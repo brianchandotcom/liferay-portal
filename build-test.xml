@@ -6761,28 +6761,9 @@ go</echo>
 
 										<gradle-execute dir="@{app.dir}" task="deploy">
 											<arg value="clean" />
+											<arg value="-Dbuild.profile=${build.profile}" />
 										</gradle-execute>
 
-										<for param="module.dir.path">
-											<path>
-												<dirset
-													dir="@{app.dir}"
-												>
-													<include name="**/*-test*" />
-												</dirset>
-											</path>
-											<sequential>
-												<basename file="@{module.dir.path}" property="module.war.name" />
-
-												<delete failonerror="false" verbose="true">
-													<fileset
-														dir="${liferay.home}/deploy"
-													>
-														<include name="${module.war.name}*" />
-													</fileset>
-												</delete>
-											</sequential>
-										</for>
 
 										<ant antfile="build.xml" dir="modules" target="build-app-lpkg">
 											<property name="app.name" value="${osgi.app.name}" />

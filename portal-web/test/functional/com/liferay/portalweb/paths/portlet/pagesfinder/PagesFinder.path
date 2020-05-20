@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_SEARCH_RESULT</td>
+	<td>//a[contains(@class,'mb-2')][normalize-space(text())='${key_pageName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TYPE_SELECTOR</td>
 	<td>//div[contains(@class,'page-type-selector')]//select[contains(@class,'form-control')]</td>
 	<td></td>

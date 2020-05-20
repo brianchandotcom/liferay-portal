@@ -33,7 +33,7 @@ export default function SearchForm({onChange, value}) {
 				}}
 				placeholder={`${Liferay.Language.get('search')}...`}
 				sizing="sm"
-				type="text"
+				type="search"
 				value={value}
 			/>
 		</ClayForm.Group>

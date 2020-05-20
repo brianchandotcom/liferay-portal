@@ -190,6 +190,20 @@ definition {
 		PagesFinder.navigateToPage(pageName = "Test Portlet Page");
 	}
 
+	@description = "This is a test for LPS-102544. Can quickly browse and go to different pages with sidebar tree."
+	@priority = "4"
+	test NavigateToDifferentPageViaPageFinder {
+		task ("Navigate to Test site Name") {
+			Navigator.openSiteURL(siteName = "Test Site Name");
+		}
+
+		PagesFinder.goToFindAPage();
+
+		for (var pageName : list "Test Portlet Page,Test Content Page,Test Embedded Page,Test Full Page Application,Test Panel Page,Test Default Page 1,Test Default Page 2,Test Default Page 3,Test Default Page 4") {
+			PagesFinder.navigateToPage(pageName = "${pageName}");
+		}
+	}
+
 	@description = "This is a test for LPS-90363. Assert that all page types can be found and counted in the pages finder."
 	@priority = "5"
 	test SearchAllPageTypes {

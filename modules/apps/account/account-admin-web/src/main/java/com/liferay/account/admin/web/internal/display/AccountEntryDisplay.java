@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class AccountEntryDisplay {
 			return new AccountEntryDisplay(accountEntry);
 		}
 
-		return null;
+		return _EMPTY_INSTANCE;
 	}
 
 	public long getAccountEntryId() {
@@ -95,6 +96,19 @@ public class AccountEntryDisplay {
 
 	public boolean isActive() {
 		return _active;
+	}
+
+	private AccountEntryDisplay() {
+		_accountEntryId = 0;
+		_active = true;
+		_description = StringPool.BLANK;
+		_domains = Collections.emptyList();
+		_logoId = 0;
+		_name = StringPool.BLANK;
+		_parentAccountEntryName = StringPool.BLANK;
+		_statusLabel = StringPool.BLANK;
+		_statusLabelStyle = StringPool.BLANK;
+		_taxId = StringPool.BLANK;
 	}
 
 	private AccountEntryDisplay(AccountEntry accountEntry) {
@@ -169,6 +183,9 @@ public class AccountEntryDisplay {
 
 		return false;
 	}
+
+	private static final AccountEntryDisplay _EMPTY_INSTANCE =
+		new AccountEntryDisplay();
 
 	private final long _accountEntryId;
 	private final boolean _active;

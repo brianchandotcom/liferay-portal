@@ -34,6 +34,7 @@ import com.liferay.calendar.test.util.RecurrenceTestUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.petra.mail.MailEngine;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
@@ -3296,7 +3297,7 @@ public class CalendarBookingLocalServiceTest {
 	private void _completeWorkflow(Group group) throws Exception {
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.petra.mail.MailEngine", Level.OFF)) {
+					MailEngine.class.getName(), Level.OFF)) {
 
 			PermissionChecker userPermissionChecker =
 				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());

@@ -34,7 +34,7 @@
 							<@liferay.language key="toggle" />
 						</#assign>
 
-						<#assign nav_item_caret = "<button aria-expanded='false' aria-haspopup='true' class='${nav_item_css_class} btn btn-secondary dropdown-toggle' data-toggle='dropdown' type='button'><span class='caret'></span><span class='sr-only'>${toggle_text}</span></button>" />
+						<#assign nav_item_caret = "<button aria-expanded='false' aria-haspopup='true' class='${nav_item_css_class} btn btn-secondary dropdown-toggle' data-toggle='liferay-dropdown' type='button'><span class='caret'></span><span class='sr-only'>${toggle_text}</span></button>" />
 					</#if>
 
 					<#if navItem.isBrowsable()>

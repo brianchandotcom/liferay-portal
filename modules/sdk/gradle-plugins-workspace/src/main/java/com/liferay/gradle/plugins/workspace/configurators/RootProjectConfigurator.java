@@ -198,10 +198,10 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask,
 			workspaceExtension);
 
-		Property<String> archiveExtension =
+		Property<String> archiveExtensionProperty =
 			distBundleTarTask.getArchiveExtension();
 
-		archiveExtension.set("tar.gz");
+		archiveExtensionProperty.set("tar.gz");
 
 		distBundleTarTask.setCompression(Compression.GZIP);
 
@@ -676,15 +676,16 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
-		Property<String> archiveBaseName = task.getArchiveBaseName();
+		Property<String> archiveBaseNameProperty = task.getArchiveBaseName();
 
-		archiveBaseName.set(project.getName());
+		archiveBaseNameProperty.set(project.getName());
 
 		task.setDescription("Assembles the Liferay bundle and zips it up.");
 
-		DirectoryProperty destinationDirectory = task.getDestinationDirectory();
+		DirectoryProperty destinationDirectoryProperty =
+			task.getDestinationDirectory();
 
-		destinationDirectory.set(project.getBuildDir());
+		destinationDirectoryProperty.set(project.getBuildDir());
 
 		task.setGroup(BUNDLE_GROUP);
 

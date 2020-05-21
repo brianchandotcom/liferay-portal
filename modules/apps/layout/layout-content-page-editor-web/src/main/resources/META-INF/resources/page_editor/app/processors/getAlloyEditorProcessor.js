@@ -224,23 +224,6 @@ export default function getAlloyEditorProcessor(
 }
 
 /**
- * Adds a listener to stop the given element event propagation
- * @param {HTMLElement} element
- * @param {string} eventName
- */
-function _stopEventPropagation(element, eventName) {
-	const handler = (event) => event.stopPropagation();
-
-	element.addEventListener(eventName, handler);
-
-	return {
-		removeListener: () => {
-			element.removeEventListener(eventName, handler);
-		},
-	};
-}
-
-/**
  * Place the caret in the click position
  * @param {Event} event
  * @param {CKEditor} nativeEditor

@@ -103,7 +103,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				ServiceContextUtil.createServiceContext(siteId, null));
 
 		_createNavigationMenuItems(
-			Arrays.asList(navigationMenu.getNavigationMenuItems()), 0, siteId,
+			navigationMenu.getNavigationMenuItems(), 0, siteId,
 			siteNavigationMenu.getSiteNavigationMenuId());
 
 		return _toNavigationMenu(siteNavigationMenu);
@@ -122,7 +122,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			navigationMenuId);
 
 		_createNavigationMenuItems(
-			Arrays.asList(navigationMenu.getNavigationMenuItems()), 0,
+			navigationMenu.getNavigationMenuItems(), 0,
 			siteNavigationMenu.getGroupId(), navigationMenuId);
 
 		return _toNavigationMenu(
@@ -133,37 +133,34 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private void _createNavigationMenuItems(
-		List<NavigationMenuItem> navigationMenuItems,
-		long parentNavigationMenuId, long siteId, long siteNavigationMenuId) {
+		NavigationMenuItem[] navigationMenuItems, long parentNavigationMenuId,
+		long siteId, long siteNavigationMenuId) {
 
-		navigationMenuItems.forEach(
-			item -> {
-				Layout layout = _getLayout(item.getLink(), siteId);
+		try {
+			for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
+				Layout layout = _getLayout(
+					navigationMenuItem.getLink(), siteId);
 
-				try {
-					SiteNavigationMenuItem siteNavigationMenuItem =
-						_siteNavigationMenuItemService.
-							addSiteNavigationMenuItem(
-								siteId, siteNavigationMenuId,
-								parentNavigationMenuId, "layout",
-								_getNavigationMenuItemTypeSettings(layout),
-								ServiceContextUtil.createServiceContext(
-									siteId, null));
+				SiteNavigationMenuItem siteNavigationMenuItem =
+					_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+						siteId, siteNavigationMenuId, parentNavigationMenuId,
+						"layout", _getNavigationMenuItemTypeSettings(layout),
+						ServiceContextUtil.createServiceContext(siteId, null));
 
-					if (_hasNavigationMenuItems(item)) {
-						_createNavigationMenuItems(
-							Arrays.asList(item.getNavigationMenuItems()),
-							siteNavigationMenuItem.
-								getSiteNavigationMenuItemId(),
-							siteId, siteNavigationMenuId);
-					}
+				if (ArrayUtil.isNotEmpty(
+						navigationMenuItem.getNavigationMenuItems())) {
+
+					_createNavigationMenuItems(
+						navigationMenuItem.getNavigationMenuItems(),
+						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+						siteId, siteNavigationMenuId);
 				}
-				catch (PortalException portalException) {
-					throw new RuntimeException(
-						"Not possible to add navigation menu item",
-						portalException);
-				}
-			});
+			}
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(
+				"Not possible to add navigation menu item", portalException);
+		}
 	}
 
 	private Layout _getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
@@ -277,13 +274,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		}
 
 		return siteNavigationMenuItemsMap;
-	}
-
-	private boolean _hasNavigationMenuItems(
-		NavigationMenuItem siteNavigationMenuItem) {
-
-		return ArrayUtil.isNotEmpty(
-			siteNavigationMenuItem.getNavigationMenuItems());
 	}
 
 	private boolean _isNameProperty(Map.Entry<String, String> property) {

@@ -29,9 +29,6 @@
 		],
 		"snapshotSerializers": [
 			"metal-jest-serializer"
-		],
-		"testPathIgnorePatterns": [
-			"ShareFormPopover"
 		]
 	},
 	"main": "admin/js/main.es.js",

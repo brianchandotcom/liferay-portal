@@ -51,19 +51,17 @@ definition {
 			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
 			userEmailAddress = "test@liferay.com");
 
+		Questions.addQuestionByAPI(
+			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
+			tagField = "tag1",
+			titleField = "Title ListOfTagsAppearsInTheTagsTab",
+			bodyField = "Body ListOfTagsAppearsInTheTagsTab");
+
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Click(
 			key_questionNameField = "Question ListOfTagsAppearsInTheTagsTab",
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			kbArticleContent = "Body ListOfTagsAppearsInTheTagsTab",
-			titleField = "Title ListOfTagsAppearsInTheTagsTab");
-
-		Questions.addTags(tagLocator = "tag1");
-
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		Pause(locator = "3000");
 
@@ -84,19 +82,17 @@ definition {
 			categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
 			userEmailAddress = "test@liferay.com");
 
+		Questions.addQuestionByAPI(
+			categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			tagField = "tag1",
+			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
+			bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
+
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Click(
 			key_questionNameField = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			kbArticleContent = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
-
-		Questions.addTags(tagLocator = "tag1");
-
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
 
 		Pause(locator = "3000");
 
@@ -121,29 +117,25 @@ definition {
 			categoryName = "Question ValidateTagsOccurrences",
 			userEmailAddress = "test@liferay.com");
 
+		Questions.addQuestionByAPI(
+			categoryName = "Question ValidateTagsOccurrences",
+			tagField = "tag1",
+			titleField = "1- Title ValidateTagsOccurrences",
+			bodyField = "1- Body ValidateTagsOccurrences");
+
+		Questions.addQuestionByAPI(
+			categoryName = "Question ValidateTagsOccurrences",
+			tagField = "tag1",
+			titleField = "2- Title ValidateTagsOccurrences",
+			bodyField = "2- Body ValidateTagsOccurrences");
+
 		Navigator.gotoPage(pageName = "Questions Page");
 
 		Click(
 			key_questionNameField = "Question ValidateTagsOccurrences",
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
 
-		Questions.askQuestionFillingTheMandatoryFields(
-			kbArticleContent = "1- Body ValidateTagsOccurrences",
-			titleField = "1- Title ValidateTagsOccurrences");
-
-		Questions.addTags(tagLocator = "tag1");
-
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
-
-		Questions.askQuestionFillingTheMandatoryFields(
-			kbArticleContent = "2- Body ValidateTagsOccurrences",
-			titleField = "2- Title ValidateTagsOccurrences");
-
-		Questions.addTags(tagLocator = "tag1");
-
-		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
-
-		Pause(locator = "5000");
+		Pause(locator = "3000");
 
 		Click(
 			key_questionTabField = "Tags",

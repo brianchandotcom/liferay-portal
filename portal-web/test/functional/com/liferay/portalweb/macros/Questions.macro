@@ -8,6 +8,29 @@ definition {
 		}
 	}
 
+	macro addQuestionByAPI {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Message Boards");
+
+		MessageboardsCategory.gotoPG(categoryName = "${categoryName}");
+
+		Pause(locator = "3000");
+
+		var categoryId = JSONMBMessage.getCategoryId();
+
+		var rightCategoryId = StringUtil.extractLast("${categoryId}", "CategoryId=");
+
+		JSONQuestionsAPI._addQuestion(
+			categoryId = "${rightCategoryId}",
+			tagField = "${tagField}",
+			titleField = "${titleField}",
+			bodyField = "${bodyField}");
+	}
+
 	macro addTags {
 		Type(
 			locator1 = "Questions#ASK_QUESTION_TAG_FIELD",

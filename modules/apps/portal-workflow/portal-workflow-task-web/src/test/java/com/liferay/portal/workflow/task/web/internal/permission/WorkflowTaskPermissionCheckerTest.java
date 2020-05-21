@@ -53,7 +53,6 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -90,7 +89,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 				mockCompanyAdminPermissionChecker()));
 	}
 
-	@Ignore
 	@Test
 	public void testContentReviewerHasPermission() {
 		PermissionChecker permissionChecker =
@@ -104,7 +102,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 				permissionChecker));
 	}
 
-	@Ignore
 	@Test
 	public void testContentReviewerRoleHasPermission() {
 		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
@@ -118,7 +115,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					RandomTestUtil.randomLong(), permissionCheckerRoleIds)));
 	}
 
-	@Ignore
 	@Test
 	public void testContentReviewerRoleWithAssetViewPermissionHasPermission() {
 		mockAssetRendererHasViewPermission(true);
@@ -135,7 +131,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false, false, false)));
 	}
 
-	@Ignore
 	@Test
 	public void testNotAssigneeHasNoPermission() {
 		long assigneeUserId = RandomTestUtil.randomLong();
@@ -148,7 +143,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					RandomTestUtil.randomLong())));
 	}
 
-	@Ignore
 	@Test
 	public void testNotAssigneeRoleHasNoPermission() {
 		long assigneeRoleId = RandomTestUtil.randomLong();
@@ -161,7 +155,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					RandomTestUtil.randomLong())));
 	}
 
-	@Ignore
 	@Test
 	public void testNotContentReviewerHasNoPermission() {
 		Assert.assertFalse(
@@ -172,7 +165,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false)));
 	}
 
-	@Ignore
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasNoPermission() {
 		mockAssetRendererHasViewPermission(true);
@@ -185,7 +177,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false)));
 	}
 
-	@Ignore
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasPermission() {
 
@@ -201,7 +192,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false)));
 	}
 
-	@Ignore
 	@Test
 	public void testNotContentReviewerWithNoAssetViewPermissionHasNoPermission() {
 		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
@@ -218,7 +208,6 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false, false, false)));
 	}
 
-	@Ignore
 	@Test
 	public void testNotContentReviewerWithoutAssetViewPermissionHasNoPermission() {
 

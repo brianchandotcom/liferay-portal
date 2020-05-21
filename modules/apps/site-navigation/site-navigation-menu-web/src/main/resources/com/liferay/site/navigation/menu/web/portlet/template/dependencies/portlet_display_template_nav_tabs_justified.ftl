@@ -55,7 +55,10 @@
 
 						<#if showChildren>
 							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
-								<@buildChildren _navItem=navItem />
+								<@buildChildren
+									displayDepth=displayDepth
+									navItem=navItem
+								/>
 							</ul>
 						</#if>
 					</li>

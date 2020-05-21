@@ -47,13 +47,16 @@
 </#macro>
 
 <#macro buildChildren
-	_navItem
+	displayDepth
+	navItem
+	navItemLevel = 2
 >
 	<#assign
 		portletDisplay = themeDisplay.getPortletDisplay()
+		showChildren = ((displayDepth == 0) || (navItemLevel < displayDepth))
 	/>
 
-	<#list _navItem.getBrowsableChildren() as childNavigationItem>
+	<#list navItem.getBrowsableChildren() as childNavigationItem>
 		<#assign
 			nav_child_css_class = ""
 		/>
@@ -68,9 +71,13 @@
 			<a aria-labelledby="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
 		</li>
 
-		<#if childNavigationItem.hasBrowsableChildren()>
+		<#if childNavigationItem.hasBrowsableChildren() && showChildren>
 			<ul class="list-unstyled pl-3">
-				<@buildChildren _navItem=childNavigationItem />
+				<@buildChildren
+					displayDepth=displayDepth
+					navItem=childNavigationItem
+					navItemLevel=(navItemLevel + 1)
+				/>
 			</ul>
 		</#if>
 	</#list>

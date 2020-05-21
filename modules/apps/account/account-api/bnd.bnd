@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Account API
 Bundle-SymbolicName: com.liferay.account.api
-Bundle-Version: 1.7.2
+Bundle-Version: 1.8.0
 Export-Package:\
 	com.liferay.account.constants,\
 	com.liferay.account.exception,\

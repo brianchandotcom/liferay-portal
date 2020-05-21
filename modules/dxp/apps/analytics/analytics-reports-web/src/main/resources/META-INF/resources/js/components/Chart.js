@@ -406,32 +406,36 @@ export default function Chart({
 								/>
 							)}
 
-							<Tooltip
-								content={
-									<CustomTooltip
-										publishDateFill={
-											CHART_COLORS.publishDate
-										}
-										showPublishedDateLabel={
-											disabledPreviousPeriodButton
-										}
-									/>
-								}
-								cursor={
-									validAnalyticsConnection &&
-									histogram.length !== 0 &&
-									!publishedToday
-								}
-								formatter={(value, name) => {
-									return [
-										numberFormat(languageTag, value),
-										keyToTranslatedLabelValue(name),
-										keyToIconType(name),
-									];
-								}}
-								labelFormatter={dateFormatters.formatLongDate}
-								separator={': '}
-							/>
+							{validAnalyticsConnection && !publishedToday && (
+								<Tooltip
+									content={
+										<CustomTooltip
+											publishDateFill={
+												CHART_COLORS.publishDate
+											}
+											showPublishedDateLabel={
+												disabledPreviousPeriodButton
+											}
+										/>
+									}
+									cursor={
+										validAnalyticsConnection &&
+										histogram.length !== 0 &&
+										!publishedToday
+									}
+									formatter={(value, name) => {
+										return [
+											numberFormat(languageTag, value),
+											keyToTranslatedLabelValue(name),
+											keyToIconType(name),
+										];
+									}}
+									labelFormatter={
+										dateFormatters.formatLongDate
+									}
+									separator={': '}
+								/>
+							)}
 
 							{keyList.map((keyName) => {
 								const color = keyToHexColor(keyName);

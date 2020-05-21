@@ -80,7 +80,7 @@ public class FileUtil {
 		}
 	}
 
-	public static void deleteDir(File dir) {
+	public static void deleteDirectory(File dir) {
 		FileUtils.deleteQuietly(dir);
 	}
 

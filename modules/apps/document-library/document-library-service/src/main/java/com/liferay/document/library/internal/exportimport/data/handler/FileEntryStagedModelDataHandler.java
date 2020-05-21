@@ -55,6 +55,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringPool;
@@ -886,7 +887,10 @@ public class FileEntryStagedModelDataHandler
 		throws PortletDataException {
 
 		if ((fileEntry.getGroupId() != portletDataContext.getGroupId()) &&
-			(fileEntry.getGroupId() != portletDataContext.getScopeGroupId())) {
+			(fileEntry.getGroupId() != portletDataContext.getScopeGroupId()) &&
+			!ExportImportGroupedModelUtil.
+				isReferenceInLayoutGroupWithinExportScope(
+					portletDataContext, fileEntry)) {
 
 			PortletDataException portletDataException =
 				new PortletDataException(PortletDataException.INVALID_GROUP);

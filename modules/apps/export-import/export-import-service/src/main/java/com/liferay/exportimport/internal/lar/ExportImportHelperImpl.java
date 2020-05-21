@@ -33,6 +33,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
+import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -748,33 +749,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return true;
 		}
 
-		Group group = null;
-
-		try {
-			group = _groupLocalService.getGroup(groupedModel.getGroupId());
-		}
-		catch (Exception exception) {
-			return false;
-		}
-
-		String className = group.getClassName();
-
-		if (className.equals(Layout.class.getName())) {
-			Layout scopeLayout = null;
-
-			try {
-				scopeLayout = _layoutLocalService.getLayout(group.getClassPK());
-			}
-			catch (Exception exception) {
-				return false;
-			}
-
-			if (scopeLayout.getGroupId() == portletDataContext.getGroupId()) {
-				return true;
-			}
-		}
-
-		return false;
+		return ExportImportGroupedModelUtil.
+			isReferenceInLayoutGroupWithinExportScope(
+				portletDataContext, groupedModel);
 	}
 
 	@Override

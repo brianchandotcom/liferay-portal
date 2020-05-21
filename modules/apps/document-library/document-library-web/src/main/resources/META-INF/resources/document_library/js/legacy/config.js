@@ -41,7 +41,6 @@
 						path: 'main.js',
 						requires: [
 							'document-library-upload',
-							'liferay-message',
 							'liferay-portlet-base',
 						],
 					},

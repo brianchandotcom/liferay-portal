@@ -567,10 +567,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [
-			'document-library-upload',
-			'liferay-message',
-			'liferay-portlet-base',
-		],
+		requires: ['document-library-upload', 'liferay-portlet-base'],
 	}
 );

@@ -1,5 +1,6 @@
 {
 	"fragmentEntryKey": "video",
+	"icon": "video",
 	"name": "video",
 	"thumbnail": "video.png",
 	"type": "component"

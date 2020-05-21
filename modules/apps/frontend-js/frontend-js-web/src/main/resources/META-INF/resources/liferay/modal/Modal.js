@@ -284,6 +284,8 @@ const Modal = ({
 	);
 };
 
+const CSS_CLASS_IFRAME_BODY = 'dialog-iframe-popup';
+
 class Iframe extends React.Component {
 	constructor(props) {
 		super(props);
@@ -294,7 +296,7 @@ class Iframe extends React.Component {
 
 		const namespace = iframeURL.searchParams.get('p_p_id');
 
-		let bodyCssClass = 'dialog-iframe-popup';
+		let bodyCssClass = CSS_CLASS_IFRAME_BODY;
 
 		if (props.iframeBodyCssClass) {
 			bodyCssClass = `${bodyCssClass} ${props.iframeBodyCssClass}`;
@@ -312,28 +314,43 @@ class Iframe extends React.Component {
 	}
 
 	componentWillUnmount() {
+		if (this.beforeScreenFlipHandler) {
+			Liferay.detach(this.beforeScreenFlipHandler);
+		}
+
 		if (this.delegateHandler) {
 			this.delegateHandler.removeListener();
 		}
 	}
 
 	onLoadHandler = () => {
-		const iframe = this.iframeRef.current;
+		const iframeWindow = this.iframeRef.current.contentWindow;
 
 		this.delegateHandler = dom.delegate(
-			iframe.contentWindow.document,
+			iframeWindow.document,
 			'click',
 			'.btn-cancel',
 			() => this.props.processClose()
 		);
 
-		iframe.contentWindow.document.body.classList.add('dialog-iframe-popup');
+		iframeWindow.document.body.classList.add(CSS_CLASS_IFRAME_BODY);
+
+		if (iframeWindow.Liferay.SPA) {
+			this.beforeScreenFlipHandler = iframeWindow.Liferay.on(
+				'beforeScreenFlip',
+				() => {
+					iframeWindow.document.body.classList.add(
+						CSS_CLASS_IFRAME_BODY
+					);
+				}
+			);
+		}
 
 		this.props.updateLoading(false);
 
 		this.setState({loading: false});
 
-		iframe.contentWindow.onunload = () => {
+		iframeWindow.onunload = () => {
 			this.props.updateLoading(true);
 
 			this.setState({loading: true});

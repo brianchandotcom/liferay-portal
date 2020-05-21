@@ -85,7 +85,7 @@ public class ClassUtilTest {
 	}
 
 	@Test
-	public void testGetPathURIFromURLUnix() throws Exception {
+	public void testGetPathURIFromURLTomcat() throws Exception {
 		testGetPathURIFromURL(
 			"jar:file:/opt/liferay/tomcat/lib/servlet-api.jar" +
 				"!/javax/servlet/Servlet.class",
@@ -99,6 +99,19 @@ public class ClassUtilTest {
 		testGetPathURIFromURL(
 			"file:/opt/liferay/tomcat/classes/javax/servlet/Servlet.class",
 			"/opt/liferay/tomcat/classes/javax/servlet/Servlet.class");
+		testGetPathURIFromURL(
+			"jar:file:/C:/Liferay/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class",
+			"/C:/Liferay/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class");
+		testGetPathURIFromURL(
+			"jar:file:/C:/With%20Space/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class",
+			"/C:/With Space/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class");
+		testGetPathURIFromURL(
+			"file:/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class",
+			"/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class");
 	}
 
 	@Test
@@ -164,23 +177,6 @@ public class ClassUtilTest {
 				"/Servlet.class",
 			"/C:/With Space/tomcat/lib/servlet-api.jar/javax/servlet" +
 				"/Servlet.class");
-	}
-
-	@Test
-	public void testGetPathURIFromURLWindows() throws Exception {
-		testGetPathURIFromURL(
-			"jar:file:/C:/Liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/C:/Liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		testGetPathURIFromURL(
-			"jar:file:/C:/With%20Space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/C:/With Space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		testGetPathURIFromURL(
-			"file:/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class",
-			"/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class");
 	}
 
 	protected void testGetPathURIFromURL(String url, String expectedPath)

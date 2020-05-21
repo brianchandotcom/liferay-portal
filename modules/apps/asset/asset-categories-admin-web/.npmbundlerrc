@@ -1,0 +1,9 @@
+{
+	"config": {
+		"imports": {
+			"asset-taglib": {
+				"/": ">=4.0.0"
+			}
+		}
+	}
+}

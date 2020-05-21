@@ -80,14 +80,14 @@ public class FileUtil {
 		}
 	}
 
-	public static void deleteDir(String dirPath) {
-		File dir = new File(dirPath);
-
+	public static void deleteDir(File dir) {
 		if (dir.exists()) {
-			File[] files = dir.listFiles();
+			if (dir.isDirectory()) {
+				File[] files = dir.listFiles();
 
-			for (File file : files) {
-				file.delete();
+				for (File file : files) {
+					deleteDir(file);
+				}
 			}
 
 			dir.delete();

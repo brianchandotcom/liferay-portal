@@ -238,28 +238,27 @@ function ToolbarBody() {
 				<NetworkStatusBar {...network} />
 				{config.undoEnabled && <Undo onUndo={onUndo} />}
 
-				{!config.undoEnabled && (
-					<li className="nav-item">
-						<form action={config.discardDraftURL} method="POST">
-							<input
-								name={`${config.portletNamespace}redirect`}
-								type="hidden"
-								value={config.discardDraftRedirectURL}
-							/>
+				<li className="nav-item">
+					<form action={config.discardDraftURL} method="POST">
+						<input
+							name={`${config.portletNamespace}redirect`}
+							type="hidden"
+							value={config.discardDraftRedirectURL}
+						/>
 
-							<ClayButton
-								className="btn btn-secondary mr-3"
-								disabled={!enableDiscard}
-								displayType="secondary"
-								onClick={handleDiscardDraft}
-								small
-								type="submit"
-							>
-								{draftButtonLabel}
-							</ClayButton>
-						</form>
-					</li>
-				)}
+						<ClayButton
+							className="btn btn-secondary mr-3"
+							disabled={!enableDiscard}
+							displayType="secondary"
+							onClick={handleDiscardDraft}
+							small
+							type="submit"
+						>
+							{draftButtonLabel}
+						</ClayButton>
+					</form>
+				</li>
+
 				<li className="nav-item">
 					<form action={config.publishURL} method="POST">
 						<input

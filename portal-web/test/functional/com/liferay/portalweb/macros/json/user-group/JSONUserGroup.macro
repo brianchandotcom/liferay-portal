@@ -1,0 +1,12 @@
+definition {
+
+	@summary = "Add a user group"
+	macro addUserGroup {
+		Variables.assertDefined(parameterList = "${userGroupName}");
+
+		JSONUserGroupAPI._addUserGroup(
+			userGroupDescription = "${userGroupDescription}",
+			userGroupName = "${userGroupName}");
+	}
+
+}

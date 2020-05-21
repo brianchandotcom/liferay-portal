@@ -1,0 +1,18 @@
+definition {
+
+	macro _addUserGroup {
+		Variables.assertDefined(parameterList = "${userGroupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/usergroup/add-user-group \
+				-u test@liferay.com:test \
+				-d name=${userGroupName} \
+				-d description=${userGroupDescription}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

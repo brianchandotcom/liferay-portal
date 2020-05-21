@@ -24,8 +24,6 @@ import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
 import com.liferay.dynamic.data.mapping.kernel.StorageEngineManager;
 import com.liferay.dynamic.data.mapping.kernel.Value;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.model.Group;
@@ -44,12 +42,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -73,19 +69,6 @@ public class DDMStructureManagerTest {
 	public static void setUpClass() {
 		_classNameId = _portal.getClassNameId(
 			"com.liferay.dynamic.data.mapping.model.DDMFormInstance");
-
-		_ddmStructureIds = new ArrayList<>();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		DB db = DBManagerUtil.getDB();
-
-		for (Long ddmStructureId : _ddmStructureIds) {
-			db.runSQL(
-				"delete from DDMStructure where structureId = " +
-					ddmStructureId);
-		}
 	}
 
 	@Before
@@ -334,15 +317,11 @@ public class DDMStructureManagerTest {
 			LocaleUtil.US, "Test Structure Description"
 		).build();
 
-		DDMStructure structure = _ddmStructureManager.addStructure(
+		return _ddmStructureManager.addStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(), null,
 			_classNameId, StringUtil.randomString(), nameMap, descriptionMap,
 			createDDMForm(), StorageEngineManager.STORAGE_TYPE_DEFAULT,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, _serviceContext);
-
-		_ddmStructureIds.add(structure.getStructureId());
-
-		return structure;
 	}
 
 	protected void assertEquals(
@@ -402,7 +381,6 @@ public class DDMStructureManagerTest {
 	}
 
 	private static long _classNameId;
-	private static List<Long> _ddmStructureIds;
 
 	@Inject
 	private static DDMStructureManager _ddmStructureManager;

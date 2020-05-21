@@ -1,0 +1,28 @@
+definition {
+
+	@summary = "Get a structureId from ddmStructure"
+	macro _getStructureId {
+		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureKey}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/ddm.ddmstructure/get-structure \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d classNameId=${classNameId} \
+			  -d structureKey=${structureKey} \
+			  -d includeAncestorStructures=true
+		''';
+		var structureId = JSONCurlUtil.post("${curl}", "$.[?(@['structureKey'] == '${structureKey}')]['structureId']");
+		var structureId = StringUtil.replace("${structureId}", "[&quot;", "");
+		var structureId = StringUtil.replace("${structureId}", "&quot;]", "");
+
+		if ("${structureId}" == "[]") {
+			fail("FAIL. Cannot find structureId.");
+		}
+
+		return "${structureId}";
+	}
+
+}

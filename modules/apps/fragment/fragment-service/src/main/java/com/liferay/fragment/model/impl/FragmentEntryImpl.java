@@ -48,6 +48,11 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	}
 
 	@Override
+	public String getIcon() {
+		return _icon;
+	}
+
+	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
 		if (Validator.isNotNull(_imagePreviewURL)) {
 			return _imagePreviewURL;
@@ -130,6 +135,11 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	}
 
 	@Override
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
+	@Override
 	public void setImagePreviewURL(String imagePreviewURL) {
 		_imagePreviewURL = imagePreviewURL;
 	}
@@ -156,6 +166,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryImpl.class);
 
+	private String _icon = "picture";
 	private String _imagePreviewURL;
 
 }

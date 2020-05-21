@@ -40,6 +40,11 @@ public class FragmentCompositionImpl extends FragmentCompositionBaseImpl {
 	}
 
 	@Override
+	public String getIcon() {
+		return _icon;
+	}
+
+	@Override
 	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
 		if (Validator.isNotNull(_imagePreviewURL)) {
 			return _imagePreviewURL;
@@ -100,6 +105,11 @@ public class FragmentCompositionImpl extends FragmentCompositionBaseImpl {
 	}
 
 	@Override
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
+	@Override
 	public void setImagePreviewURL(String imagePreviewURL) {
 		_imagePreviewURL = imagePreviewURL;
 	}
@@ -126,6 +136,7 @@ public class FragmentCompositionImpl extends FragmentCompositionBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCompositionImpl.class);
 
+	private String _icon = "picture";
 	private String _imagePreviewURL;
 
 }

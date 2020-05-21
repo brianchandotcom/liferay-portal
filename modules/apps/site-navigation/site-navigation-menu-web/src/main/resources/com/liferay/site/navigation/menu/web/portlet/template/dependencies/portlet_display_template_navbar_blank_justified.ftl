@@ -1,3 +1,5 @@
+<#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
+
 <#if !entries?has_content>
 	<#if themeDisplay.isSignedIn()>
 		<div class="alert alert-info">
@@ -57,21 +59,7 @@
 
 						<#if showChildren>
 							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
-								<#list navItem.getBrowsableChildren() as childNavigationItem>
-									<#assign
-										nav_child_css_class = ""
-									/>
-
-									<#if childNavigationItem.isSelected()>
-										<#assign
-											nav_child_css_class = "active selected"
-										/>
-									</#if>
-
-									<li class="${nav_child_css_class}" id="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" role="presentation">
-										<a aria-labelledby="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
-									</li>
-								</#list>
+								<@buildChildren _navItem=navItem />
 							</ul>
 						</#if>
 					</li>

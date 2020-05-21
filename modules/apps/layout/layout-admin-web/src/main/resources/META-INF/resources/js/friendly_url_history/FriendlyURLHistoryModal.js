@@ -83,11 +83,7 @@ const FriendlyURLHistoryModal = ({
 
 	useEffect(() => {
 		getFriendlyUrlLocalizations();
-	}, [
-		friendlyURLEntryLocalizationsURL,
-		getFriendlyUrlLocalizations,
-		isMounted,
-	]);
+	}, [getFriendlyUrlLocalizations]);
 
 	useEffect(() => {
 		if (loading) {
@@ -130,73 +126,92 @@ const FriendlyURLHistoryModal = ({
 		}
 	}, [friendlyURLEntryLocalizations, loading, languageId]);
 
-	const sendRequest = (url, friendlyURLEntryId) => {
-		return fetch(url, {
-			body: objectToFormData({
-				[`${portletNamespace}friendlyURLEntryId`]: friendlyURLEntryId,
-				[`${portletNamespace}languageId`]: languageId,
-			}),
-			method: 'POST',
-		})
-			.then((response) => response.json())
-			.catch((error) => {
-				logError(error);
-				showToastError();
-			});
-	};
+	const sendRequest = useCallback(
+		(url, friendlyURLEntryId) => {
+			return fetch(url, {
+				body: objectToFormData({
+					[`${portletNamespace}friendlyURLEntryId`]: friendlyURLEntryId,
+					[`${portletNamespace}languageId`]: languageId,
+				}),
+				method: 'POST',
+			})
+				.then((response) => response.json())
+				.catch((error) => {
+					logError(error);
+					showToastError();
+				});
+		},
+		[languageId, portletNamespace]
+	);
 
-	const handleDeleteFriendlyUrl = (deleteFriendlyURLEntryId) => {
-		sendRequest(
-			deleteFriendlyURLEntryLocalizationURL,
-			deleteFriendlyURLEntryId
-		).then(({success} = {}) => {
-			if (success) {
-				setFriendlyURLEntryLocalizations(
-					(friendlyURLEntryLocalizations) => ({
-						...friendlyURLEntryLocalizations,
-						[languageId]: {
-							...friendlyURLEntryLocalizations[languageId],
-							history: friendlyURLEntryLocalizations[
-								languageId
-							].history.filter(
-								({friendlyURLEntryId}) =>
-									friendlyURLEntryId !=
-									deleteFriendlyURLEntryId
-							),
-						},
-					})
-				);
-			}
-			else {
-				showToastError();
-			}
-		});
-	};
-
-	const handleRestoreFriendlyUrl = (restoreFriendlyUrlEntryId, urlTitle) => {
-		sendRequest(
-			restoreFriendlyURLEntryLocalizationURL,
-			restoreFriendlyUrlEntryId
-		).then(({success} = {}) => {
-			if (isMounted() && success) {
-				getFriendlyUrlLocalizations();
-
-				const inputComponent = Liferay.component(
-					`${portletNamespace}friendlyURL`
-				);
-
-				if (inputComponent.getSelectedLanguageId() === languageId) {
-					inputComponent.updateInput(urlTitle);
+	const handleDeleteFriendlyUrl = useCallback(
+		(deleteFriendlyURLEntryId) => {
+			sendRequest(
+				deleteFriendlyURLEntryLocalizationURL,
+				deleteFriendlyURLEntryId
+			).then(({success} = {}) => {
+				if (success) {
+					setFriendlyURLEntryLocalizations(
+						(friendlyURLEntryLocalizations) => ({
+							...friendlyURLEntryLocalizations,
+							[languageId]: {
+								...friendlyURLEntryLocalizations[languageId],
+								history: friendlyURLEntryLocalizations[
+									languageId
+								].history.filter(
+									({friendlyURLEntryId}) =>
+										friendlyURLEntryId !=
+										deleteFriendlyURLEntryId
+								),
+							},
+						})
+					);
 				}
 				else {
-					inputComponent.updateInputLanguage(urlTitle, languageId);
+					showToastError();
 				}
-			}
-			else {
-				showToastError();
-			}
-		});
-	};
+			});
+		},
+		[deleteFriendlyURLEntryLocalizationURL, languageId, sendRequest]
+	);
+
+	const handleRestoreFriendlyUrl = useCallback(
+		(restoreFriendlyUrlEntryId, urlTitle) => {
+			sendRequest(
+				restoreFriendlyURLEntryLocalizationURL,
+				restoreFriendlyUrlEntryId
+			).then(({success} = {}) => {
+				if (isMounted() && success) {
+					getFriendlyUrlLocalizations();
+
+					const inputComponent = Liferay.component(
+						`${portletNamespace}friendlyURL`
+					);
+
+					if (inputComponent.getSelectedLanguageId() === languageId) {
+						inputComponent.updateInput(urlTitle);
+					}
+					else {
+						inputComponent.updateInputLanguage(
+							urlTitle,
+							languageId
+						);
+					}
+				}
+				else {
+					showToastError();
+				}
+			});
+		},
+		[
+			getFriendlyUrlLocalizations,
+			isMounted,
+			languageId,
+			portletNamespace,
+			restoreFriendlyURLEntryLocalizationURL,
+			sendRequest,
+		]
+	);
 
 	return (
 		<ClayModal

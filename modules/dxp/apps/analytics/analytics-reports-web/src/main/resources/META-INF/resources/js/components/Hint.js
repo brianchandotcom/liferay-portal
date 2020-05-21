@@ -10,12 +10,13 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import className from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
 import Popover from './Popover';
 
-export default function Hint({align, message, position, title}) {
+export default function Hint({align, message, position, secondary, title}) {
 	const iconRef = useRef();
 	const [showTooltip, setShowTooltip] = useState(false);
 
@@ -26,10 +27,14 @@ export default function Hint({align, message, position, title}) {
 		setShowTooltip(false);
 	};
 
+	const hintClasses = className('p-1', {
+		'text-secondary': secondary,
+	});
+
 	return (
 		<>
 			<span
-				className="p-1"
+				className={hintClasses}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
 				ref={iconRef}

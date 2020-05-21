@@ -43,7 +43,7 @@ export default function Main({
 				title={pageTitle}
 			/>
 
-			<h5 className="mt-3 sheet-subtitle text-secondary">
+			<h5 className="mt-3 sheet-subtitle">
 				{Liferay.Language.get('engagement')}
 			</h5>
 

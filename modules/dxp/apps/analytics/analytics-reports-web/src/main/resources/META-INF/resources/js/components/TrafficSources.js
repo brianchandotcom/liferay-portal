@@ -71,12 +71,13 @@ export default function TrafficSources({
 
 	return (
 		<>
-			<h5 className="mt-3 sheet-subtitle text-secondary">
+			<h5 className="mt-3 sheet-subtitle">
 				{Liferay.Language.get('search-engines-traffic')}
 				<Hint
 					message={Liferay.Language.get(
 						'search-engines-traffic-help'
 					)}
+					secondary={true}
 					title={Liferay.Language.get('search-engines-traffic')}
 				/>
 			</h5>

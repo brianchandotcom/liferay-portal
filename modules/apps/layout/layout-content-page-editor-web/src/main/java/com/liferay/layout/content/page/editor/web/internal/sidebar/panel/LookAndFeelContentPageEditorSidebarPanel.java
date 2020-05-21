@@ -102,11 +102,6 @@ public class LookAndFeelContentPageEditorSidebarPanel
 	}
 
 	@Override
-	public boolean includeSeparator() {
-		return true;
-	}
-
-	@Override
 	public boolean isLink() {
 		return true;
 	}

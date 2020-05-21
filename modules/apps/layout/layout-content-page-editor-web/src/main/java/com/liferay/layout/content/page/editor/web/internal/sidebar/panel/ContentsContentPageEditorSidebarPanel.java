@@ -59,11 +59,6 @@ public class ContentsContentPageEditorSidebarPanel
 	}
 
 	@Override
-	public boolean includeSeparator() {
-		return true;
-	}
-
-	@Override
 	public boolean isVisible(
 		PermissionChecker permissionChecker, long plid,
 		boolean pageIsDisplayPage) {

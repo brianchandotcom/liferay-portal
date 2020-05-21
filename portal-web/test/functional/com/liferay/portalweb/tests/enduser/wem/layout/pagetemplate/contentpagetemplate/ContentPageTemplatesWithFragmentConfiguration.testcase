@@ -15,6 +15,17 @@ definition {
 		JSONFragment.addFragmentCollection(
 			groupName = "Test Site Name",
 			name = "Collection Name");
+
+		JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+			groupName = "Test Site Name",
+			layoutPageTemplateCollectionName = "Page Template Collection");
+
+		JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+			groupName = "Test Site Name",
+			layoutPageTemplateCollectionName = "Page Template Collection",
+			layoutPageTemplateEntryName = "Page Template Name",
+			layoutPageTemplateStatus = "Draft",
+			layoutPageTemplateType = "Content Page Template");
 	}
 
 	tearDown {
@@ -47,11 +58,11 @@ definition {
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
-
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -104,11 +115,11 @@ definition {
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
-
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -155,11 +166,11 @@ definition {
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
-
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -201,11 +212,11 @@ definition {
 
 		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
-
 		Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",

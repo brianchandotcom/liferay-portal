@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -23,16 +23,17 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ambrín Chaudhary
@@ -45,30 +46,36 @@ import javax.portlet.ActionResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class RestoreFriendlyURLEntryLocalizationMVCActionCommand extends
-	BaseMVCActionCommand {
+public class RestoreFriendlyURLEntryLocalizationMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
+
+		long plid = ParamUtil.getLong(actionRequest, "plid");
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		LayoutPermissionUtil.check(
-			themeDisplay.getPermissionChecker(),
-			ParamUtil.getLong(actionRequest, "plid"), ActionKeys.UPDATE);
-
-		System.out.println(ParamUtil.getLong(actionRequest, "friendlyURLEntryId"));
-		System.out.println(ParamUtil.getString(actionRequest, "languageId"));
+			themeDisplay.getPermissionChecker(), plid, ActionKeys.UPDATE);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			FriendlyURLEntry friendlyURLEntry = _friendlyURLEntryLocalService.getFriendlyURLEntry(ParamUtil.getLong(actionRequest, "friendlyURLEntryId"));
+			String languageId = ParamUtil.getString(
+				actionRequest, "languageId");
 
-			_friendlyURLEntryLocalService.setMainFriendlyURLEntry(friendlyURLEntry);
+			FriendlyURLEntryLocalization friendlyURLEntryLocalization =
+				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
+					ParamUtil.getLong(actionRequest, "friendlyURLEntryId"),
+					languageId);
+
+			_layoutLocalService.updateFriendlyURL(
+				themeDisplay.getUserId(), plid,
+				friendlyURLEntryLocalization.getUrlTitle(), languageId);
 
 			jsonObject.put("success", true);
 		}
@@ -82,4 +89,8 @@ public class RestoreFriendlyURLEntryLocalizationMVCActionCommand extends
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
 }

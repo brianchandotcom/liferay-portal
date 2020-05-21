@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
@@ -84,7 +85,7 @@ public class SearchUtil {
 			Filter filter, Class<?> indexerClass, String keywords,
 			Pagination pagination,
 			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
-			UnsafeConsumer<SearchContext, Exception>
+			UnsafeConsumer<VulcanSearchContext, Exception>
 				searchContextUnsafeConsumer,
 			Sort[] sorts,
 			UnsafeFunction<Document, T, Exception> transformUnsafeFunction)
@@ -104,13 +105,21 @@ public class SearchUtil {
 
 		Indexer<?> indexer = IndexerRegistryUtil.getIndexer(indexerClass);
 
-		SearchContext searchContext = _createSearchContext(
+		VulcanSearchContext vulcanSearchContext = _createSearchContext(
 			_getBooleanClause(booleanQueryUnsafeConsumer, filter), keywords,
 			pagination, queryConfigUnsafeConsumer, sorts);
 
-		searchContextUnsafeConsumer.accept(searchContext);
+		searchContextUnsafeConsumer.accept(vulcanSearchContext);
 
-		Hits hits = indexer.search(searchContext);
+		Hits hits;
+
+		if (vulcanSearchContext.isCheckPermissions()) {
+			hits = indexer.search(vulcanSearchContext);
+		}
+		else {
+			hits = IndexSearcherHelperUtil.search(
+				vulcanSearchContext, indexer.getFullQuery(vulcanSearchContext));
+		}
 
 		for (Document document : hits.getDocs()) {
 			T item = transformUnsafeFunction.apply(document);
@@ -121,7 +130,8 @@ public class SearchUtil {
 		}
 
 		return Page.of(
-			actions, items, pagination, indexer.searchCount(searchContext));
+			actions, items, pagination,
+			indexer.searchCount(vulcanSearchContext));
 	}
 
 	/**
@@ -144,7 +154,8 @@ public class SearchUtil {
 		return search(
 			Collections.emptyMap(), booleanQueryUnsafeConsumer, filter,
 			indexerClass, keywords, pagination, queryConfigUnsafeConsumer,
-			searchContextUnsafeConsumer, sorts, transformUnsafeFunction);
+			searchContextUnsafeConsumer::accept, sorts,
+			transformUnsafeFunction);
 	}
 
 	/**
@@ -176,18 +187,33 @@ public class SearchUtil {
 					Map.Entry::getKey,
 					entry -> (Map<String, String>)entry.getValue())),
 			booleanQueryUnsafeConsumer, filter, indexerClass, keywords,
-			pagination, queryConfigUnsafeConsumer, searchContextUnsafeConsumer,
-			sorts, transformUnsafeFunction);
+			pagination, queryConfigUnsafeConsumer,
+			searchContextUnsafeConsumer::accept, sorts,
+			transformUnsafeFunction);
 	}
 
-	private static SearchContext _createSearchContext(
+	public static class VulcanSearchContext extends SearchContext {
+
+		public boolean isCheckPermissions() {
+			return _checkPermissions;
+		}
+
+		public void setCheckPermissions(boolean checkPermissions) {
+			_checkPermissions = checkPermissions;
+		}
+
+		private boolean _checkPermissions = true;
+
+	}
+
+	private static VulcanSearchContext _createSearchContext(
 			BooleanClause<?> booleanClause, String keywords,
 			Pagination pagination,
 			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
 			Sort[] sorts)
 		throws Exception {
 
-		SearchContext searchContext = new SearchContext();
+		VulcanSearchContext searchContext = new VulcanSearchContext();
 
 		searchContext.setBooleanClauses(new BooleanClause[] {booleanClause});
 

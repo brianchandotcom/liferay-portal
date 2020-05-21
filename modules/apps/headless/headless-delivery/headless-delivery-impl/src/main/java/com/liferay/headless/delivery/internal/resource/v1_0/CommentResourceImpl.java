@@ -340,6 +340,7 @@ public class CommentResourceImpl
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
+				searchContext.setCheckPermissions(false);
 				searchContext.setAttribute("discussion", Boolean.TRUE);
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);

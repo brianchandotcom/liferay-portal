@@ -88,7 +88,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		if (isGroupOwner(groupId)) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if ((group != null) && isGroupOwner(groupId)) {
 			return true;
 		}
 
@@ -101,7 +103,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
-		if (isGroupOwner(groupId)) {
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if ((group != null) && isGroupOwner(groupId)) {
 			return true;
 		}
 

@@ -127,16 +127,9 @@ const FriendlyURLHistoryModal = ({
 	};
 
 	const handleDeleteFriendlyUrl = (deleteFriendlyURLEntryId) => {
-		fetch(deleteFriendlyURLEntryLocalizationURL, {
-			body: objectToFormData({
-				[`${portletNamespace}friendlyURLEntryId`]: deleteFriendlyURLEntryId,
-				[`${portletNamespace}languageId`]: languageId,
-			}),
-			method: 'POST',
-		})
-			.then((response) => response.json())
-			.then((response) => {
-				if (response.success) {
+		sendRequest(deleteFriendlyURLEntryLocalizationURL, deleteFriendlyURLEntryId)
+			.then(({success} = {}) => {
+				if (success) {
 					setFriendlyURLEntryLocalizations(
 						(friendlyURLEntryLocalizations) => ({
 							...friendlyURLEntryLocalizations,
@@ -156,30 +149,13 @@ const FriendlyURLHistoryModal = ({
 				else {
 					showToastError();
 				}
-			})
-			.catch((error) => {
-				logError(error);
-				showToastError();
 			});
 	};
 
 	const handleRestoreFriendlyUrl = (restoreFriendlyUrlEntryId, urlTitle) => {
-		const formData = new FormData();
-
-		formData.append(
-			`${portletNamespace}friendlyURLEntryId`,
-			restoreFriendlyUrlEntryId
-		);
-
-		formData.append(`${portletNamespace}languageId`, languageId);
-
-		fetch(restoreFriendlyURLEntryLocalizationURL, {
-			body: formData,
-			method: 'POST',
-		})
-			.then((response) => response.json())
-			.then((response) => {
-				if (response.success) {
+		sendRequest(restoreFriendlyURLEntryLocalizationURL, restoreFriendlyUrlEntryId)
+			.then(({success} = {}) => {
+				if (isMounted() && success) {
 					getFriendlyUrlLocalizations();
 
 					const inputComponent = Liferay.component(`${portletNamespace}friendlyURL`);
@@ -199,11 +175,20 @@ const FriendlyURLHistoryModal = ({
 				else {
 					showToastError();
 				}
-			})
-			.catch((error) => {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
+			});
+	};
+
+	const sendRequest = (url, friendlyURLEntryId) => {
+		return fetch(url, {
+			body: objectToFormData({
+				[`${portletNamespace}friendlyURLEntryId`]: friendlyURLEntryId,
+				[`${portletNamespace}languageId`]: languageId,
+			}),
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.catch(() => {
+				logError(error);
 				showToastError();
 			});
 	};

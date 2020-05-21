@@ -83,31 +83,26 @@ public class FileUtil {
 	public static void deleteDir(String dirPath) {
 		File dir = new File(dirPath);
 
-		try {
-			if (dir.exists()) {
-				File[] files = dir.listFiles();
+		if (dir.exists()) {
+			File[] files = dir.listFiles();
 
-				if (files.length == 0) {
-					dir.delete();
+			if (files.length == 0) {
+				dir.delete();
 
-					System.out.println("### " + dirPath + " is deleted");
-				}
-				else {
-					for (File file : files) {
-						file.delete();
-
-						System.out.println(
-							"### " + file.getName() + " is deleted");
-					}
-
-					dir.delete();
-
-					System.out.println("### " + dirPath + " is deleted");
-				}
+				System.out.println("### " + dirPath + " is deleted");
 			}
-		}
-		catch (SecurityException securityException) {
-			securityException.printStackTrace();
+			else {
+				for (File file : files) {
+					file.delete();
+
+					System.out.println(
+						"### " + file.getName() + " is deleted");
+				}
+
+				dir.delete();
+
+				System.out.println("### " + dirPath + " is deleted");
+			}
 		}
 	}
 

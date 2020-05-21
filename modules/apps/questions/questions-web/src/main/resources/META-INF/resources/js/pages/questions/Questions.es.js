@@ -12,7 +12,9 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {ClayResultsBar} from '@clayui/management-toolbar';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -22,6 +24,7 @@ import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import useQuery from '../../hooks/useQuery.es';
 import {getQuestionThreads} from '../../utils/client.es';
+import lang from '../../utils/lang.es';
 import {historyPushWithSlug, slugToText} from '../../utils/utils.es';
 import QuestionsNavigationBar from '../QuestionsNavigationBar.es';
 
@@ -41,6 +44,7 @@ export default withRouter(
 		const [pageSize, setPageSize] = useState(20);
 		const [questions, setQuestions] = useState([]);
 		const [search, setSearch] = useState('');
+		const [searchCallback, setSearchCallback] = useState();
 		const [section, setSection] = useState({});
 
 		const queryParams = useQuery(location);
@@ -80,7 +84,12 @@ export default withRouter(
 				siteKey
 			)
 				.then((data) => setQuestions(data || []))
-				.then(() => setLoading(false))
+				.then(() => {
+					setLoading(false);
+					if (searchCallback) {
+						searchCallback(false);
+					}
+				})
 				.catch((error) => {
 					if (process.env.NODE_ENV === 'development') {
 						console.error(error);
@@ -89,6 +98,7 @@ export default withRouter(
 					setError({message: 'Loading Questions', title: 'Error'});
 				});
 		}, [
+			searchCallback,
 			creatorId,
 			currentTag,
 			filter,
@@ -99,12 +109,13 @@ export default withRouter(
 			siteKey,
 		]);
 
-		const loadSearch = (search) => {
+		const loadSearch = (search, searchCallback) => {
 			historyPushParser(
 				`/questions/${sectionTitle}${
 					search && search !== '' ? '?search=' + search : ''
 				}`
 			);
+			setSearchCallback(() => searchCallback);
 		};
 
 		const changePage = (number) => {
@@ -126,6 +137,39 @@ export default withRouter(
 								sectionChange={(section) => setSection(section)}
 							/>
 						</div>
+
+						{!!search && (
+							<div className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
+								<ClayResultsBar>
+									<ClayResultsBar.Item expand>
+										<span className="component-text text-truncate-inline">
+											<span className="text-truncate">
+												{lang.sub(
+													Liferay.Language.get(
+														'x-results-for-query-with-terms-x'
+													),
+													[
+														questions.totalCount,
+														search,
+													]
+												)}
+											</span>
+										</span>
+									</ClayResultsBar.Item>
+									<ClayResultsBar.Item>
+										<ClayButton
+											className="component-link tbar-link"
+											displayType="unstyled"
+											onClick={() =>
+												loadSearch('', searchCallback)
+											}
+										>
+											{Liferay.Language.get('clear')}
+										</ClayButton>
+									</ClayResultsBar.Item>
+								</ClayResultsBar>
+							</div>
+						)}
 
 						<div className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
 							{loading ? (

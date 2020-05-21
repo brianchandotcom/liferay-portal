@@ -16,6 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -65,9 +66,13 @@ export default withRouter(
 		const historyPushParser = historyPushWithSlug(history.push);
 
 		const [active, setActive] = useState(false);
+		const [loading, setLoading] = useState(false);
 
 		const [debounceCallback] = useDebounceCallback((value) => {
-			searchChange(value);
+			setLoading(true);
+			searchChange(value, () => {
+				setLoading(false);
+			});
 		}, 500);
 
 		const section = useSection(slugToText(sectionTitle), context.siteKey);
@@ -226,11 +231,14 @@ export default withRouter(
 								className="bg-transparent"
 								tag="span"
 							>
-								<ClayButtonWithIcon
-									displayType="unstyled"
-									symbol="search"
-									type="submit"
-								/>
+								{loading && <ClayLoadingIndicator small />}
+								{!loading && (
+									<ClayButtonWithIcon
+										displayType="unstyled"
+										symbol="search"
+										type="submit"
+									/>
+								)}
 							</ClayInput.GroupInsetItem>
 						</ClayInput.GroupItem>
 

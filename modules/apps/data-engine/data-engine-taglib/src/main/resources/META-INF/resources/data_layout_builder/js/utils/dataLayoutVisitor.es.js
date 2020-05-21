@@ -115,3 +115,13 @@ export function normalizeRule(dataRule) {
 
 	return dataRule;
 }
+
+export function isDataLayoutEmpty(dataLayoutPages) {
+	return dataLayoutPages.every(({dataLayoutRows}) => {
+		return dataLayoutRows.every(({dataLayoutColumns}) => {
+			return dataLayoutColumns.every(({fieldNames = []}) => {
+				return !fieldNames.length;
+			});
+		});
+	});
+}

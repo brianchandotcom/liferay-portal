@@ -493,3 +493,7 @@
 		cursor: pointer;
 	}
 }
+
+.autocomplete-dropdown-menu.dropdown-menu {
+	z-index: 1100;
+}

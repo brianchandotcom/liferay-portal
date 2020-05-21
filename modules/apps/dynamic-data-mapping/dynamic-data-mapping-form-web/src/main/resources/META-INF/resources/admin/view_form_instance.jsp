@@ -22,6 +22,10 @@ PortletURL portletURL = ddmFormAdminDisplayContext.getPortletURL();
 FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFormAdminDisplayContext.getPermissionCheckerHelper();
 %>
 
+<div class="lfr-alert-container">
+	<clay:container-fluid className="lfr-alert-wrapper"></clay:container-fluid>
+</div>
+
 <clay:container-fluid
 	id='<%= renderResponse.getNamespace() + "formContainer" %>'
 >
@@ -118,25 +122,53 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 	</aui:form>
 </clay:container-fluid>
 
-<aui:script require='<%= mainRequire + "/admin/js/components/ShareFormPopover/ShareFormPopover.es as ShareFormPopover" %>'>
+<aui:script require='<%= "metal-dom/src/all/dom as dom, " + mainRequire + "/admin/js/components/ShareFormModal/ShareFormModal.es as ShareFormModal" %>'>
 	var spritemap = themeDisplay.getPathThemeImages() + '/lexicon/icons.svg';
 
-	Liferay.after('<portlet:namespace />copyFormURL', function (data) {
-		var url = data.url;
-		var trigger = Liferay.Menu._INSTANCE._activeTrigger;
+	var afterOpenShareFormModal = function (data) {
+		Liferay.namespace('DDM').FormSettings = {
+			portletNamespace: '<portlet:namespace />',
+			spritemap: spritemap,
+		};
 
-		var popover = new ShareFormPopover.default({
-			alignElement: trigger.getDOM(),
+		var shareFormModal = new ShareFormModal.default({
 			events: {
-				popoverClosed: function () {
-					popover.dispose();
+				shareFormModalClosed: function (event) {
+					event.preventDefault();
+					event.stopPropagation();
+
+					var overlayElement = document.querySelector('.modal-backdrop');
+					dom.exitDocument(overlayElement);
+
+					shareFormModal.dispose();
 				},
 			},
+			localizedName: data.localizedName,
+			portletNamespace: '<portlet:namespace />',
+			shareFormInstanceURL: data.shareFormInstanceURL,
+			sharingUserAutocompleteURL:
+				'<%= ddmFormAdminDisplayContext.getSharingUserAutocompleteURL() %>',
 			spritemap: spritemap,
-			url: url,
-			visible: true,
+			url: data.url,
 		});
-	});
+
+		shareFormModal.open();
+	};
+
+	Liferay.after(
+		'<portlet:namespace />openShareFormModal',
+		afterOpenShareFormModal
+	);
+
+	function handleDestroyPortlet() {
+		Liferay.detach(
+			'<portlet:namespace />openShareFormModal',
+			afterOpenShareFormModal
+		);
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>
 
 <%@ include file="/admin/copy_form_publish_url.jspf" %>

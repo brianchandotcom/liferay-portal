@@ -511,6 +511,8 @@ public class ConfigurationPersistenceManager
 				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
 				felixFileInstallFileName);
 
+			configFile = configFile.getCanonicalFile();
+
 			configFile = configFile.getAbsoluteFile();
 
 			URI uri = configFile.toURI();

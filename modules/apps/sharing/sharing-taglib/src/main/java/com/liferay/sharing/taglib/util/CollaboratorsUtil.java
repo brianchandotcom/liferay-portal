@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -48,8 +49,7 @@ public class CollaboratorsUtil {
 			"collaborators",
 			_getSharingEntryToUsersJSONArray(classPK, classNameId, themeDisplay)
 		).put(
-			"owner",
-			_getUserJSONObject(_getOwner(classNameId, classPK), themeDisplay)
+			"owner", _getUserJSONObject(classNameId, classPK, themeDisplay)
 		).put(
 			"total",
 			SharingEntryLocalServiceUtil.getSharingEntriesCount(
@@ -57,9 +57,26 @@ public class CollaboratorsUtil {
 		);
 	}
 
+	private static AssetRenderer<?> _getAssetRenderer(
+		long classNameId, long classPK) {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.
+				getAssetRendererFactoryByClassNameId(classNameId);
+
+		try {
+			return assetRendererFactory.getAssetRenderer(classPK);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+
+		return null;
+	}
+
 	private static String _getDisplayURL(ThemeDisplay themeDisplay, User user) {
 		try {
-			if (user.isDefaultUser()) {
+			if ((user == null) || user.isDefaultUser()) {
 				return StringPool.BLANK;
 			}
 
@@ -70,24 +87,6 @@ public class CollaboratorsUtil {
 
 			return null;
 		}
-	}
-
-	private static User _getOwner(long classNameId, long classPK) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(classNameId);
-
-		try {
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(classPK);
-
-			return UserLocalServiceUtil.fetchUser(assetRenderer.getUserId());
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException, portalException);
-		}
-
-		return null;
 	}
 
 	private static String _getPortraitURL(
@@ -131,6 +130,33 @@ public class CollaboratorsUtil {
 		);
 
 		return jsonArray;
+	}
+
+	private static JSONObject _getUserJSONObject(
+		long classNameId, long classPK, ThemeDisplay themeDisplay) {
+
+		AssetRenderer assetRenderer = _getAssetRenderer(classNameId, classPK);
+
+		if (assetRenderer == null) {
+			return JSONUtil.put(
+				"fullName",
+				LanguageUtil.get(themeDisplay.getLocale(), "deleted-user")
+			).put(
+				"userId", 0
+			);
+		}
+
+		User user = UserLocalServiceUtil.fetchUser(assetRenderer.getUserId());
+
+		if (user != null) {
+			return _getUserJSONObject(user, themeDisplay);
+		}
+
+		return JSONUtil.put(
+			"fullName", assetRenderer.getUserName()
+		).put(
+			"userId", assetRenderer.getUserId()
+		);
 	}
 
 	private static JSONObject _getUserJSONObject(

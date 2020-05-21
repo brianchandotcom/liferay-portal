@@ -86,6 +86,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 				mockCompanyAdminPermissionChecker()));
 	}
 
+	@Ignore
 	@Test
 	public void testContentReviewerHasPermission() {
 		PermissionChecker permissionChecker =
@@ -99,6 +100,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 				permissionChecker));
 	}
 
+	@Ignore
 	@Test
 	public void testContentReviewerRoleHasPermission() {
 		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
@@ -112,6 +114,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					RandomTestUtil.randomLong(), permissionCheckerRoleIds)));
 	}
 
+	@Ignore
 	@Test
 	public void testContentReviewerRoleWithAssetViewPermissionHasPermission()
 		throws PortalException {
@@ -167,6 +170,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false)));
 	}
 
+	@Ignore
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasNoPermission()
 		throws PortalException {
@@ -181,6 +185,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false)));
 	}
 
+	@Ignore
 	@Test
 	public void testNotContentReviewerWithAssetViewPermissionHasPermission()
 		throws PortalException {
@@ -197,6 +202,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false)));
 	}
 
+	@Ignore
 	@Test
 	public void testNotContentReviewerWithNoAssetViewPermissionHasNoPermission()
 		throws PortalException {
@@ -215,6 +221,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					false, false, false)));
 	}
 
+	@Ignore
 	@Test
 	public void testNotContentReviewerWithoutAssetViewPermissionHasNoPermission()
 		throws PortalException {

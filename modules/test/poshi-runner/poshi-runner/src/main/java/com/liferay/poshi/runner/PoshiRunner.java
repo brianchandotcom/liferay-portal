@@ -161,7 +161,7 @@ public class PoshiRunner {
 
 		PoshiRunnerVariablesUtil.clear();
 
-		FileUtil.deleteOutputDir(PropsValues.OUTPUT_DIR_NAME);
+		FileUtil.deleteDir(PropsValues.OUTPUT_DIR_NAME);
 
 		try {
 			SummaryLogger.startRunning();

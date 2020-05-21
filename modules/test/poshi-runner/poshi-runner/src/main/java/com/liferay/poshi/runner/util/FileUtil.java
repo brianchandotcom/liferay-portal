@@ -80,17 +80,17 @@ public class FileUtil {
 		}
 	}
 
-	public static void deleteOutputDir(String outputDirName) {
-		File outputDir = new File(outputDirName);
+	public static void deleteDir(String dirPath) {
+		File dir = new File(dirPath);
 
 		try {
-			if (outputDir.exists()) {
-				File[] files = outputDir.listFiles();
+			if (dir.exists()) {
+				File[] files = dir.listFiles();
 
 				if (files.length == 0) {
-					outputDir.delete();
+					dir.delete();
 
-					System.out.println("### " + outputDirName + " is deleted");
+					System.out.println("### " + dirPath + " is deleted");
 				}
 				else {
 					for (File file : files) {
@@ -100,9 +100,9 @@ public class FileUtil {
 							"### " + file.getName() + " is deleted");
 					}
 
-					outputDir.delete();
+					dir.delete();
 
-					System.out.println("### " + outputDirName + " is deleted");
+					System.out.println("### " + dirPath + " is deleted");
 				}
 			}
 		}

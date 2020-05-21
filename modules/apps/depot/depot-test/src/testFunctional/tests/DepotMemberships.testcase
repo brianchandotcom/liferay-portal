@@ -40,7 +40,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignOrganizationAsMemberCP(orgName = "Organization Name");
+		Depot.assignOrganizationAsMember(orgName = "Organization Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -49,7 +49,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.viewMemberOrganizationCP(orgName = "Organization Name");
+		Depot.viewMemberOrganization(orgName = "Organization Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -60,7 +60,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Organizations");
 
-		Site.removeOrganizationCP(orgName = "Organization Name");
+		Depot.removeOrganization(orgName = "Organization Name");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -85,7 +85,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignUserAsMemberCP(
+		Depot.assignUserAsMember(
 			depotName = "Test Depot Name",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -98,7 +98,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.removeMemberCP(
+		Depot.removeMember(
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
@@ -125,7 +125,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
+		Depot.assignUserGroupAsMember(userGroupName = "User Group Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -134,7 +134,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.viewMemberUserGroupCP(userGroupName = "User Group Name");
+		Depot.viewMemberUserGroup(userGroupName = "User Group Name");
 
 		DepotNavigator.openDepotAdmin();
 
@@ -145,7 +145,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Site.removeUserGroupCP(
+		Depot.removeUserGroup(
 			bulkEditing = "true",
 			userGroupNameList = "User Group Name");
 
@@ -238,7 +238,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignUserAsMemberCP(
+		Depot.assignUserAsMember(
 			depotName = "Test Depot Name",
 			userFirstName = "userfn",
 			userLastName = "userln",

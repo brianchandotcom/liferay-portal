@@ -49,7 +49,7 @@ definition {
 				depotName = "Test Depot Name",
 				portlet = "Memberships");
 
-			Site.assignUserAsMemberCP(
+			Depot.assignUserAsMember(
 				depotName = "Test Depot Name",
 				userFirstName = "userfn${i}",
 				userLastName = "userln${i}",
@@ -96,7 +96,7 @@ definition {
 			portlet = "Memberships");
 
 		for (var i : list "1,2") {
-			Site.viewMemberCP(
+			Depot.viewMember(
 				userFirstName = "userfn${i}",
 				userLastName = "userln${i}",
 				userScreenName = "usersn${i}");
@@ -129,7 +129,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignUserAsMemberCP(
+		Depot.assignUserAsMember(
 			depotName = "Test Depot Name",
 			userFirstName = "userfn1",
 			userLastName = "userln1",
@@ -174,7 +174,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.viewMemberCP(
+		Depot.viewMember(
 			userFirstName = "userfn1",
 			userLastName = "userln1",
 			userScreenName = "usersn1");

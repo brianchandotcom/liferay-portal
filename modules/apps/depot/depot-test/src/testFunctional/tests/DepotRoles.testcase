@@ -60,17 +60,17 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignUserAsMemberCP(
+		Depot.assignUserAsMember(
 			depotName = "Test Depot Name",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		Site.assignSiteRoleCP(
+		Depot.assignAssetLibraryRole(
 			resourceName = "userfn userln",
 			roleTitle = "Asset Library Administrator");
 
-		Site.removeMemberCP(
+		Depot.removeMember(
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
@@ -329,7 +329,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignSiteRoleCP(
+		Depot.assignAssetLibraryRole(
 			resourceName = "userfn userln",
 			roleTitle = "AL Role Name");
 
@@ -447,7 +447,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignSiteRoleCP(
+		Depot.assignAssetLibraryRole(
 			resourceName = "userfn userln",
 			roleTitle = "AL Role Name");
 
@@ -585,7 +585,7 @@ definition {
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
-		Site.assignUserAsMemberCP(
+		Depot.assignUserAsMember(
 			depotName = "Test Depot Name",
 			userFirstName = "userfn",
 			userLastName = "userln",

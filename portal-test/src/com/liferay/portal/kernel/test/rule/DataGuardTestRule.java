@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -68,23 +70,25 @@ import org.junit.runner.Description;
  */
 public class DataGuardTestRule
 	extends AbstractTestRule
-		<DataGuardTestRule.DataBag, Map<String, List<BaseModel<?>>>> {
+		<DataGuardTestRule.DataBag, DataGuardTestRule.DataBag> {
 
 	public static final DataGuardTestRule INSTANCE = new DataGuardTestRule();
 
 	public static class DataBag {
 
 		private DataBag(
-			Map<String, List<BaseModel<?>>> dataMap,
+			Map<String, List<BaseModel<?>>> dataMap, List<Portlet> portlets,
 			Map<String, Map<Serializable, String>> records,
 			ServiceRegistration<SessionCustomizer> serviceRegistration) {
 
 			_dataMap = dataMap;
+			_portlets = portlets;
 			_records = records;
 			_serviceRegistration = serviceRegistration;
 		}
 
 		private final Map<String, List<BaseModel<?>>> _dataMap;
+		private final List<Portlet> _portlets;
 		private final Map<String, Map<Serializable, String>> _records;
 		private final ServiceRegistration<SessionCustomizer>
 			_serviceRegistration;
@@ -106,20 +110,22 @@ public class DataGuardTestRule
 
 		_recordsThreadLocal.remove();
 
-		_autoDeleteAndAssert(description, dataBag._dataMap, dataBag._records);
+		_autoDeleteAndAssert(
+			description, dataBag._dataMap, dataBag._portlets, dataBag._records);
 	}
 
 	@Override
 	protected void afterMethod(
-			Description description, Map<String, List<BaseModel<?>>> dataMap,
-			Object target)
+			Description description, DataBag dataBag, Object target)
 		throws Throwable {
 
-		if (dataMap == null) {
+		if (dataBag == null) {
 			return;
 		}
 
-		_autoDeleteAndAssert(description, dataMap, _recordsThreadLocal.get());
+		_autoDeleteAndAssert(
+			description, dataBag._dataMap, dataBag._portlets,
+			_recordsThreadLocal.get());
 	}
 
 	@Override
@@ -144,13 +150,13 @@ public class DataGuardTestRule
 				SessionCustomizer.class,
 				new RecordingSessionCustomizer(records));
 
-		return new DataBag(_captureDataMap(), records, serviceRegistration);
+		return new DataBag(
+			_captureDataMap(), PortletLocalServiceUtil.getPortlets(), records,
+			serviceRegistration);
 	}
 
 	@Override
-	protected Map<String, List<BaseModel<?>>> beforeMethod(
-		Description description, Object target) {
-
+	protected DataBag beforeMethod(Description description, Object target) {
 		Class<?> testClass = description.getTestClass();
 
 		DataGuard dataGuard = testClass.getAnnotation(DataGuard.class);
@@ -161,7 +167,9 @@ public class DataGuardTestRule
 			return null;
 		}
 
-		return _captureDataMap();
+		return new DataBag(
+			_captureDataMap(), PortletLocalServiceUtil.getPortlets(), null,
+			null);
 	}
 
 	private static Map<String, List<BaseModel<?>>> _captureDataMap() {
@@ -358,8 +366,15 @@ public class DataGuardTestRule
 	private void _autoDeleteAndAssert(
 			Description description,
 			Map<String, List<BaseModel<?>>> previousDataMap,
+			List<Portlet> previousPortlets,
 			Map<String, Map<Serializable, String>> records)
 		throws Throwable {
+
+		for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
+			if (!previousPortlets.remove(portlet)) {
+				PortletLocalServiceUtil.destroyPortlet(portlet);
+			}
+		}
 
 		_autoDeleteLeftovers(previousDataMap);
 

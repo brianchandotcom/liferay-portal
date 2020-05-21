@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.task.web.internal.permission;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -71,7 +70,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@BeforeClass
-	public static void setUpClass() throws PortalException {
+	public static void setUpClass() {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		_setUpGroupLocalServiceUtil();
@@ -116,9 +115,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@Ignore
 	@Test
-	public void testContentReviewerRoleWithAssetViewPermissionHasPermission()
-		throws PortalException {
-
+	public void testContentReviewerRoleWithAssetViewPermissionHasPermission() {
 		mockAssetRendererHasViewPermission(true);
 
 		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
@@ -172,9 +169,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@Ignore
 	@Test
-	public void testNotContentReviewerWithAssetViewPermissionHasNoPermission()
-		throws PortalException {
-
+	public void testNotContentReviewerWithAssetViewPermissionHasNoPermission() {
 		mockAssetRendererHasViewPermission(true);
 
 		Assert.assertFalse(
@@ -187,8 +182,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@Ignore
 	@Test
-	public void testNotContentReviewerWithAssetViewPermissionHasPermission()
-		throws PortalException {
+	public void testNotContentReviewerWithAssetViewPermissionHasPermission() {
 
 		// Checks permission on completed workflow task
 
@@ -204,9 +198,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@Ignore
 	@Test
-	public void testNotContentReviewerWithNoAssetViewPermissionHasNoPermission()
-		throws PortalException {
-
+	public void testNotContentReviewerWithNoAssetViewPermissionHasNoPermission() {
 		long[] permissionCheckerRoleIds = randomPermissionCheckerRoleIds();
 
 		mockAssetRendererHasViewPermission(false);
@@ -223,8 +215,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 
 	@Ignore
 	@Test
-	public void testNotContentReviewerWithoutAssetViewPermissionHasNoPermission()
-		throws PortalException {
+	public void testNotContentReviewerWithoutAssetViewPermissionHasNoPermission() {
 
 		// Checks permission on completed workflow task
 
@@ -411,13 +402,13 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		return new long[] {RandomTestUtil.randomLong()};
 	}
 
-	private static void _setUpGroupLocalServiceUtil() throws PortalException {
+	private static void _setUpGroupLocalServiceUtil() {
 		ReflectionTestUtil.setFieldValue(
 			GroupLocalServiceUtil.class, "_service",
 			new GroupLocalServiceWrapper(null) {
 
 				@Override
-				public Group getGroup(long groupId) throws PortalException {
+				public Group getGroup(long groupId) {
 					return ProxyFactory.newDummyInstance(Group.class);
 				}
 

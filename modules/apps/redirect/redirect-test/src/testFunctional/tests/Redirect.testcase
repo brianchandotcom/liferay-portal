@@ -198,100 +198,6 @@ definition {
 			sourceURLVariation = "Duplicate");
 	}
 
-	@description = "This ensures that a redirection chain can be avoided."
-	@priority = "5"
-	test AvoidRedirectChain {
-		var portalURL = PropsUtil.get("portal.url");
-
-		for (var i : list "1,2,3") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page${i}");
-		}
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			siteName = "test-site-name",
-			sourceURL = "test-page1");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-page1",
-			redirectChain = "true",
-			siteName = "test-site-name",
-			sourceURL = "test-page3",
-			updateRedirect = "true");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/test-page3");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/test-page1");
-
-		AssertElementNotPresent(
-			key_destinationURL = "${portalURL}/web/test-site-name/test-page1",
-			locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page3");
-
-		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page2");
-	}
-
-	@description = "This ensures that a redirection chain will be created."
-	@priority = "5"
-	test CreateRedirectChain {
-		var portalURL = PropsUtil.get("portal.url");
-
-		for (var i : list "1,2,3") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page${i}");
-		}
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			siteName = "test-site-name",
-			sourceURL = "test-page1");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-page1",
-			noUpdateRedirect = "true",
-			noUpdateReferences = "true",
-			redirectChain = "true",
-			siteName = "test-site-name",
-			sourceURL = "test-page3",
-			updateRedirect = "true");
-
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-page1",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/test-page3");
-
-		Redirect.viewEntry(
-			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			redirectType = "Temporary",
-			sourceURL = "${portalURL}/web/test-site-name/test-page1");
-
-		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page3");
-
-		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page2");
-	}
-
 	@description = "This ensures that an entry can be added without update references."
 	@priority = "5"
 	test AddEntryWithoutReferences {
@@ -632,6 +538,54 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
 	}
 
+	@description = "This ensures that a redirection chain can be avoided."
+	@priority = "5"
+	test AvoidRedirectChain {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var i : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page${i}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			siteName = "test-site-name",
+			sourceURL = "test-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page1",
+			redirectChain = "true",
+			siteName = "test-site-name",
+			sourceURL = "test-page3",
+			updateRedirect = "true");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page3");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page1");
+
+		AssertElementNotPresent(
+			key_destinationURL = "${portalURL}/web/test-site-name/test-page1",
+			locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page3");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page2");
+	}
+
 	@description = "This ensures that the destination URL passes validation before it can be used."
 	@priority = "5"
 	test CheckDestinationURL {
@@ -656,6 +610,52 @@ definition {
 			portalName = "${siteName}",
 			siteName = "test-site-name",
 			sourceURL = "test-source-page");
+	}
+
+	@description = "This ensures that a redirection chain will be created."
+	@priority = "5"
+	test CreateRedirectChain {
+		var portalURL = PropsUtil.get("portal.url");
+
+		for (var i : list "1,2,3") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page${i}");
+		}
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			siteName = "test-site-name",
+			sourceURL = "test-page1");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page1",
+			noUpdateRedirect = "true",
+			noUpdateReferences = "true",
+			redirectChain = "true",
+			siteName = "test-site-name",
+			sourceURL = "test-page3",
+			updateRedirect = "true");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page1",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page3");
+
+		Redirect.viewEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-page2",
+			redirectType = "Temporary",
+			sourceURL = "${portalURL}/web/test-site-name/test-page1");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page3");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page2");
 	}
 
 	@description = "This ensures that all redirect entries can be deleted simultaneously."

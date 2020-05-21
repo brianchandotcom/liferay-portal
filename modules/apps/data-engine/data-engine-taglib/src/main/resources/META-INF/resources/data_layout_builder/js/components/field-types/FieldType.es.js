@@ -47,6 +47,7 @@ export default (props) => {
 		label,
 		name,
 		onClick = () => {},
+		onClickIcon = () => {},
 		onDelete,
 		onDoubleClick = () => {},
 	} = props;
@@ -120,6 +121,7 @@ export default (props) => {
 				<ClaySticker
 					className="data-layout-builder-field-sticker"
 					displayType="light"
+					onClick={onClickIcon}
 					size="md"
 				>
 					<ClayIcon symbol={fieldIcon} />

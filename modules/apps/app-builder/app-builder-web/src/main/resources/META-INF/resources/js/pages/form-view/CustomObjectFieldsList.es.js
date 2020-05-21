@@ -13,7 +13,6 @@
  */
 
 import {
-	DataDefinitionUtils,
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
 	DragTypes,
@@ -37,10 +36,16 @@ const getFieldTypes = ({
 }) => {
 	const dataDefinitionFields = [];
 	const {dataLayoutPages} = dataLayout;
+	const {dataDefinitionFields: fields} = dataDefinition;
 
-	DataDefinitionUtils.forEachDataDefinitionField(
-		dataDefinition,
-		({fieldType, label, name}) => {
+		const setDefinitionField = ({
+			customProperties: {ddmStructureId},
+			fieldType,
+			label,
+			name,
+			nestedDataDefinitionFields = [],
+		}, nested) => {
+
 			if (fieldType === 'section') {
 				return;
 			}
@@ -49,17 +54,31 @@ const getFieldTypes = ({
 				return name === fieldType;
 			});
 
-			if (label[editingLanguageId] && label[editingLanguageId] !== '') {
+			if (label[editingLanguageId]) {
 				label = label[editingLanguageId];
 			}
 			else {
 				label = label[Liferay.ThemeDisplay.getDefaultLanguageId()];
 			}
 
-			dataDefinitionFields.push({
+			const isFieldSet = ddmStructureId && fieldType === 'fieldset';
+
+			const FieldTypeLabel = isFieldSet
+				? Liferay.Language.get('fieldset')
+				: fieldTypeSettings.label;
+
+			const dataDefintionField = {
 				active: name === focusedCustomObjectField.name,
-				className: 'custom-object-field',
-				description: fieldTypeSettings.label,
+				className: nested
+					? 'custom-object-field-children'
+					: 'custom-object-field',
+				description: `${FieldTypeLabel} ${
+					nestedDataDefinitionFields.length
+						? `- ${
+								nestedDataDefinitionFields.length
+						  } ${Liferay.Language.get('fields')}`
+						: ''
+				}`,
 				disabled: DataLayoutVisitor.containsField(
 					dataLayoutPages,
 					name
@@ -67,11 +86,23 @@ const getFieldTypes = ({
 				dragAlignment: 'right',
 				dragType: DragTypes.DRAG_DATA_DEFINITION_FIELD,
 				icon: fieldTypeSettings.icon,
+				isFieldSet,
 				label,
 				name,
-			});
-		}
-	);
+				nestedDataDefinitionFields: nestedDataDefinitionFields.map(
+					(nestedField) => setDefinitionField(nestedField, true)
+				),
+			};
+
+			if (nested) {
+				return dataDefintionField;
+			}
+			dataDefinitionFields.push(dataDefintionField);
+		};
+
+	fields.forEach((fieldType) => {
+		setDefinitionField(fieldType);
+	});
 
 	return dataDefinitionFields;
 };

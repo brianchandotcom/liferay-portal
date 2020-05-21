@@ -28,6 +28,7 @@
 
 		.sidebar-body {
 			height: calc(100vh - 224px);
+			overflow: hidden;
 
 			.component-tbar {
 				height: auto;
@@ -47,5 +48,58 @@
 
 	.lfr-ddm-form-container .ddm-field-options-container .ddm-options-target {
 		margin: 2px 0;
+	}
+}
+
+.field-type-list {
+	.field-type-primary {
+		.field-type-header:hover {
+			background-color: rgba($fieldTypePrimary, 0.05) !important;
+		}
+
+		.field-type-header .data-layout-builder-field-sticker {
+			background-color: rgba($fieldTypePrimary, 0.1) !important;
+
+			.sticker-overlay {
+				svg {
+					color: $fieldTypePrimary !important;
+				}
+			}
+		}
+
+		.field-type-item::before {
+			border-left: 2px solid rgba($fieldTypePrimary, 0.2);
+			content: '';
+			height: calc(100% - 15px);
+			position: absolute;
+			width: 0;
+		}
+	}
+
+	.field-type-success {
+		.field-type-header:hover {
+			background-color: rgba($fieldTypeSuccess, 0.1) !important;
+		}
+
+		.field-type-header .data-layout-builder-field-sticker {
+			background-color: rgba($fieldTypeSuccess, 0.2) !important;
+			.sticker-overlay {
+				svg {
+					color: $fieldTypeSuccess !important;
+				}
+			}
+		}
+
+		.field-type-item::before {
+			border-left: 2px solid rgba($fieldTypeSuccess, 0.2);
+			content: '';
+			height: calc(100% - 15px);
+			position: absolute;
+			width: 0;
+		}
+	}
+
+	.panel-body {
+		padding-right: 0;
 	}
 }

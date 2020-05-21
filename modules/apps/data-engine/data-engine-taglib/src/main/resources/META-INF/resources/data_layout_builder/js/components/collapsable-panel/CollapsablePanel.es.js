@@ -21,7 +21,7 @@ import React from 'react';
 import {useHeightTransition} from '../../hooks/index.es';
 import DropDown from '../drop-down/DropDown.es';
 
-const CollapsablePanel = ({actions, children, title}) => {
+const CollapsablePanel = ({Header, actions, children, className, title}) => {
 	const panelRef = React.useRef(null);
 	const [expanded, setExpanded] = React.useState(false);
 
@@ -41,51 +41,60 @@ const CollapsablePanel = ({actions, children, title}) => {
 			className={classNames(
 				'collapsable-panel',
 				'panel',
-				'panel-unstyled'
+				'panel-unstyled',
+				className
 			)}
 			role="tablist"
 		>
 			<>
-				<ClayButton
-					aria-expanded={expanded}
-					className={classNames(
-						'collapse-icon',
-						'collapse-icon-middle',
-						'panel-header',
-						'panel-header-link',
-						{
-							collapsed: showIconCollapsed,
-						}
-					)}
-					displayType="unstyled"
-					onClick={startTransition}
-					role="tab"
-				>
+				{Header ? (
+					<Header expanded={expanded} setExpanded={setExpanded} />
+				) : (
 					<>
-						<span className="panel-title">{title}</span>
+						<ClayButton
+							aria-expanded={expanded}
+							className={classNames(
+								'collapse-icon',
+								'collapse-icon-middle',
+								'panel-header',
+								'panel-header-link',
+								{
+									collapsed: showIconCollapsed,
+								}
+							)}
+							displayType="unstyled"
+							onClick={startTransition}
+							role="tab"
+						>
+							<>
+								<span className="panel-title">{title}</span>
 
-						<span
-							className={classNames(
-								'actions',
-								'collapse-icon-closed'
-							)}
-						>
-							<ClayIcon symbol="angle-down" />
-						</span>
-						<span
-							className={classNames(
-								'actions',
-								'collapse-icon-open'
-							)}
-						>
-							<ClayIcon symbol="angle-up" />
-						</span>
+								<span
+									className={classNames(
+										'actions',
+										'collapse-icon-closed'
+									)}
+								>
+									<ClayIcon symbol="angle-down" />
+								</span>
+								<span
+									className={classNames(
+										'actions',
+										'collapse-icon-open'
+									)}
+								>
+									<ClayIcon symbol="angle-up" />
+								</span>
+							</>
+						</ClayButton>
+
+						{actions && (
+							<div className="collapse-icon-options">
+								<DropDown actions={actions} />
+							</div>
+						)}
 					</>
-				</ClayButton>
-
-				<div className="collapse-icon-options">
-					<DropDown actions={actions} />
-				</div>
+				)}
 
 				<div
 					className={classNames('panel-collapse', {

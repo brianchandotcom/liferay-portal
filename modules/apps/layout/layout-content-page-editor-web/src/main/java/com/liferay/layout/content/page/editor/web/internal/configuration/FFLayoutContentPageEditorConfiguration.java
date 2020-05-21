@@ -29,7 +29,7 @@ public interface FFLayoutContentPageEditorConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean fragmentPanelEnabled();
-	
+
 	@Meta.AD(deflt = "false", required = false)
 	public boolean responsiveEnabled();
 

@@ -3,10 +3,10 @@
 @import '../../../app/components/variables';
 
 .page-editor__fragments-widgets__fragment-card {
+	align-items: center;
+	display: flex;
 	height: 32px;
 	margin-bottom: 4px;
-	display: flex;
-	align-items: center;
 
 	&:hover {
 		background-color: $gray-100;

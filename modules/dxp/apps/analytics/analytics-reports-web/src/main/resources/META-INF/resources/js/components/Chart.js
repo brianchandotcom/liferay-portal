@@ -334,6 +334,14 @@ export default function Chart({
 							height={CHART_SIZES.height}
 							width={CHART_SIZES.width}
 						>
+							<Legend
+								formatter={legendFormatter}
+								iconSize={0}
+								layout="vertical"
+								verticalAlign="top"
+								wrapperStyle={{left: 0, paddingBottom: '1rem'}}
+							/>
+
 							<CartesianGrid
 								horizontalPoints={
 									validAnalyticsConnection &&
@@ -434,17 +442,6 @@ export default function Chart({
 								}}
 								labelFormatter={dateFormatters.formatLongDate}
 								separator={': '}
-							/>
-
-							<Legend
-								formatter={legendFormatter}
-								iconSize={0}
-								layout="vertical"
-								wrapperStyle={{
-									left: 0,
-									paddingBottom: 0,
-									paddingTop: '8px',
-								}}
 							/>
 
 							{keyList.map((keyName) => {

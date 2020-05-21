@@ -86,16 +86,11 @@ public class FileUtil {
 		if (dir.exists()) {
 			File[] files = dir.listFiles();
 
-			if (files.length == 0) {
-				dir.delete();
+			for (File file : files) {
+				file.delete();
 			}
-			else {
-				for (File file : files) {
-					file.delete();
-				}
 
-				dir.delete();
-			}
+			dir.delete();
 		}
 	}
 

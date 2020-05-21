@@ -65,7 +65,7 @@ public class FontAwesomeTopHeadDynamicInclude extends BaseDynamicInclude {
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
 
-		sb.append("<link charset=\"utf-8\" data-senna-track=\"permanent\" ");
+		sb.append("<link data-senna-track=\"permanent\" ");
 		sb.append("href=\"");
 		sb.append(
 			absolutePortalURLBuilder.forModule(

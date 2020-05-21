@@ -177,7 +177,7 @@ public class RTLServlet extends HttpServlet {
 
 		httpServletResponse.setContentLength(urlConnection.getContentLength());
 
-		httpServletResponse.setContentType(ContentTypes.TEXT_CSS);
+		httpServletResponse.setContentType(ContentTypes.TEXT_CSS_UTF8);
 		httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
 		StreamUtil.transfer(

@@ -21,10 +21,6 @@ definition {
 
 			FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
 		}
-
-		task ("Navigate to Build > Pages > Display Page Templates") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-		}
 	}
 
 	tearDown {
@@ -54,7 +50,15 @@ definition {
 	@priority = "5"
 	test EditWhenViewingInDisplayPageAsUser {
 		task ("Add a display page with fragments mapped to Basic Web Content") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -88,15 +92,10 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
-
-			PortletEntry.publish();
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
 		}
 
 		task ("Add a user with permission to edit web content articles and display pages") {
@@ -112,11 +111,9 @@ definition {
 				userEmailAddress = "userea1@liferay.com",
 				userScreenName = "usersn1");
 
-			User.openUsersAdmin();
-
-			User.assignRegularRoleCP(
+			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
-				userScreenName = "usersn1");
+				userEmailAddress = "userea1@liferay.com");
 		}
 
 		task ("Add a second user without any permissions") {
@@ -242,9 +239,14 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 
@@ -267,7 +269,15 @@ definition {
 	@priority = "5"
 	test MapWebContentAuthor {
 		task ("Add a display page with author name and profile fields mapped") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -377,9 +387,14 @@ definition {
 
 		PortletEntry.publish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -457,9 +472,14 @@ definition {
 
 		PortletEntry.publish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 
@@ -483,7 +503,15 @@ definition {
 	@priority = "5"
 	test MapWebContentLastEditor {
 		task ("Add a display page with last editor name and profile fields mapped") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -531,11 +559,9 @@ definition {
 				userEmailAddress = "userea@liferay.com",
 				userScreenName = "usersn");
 
-			User.openUsersAdmin();
-
-			User.assignRegularRoleCP(
+			JSONRole.assignRoleToUser(
 				roleTitle = "Administrator",
-				userScreenName = "usersn");
+				userEmailAddress = "userea@liferay.com");
 		}
 
 		task ("Add a profile image for the second user") {
@@ -549,13 +575,14 @@ definition {
 		}
 
 		task ("As the super admin user, add a web content article that uses the display page") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
@@ -621,7 +648,15 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a display page") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a fragment with multiple editable fields in it and map it to Basic Web Content") {
@@ -663,15 +698,15 @@ definition {
 		}
 
 		task ("Add a web content article with tags that uses the display page") {
+			var serviceContext = '''{"assetTagNames": ["tag1","tag2","tag3"]}''';
+
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				serviceContext = "${serviceContext}",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContent.addArticleCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
-
-			WebContent.addWithTagCP(tagNameList = "tag1,tag2,tag3");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -682,21 +717,22 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("Add a page to the site") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		task ("Add an Asset Publisher to page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name");
 
-			SitePages.addPublicPage(pageName = "Site Page Name");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Site Page Name",
+				widgetName = "Asset Publisher");
 		}
 
-		task ("Add an Asset Publisher widget to the page") {
+		task ("Assert the display page displays correctly along with its tags") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page Name",
 				siteName = "Test Site Name");
 
-			Portlet.addPG(portletName = "Asset Publisher");
-		}
-
-		task ("Assert the display page displays correctly along with its tags") {
 			AssertTextEquals(
 				key_assetTitle = "Webcontent Title",
 				locator1 = "AP#ASSET_ABSTRACT_TITLE",
@@ -722,10 +758,7 @@ definition {
 	test ViewDisplayPageWithNewStructureMapInFragments {
 		property testray.component.names = "Training";
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
 
@@ -740,10 +773,7 @@ definition {
 
 		WebContentStructures.saveCP(structureName = "WC Structure Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Web Content");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoTemplates();
 
@@ -812,15 +842,18 @@ definition {
 
 		PortletEntry.publish();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Name");
 
-		SitePages.addPublicPage(pageName = "Site Page Name");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Site Page Name",
+			widgetName = "Asset Publisher");
 
 		Navigator.gotoSitePage(
 			pageName = "Site Page Name",
 			siteName = "Test Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View in Context");
 
@@ -836,7 +869,15 @@ definition {
 		property test.name.skip.portal.instance = "DisplayPagesUseCase#ViewlanguageSelectorRedirect";
 
 		task ("Add a display page with a Language Selector widget and with a fragment mapped to Basic Web Content") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addWidget(portletName = "Language Selector");
 
@@ -872,15 +913,10 @@ definition {
 		}
 
 		task ("Add a web content article") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
-
-			PortletEntry.publish();
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
 		}
 
 		task ("View the web content article through its friendly URL") {

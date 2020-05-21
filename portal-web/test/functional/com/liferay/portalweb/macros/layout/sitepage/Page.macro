@@ -234,6 +234,11 @@ definition {
 
 		Click(locator1 = "SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON");
 
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
 		SelectFrame(locator1 = "IFrame#DIALOG");
 
 		var key_cardText = "${themeName}";

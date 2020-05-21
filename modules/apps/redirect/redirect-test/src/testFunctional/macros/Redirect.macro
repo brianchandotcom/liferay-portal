@@ -55,8 +55,8 @@ definition {
 
 		else if ("${destinationURLVariation}" == "Space") {
 			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR",
-				value1 = "Error:The destination URL must be specified.");
+				locator1 = "TextInput#ALERT",
+				value1 = "This URL is not supported");
 		}
 
 		else if ("${redirectChain}" == "true") {

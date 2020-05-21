@@ -92,7 +92,7 @@ public class PortalPullRequestTesterTopLevelBuild extends PortalTopLevelBuild {
 
 	@Override
 	public boolean isUniqueFailure() {
-		for (Build downstreamBuild : getDownstreamBuildFailures()) {
+		for (Build downstreamBuild : getFailedDownstreamBuilds()) {
 			if (downstreamBuild.isUniqueFailure()) {
 				return true;
 			}

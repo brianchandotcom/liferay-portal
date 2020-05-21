@@ -83,7 +83,7 @@ public class BatchBuild extends BaseBuild {
 		}
 
 		Map<Build, Element> downstreamBuildFailureMessages =
-			getDownstreamBuildMessages(getDownstreamBuildFailures());
+			getDownstreamBuildMessages(getFailedDownstreamBuilds());
 
 		List<Element> failureElements = new ArrayList<>();
 		List<Element> upstreamJobFailureElements = new ArrayList<>();

@@ -1238,7 +1238,7 @@ public abstract class BaseBuild implements Build {
 	public List<TestResult> getUniqueFailureTestResults() {
 		List<TestResult> uniqueFailureTestResults = new ArrayList<>();
 
-		for (Build downstreamBuild : getDownstreamBuildFailures()) {
+		for (Build downstreamBuild : getFailedDownstreamBuilds()) {
 			uniqueFailureTestResults.addAll(
 				downstreamBuild.getUniqueFailureTestResults());
 		}
@@ -1250,7 +1250,7 @@ public abstract class BaseBuild implements Build {
 	public List<TestResult> getUpstreamJobFailureTestResults() {
 		List<TestResult> upstreamFailureTestResults = new ArrayList<>();
 
-		for (Build downstreamBuild : getDownstreamBuildFailures()) {
+		for (Build downstreamBuild : getFailedDownstreamBuilds()) {
 			upstreamFailureTestResults.addAll(
 				downstreamBuild.getUpstreamJobFailureTestResults());
 		}
@@ -2492,16 +2492,6 @@ public abstract class BaseBuild implements Build {
 		return count;
 	}
 
-	protected List<Build> getDownstreamBuildFailures() {
-		List<Build> downstreamBuildFailures = new ArrayList<>();
-
-		downstreamBuildFailures.addAll(getDownstreamBuilds("ABORTED", null));
-		downstreamBuildFailures.addAll(getDownstreamBuilds("FAILURE", null));
-		downstreamBuildFailures.addAll(getDownstreamBuilds("UNSTABLE", null));
-
-		return downstreamBuildFailures;
-	}
-
 	protected Map<Build, Element> getDownstreamBuildMessages(
 		List<Build> downstreamBuilds) {
 
@@ -2535,6 +2525,16 @@ public abstract class BaseBuild implements Build {
 
 	protected ExecutorService getExecutorService() {
 		return null;
+	}
+
+	protected List<Build> getFailedDownstreamBuilds() {
+		List<Build> failedDownstreamBuilds = new ArrayList<>();
+
+		failedDownstreamBuilds.addAll(getDownstreamBuilds("ABORTED", null));
+		failedDownstreamBuilds.addAll(getDownstreamBuilds("FAILURE", null));
+		failedDownstreamBuilds.addAll(getDownstreamBuilds("UNSTABLE", null));
+
+		return failedDownstreamBuilds;
 	}
 
 	protected Element getFailureMessageElement() {

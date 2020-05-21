@@ -591,7 +591,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 	protected Element[] getBuildFailureElements() {
 		Map<Build, Element> downstreamBuildFailureMessages =
-			getDownstreamBuildMessages(getDownstreamBuildFailures());
+			getDownstreamBuildMessages(getFailedDownstreamBuilds());
 
 		List<Element> allCurrentBuildFailureElements = new ArrayList<>();
 		List<Element> upstreamBuildFailureElements = new ArrayList<>();

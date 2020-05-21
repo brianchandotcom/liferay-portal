@@ -23,6 +23,7 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -421,6 +423,21 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		return _editableElementParsers.get(type);
 	}
 
+	private boolean _hasNestedWidget(Element element) {
+		List<String> portletAliases = _portletRegistry.getPortletAliases();
+
+		for (String portletAlias : portletAliases) {
+			Elements tagElements = element.select(
+				"> lfr-widget-" + portletAlias);
+
+			if (tagElements.size() > 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _validateAttribute(Element element, String attributeName)
 		throws FragmentEntryContentException {
 
@@ -523,16 +540,21 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		Elements attributeElements = element.getElementsByAttribute(
 			"[data-lfr-editable-id]");
 
+		Elements dropZoneElements = element.select("> lfr-drop-zone");
+
 		Elements tagElements = element.select("> lfr-editable");
 
-		if ((attributeElements.size() > 0) || (tagElements.size() > 0)) {
+		if ((attributeElements.size() > 0) || (dropZoneElements.size() > 0) ||
+			_hasNestedWidget(element) || (tagElements.size() > 0)) {
+
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", getClass());
 
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle,
-					"editable-fields-cannot-include-nested-editables-in-it"));
+					"editable-fields-cannot-include-nested-editables-drop-" +
+						"zones-or-widgets-in-it"));
 		}
 	}
 
@@ -564,5 +586,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
 
 }

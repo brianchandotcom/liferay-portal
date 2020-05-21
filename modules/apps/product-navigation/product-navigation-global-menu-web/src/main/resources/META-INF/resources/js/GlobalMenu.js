@@ -209,7 +209,7 @@ const GlobalMenu = ({panelAppsURL}) => {
 			/>
 
 			<ul
-				className={classNames('dropdown-menu', {
+				className={classNames('c-mt-0 dropdown-menu', {
 					show: panelVisible,
 				})}
 			>

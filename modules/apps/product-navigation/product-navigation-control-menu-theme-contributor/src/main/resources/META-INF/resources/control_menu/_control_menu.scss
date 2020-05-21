@@ -32,8 +32,8 @@ a.control-menu-icon,
 		}
 	}
 
-	a,
-	button:not(.dropdown-item) {
+	a:not(.dropdown-item),
+	button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
 		color: $control-menu-level-1-link-color;
 
 		&:focus,

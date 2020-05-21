@@ -31,8 +31,6 @@ import com.liferay.dynamic.data.mapping.kernel.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.kernel.StructureNameException;
-import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -49,7 +47,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -183,26 +180,17 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 		long fileEntryTypeId = ParamUtil.getLong(
 			actionRequest, "fileEntryTypeId");
 
+		DLFileEntryType fileEntryType =
+			_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+
 		DataDefinitionResource dataDefinitionResource =
 			DataDefinitionResource.builder(
 			).user(
 				themeDisplay.getUser()
 			).build();
 
-		List<DDMStructureLink> ddmStructureLinks =
-			_ddmStructureLinkLocalService.getStructureLinks(
-				_portal.getClassNameId(DLFileEntryType.class), fileEntryTypeId);
-
-		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			_ddmStructureLinkLocalService.deleteStructureLink(
-				_portal.getClassNameId(DLFileEntryType.class), fileEntryTypeId,
-				ddmStructureLink.getStructureId());
-
-			dataDefinitionResource.deleteDataDefinition(
-				ddmStructureLink.getStructureId());
-		}
-
-		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
+		dataDefinitionResource.deleteDataDefinition(
+			fileEntryType.getDataDefinitionId());
 	}
 
 	private void _subscribeFileEntryType(ActionRequest actionRequest)
@@ -265,9 +253,6 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 		_dlFileEntryTypeService.updateFileEntryType(
 			fileEntryTypeId, nameMap, descriptionMap);
 	}
-
-	@Reference
-	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

@@ -350,6 +350,33 @@ public class AssetCategoriesDisplayContext {
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 	}
 
+	public String getCategorySelectorURL() {
+		try {
+			PortletURL portletURL = PortletProviderUtil.getPortletURL(
+				_httpServletRequest, AssetCategory.class.getName(),
+				PortletProvider.Action.BROWSE);
+
+			if (portletURL == null) {
+				return null;
+			}
+
+			portletURL.setParameter(
+				"eventName", _renderResponse.getNamespace() + "selectCategory");
+			portletURL.setParameter(
+				"selectedCategories", "{selectedCategories}");
+			portletURL.setParameter("singleSelect", "{singleSelect}");
+			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
+
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+			return portletURL.toString();
+		}
+		catch (Exception exception) {
+		}
+
+		return null;
+	}
+
 	public String getDisplayStyle() {
 		if (isFlattenedNavigationAllowed()) {
 			_displayStyle = "list";

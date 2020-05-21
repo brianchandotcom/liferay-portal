@@ -44,7 +44,6 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 >
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
-	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
 
 	<liferay-frontend:edit-form-body>
 		<liferay-ui:error exception="<%= AssetCategoryNameException.class %>" message="please-enter-a-valid-name" />
@@ -66,12 +65,76 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 				<aui:input name="description" placeholder="description" />
 
 				<c:if test="<%= assetCategoriesDisplayContext.isFlattenedNavigationAllowed() %>">
+
+					<%
+					AssetCategory parentCategory = AssetCategoryLocalServiceUtil.fetchCategory(parentCategoryId);
+					%>
+
 					<aui:field-wrapper label="parent-category">
-						<liferay-asset:asset-categories-selector
-							categoryIds="<%= String.valueOf(parentCategoryId) %>"
-							hiddenInput="parentCategoryId"
-							singleSelect="<%= true %>"
-						/>
+						<div>
+							<div id="<portlet:namespace />parentCategoryContainer">
+								<div class="field-content">
+									<div class="form-group" id="<%= "namespace_assetCategoriesSelector_" + vocabularyId %>">
+										<div class="input-group">
+											<div class="input-group-item">
+												<div class="form-control form-control-tag-group input-group">
+													<div class="input-group-item">
+														<c:if test="<%= parentCategory != null %>">
+															<clay:label
+																closeable="<%= true %>"
+																label="<%= parentCategory.getTitle(locale) %>"
+															/>
+
+															<input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
+														</c:if>
+
+														<input class="form-control-inset" type="text" value="" />
+													</div>
+												</div>
+											</div>
+
+											<div class="input-group-item input-group-item-shrink">
+												<button class="btn btn-secondary" type="button">
+													<liferay-ui:message key="select" />
+												</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<%
+							List<Map<String, Object>> selectedCategories = new ArrayList<>();
+
+							if (parentCategory != null) {
+								selectedCategories.add(
+									HashMapBuilder.<String, Object>put(
+										"label", parentCategory.getTitle(locale)
+									).put(
+										"value", parentCategory.getCategoryId()
+									).build());
+							}
+
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"categoryIds", Collections.singletonList(parentCategoryId)
+							).put(
+								"groupIds", Collections.singletonList(scopeGroupId)
+							).put(
+								"namespace", renderResponse.getNamespace()
+							).put(
+								"portletURL", assetCategoriesDisplayContext.getCategorySelectorURL()
+							).put(
+								"selectedCategories", selectedCategories
+							).put(
+								"vocabularyIds", Collections.singletonList(vocabularyId)
+							).build();
+							%>
+
+							<react:component
+								data="<%= data %>"
+								module="js/AssetCategoriesSelectorTag.es"
+							/>
+						</div>
 					</aui:field-wrapper>
 				</c:if>
 			</liferay-frontend:fieldset>

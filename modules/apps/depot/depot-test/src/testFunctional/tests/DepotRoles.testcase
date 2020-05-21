@@ -606,7 +606,7 @@ definition {
 		User.logoutPG();
 
 		User.loginUserPG(
-			password = "password",
+			password = "test",
 			userEmailAddress = "user1@liferay.com");
 
 		DepotNavigator.openDepotAdmin();

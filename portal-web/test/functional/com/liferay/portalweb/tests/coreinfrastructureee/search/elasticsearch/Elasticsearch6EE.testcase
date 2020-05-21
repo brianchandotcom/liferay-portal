@@ -877,6 +877,8 @@ definition {
 	}
 
 	test ViewSimilarResultsOnContentPages {
+		property osgi.app.includes = "portal-search-similar-results";
+
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",

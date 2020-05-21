@@ -47,7 +47,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -142,7 +141,6 @@ public class ProcessMetricResourceTest
 			});
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetProcessMetricsPageWithSortString() throws Exception {
@@ -158,7 +156,7 @@ public class ProcessMetricResourceTest
 							LocaleUtil.US.toLanguageTag(), process1.getTitle()
 						).build());
 
-					Process process2 = processMetric1.getProcess();
+					Process process2 = processMetric2.getProcess();
 
 					process2.setTitle("Bbb" + RandomTestUtil.randomString());
 					process2.setTitle_i18n(

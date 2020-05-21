@@ -80,6 +80,37 @@ public class FileUtil {
 		}
 	}
 
+	public static void deleteOutputDir(String outputDirName) {
+		File outputDir = new File(outputDirName);
+
+		try {
+			if (outputDir.exists()) {
+				File[] files = outputDir.listFiles();
+
+				if (files.length == 0) {
+					outputDir.delete();
+
+					System.out.println("### " + outputDirName + " is deleted");
+				}
+				else {
+					for (File file : files) {
+						file.delete();
+
+						System.out.println(
+							"### " + file.getName() + " is deleted");
+					}
+
+					outputDir.delete();
+
+					System.out.println("### " + outputDirName + " is deleted");
+				}
+			}
+		}
+		catch (SecurityException securityException) {
+			securityException.printStackTrace();
+		}
+	}
+
 	public static boolean exists(File file) {
 		return file.exists();
 	}

@@ -156,10 +156,6 @@ export default function getAlloyEditorProcessor(
 						nativeEditor.execCommand('selectAll');
 					}
 				}),
-
-				_stopEventPropagation(element, 'keydown'),
-				_stopEventPropagation(element, 'keyup'),
-				_stopEventPropagation(element, 'keypress'),
 			];
 
 			if (config.undoEnabled) {

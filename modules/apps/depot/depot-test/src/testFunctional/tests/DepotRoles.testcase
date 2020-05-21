@@ -89,8 +89,8 @@ definition {
 		UserNavigator.gotoRoles();
 
 		AssertElementNotPresent(
-			key_roleTitle = "Asset Library Administrator",
-			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_TITLE",
+			key_depotRoleName = "Asset Library Administrator",
+			locator1 = "UsersAndOrganizationsEditUser#DEPOT_ROLES_TABLE_NAME",
 			value1 = "Asset Library Administrator");
 
 		User.logoutAndLoginPG(
@@ -107,10 +107,13 @@ definition {
 			locator1 = "LexiconCard#CARD_ELLIPSIS");
 
 		Click(
+			key_card = "Test Depot Name",
 			locator1 = "LexiconCard#CARD_TITLE",
 			value1 = "Test Depot Name");
 
-		AssertVisible(locator1 = "LexiconCard#CARD");
+		AssertVisible(
+			key_card = "Test Depot Name",
+			locator1 = "LexiconCard#CARD");
 	}
 
 	@description = "This ensures that the Asset Library Connected Site Members role does not appear in user roles even after it is automatically assigned to a connected site member. This test also covers permissions and makes sure the library asset can be updated by the role."

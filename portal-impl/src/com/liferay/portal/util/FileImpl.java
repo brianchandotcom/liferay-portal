@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileComparator;
@@ -73,13 +74,22 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.tika.Tika;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
+import org.apache.tika.extractor.EmbeddedDocumentExtractor;
+import org.apache.tika.extractor.ParsingEmbeddedDocumentExtractor;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
 import org.apache.tika.parser.txt.UniversalEncodingDetector;
+import org.apache.tika.sax.BodyContentHandler;
+import org.apache.tika.sax.WriteOutContentHandler;
 import org.apache.tools.ant.DirectoryScanner;
 
 import org.mozilla.intl.chardet.nsDetector;
 import org.mozilla.intl.chardet.nsPSMDetector;
+
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1109,7 +1119,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	private static String _parseToString(
 			Tika tika, TikaInputStream tikaInputStream)
-		throws IOException, TikaException {
+		throws IOException, SAXException, TikaException {
 
 		UniversalEncodingDetector universalEncodingDetector =
 			new UniversalEncodingDetector();
@@ -1131,7 +1141,46 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 				"Content-Type", "text/plain; charset=" + contentEncoding);
 		}
 
-		return tika.parseToString(tikaInputStream, metadata);
+		WriteOutContentHandler handler = new WriteOutContentHandler(
+			tika.getMaxStringLength());
+
+		try {
+			ParseContext parseContext = new ParseContext();
+			Parser parser = tika.getParser();
+
+			parseContext.set(Parser.class, parser);
+
+			parseContext.set(
+				EmbeddedDocumentExtractor.class,
+				new ParsingEmbeddedDocumentExtractor(parseContext) {
+
+					@Override
+					public void parseEmbedded(
+							InputStream stream, ContentHandler handler,
+							Metadata metadata, boolean outputHtml)
+						throws IOException, SAXException {
+
+						String mimeType = tika.detect(stream);
+
+						if (mimeType.equals(ContentTypes.IMAGE_PNG)) {
+							return;
+						}
+
+						super.parseEmbedded(
+							stream, handler, metadata, outputHtml);
+					}
+
+				});
+
+			parser.parse(
+				tikaInputStream, new BodyContentHandler(handler), metadata,
+				parseContext);
+		}
+		finally {
+			tikaInputStream.close();
+		}
+
+		return handler.toString();
 	}
 
 	private boolean _isEmptyTikaInputStream(TikaInputStream tikaInputStream)

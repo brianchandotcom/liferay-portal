@@ -51,6 +51,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -74,6 +75,10 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
 		_setUpGroupLocalServiceUtil();
+	}
+
+	@Before
+	public void setUp() {
 		_setUpServiceTrackerCollections();
 	}
 
@@ -415,7 +420,7 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			});
 	}
 
-	private static void _setUpServiceTrackerCollections() {
+	private void _setUpServiceTrackerCollections() {
 		mockStatic(ServiceTrackerCollections.class, Mockito.CALLS_REAL_METHODS);
 
 		stub(

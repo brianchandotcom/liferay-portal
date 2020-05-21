@@ -19,8 +19,6 @@ definition {
 		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
-
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 	}
 
 	tearDown {
@@ -40,11 +38,24 @@ definition {
 		property testray.component.names = "Training";
 
 		task ("Add a content page template") {
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 		}
 
 		task ("Add an Image fragment to the content page template") {
@@ -74,11 +85,24 @@ definition {
 	@priority = "5"
 	test ChangeEditableText {
 		task ("Add a content page template") {
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 		}
 
 		task ("Add a Content fragment to the content page template") {
@@ -110,7 +134,11 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Delete the page template collection") {
-			PageTemplatesAdmin.addCollection(collectionName = "Collection Name");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Collection.deleteCollection(collectionName = "Collection Name");
 		}
@@ -126,11 +154,16 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a content page template") {
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
 
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
@@ -150,9 +183,12 @@ definition {
 	@priority = "4"
 	test RenameCollection {
 		task ("Add a page template collection") {
-			PageTemplatesAdmin.addCollection(
-				collectionDescription = "Collection Description Original",
-				collectionName = "Collection Name Original");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				description = "Collection Description Original",
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Collection Name Original");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 		}
 
 		task ("Rename the collection") {
@@ -171,11 +207,16 @@ definition {
 	@priority = "4"
 	test RenamePageTemplate {
 		task ("Add a content page template") {
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
 
-			Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
 		}
 
 		task ("Rename the content page template") {
@@ -197,23 +238,37 @@ definition {
 	@priority = "4"
 	test ViewDraftFragmentDoesNotDisplayInSidebar {
 		task ("Add a fragment without publishing it") {
+			JSONFragment.addFragmentCollection(
+				description = "Collection Description",
+				groupName = "Test Site Name",
+				name = "New Collection");
+
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
-			FragmentsAdmin.addCollection(
-				collectionDescription = "Collection Description",
-				collectionName = "New Collection");
+			FragmentsAdminNavigator.gotoCollection(collectionName = "New Collection");
 
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 		}
 
 		task ("Assert the unpublished fragment does not appear in the sidebar when editing a content page template") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
 
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 
 			PageEditor.viewCollectionNotPresent(collectionName = "New Collection");
 		}

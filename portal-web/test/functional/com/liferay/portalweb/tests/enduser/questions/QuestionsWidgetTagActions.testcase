@@ -40,6 +40,7 @@ definition {
 			}
 
 			//Page.tearDownCP();
+
 		}
 	}
 
@@ -52,10 +53,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		Questions.addQuestionByAPI(
+			bodyField = "Body ListOfTagsAppearsInTheTagsTab",
 			categoryName = "Question ListOfTagsAppearsInTheTagsTab",
 			tagField = "tag1",
-			titleField = "Title ListOfTagsAppearsInTheTagsTab",
-			bodyField = "Body ListOfTagsAppearsInTheTagsTab");
+			titleField = "Title ListOfTagsAppearsInTheTagsTab");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -83,10 +84,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		Questions.addQuestionByAPI(
+			bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
 			categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
 			tagField = "tag1",
-			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			bodyField = "Body TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
+			titleField = "Title TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -109,44 +110,6 @@ definition {
 			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
 	}
 
-	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
-	@priority = "4"
-	test ValidateTagsOccurrences {
-		JSONMBMessage.addCategory(
-			categoryDescription = "Description",
-			categoryName = "Question ValidateTagsOccurrences",
-			userEmailAddress = "test@liferay.com");
-
-		Questions.addQuestionByAPI(
-			categoryName = "Question ValidateTagsOccurrences",
-			tagField = "tag1",
-			titleField = "1- Title ValidateTagsOccurrences",
-			bodyField = "1- Body ValidateTagsOccurrences");
-
-		Questions.addQuestionByAPI(
-			categoryName = "Question ValidateTagsOccurrences",
-			tagField = "tag1",
-			titleField = "2- Title ValidateTagsOccurrences",
-			bodyField = "2- Body ValidateTagsOccurrences");
-
-		Navigator.gotoPage(pageName = "Questions Page");
-
-		Click(
-			key_questionNameField = "Question ValidateTagsOccurrences",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
-
-		Pause(locator = "3000");
-
-		Click(
-			key_questionTabField = "Tags",
-			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
-
-		AssertElementPresent(
-			key_amountOfUsedTimes = "2",
-			key_tagName = "tag1",
-			locator1 = "Questions#TAGS_LIST_TAB_USED_TIMES");
-	}
-
 	@description = "Validate if the user can search by tags in the tags search field"
 	@priority = "4"
 	test ValidateSearchByQuestionTags {
@@ -156,10 +119,10 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		Questions.addQuestionByAPI(
+			bodyField = "Body ValidateSearchByQuestionTags",
 			categoryName = "Question ValidateSearchByQuestionTags",
 			tagField = "tagvalidatesearchbyquestiontags",
-			titleField = "Title ValidateSearchByQuestionTags",
-			bodyField = "Body ValidateSearchByQuestionTags");
+			titleField = "Title ValidateSearchByQuestionTags");
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
@@ -183,4 +146,43 @@ definition {
 			key_tagName = "tagvalidatesearchbyquestiontags",
 			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
 	}
+
+	@description = "Validate if the Tags tab of the question portlet, the tags are ordered by occurrences"
+	@priority = "4"
+	test ValidateTagsOccurrences {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Question ValidateTagsOccurrences",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "1- Body ValidateTagsOccurrences",
+			categoryName = "Question ValidateTagsOccurrences",
+			tagField = "tag1",
+			titleField = "1- Title ValidateTagsOccurrences");
+
+		Questions.addQuestionByAPI(
+			bodyField = "2- Body ValidateTagsOccurrences",
+			categoryName = "Question ValidateTagsOccurrences",
+			tagField = "tag1",
+			titleField = "2- Title ValidateTagsOccurrences");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Question ValidateTagsOccurrences",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Pause(locator = "3000");
+
+		Click(
+			key_questionTabField = "Tags",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+
+		AssertElementPresent(
+			key_amountOfUsedTimes = "2",
+			key_tagName = "tag1",
+			locator1 = "Questions#TAGS_LIST_TAB_USED_TIMES");
+	}
+
 }

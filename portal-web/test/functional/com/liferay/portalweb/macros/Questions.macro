@@ -25,10 +25,10 @@ definition {
 		var rightCategoryId = StringUtil.extractLast("${categoryId}", "CategoryId=");
 
 		JSONQuestionsAPI._addQuestion(
+			bodyField = "${bodyField}",
 			categoryId = "${rightCategoryId}",
 			tagField = "${tagField}",
-			titleField = "${titleField}",
-			bodyField = "${bodyField}");
+			titleField = "${titleField}");
 	}
 
 	macro addTags {

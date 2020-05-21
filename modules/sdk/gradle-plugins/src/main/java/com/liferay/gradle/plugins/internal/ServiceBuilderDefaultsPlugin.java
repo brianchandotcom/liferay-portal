@@ -168,6 +168,16 @@ public class ServiceBuilderDefaultsPlugin
 	private ServiceBuilderDefaultsPlugin() {
 	}
 
+	private void _configureTaskBuildDBForLiferayBasePlugin(
+		BuildDBTask buildDBTask) {
+
+		Configuration portalConfiguration = GradleUtil.getConfiguration(
+			buildDBTask.getProject(),
+			LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+
+		buildDBTask.setClasspath(portalConfiguration);
+	}
+
 	private void _configureTaskBuildDBProvider(
 		TaskProvider<BuildDBTask> buildDBTaskProvider,
 		final TaskProvider<BuildServiceTask> buildServiceTaskProvider) {
@@ -200,16 +210,6 @@ public class ServiceBuilderDefaultsPlugin
 				}
 
 			});
-	}
-
-	private void _configureTaskBuildDBForLiferayBasePlugin(
-		BuildDBTask buildDBTask) {
-
-		Configuration portalConfiguration = GradleUtil.getConfiguration(
-			buildDBTask.getProject(),
-			LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
-
-		buildDBTask.setClasspath(portalConfiguration);
 	}
 
 	private void _configureTaskBuildService(BuildServiceTask buildServiceTask) {

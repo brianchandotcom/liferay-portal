@@ -52,23 +52,18 @@ info:
     version: "1.0.0"
 openapi: "3.0.1"
 paths:
-    "/document/{documentId}":
+    "/folder":
         get:
-            parameters:
-                - in: path
-                  name: documentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
             responses:
                 default:
                     content:
-                        "application/json":
+                        "*/*":
                             schema:
-                                $ref: "#/components/schemas/Document"
+                                items:
+                                    $ref: "#/components/schemas/Folder"
+                                type: array
                     description:
-                        ""
+                        "Default response"
     "/folder/{folderId}":
         get:
             parameters:
@@ -86,3 +81,34 @@ paths:
                                 $ref: "#/components/schemas/Folder"
                     description:
                         ""
+    /folder/count:
+        get:
+            description:
+                Retrieves the folders count.
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                example: 0
+                                format: int32
+                                type: integer
+                    description:
+                        "OK"
+    "/document/{documentId}":
+        get:
+            parameters:
+                - in: path
+                  name: documentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+        responses:
+            default:
+                content:
+                    "application/json":
+                        schema:
+                            $ref: "#/components/schemas/Document"
+                description:
+                    ""

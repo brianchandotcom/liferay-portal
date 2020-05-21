@@ -82,7 +82,9 @@ const renderFloatingToolbar = ({onButtonClick = () => {}}) => {
 
 	return render(
 		<StoreAPIContextProvider dispatch={() => {}} getState={() => state}>
+			<div id="page-editor"></div>
 			<div className="page-editor__sidebar__content"></div>
+
 			<FloatingToolbar
 				buttons={buttons}
 				item={item}

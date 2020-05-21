@@ -406,13 +406,8 @@ const ELEMENT_POSITION = {
  * @review
  */
 const getElementAlign = (element, anchor, rtl) => {
-	let horizontal, vertical;
-
-	try {
-		horizontal = getHorizontalPosition(anchor, element, rtl);
-		vertical = getVerticalPosition(anchor, element, horizontal);
-	}
-	catch (error) {}
+	const horizontal = getHorizontalPosition(anchor, element, rtl);
+	const vertical = getVerticalPosition(anchor, element, horizontal);
 
 	return ELEMENT_POSITION[vertical][horizontal];
 };

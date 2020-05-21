@@ -97,6 +97,18 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 			JSONFactoryUtil.createJSONObject();
 
 		for (String languageId : layout.getAvailableLanguageIds()) {
+			List<FriendlyURLEntryLocalization> friendlyURLEntryLocalizations =
+				_friendlyURLEntryLocalService.getFriendlyURLEntryLocalizations(
+					layout.getGroupId(),
+					_layoutFriendlyURLEntryHelper.getClassNameId(
+						layout.isPrivateLayout()),
+					layout.getPlid(), languageId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, _friendlyURLEntryLocalizationComparator);
+
+			if (friendlyURLEntryLocalizations.isEmpty()) {
+				continue;
+			}
+
 			FriendlyURLEntryLocalization mainFriendlyURLEntryLocalization =
 				_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
 					mainFriendlyURLEntry.getFriendlyURLEntryId(), languageId);
@@ -111,15 +123,7 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 					"history",
 					_getJSONJArray(
 						ListUtil.remove(
-							_friendlyURLEntryLocalService.
-								getFriendlyURLEntryLocalizations(
-									layout.getGroupId(),
-									_layoutFriendlyURLEntryHelper.
-										getClassNameId(
-											layout.isPrivateLayout()),
-									layout.getPlid(), languageId,
-									QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-									_friendlyURLEntryLocalizationComparator),
+							friendlyURLEntryLocalizations,
 							Arrays.asList(mainFriendlyURLEntryLocalization)),
 						this::_serializeFriendlyURLEntryLocalization)
 				));

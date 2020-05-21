@@ -32,7 +32,11 @@ definition {
 	macro _generateWidget {
 		Variables.assertDefined(parameterList = "${widgetName}");
 
-		if ("${widgetName}" == "Asset Publisher") {
+		if ("${widgetName}" == "Announcements") {
+			var portletId = "com_liferay_announcements_web_portlet_AnnouncementsPortlet";
+		}
+
+		else if ("${widgetName}" == "Asset Publisher") {
 			var portletId = "com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet";
 		}
 		else if ("${widgetName}" == "Blogs") {

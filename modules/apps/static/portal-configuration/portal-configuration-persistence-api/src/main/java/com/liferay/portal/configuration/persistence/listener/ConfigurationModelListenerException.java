@@ -29,30 +29,34 @@ public class ConfigurationModelListenerException extends IOException {
 
 		super(
 			String.format(
-				"The listener %s was unable to save configuration %s. Caused by: %s",
-				listenerClass.getName(), configurationClass.getName(), exception.getMessage()), 
+				"The listener %s was unable to save configuration %s. Caused " +
+					"by: %s",
+				listenerClass.getName(), configurationClass.getName(),
+				exception.getMessage()),
 			exception);
 
-		this.causeMessage = exception.getMessage();
+		causeMessage = exception.getMessage();
 		this.configurationClass = configurationClass;
 		this.listenerClass = listenerClass;
 		this.properties = properties;
 	}
-	
+
 	public ConfigurationModelListenerException(
-			String causeMessage, Class<?> configurationClass,
-			Class<?> listenerClass, Dictionary<String, Object> properties) {
+		String causeMessage, Class<?> configurationClass,
+		Class<?> listenerClass, Dictionary<String, Object> properties) {
 
-			super(
-				String.format(
-					"The listener %s was unable to save configuration %s. Caused by: %s",
-					listenerClass.getName(), configurationClass.getName(), causeMessage));
+		super(
+			String.format(
+				"The listener %s was unable to save configuration %s. Caused " +
+					"by: %s",
+				listenerClass.getName(), configurationClass.getName(),
+				causeMessage));
 
-			this.causeMessage = causeMessage;
-			this.configurationClass = configurationClass;
-			this.listenerClass = listenerClass;
-			this.properties = properties;
-		}
+		this.causeMessage = causeMessage;
+		this.configurationClass = configurationClass;
+		this.listenerClass = listenerClass;
+		this.properties = properties;
+	}
 
 	public final String causeMessage;
 	public final Class<?> configurationClass;

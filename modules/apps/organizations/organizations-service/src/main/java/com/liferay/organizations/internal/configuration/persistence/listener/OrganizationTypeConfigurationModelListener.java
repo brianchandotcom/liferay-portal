@@ -53,8 +53,8 @@ public class OrganizationTypeConfigurationModelListener
 		}
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
-				exception.getMessage(), OrganizationTypeConfiguration.class,
-				getClass(), properties);
+				exception, OrganizationTypeConfiguration.class, getClass(),
+				properties);
 		}
 	}
 

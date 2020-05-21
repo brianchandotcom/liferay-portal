@@ -80,7 +80,7 @@ public class BuildFactory {
 					url, (TopLevelBuild)parentBuild);
 			}
 
-			return new PortalPullRequestTesterTopLevelBuild(
+			return new PullRequestPortalTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);
 		}
 

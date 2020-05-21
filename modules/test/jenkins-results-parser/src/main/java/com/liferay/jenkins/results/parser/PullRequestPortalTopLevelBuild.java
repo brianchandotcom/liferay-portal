@@ -23,9 +23,9 @@ import org.dom4j.Element;
 /**
  * @author Peter Yoo
  */
-public class PortalPullRequestTesterTopLevelBuild extends PortalTopLevelBuild {
+public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 
-	public PortalPullRequestTesterTopLevelBuild(
+	public PullRequestPortalTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {
 
 		super(url, topLevelBuild);

@@ -41,6 +41,8 @@ public interface FragmentRenderer {
 		return StringPool.BLANK;
 	}
 
+	public String getIcon();
+
 	public default String getImagePreviewURL(
 		HttpServletRequest httpServletRequest) {
 

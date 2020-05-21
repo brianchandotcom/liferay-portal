@@ -255,7 +255,7 @@ definition {
 
 		Form.editDescription(formDescription = "Form Description");
 
-		Form.gotoAddField(fieldType = "Text");
+		Form.addTextField(fieldPositionNumber = "1");
 
 		Form.editFieldLabel(fieldValue = "Text Field");
 

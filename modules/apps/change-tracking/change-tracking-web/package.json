@@ -1,10 +1,10 @@
 {
 	"dependencies": {
-		"@clayui/breadcrumb": "3.1.3",
+		"@clayui/breadcrumb": "3.2.0",
 		"@clayui/button": "3.3.1",
-		"@clayui/drop-down": "3.4.2",
-		"@clayui/form": "3.7.1",
-		"@clayui/pagination-bar": "3.1.2",
+		"@clayui/drop-down": "3.4.3",
+		"@clayui/form": "3.8.0",
+		"@clayui/pagination-bar": "3.1.4",
 		"@clayui/table": "3.0.7",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",

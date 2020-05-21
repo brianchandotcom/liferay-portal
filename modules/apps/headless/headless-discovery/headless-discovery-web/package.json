@@ -1,13 +1,13 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.3.1",
-		"@clayui/badge": "3.0.2",
+		"@clayui/alert": "3.3.2",
+		"@clayui/badge": "3.1.0",
 		"@clayui/button": "3.3.1",
-		"@clayui/form": "3.7.1",
+		"@clayui/form": "3.8.0",
 		"@clayui/icon": "3.0.5",
 		"@clayui/label": "3.3.0",
 		"@clayui/panel": "3.2.0",
-		"@clayui/tabs": "3.1.1",
+		"@clayui/tabs": "3.2.0",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"graphiql": "0.11.10",

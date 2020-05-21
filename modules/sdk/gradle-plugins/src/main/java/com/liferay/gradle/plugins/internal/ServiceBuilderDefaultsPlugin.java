@@ -42,6 +42,7 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskProvider;
 
 /**
  * @author Andrea Di Giorgi
@@ -64,11 +65,18 @@ public class ServiceBuilderDefaultsPlugin
 			project, ServiceBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
 
-		BuildServiceTask buildServiceTask =
-			(BuildServiceTask)GradleUtil.getTask(
-				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
+		TaskProvider<BuildDBTask> buildDBTaskProvider =
+			GradleUtil.addTaskProvider(
+				project, BUILD_DB_TASK_NAME, BuildDBTask.class);
 
-		_addTaskBuildDB(project);
+		TaskProvider<BuildServiceTask> buildServiceTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME,
+				BuildServiceTask.class);
+
+		_configureTaskBuildDBProvider(
+			buildDBTaskProvider, buildServiceTaskProvider);
+
 		_configureTaskCleanServiceBuilder(buildServiceTask);
 		_configureTaskProcessResources(buildServiceTask);
 		_configureTasksBuildService(project);
@@ -109,32 +117,38 @@ public class ServiceBuilderDefaultsPlugin
 	private ServiceBuilderDefaultsPlugin() {
 	}
 
-	private BuildDBTask _addTaskBuildDB(final Project project) {
-		BuildDBTask buildDBTask = GradleUtil.addTask(
-			project, BUILD_DB_TASK_NAME, BuildDBTask.class);
+	private void _configureTaskBuildDBProvider(
+		TaskProvider<BuildDBTask> buildDBTaskProvider,
+		final TaskProvider<BuildServiceTask> buildServiceTaskProvider) {
 
-		buildDBTask.setDatabaseName("lportal");
-		buildDBTask.setDatabaseTypes("hypersonic", "mysql", "postgresql");
-		buildDBTask.setDescription(
-			"Builds database SQL scripts from the generic SQL scripts.");
-		buildDBTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		buildDBTask.setSqlDir(
-			new Callable<File>() {
+		buildDBTaskProvider.configure(
+			new Action<BuildDBTask>() {
 
 				@Override
-				public File call() throws Exception {
-					BuildServiceTask buildServiceTask =
-						(BuildServiceTask)GradleUtil.getTask(
-							project,
-							ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
+				public void execute(BuildDBTask buildDBTask) {
+					buildDBTask.setDatabaseName("lportal");
+					buildDBTask.setDatabaseTypes(
+						"hypersonic", "mysql", "postgresql");
+					buildDBTask.setDescription(
+						"Builds database SQL scripts from the generic SQL " +
+							"scripts.");
+					buildDBTask.setGroup(BasePlugin.BUILD_GROUP);
 
-					return buildServiceTask.getSqlDir();
+					buildDBTask.setSqlDir(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								BuildServiceTask buildServiceTask =
+									buildServiceTaskProvider.get();
+
+								return buildServiceTask.getSqlDir();
+							}
+
+						});
 				}
 
 			});
-
-		return buildDBTask;
 	}
 
 	private void _configureTaskBuildDBClasspath(

@@ -37,9 +37,9 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.CopySpec;
-import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
@@ -101,29 +101,52 @@ public class ServiceBuilderDefaultsPlugin
 
 			});
 
-		GradleUtil.withPlugin(
-			project, LiferayBasePlugin.class,
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withType(
+			LiferayBasePlugin.class,
 			new Action<LiferayBasePlugin>() {
 
 				@Override
 				public void execute(LiferayBasePlugin liferayBasePlugin) {
-					Configuration portalConfiguration =
-						GradleUtil.getConfiguration(
-							project,
-							LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+					TaskContainer taskContainer = project.getTasks();
 
-					_configureTasksBuildDB(project, portalConfiguration);
+					taskContainer.withType(
+						BuildDBTask.class,
+						new Action<BuildDBTask>() {
+
+							@Override
+							public void execute(BuildDBTask buildDBTask) {
+								_configureTaskBuildDBForLiferayBasePlugin(
+									buildDBTask);
+							}
+
+						});
 				}
 
 			});
 
-		GradleUtil.withPlugin(
-			project, LiferayOSGiPlugin.class,
+		pluginContainer.withType(
+			LiferayOSGiPlugin.class,
 			new Action<LiferayOSGiPlugin>() {
 
 				@Override
 				public void execute(LiferayOSGiPlugin liferayOSGiPlugin) {
-					_configureTasksBuildServiceForLiferayOSGiPlugin(project);
+					TaskContainer taskContainer = project.getTasks();
+
+					taskContainer.withType(
+						BuildServiceTask.class,
+						new Action<BuildServiceTask>() {
+
+							@Override
+							public void execute(
+								BuildServiceTask buildServiceTask) {
+
+								_configureTaskBuildServiceForLiferayOSGiPlugin(
+									buildServiceTask);
+							}
+
+						});
 				}
 
 			});
@@ -171,10 +194,14 @@ public class ServiceBuilderDefaultsPlugin
 			});
 	}
 
-	private void _configureTaskBuildDBClasspath(
-		BuildDBTask buildDBTask, FileCollection fileCollection) {
+	private void _configureTaskBuildDBForLiferayBasePlugin(
+		BuildDBTask buildDBTask) {
 
-		buildDBTask.setClasspath(fileCollection);
+		Configuration portalConfiguration = GradleUtil.getConfiguration(
+			buildDBTask.getProject(),
+			LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+
+		buildDBTask.setClasspath(portalConfiguration);
 	}
 
 	private void _configureTaskBuildService(BuildServiceTask buildServiceTask) {
@@ -254,41 +281,6 @@ public class ServiceBuilderDefaultsPlugin
 							}
 
 						});
-				}
-
-			});
-	}
-
-	private void _configureTasksBuildDB(
-		Project project, final FileCollection classpath) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildDBTask.class,
-			new Action<BuildDBTask>() {
-
-				@Override
-				public void execute(BuildDBTask buildDBTask) {
-					_configureTaskBuildDBClasspath(buildDBTask, classpath);
-				}
-
-			});
-	}
-
-	private void _configureTasksBuildServiceForLiferayOSGiPlugin(
-		Project project) {
-
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildServiceTask.class,
-			new Action<BuildServiceTask>() {
-
-				@Override
-				public void execute(BuildServiceTask buildServiceTask) {
-					_configureTaskBuildServiceForLiferayOSGiPlugin(
-						buildServiceTask);
 				}
 
 			});

@@ -11,6 +11,28 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function DragAndDropObject {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent("${locator1}");
+
+		selenium.mouseOver("${locator1}");
+
+		selenium.waitForVisible("${locator1}");
+
+		selenium.mouseDown("${locator1}");
+
+		selenium.mouseMoveAt("${locator1}", "${position}");
+
+		selenium.pause("3000");
+
+		selenium.mouseRelease("${locator1}");
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function dragAndDropPortletToObject {
 		WaitForSPARefresh();
 

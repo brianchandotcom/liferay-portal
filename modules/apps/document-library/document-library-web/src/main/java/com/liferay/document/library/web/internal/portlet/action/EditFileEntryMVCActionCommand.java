@@ -35,7 +35,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.exception.RequiredFileException;
 import com.liferay.document.library.kernel.exception.SourceFileNameException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -48,10 +47,10 @@ import com.liferay.document.library.web.internal.settings.DLPortletInstanceSetti
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredException;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -675,6 +674,24 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private com.liferay.dynamic.data.mapping.model.DDMStructure
+			_fetchDDMStructure(DLFileEntryType dlFileEntryType)
+		throws PortalException {
+
+		List<DDMStructureLink> ddmStructureLinks =
+			_ddmStructureLinkLocalService.getStructureLinks(
+				_portal.getClassNameId(DLFileEntryType.class),
+				dlFileEntryType.getFileEntryTypeId());
+
+		if (ListUtil.isEmpty(ddmStructureLinks)) {
+			return null;
+		}
+
+		DDMStructureLink ddmStructureLink = ddmStructureLinks.get(0);
+
+		return ddmStructureLink.getStructure();
+	}
+
 	private String _getAddMultipleFileEntriesErrorMessage(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			Exception exception)
@@ -950,14 +967,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
 				getName();
 
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
-
 		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
-			_ddmStructureLocalService.getStructure(
-				dlFileEntryType.getGroupId(),
-				_portal.getClassNameId(DLFileEntryMetadata.class),
-				DLUtil.getDDMStructureKey(dlFileEntryType.getUuid()));
+			_fetchDDMStructure(
+				_dlFileEntryTypeLocalService.getDLFileEntryType(
+					fileEntryTypeId));
 
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			serviceContext.getRequest(), ddmStructure.getDDMForm());
@@ -1123,10 +1136,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private DDMFormValuesFactory _ddmFormValuesFactory;
 
 	@Reference
-	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PORTLET_TITLE</td>
-	<td>//section[@id='portlet_com_liferay_login_web_portlet_LoginPortlet']//h2[@class='portlet-title-text']</td>
+	<td>//section[@id='portlet_com_liferay_login_web_portlet_LoginPortlet']</td>
 	<td></td>
 </tr>
 <tr>

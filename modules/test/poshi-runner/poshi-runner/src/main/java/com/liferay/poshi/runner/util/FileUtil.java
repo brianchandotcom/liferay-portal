@@ -80,8 +80,8 @@ public class FileUtil {
 		}
 	}
 
-	public static void deleteDirectory(File dir) {
-		FileUtils.deleteQuietly(dir);
+	public static boolean deleteDirectory(File dir) {
+		return FileUtils.deleteQuietly(dir);
 	}
 
 	public static boolean exists(File file) {

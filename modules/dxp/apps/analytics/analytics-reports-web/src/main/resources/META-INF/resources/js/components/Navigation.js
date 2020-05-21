@@ -100,7 +100,7 @@ export default function Navigation({
 		return Promise.resolve(trafficSource?.value ?? '-');
 	}, [trafficSourceName, trafficSources]);
 
-	const [{readsEnabled}] = useContext(StoreContext);
+	const [{publishedToday, readsEnabled}] = useContext(StoreContext);
 
 	const chartDataProviders = readsEnabled
 		? [getHistoricalViews, getHistoricalReads]
@@ -109,26 +109,33 @@ export default function Navigation({
 	return (
 		<>
 			{!validAnalyticsConnection && (
-				<ClayAlert
-					className="p-0"
-					displayType="danger"
-					variant="stripe"
-				>
+				<ClayAlert displayType="danger" variant="stripe">
 					{Liferay.Language.get('an-unexpected-error-occurred')}
 				</ClayAlert>
 			)}
 
 			{validAnalyticsConnection && (hasWarning || hasHistoricalWarning) && (
-				<ClayAlert
-					className="p-0"
-					displayType="warning"
-					variant="stripe"
-				>
+				<ClayAlert displayType="warning" variant="stripe">
 					{Liferay.Language.get(
 						'some-data-is-temporarily-unavailable'
 					)}
 				</ClayAlert>
 			)}
+
+			{validAnalyticsConnection &&
+				publishedToday &&
+				!hasWarning &&
+				!hasHistoricalWarning && (
+					<ClayAlert
+						displayType="info"
+						title={Liferay.Language.get('no-data-is-available-yet')}
+						variant="stripe"
+					>
+						{Liferay.Language.get(
+							'content-has-just-been-published'
+						)}
+					</ClayAlert>
+				)}
 
 			{currentPage.view === 'main' && (
 				<div className="p-3">

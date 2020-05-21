@@ -314,16 +314,6 @@ export default function Chart({
 
 					{title && <h5>{title}</h5>}
 
-					{validAnalyticsConnection &&
-						publishedToday &&
-						!hasHistoricalWarning && (
-							<div className="mb-2 mt-3 text-secondary">
-								{Liferay.Language.get(
-									'no-data-is-available-yet'
-								)}
-							</div>
-						)}
-
 					<div className="line-chart">
 						<LineChart
 							data={histogram}

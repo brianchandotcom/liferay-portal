@@ -40,7 +40,10 @@ public class CreateTokenTask extends DefaultTask {
 	public void createToken() throws Exception {
 		Logger logger = getLogger();
 
-		logger.warn("The CreateTokenTask is deprecated and no longer in use.");
+		if (logger.isWarnEnabled()) {
+			logger.warn(
+				"The CreateTokenTask is deprecated and no longer in use.");
+		}
 	}
 
 	@Input

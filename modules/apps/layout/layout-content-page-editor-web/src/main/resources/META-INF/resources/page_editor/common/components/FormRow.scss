@@ -6,7 +6,7 @@
 	&__column {
 		width: calc(50% - 4px);
 
-		&:nth-child(odd):not(:first-child) {
+		&:nth-child(n + 3) {
 			margin-top: 8px;
 		}
 

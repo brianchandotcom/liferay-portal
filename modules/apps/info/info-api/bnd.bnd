@@ -8,11 +8,14 @@ Export-Package:\
 	com.liferay.info.display.field,\
 	com.liferay.info.display.request.attributes.contributor,\
 	com.liferay.info.display.url.provider,\
+	com.liferay.info.fields,\
+	com.liferay.info.fields.type,\
 	com.liferay.info.item.renderer,\
 	com.liferay.info.item.renderer.template,\
 	com.liferay.info.item.selector,\
 	com.liferay.info.list.provider,\
 	com.liferay.info.list.renderer,\
+	com.liferay.info.localized,\
 	com.liferay.info.pagination,\
 	com.liferay.info.provider,\
 	com.liferay.info.renderer,\

@@ -803,6 +803,8 @@ public class ContentPageEditorDisplayContext {
 				HashMapBuilder.<String, Object>put(
 					"fragmentEntryKey", fragmentRenderer.getKey()
 				).put(
+					"icon", fragmentRenderer.getIcon()
+				).put(
 					"imagePreviewURL",
 					fragmentRenderer.getImagePreviewURL(httpServletRequest)
 				).put(
@@ -985,6 +987,8 @@ public class ContentPageEditorDisplayContext {
 				).put(
 					"groupId", fragmentComposition.getGroupId()
 				).put(
+					"icon", fragmentComposition.getIcon()
+				).put(
 					"imagePreviewURL",
 					fragmentComposition.getImagePreviewURL(themeDisplay)
 				).put(
@@ -1014,6 +1018,8 @@ public class ContentPageEditorDisplayContext {
 					"fragmentEntryKey", fragmentEntry.getFragmentEntryKey()
 				).put(
 					"groupId", fragmentEntry.getGroupId()
+				).put(
+					"icon", fragmentEntry.getIcon()
 				).put(
 					"imagePreviewURL",
 					fragmentEntry.getImagePreviewURL(themeDisplay)

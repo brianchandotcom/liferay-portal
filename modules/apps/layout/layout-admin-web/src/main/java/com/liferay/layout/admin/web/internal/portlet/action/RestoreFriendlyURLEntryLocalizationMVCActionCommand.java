@@ -79,7 +79,7 @@ public class RestoreFriendlyURLEntryLocalizationMVCActionCommand
 
 			jsonObject.put("success", true);
 		}
-		catch (Exception e) {
+		catch (Exception exception) {
 			jsonObject.put("success", false);
 		}
 

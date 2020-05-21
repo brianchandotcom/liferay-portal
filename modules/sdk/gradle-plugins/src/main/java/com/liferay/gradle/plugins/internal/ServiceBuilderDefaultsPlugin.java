@@ -58,6 +58,8 @@ public class ServiceBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		final Project project, ServiceBuilderPlugin serviceBuilderPlugin) {
 
+		GradleUtil.applyPlugin(project, DBSupportPlugin.class);
+
 		PortalTools.addPortalToolDependencies(
 			project, ServiceBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
@@ -65,8 +67,6 @@ public class ServiceBuilderDefaultsPlugin
 		BuildServiceTask buildServiceTask =
 			(BuildServiceTask)GradleUtil.getTask(
 				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
-
-		GradleUtil.applyPlugin(project, DBSupportPlugin.class);
 
 		_addTaskBuildDB(project);
 		_configureTaskCleanServiceBuilder(buildServiceTask);

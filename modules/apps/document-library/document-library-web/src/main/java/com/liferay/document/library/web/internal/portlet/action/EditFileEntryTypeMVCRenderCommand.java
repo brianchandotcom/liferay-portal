@@ -145,12 +145,6 @@ public class EditFileEntryTypeMVCRenderCommand implements MVCRenderCommand {
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference(
-		target = "(model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure)"
-	)
-	private ModelResourcePermission<DDMStructure>
-		_ddmStructureModelResourcePermission;
-
-	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType)"
 	)
 	private volatile ModelResourcePermission<DLFileEntryType>

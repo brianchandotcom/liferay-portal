@@ -41,7 +41,7 @@ class Email extends Component {
 			<div class="share-form-modal-item-email">
 				{emailAddresses && (
 					<ClayMultiSelect
-						autocompleteFilterCondition="label"
+						autocompleteFilterCondition="value"
 						dataSource={emailAddresses}
 						events={{
 							inputChange: this._handleInputChange.bind(this),
@@ -130,7 +130,7 @@ class Email extends Component {
 						emailAddresses: responseData.map((data) => {
 							return {
 								label: data.emailAddress,
-								value: data.emailAddress,
+								value: this._getAutoCompleteValue(data),
 							};
 						}),
 					});
@@ -139,6 +139,10 @@ class Email extends Component {
 			.catch((error) => {
 				throw new Error(error);
 			});
+	}
+
+	_getAutoCompleteValue(data) {
+		return data.fullName + ' (' + data.emailAddress + ')';
 	}
 
 	_handleInputChange(event) {

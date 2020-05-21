@@ -132,7 +132,10 @@ public class EmailAddressesMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 
 			JSONObject jsonObject = JSONUtil.put(
-				"emailAddress", user.getEmailAddress());
+				"emailAddress", user.getEmailAddress()
+			).put(
+				"fullName", user.getFullName()
+			);
 
 			jsonArray.put(jsonObject);
 		}

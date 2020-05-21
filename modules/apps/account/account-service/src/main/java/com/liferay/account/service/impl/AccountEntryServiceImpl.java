@@ -121,7 +121,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = _getPermissionChecker();
 
-		if (!permissionChecker.isOmniadmin()) {
+		if (!permissionChecker.isCompanyAdmin()) {
 			try {
 				User user = userLocalService.getUser(
 					permissionChecker.getUserId());

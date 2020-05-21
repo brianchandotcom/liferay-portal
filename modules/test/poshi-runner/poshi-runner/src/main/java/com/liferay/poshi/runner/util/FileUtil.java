@@ -81,17 +81,7 @@ public class FileUtil {
 	}
 
 	public static void deleteDir(File dir) {
-		if (dir.exists()) {
-			if (dir.isDirectory()) {
-				File[] files = dir.listFiles();
-
-				for (File file : files) {
-					deleteDir(file);
-				}
-			}
-
-			dir.delete();
-		}
+		FileUtils.deleteQuietly(dir);
 	}
 
 	public static boolean exists(File file) {

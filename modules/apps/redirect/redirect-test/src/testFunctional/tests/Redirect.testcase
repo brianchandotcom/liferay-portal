@@ -198,9 +198,9 @@ definition {
 			sourceURLVariation = "Duplicate");
 	}
 
-	@description = "This ensures that an entry can be added with checking update redirect."
+	@description = "This ensures that a redirection chain can be avoided."
 	@priority = "5"
-	test AddEntryWithCheckingUpdateRedirect {
+	test AvoidRedirectChain {
 		var portalURL = PropsUtil.get("portal.url");
 
 		for (var i : list "1,2,3") {
@@ -246,9 +246,9 @@ definition {
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page2");
 	}
 
-	@description = "This ensures that an entry can be added without checking update redirect."
+	@description = "This ensures that a redirection chain will be created."
 	@priority = "5"
-	test AddEntryWithoutCheckingUpdateRedirect {
+	test CreateRedirectChain {
 		var portalURL = PropsUtil.get("portal.url");
 
 		for (var i : list "1,2,3") {

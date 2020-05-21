@@ -1,0 +1,176 @@
+definition {
+
+	@summary = "Add a displayPageTemplateEntry to an existing site"
+	macro addDisplayPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${contentType},${displayPageTemplateEntryName},${groupName}");
+
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+
+		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = "${contentType}");
+
+		if ("${subType}" == "Basic Document") {
+			var classTypeId = "0";
+		}
+		else if ("${contentType}" == "Blogs Entry") {
+			var classTypeId = "0";
+		}
+		else {
+			var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+				contentType = "${contentType}",
+				classNameId = "${classNameId}",
+				groupId = "${groupId}",
+				subType = "${subType}");
+		}
+
+		if (isSet(masterLayoutEntryName)) {
+			var masterLayoutPlid = JSONLayoutpagetemplateSetter.setMasterLayoutPlid(
+				groupId = "${groupId}",
+				masterLayoutEntryName = "${masterLayoutEntryName}");
+		}
+		else {
+			var masterLayoutPlid = "0";
+		}
+
+		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
+			addGuestPermissions = "true",
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		JSONLayoutpagetemplateAPI._addDisplayPageTemplateEntry(
+			classNameId = "${classNameId}",
+			classTypeId = "${classTypeId}",
+			displayPageTemplateEntryName = "${displayPageTemplateEntryName}",
+			groupId = "${groupId}",
+			masterLayoutPlid = "${masterLayoutPlid}",
+			serviceContext = "${serviceContext}");
+	}
+
+	@summary = "Add a PageTemplateEntry to the Global site"
+	macro addGlobalPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${pageTemplateEntryActive},${pageTemplateEntryName}");
+
+		var nameMap = JSONLayoutpagetemplateSetter.setNameMap(name = "${pageTemplateEntryName}");
+
+		var descriptionMap = JSONLayoutpagetemplateSetter.setDescriptionMap(description = "${pageTemplateEntryDescription}");
+
+		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
+			addGuestPermissions = "false",
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		JSONLayoutpagetemplateAPI._addGlobalPageTemplateEntry(
+			active = "${pageTemplateEntryActive}",
+			descriptionMap = "${descriptionMap}",
+			nameMap = "${nameMap}",
+			serviceContext = "${serviceContext}");
+	}
+
+	@summary = "Add a layoutPageTemplateCollection to an existing site"
+	macro addLayoutPageTemplateCollection {
+		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateCollectionName}");
+
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+
+		if (isSet(description)) {
+			var description = "${description}";
+		}
+		else {
+			var description = "";
+		}
+
+		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
+			addGuestPermissions = "true",
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		JSONLayoutpagetemplateAPI._addLayoutPageTemplateCollection(
+			description = "${description}",
+			groupId = "${groupId}",
+			layoutPageTemplateCollectionName = "${layoutPageTemplateCollectionName}",
+			serviceContext = "${serviceContext}");
+	}
+
+	@summary = "Add a layoutPageTemplateEntry to an existing site"
+	macro addLayoutPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName},${layoutPageTemplateType},${layoutPageTemplateStatus}");
+
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+
+		if (isSet(layoutPageTemplateCollectionName)) {
+			var layoutPageTemplateCollectionId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateCollectionId(
+				groupId = "${groupId}",
+				layoutPageTemplateCollectionName = "${layoutPageTemplateCollectionName}");
+		}
+		else {
+			var layoutPageTemplateCollectionId = "0";
+		}
+
+		if (isSet(masterLayoutEntryName)) {
+			var masterLayoutPlid = JSONLayoutpagetemplateSetter.setMasterLayoutPlid(
+				groupId = "${groupId}",
+				masterLayoutEntryName = "${masterLayoutEntryName}");
+		}
+		else {
+			var masterLayoutPlid = "0";
+		}
+
+		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
+			addGuestPermissions = "true",
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		var status = JSONLayoutpagetemplateUtil._getStatus(layoutPageTemplateStatus = "${layoutPageTemplateStatus}");
+
+		var type = JSONLayoutpagetemplateUtil._getType(layoutPageTemplateType = "${layoutPageTemplateType}");
+
+		JSONLayoutpagetemplateAPI._addLayoutPageTemplateEntry(
+			groupId = "${groupId}",
+			layoutPageTemplateCollectionId = "${layoutPageTemplateCollectionId}",
+			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}",
+			masterLayoutPlid = "${masterLayoutPlid}",
+			serviceContext = "${serviceContext}",
+			status = "${status}",
+			type = "${type}");
+	}
+
+	@summary = "Add a masterPageTemplateEntry to an existing site"
+	macro addMasterPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${groupName},${masterPageTemplateEntryName}");
+
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupKey = "${groupName}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+
+		var serviceContext = JSONLayoutpagetemplateSetter.setServiceContext(
+			addGuestPermissions = "true",
+			assetCategoryIds = "${assetCategoryIds}",
+			assetTagNames = "${assetTagNames}",
+			serviceContext = "${serviceContext}",
+			workflowAction = "${workflowAction}");
+
+		JSONLayoutpagetemplateAPI._addMasterPageTemplateEntry(
+			groupId = "${groupId}",
+			masterPageTemplateEntryName = "${masterPageTemplateEntryName}",
+			serviceContext = "${serviceContext}");
+	}
+
+	@summary = "Delete a layoutPageTemplateEntry under an existing site"
+	macro deleteLayoutPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${groupName},${layoutPageTemplateEntryName}");
+
+		var groupId = JSONLayoutpagetemplateSetter.setGroupId(groupName = "${groupName}",site = "${site}");
+
+		var layoutPageTemplateEntryId = JSONLayoutpagetemplateSetter.setLayoutPageTemplateEntryId(
+			groupId = "${groupId}",
+			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}");
+
+		JSONLayoutpagetemplateAPI._deleteLayoutPageTemplateEntry(layoutPageTemplateEntryId = "${layoutPageTemplateEntryId}");
+	}
+
+}

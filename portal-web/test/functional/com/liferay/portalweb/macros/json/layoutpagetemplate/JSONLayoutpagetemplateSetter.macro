@@ -1,0 +1,115 @@
+definition {
+
+	macro setClassNameId {
+		Variables.assertDefined(parameterList = "${contentType}");
+
+		if ("${contentType}" == "Web Content Article") {
+			var value = "com.liferay.journal.model.JournalArticle";
+		}
+		else if ("${contentType}" == "Document") {
+			var value = "com.liferay.portal.kernel.repository.model.FileEntry";
+		}
+		else if ("${contentType}" == "Blogs Entry") {
+			var value = "com.liferay.blogs.model.BlogsEntry";
+		}
+		else {
+			fail("'value' is either invalid or not yet set.");
+		}
+
+		var classNameId = JSONClassname._getClassNameId(value = "${value}");
+
+		return "${classNameId}";
+	}
+
+	macro setClassTypeId {
+		Variables.assertDefined(parameterList = "${classNameId},${groupId},${subType}");
+
+		if ("${subType}" == "Basic Web Content") {
+			var structureKey = "BASIC-WEB-CONTENT";
+		}
+		else {
+			fail("'value' is either invalid or not yet set.");
+		}
+
+		var classTypeId = JSONDDMstructure._getStructureId(
+			classNameId = "${classNameId}",
+			groupId = "${groupId}",
+			structureKey = "${structureKey}");
+
+		return "${classTypeId}";
+	}
+
+	macro setDescriptionMap {
+		if (isSet(description)) {
+			var descriptionMap = '''{"en_US":"${description}"}''';
+		}
+		else {
+			var descriptionMap = "{}";
+		}
+
+		return "${descriptionMap}";
+	}
+
+	macro setGroupId {
+		Variables.assertDefined(parameterList = "${groupKey}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByGroupKey(groupKey = "${groupKey}", parentGroupName = "${parentGroupName}", grandParentGroupName = "${grandParentGroupName}", site = "${site}");
+
+		return "${groupId}";
+	}
+
+	macro setLayoutPageTemplateCollectionId {
+		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
+
+		var layoutPageTemplateCollectionId = JSONLayoutpagetemplateAPI._getLayoutPageTemplateCollectionIdByName(
+			groupId = "${groupId}",
+			layoutPageTemplateCollectionName = "${layoutPageTemplateCollectionName}");
+
+		return "${layoutPageTemplateCollectionId}";
+	}
+
+	macro setLayoutPageTemplateEntryId {
+		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName}");
+
+		var layoutPageTemplateEntryId = JSONLayoutpagetemplateAPI._getLayoutPageTemplateEntryIdByName(
+			groupId = "${groupId}",
+			layoutPageTemplateEntryName = "${layoutPageTemplateEntryName}");
+
+		return "${layoutPageTemplateEntryId}";
+	}
+
+	macro setMasterLayoutPlid {
+		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
+
+		var masterLayoutPlid = JSONLayoutpagetemplateAPI._getMasterLayoutPlidByName(
+			groupId = "${groupId}",
+			masterLayoutEntryName = "${masterLayoutEntryName}");
+
+		return "${masterLayoutPlid}";
+	}
+
+	macro setNameMap {
+		Variables.assertDefined(parameterList = "${name}");
+
+		var nameMap = '''{"en_US":"${name}"}''';
+
+		return "${nameMap}";
+	}
+
+	macro setServiceContext {
+		if (!(isSet(serviceContext))) {
+			var serviceContext = JSONServiceContextUtil.setServiceContext(
+				addGuestPermissions = "${addGuestPermissions}",
+				assetCategoryIds = "${assetCategoryIds}",
+				assetTagNames = "${assetTagNames}",
+				workflowAction = "${workflowAction}");
+		}
+
+		return "${serviceContext}";
+	}
+
+}

@@ -1,0 +1,194 @@
+definition {
+
+	@summary = "Directly calls the JSON WS API to add a displayPageTemplateEntry"
+	macro _addDisplayPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${classNameId},${classTypeId},${displayPageTemplateEntryName},${groupId},${masterLayoutPlid},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d layoutPageTemplateCollectionId=0 \
+			  -d classNameId=${classNameId} \
+			  -d classTypeId=${classTypeId} \
+			  -d name=${displayPageTemplateEntryName} \
+			  -d masterLayoutPlid=${masterLayoutPlid} \
+			  -d status=2 \
+			  -d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a globalPageTemplateEntry"
+	macro _addGlobalPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${active},${descriptionMap},${nameMap},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layoutprototype/add-layout-prototype \
+			  -u test@liferay.com:test \
+			  -d nameMap=${nameMap} \
+			  -d descriptionMap=${descriptionMap} \
+			  -d active=${active} \
+			  -d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a layoutPageTemplateCollection"
+	macro _addLayoutPageTemplateCollection {
+		Variables.assertDefined(parameterList = "${description},${groupId},${layoutPageTemplateCollectionName},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/add-layout-page-template-collection \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d name=${layoutPageTemplateCollectionName} \
+			  -d description=${description} \
+			  -d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a layoutPageTemplateEntry"
+	macro _addLayoutPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionId},${layoutPageTemplateEntryName},${masterLayoutPlid},${serviceContext},${status},${type}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d layoutPageTemplateCollectionId=${layoutPageTemplateCollectionId} \
+			  -d name=${layoutPageTemplateEntryName} \
+			  -d type=${type} \
+			  -d masterLayoutPlid=${masterLayoutPlid} \
+			  -d status=${status} \
+			  -d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a masterPageTemplateEntry"
+	macro _addMasterPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${groupId},${masterPageTemplateEntryName},${serviceContext}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/add-layout-page-template-entry \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d layoutPageTemplateCollectionId=0 \
+			  -d name=${masterPageTemplateEntryName} \
+			  -d type=3 \
+			  -d status=2 \
+			  -d serviceContext=${serviceContext}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to delete a layoutPageTemplateEntry"
+	macro _deleteLayoutPageTemplateEntry {
+		Variables.assertDefined(parameterList = "${layoutPageTemplateEntryId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/delete-layout-page-template-entry \
+			  -u test@liferay.com:test \
+			  -d layoutPageTemplateEntryId=${layoutPageTemplateEntryId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Get the layoutPageTemplateCollectionId from a layoutPageTemplateCollection by using groupId and layoutPageTemplateCollectionName"
+	macro _getLayoutPageTemplateCollectionIdByName {
+		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplatecollection/get-layout-page-template-collections \
+				-u test@liferay.com:test \
+				-d groupId=${groupId}
+		''';
+
+		var layoutPageTemplateCollectionId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${layoutPageTemplateCollectionName}')]['layoutPageTemplateCollectionId']");
+		var layoutPageTemplateCollectionId = StringUtil.replace("${layoutPageTemplateCollectionId}", "[&quot;", "");
+		var layoutPageTemplateCollectionId = StringUtil.replace("${layoutPageTemplateCollectionId}", "&quot;]", "");
+
+		if ("${layoutPageTemplateCollectionId}" == "[]") {
+			fail("FAIL. Cannot find layoutPageTemplateCollection.");
+		}
+
+		return "${layoutPageTemplateCollectionId}";
+	}
+
+	@summary = "Get the layoutPageTemplateEntryId from a layoutPageTemplateEntry by using groupId and layoutPageTemplateEntryName"
+	macro _getLayoutPageTemplateEntryIdByName {
+		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d type=${type} \
+			  -d "start=-1" \
+			  -d "end=-1" \
+			  -d -orderByComparator=
+		''';
+
+		var layoutPageTemplateEntryId = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${layoutPageTemplateEntryName}')]['layoutPageTemplateEntryId']");
+		var layoutPageTemplateEntryId = StringUtil.replace("${layoutPageTemplateEntryId}", "[&quot;", "");
+		var layoutPageTemplateEntryId = StringUtil.replace("${layoutPageTemplateEntryId}", "&quot;]", "");
+
+		if ("${layoutPageTemplateEntryId}" == "[]") {
+			fail("FAIL. Cannot find layoutPageTemplateEntry.");
+		}
+
+		return "${layoutPageTemplateEntryId}";
+	}
+
+	@summary = "Get the masterLayoutPlid from a masterLayoutEntry by using groupId and masterLayoutEntryName"
+	macro _getMasterLayoutPlidByName {
+		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layout.layoutpagetemplateentry/get-layout-page-template-entries \
+			  -u test@liferay.com:test \
+			  -d groupId=${groupId} \
+			  -d type=3 \
+			  -d "start=-1" \
+			  -d "end=-1" \
+			  -d -orderByComparator=
+		''';
+
+		var masterLayoutPlid = JSONCurlUtil.post("${curl}", "$.[?(@['name'] == '${masterLayoutEntryName}')]['plid']");
+		var masterLayoutPlid = StringUtil.replace("${masterLayoutPlid}", "[&quot;", "");
+		var masterLayoutPlid = StringUtil.replace("${masterLayoutPlid}", "&quot;]", "");
+
+		if ("${masterLayoutPlid}" == "[]") {
+			fail("FAIL. Cannot find masterLayoutEntry.");
+		}
+
+		return "${masterLayoutPlid}";
+	}
+
+}

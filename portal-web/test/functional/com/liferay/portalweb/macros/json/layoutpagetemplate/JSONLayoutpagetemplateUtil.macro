@@ -1,0 +1,37 @@
+definition {
+
+	@summary = "Get a status of layoutPageTemplate"
+	macro _getStatus {
+		Variables.assertDefined(parameterList = "${layoutPageTemplateStatus}");
+
+		if ("${layoutPageTemplateStatus}" == "Draft") {
+			var status = "2";
+		}
+		else if ("${layoutPageTemplateStatus}" == "Approved") {
+			var status = "0";
+		}
+		else {
+			fail("'layoutPageTemplateStatus' is either invalid or not yet set.");
+		}
+
+		return "${status}";
+	}
+
+	@summary = "Get a type of layoutPageTemplate"
+	macro _getType {
+		Variables.assertDefined(parameterList = "${layoutPageTemplateType}");
+
+		if ("${layoutPageTemplateType}" == "Widget Page Template") {
+			var type = "2";
+		}
+		else if ("${layoutPageTemplateType}" == "Content Page Template") {
+			var type = "0";
+		}
+		else {
+			fail("'layoutPageTemplateType' is either invalid or not yet set.");
+		}
+
+		return "${type}";
+	}
+
+}

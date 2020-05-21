@@ -49,6 +49,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -90,6 +91,7 @@ public class PanelAppMyAccountPermissionsTest {
 			_testPortletId);
 	}
 
+	@Ignore
 	@Test
 	public void testPermissionsAddedForAllCompaniesFromNewPanelApp()
 		throws Exception {
@@ -116,6 +118,7 @@ public class PanelAppMyAccountPermissionsTest {
 			_hasMyAccountPermission(testCompanyId, _testPortletId));
 	}
 
+	@Ignore
 	@Test
 	public void testPermissionsAddedForPanelAppFromNewCompany()
 		throws Exception {

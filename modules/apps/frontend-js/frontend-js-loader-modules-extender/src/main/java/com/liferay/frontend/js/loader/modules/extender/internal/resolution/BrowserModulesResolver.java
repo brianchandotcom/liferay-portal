@@ -17,9 +17,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.resolution;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.config.generator.JSConfigGeneratorPackage;
 import com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details;
-import com.liferay.frontend.js.loader.modules.extender.internal.resolution.adapter.JSBrowserModule;
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.adapter.JSConfigGeneratorBrowserModule;
-import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
@@ -71,7 +69,8 @@ public class BrowserModulesResolver {
 			new BrowserModulesResolution(
 				_jsonFactory, _details.explainResolutions());
 
-		Map<String, BrowserModule> browserModulesMap = _getBrowserModulesMap();
+		BrowserModulesMap browserModulesMap = new BrowserModulesMap(
+			browserModulesResolution, _npmRegistry);
 
 		for (String moduleName : moduleNames) {
 			_resolve(
@@ -162,20 +161,6 @@ public class BrowserModulesResolver {
 		_serviceTracker.close();
 	}
 
-	private Map<String, BrowserModule> _getBrowserModulesMap() {
-		Map<String, BrowserModule> browserModulesMap = new HashMap<>(
-			_browserModulesMap);
-
-		for (JSModule jsModule : _npmRegistry.getResolvedJSModules()) {
-			JSBrowserModule jsBrowserModule = new JSBrowserModule(
-				jsModule, _npmRegistry);
-
-			browserModulesMap.put(jsBrowserModule.getName(), jsBrowserModule);
-		}
-
-		return browserModulesMap;
-	}
-
 	private void _populateMappedModuleNames(
 		BrowserModulesResolution browserModulesResolution) {
 
@@ -207,8 +192,7 @@ public class BrowserModulesResolver {
 	}
 
 	private boolean _processBrowserModule(
-		Map<String, BrowserModule> browserModulesMap,
-		BrowserModule browserModule,
+		BrowserModulesMap browserModulesMap, BrowserModule browserModule,
 		BrowserModulesResolution browserModulesResolution,
 		HttpServletRequest httpServletRequest) {
 
@@ -247,10 +231,10 @@ public class BrowserModulesResolver {
 					browserModulesResolution, httpServletRequest);
 			}
 			else {
-				browserModulesResolution.addResolvedModuleName(
+				browserModulesResolution.addError(
 					StringBundler.concat(
-						":ERROR:Missing dependency '", dependencyModuleName,
-						"' of '", moduleName, "'"));
+						"Missing dependency '", dependencyModuleName, "' of '",
+						moduleName, "'"));
 			}
 		}
 
@@ -284,7 +268,7 @@ public class BrowserModulesResolver {
 	}
 
 	private void _resolve(
-		Map<String, BrowserModule> browserModulesMap, String moduleName,
+		BrowserModulesMap browserModulesMap, String moduleName,
 		BrowserModulesResolution browserModulesResolution,
 		HttpServletRequest httpServletRequest) {
 
@@ -294,8 +278,9 @@ public class BrowserModulesResolver {
 		BrowserModule browserModule = browserModulesMap.get(mappedModuleName);
 
 		if (browserModule == null) {
-			browserModulesResolution.addResolvedModuleName(
-				":ERROR:Missing required module '" + moduleName + "'");
+			browserModulesResolution.addError(
+				StringBundler.concat(
+					"Missing required module '", moduleName, "'"));
 
 			return;
 		}

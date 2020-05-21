@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +43,10 @@ public class BrowserModulesResolution {
 		}
 	}
 
+	public void addError(String error) {
+		_errors.add(error);
+	}
+
 	public void addProcessedModuleName(String moduleName) {
 		_processedModuleNames.add(moduleName);
 	}
@@ -62,6 +67,10 @@ public class BrowserModulesResolution {
 		sb.append(moduleName);
 
 		_explanation.add(0, sb.toString());
+	}
+
+	public void addWarning(String warning) {
+		_warnings.add(warning);
 	}
 
 	public void dedentExplanation() {
@@ -117,6 +126,14 @@ public class BrowserModulesResolution {
 			"configMap", _mappedModuleNamesMap
 		).build();
 
+		if (_errors.size() > 0) {
+			List<String> sortedErrors = new ArrayList<>(_errors);
+
+			Collections.sort(sortedErrors);
+
+			map.put("errors", sortedErrors);
+		}
+
 		if (_explanation != null) {
 			map.put("explanation", _resolvedModuleNames);
 		}
@@ -126,11 +143,20 @@ public class BrowserModulesResolution {
 		map.put("pathMap", _pathsMap);
 		map.put("resolvedModules", _resolvedModuleNames);
 
+		if (_warnings.size() > 0) {
+			List<String> sortedWarnings = new ArrayList<>(_warnings);
+
+			Collections.sort(sortedWarnings);
+
+			map.put("warnings", sortedWarnings);
+		}
+
 		return _jsonFactory.looseSerializeDeep(map);
 	}
 
 	private final Map<String, Map<String, String>> _dependenciesMap =
 		new HashMap<>();
+	private final Set<String> _errors = new HashSet<>();
 	private int _explainIndentation;
 	private List<String> _explanation;
 	private final Map<String, JSONObject> _flagsJSONObjects = new HashMap<>();
@@ -139,5 +165,6 @@ public class BrowserModulesResolution {
 	private final Map<String, String> _pathsMap = new HashMap<>();
 	private final Set<String> _processedModuleNames = new HashSet<>();
 	private final List<String> _resolvedModuleNames = new ArrayList<>();
+	private final Set<String> _warnings = new HashSet<>();
 
 }

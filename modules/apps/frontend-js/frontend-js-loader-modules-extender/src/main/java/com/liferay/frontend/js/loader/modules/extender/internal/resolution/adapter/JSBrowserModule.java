@@ -15,6 +15,7 @@
 package com.liferay.frontend.js.loader.modules.extender.internal.resolution.adapter;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModule;
+import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolution;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
@@ -35,8 +36,12 @@ import java.util.Map;
  */
 public class JSBrowserModule implements BrowserModule {
 
-	public JSBrowserModule(JSModule jsModule, NPMRegistry npmRegistry) {
+	public JSBrowserModule(
+		JSModule jsModule, BrowserModulesResolution browserModulesResolution,
+		NPMRegistry npmRegistry) {
+
 		_jsModule = jsModule;
+		_browserModulesResolution = browserModulesResolution;
 
 		_populateDependenciesMap(npmRegistry);
 	}
@@ -85,12 +90,12 @@ public class JSBrowserModule implements BrowserModule {
 					jsPackage.getJSPackageDependency(dependencyPackageName);
 
 				if (jsPackageDependency == null) {
-					String errorMessage = StringBundler.concat(
-						":ERROR:Missing version constraints for ",
-						dependencyPackageName, " in package.json of ",
-						jsPackage.getResolvedId());
-
-					_dependenciesMap.put(dependencyPackageName, errorMessage);
+					_browserModulesResolution.addError(
+						StringBundler.concat(
+							"Missing version constraints for '",
+							dependencyPackageName, "' in package.json of '",
+							jsPackage.getResolvedId(), "' (required from its '",
+							_jsModule.getName(), "' module)"));
 				}
 				else {
 					JSPackage dependencyJSPackage =
@@ -98,14 +103,14 @@ public class JSBrowserModule implements BrowserModule {
 							jsPackageDependency);
 
 					if (dependencyJSPackage == null) {
-						String errorMessage = StringBundler.concat(
-							":ERROR:Package ", dependencyPackageName,
-							" which is a dependency of ",
-							jsPackage.getResolvedId(),
-							" is not deployed in the server");
-
-						_dependenciesMap.put(
-							dependencyPackageName, errorMessage);
+						_browserModulesResolution.addError(
+							StringBundler.concat(
+								"Package '", dependencyPackageName,
+								"' which is a dependency of '",
+								jsPackage.getResolvedId(),
+								"' is not deployed in the server (required ",
+								"from its '", _jsModule.getResolvedId(),
+								"' module)"));
 					}
 					else {
 						_dependenciesMap.put(
@@ -117,6 +122,7 @@ public class JSBrowserModule implements BrowserModule {
 		}
 	}
 
+	private final BrowserModulesResolution _browserModulesResolution;
 	private final Map<String, String> _dependenciesMap = new HashMap<>();
 	private final JSModule _jsModule;
 

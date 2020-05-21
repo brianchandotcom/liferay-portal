@@ -18,7 +18,7 @@ import ClayModal from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import {fetch, objectToFormData, openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import LanguageSelector from './LanguageSelector';
 
@@ -56,7 +56,11 @@ const FriendlyURLHistoryModal = ({
 
 	useEffect(() => {
 		getFriendlyUrlLocalizations();
-	}, [friendlyURLEntryLocalizationsURL, isMounted]);
+	}, [
+		friendlyURLEntryLocalizationsURL,
+		getFriendlyUrlLocalizations,
+		isMounted,
+	]);
 
 	useEffect(() => {
 		if (loading) {
@@ -99,7 +103,7 @@ const FriendlyURLHistoryModal = ({
 		}
 	}, [friendlyURLEntryLocalizations, loading, languageId]);
 
-	const getFriendlyUrlLocalizations = () => {
+	const getFriendlyUrlLocalizations = useCallback(() => {
 		fetch(friendlyURLEntryLocalizationsURL)
 			.then((response) => response.json())
 			.then((response) => {
@@ -124,58 +128,63 @@ const FriendlyURLHistoryModal = ({
 				logError(error);
 				showToastError();
 			});
-	};
+	}, [friendlyURLEntryLocalizationsURL, isMounted]);
 
 	const handleDeleteFriendlyUrl = (deleteFriendlyURLEntryId) => {
-		sendRequest(deleteFriendlyURLEntryLocalizationURL, deleteFriendlyURLEntryId)
-			.then(({success} = {}) => {
-				if (success) {
-					setFriendlyURLEntryLocalizations(
-						(friendlyURLEntryLocalizations) => ({
-							...friendlyURLEntryLocalizations,
-							[languageId]: {
-								...friendlyURLEntryLocalizations[languageId],
-								history: friendlyURLEntryLocalizations[
-									languageId
-								].history.filter(
-									({friendlyURLEntryId}) =>
-										friendlyURLEntryId !=
-										deleteFriendlyURLEntryId
-								),
-							},
-						})
-					);
-				}
-				else {
-					showToastError();
-				}
-			});
+		sendRequest(
+			deleteFriendlyURLEntryLocalizationURL,
+			deleteFriendlyURLEntryId
+		).then(({success} = {}) => {
+			if (success) {
+				setFriendlyURLEntryLocalizations(
+					(friendlyURLEntryLocalizations) => ({
+						...friendlyURLEntryLocalizations,
+						[languageId]: {
+							...friendlyURLEntryLocalizations[languageId],
+							history: friendlyURLEntryLocalizations[
+								languageId
+							].history.filter(
+								({friendlyURLEntryId}) =>
+									friendlyURLEntryId !=
+									deleteFriendlyURLEntryId
+							),
+						},
+					})
+				);
+			}
+			else {
+				showToastError();
+			}
+		});
 	};
 
 	const handleRestoreFriendlyUrl = (restoreFriendlyUrlEntryId, urlTitle) => {
-		sendRequest(restoreFriendlyURLEntryLocalizationURL, restoreFriendlyUrlEntryId)
-			.then(({success} = {}) => {
-				if (isMounted() && success) {
-					getFriendlyUrlLocalizations();
+		sendRequest(
+			restoreFriendlyURLEntryLocalizationURL,
+			restoreFriendlyUrlEntryId
+		).then(({success} = {}) => {
+			if (isMounted() && success) {
+				getFriendlyUrlLocalizations();
 
-					const inputComponent = Liferay.component(`${portletNamespace}friendlyURL`);
+				const inputComponent = Liferay.component(
+					`${portletNamespace}friendlyURL`
+				);
 
-					if (inputComponent.getSelectedLanguageId() === languageId) {
-						Liferay.component(`${portletNamespace}friendlyURL`).updateInput(
-							urlTitle
-						);
-					}
-					else {
-						Liferay.component(`${portletNamespace}friendlyURL`).updateInputLanguage(
-							urlTitle,
-							languageId
-						);
-					}
+				if (inputComponent.getSelectedLanguageId() === languageId) {
+					Liferay.component(
+						`${portletNamespace}friendlyURL`
+					).updateInput(urlTitle);
 				}
 				else {
-					showToastError();
+					Liferay.component(
+						`${portletNamespace}friendlyURL`
+					).updateInputLanguage(urlTitle, languageId);
 				}
-			});
+			}
+			else {
+				showToastError();
+			}
+		});
 	};
 
 	const sendRequest = (url, friendlyURLEntryId) => {
@@ -187,7 +196,7 @@ const FriendlyURLHistoryModal = ({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.catch(() => {
+			.catch((error) => {
 				logError(error);
 				showToastError();
 			});

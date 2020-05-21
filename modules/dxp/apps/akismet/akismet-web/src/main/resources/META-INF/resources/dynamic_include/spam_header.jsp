@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/com.liferay.message.boards.web/init.jsp" %>
+<%@ include file="/dynamic_include/init.jsp" %>
 
 <%
 MBCategory category = (MBCategory)request.getAttribute("edit_message.jsp-category");

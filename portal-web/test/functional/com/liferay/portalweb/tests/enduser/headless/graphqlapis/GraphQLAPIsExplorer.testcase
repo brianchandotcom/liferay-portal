@@ -1,0 +1,66 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Validate if the user can change the configuration of the API explorer to disable, into the Liferay portal"
+	@priority = "5"
+	test disableApiEplorer {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Third Party",
+			configurationName = "API Explorer",
+			configurationScope = "System Scope");
+
+		FormFields.disableCheckbox(fieldName = "Enable API Explorer");
+
+		Button.clickSubmitButton();
+
+		Alert.viewSuccessMessage();
+	}
+
+	@description = "Validate if the user can change the configuration of the API explorer to enable, into the Liferay portal"
+	@priority = "5"
+	test enableApiEplorer {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Third Party",
+			configurationName = "API Explorer",
+			configurationScope = "System Scope");
+
+		FormFields.enableCheckbox(fieldName = "Enable API Explorer");
+
+		Button.clickSubmitButton();
+
+		Alert.viewSuccessMessage();
+	}
+
+}

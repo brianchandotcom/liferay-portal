@@ -39,7 +39,7 @@ definition {
 				Questions.tearDown();
 			}
 
-			//Page.tearDownCP();
+			Page.tearDownCP();
 
 		}
 	}

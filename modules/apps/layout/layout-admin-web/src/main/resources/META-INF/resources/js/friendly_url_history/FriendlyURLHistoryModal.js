@@ -171,14 +171,10 @@ const FriendlyURLHistoryModal = ({
 				);
 
 				if (inputComponent.getSelectedLanguageId() === languageId) {
-					Liferay.component(
-						`${portletNamespace}friendlyURL`
-					).updateInput(urlTitle);
+					inputComponent.updateInput(urlTitle);
 				}
 				else {
-					Liferay.component(
-						`${portletNamespace}friendlyURL`
-					).updateInputLanguage(urlTitle, languageId);
+					inputComponent.updateInputLanguage(urlTitle, languageId);
 				}
 			}
 			else {

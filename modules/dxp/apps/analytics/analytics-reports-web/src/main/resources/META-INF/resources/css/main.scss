@@ -62,7 +62,11 @@
 	}
 
 	.recharts-legend-item {
-		padding-bottom: 0.5rem;
+		padding-bottom: 8px;
+	}
+
+	.recharts-legend-item:last-child {
+		padding-bottom: 16px;
 	}
 
 	.custom-circle {

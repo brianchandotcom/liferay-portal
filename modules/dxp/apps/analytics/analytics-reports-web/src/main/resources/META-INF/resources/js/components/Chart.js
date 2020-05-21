@@ -312,7 +312,7 @@ export default function Chart({
 						/>
 					)}
 
-					{title && <h5>{title}</h5>}
+					{title && <h5 className="mb-3">{title}</h5>}
 
 					<div className="line-chart">
 						<LineChart
@@ -325,7 +325,10 @@ export default function Chart({
 								iconSize={0}
 								layout="vertical"
 								verticalAlign="top"
-								wrapperStyle={{left: 0, paddingBottom: '1rem'}}
+								wrapperStyle={{
+									left: 0,
+									top: 0,
+								}}
 							/>
 
 							<CartesianGrid

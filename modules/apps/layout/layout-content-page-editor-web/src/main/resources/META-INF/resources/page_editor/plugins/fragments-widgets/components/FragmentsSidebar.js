@@ -29,7 +29,7 @@ import Widget from './Widget';
 const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
 
 export const FragmentPanel = ({collection}) => (
-	<>
+	<ul className="list-unstyled">
 		{collection.fragmentEntries.map((fragmentEntry) => (
 			<Fragment
 				fragmentEntryKey={fragmentEntry.fragmentEntryKey}
@@ -45,22 +45,25 @@ export const FragmentPanel = ({collection}) => (
 		{collection.fragmentCollectionId === CONTENT_DISPLAY_COLLECTION_ID && (
 			<CollectionDisplayCard />
 		)}
-	</>
+	</ul>
 );
 
-export const WidgetPanel = ({category}) =>
-	category.portlets.map((widget) => (
-		<Widget key={widget.portletId} {...widget} />
-	));
+export const WidgetPanel = ({category}) => (
+	<ul className="list-unstyled">
+		{category.portlets.map((widget) => (
+			<Widget key={widget.portletId} {...widget} />
+		))}
+	</ul>
+);
 
-const ElementsPanel = ({elements, searchValue}) => {
+const ElementsPanel = ({elements}) => {
 	const isFragment = elements[0].fragmentCollectionId;
 
-	return elements.map((element) => (
-		<div key={isFragment ? element.fragmentCollectionId : element.title}>
+	return elements.map((element, index) => (
+		<li key={isFragment ? element.fragmentCollectionId : element.title}>
 			<Collapse
 				label={isFragment ? element.name : element.title}
-				open={searchValue.length > 0}
+				open={isFragment ? index < 2 : index < 3}
 			>
 				{isFragment ? (
 					<FragmentPanel collection={element} />
@@ -68,7 +71,7 @@ const ElementsPanel = ({elements, searchValue}) => {
 					<WidgetPanel category={element} />
 				)}
 			</Collapse>
-		</div>
+		</li>
 	));
 };
 
@@ -85,50 +88,54 @@ export default function FragmentsSidebar() {
 			CONTENT_DISPLAY_COLLECTION_ID
 	);
 
-	const filterComponentByName = (item, searchValueLowerCase) =>
+	const removeDuplicatedElements = (elements) => {
+		const unduplicatedElements = [
+			...new Set(elements.map((element) => JSON.stringify(element))),
+		];
+
+		return unduplicatedElements.map((element) => JSON.parse(element));
+	};
+
+	const filterElementByName = (item, searchValueLowerCase) =>
 		item.toLowerCase().indexOf(searchValueLowerCase) !== -1;
 
 	const filteredElements = useMemo(() => {
-		const filterComponents = (elements) => {
+		const filterElements = (elements) => {
 			const searchValueLowerCase = searchValue.toLowerCase();
 			const isFragment = elements[0].fragmentEntries;
 
-			return elements
-				.map((element) =>
-					isFragment
-						? {
-								...element,
-								fragmentEntries: element.fragmentEntries.filter(
-									(fragmentEntry) =>
-										filterComponentByName(
-											fragmentEntry.name,
-											searchValueLowerCase
-										)
-								),
-						  }
-						: {
-								...element,
-								portlets: element.portlets.filter((widget) =>
-									filterComponentByName(
-										widget.title,
-										searchValueLowerCase
-									)
-								),
-						  }
-				)
-				.filter((element) =>
-					isFragment
-						? element.fragmentEntries.length > 0
-						: element.portlets.length > 0
-				);
+			return isFragment
+				? elements.reduce((acc, element) => {
+						const fragmentEntries = element.fragmentEntries.filter(
+							(fragmentEntry) =>
+								filterElementByName(
+									fragmentEntry.name,
+									searchValueLowerCase
+								)
+						);
+
+						return [...acc, ...fragmentEntries];
+				  }, [])
+				: elements.reduce((acc, element) => {
+						const portlets = element.portlets.filter((widget) =>
+							filterElementByName(
+								widget.title,
+								searchValueLowerCase
+							)
+						);
+
+						return [...acc, ...portlets];
+				  }, []);
 		};
 
-		const filteredFragments = filterComponents(fragments);
-		const filteredWidgets = filterComponents(widgets);
+		const filteredFragments = filterElements(fragments);
+		const filteredWidgets = removeDuplicatedElements(
+			filterElements(widgets)
+		);
 
 		return {
-			fragments: filteredFragments,
-			widgets: filteredWidgets,
+			fragments: {fragmentEntries: filteredFragments},
+			widgets: {portlets: filteredWidgets},
 		};
 	}, [fragments, searchValue, widgets]);
 
@@ -168,23 +175,21 @@ export default function FragmentsSidebar() {
 							fade
 						>
 							<ClayTabs.TabPane aria-labelledby="tab-fragments">
-								{!searchValue.length && <LayoutElements />}
+								<ul className="list-unstyled">
+									{!searchValue.length && <LayoutElements />}
 
-								<ElementsPanel
-									elements={filteredElements.fragments}
-									searchValue={searchValue}
-								/>
+									<ElementsPanel elements={fragments} />
 
-								{!searchValue.length &&
-									!contentDisplayCollectionIncluded && (
-										<CollectionDisplay />
-									)}
+									{!searchValue.length &&
+										!contentDisplayCollectionIncluded && (
+											<CollectionDisplay />
+										)}
+								</ul>
 							</ClayTabs.TabPane>
 							<ClayTabs.TabPane aria-labelledby="tab-widgets">
-								<ElementsPanel
-									elements={filteredElements.widgets}
-									searchValue={searchValue}
-								/>
+								<ul className="list-unstyled">
+									<ElementsPanel elements={widgets} />
+								</ul>
 							</ClayTabs.TabPane>
 						</ClayTabs.Content>
 					</>

@@ -12,52 +12,51 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayPopover from '@clayui/popover';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 const ImagePreview = ({imagePreviewURL}) => (
-	<ClayPopover>
+	<ClayPopover disableScroll>
 		<img alt="thumbnail" src={imagePreviewURL} />
 	</ClayPopover>
 );
 
 export default function FragmentCard({icon, imagePreviewURL, name, sourceRef}) {
-	const [focusedItem, setFocusedItem] = useState(false);
-	const [hoveredItem, setHoveredItem] = useState(false);
 	const [showPreview, setShowPreview] = useState(false);
 
 	return (
-		<div
+		<li
 			className="page-editor__fragments-widgets__fragment-card"
-			onFocus={() => setFocusedItem(true)}
-			onMouseLeave={() => setHoveredItem(false)}
-			onMouseOver={() => setHoveredItem(true)}
 			ref={sourceRef}
-			tabIndex="0"
 		>
 			<div className="page-editor__fragments-widgets__fragment-card-body">
 				<ClayIcon className="mr-3" symbol={icon} />
 				<div className="text-truncate title">{name}</div>
 			</div>
 
-			{imagePreviewURL && (hoveredItem || focusedItem) && (
-				<div
-					className="page-editor__fragments-widgets__fragment-card-preview"
-					onBlur={() => setShowPreview(false)}
-					onFocus={() => setShowPreview(true)}
-					onMouseLeave={() => setShowPreview(false)}
-					onMouseOver={() => setShowPreview(true)}
-					tabIndex="0"
-				>
-					<ClayIcon symbol="info-circle-open" />
+			{imagePreviewURL && (
+				<div className="page-editor__fragments-widgets__fragment-card-preview">
+					<ClayButton
+						className="btn-monospaced preview-icon"
+						displayType="unstyled"
+						onBlur={() => setShowPreview(false)}
+						onFocus={() => setShowPreview(true)}
+						onMouseLeave={() => setShowPreview(false)}
+						onMouseOver={() => setShowPreview(true)}
+						small
+					>
+						<ClayIcon symbol="info-circle-open" />
+						<span className="sr-only">{name}</span>
+					</ClayButton>
 					{showPreview && (
 						<ImagePreview imagePreviewURL={imagePreviewURL} />
 					)}
 				</div>
 			)}
-		</div>
+		</li>
 	);
 }
 

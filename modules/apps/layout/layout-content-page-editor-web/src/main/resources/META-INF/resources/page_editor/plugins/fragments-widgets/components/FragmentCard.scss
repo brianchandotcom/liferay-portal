@@ -7,15 +7,31 @@
 	display: flex;
 	height: 32px;
 	margin-bottom: 4px;
+	padding: 0 4px 0 12px;
 
 	&:hover {
 		background-color: $gray-100;
+
+		.preview-icon {
+			opacity: 1;
+		}
+	}
+
+	.preview-icon {
+		opacity: 0;
+
+		.lexicon-icon {
+			fill: $secondary;
+		}
+
+		&:focus {
+			opacity: 1;
+		}
 	}
 
 	&-body {
 		align-items: center;
 		display: flex;
-		padding: 7px $pageEditorSpacing * 2;
 		text-align: center;
 		width: calc(100% - 24px);
 
@@ -29,13 +45,10 @@
 	&-preview {
 		position: relative;
 
-		.lexicon-icon {
-			fill: $secondary;
-		}
-
 		.popover {
 			border-radius: 4px;
-			bottom: 32px;
+			bottom: 40px;
+			display: block;
 			left: unset;
 			right: -8px;
 			top: unset;

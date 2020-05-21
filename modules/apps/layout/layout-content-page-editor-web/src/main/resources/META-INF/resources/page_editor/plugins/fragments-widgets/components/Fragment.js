@@ -56,7 +56,7 @@ export default function Fragment({
 
 	return (
 		<FragmentCard
-			icon={icon}
+			icon={groupId === undefined ? 'web-content' : icon}
 			imagePreviewURL={imagePreviewURL}
 			name={name}
 			sourceRef={sourceRef}

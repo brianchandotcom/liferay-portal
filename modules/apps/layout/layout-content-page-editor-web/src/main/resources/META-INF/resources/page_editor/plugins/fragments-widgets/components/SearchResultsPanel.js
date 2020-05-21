@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -22,29 +23,33 @@ export default function SearchResultsPanel({filteredElements}) {
 
 	return (
 		<>
-			{fragments.length > 0 && (
+			{fragments.length === 0 && widgets.length === 0 ? (
+				<ClayAlert
+					displayType="info"
+					title={Liferay.Language.get('info')}
+				>
+					{Liferay.Language.get(
+						'there-are-no-fragments-or-widgets-on-this-page'
+					)}
+				</ClayAlert>
+			) : (
 				<>
-					<div className="filter-subtitle">
-						{Liferay.Language.get('fragments')}
-					</div>
-					{fragments.map((fragment) => (
-						<div key={fragment.fragmentCollectionId}>
-							<FragmentPanel collection={fragment} />
-						</div>
-					))}
-				</>
-			)}
-
-			{widgets.length > 0 && (
-				<>
-					<div className="filter-subtitle">
-						{Liferay.Language.get('widgets')}
-					</div>
-					{widgets.map((widget) => (
-						<div key={widget.title}>
-							<WidgetPanel category={widget} />
-						</div>
-					))}
+					{fragments.fragmentEntries.length > 0 && (
+						<>
+							<div className="filter-subtitle">
+								{Liferay.Language.get('fragments')}
+							</div>
+							<FragmentPanel collection={fragments} />
+						</>
+					)}
+					{widgets.portlets.length > 0 && (
+						<>
+							<div className="filter-subtitle">
+								{Liferay.Language.get('widgets')}
+							</div>
+							<WidgetPanel category={widgets} />
+						</>
+					)}
 				</>
 			)}
 		</>

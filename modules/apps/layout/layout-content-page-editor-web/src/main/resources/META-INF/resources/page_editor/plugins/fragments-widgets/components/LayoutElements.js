@@ -62,12 +62,12 @@ const LayoutElementCard = ({icon, label, type}) => {
 
 export default function LayoutElements() {
 	return (
-		<>
+		<li>
 			<Collapse
 				label={Liferay.Language.get('layout-elements')}
 				open={false}
 			>
-				<>
+				<ul className="list-unstyled">
 					{layoutElements.map((layoutElement) => {
 						return (
 							<LayoutElementCard
@@ -78,8 +78,8 @@ export default function LayoutElements() {
 							/>
 						);
 					})}
-				</>
+				</ul>
 			</Collapse>
-		</>
+		</li>
 	);
 }

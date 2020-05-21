@@ -288,10 +288,6 @@ export default function Chart({
 		'line-chart-wrapper--loading': chartState.loading,
 	});
 
-	const publishedTodayClasses = className({
-		'line-chart-wrapper--published-today text-center text-secondary': publishedToday,
-	});
-
 	return (
 		<>
 			{timeSpanOptions.length && (
@@ -316,19 +312,19 @@ export default function Chart({
 						/>
 					)}
 
+					{title && <h5>{title}</h5>}
+
 					{validAnalyticsConnection &&
 						publishedToday &&
 						!hasHistoricalWarning && (
-							<div className={publishedTodayClasses}>
+							<div className="mb-2 mt-3 text-secondary">
 								{Liferay.Language.get(
 									'no-data-is-available-yet'
 								)}
 							</div>
 						)}
 
-					{title && <h5>{title}</h5>}
-
-					<div className="line-chart mt-3">
+					<div className="line-chart">
 						<LineChart
 							data={histogram}
 							height={CHART_SIZES.height}
@@ -343,13 +339,6 @@ export default function Chart({
 							/>
 
 							<CartesianGrid
-								horizontalPoints={
-									validAnalyticsConnection &&
-									publishedToday &&
-									!hasHistoricalWarning
-										? [CHART_SIZES.dotRadius]
-										: []
-								}
 								stroke={CHART_COLORS.cartesianGrid}
 								strokeDasharray="0 0"
 								vertical={true}

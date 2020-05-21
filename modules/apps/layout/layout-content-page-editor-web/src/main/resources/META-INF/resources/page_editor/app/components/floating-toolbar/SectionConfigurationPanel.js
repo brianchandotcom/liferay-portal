@@ -25,7 +25,6 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
 import {config} from '../../config/index';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
@@ -45,16 +44,13 @@ const SECTION_TYPE_LABELS = {
 	fluid: Liferay.Language.get('fluid'),
 };
 
+const DEFAULT_HORIZONTAL_PADDING = 0;
+
 export const SectionConfigurationPanel = ({item}) => {
 	const containerTypeId = useId();
 	const dispatch = useDispatch();
 	const sectionPaddingId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-
-	const sectionConfig = {
-		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.section,
-		...item.config,
-	};
 
 	const handleConfigurationValueChanged = (itemConfig) => {
 		dispatch(
@@ -67,7 +63,7 @@ export const SectionConfigurationPanel = ({item}) => {
 	};
 
 	const paddingIdentifiers =
-		sectionConfig.type === 'fluid'
+		item.config.type === 'fluid'
 			? ['paddingTop', 'paddingBottom', 'paddingHorizontal']
 			: ['paddingTop', 'paddingBottom'];
 
@@ -89,16 +85,15 @@ export const SectionConfigurationPanel = ({item}) => {
 							handleConfigurationValueChanged({
 								paddingHorizontal:
 									value === 'fixed'
-										? sectionConfig.paddingHorizontal
-										: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS
-												.section.paddingHorizontal,
+										? item.config.paddingHorizontal
+										: DEFAULT_HORIZONTAL_PADDING,
 								type: value,
 							});
 						}}
 						options={Object.entries(
 							SECTION_TYPE_LABELS
 						).map(([value, label]) => ({label, value}))}
-						value={sectionConfig.type}
+						value={item.config.type}
 					/>
 				</ClayForm.Group>
 
@@ -108,9 +103,7 @@ export const SectionConfigurationPanel = ({item}) => {
 							const inputId = `${sectionPaddingId}${configurationKey}`;
 							const label =
 								SECTION_PADDING_LABELS[configurationKey];
-							const value = String(
-								sectionConfig[configurationKey]
-							);
+							const value = String(item.config[configurationKey]);
 
 							const handleChange = ({target: {value}}) =>
 								handleConfigurationValueChanged({
@@ -148,7 +141,7 @@ export const SectionConfigurationPanel = ({item}) => {
 							backgroundColorCssClass: value,
 						})
 					}
-					selectedColor={sectionConfig.backgroundColorCssClass}
+					selectedColor={item.config.backgroundColorCssClass}
 				></ColorPalette>
 			</ClayForm.Group>
 
@@ -157,7 +150,7 @@ export const SectionConfigurationPanel = ({item}) => {
 					{Liferay.Language.get('background-image')}
 				</p>
 				<SectionBackgroundImageConfiguration
-					backgroundImage={sectionConfig.backgroundImage}
+					backgroundImage={item.config.backgroundImage || {}}
 					onValueChange={handleConfigurationValueChanged}
 				/>
 			</ClayForm.Group>

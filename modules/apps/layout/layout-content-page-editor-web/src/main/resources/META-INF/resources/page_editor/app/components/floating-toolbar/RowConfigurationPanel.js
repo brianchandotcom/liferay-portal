@@ -18,8 +18,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {config} from '../../config/index';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
@@ -113,16 +111,7 @@ export const RowConfigurationPanel = ({item}) => {
 			: Liferay.Language.get('x-module-per-row');
 	};
 
-	const rowConfig = getResponsiveConfig(
-		{
-			...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
-				LAYOUT_DATA_ITEM_TYPES.row
-			],
-			...item.config,
-		},
-		selectedViewportSize
-	);
-
+	const rowConfig = getResponsiveConfig(item.config, selectedViewportSize);
 	const viewportSize = availableViewportSizes[selectedViewportSize];
 
 	return (

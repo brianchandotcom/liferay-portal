@@ -19,7 +19,6 @@ import React from 'react';
 
 import {ControlsProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/components/Controls';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemDefaultConfigurations';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
@@ -74,9 +73,7 @@ const renderComponent = ({
 						items: {
 							'00-main': {
 								children: rootItemChildren,
-								config: {
-									...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root,
-								},
+								config: {},
 								itemId: '00-main',
 								parentId: null,
 								type: LAYOUT_DATA_ITEM_TYPES.root,
@@ -130,9 +127,7 @@ const renderComponent = ({
 						items: {
 							'10-main': {
 								children: masterRootItemChildren,
-								config: {
-									...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS.root,
-								},
+								config: {},
 								itemId: '10-main',
 								parentId: null,
 								type: LAYOUT_DATA_ITEM_TYPES.root,

@@ -20,8 +20,6 @@ import {
 	BackgroundImagePropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch} from '../../store/index';
 
@@ -33,12 +31,7 @@ const Section = React.forwardRef(({children, className, data, item}, ref) => {
 		paddingHorizontal,
 		paddingTop,
 		type,
-	} = {
-		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
-			LAYOUT_DATA_ITEM_TYPES.section
-		],
-		...item.config,
-	};
+	} = item.config;
 
 	const dispatch = useDispatch();
 

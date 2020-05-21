@@ -17,8 +17,6 @@ import React, {useEffect, useState} from 'react';
 
 import {config} from '../../../app/config/index';
 import CollectionSelector from '../../../common/components/CollectionSelector';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import InfoItemService from '../../services/InfoItemService';
 import {useDispatch, useSelector} from '../../store/index';
@@ -33,10 +31,6 @@ const LAYOUT_OPTIONS = [
 	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 5), value: '5'},
 	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6), value: '6'},
 ];
-
-function collectionIsMapped(collectionConfig) {
-	return collectionConfig.collection;
-}
 
 const LIST_STYLE_GRID = '';
 
@@ -54,13 +48,6 @@ export const CollectionConfigurationPanel = ({item}) => {
 	const listStyleId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const collectionConfig = {
-		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
-			LAYOUT_DATA_ITEM_TYPES.collection
-		],
-		...item.config,
-	};
-
 	const handleConfigurationChanged = (itemConfig) => {
 		dispatch(
 			updateItemConfig({
@@ -75,8 +62,8 @@ export const CollectionConfigurationPanel = ({item}) => {
 		DEFAULT_LIST_STYLES
 	);
 
-	const collectionItemType = collectionConfig.collection
-		? collectionConfig.collection.itemType
+	const collectionItemType = item.config.collection
+		? item.config.collection.itemType
 		: null;
 
 	useEffect(() => {
@@ -100,7 +87,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 		<>
 			<ClayForm.Group small>
 				<CollectionSelector
-					collectionTitle={collectionConfig.collection.title}
+					collectionTitle={(item.config.collection || {}).title || ''}
 					itemSelectorURL={config.collectionSelectorURL}
 					label={Liferay.Language.get('collection')}
 					onCollectionSelect={(collection) =>
@@ -111,7 +98,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 					}
 				/>
 			</ClayForm.Group>
-			{collectionIsMapped(item.config) && (
+			{item.config.collection && (
 				<>
 					<ClayForm.Group small>
 						<label htmlFor={listStyleId}>
@@ -162,7 +149,7 @@ export const CollectionConfigurationPanel = ({item}) => {
 								})
 							}
 							type="number"
-							value={collectionConfig.numberOfItems}
+							value={item.config.numberOfItems}
 						/>
 					</ClayForm.Group>
 				</>

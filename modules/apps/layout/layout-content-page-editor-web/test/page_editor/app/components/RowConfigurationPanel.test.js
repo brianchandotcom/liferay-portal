@@ -33,7 +33,7 @@ const renderComponent = (dispatch = () => {}) =>
 			<RowConfigurationPanel
 				item={{
 					children: [],
-					config: {gutters: true},
+					config: {gutters: true, numberOfColumns: 2},
 					itemId: '0',
 					parentId: '',
 					type: '',

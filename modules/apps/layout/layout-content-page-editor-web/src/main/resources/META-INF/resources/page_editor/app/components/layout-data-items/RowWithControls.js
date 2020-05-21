@@ -26,8 +26,6 @@ import {
 import {UPDATE_COL_SIZE_START} from '../../actions/types';
 import updateColSize from '../../actions/updateColSize';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import resizeColumns from '../../thunks/resizeColumns';
@@ -45,17 +43,14 @@ const RowWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
 		const {config} = layoutData.items[item.itemId];
 		const dispatch = useDispatch();
-		const {gutters} = {
-			...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
-				LAYOUT_DATA_ITEM_TYPES.row
-			],
-			...item.config,
-		};
+		const {gutters} = item.config;
 		const isMounted = useIsMounted();
+
 		const [
 			openSaveFragmentCompositionModal,
 			setOpenSaveFragmentCompositionModal,
 		] = useState(false);
+
 		const {observer, onClose} = useModal({
 			onClose: () => {
 				if (isMounted()) {

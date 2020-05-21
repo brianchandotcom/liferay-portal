@@ -25,8 +25,6 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
@@ -46,18 +44,13 @@ const CONTAINER_TYPE_LABELS = {
 	fluid: Liferay.Language.get('fluid'),
 };
 
+const DEFAULT_HORIZONTAL_PADDING = 0;
+
 export const ContainerConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 	const containerPaddingId = useId();
 	const containerTypeId = useId();
-
-	const containerConfig = {
-		...LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
-			LAYOUT_DATA_ITEM_TYPES.container
-		],
-		...item.config,
-	};
 
 	const handleConfigurationValueChanged = (itemConfig) => {
 		dispatch(
@@ -70,7 +63,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 	};
 
 	const paddingIdentifiers =
-		containerConfig.type === 'fluid'
+		item.config.type === 'fluid'
 			? ['paddingTop', 'paddingBottom', 'paddingHorizontal']
 			: ['paddingTop', 'paddingBottom'];
 
@@ -92,16 +85,15 @@ export const ContainerConfigurationPanel = ({item}) => {
 							handleConfigurationValueChanged({
 								paddingHorizontal:
 									value === 'fixed'
-										? containerConfig.paddingHorizontal
-										: LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS
-												.container.paddingHorizontal,
+										? item.config.paddingHorizontal
+										: DEFAULT_HORIZONTAL_PADDING,
 								type: value,
 							});
 						}}
 						options={Object.entries(
 							CONTAINER_TYPE_LABELS
 						).map(([value, label]) => ({label, value}))}
-						value={containerConfig.type}
+						value={item.config.type}
 					/>
 				</ClayForm.Group>
 
@@ -111,9 +103,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 							const inputId = `${containerPaddingId}${configurationKey}`;
 							const label =
 								CONTAINER_PADDING_LABELS[configurationKey];
-							const value = String(
-								containerConfig[configurationKey]
-							);
+							const value = String(item.config[configurationKey]);
 
 							const handleChange = ({target: {value}}) =>
 								handleConfigurationValueChanged({
@@ -151,7 +141,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 							backgroundColorCssClass: value,
 						})
 					}
-					selectedColor={containerConfig.backgroundColorCssClass}
+					selectedColor={item.config.backgroundColorCssClass}
 				></ColorPalette>
 			</ClayForm.Group>
 
@@ -160,7 +150,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 					{Liferay.Language.get('background-image')}
 				</p>
 				<ContainerBackgroundImageConfiguration
-					backgroundImage={containerConfig.backgroundImage}
+					backgroundImage={item.config.backgroundImage || {}}
 					onValueChange={handleConfigurationValueChanged}
 				/>
 			</ClayForm.Group>

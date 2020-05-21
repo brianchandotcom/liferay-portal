@@ -17,21 +17,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
-import {LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS} from '../../config/constants/layoutDataItemDefaultConfigurations';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 
 const Column = React.forwardRef(
 	({children, className, item, ...props}, ref) => {
-		const {
-			config: {
-				size = LAYOUT_DATA_ITEM_DEFAULT_CONFIGURATIONS[
-					LAYOUT_DATA_ITEM_TYPES.column
-				].size,
-			},
-		} = item;
-
 		const layoutData = useSelector((state) => state.layoutData);
 		const parentItem = layoutData.items[item.parentId];
 		const selectedViewportSize = useSelector(
@@ -45,7 +35,7 @@ const Column = React.forwardRef(
 
 		const {modulesPerRow, numberOfColumns} = parentItemConfig;
 
-		let columnSize = (size * numberOfColumns) / modulesPerRow;
+		let columnSize = (item.config.size * numberOfColumns) / modulesPerRow;
 
 		if (numberOfColumns === 5 && modulesPerRow !== numberOfColumns) {
 			columnSize = parentItem.children.indexOf(item.itemId) > 2 ? 6 : 4;

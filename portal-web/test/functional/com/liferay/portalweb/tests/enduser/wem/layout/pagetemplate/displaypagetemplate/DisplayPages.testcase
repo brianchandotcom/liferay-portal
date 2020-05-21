@@ -353,11 +353,12 @@ definition {
 		}
 
 		task ("Add a web content article that uses the display page") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
 
-			WebContent.addArticleCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 

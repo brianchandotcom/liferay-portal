@@ -395,7 +395,6 @@ class Form extends Component {
 			dataProviderInstancesURL,
 			defaultLanguageId,
 			editingLanguageId,
-			emailAddressesURL,
 			fieldSetDefinitionURL,
 			fieldSets,
 			fieldTypes,
@@ -409,6 +408,7 @@ class Form extends Component {
 			rolesURL,
 			rules,
 			shareFormInstanceURL,
+			sharingUserAutocompleteURL,
 			spritemap,
 			view,
 		} = this.props;
@@ -550,10 +550,12 @@ class Form extends Component {
 					/>
 					{published && (
 						<ShareFormModal
-							emailAddressesURL={emailAddressesURL}
 							localizedName={localizedName}
 							portletNamespace={namespace}
 							shareFormInstanceURL={shareFormInstanceURL}
+							sharingUserAutocompleteURL={
+								sharingUserAutocompleteURL
+							}
 							spritemap={spritemap}
 							url={this._createFormURL()}
 						/>
@@ -1147,15 +1149,6 @@ Form.PROPS = {
 	 * @default undefined
 	 * @instance
 	 * @memberof Form
-	 * @type {!string}
-	 */
-
-	emailAddressesURL: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Form
 	 * @type {?string}
 	 */
 
@@ -1297,6 +1290,15 @@ Form.PROPS = {
 	 */
 
 	shareFormInstanceURL: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Form
+	 * @type {!string}
+	 */
+
+	sharingUserAutocompleteURL: Config.string(),
 
 	/**
 	 * Whether to show an alert telling the user about the result of the

@@ -19,7 +19,7 @@ import {Config} from 'metal-state';
 
 class Email extends Component {
 	created() {
-		this._fetchEmailAddresses();
+		this._fetchSharingUserAutocomplete();
 	}
 
 	init() {
@@ -35,14 +35,14 @@ class Email extends Component {
 	}
 
 	render() {
-		const {emailAddresses, emailContent} = this.state;
+		const {emailContent, sharingUserAutocomplete} = this.state;
 
 		return (
 			<div class="share-form-modal-item-email">
-				{emailAddresses && (
+				{sharingUserAutocomplete && (
 					<ClayMultiSelect
 						autocompleteFilterCondition="value"
-						dataSource={emailAddresses}
+						dataSource={sharingUserAutocomplete}
 						events={{
 							inputChange: this._handleInputChange.bind(this),
 							labelItemAdded: this._handleLabelItemAdded.bind(
@@ -117,17 +117,17 @@ class Email extends Component {
 		};
 	}
 
-	_fetchEmailAddresses() {
-		const {emailAddressesURL} = this.props;
+	_fetchSharingUserAutocomplete() {
+		const {sharingUserAutocompleteURL} = this.props;
 
 		makeFetch({
 			method: 'GET',
-			url: emailAddressesURL,
+			url: sharingUserAutocompleteURL,
 		})
 			.then((responseData) => {
 				if (!this.isDisposed()) {
 					this.setState({
-						emailAddresses: responseData.map((data) => {
+						sharingUserAutocomplete: responseData.map((data) => {
 							return {
 								label: data.emailAddress,
 								value: this._getAutoCompleteValue(data),
@@ -211,17 +211,17 @@ Email.PROPS = {
 	 * @default undefined
 	 * @instance
 	 * @memberof Email
-	 * @type {!string}
+	 * @type {!object}
 	 */
-	emailAddressesURL: Config.string(),
+	localizedName: Config.object(),
 
 	/**
 	 * @default undefined
 	 * @instance
 	 * @memberof Email
-	 * @type {!object}
+	 * @type {!string}
 	 */
-	localizedName: Config.object(),
+	sharingUserAutocompleteURL: Config.string(),
 
 	/**
 	 * @default undefined
@@ -240,7 +240,7 @@ Email.STATE = {
 	 * @memberof Email
 	 * @type {!array}
 	 */
-	emailAddresses: Config.array(),
+	emailContent: Config.object().valueFn('_emailContentValueFn'),
 
 	/**
 	 * @default undefined
@@ -248,7 +248,7 @@ Email.STATE = {
 	 * @memberof Email
 	 * @type {!array}
 	 */
-	emailContent: Config.object().valueFn('_emailContentValueFn'),
+	sharingUserAutocomplete: Config.array(),
 };
 
 export default Email;

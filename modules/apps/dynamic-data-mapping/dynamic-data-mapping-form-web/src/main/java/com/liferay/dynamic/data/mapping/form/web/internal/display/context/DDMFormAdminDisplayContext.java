@@ -445,16 +445,6 @@ public class DDMFormAdminDisplayContext {
 		).build();
 	}
 
-	public String getEmailAddressesURL() {
-		LiferayPortletURL emailAddressesURL =
-			(LiferayPortletURL)renderResponse.createResourceURL();
-
-		emailAddressesURL.setCopyCurrentRenderParameters(false);
-		emailAddressesURL.setResourceID("/admin/email_addresses");
-
-		return emailAddressesURL.toString();
-	}
-
 	public List<DropdownItem> getEmptyResultMessageActionItemsDropdownItems() {
 		if (!_formInstancePermissionCheckerHelper.isShowAddButton() ||
 			isSearch()) {
@@ -954,6 +944,17 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		return shareFormInstanceURL.toString();
+	}
+
+	public String getSharingUserAutocompleteURL() {
+		LiferayPortletURL sharingUserAutocompleteURL =
+			(LiferayPortletURL)renderResponse.createResourceURL();
+
+		sharingUserAutocompleteURL.setCopyCurrentRenderParameters(false);
+		sharingUserAutocompleteURL.setResourceID(
+			"/admin/sharing_user_autocomplete");
+
+		return sharingUserAutocompleteURL.toString();
 	}
 
 	public String getSortingURL() throws Exception {

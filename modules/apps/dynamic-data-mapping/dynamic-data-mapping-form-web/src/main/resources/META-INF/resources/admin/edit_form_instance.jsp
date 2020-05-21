@@ -202,8 +202,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 								'<%= dataProviderInstancesURL %>',
 							defaultLanguageId:
 								'<%= ddmFormAdminDisplayContext.getDefaultLanguageId() %>',
-							emailAddressesURL:
-								'<%= ddmFormAdminDisplayContext.getEmailAddressesURL() %>',
 							fieldSetDefinitionURL:
 								'<%= ddmFormAdminDisplayContext.getFieldSetDefinitionURL() %>',
 							fieldSets: <%= ddmFormAdminDisplayContext.getFieldSetsJSONArray() %>,
@@ -221,6 +219,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							saved: <%= formInstance != null %>,
 							shareFormInstanceURL:
 								'<%= ddmFormAdminDisplayContext.getShareFormInstanceURL() %>',
+							sharingUserAutocompleteURL:
+								'<%= ddmFormAdminDisplayContext.getSharingUserAutocompleteURL() %>',
 							showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,
 							spritemap: Liferay.DDM.FormSettings.spritemap,
 							strings: Liferay.DDM.FormSettings.strings,

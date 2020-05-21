@@ -14,7 +14,6 @@ import {cleanup, render, wait} from '@testing-library/react';
 import React from 'react';
 
 import Chart from '../../../src/main/resources/META-INF/resources/js/components/Chart';
-import {StoreContextProvider} from '../../../src/main/resources/META-INF/resources/js/context/store';
 
 const mockReadsDataProvider = jest.fn(() =>
 	Promise.resolve({
@@ -216,39 +215,5 @@ describe('Chart', () => {
 		expect(getByText('226')).toBeInTheDocument();
 
 		expect(getByText('Jan 27 - Feb 2, 2020')).toBeInTheDocument();
-	});
-
-	it('displays a message in the chart if the content was published today', async () => {
-		const testProps = {
-			defaultTimeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},
-			defaultTimeSpanOption: 'last-7-days',
-			languageTag: 'en-US',
-			publishDate: new Date().getTime(),
-		};
-
-		const {getByText} = render(
-			<StoreContextProvider value={{publishedToday: true}}>
-				<Chart
-					dataProviders={[
-						mockViewsDataProvider,
-						mockReadsDataProvider,
-					]}
-					defaultTimeRange={testProps.defaultTimeRange}
-					defaultTimeSpanOption={testProps.defaultTimeSpanOption}
-					languageTag={testProps.languageTag}
-					publishDate={testProps.publishDate}
-					timeSpanOptions={mockTimeSpanOptions}
-				/>
-			</StoreContextProvider>
-		);
-
-		await wait(() =>
-			expect(mockViewsDataProvider).toHaveBeenCalledTimes(1)
-		);
-		await wait(() =>
-			expect(mockReadsDataProvider).toHaveBeenCalledTimes(1)
-		);
-
-		expect(getByText('no-data-is-available-yet')).toBeInTheDocument();
 	});
 });

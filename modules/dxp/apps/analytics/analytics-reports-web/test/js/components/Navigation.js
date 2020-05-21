@@ -236,7 +236,7 @@ describe('Navigation', () => {
 		expect(getByText('an-unexpected-error-occurred')).toBeInTheDocument();
 	});
 
-	it('displays an alert warning message if some data is not available', async () => {
+	it('displays an alert warning message if some data is temporarily unavailable', async () => {
 		const testProps = {
 			authorName: 'John Tester',
 			defaultTimeRange: {endDate: '2020-01-27', startDate: '2020-02-02'},

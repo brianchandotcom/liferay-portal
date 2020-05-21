@@ -75,7 +75,6 @@ public class CalendarBookingIndexerIndexedFieldsTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setGroup(calendarFixture.addGroup());
 		setIndexerClass(CalendarBooking.class);
 	}
 
@@ -145,8 +144,7 @@ public class CalendarBookingIndexerIndexedFieldsTest
 
 		String keywords = "nev";
 
-		Document document = calendarSearchFixture.searchOnlyOne(
-			keywords, LocaleUtil.HUNGARY);
+		Document document = searchOnlyOne(keywords, LocaleUtil.HUNGARY);
 
 		indexedFieldsFixture.postProcessDocument(document);
 
@@ -162,13 +160,13 @@ public class CalendarBookingIndexerIndexedFieldsTest
 			LocalizedValuesMap descriptionLocalizedValuesMap)
 		throws PortalException {
 
-		ServiceContext serviceContext = calendarFixture.getServiceContext();
+		ServiceContext serviceContext = getServiceContext();
 
-		Calendar calendar = calendarFixture.addCalendar(
+		Calendar calendar = addCalendar(
 			nameLocalizedValuesMap, descriptionLocalizedValuesMap,
 			serviceContext);
 
-		return calendarFixture.addCalendarBooking(
+		return addCalendarBooking(
 			titleLocalizedValuesMap, calendar, serviceContext);
 	}
 

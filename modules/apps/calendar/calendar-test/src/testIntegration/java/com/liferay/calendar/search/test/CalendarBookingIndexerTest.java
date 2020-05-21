@@ -60,9 +60,7 @@ public class CalendarBookingIndexerTest extends BaseCalendarIndexerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setGroup(calendarFixture.addGroup());
 		setIndexerClass(CalendarBooking.class);
-		setUser(calendarFixture.addUser());
 	}
 
 	@Test
@@ -76,7 +74,7 @@ public class CalendarBookingIndexerTest extends BaseCalendarIndexerTestCase {
 				}
 			});
 
-		calendarSearchFixture.searchOnlyOne(title, LocaleUtil.US);
+		searchOnlyOne(title, LocaleUtil.US);
 	}
 
 	@Test
@@ -92,7 +90,7 @@ public class CalendarBookingIndexerTest extends BaseCalendarIndexerTestCase {
 				}
 			});
 
-		calendarSearchFixture.searchOnlyOne("nev", LocaleUtil.HUNGARY);
+		searchOnlyOne("nev", LocaleUtil.HUNGARY);
 	}
 
 	@Test
@@ -109,15 +107,10 @@ public class CalendarBookingIndexerTest extends BaseCalendarIndexerTestCase {
 		calendarBookingLocalService.moveCalendarBookingToTrash(
 			TestPropsValues.getUserId(), calendarBooking);
 
-		HitsAssert.assertNoHits(
-			calendarSearchFixture.search(
-				calendarSearchFixture.getSearchContext(title, LocaleUtil.US)));
+		HitsAssert.assertNoHits(search(getSearchContext(title, LocaleUtil.US)));
 
 		HitsAssert.assertOnlyOne(
-			calendarSearchFixture.search(
-				withStatusInTrash(
-					calendarSearchFixture.getSearchContext(
-						title, LocaleUtil.US))));
+			search(withStatusInTrash(getSearchContext(title, LocaleUtil.US))));
 	}
 
 	@Rule
@@ -127,9 +120,9 @@ public class CalendarBookingIndexerTest extends BaseCalendarIndexerTestCase {
 		LocalizedValuesMap titleLocalizedValuesMap) {
 
 		try {
-			ServiceContext serviceContext = calendarFixture.getServiceContext();
+			ServiceContext serviceContext = getServiceContext();
 
-			Calendar calendar = calendarFixture.addCalendar(
+			Calendar calendar = addCalendar(
 				new LocalizedValuesMap() {
 					{
 						put(
@@ -139,7 +132,7 @@ public class CalendarBookingIndexerTest extends BaseCalendarIndexerTestCase {
 				},
 				new LocalizedValuesMap(), serviceContext);
 
-			return calendarFixture.addCalendarBooking(
+			return addCalendarBooking(
 				titleLocalizedValuesMap, calendar, serviceContext);
 		}
 		catch (PortalException portalException) {

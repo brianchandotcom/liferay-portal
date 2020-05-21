@@ -174,13 +174,13 @@ public class CalendarBookingIndexerLocalizedContentTest
 		LocalizedValuesMap descriptionLocalizedValuesMap) {
 
 		try {
-			ServiceContext serviceContext = calendarFixture.getServiceContext();
+			ServiceContext serviceContext = getServiceContext();
 
-			Calendar calendar = calendarFixture.addCalendar(
+			Calendar calendar = addCalendar(
 				nameLocalizedValuesMap, descriptionLocalizedValuesMap,
 				serviceContext);
 
-			return calendarFixture.addCalendarBooking(
+			return addCalendarBooking(
 				titleLocalizedValuesMap, calendar, serviceContext);
 		}
 		catch (PortalException portalException) {
@@ -192,8 +192,7 @@ public class CalendarBookingIndexerLocalizedContentTest
 		String prefix, Locale locale, Map<String, String> titleStrings,
 		String searchTerm) {
 
-		Document document = calendarSearchFixture.searchOnlyOne(
-			searchTerm, locale);
+		Document document = searchOnlyOne(searchTerm, locale);
 
 		FieldValuesAssert.assertFieldValues(
 			titleStrings, prefix, document, searchTerm);

@@ -64,7 +64,6 @@ public class CalendarIndexerLocalizedContentTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setGroup(calendarFixture.addGroup());
 		setIndexerClass(Calendar.class);
 	}
 
@@ -115,8 +114,7 @@ public class CalendarIndexerLocalizedContentTest
 			word1, word2, prefix1, prefix2
 		).forEach(
 			keywords -> {
-				Document document = calendarSearchFixture.searchOnlyOne(
-					keywords, LocaleUtil.JAPAN);
+				Document document = searchOnlyOne(keywords, LocaleUtil.JAPAN);
 
 				FieldValuesAssert.assertFieldValues(
 					nameMap, "name", document, keywords);
@@ -172,8 +170,7 @@ public class CalendarIndexerLocalizedContentTest
 			word1, word2
 		).forEach(
 			keywords -> {
-				Document document = calendarSearchFixture.searchOnlyOne(
-					keywords, LocaleUtil.JAPAN);
+				Document document = searchOnlyOne(keywords, LocaleUtil.JAPAN);
 
 				FieldValuesAssert.assertFieldValues(
 					nameMap, "name", document, keywords);
@@ -188,8 +185,7 @@ public class CalendarIndexerLocalizedContentTest
 		LocalizedValuesMap nameMap, LocalizedValuesMap descriptionMap) {
 
 		try {
-			return calendarFixture.addCalendar(
-				nameMap, descriptionMap, calendarFixture.getServiceContext());
+			return addCalendar(nameMap, descriptionMap, getServiceContext());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

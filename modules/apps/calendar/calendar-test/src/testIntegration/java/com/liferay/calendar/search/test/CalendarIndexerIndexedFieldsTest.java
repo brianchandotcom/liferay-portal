@@ -69,7 +69,6 @@ public class CalendarIndexerIndexedFieldsTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		setGroup(calendarFixture.addGroup());
 		setIndexerClass(Calendar.class);
 	}
 
@@ -108,8 +107,7 @@ public class CalendarIndexerIndexedFieldsTest
 
 		String keywords = "nev";
 
-		Document document = calendarSearchFixture.searchOnlyOne(
-			keywords, LocaleUtil.HUNGARY);
+		Document document = searchOnlyOne(keywords, LocaleUtil.HUNGARY);
 
 		indexedFieldsFixture.postProcessDocument(document);
 
@@ -140,8 +138,7 @@ public class CalendarIndexerIndexedFieldsTest
 
 		String keywords = translatedName;
 
-		Document document = calendarSearchFixture.searchOnlyOne(
-			keywords, LocaleUtil.BRAZIL);
+		Document document = searchOnlyOne(keywords, LocaleUtil.BRAZIL);
 
 		indexedFieldsFixture.postProcessDocument(document);
 
@@ -155,8 +152,7 @@ public class CalendarIndexerIndexedFieldsTest
 			LocalizedValuesMap nameMap, LocalizedValuesMap descriptionMap)
 		throws PortalException {
 
-		return calendarFixture.addCalendar(
-			nameMap, descriptionMap, calendarFixture.getServiceContext());
+		return addCalendar(nameMap, descriptionMap, getServiceContext());
 	}
 
 	protected void populateCalendarDate(

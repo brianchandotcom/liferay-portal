@@ -12,13 +12,16 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+			groupName = "Test Site Name",
+			layoutPageTemplateCollectionName = "Page Template Collection");
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
-
-		Navigator.gotoNavNested(navNested = "Page Template Collection");
-
-		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+			groupName = "Test Site Name",
+			layoutPageTemplateCollectionName = "Page Template Collection",
+			layoutPageTemplateEntryName = "Page Template Name",
+			layoutPageTemplateStatus = "Draft",
+			layoutPageTemplateType = "Content Page Template");
 	}
 
 	tearDown {
@@ -36,6 +39,14 @@ definition {
 	@priority = "5"
 	test MapManualURLToLinkFragment {
 		property portal.acceptance = "true";
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.addFragment(
 			collectionName = "Featured Content",

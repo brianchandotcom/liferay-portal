@@ -434,6 +434,26 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 					new BaseWorkflowHandler<Object>() {
 
 						@Override
+						public AssetRenderer<Object> getAssetRenderer(
+							long classPK) {
+
+							return (AssetRenderer<Object>)
+								ProxyUtil.newProxyInstance(
+									AssetRenderer.class.getClassLoader(),
+									new Class<?>[] {AssetRenderer.class},
+									(proxy, method, args) -> {
+										if (Objects.equals(
+												method.getName(),
+												"hasViewPermission")) {
+
+											return true;
+										}
+
+										return method.getDefaultValue();
+									});
+						}
+
+						@Override
 						public String getClassName() {
 							return _TEST_CONTEXT_ENTRY_CLASS_NAME;
 						}

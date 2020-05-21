@@ -32,18 +32,16 @@ import java.util.List;
 public class AccountEntryDisplay {
 
 	public static AccountEntryDisplay of(AccountEntry accountEntry) {
-		return new AccountEntryDisplay(accountEntry);
-	}
-
-	public static AccountEntryDisplay of(long accountEntryId) {
-		AccountEntry accountEntry =
-			AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryId);
-
 		if (accountEntry != null) {
 			return new AccountEntryDisplay(accountEntry);
 		}
 
 		return _EMPTY_INSTANCE;
+	}
+
+	public static AccountEntryDisplay of(long accountEntryId) {
+		return of(
+			AccountEntryLocalServiceUtil.fetchAccountEntry(accountEntryId));
 	}
 
 	public long getAccountEntryId() {

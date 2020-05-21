@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.exportimport.lar,\
 	com.liferay.exportimport.portlet.data.handler.helper,\
 	com.liferay.exportimport.portlet.data.handler.provider,\
+	com.liferay.exportimport.portlet.data.handler.util,\
 	com.liferay.exportimport.portlet.preferences.processor,\
 	com.liferay.exportimport.portlet.preferences.processor.base,\
 	com.liferay.exportimport.resources.importer.portlet.preferences,\

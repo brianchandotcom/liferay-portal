@@ -18,6 +18,7 @@ import com.liferay.akismet.client.AkismetClient;
 import com.liferay.akismet.internal.application.list.ModerationPanelApp;
 import com.liferay.akismet.internal.portlet.ModerationPortlet;
 import com.liferay.akismet.internal.portlet.action.AkismetEditMessageMVCActionCommand;
+import com.liferay.akismet.internal.servlet.taglib.MBMessageHeaderJSPDynamicInclude;
 import com.liferay.osgi.util.ComponentUtil;
 
 import org.osgi.service.component.ComponentContext;
@@ -34,7 +35,8 @@ public class ComponentEnabler {
 	protected void activate(ComponentContext componentContext) {
 		ComponentUtil.enableComponents(
 			AkismetClient.class, null, componentContext,
-			AkismetEditMessageMVCActionCommand.class, ModerationPanelApp.class,
+			AkismetEditMessageMVCActionCommand.class,
+			MBMessageHeaderJSPDynamicInclude.class, ModerationPanelApp.class,
 			ModerationPortlet.class);
 	}
 

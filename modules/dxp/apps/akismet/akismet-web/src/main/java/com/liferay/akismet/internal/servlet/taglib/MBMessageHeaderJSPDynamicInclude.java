@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Jamie Sammons
  */
-@Component(immediate = true, service = DynamicInclude.class)
+@Component(enabled = false, immediate = true, service = DynamicInclude.class)
 public class MBMessageHeaderJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override

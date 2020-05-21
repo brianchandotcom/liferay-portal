@@ -59,11 +59,17 @@ public class ServiceBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		final Project project, ServiceBuilderPlugin serviceBuilderPlugin) {
 
+		// Plugins
+
 		GradleUtil.applyPlugin(project, DBSupportPlugin.class);
+
+		// Dependencies
 
 		PortalTools.addPortalToolDependencies(
 			project, ServiceBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
+
+		// Tasks
 
 		TaskProvider<BuildDBTask> buildDBTaskProvider =
 			GradleUtil.addTaskProvider(
@@ -87,6 +93,8 @@ public class ServiceBuilderDefaultsPlugin
 			buildServiceTaskProvider, cleanServiceBuilderTaskProvider);
 		_configureTaskProcessResourcesProvider(
 			buildServiceTaskProvider, processResourcesTaskProvider);
+
+		// Other
 
 		TaskContainer taskContainer = project.getTasks();
 

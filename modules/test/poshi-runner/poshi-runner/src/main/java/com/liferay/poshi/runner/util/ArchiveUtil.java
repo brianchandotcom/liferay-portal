@@ -39,11 +39,7 @@ public class ArchiveUtil {
 	public static void archive(File sourceFile, File targetFile) {
 		String targetFileName = targetFile.getName();
 
-		if (!(targetFileName.endsWith(".jar") ||
-			  targetFileName.endsWith(".lar") ||
-			  targetFileName.endsWith(".war") ||
-			  targetFileName.endsWith(".zip"))) {
-
+		if (!targetFileName.matches(".*\\.(jar|lar|war|zip)")) {
 			throw new RuntimeException("Invalid archive path " + targetFile);
 		}
 

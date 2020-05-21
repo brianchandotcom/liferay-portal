@@ -73,12 +73,21 @@ public class ServiceBuilderDefaultsPlugin
 			GradleUtil.getTaskProvider(
 				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME,
 				BuildServiceTask.class);
+		TaskProvider<CleanServiceBuilderTask> cleanServiceBuilderTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, DBSupportPlugin.CLEAN_SERVICE_BUILDER_TASK_NAME,
+				CleanServiceBuilderTask.class);
+		TaskProvider<Copy> processResourcesTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME, Copy.class);
 
 		_configureTaskBuildDBProvider(
 			buildDBTaskProvider, buildServiceTaskProvider);
+		_configureTaskCleanServiceBuilderProvider(
+			buildServiceTaskProvider, cleanServiceBuilderTaskProvider);
+		_configureTaskProcessResourcesProvider(
+			buildServiceTaskProvider, processResourcesTaskProvider);
 
-		_configureTaskCleanServiceBuilder(buildServiceTask);
-		_configureTaskProcessResources(buildServiceTask);
 		_configureTasksBuildService(project);
 
 		GradleUtil.withPlugin(
@@ -174,48 +183,66 @@ public class ServiceBuilderDefaultsPlugin
 		buildServiceTask.setOsgiModule(true);
 	}
 
-	private void _configureTaskCleanServiceBuilder(
-		final BuildServiceTask buildServiceTask) {
+	private void _configureTaskCleanServiceBuilderProvider(
+		final TaskProvider<BuildServiceTask> buildServiceTaskProvider,
+		TaskProvider<CleanServiceBuilderTask> cleanServiceBuilderTaskProvider) {
 
-		CleanServiceBuilderTask cleanServiceBuilderTask =
-			(CleanServiceBuilderTask)GradleUtil.getTask(
-				buildServiceTask.getProject(),
-				DBSupportPlugin.CLEAN_SERVICE_BUILDER_TASK_NAME);
-
-		cleanServiceBuilderTask.setServiceXmlFile(
-			new Callable<File>() {
+		cleanServiceBuilderTaskProvider.configure(
+			new Action<CleanServiceBuilderTask>() {
 
 				@Override
-				public File call() throws Exception {
-					return buildServiceTask.getInputFile();
+				public void execute(
+					CleanServiceBuilderTask cleanServiceBuilderTask) {
+
+					cleanServiceBuilderTask.setServiceXmlFile(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								BuildServiceTask buildServiceTask =
+									buildServiceTaskProvider.get();
+
+								return buildServiceTask.getInputFile();
+							}
+
+						});
 				}
 
 			});
 	}
 
 	@SuppressWarnings("serial")
-	private void _configureTaskProcessResources(
-		final BuildServiceTask buildServiceTask) {
+	private void _configureTaskProcessResourcesProvider(
+		final TaskProvider<BuildServiceTask> buildServiceTaskProvider,
+		TaskProvider<Copy> processResourcesTaskProvider) {
 
-		Copy copy = (Copy)GradleUtil.getTask(
-			buildServiceTask.getProject(),
-			JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+		processResourcesTaskProvider.configure(
+			new Action<Copy>() {
 
-		copy.into(
-			"META-INF",
-			new Closure<Void>(copy) {
+				@Override
+				public void execute(Copy processResourcesTask) {
+					processResourcesTask.into(
+						"META-INF",
+						new Closure<Void>(processResourcesTask) {
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					File inputFile = buildServiceTask.getInputFile();
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								BuildServiceTask buildServiceTask =
+									buildServiceTaskProvider.get();
 
-					File dir = inputFile.getParentFile();
+								File inputFile =
+									buildServiceTask.getInputFile();
 
-					String dirName = dir.getName();
+								File dir = inputFile.getParentFile();
 
-					if (!dirName.equals("META-INF")) {
-						copySpec.from(inputFile);
-					}
+								String dirName = dir.getName();
+
+								if (!dirName.equals("META-INF")) {
+									copySpec.from(inputFile);
+								}
+							}
+
+						});
 				}
 
 			});

@@ -39,6 +39,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEVICE_TYPE</td>
+	<td>//button[contains(@class,'btn')][@aria-label='${key_deviceType}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWPOINT_HANDLE</td>
+	<td>//div[contains(@class,'page-editor__layout-viewport__handle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEWPOINT_RESIZER</td>
+	<td>//div[contains(@class,'page-editor__layout-viewport__resizer')][contains(@style,'${key_style}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

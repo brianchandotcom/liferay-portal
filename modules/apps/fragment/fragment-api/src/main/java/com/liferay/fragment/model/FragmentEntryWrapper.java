@@ -337,6 +337,11 @@ public class FragmentEntryWrapper
 	}
 
 	@Override
+	public String getIcon() {
+		return model.getIcon();
+	}
+
+	@Override
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
 
@@ -744,6 +749,11 @@ public class FragmentEntryWrapper
 	@Override
 	public void setHtml(String html) {
 		model.setHtml(html);
+	}
+
+	@Override
+	public void setIcon(String icon) {
+		model.setIcon(icon);
 	}
 
 	@Override

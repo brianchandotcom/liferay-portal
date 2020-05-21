@@ -63,12 +63,16 @@ public interface FragmentComposition
 	public com.liferay.portal.kernel.json.JSONObject getDataJSONObject()
 		throws Exception;
 
+	public String getIcon();
+
 	public String getImagePreviewURL(
 		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 
 	public void populateZipWriter(
 			com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
 		throws Exception;
+
+	public void setIcon(String icon);
 
 	public void setImagePreviewURL(String imagePreviewURL);
 

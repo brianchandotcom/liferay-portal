@@ -299,6 +299,7 @@ public abstract class BaseFragmentCollectionContributor
 		fragmentEntry.setName(name);
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
+		fragmentEntry.setIcon(jsonObject.getString("icon", "picture"));
 		fragmentEntry.setJs(js);
 		fragmentEntry.setConfiguration(configuration);
 		fragmentEntry.setType(type);

@@ -74,6 +74,11 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
+	public String getIcon() {
+		return "web-content";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "content");
 	}

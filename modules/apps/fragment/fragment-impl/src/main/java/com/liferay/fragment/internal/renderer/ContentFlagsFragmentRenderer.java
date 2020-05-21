@@ -78,6 +78,11 @@ public class ContentFlagsFragmentRenderer
 	}
 
 	@Override
+	public String getIcon() {
+		return "web-content";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);

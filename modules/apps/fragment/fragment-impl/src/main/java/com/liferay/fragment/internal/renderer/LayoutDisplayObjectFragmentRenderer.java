@@ -47,6 +47,11 @@ public class LayoutDisplayObjectFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
+	public String getIcon() {
+		return "web-content";
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());

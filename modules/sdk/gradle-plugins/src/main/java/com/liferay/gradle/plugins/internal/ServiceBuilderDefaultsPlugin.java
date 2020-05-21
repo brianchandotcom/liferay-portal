@@ -88,7 +88,18 @@ public class ServiceBuilderDefaultsPlugin
 		_configureTaskProcessResourcesProvider(
 			buildServiceTaskProvider, processResourcesTaskProvider);
 
-		_configureTasksBuildService(project);
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildServiceTask.class,
+			new Action<BuildServiceTask>() {
+
+				@Override
+				public void execute(BuildServiceTask buildServiceTask) {
+					_configureTaskBuildService(buildServiceTask);
+				}
+
+			});
 
 		GradleUtil.withPlugin(
 			project, LiferayBasePlugin.class,
@@ -260,21 +271,6 @@ public class ServiceBuilderDefaultsPlugin
 				@Override
 				public void execute(BuildDBTask buildDBTask) {
 					_configureTaskBuildDBClasspath(buildDBTask, classpath);
-				}
-
-			});
-	}
-
-	private void _configureTasksBuildService(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildServiceTask.class,
-			new Action<BuildServiceTask>() {
-
-				@Override
-				public void execute(BuildServiceTask buildServiceTask) {
-					_configureTaskBuildService(buildServiceTask);
 				}
 
 			});

@@ -8170,7 +8170,9 @@ web.server.http.port=8080
 
 admin.email.from.address=test@liferay.com
 
-announcements.email.to.address=noreply@liferay.com</echo>
+announcements.email.to.address=noreply@liferay.com
+
+login.secure.forgot.password=false</echo>
 
 		<if>
 			<equals arg1="${database.type}" arg2="oracle" />

@@ -15,7 +15,7 @@
 import React from 'react';
 
 export default function FormRow({children}) {
-	return <div className="page-editor__form-row">{children}</div>;
+	return <div className="mb-3 page-editor__form-row">{children}</div>;
 }
 
 FormRow.Column = ({children}) => (

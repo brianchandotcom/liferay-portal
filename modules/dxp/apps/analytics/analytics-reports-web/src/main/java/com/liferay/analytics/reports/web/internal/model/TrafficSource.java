@@ -107,9 +107,7 @@ public class TrafficSource {
 		_trafficShare = trafficShare;
 	}
 
-	public JSONObject toJSONObject(
-		String helpMessage, JSONArray keywordsJSONArray, String title) {
-
+	public JSONObject toJSONObject(String helpMessage, String title) {
 		return JSONUtil.put(
 			"helpMessage", helpMessage
 		).put(

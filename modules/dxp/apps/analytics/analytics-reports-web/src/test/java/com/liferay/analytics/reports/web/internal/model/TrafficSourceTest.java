@@ -60,9 +60,7 @@ public class TrafficSourceTest {
 			).put(
 				"value", trafficSource.getTrafficAmount()
 			).toString(),
-			String.valueOf(
-				trafficSource.toJSONObject(
-					helpMessage, JSONFactoryUtil.createJSONArray(), title)));
+			String.valueOf(trafficSource.toJSONObject(helpMessage, title)));
 	}
 
 	@Test
@@ -143,56 +141,7 @@ public class TrafficSourceTest {
 			).put(
 				"value", trafficSource.getTrafficAmount()
 			).toString(),
-			String.valueOf(
-				trafficSource.toJSONObject(
-					helpMessage,
-					JSONUtil.putAll(
-						JSONUtil.put(
-							"keyword", "liferay"
-						).put(
-							"position", 1
-						).put(
-							"searchVolume", 3600
-						).put(
-							"traffic", 2882
-						),
-						JSONUtil.put(
-							"keyword", "liferay inc"
-						).put(
-							"position", 1
-						).put(
-							"searchVolume", 755
-						).put(
-							"traffic", 855
-						),
-						JSONUtil.put(
-							"keyword", "liferay portal"
-						).put(
-							"position", 1
-						).put(
-							"searchVolume", 556
-						).put(
-							"traffic", 850
-						),
-						JSONUtil.put(
-							"keyword", "what is liferay"
-						).put(
-							"position", 1
-						).put(
-							"searchVolume", 390
-						).put(
-							"traffic", 312
-						),
-						JSONUtil.put(
-							"keyword", "liferay india"
-						).put(
-							"position", 1
-						).put(
-							"searchVolume", 390
-						).put(
-							"traffic", 312
-						)),
-					title)));
+			String.valueOf(trafficSource.toJSONObject(helpMessage, title)));
 	}
 
 }

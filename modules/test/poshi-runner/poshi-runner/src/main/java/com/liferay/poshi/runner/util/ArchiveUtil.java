@@ -47,22 +47,6 @@ public class ArchiveUtil {
 			throw new RuntimeException("Invalid archive path " + targetFile);
 		}
 
-		targetFile.delete();
-
-		File parentFile = targetFile.getParentFile();
-
-		parentFile.mkdirs();
-
-		File tmpDir = new File(sourceFile.getParentFile(), "tmp");
-
-		tmpDir.mkdir();
-
-		tmpDir.deleteOnExit();
-
-		File tmpFile = new File(tmpDir, targetFileName);
-
-		tmpFile.delete();
-
 		List<ArchiveZipEntry> archiveZipEntries = new ArrayList<>();
 
 		try {
@@ -90,6 +74,22 @@ public class ArchiveUtil {
 					}
 
 				});
+
+			targetFile.delete();
+
+			File parentFile = targetFile.getParentFile();
+
+			parentFile.mkdirs();
+
+			File tmpDir = new File(sourceFile.getParentFile(), "tmp");
+
+			tmpDir.mkdir();
+
+			tmpDir.deleteOnExit();
+
+			File tmpFile = new File(tmpDir, targetFileName);
+
+			tmpFile.delete();
 
 			try (ZipOutputStream zipOutputStream = new ZipOutputStream(
 					new FileOutputStream(tmpFile))) {

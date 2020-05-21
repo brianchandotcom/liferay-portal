@@ -39,7 +39,7 @@ definition {
 				Questions.tearDown();
 			}
 
-			Page.tearDownCP();
+			//Page.tearDownCP();
 		}
 	}
 
@@ -147,4 +147,40 @@ definition {
 			locator1 = "Questions#TAGS_LIST_TAB_USED_TIMES");
 	}
 
+	@description = "Validate if the user can search by tags in the tags search field"
+	@priority = "4"
+	test ValidateSearchByQuestionTags {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Question ValidateSearchByQuestionTags",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			categoryName = "Question ValidateSearchByQuestionTags",
+			tagField = "tagvalidatesearchbyquestiontags",
+			titleField = "Title ValidateSearchByQuestionTags",
+			bodyField = "Body ValidateSearchByQuestionTags");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Question ValidateSearchByQuestionTags",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Pause(locator = "3000");
+
+		Click(
+			key_questionTabField = "Tags",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+
+		Type(
+			locator1 = "Questions#SEARCH_QUESTION_FIELD",
+			value1 = "tagvalidatesearchbyquestiontags");
+
+		Pause(locator = "3000");
+
+		AssertElementPresent(
+			key_tagName = "tagvalidatesearchbyquestiontags",
+			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
+	}
 }

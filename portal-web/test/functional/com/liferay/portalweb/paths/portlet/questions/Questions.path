@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_QUESTION_FIELD</td>
+	<td>//div[contains(@class,'questions')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAGS_LIST_TAB_NAMES</td>
 	<td>//a[contains(@href, '${key_tagName}')]</td>
 	<td></td>

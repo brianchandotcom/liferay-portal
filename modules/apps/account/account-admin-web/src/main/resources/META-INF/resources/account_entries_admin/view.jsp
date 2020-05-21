@@ -76,8 +76,8 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					href="<%= rowURL %>"
-					name="account-owner"
-					value=""
+					name="organizations"
+					property="organizationNames"
 				/>
 
 				<liferay-ui:search-container-column-text

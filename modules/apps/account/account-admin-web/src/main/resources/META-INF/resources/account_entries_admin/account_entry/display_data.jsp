@@ -34,7 +34,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 			</aui:input>
 
 			<c:if test="<%= accountEntryDisplay != null %>">
-				<aui:input label="account-id" name="accountEntryId" readonly="true" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+				<aui:input cssClass="disabled" label="account-id" name="accountEntryId" readonly="true" type="text" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
 			</c:if>
 		</clay:col>
 

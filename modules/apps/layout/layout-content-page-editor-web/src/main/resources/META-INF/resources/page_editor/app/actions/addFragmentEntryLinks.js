@@ -25,8 +25,8 @@ export default function addFragmentEntryLinks({
 	layoutData,
 }) {
 	return {
-		addedItemId,
 		fragmentEntryLinks,
+		itemId: addedItemId,
 		layoutData,
 		type: ADD_FRAGMENT_ENTRY_LINKS,
 	};

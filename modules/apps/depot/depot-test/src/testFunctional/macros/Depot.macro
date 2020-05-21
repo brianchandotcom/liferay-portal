@@ -33,6 +33,124 @@ definition {
 		}
 	}
 
+	macro assignAssetLibraryRole {
+		LexiconCard.clickEllipsisItem(
+			card = "${resourceName}",
+			item = "Assign Roles");
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		LexiconCard.checkCardCheckbox(card = "${roleTitle}");
+
+		SelectFrameTop();
+
+		Button.clickDone();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro assignOrganizationAsMember {
+		var key_card = "${orgName}";
+
+		Navigator.gotoNavItem(navItem = "Organizations");
+
+		LexiconEntry.gotoAdd();
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		AssertTextEquals(
+			locator1 = "LexiconCard#CARD_TITLE",
+			value1 = "${orgName}");
+
+		LexiconCard.checkCardCheckbox(card = "${orgName}");
+
+		SelectFrameTop();
+
+		Button.clickDone();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro assignUserAsMember {
+		var key_cardText = "${userScreenName}";
+
+		LexiconEntry.gotoAdd();
+
+		AssertVisible(locator1 = "Button#DONE");
+
+		if (isSet(depotName)) {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
+			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_ASSET_LIBRARY");
+		}
+
+		else {
+			LiferayEvent.waitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
+
+			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
+		}
+
+		Pause(locator1 = "3000");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		if (isSet(userMiddleName)) {
+			LexiconCard.checkCardCheckbox(card = "${userFirstName} ${userMiddleName} ${userLastName}");
+		}
+		else {
+			LexiconCard.checkCardCheckbox(card = "${userFirstName} ${userLastName}");
+		}
+
+		SelectFrameTop();
+
+		Button.clickDone();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro assignUserGroupAsMember {
+		Navigator.gotoNavItem(navItem = "User Groups");
+
+		Pause(locator1 = "5000");
+
+		LexiconEntry.gotoAdd();
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Pause(locator1 = "3000");
+
+		LexiconEntry.selectEntry(rowEntry = "${userGroupName}");
+
+		SelectFrameTop();
+
+		Button.clickDone();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro changeLanguagesOrder {
 		var key_fromRowNumber = "${fromRowNumber}";
 		var key_toRowNumber = "${toRowNumber}";
@@ -343,6 +461,83 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro removeMember {
+		var key_cardText = "${userScreenName}";
+
+		Search.searchCP(searchTerm = "${userScreenName}");
+
+		if (isSet(userMiddleName)) {
+			LexiconCard.viewCardTitle(card = "${userFirstName} ${userMiddleName} ${userLastName}");
+		}
+		else {
+			LexiconCard.viewCardTitle(card = "${userFirstName} ${userLastName}");
+		}
+
+		LexiconCard.viewCardSubtitle(
+			card = "${userFirstName} ${userLastName}",
+			cardSubtitle = "${userScreenName}");
+
+		LexiconCard.clickEllipsisItem(
+			card = "${userScreenName}",
+			item = "Remove Membership");
+
+		Confirm();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro removeOrganization {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		if (isSet(bulkEditing)) {
+			for (var orgName : list "${orgNameList}") {
+				Check(
+					key_tableEntry = "${userGroupName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
+
+			ClickNoError(locator1 = "Icon#DELETE");
+		}
+		else {
+			Search.searchCP(searchTerm = "${orgName}");
+
+			LexiconTable.clickEllipsisItem(
+				item = "Remove Membership",
+				tableEntry = "${orgName}");
+		}
+
+		Confirm();
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro removeUserGroup {
+		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+		if (isSet(bulkEditing)) {
+			for (var userGroupName : list "${userGroupNameList}") {
+				Check(
+					key_tableEntry = "${userGroupName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
+
+			ClickNoError(locator1 = "Icon#DELETE");
+		}
+		else {
+			Search.searchCP(searchTerm = "${userGroupName}");
+
+			Click.waitForMenuToggleJSClick(
+				key_rowEntry = "${userGroupName}",
+				locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Remove Membership");
+		}
+
+		Confirm();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro view4LanguagesOrder {
 		AssertTextEquals.assertPartialText(
 			locator1 = "LanguageConfiguration#DEPOT_LANGUAGE_LOCALIZATION_NAME_1",
@@ -580,6 +775,47 @@ definition {
 			localizationName2 = "${localizationName2}",
 			localizationName3 = "${localizationName3}",
 			localizationName4 = "${localizationName4}");
+	}
+
+	macro viewMember {
+		LexiconCard.viewCardPresent(card = "${userFirstName} ${userLastName}");
+
+		LexiconCard.viewCardTitle(card = "${userFirstName} ${userLastName}");
+
+		LexiconCard.viewCardSubtitle(
+			card = "${userFirstName} ${userLastName}",
+			cardSubtitle = "${userScreenName}");
+
+		AssertVisible(
+			key_card = "${userFirstName} ${userLastName}",
+			locator1 = "LexiconCard#CARD_ELLIPSIS");
+	}
+
+	macro viewMemberOrganization {
+		var key_tableEntry = "${orgName}";
+
+		Navigator.gotoNavItem(navItem = "Organizations");
+
+		AssertTextEquals(
+			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
+			value1 = "${orgName}");
+
+		if ("${toolTip}" == "true") {
+			MouseOver(locator1 = "Icon#TOOLTIP");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Users are not allowed to request membership. Only site administrators can add new members.");
+		}
+	}
+
+	macro viewMemberUserGroup {
+		Navigator.gotoNavItem(navItem = "User Groups");
+
+		AssertTextEquals(
+			key_userGroupName = "${userGroupName}",
+			locator1 = "SiteMemberships#USER_GROUPS_TABLE_NAME",
+			value1 = "${userGroupName}");
 	}
 
 	macro viewNoConnectedSiteCP {

@@ -259,7 +259,7 @@ definition {
 		// Wrokaround LPS-89026 and LPS-113094
 
 		SearchResultPortlet.viewMultipleSearchResults(
-			resultsList = "WC WebContent Title/Web Content Article,Blogs Entry Content/Blogs Entry",
+			resultsList = "WC WebContent Title/Web Content Article,Blogs Entry Title/Blogs Entry",
 			searchTerm = "test");
 	}
 

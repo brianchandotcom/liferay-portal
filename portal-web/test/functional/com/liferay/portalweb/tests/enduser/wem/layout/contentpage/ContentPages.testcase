@@ -1222,6 +1222,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-110707. Can resize the width of device viewport when edit content page."
+	@priority = "5"
+	test ResizeDeviceViewpoint {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "responsiveEnabled = true";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		Click.clickNoMouseOver(
+			key_deviceType = "Desktop",
+			locator1 = "PageEditor#DEVICE_TYPE");
+
+		AssertElementNotPresent(locator1 = "PageEditor#VIEWPOINT_HANDLE");
+
+		Click.clickNoMouseOver(
+			key_deviceType = "Tablet",
+			locator1 = "PageEditor#DEVICE_TYPE");
+
+		AssertVisible(locator1 = "PageEditor#VIEWPOINT_HANDLE");
+
+		DragAndDrop.DragAndDropObject(
+			locator1 = "PageEditor#VIEWPOINT_HANDLE",
+			position = "200,0");
+
+		AssertElementPresent(
+			key_style = "992px",
+			locator1 = "PageEditor#VIEWPOINT_RESIZER");
+
+		Click(
+			key_deviceType = "Portrait Phone",
+			locator1 = "PageEditor#DEVICE_TYPE");
+
+		AssertVisible(locator1 = "PageEditor#VIEWPOINT_HANDLE");
+
+		DragAndDrop.DragAndDropObject(
+			locator1 = "PageEditor#VIEWPOINT_HANDLE",
+			position = "200,0");
+
+		AssertElementPresent(
+			key_style = "576px",
+			locator1 = "PageEditor#VIEWPOINT_RESIZER");
+	}
+
 	@description = "This is a test for LPS-107285. When the Section fragment is duplicated, the configuration of it and its components should also be duplicated."
 	@priority = "4"
 	test ViewConfigurationDuplicatedWhenDuplicateSectionWithHeading {

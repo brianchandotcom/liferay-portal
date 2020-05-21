@@ -54,6 +54,33 @@ const FriendlyURLHistoryModal = ({
 	const [availableLanguages, setAvailableLanguages] = useState([]);
 	const isMounted = useIsMounted();
 
+	const getFriendlyUrlLocalizations = useCallback(() => {
+		fetch(friendlyURLEntryLocalizationsURL)
+			.then((response) => response.json())
+			.then((response) => {
+				if (isMounted()) {
+					setAvailableLanguages(
+						Object.entries(response).reduce(
+							(acc, [language, {current}]) => {
+								if (current && current.urlTitle) {
+									acc.push(language);
+								}
+
+								return acc;
+							},
+							[]
+						)
+					);
+
+					setFriendlyURLEntryLocalizations(response);
+				}
+			})
+			.catch((error) => {
+				logError(error);
+				showToastError();
+			});
+	}, [friendlyURLEntryLocalizationsURL, isMounted]);
+
 	useEffect(() => {
 		getFriendlyUrlLocalizations();
 	}, [
@@ -103,32 +130,20 @@ const FriendlyURLHistoryModal = ({
 		}
 	}, [friendlyURLEntryLocalizations, loading, languageId]);
 
-	const getFriendlyUrlLocalizations = useCallback(() => {
-		fetch(friendlyURLEntryLocalizationsURL)
+	const sendRequest = (url, friendlyURLEntryId) => {
+		return fetch(url, {
+			body: objectToFormData({
+				[`${portletNamespace}friendlyURLEntryId`]: friendlyURLEntryId,
+				[`${portletNamespace}languageId`]: languageId,
+			}),
+			method: 'POST',
+		})
 			.then((response) => response.json())
-			.then((response) => {
-				if (isMounted()) {
-					setAvailableLanguages(
-						Object.entries(response).reduce(
-							(acc, [language, {current}]) => {
-								if (current && current.urlTitle) {
-									acc.push(language);
-								}
-
-								return acc;
-							},
-							[]
-						)
-					);
-
-					setFriendlyURLEntryLocalizations(response);
-				}
-			})
 			.catch((error) => {
 				logError(error);
 				showToastError();
 			});
-	}, [friendlyURLEntryLocalizationsURL, isMounted]);
+	};
 
 	const handleDeleteFriendlyUrl = (deleteFriendlyURLEntryId) => {
 		sendRequest(
@@ -181,21 +196,6 @@ const FriendlyURLHistoryModal = ({
 				showToastError();
 			}
 		});
-	};
-
-	const sendRequest = (url, friendlyURLEntryId) => {
-		return fetch(url, {
-			body: objectToFormData({
-				[`${portletNamespace}friendlyURLEntryId`]: friendlyURLEntryId,
-				[`${portletNamespace}languageId`]: languageId,
-			}),
-			method: 'POST',
-		})
-			.then((response) => response.json())
-			.catch((error) => {
-				logError(error);
-				showToastError();
-			});
 	};
 
 	return (

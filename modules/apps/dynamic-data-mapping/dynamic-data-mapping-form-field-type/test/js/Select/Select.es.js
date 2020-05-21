@@ -203,7 +203,7 @@ describe('Select', () => {
 				expect.objectContaining({
 					fieldInstance: expect.any(Object),
 					originalEvent: expect.any(Object),
-					value: [''],
+					value: [],
 				})
 			);
 		};

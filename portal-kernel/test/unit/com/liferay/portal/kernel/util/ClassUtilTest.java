@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.string.StringPool;
-
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -67,26 +65,23 @@ public class ClassUtilTest {
 	}
 
 	@Test
-	public void testGetClassesFromAnnotation() throws Exception {
-		testGetClassesFromAnnotation("Annotation", "Annotation");
-		testGetClassesFromAnnotation(
-			"AnnotationClass.Annotation", "AnnotationClass");
-	}
-
-	@Test
-	public void testGetClassesFromAnnotationsWithArrayParameter()
-		throws Exception {
-
-		testGetClassesFromAnnotation("Annotation", "Annotation", "A");
-		testGetClassesFromAnnotation("Annotation", "Annotation", "A", "B");
-		testGetClassesFromAnnotation("Annotation", "Annotation", "A", "B", "C");
-
-		testGetClassesFromAnnotation(
-			"AnnotationClass.Annotation", "AnnotationClass", "A");
-		testGetClassesFromAnnotation(
-			"AnnotationClass.Annotation", "AnnotationClass", "A", "B");
-		testGetClassesFromAnnotation(
-			"AnnotationClass.Annotation", "AnnotationClass", "A", "B", "C");
+	public void testGetClasses() throws Exception {
+		_testGetClasses("@Annotation", "Annotation");
+		_testGetClasses("@AnnotationClass.Annotation", "AnnotationClass");
+		_testGetClasses("@Annotation({A.class})", "A", "Annotation");
+		_testGetClasses(
+			"@Annotation({A.class,B.class})", "A", "B", "Annotation");
+		_testGetClasses(
+			"@Annotation({A.class,B.class,C.class})", "A", "B", "C",
+			"Annotation");
+		_testGetClasses(
+			"@AnnotationClass.Annotation({A.class})", "A", "AnnotationClass");
+		_testGetClasses(
+			"@AnnotationClass.Annotation({A.class,B.class})", "A", "B",
+			"AnnotationClass");
+		_testGetClasses(
+			"@AnnotationClass.Annotation({A.class,B.class,C.class})", "A", "B",
+			"C", "AnnotationClass");
 	}
 
 	@Test
@@ -188,50 +183,25 @@ public class ClassUtilTest {
 			"/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class");
 	}
 
-	protected void testGetClassesFromAnnotation(
-			String annotation, String expectedAnnotationClassName,
-			String... arrayParameterClassNames)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(
-			arrayParameterClassNames.length * 3 + 2);
-
-		sb.append(StringPool.AT);
-		sb.append(annotation);
-
-		if (arrayParameterClassNames.length > 0) {
-			sb.append("({");
-
-			for (int i = 0; i < arrayParameterClassNames.length; i++) {
-				sb.append(arrayParameterClassNames[i]);
-				sb.append(".class");
-
-				if (i < (arrayParameterClassNames.length - 1)) {
-					sb.append(StringPool.COMMA);
-				}
-			}
-
-			sb.append("})");
-		}
-
-		Set<String> actualClassNames = ClassUtil.getClasses(
-			new StringReader(sb.toString()), null);
-
-		Set<String> expectedClassNames = new HashSet<>();
-
-		expectedClassNames.add(expectedAnnotationClassName);
-
-		Collections.addAll(expectedClassNames, arrayParameterClassNames);
-
-		Assert.assertEquals(expectedClassNames, actualClassNames);
-	}
-
 	protected void testGetPathURIFromURL(String url, String expectedPath)
 		throws MalformedURLException {
 
 		URI uri = ClassUtil.getPathURIFromURL(new URL(url));
 
 		Assert.assertEquals(expectedPath, uri.getPath());
+	}
+
+	private void _testGetClasses(String content, String... expectedClasses)
+		throws Exception {
+
+		Set<String> expectedClassNames = new HashSet<>();
+
+		Collections.addAll(expectedClassNames, expectedClasses);
+
+		Set<String> actualClassNames = ClassUtil.getClasses(
+			new StringReader(content), null);
+
+		Assert.assertEquals(expectedClassNames, actualClassNames);
 	}
 
 }

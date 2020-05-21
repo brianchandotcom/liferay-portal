@@ -88,20 +88,13 @@ public class FileUtil {
 
 			if (files.length == 0) {
 				dir.delete();
-
-				System.out.println("### " + dirPath + " is deleted");
 			}
 			else {
 				for (File file : files) {
 					file.delete();
-
-					System.out.println(
-						"### " + file.getName() + " is deleted");
 				}
 
 				dir.delete();
-
-				System.out.println("### " + dirPath + " is deleted");
 			}
 		}
 	}

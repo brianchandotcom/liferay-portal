@@ -55,30 +55,7 @@ const FriendlyURLHistoryModal = ({
 	const isMounted = useIsMounted();
 
 	useEffect(() => {
-		fetch(friendlyURLEntryLocalizationsURL)
-			.then((response) => response.json())
-			.then((response) => {
-				if (isMounted()) {
-					setAvailableLanguages(
-						Object.entries(response).reduce(
-							(acc, [language, {current}]) => {
-								if (current && current.urlTitle) {
-									acc.push(language);
-								}
-
-								return acc;
-							},
-							[]
-						)
-					);
-
-					setFriendlyURLEntryLocalizations(response);
-				}
-			})
-			.catch((error) => {
-				logError(error);
-				showToastError();
-			});
+		getFriendlyUrlLocalizations();
 	}, [friendlyURLEntryLocalizationsURL, isMounted]);
 
 	useEffect(() => {
@@ -122,6 +99,33 @@ const FriendlyURLHistoryModal = ({
 		}
 	}, [friendlyURLEntryLocalizations, loading, languageId]);
 
+	const getFriendlyUrlLocalizations = () => {
+		fetch(friendlyURLEntryLocalizationsURL)
+			.then((response) => response.json())
+			.then((response) => {
+				if (isMounted()) {
+					setAvailableLanguages(
+						Object.entries(response).reduce(
+							(acc, [language, {current}]) => {
+								if (current && current.urlTitle) {
+									acc.push(language);
+								}
+
+								return acc;
+							},
+							[]
+						)
+					);
+
+					setFriendlyURLEntryLocalizations(response);
+				}
+			})
+			.catch((error) => {
+				logError(error);
+				showToastError();
+			});
+	};
+
 	const handleDeleteFriendlyUrl = (deleteFriendlyURLEntryId) => {
 		fetch(deleteFriendlyURLEntryLocalizationURL, {
 			body: objectToFormData({
@@ -159,7 +163,7 @@ const FriendlyURLHistoryModal = ({
 			});
 	};
 
-	const handleRestoreFriendlyUrl = (restoreFriendlyUrlEntryId) => {
+	const handleRestoreFriendlyUrl = (restoreFriendlyUrlEntryId, urlTitle) => {
 		const formData = new FormData();
 
 		formData.append(
@@ -176,7 +180,9 @@ const FriendlyURLHistoryModal = ({
 			.then((response) => response.json())
 			.then((response) => {
 				if (response.success) {
-					console.log("Restore OK para " + restoreFriendlyUrlEntryId)
+					getFriendlyUrlLocalizations();
+
+					Liferay.component(`${portletNamespace}friendlyURL`).updateInput(urlTitle);
 				}
 				else {
 					showToastError();
@@ -262,7 +268,8 @@ const FriendlyURLHistoryModal = ({
 															)}
 															onClick={() => {
 																handleRestoreFriendlyUrl(
-																	friendlyURLEntryId
+																	friendlyURLEntryId,
+																	urlTitle
 																);
 															}}
 															symbol="reload"

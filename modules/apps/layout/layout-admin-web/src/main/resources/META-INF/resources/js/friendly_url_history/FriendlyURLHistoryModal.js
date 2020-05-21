@@ -182,7 +182,19 @@ const FriendlyURLHistoryModal = ({
 				if (response.success) {
 					getFriendlyUrlLocalizations();
 
-					Liferay.component(`${portletNamespace}friendlyURL`).updateInput(urlTitle);
+					const inputComponent = Liferay.component(`${portletNamespace}friendlyURL`);
+
+					if (inputComponent.getSelectedLanguageId() === languageId) {
+						Liferay.component(`${portletNamespace}friendlyURL`).updateInput(
+							urlTitle
+						);
+					}
+					else {
+						Liferay.component(`${portletNamespace}friendlyURL`).updateInputLanguage(
+							urlTitle,
+							languageId
+						);
+					}
 				}
 				else {
 					showToastError();

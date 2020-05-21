@@ -29,7 +29,7 @@ public class ResponseCode {
 		}
 		else {
 			_defaultResponse = false;
-			_httpCode = GetterUtil.getInteger(code);
+			_httpCode = GetterUtil.getIntegerStrict(code);
 		}
 	}
 

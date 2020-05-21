@@ -131,6 +131,23 @@ public class ClassUtilTest {
 	}
 
 	@Test
+	public void testGetPathURIFromURLWebsphere() throws Exception {
+		testGetPathURIFromURL(
+			"bundleresource://266.fwk-486185329/javax/servlet/Servlet.class",
+			"/javax/servlet/Servlet.class");
+		testGetPathURIFromURL(
+			"wsjar:file:/opt/liferay/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class",
+			"/opt/liferay/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class");
+		testGetPathURIFromURL(
+			"wsjar:file:/F:/liferay/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class",
+			"/F:/liferay/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class");
+	}
+
+	@Test
 	public void testGetPathURIFromURLWildfly() throws Exception {
 		testGetPathURIFromURL(
 			"vfs:/opt/liferay/tomcat/lib/servlet-api.jar/javax/servlet" +

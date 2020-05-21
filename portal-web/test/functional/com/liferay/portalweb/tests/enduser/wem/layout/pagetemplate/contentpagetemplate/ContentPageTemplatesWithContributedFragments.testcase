@@ -14,9 +14,16 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
-		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+		JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+			groupName = "Test Site Name",
+			layoutPageTemplateCollectionName = "Page Template Collection");
 
-		PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+		JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+			groupName = "Test Site Name",
+			layoutPageTemplateCollectionName = "Page Template Collection",
+			layoutPageTemplateEntryName = "Page Template Name",
+			layoutPageTemplateStatus = "Draft",
+			layoutPageTemplateType = "Content Page Template");
 	}
 
 	tearDown {
@@ -33,7 +40,13 @@ definition {
 	@description = "This is a test for LPS-108463. Assert no Section fragment is outside when add a Row fragment to content page template."
 	@priority = "4"
 	test AddRowWithoutSection {
-		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.addLayoutRow();
 
@@ -51,7 +64,13 @@ definition {
 			groupName = "Test Site Name",
 			title = "WebContent Title");
 
-		PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
@@ -64,6 +83,8 @@ definition {
 		PageEditor.clickPublish();
 
 		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		PageEditor.assertFragmentSidebarLoaded();
 
 		task ("Assert correct content is visible") {
 			AssertTextEquals.assertPartialTextAceEditor(

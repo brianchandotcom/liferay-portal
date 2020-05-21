@@ -47,18 +47,32 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.search.test.util.HitsAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.test.rule.SynchronousMailTestRule;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.Objects;
 
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Wade Cao
  */
 public abstract class BaseCalendarIndexerTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
+			SynchronousMailTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -71,6 +85,9 @@ public abstract class BaseCalendarIndexerTestCase {
 
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected Calendar addCalendar(
 			LocalizedValuesMap nameLocalizedValuesMap,

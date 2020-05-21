@@ -25,6 +25,7 @@ GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext
 		elementClasses="lfr-portal-tooltip"
 		icon="grid"
 		monospaced="<%= true %>"
+		size="sm"
 		style="unstyled"
 		title='<%= LanguageUtil.get(request, "global-menu") %>'
 	/>

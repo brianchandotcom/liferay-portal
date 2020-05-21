@@ -31,7 +31,7 @@ const AppsPanel = ({
 
 	return (
 		<>
-			<div className="c-px-md-3 row">
+			<div className="c-px-md-4 row">
 				<ClayTabs modern>
 					{categories.map(({key, label}, index) => (
 						<ClayTabs.Item
@@ -96,6 +96,7 @@ const AppsPanel = ({
 													href={url}
 												>
 													<ClaySticker
+														className="inline-item-before"
 														inline={true}
 														size="sm"
 													>
@@ -135,6 +136,7 @@ const AppsPanel = ({
 													}
 												);
 											}}
+											small
 										>
 											{Liferay.Language.get('view-all')}
 										</ClayButton>
@@ -201,6 +203,7 @@ const GlobalMenu = ({panelAppsURL}) => {
 				onClick={handleButtonOnClick}
 				onFocus={fetchCategories}
 				onHover={fetchCategories}
+				small
 				symbol="grid"
 				title={Liferay.Language.get('global-menu')}
 			/>

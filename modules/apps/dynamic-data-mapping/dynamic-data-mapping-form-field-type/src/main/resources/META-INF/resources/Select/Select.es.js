@@ -117,7 +117,7 @@ function assertOptionParameters({multiple, option, valueArray}) {
 function normalizeOptions({fixedOptions, multiple, options, valueArray}) {
 	const emptyOption = {
 		label: Liferay.Language.get('choose-an-option'),
-		value: '',
+		value: null,
 	};
 
 	const newOptions = [
@@ -158,6 +158,9 @@ function handleDropdownItemClick({currentValue, multiple, option}) {
 				valueToBeAppended: itemValue,
 			});
 		}
+	}
+	else if (itemValue === null) {
+		newValue = [];
 	}
 	else {
 		newValue = [itemValue];

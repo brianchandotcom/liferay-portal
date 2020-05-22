@@ -54,19 +54,18 @@ public class InfoForm {
 			return true;
 		}
 
-		if (!(obj instanceof InfoField)) {
+		if (!(obj instanceof InfoForm)) {
 			return false;
 		}
 
-		InfoForm infoItemFieldSet = (InfoForm)obj;
+		InfoForm infoForm = (InfoForm)obj;
 
 		if (Objects.equals(
 				_descriptionInfoLocalizedValue,
-				infoItemFieldSet._descriptionInfoLocalizedValue) &&
+				infoForm._descriptionInfoLocalizedValue) &&
 			Objects.equals(
-				_labelInfoLocalizedValue,
-				infoItemFieldSet._labelInfoLocalizedValue) &&
-			Objects.equals(_name, infoItemFieldSet._name)) {
+				_labelInfoLocalizedValue, infoForm._labelInfoLocalizedValue) &&
+			Objects.equals(_name, infoForm._name)) {
 
 			return true;
 		}

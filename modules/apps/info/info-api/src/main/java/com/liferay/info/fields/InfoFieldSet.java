@@ -58,16 +58,16 @@ public class InfoFieldSet implements InfoFieldSetEntry {
 			return true;
 		}
 
-		if (!(obj instanceof InfoField)) {
+		if (!(obj instanceof InfoFieldSet)) {
 			return false;
 		}
 
-		InfoFieldSet infoItemFieldSet = (InfoFieldSet)obj;
+		InfoFieldSet infoFieldSet = (InfoFieldSet)obj;
 
 		if (Objects.equals(
 				_labelInfoLocalizedValue,
-				infoItemFieldSet._labelInfoLocalizedValue) &&
-			Objects.equals(_name, infoItemFieldSet._name)) {
+				infoFieldSet._labelInfoLocalizedValue) &&
+			Objects.equals(_name, infoFieldSet._name)) {
 
 			return true;
 		}

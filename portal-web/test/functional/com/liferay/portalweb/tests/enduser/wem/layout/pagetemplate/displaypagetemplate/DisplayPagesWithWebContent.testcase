@@ -23,9 +23,15 @@ definition {
 		}
 
 		task ("Add a display page with fragments mapped to Basic Web Content") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -50,8 +56,6 @@ definition {
 				source = "Basic Web Content (Default)");
 
 			Button.clickPublish();
-
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 		}
 	}
 
@@ -80,13 +84,14 @@ definition {
 		}
 
 		task ("Add a web content that uses the display page") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
@@ -275,6 +280,8 @@ definition {
 	@priority = "5"
 	test EditDisplayPageWhenViewingInDisplayPage {
 		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
@@ -335,6 +342,8 @@ definition {
 	@priority = "5"
 	test EditWebContentWhenViewingInDisplayPage {
 		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
@@ -387,6 +396,8 @@ definition {
 	@priority = "5"
 	test PreviewDraftWebContent {
 		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
@@ -437,6 +448,8 @@ definition {
 	@priority = "5"
 	test PreviewPendingWebContent {
 		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
@@ -496,6 +509,8 @@ definition {
 	@priority = "5"
 	test PreviewPublishedWebContent {
 		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
@@ -512,6 +527,8 @@ definition {
 		}
 
 		task ("Preview the web content article") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Webcontent Title",
 				menuItem = "Preview");
@@ -574,13 +591,14 @@ definition {
 		}
 
 		task ("Add a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 		}
 
 		task ("Assert the display page is selected by default") {
@@ -648,17 +666,20 @@ definition {
 	@priority = "5"
 	test ViewDisplayPageMarkedAsDefault {
 		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 		}
 
 		task ("Assert the display page is selected by default") {
@@ -711,21 +732,22 @@ definition {
 		}
 
 		task ("Add a web content article with a category and tag") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
-
-			Panel.expandPanel(panel = "Metadata");
-
-			AssetCategorization.addCategory(
+			var categoryId = JSONCategory.getCategoryId(
 				categoryName = "Category Name",
+				groupName = "Test Site Name",
 				vocabularyName = "Vocabulary Name");
 
-			AssetCategorization.addTag(tagName = "test tag");
+			var serviceContext = '''{"assetTagNames": ["test tag"], "assetCategoryIds": ["${categoryId}"]}''';
+
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				serviceContext = "${serviceContext}",
+				title = "Webcontent Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
@@ -751,13 +773,14 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a web content article that uses the display page") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
@@ -816,13 +839,14 @@ definition {
 	@priority = "5"
 	test ViewDisplayPageViaFriendlyURL {
 		task ("Add a web content article") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
 				pageName = "Display Page Name",
@@ -854,11 +878,21 @@ definition {
 	@priority = "5"
 	test ViewNonDefaultDisplayPage {
 		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a second display page that is mapped to Basic Web Content") {
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Non-Default Display Page");
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Non-Default Display Page",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Non-Default Display Page");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
@@ -886,13 +920,14 @@ definition {
 		}
 
 		task ("Add a web content article that uses the second display page") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			WebContent.editDisplayPage(
 				pageName = "Non-Default Display Page",
@@ -924,17 +959,20 @@ definition {
 	@priority = "4"
 	test ViewNoSelectedDisplayPage {
 		task ("Mark the display page as default") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
 			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
 		}
 
 		task ("Add a web content article that has no display page selected") {
+			JSONWebcontent.addWebContent(
+				content = "Webcontent Content",
+				groupName = "Test Site Name",
+				title = "Webcontent Title");
+
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "Webcontent Content",
-				webContentTitle = "Webcontent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
 			Panel.expandPanel(panel = "Display Page Template");
 

@@ -16,6 +16,12 @@ definition {
 		JSONFragment.addFragmentCollection(
 			groupName = "Test Site Name",
 			name = "Collection Name");
+
+		JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+			contentType = "Web Content Article",
+			displayPageTemplateEntryName = "Display Page Name",
+			groupName = "Test Site Name",
+			subType = "Basic Web Content");
 	}
 
 	tearDown {
@@ -49,7 +55,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -102,7 +108,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -149,7 +155,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -191,7 +197,7 @@ definition {
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",

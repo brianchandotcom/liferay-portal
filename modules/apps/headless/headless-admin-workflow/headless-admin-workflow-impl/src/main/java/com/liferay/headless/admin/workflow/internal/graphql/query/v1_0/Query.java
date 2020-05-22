@@ -522,7 +522,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowTaskHasAssignableUsers(workflowTaskId: ___){}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public String workflowTaskHasAssignableUsers(
+	public Boolean workflowTaskHasAssignableUsers(
 			@GraphQLName("workflowTaskId") Long workflowTaskId)
 		throws Exception {
 
@@ -620,7 +620,7 @@ public class Query {
 		}
 
 		@GraphQLField
-		public String hasAssignableUsers() throws Exception {
+		public Boolean hasAssignableUsers() throws Exception {
 			return _applyComponentServiceObjects(
 				_workflowTaskResourceComponentServiceObjects,
 				Query.this::_populateResourceContext,

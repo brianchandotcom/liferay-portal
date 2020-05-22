@@ -22,7 +22,6 @@ import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTaskAssignToUser;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowTasksBulkSelection;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -514,12 +513,12 @@ public abstract class BaseWorkflowTaskResourceImpl
 	@Path("/workflow-tasks/{workflowTaskId}/has-assignable-users")
 	@Produces("text/plain")
 	@Tags(value = {@Tag(name = "WorkflowTask")})
-	public String getWorkflowTaskHasAssignableUsers(
+	public Boolean getWorkflowTaskHasAssignableUsers(
 			@NotNull @Parameter(hidden = true) @PathParam("workflowTaskId") Long
 				workflowTaskId)
 		throws Exception {
 
-		return StringPool.BLANK;
+		return false;
 	}
 
 	/**

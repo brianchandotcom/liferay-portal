@@ -210,7 +210,7 @@ public interface WorkflowTaskResource {
 				Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception;
 
-	public String getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
+	public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
@@ -1618,7 +1618,7 @@ public interface WorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public String getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
+		public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1633,7 +1633,7 @@ public interface WorkflowTaskResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return content;
+				return Boolean.valueOf(content);
 			}
 			catch (Exception e) {
 				_logger.log(

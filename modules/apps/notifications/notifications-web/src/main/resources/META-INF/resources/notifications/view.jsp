@@ -213,11 +213,12 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 					}
 					else {
 						Liferay.Util.openToast({
-							message: '<liferay-ui:message key="an-unexpected-error-occurred" />',
+							message:
+								'<liferay-ui:message key="an-unexpected-error-occurred" />',
 							toastProps: {
-								autoClose: 5000
+								autoClose: 5000,
 							},
-							type: 'warning'
+							type: 'warning',
 						});
 					}
 				});

@@ -920,12 +920,12 @@ AUI.add(
 							})
 							.catch(() => {
 								Liferay.Util.openToast({
-									toastProps: {
-										autoClose: FAILURE_TIMEOUT,
-									},
 									message: Liferay.Language.get(
 										'your-request-failed-to-complete'
 									),
+									toastProps: {
+										autoClose: FAILURE_TIMEOUT,
+									},
 									type: 'warning',
 								});
 							});
@@ -1383,12 +1383,12 @@ AUI.add(
 					);
 
 					Liferay.Util.openToast({
+						message,
 						toastProps: {
 							autoClose: 10000,
 							className: {left: '0px', top: '0px'},
 						},
 						type: 'warning',
-						message: message,
 					});
 				},
 			},

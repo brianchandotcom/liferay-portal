@@ -1222,6 +1222,14 @@ definition {
 
 		Workflow._gotoPendingFilter();
 
+		while (IsElementNotPresent(locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK") && (maxIterations = "10")) {
+			Refresh();
+
+			Workflow._gotoPendingFilter();
+
+			Pause(locator1 = "1000");
+		}
+
 		AssertTextEquals(
 			locator1 = "MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_TASK",
 			value1 = "${workflowTask}");

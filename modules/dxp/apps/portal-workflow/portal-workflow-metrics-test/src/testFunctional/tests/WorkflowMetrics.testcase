@@ -9,9 +9,28 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		User.firstLoginPG();
 
 		Navigator.openURL();
+
+		if ("${testPortalInstance}" != "true") {
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Search");
+
+			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		}
+
+		ProductMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Control Panel",
+			portlet = "Metrics");
+
+		WorkflowMetrics.executeIndexActions(actionDescription = "Workflow Indexes");
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
@@ -1223,7 +1242,6 @@ definition {
 	@priority = "5"
 	test VerifyAllItemsFilterFromMetrics {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#VerifyAllItemsFilterFromMetrics";
 
 		var key_workflowInstanceName = "Blog Entry Title";
@@ -1474,7 +1492,6 @@ definition {
 	@description = "LRQA-53654 Automate LPS-88968: [Reports] View the summary of all pending items and what's their SLA status"
 	@priority = "5"
 	test ViewPendingItems {
-		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPendingItems";

@@ -65,14 +65,16 @@ definition {
 			AssertClick(
 				locator1 = "MicrosoftLogin#LOGIN_YES_BUTTON",
 				value1 = "Yes");
-		}
 
-		Pause(locator1 = "5000");
+			Pause(locator1 = "5000");
+		}
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#SHAREPOINT_NOTIFICATION")) {
 			AssertClick(
 				locator1 = "MicrosoftLogin#SHAREPOINT_TRUST_IT_BUTTON",
 				value1 = "Trust It");
+
+			Pause(locator1 = "5000");
 		}
 
 		if (IsElementPresent(locator1 = "Portlet#HEADER")) {

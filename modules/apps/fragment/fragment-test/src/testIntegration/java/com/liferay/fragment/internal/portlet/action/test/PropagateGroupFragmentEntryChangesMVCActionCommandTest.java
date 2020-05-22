@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.spring.mock.web.portlet.MockActionRequest;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -66,8 +65,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Jürgen Kappler
@@ -120,13 +117,11 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 		_fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 			_fragmentEntry);
 
-		MockActionRequest actionRequest = _getMockActionRequest();
-		ActionResponse actionResponse = new MockLiferayPortletActionResponse();
-
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "processAction",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, actionResponse);
+			_getMockLiferayPortletActionRequest(),
+			new MockLiferayPortletActionResponse());
 
 		FragmentEntryLink persistedFragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
@@ -140,11 +135,16 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 			_fragmentEntry.getJs(), persistedFragmentEntryLink.getJs());
 	}
 
-	private MockActionRequest _getMockActionRequest() throws Exception {
-		ThemeDisplay themeDisplay = _getThemeDisplay();
+	private MockLiferayPortletActionRequest
+			_getMockLiferayPortletActionRequest()
+		throws Exception {
 
-		MockActionRequest mockActionRequest = new MockActionRequest(
-			_group, themeDisplay);
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE,
+			new MockLiferayPortletActionResponse());
 
 		Portlet portlet = _portletLocalService.getPortletById(
 			FragmentPortletKeys.FRAGMENT);
@@ -153,15 +153,18 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 			(LiferayPortletConfig)PortletConfigFactoryUtil.create(
 				portlet, null);
 
-		mockActionRequest.setAttribute(
+		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, liferayPortletConfig);
 
-		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-		mockActionRequest.setParameter(
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+		mockLiferayPortletActionRequest.setParameter(
 			"fragmentEntryId",
 			String.valueOf(_fragmentEntry.getFragmentEntryId()));
+		mockLiferayPortletActionRequest.setParameter(
+			"rowIds", new String[] {String.valueOf(_group.getGroupId())});
 
-		return mockActionRequest;
+		return mockLiferayPortletActionRequest;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -223,29 +226,5 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
-
-	private static class MockActionRequest
-		extends MockLiferayPortletActionRequest {
-
-		public MockActionRequest(Group group, ThemeDisplay themeDisplay) {
-			_group = group;
-			_themeDisplay = themeDisplay;
-
-			MockHttpServletRequest mockHttpServletRequest =
-				(MockHttpServletRequest)getHttpServletRequest();
-
-			mockHttpServletRequest.setAttribute(
-				JavaConstants.JAVAX_PORTLET_RESPONSE,
-				new MockLiferayPortletActionResponse());
-			mockHttpServletRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, _themeDisplay);
-			mockHttpServletRequest.setParameter(
-				"rowIds", new String[] {String.valueOf(_group.getGroupId())});
-		}
-
-		private final Group _group;
-		private final ThemeDisplay _themeDisplay;
-
-	}
 
 }

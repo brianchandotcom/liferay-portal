@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.spring.mock.web.portlet.MockPortletSession;
 
 import java.io.IOException;
 
@@ -34,9 +35,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -50,10 +48,6 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.mock.web.MockHttpSession;
 
 /**
  * @author Cristina González
@@ -81,13 +75,16 @@ public class UpdateSegmentsContextVocabularyConfigurationMVCActionCommandTest {
 	public void testProcessAction() throws Exception {
 		String entityField = RandomTestUtil.randomString();
 
-		MockActionRequest mockActionRequest = new MockActionRequest(
-			RandomTestUtil.randomString(), entityField, null);
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				RandomTestUtil.randomString(), entityField, null);
 
 		_mvcActionCommand.processAction(
-			mockActionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
-		Assert.assertTrue(MultiSessionErrors.isEmpty(mockActionRequest));
+		Assert.assertTrue(
+			MultiSessionErrors.isEmpty(mockLiferayPortletActionRequest));
 
 		Optional<Configuration> configurationOptional =
 			_getConfigurationOptional(entityField);
@@ -103,21 +100,24 @@ public class UpdateSegmentsContextVocabularyConfigurationMVCActionCommandTest {
 	public void testProcessActionWithDuplicatedEntityField() throws Exception {
 		String entityField = RandomTestUtil.randomString();
 
-		MockActionRequest mockActionRequest = new MockActionRequest(
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				RandomTestUtil.randomString(), entityField, null);
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
+
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
 			RandomTestUtil.randomString(), entityField, null);
 
 		_mvcActionCommand.processAction(
-			mockActionRequest, new MockActionResponse());
-
-		mockActionRequest = new MockActionRequest(
-			RandomTestUtil.randomString(), entityField, null);
-
-		_mvcActionCommand.processAction(
-			mockActionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		Assert.assertTrue(
 			MultiSessionErrors.contains(
-				mockActionRequest,
+				mockLiferayPortletActionRequest,
 				StringBundler.concat(
 					"com.liferay.segments.context.vocabulary.internal.",
 					"configuration.persistence.listener.",
@@ -134,15 +134,16 @@ public class UpdateSegmentsContextVocabularyConfigurationMVCActionCommandTest {
 
 	@Test
 	public void testProcessActionWithoutEntityField() throws Exception {
-		MockActionRequest mockActionRequest = new MockActionRequest(
-			null, null, null);
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(null, null, null);
 
 		_mvcActionCommand.processAction(
-			mockActionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		Assert.assertTrue(
 			MultiSessionErrors.contains(
-				mockActionRequest,
+				mockLiferayPortletActionRequest,
 				ConfigurationModelListenerException.class.getCanonicalName()));
 	}
 
@@ -150,11 +151,13 @@ public class UpdateSegmentsContextVocabularyConfigurationMVCActionCommandTest {
 	public void testProcessActionWithPid() throws Exception {
 		String entityField = RandomTestUtil.randomString();
 
-		MockActionRequest mockActionRequest = new MockActionRequest(
-			RandomTestUtil.randomString(), entityField, null);
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(
+				RandomTestUtil.randomString(), entityField, null);
 
 		_mvcActionCommand.processAction(
-			mockActionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		Optional<Configuration> configurationOptional =
 			_getConfigurationOptional(entityField);
@@ -164,11 +167,13 @@ public class UpdateSegmentsContextVocabularyConfigurationMVCActionCommandTest {
 		try {
 			String assetVocabulary = RandomTestUtil.randomString();
 
-			mockActionRequest = new MockActionRequest(
-				assetVocabulary, entityField, configuration.getPid());
+			mockLiferayPortletActionRequest =
+				_getMockLiferayPortletActionRequest(
+					assetVocabulary, entityField, configuration.getPid());
 
 			_mvcActionCommand.processAction(
-				mockActionRequest, new MockActionResponse());
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
 
 			configurationOptional = _getConfigurationOptional(entityField);
 
@@ -207,6 +212,22 @@ public class UpdateSegmentsContextVocabularyConfigurationMVCActionCommandTest {
 		).findAny();
 	}
 
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+		String assetVocabulary, String entityField, String pid) {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setParameter(
+			"assetVocabulary", assetVocabulary);
+		mockLiferayPortletActionRequest.setParameter(
+			"entityField", entityField);
+		mockLiferayPortletActionRequest.setParameter("pid", pid);
+		mockLiferayPortletActionRequest.setSession(new MockPortletSession());
+
+		return mockLiferayPortletActionRequest;
+	}
+
 	private static Locale _locale;
 
 	@Inject
@@ -216,49 +237,5 @@ public class UpdateSegmentsContextVocabularyConfigurationMVCActionCommandTest {
 		filter = "mvc.command.name=/update_segments_context_vocabulary_configuration"
 	)
 	private MVCActionCommand _mvcActionCommand;
-
-	private static class MockActionResponse
-		extends MockLiferayPortletActionResponse {
-
-		@Override
-		public HttpServletResponse getHttpServletResponse() {
-			return new MockHttpServletResponse();
-		}
-
-	}
-
-	private class MockActionRequest extends MockLiferayPortletActionRequest {
-
-		public MockActionRequest(
-			String assetVocabulary, String entityField, String pid) {
-
-			_httpServletRequest = new MockHttpServletRequest() {
-				{
-					setParameter("assetVocabulary", assetVocabulary);
-					setParameter("entityField", entityField);
-					setParameter("pid", pid);
-					setSession(new MockHttpSession());
-				}
-			};
-		}
-
-		@Override
-		public HttpServletRequest getHttpServletRequest() {
-			return _httpServletRequest;
-		}
-
-		@Override
-		public HttpServletRequest getOriginalHttpServletRequest() {
-			return _httpServletRequest;
-		}
-
-		@Override
-		public String getParameter(String name) {
-			return _httpServletRequest.getParameter(name);
-		}
-
-		private final HttpServletRequest _httpServletRequest;
-
-	}
 
 }

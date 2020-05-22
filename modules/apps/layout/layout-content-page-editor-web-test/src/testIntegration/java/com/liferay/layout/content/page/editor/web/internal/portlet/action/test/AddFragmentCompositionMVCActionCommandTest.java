@@ -68,8 +68,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.spring.mock.web.portlet.MockActionRequest;
-import com.liferay.spring.mock.web.portlet.MockActionResponse;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -78,16 +76,12 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Pavel Savinov
@@ -121,9 +115,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 	@Test
 	public void testAddFragmentCompositionDefaultCollection() throws Exception {
-		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
-		MockLiferayPortletActionResponse actionResponse =
-			new MockLiferayPortletActionResponse();
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -136,14 +129,18 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			layoutPageTemplateStructure.getData(
 				SegmentsExperienceConstants.ID_DEFAULT));
 
-		actionRequest.addParameter("fragmentCollectionId", String.valueOf(0));
-		actionRequest.addParameter("name", RandomTestUtil.randomString());
-		actionRequest.addParameter("itemId", layoutStructure.getMainItemId());
+		mockLiferayPortletActionRequest.addParameter(
+			"fragmentCollectionId", String.valueOf(0));
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.addParameter(
+			"itemId", layoutStructure.getMainItemId());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, actionResponse);
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		Assert.assertNotNull(jsonObject);
 
@@ -167,9 +164,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	public void testAddFragmentCompositionExistingCollection()
 		throws Exception {
 
-		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
-		MockLiferayPortletActionResponse actionResponse =
-			new MockLiferayPortletActionResponse();
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -188,17 +184,20 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				StringUtil.randomString(), StringPool.BLANK,
 				ServiceContextThreadLocal.getServiceContext());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentCollectionId",
 			String.valueOf(newFragmentCollection.getFragmentCollectionId()));
 
-		actionRequest.addParameter("name", RandomTestUtil.randomString());
-		actionRequest.addParameter("itemId", layoutStructure.getMainItemId());
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.addParameter(
+			"itemId", layoutStructure.getMainItemId());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, actionResponse);
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		Assert.assertNotNull(jsonObject);
 
@@ -327,25 +326,28 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			_portal.getClassNameId(Layout.class.getName()), _layout.getPlid(),
 			layoutStructure.toString(), _serviceContext);
 
-		MockActionRequest mockActionRequest = _getMockActionRequest();
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
 
-		mockActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"description", RandomTestUtil.randomString());
-		mockActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentCollectionId",
 			String.valueOf(fragmentCollection.getFragmentCollectionId()));
-		mockActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"itemId", containerLayoutStructureItem.getItemId());
-		mockActionRequest.addParameter("name", RandomTestUtil.randomString());
-		mockActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.addParameter(
 			"saveInlineContent", Boolean.TRUE.toString());
-		mockActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"saveMappingConfiguration", Boolean.TRUE.toString());
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockActionRequest, new MockActionResponse());
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		Assert.assertEquals(
 			String.valueOf(fragmentCollection.getFragmentCollectionId()),
@@ -360,7 +362,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			String.valueOf(_group.getGroupId()),
 			jsonObject.getString("groupId"));
 		Assert.assertEquals(
-			mockActionRequest.getParameter("name"),
+			mockLiferayPortletActionRequest.getParameter("name"),
 			jsonObject.getString("name"));
 		Assert.assertEquals("composition", jsonObject.getString("type"));
 
@@ -370,10 +372,10 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		Assert.assertNotNull(fragmentComposition);
 		Assert.assertEquals(
-			mockActionRequest.getParameter("description"),
+			mockLiferayPortletActionRequest.getParameter("description"),
 			fragmentComposition.getDescription());
 		Assert.assertEquals(
-			mockActionRequest.getParameter("name"),
+			mockLiferayPortletActionRequest.getParameter("name"),
 			fragmentComposition.getName());
 
 		String expectedFragmentCompositionData = StringUtil.replace(
@@ -393,9 +395,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 	@Test
 	public void testAddFragmentCompositionWithThumbnail() throws Exception {
-		MockLiferayPortletActionRequest actionRequest = _getMockActionRequest();
-		MockLiferayPortletActionResponse actionResponse =
-			new MockLiferayPortletActionResponse();
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -414,18 +415,22 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				StringUtil.randomString(), StringPool.BLANK,
 				ServiceContextThreadLocal.getServiceContext());
 
-		actionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"fragmentCollectionId",
 			String.valueOf(newFragmentCollection.getFragmentCollectionId()));
 
-		actionRequest.addParameter("name", RandomTestUtil.randomString());
-		actionRequest.addParameter("itemId", layoutStructure.getMainItemId());
-		actionRequest.addParameter("previewImageURL", _THUMBNAIL_DATA);
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+		mockLiferayPortletActionRequest.addParameter(
+			"itemId", layoutStructure.getMainItemId());
+		mockLiferayPortletActionRequest.addParameter(
+			"previewImageURL", _THUMBNAIL_DATA);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",
 			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			actionRequest, actionResponse);
+			mockLiferayPortletActionRequest,
+			new MockLiferayPortletActionResponse());
 
 		Assert.assertNotNull(jsonObject);
 
@@ -470,16 +475,20 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			LayoutConstants.TYPE_CONTENT, false, friendlyURL, serviceContext);
 	}
 
-	private MockActionRequest _getMockActionRequest() throws Exception {
-		MockActionRequest mockActionRequest = new MockActionRequest();
+	private MockLiferayPortletActionRequest
+			_getMockLiferayPortletActionRequest()
+		throws Exception {
 
-		mockActionRequest.setAttribute(
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		mockActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
 
-		return mockActionRequest;
+		return mockLiferayPortletActionRequest;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
@@ -542,15 +551,5 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	private Portal _portal;
 
 	private ServiceContext _serviceContext;
-
-	private static class MockActionRequest
-		extends MockLiferayPortletActionRequest {
-
-		@Override
-		public HttpServletRequest getHttpServletRequest() {
-			return new MockHttpServletRequest();
-		}
-
-	}
 
 }

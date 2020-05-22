@@ -3,13 +3,14 @@ definition {
 
 	function selectFrame {
 		if (contains("${locator1}", "/iframe")) {
-			selenium.waitForVisible();
+			WaitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
 
 			selenium.mouseOver();
 
 			selenium.selectFrame();
-
-			selenium.waitForElementPresent("//body");
 
 			selenium.assertJavaScriptErrors();
 
@@ -53,13 +54,14 @@ definition {
 
 	function selectSecondFrame {
 		if (contains("${locator1}", "/iframe")) {
-			selenium.waitForVisible();
+			WaitForLiferayEvent(
+				attributeName = "src",
+				attributeValue = "dialog-iframe-popup",
+				eventName = "modalIframeLoaded");
 
 			selenium.mouseOver();
 
 			selenium.selectFrame();
-
-			selenium.waitForElementPresent("//body");
 
 			selenium.assertJavaScriptErrors();
 

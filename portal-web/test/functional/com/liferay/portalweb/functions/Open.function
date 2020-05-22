@@ -16,6 +16,8 @@ definition {
 		selenium.assertLiferayErrors();
 
 		WaitForSPARefresh();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	function openNoError {

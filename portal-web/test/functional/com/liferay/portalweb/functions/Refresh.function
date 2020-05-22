@@ -6,6 +6,8 @@ definition {
 
 		selenium.refresh();
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();

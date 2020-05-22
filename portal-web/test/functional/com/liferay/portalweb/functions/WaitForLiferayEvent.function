@@ -1,0 +1,100 @@
+@default = "waitForLiferayEvent"
+definition {
+
+	function initializeLiferayEventLog {
+		var javascript = '''
+			if (typeof Liferay != "undefined") {
+				const TRACKED_EVENTS = [
+					'addPortlet',
+					'allPortletsReady',
+					'allUploadsComplete',
+					'beforeNavigate',
+					'beforeScreenFlip',
+					'closePortlet',
+					'dataLayoutConfigReady',
+					'destroyPortlet',
+					'editorAPIReady',
+					'endNavigate',
+					'form:registered',
+					'formNavigator:reveal',
+					'dropdownShow',
+					'entitySelectionRemoved',
+					'exitNavigation',
+					'hideNavigationMenu',
+					'initLayout',
+					'inputLocalized:localeChanged',
+					'modalIframeLoaded',
+					'noticeShow',
+					'noticeHide',
+					'popupReady',
+					'portletDragStart',
+					'portletMoved',
+					'portletReady',
+					'ratings:vote',
+					'screenActivate',
+					'screenDeactivate',
+					'screenFlip',
+					'screenLoad',
+					'search-container:registered',
+					'sessionExpired',
+					'showNavigationMenu',
+					'spaRequestTimeout',
+					'startNavigate',
+					'submitForm',
+					'tempFileRemoved',
+					'toggleControls',
+					'updatedLayout',
+				];
+
+				let __LFR_TRACKED_EVENTS__ = {};
+
+				Liferay.on(TRACKED_EVENTS, function(event){
+					{
+						const eventLog = __LFR_TRACKED_EVENTS__[event.type]
+							? __LFR_TRACKED_EVENTS__[event.type].concat(event)
+							: [event];
+
+						__LFR_TRACKED_EVENTS__[event.type] = eventLog
+					};
+				});
+
+				function getLastEvent(eventName) {
+					return __LFR_TRACKED_EVENTS__[eventName]
+						? __LFR_TRACKED_EVENTS__[eventName][
+								__LFR_TRACKED_EVENTS__[eventName].length - 1
+						]
+						: {};
+				};
+
+				function getLastEventDetails(eventName){
+					return getLastEvent(eventName).details[0];
+				};
+
+				window.LFR_JS_EVENTS_LOG = {
+					getLastEvent:getLastEvent,
+					getLastEventDetails:getLastEventDetails,
+				};
+			}
+		''';
+
+		selenium.runScript("${javascript}");
+	}
+
+	function waitForLiferayEvent {
+		var javascript = '''
+			try {
+				var eventValue = LFR_JS_EVENTS_LOG.getLastEvent("${eventName}").${attributeName};
+
+				return eventValue.includes("${attributeValue}");
+			}
+			catch(err) {
+				return false;
+			}
+		''';
+
+		var message = '''Event "${eventName}" with attribute "${attributeName}" and value "${attributeValue}" not fired.''';
+
+		selenium.waitForJavaScript("${javascript}", "${message}", "");
+	}
+
+}

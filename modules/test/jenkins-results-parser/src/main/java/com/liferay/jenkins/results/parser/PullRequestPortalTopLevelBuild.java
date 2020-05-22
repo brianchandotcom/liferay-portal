@@ -209,8 +209,11 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 
 		int stableJobDownstreamBuildsSize = stableJobDownstreamBuilds.size();
 
-		if (stableJobDownstreamBuildsSuccessCount ==
-				stableJobDownstreamBuildsSize) {
+		String result = getResult();
+
+		if (((result != null) && result.matches("(APPROVED|SUCCESS)")) ||
+			(stableJobDownstreamBuildsSuccessCount ==
+				stableJobDownstreamBuildsSize)) {
 
 			sb.append(":heavy_check_mark: ");
 		}

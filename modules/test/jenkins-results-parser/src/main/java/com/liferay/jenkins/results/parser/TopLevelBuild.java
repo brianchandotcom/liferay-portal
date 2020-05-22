@@ -1277,7 +1277,7 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");
 
-		if ((result != null) && result.equals("SUCCESS")) {
+		if ((result != null) && result.matches("(APPROVED|SUCCESS)")) {
 			successCount++;
 
 			sb.append(":heavy_check_mark: ");

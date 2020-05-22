@@ -121,7 +121,7 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
       class="alert-autofit-row autofit-row"
     >
       <div
-        class="autofit-col inline-item-before"
+        class="autofit-col"
       >
         <div
           class="autofit-section"

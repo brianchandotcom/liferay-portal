@@ -629,7 +629,7 @@ public class NodeMetricResourceImpl
 		double value = avgAggregationResult.getValue();
 
 		if (Double.isInfinite(value)) {
-			return;
+			value = 0D;
 		}
 
 		nodeMetric.setDurationAvg(GetterUtil.getLong(value));

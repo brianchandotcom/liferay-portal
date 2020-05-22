@@ -62,7 +62,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		Group group, String name, long primKey, String actionId) {
 
-		if ((group != null) && isGroupOwner(group.getGroupId())) {
+		if (_isDepotGroupOwner(group)) {
 			return true;
 		}
 
@@ -75,7 +75,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		Group group, String name, String primKey, String actionId) {
 
-		if ((group != null) && isGroupOwner(group.getGroupId())) {
+		if (_isDepotGroupOwner(group)) {
 			return true;
 		}
 
@@ -88,9 +88,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if ((group != null) && isGroupOwner(groupId)) {
+		if (_isDepotGroupOwner(_groupLocalService.fetchGroup(groupId))) {
 			return true;
 		}
 
@@ -103,9 +101,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if ((group != null) && isGroupOwner(groupId)) {
+		if (_isDepotGroupOwner(_groupLocalService.fetchGroup(groupId))) {
 			return true;
 		}
 
@@ -281,6 +277,16 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		if (_userGroupRoleLocalService.hasUserGroupRole(
 				getUserId(), group.getGroupId(),
 				DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER, true)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isDepotGroupOwner(Group group) {
+		if ((group != null) && (group.getType() == GroupConstants.TYPE_DEPOT) &&
+			isGroupOwner(group.getGroupId())) {
 
 			return true;
 		}

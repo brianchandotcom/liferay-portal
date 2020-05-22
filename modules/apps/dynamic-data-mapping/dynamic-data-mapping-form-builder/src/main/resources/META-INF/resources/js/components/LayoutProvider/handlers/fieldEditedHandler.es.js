@@ -48,8 +48,11 @@ export const updatePages = (props, pages, previousFieldName, newField) => {
 		newPages = visitor.mapFields(
 			(field) => {
 				if (parentFieldName === field.fieldName) {
-					const visitor = new PagesVisitor([{rows: field.rows}]);
-
+					const visitor = new PagesVisitor([
+						{
+							rows: field.rows || [],
+						},
+					]);
 					const layout = visitor.mapColumns((column) => {
 						return {
 							...column,
@@ -62,7 +65,6 @@ export const updatePages = (props, pages, previousFieldName, newField) => {
 							}),
 						};
 					});
-
 					const {rows} = layout[0];
 
 					return {

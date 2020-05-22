@@ -52,7 +52,7 @@ info:
     version: "1.0.0"
 openapi: "3.0.1"
 paths:
-    "/document/{documentId}":
+    /document/{documentId}:
         get:
             parameters:
                 - in: path
@@ -67,9 +67,38 @@ paths:
                         "application/json":
                             schema:
                                 $ref: "#/components/schemas/Document"
+                        "application/xml":
+                            schema:
+                                $ref: "#/components/schemas/Document"
                     description:
-                        ""
-    "/folder/{folderId}":
+                        "Default response"
+    /folder:
+        get:
+            responses:
+                200:
+                    content:
+                        "*/*":
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Folder"
+                                type: array
+                    description:
+                        "OK"
+    /folder/count:
+        get:
+            description:
+                Retrieves the folders count.
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                example: 0
+                                format: int32
+                                type: integer
+                    description:
+                        "OK"
+    /folder/{folderId}:
         get:
             parameters:
                 - in: path
@@ -81,8 +110,8 @@ paths:
             responses:
                 200:
                     content:
-                        "*/*":
+                        "application/json":
                             schema:
                                 $ref: "#/components/schemas/Folder"
                     description:
-                        ""
+                        "OK"

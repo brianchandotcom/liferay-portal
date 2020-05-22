@@ -59,7 +59,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -562,7 +561,6 @@ public class PermissionCheckerTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testHasPermissionWithMissingResourcePermissions()
 		throws Exception {

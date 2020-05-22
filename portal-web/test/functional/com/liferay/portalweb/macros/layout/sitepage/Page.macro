@@ -388,6 +388,10 @@ definition {
 			locator1 = "Home#PAGE_CHILD_PAGE");
 	}
 
+	macro gotoFriendlyURLHistory {
+		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY");
+	}
+
 	macro gotoPagePanelPortlet {
 		var key_portletName = "${portletName}";
 

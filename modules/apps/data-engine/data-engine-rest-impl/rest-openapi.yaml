@@ -53,6 +53,9 @@ components:
                     type: integer
             type: object
         DataDefinitionField:
+            # @review
+            description:
+                Represents the value of each field in data definition.
             properties:
                 customProperties:
                     additionalProperties:
@@ -82,6 +85,8 @@ components:
                 name:
                     type: string
                 nestedDataDefinitionFields:
+                    description:
+                        "A list of child data definition fields that depend on this resource."
                     items:
                         $ref: "#/components/schemas/DataDefinitionField"
                     type:
@@ -280,7 +285,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.data.engine.rest.client', and version '2.0.10'."
+        'com.liferay.data.engine.rest.client', and version '2.0.12'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

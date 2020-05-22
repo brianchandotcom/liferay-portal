@@ -316,7 +316,9 @@ public class DataDefinitionField {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
-	@Schema
+	@Schema(
+		description = "A list of child data definition fields that depend on this resource."
+	)
 	@Valid
 	public DataDefinitionField[] getNestedDataDefinitionFields() {
 		return nestedDataDefinitionFields;
@@ -345,7 +347,9 @@ public class DataDefinitionField {
 		}
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A list of child data definition fields that depend on this resource."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DataDefinitionField[] nestedDataDefinitionFields;
 

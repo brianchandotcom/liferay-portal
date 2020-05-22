@@ -505,8 +505,10 @@ class DataLayoutBuilder extends React.Component {
 			availableLanguageIds,
 		});
 
-		this.formBuilderWithLayoutProvider.props.layoutProviderProps = {
-			...this.formBuilderWithLayoutProvider.props.layoutProviderProps,
+		const provider = this.getLayoutProvider();
+
+		provider.props = {
+			...provider.props,
 			availableLanguageIds,
 			editingLanguageId: selectedLanguageId,
 		};

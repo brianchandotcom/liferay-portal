@@ -109,12 +109,9 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "selectAccountOrganizations");
 
-				long accountEntryId = ParamUtil.getLong(
-					request, "accountEntryId");
-
 				AccountEntry accountEntry =
 					AccountEntryLocalServiceUtil.fetchAccountEntry(
-						accountEntryId);
+						_getAccountEntryId());
 
 				if (accountEntry != null) {
 					dropdownItem.putData(
@@ -141,7 +138,8 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 					"mvcPath",
 					"/account_entries_admin/select_account_organizations.jsp");
 				selectAccountOrganizationsURL.setParameter(
-					"accountEntryId", String.valueOf(accountEntryId));
+					"accountEntryId",
+					String.valueOf(accountEntry.getAccountEntryId()));
 				selectAccountOrganizationsURL.setWindowState(
 					LiferayWindowState.POP_UP);
 
@@ -169,12 +167,9 @@ public class ViewAccountOrganizationsManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		long accountEntryId = ParamUtil.getLong(
-			liferayPortletRequest, "accountEntryId");
-
 		long count =
 			AccountEntryOrganizationRelLocalServiceUtil.
-				getAccountEntryOrganizationRelsCount(accountEntryId);
+				getAccountEntryOrganizationRelsCount(_getAccountEntryId());
 
 		if (count > 0) {
 			return false;

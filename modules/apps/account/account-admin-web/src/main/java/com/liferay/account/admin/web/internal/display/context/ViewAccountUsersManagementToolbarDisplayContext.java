@@ -112,12 +112,9 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData("action", "selectAccountUsers");
 
-				long accountEntryId = ParamUtil.getLong(
-					request, "accountEntryId");
-
 				AccountEntry accountEntry =
 					AccountEntryLocalServiceUtil.fetchAccountEntry(
-						accountEntryId);
+						_getAccountEntryId());
 
 				if (accountEntry != null) {
 					dropdownItem.putData(
@@ -143,7 +140,8 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 					"mvcPath",
 					"/account_entries_admin/select_account_users.jsp");
 				selectAccountUsersURL.setParameter(
-					"accountEntryId", String.valueOf(accountEntryId));
+					"accountEntryId",
+					String.valueOf(accountEntry.getAccountEntryId()));
 				selectAccountUsersURL.setWindowState(LiferayWindowState.POP_UP);
 
 				dropdownItem.putData(
@@ -204,12 +202,10 @@ public class ViewAccountUsersManagementToolbarDisplayContext
 
 	@Override
 	public Boolean isDisabled() {
-		long accountEntryId = ParamUtil.getLong(
-			liferayPortletRequest, "accountEntryId");
-
 		long count =
 			AccountEntryUserRelLocalServiceUtil.
-				getAccountEntryUserRelsCountByAccountEntryId(accountEntryId);
+				getAccountEntryUserRelsCountByAccountEntryId(
+					_getAccountEntryId());
 
 		if (count > 0) {
 			return false;

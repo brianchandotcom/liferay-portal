@@ -942,6 +942,35 @@ definition {
 			locator1 = "Home#PAGE_ACTIVE");
 	}
 
+	@description = "This ensures that the old friendlyURL can be removed from the history."
+	@priority = "5"
+	test RemoveOldFriendlyURL {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+
+		Page.gotoFriendlyURLHistory();
+
+		Page.removeOldFriendlyURL(oldFriendlyURL = "/test-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page");
+
+		AssertTextPresent(value1 = "The requested resource could not be found.");
+	}
+
 	@description = "This ensures that an expired permanent redirect can be reset."
 	@priority = "5"
 	test ResetExpiredEntry {

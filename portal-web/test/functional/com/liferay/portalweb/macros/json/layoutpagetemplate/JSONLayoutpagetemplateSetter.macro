@@ -22,19 +22,12 @@ definition {
 	}
 
 	macro setClassTypeId {
-		Variables.assertDefined(parameterList = "${classNameId},${groupId},${subType}");
-
-		if ("${subType}" == "Basic Web Content") {
-			var structureKey = "BASIC-WEB-CONTENT";
-		}
-		else {
-			fail("'value' is either invalid or not yet set.");
-		}
+		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
 		var classTypeId = JSONDDMstructure._getStructureId(
 			classNameId = "${classNameId}",
 			groupId = "${groupId}",
-			structureKey = "${structureKey}");
+			structureName = "${structureName}");
 
 		return "${classTypeId}";
 	}

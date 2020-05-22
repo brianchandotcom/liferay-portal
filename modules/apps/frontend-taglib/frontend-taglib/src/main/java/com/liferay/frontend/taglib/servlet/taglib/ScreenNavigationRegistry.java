@@ -80,8 +80,6 @@ public class ScreenNavigationRegistry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
 		_screenNavigationCategoriesMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ScreenNavigationCategory.class, null,
@@ -118,7 +116,6 @@ public class ScreenNavigationRegistry {
 		return screenNavigationId + StringPool.PERIOD + screenCategoryKey;
 	}
 
-	private BundleContext _bundleContext;
 	private ServiceTrackerMap<String, List<ScreenNavigationCategory>>
 		_screenNavigationCategoriesMap;
 	private ServiceTrackerMap<String, List<ScreenNavigationEntry>>

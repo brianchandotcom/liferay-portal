@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.test.rule;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -79,6 +80,8 @@ public class SynchronousDestinationTestRule
 
 	@Override
 	public SyncHandler beforeClass(Description description) throws Throwable {
+		DependencyManagerSyncUtil.sync();
+
 		Class<?> testClass = description.getTestClass();
 
 		return _createSyncHandler(testClass.getAnnotation(Sync.class));

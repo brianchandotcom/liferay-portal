@@ -202,6 +202,16 @@ public class DocumentSerDes {
 			sb.append(document.getDocumentFolderId());
 		}
 
+		if (document.getDocumentType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"documentType\": ");
+
+			sb.append(String.valueOf(document.getDocumentType()));
+		}
+
 		if (document.getEncodingFormat() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -475,6 +485,13 @@ public class DocumentSerDes {
 				String.valueOf(document.getDocumentFolderId()));
 		}
 
+		if (document.getDocumentType() == null) {
+			map.put("documentType", null);
+		}
+		else {
+			map.put("documentType", String.valueOf(document.getDocumentType()));
+		}
+
 		if (document.getEncodingFormat() == null) {
 			map.put("encodingFormat", null);
 		}
@@ -652,6 +669,12 @@ public class DocumentSerDes {
 				if (jsonParserFieldValue != null) {
 					document.setDocumentFolderId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "documentType")) {
+				if (jsonParserFieldValue != null) {
+					document.setDocumentType(
+						DocumentTypeSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "encodingFormat")) {

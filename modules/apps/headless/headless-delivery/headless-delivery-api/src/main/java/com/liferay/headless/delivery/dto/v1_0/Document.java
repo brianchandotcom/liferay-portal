@@ -354,6 +354,35 @@ public class Document {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long documentFolderId;
 
+	@Schema
+	@Valid
+	public DocumentType getDocumentType() {
+		return documentType;
+	}
+
+	public void setDocumentType(DocumentType documentType) {
+		this.documentType = documentType;
+	}
+
+	@JsonIgnore
+	public void setDocumentType(
+		UnsafeSupplier<DocumentType, Exception> documentTypeUnsafeSupplier) {
+
+		try {
+			documentType = documentTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected DocumentType documentType;
+
 	@Schema(
 		description = "The document's content type (e.g., `application/pdf`, etc.)."
 	)
@@ -852,6 +881,16 @@ public class Document {
 			sb.append("\"documentFolderId\": ");
 
 			sb.append(documentFolderId);
+		}
+
+		if (documentType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"documentType\": ");
+
+			sb.append(String.valueOf(documentType));
 		}
 
 		if (encodingFormat != null) {

@@ -246,6 +246,27 @@ public class Document implements Cloneable {
 
 	protected Long documentFolderId;
 
+	public DocumentType getDocumentType() {
+		return documentType;
+	}
+
+	public void setDocumentType(DocumentType documentType) {
+		this.documentType = documentType;
+	}
+
+	public void setDocumentType(
+		UnsafeSupplier<DocumentType, Exception> documentTypeUnsafeSupplier) {
+
+		try {
+			documentType = documentTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected DocumentType documentType;
+
 	public String getEncodingFormat() {
 		return encodingFormat;
 	}

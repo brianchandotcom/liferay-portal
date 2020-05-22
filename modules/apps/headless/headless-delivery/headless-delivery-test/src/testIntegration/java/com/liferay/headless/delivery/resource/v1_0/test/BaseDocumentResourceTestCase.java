@@ -1364,6 +1364,14 @@ public abstract class BaseDocumentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("documentType", additionalAssertFieldName)) {
+				if (document.getDocumentType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("encodingFormat", additionalAssertFieldName)) {
 				if (document.getEncodingFormat() == null) {
 					valid = false;
@@ -1716,6 +1724,17 @@ public abstract class BaseDocumentResourceTestCase {
 				if (!Objects.deepEquals(
 						document1.getDocumentFolderId(),
 						document2.getDocumentFolderId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("documentType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						document1.getDocumentType(),
+						document2.getDocumentType())) {
 
 					return false;
 				}
@@ -2122,6 +2141,11 @@ public abstract class BaseDocumentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("documentFolderId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("documentType")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

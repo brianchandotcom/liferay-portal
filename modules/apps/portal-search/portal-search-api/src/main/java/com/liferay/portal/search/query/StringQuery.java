@@ -14,6 +14,9 @@
 
 package com.liferay.portal.search.query;
 
+import java.util.Map;
+import java.util.Set;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -27,9 +30,15 @@ import org.osgi.annotation.versioning.ProviderType;
  * </p>
  *
  * @author Bruno Farache
+ * @author Petteri Karttunen
+ * 
  */
 @ProviderType
 public interface StringQuery extends Query {
+
+	public void addField(String field);
+
+	public void addField(String field, float boost);
 
 	public Boolean getAllowLeadingWildcard();
 
@@ -45,17 +54,27 @@ public interface StringQuery extends Query {
 
 	public Boolean getEnablePositionIncrements();
 
+	public Boolean getEscape();
+
+	public Set<String> getFields();
+
+	public Map<String, Float> getFieldsBoosts();
+
 	public Float getFuzziness();
 
 	public Integer getFuzzyMaxExpansions();
 
 	public Integer getFuzzyPrefixLength();
 
+	public String getFuzzyRewrite();
+
 	public Boolean getFuzzyTranspositions();
 
 	public Boolean getLenient();
 
 	public Integer getMaxDeterminedStates();
+	
+	public String getMinimumShouldMatch();
 
 	public Integer getPhraseSlop();
 
@@ -66,6 +85,8 @@ public interface StringQuery extends Query {
 	public String getQuoteFieldSuffix();
 
 	public String getRewrite();
+
+	public Float getTieBreaker();
 
 	public String getTimeZone();
 
@@ -83,6 +104,8 @@ public interface StringQuery extends Query {
 	public void setDefaultOperator(Operator defaultOperator);
 
 	public void setEnablePositionIncrements(Boolean enablePositionIncrements);
+	
+	public void setEscape(boolean escape);
 
 	public void setFuzziness(Float fuzziness);
 
@@ -90,11 +113,15 @@ public interface StringQuery extends Query {
 
 	public void setFuzzyPrefixLength(Integer fuzzyPrefixLength);
 
+	public void setFuzzyRewrite(String fuzzyRewrite);
+
 	public void setFuzzyTranspositions(Boolean fuzzyTranspositions);
 
 	public void setLenient(Boolean lenient);
 
 	public void setMaxDeterminedStates(Integer maxDeterminedStates);
+
+	public void setMinimumShouldMatch(String minimumShouldMatch);
 
 	public void setPhraseSlop(Integer phraseSlop);
 
@@ -103,6 +130,8 @@ public interface StringQuery extends Query {
 	public void setQuoteFieldSuffix(String quoteFieldSuffix);
 
 	public void setRewrite(String rewrite);
+	
+	public void setTieBreaker(float tieBreaker);
 
 	public void setTimeZone(String timeZone);
 

@@ -30,15 +30,9 @@ definition {
 	@priority = "5"
 	test CannotExportMastersPageTemplateWithoutPublishedVersion {
 		task ("Add a custom master but not publish") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			PortletEntry.inputName(name = "Custom Masters Page Template");
-
-			Button.clickSave();
-
-			PageEditor.assertFragmentSidebarLoaded();
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
 		}
 
 		task ("Assert custom master has a Draft label") {
@@ -70,12 +64,14 @@ definition {
 	@priority = "4"
 	test ExportImportMastersPageTemplateWithCompositionOfFragments {
 		task ("Add a custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
 		}
 
 		task ("Add composition of fragments to custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
@@ -180,12 +176,14 @@ definition {
 	@priority = "4"
 	test ExportImportMastersPageTemplateWithCustomConfigurationSettingOfFragments {
 		task ("Add a custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
 		}
 
 		task ("Add a Section and a Heading to custom master and set up configuration settings of them") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
@@ -264,12 +262,14 @@ definition {
 	@priority = "4"
 	test ExportImportMastersPageTemplateWithEditedInlineContentOfFragments {
 		task ("Add a custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
 		}
 
 		task ("Add fragments to custom master and edit inline content") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
@@ -376,12 +376,14 @@ definition {
 	@priority = "4"
 	test ExportImportMastersPageTemplateWithThumbnail {
 		task ("Add a custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
 		}
 
 		task ("Change thumbnail of custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Change Thumbnail",
 				masterLayoutName = "Custom Masters Page Template");
@@ -422,12 +424,14 @@ definition {
 	@priority = "4"
 	test OverwriteExistingEntryWithThumbnailIfCheckOverwriteExistingEntries {
 		task ("Add a custom master") {
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.addMasters(masterLayoutName = "Custom Masters Page Template");
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Test Site Name",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
 		}
 
 		task ("Change thumbnail of custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 				item = "Change Thumbnail",
 				masterLayoutName = "Custom Masters Page Template");

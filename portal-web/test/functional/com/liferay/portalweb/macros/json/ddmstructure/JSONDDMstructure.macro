@@ -2,19 +2,22 @@ definition {
 
 	@summary = "Get a structureId from ddmStructure"
 	macro _getStructureId {
-		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureKey}");
+		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
 		var portalURL = JSONCompany.getPortalURL();
 
+		var companyId = JSONCompany.getCompanyId();
+
 		var curl = '''
-			${portalURL}/api/jsonws/ddm.ddmstructure/get-structure \
+			${portalURL}/api/jsonws/ddm.ddmstructure/get-structures \
 			  -u test@liferay.com:test \
-			  -d groupId=${groupId} \
+			  -d companyId=${companyId} \
+			  -d groupIds=[${groupId}] \
 			  -d classNameId=${classNameId} \
-			  -d structureKey=${structureKey} \
-			  -d includeAncestorStructures=true
+			  -d status=0
 		''';
-		var structureId = JSONCurlUtil.post("${curl}", "$.[?(@['structureKey'] == '${structureKey}')]['structureId']");
+
+		var structureId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${structureName}')]['structureId']");
 		var structureId = StringUtil.replace("${structureId}", "[&quot;", "");
 		var structureId = StringUtil.replace("${structureId}", "&quot;]", "");
 

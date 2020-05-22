@@ -38,67 +38,66 @@ const getFieldTypes = ({
 	const {dataLayoutPages} = dataLayout;
 	const {dataDefinitionFields: fields} = dataDefinition;
 
-		const setDefinitionField = ({
+	const setDefinitionField = (
+		{
 			customProperties: {ddmStructureId},
 			fieldType,
 			label,
 			name,
 			nestedDataDefinitionFields = [],
-		}, nested) => {
+		},
+		nested
+	) => {
+		if (fieldType === 'section') {
+			return;
+		}
 
-			if (fieldType === 'section') {
-				return;
-			}
+		const fieldTypeSettings = fieldTypes.find(({name}) => {
+			return name === fieldType;
+		});
 
-			const fieldTypeSettings = fieldTypes.find(({name}) => {
-				return name === fieldType;
-			});
+		if (label[editingLanguageId]) {
+			label = label[editingLanguageId];
+		}
+		else {
+			label = label[Liferay.ThemeDisplay.getDefaultLanguageId()];
+		}
 
-			if (label[editingLanguageId]) {
-				label = label[editingLanguageId];
-			}
-			else {
-				label = label[Liferay.ThemeDisplay.getDefaultLanguageId()];
-			}
+		const isFieldSet = ddmStructureId && fieldType === 'fieldset';
 
-			const isFieldSet = ddmStructureId && fieldType === 'fieldset';
+		const FieldTypeLabel = isFieldSet
+			? Liferay.Language.get('fieldset')
+			: fieldTypeSettings.label;
 
-			const FieldTypeLabel = isFieldSet
-				? Liferay.Language.get('fieldset')
-				: fieldTypeSettings.label;
-
-			const dataDefintionField = {
-				active: name === focusedCustomObjectField.name,
-				className: nested
-					? 'custom-object-field-children'
-					: 'custom-object-field',
-				description: `${FieldTypeLabel} ${
-					nestedDataDefinitionFields.length
-						? `- ${
-								nestedDataDefinitionFields.length
-						  } ${Liferay.Language.get('fields')}`
-						: ''
-				}`,
-				disabled: DataLayoutVisitor.containsField(
-					dataLayoutPages,
-					name
-				),
-				dragAlignment: 'right',
-				dragType: DragTypes.DRAG_DATA_DEFINITION_FIELD,
-				icon: fieldTypeSettings.icon,
-				isFieldSet,
-				label,
-				name,
-				nestedDataDefinitionFields: nestedDataDefinitionFields.map(
-					(nestedField) => setDefinitionField(nestedField, true)
-				),
-			};
-
-			if (nested) {
-				return dataDefintionField;
-			}
-			dataDefinitionFields.push(dataDefintionField);
+		const dataDefintionField = {
+			active: name === focusedCustomObjectField.name,
+			className: nested
+				? 'custom-object-field-children'
+				: 'custom-object-field',
+			description: `${FieldTypeLabel} ${
+				nestedDataDefinitionFields.length
+					? `- ${
+							nestedDataDefinitionFields.length
+					  } ${Liferay.Language.get('fields')}`
+					: ''
+			}`,
+			disabled: DataLayoutVisitor.containsField(dataLayoutPages, name),
+			dragAlignment: 'right',
+			dragType: DragTypes.DRAG_DATA_DEFINITION_FIELD,
+			icon: fieldTypeSettings.icon,
+			isFieldSet,
+			label,
+			name,
+			nestedDataDefinitionFields: nestedDataDefinitionFields.map(
+				(nestedField) => setDefinitionField(nestedField, true)
+			),
 		};
+
+		if (nested) {
+			return dataDefintionField;
+		}
+		dataDefinitionFields.push(dataDefintionField);
+	};
 
 	fields.forEach((fieldType) => {
 		setDefinitionField(fieldType);

@@ -14,9 +14,13 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 
 import org.dom4j.Element;
 
@@ -42,6 +46,56 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 
 			exception.printStackTrace();
 		}
+	}
+
+	@Override
+	public String getResult() {
+		String result = super.getResult();
+
+		List<Build> downstreamBuildFailures = getFailedDownstreamBuilds();
+
+		if ((result == null) || downstreamBuildFailures.isEmpty()) {
+			return result;
+		}
+
+		Properties buildProperties;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
+
+		String pullRequestForwardUpstreamFailureComparisonEnabled =
+			buildProperties.getProperty(
+				"pull.request.forward.upstream.failure.comparison.enabled");
+
+		String testSuiteName = getTestSuiteName();
+
+		if (!Boolean.parseBoolean(
+				pullRequestForwardUpstreamFailureComparisonEnabled) ||
+			!testSuiteName.matches("relevant|stable")) {
+
+			return result;
+		}
+
+		String batchWhitelist = buildProperties.getProperty(
+			"pull.request.forward.upstream.failure.comparison.batch.whitelist");
+
+		List<String> batchNames = new ArrayList<>(
+			Arrays.asList(batchWhitelist.split(",")));
+
+		for (Build downstreamBuild : downstreamBuildFailures) {
+			if (downstreamBuild.isUniqueFailure() ||
+				!batchNames.contains(downstreamBuild.getJobVariant())) {
+
+				return result;
+			}
+		}
+
+		return "APPROVED";
 	}
 
 	public String getStableJobResult() {

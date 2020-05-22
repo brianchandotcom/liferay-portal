@@ -29,10 +29,12 @@ public class GenericsUtil {
 		Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
 
 		for (Type genericInterfaceType : genericInterfaceTypes) {
-			ParameterizedType parameterizedType =
-				(ParameterizedType)genericInterfaceType;
+			if (genericInterfaceType instanceof ParameterizedType) {
+				ParameterizedType parameterizedType =
+					(ParameterizedType)genericInterfaceType;
 
-			return (Class<?>)parameterizedType.getActualTypeArguments()[0];
+				return (Class<?>)parameterizedType.getActualTypeArguments()[0];
+			}
 		}
 
 		Class<?> superClass = clazz.getSuperclass();

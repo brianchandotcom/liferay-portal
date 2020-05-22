@@ -9,6 +9,8 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
 		User.firstLoginPG();
 
 		if ("${testPortalInstance}" != "true") {

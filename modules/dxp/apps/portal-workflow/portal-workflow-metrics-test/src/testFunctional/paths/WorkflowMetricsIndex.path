@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>WorkflowMetricsIndex</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WorkflowMetricsIndex</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>METRICS_MENU_INDEX</td>
+	<td>//div[contains(@class, 'control-menu-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_INDEX_SETTINGS</td>
+	<td>//div[contains(@class,'show')]//a[@class='dropdown-item'][contains(@href,'InstanceCount')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_REINDEX_ALL_BUTTON</td>
+	<td>//button[@class='btn btn-sm btn-primary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>METRICS_REINDEX_SPECIFIC_BUTTON</td>
+	<td>//*[contains(text(),'"${key_actionDescription}"')]/following-sibling::div//button</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+

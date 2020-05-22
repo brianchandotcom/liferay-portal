@@ -16,6 +16,7 @@ import React from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+import {INIT} from '../app/actions/types';
 import App from './components/App';
 import {ControlsProvider} from './components/Controls';
 import {initializeConfig} from './config/index';
@@ -31,7 +32,7 @@ import {StoreContextProvider} from './store/index';
  * function that returns a component).
  */
 function Container({state}) {
-	const initialState = reducer(state, {type: 'INIT'});
+	const initialState = reducer(state, {type: INIT});
 
 	return (
 		<StoreContextProvider initialState={initialState} reducer={reducer}>

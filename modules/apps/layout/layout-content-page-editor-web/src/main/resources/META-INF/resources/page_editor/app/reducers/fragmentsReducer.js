@@ -12,7 +12,9 @@
  * details.
  */
 
-import {ADD_FRAGMENT_COMPOSITION} from '../actions/types';
+import {ADD_FRAGMENT_COMPOSITION, INIT} from '../actions/types';
+
+const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
 
 export default function fragmentsReducer(fragments = [], action) {
 	switch (action.type) {
@@ -47,6 +49,22 @@ export default function fragmentsReducer(fragments = [], action) {
 
 				newCollection,
 			];
+		}
+		case INIT: {
+			const contentDisplayFragment = fragments.find(
+				(fragment) =>
+					fragment.fragmentCollectionId ===
+					CONTENT_DISPLAY_COLLECTION_ID
+			);
+			const newFragments = fragments.filter(
+				(fragment) =>
+					fragment.fragmentCollectionId !==
+					CONTENT_DISPLAY_COLLECTION_ID
+			);
+
+			newFragments.splice(1, 0, contentDisplayFragment);
+
+			return newFragments;
 		}
 
 		default:

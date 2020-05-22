@@ -75,11 +75,10 @@ SearchEngineDisplayContext
 					<h3 class="search-engine-page-title">
 						<liferay-ui:message key="active-connections" />
 
-						<span class="badge badge-secondary">
-							<span class="badge-item badge-item-expand">
-								<%= (connectionInformationList == null) ? 0 : connectionInformationList.size() %>
-							</span>
-						</span>
+						<clay:badge
+							displayType="secondary"
+							label="<%= String.valueOf((connectionInformationList == null) ? 0 : connectionInformationList.size()) %>"
+						/>
 					</h3>
 
 					<c:choose>

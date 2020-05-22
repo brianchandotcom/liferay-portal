@@ -22,9 +22,12 @@
 			<%= panelCategory.getLabel(themeDisplay.getLocale()) %>
 
 			<c:if test="<%= notificationsCount > 0 %>">
-				<span class="badge badge-danger float-right panel-notifications-count">
-					<span class="badge-item badge-item-expand" data-qa-id="notificationsCount"><%= notificationsCount %></span>
-				</span>
+				<clay:badge
+					className="float-right panel-notifications-count"
+					data-qa-id="notificationsCount"
+					displayType="danger"
+					label="<%= String.valueOf(notificationsCount) %>"
+				/>
 			</c:if>
 		</c:if>
 

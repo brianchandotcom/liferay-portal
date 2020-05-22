@@ -97,6 +97,7 @@ definition {
 
 		Redirect.editEntry(
 			destinationURLEdit = "${portalURL}/web/test-site-name/new-test-destination-page",
+			permanentEntryEdit = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -750,9 +751,11 @@ definition {
 		Redirect.editEntry(
 			destinationURLEdit = "${portalURL}/web/test-site-name/new-destination-page",
 			expirationDate = "12/31/2013",
+			permanentEntryEdit = "true",
 			redirectTypeEdit = "Temporary (302)",
 			sourceURL = "test-source-page",
-			sourceURLEdit = "new-source-page");
+			sourceURLEdit = "new-source-page",
+			toolTip = "true");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 

@@ -187,6 +187,14 @@ definition {
 			item = "Edit",
 			sourceURL = "${sourceURL}");
 
+		if (isSet(toolTip)) {
+			MouseOver(locator1 = "Icon#TOOLTIP");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "The redirect type affects how long search engines and browsers cache the information.");
+		}
+
 		if (isSet(sourceURLEdit)) {
 			Type(
 				locator1 = "TextInput#REDIRECT_SOURCE_URL",
@@ -203,6 +211,12 @@ definition {
 			Select(
 				locator1 = "Select#REDIRECT_TYPE",
 				value1 = "${redirectTypeEdit}");
+		}
+
+		if (isSet(permanentEntryEdit)) {
+			AssertTextEquals(
+				locator1 = "Message#INFO",
+				value1 = "Info:Changes to this redirect might not be immediately seen for users whose browsers have cached the old redirect configuration.");
 		}
 
 		if (isSet(expirationDate)) {

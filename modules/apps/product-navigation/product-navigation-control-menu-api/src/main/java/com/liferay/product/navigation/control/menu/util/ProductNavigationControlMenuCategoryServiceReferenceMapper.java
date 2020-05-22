@@ -24,7 +24,9 @@ import org.osgi.framework.ServiceReference;
 
 /**
  * @author Julio Camarero
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class ProductNavigationControlMenuCategoryServiceReferenceMapper
 	implements ServiceReferenceMapper
 		<String, ProductNavigationControlMenuCategory> {

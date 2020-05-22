@@ -14,14 +14,11 @@
 
 import parser from 'bbcode-to-react';
 import {Editor} from 'frontend-editor-ckeditor-web';
-import React from 'react';
 
 import {getCKEditorReadOnlyConfig} from '../utils/utils.es';
 
-
 export default ({
 	articleBody,
-	bodyClass = 'question', 
 	compactMode = false,
 	encodingFormat,
 	id,
@@ -38,7 +35,7 @@ export default ({
 		{encodingFormat !== 'bbcode' && !compactMode && (
 			<div className={`cke_readonly questions-article-body-${id}`}>
 				<Editor
-					config={getCKEditorReadOnlyConfig(bodyClass)}
+					config={getCKEditorReadOnlyConfig()}
 					data={articleBody}
 					required
 				/>

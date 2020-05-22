@@ -102,7 +102,6 @@ export default withRouter(
 							<div className="c-mt-2">
 								<ArticleBodyRenderer 
 									{...answer} 
-									bodyClass={showAsAnswer?'answer-success':'answer'}
 								/>
 							</div>
 

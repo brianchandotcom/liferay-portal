@@ -40,12 +40,12 @@ export function getCKEditorConfig() {
 	return config;
 }
 
-export function getCKEditorReadOnlyConfig(bodyClass) {
+export function getCKEditorReadOnlyConfig() {
 	const config = {
 		allowedContent: true,
 		autoGrow_minHeight: 200,
 		autoGrow_onStartup: true,
-		bodyClass: 'cke_readonly_body cke_' + bodyClass,
+		bodyClass: 'cke_readonly_body',
 		codeSnippet_theme: 'monokai_sublime',
 		contentsCss: '/o/questions-web/css/main.css',
 		extraPlugins: 'autogrow,codesnippet',

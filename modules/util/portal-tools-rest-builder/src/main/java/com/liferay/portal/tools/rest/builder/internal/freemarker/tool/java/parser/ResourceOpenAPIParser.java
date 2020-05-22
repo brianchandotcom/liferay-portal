@@ -794,10 +794,12 @@ public class ResourceOpenAPIParser {
 			if ((get != null) && basePath.equals(entry.getKey())) {
 				List<String> tags = get.getTags();
 
-				String tag = tags.get(0);
+				if (!tags.isEmpty()) {
+					String tag = tags.get(0);
 
-				if (!tag.equals(schemaName)) {
-					return tag;
+					if (!tag.equals(schemaName)) {
+						return tag;
+					}
 				}
 			}
 		}

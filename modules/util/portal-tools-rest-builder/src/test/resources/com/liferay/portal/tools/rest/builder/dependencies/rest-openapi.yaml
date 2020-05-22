@@ -52,7 +52,7 @@ info:
     version: "1.0.0"
 openapi: "3.0.1"
 paths:
-    "/document/{documentId}":
+    /document/{documentId}:
         get:
             parameters:
                 - in: path
@@ -69,7 +69,7 @@ paths:
                                 $ref: "#/components/schemas/Document"
                     description:
                         ""
-    "/folder":
+    /folder:
         get:
             responses:
                 default:
@@ -81,7 +81,7 @@ paths:
                                 type: array
                     description:
                         "Default response"
-    "/folder/{folderId}":
+    /folder/{folderId}:
         get:
             parameters:
                 - in: path

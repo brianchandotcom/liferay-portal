@@ -187,7 +187,7 @@ export default function Sidebar() {
 			<div className="page-editor__sidebar" ref={dropClearRef}>
 				<div
 					className={classNames('page-editor__sidebar__buttons', {
-						light: config.fragmentPanelEnabled,
+						light: true,
 					})}
 					onClick={deselectItem}
 				>
@@ -236,7 +236,7 @@ export default function Sidebar() {
 									onClick={() => handleClick(panel)}
 									onFocus={prefetch}
 									onMouseEnter={prefetch}
-									small={config.fragmentPanelEnabled}
+									small={true}
 									symbol={icon}
 									title={label}
 								/>

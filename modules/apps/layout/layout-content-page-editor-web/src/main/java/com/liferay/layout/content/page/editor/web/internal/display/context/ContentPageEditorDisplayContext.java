@@ -265,9 +265,6 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/content_layout/edit_fragment_entry_link")
 			).put(
-				"fragmentPanelEnabled",
-				_ffLayoutContentPageEditorConfiguration.fragmentPanelEnabled()
-			).put(
 				"getAssetFieldValueURL",
 				getResourceURL("/content_layout/get_asset_field_value")
 			).put(

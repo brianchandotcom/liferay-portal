@@ -67,10 +67,6 @@ public class FragmentsContentPageEditorSidebarPanel
 		PermissionChecker permissionChecker, long plid,
 		boolean pageIsDisplayPage) {
 
-		if (!_ffLayoutContentPageEditorConfiguration.fragmentPanelEnabled()) {
-			return false;
-		}
-
 		try {
 			if (LayoutPermissionUtil.contains(
 					permissionChecker, plid, ActionKeys.UPDATE)) {

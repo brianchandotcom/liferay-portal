@@ -23,15 +23,6 @@ import FragmentsSidebar from '../../../../../../src/main/resources/META-INF/reso
 
 import '@testing-library/jest-dom/extend-expect';
 
-jest.mock(
-	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {
-			fragmentPanelEnabled: false,
-		},
-	})
-);
-
 const renderFragmentsSidebar = () =>
 	render(
 		<DndProvider backend={HTML5Backend}>

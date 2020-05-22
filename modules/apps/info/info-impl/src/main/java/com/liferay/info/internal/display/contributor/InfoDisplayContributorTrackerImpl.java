@@ -103,14 +103,15 @@ public class InfoDisplayContributorTrackerImpl
 							new InfoDisplayContributorWrapper(
 								infoDisplayContributor);
 
-						return bundleContext.registerService(
-							new String[] {
-								InfoItemFormProvider.class.getName(),
-								InfoItemProvider.class.getName()
-							},
-							infoItemFormProvider,
-							_getServiceReferenceProperties(
-								bundleContext, serviceReference));
+						return (ServiceRegistration<InfoDisplayContributor>)
+							bundleContext.registerService(
+								new String[] {
+									InfoItemFormProvider.class.getName(),
+									InfoItemProvider.class.getName()
+								},
+								infoItemFormProvider,
+								_getServiceReferenceProperties(
+									bundleContext, serviceReference));
 					}
 					finally {
 						bundleContext.ungetService(serviceReference);
@@ -147,11 +148,11 @@ public class InfoDisplayContributorTrackerImpl
 		_infoDisplayContributorServiceTracker.close();
 	}
 
-	private Dictionary _getServiceReferenceProperties(
+	private Dictionary<String, Object> _getServiceReferenceProperties(
 		BundleContext bundleContext,
 		ServiceReference<InfoDisplayContributor> serviceReference) {
 
-		Dictionary dictionary = new Hashtable();
+		Dictionary<String, Object> dictionary = new Hashtable<>();
 
 		for (String key : serviceReference.getPropertyKeys()) {
 			dictionary.put(key, serviceReference.getProperty(key));

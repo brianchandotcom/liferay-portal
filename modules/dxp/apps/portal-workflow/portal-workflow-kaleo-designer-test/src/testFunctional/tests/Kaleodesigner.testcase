@@ -457,6 +457,8 @@ definition {
 	@description = "This is a use case for LPS-37209."
 	@priority = "4"
 	test ConfigureTaskTimersViaViewTab {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "Kaleodesigner#ConfigureTaskTimersViaViewTab";
 
 		ProductMenu.gotoPortlet(
@@ -671,6 +673,8 @@ definition {
 	@description = "This is a use case for LPS-71924."
 	@priority = "5"
 	test PublishDefaultWorkflowDefinition {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishDefaultWorkflowDefinition";
 
 		ProductMenu.gotoPortlet(
@@ -1267,6 +1271,8 @@ definition {
 	@description = "This is a use case for LPS-48590."
 	@priority = "4"
 	test ViewSourceXMLNotErasedWhenInvalid {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewSourceXMLNotErasedWhenInvalid";
 
 		ProductMenu.gotoPortlet(

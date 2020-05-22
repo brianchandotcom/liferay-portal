@@ -482,6 +482,8 @@ definition {
 	@description = "LRQA-53633 Automate LPS-103368: [Dashboard] Apply searches in the workload distribution for all assignees"
 	@priority = "5"
 	test ApplySearchesForAllAssignees {
+		property portal.upstream = "quarantine";
+
 		property test.name.skip.portal.instance = "WorkflowMetrics#ApplySearchesForAllAssignees";
 
 		ProductMenu.gotoPortlet(

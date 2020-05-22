@@ -337,13 +337,6 @@ public class ClassUtil {
 					tokens.add(st.sval);
 				}
 			}
-			else if ((st.ttype != StreamTokenizer.TT_NUMBER) &&
-					 (st.ttype != StreamTokenizer.TT_EOL)) {
-
-				if (Character.isUpperCase((char)st.ttype)) {
-					tokens.add(String.valueOf((char)st.ttype));
-				}
-			}
 		}
 
 		return tokens;

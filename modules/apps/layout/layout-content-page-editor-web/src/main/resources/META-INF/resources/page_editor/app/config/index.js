@@ -54,9 +54,7 @@ export function initializeConfig(backendConfig) {
  * of a plugin. Here we deal with the exceptions by mapping IDs to
  * plugin names.
  */
-const SIDEBAR_PANEL_IDS_TO_PLUGINS = {
-	elements: 'fragments',
-};
+const SIDEBAR_PANEL_IDS_TO_PLUGINS = {};
 
 function augmentPanelData(pluginsRootPath, sidebarPanels) {
 	return sidebarPanels.map((panel) => {

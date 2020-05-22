@@ -15,11 +15,22 @@ definition {
 			var classTypeId = "0";
 		}
 		else {
-			var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
-				contentType = "${contentType}",
-				classNameId = "${classNameId}",
-				groupId = "${groupId}",
-				subType = "${subType}");
+			if ("${subType}" == "Basic Web Content") {
+				var globalGroupId = JSONGroupAPI._getGroupIdByName(
+					groupName = "Global",
+					site = "true");
+
+				var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+					classNameId = "${classNameId}",
+					groupId = "${globalGroupId}",
+					structureName = "${subType}");
+			}
+			else {
+				var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+					classNameId = "${classNameId}",
+					groupId = "${groupId}",
+					structureName = "${subType}");
+			}
 		}
 
 		if (isSet(masterLayoutEntryName)) {

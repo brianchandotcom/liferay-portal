@@ -72,7 +72,6 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 						<li class="list-group-card-item">
 							<a href="<%= viewCategoryHREF %>">
 								<clay:icon
-									elementClasses="user-icon-sm"
 									symbol="<%= configurationCategoryDisplay.getCategoryIcon() %>"
 								/>
 

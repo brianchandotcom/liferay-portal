@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -110,7 +110,15 @@ public class SearchUtil {
 
 		searchContextUnsafeConsumer.accept(searchContext);
 
-		Hits hits = indexer.search(searchContext);
+		Hits hits;
+
+		if (searchContext.isCheckPermissions()) {
+			hits = indexer.search(searchContext);
+		}
+		else {
+			hits = IndexSearcherHelperUtil.search(
+				searchContext, indexer.getFullQuery(searchContext));
+		}
 
 		for (Document document : hits.getDocs()) {
 			T item = transformUnsafeFunction.apply(document);
@@ -135,8 +143,9 @@ public class SearchUtil {
 			Filter filter, Class<?> indexerClass, String keywords,
 			Pagination pagination,
 			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
-			UnsafeConsumer<SearchContext, Exception>
-				searchContextUnsafeConsumer,
+			UnsafeConsumer
+				<com.liferay.portal.kernel.search.SearchContext, Exception>
+					searchContextUnsafeConsumer,
 			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
 			Sort[] sorts)
 		throws Exception {
@@ -144,7 +153,8 @@ public class SearchUtil {
 		return search(
 			Collections.emptyMap(), booleanQueryUnsafeConsumer, filter,
 			indexerClass, keywords, pagination, queryConfigUnsafeConsumer,
-			searchContextUnsafeConsumer, sorts, transformUnsafeFunction);
+			searchContextUnsafeConsumer::accept, sorts,
+			transformUnsafeFunction);
 	}
 
 	/**
@@ -158,8 +168,9 @@ public class SearchUtil {
 			Filter filter, Class<?> indexerClass, String keywords,
 			Pagination pagination,
 			UnsafeConsumer<QueryConfig, Exception> queryConfigUnsafeConsumer,
-			UnsafeConsumer<SearchContext, Exception>
-				searchContextUnsafeConsumer,
+			UnsafeConsumer
+				<com.liferay.portal.kernel.search.SearchContext, Exception>
+					searchContextUnsafeConsumer,
 			UnsafeFunction<Document, T, Exception> transformUnsafeFunction,
 			Sort[] sorts, Map<String, Map<String, String>> actions)
 		throws Exception {
@@ -176,8 +187,24 @@ public class SearchUtil {
 					Map.Entry::getKey,
 					entry -> (Map<String, String>)entry.getValue())),
 			booleanQueryUnsafeConsumer, filter, indexerClass, keywords,
-			pagination, queryConfigUnsafeConsumer, searchContextUnsafeConsumer,
-			sorts, transformUnsafeFunction);
+			pagination, queryConfigUnsafeConsumer,
+			searchContextUnsafeConsumer::accept, sorts,
+			transformUnsafeFunction);
+	}
+
+	public static class SearchContext
+		extends com.liferay.portal.kernel.search.SearchContext {
+
+		public boolean isCheckPermissions() {
+			return _checkPermissions;
+		}
+
+		public void setVulcanCheckPermissions(boolean checkPermissions) {
+			_checkPermissions = checkPermissions;
+		}
+
+		private boolean _checkPermissions = true;
+
 	}
 
 	private static SearchContext _createSearchContext(

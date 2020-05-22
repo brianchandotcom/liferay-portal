@@ -344,6 +344,7 @@ public class CommentResourceImpl
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setVulcanCheckPermissions(false);
 			},
 			sorts,
 			document -> CommentUtil.toComment(

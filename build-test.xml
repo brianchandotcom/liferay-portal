@@ -10098,6 +10098,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<include name="**/*.sh" />
 					</fileset>
 				</chmod>
+
+				<delete dir="${app.server.parent.dir}/logs" />
+
+				<mkdir dir="${app.server.parent.dir}/logs" />
 			</then>
 			<else>
 				<if>

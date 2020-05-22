@@ -50,11 +50,14 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 
 		String servletPath = httpServletRequest.getServletPath();
 
+		if (servletPath.startsWith(Portal.PATH_MODULE)) {
+			return false;
+		}
+
 		String contentType = httpServletRequest.getHeader(
 			HttpHeaders.CONTENT_TYPE);
 
-		if (!servletPath.startsWith(Portal.PATH_MODULE) &&
-			(contentType != null) &&
+		if ((contentType != null) &&
 			contentType.startsWith(ContentTypes.MULTIPART_FORM_DATA)) {
 
 			return true;

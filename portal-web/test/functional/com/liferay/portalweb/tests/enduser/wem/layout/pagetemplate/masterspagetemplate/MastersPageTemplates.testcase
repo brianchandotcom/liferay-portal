@@ -40,6 +40,8 @@ definition {
 	@description = "This is a test for LPS-102566 and LPS-109594. There's a custom masters page created in site, when add a new page, there's an option to select the created masters, and the common elements added in masters page are added in page. The header of drop zone is next to border of the management toolbar by default on master page template."
 	@priority = "5"
 	test AddPageBasedOnCustomMastersAndInheritElementsFromCustomMasters {
+		property portal.upstream = "quarantine";
+
 		task ("Assert header of Drop Zone is inside body by default") {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 

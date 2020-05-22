@@ -1359,27 +1359,6 @@ definition {
 		MenuItem.click(menuItem = "${itemsPerPage}");
 	}
 
-	macro previewviatemplate {
-		Panel.expandPanel(panel = "Default Template");
-
-		Click(locator1 = "WCEditWebContent#PREVIEW_TEMPLATE");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
-		SelectFrame(locator1 = "WCPreview#PREVIEW_IFRAME");
-
-		if (isSet(fieldName)) {
-			var webContentText = "${fieldName}: ${webContentText}";
-		}
-
-		AssertTextEquals(
-			locator1 = "WCPreview#BODY_FIELD",
-			value1 = "${webContentText}");
-	}
-
 	macro publishViaWCD {
 		Button.clickPublish();
 

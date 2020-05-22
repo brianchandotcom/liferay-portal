@@ -14,7 +14,7 @@
 
 import {SWITCH_SIDEBAR_PANEL} from '../actions/types';
 
-const DEFAULT_PANEL_ID = 'fragments';
+const DEFAULT_PANEL_ID = 'fragments-widgets';
 
 export const INITIAL_STATE = {
 	open: false,

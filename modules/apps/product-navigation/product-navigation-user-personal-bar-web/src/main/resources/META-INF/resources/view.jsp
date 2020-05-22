@@ -37,9 +37,11 @@
 				%>
 
 				<aui:a href="<%= (notificationsURL != null) ? notificationsURL : null %>">
-					<span class="badge badge-danger panel-notifications-count">
-						<span class="badge-item badge-item-expand"><%= notificationsCount %></span>
-					</span>
+					<clay:badge
+						className="panel-notifications-count"
+						displayType="danger"
+						label="<%= String.valueOf(notificationsCount) %>"
+					/>
 				</aui:a>
 			</c:if>
 		</span>

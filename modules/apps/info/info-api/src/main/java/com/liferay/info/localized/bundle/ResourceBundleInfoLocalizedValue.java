@@ -36,16 +36,18 @@ public class ResourceBundleInfoLocalizedValue
 
 	public ResourceBundleInfoLocalizedValue(Class<?> clazz, String valueKey) {
 		_class = clazz;
-		_symbolicName = null;
 		_valueKey = valueKey;
+
+		_symbolicName = null;
 	}
 
 	public ResourceBundleInfoLocalizedValue(
 		String symbolicName, String valueKey) {
 
-		_class = null;
 		_symbolicName = symbolicName;
 		_valueKey = valueKey;
+
+		_class = null;
 	}
 
 	@Override

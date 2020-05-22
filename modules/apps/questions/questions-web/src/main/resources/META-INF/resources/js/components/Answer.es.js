@@ -100,9 +100,7 @@ export default withRouter(
 							)}
 
 							<div className="c-mt-2">
-								<ArticleBodyRenderer 
-									{...answer} 
-								/>
+								<ArticleBodyRenderer {...answer} />
 							</div>
 
 							<ClayButton.Group

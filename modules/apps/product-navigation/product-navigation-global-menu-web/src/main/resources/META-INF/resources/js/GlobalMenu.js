@@ -116,25 +116,21 @@ const AppsPanel = ({
 										<ClayButton
 											displayType="link"
 											onClick={() => {
-												Liferay.Util.selectEntity(
-													{
-														dialog: {
-															constrain: true,
-															destroyOnHide: true,
-															modal: true,
-														},
-														eventName: `${portletNamespace}selectSite`,
-														id: `${portletNamespace}selectSite`,
-														title: Liferay.Language.get(
-															'select-site-or-asset-library'
-														),
-														uri: viewAllURL,
+												Liferay.Util.openModal({
+													id: `${portletNamespace}selectSite`,
+													onSelect: (
+														selectedItem
+													) => {
+														Liferay.Util.navigate(
+															selectedItem.url
+														);
 													},
-													(event) => {
-														location.href =
-															event.url;
-													}
-												);
+													selectEventName: `${portletNamespace}selectSite`,
+													title: Liferay.Language.get(
+														'select-site-or-asset-library'
+													),
+													url: viewAllURL,
+												});
 											}}
 											small
 										>

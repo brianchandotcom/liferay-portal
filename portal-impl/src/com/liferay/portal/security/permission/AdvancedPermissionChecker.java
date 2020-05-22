@@ -786,10 +786,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			return true;
 		}
 
-		if (_hasGroupRole(group, RoleConstants.SITE_CONTENT_REVIEWER)) {
-			return true;
-		}
-
 		return false;
 	}
 
@@ -963,11 +959,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 				organization = parentOrganization;
 			}
 		}
-		else if (_hasGroupRole(group, RoleConstants.SITE_ADMINISTRATOR) ||
-				 _hasGroupRole(group, RoleConstants.SITE_OWNER)) {
-
-			return true;
-		}
 
 		return false;
 	}
@@ -1047,9 +1038,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			if (getUserId() == groupUserId) {
 				return true;
 			}
-		}
-		else if (_hasGroupRole(group, RoleConstants.SITE_OWNER)) {
-			return true;
 		}
 
 		return false;

@@ -25,7 +25,7 @@ import {
 	UPDATE_ITEM_CONFIG,
 	UPDATE_LANGUAGE_ID,
 } from '../../actions/types';
-import getLayoutDataItemLabel from '../../utils/getLayoutDataItemLabel';
+import {getItemNameFromAction} from './getItemNameFromAction';
 import * as undoDelete from './undoDelete';
 import * as undoDuplicateItem from './undoDuplicateItem';
 import * as undoEditableValuesAction from './undoEditableValuesAction';
@@ -56,27 +56,9 @@ export function canUndoAction(action) {
 export function getDerivedStateForUndo({action, state, type}) {
 	const undoAction = UNDO_ACTIONS[type];
 
-	const layoutData = action.layoutData || state.layoutData;
-
-	const fragmentEntryLinks = action.fragmentEntryLinks
-		? Object.fromEntries(
-				action.fragmentEntryLinks.map((fragmentEntryLink) => [
-					fragmentEntryLink.fragmentEntryLinkId,
-					fragmentEntryLink,
-				])
-		  )
-		: state.fragmentEntryLinks;
-
-	const item =
-		layoutData.items[action.itemId] ||
-		Object.values(state.layoutData.items).find(
-			(item) =>
-				item.config.fragmentEntryLinkId === action.fragmentEntryLinkId
-		);
-
 	return {
 		...undoAction.getDerivedStateForUndo({action, state}),
-		itemName: getLayoutDataItemLabel(item, fragmentEntryLinks),
+		itemName: getItemNameFromAction({action, state}),
 		type,
 	};
 }

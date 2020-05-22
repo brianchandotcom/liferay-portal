@@ -11,6 +11,8 @@ Export-Package:\
 	com.liferay.info.fields,\
 	com.liferay.info.fields.type,\
 	com.liferay.info.item,\
+	com.liferay.info.item.fields,\
+	com.liferay.info.item.fields.reader,\
 	com.liferay.info.item.provider,\
 	com.liferay.info.item.renderer,\
 	com.liferay.info.item.renderer.template,\

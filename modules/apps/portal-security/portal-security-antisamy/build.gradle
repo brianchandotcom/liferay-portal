@@ -11,7 +11,7 @@ dependencies {
 	compileInclude group: "org.apache.xmlgraphics", name: "batik-i18n", version: "1.10"
 	compileInclude group: "org.apache.xmlgraphics", name: "batik-util", version: "1.10"
 	compileInclude group: "org.apache.xmlgraphics", name: "xmlgraphics-commons", version: "2.2"
-	compileInclude group: "org.owasp.antisamy", name: "antisamy", version: "1.5.7"
+	compileInclude group: "org.owasp.antisamy", name: "antisamy", version: "1.5.9"
 	compileInclude group: "xml-apis", name: "xml-apis-ext", version: "1.3.04"
 
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-1"
@@ -36,6 +36,27 @@ processKnowledgeBaseSanitizerConfiguration {
 	filter {
 		String line ->
 
+		if (line.contains('<directive name="embedStyleSheets" value="false"/>')) {
+			line = """\
+				|	${line}
+				|	<directive name="allowDynamicAttributes" value="true"/>""".stripMargin()
+		}
+		if (line.contains('</global-tag-attributes>')) {
+			line = """\
+				|	${line}
+				|	<dynamic-tag-attributes>
+				|		<attribute name="data-"/>
+				|	</dynamic-tag-attributes>""".stripMargin()
+		}
+		if (line.contains('<common-attributes>')) {
+			line = """\
+				|	${line}
+				|		<attribute name="data-" description="Allows the HTML5 'data-' attribute to be added to elements">
+				|			<regexp-list>
+				|				<regexp name="anything"/>
+				|			</regexp-list>
+				|		</attribute>""".stripMargin()
+		}
 		if (line.contains('<literal value="hr"/>')) {
 			line = """\
 				|	${line}
@@ -51,6 +72,11 @@ processKnowledgeBaseSanitizerConfiguration {
 			|		</attribute>
 			|		<attribute name="allowfullscreen">
 			|			<regexp-list>
+			|				<regexp name="anything"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="allowTransparency">
+			|			<regexp-list>
 			|				<regexp name="boolean"/>
 			|			</regexp-list>
 			|		</attribute>
@@ -62,10 +88,20 @@ processKnowledgeBaseSanitizerConfiguration {
 			|		<attribute name="height"/>
 			|		<attribute name="mozallowfullscreen">
 			|			<regexp-list>
-			|				<regexp name="boolean"/>
+			|				<regexp name="anything"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="scrolling">
+			|			<regexp-list>
+			|				<regexp name="anything"/>
 			|			</regexp-list>
 			|		</attribute>
 			|		<attribute name="src">
+			|			<regexp-list>
+			|				<regexp name="anything"/>
+			|			</regexp-list>
+			|		</attribute>
+			|		<attribute name="style">
 			|			<regexp-list>
 			|				<regexp name="anything"/>
 			|			</regexp-list>

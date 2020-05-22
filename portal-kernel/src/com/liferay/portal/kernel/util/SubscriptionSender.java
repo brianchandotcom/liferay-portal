@@ -304,12 +304,33 @@ public class SubscriptionSender implements Serializable {
 		setContextAttribute("[$COMPANY_NAME$]", company.getName());
 
 		if (Validator.isNotNull(_entryURL)) {
-			setContextAttribute(
-				"[$PORTAL_URL$]",
-				company.getPortalURL(
-					groupId,
-					_entryURL.contains(
-						_LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING)));
+			boolean secureConnection = HttpUtil.isSecure(_entryURL);
+
+			String portalURL = PortalUtil.getPortalURL(
+				company.getVirtualHostname(),
+				PortalUtil.getPortalServerPort(secureConnection),
+				secureConnection);
+
+			if (_entryURL.startsWith(portalURL)) {
+				setContextAttribute(
+					"[$PORTAL_URL$]",
+					company.getPortalURL(
+						groupId,
+						_entryURL.contains(
+							_LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING)));
+			}
+			else {
+				int endIndex = _entryURL.indexOf(
+					StringPool.FORWARD_SLASH, Http.HTTPS_WITH_SLASH.length());
+
+				if (endIndex != -1) {
+					setContextAttribute(
+						"[$PORTAL_URL$]", _entryURL.substring(0, endIndex));
+				}
+				else {
+					setContextAttribute("[$PORTAL_URL$]", _entryURL);
+				}
+			}
 		}
 		else {
 			setContextAttribute(

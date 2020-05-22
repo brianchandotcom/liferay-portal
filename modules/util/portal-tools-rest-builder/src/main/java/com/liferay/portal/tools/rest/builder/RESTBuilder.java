@@ -219,6 +219,8 @@ public class RESTBuilder {
 				_createGraphQLServletDataFile(context, escapedVersion);
 			}
 
+			context.put("schemaName", "openapi");
+
 			_createOpenAPIResourceFile(context, escapedVersion);
 			_createPropertiesFile(context, escapedVersion, "openapi");
 

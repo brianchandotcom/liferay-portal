@@ -18,7 +18,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 
 /**
  * @author Chema Balsas
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.IconTag}
  */
+@Deprecated
 public class IconTag extends BaseClayTag {
 
 	@Override

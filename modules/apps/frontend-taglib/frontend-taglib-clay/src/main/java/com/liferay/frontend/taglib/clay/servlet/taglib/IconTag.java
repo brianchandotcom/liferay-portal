@@ -1,0 +1,143 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.frontend.taglib.clay.servlet.taglib;
+
+import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Set;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
+
+/**
+ * @author Chema Balsas
+ */
+public class IconTag extends BaseContainerTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		setAttributeNamespace(_ATTRIBUTE_NAMESPACE);
+
+		setContainerElement("svg");
+
+		setDynamicAttribute(StringPool.BLANK, "role", "presentation");
+		setDynamicAttribute(StringPool.BLANK, "viewBox", "0 0 512 512");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String pathThemeImages = themeDisplay.getPathThemeImages();
+
+		_spritemap = pathThemeImages.concat("/clay/icons.svg");
+
+		return super.doStartTag();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public boolean getMonospaced() {
+		return _monospaced;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getSpritemap() {
+		return _spritemap;
+	}
+
+	public String getSymbol() {
+		return _symbol;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setMonospaced(boolean monospaced) {
+		_monospaced = monospaced;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setSpritemap(String spritemap) {
+		_spritemap = spritemap;
+	}
+
+	public void setSymbol(String symbol) {
+		_symbol = symbol;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_monospaced = false;
+		_spritemap = null;
+		_symbol = null;
+	}
+
+	@Override
+	protected String getEndPage() {
+		return _END_PAGE;
+	}
+
+	@Override
+	protected String getStartPage() {
+		return _START_PAGE;
+	}
+
+	@Override
+	protected String processClassName(Set<String> className) {
+		className.add("lexicon-icon");
+		className.add("lexicon-icon-" + _symbol);
+
+		return super.processClassName(className);
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		super.processStartTag();
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write("<use xlink:href=\"");
+		jspWriter.write(_spritemap);
+		jspWriter.write("#");
+		jspWriter.write(_symbol);
+		jspWriter.write("\" />");
+
+		return SKIP_BODY;
+	}
+
+	private static final String _ATTRIBUTE_NAMESPACE = "clay:icon:";
+
+	private static final String _END_PAGE = "/icon/end.jsp";
+
+	private static final String _START_PAGE = "/icon/start.jsp";
+
+	private boolean _monospaced;
+	private String _spritemap;
+	private String _symbol;
+
+}

@@ -106,6 +106,29 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
+		// This is a workarond for managment bar is temporarily unavailable, this error only fail in this case and there is still other case just use Site.assignUserAsMemberCP after adding a user and site.
+
+		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.gotoAdd();
+
+		LiferayEvent.waitForLiferayEvent(
+			attributeName = "src",
+			attributeValue = "dialog-iframe-popup",
+			eventName = "modalIframeLoaded");
+
+		SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
+
+		if (IsNotVisible(locator1 = "ManagementBar#FILTER_AND_ORDER")) {
+
+			ProductMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Search");
+
+			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+		}
+
 		Site.openSiteMembershipsAdmin(siteURLKey = "site-name");
 
 		Site.assignUserAsMemberCP(

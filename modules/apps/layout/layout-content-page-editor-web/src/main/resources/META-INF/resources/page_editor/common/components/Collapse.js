@@ -36,6 +36,7 @@ export default function Collapse(props) {
 				aria-expanded={open}
 				className={classNames(
 					'btn',
+					'btn-unstyled',
 					'collapse-icon',
 					'sheet-subtitle',
 					{

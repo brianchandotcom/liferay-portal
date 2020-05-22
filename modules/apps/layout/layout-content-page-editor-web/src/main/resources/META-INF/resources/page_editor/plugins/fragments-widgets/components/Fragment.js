@@ -36,6 +36,7 @@ export default function Fragment({
 
 	const {sourceRef} = useDragSymbol(
 		{
+			icon,
 			label: name,
 			type: LAYOUT_DATA_ITEM_TYPES.fragment,
 		},

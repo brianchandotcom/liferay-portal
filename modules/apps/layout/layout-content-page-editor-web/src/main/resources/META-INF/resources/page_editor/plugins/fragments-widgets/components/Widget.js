@@ -26,8 +26,11 @@ export default function Widget({instanceable, portletId, title, used}) {
 	const disabled = used && !instanceable;
 	const store = useSelector((state) => state);
 
+	const icon = instanceable ? 'grid' : 'live';
+
 	const {sourceRef} = useDragSymbol(
 		{
+			icon,
 			label: title,
 			type: LAYOUT_DATA_ITEM_TYPES.fragment,
 		},
@@ -46,7 +49,7 @@ export default function Widget({instanceable, portletId, title, used}) {
 	return (
 		!disabled && (
 			<FragmentCard
-				icon={instanceable ? 'grid' : 'live'}
+				icon={icon}
 				name={title}
 				sourceRef={disabled ? () => {} : sourceRef}
 			/>

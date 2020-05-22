@@ -41,6 +41,7 @@ const LayoutElementCard = ({icon, label, type}) => {
 
 	const {sourceRef} = useDragSymbol(
 		{
+			icon,
 			label,
 			type,
 		},
@@ -65,7 +66,7 @@ export default function LayoutElements() {
 		<li>
 			<Collapse
 				label={Liferay.Language.get('layout-elements')}
-				open={false}
+				open={true}
 			>
 				<ul className="list-unstyled">
 					{layoutElements.map((layoutElement) => {

@@ -163,7 +163,9 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 
 		item: {
 			getSourceItem,
+			icon: sourceItem.icon,
 			id: sourceItem.itemId,
+			name: sourceItem.name,
 			type: sourceItem.type,
 		},
 	});
@@ -179,13 +181,13 @@ export function useDragItem(sourceItem, onDragEnd, onBegin = () => {}) {
 	};
 }
 
-export function useDragSymbol({label, type}, onDragEnd) {
+export function useDragSymbol({icon, label, type}, onDragEnd) {
 	const selectItem = useSelectItem();
 
-	const sourceItem = useMemo(() => ({isSymbol: true, itemId: label, type}), [
-		label,
-		type,
-	]);
+	const sourceItem = useMemo(
+		() => ({icon, isSymbol: true, itemId: label, name: label, type}),
+		[icon, label, type]
+	);
 
 	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(
 		sourceItem,

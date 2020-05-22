@@ -23,7 +23,8 @@ export default function SearchResultsPanel({filteredElements}) {
 
 	return (
 		<>
-			{fragments.length === 0 && widgets.length === 0 ? (
+			{fragments.fragmentEntries.length === 0 &&
+			widgets.portlets.length === 0 ? (
 				<ClayAlert
 					displayType="info"
 					title={Liferay.Language.get('info')}

@@ -456,6 +456,24 @@ definition {
 		AssertLocation(value1 = "${localizationPageURL}");
 	}
 
+	macro removeOldFriendlyURL {
+		AssertVisible(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+
+		MouseOver(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_DELETE");
+
+		AssertElementNotPresent(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+	}
+
 	macro selectMobileDeviceFamily {
 		AssertClick(
 			locator1 = "Button#SELECT_MOBILE_DEVICE_RULES",

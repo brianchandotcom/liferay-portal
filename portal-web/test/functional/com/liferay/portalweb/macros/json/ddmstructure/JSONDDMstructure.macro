@@ -14,7 +14,9 @@ definition {
 			  -d companyId=${companyId} \
 			  -d groupIds=[${groupId}] \
 			  -d classNameId=${classNameId} \
-			  -d status=0
+			  -d "start=-1" \
+			  -d "end=-1" \
+			  -d -orderByComparator=
 		''';
 
 		var structureId = JSONCurlUtil.post("${curl}", "$.[?(@['nameCurrentValue'] == '${structureName}')]['structureId']");

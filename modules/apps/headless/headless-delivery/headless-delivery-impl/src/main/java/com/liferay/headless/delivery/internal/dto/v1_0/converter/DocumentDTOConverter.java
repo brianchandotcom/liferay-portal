@@ -27,27 +27,45 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.StorageEngineManagerUtil;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.headless.delivery.dto.v1_0.AdaptedImage;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.dto.v1_0.Document;
+import com.liferay.headless.delivery.dto.v1_0.DocumentType;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentFieldUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
+import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -99,6 +117,8 @@ public class DocumentDTOConverter
 				dateModified = fileEntry.getModifiedDate();
 				description = fileEntry.getDescription();
 				documentFolderId = fileEntry.getFolderId();
+				documentType = _toDocumentType(
+					dtoConverterContext, fileVersion);
 				encodingFormat = fileEntry.getMimeType();
 				fileExtension = fileEntry.getExtension();
 				id = fileEntry.getFileEntryId();
@@ -184,6 +204,71 @@ public class DocumentDTOConverter
 		};
 	}
 
+	private DocumentType _toDocumentType(
+			DTOConverterContext dtoConverterContext, FileVersion fileVersion)
+		throws Exception {
+
+		if (!(fileVersion.getModel() instanceof DLFileVersion)) {
+			return null;
+		}
+
+		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+
+		DLFileEntryType dlFileEntryType = dlFileVersion.getDLFileEntryType();
+
+		return new DocumentType() {
+			{
+				description = dlFileEntryType.getDescription(
+					dtoConverterContext.getLocale());
+				description_i18n = LocalizedMapUtil.getI18nMap(
+					dtoConverterContext.isAcceptAllLanguages(),
+					dlFileEntryType.getDescriptionMap());
+				name = dlFileEntryType.getName(dtoConverterContext.getLocale());
+				name_i18n = LocalizedMapUtil.getI18nMap(
+					dtoConverterContext.isAcceptAllLanguages(),
+					dlFileEntryType.getNameMap());
+
+				setContentFields(
+					() -> {
+						List<DDMFormFieldValue> ddmFormFieldValues =
+							new ArrayList<>();
+
+						for (DDMStructure ddmStructure :
+								dlFileEntryType.getDDMStructures()) {
+
+							DLFileEntryMetadata dlFileEntryMetadata =
+								_dlFileEntryMetadataLocalService.
+									fetchFileEntryMetadata(
+										ddmStructure.getStructureId(),
+										dlFileVersion.getFileVersionId());
+
+							if (dlFileEntryMetadata == null) {
+								continue;
+							}
+
+							DDMFormValues ddmFormValues =
+								_ddmBeanTranslator.translate(
+									StorageEngineManagerUtil.getDDMFormValues(
+										dlFileEntryMetadata.getDDMStorageId()));
+
+							ddmFormFieldValues.addAll(
+								ddmFormValues.getDDMFormFieldValues());
+						}
+
+						return TransformUtil.transformToArray(
+							ddmFormFieldValues,
+							ddmFormFieldValue ->
+								ContentFieldUtil.toContentField(
+									ddmFormFieldValue, _dlAppService,
+									_dlURLHelper, dtoConverterContext,
+									_journalArticleService,
+									_layoutLocalService),
+							ContentField.class);
+					});
+			}
+		};
+	}
+
 	@Reference
 	private AMImageFinder _amImageFinder;
 
@@ -206,10 +291,25 @@ public class DocumentDTOConverter
 	private CommentManager _commentManager;
 
 	@Reference
+	private DDMBeanTranslator _ddmBeanTranslator;
+
+	@Reference
 	private DLAppService _dlAppService;
 
 	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
+
+	@Reference
+	private DLFileEntryService _dlFileEntryService;
+
+	@Reference
 	private DLURLHelper _dlURLHelper;
+
+	@Reference
+	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -2226,8 +2226,29 @@ public class LayoutStagedModelDataHandler
 					importedLayout.getPlid());
 			}
 
+			UnicodeProperties prototypeTypeSettingsUnicodeProperties =
+				layoutTypePortlet.getTypeSettingsProperties();
+
+			UnicodeProperties newTypeSettingsUnicodeProperties =
+				new UnicodeProperties();
+
+			newTypeSettingsUnicodeProperties.fastLoad(
+				prototypeTypeSettingsUnicodeProperties.toString());
+
+			if (newTypeSettingsUnicodeProperties.containsKey(
+					Sites.LAST_MERGE_TIME)) {
+
+				newTypeSettingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
+			}
+
+			if (newTypeSettingsUnicodeProperties.containsKey(
+					Sites.MERGE_FAIL_COUNT)) {
+
+				newTypeSettingsUnicodeProperties.remove(Sites.MERGE_FAIL_COUNT);
+			}
+
 			importedLayout.setTypeSettingsProperties(
-				layoutTypePortlet.getTypeSettingsProperties());
+				newTypeSettingsUnicodeProperties);
 		}
 		finally {
 			layout.setGroupId(groupId);

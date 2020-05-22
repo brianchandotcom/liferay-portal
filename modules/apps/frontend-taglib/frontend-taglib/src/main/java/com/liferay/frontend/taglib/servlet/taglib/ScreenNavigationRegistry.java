@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -27,7 +26,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -89,9 +87,8 @@ public class ScreenNavigationRegistry {
 				bundleContext, ScreenNavigationCategory.class, null,
 				ServiceReferenceMapperFactory.create(
 					bundleContext,
-					(screenNavigationCategory, emitter) ->
-						emitter.emit(
-							screenNavigationCategory.getScreenNavigationKey())),
+					(screenNavigationCategory, emitter) -> emitter.emit(
+						screenNavigationCategory.getScreenNavigationKey())),
 				Collections.reverseOrder(
 					new PropertyServiceReferenceComparator(
 						"screen.navigation.category.order")));
@@ -100,11 +97,10 @@ public class ScreenNavigationRegistry {
 				bundleContext, ScreenNavigationEntry.class, null,
 				ServiceReferenceMapperFactory.create(
 					bundleContext,
-					(screenNavigationEntry, emitter) ->
-						emitter.emit(
-							_getKey(
-								screenNavigationEntry.getScreenNavigationKey(),
-								screenNavigationEntry.getCategoryKey()))),
+					(screenNavigationEntry, emitter) -> emitter.emit(
+						_getKey(
+							screenNavigationEntry.getScreenNavigationKey(),
+							screenNavigationEntry.getCategoryKey()))),
 				Collections.reverseOrder(
 					new PropertyServiceReferenceComparator(
 						"screen.navigation.entry.order")));

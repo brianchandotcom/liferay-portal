@@ -141,8 +141,8 @@ public class InfoDisplayContributorWrapper
 				).build();
 
 			InfoField infoField = new InfoField(
-				labelInfoLocalizedValue, infoDisplayField.getKey(),
-				infoFieldType);
+				infoFieldType, labelInfoLocalizedValue,
+				infoDisplayField.getKey());
 
 			infoForm.add(infoField);
 		}
@@ -169,8 +169,8 @@ public class InfoDisplayContributorWrapper
 				).build();
 
 			InfoField infoField = new InfoField(
-				fieldLabelLocalizedValue, fieldName,
-				TextInfoFieldType.INSTANCE);
+				TextInfoFieldType.INSTANCE, fieldLabelLocalizedValue,
+				fieldName);
 
 			InfoFieldValue infoFormValue = new InfoFieldValue(
 				infoField, entry.getValue());

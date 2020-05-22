@@ -29,12 +29,12 @@ import java.util.Objects;
 public class InfoField implements InfoFieldSetEntry {
 
 	public InfoField(
-		InfoLocalizedValue<String> labelInfoLocalizedValue, String name,
-		InfoFieldType infoFieldType) {
+		InfoFieldType infoFieldType,
+		InfoLocalizedValue<String> labelInfoLocalizedValue, String name) {
 
+		_infoFieldType = infoFieldType;
 		_labelInfoLocalizedValue = labelInfoLocalizedValue;
 		_name = name;
-		_infoFieldType = infoFieldType;
 	}
 
 	@Override
@@ -49,11 +49,11 @@ public class InfoField implements InfoFieldSetEntry {
 
 		InfoField infoDisplayField = (InfoField)obj;
 
-		if (Objects.equals(
+		if (Objects.equals(_infoFieldType, infoDisplayField._infoFieldType) &&
+			Objects.equals(
 				_labelInfoLocalizedValue,
 				infoDisplayField._labelInfoLocalizedValue) &&
-			Objects.equals(_name, infoDisplayField._name) &&
-			Objects.equals(_infoFieldType, infoDisplayField._infoFieldType)) {
+			Objects.equals(_name, infoDisplayField._name)) {
 
 			return true;
 		}
@@ -82,11 +82,11 @@ public class InfoField implements InfoFieldSetEntry {
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _labelInfoLocalizedValue);
+		int hash = HashUtil.hash(0, _infoFieldType);
 
-		hash = HashUtil.hash(hash, _name);
+		hash = HashUtil.hash(hash, _labelInfoLocalizedValue);
 
-		return HashUtil.hash(hash, _infoFieldType);
+		return HashUtil.hash(hash, _name);
 	}
 
 	@Override

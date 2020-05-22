@@ -1,8 +1,8 @@
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 
+import {createFieldSet} from '../util/fieldset.es';
 import {updateField} from '../util/settingsContext.es';
 import {addField} from './fieldAddedHandler.es';
-import {createFieldSet} from './sectionAddedHandler.es';
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.

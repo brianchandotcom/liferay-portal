@@ -131,6 +131,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FRIENDLY_URL-->
+<tr>
+	<td>FRIENDLY_URL_HISTORY_ITEM</td>
+	<td>//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}']</td>
+	<td></td>
+</tr>
 <!--LOGO-->
 <tr>
 	<td>LOGO_UPLOAD_IMAGE_IFRAME</td>

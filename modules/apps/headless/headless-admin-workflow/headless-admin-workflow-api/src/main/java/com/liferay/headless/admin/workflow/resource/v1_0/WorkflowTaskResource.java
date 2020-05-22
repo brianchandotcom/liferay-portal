@@ -127,7 +127,7 @@ public interface WorkflowTaskResource {
 			Long workflowTaskId, ChangeTransition changeTransition)
 		throws Exception;
 
-	public String getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
+	public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
 		throws Exception;
 
 	public WorkflowTask postWorkflowTaskUpdateDueDate(

@@ -129,12 +129,11 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	}
 
 	@Override
-	public String getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
+	public Boolean getWorkflowTaskHasAssignableUsers(Long workflowTaskId)
 		throws Exception {
 
-		return Boolean.toString(
-			_workflowTaskManager.hasAssignableUsers(
-				contextCompany.getCompanyId(), workflowTaskId));
+		return _workflowTaskManager.hasAssignableUsers(
+			contextCompany.getCompanyId(), workflowTaskId);
 	}
 
 	@Override

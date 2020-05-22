@@ -166,12 +166,14 @@ definition {
 	test DeleteUserGroup {
 		property portal.acceptance = "true";
 
+		JSONUserGroup.addUserGroup(
+			userGroupDescription = "UG UserGroup Description",
+			userGroupName = "UG UserGroup Name");
+
 		ProductMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
-
-		UserGroup.addCP(userGroupName = "UG UserGroup Name");
 
 		UserGroup.deleteCP(userGroupName = "UG UserGroup Name");
 

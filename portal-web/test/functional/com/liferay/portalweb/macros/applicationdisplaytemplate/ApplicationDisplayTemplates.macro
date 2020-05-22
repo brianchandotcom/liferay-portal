@@ -56,11 +56,6 @@ definition {
 	}
 
 	macro addManualViaRSS {
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "5000");
@@ -78,11 +73,6 @@ definition {
 		var key_adtType = "RSS";
 
 		SelectFrameTop(value1 = "relative=top");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "ApplicationDisplayTemplates#ADT_IFRAME");
 
@@ -104,11 +94,6 @@ definition {
 			portletName = "${portletName}",
 			portletOption = "Configuration");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Pause(locator1 = "5000");
@@ -127,11 +112,6 @@ definition {
 		var key_adtType = "${adtType}";
 
 		SelectFrameTop();
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "ApplicationDisplayTemplates#ADT_IFRAME");
 
@@ -159,11 +139,6 @@ definition {
 			portletName = "${portletName}",
 			portletOption = "Configuration");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Pause(locator1 = "3000");
@@ -173,11 +148,6 @@ definition {
 			value1 = "Manage Templates");
 
 		SelectFrameTop();
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "ApplicationDisplayTemplates#ADT_IFRAME");
 
@@ -198,11 +168,6 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
 			portletOption = "Configuration");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

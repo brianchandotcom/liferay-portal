@@ -4,11 +4,6 @@ definition {
 		ClassicSearch.gotoOptions(portletOption = "Configuration");
 
 		if (("${searchScope}" == "Everything") || ("${searchScope}" == "Let the User Choose") || ("${searchScope}" == "This Site")) {
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
-
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 			Select(
@@ -56,11 +51,6 @@ definition {
 		Click(locator1 = "Search#SEARCH_PORTLET_OPTIONS_WRENCH");
 
 		MenuItem.click(menuItem = "Configuration");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

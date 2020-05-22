@@ -5,11 +5,6 @@ definition {
 		var key_feedRowIndexNumber = "${feedRowIndexNumber}";
 		var key_feedTitle = "${feedTitle}";
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(buttonRowIndexNumber)) {
@@ -47,11 +42,6 @@ definition {
 	}
 
 	macro changeNumberOfEntriesPerFeed {
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -65,11 +55,6 @@ definition {
 	macro configureFeedDisplayStyle {
 		SelectFrame(value1 = "relative=top");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -82,11 +67,6 @@ definition {
 	macro deleteFeed {
 		var key_buttonRowIndexNumber = "${buttonRowIndexNumber}";
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(locator1 = "RSSFeed#FEEDS_DELETE_ROW_BUTTON");
@@ -97,11 +77,6 @@ definition {
 	}
 
 	macro disableShowFeedTitle {
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
@@ -194,11 +169,6 @@ definition {
 		var key_rowIndexNumber = "${rowIndexNumber}";
 
 		SelectFrame(value1 = "relative=top");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

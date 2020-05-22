@@ -23,11 +23,6 @@ definition {
 				locator1 = "IFrame#IFRAME_TITLE",
 				value1 = "New Field Set");
 
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
-
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			PortletEntry.inputName(name = "${kfFieldSetName}");
@@ -35,11 +30,6 @@ definition {
 	}
 
 	macro addForm {
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "DDMEditStructure#IFRAME");
 
 		LexiconEntry.gotoAdd();
@@ -89,11 +79,6 @@ definition {
 		AssertClick(
 			locator1 = "KaleoFormsAdminEditProcess#ADD_WORKFLOW_BUTTON",
 			value1 = "Add Workflow");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -320,11 +305,6 @@ definition {
 			locator1 = "IFrame#IFRAME_TITLE",
 			value1 = "Edit Field Set");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PortletEntry.inputName(name = "${kfFieldSetNameEdit}");
@@ -352,11 +332,6 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Form",
 			rowEntry = "${kfFormName}");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -407,11 +382,6 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "${workflowDefinitionTitle}");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -517,11 +487,6 @@ definition {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = "${workflowDefinitionTitle}");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -629,11 +594,6 @@ definition {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Form",
 			rowEntry = "${kfFormNameEdit}");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

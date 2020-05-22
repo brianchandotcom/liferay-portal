@@ -117,11 +117,6 @@ definition {
 
 			MenuItem.click(menuItem = "Configuration");
 
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
-
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			Navigator.gotoNavTab(navTab = "Asset Selection");

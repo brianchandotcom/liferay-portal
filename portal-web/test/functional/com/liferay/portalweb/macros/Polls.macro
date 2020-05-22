@@ -183,11 +183,6 @@ definition {
 	macro addPollPG {
 		Click(locator1 = "Polls#ADD_NEW_POLL");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.gotoAdd();
@@ -232,11 +227,6 @@ definition {
 		MouseOver.mouseOverNotVisible(locator1 = "Polls#SELECT_QUESTION");
 
 		Click(locator1 = "Polls#SELECT_QUESTION");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

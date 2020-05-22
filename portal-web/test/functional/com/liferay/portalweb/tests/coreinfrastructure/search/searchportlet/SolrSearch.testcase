@@ -69,11 +69,6 @@ definition {
 			portletName = "Search Options",
 			portletOption = "Configuration");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertNotChecked(
@@ -329,11 +324,6 @@ definition {
 			portletName = "Suggestions",
 			portletOption = "Configuration");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		FormFields.enableCheckbox(fieldName = "spellCheckSuggestionEnabled");
@@ -388,11 +378,6 @@ definition {
 			portletName = "Search Results",
 			portletOption = "Configuration");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals(
@@ -415,11 +400,6 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
 			portletOption = "Configuration");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
@@ -1662,11 +1642,6 @@ definition {
 			portletName = "Modified Facet",
 			portletOption = "Configuration");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Click(locator1 = "Button#ADD_ROW");
@@ -1703,11 +1678,6 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "Modified Facet",
 			portletOption = "Configuration");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

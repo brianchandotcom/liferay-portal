@@ -64,11 +64,6 @@ definition {
 			portletName = "Search Insights",
 			portletOption = "Configuration");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertChecked(
@@ -94,11 +89,6 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
 			portletOption = "Configuration");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 

@@ -112,11 +112,6 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 
 		if (IsNotVisible(locator1 = "ManagementBar#FILTER_AND_ORDER")) {

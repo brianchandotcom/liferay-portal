@@ -19,11 +19,6 @@ definition {
 			portletName = "Tags Navigation",
 			portletOption = "Configuration");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(displayTemplate)) {
@@ -39,11 +34,6 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "Tags Navigation",
 			portletOption = "Configuration");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -93,11 +83,6 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "Tag Cloud",
 			portletOption = "Configuration");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

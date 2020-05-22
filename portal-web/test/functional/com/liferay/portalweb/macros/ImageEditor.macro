@@ -29,21 +29,11 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "ImageEditor#IMAGE_EDITOR_IFRAME");
 	}
 
 	macro gotoImageEditorViaItemSelector {
 		ItemSelector.gotoItemSelectorViaAlloyEditor();
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
@@ -61,21 +51,11 @@ definition {
 
 		SelectFrameTop(value1 = "relative=top");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		Click(locator1 = "Icon#EDIT_PENCIL");
 
 		SelectFrameTop(value1 = "relative=top");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "ImageEditor#IMAGE_EDITOR_IFRAME");
 	}

@@ -348,11 +348,6 @@ definition {
 
 		ItemSelector.gotoItemSelectorViaAlloyEditor();
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#METADATA_SETS_IFRAME");
 
 		var key_imageFileName = "${dmDocumentTitle}";
@@ -538,11 +533,6 @@ definition {
 			}
 
 			else {
-				LiferayEvent.waitForLiferayEvent(
-					attributeName = "src",
-					attributeValue = "dialog-iframe-popup",
-					eventName = "modalIframeLoaded");
-
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 				AssertClick(
@@ -649,11 +639,6 @@ definition {
 			}
 
 			else {
-				LiferayEvent.waitForLiferayEvent(
-					attributeName = "src",
-					attributeValue = "dialog-iframe-popup",
-					eventName = "modalIframeLoaded");
-
 				SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 				AssertClick.assertPartialTextClickAt(
@@ -881,11 +866,6 @@ definition {
 				locator1 = "Button#SELECT_CONTENT",
 				value1 = "Select");
 
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
-
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			AssertClick.assertPartialTextClickAt(
@@ -943,11 +923,6 @@ definition {
 		Pause(locator1 = "5000");
 
 		SelectFrameTop();
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "WCEditWebContent#DISPLAY_PAGE_SELECT_PAGE_IFRAME");
 
@@ -1019,11 +994,6 @@ definition {
 		var iFrameDialog = "IFrame#MODAL_BODY";
 
 		if (IsElementPresent(locator1 = "${iFrameDialog}")) {
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
-
 			SelectFrame(locator1 = "${iFrameDialog}");
 		}
 
@@ -1105,11 +1075,6 @@ definition {
 				key_fieldName = "${fieldName}",
 				locator1 = "Button#SELECT_CONTENT",
 				value1 = "Select");
-
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
 
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1203,11 +1168,6 @@ definition {
 
 		Click(locator1 = "Button#PARENT_FOLDER_SELECT");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
@@ -1238,11 +1198,6 @@ definition {
 			locator1 = "Button#SELECT",
 			value1 = "Select");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");
@@ -1271,11 +1226,6 @@ definition {
 		AssertClick(
 			locator1 = "Button#SELECT",
 			value1 = "Select");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1344,11 +1294,6 @@ definition {
 			key_assetType = "${assetType}",
 			locator1 = "APConfiguration#ASSET_SELECTION_MANUAL_ASSET_ENTRIES_ASSET",
 			value1 = "${assetType}");
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "AssetRelatedAssets#SELECT_ASSET_IFRAME");
 
@@ -1455,11 +1400,6 @@ definition {
 			value1 = "Select");
 
 		IFrame.selectTopFrame();
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1623,11 +1563,6 @@ definition {
 	}
 
 	macro viewCompareVersions {
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.gotoEntry(rowEntry = "${version}");

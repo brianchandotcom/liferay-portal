@@ -38,11 +38,6 @@ definition {
 			card = "${resourceName}",
 			item = "Assign Roles");
 
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconCard.checkCardCheckbox(card = "${roleTitle}");
@@ -60,11 +55,6 @@ definition {
 		Navigator.gotoNavItem(navItem = "Organizations");
 
 		LexiconEntry.gotoAdd();
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -91,20 +81,10 @@ definition {
 		AssertVisible(locator1 = "Button#DONE");
 
 		if (isSet(depotName)) {
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
-
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_ASSET_LIBRARY");
 		}
 
 		else {
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
-
 			SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 		}
 
@@ -132,11 +112,6 @@ definition {
 		Pause(locator1 = "5000");
 
 		LexiconEntry.gotoAdd();
-
-		LiferayEvent.waitForLiferayEvent(
-			attributeName = "src",
-			attributeValue = "dialog-iframe-popup",
-			eventName = "modalIframeLoaded");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -308,11 +283,6 @@ definition {
 	macro connectSite {
 		for (var siteName : list "${siteList}") {
 			Button.clickAdd();
-
-			LiferayEvent.waitForLiferayEvent(
-				attributeName = "src",
-				attributeValue = "dialog-iframe-popup",
-				eventName = "modalIframeLoaded");
 
 			SelectFrame(locator1 = "IFrame#SELECT_SITES");
 

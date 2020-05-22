@@ -52,6 +52,23 @@ info:
     version: "1.0.0"
 openapi: "3.0.1"
 paths:
+    "/document/{documentId}":
+        get:
+            parameters:
+                - in: path
+                  name: documentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                default:
+                    content:
+                        "application/json":
+                            schema:
+                                $ref: "#/components/schemas/Document"
+                    description:
+                        ""
     "/folder":
         get:
             responses:
@@ -95,20 +112,3 @@ paths:
                                 type: integer
                     description:
                         "OK"
-    "/document/{documentId}":
-        get:
-            parameters:
-                - in: path
-                  name: documentId
-                  required: true
-                  schema:
-                      format: int64
-                      type: integer
-        responses:
-            default:
-                content:
-                    "application/json":
-                        schema:
-                            $ref: "#/components/schemas/Document"
-                description:
-                    ""

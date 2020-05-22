@@ -25,6 +25,15 @@ definition {
 					groupId = "${globalGroupId}",
 					structureName = "${subType}");
 			}
+			else if ("${subType}" == "Google Drive Shortcut") {
+				var globalGroupId = JSONGroupAPI._getGroupIdByName(
+					groupName = "Global",
+					site = "true");
+
+				var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
+					fileEntryTypeName = "${subType}",
+					groupId = "${globalGroupId}");
+			}
 			else {
 				var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
 					classNameId = "${classNameId}",

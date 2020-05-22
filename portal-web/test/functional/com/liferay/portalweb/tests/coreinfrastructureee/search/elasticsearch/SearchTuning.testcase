@@ -134,7 +134,7 @@ definition {
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Article 3");
 	}
 
-	test AssertResultRankingsAssetDetails {
+	test ViewResultRankingsAssetDetails {
 		JSONMBMessage.addMessage(
 			groupName = "Guest",
 			threadBody = "banana, red apple, blueberry!",
@@ -160,7 +160,7 @@ definition {
 
 		AssertVisible(
 			key_assetTitle = "MB Thread Message Subject Apple",
-			locator1 = "SearchTuning#RESULT_RANKINGS_VIEW_CONTENT_TITLE");
+			locator1 = "SearchTuning#RESULT_RANKINGS_ASSET_DETAILS_TITLE");
 
 		AssertVisible(
 			key_threadBody = "banana, red apple, blueberry!",
@@ -176,7 +176,7 @@ definition {
 
 		AssertVisible(
 			key_assetTitle = "Web Content Article Apple",
-			locator1 = "SearchTuning#RESULT_RANKINGS_VIEW_CONTENT_TITLE");
+			locator1 = "SearchTuning#RESULT_RANKINGS_ASSET_DETAILS_TITLE");
 
 		AssertTextEquals(
 			locator1 = "WCD#WEB_CONTENT_CONTENT",

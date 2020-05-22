@@ -87,17 +87,17 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 
 		StringBuilder sb = new StringBuilder(11);
 
-		sb.append("javascript:Liferay.Util.selectEntity({dialog: ");
-		sb.append("{constrain: true, destroyOnHide: true, modal: true}, ");
-		sb.append("eventName: '");
-		sb.append(eventName);
-		sb.append("', id:'");
+		sb.append("javascript:Liferay.Util.openModal({id: '");
 		sb.append(namespace);
-		sb.append("selectSite', title: '");
+		sb.append("selectSite', onSelect: function(selectedItem) ");
+		sb.append("{Liferay.Util.navigate(selectedItem.url);}");
+		sb.append(", selectEventName: '");
+		sb.append(eventName);
+		sb.append("', title: '");
 		sb.append(LanguageUtil.get(httpServletRequest, "select-site"));
-		sb.append("', uri:'");
+		sb.append("', url:'");
 		sb.append(HtmlUtil.escapeJS(itemSelectorURL.toString()));
-		sb.append("'}, function(event) {location.href = event.url;});");
+		sb.append("'});");
 
 		return sb.toString();
 	}

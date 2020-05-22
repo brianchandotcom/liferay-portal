@@ -119,23 +119,16 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 			if (manageSitesLink) {
 				manageSitesLink.addEventListener('click', function (event) {
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true,
-							},
-							eventName: '<%= eventName %>',
-							id: '<portlet:namespace />selectSite',
-							title:
-								'<liferay-ui:message key="select-site-or-asset-library" />',
-							uri: '<%= itemSelectorURL.toString() %>',
+					Liferay.Util.openModal({
+						id: '<portlet:namespace />selectSite',
+						onSelect: function (selectedItem) {
+							Liferay.Util.navigate(selectedItem.url);
 						},
-						function (event) {
-							location.href = event.url;
-						}
-					);
+						selectEventName: '<%= eventName %>',
+						title:
+							'<liferay-ui:message key="select-site-or-asset-library" />',
+						url: '<%= itemSelectorURL.toString() %>',
+					});
 				});
 			}
 		})();

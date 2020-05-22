@@ -63,7 +63,9 @@ public class EditRedirectEntryMVCActionCommand extends BaseMVCActionCommand {
 		String destinationURL = ParamUtil.getString(
 			actionRequest, "destinationURL");
 
-		if (!_http.hasProtocol(destinationURL)) {
+		if (Validator.isNotNull(destinationURL) &&
+			!_http.hasProtocol(destinationURL)) {
+
 			destinationURL =
 				_http.getProtocol(actionRequest) + "://" + destinationURL;
 		}

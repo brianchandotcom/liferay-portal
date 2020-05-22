@@ -33,4 +33,5 @@ dependencies {
 	testCompile group: "org.json", name: "json", version: "20180813"
 	testCompile group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	testCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
+	testCompile project(":core:petra:petra-io")
 }

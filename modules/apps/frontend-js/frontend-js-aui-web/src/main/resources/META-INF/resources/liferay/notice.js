@@ -12,6 +12,9 @@
  * details.
  */
 
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `Liferay.Util.openToast`.
+ */
 AUI.add(
 	'liferay-notice',
 	(A) => {
@@ -51,6 +54,11 @@ AUI.add(
 		 *
 		 * Callbacks
 		 * onClose {function}: Called when the toolbar is closed.
+		 */
+
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by OpenToast.es.js
+		 * @module liferay-notice
 		 */
 
 		var Notice = function (options) {

@@ -172,22 +172,14 @@ AUI.add(
 				return A.Lang.sub(template, data);
 			},
 
-			_displayNotice(message, type, timeout, useAnimation) {
-				new Liferay.Notice({
-					closeText: false,
-					content:
-						message +
-						'<button aria-label="' +
-						Liferay.Language.get('close') +
-						'" class="close" type="button">&times;</button>',
-					noticeClass: 'hide',
-					timeout: timeout || 10000,
-					toggleText: false,
+			_displayNotice(message, type, timeout) {
+				return Liferay.Util.openToast({
+					message,
+					toastProps: {
+						autoClose: timeout || 10000,
+					},
 					type: type || 'warning',
-					useAnimation: Lang.isValue(useAnimation)
-						? useAnimation
-						: true,
-				}).show();
+				});
 			},
 
 			_formatJSONResults(json) {
@@ -494,12 +486,7 @@ AUI.add(
 			_restoreNodePosition(response) {
 				var instance = this;
 
-				instance._displayNotice(
-					response.message,
-					'warning',
-					10000,
-					true
-				);
+				instance._displayNotice(response.message, 'warning', 10000);
 
 				var nodeId = A.Lang.sub(NODE_ID_TPL, {
 					groupId: response.groupId,

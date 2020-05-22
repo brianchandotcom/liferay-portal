@@ -324,6 +324,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-progressbar', 'liferay-notice', 'uploader'],
+		requires: ['aui-base', 'aui-progressbar', 'uploader'],
 	}
 );

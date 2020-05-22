@@ -22,17 +22,6 @@ if (!user.isDefaultUser() && !locale.equals(user.getLocale())) {
 }
 %>
 
-<c:if test="<%= ShutdownUtil.isInProcess() %>">
-	<div class="alert alert-danger lfr-shutdown-message popup-alert-warning" id="lfrShutdownMessage">
-		<span class="notice-label"><liferay-ui:message key="maintenance-alert" /></span> <span class="notice-date"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span>
-		<span class="notice-message"><liferay-ui:message arguments="<%= String.valueOf((ShutdownUtil.getInProcess() / Time.MINUTE) + 1) %>" key="the-portal-will-shutdown-for-maintenance-in-x-minutes" translateArguments="<%= false %>" /></span>
-
-		<c:if test="<%= Validator.isNotNull(ShutdownUtil.getMessage()) %>">
-			<span class="custom-shutdown-message"><%= HtmlUtil.escape(ShutdownUtil.getMessage()) %></span>
-		</c:if>
-	</div>
-</c:if>
-
 <%
 String jspPath = (String)PortalMessages.get(request, PortalMessages.KEY_JSP_PATH);
 String message = (String)PortalMessages.get(request, PortalMessages.KEY_MESSAGE);
@@ -61,24 +50,26 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 		</div>
 	</div>
 
-	<aui:script use="liferay-notice">
-		var banner = new Liferay.Notice(
-			{
-				animationConfig:
-					{
-						duration: 2,
-						top: '0px'
-					},
-				closeText: false,
-				node: '#portalMessageContainer',
-				noticeClass: 'hide <%= cssClass %>',
-				timeout: <%= timeout %>,
-				toggleText: false,
-				useAnimation: <%= useAnimation %>
+	<aui:script>
+		Liferay.Util.openToast({
+			message: "
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(jspPath) %>">
+						<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message key="<%= message %>" /><button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" type="button">&times;</button>
+					</c:otherwise>
+				</c:choose>",
+			renderData: {
+				portletId: <%= portletId %>
+			},
+			toastProps: {
+				autoClose: <%= timeout %>,
+				className: '<%= cssClass %>',
+				style: {top: '0px'},
 			}
-		);
-
-		banner.show();
+		});
 	</aui:script>
 
 <%

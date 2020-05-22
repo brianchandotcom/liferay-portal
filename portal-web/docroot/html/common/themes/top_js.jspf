@@ -118,16 +118,18 @@
 
 			<c:if test="<%= permissionChecker.isOmniadmin() && PortalUtil.isUpdateAvailable() %>">
 				, {
-					content: '<a class="update-available" href="<%= themeDisplay.getURLUpdateManager() %>"><liferay-ui:message key="updates-are-available-for-liferay" /></a>',
-					toggleText: false
+					message: '<a class="update-available" href="<%= themeDisplay.getURLUpdateManager() %>"><liferay-ui:message key="updates-are-available-for-liferay" /></a>',
 				}
 			</c:if>
 
 			<c:if test="<%= ShutdownUtil.isInProcess() %>">
 				, {
-					node: '#lfrShutdownMessage',
-					toggleText: false,
-					type: 'warning'
+					title: '<liferay-ui:message key="maintenance-alert" /></span> <span class="notice-date"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %>'
+					message: '<liferay-ui:message arguments="<%= String.valueOf((ShutdownUtil.getInProcess() / Time.MINUTE) + 1) %>" key="the-portal-will-shutdown-for-maintenance-in-x-minutes" translateArguments="<%= false %>" />
+						<c:if test="<%= Validator.isNotNull(ShutdownUtil.getMessage()) %>">
+							<span class="custom-shutdown-message"><%= HtmlUtil.escape(ShutdownUtil.getMessage()) %></span>
+						</c:if>',
+					type: 'danger'
 				}
 			</c:if>
 		];

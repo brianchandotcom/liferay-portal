@@ -40,30 +40,6 @@ AUI.add(
 				}
 			},
 
-			_getNotification() {
-				var instance = this;
-
-				var notification = instance._notification;
-
-				if (!notification) {
-					notification = new Liferay.Notice({
-						closeText: false,
-						content: Liferay.Language.get(
-							'there-was-an-unexpected-error.-please-refresh-the-current-page'
-						),
-						noticeClass: 'hide',
-						timeout: 10000,
-						toggleText: false,
-						type: 'warning',
-						useAnimation: true,
-					});
-
-					instance._notification = notification;
-				}
-
-				return notification;
-			},
-
 			_onInit() {
 				var instance = this;
 
@@ -229,8 +205,6 @@ AUI.add(
 			},
 
 			_updateRevision(cmd, layoutRevisionId, layoutSetBranchId) {
-				var instance = this;
-
 				var updateLayoutData = {
 					cmd,
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
@@ -252,7 +226,15 @@ AUI.add(
 						window.location.reload();
 					})
 					.catch(() => {
-						instance._getNotification().show();
+						Liferay.Util.openToast({
+							message: Liferay.Language.get(
+								'there-was-an-unexpected-error.-please-refresh-the-current-page'
+							),
+							toastProps: {
+								autoClose: 10000,
+							},
+							type: 'warning',
+						});
 					});
 			},
 

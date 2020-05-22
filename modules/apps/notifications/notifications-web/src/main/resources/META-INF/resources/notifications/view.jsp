@@ -177,7 +177,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 	});
 </aui:script>
 
-<aui:script use="aui-base,liferay-notice">
+<aui:script use="aui-base">
 	var form = A.one('#<portlet:namespace />fm');
 
 	form.delegate(
@@ -212,30 +212,16 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 						}
 					}
 					else {
-						getNotice().show();
+						Liferay.Util.openToast({
+							message: '<liferay-ui:message key="an-unexpected-error-occurred" />',
+							toastProps: {
+								autoClose: 5000
+							},
+							type: 'warning'
+						});
 					}
 				});
 		},
 		'.user-notification-action'
 	);
-
-	var notice;
-
-	function getNotice() {
-		if (!notice) {
-			notice = new Liferay.Notice({
-				closeText: false,
-				content:
-					'<liferay-ui:message key="an-unexpected-error-occurred" /><button aria-label="' +
-					Liferay.Language.get('close') +
-					'" class="close" type="button">&times;</button>',
-				timeout: 5000,
-				toggleText: false,
-				type: 'warning',
-				useAnimation: false,
-			});
-		}
-
-		return notice;
-	}
 </aui:script>

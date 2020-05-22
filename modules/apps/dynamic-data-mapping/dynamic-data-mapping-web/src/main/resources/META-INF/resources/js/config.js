@@ -38,7 +38,6 @@
 							'liferay-layouts-tree-radio',
 							'liferay-layouts-tree-selectable',
 							'liferay-map-base',
-							'liferay-notice',
 							'liferay-translation-manager',
 							'liferay-util-window',
 						],

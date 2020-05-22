@@ -17,9 +17,11 @@ definition {
 		}
 
 		task ("Add a display page") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
-
-			DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
 		}
 	}
 
@@ -38,6 +40,10 @@ definition {
 	@priority = "5"
 	test ConfigurePermissionsOfAP {
 		task ("Add an asset publisher widget to the display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
 

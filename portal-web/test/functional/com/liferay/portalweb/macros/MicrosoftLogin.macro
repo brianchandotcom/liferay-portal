@@ -59,7 +59,7 @@ definition {
 	macro confirmSharepointApp {
 		Pause(locator1 = "3000");
 
-		var app_name = "Collaboration Test Application";
+		var app_name = "SPInt";
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_STAY_SIGNED_IN_CONFIRMATION")) {
 			AssertClick(

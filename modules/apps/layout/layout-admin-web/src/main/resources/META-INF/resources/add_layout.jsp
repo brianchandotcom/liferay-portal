@@ -121,6 +121,11 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 		event.stopPropagation();
 
 		var formData = new FormData();
+		formData.append('p_auth', Liferay.authToken);
+
+		formActionURL = new URL(form.action);
+		formActionURL.searchParams.delete('p_auth');
+		form.action = formActionURL;
 
 		Array.prototype.slice
 			.call(form.querySelectorAll('input'))

@@ -274,15 +274,7 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String decodePath(String path) {
-		if (Validator.isNull(path)) {
-			return path;
-		}
-
-		path = StringUtil.replace(path, CharPool.SLASH, _TEMP_SLASH);
-		path = decodeURL(path);
-		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
-
-		return path;
+		return decodeURL(path);
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class BaseContainerTag extends IncludeTag {
 		super.cleanUp();
 
 		_className = null;
-		_containerElement = "div";
+		_containerElement = null;
 		_id = null;
 	}
 
@@ -100,6 +100,10 @@ public class BaseContainerTag extends IncludeTag {
 	@Override
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
+
+		if (_containerElement == null) {
+			setContainerElement("div");
+		}
 
 		jspWriter.write("<");
 		jspWriter.write(_containerElement);
@@ -132,7 +136,7 @@ public class BaseContainerTag extends IncludeTag {
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private String _className;
-	private String _containerElement = "div";
+	private String _containerElement;
 	private String _id;
 
 }

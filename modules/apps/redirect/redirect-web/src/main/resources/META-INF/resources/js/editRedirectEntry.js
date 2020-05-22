@@ -45,7 +45,19 @@ export default function ({
 		const destinationURL = form.elements[`${namespace}destinationURL`];
 		const sourceURL = form.elements[`${namespace}sourceURL`];
 
-		if (destinationURL.value && sourceURL.value) {
+		if (!sourceURL.value) {
+			sourceURL.focus();
+		}
+		else if (
+			!destinationURL.value ||
+			destinationURL
+				.closest('.form-group')
+				.classList.contains('has-error')
+		) {
+			destinationURL.focus();
+			destinationURL.blur();
+		}
+		else {
 			Liferay.Util.fetch(
 				Liferay.Util.PortletURL.createResourceURL(
 					getRedirectEntryChainCauseURL,
@@ -75,10 +87,6 @@ export default function ({
 						type: 'danger',
 					});
 				});
-		}
-		else {
-			destinationURL.focus();
-			destinationURL.blur();
 		}
 	}
 

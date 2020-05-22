@@ -25,7 +25,7 @@ import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freema
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
-import {FRAGMENT_CONFIGURATION_FIELDS} from '../fragment-configuration-fields';
+import {FRAGMENT_CONFIGURATION_FIELDS} from '../fragment-configuration-fields/index';
 
 const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
 	return (

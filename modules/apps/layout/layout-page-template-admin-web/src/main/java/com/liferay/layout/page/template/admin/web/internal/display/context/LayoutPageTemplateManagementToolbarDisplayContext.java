@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportLayoutPageTemplateConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -77,7 +76,6 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			ExportImportLayoutPageTemplateConfigurationUtil::enabled,
 			dropdownItem -> {
 				dropdownItem.putData(
 					"action", "exportLayoutPageTemplateEntries");
@@ -104,8 +102,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			availableActions.add("deleteLayoutPageTemplateEntries");
 		}
 
-		if (ExportImportLayoutPageTemplateConfigurationUtil.enabled() &&
-			(layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
+		if ((layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
 			!layoutPageTemplateEntry.isDraft()) {
 
 			availableActions.add("exportLayoutPageTemplateEntries");

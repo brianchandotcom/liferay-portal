@@ -15,8 +15,6 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportLayoutPageTemplateConfigurationUtil;
-import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportMasterLayoutConfigurationUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.petra.string.StringBundler;
@@ -107,12 +105,6 @@ public class ImportPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		if (!ExportImportLayoutPageTemplateConfigurationUtil.enabled() &&
-			!ExportImportMasterLayoutConfigurationUtil.enabled()) {
-
-			return false;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

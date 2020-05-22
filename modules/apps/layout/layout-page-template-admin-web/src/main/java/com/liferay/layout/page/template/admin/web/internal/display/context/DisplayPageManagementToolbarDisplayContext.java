@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportDisplayPageConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
@@ -72,7 +71,6 @@ public class DisplayPageManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			ExportImportDisplayPageConfigurationUtil::enabled,
 			dropdownItem -> {
 				dropdownItem.putData("action", "exportDisplayPages");
 				dropdownItem.putData(
@@ -97,8 +95,7 @@ public class DisplayPageManagementToolbarDisplayContext
 			availableActions.add("deleteSelectedDisplayPages");
 		}
 
-		if (ExportImportDisplayPageConfigurationUtil.enabled() &&
-			(layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
+		if ((layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
 			!layoutPageTemplateEntry.isDraft()) {
 
 			availableActions.add("exportDisplayPages");

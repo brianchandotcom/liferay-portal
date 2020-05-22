@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportMasterLayoutConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
@@ -76,7 +75,6 @@ public class MasterLayoutManagementToolbarDisplayContext
 				dropdownItem.setQuickAction(true);
 			}
 		).add(
-			ExportImportMasterLayoutConfigurationUtil::enabled,
 			dropdownItem -> {
 				dropdownItem.putData("action", "exportMasterLayouts");
 				dropdownItem.putData(
@@ -101,8 +99,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 			availableActions.add("deleteSelectedMasterLayouts");
 		}
 
-		if (ExportImportMasterLayoutConfigurationUtil.enabled() &&
-			(layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
+		if ((layoutPageTemplateEntry.getLayoutPrototypeId() == 0) &&
 			!layoutPageTemplateEntry.isDraft()) {
 
 			availableActions.add("exportMasterLayouts");

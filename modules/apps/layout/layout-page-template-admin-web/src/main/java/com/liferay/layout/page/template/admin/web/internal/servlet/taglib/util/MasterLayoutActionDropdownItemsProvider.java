@@ -21,7 +21,6 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.layout.page.template.admin.web.internal.configuration.util.ExportImportMasterLayoutConfigurationUtil;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -107,7 +106,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 		).add(
 			() ->
 				(layoutPageTemplateEntryId > 0) &&
-				ExportImportMasterLayoutConfigurationUtil.enabled() &&
 				(_layoutPageTemplateEntry.getLayoutPrototypeId() == 0),
 			_getExportMasterLayoutActionUnsafeConsumer()
 		).add(

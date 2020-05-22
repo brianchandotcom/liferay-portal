@@ -315,4 +315,36 @@ describe('liferay-kaleo-designer-xml-definition-serializer', () => {
 
 		expect(definition).toContain('<assignments');
 	});
+
+	it('serializes template element and keep format.', () => {
+		const jsonDefinition = {
+			nodes: [
+				{
+					name: 'task1',
+					notifications: {
+						name: ['notification1'],
+						recipients: [
+							{
+								assignmentType: ['user'],
+							},
+						],
+						template: [
+							'Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.\nThank You!',
+						],
+					},
+					xmlType: 'task',
+				},
+			],
+		};
+
+		const definition = serializeDefinition(
+			XML_NAMESPACE,
+			METADATA,
+			jsonDefinition
+		);
+
+		expect(definition).toContain(
+			'<![CDATA[Your submission was reviewed<#if taskComments?has_content> and the reviewer applied the following ${taskComments}</#if>.\nThank You!]]'
+		);
+	});
 });

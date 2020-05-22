@@ -295,62 +295,6 @@ definition {
 			roleTitle = "Guest");
 	}
 
-	// Ignored because of the ticket LRQA-57518
-
-	@description = "This is a use case for LPS-75802"
-	@ignore = "true"
-	@priority = "5"
-	test PublishSiteCreatedBasedOnASiteTemplate {
-		property osgi.app.includes = "frontend-theme-porygon";
-		property portal.upstream = "quarantine";
-
-		SiteTemplates.addCP(
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Manage",
-			rowEntry = "Site Template Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		Page.changeCurrentTheme(
-			pageName = "Home",
-			themeName = "Porygon");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addCP(
-			siteName = "Site Name",
-			siteTemplateActive = "Yes",
-			siteTemplateName = "Site Template Name",
-			siteType = "Site Template",
-			uncheckPropagation = "true");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
-
-		Staging.activateStagingCP(siteName = "Site Name");
-
-		Navigator.gotoStagedSitePage(
-			pageName = "Home",
-			siteName = "Site Name");
-
-		Staging.gotoPublishToLive();
-
-		Staging.publishToLive();
-	}
-
 	@priority = "3"
 	test SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates {
 		ProductMenu.gotoPortlet(

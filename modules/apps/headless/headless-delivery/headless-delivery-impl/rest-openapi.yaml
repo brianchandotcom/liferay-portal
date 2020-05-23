@@ -1812,7 +1812,6 @@ components:
                     type: string
                 id:
                     format: int64
-                    readOnly: true
                     type: integer
                 link:
                     # @review
@@ -1821,7 +1820,6 @@ components:
                     format: uri
                     type: string
                 name:
-                    readOnly: true
                     type: string
                 name_i18n:
                     additionalProperties:
@@ -1840,7 +1838,6 @@ components:
                     readOnly: true
                     type: string
                 url:
-                    readOnly: true
                     type: string
         PageCollectionDefinition:
             description:

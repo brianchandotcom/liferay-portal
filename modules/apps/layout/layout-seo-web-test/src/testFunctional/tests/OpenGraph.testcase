@@ -91,6 +91,7 @@ definition {
 	@priority = "5"
 	test DisableConfiguration {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "OpenGraph#DisableConfiguration";
 		var portalURL = PropsUtil.get("portal.url");
 

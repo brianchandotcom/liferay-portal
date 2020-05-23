@@ -15,22 +15,19 @@
 package com.liferay.product.navigation.global.menu.web.internal.product.navigation.control.menu;
 
 import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -52,6 +49,27 @@ public class GlobalMenuProductNavigationControlMenuEntry
 		return "/global_menu/global_menu.jsp";
 	}
 
+	@Override
+	public boolean isShow(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		List<PanelCategory> globalMenuPanelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
+				PanelCategoryKeys.GLOBAL_MENU);
+
+		for (PanelCategory panelCategory : globalMenuPanelCategories) {
+			List<PanelCategory> childPanelCategories =
+				_panelCategoryRegistry.getChildPanelCategories(
+					panelCategory.getKey());
+
+			if (!childPanelCategories.isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	@Reference(
 		target = "(panel.category.key=" + PanelCategoryKeys.HIDDEN + ")",
 		unbind = "-"
@@ -67,5 +85,8 @@ public class GlobalMenuProductNavigationControlMenuEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Reference
+	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

@@ -363,11 +363,21 @@ definition {
 		}
 
 		task ("Add a content page template based on custom master") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name 2",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template",
+				masterLayoutEntryName = "Custom Masters Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.addPageTemplate(
-				masterLayoutName = "Custom Masters Page Template",
-				pageTemplateName = "Page Template Name 2");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name 2");
+
+			PageEditor.assertFragmentSidebarLoaded();
 		}
 
 		task ("Assert can change master from custom master to Blank") {
@@ -499,11 +509,16 @@ definition {
 		}
 
 		task ("Add a display page template based on custom masters") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name 2",
+				groupName = "Test Site Name",
+				masterLayoutEntryName = "Custom Masters Page Template",
+				subType = "Basic Web Content");
+
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.addDisplayPage(
-				displayPageName = "Display Page Name 2",
-				masterLayoutName = "Custom Masters Page Template");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name 2");
 		}
 
 		task ("Assert can change master from custom master to Blank") {
@@ -1454,23 +1469,36 @@ definition {
 				groupName = "Test Site Name",
 				layoutPageTemplateCollectionName = "Page Template Collection");
 
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template",
+				masterLayoutEntryName = "Custom Masters Page Template");
+
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 
 			Navigator.gotoNavNested(navNested = "Page Template Collection");
 
-			PageTemplatesAdmin.addPageTemplate(
-				masterLayoutName = "Custom Masters Page Template",
-				pageTemplateName = "Page Template Name");
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 
 			PageEditor.clickPublish();
 		}
 
 		task ("Add a display page template based on custom masters") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				masterLayoutEntryName = "Custom Masters Page Template",
+				subType = "Basic Web Content");
+
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
-			DisplayPageTemplatesAdmin.addDisplayPage(
-				displayPageName = "Display Page Name",
-				masterLayoutName = "Custom Masters Page Template");
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.clickPublish();
 		}

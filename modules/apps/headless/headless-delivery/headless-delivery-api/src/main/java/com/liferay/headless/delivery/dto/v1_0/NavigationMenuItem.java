@@ -163,7 +163,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@Schema(description = "A link to a page on the server.")
@@ -215,7 +215,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@Schema
@@ -357,7 +357,7 @@ public class NavigationMenuItem {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
 	@Override

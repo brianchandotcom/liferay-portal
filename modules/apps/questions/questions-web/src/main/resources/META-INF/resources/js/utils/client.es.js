@@ -156,7 +156,6 @@ export const getTags = (page = 1, pageSize = 20, siteKey, search = '') =>
         query {
             keywordsRanked(page: ${page}, pageSize: ${pageSize}, siteKey: ${siteKey}, search: ${search}){
                 items {
-                    dateCreated
                     id
                     keywordUsageCount
                     name

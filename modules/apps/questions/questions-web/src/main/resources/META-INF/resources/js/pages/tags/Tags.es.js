@@ -23,10 +23,7 @@ import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import {getTags} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {
-	dateToInternationalHuman,
-	useDebounceCallback,
-} from '../../utils/utils.es';
+import {useDebounceCallback} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -113,18 +110,6 @@ export default withRouter(
 															'used-x-times'
 														),
 														[tag.keywordUsageCount]
-													)}
-												</ClayCard.Description>
-												<ClayCard.Description displayType="text">
-													{lang.sub(
-														Liferay.Language.get(
-															'latest-usage'
-														),
-														[
-															dateToInternationalHuman(
-																tag.dateCreated
-															),
-														]
 													)}
 												</ClayCard.Description>
 											</ClayCard.Body>

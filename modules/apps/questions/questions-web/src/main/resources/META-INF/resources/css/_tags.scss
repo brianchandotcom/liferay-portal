@@ -1,18 +1,12 @@
 .question-tags {
 	& .template-card .card-body {
-		padding: 1rem;
 		text-align: left;
 	}
 
-	& span.card-body {
-		display: none;
-	}
-
-	& .aspect-ratio .card-body {
-		display: block;
-	}
-
-	& .card:hover {
-		box-shadow: inset 0 -5px 0 $primary-l1;
+	& .card-title {
+		color: $dark;
+		font-size: 1rem;
+		font-style: normal;
+		font-weight: 600;
 	}
 }

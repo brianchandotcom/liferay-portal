@@ -89,6 +89,19 @@ export default withRouter(
 				section.parentSection.messageBoardSections.items) ||
 			[];
 
+		const navigateToNewQuestion = () => {
+			if (context.redirectToLogin && !themeDisplay.isSignedIn()) {
+				window.location.replace(
+					`/c/portal/login?redirect=/#/questions/${sectionTitle}/new`
+				);
+			}
+			else {
+				historyPushParser(`/questions/${sectionTitle}/new`);
+			}
+
+			return false;
+		};
+
 		return (
 			<div className="d-flex flex-column flex-lg-row justify-content-between">
 				<div className="d-flex flex-grow-1">
@@ -242,41 +255,32 @@ export default withRouter(
 							</ClayInput.GroupInsetItem>
 						</ClayInput.GroupItem>
 
-						{section &&
-							section.actions &&
-							section.actions['add-thread'] && (
-								<ClayInput.GroupItem shrink>
-									<ClayButton
-										className="c-ml-3 d-none d-sm-block text-nowrap"
-										displayType="primary"
-										onClick={() =>
-											historyPushParser(
-												`/questions/${sectionTitle}/new`
-											)
-										}
-									>
+						{(context.redirectToLogin ||
+							(section &&
+								section.actions &&
+								section.actions['add-thread'])) && (
+							<ClayInput.GroupItem shrink>
+								<ClayButton
+									className="c-ml-3 d-none d-sm-block text-nowrap"
+									displayType="primary"
+									onClick={navigateToNewQuestion}
+								>
+									{Liferay.Language.get('ask-question')}
+								</ClayButton>
+
+								<ClayButton
+									className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
+									displayType="primary"
+									onClick={navigateToNewQuestion}
+								>
+									<ClayIcon symbol="pencil" />
+
+									<span className="sr-only">
 										{Liferay.Language.get('ask-question')}
-									</ClayButton>
-
-									<ClayButton
-										className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
-										displayType="primary"
-										onClick={() =>
-											historyPushParser(
-												`/questions/${sectionTitle}/new`
-											)
-										}
-									>
-										<ClayIcon symbol="pencil" />
-
-										<span className="sr-only">
-											{Liferay.Language.get(
-												'ask-question'
-											)}
-										</span>
-									</ClayButton>
-								</ClayInput.GroupItem>
-							)}
+									</span>
+								</ClayButton>
+							</ClayInput.GroupItem>
+						)}
 					</ClayInput.Group>
 				</div>
 			</div>

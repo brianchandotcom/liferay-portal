@@ -23,6 +23,7 @@ import com.liferay.taglib.util.IncludeTag;
 import com.liferay.taglib.util.InlineUtil;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.jsp.JspWriter;
@@ -37,8 +38,49 @@ public class BaseContainerTag extends IncludeTag {
 		return _className;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getComponentId() {
+		return _componentId;
+	}
+
 	public String getContainerElement() {
 		return _containerElement;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getContributorKey() {
+		return _contributorKey;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public Map<String, String> getData() {
+		return _data;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getDefaultEventHandler() {
+		return _defaultEventHandler;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getClassName()}
+	 */
+	@Deprecated
+	public String getElementClasses() {
+		return getClassName();
 	}
 
 	public String getId() {
@@ -49,8 +91,49 @@ public class BaseContainerTag extends IncludeTag {
 		_className = className;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setComponentId(String componentId) {
+		_componentId = componentId;
+	}
+
 	public void setContainerElement(String containerElement) {
 		_containerElement = containerElement;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setContributorKey(String contributorKey) {
+		_contributorKey = contributorKey;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setData(Map<String, String> data) {
+		_data = data;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setDefaultEventHandler(String defaultEventHandler) {
+		_defaultEventHandler = defaultEventHandler;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setClassName(String)}
+	 */
+	@Deprecated
+	public void setElementClasses(String elementClasses) {
+		setClassName(elementClasses);
 	}
 
 	public void setId(String id) {
@@ -69,7 +152,12 @@ public class BaseContainerTag extends IncludeTag {
 		super.cleanUp();
 
 		_className = null;
+		_componentId = null;
 		_containerElement = null;
+		_contributorKey = null;
+		_data = null;
+		_defaultEventHandler = null;
+		_elementClasses = null;
 		_id = null;
 	}
 
@@ -136,7 +224,12 @@ public class BaseContainerTag extends IncludeTag {
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private String _className;
+	private String _componentId;
 	private String _containerElement;
+	private String _contributorKey;
+	private Map<String, String> _data;
+	private String _defaultEventHandler;
+	private String _elementClasses;
 	private String _id;
 
 }

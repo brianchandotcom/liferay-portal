@@ -17,6 +17,7 @@ import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import {AppContextProvider} from './AppContext.es';
 import {ErrorBoundary} from './components/ErrorBoundary.es';
+import ForumsToQuestion from './components/ForumsToQuestion.es';
 import ProtectedRoute from './components/ProtectedRoute.es';
 import NavigationBar from './pages/NavigationBar.es';
 import EditAnswer from './pages/answers/EditAnswer.es';
@@ -35,6 +36,11 @@ export default (props) => (
 				<div>
 					<Route component={Home} exact path="/" />
 					<Route component={Home} exact path="/questions" />
+					<Route
+						component={ForumsToQuestion}
+						exact
+						path="/question/:questionId"
+					/>
 					<Route
 						component={UserActivity}
 						exact

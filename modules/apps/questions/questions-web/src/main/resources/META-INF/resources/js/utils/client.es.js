@@ -221,6 +221,20 @@ export const getThread = (friendlyUrlPath, siteKey) =>
 		{nestedFields: 'lastPostDate'}
 	);
 
+export const getMessageBoardThreadById = (messageBoardThreadId) =>
+	request(
+		gql`
+        query {
+            messageBoardThread(messageBoardThreadId: ${messageBoardThreadId}){
+                friendlyUrlPath
+				id
+                messageBoardSection {
+                	title
+                }
+            }
+        }`
+	);
+
 export const getThreadContent = (friendlyUrlPath, siteKey) =>
 	request(gql`
         query {

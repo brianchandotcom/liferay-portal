@@ -131,7 +131,7 @@ export default ({onSelect, selectedValue}) => {
 					{Liferay.Language.get('retry')}
 				</ClayButton>
 			),
-			label: Liferay.Language.get('failed-to-retrieve-objects'),
+			label: Liferay.Language.get('unable-to-retrieve-objects'),
 		},
 		loadingProps: {
 			label: Liferay.Language.get('retrieving-all-objects'),

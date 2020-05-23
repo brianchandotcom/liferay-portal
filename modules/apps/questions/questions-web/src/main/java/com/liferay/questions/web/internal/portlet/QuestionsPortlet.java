@@ -20,6 +20,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.questions.web.internal.configuration.QuestionsConfiguration;
 import com.liferay.questions.web.internal.constants.QuestionsPortletKeys;
 import com.liferay.questions.web.internal.constants.QuestionsWebKeys;
 
@@ -34,6 +36,7 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.portlet.Portlet;
@@ -44,13 +47,16 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Javier Gamarra
  */
 @Component(
+	configurationPid = "com.liferay.questions.web.internal.configuration.QuestionsConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-questions",
@@ -75,6 +81,9 @@ public class QuestionsPortlet extends MVCPortlet {
 	public void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			QuestionsConfiguration.class.getName(), _questionsConfiguration);
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
@@ -118,6 +127,13 @@ public class QuestionsPortlet extends MVCPortlet {
 		super.doView(renderRequest, renderResponse);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_questionsConfiguration = ConfigurableUtil.createConfigurable(
+			QuestionsConfiguration.class, properties);
+	}
+
 	@Reference(unbind = "-")
 	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
@@ -155,5 +171,7 @@ public class QuestionsPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	private volatile QuestionsConfiguration _questionsConfiguration;
 
 }

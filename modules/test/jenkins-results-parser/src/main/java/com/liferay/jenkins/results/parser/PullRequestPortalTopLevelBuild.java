@@ -132,8 +132,11 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 			getJobVariantsDownstreamBuildCount(
 				stableJobBatchNames, "SUCCESS", null);
 
-		if (stableJobDownstreamBuildsSuccessCount ==
-				stableJobDownstreamBuildsSize) {
+		String result = getResult();
+
+		if (((result != null) && result.matches("(APPROVED|SUCCESS)")) ||
+			(stableJobDownstreamBuildsSuccessCount ==
+				stableJobDownstreamBuildsSize)) {
 
 			_stableJobResult = "SUCCESS";
 		}
@@ -198,23 +201,9 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 
 		StringBuilder sb = new StringBuilder();
 
-		List<String> stableJobBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
+		String stableJobResult = getStableJobResult();
 
-		int stableJobDownstreamBuildsSuccessCount =
-			getJobVariantsDownstreamBuildCount(
-				stableJobBatchNames, "SUCCESS", null);
-
-		List<Build> stableJobDownstreamBuilds = getStableJobDownstreamBuilds();
-
-		int stableJobDownstreamBuildsSize = stableJobDownstreamBuilds.size();
-
-		String result = getResult();
-
-		if (((result != null) && result.matches("(APPROVED|SUCCESS)")) ||
-			(stableJobDownstreamBuildsSuccessCount ==
-				stableJobDownstreamBuildsSize)) {
-
+		if (stableJobResult.equals("SUCCESS")) {
 			sb.append(":heavy_check_mark: ");
 		}
 		else {
@@ -222,9 +211,17 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 		}
 
 		sb.append("ci:test:stable - ");
-		sb.append(String.valueOf(stableJobDownstreamBuildsSuccessCount));
+
+		sb.append(
+			getJobVariantsDownstreamBuildCount(
+				new ArrayList<>(_stableJob.getBatchNames()), "SUCCESS", null));
+
 		sb.append(" out of ");
-		sb.append(String.valueOf(stableJobDownstreamBuildsSize));
+
+		List<Build> stableJobDownstreamBuilds = getStableJobDownstreamBuilds();
+
+		sb.append(stableJobDownstreamBuilds.size());
+
 		sb.append(" jobs passed");
 
 		return Dom4JUtil.getNewElement("h3", null, sb.toString());

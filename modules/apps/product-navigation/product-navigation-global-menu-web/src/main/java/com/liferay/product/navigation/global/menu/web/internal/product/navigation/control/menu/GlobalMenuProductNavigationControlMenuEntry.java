@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.global.menu.web.internal.configuration.FFProductNavigationGlobalMenuConfiguration;
 
 import java.util.Map;
 
@@ -38,7 +37,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.product.navigation.global.menu.web.internal.configuration.FFProductNavigationGlobalMenuConfiguration",
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.USER,
@@ -52,17 +50,6 @@ public class GlobalMenuProductNavigationControlMenuEntry
 	@Override
 	public String getIconJspPath() {
 		return "/global_menu/global_menu.jsp";
-	}
-
-	@Override
-	public boolean isShow(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		if (_ffProductNavigationGlobalMenuConfiguration.showGlobalMenu()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference(
@@ -80,18 +67,5 @@ public class GlobalMenuProductNavigationControlMenuEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	@Activate
-	@Modified
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_ffProductNavigationGlobalMenuConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFProductNavigationGlobalMenuConfiguration.class, properties);
-	}
-
-	private volatile FFProductNavigationGlobalMenuConfiguration
-		_ffProductNavigationGlobalMenuConfiguration;
 
 }

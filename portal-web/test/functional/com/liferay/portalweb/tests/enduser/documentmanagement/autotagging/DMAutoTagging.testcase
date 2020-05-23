@@ -296,6 +296,7 @@ definition {
 	@priority = "5"
 	test OpenNLPSmoke {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		property test.name.skip.portal.instance = "DMAutoTagging#OpenNLPSmoke";
 
@@ -434,6 +435,7 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "DMAutoTagging#Smoke";
 
 		JSONDocument.addFileWithUploadedFile(

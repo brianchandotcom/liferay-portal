@@ -252,6 +252,7 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		property test.name.skip.portal.instance = "BlogsAutoTagging#Smoke";
 

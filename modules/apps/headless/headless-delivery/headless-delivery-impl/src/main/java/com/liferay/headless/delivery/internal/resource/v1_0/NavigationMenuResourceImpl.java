@@ -19,11 +19,9 @@ import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -39,11 +37,12 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -118,12 +117,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			_siteNavigationMenuService.fetchSiteNavigationMenu(
 				navigationMenuId);
 
-		_siteNavigationMenuItemService.deleteSiteNavigationMenuItems(
-			navigationMenuId);
-
-		_createNavigationMenuItems(
+		_updateNavigationMenuItems(
 			navigationMenu.getNavigationMenuItems(), 0,
-			siteNavigationMenu.getGroupId(), navigationMenuId);
+			siteNavigationMenu.getGroupId(),
+			siteNavigationMenu.getSiteNavigationMenuId());
 
 		return _toNavigationMenu(
 			_siteNavigationMenuService.updateSiteNavigationMenu(
@@ -132,34 +129,37 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					siteNavigationMenu.getGroupId(), null)));
 	}
 
+	private void _createNavigationMenuItem(
+			NavigationMenuItem navigationMenuItem, long parentNavigationMenuId,
+			long siteId, long siteNavigationMenuId)
+		throws Exception {
+
+		String unicodeProperties = _getUnicodeProperties(
+			navigationMenuItem, siteId);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
+				siteId, siteNavigationMenuId, parentNavigationMenuId,
+				_getType(navigationMenuItem), unicodeProperties,
+				ServiceContextUtil.createServiceContext(siteId, null));
+
+		_createNavigationMenuItems(
+			navigationMenuItem.getNavigationMenuItems(),
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(), siteId,
+			siteNavigationMenuId);
+	}
+
 	private void _createNavigationMenuItems(
-		NavigationMenuItem[] navigationMenuItems, long parentNavigationMenuId,
-		long siteId, long siteNavigationMenuId) {
+			NavigationMenuItem[] navigationMenuItems,
+			long parentNavigationMenuId, long siteId, long siteNavigationMenuId)
+		throws Exception {
 
-		try {
+		if (navigationMenuItems != null) {
 			for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
-				Layout layout = _getLayout(
-					navigationMenuItem.getLink(), siteId);
-
-				SiteNavigationMenuItem siteNavigationMenuItem =
-					_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-						siteId, siteNavigationMenuId, parentNavigationMenuId,
-						"layout", _getNavigationMenuItemTypeSettings(layout),
-						ServiceContextUtil.createServiceContext(siteId, null));
-
-				if (ArrayUtil.isNotEmpty(
-						navigationMenuItem.getNavigationMenuItems())) {
-
-					_createNavigationMenuItems(
-						navigationMenuItem.getNavigationMenuItems(),
-						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-						siteId, siteNavigationMenuId);
-				}
+				_createNavigationMenuItem(
+					navigationMenuItem, parentNavigationMenuId, siteId,
+					siteNavigationMenuId);
 			}
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(
-				"Not possible to add navigation menu item", portalException);
 		}
 	}
 
@@ -216,22 +216,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		);
 	}
 
-	private String _getNavigationMenuItemTypeSettings(Layout layout) {
-		UnicodeProperties navigationMenuItemUnicodeProperties =
-			new UnicodeProperties(true);
-
-		navigationMenuItemUnicodeProperties.setProperty(
-			"groupId", String.valueOf(layout.getGroupId()));
-		navigationMenuItemUnicodeProperties.setProperty(
-			"layoutUuid", layout.getUuid());
-		navigationMenuItemUnicodeProperties.setProperty(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-		navigationMenuItemUnicodeProperties.setProperty(
-			"name", layout.getName(LocaleUtil.getDefault()));
-
-		return navigationMenuItemUnicodeProperties.toString();
-	}
-
 	private Map<Long, List<SiteNavigationMenuItem>>
 		_getSiteNavigationMenuItemsMap(
 			List<SiteNavigationMenuItem> siteNavigationMenuItems) {
@@ -276,6 +260,56 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		return siteNavigationMenuItemsMap;
 	}
 
+	private String _getType(NavigationMenuItem navigationMenuItem) {
+		if (navigationMenuItem.getLink() != null) {
+			return "layout";
+		}
+		else if (navigationMenuItem.getUrl() != null) {
+			return "url";
+		}
+
+		return "node";
+	}
+
+	private String _getUnicodeProperties(
+		NavigationMenuItem navigationMenuItem, long siteId) {
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
+
+		if (navigationMenuItem.getLink() != null) {
+			Layout layout = _getLayout(navigationMenuItem.getLink(), siteId);
+
+			unicodeProperties.setProperty(
+				"groupId", String.valueOf(layout.getGroupId()));
+			unicodeProperties.setProperty("layoutUuid", layout.getUuid());
+			unicodeProperties.setProperty(
+				"privateLayout", String.valueOf(layout.isPrivateLayout()));
+			unicodeProperties.setProperty(
+				"name", layout.getName(LocaleUtil.getDefault()));
+		}
+		else {
+			String preferredLanguageId =
+				contextAcceptLanguage.getPreferredLanguageId();
+
+			if (preferredLanguageId == null) {
+				preferredLanguageId = LocaleUtil.toLanguageId(
+					LocaleUtil.getDefault());
+			}
+
+			unicodeProperties.setProperty(
+				"name_" + preferredLanguageId, navigationMenuItem.getName());
+			unicodeProperties.setProperty(
+				"defaultLanguageId", preferredLanguageId);
+
+			if (navigationMenuItem.getUrl() != null) {
+				unicodeProperties.setProperty(
+					"url", navigationMenuItem.getUrl());
+			}
+		}
+
+		return unicodeProperties.toString();
+	}
+
 	private boolean _isNameProperty(Map.Entry<String, String> property) {
 		String propertyKey = property.getKey();
 
@@ -283,8 +317,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private NavigationMenu _toNavigationMenu(
-			SiteNavigationMenu siteNavigationMenu)
-		throws Exception {
+		SiteNavigationMenu siteNavigationMenu) {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemService.getSiteNavigationMenuItems(
@@ -315,9 +348,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private NavigationMenuItem _toNavigationMenuItem(
-			SiteNavigationMenuItem siteNavigationMenuItem,
-			Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap)
-		throws Exception {
+		SiteNavigationMenuItem siteNavigationMenuItem,
+		Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap) {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			new UnicodeProperties();
@@ -335,6 +367,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						siteNavigationMenuItem.getUserId()));
 				dateCreated = siteNavigationMenuItem.getCreateDate();
 				dateModified = siteNavigationMenuItem.getModifiedDate();
+				id = siteNavigationMenuItem.getSiteNavigationMenuItemId();
 				navigationMenuItems = transformToArray(
 					siteNavigationMenuItemsMap.getOrDefault(
 						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
@@ -393,15 +426,74 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		};
 	}
 
-	private String _toType(String siteNavigationMenuItem) {
-		if (siteNavigationMenuItem.equals("layout")) {
+	private String _toType(String type) {
+		if (type.equals("layout")) {
 			return "page";
 		}
-		else if (siteNavigationMenuItem.equals("node")) {
+		else if (type.equals("node")) {
 			return "navigationMenu";
 		}
 
-		return siteNavigationMenuItem;
+		return type;
+	}
+
+	private void _updateNavigationMenuItems(
+			NavigationMenuItem[] navigationMenuItems,
+			long parentSiteNavigationMenuId, Long siteId,
+			long siteNavigationMenuId)
+		throws Exception {
+
+		List<SiteNavigationMenuItem> siteNavigationMenuItems = new ArrayList<>(
+			_siteNavigationMenuItemService.getSiteNavigationMenuItems(
+				siteNavigationMenuId, parentSiteNavigationMenuId));
+
+		if (navigationMenuItems != null) {
+			for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
+				Stream<SiteNavigationMenuItem> stream =
+					siteNavigationMenuItems.stream();
+
+				Long navigationMenuItemId = navigationMenuItem.getId();
+
+				Optional<SiteNavigationMenuItem>
+					siteNavigationMenuItemOptional = stream.filter(
+						siteNavigationMenuItem -> Objects.equals(
+							siteNavigationMenuItem.
+								getSiteNavigationMenuItemId(),
+							navigationMenuItemId)
+					).findFirst();
+
+				if (siteNavigationMenuItemOptional.isPresent()) {
+					SiteNavigationMenuItem siteNavigationMenuItem =
+						_siteNavigationMenuItemService.
+							updateSiteNavigationMenuItem(
+								navigationMenuItemId,
+								_getUnicodeProperties(
+									navigationMenuItem, siteId),
+								ServiceContextUtil.createServiceContext(
+									siteId, null));
+
+					_updateNavigationMenuItems(
+						navigationMenuItem.getNavigationMenuItems(),
+						siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+						siteId, siteNavigationMenuId);
+
+					siteNavigationMenuItems.remove(
+						siteNavigationMenuItemOptional.get());
+				}
+				else {
+					_createNavigationMenuItem(
+						navigationMenuItem, parentSiteNavigationMenuId, siteId,
+						siteNavigationMenuId);
+				}
+			}
+		}
+
+		for (SiteNavigationMenuItem siteNavigationMenuItem :
+				siteNavigationMenuItems) {
+
+			_siteNavigationMenuItemService.deleteSiteNavigationMenuItem(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
+		}
 	}
 
 	@Reference

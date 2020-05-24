@@ -62,9 +62,11 @@ for (AssetVocabulary vocabulary : vocabularies) {
 							for (AssetCategory category : curCategories) {
 							%>
 
-								<span class="label label-dark label-lg text-uppercase">
-									<%= HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())) %>
-								</span>
+								<clay:label
+									displayType="dark"
+									label="<%= HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())) %>"
+									large="true"
+								/>
 
 							<%
 							}

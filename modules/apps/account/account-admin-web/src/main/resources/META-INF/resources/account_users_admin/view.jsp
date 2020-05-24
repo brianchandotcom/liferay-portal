@@ -103,7 +103,7 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 				>
 					<clay:label
 						displayType="<%= accountUserDisplay.getStatusLabelStyle() %>"
-						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountUserDisplay.getStatusLabel()), locale) %>"
+						label="<%= accountUserDisplay.getStatusLabel() %>"
 					/>
 				</liferay-ui:search-container-column-text>
 

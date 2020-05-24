@@ -24,9 +24,10 @@
 			</span>
 		</c:when>
 		<c:otherwise>
-			<span class="label label-warning">
-				<liferay-ui:message key="not-staged" />
-			</span>
+			<clay:label
+				displayType="warning"
+				label="not-staged"
+			/>
 		</c:otherwise>
 	</c:choose>
 </c:if>

@@ -104,8 +104,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 									name="status"
 								>
 									<clay:label
+										displayType='<%= uadApplicationSummaryDisplay.hasItems() ? "warning" : "success" %>'
 										label='<%= uadApplicationSummaryDisplay.hasItems() ? StringUtil.toUpperCase(LanguageUtil.get(request, "pending"), locale) : StringUtil.toUpperCase(LanguageUtil.get(request, "done"), locale) %>'
-										style='<%= uadApplicationSummaryDisplay.hasItems() ? "warning" : "success" %>'
 									/>
 								</liferay-ui:search-container-column-text>
 							</liferay-ui:search-container-row>

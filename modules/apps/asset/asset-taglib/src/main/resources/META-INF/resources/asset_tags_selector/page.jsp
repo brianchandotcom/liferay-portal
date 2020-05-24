@@ -50,7 +50,7 @@ List<Map<String, String>> selectedItems = (List<Map<String, String>>)data.get("s
 						%>
 
 							<clay:label
-								closeable="<%= true %>"
+								dismissible="<%= true %>"
 								label='<%= selectedItem.get("label") %>'
 							/>
 

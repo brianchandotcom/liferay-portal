@@ -37,9 +37,10 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 		}
 	}
 
@@ -60,6 +61,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Static Text fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Static Text");
@@ -70,7 +75,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a web content article with the same text as the Static Text fragment") {
@@ -107,17 +114,13 @@ definition {
 	@priority = "3"
 	test SearchContentPagesWithDeletedCategory {
 		task ("Add a a vocabulary with a category") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
 
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Categories");
-
-			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
-
-			Category.addCP(
-				categoryName = "New Category",
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "New Category",
 				vocabularyName = "Vocabulary Name");
 		}
 
@@ -148,12 +151,7 @@ definition {
 		}
 
 		task ("Delete created vocabulary") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ProductMenu.gotoPortlet(
-				category = "Categorization",
-				panel = "Site Administration",
-				portlet = "Categories");
+			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
 			Vocabulary.deleteByIconCP(vocabularyName = "Vocabulary Name");
 		}
@@ -177,6 +175,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Rich Text fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");
@@ -187,7 +189,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Search by text that appears in the editable text field in the Rich Text fragment") {
@@ -199,7 +203,9 @@ definition {
 		}
 
 		task ("Navigate to the content page's 'Edit Mode'") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name?p_l_mode=edit");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Edit the Rich Text fragment's editable text") {
@@ -215,7 +221,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Search by the new text that appears in the editable text field in the Rich Text fragment") {
@@ -241,6 +249,10 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a Static Text fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Static Text");
@@ -251,7 +263,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Search by the static text in the Static Text fragment") {

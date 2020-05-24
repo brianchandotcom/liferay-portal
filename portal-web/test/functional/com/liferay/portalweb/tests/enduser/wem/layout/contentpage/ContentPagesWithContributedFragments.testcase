@@ -86,9 +86,9 @@ definition {
 		}
 
 		task ("Add a Collection Display to page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
 		}
@@ -141,9 +141,9 @@ definition {
 	@description = "This is a use case for LPS-111274. The selected Tabs fragment should always stay selected when click on the tabs of it."
 	@priority = "5"
 	test ClickTabsFragmentTabAndViewHeader {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
@@ -256,9 +256,9 @@ definition {
 		}
 
 		task ("Add a Collection Display to page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
 		}
@@ -293,9 +293,9 @@ definition {
 			groupName = "Test Site Name",
 			title = "WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
@@ -305,19 +305,19 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WebContent Title");
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 
 		JSONWebcontent.deleteWebContent(
 			groupName = "Test Site Name",
 			title = "WebContent Title");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
 		task ("Assert the fragment is not visible in the site page") {
 			AssertElementNotPresent(
-				key_pageName = "Test Page Name",
+				key_pageName = "Content Page Name",
 				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
 		}
 
@@ -336,15 +336,14 @@ definition {
 	test MapBlogContentViaContentDisplay {
 		property testray.component.names = "Content Pages,Item Selector";
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
-
-		Blogs.addEntry(
+		JSONBlog.addEntry(
 			entryContent = "This content maps from blog content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
@@ -354,10 +353,10 @@ definition {
 			entryTitle = "Blogs Entry Title",
 			fragmentName = "Content");
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
 		AssertTextEquals(
@@ -390,9 +389,9 @@ definition {
 		}
 
 		task ("Add a Collection Display to page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
 		}
@@ -482,16 +481,16 @@ definition {
 	@description = "This case ensures that a user can map an image to a fragment via the content display."
 	@priority = "5"
 	test MapImageViaContentDisplay {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-		DMDocument.addCP(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.jpg",
-			dmDocumentTitle = "Document_1.jpg");
+			dmDocumentTitle = "Document_1.jpg",
+			groupName = "Test Site Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
@@ -500,10 +499,10 @@ definition {
 			fragmentName = "Content",
 			imageFileName = "Document_1.jpg");
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
 		AssertVisible(
@@ -514,19 +513,14 @@ definition {
 	@description = "This case ensures that a user can map the content field from web content to a fragment via the content display."
 	@priority = "5"
 	test MapWebContentContentViaContentDisplay {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		JSONWebcontent.addWebContent(
+			content = "This content maps from web content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
 
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "This content maps from web content",
-			webContentTitle = "Webcontent Title");
-
-		PortletEntry.publish();
-
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
@@ -536,10 +530,10 @@ definition {
 			webContentContent = "This content maps from web content",
 			webContentTitle = "Webcontent Title");
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
 		AssertTextEquals.assertPartialTextAceEditor(
@@ -566,12 +560,12 @@ definition {
 		}
 
 		task ("Add a document with an image") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
-
-			DMDocument.addCP(
+			JSONDocument.addFileWithUploadedFile(
 				dmDocumentDescription = "DM Document Description",
-				dmDocumentFile = "Document_1.jpg",
-				dmDocumentTitle = "DM Document Title");
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
 		}
 
 		task ("Import test fragments from dependencies folder") {
@@ -581,9 +575,9 @@ definition {
 		}
 
 		task ("Add new fragment to content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "imported",
@@ -700,9 +694,9 @@ definition {
 		}
 
 		task ("Add new fragment to content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "imported",
@@ -769,9 +763,9 @@ definition {
 		}
 
 		task ("Add new fragment to content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "imported",
@@ -833,9 +827,9 @@ definition {
 		}
 
 		task ("Add a Collection Display to page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
 		}
@@ -922,15 +916,10 @@ definition {
 	@description = "This is a test for LPS-101248. Can select any custom web content template as a "Template" for web content selected in content fragment."
 	@priority = "5"
 	test SelectCustomWebContentTemplateViaContentDisplay {
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "This content maps from web content",
-			webContentTitle = "Webcontent Title");
-
-		PortletEntry.publish();
+		JSONWebcontent.addWebContent(
+			content = "This content maps from web content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -944,9 +933,9 @@ definition {
 
 		var siteID = Site.getSiteId();
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
@@ -957,10 +946,10 @@ definition {
 			webContentContent = "${siteID}",
 			webContentTitle = "Webcontent Title");
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
 		AssertTextEquals.assertPartialTextAceEditor(
@@ -1021,9 +1010,9 @@ definition {
 		}
 
 		task ("Add a Collection Display to page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-name");
-
-			ContentPages.clickPencil();
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
 		}
@@ -1090,21 +1079,21 @@ definition {
 	@description = "Given a published content page with an unconfigured Content fragment, when the page is viewed the fragment should not be visible."
 	@priority = "4"
 	test UnconfiguredContentDisplayFragmentIsNotVisible {
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addContentDisplay(fragmentName = "Content");
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
 		task ("Assert the fragment is not visible in the site page") {
 			AssertElementNotPresent(
-				key_pageName = "Test Page Name",
+				key_pageName = "Content Page Name",
 				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
 		}
 	}

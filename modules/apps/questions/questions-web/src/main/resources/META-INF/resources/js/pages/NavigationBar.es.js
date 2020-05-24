@@ -31,6 +31,13 @@ export default withRouter(
 	}) => {
 		const isActive = (value) => location.pathname.includes(value);
 
+		const label = () =>
+			location.pathname.includes('tags')
+				? Liferay.Language.get('tags')
+				: location.pathname.includes('activity')
+				? Liferay.Language.get('my-activity')
+				: Liferay.Language.get('questions');
+
 		const context = useContext(AppContext);
 
 		useEffect(() => {
@@ -54,7 +61,7 @@ export default withRouter(
 							<div className="align-items-center col d-flex justify-content-between">
 								<ClayNavigationBar
 									className="navigation-bar"
-									triggerLabel="Questions"
+									triggerLabel={label()}
 								>
 									<ClayNavigationBar.Item
 										active={

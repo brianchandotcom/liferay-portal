@@ -12,6 +12,11 @@ definition {
 
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Content Page Name",
+			type = "content");
+
 		FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
 		FragmentsAdmin.importCollectionFromDependenciesFolder(collectionZipFile = "fragment-collection.zip");
@@ -32,11 +37,6 @@ definition {
 	@priority = "5"
 	test AddContentPageWithEditedFragmentText {
 		property testray.component.names = "Training";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -72,11 +72,6 @@ definition {
 	test AddContentPageWithHTMLFragment {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
-
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
@@ -107,11 +102,6 @@ definition {
 	@priority = "5"
 	test AddContentPageWithImageFragment {
 		property portal.acceptance = "true";
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -163,13 +153,11 @@ definition {
 	@description = "This is a test for LPS-106776. Add a translation to editable text."
 	@priority = "5"
 	test AddTraslationtoRichText {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Rich Text fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text");
@@ -195,12 +183,10 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-		}
-
-		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
+		task ("Navigate to the content page in Edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert translation is added") {

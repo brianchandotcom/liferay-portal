@@ -132,7 +132,6 @@ definition {
 	@priority = "5"
 	test DeleteCollection {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Delete the page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(

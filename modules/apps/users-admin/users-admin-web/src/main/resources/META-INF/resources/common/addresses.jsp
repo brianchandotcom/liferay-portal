@@ -87,9 +87,11 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 				<tr>
 					<td>
-						<div class="sticker sticker-secondary sticker-static">
-							<aui:icon image="picture" markupView="lexicon" />
-						</div>
+						<clay:sticker
+							className="sticker-static"
+							displayType="secondary"
+							icon="picture"
+						/>
 					</td>
 					<td class="table-cell-expand">
 						<h4>

@@ -31,8 +31,9 @@ if (bodyContent != null) {
 		<%= bodyContentString %>
 	</c:when>
 	<c:otherwise>
-		<div class="sticker sticker-secondary">
-			<aui:icon image="<%= icon %>" markupView="lexicon" />
-		</div>
+		<clay:sticker
+			displayType="secondary"
+			icon="<%= icon %>"
+		/>
 	</c:otherwise>
 </c:choose>

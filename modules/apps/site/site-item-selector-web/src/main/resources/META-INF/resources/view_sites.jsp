@@ -145,7 +145,9 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 							<div class="card-body">
 								<div class="card-row">
 									<div class="autofit-col">
-										<span class="sticker sticker-secondary">
+										<clay:sticker
+											displayType="secondary"
+										>
 											<c:choose>
 												<c:when test="<%= Validator.isNotNull(siteVerticalCard.getImageSrc()) %>">
 													<span class="sticker-overlay">
@@ -153,13 +155,12 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 													</span>
 												</c:when>
 												<c:otherwise>
-													<liferay-ui:icon
-														icon="<%= group.getIconCssClass() %>"
-														markupView="lexicon"
+													<clay:icon
+														symbol="<%= group.getIconCssClass() %>"
 													/>
 												</c:otherwise>
 											</c:choose>
-										</span>
+										</clay:sticker>
 									</div>
 
 									<div class="autofit-col autofit-col-expand autofit-col-gutters">

@@ -41,11 +41,10 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 				md="4"
 			>
 				<div class="overview-container statistics-panel">
-					<div class="sticker sticker-categories sticker-user-icon">
-						<clay:icon
-							symbol="categories"
-						/>
-					</div>
+					<clay:sticker
+						className="sticker-categories sticker-user-icon"
+						icon="categories"
+					/>
 
 					<small class="text-uppercase"><liferay-ui:message key="categories" /></small>
 
@@ -57,11 +56,10 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 				md="4"
 			>
 				<div class="overview-container statistics-panel">
-					<div class="sticker sticker-posts sticker-user-icon">
-						<clay:icon
-							symbol="message-boards"
-						/>
-					</div>
+					<clay:sticker
+						className="sticker-posts sticker-user-icon"
+						icon="message-boards"
+					/>
 
 					<small class="text-uppercase"><liferay-ui:message key="posts" /></small>
 
@@ -73,11 +71,10 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 				md="4"
 			>
 				<div class="overview-container statistics-panel">
-					<div class="sticker sticker-participants sticker-user-icon">
-						<clay:icon
-							symbol="users"
-						/>
-					</div>
+					<clay:sticker
+						className="sticker-participants sticker-user-icon"
+						icon="users"
+					/>
 
 					<small class="text-uppercase"><liferay-ui:message key="participants" /></small>
 

@@ -453,11 +453,11 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									cssClass="table-cell-expand table-cell-minw-200 table-title"
 									name="name"
 								>
-									<div class="sticker sticker-document sticker-secondary">
-										<clay:icon
-											symbol='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
-										/>
-									</div>
+									<clay:sticker
+										className="sticker-document"
+										displayType="secondary"
+										icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
+									/>
 
 									<aui:a href="<%= rowURL.toString() %>"><%= HtmlUtil.escape(curFolder.getName()) %></aui:a>
 								</liferay-ui:search-container-column-text>

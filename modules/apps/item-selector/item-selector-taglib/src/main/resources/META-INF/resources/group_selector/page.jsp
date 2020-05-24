@@ -62,11 +62,9 @@ Set<String> groupTypes = groupSelectorDisplayContext.getGroupTypes();
 					<liferay-frontend:horizontal-card-col>
 						<c:choose>
 							<c:when test="<%= Validator.isNotNull(curGroup.getLogoURL(themeDisplay, false)) %>">
-								<span class="sticker sticker-rounded">
-									<span class="sticker-overlay">
-										<img alt="" class="sticker-img" src="<%= curGroup.getLogoURL(themeDisplay, false) %>" />
-									</span>
-								</span>
+								<clay:sticker>
+									<img alt="" class="sticker-img" src="<%= curGroup.getLogoURL(themeDisplay, false) %>" />
+								</clay:sticker>
 							</c:when>
 							<c:otherwise>
 								<liferay-frontend:horizontal-card-icon

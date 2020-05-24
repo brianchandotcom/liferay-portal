@@ -169,9 +169,11 @@ else {
 										<div class="card card-horizontal taglib-horizontal-card">
 											<div class="card-body ">
 												<div class="card-col-field">
-													<div class="sticker sticker-secondary sticker-static">
-														<aui:icon image="blogs" markupView="lexicon" />
-													</div>
+													<clay:sticker
+														className="sticker-static"
+														displayType="secondary"
+														icon="blogs"
+													/>
 												</div>
 
 												<div class="card-col-content card-col-gutters">

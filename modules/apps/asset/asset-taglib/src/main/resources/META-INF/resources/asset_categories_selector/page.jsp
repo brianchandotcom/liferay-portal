@@ -78,7 +78,7 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 										%>
 
 											<clay:label
-												closeable="<%= true %>"
+												dismissible="<%= true %>"
 												label="<%= selectedItemLabel %>"
 											/>
 

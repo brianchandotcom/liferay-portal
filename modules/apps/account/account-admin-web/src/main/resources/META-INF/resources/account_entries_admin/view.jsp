@@ -85,8 +85,8 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 					name="status"
 				>
 					<clay:label
+						displayType="<%= accountEntryDisplay.getStatusLabelStyle() %>"
 						label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, accountEntryDisplay.getStatusLabel()), locale) %>"
-						style="<%= accountEntryDisplay.getStatusLabelStyle() %>"
 					/>
 				</liferay-ui:search-container-column-text>
 

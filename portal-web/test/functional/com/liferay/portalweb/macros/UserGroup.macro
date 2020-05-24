@@ -108,8 +108,6 @@ definition {
 			menuItem = "Assign Members",
 			rowEntry = "${userGroupName}");
 
-		AssertVisible(locator1 = "NavBar#USERS");
-
 		LexiconEntry.gotoAdd();
 
 		AssertElementPresent.assertVisible(locator1 = "Button#ADD");

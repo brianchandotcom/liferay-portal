@@ -419,6 +419,8 @@ definition {
 				attributeValue = "dialog-iframe-popup",
 				eventName = "modalIframeLoaded");
 
+			WaitForElementPresent(locator1 = "APConfigurationManual#ASSET_SELECTION_MANUAL_SELECT_ASSET_ENTRIES_DIALOG");
+
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 			var key_assetTitle = "${assetTitle}";

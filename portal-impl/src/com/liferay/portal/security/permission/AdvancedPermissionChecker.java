@@ -974,7 +974,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		if (_hasGroupRole(group, RoleConstants.SITE_MEMBER)) {
+		long[] roleIds = getRoleIds(getUserId(), group.getGroupId());
+
+		Role role = RoleLocalServiceUtil.getRole(
+			group.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
 			return true;
 		}
 
@@ -1269,21 +1274,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					return ReflectionUtil.throwException(portalException);
 				}
 			});
-	}
-
-	private boolean _hasGroupRole(Group group, String roleName)
-		throws PortalException {
-
-		long[] roleIds = getRoleIds(getUserId(), group.getGroupId());
-
-		Role role = RoleLocalServiceUtil.getRole(
-			group.getCompanyId(), roleName);
-
-		if (Arrays.binarySearch(roleIds, role.getRoleId()) >= 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private boolean _hasGuestPermission(

@@ -46,14 +46,17 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 			<div class="info-bar-item">
 				<c:choose>
 					<c:when test="<%= workflowDefinition.isActive() %>">
-						<span class="label label-info label-lg">
-							<liferay-ui:message key="published" />
-						</span>
+						<clay:label
+							displayType="info"
+							label="published"
+							large="true"
+						/>
 					</c:when>
 					<c:otherwise>
-						<span class="label label-lg label-secondary">
-							<liferay-ui:message key="not-published" />
-						</span>
+						<clay:label
+							label="not-published"
+							large="true"
+						/>
 					</c:otherwise>
 				</c:choose>
 			</div>

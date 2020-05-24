@@ -60,14 +60,17 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<div class="info-bar-item">
 				<c:choose>
 					<c:when test="<%= active %>">
-						<span class="label label-info label-lg">
-							<liferay-ui:message key="published" />
-						</span>
+						<clay:label
+							displayType="info"
+							label="published"
+							large="true"
+						/>
 					</c:when>
 					<c:otherwise>
-						<span class="label label-lg label-secondary">
-							<liferay-ui:message key="not-published" />
-						</span>
+						<clay:label
+							label="not-published"
+							large="true"
+						/>
 					</c:otherwise>
 				</c:choose>
 			</div>

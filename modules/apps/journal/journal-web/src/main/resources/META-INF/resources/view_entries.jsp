@@ -120,14 +120,16 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 							<span class="text-default">
 								<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
-									<span class="label label-success text-uppercase">
-										<liferay-ui:message key="approved" />
-									</span>
+									<clay:label
+										displayType="success"
+										label="approved"
+									/>
 								</c:if>
 
-								<span class="label label-<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %> text-uppercase">
-									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
-								</span>
+								<clay:label
+									displayType="<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %>"
+									label="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>"
+								/>
 							</span>
 						</liferay-ui:search-container-column-text>
 
@@ -190,14 +192,16 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							name="status"
 						>
 							<c:if test="<%= !curArticle.isApproved() && curArticle.hasApprovedVersion() %>">
-								<span class="label label-success text-uppercase">
-									<liferay-ui:message key="approved" />
-								</span>
+								<clay:label
+									displayType="success"
+									label="approved"
+								/>
 							</c:if>
 
-							<span class="label label-<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %> text-uppercase">
-								<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>" />
-							</span>
+								<clay:label
+									displayType="<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %>"
+									label="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>"
+								/>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-date

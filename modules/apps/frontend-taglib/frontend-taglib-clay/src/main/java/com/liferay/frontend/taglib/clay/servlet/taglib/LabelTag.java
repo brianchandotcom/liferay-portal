@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
-import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.servlet.jsp.JspException;
@@ -129,10 +128,6 @@ public class LabelTag extends BaseContainerTag {
 		_displayType = displayType;
 	}
 
-	public void setElementClasses(String elementClasses) {
-		setClassName(elementClasses);
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
@@ -231,10 +226,11 @@ public class LabelTag extends BaseContainerTag {
 
 			jspWriter.write("<span class=\"label-item label-item-expand\">");
 
-			ResourceBundle resourceBundle =
-				TagResourceBundleUtil.getResourceBundle(pageContext);
+			jspWriter.write(
+				LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext),
+					_label));
 
-			jspWriter.write(LanguageUtil.get(resourceBundle, _label));
 			jspWriter.write("</span>");
 
 			if (_dismissible) {

@@ -40,7 +40,7 @@ portletDisplay.setShowBackIcon(true);
 
 							<clay:label
 								displayType="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
-								label="<%= LanguageUtil.get(resourceBundle, viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus())) %>"
+								label="<%= viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
 							/>
 						</div>
 
@@ -74,7 +74,7 @@ portletDisplay.setShowBackIcon(true);
 
 							<clay:label
 								displayType="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
-								label="<%= LanguageUtil.get(resourceBundle, viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus())) %>"
+								label="<%= viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus()) %>"
 							/>
 						</div>
 

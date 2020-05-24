@@ -98,11 +98,9 @@ SearchEngineDisplayContext
 												for (String label : connectionInformation.getLabels()) {
 												%>
 
-													<span class="label label-secondary">
-														<span class="label-item label-item-expand">
-															<liferay-ui:message key="<%= label %>" />
-														</span>
-													</span>
+													<clay:label
+														label="<%= label %>"
+													/>
 
 												<%
 												}

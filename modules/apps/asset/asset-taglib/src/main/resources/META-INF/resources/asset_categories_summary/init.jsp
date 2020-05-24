@@ -16,7 +16,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
 page import="com.liferay.asset.kernel.model.AssetEntry" %><%@

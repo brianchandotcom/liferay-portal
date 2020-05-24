@@ -18,6 +18,13 @@ definition {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
 
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
 		task ("Import test fragments from dependencies folder") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
@@ -42,13 +49,11 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Title fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title");
@@ -78,7 +83,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Title fragment is present") {
@@ -124,19 +131,32 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Add a page template collection") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
-
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
 		}
 
 		task ("Add a page template with a Button fragment") {
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Button");
 
-			Button.clickPublish();
+			PageEditor.clickPublish();
 		}
 
 		task ("Add a content page") {
@@ -144,7 +164,7 @@ definition {
 
 			ContentPages.addPage(
 				collectionName = "Page Template Collection",
-				pageName = "Test Content Page Name",
+				pageName = "Test Page Name",
 				pageTemplateName = "Page Template Name");
 		}
 
@@ -153,7 +173,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Button fragment is present and the buttons work") {
@@ -172,13 +194,11 @@ definition {
 	test AddContentPageWithOOTBFragment {
 		property portal.acceptance = "true";
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Title fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Featured Content",
 				fragmentName = "Banner Center");
@@ -189,7 +209,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Banner Center fragment is on the page") {
@@ -200,13 +222,11 @@ definition {
 	@description = "This is a test for LPS-109590. Assert no Section fragment is outside when add a Row fragment to content page. Can nest a Row fragment or multiple Row inside one column of another one."
 	@priority = "5"
 	test AddRowToColumnOfAnotherRow {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Assert add Row without Section") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addLayoutRow();
 
 			AssertElementNotPresent(
@@ -260,9 +280,14 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
 
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
@@ -283,9 +308,9 @@ definition {
 	@priority = "4"
 	test CannotDuplicateSectionWithOnlyAllowedAppearOnceWidget {
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Add a Section to page") {
@@ -333,14 +358,10 @@ definition {
 	@description = "Users can only edit content pages in edit mode."
 	@priority = "5"
 	test CannotEditInViewMode {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the page cannot be edited in 'View Mode' by asserting the fragments side bar is not present") {
@@ -369,13 +390,11 @@ definition {
 	test ChangeLayoutElementProperties {
 		property portal.acceptance = "true";
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a 2 column row layout") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addLayoutRow();
 
 			PageEditor.editLayoutRow(
@@ -438,13 +457,11 @@ definition {
 	test DiscardContentPageDraft {
 		property portal.acceptance = "true";
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Assert the Discard Draft button starts off disabled but Publish button starts off enabled") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			AssertVisible(
 				key_text = "Discard Draft",
 				locator1 = "Button#ANY_DISABLED");
@@ -502,12 +519,10 @@ definition {
 			PageEditor.clickPublish();
 		}
 
-		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-		}
-
-		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
+		task ("Navigate to the content page in Edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Discard Draft button is disabled but Publish button is enabled") {
@@ -614,14 +629,7 @@ definition {
 
 		FragmentsEditor.typeHtmlEditor(content = '''<lfr-drop-zone id="drop-zone"></lfr-drop-zone>''');
 
-		Button.clickPublish();
-
-		AssertElementPresent(locator1 = "Message#SUCCESS");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
+		PortletEntry.publish();
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
@@ -657,13 +665,11 @@ definition {
 	@description = "This is a test for LPS-107285. Can duplicate the Row fragment in one Section fragment."
 	@priority = "5"
 	test DuplicateRowInSection {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Section to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
 
@@ -701,13 +707,11 @@ definition {
 	@description = "This is a test for LPS-107285. When the Row fragment is duplicated, the components in each of columns should also be duplicated."
 	@priority = "4"
 	test DuplicateRowWithElements {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Row to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addLayoutRow();
 		}
 
@@ -805,13 +809,11 @@ definition {
 	@description = "This is a test for LPS-107285. When duplicate the Section fragment with the Row fragment, the Row fragment should also be duplicated."
 	@priority = "5"
 	test DuplicateSectionWithRow {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Section to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
 
@@ -852,13 +854,11 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Title fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title");
@@ -871,7 +871,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Title fragment is not present because it has not been published yet") {
@@ -1001,9 +1003,9 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
@@ -1020,7 +1022,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
@@ -1051,9 +1053,9 @@ definition {
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
@@ -1068,7 +1070,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
@@ -1088,13 +1090,11 @@ definition {
 	@description = "This is a test for LPS-109169. Topper only visible when the element is selected but not hover."
 	@priority = "5"
 	test HeaderOnlyShownWhenElementSelected {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Heading fragment and an Asset Publisher portlet to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
@@ -1152,18 +1152,11 @@ definition {
 	@description = "This is a test for LPS-106778. Add a content page with fragments. Can reorganize them."
 	@priority = "5"
 	test ReorganizeFragmentsInContentPage {
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-
+		task ("Add a Button fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
-		}
 
-		task ("Add a Button fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
@@ -1177,8 +1170,6 @@ definition {
 
 		task ("Publish the content page") {
 			PageEditor.clickPublish();
-
-			Pause(locator1 = "3000");
 		}
 
 		task ("Navigate to the content page in Edit mode") {
@@ -1228,9 +1219,9 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
 		property osgi.module.configurations = "responsiveEnabled = true";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		Click.clickNoMouseOver(
 			key_deviceType = "Desktop",
@@ -1270,13 +1261,11 @@ definition {
 	@description = "This is a test for LPS-107285. When the Section fragment is duplicated, the configuration of it and its components should also be duplicated."
 	@priority = "4"
 	test ViewConfigurationDuplicatedWhenDuplicateSectionWithHeading {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Section to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
 
@@ -1337,13 +1326,11 @@ definition {
 	@description = "This is a test for LPS-107285. When the Section fragment with Heading fragment is duplicated, the edited inline content should also be duplicated."
 	@priority = "4"
 	test ViewEditedInlineContentDuplicatedWhenDuplicateSectionWithHeading {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Section to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
 
@@ -1399,13 +1386,11 @@ definition {
 				layoutName = "Test Widget Page Name");
 		}
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Assert the header and footer are disabled") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			AssertVisible(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
 			AssertVisible(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_FOOTER");
@@ -1471,13 +1456,11 @@ definition {
 	@description = "This is a test for LPS-104629. The header of fragment selected can reach the border of the management toolbar."
 	@priority = "5"
 	test ViewHeaderOfFragmentMoveInsideBodyWhenReachTheManagementToolbar {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add Image, Slider, Card and HTML fragments to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			for (var fragmentName : list "HTML,Card,Slider,Image") {
 				PageEditor.addFragment(
 					collectionName = "Basic Components",
@@ -1513,13 +1496,11 @@ definition {
 	@description = "This is a test for LPS-104629. The header of widget selected can reach the border of the management toolbar."
 	@priority = "4"
 	test ViewHeaderOfWidgetMoveInsideBodyWhenReachTheManagementToolbar {
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add My Sites, Documents and Media, Blogs and Asset Publisher widgets to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			for (var portletName : list "Asset Publisher,Blogs,Documents and Media") {
 				PageEditor.addWidget(portletName = "${portletName}");
 
@@ -1564,13 +1545,11 @@ definition {
 				title = "WC WebContent Title");
 		}
 
-		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
-		}
-
 		task ("Add a Section to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
 		}
 
@@ -1634,11 +1613,6 @@ definition {
 	@priority = "4"
 	test ViewRestrictionVisualFeedbackWhenDragExistingSectionOverAnotherOne {
 		task ("Add the first Section to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -1689,11 +1663,6 @@ definition {
 	@priority = "5"
 	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverAnotherOne {
 		task ("Add a Section to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -1737,11 +1706,6 @@ definition {
 	@priority = "5"
 	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverColumnOfRow {
 		task ("Add a Row to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -1788,11 +1752,6 @@ definition {
 	@priority = "4"
 	test ViewRestrictionVisualFeedbackWhenDragSectionContainingHeadingOverColumnOfRow {
 		task ("Add a Row to page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Content Page Name",
-				type = "content");
-
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -1924,9 +1883,9 @@ definition {
 	test ViewSelectedImageName {
 		property portal.acceptance = "true";
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",

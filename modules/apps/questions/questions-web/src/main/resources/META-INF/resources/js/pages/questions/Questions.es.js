@@ -139,7 +139,7 @@ export default withRouter(
 						</div>
 
 						{!!search && (
-							<div className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
+							<div className="c-mt-5 c-mt-md-1 c-mx-auto c-px-0 col-xl-10">
 								<ClayResultsBar>
 									<ClayResultsBar.Item expand>
 										<span className="component-text text-truncate-inline">

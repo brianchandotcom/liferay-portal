@@ -381,6 +381,8 @@ definition {
 
 	macro clickPublish {
 		Button.click(button = "Publish");
+
+		Alert.viewSuccessMessage();
 	}
 
 	macro closeSidebar {

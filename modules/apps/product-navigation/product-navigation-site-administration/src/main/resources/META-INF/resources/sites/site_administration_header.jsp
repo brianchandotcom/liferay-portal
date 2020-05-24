@@ -145,9 +145,10 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 							<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
 						</c:when>
 						<c:otherwise>
-							<div class="sticker sticker-secondary">
-								<aui:icon image="<%= group.getIconCssClass() %>" markupView="lexicon" />
-							</div>
+							<clay:sticker
+								displayType="secondary"
+								icon="<%= group.getIconCssClass() %>"
+							/>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -168,7 +169,14 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 			</div>
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
-				<span class="panel-notifications-count sticker sticker-rounded sticker-sm sticker-top-right sticker-warning"><%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %></span>
+				<clay:sticker
+					className="panel-notifications-count"
+					displayType="warning"
+					position="top-right"
+					size="sm"
+				>
+					<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %>
+				</clay:sticker>
 			</c:if>
 
 			<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />

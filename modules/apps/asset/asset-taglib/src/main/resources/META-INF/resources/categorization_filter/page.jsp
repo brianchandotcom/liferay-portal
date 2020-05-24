@@ -67,7 +67,9 @@ if (assetCategoryId != 0) {
 
 			<clay:label-item-after>
 				<a href="<%= viewURLWithoutCategory %>" title='<liferay-ui:message key="remove" />'>
-					<clay:icon symbol="times-circle" />
+					<clay:icon
+						symbol="times-circle"
+					/>
 				</a>
 			</clay:label-item-after>
 		</clay:label>
@@ -91,7 +93,9 @@ if (assetCategoryId != 0) {
 
 			<clay:label-item-after>
 				<a href="<%= viewURLWithoutTag %>" title='<liferay-ui:message key="remove" />'>
-					<clay:icon symbol="times-circle" />
+					<clay:icon
+						symbol="times-circle"
+					/>
 				</a>
 			</clay:label-item-after>
 		</clay:label>

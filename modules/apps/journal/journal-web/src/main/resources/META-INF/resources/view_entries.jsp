@@ -198,10 +198,10 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 								/>
 							</c:if>
 
-								<clay:label
-									displayType="<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %>"
-									label="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>"
-								/>
+							<clay:label
+								displayType="<%= WorkflowConstants.getStatusStyle(curArticle.getStatus()) %>"
+								label="<%= WorkflowConstants.getStatusLabel(curArticle.getStatus()) %>"
+							/>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-date

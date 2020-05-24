@@ -20,7 +20,10 @@
 String iconURL = ParamUtil.getString(request, "iconURL");
 %>
 
-<div class="search-container-icon sticker sticker-secondary">
+<clay:sticker
+	className="search-container"
+	displaytype="secondary"
+>
 	<c:choose>
 		<c:when test='<%= iconURL.contains(".svg#") %>'>
 			<svg class="lexicon-icon">
@@ -31,4 +34,4 @@ String iconURL = ParamUtil.getString(request, "iconURL");
 			<img alt="thumbnail" class="img-fluid" src="<%= iconURL %>" />
 		</c:when>
 	</c:choose>
-</div>
+</clay:sticker>

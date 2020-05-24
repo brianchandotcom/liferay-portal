@@ -21,8 +21,7 @@ String cssClass = (String)request.getAttribute("liferay-document-library:mime-ty
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = (DLViewFileVersionDisplayContext)request.getAttribute("liferay-document-library:mime-type-sticker:dlViewFileVersionDisplayContext");
 %>
 
-<div class="sticker sticker-document <%= cssClass %> <%= dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>">
-	<clay:icon
-		symbol="<%= dlViewFileVersionDisplayContext.getIconFileMimeType() %>"
-	/>
-</div>
+<clay:sticker
+	className='<%= "sticker-document " + cssClass + " " + dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>'
+	icon="<%= dlViewFileVersionDisplayContext.getIconFileMimeType() %>"
+/>

@@ -18,7 +18,10 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 
 /**
  * @author Carlos Lancha
+ * @deprecated As of Athanasius (7.3.x), replaced by {@link
+ *             com.liferay.frontend.taglib.clay.servlet.taglib.StickerTag}
  */
+@Deprecated
 public class StickerTag extends BaseClayTag {
 
 	@Override

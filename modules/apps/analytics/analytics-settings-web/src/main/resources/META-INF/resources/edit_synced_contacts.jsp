@@ -88,12 +88,11 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 			</c:choose>
 
 				<div class="pr-3">
-					<div class="bg-light sticker sticker-light sticker-rounded">
-						<liferay-ui:icon
-							icon="users"
-							markupView="lexicon"
-						/>
-					</div>
+					<clay:sticker
+						className="sticker-light"
+						displayType="light"
+						icon="users"
+					/>
 				</div>
 
 				<div>
@@ -130,12 +129,11 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 			</c:choose>
 
 				<div class="pr-3">
-					<div class="bg-light sticker sticker-light sticker-rounded">
-						<liferay-ui:icon
-							icon="organizations"
-							markupView="lexicon"
-						/>
-					</div>
+					<clay:sticker
+						className="sticker-light"
+						displayType="light"
+						icon="organizations"
+					/>
 				</div>
 
 				<div>

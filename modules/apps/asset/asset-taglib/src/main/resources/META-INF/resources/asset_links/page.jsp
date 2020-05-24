@@ -35,11 +35,11 @@ List<Tuple> assetLinkEntries = (List<Tuple>)request.getAttribute("liferay-asset:
 
 		<li class="list-group-item list-group-item-flex">
 			<div class="autofit-col">
-				<div class="sticker sticker-secondary">
-					<span class="inline-item">
-						<aui:icon image="<%= assetRenderer.getIconCssClass() %>" markupView="lexicon" />
-					</span>
-				</div>
+				<clay:sticker
+					displayType="secondary"
+					icon="<%= assetRenderer.getIconCssClass() %>"
+					inline="true"
+				/>
 			</div>
 
 			<div class="autofit-col autofit-col-expand">

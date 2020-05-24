@@ -150,9 +150,9 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 
 							<c:if test='<%= columnEntryKey.equals("name") || columnEntryKey.equals("title") %>'>
 								<c:if test="<%= uadEntity.isInTrash() %>">
-									<span class="label label-secondary">
-										<span class="label-item label-item-expand"><%= StringUtil.toUpperCase(LanguageUtil.get(request, "in-trash"), locale) %></span>
-									</span>
+									<clay:label
+										label="in-trash"
+									/>
 								</c:if>
 
 								<c:if test="<%= showUserIcon %>">

@@ -27,11 +27,18 @@
 		size="2"
 	>
 		<div>
-			<clay:label label="Label text" displayType="info" />
+			<clay:label
+				displayType="info"
+				label="Label text"
+			/>
 		</div>
 
 		<div>
-			<clay:label label="Label text" large="true" displayType="info" />
+			<clay:label
+				displayType="info"
+				label="Label text"
+				large="true"
+			/>
 		</div>
 	</clay:col>
 
@@ -45,22 +52,22 @@
 	<clay:col
 		size="2"
 	>
-		<div><clay:label label="Pending" displayType="warning" /></div>
-		<div><clay:label label="Pending" large="true" displayType="warning" /></div>
+		<div><clay:label displayType="warning" label="Pending" /></div>
+		<div><clay:label displayType="warning" label="Pending" large="true" /></div>
 	</clay:col>
 
 	<clay:col
 		size="2"
 	>
-		<div><clay:label label="Rejected" displayType="danger" /></div>
-		<div><clay:label label="Rejected" large="true" displayType="danger" /></div>
+		<div><clay:label displayType="danger" label="Rejected" /></div>
+		<div><clay:label displayType="danger" label="Rejected" large="true" /></div>
 	</clay:col>
 
 	<clay:col
 		size="2"
 	>
-		<div><clay:label label="Approved" displayType="success" /></div>
-		<div><clay:label label="Approved" large="true" displayType="success" /></div>
+		<div><clay:label displayType="success" label="Approved" /></div>
+		<div><clay:label displayType="success" label="Approved" large="true" /></div>
 	</clay:col>
 </clay:row>
 
@@ -79,9 +86,9 @@
 
 		<clay:label
 			dismissible="<%= true %>"
+			displayType="success"
 			label="Large Label"
 			large="true"
-			displayType="success"
 		/>
 	</clay:col>
 </clay:row>

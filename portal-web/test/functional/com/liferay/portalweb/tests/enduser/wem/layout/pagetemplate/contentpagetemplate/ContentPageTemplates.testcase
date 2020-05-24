@@ -137,7 +137,7 @@ definition {
 		task ("Delete the page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",
-				layoutPageTemplateCollectionName = "Page Template Collection");
+				layoutPageTemplateCollectionName = "Collection Name");
 
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 

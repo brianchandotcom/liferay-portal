@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.content.page.editor.web.internal.portlet.action;
+package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.util.LayoutCopyHelper;
@@ -46,8 +46,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/discard_draft_layout"
+		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
+		"mvc.command.name=/layout/discard_draft_layout"
 	},
 	service = {AopService.class, MVCActionCommand.class}
 )

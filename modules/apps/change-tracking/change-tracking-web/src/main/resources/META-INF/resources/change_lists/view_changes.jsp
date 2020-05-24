@@ -39,8 +39,8 @@ portletDisplay.setShowBackIcon(true);
 							<span><%= HtmlUtil.escape(ctCollection.getName()) %></span>
 
 							<clay:label
+								displayType="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
 								label="<%= LanguageUtil.get(resourceBundle, viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus())) %>"
-								style="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
 							/>
 						</div>
 
@@ -73,8 +73,8 @@ portletDisplay.setShowBackIcon(true);
 							<span><%= HtmlUtil.escape(ctCollection.getName()) %></span>
 
 							<clay:label
+								displayType="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
 								label="<%= LanguageUtil.get(resourceBundle, viewChangesDisplayContext.getStatusLabel(ctCollection.getStatus())) %>"
-								style="<%= WorkflowConstants.getStatusStyle(ctCollection.getStatus()) %>"
 							/>
 						</div>
 

@@ -37,8 +37,8 @@ UADExportProcessDisplayContext uadExportProcessDisplayContext = new UADExportPro
 				</h5>
 
 				<clay:label
+					displayType="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
 					label="<%= StringUtil.toUpperCase(LanguageUtil.get(request, backgroundTask.getStatusLabel()), locale) %>"
-					style="<%= UADExportProcessUtil.getStatusStyle(backgroundTask.getStatus()) %>"
 				/>
 			</div>
 		</liferay-ui:search-container-column-text>

@@ -84,8 +84,8 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 
 						<div>
 							<clay:label
+								displayType="<%= viewHistoryDisplayContext.getStatusStyle(status) %>"
 								label="<%= LanguageUtil.get(resourceBundle, viewHistoryDisplayContext.getStatusLabel(status)) %>"
-								style="<%= viewHistoryDisplayContext.getStatusStyle(status) %>"
 							/>
 						</div>
 					</liferay-ui:search-container-column-text>
@@ -129,8 +129,8 @@ Format format = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 						name="status"
 					>
 						<clay:label
+							displayType="<%= viewHistoryDisplayContext.getStatusStyle(status) %>"
 							label="<%= LanguageUtil.get(resourceBundle, viewHistoryDisplayContext.getStatusLabel(status)) %>"
-							style="<%= viewHistoryDisplayContext.getStatusStyle(status) %>"
 						/>
 					</liferay-ui:search-container-column-text>
 				</c:otherwise>

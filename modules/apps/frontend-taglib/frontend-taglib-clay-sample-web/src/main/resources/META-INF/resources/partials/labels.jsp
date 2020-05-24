@@ -26,36 +26,41 @@
 	<clay:col
 		size="2"
 	>
-		<div><clay:label label="Label text" style="info" /></div>
-		<div><clay:label label="Label text" size="lg" style="info" /></div>
+		<div>
+			<clay:label label="Label text" displayType="info" />
+		</div>
+
+		<div>
+			<clay:label label="Label text" large="true" displayType="info" />
+		</div>
 	</clay:col>
 
 	<clay:col
 		size="2"
 	>
 		<div><clay:label label="Status" /></div>
-		<div><clay:label label="Status" size="lg" /></div>
+		<div><clay:label label="Status" large="true" /></div>
 	</clay:col>
 
 	<clay:col
 		size="2"
 	>
-		<div><clay:label label="Pending" style="warning" /></div>
-		<div><clay:label label="Pending" size="lg" style="warning" /></div>
+		<div><clay:label label="Pending" displayType="warning" /></div>
+		<div><clay:label label="Pending" large="true" displayType="warning" /></div>
 	</clay:col>
 
 	<clay:col
 		size="2"
 	>
-		<div><clay:label label="Rejected" style="danger" /></div>
-		<div><clay:label label="Rejected" size="lg" style="danger" /></div>
+		<div><clay:label label="Rejected" displayType="danger" /></div>
+		<div><clay:label label="Rejected" large="true" displayType="danger" /></div>
 	</clay:col>
 
 	<clay:col
 		size="2"
 	>
-		<div><clay:label label="Approved" style="success" /></div>
-		<div><clay:label label="Approved" size="lg" style="success" /></div>
+		<div><clay:label label="Approved" displayType="success" /></div>
+		<div><clay:label label="Approved" large="true" displayType="success" /></div>
 	</clay:col>
 </clay:row>
 
@@ -68,15 +73,15 @@
 		size="12"
 	>
 		<clay:label
-			closeable="<%= true %>"
+			dismissible="<%= true %>"
 			label="Normal Label"
 		/>
 
 		<clay:label
-			closeable="<%= true %>"
+			dismissible="<%= true %>"
 			label="Large Label"
-			size="lg"
-			style="success"
+			large="true"
+			displayType="success"
 		/>
 	</clay:col>
 </clay:row>

@@ -16,6 +16,11 @@ definition {
 		JSONFragment.addFragmentCollection(
 			groupName = "Test Site Name",
 			name = "Collection Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Content Page Name",
+			type = "content");
 	}
 
 	tearDown {
@@ -34,13 +39,8 @@ definition {
 	test ActivateFragmentConfigurationViaTopper {
 		property portal.acceptance = "true";
 
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
-
 		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
+			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
@@ -67,9 +67,9 @@ definition {
 				name = "Checkbox Fragment Example");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -85,7 +85,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
@@ -101,7 +101,6 @@ definition {
 	@description = "This is a test for LPS-97179. User can change colorPalette fragment configuration."
 	@priority = "5"
 	test AddColorPaletteConfigurationFragmentToContentPage {
-
 		task ("Add a section fragment to the fragment collection via JSON") {
 			var htmlSnippet = FragmentsAPI.getFragmentFileContent(fileName = "colorPalette_configuration.html");
 			var jsonSnippet = FragmentsAPI.getFragmentFileContent(fileName = "colorPalette_configuration.json");
@@ -114,9 +113,9 @@ definition {
 				name = "ColorPalette Fragment Example");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -124,7 +123,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
@@ -147,7 +146,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
@@ -172,9 +171,9 @@ definition {
 				name = "Text Fragment Example");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -206,9 +205,9 @@ definition {
 				name = "Text Fragment Example");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -220,7 +219,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
@@ -246,9 +245,9 @@ definition {
 				name = "Text Fragment Example");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -261,7 +260,7 @@ definition {
 
 		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
+		ContentPagesNavigator.openViewContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
@@ -277,11 +276,6 @@ definition {
 	@description = "This is a test for LPS-100545. Ensure that the correct content is selected when using itemSelector."
 	@priority = "4"
 	test CanSelectSpecificWebContentUsingItemSelector {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Content Page Name",
-			type = "content");
-
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content ${count}",
@@ -302,7 +296,7 @@ definition {
 		}
 
 		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
+			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
@@ -315,10 +309,10 @@ definition {
 			webContentContent = "WC WebContent Content 2",
 			webContentTitle = "WebContent Title 2");
 
-		Button.clickPublish();
+		PageEditor.clickPublish();
 
-		Navigator.gotoSitePage(
-			pageName = "Content Page Name",
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
 		task ("Assert correct content is visible") {
@@ -347,9 +341,9 @@ definition {
 				name = "Text Fragment Example");
 		}
 
-		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-		ContentPages.addPage(pageName = "Test Content Page Name");
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",

@@ -83,10 +83,9 @@ public class ScreenNavigationRegistry {
 		_screenNavigationCategoriesMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, ScreenNavigationCategory.class, null,
-				ServiceReferenceMapperFactory.create(
+				ServiceReferenceMapperFactory.createFromFunction(
 					bundleContext,
-					(screenNavigationCategory, emitter) -> emitter.emit(
-						screenNavigationCategory.getScreenNavigationKey())),
+					ScreenNavigationCategory::getScreenNavigationKey),
 				Collections.reverseOrder(
 					new PropertyServiceReferenceComparator<>(
 						"screen.navigation.category.order")));

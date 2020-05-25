@@ -64,14 +64,58 @@
 }
 
 .ratings-thumbs {
+	$animation-duration: 500ms;
+
 	.btn {
+		position: relative;
+
 		&:hover:not(:disabled) .lexicon-icon {
 			transform: scale(1.3);
 		}
 
+		.on {
+			opacity: 0;
+			position: absolute;
+			visibility: hidden;
+		}
+
+		.off {
+			opacity: 1;
+			visibility: visible;
+		}
+
 		&[aria-pressed='true'] {
-			.lexicon-icon {
-				color: $primary;
+			.on {
+				opacity: 1;
+				visibility: visible;
+
+				.lexicon-icon {
+					color: $primary;
+				}
+			}
+
+			.off {
+				opacity: 0;
+				visibility: hidden;
+			}
+		}
+
+		&.btn-animation {
+			&[aria-pressed='true'] {
+				.on {
+					animation-duration: $animation-duration;
+					animation-fill-mode: forwards;
+					animation-name: thumbs-on;
+					animation-timing-function: ease-in-out;
+				}
+
+				&.btn-thumbs-up .on {
+					transform-origin: bottom left;
+				}
+
+				&.btn-thumbs-down .on {
+					transform-origin: top right;
+				}
 			}
 		}
 	}

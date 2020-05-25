@@ -14,9 +14,10 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useReducer} from 'react';
+import React, {useCallback, useReducer, useState} from 'react';
 
 import AnimatedCounter from './AnimatedCounter';
 
@@ -84,9 +85,12 @@ const RatingsThumbs = ({
 	const isMounted = useIsMounted();
 
 	const {negativeVotes, positiveVotes, pressed} = state;
+	const [buttonUpAnimation, setButtonUpAnimation] = useState(false);
+	const [buttonDownAnimation, setButtonDownAnimation] = useState(false);
 
 	const voteUp = useCallback(() => {
 		dispatch({type: VOTE_UP});
+		setButtonUpAnimation(true);
 
 		const score = pressed !== PRESSED_UP ? SCORE_UP : SCORE_UNVOTE;
 		handleSendVoteRequest(score);
@@ -94,6 +98,7 @@ const RatingsThumbs = ({
 
 	const voteDown = useCallback(() => {
 		dispatch({type: VOTE_DOWN});
+		setButtonDownAnimation(true);
 
 		const score = pressed !== PRESSED_DOWN ? SCORE_DOWN : SCORE_UNVOTE;
 		handleSendVoteRequest(score);
@@ -149,6 +154,9 @@ const RatingsThumbs = ({
 			<ClayButton
 				aria-pressed={pressed === PRESSED_UP}
 				borderless
+				className={classNames('btn-thumbs-up', {
+					'btn-animation': buttonUpAnimation,
+				})}
 				disabled={disabled}
 				displayType="secondary"
 				onClick={voteUp}
@@ -157,13 +165,21 @@ const RatingsThumbs = ({
 				value={positiveVotes}
 			>
 				<span className="inline-item inline-item-before">
-					<ClayIcon symbol="thumbs-up" />
+					<span className="off">
+						<ClayIcon symbol="thumbs-up" />
+					</span>
+					<span className="on">
+						<ClayIcon symbol="thumbs-up-full" />
+					</span>
 				</span>
 				<AnimatedCounter counter={positiveVotes} />
 			</ClayButton>
 			<ClayButton
 				aria-pressed={pressed === PRESSED_DOWN}
 				borderless
+				className={classNames('btn-thumbs-down', {
+					'btn-animation': buttonDownAnimation,
+				})}
 				disabled={disabled}
 				displayType="secondary"
 				onClick={voteDown}
@@ -172,7 +188,12 @@ const RatingsThumbs = ({
 				value={negativeVotes}
 			>
 				<span className="inline-item inline-item-before">
-					<ClayIcon symbol="thumbs-down" />
+					<span className="off">
+						<ClayIcon symbol="thumbs-down" />
+					</span>
+					<span className="on">
+						<ClayIcon symbol="thumbs-down-full" />
+					</span>
 				</span>
 				<AnimatedCounter counter={negativeVotes} />
 			</ClayButton>

@@ -41,3 +41,18 @@
 		transform: translate3d(0, -1.5rem, 0);
 	}
 }
+
+@keyframes thumbs-on {
+	0% {
+		opacity: 0;
+		transform: rotate(45deg) scale(0.1);
+	}
+
+	50% {
+		transform: rotate(-15deg) scale(1.2);
+	}
+
+	100% {
+		opacity: 1;
+	}
+}

@@ -81,12 +81,8 @@ public class InfoItemRendererTrackerImpl implements InfoItemRendererTracker {
 		_infoItemRenderersServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, InfoItemRenderer.class, null,
-				(serviceReference, emitter) -> {
-					InfoItemRenderer infoItemRenderer =
-						bundleContext.getService(serviceReference);
-
-					emitter.emit(infoItemRenderer.getKey());
-				});
+				ServiceReferenceMapperFactory.createFromFunction(
+					bundleContext, InfoItemRenderer::getKey));
 	}
 
 	@Deactivate

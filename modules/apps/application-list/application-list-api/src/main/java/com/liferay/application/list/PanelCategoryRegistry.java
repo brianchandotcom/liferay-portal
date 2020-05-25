@@ -17,7 +17,7 @@ package com.liferay.application.list;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.osgi.service.tracker.collections.ServiceTrackerMapBuilder;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -176,25 +175,8 @@ public class PanelCategoryRegistry {
 		_panelCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, PanelCategory.class, null,
-				new ServiceReferenceMapper<String, PanelCategory>() {
-
-					@Override
-					public void map(
-						ServiceReference<PanelCategory> serviceReference,
-						Emitter<String> emitter) {
-
-						PanelCategory panelCategory = bundleContext.getService(
-							serviceReference);
-
-						try {
-							emitter.emit(panelCategory.getKey());
-						}
-						finally {
-							bundleContext.ungetService(serviceReference);
-						}
-					}
-
-				});
+				ServiceReferenceMapperFactory.createFromFunction(
+					bundleContext, PanelCategory::getKey));
 	}
 
 	@Deactivate

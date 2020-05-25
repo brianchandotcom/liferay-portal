@@ -42,6 +42,10 @@ public class AccountPortletPermissionLogic
 		PermissionChecker permissionChecker, String name, Group group,
 		String actionId) {
 
+		if (permissionChecker.hasPermission(group, name, 0, actionId)) {
+			return true;
+		}
+
 		try {
 			List<Organization> organizations =
 				_organizationLocalService.getUserOrganizations(

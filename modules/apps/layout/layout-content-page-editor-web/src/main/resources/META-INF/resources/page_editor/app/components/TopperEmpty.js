@@ -50,7 +50,7 @@ function TopperEmpty({children, item, layoutData}) {
 	const isFragment = children.type === React.Fragment;
 	const realChildren = isFragment ? children.props.children : children;
 
-	const dataAdvice =
+	const notDroppableMessage =
 		isOverTarget && !canDropOverTarget
 			? Liferay.Util.sub(
 					Liferay.Language.get('a-x-cannot-be-dropped-inside-a-x'),
@@ -80,10 +80,10 @@ function TopperEmpty({children, item, layoutData}) {
 						'drag-over-top':
 							isOverTarget &&
 							targetPosition === TARGET_POSITION.TOP,
-						'not-droppable': !!dataAdvice,
+						'not-droppable': !!notDroppableMessage,
 						'page-editor__topper': true,
 					}),
-					'data-advice': dataAdvice,
+					'data-not-droppable-message': notDroppableMessage,
 					ref: (node) => {
 						containerRef.current = node;
 						targetRef(node);

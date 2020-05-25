@@ -174,7 +174,7 @@ function Topper({children, item, itemElement, layoutData}) {
 		}
 	}, [itemElement, layoutData, windowScrollPosition]);
 
-	const dataAdvice =
+	const notDroppableMessage =
 		isOverTarget && !canDropOverTarget
 			? Liferay.Util.sub(
 					Liferay.Language.get('a-x-cannot-be-dropped-inside-a-x'),
@@ -197,7 +197,7 @@ function Topper({children, item, itemElement, layoutData}) {
 					isOverTarget && targetPosition === TARGET_POSITION.TOP,
 				dragged: isDraggingSource,
 				hovered: isHovered(item.itemId) || fragmentShouldBeHovered(),
-				'not-droppable': !!dataAdvice,
+				'not-droppable': !!notDroppableMessage,
 				'page-editor__topper--mapped': itemIsMappedCollection(item),
 			})}
 			onClick={(event) => {
@@ -302,9 +302,11 @@ function Topper({children, item, itemElement, layoutData}) {
 				</ul>
 			</div>
 			<div className="page-editor__topper__content" ref={targetRef}>
-				{dataAdvice
+				{notDroppableMessage
 					? React.cloneElement(children, {
-							data: {'data-advice': dataAdvice},
+							data: {
+								'data-not-droppable-message': notDroppableMessage,
+							},
 					  })
 					: children}
 			</div>

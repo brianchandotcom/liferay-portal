@@ -12,17 +12,125 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	waitForElement,
+} from '@testing-library/react';
 import React from 'react';
+import {act} from 'react-dom/test-utils';
 
 import FriendlyURLHistory from '../../../src/main/resources/META-INF/resources/js/friendly_url_history/FriendlyURLHistory';
 
+const activeUrl = '/test';
+
+const defaultProps = {
+	defaultLanguageId: 'en_US',
+	deleteFriendlyURLEntryLocalizationURL: '/delete/friendly_url_history',
+	friendlyURLEntryLocalizationsURL: '/get/friendly_url_history',
+	restoreFriendlyURLEntryLocalizationURL: '/restore/friendly_url_history',
+};
+
+const fetchResponse = {
+	en_US: {
+		current: {
+			urlTitle: activeUrl,
+			friendlyURLEntryId: 36000,
+			friendlyURLEntryLocalizationId: 30,
+		},
+		history: [
+			{
+				urlTitle: '/test-3',
+				friendlyURLEntryId: 36003,
+				friendlyURLEntryLocalizationId: 303,
+			},
+			{
+				urlTitle: '/test-2',
+				friendlyURLEntryId: 36002,
+				friendlyURLEntryLocalizationId: 302,
+			},
+			{
+				urlTitle: '/test-1',
+				friendlyURLEntryId: 36001,
+				friendlyURLEntryLocalizationId: 301,
+			},
+		],
+	},
+};
+
+const renderComponent = (props) => render(<FriendlyURLHistory {...props} />);
+
 describe('FriendlyURLHistory', () => {
+	let historyButton;
+
 	afterEach(cleanup);
 
-	it('renders an icon', async () => {
-		const {getByRole} = render(<FriendlyURLHistory portletNamespace="_friendlyUrlHistory_" />);
+	beforeAll(() => {
+		Liferay.component = jest.fn().mockImplementation(() => {
+			return {
+				getSelectedLanguageId: () => 'en_US',
+			};
+		});
+	});
 
-		expect(getByRole('button').className).toContain('btn-url-history');
+	it('renders a button', () => {
+		const {getByRole} = renderComponent({...defaultProps});
+
+		historyButton = getByRole('button');
+
+		expect(historyButton.className).toContain('btn-url-history');
+	});
+
+	it('renders a restore icon inside the button', () => {
+		renderComponent({...defaultProps});
+
+		expect(historyButton.querySelector('svg').classList).toContain(
+			'lexicon-icon-restore'
+		);
+	});
+
+	describe('FriendlyURLHistoryModal', () => {
+		let result;
+
+		afterEach(() => {
+			fetch.resetMocks();
+		});
+
+		beforeEach(async() => {
+			fetch.mockResponseOnce(JSON.stringify(fetchResponse));
+
+			result = renderComponent({...defaultProps});
+
+			historyButton = result.getByRole('button');
+
+			await act(async () => {
+				fireEvent.click(historyButton);
+			});
+		});
+
+		it('renders a modal when user clicks on history button', async () => {
+			const title = await waitForElement(() =>
+				result.getByText('history')
+			);
+
+			expect(title);
+		});
+
+		it('renders the active url', async () => {
+			const activeUrlElement = await waitForElement(() =>
+				result.getByText(activeUrl)
+			);
+
+			expect(activeUrlElement);
+		});
+
+		it('renders the old friendly urls', async () => {
+			const listItems = await waitForElement(() =>
+				result.getAllByRole('listitem')
+			);
+
+			expect(listItems.length).toBe(4);
+		});
 	});
 });

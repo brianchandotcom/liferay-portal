@@ -20,9 +20,9 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {
 	Layout,
-	STORE_TYPES,
+	PAGE_TYPES,
 	getRepeatedIndex,
-	useStore,
+	usePage,
 } from 'dynamic-data-mapping-form-renderer';
 import React, {useMemo} from 'react';
 
@@ -63,7 +63,7 @@ function FieldBase({
 	const {
 		dispatch,
 		store: {editingLanguageId = {}},
-	} = useStore();
+	} = usePage();
 
 	const localizedValueArray = useMemo(() => {
 		const languageValues = [];
@@ -100,7 +100,7 @@ function FieldBase({
 								onClick={() =>
 									dispatch({
 										payload: name,
-										type: STORE_TYPES.REMOVED,
+										type: PAGE_TYPES.REMOVED,
 									})
 								}
 								small
@@ -117,7 +117,7 @@ function FieldBase({
 							onClick={() =>
 								dispatch({
 									payload: name,
-									type: STORE_TYPES.REPEATED,
+									type: PAGE_TYPES.REPEATED,
 								})
 							}
 							small

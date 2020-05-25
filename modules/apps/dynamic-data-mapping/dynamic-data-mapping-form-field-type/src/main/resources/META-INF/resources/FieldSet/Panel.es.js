@@ -17,7 +17,7 @@ import './Panel.scss';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {STORE_TYPES, useStore} from 'dynamic-data-mapping-form-renderer';
+import {PAGE_TYPES, usePage} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
 import useHeightTransition from './useHeightTransition.es';
@@ -38,7 +38,7 @@ const Panel = ({
 	const panelRef = React.useRef(null);
 	const [expanded, setExpanded] = React.useState(true);
 
-	const {dispatch} = useStore();
+	const {dispatch} = usePage();
 
 	const [
 		transitioning,
@@ -97,7 +97,7 @@ const Panel = ({
 
 												dispatch({
 													payload: name,
-													type: STORE_TYPES.REMOVED,
+													type: PAGE_TYPES.REMOVED,
 												});
 											}}
 											small
@@ -117,7 +117,7 @@ const Panel = ({
 
 											dispatch({
 												payload: name,
-												type: STORE_TYPES.REPEATED,
+												type: PAGE_TYPES.REPEATED,
 											});
 										}}
 										small

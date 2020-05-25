@@ -16,7 +16,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {useStore} from 'dynamic-data-mapping-form-renderer';
+import {usePage} from 'dynamic-data-mapping-form-renderer';
 import {
 	ItemSelectorDialog,
 	createActionURL,
@@ -212,7 +212,7 @@ const Main = ({
 	value = '{}',
 	...otherProps
 }) => {
-	const {store} = useStore();
+	const {store} = usePage();
 	const [currentValue, setCurrentValue] = useState(value);
 
 	const handleVisibleChange = (event) => {

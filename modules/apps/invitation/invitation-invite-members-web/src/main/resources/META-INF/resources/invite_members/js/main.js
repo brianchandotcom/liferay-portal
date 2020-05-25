@@ -212,7 +212,7 @@ AUI.add(
 				_onInviteMembersListResults(event) {
 					var instance = this;
 
-					var responseData = A.JSON.parse(event.data.responseText);
+					var responseData = JSON.parse(event.data.responseText);
 
 					instance._membersList.html(
 						instance._renderResults(responseData).join(STR_BLANK)

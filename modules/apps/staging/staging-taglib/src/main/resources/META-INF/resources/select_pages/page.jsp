@@ -19,7 +19,7 @@
 <aui:input name="layoutIds" type="hidden" value="<%= ExportImportHelperUtil.getSelectedLayoutsJSON(selectPagesGroupId, selectPagesPrivateLayout, selectedLayoutIds) %>" />
 
 <aui:fieldset cssClass="options-group" id="pages-fieldset" markupView="lexicon">
-	<div class="sheet-section">
+	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="pages" /></h3>
 
 		<ul class="flex-container layout-selector" id="<portlet:namespace />pages">
@@ -216,5 +216,5 @@
 				</li>
 			</ul>
 		</c:if>
-	</div>
+	</clay:sheet-section>
 </aui:fieldset>

@@ -17,7 +17,7 @@
 <%@ include file="/permissions/init.jsp" %>
 
 <aui:fieldset cssClass="options-group" markupView="lexicon">
-	<div class="sheet-section">
+	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="permissions" /></h3>
 
 		<%
@@ -31,5 +31,5 @@
 			label="<%= inputTitle %>"
 			name="<%= PortletDataHandlerKeys.PERMISSIONS %>"
 		/>
-	</div>
+	</clay:sheet-section>
 </aui:fieldset>

@@ -18,7 +18,7 @@
 
 <c:if test="<%= cmd.equals(Constants.EXPORT) || cmd.equals(Constants.IMPORT) || cmd.equals(Constants.PUBLISH) %>">
 	<aui:fieldset cssClass="options-group" markupView="lexicon">
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<h3 class="sheet-subtitle"><liferay-ui:message key="deletions" /></h3>
 
 			<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
@@ -43,6 +43,6 @@
 				label="<%= individualDeletionsTitle %>"
 				name="<%= PortletDataHandlerKeys.DELETIONS %>"
 			/>
-		</div>
+		</clay:sheet-section>
 	</aui:fieldset>
 </c:if>

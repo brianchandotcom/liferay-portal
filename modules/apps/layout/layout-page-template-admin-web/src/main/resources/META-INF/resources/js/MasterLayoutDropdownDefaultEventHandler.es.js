@@ -38,6 +38,18 @@ class MasterLayoutDropdownDefaultEventHandler extends DefaultEventHandler {
 		this._send(itemData.deleteMasterLayoutPreviewURL);
 	}
 
+	discardDraft(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+				)
+			)
+		) {
+			this._send(itemData.discardDraftURL);
+		}
+	}
+
 	markAsDefaultMasterLayout(itemData) {
 		if (itemData.message !== '') {
 			if (confirm(Liferay.Language.get(itemData.message))) {

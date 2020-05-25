@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.List;
@@ -81,6 +83,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 					LayoutPageTemplateAdminWebConfiguration.class.getName());
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_draftLayout = _getDraftLayout(_layoutPageTemplateEntry);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -121,6 +125,9 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
 				ActionKeys.PERMISSIONS),
 			_getPermissionsLayoutPageTemplateEntryActionUnsafeConsumer()
+		).add(
+			() -> hasUpdatePermission && _isShowDiscardDraftAction(),
+			_getDiscardDraftActionUnsafeConsumer()
 		).add(
 			() -> LayoutPageTemplateEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
@@ -226,6 +233,42 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
 		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDiscardDraftActionUnsafeConsumer() {
+
+		PortletURL discardDraftURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.ACTION_PHASE);
+
+		discardDraftURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/discard_draft_layout");
+		discardDraftURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		discardDraftURL.setParameter(
+			"selPlid", String.valueOf(_draftLayout.getPlid()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "discardDraft");
+			dropdownItem.putData("discardDraftURL", discardDraftURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "discard-draft"));
+		};
+	}
+
+	private Layout _getDraftLayout(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		if (layout == null) {
+			return null;
+		}
+
+		return LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class),
+			_layoutPageTemplateEntry.getPlid());
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -461,6 +504,19 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		return updateLayoutPrototypeURL.toString();
 	}
 
+	private boolean _isShowDiscardDraftAction() {
+		if (_draftLayout == null) {
+			return false;
+		}
+
+		if (_draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final LayoutPageTemplateAdminWebConfiguration

@@ -34,6 +34,18 @@ class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 		this._send(itemData.deleteLayoutPageTemplateEntryPreviewURL);
 	}
 
+	discardDraft(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+				)
+			)
+		) {
+			this._send(itemData.discardDraftURL);
+		}
+	}
+
 	markAsDefaultDisplayPage(itemData) {
 		if (itemData.message !== '') {
 			if (confirm(Liferay.Language.get(itemData.message))) {

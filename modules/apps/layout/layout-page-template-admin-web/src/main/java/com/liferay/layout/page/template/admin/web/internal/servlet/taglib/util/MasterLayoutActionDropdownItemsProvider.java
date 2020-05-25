@@ -20,6 +20,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.constants.LayoutPageTemplateAdminWebKeys;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
@@ -31,6 +32,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -46,6 +48,7 @@ import com.liferay.taglib.security.PermissionsURLTag;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -70,6 +73,8 @@ public class MasterLayoutActionDropdownItemsProvider {
 			LayoutPageTemplateAdminWebKeys.ITEM_SELECTOR);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_draftLayout = _getDraftLayout(_layoutPageTemplateEntry);
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -129,6 +134,11 @@ public class MasterLayoutActionDropdownItemsProvider {
 					_themeDisplay.getPermissionChecker(),
 					_layoutPageTemplateEntry, ActionKeys.DELETE),
 			_getDeleteMasterLayoutActionUnsafeConsumer()
+		).add(
+			() ->
+				(layoutPageTemplateEntryId > 0) && hasUpdatePermission &&
+				_isShowDiscardDraftAction(),
+			_getDiscardDraftActionUnsafeConsumer()
 		).add(
 			() ->
 				(layoutPageTemplateEntryId <= 0) &&
@@ -220,6 +230,42 @@ public class MasterLayoutActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
 		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDiscardDraftActionUnsafeConsumer() {
+
+		PortletURL discardDraftURL = PortletURLFactoryUtil.create(
+			_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
+			PortletRequest.ACTION_PHASE);
+
+		discardDraftURL.setParameter(
+			ActionRequest.ACTION_NAME, "/layout/discard_draft_layout");
+		discardDraftURL.setParameter("redirect", _themeDisplay.getURLCurrent());
+		discardDraftURL.setParameter(
+			"selPlid", String.valueOf(_draftLayout.getPlid()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "discardDraft");
+			dropdownItem.putData("discardDraftURL", discardDraftURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "discard-draft"));
+		};
+	}
+
+	private Layout _getDraftLayout(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		if (layout == null) {
+			return null;
+		}
+
+		return LayoutLocalServiceUtil.fetchLayout(
+			PortalUtil.getClassNameId(Layout.class),
+			_layoutPageTemplateEntry.getPlid());
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -461,6 +507,19 @@ public class MasterLayoutActionDropdownItemsProvider {
 		};
 	}
 
+	private boolean _isShowDiscardDraftAction() {
+		if (_draftLayout == null) {
+			return false;
+		}
+
+		if (_draftLayout.getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private final Layout _draftLayout;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;

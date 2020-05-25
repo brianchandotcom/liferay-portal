@@ -1,6 +1,6 @@
 Bundle-Name: Liferay OSGi Service Tracker Collections
 Bundle-SymbolicName: com.liferay.osgi.service.tracker.collections
-Bundle-Version: 5.0.2
+Bundle-Version: 6.0.0
 Export-Package:\
 	com.liferay.osgi.service.tracker.collections,\
 	com.liferay.osgi.service.tracker.collections.list,\

@@ -67,9 +67,17 @@ public class DLViewFileEntryTypesDisplayContext {
 				dropdownItem -> {
 					PortletURL creationURL = renderResponse.createRenderURL();
 
+					String mvcRenderCommandName =
+						"/document_library/edit_file_entry_type";
+
+					if (useDataEngineEditor()) {
+						mvcRenderCommandName =
+							"/document_library" +
+								"/edit_file_entry_type_data_definition";
+					}
+
 					creationURL.setParameter(
-						"mvcRenderCommandName",
-						"/document_library/edit_file_entry_type");
+						"mvcRenderCommandName", mvcRenderCommandName);
 					creationURL.setParameter(
 						"redirect",
 						PortalUtil.getCurrentURL(_httpServletRequest));

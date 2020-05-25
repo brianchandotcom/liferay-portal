@@ -74,7 +74,7 @@ RedirectNotFoundEntriesManagementToolbarDisplayContext redirectNotFoundEntriesMa
 					</c:if>
 
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-expand-smallest"
+						cssClass="table-cell-expand-smallest table-column-text-end"
 						name="requests"
 					>
 						<%= redirectNotFoundEntry.getHits() %>

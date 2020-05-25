@@ -51,7 +51,7 @@ public class AssetEntryActionRegistry {
 			bundleContext, AssetEntryAction.class, null,
 			new AssetEntryActionServiceReferenceMapper(),
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
+				new PropertyServiceReferenceComparator<>(
 					"asset.entry.action.order")));
 	}
 

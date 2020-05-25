@@ -167,7 +167,7 @@ public class PanelCategoryRegistry {
 				bundleContext, PanelCategory.class, "(panel.category.key=*)",
 				new PanelCategoryServiceReferenceMapper(),
 				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator(
+					new PropertyServiceReferenceComparator<>(
 						"panel.category.order")));
 
 		_panelCategoryServiceTrackerMap =

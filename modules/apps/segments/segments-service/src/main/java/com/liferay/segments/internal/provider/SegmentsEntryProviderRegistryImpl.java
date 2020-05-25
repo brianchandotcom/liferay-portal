@@ -146,7 +146,7 @@ public class SegmentsEntryProviderRegistryImpl
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SegmentsEntryProvider.class,
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
+				new PropertyServiceReferenceComparator<>(
 					"segments.entry.provider.order")));
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, SegmentsEntryProvider.class,

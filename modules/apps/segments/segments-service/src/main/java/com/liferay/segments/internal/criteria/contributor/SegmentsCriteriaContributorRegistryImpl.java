@@ -99,7 +99,7 @@ public class SegmentsCriteriaContributorRegistryImpl
 			"(segments.criteria.contributor.model.class.name=*)",
 			new SegmentsCriteriaContributorServiceReferenceMapper(),
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
+				new PropertyServiceReferenceComparator<>(
 					"segments.criteria.contributor.priority")));
 	}
 

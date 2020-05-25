@@ -180,7 +180,7 @@ public class FragmentEntryProcessorRegistryImpl
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, FragmentEntryProcessor.class,
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
+				new PropertyServiceReferenceComparator<>(
 					"fragment.entry.processor.priority")));
 	}
 

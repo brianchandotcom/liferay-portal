@@ -29,22 +29,15 @@ public final class ServiceReferenceMapperFactory {
 		final BundleContext bundleContext,
 		final ServiceMapper<K, S> serviceMapper) {
 
-		return new ServiceReferenceMapper<K, S>() {
+		return (serviceReference, emitter) -> {
+			S service = bundleContext.getService(serviceReference);
 
-			@Override
-			public void map(
-				ServiceReference<S> serviceReference, Emitter<K> emitter) {
-
-				S service = bundleContext.getService(serviceReference);
-
-				try {
-					serviceMapper.map(service, emitter);
-				}
-				finally {
-					bundleContext.ungetService(serviceReference);
-				}
+			try {
+				serviceMapper.map(service, emitter);
 			}
-
+			finally {
+				bundleContext.ungetService(serviceReference);
+			}
 		};
 	}
 

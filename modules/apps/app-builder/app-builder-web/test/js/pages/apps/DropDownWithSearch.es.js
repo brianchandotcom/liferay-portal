@@ -50,7 +50,7 @@ describe('DropDownWithSearch', () => {
 							</ClayButton>
 						),
 						label: Liferay.Language.get(
-							'unable-to-retrieve-objects'
+							'unable-to-retrieve-the-objects'
 						),
 					},
 					loading: {
@@ -110,7 +110,7 @@ describe('DropDownWithSearch', () => {
 							</ClayButton>
 						),
 						label: Liferay.Language.get(
-							'unable-to-retrieve-objects'
+							'unable-to-retrieve-the-objects'
 						),
 					},
 					loading: {
@@ -145,7 +145,7 @@ describe('DropDownWithSearch', () => {
 							</ClayButton>
 						),
 						label: Liferay.Language.get(
-							'unable-to-retrieve-objects'
+							'unable-to-retrieve-the-objects'
 						),
 					},
 					loading: {

@@ -121,9 +121,7 @@ export default ({onSelect, selectedValue}) => {
 					{Liferay.Language.get('new-custom-object')}
 				</ClayButton>
 			),
-			label: Liferay.Language.get(
-				'no-objects-yet-create-your-first-object'
-			),
+			label: Liferay.Language.get('there-are-no-objects-yet'),
 		},
 		errorProps: {
 			children: (
@@ -131,7 +129,7 @@ export default ({onSelect, selectedValue}) => {
 					{Liferay.Language.get('retry')}
 				</ClayButton>
 			),
-			label: Liferay.Language.get('unable-to-retrieve-objects'),
+			label: Liferay.Language.get('unable-to-retrieve-the-objects'),
 		},
 		loadingProps: {
 			label: Liferay.Language.get('retrieving-all-objects'),

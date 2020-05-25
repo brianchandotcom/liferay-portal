@@ -100,7 +100,7 @@ public class ProductNavigationControlMenuEntryRegistryImpl
 			"(product.navigation.control.menu.category.key=*)",
 			new ProductNavigationControlMenuEntryServiceReferenceMapper(),
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
+				new PropertyServiceReferenceComparator<>(
 					"product.navigation.control.menu.entry.order")));
 	}
 

@@ -77,7 +77,7 @@ public class InfoItemFieldReaderTrackerImpl
 
 				},
 				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator(
+					new PropertyServiceReferenceComparator<>(
 						"info.item.field.order")));
 	}
 

@@ -89,7 +89,8 @@ public class InfoItemRendererTrackerImpl implements InfoItemRendererTracker {
 
 				},
 				Collections.reverseOrder(
-					new PropertyServiceReferenceComparator("service.ranking")));
+					new PropertyServiceReferenceComparator<>(
+						"service.ranking")));
 
 		_infoItemRenderersServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(

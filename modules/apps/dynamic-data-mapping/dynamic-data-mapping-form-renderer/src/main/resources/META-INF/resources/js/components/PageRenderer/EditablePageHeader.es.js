@@ -12,22 +12,23 @@
  * details.
  */
 
-export {default as compose} from './js/util/compose.es';
+import React from 'react';
 
-export {normalizeFieldName} from './js/util/fields.es';
-
-export {
-	getRepeatedIndex,
-	generateName,
-	generateInstanceId,
-} from './js/util/repeatable.es';
-
-export {PagesVisitor, RulesVisitor} from './js/util/visitors.es';
-
-export * as FormSupport from './js/components/FormRenderer/FormSupport.es';
-
-export {usePage, PAGE_TYPES} from './js/hooks/usePage.es';
-
-export * as DefaultVariant from './js/components/PageRenderer/DefaultVariant.es';
-
-export {Layout} from './js/components/PageRenderer/Layout.es';
+export const PageHeader = ({description, placeholder, title}) => (
+	<div className="pl-3 pr-3">
+		<input
+			className="form-builder-page-header-title form-control p-0"
+			defaultValue={title}
+			maxLength="120"
+			placeholder={placeholder}
+		/>
+		<input
+			className="form-builder-page-header-description form-control p-0"
+			defaultValue={description}
+			maxLength="120"
+			placeholder={Liferay.Language.get(
+				'add-a-short-description-for-this-page'
+			)}
+		/>
+	</div>
+);

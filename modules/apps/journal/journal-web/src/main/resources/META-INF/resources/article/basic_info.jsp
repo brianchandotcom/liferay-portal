@@ -45,7 +45,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 		<b><liferay-ui:message key="version" /></b>: <%= article.getVersion() %>
 
 		<clay:label
-			className="ml-2"
+			className="ml-2 text-uppercase"
 			displayType="<%= WorkflowConstants.getStatusStyle(article.getStatus()) %>"
 			label="<%= WorkflowConstants.getStatusLabel(article.getStatus()) %>"
 		/>

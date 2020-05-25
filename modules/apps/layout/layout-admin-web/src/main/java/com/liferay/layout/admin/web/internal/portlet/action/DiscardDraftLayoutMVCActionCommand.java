@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -71,22 +72,23 @@ public class DiscardDraftLayoutMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long selPlid = ParamUtil.getLong(actionRequest, "selPlid");
+
 		try {
 			LayoutPermissionUtil.check(
-				themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+				themeDisplay.getPermissionChecker(), selPlid,
 				ActionKeys.UPDATE);
 		}
 		catch (PrincipalException principalException) {
 			if (!LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), themeDisplay.getPlid(),
+					themeDisplay.getPermissionChecker(), selPlid,
 					ActionKeys.UPDATE_LAYOUT_CONTENT)) {
 
 				throw principalException;
 			}
 		}
 
-		Layout draftLayout = _layoutLocalService.getLayout(
-			themeDisplay.getPlid());
+		Layout draftLayout = _layoutLocalService.getLayout(selPlid);
 
 		if ((draftLayout.getClassPK() == 0) ||
 			(_portal.getClassNameId(Layout.class) !=

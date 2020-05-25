@@ -80,7 +80,7 @@ public class SegmentsFieldCustomizerRegistryImpl
 			"(segments.field.customizer.entity.name=*)",
 			new FieldCustomizerServiceReferenceMapper(),
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
+				new PropertyServiceReferenceComparator<>(
 					"segments.field.customizer.priority")));
 	}
 

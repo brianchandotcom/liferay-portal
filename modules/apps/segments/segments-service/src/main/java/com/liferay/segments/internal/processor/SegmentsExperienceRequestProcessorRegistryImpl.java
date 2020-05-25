@@ -82,7 +82,7 @@ public class SegmentsExperienceRequestProcessorRegistryImpl
 		_serviceTrackerList = ServiceTrackerListFactory.open(
 			bundleContext, SegmentsExperienceRequestProcessor.class,
 			Collections.reverseOrder(
-				new PropertyServiceReferenceComparator(
+				new PropertyServiceReferenceComparator<>(
 					"segments.experience.request.processor.priority")));
 	}
 

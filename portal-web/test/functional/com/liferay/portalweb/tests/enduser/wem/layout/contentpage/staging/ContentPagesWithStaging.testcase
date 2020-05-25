@@ -29,9 +29,15 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Content Page Name",
+				site = "false",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
 		}
 
 		task ("Add a Title fragment to the content page") {
@@ -76,7 +82,9 @@ definition {
 		}
 
 		task ("Navigate to the content page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Title fragment is still present after deactivating staging") {
@@ -102,7 +110,9 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("Navigate to the content page in the staging site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
 		}
 
 		task ("Assert the Title fragment is present") {
@@ -122,7 +132,9 @@ definition {
 		}
 
 		task ("Navigate to the URL of what the content page should be in the live site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the content page does not yet exist in the live site") {
@@ -136,7 +148,9 @@ definition {
 		}
 
 		task ("Navigate to the content page in the live site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Title fragment is present") {
@@ -170,12 +184,10 @@ definition {
 			Staging.publishCustomPublication();
 		}
 
-		task ("Navigate to the content page in the staging site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/test-content-page-name");
-		}
-
-		task ("Navigate to the content page's 'Edit Mode'") {
-			ContentPages.clickPencil();
+		task ("Navigate to the content page in the staging site at Edit mode") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
 		}
 
 		task ("Add a Content fragment") {
@@ -221,7 +233,9 @@ definition {
 		}
 
 		task ("Navigate to the content page in the live site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Title fragment is present") {
@@ -255,7 +269,9 @@ definition {
 		}
 
 		task ("Navigate to the content page in the live site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Title fragment is present") {

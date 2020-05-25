@@ -31,6 +31,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -130,8 +131,13 @@ public class ClassUtilTest {
 
 	@Test
 	public void testGetClassesWithFile() throws IOException {
-		_testGetClassesWithFile(".java");
-		_testGetClassesWithFile(".txt");
+		_testGetClassesWithFile("TestClass.java", null);
+		_testGetClassesWithFile(
+			"TestClass.java", "@Annotation({A.class,B.class} TestClass", "A",
+			"B", "Annotation");
+		_testGetClassesWithFile(
+			"TestClass.txt", "@Annotation({A.class,B.class} TestClass", "A",
+			"B", "Annotation", "TestClass");
 	}
 
 	@Test
@@ -406,20 +412,31 @@ public class ClassUtilTest {
 		Assert.assertEquals(expectedClassNames, actualClassNames);
 	}
 
-	private void _testGetClassesWithFile(String suffix) throws IOException {
-		File file = null;
+	private void _testGetClassesWithFile(
+			String fileName, String fileContent, String... expectedClasses)
+		throws IOException {
 
-		try {
-			file = File.createTempFile("Test", suffix);
+		Path tempDirPath = Files.createTempDirectory(
+			ClassUtilTest.class.getName());
 
-			Assert.assertEquals(
-				Collections.emptySet(), ClassUtil.getClasses(file));
+		File file = new File(tempDirPath.toFile(), fileName);
+
+		if (fileContent == null) {
+			file.createNewFile();
 		}
-		finally {
-			if (file != null) {
-				file.delete();
-			}
+		else {
+			Files.write(file.toPath(), Collections.singleton(fileContent));
 		}
+
+		Set<String> expectedClassNames = new HashSet<>();
+
+		if (expectedClasses != null) {
+			Collections.addAll(expectedClassNames, expectedClasses);
+		}
+
+		Set<String> actualClassNames = ClassUtil.getClasses(file);
+
+		Assert.assertEquals(expectedClassNames, actualClassNames);
 	}
 
 	private class TestClassA implements TestInterfaceA {

@@ -25,8 +25,12 @@ export default function getLayoutDataItemLabel(item, fragmentEntryLinks) {
 		return fragmentEntryLinks[item.config.fragmentEntryLinkId].name;
 	}
 
-	if (item.type in LAYOUT_DATA_ITEM_TYPE_LABELS) {
-		return LAYOUT_DATA_ITEM_TYPE_LABELS[item.type];
+	const itemTypeKey = Object.keys(LAYOUT_DATA_ITEM_TYPES).find(
+		(key) => LAYOUT_DATA_ITEM_TYPES[key] === item.type
+	);
+
+	if (itemTypeKey in LAYOUT_DATA_ITEM_TYPE_LABELS) {
+		return LAYOUT_DATA_ITEM_TYPE_LABELS[itemTypeKey];
 	}
 
 	return item.type;

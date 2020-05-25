@@ -38,30 +38,21 @@ public class ResponsiveLayoutStructureUtil {
 
 		StringBundler sb = new StringBundler();
 
-		int columnSize =
-			columnLayoutStructureItem.getSize() *
-				rowLayoutStructureItem.getNumberOfColumns() /
-					rowLayoutStructureItem.getModulesPerRow();
-
 		sb.append("col-lg-");
-		sb.append(columnSize);
+		sb.append(columnLayoutStructureItem.getSize());
 
-		Map<String, JSONObject> viewportSizeConfigurations =
-			rowLayoutStructureItem.getViewportSizeConfigurations();
+		Map<String, JSONObject> columnsViewportSizeConfigurations =
+			columnLayoutStructureItem.getViewportSizeConfigurations();
 
 		for (ViewportSize viewportSize : ViewportSize.values()) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
 				continue;
 			}
 
-			int modulesPerRow = GetterUtil.getInteger(
+			int columnSize = GetterUtil.getInteger(
 				getResponsivePropertyValue(
-					viewportSize, viewportSizeConfigurations, "modulesPerRow",
-					rowLayoutStructureItem.getModulesPerRow()));
-
-			columnSize =
-				columnLayoutStructureItem.getSize() *
-					rowLayoutStructureItem.getNumberOfColumns() / modulesPerRow;
+					viewportSize, columnsViewportSizeConfigurations, "size",
+					columnLayoutStructureItem.getSize()));
 
 			sb.append(StringPool.SPACE);
 			sb.append("col");

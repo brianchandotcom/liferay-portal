@@ -12,13 +12,16 @@
  * details.
  */
 
+import './Field.scss';
+
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import MetalComponent from 'metal-component';
 import React, {Suspense, lazy, useCallback, useRef, useState} from 'react';
 
-import './Field.scss';
 import {usePage} from '../../hooks/usePage.es';
 import {ErrorBoundary} from '../ErrorBoundary.es';
+import {MetalComponentAdapter} from './MetalComponentAdapter.es';
 
 const getModule = (fieldTypes, fieldType) => {
 	const field = fieldTypes.find((field) => field.name === fieldType);
@@ -49,9 +52,20 @@ const useLazy = () => {
 		if (!components.current.has(fieldModule)) {
 			const Component = lazy(() => {
 				return load(fieldModule).then((instance) => {
-					return {
-						default: instance ? instance.default : null,
-					};
+					if (!(instance && instance.default)) {
+						return null;
+					}
+
+					// To maintain compatibility with fields in Metal+Soy,
+					// we call the bridge component to handle this component.
+
+					if (MetalComponent.isComponentCtor(instance.default)) {
+						return {
+							default: MetalComponentAdapter,
+						};
+					}
+
+					return instance;
 				});
 			});
 

@@ -1,0 +1,26 @@
+{namespace MetalFieldAdapter}
+
+{template .render}
+	{@param type: string}
+	{@param? _handleFieldBlurred: any}
+	{@param? _handleFieldEdited: any}
+	{@param? _handleFieldFocused: any}
+	{@param? activePage: number}
+	{@param? editable: bool}
+	{@param? field: ?}
+	{@param? pageIndex: number}
+	{@param? spritemap: string}
+
+	{delcall PageRenderer.RegisterFieldType variant="$type" data="$field" allowemptydefault="true"}
+		{param activePage: $activePage /}
+		{param editable: $editable /}
+		{param events: [
+			'fieldBlurred': $_handleFieldBlurred,
+			'fieldEdited': $_handleFieldEdited,
+			'fieldFocused': $_handleFieldFocused
+		] /}
+		{param pageIndex: $pageIndex /}
+		{param ref: 'pageRendererFieldRef' + $field.instanceId /}
+		{param spritemap: $spritemap /}
+	{/delcall}
+{/template}

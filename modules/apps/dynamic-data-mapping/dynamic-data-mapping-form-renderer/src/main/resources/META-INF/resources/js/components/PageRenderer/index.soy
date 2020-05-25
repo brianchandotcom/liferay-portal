@@ -3,3 +3,14 @@
 {template .render}
 	<div></div>
 {/template} 
+
+{deltemplate PageRenderer.RegisterFieldType}
+	{@param? editable: bool}
+	{@param? field: ?}
+
+	{if $editable}
+		<div class="ddm-field-not-found">
+			Field doesn't exist.
+		</div>
+	{/if}
+{/deltemplate}

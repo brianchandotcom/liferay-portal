@@ -106,20 +106,17 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_SLA_BREACHED_VALUE",
-			rowName = "${key_rowName}",
 			value1 = "${key_SLABreachedValue}");
 
 		if ("${key_avgCompletionTime}" != "0min") {
 			AssertTextNotEquals(
 				locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_AVG_COMPLETION_TIME_VALUE",
-				rowName = "${key_rowName}",
 				value1 = "0min");
 		}
 
 		else {
 			AssertTextEquals(
 				locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_AVG_COMPLETION_TIME_VALUE",
-				rowName = "${key_rowName}",
 				value1 = "${key_avgCompletionTime}");
 
 		}
@@ -604,7 +601,20 @@ definition {
 	macro selectStepFilterPerformaceByAssignee {
 		var key_velocityUnit = "${velocityUnit}";
 
+		ScrollWebElementIntoView(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
+
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
+
+		while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_${velocityUnit}") && (maxIterations = "10")) {
+
+			Refresh();
+
+			ScrollWebElementIntoView(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
+
+			Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
+
+			Pause(locator1 = "1000");
+		}
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_${velocityUnit}");
 	}
@@ -635,6 +645,15 @@ definition {
 
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
 
+		while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION") && (maxIterations = "10")) {
+
+			Refresh();
+
+			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
+
+			Pause(locator1 = "1000");
+		}
+
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION");
 
 		if (IsElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME")) {
@@ -647,7 +666,6 @@ definition {
 
 		if (IsElementPresent(locator1 = "WorkflowMetricsSLA#SLA_TABLE")) {
 			WorkflowMetrics._deleteAllSLAs();
-
 		}
 	}
 
@@ -953,9 +971,8 @@ definition {
 	}
 
 	macro waitForCompletedSLA {
-		var count = "0";
 
-		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && ("${count}" != "${timesToRun}")) {
+		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "${timesToRun}")) {
 
 			echo("Waiting 5 seconds, until the Completed SLA shows up");
 
@@ -964,31 +981,25 @@ definition {
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
 			Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
-
-			count = MathUtil.sum("${count}", "1");
 		}
 
-		if ("${count}" == "${timesToRun}") {
+		if (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}")) {
 			echo("timeout exceeded");
 		}
 	}
 
 	macro waitForSLA {
-		var count = "0";
 
-		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && ("${count}" != "${timesToRun}")) {
+		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "${timesToRun}")) {
 
 			echo("Waiting 5 seconds to recheck");
 
 			Pause(locator1 = "5000");
 
 			WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-			count = MathUtil.sum("${count}", "1");
-
 		}
 
-		if ("${count}" == "${timesToRun}") {
+		if (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}")) {
 			echo("timeout exceeded");
 		}
 	}

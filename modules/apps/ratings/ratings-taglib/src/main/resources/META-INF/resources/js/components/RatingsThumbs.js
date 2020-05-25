@@ -172,7 +172,9 @@ const RatingsThumbs = ({
 						<ClayIcon symbol="thumbs-up-full" />
 					</span>
 				</span>
-				<AnimatedCounter counter={positiveVotes} />
+				<span className="inline-item">
+					<AnimatedCounter counter={positiveVotes} />
+				</span>
 			</ClayButton>
 			<ClayButton
 				aria-pressed={pressed === PRESSED_DOWN}
@@ -195,7 +197,9 @@ const RatingsThumbs = ({
 						<ClayIcon symbol="thumbs-down-full" />
 					</span>
 				</span>
-				<AnimatedCounter counter={negativeVotes} />
+				<span className="inline-item">
+					<AnimatedCounter counter={negativeVotes} />
+				</span>
 			</ClayButton>
 		</div>
 	);

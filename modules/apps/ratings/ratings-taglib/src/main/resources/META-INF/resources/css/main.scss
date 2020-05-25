@@ -4,6 +4,10 @@
 .ratings {
 	.btn {
 		overflow: hidden;
+
+		.inline-item .animated-counter {
+			font-size: 0.875rem;
+		}
 	}
 
 	.animated-counter {

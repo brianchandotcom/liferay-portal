@@ -68,7 +68,7 @@ $gray-lighter: lighten($gray-base, 93.5%) !default; // #EEE
 	}
 
 	.lfr-image-editor-tools-container {
-		height: $imageeditor-controls-height + $imageeditor-filters-height;
+		height: $imageeditor-controls-height + $slider-height;
 	}
 
 	.controls {

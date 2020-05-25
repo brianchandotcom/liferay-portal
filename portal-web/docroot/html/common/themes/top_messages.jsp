@@ -30,25 +30,7 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 	String cssClass = GetterUtil.getString(PortalMessages.get(request, PortalMessages.KEY_CSS_CLASS), "alert-info");
 	String portletId = (String)PortalMessages.get(request, PortalMessages.KEY_PORTLET_ID);
 	int timeout = GetterUtil.getInteger(PortalMessages.get(request, PortalMessages.KEY_TIMEOUT), 10000);
-	boolean useAnimation = GetterUtil.getBoolean(PortalMessages.get(request, PortalMessages.KEY_ANIMATION), true);
-
-	if (useAnimation) {
-		cssClass = cssClass + " hide";
-	}
 %>
-
-	<div class="alert-notifications alert-notifications-fixed" id="portalMessageContainer">
-		<div class="alert alert-dismissible <%= cssClass %>">
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(jspPath) %>">
-					<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
-				</c:when>
-				<c:otherwise>
-					<liferay-ui:message key="<%= message %>" /><button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" type="button">&times;</button>
-				</c:otherwise>
-			</c:choose>
-		</div>
-	</div>
 
 	<aui:script>
 		Liferay.Util.openToast({
@@ -58,7 +40,7 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 						<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
 					</c:when>
 					<c:otherwise>
-						<liferay-ui:message key="<%= message %>" /><button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" type="button">&times;</button>
+						<liferay-ui:message key="<%= message %>" />
 					</c:otherwise>
 				</c:choose>",
 			renderData: {

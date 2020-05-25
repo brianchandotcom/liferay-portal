@@ -36,6 +36,10 @@ import javax.servlet.http.HttpSession;
  */
 public class PortalMessages {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String KEY_ANIMATION = "animation";
 
 	public static final String KEY_CSS_CLASS = "cssClass";

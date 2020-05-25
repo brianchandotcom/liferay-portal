@@ -17,7 +17,7 @@ import React from 'react';
 
 import {PAGE_TYPES, usePage} from '../hooks/usePage.es';
 
-export const Tabs = ({activePage, pageIndex, pages}) => {
+export const Tabs = ({activePage, pages}) => {
 	const {dispatch} = usePage();
 
 	return (
@@ -26,7 +26,7 @@ export const Tabs = ({activePage, pageIndex, pages}) => {
 				<ClayTabs>
 					{pages.map((page, index) => (
 						<ClayTabs.Item
-							active={pageIndex === activePage}
+							active={index === activePage}
 							disabled={!page.enabled}
 							key={index}
 							onClick={() =>

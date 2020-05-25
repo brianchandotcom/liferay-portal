@@ -23,9 +23,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)request.getAttribute(WebKeys.DO
 
 long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryTypeId");
 
-com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = (com.liferay.dynamic.data.mapping.model.DDMStructure)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
-
-long ddmStructureId = BeanParamUtil.getLong(ddmStructure, request, "structureId");
+long dataDefinitionId = BeanParamUtil.getLong(fileEntryType, request, "dataDefinitionId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -41,7 +39,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />
-	<aui:input name="dataDefinitionId" type="hidden" value="<%= ddmStructureId %>" />
+	<aui:input name="dataDefinitionId" type="hidden" value="<%= dataDefinitionId %>" />
 	<aui:input name="dataDefinition" type="hidden" />
 	<aui:input name="dataLayout" type="hidden" />
 
@@ -84,7 +82,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 			additionalPanels="<%= dlEditFileEntryTypeDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
 			componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
 			contentType="document-library"
-			dataDefinitionId="<%= ddmStructureId %>"
+			dataDefinitionId="<%= dataDefinitionId %>"
 			dataLayoutInputId="dataLayout"
 			groupId="<%= scopeGroupId %>"
 			localizable="<%= true %>"

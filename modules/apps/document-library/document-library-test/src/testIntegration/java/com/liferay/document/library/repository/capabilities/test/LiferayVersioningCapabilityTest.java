@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -238,26 +239,23 @@ public class LiferayVersioningCapabilityTest {
 	private FileEntry _addRandomFileEntry(ServiceContext serviceContext)
 		throws PortalException {
 
-		String content = StringUtil.randomString();
-
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			content.getBytes(), serviceContext);
+			TestDataConstants.TEST_BYTE_ARRAY, serviceContext);
 	}
 
 	private FileEntry _generateNewVersion(
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		String content = RandomTestUtil.randomString();
-
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), fileEntry.getFileName(),
 			fileEntry.getMimeType(), fileEntry.getTitle(),
 			fileEntry.getDescription(), RandomTestUtil.randomString(),
-			DLVersionNumberIncrease.MINOR, content.getBytes(), serviceContext);
+			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
+			serviceContext);
 	}
 
 	private void _withMaximumNumberOfVersionsConfigured(

@@ -24,6 +24,8 @@
 	<react:component
 		data='<%=
 			HashMapBuilder.<String, Object>put(
+				"appsTabs", request.getAttribute(AppBuilderWebKeys.APPS_TABS)
+			).put(
 				"basePortletURL", String.valueOf(renderResponse.createRenderURL())
 			).put(
 				"defaultDelta", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA

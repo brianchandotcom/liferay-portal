@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Link copies the sharable URL to user's clipboard 1`] = `
+<div class="share-form-modal-item-link form-group m-0 has-success">
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend"><input value="publish/url" class="form-control" readonly="" ref="shareFieldURL" type="text">
+      <div class="form-feedback-group">
+        <div class="form-feedback-item">copied-to-clipboard</div>
+      </div>
+    </div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn ddm-copy-clipboard btn-success" data-clipboard-text="publish/url" type="button"><span class="publish-button-success-icon pl-2 pr-2"><svg aria-hidden="true" class="lexicon-icon lexicon-icon-check">
+            <use xlink:href="spritemap#check"></use>
+          </svg></span></button></span>
+  </div>
+</div>
+`;
+
+exports[`Link renders the default markup 1`] = `
+<div class="share-form-modal-item-link form-group m-0">
+  <div class="input-group">
+    <div class="input-group-item input-group-prepend"><input value="publish/url" class="form-control" readonly="" ref="shareFieldURL" type="text"></div><span class="input-group-append input-group-item input-group-item-shrink"><button class="btn ddm-copy-clipboard btn-secondary" data-clipboard-text="publish/url" type="button"><span class="publish-button-text">copy</span></button></span>
+  </div>
+</div>
+`;

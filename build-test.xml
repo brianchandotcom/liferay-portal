@@ -8487,7 +8487,9 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
-index.on.startup=true</echo>
+index.on.startup=true
+
+index.on.startup.delay=5</echo>
 			</then>
 		</if>
 

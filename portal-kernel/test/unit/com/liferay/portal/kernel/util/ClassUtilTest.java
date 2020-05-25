@@ -202,7 +202,39 @@ public class ClassUtilTest {
 	}
 
 	@Test
-	public void testGetPathURIFromURLLog() throws MalformedURLException {
+	public void testGetPathURIFromURL() throws Exception {
+
+		// Tomcat
+
+		_testGetPathURIFromURL("jar:file:", "jar:file:/");
+		_testGetPathURIFromURL(
+			new URL(
+				"file:/opt/liferay/tomcat/classes/javax/servlet/Servlet.class"),
+			"/opt/liferay/tomcat/classes/javax/servlet/Servlet.class");
+		_testGetPathURIFromURL(
+			new URL(
+				"file:/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class"),
+			"/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class");
+
+		// Weblogic
+
+		_testGetPathURIFromURL("zip:", "zip:");
+
+		// Websphere
+
+		_testGetPathURIFromURL("wsjar:file:", "wsjar:file:/");
+		_testGetPathURIFromURL(
+			new URL(
+				"bundleresource://266.fwk-486185329/javax/servlet/Servlet." +
+					"class"),
+			"/javax/servlet/Servlet.class");
+
+		// Wildfly
+
+		_testGetPathURIFromURL("vfs:", "vfs:/");
+
+		// logging
+
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
 					ClassUtil.class.getName(), Level.FINE)) {
@@ -223,101 +255,6 @@ public class ClassUtilTest {
 					"/servlet/Servlet.class",
 				logRecord.getMessage());
 		}
-	}
-
-	@Test
-	public void testGetPathURIFromURLTomcat() throws Exception {
-		_testGetPathURIFromURL(
-			"jar:file:/opt/liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/opt/liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"jar:file:/opt/with%20space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/opt/with space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"file:/opt/liferay/tomcat/classes/javax/servlet/Servlet.class",
-			"/opt/liferay/tomcat/classes/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"jar:file:/C:/Liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/C:/Liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"jar:file:/C:/With%20Space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/C:/With Space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"file:/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class",
-			"/C:/Liferay/tomcat/classes/javax/servlet/Servlet.class");
-	}
-
-	@Test
-	public void testGetPathURIFromURLWeblogic() throws Exception {
-		_testGetPathURIFromURL(
-			"zip:/opt/liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/opt/liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"zip:/opt/with%20space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/opt/with space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"zip:C:/Liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/C:/Liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"zip:C:/With%20Space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/C:/With Space/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-	}
-
-	@Test
-	public void testGetPathURIFromURLWebsphere() throws Exception {
-		_testGetPathURIFromURL(
-			"bundleresource://266.fwk-486185329/javax/servlet/Servlet.class",
-			"/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"wsjar:file:/opt/liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/opt/liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-		_testGetPathURIFromURL(
-			"wsjar:file:/F:/liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class",
-			"/F:/liferay/tomcat/lib/servlet-api.jar" +
-				"!/javax/servlet/Servlet.class");
-	}
-
-	@Test
-	public void testGetPathURIFromURLWildfly() throws Exception {
-		_testGetPathURIFromURL(
-			"vfs:/opt/liferay/tomcat/lib/servlet-api.jar/javax/servlet" +
-				"/Servlet.class",
-			"/opt/liferay/tomcat/lib/servlet-api.jar/javax/servlet" +
-				"/Servlet.class");
-		_testGetPathURIFromURL(
-			"vfs:/opt/with%20space/tomcat/lib/servlet-api.jar/javax/servlet" +
-				"/Servlet.class",
-			"/opt/with space/tomcat/lib/servlet-api.jar/javax/servlet" +
-				"/Servlet.class");
-		_testGetPathURIFromURL(
-			"vfs:/C:/Liferay/tomcat/lib/servlet-api.jar/javax/servlet" +
-				"/Servlet.class",
-			"/C:/Liferay/tomcat/lib/servlet-api.jar/javax/servlet" +
-				"/Servlet.class");
-		_testGetPathURIFromURL(
-			"vfs:/C:/With%20Space/tomcat/lib/servlet-api.jar/javax/servlet" +
-				"/Servlet.class",
-			"/C:/With Space/tomcat/lib/servlet-api.jar/javax/servlet" +
-				"/Servlet.class");
 	}
 
 	@Test
@@ -446,10 +383,38 @@ public class ClassUtilTest {
 		Assert.assertEquals(expectedClassNames, actualClassNames);
 	}
 
-	private void _testGetPathURIFromURL(String url, String expectedPath)
+	private void _testGetPathURIFromURL(
+			String linuxProtocol, String windowsProtocol)
 		throws Exception {
 
-		URI uri = ClassUtil.getPathURIFromURL(new URL(url));
+		_testGetPathURIFromURL(
+			new URL(
+				linuxProtocol + "/opt/liferay/tomcat/lib/servlet-api.jar" +
+					"!/javax/servlet/Servlet.class"),
+			"/opt/liferay/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class");
+		_testGetPathURIFromURL(
+			new URL(
+				linuxProtocol + "/opt/with%20space/tomcat/lib/servlet-api.jar" +
+					"!/javax/servlet/Servlet.class"),
+			"/opt/with space/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class");
+		_testGetPathURIFromURL(
+			new URL(
+				windowsProtocol + "C:/Liferay/tomcat/lib/servlet-api.jar" +
+					"!/javax/servlet/Servlet.class"),
+			"/C:/Liferay/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class");
+		_testGetPathURIFromURL(
+			new URL(
+				windowsProtocol + "C:/With%20Space/tomcat/lib/servlet-api.jar" +
+					"!/javax/servlet/Servlet.class"),
+			"/C:/With Space/tomcat/lib/servlet-api.jar" +
+				"!/javax/servlet/Servlet.class");
+	}
+
+	private void _testGetPathURIFromURL(URL url, String expectedPath) {
+		URI uri = ClassUtil.getPathURIFromURL(url);
 
 		Assert.assertEquals(expectedPath, uri.getPath());
 	}

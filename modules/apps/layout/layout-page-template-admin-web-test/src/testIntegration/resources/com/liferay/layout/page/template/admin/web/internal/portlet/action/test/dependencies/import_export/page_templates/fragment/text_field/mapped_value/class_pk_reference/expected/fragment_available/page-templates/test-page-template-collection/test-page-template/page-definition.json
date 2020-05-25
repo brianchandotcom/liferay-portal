@@ -1,0 +1,39 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"collectionName": "Test Collection",
+						"key": "test-text-fragment",
+						"name": "Test Text Fragment"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "element-text",
+							"value": {
+								"text": {
+									"mapping": {
+										"fieldKey": "ddmTemplate_BASIC_WEB_CONTENT",
+										"itemReference": {
+											"className": "com.liferay.journal.model.JournalArticle",
+											"classPK": "${CLASS_PK}"
+										}
+									}
+								}
+							}
+						}
+					]
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	}
+}

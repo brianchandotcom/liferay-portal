@@ -16,12 +16,8 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<%
-DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
-%>
-
 <c:choose>
-	<c:when test="<%= dlEditFileEntryTypeDisplayContext.useDataEngineEditor() %>">
+	<c:when test="<%= FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor() %>">
 		<liferay-util:include page="/document_library/edit_file_entry_type_data_layout_builder.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>

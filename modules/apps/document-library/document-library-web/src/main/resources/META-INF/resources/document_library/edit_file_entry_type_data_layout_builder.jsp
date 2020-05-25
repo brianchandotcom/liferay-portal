@@ -75,11 +75,12 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	>
 
 		<%
-		DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFileEntryTypeDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT);
+		DLEditFileEntryTypeDataEngineDisplayContext
+			dlEditFileEntryTypeDataEngineDisplayContext = (DLEditFileEntryTypeDataEngineDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_ENTRY_TYPE_DATA_ENGINE_DISPLAY_CONTEXT);
 		%>
 
 		<liferay-data-engine:data-layout-builder
-			additionalPanels="<%= dlEditFileEntryTypeDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
+			additionalPanels="<%= dlEditFileEntryTypeDataEngineDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
 			componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
 			contentType="document-library"
 			dataDefinitionId="<%= dataDefinitionId %>"

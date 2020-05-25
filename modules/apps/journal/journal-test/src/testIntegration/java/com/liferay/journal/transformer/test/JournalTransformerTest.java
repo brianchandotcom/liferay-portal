@@ -15,10 +15,8 @@
 package com.liferay.journal.transformer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.model.JournalArticle;
@@ -82,59 +80,6 @@ public class JournalTransformerTest {
 		_transformMethod = JournalTestUtil.getJournalUtilTransformMethod();
 
 		_getTokensMethod = JournalTestUtil.getJournalUtilGetTokensMethod();
-	}
-
-	@Test
-	public void testContentTransformerListener() throws Exception {
-		DDMForm ddmForm = new DDMForm();
-
-		ddmForm.addAvailableLocale(LocaleUtil.US);
-		ddmForm.addDDMFormField(
-			DDMFormTestUtil.createTextDDMFormField(
-				"link", false, false, false));
-		ddmForm.addDDMFormField(
-			DDMFormTestUtil.createTextDDMFormField(
-				"name", false, false, false));
-		ddmForm.setDefaultLocale(LocaleUtil.US);
-
-		_ddmStructure = DDMStructureTestUtil.addStructure(
-			JournalArticle.class.getName(), ddmForm);
-
-		String xsl = "$name.getData()";
-
-		_ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_VM, xsl);
-
-		String xml = DDMStructureTestUtil.getSampleStructuredContent(
-			"Joe Bloggs");
-
-		_article = JournalTestUtil.addArticleWithXMLContent(
-			xml, _ddmStructure.getStructureKey(),
-			_ddmTemplate.getTemplateKey());
-
-		Map<String, String> tokens = getTokens();
-
-		String content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US",
-			UnsecureSAXReaderUtil.read(xml), null, xsl,
-			TemplateConstants.LANG_TYPE_VM);
-
-		Assert.assertEquals("Joe Bloggs", content);
-
-		Document document = UnsecureSAXReaderUtil.read(xml);
-
-		Element element = (Element)document.selectSingleNode(
-			"//dynamic-content");
-
-		element.setText("[@" + _article.getArticleId() + ";name@]");
-
-		content = (String)_transformMethod.invoke(
-			null, null, tokens, Constants.VIEW, "en_US", document, null, xsl,
-			TemplateConstants.LANG_TYPE_VM);
-
-		Assert.assertEquals("Joe Bloggs", content);
 	}
 
 	@Test

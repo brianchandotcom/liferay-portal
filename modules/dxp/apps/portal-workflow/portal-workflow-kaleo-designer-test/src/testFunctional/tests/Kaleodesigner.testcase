@@ -723,8 +723,8 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithConnectorPointingToStartNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithConnectorPointingToStartNodeAndViewErrorMessage";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
@@ -767,7 +767,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeAndViewErrorMessage";
 
 		ProductMenu.gotoPortlet(
@@ -812,7 +811,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidConditionNodeSettingsAndViewErrorMessage";
 
 		var nodeScript = '''
@@ -897,7 +895,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage";
 
 		ProductMenu.gotoPortlet(
@@ -942,7 +939,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage";
 
 		ProductMenu.gotoPortlet(
@@ -987,7 +983,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage";
 
 		ProductMenu.gotoPortlet(
@@ -1032,7 +1027,6 @@ definition {
 
 	@priority = "4"
 	test PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithMultipleStartNodesAndViewErrorMessage";
 
 		ProductMenu.gotoPortlet(
@@ -1053,8 +1047,8 @@ definition {
 
 	@priority = "4"
 	test PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithNoConnectorsAndViewErrorMessage";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
@@ -1070,8 +1064,8 @@ definition {
 
 	@priority = "4"
 	test PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithNoEndNodeAndViewErrorMessage";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
@@ -1089,8 +1083,8 @@ definition {
 
 	@priority = "4"
 	test PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Workflow",

@@ -81,6 +81,20 @@ paths:
                                 type: array
                     description:
                         "Default response"
+    /folder/count:
+        get:
+            description:
+                Retrieves the folders count.
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                example: 0
+                                format: int32
+                                type: integer
+                    description:
+                        "OK"
     /folder/{folderId}:
         get:
             parameters:
@@ -98,17 +112,3 @@ paths:
                                 $ref: "#/components/schemas/Folder"
                     description:
                         ""
-    /folder/count:
-        get:
-            description:
-                Retrieves the folders count.
-            responses:
-                200:
-                    content:
-                        text/plain:
-                            schema:
-                                example: 0
-                                format: int32
-                                type: integer
-                    description:
-                        "OK"

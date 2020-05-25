@@ -23,9 +23,10 @@ definition {
 		}
 
 		task ("Add a content page") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
-
-			ContentPages.addPage(pageName = "Test Content Page Name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
 		}
 	}
 
@@ -51,10 +52,7 @@ definition {
 			userLastName = "Userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -74,22 +72,14 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.openUsersAdmin();
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
 
-		User.assignSiteRoleCP(
-			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn");
-
-		Navigator.openSiteURL(siteName = "Test Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Blogs");
-
-		Blogs.addEntry(
-			entryContent = "Blog Entry Content",
-			entryTitle = "Blogs Entry Title");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title",
+			groupName = "Test Site Name");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
@@ -137,10 +127,7 @@ definition {
 			userLastName = "Userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -196,11 +183,9 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.openUsersAdmin();
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -246,17 +231,17 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
@@ -264,9 +249,9 @@ definition {
 			assetTitle = "WC WebContent Title 3",
 			assetType = "Basic Web Content");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.clickPublish();
 
@@ -302,10 +287,7 @@ definition {
 			userLastName = "Userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -345,22 +327,15 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.openUsersAdmin();
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
 
 		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "${webContentTitle}");
-
-			PortletEntry.publish();
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "${webContentTitle}");
 		}
 
 		ContentPagesNavigator.openEditContentPage(
@@ -387,17 +362,17 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 
@@ -405,9 +380,9 @@ definition {
 			assetTitle = "WC WebContent Title 3",
 			assetType = "Basic Web Content");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.clickPublish();
 
@@ -443,10 +418,7 @@ definition {
 			userLastName = "Userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -466,22 +438,15 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.openUsersAdmin();
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
 
 		for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-			WebContentNavigator.gotoAddCP();
-
-			WebContent.addCP(
-				webContentContent = "WC WebContent Content",
-				webContentTitle = "${webContentTitle}");
-
-			PortletEntry.publish();
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Test Site Name",
+				title = "${webContentTitle}");
 		}
 
 		ContentPagesNavigator.openEditContentPage(
@@ -508,17 +473,17 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -558,6 +523,10 @@ definition {
 	test EditInlineContentWithUpdatePageContentPermission {
 		property portal.acceptance = "true";
 
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
 			fragmentName = "Rich Text");
@@ -570,10 +539,7 @@ definition {
 			userLastName = "Userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -601,11 +567,9 @@ definition {
 				roleType = "site");
 		}
 
-		User.openUsersAdmin();
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -645,19 +609,14 @@ definition {
 	test MapInlineContentWithUpdatePageContentPermission {
 		property portal.acceptance = "true";
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		JSONWebcontent.addWebContent(
+			content = "Webcontent Content",
+			groupName = "Test Site Name",
+			title = "Webcontent Title");
 
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "Webcontent Content",
-			webContentTitle = "Webcontent Title");
-
-		PortletEntry.publish();
-
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
@@ -688,10 +647,7 @@ definition {
 			userLastName = "Userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -719,11 +675,9 @@ definition {
 				roleType = "site");
 		}
 
-		User.openUsersAdmin();
-
-		User.assignSiteRoleCP(
-			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn");
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
@@ -769,10 +723,7 @@ definition {
 			userLastName = "Userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -792,17 +743,14 @@ definition {
 			roleTitle = "Roles Siterole Name",
 			roleType = "site");
 
-		User.openUsersAdmin();
+		JSONRole.assignRoleToUser(
+			roleTitle = "Roles Siterole Name",
+			userEmailAddress = "userea@liferay.com");
 
-		User.assignSiteRoleCP(
-			siteRoleName = "Roles Siterole Name",
-			userScreenName = "usersn");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-		WebContent.addArticleCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
 
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
@@ -828,17 +776,17 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Web Content Display");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
-
-		ContentPages.clickPencil();
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
 
 		PageEditor.addWidget(portletName = "Asset Publisher");
 

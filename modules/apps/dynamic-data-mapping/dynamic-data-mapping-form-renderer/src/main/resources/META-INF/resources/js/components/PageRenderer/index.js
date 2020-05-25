@@ -24,7 +24,7 @@ import * as EditablePageHeader from './EditablePageHeader.es';
 import {Layout} from './Layout.es';
 import * as MultiPages from './MultiPagesVariant.es';
 import * as Paginated from './PaginatedVariant.es';
-import * as SuccessPage from './Success.es';
+import * as SuccessPage from './SuccessVariant.es';
 import * as Tabbed from './TabbedVariant.es';
 import * as Wizard from './WizardVariant.es';
 import templates from './index.soy';

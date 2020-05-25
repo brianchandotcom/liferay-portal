@@ -14,8 +14,10 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import React from 'react';
 
 import {PAGE_TYPES, usePage} from '../../hooks/usePage.es';
+import {Placeholder} from './DefaultVariant.es';
 
 export const Container = ({children, page, pageIndex, pages}) => {
 	const {dispatch, store} = usePage();
@@ -71,8 +73,14 @@ export const Container = ({children, page, pageIndex, pages}) => {
 
 			<div className="ddm-paginated-builder-dropdown">
 				<ClayDropDownWithItems
+					className="dropdown-action"
 					items={pageSettingsItems}
-					trigger={<ClayButtonWithIcon symbol="ellipsis-v" />}
+					trigger={
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							symbol="ellipsis-v"
+						/>
+					}
 				/>
 			</div>
 
@@ -110,4 +118,70 @@ export const Container = ({children, page, pageIndex, pages}) => {
 			)}
 		</div>
 	);
+};
+
+export const Page = ({
+	children,
+	editable,
+	empty,
+	header: Header,
+	pageIndex,
+}) => (
+	<div
+		className="active ddm-form-page lfr-ddm-form-page"
+		data-ddm-page={pageIndex}
+	>
+		{Header}
+
+		{empty && editable ? (
+			<div className="row">
+				<div
+					className="col col-ddm col-empty col-md-12 last-col lfr-initial-col mb-4 mt-5"
+					data-ddm-field-column="0"
+					data-ddm-field-page={pageIndex}
+					data-ddm-field-row="0"
+				>
+					<div className="ddm-empty-page ddm-target">
+						<p className="ddm-empty-page-message">
+							{Liferay.Language.get(
+								'drag-fields-from-the-sidebar-to-compose-your-form'
+							)}
+						</p>
+					</div>
+				</div>
+			</div>
+		) : (
+			children
+		)}
+	</div>
+);
+
+export const Rows = ({children, editable, pageIndex, rows}) => {
+	if (!rows) {
+		return null;
+	}
+
+	return rows.map((row, index) => (
+		<div key={index}>
+			{index === 0 && editable && (
+				<Placeholder
+					isRow
+					pageIndex={pageIndex}
+					rowIndex={0}
+					size={12}
+				/>
+			)}
+
+			{children({index, row})}
+
+			{editable && (
+				<Placeholder
+					isRow
+					pageIndex={pageIndex}
+					rowIndex={index + 1}
+					size={12}
+				/>
+			)}
+		</div>
+	));
 };

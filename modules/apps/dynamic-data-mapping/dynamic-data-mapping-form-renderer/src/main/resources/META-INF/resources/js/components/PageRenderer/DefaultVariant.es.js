@@ -151,7 +151,13 @@ export const PageHeader = ({description, title}) => (
 	</>
 );
 
-const Placeholder = ({columnIndex, isRow, pageIndex, rowIndex, size}) => {
+export const Placeholder = ({
+	columnIndex,
+	isRow,
+	pageIndex,
+	rowIndex,
+	size,
+}) => {
 	const Content = (
 		<div
 			className={`col col-ddm col-empty col-md-${size}`}

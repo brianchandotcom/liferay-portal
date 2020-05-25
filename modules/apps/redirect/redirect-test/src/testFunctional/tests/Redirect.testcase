@@ -593,13 +593,28 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Source Page1");
+
+		for (var destinationURL : list " ,liferay.com,test,redirect/test") {
+			Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+			Redirect.addEntry(
+				destinationURL = "${destinationURL}",
+				destinationURLVariation = "RelativeURL",
+				siteName = "test-site-name",
+				sourceURL = "test-source-page");
+		}
+
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.addEntry(
-			destinationURL = " ",
-			destinationURLVariation = "Space",
+			destinationURL = "www.liferay.com",
 			siteName = "test-site-name",
-			sourceURL = "test-source-page");
+			sourceURL = "test-source-page1");
+
+		Redirect.viewEntryFloatingURL(redirectURL = "http://www.liferay.com");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 

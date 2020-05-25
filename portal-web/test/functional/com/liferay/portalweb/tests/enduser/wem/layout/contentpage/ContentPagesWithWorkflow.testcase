@@ -18,10 +18,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
+		User.openUsersAdmin();
 
 		User.editPasswordCP(
 			userEmailAddress = "userea@liferay.com",
@@ -69,9 +66,14 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		task ("Add a content page with Heading fragment") {
-			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
 
-			ContentPages.addPage(pageName = "Test Page Name");
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
 			PageEditor.addFragment(
 				collectionName = "Basic Components",

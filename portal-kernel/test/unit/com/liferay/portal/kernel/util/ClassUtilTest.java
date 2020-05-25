@@ -35,6 +35,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -359,36 +361,27 @@ public class ClassUtilTest {
 	@Test
 	public void testIsSubclass() {
 		Assert.assertTrue(
-			ClassUtil.isSubclass(TestClassA.class, TestClassA.class));
+			ClassUtil.isSubclass(ArrayList.class, ArrayList.class));
 		Assert.assertFalse(
-			ClassUtil.isSubclass(TestClassA.class, (Class<?>)null));
-		Assert.assertFalse(ClassUtil.isSubclass(null, TestClassA.class));
+			ClassUtil.isSubclass(ArrayList.class, (Class<?>)null));
+		Assert.assertFalse(ClassUtil.isSubclass(null, ArrayList.class));
 		Assert.assertTrue(
-			ClassUtil.isSubclass(TestClassB.class, TestClassA.class));
-		Assert.assertTrue(
-			ClassUtil.isSubclass(TestClassA.class, TestInterfaceA.class));
-		Assert.assertTrue(
-			ClassUtil.isSubclass(TestClassB.class, TestInterfaceA.class));
-		Assert.assertFalse(
-			ClassUtil.isSubclass(TestClassC.class, TestInterfaceA.class));
+			ClassUtil.isSubclass(ArrayList.class, AbstractList.class));
+		Assert.assertTrue(ClassUtil.isSubclass(ArrayList.class, List.class));
+		Assert.assertFalse(ClassUtil.isSubclass(ArrayList.class, Set.class));
 
 		Assert.assertTrue(
-			ClassUtil.isSubclass(TestClassA.class, TestClassA.class.getName()));
+			ClassUtil.isSubclass(ArrayList.class, ArrayList.class.getName()));
+		Assert.assertFalse(ClassUtil.isSubclass(ArrayList.class, (String)null));
 		Assert.assertFalse(
-			ClassUtil.isSubclass(TestClassA.class, (String)null));
-		Assert.assertFalse(
-			ClassUtil.isSubclass(null, TestClassA.class.getName()));
-		Assert.assertTrue(
-			ClassUtil.isSubclass(TestClassB.class, TestClassA.class.getName()));
+			ClassUtil.isSubclass(null, ArrayList.class.getName()));
 		Assert.assertTrue(
 			ClassUtil.isSubclass(
-				TestClassA.class, TestInterfaceA.class.getName()));
+				ArrayList.class, AbstractList.class.getName()));
 		Assert.assertTrue(
-			ClassUtil.isSubclass(
-				TestClassB.class, TestInterfaceA.class.getName()));
+			ClassUtil.isSubclass(ArrayList.class, List.class.getName()));
 		Assert.assertFalse(
-			ClassUtil.isSubclass(
-				TestClassC.class, TestInterfaceA.class.getName()));
+			ClassUtil.isSubclass(ArrayList.class, Set.class.getName()));
 	}
 
 	protected void testGetPathURIFromURL(String url, String expectedPath)
@@ -437,21 +430,6 @@ public class ClassUtilTest {
 		Set<String> actualClassNames = ClassUtil.getClasses(file);
 
 		Assert.assertEquals(expectedClassNames, actualClassNames);
-	}
-
-	private class TestClassA implements TestInterfaceA {
-	}
-
-	private class TestClassB extends TestClassA {
-	}
-
-	private class TestClassC implements TestInterfaceB {
-	}
-
-	private interface TestInterfaceA {
-	}
-
-	private interface TestInterfaceB {
 	}
 
 }

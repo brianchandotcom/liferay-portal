@@ -15,7 +15,7 @@
 package com.liferay.map.taglib.internal.servlet;
 
 import com.liferay.map.MapProvider;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -25,7 +25,6 @@ import java.util.Collection;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -57,22 +56,9 @@ public class ServletContextUtil {
 	protected void activate(final BundleContext bundleContext) {
 		_mapProviders = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, MapProvider.class, null,
-			new ServiceReferenceMapper<String, MapProvider>() {
-
-				@Override
-				public void map(
-					ServiceReference<MapProvider> serviceReference,
-					ServiceReferenceMapper.Emitter<String> emitter) {
-
-					MapProvider mapProvider = bundleContext.getService(
-						serviceReference);
-
-					emitter.emit(mapProvider.getKey());
-
-					bundleContext.ungetService(serviceReference);
-				}
-
-			});
+			ServiceReferenceMapperFactory.create(
+				bundleContext,
+				(mapProvider, emitter) -> emitter.emit(mapProvider.getKey())));
 	}
 
 	@Deactivate

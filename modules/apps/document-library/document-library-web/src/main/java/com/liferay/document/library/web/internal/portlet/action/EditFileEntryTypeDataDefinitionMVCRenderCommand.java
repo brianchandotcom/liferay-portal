@@ -19,12 +19,8 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryTypeExceptio
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
-import com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDisplayContext;
-import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.document.library.web.internal.display.context.DLEditFileEntryTypeDataEngineDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -67,10 +63,8 @@ public class EditFileEntryTypeDataDefinitionMVCRenderCommand
 		try {
 			renderRequest.setAttribute(
 				DLWebKeys.
-					DOCUMENT_LIBRARY_EDIT_EDIT_FILE_ENTRY_TYPE_DISPLAY_CONTEXT,
-				new DLEditFileEntryTypeDisplayContext(
-					_ddm, _ddmStorageLinkLocalService,
-					_ddmStructureLocalService, _language,
+					DOCUMENT_LIBRARY_EDIT_FILE_ENTRY_TYPE_DATA_ENGINE_DISPLAY_CONTEXT,
+				new DLEditFileEntryTypeDataEngineDisplayContext(
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 
@@ -94,11 +88,6 @@ public class EditFileEntryTypeDataDefinitionMVCRenderCommand
 			renderRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE, dlFileEntryType);
 
-			renderRequest.setAttribute(
-				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE,
-				_ddmStructureLocalService.fetchStructure(
-					dlFileEntryType.getDataDefinitionId()));
-
 			return "/document_library/edit_file_entry_type.jsp";
 		}
 		catch (NoSuchFileEntryTypeException | PrincipalException exception) {
@@ -111,15 +100,6 @@ public class EditFileEntryTypeDataDefinitionMVCRenderCommand
 		}
 	}
 
-	@Reference
-	private DDM _ddm;
-
-	@Reference
-	private DDMStorageLinkLocalService _ddmStorageLinkLocalService;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
 	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileEntryType)"
 	)
@@ -128,9 +108,6 @@ public class EditFileEntryTypeDataDefinitionMVCRenderCommand
 
 	@Reference
 	private DLFileEntryTypeService _dlFileEntryTypeService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

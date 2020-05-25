@@ -53,7 +53,7 @@ definition {
 				value1 = "Error:There is already a redirect set for the same source URL.");
 		}
 
-		else if ("${destinationURLVariation}" == "Space") {
+		else if (("${destinationURLVariation}" == "Space") || ("${destinationURLVariation}" == "RelativeURL")) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "TextInput#ALERT",
 				value1 = "This URL is not supported");

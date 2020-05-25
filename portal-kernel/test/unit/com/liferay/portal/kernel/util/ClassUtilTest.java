@@ -60,7 +60,7 @@ public class ClassUtilTest {
 		CodeCoverageAssertor.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		URL.setURLStreamHandlerFactory(
 			protocol -> {
 				if (protocol.equals("vfs") || protocol.equals("zip") ||
@@ -69,12 +69,10 @@ public class ClassUtilTest {
 
 					return new URLStreamHandler() {
 
-						protected URLConnection openConnection(URL url)
-							throws IOException {
-
+						protected URLConnection openConnection(URL url) {
 							return new URLConnection(url) {
 
-								public void connect() throws IOException {
+								public void connect() {
 									throw new UnsupportedOperationException(
 										"protocol not supported");
 								}

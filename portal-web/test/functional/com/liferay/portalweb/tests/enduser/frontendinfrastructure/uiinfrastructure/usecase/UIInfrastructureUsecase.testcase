@@ -20,6 +20,43 @@ definition {
 		}
 	}
 
+	@priority = "5"
+	test CheckAUIPreloadConfiguration {
+		property test.name.skip.portal.instance = "UIInfrastructureUsecase#CheckAUIPreloadConfiguration";
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Third Party",
+			configurationName = "AUI",
+			configurationScope = "System Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "enableAUIPreload");
+
+		SystemSettings.configureSystemSetting(
+			enableSetting = "false",
+			settingFieldName = "Preload Widely Used AUI Modules");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Third Party",
+			configurationName = "AUI",
+			configurationScope = "System Scope");
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enableAUIPreload");
+
+		Navigator.gotoPage(pageName = "Home");
+
+		Portlet.viewTitle(portletName = "Hello World");
+	}
+
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on guest page level after page refresh."
 	@priority = "5"
 	test RefreshHomePage {

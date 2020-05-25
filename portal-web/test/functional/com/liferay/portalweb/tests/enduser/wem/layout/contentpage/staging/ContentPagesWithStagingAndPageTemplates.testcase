@@ -29,16 +29,31 @@ definition {
 		}
 
 		task ("Add a page template collection") {
-			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
-
-			PageTemplatesAdmin.addCollection(collectionName = "Page Template Collection");
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name-staging",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				site = "false");
 		}
 
 		task ("Add a page template") {
-			PageTemplatesAdmin.addPageTemplate(pageTemplateName = "Page Template Name");
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name-staging",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template",
+				site = "false");
 		}
 
 		task ("Add a Title fragment to the page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title");
@@ -85,7 +100,9 @@ definition {
 		}
 
 		task ("Navigate to the content page in the staging site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name-staging/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name Staging");
 		}
 
 		task ("Assert the Title fragment is present") {
@@ -105,7 +122,9 @@ definition {
 		}
 
 		task ("Navigate to the URL of what the content page should be in the live site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the content page does not yet exist in the live site") {
@@ -119,7 +138,9 @@ definition {
 		}
 
 		task ("Navigate to the content page in the live site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
 		}
 
 		task ("Assert the Title fragment is present") {

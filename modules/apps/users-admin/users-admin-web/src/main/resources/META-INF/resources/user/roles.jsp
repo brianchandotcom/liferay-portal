@@ -66,14 +66,19 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 <aui:input name="deleteGroupRolesRoleIds" type="hidden" />
 <aui:input name="deleteRoleIds" type="hidden" />
 
-<div class="sheet-section">
-	<h3 class="autofit-row sheet-subtitle">
-		<span class="autofit-col autofit-col-expand">
+<clay:sheet-section>
+	<clay:content-row
+		className="sheet-subtitle"
+		containerElement="h3"
+	>
+		<clay:content-col
+			expand="true"
+		>
 			<span class="heading-text"><liferay-ui:message key="regular-roles" /></span>
-		</span>
+		</clay:content-col>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
-			<span class="autofit-col">
+			<clay:content-col>
 				<span class="heading-end">
 					<liferay-ui:icon
 						cssClass="modify-link"
@@ -85,9 +90,9 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 						url="javascript:;"
 					/>
 				</span>
-			</span>
+			</clay:content-col>
 		</c:if>
-	</h3>
+	</clay:content-row>
 
 	<liferay-ui:search-container
 		compactEmptyResultsMessage="<%= true %>"
@@ -243,16 +248,21 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			/>
 		</liferay-ui:search-container>
 	</c:if>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
-	<h3 class="autofit-row sheet-subtitle">
-		<span class="autofit-col autofit-col-expand">
+<clay:sheet-section>
+	<clay:content-row
+		className="sheet-subtitle"
+		containerElement="h3"
+	>
+		<clay:content-col
+			expand="true"
+		>
 			<span class="heading-text"><liferay-ui:message key="organization-roles" /></span>
-		</span>
+		</clay:content-col>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && (!organizations.isEmpty() || !organizationRoles.isEmpty()) %>">
-			<span class="autofit-col">
+			<clay:content-col>
 				<span class="heading-end">
 					<liferay-ui:icon
 						cssClass="modify-link"
@@ -264,9 +274,9 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 						url="javascript:;"
 					/>
 				</span>
-			</span>
+			</clay:content-col>
 		</c:if>
-	</h3>
+	</clay:content-row>
 
 	<c:if test="<%= organizations.isEmpty() && organizationRoles.isEmpty() %>">
 		<div class="text-muted"><liferay-ui:message key="this-user-does-not-belong-to-an-organization-to-which-an-organization-role-can-be-assigned" /></div>
@@ -473,16 +483,21 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			}
 		</aui:script>
 	</c:if>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
-	<h3 class="autofit-row sheet-subtitle">
-		<span class="autofit-col autofit-col-expand">
+<clay:sheet-section>
+	<clay:content-row
+		className="sheet-subtitle"
+		containerElement="h3"
+	>
+		<clay:content-col
+			expand="true"
+		>
 			<span class="heading-text"><liferay-ui:message key="site-roles" /></span>
-		</span>
+		</clay:content-col>
 
 		<c:if test="<%= !portletName.equals(myAccountPortletId) && (!groups.isEmpty() || !siteRoles.isEmpty()) %>">
-			<span class="autofit-col">
+			<clay:content-col>
 				<span class="heading-end">
 					<liferay-ui:icon
 						cssClass="modify-link"
@@ -494,9 +509,9 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 						url="javascript:;"
 					/>
 				</span>
-			</span>
+			</clay:content-col>
 		</c:if>
-	</h3>
+	</clay:content-row>
 
 	<c:if test="<%= groups.isEmpty() && siteRoles.isEmpty() %>">
 		<div class="text-muted"><liferay-ui:message key="this-user-does-not-belong-to-a-site-to-which-a-site-role-can-be-assigned" /></div>
@@ -943,6 +958,6 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 			});
 		</aui:script>
 	</c:if>
-</div>
+</clay:sheet-section>
 
 <liferay-util:dynamic-include key="com.liferay.users.admin.web#/user/roles.jsp#post" />

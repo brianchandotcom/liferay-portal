@@ -25,12 +25,20 @@ String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage")
 List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 %>
 
-<div class="sheet-header">
-	<h2 class="autofit-row sheet-title">
-		<span class="autofit-col autofit-col-expand">
+<clay:sheet-header>
+	<clay:content-row
+		className="sheet-title"
+		containerElement="h2"
+	>
+		<clay:content-col
+			expand="true"
+		>
 			<span class="heading-text"><liferay-ui:message key="addresses" /></span>
-		</span>
-		<span class="autofit-col">
+		</clay:content-col>
+
+		<clay:content-col
+			expand="true"
+		>
 			<span class="heading-end">
 
 				<%
@@ -49,9 +57,9 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 					url="<%= editURL.toString() %>"
 				/>
 			</span>
-		</span>
-	</h2>
-</div>
+		</clay:content-col>
+	</clay:content-row>
+</clay:sheet-header>
 
 <c:if test="<%= addresses.isEmpty() %>">
 	<div class="contact-information-empty-results-message-wrapper">
@@ -108,11 +116,13 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 						</c:if>
 					</td>
 					<td>
-						<span class="autofit-col lfr-search-container-wrapper">
+						<clay:content-col
+							className="lfr-search-container-wrapper"
+						>
 							<liferay-util:include page="/common/address_action.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="addressId" value="<%= String.valueOf(address.getAddressId()) %>" />
 							</liferay-util:include>
-						</span>
+						</clay:content-col>
 					</td>
 				</tr>
 

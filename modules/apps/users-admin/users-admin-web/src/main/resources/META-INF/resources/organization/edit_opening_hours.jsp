@@ -53,12 +53,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 			/>
 		</div>
 
-		<div class="sheet sheet-lg">
-			<div class="sheet-header">
+		<clay:sheet>
+			<clay:sheet-header>
 				<h2 class="sheet-title"><%= editContactInformationDisplayContext.getSheetTitle() %></h2>
-			</div>
+			</clay:sheet-header>
 
-			<div class="sheet-section">
+			<clay:sheet-section>
 				<aui:model-context bean="<%= orgLabor %>" model="<%= OrgLabor.class %>" />
 
 				<liferay-ui:error key="<%= NoSuchListTypeException.class.getName() + editContactInformationDisplayContext.getClassName() + ListTypeConstants.ORGANIZATION_SERVICE %>" message="please-select-a-type" />
@@ -119,13 +119,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 					%>
 
 				</table>
-			</div>
+			</clay:sheet-section>
 
-			<div class="sheet-footer">
+			<clay:sheet-footer>
 				<aui:button primary="<%= true %>" type="submit" />
 
 				<aui:button href="<%= editContactInformationDisplayContext.getRedirect() %>" type="cancel" />
-			</div>
-		</div>
+			</clay:sheet-footer>
+		</clay:sheet>
 	</clay:container-fluid>
 </aui:form>

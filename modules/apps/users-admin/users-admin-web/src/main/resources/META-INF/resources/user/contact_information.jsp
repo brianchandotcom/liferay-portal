@@ -34,44 +34,44 @@ request.setAttribute("contact_information.jsp-className", Contact.class.getName(
 request.setAttribute("contact_information.jsp-classPK", selContactId);
 %>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-phone-numbers" />
 	</liferay-util:include>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-additional-email-addresses" />
 	</liferay-util:include>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="emptyResultsMessage" value="this-user-does-not-have-any-websites" />
 	</liferay-util:include>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="instant-messenger" /></h3>
 
 	<liferay-util:include page="/user/instant_messenger.jsp" servletContext="<%= application %>" />
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="sms" /></h3>
 
 	<liferay-util:include page="/user/sms.jsp" servletContext="<%= application %>" />
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="social-network" /></h3>
 
 	<liferay-util:include page="/user/social_network.jsp" servletContext="<%= application %>" />
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="openid" /></h3>
 
 	<liferay-util:include page="/user/openid.jsp" servletContext="<%= application %>" />
-</div>
+</clay:sheet-section>

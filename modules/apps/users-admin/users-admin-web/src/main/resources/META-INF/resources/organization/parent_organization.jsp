@@ -66,11 +66,17 @@ if (parentOrganization != null) {
 }
 %>
 
-<h3 class="autofit-row sheet-subtitle">
-	<span class="autofit-col autofit-col-expand">
+<clay:content-row
+	className="sheet-subtitle"
+	containerElement="h3"
+>
+	<clay:content-col
+		expand="true"
+	>
 		<span class="heading-text"><liferay-ui:message key="parent-organization" /></span>
-	</span>
-	<span class="autofit-col">
+	</clay:content-col>
+
+	<clay:content-col>
 		<span class="heading-end">
 			<liferay-ui:icon
 				cssClass="modify-link"
@@ -81,8 +87,8 @@ if (parentOrganization != null) {
 				url="javascript:;"
 			/>
 		</span>
-	</span>
-</h3>
+	</clay:content-col>
+</clay:content-row>
 
 <liferay-util:buffer
 	var="removeOrganizationIcon"

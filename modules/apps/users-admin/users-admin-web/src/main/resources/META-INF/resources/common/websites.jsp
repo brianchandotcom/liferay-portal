@@ -25,11 +25,17 @@ String emptyResultsMessage = ParamUtil.getString(request, "emptyResultsMessage")
 List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 %>
 
-<h3 class="autofit-row sheet-subtitle">
-	<span class="autofit-col autofit-col-expand">
+<clay:content-row
+	className="sheet-subtitle"
+	containerElement="h3"
+>
+	<clay:content-col
+		expand="true"
+	>
 		<span class="heading-text"><liferay-ui:message key="websites" /></span>
-	</span>
-	<span class="autofit-col">
+	</clay:content-col>
+
+	<clay:content-col>
 		<span class="heading-end">
 
 			<%
@@ -48,8 +54,8 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 				url="<%= editURL.toString() %>"
 			/>
 		</span>
-	</span>
-</h3>
+	</clay:content-col>
+</clay:content-row>
 
 <liferay-ui:search-container
 	compactEmptyResultsMessage="<%= true %>"

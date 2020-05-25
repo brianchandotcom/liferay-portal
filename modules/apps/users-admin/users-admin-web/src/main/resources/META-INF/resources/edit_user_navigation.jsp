@@ -74,25 +74,25 @@ redirect = HttpUtil.addParameter(redirect, renderResponse.getNamespace() + "scre
 	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= screenNavigationCategoryKey %>" />
 	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= screenNavigationEntryKey %>" />
 
-	<div class="sheet sheet-lg">
+	<clay:sheet>
 		<c:if test="<%= (boolean)request.getAttribute(UsersAdminWebKeys.SHOW_TITLE) %>">
-			<div class="sheet-header">
+			<clay:sheet-header>
 				<h2 class="sheet-title"><%= formLabel %></h2>
-			</div>
+			</clay:sheet-header>
 		</c:if>
 
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<liferay-util:include page="<%= jspPath %>" servletContext="<%= application %>" />
-		</div>
+		</clay:sheet-section>
 
 		<c:if test="<%= editable && (boolean)request.getAttribute(UsersAdminWebKeys.SHOW_CONTROLS) %>">
-			<div class="sheet-footer">
+			<clay:sheet-footer>
 				<aui:button primary="<%= true %>" type="submit" />
 
 				<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) %>">
 					<aui:button href="<%= backURL %>" type="cancel" />
 				</c:if>
-			</div>
+			</clay:sheet-footer>
 		</c:if>
-	</div>
+	</clay:sheet>
 </aui:form>

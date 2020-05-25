@@ -74,7 +74,7 @@ if (selUser != null) {
 boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 %>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="profile" /></h3>
 
 	<c:choose>
@@ -151,9 +151,9 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 			</aui:field-wrapper>
 		</c:otherwise>
 	</c:choose>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="dashboard" /></h3>
 
 	<c:choose>
@@ -230,7 +230,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 			</aui:field-wrapper>
 		</c:otherwise>
 	</c:choose>
-</div>
+</clay:sheet-section>
 
 <%
 if ((selUser == null) && layoutSetPrototypes.isEmpty()) {

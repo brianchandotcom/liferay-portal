@@ -53,12 +53,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 			/>
 		</div>
 
-		<div class="sheet sheet-lg">
-			<div class="sheet-header">
+		<clay:sheet>
+			<clay:sheet-header>
 				<h2 class="sheet-title"><%= editContactInformationDisplayContext.getSheetTitle() %></h2>
-			</div>
+			</clay:sheet-header>
 
-			<div class="sheet-section">
+			<clay:sheet-section>
 				<clay:alert
 					message='<%= LanguageUtil.get(request, "extension-must-be-numeric") %>'
 					style="info"
@@ -82,13 +82,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 				<aui:input fieldParam="phoneExtension" id="phoneExtension" name="extension">
 					<aui:validator name="digits" />
 				</aui:input>
-			</div>
+			</clay:sheet-section>
 
-			<div class="sheet-footer">
+			<clay:sheet-footer>
 				<aui:button primary="<%= true %>" type="submit" />
 
 				<aui:button href="<%= editContactInformationDisplayContext.getRedirect() %>" type="cancel" />
-			</div>
-		</div>
+			</clay:sheet-footer>
+		</clay:sheet>
 	</clay:container-fluid>
 </aui:form>

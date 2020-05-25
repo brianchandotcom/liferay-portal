@@ -34,7 +34,7 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	<liferay-util:include page="/user/personal_information.jsp" servletContext="<%= application %>" />
 </div>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="more-information" /></h3>
 
 	<div class="form-group">
@@ -44,8 +44,8 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 	<div class="form-group">
 		<liferay-util:include page="/user/comments.jsp" servletContext="<%= application %>" />
 	</div>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<liferay-util:include page="/user/custom_fields.jsp" servletContext="<%= application %>" />
-</div>
+</clay:sheet-section>

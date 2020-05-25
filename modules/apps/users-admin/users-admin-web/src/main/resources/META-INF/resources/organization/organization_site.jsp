@@ -78,7 +78,7 @@ if (organization != null) {
 
 <c:choose>
 	<c:when test="<%= (organizationGroup == null) || GroupPermissionUtil.contains(permissionChecker, organizationGroup, ActionKeys.UPDATE) %>">
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<c:choose>
 				<c:when test="<%= (organization == null) || ((publicLayoutSetPrototype == null) && (privateLayoutSetPrototype == null)) %>">
 					<p class="sheet-text"><liferay-ui:message key="by-clicking-this-toggle-you-could-create-a-public-and-or-private-site-for-your-organization" /></p>
@@ -109,14 +109,14 @@ if (organization != null) {
 					/>
 				</div>
 			</c:if>
-		</div>
+		</clay:sheet-section>
 
 		<%
 		boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
 		%>
 
 		<div id="<portlet:namespace />siteTemplates">
-			<div class="sheet-section">
+			<clay:sheet-section>
 				<h3 class="sheet-subtitle"><liferay-ui:message key="public-pages" /></h3>
 
 				<c:choose>
@@ -190,9 +190,9 @@ if (organization != null) {
 						</c:choose>
 					</c:otherwise>
 				</c:choose>
-			</div>
+			</clay:sheet-section>
 
-			<div class="sheet-section">
+			<clay:sheet-section>
 				<h3 class="sheet-subtitle"><liferay-ui:message key="private-pages" /></h3>
 
 				<c:choose>
@@ -266,9 +266,9 @@ if (organization != null) {
 						</c:choose>
 					</c:otherwise>
 				</c:choose>
-			</div>
+			</clay:sheet-section>
 
-			<div class="sheet-footer">
+			<clay:sheet-footer>
 				<aui:button primary="<%= true %>" type="submit" />
 
 				<%
@@ -276,7 +276,7 @@ if (organization != null) {
 				%>
 
 				<aui:button href="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" type="cancel" />
-			</div>
+			</clay:sheet-footer>
 		</div>
 
 		<%

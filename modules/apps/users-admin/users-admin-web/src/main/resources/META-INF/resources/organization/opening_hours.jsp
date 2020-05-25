@@ -24,12 +24,18 @@ long organizationId = organizationScreenNavigationDisplayContext.getOrganization
 List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 %>
 
-<div class="sheet-header">
-	<h2 class="autofit-row sheet-title">
-		<span class="autofit-col autofit-col-expand">
+<clay:sheet-header>
+	<clay:content-row
+		className="sheet-title"
+		containerElement="h3"
+	>
+		<clay:content-col
+			expand="true"
+		>
 			<span class="heading-text"><%= organizationScreenNavigationDisplayContext.getFormLabel() %></span>
-		</span>
-		<span class="autofit-col">
+		</clay:content-col>
+
+		<clay:content-col>
 			<span class="heading-end">
 
 				<%
@@ -48,9 +54,9 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 					url="<%= editURL.toString() %>"
 				/>
 			</span>
-		</span>
-	</h2>
-</div>
+		</clay:content-col>
+	</clay:content-row>
+</clay:sheet-header>
 
 <c:if test="<%= orgLabors.isEmpty() %>">
 	<div class="contact-information-empty-results-message-wrapper">
@@ -76,16 +82,21 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 	%>
 
 		<div class="opening-hours-entry">
-			<div class="autofit-row opening-hours-header">
-				<span class="autofit-col">
+			<clay:content-row
+				className="opening-hours-header"
+			>
+				<clay:content-col>
 					<h5><%= orgLaborDisplay.getTitle() %></h5>
-				</span>
-				<span class="autofit-col lfr-search-container-wrapper">
+				</clay:content-col>
+
+				<clay:content-col
+					className="lfr-search-container-wrapper"
+				>
 					<liferay-util:include page="/organization/opening_hours_action.jsp" servletContext="<%= application %>">
 						<liferay-util:param name="orgLaborId" value="<%= String.valueOf(orgLabor.getOrgLaborId()) %>" />
 					</liferay-util:include>
-				</span>
-			</div>
+				</clay:content-col>
+			</clay:content-row>
 
 			<div class="table-responsive">
 				<table class="table table-autofit">

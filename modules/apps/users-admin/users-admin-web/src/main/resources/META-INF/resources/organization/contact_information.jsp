@@ -25,20 +25,20 @@ request.setAttribute("contact_information.jsp-className", Organization.class.get
 request.setAttribute("contact_information.jsp-classPK", organizationId);
 %>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<liferay-util:include page="/common/phone_numbers.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-phone-numbers" />
 	</liferay-util:include>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<liferay-util:include page="/common/additional_email_addresses.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-additional-email-addresses" />
 	</liferay-util:include>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<liferay-util:include page="/common/websites.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-websites" />
 	</liferay-util:include>
-</div>
+</clay:sheet-section>

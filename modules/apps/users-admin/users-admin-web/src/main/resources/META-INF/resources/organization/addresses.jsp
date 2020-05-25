@@ -28,8 +28,8 @@ request.setAttribute("contact_information.jsp-mvcActionPath", "/users_admin/upda
 
 <aui:input name="classPK" type="hidden" value="<%= String.valueOf(organizationId) %>" />
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<liferay-util:include page="/common/addresses.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="emptyResultsMessage" value="this-organization-does-not-have-any-addresses" />
 	</liferay-util:include>
-</div>
+</clay:sheet-section>

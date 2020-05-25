@@ -20,15 +20,17 @@
 User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 %>
 
-<div class="autofit-padded-no-gutters autofit-row">
-	<span class="autofit-col autofit-col-expand">
+<clay:content-row>
+	<clay:content-col
+		expand="true"
+	>
 		<h4 class="sheet-tertiary-title">
 			<liferay-ui:message key="custom-fields" />
 		</h4>
-	</span>
+	</clay:content-col>
 
 	<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, PortletKeys.EXPANDO, ActionKeys.ACCESS_IN_CONTROL_PANEL) %>">
-		<span class="autofit-col">
+		<clay:content-col>
 
 			<%
 			boolean hasVisibleCustomFields = CustomFieldsUtil.hasVisibleCustomFields(company.getCompanyId(), User.class);
@@ -53,9 +55,9 @@ User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 				method="get"
 				url="<%= customFieldsURL.toString() %>"
 			/>
-		</span>
+		</clay:content-col>
 	</c:if>
-</div>
+</clay:content-row>
 
 <liferay-expando:custom-attribute-list
 	className="com.liferay.portal.kernel.model.User"

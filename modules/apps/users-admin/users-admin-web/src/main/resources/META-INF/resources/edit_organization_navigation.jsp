@@ -21,23 +21,23 @@ OrganizationScreenNavigationDisplayContext organizationScreenNavigationDisplayCo
 %>
 
 <aui:form action="<%= organizationScreenNavigationDisplayContext.getEditOrganizationActionURL() %>" cssClass="portlet-users-admin-edit-organization" method="post" name="fm">
-	<div class="sheet sheet-lg">
+	<clay:sheet>
 		<c:if test="<%= organizationScreenNavigationDisplayContext.isShowTitle() %>">
-			<div class="sheet-header">
+			<clay:sheet-header>
 				<h2 class="sheet-title"><%= organizationScreenNavigationDisplayContext.getFormLabel() %></h2>
-			</div>
+			</clay:sheet-header>
 		</c:if>
 
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<liferay-util:include page="<%= organizationScreenNavigationDisplayContext.getJspPath() %>" servletContext="<%= application %>" />
-		</div>
+		</clay:sheet-section>
 
 		<c:if test="<%= organizationScreenNavigationDisplayContext.isShowControls() %>">
-			<div class="sheet-footer">
+			<clay:sheet-footer>
 				<aui:button primary="<%= true %>" type="submit" />
 
 				<aui:button href="<%= organizationScreenNavigationDisplayContext.getBackURL() %>" type="cancel" />
-			</div>
+			</clay:sheet-footer>
 		</c:if>
-	</div>
+	</clay:sheet>
 </aui:form>

@@ -618,3 +618,31 @@ archived. Skipping initialization by default streamlines page loads for the
 common case.
 
 ---------------------------------------
+
+### ContentTransformerListener Is Disabled By Default
+- **Date:** 2020-May-25
+- **JIRA Ticket:** [LPS-114239](https://issues.liferay.com/browse/LPS-114239)
+
+#### What changed?
+
+ContentTransformerListener is now disabled by default.
+
+#### Who is affected?
+
+Liferay installations who were using legacy web content features provided by the
+ContentTransformerListener such as embedding web content inside another web
+content, a legacy edit in place infrastructure, token replacements
+(@article_group_id@, @articleId;elementName@), etc.
+
+#### How should I update my code?
+
+There's no need to update your code. If you still want to use
+ContentTransformerListener, you can enable it in System Settings.
+
+#### Why was this change made?
+
+ContentTransformerListener does a lot of string processing on article elements
+(calling HtmlUtil.stripComments and HtmlUtil.stripHtml on article fields). We
+disabled it to improve performance.
+
+---------------------------------------

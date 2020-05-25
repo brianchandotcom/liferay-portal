@@ -44,14 +44,14 @@ public final class ServiceReferenceMapperFactory {
 	public static <K, S> Function<BundleContext, ServiceReferenceMapper<K, S>>
 		createFromFunction(BiFunction<ServiceReference<S>, S, K> function) {
 
-		return b -> (serviceReference, emitter) -> {
-			S service = b.getService(serviceReference);
+		return bundleContext -> (serviceReference, emitter) -> {
+			S service = bundleContext.getService(serviceReference);
 
 			try {
 				emitter.emit(function.apply(serviceReference, service));
 			}
 			catch (Exception exception) {
-				b.ungetService(serviceReference);
+				bundleContext.ungetService(serviceReference);
 			}
 		};
 	}

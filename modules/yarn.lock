@@ -11426,10 +11426,10 @@ lie@~3.3.0:
   dependencies:
     immediate "~3.0.5"
 
-liferay-amd-loader@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/liferay-amd-loader/-/liferay-amd-loader-4.2.0.tgz#c166fa3723a7cf760deefb8e580d8892c6bf436b"
-  integrity sha512-q+b2oU6zy6gDe6uKqHPY2/L9eUjhZAVatCAC5HNrHd+tMIk+MDBSCiHmRvihoJnmPylT+RZ4gNvWxtVwIQBF/Q==
+liferay-amd-loader@4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/liferay-amd-loader/-/liferay-amd-loader-4.3.0.tgz#5a6e6b94374f3d5298f637aca57220ec0b3c66ce"
+  integrity sha512-8y7jgugf3RzcmA7t4eKJaNFMKI/e2K9+UaAAuT2maDd2X047E961nELmomRfEaXA5aWIS7SvKlP/dnvfGEvxPw==
 
 liferay-ckeditor@4.13.1-liferay.5:
   version "4.13.1-liferay.5"

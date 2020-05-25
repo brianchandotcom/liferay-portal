@@ -15,8 +15,8 @@
 import React from 'react';
 
 import {usePage} from '../../hooks/usePage.es';
+import {Field} from '../Field/Field.es';
 import * as DefaultVariant from './DefaultVariant.es';
-import {Field} from './Field.es';
 
 export const Layout = ({
 	components: Components = DefaultVariant,

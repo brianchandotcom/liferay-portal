@@ -18,9 +18,9 @@
 			<#assign navItems = entries />
 
 			<#list navItems as navItem>
-				<#assign showChildren = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
 
-				<#if navItem.isBrowsable() || showChildren>
+				<#if navItem.isBrowsable() || showChildrenNavItems>
 					<#assign
 						nav_item_caret = ""
 						nav_item_css_class = ""
@@ -31,7 +31,7 @@
 						<#assign nav_item_css_class = "active" />
 					</#if>
 
-					<#if showChildren>
+					<#if showChildrenNavItems>
 						<#assign toggle_text>
 							<@liferay.language key="toggle" />
 						</#assign>
@@ -46,9 +46,9 @@
 					<li>
 						<a aria-labelledby="layout_${portletDisplay.getId()}_${navItem.getLayoutId()}" class="${nav_item_css_class} btn btn-secondary" ${nav_item_href_link}><span>${navItem.getName()}</span></a>${nav_item_caret}
 
-						<#if showChildren>
+						<#if showChildrenNavItems>
 							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
-								<@buildChildren
+								<@buildChildrenNavItems
 									displayDepth=displayDepth
 									navItem=navItem
 								/>

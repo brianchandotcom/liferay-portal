@@ -18,9 +18,9 @@
 			<#assign navItems = entries />
 
 			<#list navItems as navItem>
-				<#assign showChildren = (displayDepth != 1) && navItem.hasBrowsableChildren() />
+				<#assign showChildrenNavItems = (displayDepth != 1) && navItem.hasBrowsableChildren() />
 
-				<#if navItem.isBrowsable() || showChildren>
+				<#if navItem.isBrowsable() || showChildrenNavItems>
 					<#assign
 						nav_item_attr_has_popup = ""
 						nav_item_caret = ""
@@ -29,7 +29,7 @@
 						nav_item_link_css_class = "nav-link text-truncate"
 					/>
 
-					<#if showChildren>
+					<#if showChildrenNavItems>
 						<#assign nav_item_attr_has_popup = "aria-haspopup='true'" />
 						<#assign nav_item_caret>
 							<span class="lfr-nav-child-toggle">
@@ -57,9 +57,9 @@
 							<span class="text-truncate"><@liferay_theme["layout-icon"] layout=navItem.getLayout() /> ${navItem.getName()} ${nav_item_caret}</span>
 						</a>
 
-						<#if showChildren>
+						<#if showChildrenNavItems>
 							<ul aria-expanded="false" class="child-menu dropdown-menu" role="menu">
-								<@buildChildren
+								<@buildChildrenNavItems
 									displayDepth=displayDepth
 									navItem=navItem
 								/>

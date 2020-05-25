@@ -90,7 +90,7 @@ public class DepotRoleTypeContributorTest {
 		);
 
 		Assert.assertTrue(
-			!depotRoleTypeContributor.isAllowDefinePermissions(role));
+			depotRoleTypeContributor.isAllowDefinePermissions(role));
 	}
 
 	@Test

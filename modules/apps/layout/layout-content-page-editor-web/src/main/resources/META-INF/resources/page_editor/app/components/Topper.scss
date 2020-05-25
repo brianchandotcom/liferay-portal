@@ -140,20 +140,13 @@
 		box-shadow: inset 0 0 0 1px $danger;
 		position: absolute;
 	}
-	&.not-droppable.page-editor__col[data-advice]:after,
-	&.not-droppable.page-editor__collection-item[data-advice]:after,
-	&.not-droppable .page-editor__container > .container[data-advice]:after,
-	&.not-droppable
-		.page-editor__container
-		> .container-fluid[data-advice]:after,
-	&.not-droppable .page-editor__section > .container[data-advice]:after,
-	&.not-droppable
-		.page-editor__section
-		> .container-fluid[data-advice]:after {
+
+	&[data-not-droppable-message]:after,
+	& [data-not-droppable-message]:after {
 		background-color: $danger;
 		border-radius: 2px;
 		color: $white;
-		content: attr(data-advice) ' ';
+		content: attr(data-not-droppable-message) ' ';
 		font-size: 10px;
 		height: auto;
 		left: 16px;
@@ -163,16 +156,18 @@
 		transform: translateY(4px);
 		width: auto;
 	}
-	&.not-droppable.page-editor__col[data-advice]:before,
-	&.not-droppable.page-editor__collection-item[data-advice]:before {
+
+	&[data-not-droppable-message]:before {
 		height: auto;
 		width: calc(100% - 32px);
+
 		@include media-breakpoint-up(lg) {
 			height: 20px;
 			width: auto;
 		}
 	}
-	&.not-droppable.page-editor__collection-item[data-advice]:before {
+
+	&.page-editor__collection-item[data-not-droppable-message]:before {
 		left: 4px;
 	}
 

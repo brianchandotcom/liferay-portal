@@ -361,26 +361,42 @@ public class ClassUtilTest {
 	@Test
 	public void testIsSubclass() {
 		Assert.assertTrue(
+			"ArrayList should be considered sub class of itself",
 			ClassUtil.isSubclass(ArrayList.class, ArrayList.class));
 		Assert.assertFalse(
+			"ArrayList should not be sub class of null",
 			ClassUtil.isSubclass(ArrayList.class, (Class<?>)null));
-		Assert.assertFalse(ClassUtil.isSubclass(null, ArrayList.class));
+		Assert.assertFalse(
+			"null should not be sub class of any class or interface",
+			ClassUtil.isSubclass(null, ArrayList.class));
 		Assert.assertTrue(
+			"ArrayList should be sub class of abstract class AbstractList",
 			ClassUtil.isSubclass(ArrayList.class, AbstractList.class));
-		Assert.assertTrue(ClassUtil.isSubclass(ArrayList.class, List.class));
-		Assert.assertFalse(ClassUtil.isSubclass(ArrayList.class, Set.class));
+		Assert.assertTrue(
+			"ArrayList should be sub class of interface List",
+			ClassUtil.isSubclass(ArrayList.class, List.class));
+		Assert.assertFalse(
+			"ArrayList should be sub class of interface Set",
+			ClassUtil.isSubclass(ArrayList.class, Set.class));
 
 		Assert.assertTrue(
+			"ArrayList should be considered sub class of itself",
 			ClassUtil.isSubclass(ArrayList.class, ArrayList.class.getName()));
-		Assert.assertFalse(ClassUtil.isSubclass(ArrayList.class, (String)null));
 		Assert.assertFalse(
+			"ArrayList should not be sub class of null",
+			ClassUtil.isSubclass(ArrayList.class, (String)null));
+		Assert.assertFalse(
+			"null should not be sub class of any class or interface",
 			ClassUtil.isSubclass(null, ArrayList.class.getName()));
 		Assert.assertTrue(
+			"ArrayList should be sub class of abstract class AbstractList",
 			ClassUtil.isSubclass(
 				ArrayList.class, AbstractList.class.getName()));
 		Assert.assertTrue(
+			"ArrayList should be sub class of interface List",
 			ClassUtil.isSubclass(ArrayList.class, List.class.getName()));
 		Assert.assertFalse(
+			"ArrayList should be sub class of interface Set",
 			ClassUtil.isSubclass(ArrayList.class, Set.class.getName()));
 	}
 

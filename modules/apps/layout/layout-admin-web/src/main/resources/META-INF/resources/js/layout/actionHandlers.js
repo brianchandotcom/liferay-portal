@@ -40,6 +40,16 @@ const actionHandlers = {
 		}
 	},
 
+	discardDraft: ({actionURL}) => {
+		const discardDraftMessage = Liferay.Language.get(
+			'are-you-sure-you-want-to-discard-current-draft-and-apply-latest-published-changes'
+		);
+
+		if (confirm(discardDraftMessage)) {
+			Liferay.Util.navigate(actionURL);
+		}
+	},
+
 	permissions: ({actionURL}) => {
 		Liferay.Util.openWindow({
 			dialog: {

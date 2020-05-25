@@ -575,6 +575,19 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
+		if (_layoutsAdminDisplayContext.isShowDiscardDraftAction(layout)) {
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "discardDraft"
+				).put(
+					"label",
+					LanguageUtil.get(_httpServletRequest, "discard-draft")
+				).put(
+					"url",
+					_layoutsAdminDisplayContext.getDiscardDraftURL(layout)
+				));
+		}
+
 		if (_layoutsAdminDisplayContext.isShowDeleteAction(layout)) {
 			jsonArray.put(
 				JSONUtil.put(

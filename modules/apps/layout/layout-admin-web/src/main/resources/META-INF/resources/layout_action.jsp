@@ -95,6 +95,13 @@ Layout curLayout = (Layout)row.getObject();
 			url="<%= layoutsAdminDisplayContext.getDeleteLayoutURL(curLayout) %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= layoutsAdminDisplayContext.isShowDiscardDraftAction(curLayout) %>">
+		<liferay-ui:icon
+			message="discard-draft"
+			url="<%= layoutsAdminDisplayContext.getDiscardDraftURL(curLayout) %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>
 
 <aui:script require="metal-dom/src/all/dom as dom">

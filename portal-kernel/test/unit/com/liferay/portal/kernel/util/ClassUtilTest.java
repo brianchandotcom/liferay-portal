@@ -322,8 +322,8 @@ public class ClassUtilTest {
 				"/Servlet.class");
 	}
 
-	@Test(expected = URISyntaxException.class)
-	public void testGetPathURIFromURLWithIllegalCharacter() throws Throwable {
+	@Test
+	public void testGetPathURIFromURLWithIllegalCharacter() {
 		try {
 			ClassUtil.getPathURIFromURL(
 				new URL(
@@ -334,13 +334,17 @@ public class ClassUtilTest {
 				"SystemException caused by URISyntaxException should be " +
 					"thrown because of the illegal character '['");
 		}
-		catch (SystemException systemException) {
-			throw systemException.getCause();
+		catch (Exception exception) {
+			Assert.assertSame(SystemException.class, exception.getClass());
+
+			Throwable cause = exception.getCause();
+
+			Assert.assertSame(URISyntaxException.class, cause.getClass());
 		}
 	}
 
-	@Test(expected = MalformedURLException.class)
-	public void testGetPathURIFromURLWithUnknownProtocol() throws Throwable {
+	@Test
+	public void testGetPathURIFromURLWithUnknownProtocol() {
 		try {
 			ClassUtil.getPathURIFromURL(
 				new URL(
@@ -353,8 +357,12 @@ public class ClassUtilTest {
 				"SystemException caused by MalformedURLException should be " +
 					"thrown because of the unknown protocol");
 		}
-		catch (SystemException systemException) {
-			throw systemException.getCause();
+		catch (Exception exception) {
+			Assert.assertSame(SystemException.class, exception.getClass());
+
+			Throwable cause = exception.getCause();
+
+			Assert.assertSame(MalformedURLException.class, cause.getClass());
 		}
 	}
 

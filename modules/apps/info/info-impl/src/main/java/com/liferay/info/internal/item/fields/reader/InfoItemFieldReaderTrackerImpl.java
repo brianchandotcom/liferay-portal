@@ -18,7 +18,7 @@ import com.liferay.info.internal.util.GenericsUtil;
 import com.liferay.info.item.fields.reader.InfoItemFieldReader;
 import com.liferay.info.item.fields.reader.InfoItemFieldReaderTracker;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -27,7 +27,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
@@ -59,23 +58,10 @@ public class InfoItemFieldReaderTrackerImpl
 		_itemClassNameInfoItemFieldReaderServiceTrackerMap =
 			ServiceTrackerMapFactory.openMultiValueMap(
 				bundleContext, InfoItemFieldReader.class, null,
-				new ServiceReferenceMapper<String, InfoItemFieldReader>() {
-
-					@Override
-					public void map(
-						ServiceReference<InfoItemFieldReader> serviceReference,
-						Emitter<String> emitter) {
-
-						InfoItemFieldReader infoItemRenderer =
-							bundleContext.getService(serviceReference);
-
-						String className = GenericsUtil.getItemClassName(
-							infoItemRenderer);
-
-						emitter.emit(className);
-					}
-
-				},
+				ServiceReferenceMapperFactory.create(
+					bundleContext,
+					(infoItemFieldReader, emitter) -> emitter.emit(
+						GenericsUtil.getItemClassName(infoItemFieldReader))),
 				Collections.reverseOrder(
 					new PropertyServiceReferenceComparator<>(
 						"info.item.field.order")));

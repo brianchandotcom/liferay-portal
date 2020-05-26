@@ -580,9 +580,7 @@ definition {
 
 			Click(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 
-			if (IsElementPresent(locator1 = "IFrame#SELECT_SITES")) {
-				IFrame.closeFrame();
-			}
+			Alert.viewSuccessMessage();
 
 			SelectFrame(value1 = "relative=top");
 

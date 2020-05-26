@@ -618,3 +618,38 @@ archived. Skipping initialization by default streamlines page loads for the
 common case.
 
 ---------------------------------------
+
+### Liferay.BrowserSelectors.run Is No Longer called
+- **Date:** 2020-May-26
+- **JIRA Ticket:** [LPS-112983](https://issues.liferay.com/browse/LPS-112983)
+
+#### What changed?
+
+The `Liferay.BrowserSelectors.run` function is no longer been called and as a
+result some CSS classes are no longer present in the top `<html>` element,
+ now most of these are present in the `<body>` element.
+
+#### Who is affected?
+
+This affects any code that relies on having the following CSS classes set on
+the top `<html>` element: `aol`, `camino`, `edgeHTML` `edge`, `firefox`,
+`flock` `gecko`, `icab`, `ie11`, `ie6`, `ie7`, `ie9`, `ie`, `js` `konqueror`,
+`mac` `mozilla`, `netscape`, `opera`, `presto`, `safari` `secure`, `touch`,
+`trident`, `webkit`, `win`.
+
+Instead, depending on which browser is being used, the following classes are
+added to the `<body>` element: `chrome`, `edge`, `firefox`, `ie`, `mobile`
+and `other`.
+
+#### How should I update my code?
+
+There's no direct replacement for the `Liferay.BrowserSelectors.run` function,
+but you can adapt your CSS to target the `<body>` element.
+
+#### Why was this change made?
+
+The classes added to the top `<html>` element where being added via JavaScript,
+with this change it is now done on the server side to streamline page loads.
+Some CSS classes where targeting some older browsers and weren't needed anymore.
+
+---------------------------------------

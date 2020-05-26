@@ -95,6 +95,14 @@ definition {
 		task ("Assert editable has the specified URL mapped correctly") {
 			AssertElementPresent(locator1 = "//a[contains(@class,'btn')][contains(@href,'liferay.com')]");
 		}
+
+		ContentPages.clickPencil();
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		AssertVisible(
+			key_webContentTitle = "liferay.com",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CONTENTS_LIST_TITLE");
 	}
 
 }

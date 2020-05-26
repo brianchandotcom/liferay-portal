@@ -284,15 +284,10 @@ definition {
 		takeScreenshot();
 	}
 
-	// Ignored because of the ticket LRQA-57204
-
 	@description = "This test validates sign in and sign out UI"
-	@ignore = "true"
 	@priority = "5"
 	test ViewSignInSignOutUI {
 		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "UIInfrastructureUsecase#ViewSignInSignOutUI";
 
 		UserBar.signOut();
 

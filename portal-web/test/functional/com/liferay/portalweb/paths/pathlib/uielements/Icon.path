@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRIENDLY_URL_HISTORY_ITEM_RESTORE</td>
+	<td>//button[contains(@class,'quick-action-item')][*[name()='svg'][contains(@class,'lexicon-icon-reload')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRIENDLY_URL_HISTORY</td>
 	<td>//button[contains(@class,'history')][*[name()='svg'][contains(@class,'lexicon-icon-restore')]]</td>
 	<td></td>

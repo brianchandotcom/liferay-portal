@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_SIDEBAR_CONTENTS_LIST_TITLE</td>
+	<td>//li[contains(@class,'page-content')]//strong[contains(@class,'title') and contains(.,'${key_webContentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_SIDEBAR_ELLIPSIS</td>
 	<td>//div[contains(@class,'sidebar')]//button[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>

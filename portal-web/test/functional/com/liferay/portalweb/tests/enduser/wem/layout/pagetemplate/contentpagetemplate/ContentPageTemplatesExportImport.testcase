@@ -888,4 +888,135 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-106815. The specific message will be shown when import content page template where the widget has permission settings for a Role if it doesn't exist in site."
+	@priority = "4"
+	test ShowSpecificWarningMessageWhenImportContentPageTemplateWithPermissionSettingsOfWidgetsToSiteWhereTheSpecificRoleNotExist {
+		task ("Add a organization and organization site") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name",
+				organizationSite = "true");
+		}
+
+		task ("Add a content page template to organization site") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Organization Name LFR_ORGANIZATION",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Organization Name LFR_ORGANIZATION",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "organization-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Add a Sites Directory portlet to content page template") {
+			PageEditor.addWidget(portletName = "RSS Publisher");
+		}
+
+		task ("Configure Team Role permission settings of Sites Directory") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "RSS Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "RSS Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			Check(
+				key_roleTitle = "account-manager",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "organization-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Export",
+				pageTemplateName = "Page Template Name");
+
+			DownloadTempFile();
+		}
+
+		task ("Import content page template in a normal site") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Import");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			var pageTemplateZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "page-template-*.zip");
+
+			UploadTempFile(
+				locator1 = "TextInput#FILE",
+				value1 = "${pageTemplateZipFileName}");
+
+			Click(locator1 = "Button#IMPORT");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert specific warning message is shown in Import popup") {
+			Alert.viewWarningSpecific(warningMessage = "Some page templates were imported with warnings.");
+
+			AssertElementPresent(
+				key_warningInfo = "Role with key Account Manager was ignored because it does not exist.",
+				locator1 = "Message#WARNING_INFO");
+		}
+
+		task ("Assert Account Manager is not shown in permissions panel of RSS Publisher") {
+			IFrame.closeFrame();
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "RSS Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "RSS Publisher",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertElementNotPresent(
+				key_roleName = "Account Manager",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ROLE_NAME");
+		}
+	}
+
 }

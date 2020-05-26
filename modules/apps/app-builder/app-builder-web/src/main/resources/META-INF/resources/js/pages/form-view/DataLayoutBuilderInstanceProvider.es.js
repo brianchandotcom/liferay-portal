@@ -119,6 +119,7 @@ export default ({children, dataLayoutBuilder}) => {
 			shouldAutoGenerateName: () => false,
 		};
 
+		provider.getEvents().fieldHovered(fieldHovered);
 	}, [dataLayoutBuilder, dispatch, onDeleteDefinitionField, saveAsFieldset]);
 
 	useEffect(() => {

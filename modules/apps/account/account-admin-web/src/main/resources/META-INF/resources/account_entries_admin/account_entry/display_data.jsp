@@ -20,7 +20,7 @@
 AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttribute(AccountWebKeys.ACCOUNT_ENTRY_DISPLAY);
 %>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle">
 		<%= LanguageUtil.get(request, "account-display-data") %>
 	</h3>
@@ -59,4 +59,4 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 	<aui:field-wrapper cssClass="form-group lfr-input-text-container">
 		<aui:input label="" labelOff="inactive" labelOn="active" name="active" type="toggle-switch" value="<%= (accountEntryDisplay == null) ? true : accountEntryDisplay.isActive() %>" />
 	</aui:field-wrapper>
-</div>
+</clay:sheet-section>

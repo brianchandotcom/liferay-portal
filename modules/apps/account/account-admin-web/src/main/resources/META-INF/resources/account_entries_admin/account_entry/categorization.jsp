@@ -24,7 +24,7 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 
 <liferay-asset:asset-tags-error />
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle">
 		<%= LanguageUtil.get(request, "more-information") %>
 	</h3>
@@ -43,4 +43,4 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 			groupIds="<%= new long[] {themeDisplay.getCompanyGroupId()} %>"
 		/>
 	</div>
-</div>
+</clay:sheet-section>

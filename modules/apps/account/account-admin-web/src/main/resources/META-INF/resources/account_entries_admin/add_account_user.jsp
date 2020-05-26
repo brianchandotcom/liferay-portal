@@ -54,7 +54,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 			<%= LanguageUtil.get(request, "information") %>
 		</h2>
 
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<h3 class="sheet-subtitle">
 				<%= LanguageUtil.get(request, "user-display-data") %>
 			</h3>
@@ -115,7 +115,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 					</div>
 				</clay:col>
 			</clay:row>
-		</div>
+		</clay:sheet-section>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

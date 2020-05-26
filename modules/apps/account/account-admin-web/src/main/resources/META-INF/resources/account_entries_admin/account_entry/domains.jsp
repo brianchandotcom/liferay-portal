@@ -38,12 +38,18 @@ if (accountEntryDisplay != null) {
 	/>
 </liferay-util:buffer>
 
-<div class="sheet-section">
-	<h3 class="autofit-row sheet-subtitle">
-		<span class="autofit-col autofit-col-expand">
+<clay:sheet-section>
+	<clay:content-row
+		className="sheet-subtitle"
+		containerElement="h3"
+	>
+		<clay:content-col
+			expand="true"
+		>
 			<span class="heading-text"><liferay-ui:message key="valid-domains" /></span>
-		</span>
-		<span class="autofit-col">
+		</clay:content-col>
+
+		<clay:content-col>
 			<span class="heading-end">
 				<liferay-ui:icon
 					cssClass="modify-link"
@@ -55,8 +61,8 @@ if (accountEntryDisplay != null) {
 					url="javascript:;"
 				/>
 			</span>
-		</span>
-	</h3>
+		</clay:content-col>
+	</clay:content-row>
 
 	<aui:input name="domains" type="hidden" value="<%= StringUtil.merge(domains) %>" />
 
@@ -91,7 +97,7 @@ if (accountEntryDisplay != null) {
 			markupView="lexicon"
 		/>
 	</liferay-ui:search-container>
-</div>
+</clay:sheet-section>
 
 <aui:script use="liferay-search-container">
 	var searchContainer = Liferay.SearchContainer.get(

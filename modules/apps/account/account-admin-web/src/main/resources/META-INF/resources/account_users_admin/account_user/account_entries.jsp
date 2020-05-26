@@ -50,18 +50,24 @@ portletDisplay.setURLBack(backURL);
 	<aui:input name="addAccountEntryIds" type="hidden" />
 	<aui:input name="deleteAccountEntryIds" type="hidden" />
 
-	<div class="sheet sheet-lg">
+	<clay:sheet>
 		<h2 class="sheet-title">
 			<%= LanguageUtil.get(request, "accounts") %>
 		</h2>
 
-		<h3 class="autofit-row sheet-subtitle">
-			<span class="autofit-col autofit-col-expand">
+		<clay:content-row
+			className="sheet-subtitle"
+			containerElement="h3"
+		>
+			<clay:content-col
+				expand="true"
+			>
 				<span class="heading-text">
 					<liferay-ui:message key="accounts" />
 				</span>
-			</span>
-			<span class="autofit-col">
+			</clay:content-col>
+
+			<clay:content-col>
 				<span class="heading-end">
 					<liferay-ui:icon
 						cssClass="modify-link"
@@ -73,10 +79,10 @@ portletDisplay.setURLBack(backURL);
 						url="javascript:;"
 					/>
 				</span>
-			</span>
-		</h3>
+			</clay:content-col>
+		</clay:content-row>
 
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<liferay-ui:search-container
 				compactEmptyResultsMessage="<%= true %>"
 				emptyResultsMessage="this-user-does-not-belong-to-any-accounts"
@@ -116,14 +122,14 @@ portletDisplay.setURLBack(backURL);
 					markupView="lexicon"
 				/>
 			</liferay-ui:search-container>
-		</div>
+		</clay:sheet-section>
 
-		<div class="sheet-footer">
+		<clay:sheet-footer>
 			<aui:button type="submit" />
 
 			<aui:button href="<%= backURL %>" type="cancel" />
-		</div>
-	</div>
+		</clay:sheet-footer>
+	</clay:sheet>
 </aui:form>
 
 <aui:script use="liferay-search-container">

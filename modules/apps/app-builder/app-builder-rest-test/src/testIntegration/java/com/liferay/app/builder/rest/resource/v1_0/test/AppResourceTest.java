@@ -23,6 +23,9 @@ import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
@@ -31,6 +34,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureLayoutTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -66,6 +70,8 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 		_ddmStructureLayout = _addDDMStructureLayout(
 			_ddmStructure.getStructureId());
+
+		_ddlRecordSet = _addDDLRecordSet(_ddmStructure);
 
 		_deDataListView = _deDataListViewLocalService.addDEDataListView(
 			testGroup.getGroupId(), testCompany.getCompanyId(),
@@ -235,6 +241,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				dataDefinitionName = _ddmStructure.getName(LocaleUtil.US);
 				dataLayoutId = _ddmStructureLayout.getStructureLayoutId();
 				dataListViewId = _deDataListView.getDeDataListViewId();
+				dataRecordCollectionId = _ddlRecordSet.getRecordSetId();
 				scope = AppBuilderAppConstants.SCOPE_STANDARD;
 				siteId = _ddmStructure.getGroupId();
 				userId = testGroup.getCreatorUserId();
@@ -305,6 +312,16 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 		return testGetApp_addApp();
 	}
 
+	private DDLRecordSet _addDDLRecordSet(DDMStructure ddmStructure)
+		throws Exception {
+
+		return _ddlRecordSetLocalService.addRecordSet(
+			testGroup.getCreatorUserId(), testGroup.getGroupId(),
+			ddmStructure.getStructureId(), ddmStructure.getStructureKey(),
+			ddmStructure.getNameMap(), ddmStructure.getDescriptionMap(), 0,
+			DDLRecordSetConstants.SCOPE_DATA_ENGINE, new ServiceContext());
+	}
+
 	private DDMStructure _addDDMStructure(Group group) throws Exception {
 		DDMStructureTestHelper ddmStructureTestHelper =
 			new DDMStructureTestHelper(
@@ -345,6 +362,11 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 	@Inject
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
+
+	private DDLRecordSet _ddlRecordSet;
+
+	@Inject
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 	private DDMStructure _ddmStructure;
 	private DDMStructureLayout _ddmStructureLayout;

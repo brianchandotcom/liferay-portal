@@ -11,6 +11,7 @@ dependencies {
 	testIntegrationCompile project(":apps:app-builder:app-builder-rest-api")
 	testIntegrationCompile project(":apps:app-builder:app-builder-rest-client")
 	testIntegrationCompile project(":apps:data-engine:data-engine-api")
+	testIntegrationCompile project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationCompile project(":apps:portal-odata:portal-odata-api")

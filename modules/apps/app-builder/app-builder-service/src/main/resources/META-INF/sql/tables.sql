@@ -8,6 +8,7 @@ create table AppBuilderApp (
 	createDate DATE null,
 	modifiedDate DATE null,
 	active_ BOOLEAN,
+	ddlRecordSetId LONG,
 	ddmStructureId LONG,
 	ddmStructureLayoutId LONG,
 	deDataListViewId LONG,

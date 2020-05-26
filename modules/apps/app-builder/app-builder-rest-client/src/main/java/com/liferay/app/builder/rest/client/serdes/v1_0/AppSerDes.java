@@ -135,6 +135,16 @@ public class AppSerDes {
 			sb.append(app.getDataListViewId());
 		}
 
+		if (app.getDataRecordCollectionId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataRecordCollectionId\": ");
+
+			sb.append(app.getDataRecordCollectionId());
+		}
+
 		if (app.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -283,6 +293,15 @@ public class AppSerDes {
 			map.put("dataListViewId", String.valueOf(app.getDataListViewId()));
 		}
 
+		if (app.getDataRecordCollectionId() == null) {
+			map.put("dataRecordCollectionId", null);
+		}
+		else {
+			map.put(
+				"dataRecordCollectionId",
+				String.valueOf(app.getDataRecordCollectionId()));
+		}
+
 		if (app.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -394,6 +413,14 @@ public class AppSerDes {
 			else if (Objects.equals(jsonParserFieldName, "dataListViewId")) {
 				if (jsonParserFieldValue != null) {
 					app.setDataListViewId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "dataRecordCollectionId")) {
+
+				if (jsonParserFieldValue != null) {
+					app.setDataRecordCollectionId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}

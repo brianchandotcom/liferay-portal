@@ -52,6 +52,7 @@ public class AppBuilderAppWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("active", isActive());
+		attributes.put("ddlRecordSetId", getDdlRecordSetId());
 		attributes.put("ddmStructureId", getDdmStructureId());
 		attributes.put("ddmStructureLayoutId", getDdmStructureLayoutId());
 		attributes.put("deDataListViewId", getDeDataListViewId());
@@ -115,6 +116,12 @@ public class AppBuilderAppWrapper
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long ddlRecordSetId = (Long)attributes.get("ddlRecordSetId");
+
+		if (ddlRecordSetId != null) {
+			setDdlRecordSetId(ddlRecordSetId);
 		}
 
 		Long ddmStructureId = (Long)attributes.get("ddmStructureId");
@@ -192,6 +199,16 @@ public class AppBuilderAppWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ddl record set ID of this app builder app.
+	 *
+	 * @return the ddl record set ID of this app builder app
+	 */
+	@Override
+	public long getDdlRecordSetId() {
+		return model.getDdlRecordSetId();
 	}
 
 	/**
@@ -453,6 +470,16 @@ public class AppBuilderAppWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the ddl record set ID of this app builder app.
+	 *
+	 * @param ddlRecordSetId the ddl record set ID of this app builder app
+	 */
+	@Override
+	public void setDdlRecordSetId(long ddlRecordSetId) {
+		model.setDdlRecordSetId(ddlRecordSetId);
 	}
 
 	/**

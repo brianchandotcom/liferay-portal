@@ -11,6 +11,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="active" type="boolean" />
+		<field name="ddlRecordSetId" type="long" />
 		<field name="ddmStructureId" type="long" />
 		<field name="ddmStructureLayoutId" type="long" />
 		<field name="deDataListViewId" type="long" />

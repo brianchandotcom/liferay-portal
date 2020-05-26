@@ -62,7 +62,7 @@ public class AppBuilderAppCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -82,6 +82,8 @@ public class AppBuilderAppCacheModel
 		sb.append(modifiedDate);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", ddlRecordSetId=");
+		sb.append(ddlRecordSetId);
 		sb.append(", ddmStructureId=");
 		sb.append(ddmStructureId);
 		sb.append(", ddmStructureLayoutId=");
@@ -135,6 +137,7 @@ public class AppBuilderAppCacheModel
 		}
 
 		appBuilderAppImpl.setActive(active);
+		appBuilderAppImpl.setDdlRecordSetId(ddlRecordSetId);
 		appBuilderAppImpl.setDdmStructureId(ddmStructureId);
 		appBuilderAppImpl.setDdmStructureLayoutId(ddmStructureLayoutId);
 		appBuilderAppImpl.setDeDataListViewId(deDataListViewId);
@@ -175,6 +178,8 @@ public class AppBuilderAppCacheModel
 
 		active = objectInput.readBoolean();
 
+		ddlRecordSetId = objectInput.readLong();
+
 		ddmStructureId = objectInput.readLong();
 
 		ddmStructureLayoutId = objectInput.readLong();
@@ -213,6 +218,8 @@ public class AppBuilderAppCacheModel
 
 		objectOutput.writeBoolean(active);
 
+		objectOutput.writeLong(ddlRecordSetId);
+
 		objectOutput.writeLong(ddmStructureId);
 
 		objectOutput.writeLong(ddmStructureLayoutId);
@@ -243,6 +250,7 @@ public class AppBuilderAppCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public boolean active;
+	public long ddlRecordSetId;
 	public long ddmStructureId;
 	public long ddmStructureLayoutId;
 	public long deDataListViewId;

@@ -230,6 +230,20 @@ public interface AppBuilderAppModel
 	public void setActive(boolean active);
 
 	/**
+	 * Returns the ddl record set ID of this app builder app.
+	 *
+	 * @return the ddl record set ID of this app builder app
+	 */
+	public long getDdlRecordSetId();
+
+	/**
+	 * Sets the ddl record set ID of this app builder app.
+	 *
+	 * @param ddlRecordSetId the ddl record set ID of this app builder app
+	 */
+	public void setDdlRecordSetId(long ddlRecordSetId);
+
+	/**
 	 * Returns the ddm structure ID of this app builder app.
 	 *
 	 * @return the ddm structure ID of this app builder app

@@ -81,7 +81,8 @@ public class AppBuilderAppModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"active_", Types.BOOLEAN}, {"ddmStructureId", Types.BIGINT},
+		{"active_", Types.BOOLEAN}, {"ddlRecordSetId", Types.BIGINT},
+		{"ddmStructureId", Types.BIGINT},
 		{"ddmStructureLayoutId", Types.BIGINT},
 		{"deDataListViewId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"scope", Types.VARCHAR}
@@ -100,6 +101,7 @@ public class AppBuilderAppModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("ddlRecordSetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ddmStructureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ddmStructureLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("deDataListViewId", Types.BIGINT);
@@ -108,7 +110,7 @@ public class AppBuilderAppModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,scope VARCHAR(75) null)";
+		"create table AppBuilderApp (uuid_ VARCHAR(75) null,appBuilderAppId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,active_ BOOLEAN,ddlRecordSetId LONG,ddmStructureId LONG,ddmStructureLayoutId LONG,deDataListViewId LONG,name STRING null,scope VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table AppBuilderApp";
 
@@ -312,6 +314,11 @@ public class AppBuilderAppModelImpl
 			"active",
 			(BiConsumer<AppBuilderApp, Boolean>)AppBuilderApp::setActive);
 		attributeGetterFunctions.put(
+			"ddlRecordSetId", AppBuilderApp::getDdlRecordSetId);
+		attributeSetterBiConsumers.put(
+			"ddlRecordSetId",
+			(BiConsumer<AppBuilderApp, Long>)AppBuilderApp::setDdlRecordSetId);
+		attributeGetterFunctions.put(
 			"ddmStructureId", AppBuilderApp::getDdmStructureId);
 		attributeSetterBiConsumers.put(
 			"ddmStructureId",
@@ -513,6 +520,16 @@ public class AppBuilderAppModelImpl
 
 	public boolean getOriginalActive() {
 		return _originalActive;
+	}
+
+	@Override
+	public long getDdlRecordSetId() {
+		return _ddlRecordSetId;
+	}
+
+	@Override
+	public void setDdlRecordSetId(long ddlRecordSetId) {
+		_ddlRecordSetId = ddlRecordSetId;
 	}
 
 	@Override
@@ -801,6 +818,7 @@ public class AppBuilderAppModelImpl
 		appBuilderAppImpl.setCreateDate(getCreateDate());
 		appBuilderAppImpl.setModifiedDate(getModifiedDate());
 		appBuilderAppImpl.setActive(isActive());
+		appBuilderAppImpl.setDdlRecordSetId(getDdlRecordSetId());
 		appBuilderAppImpl.setDdmStructureId(getDdmStructureId());
 		appBuilderAppImpl.setDdmStructureLayoutId(getDdmStructureLayoutId());
 		appBuilderAppImpl.setDeDataListViewId(getDeDataListViewId());
@@ -945,6 +963,8 @@ public class AppBuilderAppModelImpl
 
 		appBuilderAppCacheModel.active = isActive();
 
+		appBuilderAppCacheModel.ddlRecordSetId = getDdlRecordSetId();
+
 		appBuilderAppCacheModel.ddmStructureId = getDdmStructureId();
 
 		appBuilderAppCacheModel.ddmStructureLayoutId =
@@ -1061,6 +1081,7 @@ public class AppBuilderAppModelImpl
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
+	private long _ddlRecordSetId;
 	private long _ddmStructureId;
 	private long _originalDdmStructureId;
 	private boolean _setOriginalDdmStructureId;

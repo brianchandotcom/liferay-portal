@@ -1115,6 +1115,16 @@ public abstract class BaseAppResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"dataRecordCollectionId", additionalAssertFieldName)) {
+
+				if (app.getDataRecordCollectionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (app.getName() == null) {
 					valid = false;
@@ -1296,6 +1306,19 @@ public abstract class BaseAppResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"dataRecordCollectionId", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						app1.getDataRecordCollectionId(),
+						app2.getDataRecordCollectionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						app1.getDateCreated(), app2.getDateCreated())) {
@@ -1463,6 +1486,11 @@ public abstract class BaseAppResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("dataRecordCollectionId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
 				sb = new StringBundler();
@@ -1603,6 +1631,7 @@ public abstract class BaseAppResourceTestCase {
 					RandomTestUtil.randomString());
 				dataLayoutId = RandomTestUtil.randomLong();
 				dataListViewId = RandomTestUtil.randomLong();
+				dataRecordCollectionId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				id = RandomTestUtil.randomLong();

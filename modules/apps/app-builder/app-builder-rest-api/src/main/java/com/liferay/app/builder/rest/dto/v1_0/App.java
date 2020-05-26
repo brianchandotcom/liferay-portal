@@ -226,6 +226,34 @@ public class App {
 	protected Long dataListViewId;
 
 	@Schema
+	public Long getDataRecordCollectionId() {
+		return dataRecordCollectionId;
+	}
+
+	public void setDataRecordCollectionId(Long dataRecordCollectionId) {
+		this.dataRecordCollectionId = dataRecordCollectionId;
+	}
+
+	@JsonIgnore
+	public void setDataRecordCollectionId(
+		UnsafeSupplier<Long, Exception> dataRecordCollectionIdUnsafeSupplier) {
+
+		try {
+			dataRecordCollectionId = dataRecordCollectionIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long dataRecordCollectionId;
+
+	@Schema
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -522,6 +550,16 @@ public class App {
 			sb.append("\"dataListViewId\": ");
 
 			sb.append(dataListViewId);
+		}
+
+		if (dataRecordCollectionId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"dataRecordCollectionId\": ");
+
+			sb.append(dataRecordCollectionId);
 		}
 
 		if (dateCreated != null) {

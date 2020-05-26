@@ -75,6 +75,13 @@ public interface AppBuilderAppLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public AppBuilderApp addAppBuilderApp(AppBuilderApp appBuilderApp);
 
+	@Indexable(type = IndexableType.REINDEX)
+	public AppBuilderApp addAppBuilderApp(
+			long groupId, long companyId, long userId, boolean active,
+			long ddlRecordSetId, long ddmStructureId, long ddmStructureLayoutId,
+			long deDataListViewId, Map<Locale, String> nameMap, String scope)
+		throws PortalException;
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addAppBuilderApp(long, long, long, boolean, long, long,
@@ -87,7 +94,6 @@ public interface AppBuilderAppLocalService
 			long deDataListViewId, Map<Locale, String> nameMap)
 		throws PortalException;
 
-	@Indexable(type = IndexableType.REINDEX)
 	public AppBuilderApp addAppBuilderApp(
 			long groupId, long companyId, long userId, boolean active,
 			long ddmStructureId, long ddmStructureLayoutId,

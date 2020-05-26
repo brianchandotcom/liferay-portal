@@ -51,6 +51,8 @@ public class AppBuilderAppTable extends BaseTable<AppBuilderAppTable> {
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<AppBuilderAppTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<AppBuilderAppTable, Long> ddlRecordSetId = createColumn(
+		"ddlRecordSetId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AppBuilderAppTable, Long> ddmStructureId = createColumn(
 		"ddmStructureId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AppBuilderAppTable, Long> ddmStructureLayoutId =

@@ -50,6 +50,18 @@ public class AppBuilderAppLocalServiceUtil {
 		return getService().addAppBuilderApp(appBuilderApp);
 	}
 
+	public static com.liferay.app.builder.model.AppBuilderApp addAppBuilderApp(
+			long groupId, long companyId, long userId, boolean active,
+			long ddlRecordSetId, long ddmStructureId, long ddmStructureLayoutId,
+			long deDataListViewId,
+			java.util.Map<java.util.Locale, String> nameMap, String scope)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addAppBuilderApp(
+			groupId, companyId, userId, active, ddlRecordSetId, ddmStructureId,
+			ddmStructureLayoutId, deDataListViewId, nameMap, scope);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addAppBuilderApp(long, long, long, boolean, long, long,

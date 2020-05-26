@@ -161,6 +161,27 @@ public class App implements Cloneable {
 
 	protected Long dataListViewId;
 
+	public Long getDataRecordCollectionId() {
+		return dataRecordCollectionId;
+	}
+
+	public void setDataRecordCollectionId(Long dataRecordCollectionId) {
+		this.dataRecordCollectionId = dataRecordCollectionId;
+	}
+
+	public void setDataRecordCollectionId(
+		UnsafeSupplier<Long, Exception> dataRecordCollectionIdUnsafeSupplier) {
+
+		try {
+			dataRecordCollectionId = dataRecordCollectionIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long dataRecordCollectionId;
+
 	public Date getDateCreated() {
 		return dateCreated;
 	}

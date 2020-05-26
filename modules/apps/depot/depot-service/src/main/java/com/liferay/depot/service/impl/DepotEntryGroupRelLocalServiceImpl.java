@@ -84,6 +84,12 @@ public class DepotEntryGroupRelLocalServiceImpl
 	}
 
 	@Override
+	public int getDepotEntryGroupRelsCount(DepotEntry depotEntry) {
+		return depotEntryGroupRelPersistence.countByDepotEntryId(
+			depotEntry.getDepotEntryId());
+	}
+
+	@Override
 	public int getDepotEntryGroupRelsCount(long groupId) {
 		return depotEntryGroupRelPersistence.countByToGroupId(groupId);
 	}

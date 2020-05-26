@@ -304,7 +304,7 @@ definition {
 				value1 = "${importValidationMissingItem}");
 		}
 
-		if ("importCampaignValidationError" == "true") {
+		if ("${importCampaignValidationError}" == "true") {
 			AssertTextEquals(
 				locator1 = "SitePagesImport#VALIDATION_ERROR_MESSAGE",
 				value1 = "The following data will not be imported:");
@@ -318,7 +318,7 @@ definition {
 				value1 = "The original Referenced Asset does not exist in the current environment.");
 		}
 
-		if ("importFail" == "true") {
+		if ("${importFail}" == "true") {
 			AssertTextEquals(
 				locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS_1",
 				value1 = "Failed");

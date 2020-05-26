@@ -40,8 +40,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<aui:input name="redirect" type="hidden" value="<%= viewUADExportProcesses.toString() %>" />
 		<aui:input name="applicationKeys" type="hidden" />
 
-		<div class="sheet sheet-lg">
-			<div class="sheet-section">
+		<clay:sheet>
+			<clay:sheet-section>
 				<h2 class="sheet-title"><liferay-ui:message key="export-personal-data" /></h2>
 
 				<div class="sheet-text">
@@ -122,14 +122,14 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 					/>
 				</liferay-ui:search-container>
-			</div>
+			</clay:sheet-section>
 
-			<div class="sheet-footer">
+			<clay:sheet-footer>
 				<aui:button primary="<%= true %>" type="submit" value="export" />
 
 				<aui:button href="<%= backURL %>" type="cancel" />
-			</div>
-		</div>
+			</clay:sheet-footer>
+		</clay:sheet>
 	</aui:form>
 </clay:container-fluid>
 

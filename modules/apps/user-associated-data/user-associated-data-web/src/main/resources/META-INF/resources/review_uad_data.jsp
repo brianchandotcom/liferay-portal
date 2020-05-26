@@ -185,20 +185,20 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 		<clay:col
 			lg="9"
 		>
-			<div class="sheet">
-				<div class="sheet-header">
+			<clay:sheet>
+				<clay:sheet-header>
 					<h2 class="sheet-title"><liferay-ui:message key="review-data" /></h2>
-				</div>
+				</clay:sheet-header>
 
-				<div class="sheet-section">
+				<clay:sheet-section>
 					<h3 class="sheet-subtitle">
 						<liferay-ui:message key="status-summary" />
 					</h3>
 
 					<strong><liferay-ui:message key="remaining-items" />: </strong><%= totalReviewableUADEntitiesCount %>
-				</div>
+				</clay:sheet-section>
 
-				<div class="sheet-section">
+				<clay:sheet-section>
 					<c:choose>
 						<c:when test="<%= totalReviewableUADEntitiesCount == 0 %>">
 							<liferay-ui:empty-result-message
@@ -211,8 +211,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 							<liferay-util:include page="/view_uad_entities.jsp" servletContext="<%= application %>" />
 						</c:otherwise>
 					</c:choose>
-				</div>
-			</div>
+				</clay:sheet-section>
+			</clay:sheet>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>

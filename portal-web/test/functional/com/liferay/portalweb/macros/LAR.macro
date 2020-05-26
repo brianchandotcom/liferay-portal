@@ -484,6 +484,18 @@ definition {
 		LAR._exportSite(larFileName = "${larFileName}");
 	}
 
+	macro exportTeam {
+		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
+
+		Click.waitForMenuToggleJSClick(locator1 = "Portlet#OPTIONS_ICON");
+
+		MenuItem.click(menuItem = "Export / Import");
+
+		LAR._export(
+			exportPermissions = "${exportPermissions}",
+			larFileName = "${larFileName}");
+	}
+
 	macro exportUserGroups {
 		LAR._gotoExportImport();
 

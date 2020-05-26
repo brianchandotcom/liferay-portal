@@ -51,7 +51,10 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		BrowserMetadata browserMetadata = getBrowserMetadata(
 			httpServletRequest);
 
-		if (browserMetadata.isEdge()) {
+		if (browserMetadata.isChrome()) {
+			return BROWSER_ID_CHROME;
+		}
+		else if (browserMetadata.isEdge()) {
 			return BROWSER_ID_EDGE;
 		}
 		else if (browserMetadata.isIe()) {

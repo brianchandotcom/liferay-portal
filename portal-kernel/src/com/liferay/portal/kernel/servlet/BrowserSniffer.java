@@ -26,6 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BrowserSniffer {
 
+	public static final String BROWSER_ID_CHROME = "chrome";
+
 	public static final String BROWSER_ID_EDGE = "edge";
 
 	public static final String BROWSER_ID_FIREFOX = "firefox";

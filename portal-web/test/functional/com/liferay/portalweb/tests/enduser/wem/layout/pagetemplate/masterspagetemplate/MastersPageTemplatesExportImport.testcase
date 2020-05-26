@@ -468,6 +468,107 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-106815. The Organization Role permission settings of widgets will be exported and imported with master page template."
+	@priority = "4"
+	test ExportImportMastersPageTemplateWithOrganizationRolePermissionSettingsOfWidgets {
+		task ("Add a organization and organization site") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name 1",
+				organizationSite = "true");
+		}
+
+		task ("Add a custom master in organization site") {
+			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
+				groupName = "Organization Name 1 LFR_ORGANIZATION",
+				masterPageTemplateEntryName = "Custom Masters Page Template");
+		}
+
+		task ("Add a Categories Navigation portlet to master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-1");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			PageEditor.addWidget(
+				dropTarget = "Header",
+				portletName = "Categories Navigation",
+				scope = "Master");
+		}
+
+		task ("Configure Organization Role permission settings of Categories Navigation") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Categories Navigation",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Categories Navigation",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			Check(
+				key_roleTitle = "account-manager",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			Button.click(button = "Publish Master");
+		}
+
+		task ("Export custom master") {
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-1");
+
+			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
+				item = "Export",
+				masterLayoutName = "Custom Masters Page Template");
+
+			DownloadTempFile();
+		}
+
+		task ("Import masters page template in new organization site") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name 2",
+				organizationSite = "true");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "organization-name-2");
+
+			MastersPageTemplatesAdmin.importMastersFromTempFolder();
+		}
+
+		task ("Assert the Organization Role permission settings of Categories Navigation are imported") {
+			MastersPageTemplatesAdmin.viewMastersPresent(masterLayoutName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			AssertElementPresent(
+				key_fragmentName = "Categories Navigation",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Categories Navigation",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Categories Navigation",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(
+				key_roleTitle = "account-manager",
+				locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
+		}
+	}
+
 	@description = "This is a use case for LPS-102207. Can export a master page template with the thumbnail and import."
 	@priority = "4"
 	test ExportImportMastersPageTemplateWithThumbnail {

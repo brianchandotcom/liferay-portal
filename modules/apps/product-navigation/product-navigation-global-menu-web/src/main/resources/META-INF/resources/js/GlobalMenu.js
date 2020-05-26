@@ -45,7 +45,7 @@ const Sites = ({label, sites}) => {
 	);
 };
 
-const AppsPanel = ({categories = [], portletNamespace, sites, viewAllURL}) => {
+const AppsPanel = ({categories = [], portletNamespace, sites}) => {
 	const [activeTab, setActiveTab] = useState(0);
 
 	return (
@@ -101,43 +101,55 @@ const AppsPanel = ({categories = [], portletNamespace, sites, viewAllURL}) => {
 										{Liferay.Language.get('sites')}
 									</li>
 
-									<Sites
-										label={Liferay.Language.get(
-											'recently-visited'
+									{sites.recentSites &&
+										sites.recentSites.length > 0 && (
+											<Sites
+												label={Liferay.Language.get(
+													'recently-visited'
+												)}
+												sites={sites.recentSites}
+											/>
 										)}
-										sites={sites.recentSites}
-									/>
 
-									<Sites
-										label={Liferay.Language.get('my-sites')}
-										sites={sites.mySites}
-									/>
+									{sites.mySites &&
+										sites.mySites.length > 0 && (
+											<Sites
+												label={Liferay.Language.get(
+													'my-sites'
+												)}
+												sites={sites.mySites}
+											/>
+										)}
 
-									<li>
-										<ClayButton
-											displayType="link"
-											onClick={() => {
-												Liferay.Util.openModal({
-													id: `${portletNamespace}selectSite`,
-													onSelect: (
-														selectedItem
-													) => {
-														Liferay.Util.navigate(
-															selectedItem.url
-														);
-													},
-													selectEventName: `${portletNamespace}selectSite`,
-													title: Liferay.Language.get(
-														'select-site-or-asset-library'
-													),
-													url: viewAllURL,
-												});
-											}}
-											small
-										>
-											{Liferay.Language.get('view-all')}
-										</ClayButton>
-									</li>
+									{sites.viewAllURL && (
+										<li>
+											<ClayButton
+												displayType="link"
+												onClick={() => {
+													Liferay.Util.openModal({
+														id: `${portletNamespace}selectSite`,
+														onSelect: (
+															selectedItem
+														) => {
+															Liferay.Util.navigate(
+																selectedItem.url
+															);
+														},
+														selectEventName: `${portletNamespace}selectSite`,
+														title: Liferay.Language.get(
+															'select-site-or-asset-library'
+														),
+														url: sites.viewAllURL,
+													});
+												}}
+												small
+											>
+												{Liferay.Language.get(
+													'view-all'
+												)}
+											</ClayButton>
+										</li>
+									)}
 								</ul>
 							</div>
 						</div>
@@ -175,12 +187,11 @@ const GlobalMenu = ({panelAppsURL}) => {
 		if (!fetchCategoriesPromiseRef.current) {
 			fetchCategoriesPromiseRef.current = fetch(panelAppsURL)
 				.then((response) => response.json())
-				.then(({items, portletNamespace, sites, viewAllURL}) => {
+				.then(({items, portletNamespace, sites}) => {
 					setAppsPanelData({
 						categories: items,
 						portletNamespace,
 						sites,
-						viewAllURL,
 					});
 				})
 				.catch(() => {

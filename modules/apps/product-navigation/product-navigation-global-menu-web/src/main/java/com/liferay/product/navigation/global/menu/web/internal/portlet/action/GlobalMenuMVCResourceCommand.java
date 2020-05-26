@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -47,6 +48,7 @@ import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.site.util.GroupURLProvider;
 import com.liferay.site.util.RecentGroupManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -135,33 +137,10 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 			"portletNamespace", resourceResponse.getNamespace()
 		).put(
 			"sites",
-			JSONUtil.put(
-				"mySites", _getMySitesJSONArray(resourceRequest, themeDisplay)
-			).put(
-				"recentSites",
-				_getSitesJSONArray(
-					_recentGroupManager.getRecentGroups(httpServletRequest),
-					resourceRequest, themeDisplay)
-			)
-		).put(
-			"viewAllURL", _getViewAllURL(resourceRequest, resourceResponse)
+			_getSitesJSONObject(
+				httpServletRequest, resourceRequest, resourceResponse,
+				themeDisplay)
 		);
-	}
-
-	private JSONArray _getMySitesJSONArray(
-			ResourceRequest resourceRequest, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		User user = themeDisplay.getUser();
-
-		List<Group> mySiteGroups = user.getMySiteGroups(
-			new String[] {
-				Company.class.getName(), Group.class.getName(),
-				Organization.class.getName()
-			},
-			QueryUtil.ALL_POS);
-
-		return _getSitesJSONArray(mySiteGroups, resourceRequest, themeDisplay);
 	}
 
 	private JSONArray _getPanelAppsJSONArray(
@@ -252,6 +231,71 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		return recentSitesJSONArray;
+	}
+
+	private JSONObject _getSitesJSONObject(
+			HttpServletRequest httpServletRequest,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		JSONObject sitesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		int max = 8;
+
+		List<Group> recentGroups = _recentGroupManager.getRecentGroups(
+			httpServletRequest);
+
+		if (ListUtil.isNotEmpty(recentGroups)) {
+			sitesJSONObject.put(
+				"recentSites",
+				_getSitesJSONArray(
+					ListUtil.subList(recentGroups, 0, max), resourceRequest,
+					themeDisplay));
+
+			max -= recentGroups.size();
+		}
+
+		List<Group> filteredGroups = new ArrayList<>();
+
+		if (max > 0) {
+			User user = themeDisplay.getUser();
+
+			List<Group> mySiteGroups = user.getMySiteGroups(
+				new String[] {
+					Company.class.getName(), Group.class.getName(),
+					Organization.class.getName()
+				},
+				QueryUtil.ALL_POS);
+
+			for (Group group : mySiteGroups) {
+				if (!recentGroups.contains(group)) {
+					filteredGroups.add(group);
+				}
+			}
+
+			if (ListUtil.isNotEmpty(filteredGroups)) {
+				if (ListUtil.isNotEmpty(recentGroups)) {
+					max--;
+				}
+
+				sitesJSONObject.put(
+					"mySites",
+					_getSitesJSONArray(
+						ListUtil.subList(filteredGroups, 0, max),
+						resourceRequest, themeDisplay));
+
+				max -= filteredGroups.size();
+			}
+		}
+
+		if (max < 0) {
+			sitesJSONObject.put(
+				"viewAllURL",
+				_getViewAllURL(resourceRequest, resourceResponse));
+		}
+
+		return sitesJSONObject;
 	}
 
 	private String _getViewAllURL(

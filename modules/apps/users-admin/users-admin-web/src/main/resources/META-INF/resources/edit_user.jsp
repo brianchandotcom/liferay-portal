@@ -39,7 +39,6 @@ if (Validator.isNotNull(backURL)) {
 	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	context="<%= selUser %>"
 	headerContainerCssClass=""
-	inverted="<%= layout.isTypeControlPanel() %>"
 	key="<%= UserScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_USERS %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"

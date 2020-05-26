@@ -31,7 +31,6 @@ if (accountEntryDisplay != null) {
 	containerWrapperCssClass=""
 	context="<%= accountEntryDisplay %>"
 	headerContainerCssClass=""
-	inverted="<%= true %>"
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ENTRY %>"
 	portletURL="<%= portletURL %>"
 />

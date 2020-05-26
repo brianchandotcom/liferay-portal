@@ -30,7 +30,6 @@ portletURL.setParameter("mvcPath", "/account_users_admin/edit_account_user.jsp")
 	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	context="<%= selUser %>"
 	headerContainerCssClass=""
-	inverted="<%= true %>"
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_USER %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"

@@ -25,7 +25,6 @@ DepotEntry depotEntry = (DepotEntry)request.getAttribute(DepotAdminWebKeys.DEPOT
 	containerWrapperCssClass="container-fluid container-fluid-max-xl container-form-lg"
 	context="<%= depotEntry %>"
 	headerContainerCssClass=""
-	inverted="<%= true %>"
 	key="<%= DepotScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_DEPOT %>"
 	menubarCssClass="menubar menubar-transparent menubar-vertical-expand-lg"
 	navCssClass="col-lg-3"

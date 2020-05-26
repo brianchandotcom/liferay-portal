@@ -57,7 +57,6 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "add-new-role
 	containerWrapperCssClass=""
 	context="<%= accountRole %>"
 	headerContainerCssClass=""
-	inverted="<%= true %>"
 	key="<%= AccountScreenNavigationEntryConstants.SCREEN_NAVIGATION_KEY_ACCOUNT_ROLE %>"
 	portletURL="<%= portletURL %>"
 />

@@ -81,8 +81,7 @@ public class AUITopHeadResources implements TopHeadResources {
 	}
 
 	private static final String[] _FILE_NAMES_AUI_CORE = {
-		"/aui/aui/aui.js", "/liferay/modules.js",
-		"/liferay/browser_selectors.js", "/liferay/aui_sandbox.js",
+		"/aui/aui/aui.js", "/liferay/modules.js", "/liferay/aui_sandbox.js",
 		"/aui/attribute-base/attribute-base.js",
 		"/aui/attribute-complex/attribute-complex.js",
 		"/aui/attribute-core/attribute-core.js",
@@ -150,9 +149,9 @@ public class AUITopHeadResources implements TopHeadResources {
 		"/aui/aui-node-base/aui-node-base.js",
 		"/aui/aui-node-html5/aui-node-html5.js",
 		"/aui/aui-selector/aui-selector.js", "/aui/aui-timer/aui-timer.js",
-		"/liferay/language.js", "/liferay/form.js",
-		"/liferay/form_placeholders.js", "/liferay/icon.js", "/liferay/menu.js",
-		"/liferay/notice.js", "/liferay/poller.js"
+		"/liferay/browser_selectors.js", "/liferay/language.js",
+		"/liferay/form.js", "/liferay/form_placeholders.js", "/liferay/icon.js",
+		"/liferay/menu.js", "/liferay/notice.js", "/liferay/poller.js"
 	};
 
 	private static final String[] _FILE_NAMES_AUI_PRELOAD_AUTHENTICATED = {

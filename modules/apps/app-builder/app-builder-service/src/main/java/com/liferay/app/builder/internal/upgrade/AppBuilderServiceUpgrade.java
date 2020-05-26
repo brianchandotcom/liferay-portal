@@ -14,9 +14,12 @@
 
 package com.liferay.app.builder.internal.upgrade;
 
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -35,6 +38,18 @@ public class AppBuilderServiceUpgrade implements UpgradeStepRegistrator {
 			"2.0.0", "2.1.0",
 			new com.liferay.app.builder.internal.upgrade.v2_1_0.
 				UpgradeAppBuilderApp());
+
+		registry.register(
+			"2.1.0", "2.2.0",
+			new com.liferay.app.builder.internal.upgrade.v2_2_0.
+				UpgradeAppBuilderApp(
+					_ddlRecordSetLocalService, _ddmStructureLocalService));
 	}
+
+	@Reference
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

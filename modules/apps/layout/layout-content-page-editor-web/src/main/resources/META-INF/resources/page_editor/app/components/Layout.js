@@ -57,7 +57,9 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: CollectionWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: CollectionItemWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.column]: ColumnWithControls,
-	[LAYOUT_DATA_ITEM_TYPES.container]: ContainerWithControls,
+	[LAYOUT_DATA_ITEM_TYPES.container]: config.containerItemEnabled
+		? ContainerWithControls
+		: SectionWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: FragmentWithControls,
 	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: Root,

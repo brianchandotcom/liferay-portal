@@ -232,6 +232,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"collectionSelectorURL", _getCollectionSelectorURL()
 			).put(
+				"containerItemEnabled",
+				_ffLayoutContentPageEditorConfiguration.containerItemEnabled()
+			).put(
 				"defaultEditorConfigurations", _getDefaultConfigurations()
 			).put(
 				"defaultLanguageId",

@@ -84,7 +84,9 @@ const SectionWithControls = React.forwardRef(
 			);
 		}
 
-		buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.sectionConfiguration);
+		buttons.push(
+			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
+		);
 
 		return (
 			<Topper item={item} itemRef={ref} layoutData={layoutData}>

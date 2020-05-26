@@ -95,6 +95,8 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 	);
 });
 
+Container.displayName = 'Container';
+
 Container.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({

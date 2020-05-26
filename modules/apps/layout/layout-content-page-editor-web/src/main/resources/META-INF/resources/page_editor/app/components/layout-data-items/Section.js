@@ -95,6 +95,8 @@ const Section = React.forwardRef(({children, className, data, item}, ref) => {
 	);
 });
 
+Section.displayName = 'Section';
+
 Section.propTypes = {
 	item: getLayoutDataItemPropTypes({
 		config: PropTypes.shape({

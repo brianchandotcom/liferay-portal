@@ -92,6 +92,7 @@ class LayoutProvider extends Component {
 			fieldDeleted: this._handleFieldDeleted.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated.bind(this),
 			fieldEdited: this._handleFieldEdited.bind(this),
+			fieldHovered: this._handleFieldHovered.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
 			fieldSetAdded: this._handleFieldSetAdded.bind(this),
 			focusedFieldEvaluationEnded: this._handleFocusedFieldEvaluationEnded.bind(
@@ -344,6 +345,10 @@ class LayoutProvider extends Component {
 
 	_handleFieldAdded(event) {
 		this.setState(handleFieldAdded(this.props, this.state, event));
+	}
+
+	_handleFieldHovered(fieldHovered) {
+		this.setState({fieldHovered});
 	}
 
 	_handleFieldBlurred(event) {
@@ -807,7 +812,17 @@ LayoutProvider.STATE = {
 	 * @memberof LayoutProvider
 	 * @type {?object}
 	 */
+	fieldHovered: Config.shapeOf({
+		fieldName: Config.string().value(''),
+		type: Config.string().value(''),
+	}).value({}),
 
+	/**
+	 * @default {}
+	 * @instance
+	 * @memberof LayoutProvider
+	 * @type {?object}
+	 */
 	focusedField: Config.shapeOf({
 		columnIndex: Config.oneOfType([
 			Config.bool().value(false),

@@ -107,6 +107,7 @@ class FieldActionsDropDown extends Component {
 			<div
 				class={this.getCssClasses()}
 				onMouseDown={this._handleOnMouseDown.bind(this)}
+				onMouseEnter={this._handleOnMouseEnter.bind(this)}
 				onMouseLeave={this._handleOnMouseLeave.bind(this)}
 			>
 				<span class="actions-label">{this.getLabel()}</span>
@@ -157,6 +158,20 @@ class FieldActionsDropDown extends Component {
 
 			dispatch('fieldClicked', {fieldName});
 		}
+	}
+
+	_handleOnMouseEnter(event) {
+		const {dispatch} = this.context;
+		const {fieldName} = this.state;
+		const {pages} = this.props;
+
+		event.stopImmediatePropagation();
+		event.stopPropagation();
+
+		dispatch('fieldHovered', {
+			fieldName,
+			type: getField(pages, fieldName).type,
+		});
 	}
 
 	_handleOnMouseLeave(event) {

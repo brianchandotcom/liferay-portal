@@ -34,7 +34,7 @@ definition {
 			value1 = "Add List");
 
 		AssertTextEquals(
-			locator1 = "Portlet#H3_MODAL_TITLE",
+			locator1 = "Portlet#MODAL_TITLE",
 			value1 = "Add List");
 
 		LiferayEvent.waitForLiferayEvent(

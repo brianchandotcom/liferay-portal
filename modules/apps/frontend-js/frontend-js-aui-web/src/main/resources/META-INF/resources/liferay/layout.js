@@ -158,8 +158,7 @@ AUI.add(
 
 					if (!firstPortletStatic || firstPortletStatic == 'end') {
 						referencePortlet = firstPortlet;
-					}
-					else {
+					} else {
 						portlets.each((item) => {
 							var isStatic = item.isStatic;
 
@@ -533,12 +532,11 @@ AUI.add(
 			});
 
 			if (layoutContainer) {
-				if (!A.UA.touch) {
+				if (!A.UA.touchEnabled) {
 					layoutContainer.once('mousemove', () => {
 						Liferay.fire('initLayout');
 					});
-				}
-				else {
+				} else {
 					Liferay.fire('initLayout');
 				}
 			}

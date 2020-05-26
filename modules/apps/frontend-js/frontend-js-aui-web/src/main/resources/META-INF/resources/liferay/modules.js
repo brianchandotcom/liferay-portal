@@ -274,8 +274,12 @@
 							'liferay-input-move-boxes-touch': {
 								condition: {
 									name: 'liferay-input-move-boxes-touch',
+									test(A) {
+										return (
+											A.UA.touchEnabled && !!A.UA.mobile
+										);
+									},
 									trigger: 'liferay-input-move-boxes',
-									ua: 'touchMobile',
 								},
 							},
 						},
@@ -390,8 +394,10 @@
 								condition: {
 									name:
 										'liferay-navigation-interaction-touch',
+									test(A) {
+										return A.UA.touchEnabled;
+									},
 									trigger: 'liferay-navigation-interaction',
-									ua: 'touch',
 								},
 							},
 						},

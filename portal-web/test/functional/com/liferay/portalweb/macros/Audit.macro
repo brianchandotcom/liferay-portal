@@ -38,4 +38,29 @@ definition {
 			value1 = "${searchTerm}");
 	}
 
+	macro viewAuditDetails {
+		var key_resourceAction = "${resourceAction}";
+		var key_resourceName = "${resourceName}";
+
+		AssertClick(
+			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
+			value1 = "${resourceAction}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AuditReports#REPORTS_DETAIL_RESOURCE_NAME",
+			value1 = "${resourceName}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AuditReports#REPORTS_DETAIL_RESOURCE_ACTION",
+			value1 = "${resourceAction}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AuditReports#REPORTS_DETAIL_USER_NAME",
+			value1 = "${userName}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "AuditReports#REPORTS_DETAIL_ADDITIONAL_INFORMATION",
+			value1 = "${additionalInformation}");
+	}
+
 }

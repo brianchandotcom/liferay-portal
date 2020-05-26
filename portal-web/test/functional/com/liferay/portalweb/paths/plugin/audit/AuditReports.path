@@ -49,6 +49,32 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--REPORTS_DETAIL -->
+<tr>
+	<td>REPORTS_DETAIL_RESOURCE_NAME</td>
+	<td>//span[(@class='control-label') and contains (.,'Resource Name')]/..</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_DETAIL_RESOURCE_ACTION</td>
+	<td>//span[(@class='control-label') and contains (.,'Resource Action')]/..</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_DETAIL_USER_NAME</td>
+	<td>//span[(@class='control-label') and contains (.,'User Name')]/..</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS_DETAIL_ADDITIONAL_INFORMATION</td>
+	<td>//span[(@class='control-label') and contains (.,'Additional Information')]/..</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADVANCED_SEARCH -->
 <tr>
 	<td>ADVANCED_SEARCH_MATCH_SELECT</td>

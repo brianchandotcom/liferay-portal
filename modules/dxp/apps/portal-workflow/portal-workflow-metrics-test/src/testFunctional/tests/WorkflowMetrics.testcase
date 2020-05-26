@@ -803,8 +803,7 @@ definition {
 
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
-			key_status = "OVERDUE",
-			timesToRun = "24");
+			key_status = "OVERDUE");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -1215,8 +1214,7 @@ definition {
 
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
-			key_status = "ONTIME",
-			timesToRun = "24");
+			key_status = "ONTIME");
 
 		WorkflowMetrics.checkWorkflowReports(
 			key_onTimeValue = "1",
@@ -1449,8 +1447,7 @@ definition {
 
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
-			key_status = "OVERDUE",
-			timesToRun = "24");
+			key_status = "OVERDUE");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -1470,8 +1467,7 @@ definition {
 
 		WorkflowMetrics.waitForCompletedSLA(
 			key_expectedValue = "0",
-			key_status = "OVERDUE",
-			timesToRun = "24");
+			key_status = "OVERDUE");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
 			avgCompletionTime = "1min",
@@ -1551,8 +1547,7 @@ definition {
 
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
-			key_status = "ONTIME",
-			timesToRun = "24");
+			key_status = "ONTIME");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "1",
@@ -1569,8 +1564,7 @@ definition {
 
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
-			key_status = "OVERDUE",
-			timesToRun = "24");
+			key_status = "OVERDUE");
 
 		WorkflowMetrics.checkPendingWorkflowValues(
 			key_ontime = "0",
@@ -1789,8 +1783,7 @@ definition {
 
 		WorkflowMetrics.waitForSLA(
 			key_expectedValue = "0",
-			key_status = "OVERDUE",
-			timesToRun = "24");
+			key_status = "OVERDUE");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -1817,8 +1810,7 @@ definition {
 
 		WorkflowMetrics.waitForCompletedSLA(
 			key_expectedValue = "0",
-			key_status = "OVERDUE",
-			timesToRun = "24");
+			key_status = "OVERDUE");
 
 		WorkflowMetrics.assertChartTotalValuePerformanceByStep(
 			avgCompletionTime = "1min",
@@ -1834,6 +1826,7 @@ definition {
 	@description = "LRQA-53631 Automate LPS-97666: [Performance] View top assignee performance"
 	@priority = "5"
 	test ViewTopAsigneePerformance {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewTopAsigneePerformance";
 
@@ -1932,6 +1925,7 @@ definition {
 	@description = "LRQA-53641 Automate LPS-97669 [Dashboard] View overloaded assignees"
 	@priority = "5"
 	test ViewWorkloadByAssigneeCard {
+		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneeCard";
 

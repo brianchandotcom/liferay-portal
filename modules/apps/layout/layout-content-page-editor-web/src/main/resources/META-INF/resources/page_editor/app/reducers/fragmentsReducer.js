@@ -12,6 +12,7 @@
  * details.
  */
 
+import {config} from '../../app/config/index';
 import {ADD_FRAGMENT_COMPOSITION, INIT} from '../actions/types';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
@@ -65,33 +66,35 @@ export default function fragmentsReducer(fragments = [], action) {
 					CONTENT_DISPLAY_COLLECTION_ID
 			);
 
-			newFragments.unshift({
-				fragmentCollectionId: 'layout-elements',
-				fragmentEntries: [
-					{
-						data: {
-							itemType: LAYOUT_DATA_ITEM_TYPES.container,
+			if (config.fragmentPanelEnabled) {
+				newFragments.unshift({
+					fragmentCollectionId: 'layout-elements',
+					fragmentEntries: [
+						{
+							data: {
+								itemType: LAYOUT_DATA_ITEM_TYPES.container,
+							},
+							icon: 'table',
+							itemId: 'container',
+							label: Liferay.Language.get('section'),
+							type: 'container',
 						},
-						icon: 'table',
-						itemId: 'container',
-						label: Liferay.Language.get('section'),
-						type: 'container',
-					},
-					{
-						data: {
-							itemType: LAYOUT_DATA_ITEM_TYPES.row,
+						{
+							data: {
+								itemType: LAYOUT_DATA_ITEM_TYPES.row,
+							},
+							icon: 'table',
+							itemId: 'row',
+							label: Liferay.Language.get('row'),
+							type: 'row',
 						},
-						icon: 'table',
-						itemId: 'row',
-						label: Liferay.Language.get('row'),
-						type: 'row',
-					},
-				],
-				name: Liferay.Language.get('layout-elements'),
-			});
+					],
+					name: Liferay.Language.get('layout-elements'),
+				});
+			}
 
 			if (contentDisplayCollection) {
-				newFragments.splice(1, 0, {
+				newFragments.splice(2, 0, {
 					...contentDisplayCollection,
 
 					fragmentEntries: [

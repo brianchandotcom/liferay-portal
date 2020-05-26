@@ -19,7 +19,7 @@ import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import CollectionDisplay, {CollectionDisplayCard} from './CollectionDisplay';
+import CollectionDisplay from './CollectionDisplay';
 import FragmentCard from './FragmentCard';
 import LayoutElements from './LayoutElements';
 
@@ -86,16 +86,17 @@ export default function FragmentsSidebar() {
 											imagePreviewURL={
 												fragmentEntry.imagePreviewURL
 											}
-											key={fragmentEntry.fragmentEntryKey}
-											name={fragmentEntry.name}
+											key={
+												fragmentEntry.fragmentEntryKey ||
+												fragmentEntry.itemId
+											}
+											name={
+												fragmentEntry.label ||
+												fragmentEntry.name
+											}
 											type={fragmentEntry.type}
 										/>
 									)
-								)}
-
-								{fragmentCollection.fragmentCollectionId ===
-									CONTENT_DISPLAY_COLLECTION_ID && (
-									<CollectionDisplayCard />
 								)}
 							</div>
 						</Collapse>

@@ -249,7 +249,7 @@ definition {
 		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
 
 		AssertTextEquals(
-			locator1 = "Portlet#H3_MODAL_TITLE",
+			locator1 = "Portlet#MODAL_TITLE",
 			value1 = "Select Asset Type");
 
 		LiferayEvent.waitForLiferayEvent(
@@ -281,7 +281,7 @@ definition {
 		ManagementBar.setFilterAndOrder(filterBy = "Asset Types");
 
 		AssertTextEquals(
-			locator1 = "Portlet#H3_MODAL_TITLE",
+			locator1 = "Portlet#MODAL_TITLE",
 			value1 = "Select Asset Type");
 
 		LiferayEvent.waitForLiferayEvent(

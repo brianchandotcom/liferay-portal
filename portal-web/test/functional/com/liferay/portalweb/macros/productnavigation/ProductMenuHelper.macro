@@ -61,10 +61,10 @@ definition {
 	}
 
 	macro openWorkspace {
-		if (IsElementNotPresent(locator1 = "Portlet#H3_MODAL_TITLE")) {
+		if (IsElementNotPresent(locator1 = "Portlet#MODAL_TITLE")) {
 			Click(locator1 = "ProductMenu#CHANGE_SPACE_ICON");
 
-			AssertVisible(locator1 = "Portlet#H3_MODAL_TITLE");
+			AssertVisible(locator1 = "Portlet#MODAL_TITLE");
 		}
 	}
 

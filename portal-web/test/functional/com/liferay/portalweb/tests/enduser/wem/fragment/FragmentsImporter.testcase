@@ -1021,37 +1021,46 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		PageEditor.addFragment(
-			collectionName = "Collection Name",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+		task ("Assert changes from fragment are propagated to composition of fragment") {
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "New Fragment Name",
+				withSection = "true");
 
-		AssertElementPresent(
-			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
-			key_position = "1",
-			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+			AssertElementPresent(
+				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
+				key_position = "1",
+				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
 
-		AssertElementPresent(
-			key_color = "success",
-			key_text = "Here we go",
-			locator1 = "Button#ANY_WITH_COLOR");
+			AssertElementPresent(
+				key_color = "success",
+				key_text = "Here we go",
+				locator1 = "Button#ANY_WITH_COLOR");
 
-		AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__fragment-content')][contains(.,'border: solid violet')]");
+			AssertElementPresent(locator1 = "//div[contains(@class,'page-editor__fragment-content')][contains(.,'border: solid violet')]");
 
-		PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
+			PageEditor.gotoConfiguration(fragmentName = "Fragment Name");
 
-		// This is a bug filed in LPS-112814
+			AssertTextEquals(
+				key_fieldLabel = "Button Text",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Go Somewhere");
 
-		AssertTextEquals(
-			key_fieldLabel = "Button Text",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "Description");
+			AssertClick(
+				locator1 = "Button#RESTORE_VALUES",
+				value1 = "Restore Values");
 
-		ClickNoError(
-			key_text = "Here we go",
-			locator1 = "Button#ANY");
+			AssertTextEquals(
+				key_fieldLabel = "Button Text",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Description");
 
-		AssertConfirm(value1 = "Here we go");
+			ClickNoError(
+				key_text = "Here we go",
+				locator1 = "Button#ANY");
+
+			AssertConfirm(value1 = "Here we go");
+		}
 	}
 
 	@description = "This is a test case for LPS-101256. Can edit inline content of fragment in composition."

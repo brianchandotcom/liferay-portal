@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -54,7 +55,7 @@ public class ConfigurationHandlerTest {
 	@Test
 	public void testWriteByte() throws IOException {
 		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, Byte.valueOf("10")),
+			MapUtil.singletonDictionary(_TEST_KEY, (byte)10),
 			_TEST_KEY.concat("=X\"10\"\r\n"));
 	}
 
@@ -137,13 +138,10 @@ public class ConfigurationHandlerTest {
 			Dictionary<String, Object> properties, String line)
 		throws IOException {
 
-		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream()) {
+		try (OutputStream outputStream = new UnsyncByteArrayOutputStream()) {
+			ConfigurationHandler.write(outputStream, properties);
 
-			ConfigurationHandler.write(unsyncByteArrayOutputStream, properties);
-
-			Assert.assertEquals(
-				line, new String(unsyncByteArrayOutputStream.toByteArray()));
+			Assert.assertEquals(line, outputStream.toString());
 		}
 	}
 

@@ -94,8 +94,18 @@ public class ColTag extends BaseContainerTag {
 		return _START_PAGE;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
+		return processCssClass(className);
+	}
+
+	@Override
+	protected String processCssClass(Set<String> className) {
 		if (Validator.isNotNull(_size)) {
 			className.add("col-" + _size);
 		}
@@ -120,7 +130,7 @@ public class ColTag extends BaseContainerTag {
 			className.add("col");
 		}
 
-		return super.processClassName(className);
+		return super.processCssClass(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:col:";

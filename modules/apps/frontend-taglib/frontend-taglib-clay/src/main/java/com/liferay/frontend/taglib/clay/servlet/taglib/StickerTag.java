@@ -169,8 +169,18 @@ public class StickerTag extends BaseContainerTag {
 		return _START_PAGE;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
+		return processCssClass(className);
+	}
+
+	@Override
+	protected String processCssClass(Set<String> className) {
 		className.add("sticker");
 
 		if (Validator.isNotNull(_displayType)) {
@@ -193,7 +203,7 @@ public class StickerTag extends BaseContainerTag {
 			className.add("sticker-" + _size);
 		}
 
-		return super.processClassName(className);
+		return super.processCssClass(className);
 	}
 
 	@Override

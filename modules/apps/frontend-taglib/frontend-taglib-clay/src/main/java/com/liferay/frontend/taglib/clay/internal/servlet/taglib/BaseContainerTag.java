@@ -34,8 +34,13 @@ import javax.servlet.jsp.PageContext;
  */
 public class BaseContainerTag extends IncludeTag {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getCssClass()}
+	 */
+	@Deprecated
 	public String getClassName() {
-		return _className;
+		return getCssClass();
 	}
 
 	/**
@@ -58,6 +63,10 @@ public class BaseContainerTag extends IncludeTag {
 		return _contributorKey;
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
@@ -76,19 +85,24 @@ public class BaseContainerTag extends IncludeTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getClassName()}
+	 *             #getCssClass()}
 	 */
 	@Deprecated
 	public String getElementClasses() {
-		return getClassName();
+		return getCssClass();
 	}
 
 	public String getId() {
 		return _id;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setCssClass(String)}
+	 */
+	@Deprecated
 	public void setClassName(String className) {
-		_className = className;
+		setCssClass(className);
 	}
 
 	/**
@@ -111,6 +125,10 @@ public class BaseContainerTag extends IncludeTag {
 		_contributorKey = contributorKey;
 	}
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
@@ -129,11 +147,11 @@ public class BaseContainerTag extends IncludeTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setClassName(String)}
+	 *             #setCssClass(String)}
 	 */
 	@Deprecated
 	public void setElementClasses(String elementClasses) {
-		setClassName(elementClasses);
+		setCssClass(elementClasses);
 	}
 
 	public void setId(String id) {
@@ -151,10 +169,10 @@ public class BaseContainerTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_className = null;
 		_componentId = null;
 		_containerElement = null;
 		_contributorKey = null;
+		_cssClass = null;
 		_data = null;
 		_defaultEventHandler = null;
 		_elementClasses = null;
@@ -166,12 +184,21 @@ public class BaseContainerTag extends IncludeTag {
 		return _CLEAN_UP_SET_ATTRIBUTES;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	protected String processClassName(Set<String> className) {
-		if (Validator.isNotNull(_className)) {
-			className.addAll(StringUtil.split(_className, CharPool.SPACE));
+		return processCssClass(className);
+	}
+
+	protected String processCssClass(Set<String> cssClass) {
+		if (Validator.isNotNull(_cssClass)) {
+			cssClass.addAll(StringUtil.split(_cssClass, CharPool.SPACE));
 		}
 
-		return StringUtil.merge(className, StringPool.SPACE);
+		return StringUtil.merge(cssClass, StringPool.SPACE);
 	}
 
 	@Override
@@ -196,7 +223,7 @@ public class BaseContainerTag extends IncludeTag {
 		jspWriter.write("<");
 		jspWriter.write(_containerElement);
 		jspWriter.write(" class=\"");
-		jspWriter.write(processClassName(new LinkedHashSet<>()));
+		jspWriter.write(processCssClass(new LinkedHashSet<>()));
 		jspWriter.write("\"");
 
 		if (Validator.isNotNull(_id)) {
@@ -223,10 +250,10 @@ public class BaseContainerTag extends IncludeTag {
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
-	private String _className;
 	private String _componentId;
 	private String _containerElement;
 	private String _contributorKey;
+	private String _cssClass;
 	private Map<String, String> _data;
 	private String _defaultEventHandler;
 	private String _elementClasses;

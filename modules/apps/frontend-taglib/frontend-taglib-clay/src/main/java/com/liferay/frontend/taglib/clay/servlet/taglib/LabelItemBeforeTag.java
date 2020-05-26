@@ -46,12 +46,22 @@ public class LabelItemBeforeTag extends BaseContainerTag {
 		return _START_PAGE;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
+		return processCssClass(className);
+	}
+
+	@Override
+	protected String processCssClass(Set<String> className) {
 		className.add("label-item");
 		className.add("label-item-before");
 
-		return super.processClassName(className);
+		return super.processCssClass(className);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =

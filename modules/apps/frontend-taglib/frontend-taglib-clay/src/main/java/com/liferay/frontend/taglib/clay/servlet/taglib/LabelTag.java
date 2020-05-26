@@ -201,8 +201,18 @@ public class LabelTag extends BaseContainerTag {
 		return _START_PAGE;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
+		return processCssClass(className);
+	}
+
+	@Override
+	protected String processCssClass(Set<String> className) {
 		className.add("label");
 		className.add("label-" + _displayType);
 
@@ -214,7 +224,7 @@ public class LabelTag extends BaseContainerTag {
 			className.add("label-lg");
 		}
 
-		return super.processClassName(className);
+		return super.processCssClass(className);
 	}
 
 	@Override

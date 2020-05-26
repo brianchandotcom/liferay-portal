@@ -42,12 +42,14 @@ public interface AppResource {
 
 	public Page<App> getAppsPage(
 			Boolean active, String[] deploymentTypes, String keywords,
-			Long[] userIds, Pagination pagination, String sortString)
+			String scope, Long[] userIds, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAppsPageHttpResponse(
 			Boolean active, String[] deploymentTypes, String keywords,
-			Long[] userIds, Pagination pagination, String sortString)
+			String scope, Long[] userIds, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public void deleteApp(Long appId) throws Exception;
@@ -89,13 +91,13 @@ public interface AppResource {
 		throws Exception;
 
 	public Page<App> getDataDefinitionAppsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination,
-			String sortString)
+			Long dataDefinitionId, String keywords, String scope,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getDataDefinitionAppsPageHttpResponse(
-			Long dataDefinitionId, String keywords, Pagination pagination,
-			String sortString)
+			Long dataDefinitionId, String keywords, String scope,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public App postDataDefinitionApp(Long dataDefinitionId, App app)
@@ -106,12 +108,12 @@ public interface AppResource {
 		throws Exception;
 
 	public Page<App> getSiteAppsPage(
-			Long siteId, String keywords, Pagination pagination,
+			Long siteId, String keywords, String scope, Pagination pagination,
 			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteAppsPageHttpResponse(
-			Long siteId, String keywords, Pagination pagination,
+			Long siteId, String keywords, String scope, Pagination pagination,
 			String sortString)
 		throws Exception;
 
@@ -172,11 +174,12 @@ public interface AppResource {
 
 		public Page<App> getAppsPage(
 				Boolean active, String[] deploymentTypes, String keywords,
-				Long[] userIds, Pagination pagination, String sortString)
+				String scope, Long[] userIds, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getAppsPageHttpResponse(
-				active, deploymentTypes, keywords, userIds, pagination,
+				active, deploymentTypes, keywords, scope, userIds, pagination,
 				sortString);
 
 			String content = httpResponse.getContent();
@@ -201,7 +204,8 @@ public interface AppResource {
 
 		public HttpInvoker.HttpResponse getAppsPageHttpResponse(
 				Boolean active, String[] deploymentTypes, String keywords,
-				Long[] userIds, Pagination pagination, String sortString)
+				String scope, Long[] userIds, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -238,6 +242,10 @@ public interface AppResource {
 
 			if (keywords != null) {
 				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (scope != null) {
+				httpInvoker.parameter("scope", String.valueOf(scope));
 			}
 
 			if (userIds != null) {
@@ -660,13 +668,13 @@ public interface AppResource {
 		}
 
 		public Page<App> getDataDefinitionAppsPage(
-				Long dataDefinitionId, String keywords, Pagination pagination,
-				String sortString)
+				Long dataDefinitionId, String keywords, String scope,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getDataDefinitionAppsPageHttpResponse(
-					dataDefinitionId, keywords, pagination, sortString);
+					dataDefinitionId, keywords, scope, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -689,8 +697,8 @@ public interface AppResource {
 		}
 
 		public HttpInvoker.HttpResponse getDataDefinitionAppsPageHttpResponse(
-				Long dataDefinitionId, String keywords, Pagination pagination,
-				String sortString)
+				Long dataDefinitionId, String keywords, String scope,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -716,6 +724,10 @@ public interface AppResource {
 
 			if (keywords != null) {
 				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (scope != null) {
+				httpInvoker.parameter("scope", String.valueOf(scope));
 			}
 
 			if (pagination != null) {
@@ -807,12 +819,12 @@ public interface AppResource {
 		}
 
 		public Page<App> getSiteAppsPage(
-				Long siteId, String keywords, Pagination pagination,
-				String sortString)
+				Long siteId, String keywords, String scope,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getSiteAppsPageHttpResponse(
-				siteId, keywords, pagination, sortString);
+				siteId, keywords, scope, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -835,8 +847,8 @@ public interface AppResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteAppsPageHttpResponse(
-				Long siteId, String keywords, Pagination pagination,
-				String sortString)
+				Long siteId, String keywords, String scope,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -862,6 +874,10 @@ public interface AppResource {
 
 			if (keywords != null) {
 				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (scope != null) {
+				httpInvoker.parameter("scope", String.valueOf(scope));
 			}
 
 			if (pagination != null) {

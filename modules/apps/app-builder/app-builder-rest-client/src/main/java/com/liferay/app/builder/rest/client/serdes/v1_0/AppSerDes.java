@@ -183,6 +183,20 @@ public class AppSerDes {
 			sb.append(_toJSON(app.getName()));
 		}
 
+		if (app.getScope() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scope\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(app.getScope()));
+
+			sb.append("\"");
+		}
+
 		if (app.getSiteId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -301,6 +315,13 @@ public class AppSerDes {
 			map.put("name", String.valueOf(app.getName()));
 		}
 
+		if (app.getScope() == null) {
+			map.put("scope", null);
+		}
+		else {
+			map.put("scope", String.valueOf(app.getScope()));
+		}
+
 		if (app.getSiteId() == null) {
 			map.put("siteId", null);
 		}
@@ -395,6 +416,11 @@ public class AppSerDes {
 				if (jsonParserFieldValue != null) {
 					app.setName(
 						(Map)AppSerDes.toMap((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "scope")) {
+				if (jsonParserFieldValue != null) {
+					app.setScope((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {

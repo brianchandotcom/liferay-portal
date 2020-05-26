@@ -337,6 +337,34 @@ public class App {
 	protected Map<String, Object> name;
 
 	@Schema
+	public String getScope() {
+		return scope;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+
+	@JsonIgnore
+	public void setScope(
+		UnsafeSupplier<String, Exception> scopeUnsafeSupplier) {
+
+		try {
+			scope = scopeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String scope;
+
+	@Schema
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -542,6 +570,20 @@ public class App {
 			sb.append("\"name\": ");
 
 			sb.append(_toJSON(name));
+		}
+
+		if (scope != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scope\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(scope));
+
+			sb.append("\"");
 		}
 
 		if (siteId != null) {

@@ -50,7 +50,8 @@ public class RESTBuilderDefaultsPlugin
 			GradleUtil.getTaskProvider(
 				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME, Copy.class);
 
-		_configureTaskProcessResources(project, processResourcesTaskProvider);
+		_configureTaskProcessResourcesProvider(
+			project, processResourcesTaskProvider);
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class RESTBuilderDefaultsPlugin
 	}
 
 	@SuppressWarnings("serial")
-	private void _configureTaskProcessResources(
+	private void _configureTaskProcessResourcesProvider(
 		final Project project,
 		TaskProvider<Copy> processResourcesTaskProvider) {
 

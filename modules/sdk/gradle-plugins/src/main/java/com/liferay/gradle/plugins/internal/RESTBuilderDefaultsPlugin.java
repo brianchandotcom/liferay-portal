@@ -16,17 +16,18 @@ package com.liferay.gradle.plugins.internal;
 
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.rest.builder.BuildRESTTask;
 import com.liferay.gradle.plugins.rest.builder.RESTBuilderPlugin;
 import com.liferay.gradle.plugins.util.PortalTools;
 
 import groovy.lang.Closure;
 
+import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.TaskProvider;
 
 /**
  * @author Peter Shin
@@ -45,10 +46,11 @@ public class RESTBuilderDefaultsPlugin
 			project, RESTBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
 
-		BuildRESTTask buildRESTTask = (BuildRESTTask)GradleUtil.getTask(
-			project, RESTBuilderPlugin.BUILD_REST_TASK_NAME);
+		TaskProvider<Copy> processResourcesTaskProvider =
+			GradleUtil.getTaskProvider(
+				project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME, Copy.class);
 
-		_configureTaskProcessResources(buildRESTTask);
+		_configureTaskProcessResources(project, processResourcesTaskProvider);
 	}
 
 	@Override
@@ -60,20 +62,26 @@ public class RESTBuilderDefaultsPlugin
 	}
 
 	@SuppressWarnings("serial")
-	private void _configureTaskProcessResources(BuildRESTTask buildRESTTask) {
-		final Project project = buildRESTTask.getProject();
+	private void _configureTaskProcessResources(
+		final Project project,
+		TaskProvider<Copy> processResourcesTaskProvider) {
 
-		Copy copy = (Copy)GradleUtil.getTask(
-			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
+		processResourcesTaskProvider.configure(
+			new Action<Copy>() {
 
-		copy.into(
-			"META-INF/liferay/rest",
-			new Closure<Void>(copy) {
+				@Override
+				public void execute(Copy processResourcesTask) {
+					processResourcesTask.into(
+						"META-INF/liferay/rest",
+						new Closure<Void>(processResourcesTask) {
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.from(project.getProjectDir());
-					copySpec.include("*.yaml");
+							@SuppressWarnings("unused")
+							public void doCall(CopySpec copySpec) {
+								copySpec.from(project.getProjectDir());
+								copySpec.include("*.yaml");
+							}
+
+						});
 				}
 
 			});

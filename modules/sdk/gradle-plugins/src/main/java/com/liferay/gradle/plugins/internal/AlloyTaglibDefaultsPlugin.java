@@ -43,7 +43,15 @@ public class AlloyTaglibDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, AlloyTaglibPlugin alloyTaglibPlugin) {
 
-		_addPortalToolDependencies(project);
+		_addPortalToolConfiguration(project);
+
+		PortalTools.addPortalToolDependencies(
+			project, _PORTAL_TOOL_CONFIGURATION_NAME, _PORTAL_TOOL_GROUP,
+			PORTAL_TOOL_NAME);
+
+		GradleUtil.addDependency(
+			project, _PORTAL_TOOL_CONFIGURATION_NAME, "org.freemarker",
+			"freemarker", "2.3.23");
 
 		_configureTasksBuildTaglibs(project);
 	}
@@ -88,18 +96,6 @@ public class AlloyTaglibDefaultsPlugin
 		configuration.extendsFrom(runtimeConfiguration);
 
 		return configuration;
-	}
-
-	private void _addPortalToolDependencies(Project project) {
-		_addPortalToolConfiguration(project);
-
-		PortalTools.addPortalToolDependencies(
-			project, _PORTAL_TOOL_CONFIGURATION_NAME, _PORTAL_TOOL_GROUP,
-			PORTAL_TOOL_NAME);
-
-		GradleUtil.addDependency(
-			project, _PORTAL_TOOL_CONFIGURATION_NAME, "org.freemarker",
-			"freemarker", "2.3.23");
 	}
 
 	private void _configureTaskBuildTaglibs(BuildTaglibsTask buildTaglibsTask) {

@@ -324,18 +324,30 @@ definition {
 	}
 
 	macro configureWorkflow {
+		var key_workflowResourceValue = "${workflowResourceValue}";
+
 		AssertClick.pauseAssertTextClickAt(
 			key_rowEntry = "${workflowResourceValue}",
 			locator1 = "Button#EDIT_ROW",
 			value1 = "Edit");
 
+		if (IsNotVisible(locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT")) {
+
+			Refresh();
+
+			WaitForSPARefresh();
+
+			AssertClick.pauseAssertTextClickAt(
+				key_rowEntry = "${workflowResourceValue}",
+				locator1 = "Button#EDIT_ROW",
+				value1 = "Edit");
+		}
+
 		Select(
-			key_workflowResourceValue = "${workflowResourceValue}",
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SELECT",
 			value1 = "${workflowDefinition}");
 
 		AssertClick(
-			key_workflowResourceValue = "${workflowResourceValue}",
 			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_SAVE",
 			value1 = "Save");
 

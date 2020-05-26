@@ -361,6 +361,11 @@ definition {
 			Pause(locator1 = "1000");
 		}
 
+		if (IsElementNotPresent(locator1 = "WorkflowMetricsIndex#METRICS_INDEX_SETTINGS")) {
+
+			echo("timeout exceeded");
+		}
+
 		Click(locator1 = "WorkflowMetricsIndex#METRICS_INDEX_SETTINGS");
 
 		if ("${actionDescription}" == "Workflow Indexes") {
@@ -499,7 +504,12 @@ definition {
 				panel = "Control Panel",
 				portlet = "Metrics");
 
-			Pause(locator1 = "1000");
+			Pause(locator1 = "6000");
+		}
+
+		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME")) {
+
+			echo("timeout exceeded");
 		}
 
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKFLOW_PROCESS_NAME");
@@ -613,7 +623,12 @@ definition {
 
 			Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_VIEW_STEPS_DROPDOWN");
 
-			Pause(locator1 = "1000");
+			Pause(locator1 = "6000");
+		}
+
+		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_${velocityUnit}")) {
+
+			echo("timeout exceeded");
 		}
 
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_ASSIGNEE_DROPDOWN_STEP_${velocityUnit}");
@@ -631,6 +646,20 @@ definition {
 
 		for (var key_workflowStep : list "${workflowStep}") {
 			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
+
+			while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION") && (maxIterations = "10")) {
+
+				Refresh();
+
+				Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER");
+
+				Pause(locator1 = "6000");
+			}
+
+			if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION")) {
+
+				echo("timeout exceeded");
+			}
 
 			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION");
 
@@ -652,6 +681,11 @@ definition {
 			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
 
 			Pause(locator1 = "1000");
+		}
+
+		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION")) {
+
+			echo("timeout exceeded");
 		}
 
 		Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION");
@@ -972,7 +1006,7 @@ definition {
 
 	macro waitForCompletedSLA {
 
-		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "${timesToRun}")) {
+		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "24")) {
 
 			echo("Waiting 5 seconds, until the Completed SLA shows up");
 
@@ -984,13 +1018,14 @@ definition {
 		}
 
 		if (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}")) {
+
 			echo("timeout exceeded");
 		}
 	}
 
 	macro waitForSLA {
 
-		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "${timesToRun}")) {
+		while (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}") && (maxIterations = "24")) {
 
 			echo("Waiting 5 seconds to recheck");
 
@@ -1000,6 +1035,7 @@ definition {
 		}
 
 		if (IsTextEqual(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_status}_ITEMS_VALUE", value1 = "${key_expectedValue}")) {
+
 			echo("timeout exceeded");
 		}
 	}

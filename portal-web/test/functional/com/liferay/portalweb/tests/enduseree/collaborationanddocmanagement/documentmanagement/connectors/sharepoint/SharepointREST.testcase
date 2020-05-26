@@ -201,6 +201,8 @@ definition {
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
 		DMFolder.addCP(dmFolderName = "DM Folder3 Name");
 
 		DMFolder.viewCP(dmFolderName = "DM Folder3 Name");
@@ -262,6 +264,8 @@ definition {
 		property test.name.skip.portal.instance = "SharepointREST#DeleteSubfolder";
 
 		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
@@ -342,6 +346,8 @@ definition {
 
 		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
 
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
 		DMFolder.addCP(dmFolderName = "Sharepoint Subfolder");
 
 		DMFolder.viewCP(dmFolderName = "Sharepoint Subfolder");
@@ -386,6 +392,8 @@ definition {
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		DMDocument.moveToSubFolderCP(
 			dmDocumentTitle = "Document_1.txt",

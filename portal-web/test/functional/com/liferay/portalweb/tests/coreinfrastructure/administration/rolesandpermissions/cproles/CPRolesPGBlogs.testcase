@@ -1471,6 +1471,8 @@ definition {
 
 	@priority = "4"
 	test SubscribeBlogsSiteRoleInline {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpSiteMemberRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",

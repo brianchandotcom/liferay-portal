@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -322,7 +323,8 @@ public class MessageBoardSectionResourceImpl
 				id = mbCategory.getCategoryId();
 				numberOfMessageBoardSections =
 					_mbCategoryService.getCategoriesCount(
-						mbCategory.getGroupId(), mbCategory.getCategoryId());
+						mbCategory.getGroupId(), mbCategory.getCategoryId(),
+						WorkflowConstants.STATUS_APPROVED);
 				numberOfMessageBoardThreads = mbCategory.getThreadCount();
 				siteId = mbCategory.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(

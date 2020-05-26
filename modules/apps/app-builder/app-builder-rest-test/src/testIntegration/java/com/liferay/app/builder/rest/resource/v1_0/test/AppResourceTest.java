@@ -14,6 +14,7 @@
 
 package com.liferay.app.builder.rest.resource.v1_0.test;
 
+import com.liferay.app.builder.constants.AppBuilderAppConstants;
 import com.liferay.app.builder.rest.client.dto.v1_0.App;
 import com.liferay.app.builder.rest.client.dto.v1_0.AppDeployment;
 import com.liferay.app.builder.rest.client.pagination.Page;
@@ -129,6 +130,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 		Page<App> page = appResource.getAppsPage(
 			true, new String[] {"productMenu"}, StringPool.BLANK,
+			AppBuilderAppConstants.SCOPE_STANDARD,
 			new Long[] {testGroup.getCreatorUserId()}, Pagination.of(1, 10),
 			null);
 
@@ -139,6 +141,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 		page = appResource.getAppsPage(
 			false, new String[] {"productMenu"}, StringPool.BLANK,
+			AppBuilderAppConstants.SCOPE_STANDARD,
 			new Long[] {testGroup.getCreatorUserId()}, Pagination.of(1, 10),
 			null);
 
@@ -146,7 +149,8 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 		page = appResource.getAppsPage(
 			null, new String[] {"productMenu", "standalone"}, StringPool.BLANK,
-			null, Pagination.of(1, 10), null);
+			AppBuilderAppConstants.SCOPE_STANDARD, null, Pagination.of(1, 10),
+			null);
 
 		Assert.assertEquals(3, page.getTotalCount());
 
@@ -154,7 +158,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 			Arrays.asList(app1, app2, app3), (List<App>)page.getItems());
 
 		page = appResource.getAppsPage(
-			null, null, StringPool.BLANK,
+			null, null, StringPool.BLANK, AppBuilderAppConstants.SCOPE_STANDARD,
 			new Long[] {TestPropsValues.getUserId()}, Pagination.of(1, 10),
 			null);
 
@@ -164,8 +168,8 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 			Arrays.asList(app1, app2, app3), (List<App>)page.getItems());
 
 		page = appResource.getAppsPage(
-			null, null, StringPool.BLANK, new Long[] {1L}, Pagination.of(1, 10),
-			null);
+			null, null, StringPool.BLANK, AppBuilderAppConstants.SCOPE_STANDARD,
+			new Long[] {1L}, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 	}
@@ -231,6 +235,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 				dataDefinitionName = _ddmStructure.getName(LocaleUtil.US);
 				dataLayoutId = _ddmStructureLayout.getStructureLayoutId();
 				dataListViewId = _deDataListView.getDeDataListViewId();
+				scope = AppBuilderAppConstants.SCOPE_STANDARD;
 				siteId = _ddmStructure.getGroupId();
 				userId = testGroup.getCreatorUserId();
 			}
@@ -243,6 +248,7 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 
 		randomIrrelevantApp.setDataDefinitionId(
 			_irrelevantDDMStructure.getStructureId());
+		randomIrrelevantApp.setScope(AppBuilderAppConstants.SCOPE_STANDARD);
 
 		return randomIrrelevantApp;
 	}

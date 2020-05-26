@@ -159,10 +159,10 @@ definition {
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Web Content Display");
 
-		var key_teamName = "Site Team Name";
+		var key_roleName = "Site Team Name";
 
 		AssertTextEquals(
-			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME",
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ROLE_NAME",
 			value1 = "Team Site Team Name");
 
 		User.logoutPG();
@@ -175,10 +175,10 @@ definition {
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Web Content Display");
 
-		var key_teamName = "Site Team Name";
+		var key_roleName = "Site Team Name";
 
 		AssertTextEquals(
-			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_TEAM_ROLE_NAME",
+			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_ROLE_NAME",
 			value1 = "Team Site Team Name");
 
 		Navigator.openURL();

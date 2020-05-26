@@ -578,7 +578,7 @@ definition {
 				locator1 = "APConfigurationSites#SITES_TABLE_TYPE",
 				value1 = "${siteScopeType}");
 
-			ClickNoError(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
+			Click(locator1 = "SitesSelectSite#SITES_TABLE_CHOOSE_SITE_LINK");
 
 			if (IsElementPresent(locator1 = "IFrame#SELECT_SITES")) {
 				IFrame.closeFrame();

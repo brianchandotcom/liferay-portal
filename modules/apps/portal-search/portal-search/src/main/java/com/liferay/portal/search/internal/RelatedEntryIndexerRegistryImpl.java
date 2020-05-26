@@ -52,7 +52,7 @@ public class RelatedEntryIndexerRegistryImpl
 	}
 
 	@Override
-	public List<RelatedEntryIndexer> getRelatedEntryIndexers(Class clazz) {
+	public List<RelatedEntryIndexer> getRelatedEntryIndexers(Class<?> clazz) {
 		return serviceTrackerMap.getService(clazz.getName());
 	}
 

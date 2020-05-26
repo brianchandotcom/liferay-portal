@@ -27,7 +27,7 @@ public class GCloudVisionAssetAutoTagProviderCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return GCloudVisionAssetAutoTagProviderCompanyConfiguration.class;
 	}
 

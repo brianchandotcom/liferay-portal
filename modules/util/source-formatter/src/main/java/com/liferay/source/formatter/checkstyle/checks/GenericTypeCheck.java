@@ -21,6 +21,7 @@ import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
@@ -29,6 +30,7 @@ import com.liferay.source.formatter.util.FileUtil;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
@@ -92,22 +94,26 @@ public class GenericTypeCheck extends BaseCheck {
 
 		String genericTypeName = _getGenericTypeName(typeDetailAST);
 
-		if ((genericTypeName == null) ||
-			((detailAST.getType() == TokenTypes.METHOD_DEF) &&
-			 AnnotationUtil.containsAnnotation(detailAST, "Override"))) {
-
+		if (genericTypeName == null) {
 			return;
 		}
 
-		if (detailAST.getType() == TokenTypes.PARAMETER_DEF) {
-			DetailAST parentDetailAST = getParentWithTokenType(
-				detailAST, TokenTypes.METHOD_DEF, TokenTypes.CTOR_DEF);
-
-			if ((parentDetailAST != null) &&
-				AnnotationUtil.containsAnnotation(
-					parentDetailAST, "Override")) {
+		if (!genericTypeName.startsWith("com.liferay.")) {
+			if ((detailAST.getType() == TokenTypes.METHOD_DEF) &&
+				_overridesUnknownTerm(detailAST)) {
 
 				return;
+			}
+
+			if (detailAST.getType() == TokenTypes.PARAMETER_DEF) {
+				DetailAST parentDetailAST = getParentWithTokenType(
+					detailAST, TokenTypes.METHOD_DEF, TokenTypes.CTOR_DEF);
+
+				if ((parentDetailAST != null) &&
+					_overridesUnknownTerm(parentDetailAST)) {
+
+					return;
+				}
 			}
 		}
 
@@ -235,6 +241,71 @@ public class GenericTypeCheck extends BaseCheck {
 		return false;
 	}
 
+	private boolean _overridesUnknownTerm(DetailAST detailAST) {
+		if (!AnnotationUtil.containsAnnotation(detailAST, "Override")) {
+			return false;
+		}
+
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		parentDetailAST = parentDetailAST.getParent();
+
+		if ((parentDetailAST.getType() != TokenTypes.CLASS_DEF) ||
+			(parentDetailAST.findFirstToken(TokenTypes.EXTENDS_CLAUSE) !=
+				null)) {
+
+			return true;
+		}
+
+		DetailAST implementsClauseDetailAST = parentDetailAST.findFirstToken(
+			TokenTypes.IMPLEMENTS_CLAUSE);
+
+		if (implementsClauseDetailAST == null) {
+			return false;
+		}
+
+		List<String> importNames = getImportNames(detailAST);
+
+		DetailAST childDetailAST = implementsClauseDetailAST.getFirstChild();
+
+		while (true) {
+			if (childDetailAST == null) {
+				return false;
+			}
+
+			if (childDetailAST.getType() == TokenTypes.IDENT) {
+				String implementedClassName = childDetailAST.getText();
+
+				if (ArrayUtil.contains(
+						_JAVA_LANG_INTERFACE_NAMES, implementedClassName)) {
+
+					return true;
+				}
+
+				for (String importName : importNames) {
+					if (importName.endsWith("." + implementedClassName)) {
+						if (!importName.startsWith("com.liferay.")) {
+							return true;
+						}
+
+						break;
+					}
+				}
+			}
+			else if (childDetailAST.getType() == TokenTypes.DOT) {
+				FullIdent fullIdent = FullIdent.createFullIdent(childDetailAST);
+
+				String implementedClassName = fullIdent.getText();
+
+				if (!implementedClassName.startsWith("com.liferay.")) {
+					return true;
+				}
+			}
+
+			childDetailAST = childDetailAST.getNextSibling();
+		}
+	}
+
 	private void _populateGenericTypeNames(
 		DetailAST typeDetailAST, List<DetailAST> typeArgumentDetailASTList) {
 
@@ -312,6 +383,11 @@ public class GenericTypeCheck extends BaseCheck {
 
 	private static final String _GENERIC_TYPE_NAMES_FILE_NAME =
 		"generic-type-names.json";
+
+	private static final String[] _JAVA_LANG_INTERFACE_NAMES = {
+		"Appendable", "AutoCloseable", "CharSequence", "Cloneable",
+		"Comparable", "Iterable", "Readable", "Runnable"
+	};
 
 	private static final String _MSG_PARAMETERIZE_GENERIC_TYPE =
 		"generic.type.parameterize";

@@ -135,7 +135,7 @@ public abstract class BaseItemSelectorCriterionHandler
 		_serviceTrackerMap;
 
 	private class ItemSelectorViewServiceReferenceMapper
-		implements ServiceReferenceMapper<Class, ItemSelectorView> {
+		implements ServiceReferenceMapper<Class<?>, ItemSelectorView> {
 
 		public ItemSelectorViewServiceReferenceMapper(
 			BundleContext bundleContext) {
@@ -146,7 +146,7 @@ public abstract class BaseItemSelectorCriterionHandler
 		@Override
 		public void map(
 			ServiceReference<ItemSelectorView> serviceReference,
-			Emitter<Class> emitter) {
+			Emitter<Class<?>> emitter) {
 
 			ItemSelectorView itemSelectorView = _bundleContext.getService(
 				serviceReference);

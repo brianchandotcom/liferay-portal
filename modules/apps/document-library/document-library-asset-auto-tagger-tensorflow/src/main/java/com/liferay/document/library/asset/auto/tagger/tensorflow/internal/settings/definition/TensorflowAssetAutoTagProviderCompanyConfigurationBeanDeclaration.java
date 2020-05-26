@@ -27,7 +27,7 @@ public class TensorflowAssetAutoTagProviderCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return TensorFlowImageAssetAutoTagProviderCompanyConfiguration.class;
 	}
 

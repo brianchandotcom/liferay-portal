@@ -27,7 +27,7 @@ public class LayoutSEOConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return LayoutSEOCompanyConfiguration.class;
 	}
 

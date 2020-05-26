@@ -27,7 +27,7 @@ public class AssetAutoTaggerCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return AssetAutoTaggerCompanyConfiguration.class;
 	}
 

@@ -33,14 +33,14 @@ import org.osgi.service.component.annotations.Component;
 	service = ExpressionConvert.class
 )
 public class PredicateExpressionConvertImpl
-	implements ExpressionConvert<Predicate> {
+	implements ExpressionConvert<Predicate<?>> {
 
 	@Override
-	public Predicate convert(
+	public Predicate<?> convert(
 			Expression expression, Locale locale, EntityModel entityModel)
 		throws ExpressionVisitException {
 
-		return (Predicate)expression.accept(
+		return (Predicate<?>)expression.accept(
 			new PredicateExpressionVisitorImpl(entityModel));
 	}
 

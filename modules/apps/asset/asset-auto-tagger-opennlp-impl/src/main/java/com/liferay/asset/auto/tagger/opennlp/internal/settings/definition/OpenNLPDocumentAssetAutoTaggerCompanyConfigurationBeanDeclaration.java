@@ -27,7 +27,7 @@ public class OpenNLPDocumentAssetAutoTaggerCompanyConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return OpenNLPDocumentAssetAutoTaggerCompanyConfiguration.class;
 	}
 

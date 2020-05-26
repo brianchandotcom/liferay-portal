@@ -56,6 +56,26 @@ public final class ServiceReferenceMapperFactory {
 		};
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #createFromBiFunction(BiFunction)}
+	 */
+	@Deprecated
+	public static <K, S> Function<BundleContext, ServiceReferenceMapper<K, S>>
+		createFromFunction(BiFunction<ServiceReference<S>, S, K> function) {
+
+		return bundleContext -> (serviceReference, emitter) -> {
+			S service = bundleContext.getService(serviceReference);
+
+			try {
+				emitter.emit(function.apply(serviceReference, service));
+			}
+			catch (Exception exception) {
+				bundleContext.ungetService(serviceReference);
+			}
+		};
+	}
+
 	public static <K, S> ServiceReferenceMapper<K, S> createFromFunction(
 		final BundleContext bundleContext, final Function<S, K> function) {
 

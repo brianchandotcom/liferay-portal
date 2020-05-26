@@ -166,7 +166,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentEntryImpl.class);
 
-	private String _icon = "picture";
+	private String _icon = "code";
 	private String _imagePreviewURL;
 
 }

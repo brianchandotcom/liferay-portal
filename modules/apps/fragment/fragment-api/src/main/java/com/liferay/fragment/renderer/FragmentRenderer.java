@@ -42,7 +42,7 @@ public interface FragmentRenderer {
 	}
 
 	public default String getIcon() {
-		return "picture";
+		return "code";
 	}
 
 	public default String getImagePreviewURL(

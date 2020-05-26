@@ -136,7 +136,7 @@ public class FragmentCompositionImpl extends FragmentCompositionBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FragmentCompositionImpl.class);
 
-	private String _icon = "picture";
+	private String _icon = "edit-layout";
 	private String _imagePreviewURL;
 
 }

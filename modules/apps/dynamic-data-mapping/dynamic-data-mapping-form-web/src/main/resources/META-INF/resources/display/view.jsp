@@ -171,7 +171,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						</div>
 
 						<clay:container-fluid
-							className="ddm-form-builder-app ddm-form-builder-app-not-ready"
+							cssClass="ddm-form-builder-app ddm-form-builder-app-not-ready"
 							id='<%= ddmFormDisplayContext.getContainerId() + "container" %>'
 						>
 							<%= ddmFormDisplayContext.getDDMFormHTML() %>

@@ -26,7 +26,7 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 <clay:sheet-header>
 	<clay:content-row
-		className="sheet-title"
+		cssClass="sheet-title"
 		containerElement="h3"
 	>
 		<clay:content-col
@@ -83,14 +83,14 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 		<div class="opening-hours-entry">
 			<clay:content-row
-				className="opening-hours-header"
+				cssClass="opening-hours-header"
 			>
 				<clay:content-col>
 					<h5><%= orgLaborDisplay.getTitle() %></h5>
 				</clay:content-col>
 
 				<clay:content-col
-					className="lfr-search-container-wrapper"
+					cssClass="lfr-search-container-wrapper"
 				>
 					<liferay-util:include page="/organization/opening_hours_action.jsp" servletContext="<%= application %>">
 						<liferay-util:param name="orgLaborId" value="<%= String.valueOf(orgLabor.getOrgLaborId()) %>" />

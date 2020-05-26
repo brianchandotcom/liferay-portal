@@ -270,7 +270,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 						title='<%= LanguageUtil.get(request, "details") %>'
 					>
 						<clay:row
-							className="lfr-ddm-types-form-column"
+							cssClass="lfr-ddm-types-form-column"
 						>
 							<c:choose>
 								<c:when test="<%= Validator.isNull(storageTypeValue) %>">

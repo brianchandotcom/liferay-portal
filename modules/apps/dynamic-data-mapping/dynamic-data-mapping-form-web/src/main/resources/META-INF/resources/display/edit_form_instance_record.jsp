@@ -48,7 +48,7 @@ renderResponse.setTitle(GetterUtil.get(title, LanguageUtil.get(request, "view-fo
 </clay:container-fluid>
 
 <clay:container-fluid
-	className="ddm-form-builder-app editing-form-entry"
+	cssClass="ddm-form-builder-app editing-form-entry"
 >
 	<portlet:actionURL name="addFormInstanceRecord" var="editFormInstanceRecordActionURL" />
 

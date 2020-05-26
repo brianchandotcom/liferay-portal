@@ -43,7 +43,7 @@ Hits hits = searchDisplayContext.getHits();
 	</c:if>
 
 	<clay:col
-		className="result"
+		cssClass="result"
 		md="9"
 	>
 		<%@ include file="/main_search_suggest.jspf" %>

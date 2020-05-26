@@ -33,7 +33,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 %>
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<div class="sheet">
 		<div class="sheet-header">

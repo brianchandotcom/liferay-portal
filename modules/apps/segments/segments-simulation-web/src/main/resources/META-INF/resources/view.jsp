@@ -21,7 +21,7 @@ SegmentsSimulationDisplayContext segmentsSimulationDisplayContext = new Segments
 %>
 
 <clay:container-fluid
-	className="segments-simulation"
+	cssClass="segments-simulation"
 	id='<%= renderResponse.getNamespace() + "segmentsSimulationContainer" %>'
 >
 	<c:choose>

@@ -49,7 +49,7 @@ Map<String, Object> context = HashMapBuilder.<String, Object>put(
 %>
 
 <clay:container-fluid
-	className="lfr-item-viewer"
+	cssClass="lfr-item-viewer"
 	id="itemSelectorUploadContainer"
 >
 	<div class="drop-enabled drop-zone item-selector upload-view">

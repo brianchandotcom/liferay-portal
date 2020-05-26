@@ -21,7 +21,7 @@ JournalArticleDisplay articleDisplay = journalDisplayContext.getArticleDisplay()
 %>
 
 <clay:container-fluid
-	className="mt-2"
+	cssClass="mt-2"
 >
 	<%= articleDisplay.getContent() %>
 </clay:container-fluid>

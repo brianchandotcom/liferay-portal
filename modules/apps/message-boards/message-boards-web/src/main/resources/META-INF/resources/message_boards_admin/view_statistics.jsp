@@ -42,7 +42,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			>
 				<div class="overview-container statistics-panel">
 					<clay:sticker
-						className="sticker-categories sticker-user-icon"
+						cssClass="sticker-categories sticker-user-icon"
 						icon="categories"
 					/>
 
@@ -57,7 +57,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			>
 				<div class="overview-container statistics-panel">
 					<clay:sticker
-						className="sticker-posts sticker-user-icon"
+						cssClass="sticker-posts sticker-user-icon"
 						icon="message-boards"
 					/>
 
@@ -72,7 +72,7 @@ MBCategoryDisplay categoryDisplay = new MBCategoryDisplay(scopeGroupId, category
 			>
 				<div class="overview-container statistics-panel">
 					<clay:sticker
-						className="sticker-participants sticker-user-icon"
+						cssClass="sticker-participants sticker-user-icon"
 						icon="users"
 					/>
 

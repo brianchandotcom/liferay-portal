@@ -18,7 +18,7 @@
 
 <clay:row>
 	<clay:col
-		className="lfr-border-width use-for-all-column"
+		cssClass="lfr-border-width use-for-all-column"
 		md="4"
 	>
 		<aui:fieldset label="border-width">
@@ -64,7 +64,7 @@
 	</clay:col>
 
 	<clay:col
-		className="lfr-border-style"
+		cssClass="lfr-border-style"
 		md="4"
 	>
 		<aui:fieldset label="border-style">
@@ -121,7 +121,7 @@
 	</clay:col>
 
 	<clay:col
-		className="lfr-border-color"
+		cssClass="lfr-border-color"
 		md="4"
 	>
 		<aui:fieldset label="border-color">

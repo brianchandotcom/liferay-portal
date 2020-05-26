@@ -30,7 +30,7 @@ GroupFragmentEntryUsageManagementToolbarDisplayContext groupFragmentEntryUsageMa
 %>
 
 <clay:container-fluid
-	className="container-form-lg"
+	cssClass="container-form-lg"
 >
 	<div class="sheet">
 		<clay:row>

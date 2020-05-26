@@ -43,7 +43,7 @@
 
 								<c:if test="<%= notificationsCount > 0 %>">
 									<clay:sticker
-										className="panel-notifications-count"
+										cssClass="panel-notifications-count"
 										displayType="warning"
 										position="top-right"
 										size="sm"

@@ -45,7 +45,7 @@ sharedAssetsViewDisplayContext.populateResults(sharingEntriesSearchContainer);
 %>
 
 <clay:container-fluid
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<liferay-ui:search-container
 		id="sharingEntries"

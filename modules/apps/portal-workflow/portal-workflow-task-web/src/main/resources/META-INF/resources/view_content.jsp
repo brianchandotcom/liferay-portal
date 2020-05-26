@@ -44,10 +44,10 @@ renderResponse.setTitle(title);
 %>
 
 <clay:container-fluid
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<clay:col
-		className="lfr-asset-column lfr-asset-column-details"
+		cssClass="lfr-asset-column lfr-asset-column-details"
 		md="12"
 	>
 		<div class="card-horizontal main-content-card">

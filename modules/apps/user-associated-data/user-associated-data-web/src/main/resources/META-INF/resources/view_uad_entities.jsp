@@ -71,7 +71,7 @@ long[] groupIds = viewUADEntitiesDisplay.getGroupIds();
 	</c:choose>
 
 	<clay:container-fluid
-		className="closed sidenav-container sidenav-right"
+		cssClass="closed sidenav-container sidenav-right"
 		id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 	>
 		<div id="breadcrumb">

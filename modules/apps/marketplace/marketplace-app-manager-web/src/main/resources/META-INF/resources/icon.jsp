@@ -21,7 +21,7 @@ String iconURL = ParamUtil.getString(request, "iconURL");
 %>
 
 <clay:sticker
-	className="search-container"
+	cssClass="search-container"
 	displaytype="secondary"
 >
 	<c:choose>

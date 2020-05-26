@@ -23,7 +23,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 %>
 
 <clay:container-fluid
-	className="pt-2"
+	cssClass="pt-2"
 >
 	<liferay-frontend:edit-form
 		action="<%= (sourcePlid <= 0) ? layoutsAdminDisplayContext.getAddLayoutURL() : layoutsAdminDisplayContext.getCopyLayoutURL(sourcePlid) %>"
@@ -41,7 +41,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					<liferay-ui:message key="add-this-page-to-the-following-menus" />
 
 					<clay:container-fluid
-						className="auto-site-navigation-menus mt-3"
+						cssClass="auto-site-navigation-menus mt-3"
 					>
 						<clay:row>
 
@@ -69,7 +69,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					%>
 
 					<clay:container-fluid
-						className="auto-site-navigation-menus mt-3"
+						cssClass="auto-site-navigation-menus mt-3"
 					>
 						<clay:row>
 							<aui:input id='<%= "menu_" + autoSiteNavigationMenu.getSiteNavigationMenuId() %>' label='<%= LanguageUtil.format(request, "add-this-page-to-x", HtmlUtil.escape(autoSiteNavigationMenu.getName())) %>' name="TypeSettingsProperties--siteNavigationMenuId--" type="checkbox" value="<%= autoSiteNavigationMenu.getSiteNavigationMenuId() %>" />

@@ -38,7 +38,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "view-form"));
 </clay:container-fluid>
 
 <clay:container-fluid
-	className="ddm-form-builder-app form-entry"
+	cssClass="ddm-form-builder-app form-entry"
 >
 	<%= ddmFormAdminDisplayContext.getDDMFormHTML(renderRequest) %>
 </clay:container-fluid>

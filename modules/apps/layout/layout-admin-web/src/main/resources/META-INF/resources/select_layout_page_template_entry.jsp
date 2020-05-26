@@ -34,7 +34,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 	id='<%= renderResponse.getNamespace() + "layoutPageTemplateEntries" %>'
 >
 	<clay:row>

@@ -386,7 +386,7 @@ while (manageableCalendarsIterator.hasNext()) {
 						</c:if>
 
 						<clay:row
-							className="calendar-booking-invitations"
+							cssClass="calendar-booking-invitations"
 						>
 							<clay:col
 								md="<%= (calendarBooking != null) ? String.valueOf(3) : String.valueOf(4) %>"

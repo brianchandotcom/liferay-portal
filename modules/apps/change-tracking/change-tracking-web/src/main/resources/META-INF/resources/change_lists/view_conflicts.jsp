@@ -34,7 +34,7 @@ portletDisplay.setURLBack(backURL);
 %>
 
 <clay:container-fluid
-	className="container-form-lg"
+	cssClass="container-form-lg"
 >
 	<div class="sheet-lg table-responsive">
 		<table class="change-lists-conflicts-table table table-autofit table-list">

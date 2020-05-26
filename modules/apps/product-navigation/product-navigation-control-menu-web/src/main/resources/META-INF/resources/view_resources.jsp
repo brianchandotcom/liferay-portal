@@ -117,7 +117,7 @@ if (Validator.isNotNull(keywords)) {
 </h4>
 
 <clay:row
-	className="m-1"
+	cssClass="m-1"
 >
 
 	<%

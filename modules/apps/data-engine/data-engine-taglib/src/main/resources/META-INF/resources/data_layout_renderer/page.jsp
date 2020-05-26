@@ -18,7 +18,7 @@
 
 <div class="sheet">
 	<clay:container-fluid
-		className="ddm-form-builder-app"
+		cssClass="ddm-form-builder-app"
 	>
 		<%= content %>
 	</clay:container-fluid>

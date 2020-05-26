@@ -42,7 +42,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 		<div class="widget-mode-simple-entry">
 			<clay:content-row
-				className="widget-topbar"
+				cssClass="widget-topbar"
 			>
 				<clay:content-col
 					expand="true"
@@ -61,7 +61,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				</clay:content-col>
 
 				<clay:content-col
-					className="visible-interaction"
+					cssClass="visible-interaction"
 				>
 					<div class="dropdown dropdown-action">
 						<liferay-util:include page="/blogs/entry_action.jsp" servletContext="<%= application %>" />
@@ -70,7 +70,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			</clay:content-row>
 
 			<clay:content-row
-				className="widget-metadata"
+				cssClass="widget-metadata"
 			>
 
 				<%
@@ -84,7 +84,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				%>
 
 				<clay:content-col
-					className="inline-item-before"
+					cssClass="inline-item-before"
 				>
 					<liferay-ui:user-portrait
 						user="<%= entryUser %>"

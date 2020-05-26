@@ -17,7 +17,7 @@
 <%@ include file="/process_info/init.jsp" %>
 
 <clay:container-fluid
-	className="text-secondary"
+	cssClass="text-secondary"
 >
 	<clay:row>
 		<clay:col

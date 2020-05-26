@@ -57,7 +57,7 @@ renderResponse.setTitle((ddlRecord != null) ? LanguageUtil.format(request, "edit
 </portlet:actionURL>
 
 <clay:container-fluid
-	className="sidenav-container sidenav-right"
+	cssClass="sidenav-container sidenav-right"
 >
 	<div class="lfr-form-content">
 		<aui:form action="<%= updateDDLRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'>

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:container-fluid
-	className="pt-3"
+	cssClass="pt-3"
 >
 	<liferay-ui:search-container
 		id="assetEntries"

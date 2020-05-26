@@ -17,7 +17,7 @@
 <%@ include file="/change_lists_configuration/init.jsp" %>
 
 <clay:container-fluid
-	className="container-form-lg"
+	cssClass="container-form-lg"
 >
 	<aui:form action="<%= changeListsConfigurationDisplayContext.getActionURL() %>" method="post" name="fm">
 		<aui:input name="navigation" type="hidden" value="<%= changeListsConfigurationDisplayContext.getNavigation() %>" />

@@ -67,7 +67,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "new-cus
 		</div>
 
 		<clay:row
-			className="clay-site-row-spacer"
+			cssClass="clay-site-row-spacer"
 		>
 			<clay:col
 				size="12"

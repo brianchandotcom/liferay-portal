@@ -21,7 +21,7 @@
 </blockquote>
 
 <clay:row
-	className="text-center"
+	cssClass="text-center"
 >
 	<clay:col
 		md="1"

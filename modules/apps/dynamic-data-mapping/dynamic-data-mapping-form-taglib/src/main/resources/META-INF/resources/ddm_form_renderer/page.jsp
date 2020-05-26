@@ -100,7 +100,7 @@ if (ddmFormInstance != null) {
 					</c:if>
 
 					<clay:container-fluid
-						className="ddm-form-builder-app"
+						cssClass="ddm-form-builder-app"
 					>
 						<%= ddmFormHTML %>
 

@@ -113,7 +113,7 @@ else if (metadataField.equals("view-count")) {
 	</c:when>
 	<c:when test="<%= Validator.isNotNull(value) %>">
 		<clay:col
-			className="form-feedback-item"
+			cssClass="form-feedback-item"
 			md="3"
 			size="6"
 			sm="4"

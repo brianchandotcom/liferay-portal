@@ -95,7 +95,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
 			<clay:row>
 				<clay:col
-					className="col-md-offset-1 entry-navigation"
+					cssClass="col-md-offset-1 entry-navigation"
 					md="10"
 				>
 					<h2>
@@ -103,7 +103,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</h2>
 
 					<clay:row
-						className="widget-mode-card"
+						cssClass="widget-mode-card"
 					>
 
 						<%
@@ -125,7 +125,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 	<clay:row>
 		<clay:col
-			className="col-md-offset-2"
+			cssClass="col-md-offset-2"
 			md="8"
 		>
 			<c:if test="<%= blogsPortletInstanceConfiguration.enableComments() %>">

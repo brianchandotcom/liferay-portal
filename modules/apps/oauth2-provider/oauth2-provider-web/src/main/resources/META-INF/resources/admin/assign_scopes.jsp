@@ -25,7 +25,7 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 %>
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
 

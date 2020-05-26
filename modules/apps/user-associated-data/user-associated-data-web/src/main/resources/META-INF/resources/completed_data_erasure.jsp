@@ -27,7 +27,7 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 %>
 
 <clay:container-fluid
-	className="container-form-lg"
+	cssClass="container-form-lg"
 >
 	<liferay-ui:empty-result-message
 		message="you-have-successfully-anonymized-all-remaining-data"

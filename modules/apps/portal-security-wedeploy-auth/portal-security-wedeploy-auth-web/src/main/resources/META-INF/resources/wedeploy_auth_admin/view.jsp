@@ -37,7 +37,7 @@ weDeployAuthAppsSearchContainer.setResults(weDeployAuthApps);
 />
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<liferay-ui:search-container
 		id="weDeployAuthApps"

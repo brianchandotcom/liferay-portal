@@ -37,7 +37,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 		<div class="dialog-body">
 			<clay:container-fluid
-				className="main-content-body"
+				cssClass="main-content-body"
 			>
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>

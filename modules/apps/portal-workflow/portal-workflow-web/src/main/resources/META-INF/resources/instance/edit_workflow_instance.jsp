@@ -36,7 +36,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 
 <clay:container-fluid>
 	<clay:col
-		className="lfr-asset-column lfr-asset-column-details"
+		cssClass="lfr-asset-column lfr-asset-column-details"
 	>
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>

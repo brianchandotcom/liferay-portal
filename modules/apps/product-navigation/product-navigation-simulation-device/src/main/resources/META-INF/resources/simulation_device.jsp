@@ -19,10 +19,10 @@
 <div id="<portlet:namespace />simulationDeviceContainer">
 	<div class="list-group-panel">
 		<clay:container-fluid
-			className="devices"
+			cssClass="devices"
 		>
 			<clay:row
-				className="default-devices"
+				cssClass="default-devices"
 			>
 				<button class="btn btn-unstyled col-4 d-lg-block d-none lfr-device-item selected text-center" data-device="desktop" type="button">
 					<aui:icon cssClass="icon icon-monospaced" image="desktop" markupView="lexicon" />
@@ -60,7 +60,7 @@
 			</clay:row>
 
 			<clay:row
-				className="custom-devices d-lg-flex d-none hide"
+				cssClass="custom-devices d-lg-flex d-none hide"
 				id='<%= renderResponse.getNamespace() + "customDeviceContainer" %>'
 			>
 				<aui:input cssClass="input-sm" inlineField="<%= true %>" label='<%= LanguageUtil.get(request, "height") + " (px):" %>' name="height" size="4" value="600" wrapperCssClass="col-6" />

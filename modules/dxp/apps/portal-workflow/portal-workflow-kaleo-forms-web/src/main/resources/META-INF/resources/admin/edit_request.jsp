@@ -34,7 +34,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "new-x", kaleoProcess.getNa
 %>
 
 <clay:container-fluid
-	className="sidenav-container sidenav-right"
+	cssClass="sidenav-container sidenav-right"
 >
 	<portlet:actionURL name="startWorkflowInstance" var="startWorkflowInstanceURL" />
 

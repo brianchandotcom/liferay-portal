@@ -32,7 +32,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<clay:row>
 		<clay:col

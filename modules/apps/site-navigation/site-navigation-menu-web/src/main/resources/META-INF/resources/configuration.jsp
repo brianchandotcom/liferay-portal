@@ -170,7 +170,7 @@ else {
 											<div class="card-body ">
 												<div class="card-col-field">
 													<clay:sticker
-														className="sticker-static"
+														cssClass="sticker-static"
 														displayType="secondary"
 														icon="blogs"
 													/>

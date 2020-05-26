@@ -36,7 +36,7 @@ ConfigurationScopeDisplayContext configurationScopeDisplayContext = Configuratio
 />
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<c:if test="<%= configurationCategorySectionDisplays.isEmpty() %>">
 		<liferay-ui:empty-result-message

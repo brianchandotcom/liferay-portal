@@ -28,7 +28,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 %>
 
 <clay:content-row
-	className="widget-toolbar"
+	cssClass="widget-toolbar"
 	floatElements="end"
 	verticalAlign="center"
 >
@@ -104,7 +104,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 	</c:if>
 
 	<clay:content-col
-		className="autofit-col-end"
+		cssClass="autofit-col-end"
 	>
 		<liferay-portlet:renderURL varImpl="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />

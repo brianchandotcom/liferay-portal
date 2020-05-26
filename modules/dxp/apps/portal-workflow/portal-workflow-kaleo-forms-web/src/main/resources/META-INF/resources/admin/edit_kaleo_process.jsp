@@ -65,7 +65,7 @@ renderResponse.setTitle(title);
 
 <c:if test="<%= kaleoProcessStarted %>">
 	<clay:container-fluid
-		className="alert alert-info"
+		cssClass="alert alert-info"
 	>
 		<liferay-ui:message key="updating-the-field-set-or-workflow-will-cause-loss-of-data" />
 	</clay:container-fluid>

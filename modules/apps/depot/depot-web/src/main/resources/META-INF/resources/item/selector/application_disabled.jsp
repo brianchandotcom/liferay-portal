@@ -21,7 +21,7 @@ DepotApplicationDisplayContext depotApplicationDisplayContext = (DepotApplicatio
 %>
 
 <clay:container-fluid
-	className="pt-4"
+	cssClass="pt-4"
 >
 	<div class="alert alert-info">
 		<span class="alert-indicator">

@@ -35,7 +35,7 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 
 	<clay:row>
 		<clay:col
-			className="lfr-asset-column lfr-asset-column-details"
+			cssClass="lfr-asset-column lfr-asset-column-details"
 		>
 			<c:if test="<%= Validator.isNotNull(folder.getDescription()) %>">
 				<div class="lfr-asset-description">

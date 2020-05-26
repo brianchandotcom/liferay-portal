@@ -68,7 +68,7 @@ String displayStyle = blogImagesManagementToolbarDisplayContext.getDisplayStyle(
 />
 
 <clay:container-fluid
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<portlet:actionURL name="/blogs/edit_image" var="editImageURL" />
 

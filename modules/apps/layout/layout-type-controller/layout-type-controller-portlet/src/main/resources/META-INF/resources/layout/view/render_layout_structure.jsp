@@ -90,7 +90,7 @@ for (String childrenItemId : childrenItemIds) {
 			%>
 
 			<clay:col
-				className="<%= ResponsiveLayoutStructureUtil.getColumnCssClass(rowLayoutStructureItem, columnLayoutStructureItem) %>"
+				cssClass="<%= ResponsiveLayoutStructureUtil.getColumnCssClass(rowLayoutStructureItem, columnLayoutStructureItem) %>"
 			>
 
 				<%
@@ -226,7 +226,7 @@ for (String childrenItemId : childrenItemIds) {
 				<c:when test="<%= parentLayoutStructureItem instanceof RootLayoutStructureItem %>">
 					<div className="container-fluid p-0">
 						<clay:row
-							className="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowLayoutStructureItem) %>"
+							cssClass="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowLayoutStructureItem) %>"
 						>
 
 							<%
@@ -239,7 +239,7 @@ for (String childrenItemId : childrenItemIds) {
 				</c:when>
 				<c:otherwise>
 					<clay:row
-						className="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowLayoutStructureItem) %>"
+						cssClass="<%= ResponsiveLayoutStructureUtil.getRowCssClass(rowLayoutStructureItem) %>"
 					>
 
 						<%

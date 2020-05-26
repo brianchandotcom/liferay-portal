@@ -68,7 +68,7 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 />
 
 <clay:container-fluid
-	className="closed sidenav-container sidenav-right"
+	cssClass="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="infoPanel" var="sidebarPanelURL">

@@ -93,7 +93,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 />
 
 <clay:container-fluid
-	className="closed sidenav-container sidenav-right"
+	cssClass="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/wiki/node_info_panel" var="sidebarPanelURL" />

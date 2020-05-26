@@ -23,7 +23,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 <aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" value="/depot/update_roles" />
 
 <clay:content-row
-	className="sheet-subtitle"
+	cssClass="sheet-subtitle"
 	containerElement="h3"
 >
 	<clay:content-col

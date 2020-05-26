@@ -50,7 +50,7 @@ renderResponse.setTitle((ddmDataProviderInstance == null) ? LanguageUtil.get(req
 	<%@ include file="/exceptions.jspf" %>
 
 	<clay:container-fluid
-		className="lfr-ddm-edit-data-provider"
+		cssClass="lfr-ddm-edit-data-provider"
 	>
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>

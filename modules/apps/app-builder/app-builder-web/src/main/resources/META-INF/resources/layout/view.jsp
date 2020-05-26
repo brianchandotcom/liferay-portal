@@ -33,7 +33,7 @@ if (mvcPath.startsWith("/edit_entry.jsp")) {
 <div class="app-builder-standalone">
 	<header class="app-builder-standalone-header">
 		<clay:container-fluid
-			className="p-0"
+			cssClass="p-0"
 		>
 			<div class="app-builder-standalone-menu autofit-row">
 				<div class="autofit-col autofit-col-expand">
@@ -65,7 +65,7 @@ if (mvcPath.startsWith("/edit_entry.jsp")) {
 	</header>
 
 	<clay:container-fluid
-		className="app-builder-standalone-content <%= editEntryCssClass %> sheet"
+		cssClass="app-builder-standalone-content <%= editEntryCssClass %> sheet"
 	>
 		<liferay-portlet:runtime
 			portletName="<%= portletName %>"

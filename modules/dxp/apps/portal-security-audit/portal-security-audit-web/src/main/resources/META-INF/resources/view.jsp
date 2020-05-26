@@ -19,7 +19,7 @@
 <liferay-portlet:renderURL varImpl="searchURL" />
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<aui:form action="<%= searchURL %>" method="get" name="fm">
 		<liferay-portlet:renderURLParams varImpl="searchURL" />

@@ -246,7 +246,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 							</clay:col>
 
 							<clay:col
-								className="workflow-definition-upload"
+								cssClass="workflow-definition-upload"
 								size="12"
 							>
 								<liferay-util:buffer
@@ -263,7 +263,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 							</clay:col>
 
 							<clay:col
-								className="workflow-definition-content-source-wrapper"
+								cssClass="workflow-definition-content-source-wrapper"
 								id='<%= renderResponse.getNamespace() + "contentSourceWrapper" %>'
 								size="12"
 							>

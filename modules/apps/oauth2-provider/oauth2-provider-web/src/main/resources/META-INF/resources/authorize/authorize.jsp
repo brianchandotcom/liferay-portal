@@ -31,7 +31,7 @@ if (Validator.isNotNull(replyTo) && !replyTo.startsWith(PortalUtil.getPortalURL(
 %>
 
 <clay:container-fluid
-	className="closed consent"
+	cssClass="closed consent"
 >
 	<aui:form action="<%= replyTo %>" data-senna-off="true" method="post" name="fm">
 		<aui:fieldset-group markupView="lexicon">

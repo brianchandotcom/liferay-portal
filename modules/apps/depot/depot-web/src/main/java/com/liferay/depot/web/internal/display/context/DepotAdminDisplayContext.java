@@ -15,6 +15,7 @@
 package com.liferay.depot.web.internal.display.context;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryGroupRelServiceUtil;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.search.DepotEntrySearch;
@@ -81,6 +82,13 @@ public class DepotAdminDisplayContext {
 
 	public String getDefaultDisplayStyle() {
 		return "icon";
+	}
+
+	public int getDepotEntryConnectedGroupsCount(DepotEntry depotEntry)
+		throws PortalException {
+
+		return DepotEntryGroupRelServiceUtil.getDepotEntryGroupRelsCount(
+			depotEntry);
 	}
 
 	public DepotEntryVerticalCard getDepotEntryVerticalCard(

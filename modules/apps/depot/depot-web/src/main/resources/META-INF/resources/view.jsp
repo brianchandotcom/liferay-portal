@@ -72,6 +72,10 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 										<%= HtmlUtil.escape(depotEntryGroup.getDescriptiveName(locale)) %>
 									</aui:a>
 								</h5>
+
+								<h6>
+									<liferay-ui:message arguments="<%= new Object[] {depotAdminDisplayContext.getDepotEntryConnectedGroupsCount(depotEntry)} %>" key="x-connected-sites" />
+								</h6>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text>

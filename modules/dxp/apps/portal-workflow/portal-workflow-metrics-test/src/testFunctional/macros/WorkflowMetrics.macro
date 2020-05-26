@@ -17,6 +17,22 @@ definition {
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
 
 		for (var assigneeName : list "${assigneeName}") {
+			while (IsElementNotPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE") && (maxIterations = "10")) {
+
+				Refresh();
+
+				WaitForSPARefresh();
+
+				Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY");
+
+				Pause(locator1 = "6000");
+			}
+
+			if (IsElementNotPresent(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE")) {
+
+				echo("timeout exceeded");
+			}
+
 			Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE");
 		}
 
@@ -30,6 +46,20 @@ definition {
 
 		for (var isInstancePresent : list "${isPresent}") {
 			var key_instanceInfo = "${isInstancePresent}";
+
+			while (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME") && (maxIterations = "10")) {
+
+				Refresh();
+
+				WaitForSPARefresh();
+
+				Pause(locator1 = "6000");
+			}
+
+			if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME")) {
+
+				echo("timeout exceeded");
+			}
 
 			AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_ALL_ITEMS_TABLE_NAME");
 
@@ -416,6 +446,8 @@ definition {
 
 				Refresh();
 
+				WaitForSPARefresh();
+
 				Click(locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_START");
 			}
 
@@ -680,7 +712,7 @@ definition {
 
 			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_PROCESS_STEP");
 
-			Pause(locator1 = "1000");
+			Pause(locator1 = "6000");
 		}
 
 		if (IsElementNotPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_CARD_FILTER_OPTION")) {
@@ -737,6 +769,12 @@ definition {
 				locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATED_BY",
 				value1 = "${key_createdBy}");
 
+			if (!IsTextEqual.isPartialText(locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATION_DATE", value1 = "${key_currentDate}")) {
+
+				var key_currentDateDay = MathUtil.sum("${key_currentDateDay}", "1");
+				var key_currentDate = "${key_currentDateMonthShort} ${key_currentDateDay}, ${key_currentDateYear}";
+			}
+
 			AssertTextEquals.assertPartialText(
 				locator1 = "WorkflowAllItems#DETAIL_PAGE_CREATION_DATE",
 				value1 = "${key_currentDate}");
@@ -763,6 +801,12 @@ definition {
 			AssertTextEquals(
 				locator1 = "WorkflowAllItems#DETAIL_PAGE_PROCESS_STATUS",
 				value1 = "Completed");
+
+			if (!IsTextEqual.isPartialText(locator1 = "WorkflowAllItems#DETAIL_PAGE_END_DATE", value1 = "${key_currentDate}")) {
+
+				var key_currentDateDay = MathUtil.sum("${key_currentDateDay}", "1");
+				var key_currentDate = "${key_currentDateMonthShort} ${key_currentDateDay}, ${key_currentDateYear}";
+			}
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "WorkflowAllItems#DETAIL_PAGE_END_DATE",

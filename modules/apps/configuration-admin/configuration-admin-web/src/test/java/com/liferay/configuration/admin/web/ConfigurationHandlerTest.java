@@ -23,7 +23,6 @@ import java.io.OutputStream;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Dictionary;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
 
@@ -38,110 +37,87 @@ public class ConfigurationHandlerTest {
 	@Test
 	public void testWriteArray() throws IOException {
 		_assertProperties(
-			MapUtil.singletonDictionary(
-				_TEST_KEY, new String[] {"testValue1", "testValue2"}),
-			_TEST_KEY.concat(
-				"=[ \\\r\n  \"testValue1\", \\\r\n  \"testValue2\", \\\r\n  " +
-					"]\r\n"));
+			new String[] {"testValue1", "testValue2"},
+			"[ \\\r\n  \"testValue1\", \\\r\n  \"testValue2\", \\\r\n  ]");
 	}
 
 	@Test
 	public void testWriteBoolean() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, true),
-			_TEST_KEY.concat("=B\"true\"\r\n"));
+		_assertProperties(true, "B\"true\"");
 	}
 
 	@Test
 	public void testWriteByte() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, (byte)10),
-			_TEST_KEY.concat("=X\"10\"\r\n"));
+		_assertProperties((byte)10, "X\"10\"");
 	}
 
 	@Test
 	public void testWriteChar() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, 'c'),
-			_TEST_KEY.concat("=C\"c\"\r\n"));
+		_assertProperties('c', "C\"c\"");
 	}
 
 	@Test
 	public void testWriteCollection() throws IOException {
 		_assertProperties(
-			MapUtil.singletonDictionary(
-				_TEST_KEY, Arrays.asList("testValue1", "testValue2")),
-			_TEST_KEY.concat(
-				"=( \\\r\n  \"testValue1\", \\\r\n  \"testValue2\", " +
-					"\\\r\n)\r\n"));
+			Arrays.asList("testValue1", "testValue2"),
+			"( \\\r\n  \"testValue1\", \\\r\n  \"testValue2\", \\\r\n)");
 	}
 
 	@Test
 	public void testWriteDouble() throws IOException {
 		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, 10.1D),
-			StringBundler.concat(
-				_TEST_KEY, "=D\"", Double.doubleToLongBits(10.1D), "\"\r\n"));
+			10.1D,
+			StringBundler.concat("D\"", Double.doubleToLongBits(10.1D), "\""));
 	}
 
 	@Test
 	public void testWriteEmptyCollection() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, Collections.emptyList()),
-			_TEST_KEY.concat("=( \\\r\n)\r\n"));
+		_assertProperties(Collections.emptyList(), "( \\\r\n)");
 	}
 
 	@Test
 	public void testWriteFloat() throws IOException {
 		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, 10.1F),
-			StringBundler.concat(
-				_TEST_KEY, "=F\"", Float.floatToRawIntBits(10.1F), "\"\r\n"));
+			10.1F,
+			StringBundler.concat("F\"", Float.floatToRawIntBits(10.1F), "\""));
 	}
 
 	@Test
 	public void testWriteInteger() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, 10),
-			_TEST_KEY.concat("=I\"10\"\r\n"));
+		_assertProperties(10, "I\"10\"");
 	}
 
 	@Test
 	public void testWriteLong() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, 10L),
-			_TEST_KEY.concat("=L\"10\"\r\n"));
+		_assertProperties(10L, "L\"10\"");
 	}
 
 	@Test
 	public void testWriteShort() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, (short)10),
-			_TEST_KEY.concat("=S\"10\"\r\n"));
+		_assertProperties((short)10, "S\"10\"");
 	}
 
 	@Test
 	public void testWriteString() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, "testValue"),
-			_TEST_KEY.concat("=\"testValue\"\r\n"));
+		_assertProperties("testValue", "\"testValue\"");
 	}
 
 	@Test
 	public void testWriteStringEscapedValues() throws IOException {
-		_assertProperties(
-			MapUtil.singletonDictionary(_TEST_KEY, "${testValue=\"}"),
-			_TEST_KEY.concat("=\"$\\{testValue\\=\\\"\\}\"\r\n"));
+		_assertProperties("${testValue=\"}", "\"$\\{testValue\\=\\\"\\}\"");
 	}
 
-	private void _assertProperties(
-			Dictionary<String, Object> properties, String line)
+	private void _assertProperties(Object inputValue, String outputValue)
 		throws IOException {
 
 		try (OutputStream outputStream = new UnsyncByteArrayOutputStream()) {
-			ConfigurationHandler.write(outputStream, properties);
+			ConfigurationHandler.write(
+				outputStream,
+				MapUtil.singletonDictionary(_TEST_KEY, inputValue));
 
-			Assert.assertEquals(line, outputStream.toString());
+			Assert.assertEquals(
+				StringBundler.concat(_TEST_KEY, "=", outputValue, "\r\n"),
+				outputStream.toString());
 		}
 	}
 

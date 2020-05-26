@@ -54,11 +54,16 @@ public class DBSupportDefaultsPlugin
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
+		Configuration dbSupportConfiguration = GradleUtil.getConfiguration(
+			project, DBSupportPlugin.CONFIGURATION_NAME);
+
+		_configureConfigurationDBSupport(
+			project, liferayExtension, dbSupportConfiguration);
+
 		PortalTools.addPortalToolDependencies(
 			project, DBSupportPlugin.TOOL_CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
 
-		_configureConfigurationDBSupport(project, liferayExtension);
 		_configureTasksBaseDBSupport(project, liferayExtension);
 	}
 
@@ -70,27 +75,20 @@ public class DBSupportDefaultsPlugin
 	private DBSupportDefaultsPlugin() {
 	}
 
-	private void _addDependenciesDBSupport(
-		Project project, LiferayExtension liferayExtension) {
-
-		GradleUtil.addDependency(
-			project, DBSupportPlugin.CONFIGURATION_NAME,
-			FileUtil.getJarsFileTree(
-				project, liferayExtension.getAppServerLibGlobalDir()));
-	}
-
 	private void _configureConfigurationDBSupport(
-		final Project project, final LiferayExtension liferayExtension) {
+		final Project project, final LiferayExtension liferayExtension,
+		Configuration dbSupportConfiguration) {
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, DBSupportPlugin.CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
+		dbSupportConfiguration.defaultDependencies(
 			new Action<DependencySet>() {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addDependenciesDBSupport(project, liferayExtension);
+					GradleUtil.addDependency(
+						project, DBSupportPlugin.CONFIGURATION_NAME,
+						FileUtil.getJarsFileTree(
+							project,
+							liferayExtension.getAppServerLibGlobalDir()));
 				}
 
 			});

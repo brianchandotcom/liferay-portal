@@ -148,6 +148,9 @@ export default withRouter(
 							}
 						>
 							<Link
+								onClick={() => {
+									setActive(false);
+								}}
 								to={`/questions/${
 									(section &&
 										section.parentSection &&
@@ -168,6 +171,9 @@ export default withRouter(
 											key={i}
 										>
 											<Link
+												onClick={() => {
+													setActive(false);
+												}}
 												to={'/questions/' + item.title}
 											>
 												{item.title}

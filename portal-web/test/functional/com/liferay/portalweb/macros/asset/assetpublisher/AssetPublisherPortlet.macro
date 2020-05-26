@@ -560,7 +560,7 @@ definition {
 
 			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-			if ("${siteScopeType}" != "Parent Site") {
+			if ("${siteScopeType}" == "Child Site") {
 				Type(
 					locator1 = "TextInput#SITE_SEARCH_KEYWORDS",
 					value1 = "${siteName}");

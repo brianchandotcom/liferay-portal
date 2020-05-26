@@ -60,6 +60,26 @@ definition {
 			item = "${item}");
 	}
 
+	macro importDisplayPageTemplateFromTempFolder {
+		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Import");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		var displayPageTemplateZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "display-page-template-*.zip");
+
+		UploadTempFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${displayPageTemplateZipFileName}");
+
+		Click(locator1 = "Button#IMPORT");
+
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
+	}
+
 	macro markDisplayPageAsDefault {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = "${displayPageName}",

@@ -23,6 +23,7 @@ import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -321,14 +322,14 @@ public class SubscriptionSender implements Serializable {
 			}
 			else {
 				int endIndex = _entryURL.indexOf(
-					StringPool.FORWARD_SLASH, Http.HTTPS_WITH_SLASH.length());
+					CharPool.FORWARD_SLASH, Http.HTTPS_WITH_SLASH.length());
 
-				if (endIndex != -1) {
-					setContextAttribute(
-						"[$PORTAL_URL$]", _entryURL.substring(0, endIndex));
+				if (endIndex == -1) {
+					setContextAttribute("[$PORTAL_URL$]", _entryURL);
 				}
 				else {
-					setContextAttribute("[$PORTAL_URL$]", _entryURL);
+					setContextAttribute(
+						"[$PORTAL_URL$]", _entryURL.substring(0, endIndex));
 				}
 			}
 		}

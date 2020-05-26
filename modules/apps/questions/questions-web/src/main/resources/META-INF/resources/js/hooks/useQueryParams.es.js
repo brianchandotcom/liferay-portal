@@ -12,6 +12,6 @@
  * details.
  */
 
-export default function useQuery(location) {
+export default function useQueryParams(location) {
 	return new URLSearchParams(location.search);
 }

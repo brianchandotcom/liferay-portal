@@ -22,7 +22,7 @@ import {AppContext} from '../../AppContext.es';
 import Error from '../../components/Error.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
-import useQuery from '../../hooks/useQuery.es';
+import useQueryParams from '../../hooks/useQueryParams.es';
 import {getQuestionThreads} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {historyPushWithSlug, slugToText} from '../../utils/utils.es';
@@ -47,7 +47,7 @@ export default withRouter(
 		const [searchCallback, setSearchCallback] = useState();
 		const [section, setSection] = useState({});
 
-		const queryParams = useQuery(location);
+		const queryParams = useQueryParams(location);
 
 		const context = useContext(AppContext);
 

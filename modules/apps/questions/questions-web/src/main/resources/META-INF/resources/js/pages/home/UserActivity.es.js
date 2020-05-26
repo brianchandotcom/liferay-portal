@@ -21,7 +21,7 @@ import {AppContext} from '../../AppContext.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
-import useQuery from '../../hooks/useQuery.es';
+import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivity} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
 import NavigationBar from '../NavigationBar.es';
@@ -38,7 +38,7 @@ export default withRouter(
 		const defaultPostsNumber = 0;
 		const defaultRank = context.defaultRank;
 		const historyPushParser = historyPushWithSlug(history.push);
-		const queryParams = useQuery(location);
+		const queryParams = useQueryParams(location);
 		const siteKey = context.siteKey;
 
 		const [creatorInfo, setCreatorInfo] = useState({});

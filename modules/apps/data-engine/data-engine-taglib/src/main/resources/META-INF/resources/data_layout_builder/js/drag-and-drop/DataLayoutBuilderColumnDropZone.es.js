@@ -113,6 +113,7 @@ export default ({dataLayoutBuilder, node}) => {
 						fieldSet: data.fieldSet,
 						indexes,
 						parentFieldName,
+						useFieldName: data.useFieldName,
 					})
 				);
 			}

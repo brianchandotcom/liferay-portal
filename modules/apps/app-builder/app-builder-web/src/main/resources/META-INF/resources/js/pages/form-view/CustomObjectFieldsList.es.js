@@ -27,10 +27,39 @@ import FormViewContext from './FormViewContext.es';
 import useDeleteDefinitionField from './useDeleteDefinitionField.es';
 import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
+const createFieldSet = ({
+	dataDefinitionFields,
+	defaultLanguageId,
+	fieldSetName,
+}) => {
+	return {
+		availableLanguageIds: [defaultLanguageId],
+		dataDefinitionFields,
+		defaultLanguageId,
+		description: {},
+		name: {
+			[defaultLanguageId]: fieldSetName,
+		},
+	};
+};
+
+const getFieldSet = (data) => {
+	const {defaultLanguageId = 'en_US', fieldSetName, fieldSets} = data;
+	let fieldSet = fieldSets.find(
+		({name}) => name[defaultLanguageId] === fieldSetName
+	);
+	if (!fieldSet) {
+		fieldSet = createFieldSet({...data, defaultLanguageId});
+	}
+
+	return fieldSet;
+};
+
 const getFieldTypes = ({
 	dataDefinition,
 	dataLayout,
 	editingLanguageId,
+	fieldSets,
 	fieldTypes,
 	focusedCustomObjectField,
 }) => {
@@ -63,7 +92,8 @@ const getFieldTypes = ({
 			label = label[Liferay.ThemeDisplay.getDefaultLanguageId()];
 		}
 
-		const isFieldSet = ddmStructureId && fieldType === 'fieldset';
+		const isFieldGroup = fieldType === 'fieldset';
+		const isFieldSet = isFieldGroup && ddmStructureId;
 
 		const FieldTypeLabel = isFieldSet
 			? Liferay.Language.get('fieldset')
@@ -75,7 +105,7 @@ const getFieldTypes = ({
 				? 'custom-object-field-children'
 				: 'custom-object-field',
 			description: `${FieldTypeLabel} ${
-				nestedDataDefinitionFields.length
+				isFieldGroup && !nested
 					? `- ${
 							nestedDataDefinitionFields.length
 					  } ${Liferay.Language.get('fields')}`
@@ -83,9 +113,19 @@ const getFieldTypes = ({
 			}`,
 			disabled: DataLayoutVisitor.containsField(dataLayoutPages, name),
 			dragAlignment: 'right',
-			dragType: DragTypes.DRAG_DATA_DEFINITION_FIELD,
+			dragType: isFieldGroup
+				? DragTypes.DRAG_FIELDSET
+				: DragTypes.DRAG_DATA_DEFINITION_FIELD,
 			icon: fieldTypeSettings.icon,
 			isFieldSet,
+			...(isFieldGroup && {
+				fieldSet: getFieldSet({
+					dataDefinitionFields: nestedDataDefinitionFields,
+					fieldSetName: label,
+					fieldSets,
+				}),
+				useFieldName: name,
+			}),
 			label,
 			name,
 			nestedDataDefinitionFields: nestedDataDefinitionFields.map(
@@ -109,9 +149,10 @@ const getFieldTypes = ({
 export default ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [state, dispatch] = useContext(FormViewContext);
-	const {dataDefinition} = state;
+	const {dataDefinition, fieldSets} = state;
 	const {dataDefinitionFields} = dataDefinition;
 	const fieldTypes = getFieldTypes(state);
+
 	const onClick = ({name}) => {
 		const dataDefinitionField = findFieldByName(dataDefinitionFields, name);
 
@@ -121,20 +162,50 @@ export default ({keywords}) => {
 		});
 	};
 	const onDoubleClick = ({name}) => {
+		const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 		const {activePage, pages} = dataLayoutBuilder.getStore();
+		const indexes = {
+			columnIndex: 0,
+			pageIndex: activePage,
+			rowIndex: pages[activePage].rows.length,
+		};
 
-		dataLayoutBuilder.dispatch(
-			'fieldAdded',
-			DataLayoutBuilderActions.dropCustomObjectField({
-				addedToPlaceholder: true,
-				dataDefinition,
-				dataDefinitionFieldName: name,
-				dataLayoutBuilder,
-				indexes: {
-					columnIndex: 0,
-					pageIndex: activePage,
-					rowIndex: pages[activePage].rows.length,
-				},
+		const {fieldType, label, nestedDataDefinitionFields} = findFieldByName(
+			dataDefinitionFields,
+			name
+		);
+
+		if (fieldType !== 'fieldset') {
+			return dataLayoutBuilder.dispatch(
+				'fieldAdded',
+				DataLayoutBuilderActions.dropCustomObjectField({
+					addedToPlaceholder: true,
+					dataDefinition,
+					dataDefinitionFieldName: name,
+					dataLayoutBuilder,
+					indexes,
+				})
+			);
+		}
+
+		const payload = {
+			dataLayoutBuilder,
+			fieldName: name,
+			indexes,
+			useFieldName: name,
+		};
+
+		const fieldSet = getFieldSet({
+			dataDefinitionFields: nestedDataDefinitionFields,
+			fieldSetName: label[defaultLanguageId],
+			fieldSets,
+		});
+
+		return dataLayoutBuilder.dispatch(
+			'fieldSetAdded',
+			DataLayoutBuilderActions.dropFieldSet({
+				...payload,
+				fieldSet,
 			})
 		);
 	};

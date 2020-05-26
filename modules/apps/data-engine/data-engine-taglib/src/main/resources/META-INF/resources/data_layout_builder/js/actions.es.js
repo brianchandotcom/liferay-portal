@@ -99,11 +99,13 @@ export const dropFieldSet = ({
 	fieldSet,
 	indexes,
 	parentFieldName,
+	useFieldName,
 }) => {
 	return {
 		fieldName,
 		fieldSet: dataLayoutBuilder.getDDMForm(fieldSet),
 		indexes,
 		parentFieldName,
+		useFieldName,
 	};
 };

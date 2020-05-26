@@ -42,7 +42,7 @@ public class AlloyTaglibDefaultsPlugin
 
 	@Override
 	protected void applyPluginDefaults(
-		Project project, AlloyTaglibPlugin alloyTaglibPlugin) {
+		final Project project, AlloyTaglibPlugin alloyTaglibPlugin) {
 
 		final Configuration portalToolConfiguration =
 			_addPortalToolConfiguration(project);
@@ -91,8 +91,8 @@ public class AlloyTaglibDefaultsPlugin
 	private AlloyTaglibDefaultsPlugin() {
 	}
 
-	private Configuration _addPortalToolConfiguration(final Project project) {
-		final Configuration configuration = GradleUtil.addConfiguration(
+	private Configuration _addPortalToolConfiguration(Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
 			project, _PORTAL_TOOL_CONFIGURATION_NAME);
 
 		configuration.setDescription(

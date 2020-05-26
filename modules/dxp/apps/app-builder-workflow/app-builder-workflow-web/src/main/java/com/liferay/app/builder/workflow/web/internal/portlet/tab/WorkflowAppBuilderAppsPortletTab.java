@@ -49,9 +49,9 @@ public class WorkflowAppBuilderAppsPortletTab
 	}
 
 	@Override
-	public String getPluginEntryPoint() {
+	public String getListEntryPoint() {
 		return _npmResolver.resolveModuleName(
-			"app-builder-workflow-web/js/index.es");
+			"app-builder-workflow-web/js/pages/apps/ListApps.es");
 	}
 
 	@Reference

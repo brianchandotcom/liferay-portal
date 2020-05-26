@@ -16,6 +16,8 @@ definition {
 		KeyPress(
 			locator1 = "TextInput#SEARCH",
 			value1 = "\RETURN");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro searchPG {
@@ -30,6 +32,8 @@ definition {
 		KeyPress(
 			locator1 = "Portlet#SEARCH_FIELD",
 			value1 = "\RETURN");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro viewNoResultAssetTitle {

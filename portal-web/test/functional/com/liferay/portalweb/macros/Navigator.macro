@@ -106,6 +106,8 @@ definition {
 			value1 = "${navTab}");
 
 		AssertElementPresent(locator1 = "NavTab#ACTIVE_TAB_LINK");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro gotoNavUnderline {

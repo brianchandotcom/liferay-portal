@@ -392,6 +392,8 @@ definition {
 		KeyPress(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
 			value1 = "\RETURN");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro searchWidget {
@@ -402,6 +404,8 @@ definition {
 		KeyPress(
 			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = "\RETURN");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro selectEmbeddedScopeInput {

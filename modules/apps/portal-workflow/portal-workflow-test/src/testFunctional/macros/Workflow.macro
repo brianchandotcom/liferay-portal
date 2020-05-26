@@ -199,6 +199,8 @@ definition {
 		Button.clickDone();
 
 		Alert.viewSuccessMessage();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro assignTaskToUser {
@@ -376,6 +378,8 @@ definition {
 		Click(locator1 = "Button#DONE");
 
 		Alert.viewSuccessMessage();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro createWorkflowBlogInstance {

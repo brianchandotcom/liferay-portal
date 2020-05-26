@@ -186,6 +186,8 @@ definition {
 
 	@priority = "4"
 	test AddDMDocumentSiteRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Documents and Media Page",

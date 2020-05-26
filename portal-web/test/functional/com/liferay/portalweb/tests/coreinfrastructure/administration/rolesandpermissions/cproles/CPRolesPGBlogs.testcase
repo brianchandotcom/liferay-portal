@@ -329,6 +329,8 @@ definition {
 
 	@priority = "5"
 	test AddBlogsEntrySiteRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -387,6 +389,7 @@ definition {
 
 	@priority = "4"
 	test AddBlogsEntrySiteRoleInline {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.upstream = "quarantine";
 
 		Permissions.setUpSiteRoleLoginUserPG(
@@ -1007,6 +1010,8 @@ definition {
 
 	@priority = "4"
 	test DeleteBlogsEntrySiteRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -1088,6 +1093,8 @@ definition {
 
 	@priority = "4"
 	test DeleteBlogsEntrySiteRoleInline {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -1772,6 +1779,8 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsPermissionsSiteRole {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",
@@ -1854,6 +1863,8 @@ definition {
 
 	@priority = "4"
 	test ViewBlogsPermissionsSiteRoleInline {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
 		Permissions.setUpSiteRoleLoginUserPG(
 			page = "Public Pages",
 			pageName = "Blogs Page",

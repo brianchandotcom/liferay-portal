@@ -103,7 +103,8 @@
 						loadHTML(responseHTML);
 					},
 				});
-			} else {
+			}
+			else {
 				loadHTML(responseHTML);
 			}
 		},
@@ -172,7 +173,8 @@
 				placeHolder = A.Node.create(
 					'<div class="loading-animation" />'
 				);
-			} else {
+			}
+			else {
 				placeHolder = A.one(placeHolder);
 			}
 
@@ -237,7 +239,8 @@
 						nestedPortletOffset += nestedPortlet
 							.all('.portlet-boundary')
 							.size();
-					} else if (nestedPortletIndex >= portletPosition) {
+					}
+					else if (nestedPortletIndex >= portletPosition) {
 						return true;
 					}
 				});
@@ -270,7 +273,8 @@
 			if (!options.placeHolder && !options.plid) {
 				if (!hasStaticPortlet) {
 					container.prepend(placeHolder);
-				} else {
+				}
+				else {
 					firstPortlet.placeAfter(placeHolder);
 				}
 			}
@@ -358,7 +362,8 @@
 					if (onComplete) {
 						onComplete(portletBoundary, portletId);
 					}
-				} else {
+				}
+				else {
 					placeHolder.remove();
 				}
 
@@ -376,16 +381,19 @@
 				.then((response) => {
 					if (dataType === 'JSON') {
 						return response.json();
-					} else {
+					}
+					else {
 						return response.text();
 					}
 				})
 				.then((response) => {
 					if (dataType === 'HTML') {
 						addPortletReturn(response);
-					} else if (response.refresh) {
+					}
+					else if (response.refresh) {
 						addPortletReturn(response.portletHTML);
-					} else {
+					}
+					else {
 						Portlet._loadMarkupHeadElements(response);
 						Portlet._loadPortletFiles(response, addPortletReturn);
 					}
@@ -444,7 +452,8 @@
 				Liferay.fire('destroyPortlet', options);
 
 				Liferay.fire('closePortlet', options);
-			} else {
+			}
+			else {
 				A.config.win.focus();
 			}
 		},
@@ -503,6 +512,7 @@
 				// Functions to run on portlet load
 
 				if (canEditTitle) {
+
 					// https://github.com/yui/yui3/issues/1808
 
 					var events = 'focus';
@@ -607,7 +617,8 @@
 						placeHolder,
 						url,
 					});
-				} else if (!portlet.getData('pendingRefresh')) {
+				}
+				else if (!portlet.getData('pendingRefresh')) {
 					portlet.setData('pendingRefresh', true);
 
 					var nonAjaxableContentMessage = Lang.sub(TPL_NOT_AJAXABLE, [
@@ -637,7 +648,8 @@
 
 			if (Node && portletId instanceof Node) {
 				portletId = portletId.attr('id');
-			} else if (portletId.id) {
+			}
+			else if (portletId.id) {
 				portletId = portletId.id;
 			}
 

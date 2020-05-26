@@ -1018,6 +1018,39 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
+	@description = "This ensures that the old friendlyURL can be restored from the history."
+	@priority = "5"
+	test RestoreOldFriendlyURL {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+
+		Page.gotoFriendlyURLHistory();
+
+		Page.restoreOldFriendlyURL(
+			activeURL = "/new-test-page",
+			friendlyURLEdit = "/test-page",
+			oldFriendlyURL = "/test-page",
+			restoredURL = "/test-page");
+
+		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-page");
+
+		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-page");
+	}
+
 	@description = "This test covers LPS-110773. It ensures that a redirect entry can be found by search."
 	@priority = "3"
 	test SearchEntry {

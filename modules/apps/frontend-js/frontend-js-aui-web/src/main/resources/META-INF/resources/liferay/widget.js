@@ -14,6 +14,9 @@
 
 window.Liferay = window.Liferay || {};
 
+/**
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ */
 Liferay.Widget = function (options) {
 	options = options || {};
 

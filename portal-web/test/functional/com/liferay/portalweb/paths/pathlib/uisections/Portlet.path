@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>H3_MODAL_TITLE</td>
-	<td>//div[@class='modal-header']//div[@class='modal-title']</td>
+	<td>//h3[@class='modal-title']</td>
 	<td></td>
 </tr>
 <tr>

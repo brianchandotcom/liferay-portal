@@ -110,11 +110,9 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteMemberRoleLoginUserPG(
-			page = "Public Pages",
 			pageName = "Documents and Media Page",
 			portletName = "Documents and Media",
 			siteName = "Site Name",
-			siteURLTemp = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",

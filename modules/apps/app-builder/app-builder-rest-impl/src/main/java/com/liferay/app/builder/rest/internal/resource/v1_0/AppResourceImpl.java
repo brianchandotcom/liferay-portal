@@ -122,7 +122,7 @@ public class AppResourceImpl
 	@Override
 	public Page<App> getAppsPage(
 			Boolean active, String[] deploymentTypes, String keywords,
-			Long[] userIds, Pagination pagination, Sort[] sorts)
+			String scope, Long[] userIds, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
@@ -141,21 +141,20 @@ public class AppResourceImpl
 		}
 
 		if (Objects.isNull(active) && ArrayUtil.isEmpty(deploymentTypes) &&
-			Validator.isNull(keywords) && ArrayUtil.isEmpty(userIds)) {
+			Validator.isNull(keywords) && Validator.isNull(scope) &&
+			ArrayUtil.isEmpty(userIds)) {
 
 			return Page.of(
 				transform(
 					_appBuilderAppLocalService.getCompanyAppBuilderApps(
 						contextCompany.getCompanyId(),
-						AppBuilderAppConstants.SCOPE_STANDARD,
 						pagination.getStartPosition(),
 						pagination.getEndPosition(),
 						_toOrderByComparator(sorts[0])),
 					this::_toApp),
 				pagination,
 				_appBuilderAppLocalService.getCompanyAppBuilderAppsCount(
-					contextCompany.getCompanyId(),
-					AppBuilderAppConstants.SCOPE_STANDARD));
+					contextCompany.getCompanyId()));
 		}
 
 		return SearchUtil.search(
@@ -200,14 +199,15 @@ public class AppResourceImpl
 						userIdTermsFilter, BooleanClauseOccur.MUST);
 				}
 
-				BooleanQuery scopeBooleanQuery = new BooleanQueryImpl();
+				if (Validator.isNotNull(scope)) {
+					BooleanQuery scopeBooleanQuery = new BooleanQueryImpl();
 
-				scopeBooleanQuery.addTerm(
-					"scope", AppBuilderAppConstants.SCOPE_STANDARD);
+					scopeBooleanQuery.addTerm("scope", scope);
 
-				booleanFilter.add(
-					new QueryFilter(scopeBooleanQuery),
-					BooleanClauseOccur.MUST);
+					booleanFilter.add(
+						new QueryFilter(scopeBooleanQuery),
+						BooleanClauseOccur.MUST);
+				}
 			},
 			null, AppBuilderApp.class, keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -227,8 +227,8 @@ public class AppResourceImpl
 
 	@Override
 	public Page<App> getDataDefinitionAppsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long dataDefinitionId, String keywords, String scope,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
@@ -249,7 +249,7 @@ public class AppResourceImpl
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			dataDefinitionId);
 
-		if (Validator.isNull(keywords)) {
+		if (Validator.isNull(keywords) && Validator.isNull(scope)) {
 			return Page.of(
 				transform(
 					_appBuilderAppLocalService.getAppBuilderApps(
@@ -272,14 +272,15 @@ public class AppResourceImpl
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				BooleanQuery scopeBooleanQuery = new BooleanQueryImpl();
+				if (Validator.isNotNull(scope)) {
+					BooleanQuery scopeBooleanQuery = new BooleanQueryImpl();
 
-				scopeBooleanQuery.addTerm(
-					"scope", AppBuilderAppConstants.SCOPE_STANDARD);
+					scopeBooleanQuery.addTerm("scope", scope);
 
-				booleanFilter.add(
-					new QueryFilter(scopeBooleanQuery),
-					BooleanClauseOccur.MUST);
+					booleanFilter.add(
+						new QueryFilter(scopeBooleanQuery),
+						BooleanClauseOccur.MUST);
+				}
 			},
 			null, AppBuilderApp.class, keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -309,7 +310,8 @@ public class AppResourceImpl
 
 	@Override
 	public Page<App> getSiteAppsPage(
-			Long siteId, String keywords, Pagination pagination, Sort[] sorts)
+			Long siteId, String keywords, String scope, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		if (pagination.getPageSize() > 250) {
@@ -327,18 +329,16 @@ public class AppResourceImpl
 			};
 		}
 
-		if (Validator.isNull(keywords)) {
+		if (Validator.isNull(keywords) && Validator.isNull(scope)) {
 			return Page.of(
 				transform(
 					_appBuilderAppLocalService.getAppBuilderApps(
-						siteId, AppBuilderAppConstants.SCOPE_STANDARD,
-						pagination.getStartPosition(),
+						siteId, pagination.getStartPosition(),
 						pagination.getEndPosition(),
 						_toOrderByComparator(sorts[0])),
 					this::_toApp),
 				pagination,
-				_appBuilderAppLocalService.getAppBuilderAppsCount(
-					siteId, AppBuilderAppConstants.SCOPE_STANDARD));
+				_appBuilderAppLocalService.getAppBuilderAppsCount(siteId));
 		}
 
 		return SearchUtil.search(
@@ -347,14 +347,15 @@ public class AppResourceImpl
 				BooleanFilter booleanFilter =
 					booleanQuery.getPreBooleanFilter();
 
-				BooleanQuery scopeBooleanQuery = new BooleanQueryImpl();
+				if (Validator.isNotNull(scope)) {
+					BooleanQuery scopeBooleanQuery = new BooleanQueryImpl();
 
-				scopeBooleanQuery.addTerm(
-					"scope", AppBuilderAppConstants.SCOPE_STANDARD);
+					scopeBooleanQuery.addTerm("scope", scope);
 
-				booleanFilter.add(
-					new QueryFilter(scopeBooleanQuery),
-					BooleanClauseOccur.MUST);
+					booleanFilter.add(
+						new QueryFilter(scopeBooleanQuery),
+						BooleanClauseOccur.MUST);
+				}
 			},
 			null, AppBuilderApp.class, keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
@@ -400,7 +401,8 @@ public class AppResourceImpl
 				dataDefinitionId, GetterUtil.getLong(app.getDataLayoutId()),
 				GetterUtil.getLong(app.getDataListViewId()),
 				LocalizedValueUtil.toLocaleStringMap(app.getName()),
-				AppBuilderAppConstants.SCOPE_STANDARD);
+				GetterUtil.getString(
+					app.getScope(), AppBuilderAppConstants.SCOPE_STANDARD));
 
 		app.setId(appBuilderApp.getAppBuilderAppId());
 

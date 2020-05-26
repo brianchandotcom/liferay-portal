@@ -21,12 +21,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
-const AppsPanel = ({
-	categories = [],
-	portletNamespace,
-	recentSites,
-	viewAllURL,
-}) => {
+const AppsPanel = ({categories = [], portletNamespace, sites, viewAllURL}) => {
 	const [activeTab, setActiveTab] = useState(0);
 
 	return (
@@ -88,7 +83,35 @@ const AppsPanel = ({
 										)}
 									</li>
 
-									{recentSites.map(
+									{sites.recentSites.map(
+										({key, label, logoURL, url}) => (
+											<li key={key}>
+												<a
+													className="dropdown-item"
+													href={url}
+												>
+													<ClaySticker
+														className="inline-item-before"
+														inline={true}
+														size="sm"
+													>
+														<img
+															className="sticker-img"
+															src={logoURL}
+														/>
+													</ClaySticker>
+
+													{label}
+												</a>
+											</li>
+										)
+									)}
+
+									<li className="dropdown-subheader">
+										{Liferay.Language.get('my-sites')}
+									</li>
+
+									{sites.mySites.map(
 										({key, label, logoURL, url}) => (
 											<li key={key}>
 												<a
@@ -174,11 +197,11 @@ const GlobalMenu = ({panelAppsURL}) => {
 		if (!fetchCategoriesPromiseRef.current) {
 			fetchCategoriesPromiseRef.current = fetch(panelAppsURL)
 				.then((response) => response.json())
-				.then(({items, portletNamespace, recentSites, viewAllURL}) => {
+				.then(({items, portletNamespace, sites, viewAllURL}) => {
 					setAppsPanelData({
 						categories: items,
 						portletNamespace,
-						recentSites,
+						sites,
 						viewAllURL,
 					});
 				})

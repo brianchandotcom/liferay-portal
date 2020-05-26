@@ -43,6 +43,10 @@ public class AppBuilderAppModelDocumentContributor
 	public void contribute(Document document, AppBuilderApp appBuilderApp) {
 		document.addKeyword("active", appBuilderApp.isActive());
 		document.addKeyword(
+			"ddlRecordSetId", appBuilderApp.getDdlRecordSetId());
+		document.addKeyword(
+			"ddmStructureId", appBuilderApp.getDdmStructureId());
+		document.addKeyword(
 			"deploymentTypes",
 			Stream.of(
 				_appBuilderAppDeploymentLocalService.
@@ -55,8 +59,6 @@ public class AppBuilderAppModelDocumentContributor
 			).toArray(
 				String[]::new
 			));
-		document.addKeyword(
-			"ddmStructureId", appBuilderApp.getDdmStructureId());
 
 		String[] languageIds = getLanguageIds(
 			appBuilderApp.getDefaultLanguageId(), appBuilderApp.getName());

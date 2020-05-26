@@ -20,6 +20,9 @@ components:
                 dataListViewId:
                     format: int64
                     type: integer
+                dataRecordCollectionId:
+                    format: int64
+                    type: integer
                 dateCreated:
                     format: date-time
                     type: string

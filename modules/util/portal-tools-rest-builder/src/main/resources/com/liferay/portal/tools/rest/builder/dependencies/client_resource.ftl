@@ -135,6 +135,18 @@ public interface ${schemaName}Resource {
 							return Page.of(content, ${schemaName}SerDes::toDTO);
 						<#elseif javaMethodSignature.returnType?ends_with("String")>
 							return content;
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean") ||
+									stringUtil.equals(javaMethodSignature.returnType, "java.lang.Float") ||
+									stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||
+									stringUtil.equals(javaMethodSignature.returnType, "java.lang.Integer") ||
+									stringUtil.equals(javaMethodSignature.returnType, "java.lang.Long")>
+							return ${javaMethodSignature.returnType}.valueOf(content);
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Number")>
+							return Double.valueOf(content);
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.math.BigDecimal")>
+							return new java.math.BigDecimal(content);
+						<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.util.Date")>
+							return java.text.DateFormat.getInstance().parse(content);
 						<#elseif !stringUtil.equals(javaMethodSignature.returnType, "void")>
 							return ${javaMethodSignature.returnType?replace(".dto.", ".client.serdes.")}SerDes.toDTO(content);
 						<#else>

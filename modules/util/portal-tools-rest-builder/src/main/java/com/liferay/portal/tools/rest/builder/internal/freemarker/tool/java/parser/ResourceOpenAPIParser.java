@@ -856,6 +856,8 @@ public class ResourceOpenAPIParser {
 			}
 		}
 
+		String returnType = String.class.getName();
+
 		if ((response != null) && (response.getContent() != null)) {
 			Map<String, Content> sortedContents =
 				TreeMapBuilder.<String, Content>putAll(
@@ -884,7 +886,7 @@ public class ResourceOpenAPIParser {
 					return javax.ws.rs.core.Response.class.getName();
 				}
 
-				String returnType = OpenAPIParserUtil.getJavaDataType(
+				returnType = OpenAPIParserUtil.getJavaDataType(
 					javaDataTypeMap, schema);
 
 				if (returnType.startsWith("[")) {
@@ -905,7 +907,7 @@ public class ResourceOpenAPIParser {
 		}
 
 		if (Get.class.isInstance(operation)) {
-			return String.class.getName();
+			return returnType;
 		}
 
 		return javax.ws.rs.core.Response.class.getName();

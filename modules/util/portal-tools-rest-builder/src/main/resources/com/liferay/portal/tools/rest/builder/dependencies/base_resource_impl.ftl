@@ -199,12 +199,6 @@ public abstract class Base${schemaName}ResourceImpl
 				PermissionUtil.checkPermission(ActionKeys.PERMISSIONS, groupLocalService, portletName, siteId, siteId);
 
 				resourcePermissionLocalService.updateResourcePermissions(contextCompany.getCompanyId(), siteId, portletName, String.valueOf(siteId), ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, siteId, portletName, resourceActionLocalService, resourcePermissionLocalService, roleLocalService));
-			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>
-				return StringPool.BLANK;
-			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
-				Response.ResponseBuilder responseBuilder = Response.ok();
-
-				return responseBuilder.build();
 			<#elseif stringUtil.equals(javaMethodSignature.returnType, "void")>
 			<#elseif javaMethodSignature.returnType?contains("Page<")>
 				return Page.of(Collections.emptyList());
@@ -229,6 +223,28 @@ public abstract class Base${schemaName}ResourceImpl
 				preparePatch(${schemaVarName}, existing${schemaName});
 
 				return put${schemaName}(${firstJavaMethodParameter.parameterName}, existing${schemaName});
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Boolean")>
+				return false;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Double") ||
+						stringUtil.equals(javaMethodSignature.returnType, "java.lang.Number")>
+				return 0.0;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Float")>
+				return 0f;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Integer")>
+				return 0;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Long")>
+				return 0L;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.Object")>
+				return null;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.lang.String")>
+				return StringPool.BLANK;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.math.BigDecimal")>
+				return java.math.BigDecimal.ZERO;
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "java.util.Date")>
+				return new java.util.Date();
+			<#elseif stringUtil.equals(javaMethodSignature.returnType, "javax.ws.rs.core.Response")>
+				Response.ResponseBuilder responseBuilder = Response.ok();
+				return responseBuilder.build();
 			<#else>
 				return new ${javaMethodSignature.returnType}();
 			</#if>

@@ -32,6 +32,10 @@ const noop = () => {};
  * will not have a React context above it.
  */
 export const ReactFieldAdapter = ({fieldType, instance, ...field}) => {
+	if (!fieldType || fieldType === '') {
+		return null;
+	}
+
 	const emit = (name, event) => {
 		instance.emit(name, {
 			...event,

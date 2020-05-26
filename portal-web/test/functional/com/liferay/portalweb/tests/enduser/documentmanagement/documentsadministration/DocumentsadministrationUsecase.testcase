@@ -1621,15 +1621,43 @@ definition {
 			layoutName = "Documents and Media Page",
 			widgetName = "Documents and Media");
 
+		JSONDocument.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
+
+		for (var documentName : list "Document_2.doc,Document_1.xls,Document_4.jpg,Document_3.jpg,Document_2.xls,Document_1.txt,Document_4.txt,Document_3.xls,Document_2.jpg,Document_1.doc") {
+
+			var extension = StringUtil.extractLast("${documentName}", ".");
+
+			if ("${extension}" == "doc") {
+				var mimeType = "application/msword";
+			}
+			else if ("${extension}" == "jpg") {
+				var mimeType = "image/jpg";
+			}
+			else if ("${extension}" == "png") {
+				var mimeType = "image/png";
+			}
+			else if ("${extension}" == "xls") {
+				var mimeType = "application/vnd.ms-excel";
+			}
+			else if ("${extension}" == "txt") {
+				var mimeType = "text/plain";
+			}
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "${documentName}",
+				folderName = "DM Folder Name",
+				groupName = "Guest",
+				mimeType = "${mimeType}",
+				sourceFileName = "${documentName}");
+		}
+
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		DMFolder.addCP(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
-
 		DMFolder.gotoEntry(dmFolderName = "DM Folder Name");
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.doc,Document_2.jpg,Document_3.xls,Document_4.txt,Document_1.txt,Document_2.xls,Document_3.jpg,Document_4.jpg,Document_1.xls,Document_2.doc");
 
 		Pagination.changePagination(itemsPerPage = "4");
 

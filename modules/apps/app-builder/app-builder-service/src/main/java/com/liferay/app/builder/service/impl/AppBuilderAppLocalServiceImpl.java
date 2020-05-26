@@ -19,6 +19,10 @@ import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
 import com.liferay.app.builder.service.base.AppBuilderAppLocalServiceBaseImpl;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -44,6 +48,36 @@ import org.osgi.service.component.annotations.Reference;
 public class AppBuilderAppLocalServiceImpl
 	extends AppBuilderAppLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public AppBuilderApp addAppBuilderApp(
+			long groupId, long companyId, long userId, boolean active,
+			long ddlRecordSetId, long ddmStructureId, long ddmStructureLayoutId,
+			long deDataListViewId, Map<Locale, String> nameMap, String scope)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		AppBuilderApp appBuilderApp = appBuilderAppPersistence.create(
+			counterLocalService.increment());
+
+		appBuilderApp.setGroupId(groupId);
+		appBuilderApp.setCompanyId(companyId);
+		appBuilderApp.setUserId(user.getUserId());
+		appBuilderApp.setUserName(user.getFullName());
+		appBuilderApp.setCreateDate(new Date());
+		appBuilderApp.setModifiedDate(new Date());
+		appBuilderApp.setActive(active);
+		appBuilderApp.setDdlRecordSetId(ddlRecordSetId);
+		appBuilderApp.setDdmStructureId(ddmStructureId);
+		appBuilderApp.setDdmStructureLayoutId(ddmStructureLayoutId);
+		appBuilderApp.setDeDataListViewId(deDataListViewId);
+		appBuilderApp.setNameMap(nameMap);
+		appBuilderApp.setScope(scope);
+
+		return appBuilderAppPersistence.update(appBuilderApp);
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addAppBuilderApp(long, long, long, boolean, long, long,
@@ -63,7 +97,6 @@ public class AppBuilderAppLocalServiceImpl
 			AppBuilderAppConstants.SCOPE_STANDARD);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AppBuilderApp addAppBuilderApp(
 			long groupId, long companyId, long userId, boolean active,
@@ -71,25 +104,16 @@ public class AppBuilderAppLocalServiceImpl
 			long deDataListViewId, Map<Locale, String> nameMap, String scope)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			ddmStructureId);
 
-		AppBuilderApp appBuilderApp = appBuilderAppPersistence.create(
-			counterLocalService.increment());
+		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.getRecordSet(
+			groupId, ddmStructure.getStructureKey());
 
-		appBuilderApp.setGroupId(groupId);
-		appBuilderApp.setCompanyId(companyId);
-		appBuilderApp.setUserId(user.getUserId());
-		appBuilderApp.setUserName(user.getFullName());
-		appBuilderApp.setCreateDate(new Date());
-		appBuilderApp.setModifiedDate(new Date());
-		appBuilderApp.setActive(active);
-		appBuilderApp.setDdmStructureId(ddmStructureId);
-		appBuilderApp.setDdmStructureLayoutId(ddmStructureLayoutId);
-		appBuilderApp.setDeDataListViewId(deDataListViewId);
-		appBuilderApp.setNameMap(nameMap);
-		appBuilderApp.setScope(scope);
-
-		return appBuilderAppPersistence.update(appBuilderApp);
+		return addAppBuilderApp(
+			groupId, companyId, userId, active, ddlRecordSet.getRecordSetId(),
+			ddmStructureId, ddmStructureLayoutId, deDataListViewId, nameMap,
+			scope);
 	}
 
 	@Override
@@ -246,5 +270,11 @@ public class AppBuilderAppLocalServiceImpl
 	@Reference
 	private AppBuilderAppDeploymentLocalService
 		_appBuilderAppDeploymentLocalService;
+
+	@Reference
+	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

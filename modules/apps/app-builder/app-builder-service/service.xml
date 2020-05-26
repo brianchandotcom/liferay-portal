@@ -24,6 +24,7 @@
 		<!-- Other fields -->
 
 		<column name="active" type="boolean" />
+		<column name="ddlRecordSetId" type="long" />
 		<column name="ddmStructureId" type="long" />
 		<column name="ddmStructureLayoutId" type="long" />
 		<column name="deDataListViewId" type="long" />

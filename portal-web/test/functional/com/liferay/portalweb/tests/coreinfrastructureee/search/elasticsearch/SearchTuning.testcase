@@ -953,7 +953,9 @@ definition {
 			key_assetTitle = "MB Thread Message Subject Apple",
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_TITLE");
 
-		SelectWindow(locator1 = "title=Result Rankings - Liferay DXP");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SelectWindow(locator1 = "title=Result Rankings - ${siteName}");
 
 		AssertVisible(
 			key_assetTitle = "MB Thread Message Subject Apple",
@@ -963,13 +965,13 @@ definition {
 			key_threadBody = "banana, red apple, blueberry!",
 			locator1 = "MessageBoardsThread#THREAD_BODY");
 
-		Close.closeAndSelectWindow(locator1 = "title=Customize Results - Liferay DXP");
+		Close.closeAndSelectWindow(locator1 = "title=Customize Results - ${siteName}");
 
 		Click(
 			key_assetTitle = "Web Content Article Apple",
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_TITLE");
 
-		SelectWindow(locator1 = "title=Result Rankings - Liferay DXP");
+		SelectWindow(locator1 = "title=Result Rankings - ${siteName}");
 
 		AssertVisible(
 			key_assetTitle = "Web Content Article Apple",

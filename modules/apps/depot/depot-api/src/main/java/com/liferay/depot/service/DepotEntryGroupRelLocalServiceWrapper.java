@@ -310,6 +310,14 @@ public class DepotEntryGroupRelLocalServiceWrapper
 	}
 
 	@Override
+	public int getDepotEntryGroupRelsCount(
+		com.liferay.depot.model.DepotEntry depotEntry) {
+
+		return _depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
+			depotEntry);
+	}
+
+	@Override
 	public int getDepotEntryGroupRelsCount(long groupId) {
 		return _depotEntryGroupRelLocalService.getDepotEntryGroupRelsCount(
 			groupId);

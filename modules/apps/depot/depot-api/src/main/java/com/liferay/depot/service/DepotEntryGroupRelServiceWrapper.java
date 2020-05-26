@@ -61,6 +61,15 @@ public class DepotEntryGroupRelServiceWrapper
 	}
 
 	@Override
+	public int getDepotEntryGroupRelsCount(
+			com.liferay.depot.model.DepotEntry depotEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _depotEntryGroupRelService.getDepotEntryGroupRelsCount(
+			depotEntry);
+	}
+
+	@Override
 	public int getDepotEntryGroupRelsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

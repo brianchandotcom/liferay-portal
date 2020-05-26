@@ -176,7 +176,8 @@ public class DepotEntryGroupRelServiceHttp {
 	}
 
 	public static int getDepotEntryGroupRelsCount(
-			HttpPrincipal httpPrincipal, long groupId)
+			HttpPrincipal httpPrincipal,
+			com.liferay.depot.model.DepotEntry depotEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -184,6 +185,47 @@ public class DepotEntryGroupRelServiceHttp {
 				DepotEntryGroupRelServiceUtil.class,
 				"getDepotEntryGroupRelsCount",
 				_getDepotEntryGroupRelsCountParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, depotEntry);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static int getDepotEntryGroupRelsCount(
+			HttpPrincipal httpPrincipal, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DepotEntryGroupRelServiceUtil.class,
+				"getDepotEntryGroupRelsCount",
+				_getDepotEntryGroupRelsCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -223,7 +265,7 @@ public class DepotEntryGroupRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DepotEntryGroupRelServiceUtil.class, "updateSearchable",
-				_updateSearchableParameterTypes4);
+				_updateSearchableParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, depotEntryGroupRelId, searchable);
@@ -266,8 +308,12 @@ public class DepotEntryGroupRelServiceHttp {
 	private static final Class<?>[] _getDepotEntryGroupRelsParameterTypes2 =
 		new Class[] {long.class, int.class, int.class};
 	private static final Class<?>[]
-		_getDepotEntryGroupRelsCountParameterTypes3 = new Class[] {long.class};
-	private static final Class<?>[] _updateSearchableParameterTypes4 =
+		_getDepotEntryGroupRelsCountParameterTypes3 = new Class[] {
+			com.liferay.depot.model.DepotEntry.class
+		};
+	private static final Class<?>[]
+		_getDepotEntryGroupRelsCountParameterTypes4 = new Class[] {long.class};
+	private static final Class<?>[] _updateSearchableParameterTypes5 =
 		new Class[] {long.class, boolean.class};
 
 }

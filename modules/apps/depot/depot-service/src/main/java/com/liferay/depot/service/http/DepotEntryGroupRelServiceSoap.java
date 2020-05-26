@@ -119,6 +119,25 @@ public class DepotEntryGroupRelServiceSoap {
 		}
 	}
 
+	public static int getDepotEntryGroupRelsCount(
+			com.liferay.depot.model.DepotEntrySoap depotEntry)
+		throws RemoteException {
+
+		try {
+			int returnValue =
+				DepotEntryGroupRelServiceUtil.getDepotEntryGroupRelsCount(
+					com.liferay.depot.model.impl.DepotEntryModelImpl.toModel(
+						depotEntry));
+
+			return returnValue;
+		}
+		catch (Exception exception) {
+			_log.error(exception, exception);
+
+			throw new RemoteException(exception.getMessage());
+		}
+	}
+
 	public static int getDepotEntryGroupRelsCount(long groupId)
 		throws RemoteException {
 

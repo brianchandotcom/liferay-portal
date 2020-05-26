@@ -14,6 +14,7 @@
 
 package com.liferay.depot.service;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -62,6 +63,10 @@ public interface DepotEntryGroupRelService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
 			long groupId, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getDepotEntryGroupRelsCount(DepotEntry depotEntry)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

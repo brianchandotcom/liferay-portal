@@ -284,6 +284,12 @@ public class DepotEntryGroupRelLocalServiceUtil {
 		return getService().getDepotEntryGroupRelsCount();
 	}
 
+	public static int getDepotEntryGroupRelsCount(
+		com.liferay.depot.model.DepotEntry depotEntry) {
+
+		return getService().getDepotEntryGroupRelsCount(depotEntry);
+	}
+
 	public static int getDepotEntryGroupRelsCount(long groupId) {
 		return getService().getDepotEntryGroupRelsCount(groupId);
 	}

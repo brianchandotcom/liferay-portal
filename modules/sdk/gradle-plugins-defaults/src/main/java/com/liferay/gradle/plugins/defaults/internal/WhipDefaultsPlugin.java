@@ -42,7 +42,18 @@ public class WhipDefaultsPlugin extends BaseDefaultsPlugin<WhipPlugin> {
 
 		_configureExtensionWhip(project, whipExtension);
 
-		_configureTasksTest(project);
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			Test.class,
+			new Action<Test>() {
+
+				@Override
+				public void execute(Test test) {
+					_configureTaskTest(test);
+				}
+
+			});
 	}
 
 	@Override
@@ -61,21 +72,6 @@ public class WhipDefaultsPlugin extends BaseDefaultsPlugin<WhipPlugin> {
 		if (Validator.isNotNull(version)) {
 			whipExtension.setVersion(version);
 		}
-	}
-
-	private void _configureTasksTest(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			Test.class,
-			new Action<Test>() {
-
-				@Override
-				public void execute(Test test) {
-					_configureTaskTest(test);
-				}
-
-			});
 	}
 
 	private void _configureTaskTest(Test test) {

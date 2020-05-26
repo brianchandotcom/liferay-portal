@@ -68,16 +68,17 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 				"Unable to get build properties", ioException);
 		}
 
-		String pullRequestForwardUpstreamFailureComparisonEnabled =
-			buildProperties.getProperty(
-				"pull.request.forward.upstream.failure.comparison.enabled");
+		boolean pullRequestForwardUpstreamFailureComparisonEnabled =
+			Boolean.parseBoolean(buildProperties.getProperty(
+				"pull.request.forward.upstream.failure.comparison.enabled"));
+
+		if (pullRequestForwardUpstreamFailureComparisonEnabled == false) {
+			return result;
+		}
 
 		String testSuiteName = getTestSuiteName();
 
-		if (!Boolean.parseBoolean(
-				pullRequestForwardUpstreamFailureComparisonEnabled) ||
-			!testSuiteName.matches("relevant|stable")) {
-
+		if (!testSuiteName.matches("relevant|stable")) {
 			return result;
 		}
 

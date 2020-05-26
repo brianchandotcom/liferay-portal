@@ -1,0 +1,44 @@
+definition {
+
+	@summary = "This calls the JSON WS API to add a redirect entry"
+	macro addRedirect {
+		Variables.assertDefined(parameterList = "${sourceURL},${destinationURL}");
+
+		if (!(isSet(site))) {
+			var site = "true";
+		}
+
+		var groupId = JSONGroupAPI._getGroupIdByName(groupName = "${groupName}", site = "${site}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var destinationURL = StringUtil.replace("${destinationURL}", ":", "%3A");
+
+		if (!(isSet(expirationDate))) {
+			var expirationDate = "0";
+		}
+
+		if (!(isSet(permanent))) {
+			var permanent = "false";
+		}
+
+		var curl = '''
+			${portalURL}/api/jsonws/redirect.redirectentry/add-redirect-entry \
+			-u test@liferay.com:test \
+			-d groupId=${groupId} \
+			-d destinationURL=${destinationURL} \
+			-d expirationDate=${expirationDate} \
+			-d permanent=${permanent} \
+			-d sourceURL=${sourceURL} \
+		''';
+
+		echo("## Adding a 'Redirection' with the following info using JSONWS:");
+
+		echo("## * SourceURL: ${sourceURL}");
+
+		echo("## * DestinationURL: ${destinationURL}");
+
+		var messageId = JSONCurlUtil.post("${curl}");
+	}
+
+}

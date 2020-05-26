@@ -132,5 +132,26 @@ describe('FriendlyURLHistory', () => {
 
 			expect(listItems.length).toBe(4);
 		});
+
+		it('deletes the third url', async () => {
+			fetch.mockResponse(JSON.stringify({success: true}));
+
+			const listItems = await waitForElement(() =>
+				result.getAllByRole('listitem')
+			);
+
+			const deleteButtons = listItems.map(
+				(listitem) => listitem.querySelector('button[data-title="forget-url"]')
+			);
+
+			await act(async () => {
+				fireEvent.click(deleteButtons[2]);
+			});
+
+			expect(
+				document.querySelectorAll('.modal-content li.list-group-item')
+					.length
+			).toBe(2);
+		});
 	});
 });

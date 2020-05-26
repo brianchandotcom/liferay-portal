@@ -619,37 +619,49 @@ common case.
 
 ---------------------------------------
 
-### Liferay.BrowserSelectors.run Is No Longer called
+### Liferay.BrowserSelectors.run Is No Longer Called
 - **Date:** 2020-May-26
 - **JIRA Ticket:** [LPS-112983](https://issues.liferay.com/browse/LPS-112983)
 
 #### What changed?
 
-The `Liferay.BrowserSelectors.run` function is no longer been called and as a
-result some CSS classes are no longer present in the top `<html>` element,
- now most of these are present in the `<body>` element.
+The `Liferay.BrowserSelectors.run()` function is no longer called on all pages
+and as a result some CSS classes are no longer present in the opening `<html>`
+tag. Many of these are now added to the `<body>` element instead.
 
 #### Who is affected?
 
-This affects any code that relies on having the following CSS classes set on
-the top `<html>` element: `aol`, `camino`, `edgeHTML` `edge`, `firefox`,
-`flock` `gecko`, `icab`, `ie11`, `ie6`, `ie7`, `ie9`, `ie`, `js` `konqueror`,
-`mac` `mozilla`, `netscape`, `opera`, `presto`, `safari` `secure`, `touch`,
-`trident`, `webkit`, `win`.
+This affects any code that relies on having the following CSS classes set on the
+`<html>` element: `aol`, `camino`, `edgeHTML` `edge`, `firefox`, `flock`
+`gecko`, `icab`, `ie11`, `ie6`, `ie7`, `ie9`, `ie`, `js` `konqueror`, `mac`
+`mozilla`, `netscape`, `opera`, `presto`, `safari` `secure`, `touch`, `trident`,
+`webkit`, and `win`.
 
 Instead, depending on which browser is being used, the following classes are
-added to the `<body>` element: `chrome`, `edge`, `firefox`, `ie`, `mobile`
+added to the `<body>` element: `chrome`, `edge`, `firefox`, `ie`, `mobile`,
 and `other`.
 
 #### How should I update my code?
 
-There's no direct replacement for the `Liferay.BrowserSelectors.run` function,
-but you can adapt your CSS to target the `<body>` element.
+There's no direct replacement for the `Liferay.BrowserSelectors.run()`
+function, but you can adapt your CSS and JS to target the new classes on
+the `<body>` element instead.
+
+Alternatively, you can still invoke `Liferay.BrowserSelectors.run()` to
+apply the old classes to the `<html>` element with the following code:
+
+```
+<aui:script use="liferay-browser-selectors">
+	Liferay.BrowserSelectors.run();
+</aui:script>
+```
 
 #### Why was this change made?
 
-The classes added to the top `<html>` element where being added via JavaScript,
-with this change it is now done on the server side to streamline page loads.
-Some CSS classes where targeting some older browsers and weren't needed anymore.
+The classes added to the top `<html>` element were being added via
+legacy JavaScript that depended on Alloy UI. With this change it is now
+done on the server side, streamlining page loads. Additionally, some of
+the previously added CSS classes were related to older browsers and are
+no longer relevant.
 
 ---------------------------------------

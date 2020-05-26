@@ -21,6 +21,30 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
 
+const Sites = ({label, sites}) => {
+	return (
+		<>
+			<li className="dropdown-subheader">{label}</li>
+
+			{sites.map(({key, label, logoURL, url}) => (
+				<li key={key}>
+					<a className="dropdown-item" href={url}>
+						<ClaySticker
+							className="inline-item-before"
+							inline={true}
+							size="sm"
+						>
+							<img className="sticker-img" src={logoURL} />
+						</ClaySticker>
+
+						{label}
+					</a>
+				</li>
+			))}
+		</>
+	);
+};
+
 const AppsPanel = ({categories = [], portletNamespace, sites, viewAllURL}) => {
 	const [activeTab, setActiveTab] = useState(0);
 
@@ -77,63 +101,17 @@ const AppsPanel = ({categories = [], portletNamespace, sites, viewAllURL}) => {
 										{Liferay.Language.get('sites')}
 									</li>
 
-									<li className="dropdown-subheader">
-										{Liferay.Language.get(
+									<Sites
+										label={Liferay.Language.get(
 											'recently-visited'
 										)}
-									</li>
+										sites={sites.recentSites}
+									/>
 
-									{sites.recentSites.map(
-										({key, label, logoURL, url}) => (
-											<li key={key}>
-												<a
-													className="dropdown-item"
-													href={url}
-												>
-													<ClaySticker
-														className="inline-item-before"
-														inline={true}
-														size="sm"
-													>
-														<img
-															className="sticker-img"
-															src={logoURL}
-														/>
-													</ClaySticker>
-
-													{label}
-												</a>
-											</li>
-										)
-									)}
-
-									<li className="dropdown-subheader">
-										{Liferay.Language.get('my-sites')}
-									</li>
-
-									{sites.mySites.map(
-										({key, label, logoURL, url}) => (
-											<li key={key}>
-												<a
-													className="dropdown-item"
-													href={url}
-												>
-													<ClaySticker
-														className="inline-item-before"
-														inline={true}
-														size="sm"
-													>
-														<img
-															className="sticker-img"
-															src={logoURL}
-														/>
-													</ClaySticker>
-
-													{label}
-												</a>
-											</li>
-										)
-									)}
+									<Sites
+										label={Liferay.Language.get('my-sites')}
+										sites={sites.mySites}
+									/>
 
 									<li>
 										<ClayButton

@@ -224,6 +224,33 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
+	public void testSearchBySourceURLAfterUpdatingChainedRedirectEntries()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		_redirectEntryLocalService.addRedirectEntry(
+			serviceContext.getScopeGroupId(), "http://localhost/site/page2",
+			null, false, "page1", serviceContext);
+
+		RedirectEntry redirectEntry =
+			_redirectEntryLocalService.addRedirectEntry(
+				serviceContext.getScopeGroupId(), "http://localhost/site/page3",
+				null, "http://localhost/site", false, "page2", true,
+				serviceContext);
+
+		List<SearchResult> searchResults = _getSearchResults("page2");
+
+		Assert.assertEquals(searchResults.toString(), 1, searchResults.size());
+
+		SearchResult searchResult = searchResults.get(0);
+
+		Assert.assertEquals(
+			redirectEntry.getRedirectEntryId(), searchResult.getClassPK());
+	}
+
+	@Test
 	public void testSearchBySourceURLSubstring() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());

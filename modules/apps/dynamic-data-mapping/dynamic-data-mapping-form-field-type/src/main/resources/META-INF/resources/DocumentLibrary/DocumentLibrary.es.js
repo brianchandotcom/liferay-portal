@@ -28,6 +28,7 @@ import getConnectedReactComponentAdapter from '../util/ReactComponentAdapter.es'
 import {connectStore} from '../util/connectStore.es';
 
 function getDocumentLibrarySelectorURL({
+	groupId,
 	itemSelectorAuthToken,
 	portletNamespace,
 }) {
@@ -48,13 +49,13 @@ function getDocumentLibrarySelectorURL({
 		'2_json': JSON.stringify(uploadCriterionJSON),
 		criteria:
 			'com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion',
-		doAsGroupId: themeDisplay.getScopeGroupId(),
+		doAsGroupId: groupId,
 		itemSelectedEventName: `${portletNamespace}selectDocumentLibrary`,
 		p_p_auth: itemSelectorAuthToken,
 		p_p_id: Liferay.PortletKeys.ITEM_SELECTOR,
 		p_p_mode: 'view',
 		p_p_state: 'pop_up',
-		refererGroupId: themeDisplay.getScopeGroupId(),
+		refererGroupId: groupId,
 	};
 
 	const documentLibrarySelectorURL = createPortletURL(
@@ -202,6 +203,7 @@ const DocumentLibraryProxy = connectStore(
 		emit,
 		fileEntryTitle,
 		fileEntryURL,
+		groupId,
 		id,
 		itemSelectorAuthToken,
 		name,
@@ -230,6 +232,7 @@ const DocumentLibraryProxy = connectStore(
 				eventName: `${portletNamespace}selectDocumentLibrary`,
 				singleSelect: true,
 				url: getDocumentLibrarySelectorURL({
+					groupId,
 					itemSelectorAuthToken,
 					portletNamespace,
 				}),

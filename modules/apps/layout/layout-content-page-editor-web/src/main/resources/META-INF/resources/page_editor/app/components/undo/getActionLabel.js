@@ -19,7 +19,7 @@ import {
 	DELETE_ITEM,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
-	UPDATE_COL_SIZE_START,
+	UPDATE_COL_SIZE,
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
@@ -71,7 +71,7 @@ export function getActionLabel(action, type) {
 						action.previousSegmentsExperienceName
 				  );
 
-		case UPDATE_COL_SIZE_START:
+		case UPDATE_COL_SIZE:
 			return Liferay.Language.get('update-column-size');
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 		case UPDATE_ITEM_CONFIG:

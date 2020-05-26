@@ -23,6 +23,7 @@ import {
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
+import {NotDraggableArea} from '../../utils/useDragAndDrop';
 import {useIsActive} from '../Controls';
 import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
@@ -277,7 +278,7 @@ const ColumnWithControls = React.forwardRef(
 					ref={ref}
 				>
 					{parentItemIsActive && columnIndex !== 0 ? (
-						<div>
+						<NotDraggableArea>
 							<button
 								className={classNames(
 									'btn-primary page-editor__col__resizer',
@@ -288,7 +289,7 @@ const ColumnWithControls = React.forwardRef(
 								onMouseDown={handleMouseDown}
 							/>
 							{children}
-						</div>
+						</NotDraggableArea>
 					) : (
 						children
 					)}

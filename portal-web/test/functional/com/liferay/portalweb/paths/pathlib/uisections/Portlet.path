@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_TITLE</td>
+	<td>//div[contains(@class,'modal-content')]//*[@class='modal-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_ICON</td>
 	<td>//div[@id='main-content']//div[contains(@class,'portlet-options')]/a</td>
 	<td></td>

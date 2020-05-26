@@ -144,7 +144,7 @@ definition {
 	test CheckinDocument {
 		property test.name.skip.portal.instance = "SharepointREST#CheckinDocument";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.txt");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.txt",
@@ -199,7 +199,7 @@ definition {
 	test DeleteDocumentInSubfolder {
 		property test.name.skip.portal.instance = "SharepointREST#DeleteDocumentInSubfolder";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 
 		DMFolder.addCP(dmFolderName = "DM Folder3 Name");
 
@@ -253,13 +253,15 @@ definition {
 		DMDocument.cannotViewCP(dmDocumentTitle = "Document_2.doc");
 
 		DMDocument.viewDefaultCP();
+
+		DMRepository.cleanRepository(dmFolderName = "DM Folder3 Name");
 	}
 
 	@priority = "4"
 	test DeleteSubfolder {
 		property test.name.skip.portal.instance = "SharepointREST#DeleteSubfolder";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
 
 		DMFolder.addCP(dmFolderName = "DM Folder Name");
 
@@ -277,13 +279,15 @@ definition {
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
 		DMFolder.cannotViewCP(dmFolderName = "DM Folder Name");
+
+		DMRepository.cleanRepository(dmFolderName = "DM Folder Name");
 	}
 
 	@priority = "4"
 	test EditDocumentFile {
 		property test.name.skip.portal.instance = "SharepointREST#EditDocumentFile";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.doc",
@@ -328,13 +332,15 @@ definition {
 		DMDocument.cannotViewDocumentMetadataCP(
 			metadataData = "ISO-8859-1",
 			metadataLabel = "Content Encoding");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.doc");
 	}
 
 	@priority = "4"
 	test MoveCheckedoutDocumentToFolder {
 		property test.name.skip.portal.instance = "SharepointREST#MoveCheckedoutDocumentToFolder";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
 
 		DMFolder.addCP(dmFolderName = "Sharepoint Subfolder");
 
@@ -381,8 +387,6 @@ definition {
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
-
 		DMDocument.moveToSubFolderCP(
 			dmDocumentTitle = "Document_1.txt",
 			dmFolderName = "Collaboration Test Application",
@@ -397,13 +401,15 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.txt");
 
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		DMRepository.cleanRepository(dmFolderName = "Sharepoint Subfolder");
 	}
 
 	@priority = "4"
 	test MoveDocumentToHome {
 		property test.name.skip.portal.instance = "SharepointREST#MoveDocumentToHome";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.odt");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.odt",
@@ -440,7 +446,7 @@ definition {
 	test SearchDocumentViaHome {
 		property test.name.skip.portal.instance = "SharepointREST#SearchDocumentViaHome";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.odt");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.odt",
@@ -458,6 +464,8 @@ definition {
 		DMDocument.viewSearchResultsCP(
 			dmDocumentTitle = "Document_3.odt",
 			dmRepositoryName = "Collaboration Test Application");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.odt");
 	}
 
 	@priority = "4"
@@ -482,6 +490,8 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		Portlet.addPG(portletName = "Documents and Media");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.doc");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
@@ -509,13 +519,19 @@ definition {
 			value1 = "Collaboration Test Application");
 
 		AssertElementPresent(locator1 = "MicrosoftLogin#LOGIN_EMAIL_FIELD");
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.doc");
 	}
 
 	@priority = "4"
 	test ViewEditedCheckedoutDocument {
 		property test.name.skip.portal.instance = "SharepointREST#ViewEditedCheckedoutDocument";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.xls");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.xls",
@@ -560,13 +576,15 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1_Edit.xls");
 
 		DMDocument.viewCheckedoutCP(dmRepositoryName = "true");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1_Edit.xls");
 	}
 
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange {
 		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionChange";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_1.docx",
@@ -598,13 +616,15 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.docx");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_1.docx");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_1.docx");
 	}
 
 	@priority = "4"
 	test ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval {
 		property test.name.skip.portal.instance = "SharepointREST#ViewOriginalFileExtensionAfterUnsuccessfulExtensionRemoval";
 
-		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.docx");
 
 		DMDocument.addCP(
 			dmDocumentFile = "Document_3.docx",
@@ -636,6 +656,8 @@ definition {
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_3.docx");
 
 		DMDocument.viewCP(dmDocumentTitle = "Document_3.docx");
+
+		DMRepository.cleanRepository(dmDocumentTitle = "Document_3.docx");
 	}
 
 	@priority = "4"

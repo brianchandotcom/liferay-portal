@@ -47,10 +47,7 @@ function FieldBase({
 	localizedValue = {},
 	name,
 	nestedFields,
-	onBlur,
-	onChange,
 	onClick,
-	onFocus,
 	readOnly,
 	repeatable,
 	required,
@@ -161,14 +158,7 @@ function FieldBase({
 
 				{children}
 
-				{nestedFields && (
-					<Layout
-						onBlur={onBlur}
-						onChange={onChange}
-						onFocus={onFocus}
-						rows={getDefaultRows(nestedFields)}
-					/>
-				)}
+				{nestedFields && <Layout rows={getDefaultRows(nestedFields)} />}
 
 				{localizedValueArray.length > 0 &&
 					localizedValueArray.map((language) => (

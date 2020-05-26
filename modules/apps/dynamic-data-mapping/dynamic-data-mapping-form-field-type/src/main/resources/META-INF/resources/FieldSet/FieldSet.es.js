@@ -54,9 +54,6 @@ const FieldSet = ({
 	label,
 	name,
 	nestedFields = [],
-	onBlur,
-	onChange,
-	onFocus,
 	readOnly,
 	repeatable,
 	rows,
@@ -93,20 +90,10 @@ const FieldSet = ({
 						showLabel={showLabel}
 						title={label}
 					>
-						<Layout
-							onBlur={onBlur}
-							onChange={onChange}
-							onFocus={onFocus}
-							rows={getRows(rows, nestedFields)}
-						/>
+						<Layout rows={getRows(rows, nestedFields)} />
 					</Panel>
 				) : (
-					<Layout
-						onBlur={onBlur}
-						onChange={onChange}
-						onFocus={onFocus}
-						rows={getRows(rows, nestedFields)}
-					/>
+					<Layout rows={getRows(rows, nestedFields)} />
 				)}
 			</div>
 		</FieldBase>

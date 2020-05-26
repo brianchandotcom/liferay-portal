@@ -158,9 +158,6 @@ const Renderer = ({
 	activePage = 0,
 	editable = false,
 	editingLanguageId,
-	onBlur,
-	onChange,
-	onFocus,
 	overrides = {},
 	page: defaultPage,
 	pageIndex = 0,
@@ -217,27 +214,20 @@ const Renderer = ({
 				page={page}
 				pageIndex={pageIndex}
 			>
-				<Layout
-					components={Components}
-					onBlur={onBlur}
-					onChange={onChange}
-					onFocus={onFocus}
-					rows={page.rows}
-				/>
+				<Layout components={Components} rows={page.rows} />
 			</Components.Page>
 		</Components.Container>
 	);
 };
 
 const RendererProxy = ({instance, ...otherProps}) => (
-	<PageProvider dispatch={instance.context.dispatch} value={otherProps}>
+	<PageProvider
+		dispatch={instance.context.dispatch}
+		emit={(...args) => instance.emit(...args)}
+		value={otherProps}
+	>
 		<ClayIconSpriteContext.Provider value={otherProps.spritemap}>
-			<Renderer
-				{...otherProps}
-				onBlur={(event) => instance.emit('fieldBlurred', event)}
-				onChange={(event) => instance.emit('fieldEdited', event)}
-				onFocus={(event) => instance.emit('fieldFocused', event)}
-			/>
+			<Renderer {...otherProps} />
 		</ClayIconSpriteContext.Provider>
 	</PageProvider>
 );

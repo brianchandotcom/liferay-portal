@@ -19,6 +19,9 @@ const PageContext = React.createContext({});
 
 export const PAGE_TYPES = {
 	CHANGE_ACTIVE_PAGE: 'activePageUpdated',
+	FIELD_BLUR: 'fieldBlurred',
+	FIELD_CHANGE: 'fieldEdited',
+	FIELD_FOCUS: 'fieldFocused',
 	PAGE_ADDED: 'pageAdded',
 	PAGE_DELETED: 'pageDeleted',
 	PAGE_RESET: 'pageReset',
@@ -32,7 +35,7 @@ export const PAGE_TYPES = {
 
 const endpoint = `${window.location.origin}/o/data-engine/v2.0/data-definitions/data-definition-fields/field-types`;
 
-export const PageProvider = ({children, dispatch, value}) => {
+export const PageProvider = ({children, dispatch, emit, value}) => {
 	const [store, setStore] = useState(value);
 
 	// `useResource` is unmounted all the time in the Sidebar, to avoid
@@ -68,6 +71,11 @@ export const PageProvider = ({children, dispatch, value}) => {
 			case PAGE_TYPES.PAGINATION_NEXT:
 			case PAGE_TYPES.PAGINATION_PREVIOUS:
 				dispatch(type);
+				break;
+			case PAGE_TYPES.FIELD_BLUR:
+			case PAGE_TYPES.FIELD_CHANGE:
+			case PAGE_TYPES.FIELD_FOCUS:
+				emit(type, payload);
 				break;
 			default:
 				throw new TypeError('The type does not exist');

@@ -14,18 +14,13 @@
 
 import React from 'react';
 
-import {usePage} from '../../hooks/usePage.es';
+import {PAGE_TYPES, usePage} from '../../hooks/usePage.es';
 import {Field} from '../Field/Field.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
-export const Layout = ({
-	components: Components = DefaultVariant,
-	onBlur,
-	onChange,
-	onFocus,
-	rows,
-}) => {
+export const Layout = ({components: Components = DefaultVariant, rows}) => {
 	const {
+		dispatch,
 		store: {activePage, editable, pageIndex, spritemap},
 	} = usePage();
 
@@ -54,9 +49,24 @@ export const Layout = ({
 									activePage={activePage}
 									editable={editable}
 									key={fieldProps.field.instanceId}
-									onBlur={onBlur}
-									onChange={onChange}
-									onFocus={onFocus}
+									onBlur={(event) =>
+										dispatch({
+											payload: event,
+											type: PAGE_TYPES.FIELD_BLUR,
+										})
+									}
+									onChange={(event) =>
+										dispatch({
+											payload: event,
+											type: PAGE_TYPES.FIELD_CHANGE,
+										})
+									}
+									onFocus={(event) =>
+										dispatch({
+											payload: event,
+											type: PAGE_TYPES.FIELD_FOCUS,
+										})
+									}
 									pageIndex={pageIndex}
 									spritemap={spritemap}
 								/>

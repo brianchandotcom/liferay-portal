@@ -467,11 +467,13 @@ export const getSection = (title, siteKey) => {
 					messageBoardSections(sort: "title:asc") {
 						items {
 							id
+							numberOfMessageBoardSections
 							parentMessageBoardSectionId
 							subscribed
 							title
 						}
 					}
+					numberOfMessageBoardSections
 					parentMessageBoardSectionId
 					subscribed
 					title

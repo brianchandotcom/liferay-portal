@@ -332,13 +332,10 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteRoleLoginUserPG(
-			page = "Public Pages",
 			pageName = "Blogs Page",
 			portletName = "Blogs",
 			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
 			siteName = "Site Name",
-			siteURL = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -393,13 +390,10 @@ definition {
 		property portal.upstream = "quarantine";
 
 		Permissions.setUpSiteRoleLoginUserPG(
-			page = "Public Pages",
 			pageName = "Blogs Page",
 			portletName = "Blogs",
 			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
 			siteName = "Site Name",
-			siteURL = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -1013,13 +1007,10 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteRoleLoginUserPG(
-			page = "Public Pages",
 			pageName = "Blogs Page",
 			portletName = "Blogs",
 			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
 			siteName = "Site Name",
-			siteURL = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -1096,13 +1087,10 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteRoleLoginUserPG(
-			page = "Public Pages",
 			pageName = "Blogs Page",
 			portletName = "Blogs",
 			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
 			siteName = "Site Name",
-			siteURL = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -1782,13 +1770,10 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteRoleLoginUserPG(
-			page = "Public Pages",
 			pageName = "Blogs Page",
 			portletName = "Blogs",
 			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
 			siteName = "Site Name",
-			siteURL = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
@@ -1866,13 +1851,10 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		Permissions.setUpSiteRoleLoginUserPG(
-			page = "Public Pages",
 			pageName = "Blogs Page",
 			portletName = "Blogs",
 			roleTitle = "Roles Siterole Name",
-			roleType = "Site",
 			siteName = "Site Name",
-			siteURL = "true",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",

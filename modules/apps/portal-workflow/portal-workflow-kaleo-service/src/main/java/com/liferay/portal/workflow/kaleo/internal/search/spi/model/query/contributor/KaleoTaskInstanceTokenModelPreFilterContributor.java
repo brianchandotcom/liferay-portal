@@ -97,24 +97,24 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 
 		BooleanFilter innerBooleanFilter = new BooleanFilter();
 
+		appendAssetTitleTerm(
+			innerBooleanFilter, kaleoTaskInstanceTokenQuery, searchContext);
+		appendAssetTypeTerm(innerBooleanFilter, kaleoTaskInstanceTokenQuery);
 		appendAssigneeClassIdsNameTerm(
 			innerBooleanFilter, kaleoTaskInstanceTokenQuery);
 		appendAssigneeClassPKsTerm(
 			innerBooleanFilter, kaleoTaskInstanceTokenQuery);
+		appendTaskNameTerm(innerBooleanFilter, kaleoTaskInstanceTokenQuery);
 
 		if (innerBooleanFilter.hasClauses()) {
 			booleanFilter.add(innerBooleanFilter, BooleanClauseOccur.MUST);
 		}
 
-		appendAssetTitleTerm(
-			booleanFilter, kaleoTaskInstanceTokenQuery, searchContext);
-		appendAssetTypeTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendCompletedTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendKaleoDefinitionIdTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendKaleoInstanceIdsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendRoleIdsTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 		appendSearchByUserRolesTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
-		appendTaskNameTerm(booleanFilter, kaleoTaskInstanceTokenQuery);
 
 		if (appendSearchCriteria(kaleoTaskInstanceTokenQuery)) {
 			appendAssetPrimaryKeyTerm(
@@ -206,8 +206,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 			KaleoTaskInstanceTokenField.ASSIGNEE_CLASS_NAME_IDS,
 			String.valueOf(portal.getClassNameId(assigneeClassName)));
 
-		booleanFilter.add(
-			assigneeClassNameIdsTermFilter, BooleanClauseOccur.SHOULD);
+		booleanFilter.add(assigneeClassNameIdsTermFilter);
 	}
 
 	protected void appendAssigneeClassPKsTerm(
@@ -233,8 +232,7 @@ public class KaleoTaskInstanceTokenModelPreFilterContributor
 				String[]::new
 			));
 
-		booleanFilter.add(
-			assigneeClassPKsTermsFilter, BooleanClauseOccur.SHOULD);
+		booleanFilter.add(assigneeClassPKsTermsFilter);
 	}
 
 	protected void appendCompletedTerm(

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.query.contributor;
 
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -50,7 +51,8 @@ public class KaleoActionModelPreFilterContributor
 
 			booleanQuery.addRequiredTerm("executionType", executionType);
 
-			booleanFilter.add(new QueryFilter(booleanQuery));
+			booleanFilter.add(
+				new QueryFilter(booleanQuery), BooleanClauseOccur.MUST);
 		}
 
 		long kaleoClassPK = GetterUtil.getLong(

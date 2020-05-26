@@ -63,12 +63,19 @@ public class KaleoInstanceModelPreFilterContributor
 			return;
 		}
 
-		appendClassName(booleanFilter, kaleoInstanceQuery);
+		BooleanFilter innerBooleanFilter = new BooleanFilter();
+
+		appendClassName(innerBooleanFilter, kaleoInstanceQuery);
+		appendCurrentKaleoNodeNameTerm(innerBooleanFilter, kaleoInstanceQuery);
+		appendKaleoDefinitionNameTerm(innerBooleanFilter, kaleoInstanceQuery);
+
+		if (innerBooleanFilter.hasClauses()) {
+			booleanFilter.add(innerBooleanFilter, BooleanClauseOccur.MUST);
+		}
+
 		appendClassPKTerm(booleanFilter, kaleoInstanceQuery);
 		appendCompletedTerm(booleanFilter, kaleoInstanceQuery);
 		appendCompletionDateRangeTerm(booleanFilter, kaleoInstanceQuery);
-		appendCurrentKaleoNodeNameTerm(booleanFilter, kaleoInstanceQuery);
-		appendKaleoDefinitionNameTerm(booleanFilter, kaleoInstanceQuery);
 		appendKaleoDefinitionVersionIdTerm(booleanFilter, kaleoInstanceQuery);
 		appendKaleoDefinitionVersionTerm(booleanFilter, kaleoInstanceQuery);
 		appendKaleoInstanceIdTerm(booleanFilter, kaleoInstanceQuery);

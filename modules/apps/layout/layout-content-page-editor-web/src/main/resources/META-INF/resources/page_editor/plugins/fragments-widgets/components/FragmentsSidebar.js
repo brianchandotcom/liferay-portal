@@ -12,132 +12,77 @@
  * details.
  */
 
-import ClayTabs from '@clayui/tabs';
 import React, {useMemo, useState} from 'react';
 
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useSelector} from '../../../app/store/index';
-import Collapse from '../../../common/components/Collapse';
 import SearchForm from '../../../common/components/SearchForm';
 import SidebarPanelContent from '../../../common/components/SidebarPanelContent';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
-import CollectionDisplay, {CollectionDisplayCard} from './CollectionDisplay';
-import Fragment from './Fragment';
-import LayoutElements from './LayoutElements';
 import SearchResultsPanel from './SearchResultsPanel';
-import Widget from './Widget';
-
-const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
-
-export const FragmentPanel = ({collection}) => (
-	<ul className="list-unstyled">
-		{collection.fragmentEntries.map((fragmentEntry) => (
-			<Fragment
-				fragmentEntryKey={fragmentEntry.fragmentEntryKey}
-				groupId={fragmentEntry.groupId}
-				icon={fragmentEntry.icon}
-				imagePreviewURL={fragmentEntry.imagePreviewURL}
-				key={fragmentEntry.fragmentEntryKey}
-				name={fragmentEntry.name}
-				type={fragmentEntry.type}
-			/>
-		))}
-
-		{collection.fragmentCollectionId === CONTENT_DISPLAY_COLLECTION_ID && (
-			<CollectionDisplayCard />
-		)}
-	</ul>
-);
-
-export const WidgetPanel = ({category}) => (
-	<ul className="list-unstyled">
-		{category.portlets.map((widget) => (
-			<Widget key={widget.portletId} {...widget} />
-		))}
-	</ul>
-);
-
-const ElementsPanel = ({elements}) => {
-	const isFragment = elements[0].fragmentCollectionId;
-
-	return elements.map((element, index) => (
-		<li key={isFragment ? element.fragmentCollectionId : element.title}>
-			<Collapse
-				label={isFragment ? element.name : element.title}
-				open={isFragment ? index < 2 : index < 3}
-			>
-				{isFragment ? (
-					<FragmentPanel collection={element} />
-				) : (
-					<WidgetPanel category={element} />
-				)}
-			</Collapse>
-		</li>
-	));
-};
+import TabsPanel from './TabsPanel';
 
 export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useSelector((state) => state.widgets);
 
 	const [searchValue, setSearchValue] = useState('');
-	const [activeTabValue, setActiveTabValue] = useState(0);
 
-	const contentDisplayCollectionIncluded = fragments.some(
-		(fragmentCollection) =>
-			fragmentCollection.fragmentCollectionId ===
-			CONTENT_DISPLAY_COLLECTION_ID
+	const searchValueLowerCase = useMemo(() => searchValue.toLowerCase(), [
+		searchValue,
+	]);
+
+	const tabs = useMemo(
+		() => [
+			{
+				collections: fragments.map((collection) => ({
+					children: collection.fragmentEntries.map(
+						normalizeFragmentEntry
+					),
+					collectionId: collection.fragmentCollectionId,
+					label: collection.name,
+				})),
+				label: Liferay.Language.get('fragments'),
+			},
+			{
+				collections: widgets.map((collection) => ({
+					children: collection.portlets.map(normalizeWidget),
+					collectionId: collection.path,
+					label: collection.title,
+				})),
+				label: Liferay.Language.get('widgets'),
+			},
+		],
+		[fragments, widgets]
 	);
 
-	const removeDuplicatedElements = (elements) => {
-		const unduplicatedElements = [
-			...new Set(elements.map((element) => JSON.stringify(element))),
-		];
+	const filteredTabs = useMemo(
+		() =>
+			searchValueLowerCase
+				? tabs
+						.map((tab) => ({
+							...tab,
 
-		return unduplicatedElements.map((element) => JSON.parse(element));
-	};
-
-	const filterElementByName = (item, searchValueLowerCase) =>
-		item.toLowerCase().indexOf(searchValueLowerCase) !== -1;
-
-	const filteredElements = useMemo(() => {
-		const filterElements = (elements) => {
-			const searchValueLowerCase = searchValue.toLowerCase();
-			const isFragment = elements[0].fragmentEntries;
-
-			return isFragment
-				? elements.reduce((acc, element) => {
-						const fragmentEntries = element.fragmentEntries.filter(
-							(fragmentEntry) =>
-								filterElementByName(
-									fragmentEntry.name,
-									searchValueLowerCase
-								)
-						);
-
-						return [...acc, ...fragmentEntries];
-				  }, [])
-				: elements.reduce((acc, element) => {
-						const portlets = element.portlets.filter((widget) =>
-							filterElementByName(
-								widget.title,
-								searchValueLowerCase
-							)
-						);
-
-						return [...acc, ...portlets];
-				  }, []);
-		};
-
-		const filteredFragments = filterElements(fragments);
-		const filteredWidgets = removeDuplicatedElements(
-			filterElements(widgets)
-		);
-
-		return {
-			fragments: {fragmentEntries: filteredFragments},
-			widgets: {portlets: filteredWidgets},
-		};
-	}, [fragments, searchValue, widgets]);
+							collections: tab.collections
+								.map((collection) => ({
+									...collection,
+									children: collection.children.filter(
+										(item) =>
+											item.label
+												.toLowerCase()
+												.indexOf(
+													searchValueLowerCase
+												) !== -1
+									),
+								}))
+								.filter(
+									(collection) => collection.children.length
+								),
+						}))
+						.filter((tab) => tab.collections.length)
+				: tabs,
+		[tabs, searchValueLowerCase]
+	);
 
 	return (
 		<>
@@ -147,56 +92,47 @@ export default function FragmentsSidebar() {
 
 			<SidebarPanelContent className="page-editor__sidebar__fragments-widgets-panel">
 				<SearchForm onChange={setSearchValue} value={searchValue} />
-				{!searchValue.length ? (
-					<>
-						<ClayTabs className="page-editor__sidebar__tabs" modern>
-							<ClayTabs.Item
-								active={activeTabValue == 0}
-								innerProps={{
-									'aria-controls': 'tabpanel-fragments',
-								}}
-								onClick={() => setActiveTabValue(0)}
-							>
-								Fragments
-							</ClayTabs.Item>
-							<ClayTabs.Item
-								active={activeTabValue == 1}
-								innerProps={{
-									'aria-controls': 'tabpanel-widgets',
-								}}
-								onClick={() => setActiveTabValue(1)}
-							>
-								Widgets
-							</ClayTabs.Item>
-						</ClayTabs>
-						<ClayTabs.Content
-							activeIndex={activeTabValue}
-							className="page-editor__sidebar__tab-content"
-							fade
-						>
-							<ClayTabs.TabPane aria-labelledby="tab-fragments">
-								<ul className="list-unstyled">
-									{!searchValue.length && <LayoutElements />}
-
-									<ElementsPanel elements={fragments} />
-
-									{!searchValue.length &&
-										!contentDisplayCollectionIncluded && (
-											<CollectionDisplay />
-										)}
-								</ul>
-							</ClayTabs.TabPane>
-							<ClayTabs.TabPane aria-labelledby="tab-widgets">
-								<ul className="list-unstyled">
-									<ElementsPanel elements={widgets} />
-								</ul>
-							</ClayTabs.TabPane>
-						</ClayTabs.Content>
-					</>
+				{searchValue ? (
+					<SearchResultsPanel filteredTabs={filteredTabs} />
 				) : (
-					<SearchResultsPanel filteredElements={filteredElements} />
+					<TabsPanel tabs={tabs} />
 				)}
 			</SidebarPanelContent>
 		</>
 	);
 }
+
+const normalizeFragmentEntry = (fragmentEntry) => {
+	if (!fragmentEntry.fragmentEntryKey) {
+		return fragmentEntry;
+	}
+
+	return {
+		data: {
+			fragmentEntryKey: fragmentEntry.fragmentEntryKey,
+			groupId: fragmentEntry.groupId,
+			type: fragmentEntry.type,
+		},
+		icon: fragmentEntry.icon,
+		itemId: fragmentEntry.fragmentEntryKey,
+		label: fragmentEntry.name,
+		preview: fragmentEntry.imagePreviewURL,
+		type: LAYOUT_DATA_ITEM_TYPES.fragment,
+	};
+};
+
+const normalizeWidget = (widget) => {
+	return {
+		data: {
+			instanceable: widget.instanceable,
+			portletId: widget.portletId,
+			used: widget.used,
+		},
+		disabled: !widget.instanceable && widget.used,
+		icon: widget.instanceable ? 'cards2' : 'square-hole',
+		itemId: widget.portletId,
+		label: widget.title,
+		preview: '',
+		type: LAYOUT_DATA_ITEM_TYPES.fragment,
+	};
+};

@@ -16,13 +16,13 @@ package com.liferay.configuration.admin.web;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Dictionary;
-import java.util.List;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
 
@@ -36,12 +36,9 @@ public class ConfigurationHandlerTest {
 
 	@Test
 	public void testWriteArray() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, new String[] {"testValue1", "testValue2"});
-
 		_assertProperties(
-			properties,
+			MapUtil.singletonDictionary(
+				_TEST_KEY, new String[] {"testValue1", "testValue2"}),
 			_TEST_KEY.concat(
 				"=[ \\\r\n  \"testValue1\", \\\r\n  \"testValue2\", \\\r\n  " +
 					"]\r\n"));
@@ -49,44 +46,30 @@ public class ConfigurationHandlerTest {
 
 	@Test
 	public void testWriteBoolean() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, true);
-
-		_assertProperties(properties, _TEST_KEY.concat("=B\"true\"\r\n"));
+		_assertProperties(
+			MapUtil.singletonDictionary(_TEST_KEY, true),
+			_TEST_KEY.concat("=B\"true\"\r\n"));
 	}
 
 	@Test
 	public void testWriteByte() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, Byte.valueOf("10"));
-
-		_assertProperties(properties, _TEST_KEY.concat("=X\"10\"\r\n"));
+		_assertProperties(
+			MapUtil.singletonDictionary(_TEST_KEY, Byte.valueOf("10")),
+			_TEST_KEY.concat("=X\"10\"\r\n"));
 	}
 
 	@Test
 	public void testWriteChar() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, 'c');
-
-		_assertProperties(properties, _TEST_KEY.concat("=C\"c\"\r\n"));
+		_assertProperties(
+			MapUtil.singletonDictionary(_TEST_KEY, 'c'),
+			_TEST_KEY.concat("=C\"c\"\r\n"));
 	}
 
 	@Test
 	public void testWriteCollection() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		List<String> list = new ArrayList<>();
-
-		list.add("testValue1");
-		list.add("testValue2");
-
-		properties.put(_TEST_KEY, list);
-
 		_assertProperties(
-			properties,
+			MapUtil.singletonDictionary(
+				_TEST_KEY, Arrays.asList("testValue1", "testValue2")),
 			_TEST_KEY.concat(
 				"=( \\\r\n  \"testValue1\", \\\r\n  \"testValue2\", " +
 					"\\\r\n)\r\n"));
@@ -94,81 +77,60 @@ public class ConfigurationHandlerTest {
 
 	@Test
 	public void testWriteDouble() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, 10.1D);
-
 		_assertProperties(
-			properties,
+			MapUtil.singletonDictionary(_TEST_KEY, 10.1D),
 			StringBundler.concat(
 				_TEST_KEY, "=D\"", Double.doubleToLongBits(10.1D), "\"\r\n"));
 	}
 
 	@Test
 	public void testWriteEmptyCollection() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, new ArrayList());
-
-		_assertProperties(properties, _TEST_KEY.concat("=( \\\r\n)\r\n"));
+		_assertProperties(
+			MapUtil.singletonDictionary(_TEST_KEY, Collections.emptyList()),
+			_TEST_KEY.concat("=( \\\r\n)\r\n"));
 	}
 
 	@Test
 	public void testWriteFloat() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, 10.1F);
-
 		_assertProperties(
-			properties,
+			MapUtil.singletonDictionary(_TEST_KEY, 10.1F),
 			StringBundler.concat(
 				_TEST_KEY, "=F\"", Float.floatToRawIntBits(10.1F), "\"\r\n"));
 	}
 
 	@Test
 	public void testWriteInteger() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, 10);
-
-		_assertProperties(properties, _TEST_KEY.concat("=I\"10\"\r\n"));
+		_assertProperties(
+			MapUtil.singletonDictionary(_TEST_KEY, 10),
+			_TEST_KEY.concat("=I\"10\"\r\n"));
 	}
 
 	@Test
 	public void testWriteLong() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, 10L);
-
-		_assertProperties(properties, _TEST_KEY.concat("=L\"10\"\r\n"));
+		_assertProperties(
+			MapUtil.singletonDictionary(_TEST_KEY, 10L),
+			_TEST_KEY.concat("=L\"10\"\r\n"));
 	}
 
 	@Test
 	public void testWriteShort() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, (short)10);
-
-		_assertProperties(properties, _TEST_KEY.concat("=S\"10\"\r\n"));
+		_assertProperties(
+			MapUtil.singletonDictionary(_TEST_KEY, (short)10),
+			_TEST_KEY.concat("=S\"10\"\r\n"));
 	}
 
 	@Test
 	public void testWriteString() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, "testValue");
-
-		_assertProperties(properties, _TEST_KEY.concat("=\"testValue\"\r\n"));
+		_assertProperties(
+			MapUtil.singletonDictionary(_TEST_KEY, "testValue"),
+			_TEST_KEY.concat("=\"testValue\"\r\n"));
 	}
 
 	@Test
 	public void testWriteStringEscapedValues() throws IOException {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(_TEST_KEY, "${testValue=\"}");
-
 		_assertProperties(
-			properties, _TEST_KEY.concat("=\"$\\{testValue\\=\\\"\\}\"\r\n"));
+			MapUtil.singletonDictionary(_TEST_KEY, "${testValue=\"}"),
+			_TEST_KEY.concat("=\"$\\{testValue\\=\\\"\\}\"\r\n"));
 	}
 
 	private void _assertProperties(

@@ -1,0 +1,438 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.product.navigation.global.menu.web.internal.portlet.action.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
+import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.util.RecentGroupManager;
+import com.liferay.spring.mock.web.portlet.MockPortletRequest;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+
+/**
+ * @author Eudaldo Alonso
+ */
+@RunWith(Arquillian.class)
+@Sync
+public class GlobalMenuMVCResourceCommandTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_groups = new ArrayList<>();
+
+		_themeDisplay = _getThemeDisplay();
+
+		_mockHttpServletRequest = new MockHttpServletRequest();
+
+		_mockPortletRequest = new MockLiferayResourceRequest();
+
+		_mockPortletRequest.setAttribute(
+			PortletServlet.PORTLET_SERVLET_REQUEST, _mockHttpServletRequest);
+		_mockPortletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
+
+		_mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST, _mockPortletRequest);
+
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.USER, TestPropsValues.getUser());
+
+		_setUser();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PrincipalThreadLocal.setName(_originalName);
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+	}
+
+	@Test
+	public void testNoSites() {
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertFalse(jsonObject.has("mySites"));
+		Assert.assertFalse(jsonObject.has("recentSites"));
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+	}
+
+	@Test
+	public void testOnlyMyRecentSitesLessThan8() throws Exception {
+		_addRecentGroups(7);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertFalse(jsonObject.has("mySites"));
+		Assert.assertTrue(jsonObject.has("recentSites"));
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+	}
+
+	@Test
+	public void testOnlyMyRecentSitesMax8() throws Exception {
+		_addRecentGroups(8);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertFalse(jsonObject.has("mySites"));
+		Assert.assertTrue(jsonObject.has("recentSites"));
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+	}
+
+	@Test
+	public void testOnlyMyRecentSitesMoreThan8() throws Exception {
+		_addRecentGroups(10);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertFalse(jsonObject.has("mySites"));
+		Assert.assertTrue(jsonObject.has("recentSites"));
+		Assert.assertTrue(jsonObject.has("viewAllURL"));
+	}
+
+	@Test
+	public void testOnlyMySitesLessThan8() throws Exception {
+		_addMySiteGroups(7);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+		Assert.assertFalse(jsonObject.has("recentSites"));
+		Assert.assertTrue(jsonObject.has("mySites"));
+	}
+
+	@Test
+	public void testOnlyMySitesMax8() throws Exception {
+		_addMySiteGroups(8);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+		Assert.assertFalse(jsonObject.has("recentSites"));
+		Assert.assertTrue(jsonObject.has("mySites"));
+	}
+
+	@Test
+	public void testOnlyMySitesMoreThan8() throws Exception {
+		_addMySiteGroups(10);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertTrue(jsonObject.has("viewAllURL"));
+		Assert.assertFalse(jsonObject.has("recentSites"));
+		Assert.assertTrue(jsonObject.has("mySites"));
+	}
+
+	@Test
+	public void testRecentSitesAndMySitesLessThan7() throws Exception {
+		_addMySiteGroups(3);
+		_addRecentGroups(3);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+		Assert.assertTrue(jsonObject.has("recentSites"));
+		Assert.assertTrue(jsonObject.has("mySites"));
+	}
+
+	@Test
+	public void testRecentSitesAndMySitesMax7() throws Exception {
+		_addMySiteGroups(3);
+		_addRecentGroups(4);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertFalse(jsonObject.has("viewAllURL"));
+		Assert.assertTrue(jsonObject.has("recentSites"));
+		Assert.assertTrue(jsonObject.has("mySites"));
+	}
+
+	@Test
+	public void testRecentSitesAndMySitesMoreThan7() throws Exception {
+		_addMySiteGroups(4);
+		_addRecentGroups(4);
+
+		JSONObject jsonObject = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getSitesJSONObject",
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ResourceResponse.class, ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest,
+			new MockLiferayResourceResponse(), _themeDisplay);
+
+		Assert.assertTrue(jsonObject.has("viewAllURL"));
+
+		Assert.assertTrue(jsonObject.has("recentSites"));
+
+		JSONArray recentSitesJSONArray = jsonObject.getJSONArray("recentSites");
+
+		Assert.assertEquals(4, recentSitesJSONArray.length());
+
+		Assert.assertTrue(jsonObject.has("mySites"));
+
+		JSONArray mySitesSitesJSONArray = jsonObject.getJSONArray("mySites");
+
+		Assert.assertEquals(3, mySitesSitesJSONArray.length());
+	}
+
+	private void _addMySiteGroups(int max) throws Exception {
+		for (int i = 0; i < max; i++) {
+			Group group = GroupTestUtil.addGroup();
+
+			LayoutTestUtil.addLayout(group);
+
+			_groups.add(group);
+
+			_userLocalService.setGroupUsers(
+				group.getGroupId(), new long[] {_user.getUserId()});
+		}
+	}
+
+	private void _addRecentGroups(int max) throws Exception {
+		List<Long> groupIds = new ArrayList<>();
+
+		for (int i = 0; i < max; i++) {
+			Group group = GroupTestUtil.addGroup();
+
+			LayoutTestUtil.addLayout(group);
+
+			_groups.add(group);
+
+			groupIds.add(group.getGroupId());
+
+			_userLocalService.setGroupUsers(
+				group.getGroupId(), new long[] {_user.getUserId()});
+		}
+
+		_setRecentGroupsValue(
+			_mockHttpServletRequest, StringUtil.merge(groupIds));
+	}
+
+	private User _addUser() throws Exception {
+		return UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(
+				NumericStringRandomizerBumper.INSTANCE,
+				UniqueStringRandomizerBumper.INSTANCE),
+			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[0],
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setLayout(layout);
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+		themeDisplay.setLocale(
+			LocaleUtil.fromLanguageId(_group.getDefaultLanguageId()));
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser());
+
+		themeDisplay.setPermissionChecker(permissionChecker);
+
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		return themeDisplay;
+	}
+
+	private void _setRecentGroupsValue(
+		HttpServletRequest httpServletRequest, String value) {
+
+		SessionClicks.put(httpServletRequest, _KEY_RECENT_GROUPS, value);
+	}
+
+	private void _setUser() throws Exception {
+		_user = _addUser();
+
+		_themeDisplay.setUser(_user);
+
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		_setRecentGroupsValue(_mockHttpServletRequest, StringPool.BLANK);
+	}
+
+	private static final String _KEY_RECENT_GROUPS =
+		"com.liferay.site.util_recentGroups";
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	@DeleteAfterTestRun
+	private List<Group> _groups;
+
+	private HttpServletRequest _mockHttpServletRequest;
+	private MockPortletRequest _mockPortletRequest;
+
+	@Inject(filter = "mvc.command.name=/global_menu/panel_apps")
+	private MVCResourceCommand _mvcResourceCommand;
+
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
+
+	@Inject
+	private RecentGroupManager _recentGroupManager;
+
+	private ThemeDisplay _themeDisplay;
+	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+}

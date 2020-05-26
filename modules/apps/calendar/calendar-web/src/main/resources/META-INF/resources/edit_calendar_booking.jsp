@@ -275,7 +275,7 @@ while (manageableCalendarsIterator.hasNext()) {
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 	<div class="lfr-form-content">
-		<div class="sheet sheet-lg">
+		<clay:sheet>
 			<liferay-ui:error exception="<%= CalendarBookingDurationException.class %>" message="please-enter-a-start-date-that-comes-before-the-end-date" />
 			<liferay-ui:error exception="<%= CalendarBookingRecurrenceException.class %>" message="the-last-repeating-date-should-come-after-the-event-start-date" />
 
@@ -508,7 +508,7 @@ while (manageableCalendarsIterator.hasNext()) {
 			</aui:fieldset>
 
 			<%@ include file="/calendar_booking_recurrence_container.jspf" %>
-		</div>
+		</clay:sheet>
 	</div>
 
 	<aui:button-row cssClass="d-block">

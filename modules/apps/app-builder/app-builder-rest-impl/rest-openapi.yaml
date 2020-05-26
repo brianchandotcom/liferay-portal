@@ -33,6 +33,8 @@ components:
                     additionalProperties:
                         type: object
                     type: object
+                scope:
+                    type: string
                 siteId:
                     format: int64
                     type: integer
@@ -77,6 +79,10 @@ paths:
                       type: array
                 - in: query
                   name: keywords
+                  schema:
+                      type: string
+                - in: query
+                  name: scope
                   schema:
                       type: string
                 - in: query
@@ -228,6 +234,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: scope
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   schema:
                       type: integer
@@ -297,6 +307,10 @@ paths:
                       type: integer
                 - in: query
                   name: keywords
+                  schema:
+                      type: string
+                - in: query
+                  name: scope
                   schema:
                       type: string
                 - in: query

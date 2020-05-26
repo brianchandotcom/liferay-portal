@@ -386,12 +386,14 @@ definition {
 
 		var j = "0";
 
-		for (var fieldOptionsValue : list "${fieldOptionsValues}") {
-			var j = ${j} + 1;
+		if (isSet(fieldOptionsValues)) {
+			for (var fieldOptionsValue : list "${fieldOptionsValues}") {
+				var j = ${j} + 1;
 
-			Type(
-				locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}",
-				value1 = "${fieldOptionsValue}");
+				Type(
+					locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}",
+					value1 = "${fieldOptionsValue}");
+			}
 		}
 
 		AssertClick(
@@ -763,22 +765,24 @@ definition {
 
 			var j = "0";
 
-			for (var fieldOptionsValue : list "${fieldOptionsValues}") {
-				var j = ${j} + 1;
+			if (isSet(fieldOptionsValues)) {
+				for (var fieldOptionsValue : list "${fieldOptionsValues}") {
+					var j = ${j} + 1;
 
-				AssertTextEquals(
-					locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}",
-					value1 = "${fieldOptionsValue}");
+					AssertTextEquals(
+						locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_OPTIONS_VALUE_${j}",
+						value1 = "${fieldOptionsValue}");
+				}
 			}
-		}
 
-		if ("${field}" == "Radio") {
-			for (var fieldOptionsName : list "${fieldOptionsNames}") {
-				var key_fieldOptionsName = "${fieldOptionsName}";
+			if ("${field}" == "Radio") {
+				for (var fieldOptionsName : list "${fieldOptionsNames}") {
+					var key_fieldOptionsName = "${fieldOptionsName}";
 
-				AssertTextEquals(
-					locator1 = "DDMEditStructure#FORM_FIELD_RADIO_LABEL",
-					value1 = "${fieldOptionsName}");
+					AssertTextEquals(
+						locator1 = "DDMEditStructure#FORM_FIELD_RADIO_LABEL",
+						value1 = "${fieldOptionsName}");
+				}
 			}
 		}
 

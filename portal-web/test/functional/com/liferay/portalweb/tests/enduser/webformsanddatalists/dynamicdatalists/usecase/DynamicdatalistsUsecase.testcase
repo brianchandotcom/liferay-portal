@@ -882,8 +882,7 @@ definition {
 			field = "Select",
 			fieldFieldLabel = "SelectJA",
 			fieldName = "Select",
-			fieldOptionsNames = "JAOption1",
-			fieldOptionsValues = "Value 1");
+			fieldOptionsNames = "JAOption1");
 
 		DDLDataDefinition.save();
 

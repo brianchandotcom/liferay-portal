@@ -92,6 +92,7 @@ public abstract class BaseAppResourceImpl
 			@Parameter(in = ParameterIn.QUERY, name = "active"),
 			@Parameter(in = ParameterIn.QUERY, name = "deploymentTypes"),
 			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
+			@Parameter(in = ParameterIn.QUERY, name = "scope"),
 			@Parameter(in = ParameterIn.QUERY, name = "userIds"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
@@ -106,6 +107,7 @@ public abstract class BaseAppResourceImpl
 			@Parameter(hidden = true) @QueryParam("deploymentTypes") String[]
 				deploymentTypes,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
+			@Parameter(hidden = true) @QueryParam("scope") String scope,
 			@Parameter(hidden = true) @QueryParam("userIds") Long[] userIds,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
@@ -186,7 +188,7 @@ public abstract class BaseAppResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "siteId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder/v1.0/apps/{appId}' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "scope": ___, "siteId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -288,6 +290,7 @@ public abstract class BaseAppResourceImpl
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "dataDefinitionId"),
 			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
+			@Parameter(in = ParameterIn.QUERY, name = "scope"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
@@ -300,6 +303,7 @@ public abstract class BaseAppResourceImpl
 			@NotNull @Parameter(hidden = true) @PathParam("dataDefinitionId")
 				Long dataDefinitionId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
+			@Parameter(hidden = true) @QueryParam("scope") String scope,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
@@ -309,7 +313,7 @@ public abstract class BaseAppResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "siteId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/app-builder/v1.0/data-definitions/{dataDefinitionId}/apps' -d $'{"active": ___, "appDeployments": ___, "dataDefinitionId": ___, "dataLayoutId": ___, "dataListViewId": ___, "dateCreated": ___, "dateModified": ___, "id": ___, "name": ___, "scope": ___, "siteId": ___, "userId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
@@ -340,6 +344,7 @@ public abstract class BaseAppResourceImpl
 		value = {
 			@Parameter(in = ParameterIn.PATH, name = "siteId"),
 			@Parameter(in = ParameterIn.QUERY, name = "keywords"),
+			@Parameter(in = ParameterIn.QUERY, name = "scope"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize"),
 			@Parameter(in = ParameterIn.QUERY, name = "sort")
@@ -351,6 +356,7 @@ public abstract class BaseAppResourceImpl
 	public Page<App> getSiteAppsPage(
 			@NotNull @Parameter(hidden = true) @PathParam("siteId") Long siteId,
 			@Parameter(hidden = true) @QueryParam("keywords") String keywords,
+			@Parameter(hidden = true) @QueryParam("scope") String scope,
 			@Context Pagination pagination, @Context Sort[] sorts)
 		throws Exception {
 
@@ -399,7 +405,7 @@ public abstract class BaseAppResourceImpl
 
 		return getSiteAppsPage(
 			(Long)parameters.get("siteId"), (String)parameters.get("keywords"),
-			pagination, sorts);
+			(String)parameters.get("scope"), pagination, sorts);
 	}
 
 	@Override

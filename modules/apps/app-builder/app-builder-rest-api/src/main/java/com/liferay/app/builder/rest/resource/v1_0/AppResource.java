@@ -50,7 +50,7 @@ public interface AppResource {
 
 	public Page<App> getAppsPage(
 			Boolean active, String[] deploymentTypes, String keywords,
-			Long[] userIds, Pagination pagination, Sort[] sorts)
+			String scope, Long[] userIds, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public void deleteApp(Long appId) throws Exception;
@@ -70,15 +70,16 @@ public interface AppResource {
 	public Response putAppUndeploy(Long appId) throws Exception;
 
 	public Page<App> getDataDefinitionAppsPage(
-			Long dataDefinitionId, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long dataDefinitionId, String keywords, String scope,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public App postDataDefinitionApp(Long dataDefinitionId, App app)
 		throws Exception;
 
 	public Page<App> getSiteAppsPage(
-			Long siteId, String keywords, Pagination pagination, Sort[] sorts)
+			Long siteId, String keywords, String scope, Pagination pagination,
+			Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

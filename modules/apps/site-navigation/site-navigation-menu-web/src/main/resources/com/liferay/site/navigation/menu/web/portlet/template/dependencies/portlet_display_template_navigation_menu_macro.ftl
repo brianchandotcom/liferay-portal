@@ -5,7 +5,6 @@
 >
 	<#assign
 		portletDisplay = themeDisplay.getPortletDisplay()
-		showChildrenNavItems = ((displayDepth == 0) || (navItemLevel < displayDepth))
 	/>
 
 	<#list navItem.getBrowsableChildren() as childNavigationItem>
@@ -23,7 +22,7 @@
 			<a aria-labelledby="layout_${portletDisplay.getId()}_${childNavigationItem.getLayoutId()}" class="dropdown-item" href="${childNavigationItem.getURL()}" ${childNavigationItem.getTarget()} role="menuitem">${childNavigationItem.getName()}</a>
 		</li>
 
-		<#if childNavigationItem.hasBrowsableChildren() && showChildrenNavItems>
+		<#if childNavigationItem.hasBrowsableChildren() && ((displayDepth == 0) || (navItemLevel < displayDepth))>
 			<ul class="list-unstyled pl-3">
 				<@buildChildrenNavItems
 					displayDepth=displayDepth

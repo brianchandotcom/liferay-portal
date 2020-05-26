@@ -40,7 +40,7 @@ public class WhipDefaultsPlugin extends BaseDefaultsPlugin<WhipPlugin> {
 		WhipExtension whipExtension = GradleUtil.getExtension(
 			project, WhipExtension.class);
 
-		_addPortalToolDependencies(project, whipExtension);
+		_configureExtensionWhip(project, whipExtension);
 
 		_configureTasksTest(project);
 	}
@@ -53,7 +53,7 @@ public class WhipDefaultsPlugin extends BaseDefaultsPlugin<WhipPlugin> {
 	private WhipDefaultsPlugin() {
 	}
 
-	private void _addPortalToolDependencies(
+	private void _configureExtensionWhip(
 		Project project, WhipExtension whipExtension) {
 
 		String version = PortalTools.getVersion(project, _PORTAL_TOOL_NAME);

@@ -71,7 +71,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 					<aui:fieldset>
 						<div class="lfr-ddl-content">
-							<div class="sheet sheet-lg">
+							<clay:sheet>
 								<liferay-ui:search-container
 									emptyResultsMessage="no-lists-were-found"
 									iteratorURL="<%= configurationRenderURL %>"
@@ -137,7 +137,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 										searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 									/>
 								</liferay-ui:search-container>
-							</div>
+							</clay:sheet>
 						</div>
 					</aui:fieldset>
 				</clay:container-fluid>
@@ -160,7 +160,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 						<aui:fieldset>
 							<div class="lfr-ddl-content">
-								<div class="sheet sheet-lg">
+								<clay:sheet>
 									<aui:select helpMessage="select-the-display-template-used-to-diplay-the-list-records" label="display-template" name="preferences--displayDDMTemplateId--">
 										<aui:option label="default" value="<%= 0 %>" />
 
@@ -230,7 +230,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 									<aui:input helpMessage="check-to-display-the-form-entry-view" label="form-view" name="preferences--formView--" type="checkbox" value="<%= formView %>" />
 
 									<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= spreadsheet %>" />
-								</div>
+								</clay:sheet>
 							</div>
 						</aui:fieldset>
 					</clay:container-fluid>

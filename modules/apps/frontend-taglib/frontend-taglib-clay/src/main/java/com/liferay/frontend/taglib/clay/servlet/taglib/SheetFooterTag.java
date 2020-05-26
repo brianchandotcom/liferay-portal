@@ -42,11 +42,21 @@ public class SheetFooterTag extends BaseContainerTag {
 		return _START_PAGE;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		className.add("sheet-footer");
+		return processCssClass(className);
+	}
 
-		return super.processClassName(className);
+	@Override
+	protected String processCssClass(Set<String> cssClass) {
+		cssClass.add("sheet-footer");
+
+		return super.processCssClass(cssClass);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:sheet-footer:";

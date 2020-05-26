@@ -42,11 +42,21 @@ public class SheetHeaderTag extends BaseContainerTag {
 		return _START_PAGE;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		className.add("sheet-header");
+		return processCssClass(className);
+	}
 
-		return super.processClassName(className);
+	@Override
+	protected String processCssClass(Set<String> cssClass) {
+		cssClass.add("sheet-header");
+
+		return super.processCssClass(cssClass);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:sheet-header:";

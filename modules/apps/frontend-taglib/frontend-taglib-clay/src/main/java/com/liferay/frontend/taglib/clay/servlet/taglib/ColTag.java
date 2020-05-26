@@ -94,33 +94,43 @@ public class ColTag extends BaseContainerTag {
 		return _START_PAGE;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
+		return processCssClass(className);
+	}
+
+	@Override
+	protected String processCssClass(Set<String> cssClass) {
 		if (Validator.isNotNull(_size)) {
-			className.add("col-" + _size);
+			cssClass.add("col-" + _size);
 		}
 
 		if (Validator.isNotNull(_lg)) {
-			className.add("col-lg-" + _lg);
+			cssClass.add("col-lg-" + _lg);
 		}
 
 		if (Validator.isNotNull(_md)) {
-			className.add("col-md-" + _md);
+			cssClass.add("col-md-" + _md);
 		}
 
 		if (Validator.isNotNull(_sm)) {
-			className.add("col-sm-" + _sm);
+			cssClass.add("col-sm-" + _sm);
 		}
 
 		if (Validator.isNotNull(_xl)) {
-			className.add("col-xl-" + _xl);
+			cssClass.add("col-xl-" + _xl);
 		}
 
-		if (className.isEmpty()) {
-			className.add("col");
+		if (cssClass.isEmpty()) {
+			cssClass.add("col");
 		}
 
-		return super.processClassName(className);
+		return super.processCssClass(cssClass);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:col:";

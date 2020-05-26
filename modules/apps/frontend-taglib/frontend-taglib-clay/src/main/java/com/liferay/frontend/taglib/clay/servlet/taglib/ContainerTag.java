@@ -67,20 +67,30 @@ public class ContainerTag extends BaseContainerTag {
 		return _START_PAGE;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #processCssClass(String)}
+	 */
+	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
+		return processCssClass(className);
+	}
+
+	@Override
+	protected String processCssClass(Set<String> cssClass) {
 		if (!_fluid) {
-			className.add("container");
+			cssClass.add("container");
 		}
 		else {
-			className.add("container-fluid");
+			cssClass.add("container-fluid");
 
 			if (Validator.isNotNull(_size)) {
-				className.add("container-fluid-max-" + _size);
+				cssClass.add("container-fluid-max-" + _size);
 			}
 		}
 
-		return super.processClassName(className);
+		return super.processCssClass(cssClass);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:container:";

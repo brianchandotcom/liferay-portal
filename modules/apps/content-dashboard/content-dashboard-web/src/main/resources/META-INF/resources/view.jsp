@@ -21,6 +21,16 @@
 >
 	<div class="sheet">
 		<h2 class="sheet-title">
+			<%= LanguageUtil.format(request, "number-of-contents-per-audience-and-stage-x", 0, false) %>
+		</h2>
+	</div>
+</clay:container>
+
+<clay:container
+	className="main-content-body"
+>
+	<div class="sheet">
+		<h2 class="sheet-title">
 			<%= LanguageUtil.format(request, "content-x", 0, false) %>
 		</h2>
 

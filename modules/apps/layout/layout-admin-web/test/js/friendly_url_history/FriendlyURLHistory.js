@@ -37,7 +37,7 @@ const fetchResponse = {
 		current: {
 			urlTitle: activeUrl,
 			friendlyURLEntryId: 36000,
-			friendlyURLEntryLocalizationId: 30,
+			friendlyURLEntryLocalizationId: 300,
 		},
 		history: [
 			{
@@ -59,6 +59,33 @@ const fetchResponse = {
 	},
 };
 
+const fetchResponseAfterRestore = {
+	en_US: {
+		current: {
+			urlTitle: '/test-2',
+			friendlyURLEntryId: 36002,
+			friendlyURLEntryLocalizationId: 30,
+		},
+		history: [
+			{
+				urlTitle: '/test-3',
+				friendlyURLEntryId: 36003,
+				friendlyURLEntryLocalizationId: 303,
+			},
+			{
+				urlTitle: '/test-1',
+				friendlyURLEntryId: 36001,
+				friendlyURLEntryLocalizationId: 301,
+			},
+			{
+				urlTitle: '/test',
+				friendlyURLEntryId: 36000,
+				friendlyURLEntryLocalizationId: 300,
+			},
+		],
+	},
+};
+
 const renderComponent = (props) => render(<FriendlyURLHistory {...props} />);
 
 describe('FriendlyURLHistory', () => {
@@ -70,6 +97,7 @@ describe('FriendlyURLHistory', () => {
 		Liferay.component = jest.fn().mockImplementation(() => {
 			return {
 				getSelectedLanguageId: () => 'en_US',
+				updateInput: () => jest.fn()
 			};
 		});
 	});
@@ -133,8 +161,8 @@ describe('FriendlyURLHistory', () => {
 			expect(listItems.length).toBe(4);
 		});
 
-		it('deletes the third url', async () => {
-			fetch.mockResponse(JSON.stringify({success: true}));
+		it('deletes the third old friendly url', async () => {
+			fetch.mockResponseOnce(JSON.stringify({success: true}));
 
 			const listItems = await waitForElement(() =>
 				result.getAllByRole('listitem')
@@ -152,6 +180,31 @@ describe('FriendlyURLHistory', () => {
 				document.querySelectorAll('.modal-content li.list-group-item')
 					.length
 			).toBe(2);
+
+			expect(fetch.mock.calls.length).toEqual(2);
+		});
+
+		it('restores the second old friendly url as the active url', async () => {
+			fetch.mockResponseOnce(JSON.stringify({success: true}));
+			fetch.mockResponseOnce(JSON.stringify(fetchResponseAfterRestore));
+
+			const listItems = await waitForElement(() =>
+				result.getAllByRole('listitem')
+			);
+
+			const restoreButtons = listItems.map((listitem) =>
+				listitem.querySelector('button[data-title="restore-url"]')
+			);
+
+			await act(async () => {
+				fireEvent.click(restoreButtons[1]);
+			});
+
+			expect(fetch.mock.calls.length).toEqual(3);
+
+			expect(
+				document.querySelector('.modal-content .active-url-text').innerHTML
+			).toBe('/test-2');
 		});
 	});
 });

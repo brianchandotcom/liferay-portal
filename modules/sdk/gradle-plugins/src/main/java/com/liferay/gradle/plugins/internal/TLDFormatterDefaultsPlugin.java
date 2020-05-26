@@ -34,6 +34,8 @@ public class TLDFormatterDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, TLDFormatterPlugin tldFormatterPlugin) {
 
+		// Dependencies
+
 		PortalTools.addPortalToolDependencies(
 			project, TLDFormatterPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);

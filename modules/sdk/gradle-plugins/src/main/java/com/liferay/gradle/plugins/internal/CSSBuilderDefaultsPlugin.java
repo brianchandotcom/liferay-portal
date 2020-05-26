@@ -41,6 +41,8 @@ public class CSSBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, CSSBuilderPlugin cssBuilderPlugin) {
 
+		// Dependencies
+
 		PortalTools.addPortalToolDependencies(
 			project, CSSBuilderPlugin.CSS_BUILDER_CONFIGURATION_NAME,
 			PortalTools.GROUP, _PORTAL_TOOL_NAME);
@@ -48,6 +50,8 @@ public class CSSBuilderDefaultsPlugin
 		PortalTools.addPortalToolDependencies(
 			project, CSSBuilderPlugin.PORTAL_COMMON_CSS_CONFIGURATION_NAME,
 			PortalTools.GROUP, _FRONTEND_COMMON_CSS_NAME);
+
+		// Other
 
 		TaskContainer taskContainer = project.getTasks();
 

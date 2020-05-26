@@ -42,9 +42,13 @@ public class RESTBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		final Project project, RESTBuilderPlugin restBuilderPlugin) {
 
+		// Dependencies
+
 		PortalTools.addPortalToolDependencies(
 			project, RESTBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
+
+		// Tasks
 
 		TaskProvider<Copy> processResourcesTaskProvider =
 			GradleUtil.getTaskProvider(

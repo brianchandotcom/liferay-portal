@@ -51,8 +51,12 @@ public class DBSupportDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, DBSupportPlugin plugin) {
 
+		// Extensions
+
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
+
+		// Configurations
 
 		Configuration dbSupportConfiguration = GradleUtil.getConfiguration(
 			project, DBSupportPlugin.CONFIGURATION_NAME);
@@ -60,9 +64,13 @@ public class DBSupportDefaultsPlugin
 		_configureConfigurationDBSupport(
 			project, liferayExtension, dbSupportConfiguration);
 
+		// Dependencies
+
 		PortalTools.addPortalToolDependencies(
 			project, DBSupportPlugin.TOOL_CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
+
+		// Other
 
 		TaskContainer taskContainer = project.getTasks();
 

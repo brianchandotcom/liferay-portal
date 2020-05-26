@@ -37,10 +37,15 @@ public class WhipDefaultsPlugin extends BaseDefaultsPlugin<WhipPlugin> {
 
 	@Override
 	protected void applyPluginDefaults(Project project, WhipPlugin whipPlugin) {
+
+		// Extensions
+
 		WhipExtension whipExtension = GradleUtil.getExtension(
 			project, WhipExtension.class);
 
 		_configureExtensionWhip(project, whipExtension);
+
+		// Other
 
 		TaskContainer taskContainer = project.getTasks();
 

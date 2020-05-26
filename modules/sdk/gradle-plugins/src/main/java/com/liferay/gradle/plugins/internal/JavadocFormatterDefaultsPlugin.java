@@ -34,6 +34,8 @@ public class JavadocFormatterDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, JavadocFormatterPlugin javadocFormatterPlugin) {
 
+		// Dependencies
+
 		PortalTools.addPortalToolDependencies(
 			project, JavadocFormatterPlugin.CONFIGURATION_NAME,
 			PortalTools.GROUP, _PORTAL_TOOL_NAME);

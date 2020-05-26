@@ -38,9 +38,13 @@ public class LangBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, LangBuilderPlugin langBuilderPlugin) {
 
+		// Dependencies
+
 		PortalTools.addPortalToolDependencies(
 			project, LangBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);
+
+		// Other
 
 		TaskContainer taskContainer = project.getTasks();
 

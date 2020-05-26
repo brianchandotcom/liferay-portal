@@ -34,6 +34,8 @@ public class WSDDBuilderDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, WSDDBuilderPlugin wsddBuilderPlugin) {
 
+		// Dependencies
+
 		PortalTools.addPortalToolDependencies(
 			project, WSDDBuilderPlugin.CONFIGURATION_NAME, PortalTools.GROUP,
 			_PORTAL_TOOL_NAME);

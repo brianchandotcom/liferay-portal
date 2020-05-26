@@ -26,8 +26,8 @@ List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 
 <clay:sheet-header>
 	<clay:content-row
-		cssClass="sheet-title"
 		containerElement="h3"
+		cssClass="sheet-title"
 	>
 		<clay:content-col
 			expand="true"

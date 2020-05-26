@@ -27,8 +27,8 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 <clay:sheet-header>
 	<clay:content-row
-		cssClass="sheet-title"
 		containerElement="h2"
+		cssClass="sheet-title"
 	>
 		<clay:content-col
 			expand="true"

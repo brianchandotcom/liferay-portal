@@ -24,8 +24,8 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 
 <clay:sheet-section>
 	<clay:content-row
-		cssClass="sheet-subtitle"
 		containerElement="h3"
+		cssClass="sheet-subtitle"
 	>
 		<clay:content-col
 			expand="true"

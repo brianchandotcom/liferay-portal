@@ -474,6 +474,32 @@ definition {
 			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
+	macro restoreOldFriendlyURL {
+		MouseOver(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY_ITEM_RESTORE");
+
+		AssertVisible(
+			key_activeURL = "${restoredURL}",
+			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+
+		AssertVisible(
+			key_oldFriendlyURL = "${activeURL}",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+
+		Click(locator1 = "Icon#TIMES");
+
+		AssertVisible(
+			locator1 = "TextInput#FRIENDLY_URL",
+			value1 = "${friendlyURLEdit}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro selectMobileDeviceFamily {
 		AssertClick(
 			locator1 = "Button#SELECT_MOBILE_DEVICE_RULES",

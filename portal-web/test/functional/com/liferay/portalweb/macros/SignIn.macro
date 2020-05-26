@@ -94,7 +94,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "//script[contains(@src,'ManagementToolbar.es.js')]");
 
 		Type(
 			locator1 = "TextInput#WEB_ID",
@@ -110,7 +110,7 @@ definition {
 
 		Button.clickSave();
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "//script[contains(@src,'ClayToast.js')]");
 
 		Alert.viewSuccessMessage();
 

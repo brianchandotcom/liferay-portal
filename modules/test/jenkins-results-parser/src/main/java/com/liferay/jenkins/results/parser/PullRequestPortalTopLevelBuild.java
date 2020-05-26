@@ -69,10 +69,12 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 		}
 
 		boolean pullRequestForwardUpstreamFailureComparisonEnabled =
-			Boolean.parseBoolean(buildProperties.getProperty(
-				"pull.request.forward.upstream.failure.comparison.enabled"));
+			Boolean.parseBoolean(
+				buildProperties.getProperty(
+					"pull.request.forward.upstream.failure.comparison." +
+						"enabled"));
 
-		if (pullRequestForwardUpstreamFailureComparisonEnabled == false) {
+		if (!pullRequestForwardUpstreamFailureComparisonEnabled) {
 			return result;
 		}
 
@@ -85,12 +87,13 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 		String batchWhitelist = buildProperties.getProperty(
 			"pull.request.forward.upstream.failure.comparison.batch.whitelist");
 
-		List<String> whitelistedBatchNames =
-			Arrays.asList(batchWhitelist.split("\\s*,\\s*"));
+		List<String> whitelistedBatchNames = Arrays.asList(
+			batchWhitelist.split("\\s*,\\s*"));
 
 		for (Build downstreamBuild : downstreamBuildFailures) {
 			if (downstreamBuild.isUniqueFailure() ||
-				!whitelistedBatchNames.contains(downstreamBuild.getJobVariant())) {
+				!whitelistedBatchNames.contains(
+					downstreamBuild.getJobVariant())) {
 
 				return result;
 			}

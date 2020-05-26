@@ -519,6 +519,123 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-106815. The Team Role permission settings of widgets will be exported and imported with content page template."
+	@priority = "4"
+	test ExportImportContentPageTemplateWithTeamRolePermissionSettingsOfWidgets {
+		task ("Add a Team in site") {
+			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
+
+			Team.addCP(
+				teamDescription = "Site Team Description",
+				teamName = "Site Team Name");
+		}
+
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+		}
+
+		task ("Add a Sites Directory portlet to content page template") {
+			PageEditor.addWidget(portletName = "Sites Directory");
+		}
+
+		task ("Configure Team Role permission settings of Sites Directory") {
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Sites Directory",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Sites Directory",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			Team.definePermissionPG(
+				permissionDefinitionKey = "ACTION_VIEW",
+				teamName = "Site Team Name");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+
+			SelectFrameTop();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Export",
+				pageTemplateName = "Page Template Name");
+
+			DownloadTempFile();
+		}
+
+		task ("Export Team") {
+			Site.openSiteTeamsAdmin(siteURLKey = "test-site-name");
+
+			LAR.exportTeam(larFileName = "Site Team Name");
+		}
+
+		task ("Import Team in a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			Site.openSiteTeamsAdmin(siteURLKey = "site-name");
+
+			LAR.importTeam(larFileName = "Site Team Name");
+		}
+
+		task ("Import content page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			PageTemplatesAdmin.importPageTemplatesFromTempFolder();
+		}
+
+		task ("Assert Team Role permission settings of widgets are imported") {
+			PageTemplatesAdmin.viewPageTemplatePresent(pageTemplateName = "Page Template Name");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			MouseOver.mouseOverNotVisible(
+				key_portletName = "Sites Directory",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			Click.waitForMenuToggleJSClick(
+				key_portletName = "Sites Directory",
+				locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			AssertChecked(locator1 = "//tr[contains(.,'Site Team Name')]/td/input[contains(@id,'ACTION_VIEW')]");
+		}
+	}
+
 	@description = "This is a use case for LPS-107748. Can export a content page template with custom fragments and import."
 	@priority = "4"
 	test IgnoreFragmentNotExistInSiteWhenImportContentPageTemplate {

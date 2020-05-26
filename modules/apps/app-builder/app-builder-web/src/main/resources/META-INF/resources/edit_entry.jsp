@@ -22,12 +22,12 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 
 <div class="app-builder-root">
 	<clay:container-fluid
-		className="edit-entry"
+		cssClass="edit-entry"
 	>
 		<div id="<%= renderResponse.getNamespace() %>-control-menu"></div>
 
 		<clay:row
-			className="justify-content-center"
+			cssClass="justify-content-center"
 		>
 			<clay:col
 				lg="12"

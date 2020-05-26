@@ -55,7 +55,7 @@ advancedPublishURL.setParameter("privateLayout", String.valueOf(privateLayout));
 %>
 
 <clay:container-fluid
-	className="mt-2 publish-navbar text-right"
+	cssClass="mt-2 publish-navbar text-right"
 >
 	<clay:link
 		buttonStyle="link"

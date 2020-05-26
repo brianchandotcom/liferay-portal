@@ -101,7 +101,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 
 	<div class="contextual-sidebar-content">
 		<clay:container-fluid
-			className="container-view"
+			cssClass="container-view"
 		>
 			<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
 

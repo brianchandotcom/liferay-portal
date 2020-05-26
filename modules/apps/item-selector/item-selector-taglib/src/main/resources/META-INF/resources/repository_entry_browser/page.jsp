@@ -71,7 +71,7 @@ ItemSelectorRepositoryEntryManagementToolbarDisplayContext itemSelectorRepositor
 />
 
 <clay:container-fluid
-	className="item-selector lfr-item-viewer"
+	cssClass="item-selector lfr-item-viewer"
 	id='<%= randomNamespace + "ItemSelectorContainer" %>'
 >
 	<c:if test="<%= showSearchInfo %>">

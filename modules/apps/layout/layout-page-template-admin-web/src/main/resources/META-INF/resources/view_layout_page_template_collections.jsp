@@ -30,7 +30,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 <liferay-ui:success key="layoutPageTemplatePublished" message="the-page-template-was-published-succesfully" />
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<clay:row>
 		<clay:col

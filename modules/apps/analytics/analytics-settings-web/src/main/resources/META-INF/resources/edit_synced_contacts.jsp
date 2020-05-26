@@ -89,7 +89,7 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 
 				<div class="pr-3">
 					<clay:sticker
-						className="sticker-light"
+						cssClass="sticker-light"
 						displayType="light"
 						icon="users"
 					/>
@@ -130,7 +130,7 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 
 				<div class="pr-3">
 					<clay:sticker
-						className="sticker-light"
+						cssClass="sticker-light"
 						displayType="light"
 						icon="organizations"
 					/>

@@ -18,7 +18,7 @@
 
 <clay:row>
 	<clay:col
-		className="lfr-padding use-for-all-column"
+		cssClass="lfr-padding use-for-all-column"
 		md="6"
 	>
 		<aui:fieldset label="padding">
@@ -64,7 +64,7 @@
 	</clay:col>
 
 	<clay:col
-		className="lfr-margin use-for-all-column"
+		cssClass="lfr-margin use-for-all-column"
 		md="6"
 	>
 		<aui:fieldset label="margin">

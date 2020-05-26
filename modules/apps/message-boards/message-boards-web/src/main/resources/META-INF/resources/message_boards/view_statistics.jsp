@@ -45,7 +45,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 			>
 				<div class="overview-container statistics-panel">
 					<clay:sticker
-						className="sticker-categories sticker-user-icon"
+						cssClass="sticker-categories sticker-user-icon"
 						icon="categories"
 					/>
 
@@ -60,7 +60,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 			>
 				<div class="overview-container statistics-panel">
 					<clay:sticker
-						className="sticker-posts sticker-user-icon"
+						cssClass="sticker-posts sticker-user-icon"
 						icon="message-boards"
 					/>
 
@@ -75,7 +75,7 @@ portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 			>
 				<div class="overview-container statistics-panel">
 					<clay:sticker
-						className="sticker-participants sticker-user-icon"
+						cssClass="sticker-participants sticker-user-icon"
 						icon="users"
 					/>
 

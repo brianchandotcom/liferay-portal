@@ -454,7 +454,7 @@ if (portletTitleBasedNavigation && (folderId != DLFolderConstants.DEFAULT_PARENT
 									name="name"
 								>
 									<clay:sticker
-										className="sticker-document"
+										cssClass="sticker-document"
 										displayType="secondary"
 										icon='<%= curFolder.isMountPoint() ? "repository" : "folder" %>'
 									/>

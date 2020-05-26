@@ -43,7 +43,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		</portlet:renderURL>
 
 		<clay:container-fluid
-			className="widget-mode-detail-header"
+			cssClass="widget-mode-detail-header"
 		>
 			<liferay-asset:asset-categories-available
 				className="<%= BlogsEntry.class.getName() %>"
@@ -51,7 +51,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			>
 				<clay:row>
 					<clay:col
-						className="categories mx-auto widget-metadata"
+						cssClass="categories mx-auto widget-metadata"
 						md="8"
 					>
 						<liferay-asset:asset-categories-summary
@@ -66,7 +66,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 			<clay:row>
 				<clay:col
-					className="mx-auto"
+					cssClass="mx-auto"
 					md="8"
 				>
 					<clay:content-row>
@@ -85,7 +85,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						</clay:content-col>
 
 						<clay:content-col
-							className="visible-interaction"
+							cssClass="visible-interaction"
 						>
 							<div class="dropdown dropdown-action">
 								<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
@@ -112,7 +112,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</clay:content-row>
 
 					<clay:content-row
-						className="widget-metadata"
+						cssClass="widget-metadata"
 					>
 
 						<%
@@ -126,7 +126,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 						%>
 
 						<clay:content-col
-							className="inline-item-before"
+							cssClass="inline-item-before"
 						>
 							<liferay-ui:user-portrait
 								cssClass="sticker-lg"
@@ -180,7 +180,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		<!-- text resume -->
 
 		<clay:container-fluid
-			className="widget-mode-detail-header"
+			cssClass="widget-mode-detail-header"
 			id="<%= renderResponse.getNamespace() + entry.getEntryId() %>"
 		>
 			<c:if test="<%= Validator.isNotNull(coverImageURL) %>">
@@ -192,7 +192,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				<c:if test="<%= Validator.isNotNull(coverImageCaption) %>">
 					<clay:row>
 						<clay:col
-							className="mx-auto"
+							cssClass="mx-auto"
 							md="8"
 						>
 							<div class="cover-image-caption">
@@ -205,7 +205,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 			<clay:row>
 				<clay:col
-					className="mx-auto widget-mode-detail-text"
+					cssClass="mx-auto widget-mode-detail-text"
 					md="8"
 				>
 					<%= entry.getContent() %>
@@ -217,7 +217,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			>
 				<clay:row>
 					<clay:col
-						className="mx-auto widget-mode-detail-text"
+						cssClass="mx-auto widget-mode-detail-text"
 						md="8"
 					>
 						<liferay-expando:custom-attribute-list
@@ -236,7 +236,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			>
 				<clay:row>
 					<clay:col
-						className="mx-auto widget-mode-detail-text"
+						cssClass="mx-auto widget-mode-detail-text"
 						md="8"
 					>
 						<div class="entry-tags">
@@ -254,7 +254,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 		<clay:container-fluid>
 			<clay:row>
 				<clay:col
-					className="mx-auto widget-mode-detail-text"
+					cssClass="mx-auto widget-mode-detail-text"
 					md="8"
 				>
 
@@ -271,7 +271,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 			<c:if test="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>">
 				<clay:row>
 					<clay:col
-						className="mx-auto widget-mode-detail-text"
+						cssClass="mx-auto widget-mode-detail-text"
 						md="8"
 					>
 

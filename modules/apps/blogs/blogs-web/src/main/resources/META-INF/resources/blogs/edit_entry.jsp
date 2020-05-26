@@ -57,7 +57,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <clay:container-fluid
-	className="entry-body"
+	cssClass="entry-body"
 >
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -132,7 +132,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 					<aui:input name="coverImageCaption" type="hidden" />
 
 					<clay:col
-						className="col-md-offset-2"
+						cssClass="col-md-offset-2"
 						md="8"
 					>
 						<div class='cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>'>
@@ -149,7 +149,7 @@ renderResponse.setTitle((entry != null) ? BlogsEntryUtil.getDisplayTitle(resourc
 					</clay:col>
 
 					<clay:col
-						className="col-md-offset-2"
+						cssClass="col-md-offset-2"
 						md="8"
 					>
 						<div class="entry-title form-group">

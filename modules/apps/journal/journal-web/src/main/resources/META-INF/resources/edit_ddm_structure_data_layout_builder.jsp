@@ -77,7 +77,7 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 	</nav>
 
 	<clay:container-fluid
-		className="container-view"
+		cssClass="container-view"
 	>
 		<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(journalEditDDMStructuresDisplayContext.getDDMStructureId()) > 0) %>">
 			<div class="alert alert-warning">

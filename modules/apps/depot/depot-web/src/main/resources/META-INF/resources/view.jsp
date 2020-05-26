@@ -27,7 +27,7 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 />
 
 <clay:container-fluid
-	className="closed sidenav-container sidenav-right"
+	cssClass="closed sidenav-container sidenav-right"
 >
 	<div class="sidenav-content">
 		<portlet:actionURL name="deleteGroups" var="deleteGroupsURL" />

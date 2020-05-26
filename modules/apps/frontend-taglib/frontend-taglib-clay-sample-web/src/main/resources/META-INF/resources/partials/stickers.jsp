@@ -23,7 +23,7 @@
 <h3>SQUARE</h3>
 
 <clay:row
-	className="mb-3 text-center"
+	cssClass="mb-3 text-center"
 >
 	<clay:col
 		md="1"
@@ -45,7 +45,7 @@
 <h3>ROUND</h3>
 
 <clay:row
-	className="mb-3 text-center"
+	cssClass="mb-3 text-center"
 >
 	<clay:col
 		md="1"
@@ -69,7 +69,7 @@
 <h3>POSITION</h3>
 
 <clay:row
-	className="mb-3"
+	cssClass="mb-3"
 >
 	<clay:col
 		md="2"

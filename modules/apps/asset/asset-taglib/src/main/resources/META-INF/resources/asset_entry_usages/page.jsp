@@ -24,7 +24,7 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 %>
 
 <clay:container-fluid
-	className="container-form-lg"
+	cssClass="container-form-lg"
 >
 	<clay:row>
 		<clay:col

@@ -21,7 +21,7 @@ PreviewSegmentsEntryUsersDisplayContext previewSegmentsEntryUsersDisplayContext 
 %>
 
 <clay:container-fluid
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<liferay-ui:search-container
 		searchContainer="<%= previewSegmentsEntryUsersDisplayContext.getSearchContainer() %>"

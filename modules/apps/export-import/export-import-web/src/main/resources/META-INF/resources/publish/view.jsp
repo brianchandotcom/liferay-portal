@@ -125,7 +125,7 @@ simplePublishURL.setParameter("targetGroupId", String.valueOf(liveGroupId));
 
 <c:if test='<%= !publishConfigurationButtons.equals("template") %>'>
 	<clay:container-fluid
-		className="publish-navbar"
+		cssClass="publish-navbar"
 	>
 		<div class="autofit-row autofit-row-center">
 			<div class="autofit-col autofit-col-expand">

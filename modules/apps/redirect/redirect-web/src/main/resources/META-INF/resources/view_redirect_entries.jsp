@@ -29,7 +29,7 @@ RedirectManagementToolbarDisplayContext redirectManagementToolbarDisplayContext 
 />
 
 <clay:container-fluid
-	className="closed redirect-entries sidenav-container sidenav-right"
+	cssClass="closed redirect-entries sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/redirect/info_panel" var="sidebarPanelURL" />

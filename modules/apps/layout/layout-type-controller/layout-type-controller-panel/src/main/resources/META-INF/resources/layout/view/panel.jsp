@@ -19,7 +19,7 @@
 <c:choose>
 	<c:when test="<%= !themeDisplay.isStatePopUp() %>">
 		<clay:container-fluid
-			className="lfr-panel-page"
+			cssClass="lfr-panel-page"
 			id="main-content"
 		>
 			<clay:row>
@@ -36,7 +36,7 @@
 				%>
 
 				<clay:col
-					className="panel-page-menu"
+					cssClass="panel-page-menu"
 					md="3"
 				>
 
@@ -68,7 +68,7 @@
 				</clay:col>
 
 				<clay:col
-					className="<%= panelBodyCssClass %>"
+					cssClass="<%= panelBodyCssClass %>"
 					md="9"
 				>
 					<%@ include file="/layout/view/panel_description.jspf" %>

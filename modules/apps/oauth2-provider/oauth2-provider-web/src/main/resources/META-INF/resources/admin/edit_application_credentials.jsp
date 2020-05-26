@@ -33,7 +33,7 @@ String clientSecret = (oAuth2Application == null) ? "" : oAuth2Application.getCl
 
 <aui:form action="<%= updateOAuth2ApplicationURL %>" id="oauth2-application-fm" method="post" name="oauth2-application-fm">
 	<clay:container-fluid
-		className="container-view"
+		cssClass="container-view"
 	>
 		<div class="sheet">
 			<clay:row>

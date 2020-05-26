@@ -31,7 +31,7 @@ renderResponse.setTitle(oAuth2Application.getName());
 %>
 
 <clay:container-fluid
-	className="view-application"
+	cssClass="view-application"
 >
 	<portlet:actionURL name="/connected_applications/revoke_oauth2_authorizations" var="revokeOAuth2AuthorizationURL" />
 

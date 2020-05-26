@@ -30,7 +30,7 @@ Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator
 %>
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<liferay-ui:search-container
 		emptyResultsMessage='<%= LanguageUtil.get(request, "custom-fields-are-not-enabled-for-any-resource") %>'

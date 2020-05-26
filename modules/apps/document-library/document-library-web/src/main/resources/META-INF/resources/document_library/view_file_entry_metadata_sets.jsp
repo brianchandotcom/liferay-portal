@@ -27,7 +27,7 @@ DLViewFileEntryMetadataSetsDisplayContext dLViewFileEntryMetadataSetsDisplayCont
 />
 
 <clay:container-fluid
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
 	<liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByTemplates.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-templates" />

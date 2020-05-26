@@ -127,7 +127,7 @@
 <clay:container-fluid>
 	<clay:row>
 		<clay:col
-			className="geomap"
+			cssClass="geomap"
 		>
 			<chart:geomap
 				config="<%= chartSampleDisplayContext.getGeomapConfig1() %>"
@@ -136,7 +136,7 @@
 		</clay:col>
 
 		<clay:col
-			className="geomap"
+			cssClass="geomap"
 		>
 			<chart:geomap
 				config="<%= chartSampleDisplayContext.getGeomapConfig2() %>"
@@ -149,7 +149,7 @@
 <clay:container-fluid>
 	<clay:row>
 		<clay:col
-			className="polling-interval"
+			cssClass="polling-interval"
 		>
 			<chart:line
 				componentId="polling-interval-line-chart"
@@ -163,7 +163,7 @@
 <clay:container-fluid>
 	<clay:row>
 		<clay:col
-			className="predictive"
+			cssClass="predictive"
 		>
 			<chart:predictive
 				componentId="predictive-chart"

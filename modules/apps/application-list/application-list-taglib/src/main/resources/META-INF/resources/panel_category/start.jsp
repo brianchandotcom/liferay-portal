@@ -23,7 +23,7 @@
 
 			<c:if test="<%= notificationsCount > 0 %>">
 				<clay:badge
-					className="float-right panel-notifications-count"
+					cssClass="float-right panel-notifications-count"
 					data-qa-id="notificationsCount"
 					displayType="danger"
 					label="<%= String.valueOf(notificationsCount) %>"

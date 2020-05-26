@@ -53,7 +53,7 @@ renderResponse.setTitle(definition.getName(locale));
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<clay:row
-				className="lfr-asset-column lfr-asset-column-details"
+				cssClass="lfr-asset-column lfr-asset-column-details"
 			>
 				<clay:col
 					md="6"

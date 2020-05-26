@@ -36,7 +36,7 @@ SearchEngineDisplayContext
 %>
 
 <clay:container-fluid
-	className="container-form-lg search-engine-page-container"
+	cssClass="container-form-lg search-engine-page-container"
 >
 	<c:choose>
 		<c:when test="<%= searchEngineDisplayContext.isMissingSearchEngine() %>">

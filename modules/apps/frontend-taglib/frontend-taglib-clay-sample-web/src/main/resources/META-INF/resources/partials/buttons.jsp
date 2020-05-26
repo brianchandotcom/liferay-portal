@@ -34,14 +34,14 @@
 		<tr>
 			<td>
 				<clay:row
-					className="flex-md-nowrap mb-2"
+					cssClass="flex-md-nowrap mb-2"
 				>
 					<clay:col><clay:button label="Primary" /></clay:col>
 					<clay:col><clay:button ariaLabel="Workflow" icon="workflow" /></clay:col>
 				</clay:row>
 
 				<clay:row
-					className="flex-md-nowrap"
+					cssClass="flex-md-nowrap"
 				>
 					<clay:col><clay:button disabled="<%= true %>" label="Primary" /></clay:col>
 					<clay:col><clay:button ariaLabel="Workflow" disabled="<%= true %>" icon="workflow" /></clay:col>
@@ -54,14 +54,14 @@
 		<tr>
 			<td>
 				<clay:row
-					className="flex-md-nowrap mb-2"
+					cssClass="flex-md-nowrap mb-2"
 				>
 					<clay:col><clay:button label="Secondary" style="secondary" /></clay:col>
 					<clay:col><clay:button ariaLabel="Wiki" icon="wiki" style="secondary" /></clay:col>
 				</clay:row>
 
 				<clay:row
-					className="flex-md-nowrap"
+					cssClass="flex-md-nowrap"
 				>
 					<clay:col><clay:button disabled="<%= true %>" label="Secondary" style="secondary" /></clay:col>
 					<clay:col><clay:button ariaLabel="Wiki" disabled="<%= true %>" icon="wiki" style="secondary" /></clay:col>
@@ -74,14 +74,14 @@
 		<tr>
 			<td>
 				<clay:row
-					className="flex-md-nowrap mb-2"
+					cssClass="flex-md-nowrap mb-2"
 				>
 					<clay:col><clay:button label="Borderless" style="borderless" /></clay:col>
 					<clay:col><clay:button ariaLabel="Page Template" icon="page-template" style="borderless" /></clay:col>
 				</clay:row>
 
 				<clay:row
-					className="flex-md-nowrap"
+					cssClass="flex-md-nowrap"
 				>
 					<clay:col><clay:button disabled="<%= true %>" label="Borderless" style="borderless" /></clay:col>
 					<clay:col><clay:button ariaLabel="Page Template" disabled="<%= true %>" icon="page-template" style="borderless" /></clay:col>
@@ -94,14 +94,14 @@
 		<tr>
 			<td>
 				<clay:row
-					className="flex-md-nowrap mb-2"
+					cssClass="flex-md-nowrap mb-2"
 				>
 					<clay:col><clay:button label="Link" style="link" /></clay:col>
 					<clay:col><clay:button ariaLabel="Add Role" icon="add-role" style="link" /></clay:col>
 				</clay:row>
 
 				<clay:row
-					className="flex-md-nowrap"
+					cssClass="flex-md-nowrap"
 				>
 					<clay:col><clay:button disabled="<%= true %>" label="Link" style="link" /></clay:col>
 					<clay:col><clay:button ariaLabel="Add Role" disabled="<%= true %>" icon="add-role" style="link" /></clay:col>
@@ -117,7 +117,7 @@
 <h3>VARIATIONS</h3>
 
 <clay:row
-	className="text-center"
+	cssClass="text-center"
 >
 	<clay:col
 		md="2"

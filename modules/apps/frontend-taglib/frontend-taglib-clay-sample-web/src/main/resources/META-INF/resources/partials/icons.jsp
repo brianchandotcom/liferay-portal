@@ -23,7 +23,7 @@
 <h3>Liferay Icon Library</h3>
 
 <clay:row
-	className="mb-3"
+	cssClass="mb-3"
 >
 
 	<%
@@ -51,7 +51,7 @@
 <h3>Language Flags</h3>
 
 <clay:row
-	className="mb-3"
+	cssClass="mb-3"
 >
 
 	<%

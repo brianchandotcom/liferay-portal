@@ -141,7 +141,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 		</aui:form>
 
 		<clay:row
-			className="contacts-result-container lfr-app-column-view"
+			cssClass="contacts-result-container lfr-app-column-view"
 		>
 			<aui:col cssClass="contacts-list" first="<%= true %>" width="<%= 30 %>">
 				<div class="toggle-user">

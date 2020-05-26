@@ -26,7 +26,7 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 %>
 
 <clay:content-row
-	className="sheet-subtitle"
+	cssClass="sheet-subtitle"
 	containerElement="h3"
 >
 	<clay:content-col

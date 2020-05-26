@@ -98,7 +98,7 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 
 	<div class="contextual-sidebar-content">
 		<clay:container-fluid
-			className="container-view"
+			cssClass="container-view"
 		>
 			<div class="sheet">
 				<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />

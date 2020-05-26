@@ -36,7 +36,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 %>
 
 <clay:container-fluid
-	className="closed sidenav-container sidenav-right"
+	cssClass="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/adaptive_media/info_panel" var="sidebarPanelURL" />

@@ -48,7 +48,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 />
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<liferay-ui:search-container
 		emptyResultsMessage="no-configurations-were-found"

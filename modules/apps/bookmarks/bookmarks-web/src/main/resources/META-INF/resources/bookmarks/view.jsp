@@ -180,7 +180,7 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 </liferay-util:include>
 
 <clay:container-fluid
-	className="closed sidenav-container sidenav-right"
+	cssClass="closed sidenav-container sidenav-right"
 	id='<%= renderResponse.getNamespace() + "infoPanelId" %>'
 >
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/bookmarks/info_panel" var="sidebarPanelURL">

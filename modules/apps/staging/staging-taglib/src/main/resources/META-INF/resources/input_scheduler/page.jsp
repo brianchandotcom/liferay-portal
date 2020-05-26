@@ -228,7 +228,7 @@
 						%>
 
 						<clay:row
-							className="weekdays"
+							cssClass="weekdays"
 						>
 
 							<%

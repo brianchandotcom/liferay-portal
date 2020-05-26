@@ -411,7 +411,7 @@ Map<String, Object> fragmentsEditorData = HashMapBuilder.<String, Object>put(
 
 	<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">
 		<clay:col
-			className="mt-4"
+			cssClass="mt-4"
 			md="12"
 		>
 			<liferay-comment:discussion

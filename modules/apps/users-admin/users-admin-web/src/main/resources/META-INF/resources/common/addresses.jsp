@@ -27,7 +27,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 
 <clay:sheet-header>
 	<clay:content-row
-		className="sheet-title"
+		cssClass="sheet-title"
 		containerElement="h2"
 	>
 		<clay:content-col
@@ -88,7 +88,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 				<tr>
 					<td>
 						<clay:sticker
-							className="sticker-static"
+							cssClass="sticker-static"
 							displayType="secondary"
 							icon="picture"
 						/>
@@ -120,7 +120,7 @@ List<Address> addresses = AddressServiceUtil.getAddresses(className, classPK);
 					</td>
 					<td>
 						<clay:content-col
-							className="lfr-search-container-wrapper"
+							cssClass="lfr-search-container-wrapper"
 						>
 							<liferay-util:include page="/common/address_action.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="addressId" value="<%= String.valueOf(address.getAddressId()) %>" />

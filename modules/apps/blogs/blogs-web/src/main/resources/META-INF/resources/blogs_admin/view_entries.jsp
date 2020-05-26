@@ -45,7 +45,7 @@ BlogEntriesManagementToolbarDisplayContext blogEntriesManagementToolbarDisplayCo
 />
 
 <clay:container-fluid
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />

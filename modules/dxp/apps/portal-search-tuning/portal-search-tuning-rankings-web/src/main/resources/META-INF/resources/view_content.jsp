@@ -53,7 +53,7 @@ RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingR
 %>
 
 <clay:container-fluid
-	className="container-no-gutters-sm-down container-view"
+	cssClass="container-no-gutters-sm-down container-view"
 >
 	<c:choose>
 		<c:when test="<%= rankingResultContentDisplayContext.isVisible() %>">

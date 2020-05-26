@@ -25,7 +25,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentDis
 %>
 
 <clay:container-fluid
-	className="container-view"
+	cssClass="container-view"
 >
 	<clay:row>
 		<clay:col

@@ -55,7 +55,7 @@ if (!ddlDisplayContext.isAdminPortlet()) {
 />
 
 <clay:container-fluid
-	className="view-records-container"
+	cssClass="view-records-container"
 	id='<%= renderResponse.getNamespace() + "formContainer" %>'
 >
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

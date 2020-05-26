@@ -31,7 +31,7 @@ SearchContainer<Object> searchContainer = itemSelectorViewDescriptor.getSearchCo
 </c:if>
 
 <clay:container-fluid
-	className="item-selector lfr-item-viewer"
+	cssClass="item-selector lfr-item-viewer"
 	id='<%= renderResponse.getNamespace() + "entriesContainer" %>'
 >
 	<c:if test="<%= itemSelectorViewDescriptor.isShowBreadcrumb() %>">

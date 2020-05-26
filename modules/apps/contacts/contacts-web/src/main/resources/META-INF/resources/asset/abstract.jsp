@@ -26,7 +26,7 @@ request.setAttribute("view_user.jsp-user", user2);
 
 <clay:row>
 	<clay:col
-		className="contacts-container"
+		cssClass="contacts-container"
 	>
 		<div class="lfr-contact-thumb">
 			<img alt="<%= HtmlUtil.escapeAttribute(user2.getFullName()) %>" src="<%= user2.getPortraitURL(themeDisplay) %>" />

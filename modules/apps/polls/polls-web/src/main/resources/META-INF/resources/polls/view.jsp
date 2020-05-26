@@ -21,7 +21,7 @@
 <liferay-util:include page="/polls/management_bar.jsp" servletContext="<%= application %>" />
 
 <clay:container-fluid
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<aui:form method="post" name="fm">
 		<aui:input name="deleteQuestionIds" type="hidden" />

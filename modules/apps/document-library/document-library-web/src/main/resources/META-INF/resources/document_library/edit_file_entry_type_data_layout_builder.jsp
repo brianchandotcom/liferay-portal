@@ -73,7 +73,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	</nav>
 
 	<clay:container-fluid
-		className="container-view"
+		cssClass="container-view"
 	>
 
 		<%

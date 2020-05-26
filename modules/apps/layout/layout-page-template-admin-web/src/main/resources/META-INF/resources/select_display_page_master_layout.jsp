@@ -28,7 +28,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 %>
 
 <clay:container-fluid
-	className="mt-4"
+	cssClass="mt-4"
 >
 	<div class="lfr-search-container-wrapper">
 		<ul class="card-page card-page-equal-height">

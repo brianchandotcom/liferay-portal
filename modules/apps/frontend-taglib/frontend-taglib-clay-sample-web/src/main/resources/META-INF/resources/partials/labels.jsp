@@ -21,7 +21,7 @@
 </blockquote>
 
 <clay:row
-	className="mb-3"
+	cssClass="mb-3"
 >
 	<clay:col
 		size="2"
@@ -74,7 +74,7 @@
 <h3>LABEL REMOVABLE</h3>
 
 <clay:row
-	className="row"
+	cssClass="row"
 >
 	<clay:col
 		size="12"

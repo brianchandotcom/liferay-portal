@@ -17,7 +17,7 @@
 <%@ include file="/process_status/init.jsp" %>
 
 <clay:label
-	className="process-status"
+	cssClass="process-status"
 	data-qa-id="processResult"
 	displayType="<%= clayClassPostfix %>"
 	label="<%= backgroundTaskStatusLabel %>"

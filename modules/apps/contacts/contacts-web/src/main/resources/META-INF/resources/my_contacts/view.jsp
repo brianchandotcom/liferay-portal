@@ -44,7 +44,7 @@
 			<c:otherwise>
 				<clay:row>
 					<clay:col
-						className="my-contacts"
+						cssClass="my-contacts"
 					>
 
 						<%
@@ -53,7 +53,7 @@
 
 							<clay:row>
 								<clay:col
-									className="lfr-contact-grid-item"
+									cssClass="lfr-contact-grid-item"
 								>
 									<div class="lfr-contact-thumb">
 										<a href="<%= user2.getDisplayURL(themeDisplay) %>"><img alt="<%= HtmlUtil.escapeAttribute(user2.getFullName()) %>" src="<%= user2.getPortraitURL(themeDisplay) %>" /></a>

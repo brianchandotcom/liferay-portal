@@ -48,7 +48,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 
 			<div class="card-body widget-topbar">
 				<clay:content-row
-					className="card-title"
+					cssClass="card-title"
 				>
 					<clay:content-col
 						expand="true"
@@ -72,7 +72,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 				</clay:content-row>
 
 				<clay:content-row
-					className="widget-metadata"
+					cssClass="widget-metadata"
 				>
 
 					<%
@@ -86,7 +86,7 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					%>
 
 					<clay:content-col
-						className="inline-item-before"
+						cssClass="inline-item-before"
 					>
 						<liferay-ui:user-portrait
 							user="<%= blogsEntryUser %>"
@@ -94,11 +94,11 @@ BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = BlogsPortl
 					</clay:content-col>
 
 					<clay:content-col
-						className="inline-item-before"
+						cssClass="inline-item-before"
 					>
 						<clay:content-row>
 							<clay:content-col
-								className="inline-item-before"
+								cssClass="inline-item-before"
 							>
 								<div class="text-truncate-inline">
 									<a class="text-truncate username" href="<%= blogsEntryUserURL %>"><%= HtmlUtil.escape(blogsEntry.getUserName()) %></a>

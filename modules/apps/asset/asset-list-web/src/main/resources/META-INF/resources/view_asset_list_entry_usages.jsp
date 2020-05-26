@@ -34,7 +34,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 %>
 
 <clay:container-fluid
-	className="container-form-lg"
+	cssClass="container-form-lg"
 >
 	<clay:row>
 		<clay:col

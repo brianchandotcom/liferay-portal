@@ -26,11 +26,11 @@ JournalDDMTemplateHelper journalDDMTemplateHelper = (JournalDDMTemplateHelper)re
 
 <div id="templateScriptContainer">
 	<clay:row
-		className="form-group lfr-template-editor-container"
+		cssClass="form-group lfr-template-editor-container"
 	>
 		<c:if test="<%= journalEditDDMTemplateDisplayContext.isAutocompleteEnabled() %>">
 			<clay:col
-				className="lfr-template-palette-container"
+				cssClass="lfr-template-palette-container"
 				id='<%= renderResponse.getNamespace() + "templatePaletteContainer" %>'
 				md="3"
 			>

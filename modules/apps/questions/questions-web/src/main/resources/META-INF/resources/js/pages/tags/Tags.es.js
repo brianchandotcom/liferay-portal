@@ -13,7 +13,6 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayCard, {ClayCardWithNavigation} from '@clayui/card';
 import {ClayInput} from '@clayui/form';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -99,21 +98,34 @@ export default withRouter(
 									<Link
 										to={`/questions/${sectionTitle}/tag/${tag.name}`}
 									>
-										<ClayCardWithNavigation>
-											<ClayCard.Body>
-												<ClayCard.Description displayType="title">
-													{tag.name}
-												</ClayCard.Description>
-												<ClayCard.Description displayType="text">
-													{lang.sub(
-														Liferay.Language.get(
-															'used-x-times'
-														),
-														[tag.keywordUsageCount]
-													)}
-												</ClayCard.Description>
-											</ClayCard.Body>
-										</ClayCardWithNavigation>
+										<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
+											<div className="card-body">
+												<div className="card-row">
+													<div className="autofit-col autofit-col-expand">
+														<div className="autofit-section">
+															<div
+																className="card-title"
+																title="Content Page"
+															>
+																<span className="text-truncate-inline">
+																	{tag.name}
+																</span>
+															</div>
+															<div>
+																{lang.sub(
+																	Liferay.Language.get(
+																		'used-x-times'
+																	),
+																	[
+																		tag.keywordUsageCount,
+																	]
+																)}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
 									</Link>
 								</div>
 							)}

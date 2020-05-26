@@ -3,6 +3,10 @@
 		text-align: left;
 	}
 
+	:hover {
+		text-decoration: none;
+	}
+
 	& .card-title {
 		color: $dark;
 		font-size: 1rem;

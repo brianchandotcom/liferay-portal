@@ -35,25 +35,25 @@ const defaultProps = {
 const fetchResponse = {
 	en_US: {
 		current: {
-			urlTitle: activeUrl,
 			friendlyURLEntryId: 36000,
 			friendlyURLEntryLocalizationId: 300,
+			urlTitle: activeUrl,
 		},
 		history: [
 			{
-				urlTitle: '/test-3',
 				friendlyURLEntryId: 36003,
 				friendlyURLEntryLocalizationId: 303,
+				urlTitle: '/test-3',
 			},
 			{
-				urlTitle: '/test-2',
 				friendlyURLEntryId: 36002,
 				friendlyURLEntryLocalizationId: 302,
+				urlTitle: '/test-2',
 			},
 			{
-				urlTitle: '/test-1',
 				friendlyURLEntryId: 36001,
 				friendlyURLEntryLocalizationId: 301,
+				urlTitle: '/test-1',
 			},
 		],
 	},
@@ -62,25 +62,25 @@ const fetchResponse = {
 const fetchResponseAfterRestore = {
 	en_US: {
 		current: {
-			urlTitle: '/test-2',
 			friendlyURLEntryId: 36002,
 			friendlyURLEntryLocalizationId: 30,
+			urlTitle: '/test-2',
 		},
 		history: [
 			{
-				urlTitle: '/test-3',
 				friendlyURLEntryId: 36003,
 				friendlyURLEntryLocalizationId: 303,
+				urlTitle: '/test-3',
 			},
 			{
-				urlTitle: '/test-1',
 				friendlyURLEntryId: 36001,
 				friendlyURLEntryLocalizationId: 301,
+				urlTitle: '/test-1',
 			},
 			{
-				urlTitle: '/test',
 				friendlyURLEntryId: 36000,
 				friendlyURLEntryLocalizationId: 300,
+				urlTitle: '/test',
 			},
 		],
 	},
@@ -97,7 +97,7 @@ describe('FriendlyURLHistory', () => {
 		Liferay.component = jest.fn().mockImplementation(() => {
 			return {
 				getSelectedLanguageId: () => 'en_US',
-				updateInput: () => jest.fn()
+				updateInput: () => jest.fn(),
 			};
 		});
 	});
@@ -125,7 +125,7 @@ describe('FriendlyURLHistory', () => {
 			fetch.resetMocks();
 		});
 
-		beforeEach(async() => {
+		beforeEach(async () => {
 			fetch.mockResponseOnce(JSON.stringify(fetchResponse));
 
 			result = renderComponent({...defaultProps});
@@ -168,8 +168,8 @@ describe('FriendlyURLHistory', () => {
 				result.getAllByRole('listitem')
 			);
 
-			const deleteButtons = listItems.map(
-				(listitem) => listitem.querySelector('button[data-title="forget-url"]')
+			const deleteButtons = listItems.map((listitem) =>
+				listitem.querySelector('button[data-title="forget-url"]')
 			);
 
 			await act(async () => {
@@ -203,7 +203,8 @@ describe('FriendlyURLHistory', () => {
 			expect(fetch.mock.calls.length).toEqual(3);
 
 			expect(
-				document.querySelector('.modal-content .active-url-text').innerHTML
+				document.querySelector('.modal-content .active-url-text')
+					.innerHTML
 			).toBe('/test-2');
 		});
 	});

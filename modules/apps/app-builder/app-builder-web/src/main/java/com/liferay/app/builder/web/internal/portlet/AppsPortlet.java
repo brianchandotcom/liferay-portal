@@ -96,6 +96,9 @@ public class AppsPortlet extends MVCPortlet {
 			appsTabs.put(
 				appBuilderAppsPortletTabName,
 				HashMapBuilder.<String, Object>put(
+					"editEntryPoint",
+					appBuilderAppsPortletTab.getEditEntryPoint()
+				).put(
 					"label",
 					appBuilderAppsPortletTab.getLabel(themeDisplay.getLocale())
 				).put(

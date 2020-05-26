@@ -243,7 +243,7 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 				).put(
 					"label",
 					LanguageUtil.get(
-						resourceBundle, group.getScopeLabel(themeDisplay))
+						resourceBundle, group.getName(themeDisplay.getLocale()))
 				).put(
 					"logoURL", group.getLogoURL(themeDisplay, true)
 				).put(

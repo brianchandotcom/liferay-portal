@@ -111,7 +111,7 @@ public class DeleteWorkflowInstanceMVCActionCommand
 					portletSession.getPortletContext();
 
 				PortletRequestDispatcher portletRequestDispatcher =
-					portletContext.getRequestDispatcher("/error.jsp");
+					portletContext.getRequestDispatcher("/instance/error.jsp");
 
 				portletRequestDispatcher.include(actionRequest, actionResponse);
 			}

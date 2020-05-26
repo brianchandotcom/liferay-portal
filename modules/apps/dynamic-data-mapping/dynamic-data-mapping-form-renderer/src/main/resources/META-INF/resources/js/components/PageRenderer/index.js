@@ -16,6 +16,8 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import core from 'metal';
 import Soy from 'metal-soy';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import {PageProvider} from '../../hooks/usePage.es';
 import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
@@ -221,15 +223,17 @@ const Renderer = ({
 };
 
 const RendererProxy = ({instance, ...otherProps}) => (
-	<PageProvider
-		dispatch={instance.context.dispatch}
-		emit={(...args) => instance.emit(...args)}
-		value={otherProps}
-	>
-		<ClayIconSpriteContext.Provider value={otherProps.spritemap}>
-			<Renderer {...otherProps} />
-		</ClayIconSpriteContext.Provider>
-	</PageProvider>
+	<DndProvider backend={HTML5Backend} context={window}>
+		<PageProvider
+			dispatch={instance.context.dispatch}
+			emit={(...args) => instance.emit(...args)}
+			value={otherProps}
+		>
+			<ClayIconSpriteContext.Provider value={otherProps.spritemap}>
+				<Renderer {...otherProps} />
+			</ClayIconSpriteContext.Provider>
+		</PageProvider>
+	</DndProvider>
 );
 
 const ReactComponentAdapter = getConnectedReactComponentAdapter(RendererProxy);

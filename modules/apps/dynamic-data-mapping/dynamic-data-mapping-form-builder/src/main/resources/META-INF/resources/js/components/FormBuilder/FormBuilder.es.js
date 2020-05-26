@@ -76,6 +76,7 @@ class FormBuilderBase extends Component {
 		const {props} = this;
 		const {
 			activePage,
+			dnd,
 			editingLanguageId,
 			pages,
 			paginationMode,
@@ -90,6 +91,7 @@ class FormBuilderBase extends Component {
 				<div class="container ddm-form-builder">
 					<FormRenderer
 						activePage={activePage}
+						dnd={dnd}
 						editable={true}
 						editingLanguageId={editingLanguageId}
 						pages={this.preparePagesForRender(pages)}

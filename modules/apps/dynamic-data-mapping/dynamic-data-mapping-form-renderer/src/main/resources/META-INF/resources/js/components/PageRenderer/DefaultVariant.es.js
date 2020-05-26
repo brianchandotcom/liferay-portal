@@ -15,6 +15,8 @@
 import classnames from 'classnames';
 import React from 'react';
 
+import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
+
 export const Container = ({
 	activePage,
 	children,
@@ -45,6 +47,14 @@ export const Column = ({
 	pageIndex,
 	rowIndex,
 }) => {
+	const {drop, overTarget} = useDrop({
+		columnIndex: index,
+		fieldName: column.fields[0]?.fieldName,
+		origin: DND_ORIGIN_TYPE.FIELD,
+		pageIndex,
+		rowIndex,
+	});
+
 	if (column.fields.length === 0 && editable && activePage === pageIndex) {
 		return (
 			<Placeholder
@@ -73,7 +83,11 @@ export const Column = ({
 					className={classnames(
 						'ddm-field-container ddm-target h-100',
 						{
+							'active-drop-child':
+								column.fields[0].type === 'fieldset' &&
+								overTarget,
 							selected: column.fields[0].selected,
+							'target-over targetOver': overTarget,
 						}
 					)}
 					data-field-name={column.fields[0].fieldName}
@@ -87,7 +101,9 @@ export const Column = ({
 						)}
 						{...addr}
 					/>
-					<div className="ddm-drag">{fields}</div>
+					<div className="ddm-drag" ref={drop}>
+						{fields}
+					</div>
 					<div
 						className={classnames(
 							'ddm-resize-handle ddm-resize-handle-right',
@@ -112,35 +128,50 @@ export const Page = ({
 	empty,
 	header: Header,
 	pageIndex,
-}) => (
-	<div
-		className="active ddm-form-page lfr-ddm-form-page"
-		data-ddm-page={pageIndex}
-	>
-		{activePage === pageIndex && Header}
+}) => {
+	const {canDrop, drop, overTarget} = useDrop({
+		columnIndex: 0,
+		origin: DND_ORIGIN_TYPE.EMPTY,
+		pageIndex,
+		rowIndex: 0,
+	});
 
-		{empty && editable && activePage === pageIndex ? (
-			<div className="row">
-				<div
-					className="col col-ddm col-empty col-md-12 last-col lfr-initial-col mb-4 mt-5"
-					data-ddm-field-column="0"
-					data-ddm-field-page={pageIndex}
-					data-ddm-field-row="0"
-				>
-					<div className="ddm-empty-page ddm-target">
-						<p className="ddm-empty-page-message">
-							{Liferay.Language.get(
-								'drag-fields-from-the-sidebar-to-compose-your-form'
-							)}
-						</p>
+	return (
+		<div
+			className="active ddm-form-page lfr-ddm-form-page"
+			data-ddm-page={pageIndex}
+		>
+			{activePage === pageIndex && Header}
+
+			{empty && editable && activePage === pageIndex ? (
+				<div className="row">
+					<div
+						className="col col-ddm col-empty col-md-12 last-col lfr-initial-col mb-4 mt-5"
+						data-ddm-field-column="0"
+						data-ddm-field-page={pageIndex}
+						data-ddm-field-row="0"
+					>
+						<div
+							className={classnames('ddm-empty-page ddm-target', {
+								'target-droppable': canDrop,
+								'target-over targetOver': overTarget,
+							})}
+							ref={drop}
+						>
+							<p className="ddm-empty-page-message">
+								{Liferay.Language.get(
+									'drag-fields-from-the-sidebar-to-compose-your-form'
+								)}
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		) : (
-			children
-		)}
-	</div>
-);
+			) : (
+				children
+			)}
+		</div>
+	);
+};
 
 export const PageHeader = ({description, title}) => (
 	<>
@@ -158,6 +189,13 @@ export const Placeholder = ({
 	rowIndex,
 	size,
 }) => {
+	const {drop, overTarget} = useDrop({
+		columnIndex: columnIndex ?? 0,
+		origin: DND_ORIGIN_TYPE.EMPTY,
+		pageIndex,
+		rowIndex,
+	});
+
 	const Content = (
 		<div
 			className={`col col-ddm col-empty col-md-${size}`}
@@ -165,7 +203,12 @@ export const Placeholder = ({
 			data-ddm-field-page={pageIndex}
 			data-ddm-field-row={rowIndex}
 		>
-			<div className="ddm-target"></div>
+			<div
+				className={classnames('ddm-target', {
+					'target-over targetOver': overTarget,
+				})}
+				ref={drop}
+			/>
 		</div>
 	);
 

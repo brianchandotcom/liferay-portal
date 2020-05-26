@@ -12,83 +12,95 @@
  * details.
  */
 
-import {getIndexes} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 import dom from 'metal-dom';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect} from 'react';
 
-import DataLayoutBuilderColumnDropZone from './DataLayoutBuilderColumnDropZone.es';
+import AppContext from '../AppContext.es';
+import {
+	dropCustomObjectField,
+	dropFieldSet,
+	dropLayoutBuilderField,
+} from '../actions.es';
 import DragLayer from './DragLayer.es';
-
-const getColumns = () => [
-	...document.querySelectorAll(
-		'.col-empty .ddm-target:not([data-drop-disabled="true"])'
-	),
-];
-
-const getFields = () => [
-	...document.querySelectorAll(
-		'.ddm-field-container.ddm-target:not([data-drop-disabled="true"])'
-	),
-];
-
-const getColumnKey = (node) => {
-	const {columnIndex, pageIndex, rowIndex} = getIndexes(node.parentElement);
-	const placeholder = !!dom.closest(node, '.placeholder');
-	const parentField = dom.closest(node, '.ddm-field');
-
-	let parentFieldName = '';
-
-	if (parentField) {
-		parentFieldName = getFieldKey(parentField);
-	}
-
-	return `${parentFieldName}_column_${pageIndex}_${rowIndex}_${columnIndex}_${placeholder}`;
-};
-
-const getFieldKey = (node) => {
-	return node.dataset.fieldName;
-};
+import {
+	DRAG_DATA_DEFINITION_FIELD,
+	DRAG_FIELDSET,
+	DRAG_FIELD_TYPE,
+} from './dragTypes.es';
 
 export default ({dataLayoutBuilder}) => {
-	const [columns, setColumns] = useState(getColumns());
-	const [fields, setFields] = useState(getFields());
+	const [{dataDefinition}] = useContext(AppContext);
+
+	const onDrop = useCallback(
+		({data, type}, monitor, {fieldName, origin, ...indexes}) => {
+			if (monitor.didDrop()) {
+				return;
+			}
+
+			let parentFieldName;
+			const parentFieldNode = dom.closest(
+				document.querySelector(`div[data-field-name="${fieldName}"]`),
+				'.ddm-field'
+			);
+
+			if (parentFieldNode) {
+				parentFieldName = parentFieldNode.dataset.fieldName;
+			}
+
+			if (type === DRAG_FIELD_TYPE) {
+				const payload = dropLayoutBuilderField({
+					dataLayoutBuilder,
+					fieldName,
+					fieldTypeName: data.name,
+					indexes,
+					parentFieldName,
+				});
+
+				if (origin === 'empty') {
+					dataLayoutBuilder.dispatch('fieldAdded', payload);
+				}
+				else {
+					dataLayoutBuilder.dispatch('sectionAdded', payload);
+				}
+			}
+			else if (type === DRAG_DATA_DEFINITION_FIELD) {
+				const payload = dropCustomObjectField({
+					dataDefinition,
+					dataDefinitionFieldName: data.name,
+					dataLayoutBuilder,
+					fieldName,
+					indexes,
+					parentFieldName,
+				});
+
+				if (origin === 'empty') {
+					dataLayoutBuilder.dispatch('fieldAdded', payload);
+				}
+				else {
+					dataLayoutBuilder.dispatch('sectionAdded', payload);
+				}
+			}
+			else if (type === DRAG_FIELDSET) {
+				dataLayoutBuilder.dispatch(
+					'fieldSetAdded',
+					dropFieldSet({
+						dataLayoutBuilder,
+						fieldName,
+						fieldSet: data.fieldSet,
+						indexes,
+						parentFieldName,
+					})
+				);
+			}
+		},
+		[dataDefinition, dataLayoutBuilder]
+	);
 
 	useEffect(() => {
-		const provider = dataLayoutBuilder.getLayoutProvider();
+		const {formBuilderWithLayoutProvider} = dataLayoutBuilder;
 
-		const eventHandler = provider.on('rendered', () => {
-			setColumns(getColumns());
-			setFields(getFields());
-		});
+		formBuilderWithLayoutProvider.props.formBuilderProps.dnd.spec.drop = onDrop;
+	}, [dataLayoutBuilder, onDrop]);
 
-		return () => eventHandler.removeListener();
-	}, [dataLayoutBuilder]);
-
-	return (
-		<>
-			<DragLayer />
-
-			{columns.map(
-				(node, index) =>
-					node.parentElement && (
-						<DataLayoutBuilderColumnDropZone
-							dataLayoutBuilder={dataLayoutBuilder}
-							key={getColumnKey(node, index)}
-							node={node}
-						/>
-					)
-			)}
-
-			{fields.map(
-				(node, index) =>
-					node.parentElement && (
-						<DataLayoutBuilderColumnDropZone
-							dataLayoutBuilder={dataLayoutBuilder}
-							key={getFieldKey(node, index)}
-							node={node}
-						/>
-					)
-			)}
-		</>
-	);
+	return <DragLayer />;
 };

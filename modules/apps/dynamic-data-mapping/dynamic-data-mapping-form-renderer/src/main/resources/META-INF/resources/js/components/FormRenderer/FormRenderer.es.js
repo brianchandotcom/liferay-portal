@@ -103,6 +103,15 @@ FormRenderer.STATE = {
 	displayable: Config.bool().valueFn('_getDisplayableFn'),
 
 	/**
+	 * @default undefined
+	 * @memberof FormRenderer
+	 * @type {?(object|undefined)}
+	 * @required
+	 */
+
+	dnd: Config.object(),
+
+	/**
 	 * @default false
 	 * @instance
 	 * @memberof FormRenderer

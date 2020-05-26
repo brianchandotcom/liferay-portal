@@ -18,6 +18,11 @@ import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import core from 'metal';
 import React from 'react';
 
+import {
+	DRAG_DATA_DEFINITION_FIELD,
+	DRAG_FIELDSET,
+	DRAG_FIELD_TYPE,
+} from '../drag-and-drop/dragTypes.es';
 import {getDataDefinitionField} from '../utils/dataDefinition.es';
 import EventEmitter from './EventEmitter.es';
 import saveDefinitionAndLayout from './saveDefinitionAndLayout.es';
@@ -56,6 +61,20 @@ class DataLayoutBuilder extends React.Component {
 					},
 				},
 				formBuilderProps: {
+					dnd: {
+						spec: {
+							accept: [
+								DRAG_DATA_DEFINITION_FIELD,
+								DRAG_FIELDSET,
+								DRAG_FIELD_TYPE,
+							],
+							collect: (monitor) => ({
+								canDrop: monitor.canDrop(),
+								overTarget: monitor.isOver(),
+							}),
+							drop: () => {},
+						},
+					},
 					fieldTypes,
 					portletNamespace,
 					ref: 'builder',

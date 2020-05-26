@@ -10,6 +10,7 @@
 	{@param? activePage: int}
 	{@param? cancelLabel: string}
 	{@param? displayable: bool}
+	{@param? dnd: ?}
 	{@param? editable: bool}
 	{@param? editingLanguageId: string}
 	{@param? paginationMode: string}
@@ -19,9 +20,9 @@
 	{@param? showSubmitButton: bool}
 	{@param? strings: map<string, string>}
 	{@param? submitLabel: string}
+	{@param? successPageSettings: ?}
 	{@param? view: string}
 	{@param? viewMode: bool}
-	{@param? successPageSettings: ?}
 
 	{if $displayable}
 		{let $currentPaginationMode: $paginationMode ?: 'wizard' /}
@@ -78,6 +79,7 @@
 						{call PageRenderer.render}
 							{param activePage: $activePage /}
 							{param cancelLabel: $cancelLabel ?: 'cancel' /}
+							{param dnd: $dnd /}
 							{param editable: $editable /}
 							{param editingLanguageId: $editingLanguageId /}
 							{param events: [

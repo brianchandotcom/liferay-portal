@@ -456,93 +456,41 @@ definition {
 	}
 
 	macro setUpSiteRoleLoginUserPG {
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.addCP(
-			userBirthday = "${userBirthday}",
+		JSONUser.addUser(
 			userEmailAddress = "${userEmailAddress}",
-			userEmailAddressVariation = "${userEmailAddressVariation}",
-			userFirstName = "${userFirstName}",
-			userGender = "${userGender}",
-			userLastName = "${userLastName}",
-			userMiddleName = "${userMiddleName}",
-			userScreenName = "${userScreenName}",
-			userScreenNameVariation = "${userScreenNameVariation}");
-
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Users and Organizations");
-
-		User.editPasswordCP(
-			newPassword = "${newPassword}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
-			userEmailAddress = "${userEmailAddress}",
-			userScreenName = "${userScreenName}");
-
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
-
-		Site.addBlankCP(siteName = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
-
-		Site.assignUserAsMemberCP(
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
-			userMiddleName = "${userMiddleName}",
 			userScreenName = "${userScreenName}");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "${userEmailAddress}");
 
-		SitePages.addPublicPage(pageName = "${pageName}");
+		JSONGroup.addGroup(groupName = "${siteName}");
 
-		Navigator.gotoSitePage(
-			pageName = "${pageName}",
-			siteName = "${siteName}");
+		JSONGroup.assignUserToGroup(
+			groupName = "${siteName}",
+			userEmailAddress = "${userEmailAddress}");
 
-		Portlet.addPG(
-			i = "${i}",
-			pageName = "${pageName}",
-			portletName = "${portletName}",
-			siteName = "${siteName}",
-			siteURL = "true");
+		JSONLayout.addPublicLayout(
+			groupName = "${siteName}",
+			layoutName = "${pageName}");
 
-		ProductMenu.gotoPortlet(
-			category = "Users",
-			panel = "Control Panel",
-			portlet = "Roles");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "${siteName}",
+			layoutName = "${pageName}",
+			widgetName = "${portletName}");
 
-		RoleNavigator.gotoRoleType(roleType = "${roleType}");
-
-		Role.add(
+		JSONRole.addSiteRole(
 			roleDescription = "${roleDescription}",
 			roleKey = "${roleKey}",
 			roleTitle = "${roleTitle}");
 
-		SitePages.openPagesAdmin(siteURLKey = "${siteName}");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
-
-		Pause(locator1 = "5000");
-
-		Site.assignSiteRoleCP(
-			resourceName = "${userFirstName} ${userLastName}",
-			roleTitle = "${roleTitle}");
+		JSONGroup.assignGroupRoleToUser(
+			groupName = "${siteName}",
+			roleTitle = "${roleTitle}",
+			userEmailAddress = "${userEmailAddress}");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "${userLoginEmailAddress}",

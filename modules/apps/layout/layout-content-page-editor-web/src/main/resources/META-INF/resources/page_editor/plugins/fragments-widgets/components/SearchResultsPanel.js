@@ -25,23 +25,25 @@ export default function SearchResultsPanel({filteredTabs}) {
 				<div className="page-editor__fragments-widgets__search-results-panel__filter-subtitle">
 					{tab.label}
 				</div>
-
-				{tab.collections
-					.reduce(
-						(acc, collection) =>
-							acc.concat(
-								collection.children.filter(
-									(item) =>
-										!acc.some(
-											({itemId}) => itemId === item.itemId
-										)
-								)
-							),
-						[]
-					)
-					.map((item) => (
-						<TabItem item={item} key={item.itemId} />
-					))}
+				<ul className="list-unstyled">
+					{tab.collections
+						.reduce(
+							(acc, collection) =>
+								acc.concat(
+									collection.children.filter(
+										(item) =>
+											!acc.some(
+												({itemId}) =>
+													itemId === item.itemId
+											)
+									)
+								),
+							[]
+						)
+						.map((item) => (
+							<TabItem item={item} key={item.itemId} />
+						))}
+				</ul>
 			</div>
 		))
 	) : (

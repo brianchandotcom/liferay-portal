@@ -32,6 +32,8 @@ export interface Config {
 		};
 	};
 
+	containerItemEnabled: boolean;
+
 	defaultEditorConfigurations: {
 		[key: 'comment' | 'rich-text' | 'text']: {
 			editorConfig: object;

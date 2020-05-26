@@ -13,6 +13,7 @@
  */
 
 import {ADD_FRAGMENT_COMPOSITION, INIT} from '../actions/types';
+import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
@@ -80,7 +81,7 @@ export default function fragmentsReducer(fragments = [], action) {
 						},
 						icon: 'table',
 						itemId: 'container',
-						label: Liferay.Language.get('section'),
+						label: LAYOUT_DATA_ITEM_TYPE_LABELS.container,
 						type: 'container',
 					},
 					{
@@ -89,7 +90,7 @@ export default function fragmentsReducer(fragments = [], action) {
 						},
 						icon: 'table',
 						itemId: 'row',
-						label: Liferay.Language.get('row'),
+						label: LAYOUT_DATA_ITEM_TYPE_LABELS.row,
 						type: 'row',
 					},
 				],

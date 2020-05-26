@@ -17,7 +17,7 @@ const DEFAULT_CONFIG = {
 };
 
 /** @type {import('../../types/config').Config} */
-export let config = null;
+export let config = DEFAULT_CONFIG;
 
 /**
  * Extracts the immutable parts from the server data.

@@ -313,43 +313,35 @@ definition {
 
 		PortalSettings.configureContentSharingSubSitesCP(subSites = "enabledByDefault");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addGroup(groupName = "Site Name");
 
-		Site.addBlankCP(siteName = "Site Name");
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AP Test Page");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		JSONGroup.addChildSite(
+			groupName = "Child SiteName",
+			parentGroupName = "Site Name");
 
-		SitePages.addPublicPage(pageName = "AP Test Page");
+		JSONLayout.addPublicLayout(
+			groupName = "Child SiteName",
+			layoutName = "WC Test Page",
+			parentGroupName = "Site Name");
 
-		ProductMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+		JSONGroup.addChildSite(groupName = "Site Name");
 
-		Site.addBlankCP(
-			parentSiteName = "Site Name",
-			siteName = "Child SiteName");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "AP Test Page",
+			widgetName = "Asset Publisher");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "WC Test Page");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Portlet.addPG(portletName = "Asset Publisher");
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Child SiteName",
+			layoutName = "WC Test Page",
+			parentGroupName = "Site Name",
+			widgetName = "Web Content Display");
 
 		Navigator.openSiteURL(siteName = "Child SiteName");
-
-		Portlet.addPG(portletName = "Web Content Display");
 
 		WebContent.addPGViaWCD(
 			webContentContent = "WC WebContent Content",

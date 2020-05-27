@@ -15,7 +15,7 @@ definition {
 		var destinationURL = StringUtil.replace("${destinationURL}", ":", "%3A");
 
 		if (!(isSet(expirationDate))) {
-			var expirationDate = "0";
+			var expirationDate = "2100-01-01";
 		}
 
 		if (!(isSet(permanent))) {
@@ -29,7 +29,7 @@ definition {
 			-d destinationURL=${destinationURL} \
 			-d expirationDate=${expirationDate} \
 			-d permanent=${permanent} \
-			-d sourceURL=${sourceURL} \
+			-d sourceURL=${sourceURL}
 		''';
 
 		echo("## Adding a 'Redirection' with the following info using JSONWS:");

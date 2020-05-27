@@ -27,7 +27,7 @@ export default function Hint({align, message, position, secondary, title}) {
 		setShowTooltip(false);
 	};
 
-	const hintClasses = className('p-1', {
+	const hintClasses = className('p-1', 'small', {
 		'text-secondary': secondary,
 	});
 

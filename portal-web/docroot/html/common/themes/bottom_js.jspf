@@ -193,7 +193,7 @@ if (layout != null) {
 
 	var liferayNotices = Liferay.Data.notices;
 
-	for (var i = 1; i < liferayNotices.length; i++) {
+	for (var i = 0; i < liferayNotices.length; i++) {
 		Liferay.Util.openToast(liferayNotices[i]);
 	}
 

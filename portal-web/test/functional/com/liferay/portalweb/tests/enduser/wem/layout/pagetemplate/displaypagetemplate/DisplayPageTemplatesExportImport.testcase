@@ -1,0 +1,148 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Layout Page Templates";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-86193. The Collection Display with mapping content should be exported and imported with display page template."
+	@priority = "4"
+	test ExportImportDisplayPageTemplateWithCollectionDisplayContainingMappingContent {
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
+			JSONAssetlist.addDynamicAssetListEntry(
+				groupName = "Test Site Name",
+				title = "Dynamic Collection");
+
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+		}
+
+		task ("Add a display page template with Web Content Article type and Basic Web Content subtype") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Collection Display to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert the title of three Web Content Articles are respectively shown in each cell") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Third Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Second Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "First Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Export");
+
+			DownloadTempFile();
+		}
+
+		task ("Import display page template in a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name");
+
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+		}
+
+		task ("Assert the Collection Display containing mapping content is imported") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertElementPresent(
+				key_fragmentName = "Collection Display",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Third Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Second Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "First Web Content",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+	}
+
+}

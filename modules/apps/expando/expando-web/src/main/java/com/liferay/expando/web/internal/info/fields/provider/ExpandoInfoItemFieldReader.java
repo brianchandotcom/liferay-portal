@@ -17,8 +17,11 @@ package com.liferay.expando.web.internal.info.fields.provider;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.util.ExpandoConverterUtil;
-import com.liferay.info.display.contributor.field.InfoDisplayContributorField;
-import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldType;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.field.reader.LocalizedInfoItemFieldReader;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -29,6 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -42,8 +46,10 @@ import java.util.Map;
 
 /**
  * @author Pavel Savinov
+ * @author Jorge Ferrer
  */
-public class ExpandoInfoItemFieldReader implements InfoDisplayContributorField {
+public class ExpandoInfoItemFieldReader
+	implements LocalizedInfoItemFieldReader {
 
 	public ExpandoInfoItemFieldReader(
 		String attributeName, ExpandoBridge expandoBridge) {
@@ -53,19 +59,27 @@ public class ExpandoInfoItemFieldReader implements InfoDisplayContributorField {
 	}
 
 	@Override
-	public String getKey() {
+	public InfoField getField() {
+		InfoFieldType fieldType = TextInfoFieldType.INSTANCE;
+
+		InfoLocalizedValue labelInfoLocalizedValue = InfoLocalizedValue.builder(
+		).addValue(
+			LocaleUtil.getDefault(), _attributeName
+		).defaultLocale(
+			LocaleUtil.getDefault()
+		).build();
+
+		return new InfoField(fieldType, labelInfoLocalizedValue, getName());
+	}
+
+	public String getName() {
 		return _CUSTOM_FIELD_PREFIX +
 			_attributeName.replaceAll("\\W", StringPool.UNDERLINE);
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _attributeName;
-	}
-
-	@Override
-	public InfoDisplayContributorFieldType getType() {
-		return InfoDisplayContributorFieldType.TEXT;
+	public Object getValue(Object model) {
+		return getValue(model, LocaleUtil.getDefault());
 	}
 
 	@Override

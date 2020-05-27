@@ -33,11 +33,19 @@ const RatingsLike = ({
 }) => {
 	const [liked, setLiked] = useState(initialLiked);
 	const [totalLikes, setTotalLikes] = useState(positiveVotes);
-	const isMounted = useIsMounted();
 	const [buttonAnimation, setButtonAnimation] = useState(false);
 
+	const isMounted = useIsMounted();
+
+	const AnimationEnd = () => {
+		setButtonAnimation(false);
+	};
+
 	const toggleLiked = () => {
-		setButtonAnimation(true);
+		if (!liked) {
+			setButtonAnimation(true);
+		}
+
 		const score = liked ? SCORE_UNLIKE : SCORE_LIKE;
 
 		setLiked(!liked);
@@ -82,7 +90,7 @@ const RatingsLike = ({
 					<span className="off">
 						<ClayIcon symbol="heart" />
 					</span>
-					<span className="on">
+					<span className="on" onAnimationEnd={AnimationEnd}>
 						<ClayIcon symbol="heart-full" />
 					</span>
 				</span>

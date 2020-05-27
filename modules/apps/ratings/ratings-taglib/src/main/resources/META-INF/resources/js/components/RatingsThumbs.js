@@ -82,23 +82,38 @@ const RatingsThumbs = ({
 		positiveVotes: initialPositiveVotes,
 		pressed: thumbDown ? PRESSED_DOWN : thumbUp ? PRESSED_UP : null,
 	});
-	const isMounted = useIsMounted();
 
 	const {negativeVotes, positiveVotes, pressed} = state;
 	const [buttonUpAnimation, setButtonUpAnimation] = useState(false);
 	const [buttonDownAnimation, setButtonDownAnimation] = useState(false);
 
+	const isMounted = useIsMounted();
+
+	const AnimationEndUp = () => {
+		setButtonUpAnimation(false);
+	};
+
+	const AnimationEndDown = () => {
+		setButtonDownAnimation(false);
+	};
+
 	const voteUp = useCallback(() => {
+		if (pressed !== PRESSED_UP) {
+			setButtonUpAnimation(true);
+		}
+
 		dispatch({type: VOTE_UP});
-		setButtonUpAnimation(true);
 
 		const score = pressed !== PRESSED_UP ? SCORE_UP : SCORE_UNVOTE;
 		handleSendVoteRequest(score);
 	}, [handleSendVoteRequest, pressed]);
 
 	const voteDown = useCallback(() => {
+		if (pressed !== PRESSED_DOWN) {
+			setButtonDownAnimation(true);
+		}
+
 		dispatch({type: VOTE_DOWN});
-		setButtonDownAnimation(true);
 
 		const score = pressed !== PRESSED_DOWN ? SCORE_DOWN : SCORE_UNVOTE;
 		handleSendVoteRequest(score);
@@ -168,7 +183,7 @@ const RatingsThumbs = ({
 					<span className="off">
 						<ClayIcon symbol="thumbs-up" />
 					</span>
-					<span className="on">
+					<span className="on" onAnimationEnd={AnimationEndUp}>
 						<ClayIcon symbol="thumbs-up-full" />
 					</span>
 				</span>
@@ -193,7 +208,7 @@ const RatingsThumbs = ({
 					<span className="off">
 						<ClayIcon symbol="thumbs-down" />
 					</span>
-					<span className="on">
+					<span className="on" onAnimationEnd={AnimationEndDown}>
 						<ClayIcon symbol="thumbs-down-full" />
 					</span>
 				</span>

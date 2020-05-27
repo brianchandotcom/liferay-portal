@@ -16,13 +16,14 @@ package com.liferay.portal.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Portal;
@@ -45,6 +46,7 @@ import org.junit.runner.RunWith;
  * @author Mika Koivisto
  * @author Christopher Kian
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class SubscriptionSenderTest {
 
@@ -64,18 +66,14 @@ public class SubscriptionSenderTest {
 			company.getVirtualHostname(), _portal.getPortalServerPort(false),
 			false);
 
-		StringBuilder sb = new StringBuilder(3);
-
-		sb.append("http://virtual");
+		_virtualURL = "http://virtual";
 
 		int portalServerPort = _portal.getPortalServerPort(false);
 
 		if (portalServerPort > 0) {
-			sb.append(StringPool.COLON);
-			sb.append(_portal.getPortalServerPort(false));
+			_virtualURL = StringBundler.concat(
+				_virtualURL, StringPool.COLON, portalServerPort);
 		}
-
-		_virtualURL = sb.toString();
 	}
 
 	@Test
@@ -274,7 +272,6 @@ public class SubscriptionSenderTest {
 		Assert.assertEquals(_virtualURL, portalURL);
 	}
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject

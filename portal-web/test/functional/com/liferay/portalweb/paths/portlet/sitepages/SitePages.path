@@ -142,6 +142,11 @@
 	<td>//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRIENDLY_URL_HISTORY_ITEM_LAST</td>
+	<td>xpath=(//div[contains(@class,'modal-dialog')]//ul/li[contains(@class,'list-group-item')]//p[normalize-space(text())='${key_oldFriendlyURL}'])[last()]</td>
+	<td></td>
+</tr>
 <!--LOGO-->
 <tr>
 	<td>LOGO_UPLOAD_IMAGE_IFRAME</td>

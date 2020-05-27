@@ -76,10 +76,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 		Document document, DDMStructure ddmStructure,
 		DDMFormValues ddmFormValues) {
 
-		FieldArray fieldArray = (FieldArray)document.getField("ddmFields");
+		FieldArray fieldArray = (FieldArray)document.getField(
+			DDMIndexer.DDM_FIELDS);
 
 		if (fieldArray == null) {
-			fieldArray = new FieldArray("ddmFields");
+			fieldArray = new FieldArray(DDMIndexer.DDM_FIELDS);
 
 			document.add(fieldArray);
 		}
@@ -169,22 +170,35 @@ public class DDMIndexerImpl implements DDMIndexer {
 					ddmStructureFieldValueArray) {
 
 				booleanQuery.addRequiredTerm(
-					"ddmFields.fieldName", ddmStructureFieldName);
+					StringBundler.concat(
+						DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
+						DDMIndexer.DDM_FIELD_NAME),
+					ddmStructureFieldName);
 				booleanQuery.addRequiredTerm(
-					"ddmFields.fieldValue" + ddmFieldsFieldValueSuffix,
+					StringBundler.concat(
+						DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
+						DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
+						ddmFieldsFieldValueSuffix),
 					StringPool.QUOTE + ddmStructureFieldValueString +
 						StringPool.QUOTE);
 			}
 		}
 		else {
 			booleanQuery.addRequiredTerm(
-				"ddmFields.fieldName", ddmStructureFieldName);
+				StringBundler.concat(
+					DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
+					DDMIndexer.DDM_FIELD_NAME),
+				ddmStructureFieldName);
 			booleanQuery.addRequiredTerm(
-				"ddmFields.fieldValue" + ddmFieldsFieldValueSuffix,
+				StringBundler.concat(
+					DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
+					DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
+					ddmFieldsFieldValueSuffix),
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
-		return new QueryFilter(new NestedQuery("ddmFields", booleanQuery));
+		return new QueryFilter(
+			new NestedQuery(DDMIndexer.DDM_FIELDS, booleanQuery));
 	}
 
 	@Override
@@ -316,7 +330,9 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		Document document = new DocumentImpl();
 
-		String name = "fieldValue" + StringUtil.upperCaseFirstLetter(indexType);
+		String name =
+			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX +
+				StringUtil.upperCaseFirstLetter(indexType);
 
 		if (locale != null) {
 			name =
@@ -435,7 +451,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 			new com.liferay.portal.kernel.search.Field("");
 
 		field.addField(
-			new com.liferay.portal.kernel.search.Field("fieldName", name));
+			new com.liferay.portal.kernel.search.Field(
+				DDMIndexer.DDM_FIELD_NAME, name));
 
 		Stream.of(
 			document.getFields()

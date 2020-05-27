@@ -28,7 +28,7 @@ export default function deleteItem({isUndo = false, itemId, store}) {
 			? markItemForDeletion
 			: LayoutService.deleteItem;
 
-		service({
+		return service({
 			fragmentEntryLinks,
 			itemId,
 			layoutData,

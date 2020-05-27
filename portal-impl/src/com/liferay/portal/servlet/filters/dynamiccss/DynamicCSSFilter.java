@@ -148,7 +148,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 				httpServletResponse.setContentType(ContentTypes.TEXT_CSS_UTF8);
 
-				FileUtil.write(cacheContentTypeFile, ContentTypes.TEXT_CSS_UTF8);
+				FileUtil.write(
+					cacheContentTypeFile, ContentTypes.TEXT_CSS_UTF8);
 			}
 			else if (originalRequestPath.endsWith(_JSP_EXTENSION)) {
 				if (_log.isInfoEnabled()) {

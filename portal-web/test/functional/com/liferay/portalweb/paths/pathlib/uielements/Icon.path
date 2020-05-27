@@ -154,6 +154,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRIENDLY_URL_HISTORY_LOCALIZATION</td>
+	<td>//div[contains(@class,'language-selector-container')]//*[*[name()='svg'][contains(@class,'lexicon-icon-en-us')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRIENDLY_URL_HISTORY_SPANISH_LOCALIZATION</td>
+	<td>//button[contains(@class,'dropdown-item')]//*[*[name()='svg'][contains(@class,'exicon-icon-es-es')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRIENDLY_URL_HISTORY</td>
 	<td>//button[contains(@class,'history')][*[name()='svg'][contains(@class,'lexicon-icon-restore')]]</td>
 	<td></td>

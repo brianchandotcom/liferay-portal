@@ -11,13 +11,13 @@ definition {
 
 		selenium.open();
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		selenium.assertJavaScriptErrors();
 
 		selenium.assertLiferayErrors();
 
 		WaitForSPARefresh();
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	function openNoError {

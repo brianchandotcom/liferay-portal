@@ -88,10 +88,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		<clay:col
 			lg="9"
 		>
-			<div class="sheet">
+			<clay:sheet>
 				<h2 class="sheet-title">
-					<div class="autofit-row autofit-row-center">
-						<div class="autofit-col autofit-col-expand">
+					<clay:content-row
+						verticalAlign="center"
+					>
+						<clay:content-col
+							expand="true"
+						>
 							<span class="text-uppercase">
 								<c:choose>
 									<c:when test="<%= selectLayoutPageTemplateEntryDisplayContext.isContentPages() %>">
@@ -112,8 +116,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 									</c:when>
 								</c:choose>
 							</span>
-						</div>
-					</div>
+						</clay:content-col>
+					</clay:content-row>
 				</h2>
 
 				<c:choose>
@@ -156,7 +160,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 						<liferay-util:include page="/select_global_templates.jsp" servletContext="<%= application %>" />
 					</c:otherwise>
 				</c:choose>
-			</div>
+			</clay:sheet>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>

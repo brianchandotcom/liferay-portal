@@ -193,11 +193,11 @@ String friendlyURLBase = StringPool.BLANK;
 </div>
 
 <c:if test="<%= !selLayout.isTypeAssetDisplay() %>">
-	<div class="sheet-section">
+	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="categorization" /></h3>
 
 		<liferay-util:include page="/layout/categorization.jsp" servletContext="<%= application %>" />
-	</div>
+	</clay:sheet-section>
 </c:if>
 
 <aui:script require="metal-dom/src/dom as dom">

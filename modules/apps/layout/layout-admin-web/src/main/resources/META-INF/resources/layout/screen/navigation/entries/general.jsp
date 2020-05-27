@@ -143,12 +143,12 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 			</c:if>
 
-			<div class="sheet sheet-lg">
-				<div class="sheet-header">
+			<clay:sheet>
+				<clay:sheet-header>
 					<h2 class="sheet-title"><liferay-ui:message key="general" /></h2>
-				</div>
+				</clay:sheet-header>
 
-				<div class="sheet-section">
+				<clay:sheet-section>
 					<liferay-ui:success key="layoutAdded" message="the-page-was-created-succesfully" />
 
 					<liferay-ui:error exception="<%= LayoutTypeException.class %>">
@@ -236,9 +236,9 @@ renderResponse.setTitle(selLayout.getName(locale));
 						id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT %>"
 						showButtons="<%= false %>"
 					/>
-				</div>
+				</clay:sheet-section>
 
-				<div class="sheet-footer">
+				<clay:sheet-footer>
 					<c:if test="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
 						<aui:button type="submit" />
 
@@ -246,8 +246,8 @@ renderResponse.setTitle(selLayout.getName(locale));
 							<aui:button href="<%= backURL %>" name="cancelButton" type="cancel" />
 						</c:if>
 					</c:if>
-				</div>
-			</div>
+				</clay:sheet-footer>
+			</clay:sheet>
 		</aui:form>
 	</c:otherwise>
 </c:choose>

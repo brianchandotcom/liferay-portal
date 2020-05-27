@@ -1110,6 +1110,8 @@ definition {
 
 		Pause(locator1 = "10000");
 
+		WaitForElementPresent(locator1 = "UsersAndOrganizationsEditUser#USER_PORTRAIT_CROPPER");
+
 		WaitForElementNotPresent(
 			key_text = "Done",
 			locator1 = "Button#ANY_DISABLED");

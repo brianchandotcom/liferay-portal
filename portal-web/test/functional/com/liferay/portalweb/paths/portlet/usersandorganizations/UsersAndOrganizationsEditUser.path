@@ -320,6 +320,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>USER_PORTRAIT_CROPPER</td>
+	<td>//div[contains(@class,'image-cropper')]//div</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

@@ -1416,6 +1416,41 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-source-page");
 	}
 
+	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
+	@priority = "5"
+	test ViewFriendlyURLs {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+
+		Page.gotoFriendlyURLHistory();
+
+		Page.viewActiveURL(activeURL = "/new-test-page");
+
+		AssertElementNotPresent(
+			key_activeURL = "/test-page",
+			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+
+		Page.viewOldFriendlyURL(oldFriendlyURL = "/test-page");
+
+		AssertElementNotPresent(
+			key_oldFriendlyURL = "/new-test-page",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+	}
+
 	@description = "This ensures that an ignored URL can be viewed."
 	@priority = "5"
 	test ViewIgnoredURL {
@@ -1453,6 +1488,129 @@ definition {
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
+	}
+
+	@description = "This ensures that both the localized active URL and old friendlyURL can be viewed from the history."
+	@priority = "5"
+	test ViewLocalizedFriendlyURLs {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+
+		Page.addFriendlyURLLocalizedPG(
+			friendlyUrlLocalized = "es_ES",
+			localizedFriendlyURL = "/pagina-de-prueba");
+
+		PortletEntry.inputName(name = "Pagina de prueba");
+
+		Button.clickSave();
+
+		Page.addFriendlyURLLocalizedPG(
+			friendlyUrlLocalized = "es_ES",
+			localizedFriendlyURL = "/nueva-pagina-de-prueba");
+
+		Button.clickSave();
+
+		Page.gotoFriendlyURLHistory();
+
+		PortletEntry.changeLocale(
+			friendlyURLHistory = "true",
+			localizedFriendlyURL = "es_ES");
+
+		Page.viewActiveURL(activeURL = "/nueva-pagina-de-prueba");
+
+		AssertElementNotPresent(
+			key_activeURL = "/pagina-de-prueba",
+			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+
+		Page.viewOldFriendlyURL(oldFriendlyURL = "/pagina-de-prueba");
+
+		AssertElementNotPresent(
+			key_oldFriendlyURL = "/nueva-pagina-de-prueba",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+	}
+
+	@description = "This ensures that the multiple old friendlyURLs can be viewed from the history. This test also covers the first old friendlyURL is the last one."
+	@priority = "5"
+	test ViewMultipleOldFriendlyURLs {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page1");
+
+		Page.gotoFriendlyURLHistory();
+
+		Page.viewActiveURL(activeURL = "/new-test-page1");
+
+		Page.viewOldFriendlyURL(
+			lastOldFriendlyURL = "/test-page",
+			oldFriendlyURL = "/new-test-page");
+	}
+
+	@description = "This ensures that both the active URL and the old friendlyURL can be viewed by default language from the history after localization without friendlyURL."
+	@priority = "5"
+	test ViewURLsAfterLocalizationWithoutFriendlyURL {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name",
+			layoutName = "Test Page");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Test Page");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-test-page");
+
+		PortletEntry.changeLocale(
+			fieldName = "Friendly URL",
+			locale = "es-ES");
+
+		PortletEntry.inputName(name = "Pagina de prueba");
+
+		Button.clickSave();
+
+		PortletEntry.changeLocale(
+			fieldName = "Friendly URL",
+			locale = "es-ES");
+
+		Page.gotoFriendlyURLHistory();
+
+		Page.viewActiveURL(activeURL = "/new-test-page");
+
+		Page.viewOldFriendlyURL(oldFriendlyURL = "/test-page");
 	}
 
 }

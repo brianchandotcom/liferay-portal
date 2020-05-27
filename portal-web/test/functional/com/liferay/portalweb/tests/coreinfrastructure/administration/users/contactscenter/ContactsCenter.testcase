@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Users and Organizations";
+	property testray.main.component.name = "Contacts Center";
 
 	setUp {
 		TestCase.setUpPortalInstance();

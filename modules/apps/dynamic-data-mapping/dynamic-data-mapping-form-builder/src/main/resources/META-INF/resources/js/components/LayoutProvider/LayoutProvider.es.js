@@ -110,6 +110,7 @@ class LayoutProvider extends Component {
 			),
 			ruleAdded: this._handleRuleAdded.bind(this),
 			ruleDeleted: this._handleRuleDeleted.bind(this),
+			ruleEdited: this._handleRuleSaved.bind(this),
 			ruleSaved: this._handleRuleSaved.bind(this),
 			ruleValidatorChanged: this._handleRuleValidatorChanged.bind(this),
 			sectionAdded: this._handleSectionAdded.bind(this),

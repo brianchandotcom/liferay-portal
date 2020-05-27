@@ -152,14 +152,12 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 						</div>
 
 						<div class="sidebar-header">
-							<div class="autofit-row sidebar-section">
-								<div class="autofit-col autofit-col-expand">
-									<h4 class="component-title">
-										<span class="text-truncate-inline">
-											<span class="text-truncate"><%= HtmlUtil.escape(kaleoDefinitionVersion.getTitle(locale)) %></span>
-										</span>
-									</h4>
-								</div>
+							<div class="sidebar-section">
+								<h4 class="component-title">
+									<span class="text-truncate-inline">
+										<span class="text-truncate"><%= HtmlUtil.escape(kaleoDefinitionVersion.getTitle(locale)) %></span>
+									</span>
+								</h4>
 							</div>
 						</div>
 

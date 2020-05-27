@@ -129,7 +129,7 @@
 						<c:if test="<%= Validator.isNotNull(ShutdownUtil.getMessage()) %>">
 							<span class="custom-shutdown-message"><%= HtmlUtil.escape(ShutdownUtil.getMessage()) %></span>
 						</c:if>',
-					type: 'danger'
+					type: 'warning'
 				}
 			</c:if>
 		];

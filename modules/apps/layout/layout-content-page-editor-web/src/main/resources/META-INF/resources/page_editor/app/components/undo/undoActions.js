@@ -77,6 +77,7 @@ export function getDerivedStateForUndo({action, state, type}) {
 	return {
 		...undoAction.getDerivedStateForUndo({action, state}),
 		itemName: getLayoutDataItemLabel(item, fragmentEntryLinks),
+		segmentsExperienceId: state.segmentsExperienceId,
 		type,
 	};
 }

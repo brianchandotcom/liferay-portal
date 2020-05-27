@@ -4,6 +4,12 @@
 	&-item {
 		text-overflow: ellipsis;
 		white-space: nowrap;
+
+		span {
+			color: $secondary-l1;
+			font-size: 12px;
+			margin-left: 1em;
+		}
 	}
 
 	&-menu {

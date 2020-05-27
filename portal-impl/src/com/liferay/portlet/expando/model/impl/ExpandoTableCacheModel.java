@@ -75,10 +75,12 @@ public class ExpandoTableCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", tableId=");
 		sb.append(tableId);
 		sb.append(", companyId=");
@@ -97,6 +99,7 @@ public class ExpandoTableCacheModel
 		ExpandoTableImpl expandoTableImpl = new ExpandoTableImpl();
 
 		expandoTableImpl.setMvccVersion(mvccVersion);
+		expandoTableImpl.setCtCollectionId(ctCollectionId);
 		expandoTableImpl.setTableId(tableId);
 		expandoTableImpl.setCompanyId(companyId);
 		expandoTableImpl.setClassNameId(classNameId);
@@ -117,6 +120,8 @@ public class ExpandoTableCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		tableId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -128,6 +133,8 @@ public class ExpandoTableCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(tableId);
 
@@ -144,6 +151,7 @@ public class ExpandoTableCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long tableId;
 	public long companyId;
 	public long classNameId;

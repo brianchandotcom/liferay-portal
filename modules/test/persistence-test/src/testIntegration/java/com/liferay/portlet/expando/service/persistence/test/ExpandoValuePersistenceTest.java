@@ -123,6 +123,8 @@ public class ExpandoValuePersistenceTest {
 
 		newExpandoValue.setMvccVersion(RandomTestUtil.nextLong());
 
+		newExpandoValue.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newExpandoValue.setCompanyId(RandomTestUtil.nextLong());
 
 		newExpandoValue.setTableId(RandomTestUtil.nextLong());
@@ -145,6 +147,9 @@ public class ExpandoValuePersistenceTest {
 		Assert.assertEquals(
 			existingExpandoValue.getMvccVersion(),
 			newExpandoValue.getMvccVersion());
+		Assert.assertEquals(
+			existingExpandoValue.getCtCollectionId(),
+			newExpandoValue.getCtCollectionId());
 		Assert.assertEquals(
 			existingExpandoValue.getValueId(), newExpandoValue.getValueId());
 		Assert.assertEquals(
@@ -270,9 +275,9 @@ public class ExpandoValuePersistenceTest {
 
 	protected OrderByComparator<ExpandoValue> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"ExpandoValue", "mvccVersion", true, "valueId", true, "companyId",
-			true, "tableId", true, "columnId", true, "rowId", true,
-			"classNameId", true, "classPK", true);
+			"ExpandoValue", "mvccVersion", true, "ctCollectionId", true,
+			"valueId", true, "companyId", true, "tableId", true, "columnId",
+			true, "rowId", true, "classNameId", true, "classPK", true);
 	}
 
 	@Test
@@ -522,6 +527,8 @@ public class ExpandoValuePersistenceTest {
 		ExpandoValue expandoValue = _persistence.create(pk);
 
 		expandoValue.setMvccVersion(RandomTestUtil.nextLong());
+
+		expandoValue.setCtCollectionId(RandomTestUtil.nextLong());
 
 		expandoValue.setCompanyId(RandomTestUtil.nextLong());
 

@@ -397,6 +397,7 @@
 	</model>
 	<model name="com.liferay.expando.kernel.model.ExpandoColumn">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="columnId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="tableId" type="long" />
@@ -413,6 +414,7 @@
 	</model>
 	<model name="com.liferay.expando.kernel.model.ExpandoRow">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="rowId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="modifiedDate" type="Date" />
@@ -421,6 +423,7 @@
 	</model>
 	<model name="com.liferay.expando.kernel.model.ExpandoTable">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="tableId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="classNameId" type="long" />
@@ -428,6 +431,7 @@
 	</model>
 	<model name="com.liferay.expando.kernel.model.ExpandoValue">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="valueId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="tableId" type="long" />

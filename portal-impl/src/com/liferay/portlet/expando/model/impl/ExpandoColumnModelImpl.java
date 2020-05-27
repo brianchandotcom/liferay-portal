@@ -65,10 +65,11 @@ public class ExpandoColumnModelImpl
 	public static final String TABLE_NAME = "ExpandoColumn";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"columnId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"tableId", Types.BIGINT},
-		{"name", Types.VARCHAR}, {"type_", Types.INTEGER},
-		{"defaultData", Types.CLOB}, {"typeSettings", Types.CLOB}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"columnId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"tableId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"type_", Types.INTEGER}, {"defaultData", Types.CLOB},
+		{"typeSettings", Types.CLOB}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -76,6 +77,7 @@ public class ExpandoColumnModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("columnId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
@@ -86,7 +88,7 @@ public class ExpandoColumnModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExpandoColumn (mvccVersion LONG default 0 not null,columnId LONG not null primary key,companyId LONG,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null)";
+		"create table ExpandoColumn (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,columnId LONG not null,companyId LONG,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null,primary key (columnId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoColumn";
 
@@ -135,6 +137,7 @@ public class ExpandoColumnModelImpl
 		ExpandoColumn model = new ExpandoColumnImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setColumnId(soapModel.getColumnId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setTableId(soapModel.getTableId());
@@ -303,6 +306,11 @@ public class ExpandoColumnModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<ExpandoColumn, Long>)ExpandoColumn::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", ExpandoColumn::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<ExpandoColumn, Long>)ExpandoColumn::setCtCollectionId);
 		attributeGetterFunctions.put("columnId", ExpandoColumn::getColumnId);
 		attributeSetterBiConsumers.put(
 			"columnId",
@@ -347,6 +355,17 @@ public class ExpandoColumnModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -487,6 +506,7 @@ public class ExpandoColumnModelImpl
 		ExpandoColumnImpl expandoColumnImpl = new ExpandoColumnImpl();
 
 		expandoColumnImpl.setMvccVersion(getMvccVersion());
+		expandoColumnImpl.setCtCollectionId(getCtCollectionId());
 		expandoColumnImpl.setColumnId(getColumnId());
 		expandoColumnImpl.setCompanyId(getCompanyId());
 		expandoColumnImpl.setTableId(getTableId());
@@ -570,6 +590,8 @@ public class ExpandoColumnModelImpl
 			new ExpandoColumnCacheModel();
 
 		expandoColumnCacheModel.mvccVersion = getMvccVersion();
+
+		expandoColumnCacheModel.ctCollectionId = getCtCollectionId();
 
 		expandoColumnCacheModel.columnId = getColumnId();
 
@@ -677,6 +699,7 @@ public class ExpandoColumnModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _columnId;
 	private long _companyId;
 	private long _tableId;

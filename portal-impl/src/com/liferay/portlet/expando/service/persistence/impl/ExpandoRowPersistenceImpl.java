@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.model.ExpandoRow;
 import com.liferay.expando.kernel.model.ExpandoRowTable;
 import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -41,7 +43,12 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -150,25 +157,28 @@ public class ExpandoRowPersistenceImpl
 		OrderByComparator<ExpandoRow> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ExpandoRow.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByTableId;
 				finderArgs = new Object[] {tableId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByTableId;
 			finderArgs = new Object[] {tableId, start, end, orderByComparator};
 		}
 
 		List<ExpandoRow> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -224,12 +234,12 @@ public class ExpandoRowPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -526,12 +536,22 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public int countByTableId(long tableId) {
-		FinderPath finderPath = _finderPathCountByTableId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ExpandoRow.class);
 
-		Object[] finderArgs = new Object[] {tableId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByTableId;
+
+			finderArgs = new Object[] {tableId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -555,10 +575,14 @@ public class ExpandoRowPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -647,25 +671,28 @@ public class ExpandoRowPersistenceImpl
 		OrderByComparator<ExpandoRow> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ExpandoRow.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByClassPK;
 				finderArgs = new Object[] {classPK};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByClassPK;
 			finderArgs = new Object[] {classPK, start, end, orderByComparator};
 		}
 
 		List<ExpandoRow> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -721,12 +748,12 @@ public class ExpandoRowPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1023,12 +1050,22 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public int countByClassPK(long classPK) {
-		FinderPath finderPath = _finderPathCountByClassPK;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ExpandoRow.class);
 
-		Object[] finderArgs = new Object[] {classPK};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByClassPK;
+
+			finderArgs = new Object[] {classPK};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -1052,10 +1089,14 @@ public class ExpandoRowPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1134,15 +1175,18 @@ public class ExpandoRowPersistenceImpl
 	public ExpandoRow fetchByT_C(
 		long tableId, long classPK, boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ExpandoRow.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {tableId, classPK};
 		}
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByT_C, finderArgs, this);
 		}
@@ -1184,7 +1228,7 @@ public class ExpandoRowPersistenceImpl
 				List<ExpandoRow> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByT_C, finderArgs, list);
 					}
@@ -1198,7 +1242,7 @@ public class ExpandoRowPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByT_C, finderArgs);
 				}
@@ -1243,12 +1287,22 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public int countByT_C(long tableId, long classPK) {
-		FinderPath finderPath = _finderPathCountByT_C;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ExpandoRow.class);
 
-		Object[] finderArgs = new Object[] {tableId, classPK};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByT_C;
+
+			finderArgs = new Object[] {tableId, classPK};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1276,10 +1330,14 @@ public class ExpandoRowPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1320,6 +1378,12 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(ExpandoRow expandoRow) {
+		if (expandoRow.getCtCollectionId() != 0) {
+			expandoRow.resetOriginalValues();
+
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			ExpandoRowModelImpl.ENTITY_CACHE_ENABLED, ExpandoRowImpl.class,
 			expandoRow.getPrimaryKey(), expandoRow);
@@ -1340,6 +1404,12 @@ public class ExpandoRowPersistenceImpl
 	@Override
 	public void cacheResult(List<ExpandoRow> expandoRows) {
 		for (ExpandoRow expandoRow : expandoRows) {
+			if (expandoRow.getCtCollectionId() != 0) {
+				expandoRow.resetOriginalValues();
+
+				continue;
+			}
+
 			if (EntityCacheUtil.getResult(
 					ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
 					ExpandoRowImpl.class, expandoRow.getPrimaryKey()) == null) {
@@ -1526,6 +1596,10 @@ public class ExpandoRowPersistenceImpl
 
 	@Override
 	protected ExpandoRow removeImpl(ExpandoRow expandoRow) {
+		if (!CTPersistenceHelperUtil.isRemove(expandoRow)) {
+			return expandoRow;
+		}
+
 		Session session = null;
 
 		try {
@@ -1582,7 +1656,16 @@ public class ExpandoRowPersistenceImpl
 		try {
 			session = openSession();
 
-			if (expandoRow.isNew()) {
+			if (CTPersistenceHelperUtil.isInsert(expandoRow)) {
+				if (!isNew) {
+					ExpandoRow oldExpandoRow = (ExpandoRow)session.get(
+						ExpandoRowImpl.class, expandoRow.getPrimaryKeyObj());
+
+					if (oldExpandoRow != null) {
+						session.evict(oldExpandoRow);
+					}
+				}
+
 				session.save(expandoRow);
 
 				expandoRow.setNew(false);
@@ -1596,6 +1679,12 @@ public class ExpandoRowPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (expandoRow.getCtCollectionId() != 0) {
+			expandoRow.resetOriginalValues();
+
+			return expandoRow;
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1714,12 +1803,119 @@ public class ExpandoRowPersistenceImpl
 	/**
 	 * Returns the expando row with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the expando row
+	 * @return the expando row, or <code>null</code> if a expando row with the primary key could not be found
+	 */
+	@Override
+	public ExpandoRow fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(ExpandoRow.class)) {
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		ExpandoRow expandoRow = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			expandoRow = (ExpandoRow)session.get(
+				ExpandoRowImpl.class, primaryKey);
+
+			if (expandoRow != null) {
+				cacheResult(expandoRow);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return expandoRow;
+	}
+
+	/**
+	 * Returns the expando row with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param rowId the primary key of the expando row
 	 * @return the expando row, or <code>null</code> if a expando row with the primary key could not be found
 	 */
 	@Override
 	public ExpandoRow fetchByPrimaryKey(long rowId) {
 		return fetchByPrimaryKey((Serializable)rowId);
+	}
+
+	@Override
+	public Map<Serializable, ExpandoRow> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(ExpandoRow.class)) {
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, ExpandoRow> map =
+			new HashMap<Serializable, ExpandoRow>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			ExpandoRow expandoRow = fetchByPrimaryKey(primaryKey);
+
+			if (expandoRow != null) {
+				map.put(primaryKey, expandoRow);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (ExpandoRow expandoRow : (List<ExpandoRow>)query.list()) {
+				map.put(expandoRow.getPrimaryKeyObj(), expandoRow);
+
+				cacheResult(expandoRow);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -1785,25 +1981,28 @@ public class ExpandoRowPersistenceImpl
 		int start, int end, OrderByComparator<ExpandoRow> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ExpandoRow.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<ExpandoRow> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<ExpandoRow>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1841,12 +2040,12 @@ public class ExpandoRowPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1878,8 +2077,15 @@ public class ExpandoRowPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			ExpandoRow.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -1891,12 +2097,16 @@ public class ExpandoRowPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(exception);
 			}
@@ -1929,8 +2139,64 @@ public class ExpandoRowPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return ExpandoRowModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "ExpandoRow";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("companyId");
+		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("tableId");
+		ctStrictColumnNames.add("classPK");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK, Collections.singleton("rowId_"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(new String[] {"tableId", "classPK"});
 	}
 
 	/**

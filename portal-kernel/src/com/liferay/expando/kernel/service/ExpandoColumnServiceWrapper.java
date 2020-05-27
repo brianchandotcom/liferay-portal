@@ -14,6 +14,7 @@
 
 package com.liferay.expando.kernel.service;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
@@ -33,15 +34,14 @@ public class ExpandoColumnServiceWrapper
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn addColumn(
-			long tableId, String name, int type)
+	public ExpandoColumn addColumn(long tableId, String name, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoColumnService.addColumn(tableId, name, type);
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn addColumn(
+	public ExpandoColumn addColumn(
 			long tableId, String name, int type, Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -57,8 +57,7 @@ public class ExpandoColumnServiceWrapper
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn fetchExpandoColumn(
-			long columnId)
+	public ExpandoColumn fetchExpandoColumn(long columnId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoColumnService.fetchExpandoColumn(columnId);
@@ -75,15 +74,14 @@ public class ExpandoColumnServiceWrapper
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
-			long columnId, String name, int type)
+	public ExpandoColumn updateColumn(long columnId, String name, int type)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoColumnService.updateColumn(columnId, name, type);
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn updateColumn(
+	public ExpandoColumn updateColumn(
 			long columnId, String name, int type, Object defaultData)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -92,8 +90,7 @@ public class ExpandoColumnServiceWrapper
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoColumn updateTypeSettings(
-			long columnId, String typeSettings)
+	public ExpandoColumn updateTypeSettings(long columnId, String typeSettings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoColumnService.updateTypeSettings(columnId, typeSettings);

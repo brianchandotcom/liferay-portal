@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -35,7 +36,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ExpandoValueModel
-	extends AttachedModel, BaseModel<ExpandoValue>, MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<ExpandoValue>, CTModel<ExpandoValue>,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -48,6 +50,7 @@ public interface ExpandoValueModel
 	 *
 	 * @return the primary key of this expando value
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -55,6 +58,7 @@ public interface ExpandoValueModel
 	 *
 	 * @param primaryKey the primary key of this expando value
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -72,6 +76,22 @@ public interface ExpandoValueModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this expando value.
+	 *
+	 * @return the ct collection ID of this expando value
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this expando value.
+	 *
+	 * @param ctCollectionId the ct collection ID of this expando value
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the value ID of this expando value.

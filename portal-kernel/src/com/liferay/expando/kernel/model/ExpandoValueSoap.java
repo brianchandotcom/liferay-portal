@@ -31,6 +31,7 @@ public class ExpandoValueSoap implements Serializable {
 		ExpandoValueSoap soapModel = new ExpandoValueSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setValueId(model.getValueId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setTableId(model.getTableId());
@@ -100,6 +101,14 @@ public class ExpandoValueSoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getValueId() {
 		return _valueId;
 	}
@@ -165,6 +174,7 @@ public class ExpandoValueSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _valueId;
 	private long _companyId;
 	private long _tableId;

@@ -61,9 +61,10 @@ public class ExpandoRowModelImpl
 	public static final String TABLE_NAME = "ExpandoRow";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"rowId_", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"modifiedDate", Types.TIMESTAMP},
-		{"tableId", Types.BIGINT}, {"classPK", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"rowId_", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"modifiedDate", Types.TIMESTAMP}, {"tableId", Types.BIGINT},
+		{"classPK", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -71,6 +72,7 @@ public class ExpandoRowModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("rowId_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
@@ -79,7 +81,7 @@ public class ExpandoRowModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ExpandoRow (mvccVersion LONG default 0 not null,rowId_ LONG not null primary key,companyId LONG,modifiedDate DATE null,tableId LONG,classPK LONG)";
+		"create table ExpandoRow (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,rowId_ LONG not null,companyId LONG,modifiedDate DATE null,tableId LONG,classPK LONG,primary key (rowId_, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table ExpandoRow";
 
@@ -248,6 +250,11 @@ public class ExpandoRowModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<ExpandoRow, Long>)ExpandoRow::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", ExpandoRow::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<ExpandoRow, Long>)ExpandoRow::setCtCollectionId);
 		attributeGetterFunctions.put("rowId", ExpandoRow::getRowId);
 		attributeSetterBiConsumers.put(
 			"rowId", (BiConsumer<ExpandoRow, Long>)ExpandoRow::setRowId);
@@ -281,6 +288,16 @@ public class ExpandoRowModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -381,6 +398,7 @@ public class ExpandoRowModelImpl
 		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
 
 		expandoRowImpl.setMvccVersion(getMvccVersion());
+		expandoRowImpl.setCtCollectionId(getCtCollectionId());
 		expandoRowImpl.setRowId(getRowId());
 		expandoRowImpl.setCompanyId(getCompanyId());
 		expandoRowImpl.setModifiedDate(getModifiedDate());
@@ -464,6 +482,8 @@ public class ExpandoRowModelImpl
 		ExpandoRowCacheModel expandoRowCacheModel = new ExpandoRowCacheModel();
 
 		expandoRowCacheModel.mvccVersion = getMvccVersion();
+
+		expandoRowCacheModel.ctCollectionId = getCtCollectionId();
 
 		expandoRowCacheModel.rowId = getRowId();
 
@@ -556,6 +576,7 @@ public class ExpandoRowModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _rowId;
 	private long _companyId;
 	private Date _modifiedDate;

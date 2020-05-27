@@ -17,6 +17,7 @@ package com.liferay.expando.kernel.service.persistence;
 import com.liferay.expando.kernel.exception.NoSuchValueException;
 import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface ExpandoValuePersistence extends BasePersistence<ExpandoValue> {
+public interface ExpandoValuePersistence
+	extends BasePersistence<ExpandoValue>, CTPersistence<ExpandoValue> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

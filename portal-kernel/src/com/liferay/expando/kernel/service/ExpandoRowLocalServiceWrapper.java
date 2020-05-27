@@ -14,7 +14,10 @@
 
 package com.liferay.expando.kernel.service;
 
+import com.liferay.expando.kernel.model.ExpandoRow;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 
 /**
  * Provides a wrapper for {@link ExpandoRowLocalService}.
@@ -39,15 +42,12 @@ public class ExpandoRowLocalServiceWrapper
 	 * @return the expando row that was added
 	 */
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow addExpandoRow(
-		com.liferay.expando.kernel.model.ExpandoRow expandoRow) {
-
+	public ExpandoRow addExpandoRow(ExpandoRow expandoRow) {
 		return _expandoRowLocalService.addExpandoRow(expandoRow);
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow addRow(
-			long tableId, long classPK)
+	public ExpandoRow addRow(long tableId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoRowLocalService.addRow(tableId, classPK);
@@ -60,9 +60,7 @@ public class ExpandoRowLocalServiceWrapper
 	 * @return the new expando row
 	 */
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow createExpandoRow(
-		long rowId) {
-
+	public ExpandoRow createExpandoRow(long rowId) {
 		return _expandoRowLocalService.createExpandoRow(rowId);
 	}
 
@@ -84,9 +82,7 @@ public class ExpandoRowLocalServiceWrapper
 	 * @return the expando row that was removed
 	 */
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow deleteExpandoRow(
-		com.liferay.expando.kernel.model.ExpandoRow expandoRow) {
-
+	public ExpandoRow deleteExpandoRow(ExpandoRow expandoRow) {
 		return _expandoRowLocalService.deleteExpandoRow(expandoRow);
 	}
 
@@ -98,8 +94,7 @@ public class ExpandoRowLocalServiceWrapper
 	 * @throws PortalException if a expando row with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow deleteExpandoRow(
-			long rowId)
+	public ExpandoRow deleteExpandoRow(long rowId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoRowLocalService.deleteExpandoRow(rowId);
@@ -117,7 +112,7 @@ public class ExpandoRowLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteRow(com.liferay.expando.kernel.model.ExpandoRow row) {
+	public void deleteRow(ExpandoRow row) {
 		_expandoRowLocalService.deleteRow(row);
 	}
 
@@ -254,16 +249,12 @@ public class ExpandoRowLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow fetchExpandoRow(
-		long rowId) {
-
+	public ExpandoRow fetchExpandoRow(long rowId) {
 		return _expandoRowLocalService.fetchExpandoRow(rowId);
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow fetchRow(
-		long tableId, long classPK) {
-
+	public ExpandoRow fetchRow(long tableId, long classPK) {
 		return _expandoRowLocalService.fetchRow(tableId, classPK);
 	}
 
@@ -275,18 +266,16 @@ public class ExpandoRowLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
-		getDefaultTableRows(
-			long companyId, long classNameId, int start, int end) {
+	public java.util.List<ExpandoRow> getDefaultTableRows(
+		long companyId, long classNameId, int start, int end) {
 
 		return _expandoRowLocalService.getDefaultTableRows(
 			companyId, classNameId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
-		getDefaultTableRows(
-			long companyId, String className, int start, int end) {
+	public java.util.List<ExpandoRow> getDefaultTableRows(
+		long companyId, String className, int start, int end) {
 
 		return _expandoRowLocalService.getDefaultTableRows(
 			companyId, className, start, end);
@@ -312,7 +301,7 @@ public class ExpandoRowLocalServiceWrapper
 	 * @throws PortalException if a expando row with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow getExpandoRow(long rowId)
+	public ExpandoRow getExpandoRow(long rowId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoRowLocalService.getExpandoRow(rowId);
@@ -330,9 +319,7 @@ public class ExpandoRowLocalServiceWrapper
 	 * @return the range of expando rows
 	 */
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow>
-		getExpandoRows(int start, int end) {
-
+	public java.util.List<ExpandoRow> getExpandoRows(int start, int end) {
 		return _expandoRowLocalService.getExpandoRows(start, end);
 	}
 
@@ -375,22 +362,21 @@ public class ExpandoRowLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow getRow(long rowId)
+	public ExpandoRow getRow(long rowId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoRowLocalService.getRow(rowId);
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow getRow(
-			long tableId, long classPK)
+	public ExpandoRow getRow(long tableId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _expandoRowLocalService.getRow(tableId, classPK);
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow getRow(
+	public ExpandoRow getRow(
 		long companyId, long classNameId, String tableName, long classPK) {
 
 		return _expandoRowLocalService.getRow(
@@ -398,7 +384,7 @@ public class ExpandoRowLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow getRow(
+	public ExpandoRow getRow(
 		long companyId, String className, String tableName, long classPK) {
 
 		return _expandoRowLocalService.getRow(
@@ -406,14 +392,14 @@ public class ExpandoRowLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getRows(
+	public java.util.List<ExpandoRow> getRows(
 		long tableId, int start, int end) {
 
 		return _expandoRowLocalService.getRows(tableId, start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getRows(
+	public java.util.List<ExpandoRow> getRows(
 		long companyId, long classNameId, String tableName, int start,
 		int end) {
 
@@ -422,7 +408,7 @@ public class ExpandoRowLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.expando.kernel.model.ExpandoRow> getRows(
+	public java.util.List<ExpandoRow> getRows(
 		long companyId, String className, String tableName, int start,
 		int end) {
 
@@ -458,10 +444,28 @@ public class ExpandoRowLocalServiceWrapper
 	 * @return the expando row that was updated
 	 */
 	@Override
-	public com.liferay.expando.kernel.model.ExpandoRow updateExpandoRow(
-		com.liferay.expando.kernel.model.ExpandoRow expandoRow) {
-
+	public ExpandoRow updateExpandoRow(ExpandoRow expandoRow) {
 		return _expandoRowLocalService.updateExpandoRow(expandoRow);
+	}
+
+	@Override
+	public CTPersistence<ExpandoRow> getCTPersistence() {
+		return _expandoRowLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<ExpandoRow> getModelClass() {
+		return _expandoRowLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<ExpandoRow>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _expandoRowLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

@@ -12,7 +12,6 @@
  * details.
  */
 
-import {config} from '../../app/config/index';
 import {ADD_FRAGMENT_COMPOSITION, INIT} from '../actions/types';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
@@ -91,7 +90,7 @@ export default function fragmentsReducer(fragments = [], action) {
 				name: Liferay.Language.get('layout-elements'),
 			});
 
-			if (contentDisplayCollection && config.fragmentPanelEnabled) {
+			if (contentDisplayCollection) {
 				newFragments.splice(2, 0, {
 					...contentDisplayCollection,
 
@@ -109,9 +108,6 @@ export default function fragmentsReducer(fragments = [], action) {
 						},
 					],
 				});
-			}
-			else {
-				newFragments.splice(2, 0, contentDisplayCollection);
 			}
 
 			return newFragments;

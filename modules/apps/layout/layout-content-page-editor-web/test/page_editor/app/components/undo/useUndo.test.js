@@ -38,6 +38,7 @@ describe('useUndo', () => {
 		Actions.DELETE_FRAGMENT_ENTRY_LINK_COMMENT,
 		Actions.DELETE_WIDGETS,
 		Actions.EDIT_FRAGMENT_ENTRY_LINK_COMMENT,
+		Actions.INIT,
 		Actions.LOAD_REDUCER,
 		Actions.SWITCH_SIDEBAR_PANEL,
 		Actions.SWITCH_VIEWPORT_SIZE,

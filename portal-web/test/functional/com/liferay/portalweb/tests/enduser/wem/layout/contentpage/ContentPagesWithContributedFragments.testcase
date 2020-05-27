@@ -616,7 +616,6 @@ definition {
 	@description = "This is a test for LPS-101249. Can only select web content articles created with a specific structure when set itemSubtype."
 	@priority = "3"
 	test OnlySelectWebContentBasedOnCustomStructureViaFragmentWhenSetItemSubtype {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "ContentPagesWithContributedFragments#OnlySelectWebContentBasedOnCustomStructureViaFragmentWhenSetItemSubtype";
 
 		task ("Add a WC based on Basic Web Content") {

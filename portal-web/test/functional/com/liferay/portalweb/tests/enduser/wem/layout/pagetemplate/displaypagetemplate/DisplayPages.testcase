@@ -217,10 +217,7 @@ definition {
 	@description = "User can delete display pages."
 	@priority = "5"
 	test DeleteDisplayPage {
-
-		// Ignoring test from acceptance until LRQA-52642 is resolved
-
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		task ("Delete the display page") {
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");

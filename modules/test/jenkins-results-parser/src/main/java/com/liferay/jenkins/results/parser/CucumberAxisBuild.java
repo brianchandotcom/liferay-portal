@@ -50,6 +50,20 @@ public class CucumberAxisBuild extends AxisBuild {
 		return _cucumberFeatureResults;
 	}
 
+	public List<CucumberTestResult> getCucumberTestResults(String testStatus) {
+		List<CucumberTestResult> cucumberTestResults = new ArrayList<>();
+
+		for (TestResult testResult : getTestResults(testStatus)) {
+			if (!(testResult instanceof CucumberTestResult)) {
+				continue;
+			}
+
+			cucumberTestResults.add((CucumberTestResult)testResult);
+		}
+
+		return cucumberTestResults;
+	}
+
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
 		List<TestResult> testResults = new ArrayList<>();

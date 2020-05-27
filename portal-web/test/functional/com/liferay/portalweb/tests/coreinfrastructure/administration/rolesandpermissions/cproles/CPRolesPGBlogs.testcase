@@ -387,7 +387,6 @@ definition {
 	@priority = "4"
 	test AddBlogsEntrySiteRoleInline {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.upstream = "quarantine";
 
 		Permissions.setUpSiteRoleLoginUserPG(
 			pageName = "Blogs Page",

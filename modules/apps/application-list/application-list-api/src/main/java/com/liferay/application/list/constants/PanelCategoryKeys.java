@@ -46,6 +46,9 @@ public interface PanelCategoryKeys {
 	public static final String GLOBAL_MENU_APPLICATIONS =
 		"global_menu.applications";
 
+	public static final String GLOBAL_MENU_APPLICATIONS_CONTENT =
+		"global_menu.applications.content";
+
 	public static final String HIDDEN = "hidden";
 
 	public static final String ROOT = "root";

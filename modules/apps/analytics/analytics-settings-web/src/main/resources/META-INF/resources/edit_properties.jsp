@@ -32,7 +32,9 @@ if (!Validator.isBlank(analyticsConfiguration.token())) {
 String keywords = ParamUtil.getString(request, "keywords");
 %>
 
-<div class="pb-2 portlet-analytics-settings sheet sheet-lg">
+<clay:sheet
+	className="pb-2 portlet-analytics-settings"
+>
 	<h2>
 		<liferay-ui:message key="sync-sites-to-property" />
 	</h2>
@@ -130,4 +132,4 @@ String keywords = ParamUtil.getString(request, "keywords");
 			</liferay-ui:search-container>
 		</c:otherwise>
 	</c:choose>
-</div>
+</clay:sheet>

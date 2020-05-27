@@ -60,7 +60,7 @@ if (analyticsConfiguration != null) {
 
 <portlet:actionURL name="/analytics/edit_workspace_connection" var="editWorkspaceConnectionURL" />
 
-<div class="sheet sheet-lg">
+<clay:sheet>
 	<c:if test="<%= AnalyticsSettingsUtil.isAnalyticsEnabledWithOAuth(themeDisplay.getCompanyId()) %>">
 		<aui:alert type="warning">
 			<div class="mb-2">
@@ -79,10 +79,8 @@ if (analyticsConfiguration != null) {
 		</aui:alert>
 	</c:if>
 
-	<h2 class="autofit-row">
-		<span class="autofit-col autofit-col-expand">
-			<liferay-ui:message key="connect-analytics-cloud" />
-		</span>
+	<h2>
+		<liferay-ui:message key="connect-analytics-cloud" />
 	</h2>
 
 	<aui:form action="<%= editWorkspaceConnectionURL %>" data-senna-off="true" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "confirmation(event);" %>'>
@@ -177,7 +175,7 @@ if (analyticsConfiguration != null) {
 			<aui:button disabled="<%= !connected %>" href="<%= selectSitesURL.toString() %>" primary="<%= true %>" value="select-sites" />
 		</aui:button-row>
 	</aui:fieldset>
-</div>
+</clay:sheet>
 
 <script>
 	function <portlet:namespace />confirmation(event) {

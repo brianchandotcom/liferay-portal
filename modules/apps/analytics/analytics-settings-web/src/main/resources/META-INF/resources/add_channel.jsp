@@ -53,8 +53,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 <aui:form action="<%= addChannelURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<div class="portlet-analytics-settings sheet sheet-lg">
-		<h2 class="autofit-row">
+	<clay:sheet
+		className="portlet-analytics-settings"
+	>
+		<h2>
 			<liferay-ui:message key="new-property" />
 		</h2>
 
@@ -141,7 +143,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 				<aui:button disabled="<%= true %>" id="add-channel-button" type="submit" value="done" />
 			</aui:button-row>
 		</div>
-	</div>
+	</clay:sheet>
 </aui:form>
 
 <aui:script use="liferay-search-container">

@@ -56,7 +56,30 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 				HtmlUtil.escape(
 					PortalUtil.getStaticResourceURL(
 						themeDisplay.getRequest(),
-						themeDisplay.getPathThemeCss() + "/main.css")))
+						themeDisplay.getPathThemeCss() + "/main.css")),
+				HtmlUtil.escape(
+					PortalUtil.getStaticResourceURL(
+						themeDisplay.getRequest(),
+						"/o/frontend-css-web/main.css")))
+		).put(
+			"contextmenu_contentsCss",
+			JSONUtil.putAll(
+				HtmlUtil.escape(
+					PortalUtil.getStaticResourceURL(
+						themeDisplay.getRequest(),
+						themeDisplay.getPathThemeCss() + "/clay.css")),
+				HtmlUtil.escape(
+					PortalUtil.getStaticResourceURL(
+						themeDisplay.getRequest(),
+						themeDisplay.getPathThemeCss() + "/main.css")),
+				HtmlUtil.escape(
+					PortalUtil.getStaticResourceURL(
+						themeDisplay.getRequest(),
+						"/o/frontend-editor-ckeditor-web/ckeditor/skins/moono-lisa/editor.css")),
+				HtmlUtil.escape(
+					PortalUtil.getStaticResourceURL(
+						themeDisplay.getRequest(),
+						"/o/frontend-css-web/main.css")))
 		).put(
 			"contentsLangDirection",
 			HtmlUtil.escapeJS(

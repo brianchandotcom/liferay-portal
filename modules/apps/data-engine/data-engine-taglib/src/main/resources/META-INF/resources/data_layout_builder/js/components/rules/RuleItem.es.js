@@ -19,6 +19,7 @@ import React, {useContext} from 'react';
 
 import AppContext from '../../AppContext.es';
 import {DELETE_DATA_LAYOUT_RULE} from '../../actions.es';
+import {getFieldLabel} from '../../utils/dataDefinition.es';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
 
 const Text = ({capitalize = false, children = '', lowercase = false}) => (
@@ -49,7 +50,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 		logicalOperator,
 		name: {en_US: name},
 	} = rule;
-	const [, dispatch] = useContext(AppContext);
+	const [{dataDefinition}, dispatch] = useContext(AppContext);
 
 	const dropDownActions = [
 		{
@@ -89,7 +90,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 								{Liferay.Language.get('field')}
 							</Text>
 							<ClayLabel displayType="success">
-								{first.value}
+								{getFieldLabel(dataDefinition, first.value)}
 							</ClayLabel>
 							<ClayLabel displayType="secondary">
 								{OPERATOR_LABELS[operator] || operator}
@@ -97,7 +98,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 
 							{last && last.value && (
 								<ClayLabel displayType="info">
-									{last.value}
+									{getFieldLabel(dataDefinition, last.value)}
 								</ClayLabel>
 							)}
 
@@ -115,7 +116,9 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 				{actions.map(({action, target}, index) => (
 					<>
 						<Text lowercase>{action}</Text>
-						<ClayLabel displayType="success">{target}</ClayLabel>
+						<ClayLabel displayType="success">
+							{getFieldLabel(dataDefinition, target)}
+						</ClayLabel>
 
 						{index + 1 !== actions.length && (
 							<ClayLabel displayType="warning">

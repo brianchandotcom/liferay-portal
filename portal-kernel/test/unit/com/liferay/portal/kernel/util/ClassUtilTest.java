@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.io.File;
@@ -155,7 +156,9 @@ public class ClassUtilTest {
 
 		URL url = classLoader.getResource(className);
 
-		URI uri = ClassUtil.getPathURIFromURL(url);
+		URI uri = ReflectionTestUtil.invoke(
+			ClassUtil.class, "_getPathURIFromURL", new Class<?>[] {URL.class},
+			url);
 
 		Path path = Paths.get(uri);
 
@@ -239,7 +242,9 @@ public class ClassUtilTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					ClassUtil.class.getName(), Level.FINE)) {
 
-			ClassUtil.getPathURIFromURL(
+			ReflectionTestUtil.invoke(
+				ClassUtil.class, "_getPathURIFromURL",
+				new Class<?>[] {URL.class},
 				new URL(
 					"jar:file:/opt/liferay/tomcat/lib/servlet-api.jar" +
 						"!/javax/servlet/Servlet.class"));
@@ -260,7 +265,9 @@ public class ClassUtilTest {
 	@Test
 	public void testGetPathURIFromURLWithIllegalCharacter() {
 		try {
-			ClassUtil.getPathURIFromURL(
+			ReflectionTestUtil.invoke(
+				ClassUtil.class, "_getPathURIFromURL",
+				new Class<?>[] {URL.class},
 				new URL(
 					"jar:file:/[opt/liferay/tomcat/lib/servlet-api.jar" +
 						"!/javax/servlet/Servlet.class"));
@@ -281,7 +288,9 @@ public class ClassUtilTest {
 	@Test
 	public void testGetPathURIFromURLWithUnknownProtocol() {
 		try {
-			ClassUtil.getPathURIFromURL(
+			ReflectionTestUtil.invoke(
+				ClassUtil.class, "_getPathURIFromURL",
+				new Class<?>[] {URL.class},
 				new URL(
 					"jar", null, -1,
 					"unknown:/opt/liferay/tomcat/lib/servlet-api.jar!/javax" +
@@ -414,7 +423,9 @@ public class ClassUtilTest {
 	}
 
 	private void _testGetPathURIFromURL(URL url, String expectedPath) {
-		URI uri = ClassUtil.getPathURIFromURL(url);
+		URI uri = ReflectionTestUtil.invoke(
+			ClassUtil.class, "_getPathURIFromURL", new Class<?>[] {URL.class},
+			url);
 
 		Assert.assertEquals(expectedPath, uri.getPath());
 	}

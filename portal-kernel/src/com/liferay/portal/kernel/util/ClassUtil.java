@@ -157,7 +157,7 @@ public class ClassUtil {
 
 		URL url = classLoader.getResource(className);
 
-		Path path = Paths.get(getPathURIFromURL(url));
+		Path path = Paths.get(_getPathURIFromURL(url));
 
 		String parentPath = StringUtil.replace(
 			path.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
@@ -171,38 +171,6 @@ public class ClassUtil {
 		}
 
 		return parentPath;
-	}
-
-	public static URI getPathURIFromURL(URL url) {
-		String urlProtocol = url.getProtocol();
-
-		if (urlProtocol.equals("jar") || urlProtocol.equals("wsjar")) {
-			try {
-				url = new URL(url.getPath());
-			}
-			catch (MalformedURLException malformedURLException) {
-				throw new SystemException(malformedURLException);
-			}
-		}
-
-		String path = url.getPath();
-
-		if (!path.startsWith(StringPool.SLASH)) {
-			path = StringPool.SLASH + path;
-		}
-
-		try {
-			URI uri = new URI("file:" + path);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("URI " + uri);
-			}
-
-			return uri;
-		}
-		catch (URISyntaxException uriSyntaxException) {
-			throw new SystemException(uriSyntaxException);
-		}
 	}
 
 	public static boolean isSubclass(Class<?> a, Class<?> b) {
@@ -261,6 +229,38 @@ public class ClassUtil {
 		}
 
 		return false;
+	}
+
+	private static URI _getPathURIFromURL(URL url) {
+		String urlProtocol = url.getProtocol();
+
+		if (urlProtocol.equals("jar") || urlProtocol.equals("wsjar")) {
+			try {
+				url = new URL(url.getPath());
+			}
+			catch (MalformedURLException malformedURLException) {
+				throw new SystemException(malformedURLException);
+			}
+		}
+
+		String path = url.getPath();
+
+		if (!path.startsWith(StringPool.SLASH)) {
+			path = StringPool.SLASH + path;
+		}
+
+		try {
+			URI uri = new URI("file:" + path);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("URI " + uri);
+			}
+
+			return uri;
+		}
+		catch (URISyntaxException uriSyntaxException) {
+			throw new SystemException(uriSyntaxException);
+		}
 	}
 
 	private static String[] _processAnnotation(String s, StreamTokenizer st)

@@ -1400,6 +1400,16 @@ definition {
 				value1 = "${dateRestrictionOption}");
 		}
 
+		if (isSet(noContent)) {
+			for (var noContent : list "${noContentList}") {
+				var key_content = "${noContent}";
+
+				AssertTextNotPresent(
+					locator1 = "Staging#PUBLICATION_CONTENT",
+					value1 = "${content}");
+			}
+		}
+
 		if (isSet(pagesOption)) {
 			AssertTextEquals(
 				locator1 = "Staging#PUBLICATION_PAGE_OPTION",

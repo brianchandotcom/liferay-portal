@@ -14,7 +14,6 @@
 
 package com.liferay.layout.util.structure;
 
-import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
@@ -64,13 +63,15 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 				continue;
 			}
 
+			JSONObject viewportSizeConfigurationJSONObject =
+				_viewportSizeConfigurations.getOrDefault(
+					viewportSize.getViewportSizeId(),
+					JSONFactoryUtil.createJSONObject());
+
 			jsonObject.put(
 				viewportSize.getViewportSizeId(),
 				JSONUtil.put(
-					"size",
-					ResponsiveLayoutStructureUtil.getResponsivePropertyValue(
-						viewportSize, _viewportSizeConfigurations, "size",
-						null)));
+					"size", viewportSizeConfigurationJSONObject.get("size")));
 		}
 
 		return jsonObject;

@@ -14,7 +14,6 @@
 
 package com.liferay.layout.util.structure;
 
-import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
@@ -84,23 +83,22 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 				continue;
 			}
 
+			JSONObject viewportSizeConfigurationJSONObject =
+				_viewportSizeConfigurations.getOrDefault(
+					viewportSize.getViewportSizeId(),
+					JSONFactoryUtil.createJSONObject());
+
 			jsonObject.put(
 				viewportSize.getViewportSizeId(),
 				JSONUtil.put(
 					"modulesPerRow",
-					ResponsiveLayoutStructureUtil.getResponsivePropertyValue(
-						viewportSize, _viewportSizeConfigurations,
-						"modulesPerRow", getModulesPerRow())
+					viewportSizeConfigurationJSONObject.get("modulesPerRow")
 				).put(
 					"reverseOrder",
-					ResponsiveLayoutStructureUtil.getResponsivePropertyValue(
-						viewportSize, _viewportSizeConfigurations,
-						"reverseOrder", isReverseOrder())
+					viewportSizeConfigurationJSONObject.get("reverseOrder")
 				).put(
 					"verticalAlignment",
-					ResponsiveLayoutStructureUtil.getResponsivePropertyValue(
-						viewportSize, _viewportSizeConfigurations,
-						"verticalAlignment", getVerticalAlignment())
+					viewportSizeConfigurationJSONObject.get("verticalAlignment")
 				));
 		}
 

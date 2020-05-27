@@ -14,8 +14,12 @@
 
 package com.liferay.external.reference.service.impl;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.external.reference.service.base.ERAccountEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,9 +43,39 @@ import org.osgi.service.component.annotations.Component;
 public class ERAccountEntryLocalServiceImpl
 	extends ERAccountEntryLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.liferay.external.reference.service.ERAccountEntryLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.liferay.external.reference.service.ERAccountEntryLocalServiceUtil</code>.
-	 */
+	@Override
+	public AccountEntry addOrUpdateAccountEntry(
+			String externalReferenceCode, long userId,
+			long parentAccountEntryId, String name, String description,
+			boolean deleteLogo, String[] domains, byte[] logoBytes,
+			String taxId, String type, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		AccountEntry accountEntry =
+			accountEntryLocalService.fetchAccountEntryByReferenceCode(
+				user.getCompanyId(), externalReferenceCode);
+
+		if (accountEntry == null) {
+			accountEntry = accountEntryLocalService.addAccountEntry(
+				userId, parentAccountEntryId, name, description, domains,
+				logoBytes, taxId, type, status, serviceContext);
+
+			accountEntry.setExternalReferenceCode(externalReferenceCode);
+
+			accountEntry = accountEntryLocalService.updateAccountEntry(
+				accountEntry);
+		}
+		else {
+			accountEntry = accountEntryLocalService.updateAccountEntry(
+				accountEntry.getAccountEntryId(), parentAccountEntryId, name,
+				description, deleteLogo, domains, logoBytes, taxId, status,
+				serviceContext);
+		}
+
+		return accountEntry;
+	}
+
 }

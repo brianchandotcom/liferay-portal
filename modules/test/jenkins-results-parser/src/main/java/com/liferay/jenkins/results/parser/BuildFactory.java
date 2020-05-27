@@ -29,6 +29,13 @@ public class BuildFactory {
 		url = JenkinsResultsParserUtil.getLocalURL(url);
 
 		if (url.contains("AXIS_VARIABLE=")) {
+			String jobVariant = JenkinsResultsParserUtil.getBuildParameter(
+				url, "JOB_VARIANT");
+
+			if ((jobVariant != null) && jobVariant.contains("cucumber")) {
+				return new CucumberAxisBuild(url, (BatchBuild)parentBuild);
+			}
+
 			return new AxisBuild(url, (BatchBuild)parentBuild);
 		}
 

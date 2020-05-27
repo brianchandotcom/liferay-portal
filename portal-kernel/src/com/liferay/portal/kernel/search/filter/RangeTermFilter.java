@@ -126,7 +126,7 @@ public class RangeTermFilter extends BaseFilter {
 				return StringPool.LESS_THAN;
 			}
 			else if (name.equals(LTE.name())) {
-				return StringPool.GREATER_THAN_OR_EQUAL;
+				return StringPool.LESS_THAN_OR_EQUAL;
 			}
 
 			return StringPool.BLANK;

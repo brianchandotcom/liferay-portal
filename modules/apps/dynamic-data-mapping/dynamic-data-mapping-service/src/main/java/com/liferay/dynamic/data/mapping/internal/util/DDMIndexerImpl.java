@@ -76,11 +76,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 		Document document, DDMStructure ddmStructure,
 		DDMFormValues ddmFormValues) {
 
-		FieldArray fieldArray = (FieldArray)document.getField(
-			DDMIndexer.DDM_FIELDS);
+		FieldArray fieldArray = (FieldArray)document.getField(DDM_FIELDS);
 
 		if (fieldArray == null) {
-			fieldArray = new FieldArray(DDMIndexer.DDM_FIELDS);
+			fieldArray = new FieldArray(DDM_FIELDS);
 
 			document.add(fieldArray);
 		}
@@ -143,7 +142,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		String[] ddmStructureFieldNameParts = StringUtil.split(
-			ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
+			ddmStructureFieldName, DDM_FIELD_SEPARATOR);
 
 		DDMStructure structure = _ddmStructureLocalService.getStructure(
 			GetterUtil.getLong(ddmStructureFieldNameParts[2]));
@@ -171,14 +170,12 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				booleanQuery.addRequiredTerm(
 					StringBundler.concat(
-						DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
-						DDMIndexer.DDM_FIELD_NAME),
+						DDM_FIELDS, StringPool.PERIOD, DDM_FIELD_NAME),
 					ddmStructureFieldName);
 				booleanQuery.addRequiredTerm(
 					StringBundler.concat(
-						DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
-						DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
-						ddmFieldsFieldValueSuffix),
+						DDM_FIELDS, StringPool.PERIOD,
+						DDM_VALUE_FIELD_NAME_PREFIX, ddmFieldsFieldValueSuffix),
 					StringPool.QUOTE + ddmStructureFieldValueString +
 						StringPool.QUOTE);
 			}
@@ -186,19 +183,16 @@ public class DDMIndexerImpl implements DDMIndexer {
 		else {
 			booleanQuery.addRequiredTerm(
 				StringBundler.concat(
-					DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
-					DDMIndexer.DDM_FIELD_NAME),
+					DDM_FIELDS, StringPool.PERIOD, DDM_FIELD_NAME),
 				ddmStructureFieldName);
 			booleanQuery.addRequiredTerm(
 				StringBundler.concat(
-					DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
-					DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX,
+					DDM_FIELDS, StringPool.PERIOD, DDM_VALUE_FIELD_NAME_PREFIX,
 					ddmFieldsFieldValueSuffix),
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
-		return new QueryFilter(
-			new NestedQuery(DDMIndexer.DDM_FIELDS, booleanQuery));
+		return new QueryFilter(new NestedQuery(DDM_FIELDS, booleanQuery));
 	}
 
 	@Override
@@ -326,19 +320,17 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 	@Override
 	public String getValueFieldName(String indexType, Locale locale) {
-		String valueFieldName = DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX;
+		String valueFieldName = DDM_VALUE_FIELD_NAME_PREFIX;
 
 		if (indexType != null) {
-			valueFieldName =
-				valueFieldName.concat(
-					StringUtil.upperCaseFirstLetter(indexType));
+			valueFieldName = valueFieldName.concat(
+				StringUtil.upperCaseFirstLetter(indexType));
 		}
 
 		if (locale != null) {
-			valueFieldName =
-				StringBundler.concat(
-					valueFieldName, StringPool.UNDERLINE,
-					LocaleUtil.toLanguageId(locale));
+			valueFieldName = StringBundler.concat(
+				valueFieldName, StringPool.UNDERLINE,
+				LocaleUtil.toLanguageId(locale));
 		}
 
 		return valueFieldName;
@@ -464,8 +456,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 			new com.liferay.portal.kernel.search.Field("");
 
 		field.addField(
-			new com.liferay.portal.kernel.search.Field(
-				DDMIndexer.DDM_FIELD_NAME, name));
+			new com.liferay.portal.kernel.search.Field(DDM_FIELD_NAME, name));
 
 		Stream.of(
 			document.getFields()

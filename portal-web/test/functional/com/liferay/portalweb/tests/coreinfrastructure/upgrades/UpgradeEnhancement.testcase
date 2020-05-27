@@ -342,6 +342,8 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "upgrade-legacy-database");
 
+		Pause(locator1 = "180000");
+
 		Portlet.startServer(
 			deleteLiferayHome = "true",
 			keepCachedAppServerData = "false");

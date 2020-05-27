@@ -25,8 +25,12 @@ long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(theme
 Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
-<div class="autofit-row autofit-row-center">
-	<div class="autofit-col inline-item-before">
+<clay:content-row
+	verticaAlign="center"
+>
+	<clay:content-col
+		className="inline-item-before"
+	>
 		<aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
 
 		<aui:select id="displayStyle" inlineField="<%= true %>" label="<%= HtmlUtil.escape(label) %>" name="preferences--displayStyle--">
@@ -68,10 +72,10 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 			%>
 
 		</aui:select>
-	</div>
+	</clay:content-col>
 
 	<c:if test="<%= !ddmTemplateGroup.isLayoutPrototype() %>">
-		<div class="autofit-col">
+		<clay:content-col>
 			<liferay-ui:icon
 				icon="<%= HtmlUtil.escapeCSS(icon) %>"
 				id="selectDDMTemplate"
@@ -80,9 +84,9 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 				message='<%= LanguageUtil.get(request, "manage-templates") %>'
 				url="javascript:;"
 			/>
-		</div>
+		</clay:content-col>
 	</c:if>
-</div>
+</clay:content-row>
 
 <liferay-portlet:renderURL plid="<%= themeDisplay.getPlid() %>" portletName="<%= PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW) %>" var="basePortletURL">
 	<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />

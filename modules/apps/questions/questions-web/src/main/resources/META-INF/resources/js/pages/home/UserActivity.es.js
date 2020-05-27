@@ -12,9 +12,9 @@
  * details.
  */
 
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
@@ -35,58 +35,50 @@ export default withRouter(
 		},
 	}) => {
 		const context = useContext(AppContext);
-		const defaultPostsNumber = 0;
-		const defaultRank = context.defaultRank;
 		const historyPushParser = historyPushWithSlug(history.push);
 		const queryParams = useQueryParams(location);
 		const siteKey = context.siteKey;
-
-		const [creatorInfo, setCreatorInfo] = useState({});
-		const [loading, setLoading] = useState(true);
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
-		const [questions, setQuestions] = useState([]);
 
 		useEffect(() => {
 			const pageNumber = queryParams.get('page') || 1;
 			setPage(isNaN(pageNumber) ? 1 : parseInt(pageNumber, 10));
 		}, [queryParams]);
 
-		useEffect(() => {
-			getUserActivity(page, pageSize, siteKey, creatorId)
-				.then((questions) => {
-					const creatorBasicInfo = questions.items[0].creator;
-					const creatorStatistics =
-						questions.items[0].creatorStatistics;
-					const creatorInfo = {
-						id: creatorId,
-						image: creatorBasicInfo.image,
-						name: creatorBasicInfo.name,
-						postsNumber: creatorStatistics.postsNumber,
-						rank: creatorStatistics.rank,
-					};
-					setCreatorInfo(creatorInfo);
-					setQuestions(questions);
-					setLoading(false);
-				})
-				.catch((_) => {
-					setLoading(false);
-					setCreatorInfo(getCreatorDefaultInfo(creatorId));
-				});
-		}, [creatorId, getCreatorDefaultInfo, page, pageSize, siteKey]);
+		const {data, loading} = useQuery(getUserActivity, {
+			variables: {
+				filter: `creatorId eq ${creatorId}`,
+				page,
+				pageSize,
+				siteKey,
+			},
+		});
 
-		const getCreatorDefaultInfo = useCallback(
-			(creatorId) => ({
+		let creatorInfo = {
+			id: creatorId,
+			image: null,
+			name: decodeURI(
+				JSON.parse(`"${Liferay.ThemeDisplay.getUserName()}"`)
+			),
+			postsNumber: 0,
+			rank: context.defaultRank,
+		};
+
+		if (data && data.messageBoardThreads) {
+			const {
+				creator,
+				creatorStatistics,
+			} = data.messageBoardThreads.items[0];
+
+			creatorInfo = {
 				id: creatorId,
-				image: null,
-				name: decodeURI(
-					JSON.parse(`"${Liferay.ThemeDisplay.getUserName()}"`)
-				),
-				postsNumber: defaultPostsNumber,
-				rank: defaultRank,
-			}),
-			[defaultPostsNumber, defaultRank]
-		);
+				image: creator.image,
+				name: creator.name,
+				postsNumber: creatorStatistics.postsNumber,
+				rank: creatorStatistics.rank,
+			};
+		}
 
 		const changePage = (number) => {
 			historyPushParser(`/activity/${creatorId}?page=${number}`);
@@ -154,25 +146,22 @@ export default withRouter(
 		function Questions() {
 			return (
 				<div className="c-mx-auto c-px-0 col-xl-10">
-					{loading ? (
-						<ClayLoadingIndicator />
-					) : (
-						<PaginatedList
-							activeDelta={pageSize}
-							activePage={page}
-							changeDelta={setPageSize}
-							changePage={changePage}
-							data={questions}
-						>
-							{(question) => (
-								<QuestionRow
-									key={question.id}
-									question={question}
-									showSectionLabel={true}
-								/>
-							)}
-						</PaginatedList>
-					)}
+					<PaginatedList
+						activeDelta={pageSize}
+						activePage={page}
+						changeDelta={setPageSize}
+						changePage={changePage}
+						data={data && data.messageBoardThreads}
+						loading={loading}
+					>
+						{(question) => (
+							<QuestionRow
+								key={question.id}
+								question={question}
+								showSectionLabel={true}
+							/>
+						)}
+					</PaginatedList>
 				</div>
 			);
 		}

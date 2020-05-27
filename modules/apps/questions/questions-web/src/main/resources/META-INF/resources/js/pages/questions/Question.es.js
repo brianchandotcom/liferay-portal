@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -34,11 +35,11 @@ import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
 import {
-	createAnswer,
-	deleteMessageBoardThread,
+	createAnswerQuery,
+	deleteMessageBoardThreadQuery,
 	getMessages,
 	getThread,
-	markAsAnswerMessageBoardMessage,
+	markAsAnswerMessageBoardMessageQuery,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
@@ -82,17 +83,17 @@ export default withRouter(
 			}
 		}, [question, page, pageSize, sort]);
 
-		const postAnswer = () => {
-			createAnswer(articleBody, question.id)
-				.then(() => {
-					setArticleBody('');
+		const [createAnswer] = useMutation(createAnswerQuery, {
+			onCompleted() {
+				setArticleBody('');
 
-					return getMessages(question.id, page, pageSize, sort);
-				})
-				.then((data) => {
-					setAnswers(data);
-				});
-		};
+				return getMessages(question.id, page, pageSize, sort).then(
+					(data) => {
+						setAnswers(data);
+					}
+				);
+			},
+		});
 
 		const updateMarkAsAnswer = useCallback(
 			(answerId) => {
@@ -111,9 +112,11 @@ export default withRouter(
 			[answers]
 		);
 
-		const deleteThread = () => {
-			deleteMessageBoardThread(question.id).then(() => history.goBack());
-		};
+		const [deleteThread] = useMutation(deleteMessageBoardThreadQuery, {
+			onCompleted() {
+				history.goBack();
+			},
+		});
 
 		const deleteAnswer = useCallback(
 			(answer) => {
@@ -129,6 +132,30 @@ export default withRouter(
 			[answers]
 		);
 
+		const [markAsAnswerMessageBoardMessage] = useMutation(
+			markAsAnswerMessageBoardMessageQuery,
+			{
+				onCompleted(data) {
+					setAnswers({
+						...answers,
+						items: [
+							...answers.items.map((otherAnswer) => {
+								if (
+									otherAnswer.id ===
+									data.patchMessageBoardMessage.id
+								) {
+									otherAnswer.showAsAnswer =
+										data.patchMessageBoardMessage.showAsAnswer;
+								}
+
+								return otherAnswer;
+							}),
+						],
+					});
+				},
+			}
+		);
+
 		const answerChange = useCallback(
 			(answerId) => {
 				const answer = answers.items.find(
@@ -136,17 +163,16 @@ export default withRouter(
 				);
 
 				if (answer) {
-					markAsAnswerMessageBoardMessage(answer.id, false).then(
-						() => {
-							updateMarkAsAnswer(answerId);
-						}
-					);
+					markAsAnswerMessageBoardMessage({
+						variables: {
+							messageBoardMessageId: answer.id,
+							showAsAnswer: false,
+						},
+					});
 				}
-				else {
-					updateMarkAsAnswer(answerId);
-				}
+				updateMarkAsAnswer(answerId);
 			},
-			[answers, updateMarkAsAnswer]
+			[answers.items, markAsAnswerMessageBoardMessage, updateMarkAsAnswer]
 		);
 
 		return (
@@ -233,7 +259,14 @@ export default withRouter(
 														body={Liferay.Language.get(
 															'do-you-want-to-delete–this-thread'
 														)}
-														callback={deleteThread}
+														callback={() => {
+															deleteThread({
+																variables: {
+																	messageBoardThreadId:
+																		question.id,
+																},
+															});
+														}}
 														onClose={() =>
 															setDeleteModalVisible(
 																false
@@ -407,7 +440,15 @@ export default withRouter(
 											<ClayButton
 												disabled={!articleBody}
 												displayType="primary"
-												onClick={postAnswer}
+												onClick={() => {
+													createAnswer({
+														variables: {
+															articleBody,
+															messageBoardThreadId:
+																question.id,
+														},
+													});
+												}}
 											>
 												{Liferay.Language.get(
 													'post-answer'

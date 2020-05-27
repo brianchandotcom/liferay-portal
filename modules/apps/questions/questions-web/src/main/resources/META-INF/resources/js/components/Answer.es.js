@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
@@ -19,8 +20,8 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {
-	deleteMessage,
-	markAsAnswerMessageBoardMessage,
+	deleteMessageQuery,
+	markAsAnswerMessageBoardMessageQuery,
 } from '../utils/client.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 import Comments from './Comments.es';
@@ -36,22 +37,36 @@ export default withRouter(
 		const [showAsAnswer, setShowAsAnswer] = useState(answer.showAsAnswer);
 		const [showNewComment, setShowNewComment] = useState(false);
 
-		const _deleteAnswer = () =>
-			deleteMessage(answer).then(() => deleteAnswer(answer));
+		const [deleteMessage] = useMutation(deleteMessageQuery, {
+			onCompleted() {
+				deleteAnswer(answer);
+				if (answer.messageBoardMessages) {
+					return Promise.all(
+						answer.messageBoardMessages.items.map(({id}) =>
+							deleteMessage({
+								variables: {$messageBoardMessageId: id},
+							})
+						)
+					);
+				}
+			},
+		});
 
 		const _commentsChange = useCallback((comments) => {
 			setComments([...comments]);
 		}, []);
 
-		const _answerChange = () =>
-			markAsAnswerMessageBoardMessage(answer.id, !showAsAnswer).then(
-				() => {
+		const [markAsAnswerMessageBoardMessage] = useMutation(
+			markAsAnswerMessageBoardMessageQuery,
+			{
+				onCompleted() {
 					setShowAsAnswer(!showAsAnswer);
 					if (answerChange) {
 						answerChange(answer.id);
 					}
-				}
-			);
+				},
+			}
+		);
 
 		const _ratingChange = useCallback(
 			(ratingValue) => {
@@ -121,7 +136,14 @@ export default withRouter(
 									<ClayButton
 										className="text-reset"
 										displayType="unstyled"
-										onClick={_deleteAnswer}
+										onClick={() => {
+											deleteMessage({
+												variables: {
+													messageBoardMessageId:
+														answer.id,
+												},
+											});
+										}}
 									>
 										{Liferay.Language.get('delete')}
 									</ClayButton>
@@ -131,7 +153,15 @@ export default withRouter(
 									<ClayButton
 										className="text-reset"
 										displayType="unstyled"
-										onClick={_answerChange}
+										onClick={() => {
+											markAsAnswerMessageBoardMessage({
+												variables: {
+													messageBoardMessageId:
+														answer.id,
+													showAsAnswer: !showAsAnswer,
+												},
+											});
+										}}
 									>
 										{Liferay.Language.get(
 											showAsAnswer

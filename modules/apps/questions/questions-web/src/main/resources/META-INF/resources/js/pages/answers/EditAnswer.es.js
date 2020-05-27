@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useLazyQuery, useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -20,7 +21,7 @@ import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import {getMessage, updateMessage} from '../../utils/client.es';
+import {getMessageQuery, updateMessageQuery} from '../../utils/client.es';
 import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
 
 export default withRouter(
@@ -32,18 +33,18 @@ export default withRouter(
 	}) => {
 		const context = useContext(AppContext);
 
+		const [getMessage, {data}] = useLazyQuery(getMessageQuery, {
+			fetchPolicy: 'network-only',
+			variables: {friendlyUrlPath: answerId, siteKey: context.siteKey},
+		});
+
 		const [articleBody, setArticleBody] = useState('');
-		const [id, setId] = useState();
 
-		const loadMessage = () =>
-			getMessage(answerId, context.siteKey).then(({articleBody, id}) => {
-				setArticleBody(articleBody);
-				setId(id);
-			});
-
-		const submit = () => {
-			updateMessage(articleBody, id).then(() => history.goBack());
-		};
+		const [addUpdateMessage] = useMutation(updateMessageQuery, {
+			onCompleted() {
+				history.goBack();
+			},
+		});
 
 		return (
 			<section className="c-mt-5 questions-section questions-sections-answer">
@@ -64,7 +65,12 @@ export default withRouter(
 
 									<Editor
 										config={getCKEditorConfig()}
-										data={articleBody}
+										data={
+											data &&
+											data
+												.messageBoardMessageByFriendlyUrlPath
+												.articleBody
+										}
 										onBeforeLoad={(editor) =>
 											onBeforeLoadCKEditor(
 												editor,
@@ -76,7 +82,7 @@ export default withRouter(
 												event.editor.getData()
 											)
 										}
-										onInstanceReady={loadMessage}
+										onInstanceReady={() => getMessage()}
 										required
 										type="text"
 									/>
@@ -98,7 +104,17 @@ export default withRouter(
 									className="c-mt-4 c-mt-sm-0"
 									disabled={!articleBody}
 									displayType="primary"
-									onClick={submit}
+									onClick={() => {
+										addUpdateMessage({
+											variables: {
+												articleBody,
+												messageBoardMessageId:
+													data
+														.messageBoardMessageByFriendlyUrlPath
+														.id,
+											},
+										});
+									}}
 								>
 									{Liferay.Language.get('update-your-answer')}
 								</ClayButton>

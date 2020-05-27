@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ApolloProvider} from '@apollo/client';
 import React from 'react';
 import {HashRouter as Router, Route, Switch} from 'react-router-dom';
 
@@ -28,78 +29,81 @@ import NewQuestion from './pages/questions/NewQuestion.es';
 import Question from './pages/questions/Question.es';
 import Questions from './pages/questions/Questions.es';
 import Tags from './pages/tags/Tags.es';
+import {createClient} from './utils/client.es';
 
 export default (props) => (
 	<AppContextProvider {...props}>
-		<Router>
-			<ErrorBoundary>
-				<div>
-					<Route component={Home} exact path="/" />
-					<Route component={Home} exact path="/questions" />
-					<Route
-						component={ForumsToQuestion}
-						exact
-						path="/question/:questionId"
-					/>
-					<Route
-						component={UserActivity}
-						exact
-						path="/activity/:creatorId"
-					/>
+		<ApolloProvider client={createClient()}>
+			<Router>
+				<ErrorBoundary>
+					<div>
+						<Route component={Home} exact path="/" />
+						<Route component={Home} exact path="/questions" />
+						<Route
+							component={ForumsToQuestion}
+							exact
+							path="/question/:questionId"
+						/>
+						<Route
+							component={UserActivity}
+							exact
+							path="/activity/:creatorId"
+						/>
 
-					<Route
-						path="/questions/:sectionTitle"
-						render={({match: {path}}) => (
-							<>
-								<NavigationBar />
+						<Route
+							path="/questions/:sectionTitle"
+							render={({match: {path}}) => (
+								<>
+									<NavigationBar />
 
-								<Switch>
-									<ProtectedRoute
-										component={EditAnswer}
-										exact
-										path={`${path}/:questionId/answers/:answerId/edit`}
-									/>
-									<Route
-										component={Questions}
-										exact
-										path={`${path}/creator/:creatorId`}
-									/>
-									<Route
-										component={Questions}
-										exact
-										path={`${path}/tag/:tag`}
-									/>
-									<ProtectedRoute
-										component={NewQuestion}
-										exact
-										path={`${path}/new`}
-									/>
-									<Route
-										component={Tags}
-										exact
-										path={`${path}/tags`}
-									/>
-									<Route
-										component={Question}
-										exact
-										path={`${path}/:questionId`}
-									/>
-									<ProtectedRoute
-										component={EditQuestion}
-										exact
-										path={`${path}/:questionId/edit`}
-									/>
-									<Route
-										component={Questions}
-										exact
-										path={`${path}/`}
-									/>
-								</Switch>
-							</>
-						)}
-					/>
-				</div>
-			</ErrorBoundary>
-		</Router>
+									<Switch>
+										<ProtectedRoute
+											component={EditAnswer}
+											exact
+											path={`${path}/:questionId/answers/:answerId/edit`}
+										/>
+										<Route
+											component={Questions}
+											exact
+											path={`${path}/creator/:creatorId`}
+										/>
+										<Route
+											component={Questions}
+											exact
+											path={`${path}/tag/:tag`}
+										/>
+										<ProtectedRoute
+											component={NewQuestion}
+											exact
+											path={`${path}/new`}
+										/>
+										<Route
+											component={Tags}
+											exact
+											path={`${path}/tags`}
+										/>
+										<Route
+											component={Question}
+											exact
+											path={`${path}/:questionId`}
+										/>
+										<ProtectedRoute
+											component={EditQuestion}
+											exact
+											path={`${path}/:questionId/edit`}
+										/>
+										<Route
+											component={Questions}
+											exact
+											path={`${path}/`}
+										/>
+									</Switch>
+								</>
+							)}
+						/>
+					</div>
+				</ErrorBoundary>
+			</Router>
+		</ApolloProvider>
 	</AppContextProvider>
 );

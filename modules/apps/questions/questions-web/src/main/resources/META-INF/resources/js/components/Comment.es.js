@@ -12,18 +12,22 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {deleteMessage} from '../utils/client.es';
+import {deleteMessageQuery} from '../utils/client.es';
 import ArticleBodyRenderer from './ArticleBodyRenderer.es';
 
 export default ({comment, commentChange}) => {
-	const deleteComment = () => {
-		deleteMessage(comment);
-		commentChange(comment);
-	};
+	const [deleteMessage] = useMutation(deleteMessageQuery, {
+		onCompleted() {
+			if (commentChange) {
+				commentChange(comment);
+			}
+		},
+	});
 
 	return (
 		<div className="c-my-3 questions-reply row">
@@ -46,7 +50,11 @@ export default ({comment, commentChange}) => {
 					<ClayButton
 						className="c-mt-3 font-weight-bold text-secondary"
 						displayType="unstyled"
-						onClick={deleteComment}
+						onClick={() => {
+							deleteMessage({
+								variables: {messageBoardMessageId: comment.id},
+							});
+						}}
 					>
 						{Liferay.Language.get('delete')}
 					</ClayButton>

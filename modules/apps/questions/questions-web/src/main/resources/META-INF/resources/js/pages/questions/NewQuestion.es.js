@@ -12,6 +12,7 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -23,7 +24,7 @@ import {AppContext} from '../../AppContext.es';
 import Link from '../../components/Link.es';
 import TagSelector from '../../components/TagSelector.es';
 import useSection from '../../hooks/useSection.es';
-import {createQuestion} from '../../utils/client.es';
+import {createQuestionQuery} from '../../utils/client.es';
 import {
 	getCKEditorConfig,
 	historyPushWithSlug,
@@ -56,13 +57,11 @@ export default withRouter(
 			500
 		);
 
-		const submit = () =>
-			createQuestion(
-				articleBody,
-				headline,
-				sectionId || section.id,
-				tags.map((tag) => tag.label)
-			).then(() => debounceCallback());
+		const [createQuestion] = useMutation(createQuestionQuery, {
+			onCompleted() {
+				debounceCallback();
+			},
+		});
 
 		useEffect(() => {
 			if (section && section.parentSection) {
@@ -194,7 +193,19 @@ export default withRouter(
 										!articleBody || !headline || !tagsLoaded
 									}
 									displayType="primary"
-									onClick={submit}
+									onClick={() => {
+										createQuestion({
+											variables: {
+												articleBody,
+												headline,
+												keywords: tags.map(
+													(tag) => tag.label
+												),
+												messageBoardSectionId:
+													sectionId || section.id,
+											},
+										});
+									}}
 								>
 									{Liferay.Language.get('post-your-question')}
 								</ClayButton>

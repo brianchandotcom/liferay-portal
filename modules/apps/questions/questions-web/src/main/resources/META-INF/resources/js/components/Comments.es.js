@@ -12,13 +12,14 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useContext, useState} from 'react';
 
 import {AppContext} from '../AppContext.es';
-import {createComment} from '../utils/client.es';
+import {createCommentQuery} from '../utils/client.es';
 import lang from '../utils/lang.es';
 import {getCKEditorConfig, onBeforeLoadCKEditor} from '../utils/utils.es';
 import Comment from './Comment.es';
@@ -34,13 +35,16 @@ export default ({
 
 	const context = useContext(AppContext);
 
-	const postComment = () => {
-		return createComment(comment, entityId).then((data) => {
+	const [createComment] = useMutation(createCommentQuery, {
+		onCompleted(data) {
 			setComment('');
 			showNewCommentChange(false);
-			commentsChange([...comments, data]);
-		});
-	};
+			commentsChange([
+				...comments,
+				data.createMessageBoardMessageMessageBoardMessage,
+			]);
+		},
+	});
 
 	const _commentChange = useCallback(
 		(comment) => {
@@ -95,7 +99,14 @@ export default ({
 							<ClayButton
 								disabled={comment.length < 15}
 								displayType="primary"
-								onClick={postComment}
+								onClick={() => {
+									createComment({
+										variables: {
+											articleBody: comment,
+											parentMessageBoardMessageId: entityId,
+										},
+									});
+								}}
 							>
 								{Liferay.Language.get('reply')}
 							</ClayButton>

@@ -12,31 +12,36 @@
  * details.
  */
 
-import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayEmptyState from '@clayui/empty-state';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import React from 'react';
-import {withLoading} from "./Loading.es";
+
+import {withLoading} from './Loading.es';
 
 const scrollToTop = () => window.scrollTo({behavior: 'smooth', top: 0});
 
 const PaginatedList = ({
-						   activeDelta,
-						   activePage,
-						   changeDelta,
-						   changePage,
-						   children,
-						   data,
-					   }) => {
+	activeDelta,
+	activePage,
+	changeDelta,
+	changePage,
+	children,
+	data,
+	showEmptyState,
+}) => {
 	const deltaValues = [4, 8, 20, 40, 60];
 
 	const deltas = deltaValues.map((label) => ({label}));
 
 	return (
 		<>
-			{data.totalCount === 0 && (
+			{showEmptyState && !data.totalCount && (
 				<ClayEmptyState
-					description="You don't have more notifications to review"
-					title="Hurray"/>
+					description={Liferay.Language.get(
+						'sorry-there-are-no-results-found'
+					)}
+					title={Liferay.Language.get('no-results-found')}
+				/>
 			)}
 			{data.totalCount > 0 && (
 				<>

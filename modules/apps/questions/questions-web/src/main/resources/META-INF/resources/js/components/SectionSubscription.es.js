@@ -12,29 +12,48 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React, {useEffect, useState} from 'react';
 
-import {subscribeSection, unsubscribeSection} from '../utils/client.es';
+import {
+	subscribeSectionQuery,
+	unsubscribeSectionQuery,
+} from '../utils/client.es';
 
-export default ({onSubscription, section: {id, subscribed}}) => {
+export default ({
+	onSubscription,
+	section: {id: messageBoardSectionId, subscribed},
+}) => {
 	const [subscription, setSubscription] = useState(false);
 
 	useEffect(() => {
 		setSubscription(subscribed);
 	}, [subscribed]);
 
+	const onCompleted = () => {
+		setSubscription(!subscription);
+		if (onSubscription) {
+			onSubscription(!subscription);
+		}
+	};
+
+	const [subscribeSection] = useMutation(subscribeSectionQuery, {
+		onCompleted,
+	});
+
+	const [unsubscribeSection] = useMutation(unsubscribeSectionQuery, {
+		onCompleted,
+	});
+
 	const changeSubscription = () => {
-		const promise = subscription
-			? unsubscribeSection(id)
-			: subscribeSection(id);
-		promise.then(() => {
-			setSubscription(!subscription);
-			if (onSubscription) {
-				onSubscription(!subscription);
-			}
-		});
+		if (subscription) {
+			subscribeSection({variables: {messageBoardSectionId}});
+		}
+		else {
+			unsubscribeSection({variables: {messageBoardSectionId}});
+		}
 	};
 
 	const btnTitle = subscription

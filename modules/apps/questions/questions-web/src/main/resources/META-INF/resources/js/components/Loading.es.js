@@ -17,11 +17,10 @@ import React from 'react';
 
 export const withLoading = (Component) => {
 	return ({loading, ...restProps}) => {
-
 		if (loading) {
 			return (
-				<div className="align-items-center d-flex">
-					<ClayLoadingIndicator/>
+				<div className="align-items-center d-flex w-100">
+					<ClayLoadingIndicator />
 				</div>
 			);
 		}

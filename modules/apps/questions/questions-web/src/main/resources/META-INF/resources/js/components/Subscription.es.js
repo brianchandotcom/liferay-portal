@@ -12,22 +12,30 @@
  * details.
  */
 
+import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {subscribe, unsubscribe} from '../utils/client.es';
+import {subscribeQuery, unsubscribeQuery} from '../utils/client.es';
 
 export default ({onSubscription, question}) => {
+	const onCompleted = () => {
+		if (onSubscription) {
+			onSubscription(!question.subscribed);
+		}
+	};
+
+	const [subscribe] = useMutation(subscribeQuery, {onCompleted});
+	const [unsubscribe] = useMutation(unsubscribeQuery, {onCompleted});
+
 	const changeSubscription = () => {
-		const promise = question.subscribed
-			? unsubscribe(question.id)
-			: subscribe(question.id);
-		promise.then(() => {
-			if (onSubscription) {
-				onSubscription(!question.subscribed);
-			}
-		});
+		if (question.subscribed) {
+			subscribe({variables: {messageBoardThreadId: question.id}});
+		}
+		else {
+			unsubscribe({variables: {messageBoardThreadId: question.id}});
+		}
 	};
 
 	return (

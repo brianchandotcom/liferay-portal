@@ -12,11 +12,13 @@
  * details.
  */
 
+import {useQuery} from '@apollo/client';
+
 /*eslint-disable no-unused-vars*/
-import React, {useEffect} from 'react';
+import React from 'react';
 import {withRouter} from 'react-router-dom';
 
-import {getMessageBoardThreadById} from '../utils/client.es';
+import {getMessageBoardThreadByIdQuery} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 
 export default withRouter(
@@ -28,13 +30,16 @@ export default withRouter(
 	}) => {
 		const historyPushParser = historyPushWithSlug(history.push);
 
-		useEffect(() => {
-			getMessageBoardThreadById(questionId).then((data) =>
+		useQuery(getMessageBoardThreadByIdQuery, {
+			onCompleted({messageBoardThread}) {
 				historyPushParser(
-					`/questions/${data.messageBoardSection.title}/${data.friendlyUrlPath}`
-				)
-			);
-		}, [historyPushParser, questionId]);
+					`/questions/${messageBoardThread.messageBoardSection.title}/${messageBoardThread.friendlyUrlPath}`
+				);
+			},
+			variables: {
+				messageBoardThreadId: questionId,
+			},
+		});
 
 		return null;
 	}

@@ -54,6 +54,77 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-86193. Can export display page template and import to Staging site via UI."
+	@priority = "3"
+	test ExportImportDisplayPageTemplateInStagingSite {
+		task ("Add a display page template with Web Content Article type and Basic Web Content subtype") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Web Content Article",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name-staging",
+				site = "false",
+				subType = "Basic Web Content");
+		}
+
+		task ("Add a Collection Display to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+
+			PageEditor.addDisplayPageContent(fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Export display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
+				displayPageName = "Display Page Name",
+				item = "Export");
+
+			DownloadTempFile();
+		}
+
+		task ("Import display page template in a new staging site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(siteName = "Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "site-name-staging");
+
+			DisplayPageTemplatesAdmin.importDisplayPageTemplateFromTempFolder();
+
+			DisplayPageTemplatesAdmin.viewDisplayPagePresent(displayPageName = "Display Page Name");
+		}
+
+		task ("Assert the Collection Display and the Display Page Template are shown in display page template") {
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			AssertElementPresent(
+				key_fragmentName = "Collection Display",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertVisible(
+				key_fragmentName = "Collection Display",
+				key_message = "No Collection Selected Yet",
+				locator1 = "Fragment#NOT_COLLECTION_SELECTED_MESSAGE");
+
+			AssertElementPresent(
+				key_fragmentName = "Display Page Content",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+
+			AssertVisible(
+				key_fragmentName = "Display Page Content",
+				key_messageIfo = "The display page content will be shown here.",
+				locator1 = "Fragment#MESSAGE_INFO");
+		}
+	}
+
 	@description = "This tests one of the workarounds of LPS-92522."
 	@priority = "5"
 	test PublishDisplayPageWithFragment {

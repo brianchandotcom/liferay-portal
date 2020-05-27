@@ -22,6 +22,6 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = (DLViewFileVer
 %>
 
 <clay:sticker
-	className='<%= "sticker-document " + cssClass + " " + dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>'
+	cssClass='<%= "sticker-document " + cssClass + " " + dlViewFileVersionDisplayContext.getCssClassFileMimeType() %>'
 	icon="<%= dlViewFileVersionDisplayContext.getIconFileMimeType() %>"
 />

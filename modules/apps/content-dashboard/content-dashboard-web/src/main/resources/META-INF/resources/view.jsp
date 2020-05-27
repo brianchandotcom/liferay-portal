@@ -21,7 +21,7 @@
 >
 	<div class="sheet">
 		<h2 class="sheet-title">
-			<%= LanguageUtil.format(request, "number-of-contents-per-audience-and-stage-x", 0, false) %>
+			<%= LanguageUtil.format(request, "content-per-audience-and-stage-x", 0, false) %>
 		</h2>
 
 		<div id="audit-graph">
@@ -50,7 +50,7 @@
 					<div class="taglib-empty-result-message-header"></div>
 
 					<div class="sheet-text text-center">
-						<%= LanguageUtil.get(request, "there-are-no-contents") %>
+						<%= LanguageUtil.get(request, "there-is-no-content") %>
 					</div>
 				</div>
 			</c:when>

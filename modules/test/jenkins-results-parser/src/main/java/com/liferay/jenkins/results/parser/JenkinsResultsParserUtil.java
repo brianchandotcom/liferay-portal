@@ -747,6 +747,10 @@ public class JenkinsResultsParserUtil {
 	public static Map<String, String> getBuildParameters(String buildURL) {
 		Map<String, String> buildParameters = new HashMap<>();
 
+		if (!buildURL.endsWith("/")) {
+			buildURL += "/";
+		}
+
 		String buildParametersURL = getLocalURL(
 			combine(buildURL, "api/json?tree=actions[parameters[name,value]]"));
 
@@ -756,6 +760,12 @@ public class JenkinsResultsParserUtil {
 			JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
 			for (int i = 0; i < actionsJSONArray.length(); i++) {
+				Object actions = actionsJSONArray.get(i);
+
+				if (actions == JSONObject.NULL) {
+					continue;
+				}
+
 				JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
 
 				if (!actionJSONObject.has("parameters")) {

@@ -45,11 +45,11 @@
 @keyframes thumbs-on {
 	0% {
 		opacity: 0;
-		transform: rotate(45deg) scale(0.1);
+		transform: rotate(45deg) scale3d(0.1, 0.1, 0.1);
 	}
 
 	50% {
-		transform: rotate(-15deg) scale(1.2);
+		transform: rotate(-15deg) scale3d(1.2, 1.2, 1.2);
 	}
 
 	100% {

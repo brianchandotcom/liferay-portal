@@ -42,6 +42,11 @@ jest.mock(
 	}
 );
 
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({config: {fragmentPanelEnabled: false}})
+);
+
 const NO_COMMENTS_STATE = {
 	layoutData: {items: {}},
 };

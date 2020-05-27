@@ -23,6 +23,11 @@ import WidgetsSidebar from '../../../../../../src/main/resources/META-INF/resour
 
 import '@testing-library/jest-dom/extend-expect';
 
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	() => ({config: {fragmentPanelEnabled: false}})
+);
+
 const widgets = [
 	{
 		portlets: [

@@ -27,7 +27,7 @@ jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
-			fragmentPanelConfig: false,
+			fragmentPanelEnabled: false,
 		},
 	})
 );

@@ -113,9 +113,21 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 
 				<Text>{Liferay.Language.get('then')}</Text>
 
-				{actions.map(({action, target}, index) => (
+				{actions.map(({action, expression, target}, index) => (
 					<>
 						<Text lowercase>{action}</Text>
+
+						{expression && (
+							<>
+								<ClayLabel displayType="secondary">
+									{expression}
+								</ClayLabel>
+								<Text lowercase>
+									{Liferay.Language.get('into')}
+								</Text>
+							</>
+						)}
+
 						<ClayLabel displayType="success">
 							{getFieldLabel(dataDefinition, target)}
 						</ClayLabel>

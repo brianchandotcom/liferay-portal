@@ -127,52 +127,11 @@ public class PublishLayoutMVCActionCommand
 			}
 		}
 
-		if (_ffLayoutContentPageEditorConfiguration.undoEnabled()) {
-			LayoutStructureUtil.deleteMarkedForDeletionItems(
-				draftLayout.getCompanyId(), _contentPageEditorListenerTracker,
-				draftLayout.getGroupId(), draftLayout.getPlid(),
-				_portletRegistry);
-		}
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
 
-		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
-				layout.getCompanyId(), layout.getGroupId(),
-				Layout.class.getName())) {
-
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				layout.getCompanyId(), layout.getGroupId(),
-				themeDisplay.getUserId(), Layout.class.getName(),
-				layout.getPlid(), layout, serviceContext,
-				Collections.emptyMap());
-		}
-		else {
-			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
-
-			layout.setType(draftLayout.getType());
-			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
-
-			layout.setLayoutPrototypeUuid(null);
-
-			_layoutLocalService.updateLayout(layout);
-
-			draftLayout = _layoutLocalService.getLayout(themeDisplay.getPlid());
-
-			UnicodeProperties typeSettingsUnicodeProperties =
-				draftLayout.getTypeSettingsProperties();
-
-			if (Validator.isNotNull(layoutPrototypeUuid)) {
-				typeSettingsUnicodeProperties.setProperty(
-					"layoutPrototypeUuid", layoutPrototypeUuid);
-			}
-
-			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-			_layoutLocalService.updateLayout(draftLayout);
-		}
+		_publishLayout(
+			draftLayout, layout, serviceContext, themeDisplay.getUserId());
 
 		String portletId = _portal.getPortletId(actionRequest);
 
@@ -187,6 +146,55 @@ public class PublishLayoutMVCActionCommand
 		MultiSessionMessages.add(actionRequest, "layoutPublished");
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	private void _publishLayout(
+			Layout draftLayout, Layout layout, ServiceContext serviceContext,
+			long userId)
+		throws Exception {
+
+		if (_ffLayoutContentPageEditorConfiguration.undoEnabled()) {
+			LayoutStructureUtil.deleteMarkedForDeletionItems(
+				draftLayout.getCompanyId(), _contentPageEditorListenerTracker,
+				draftLayout.getGroupId(), draftLayout.getPlid(),
+				_portletRegistry);
+		}
+
+		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
+				layout.getCompanyId(), layout.getGroupId(),
+				Layout.class.getName())) {
+
+			WorkflowHandlerRegistryUtil.startWorkflowInstance(
+				layout.getCompanyId(), layout.getGroupId(), userId,
+				Layout.class.getName(), layout.getPlid(), layout,
+				serviceContext, Collections.emptyMap());
+		}
+		else {
+			layout = _layoutCopyHelper.copyLayout(draftLayout, layout);
+
+			layout.setType(draftLayout.getType());
+			layout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
+
+			layout.setLayoutPrototypeUuid(null);
+
+			_layoutLocalService.updateLayout(layout);
+
+			draftLayout = _layoutLocalService.getLayout(draftLayout.getPlid());
+
+			UnicodeProperties typeSettingsUnicodeProperties =
+				draftLayout.getTypeSettingsProperties();
+
+			if (Validator.isNotNull(layoutPrototypeUuid)) {
+				typeSettingsUnicodeProperties.setProperty(
+					"layoutPrototypeUuid", layoutPrototypeUuid);
+			}
+
+			draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+			_layoutLocalService.updateLayout(draftLayout);
+		}
 	}
 
 	@Reference

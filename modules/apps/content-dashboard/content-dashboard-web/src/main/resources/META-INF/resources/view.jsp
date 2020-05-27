@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:container
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<div class="sheet">
 		<h2 class="sheet-title">
@@ -37,7 +37,7 @@
 </clay:container>
 
 <clay:container
-	className="main-content-body"
+	cssClass="main-content-body"
 >
 	<div class="sheet">
 		<h2 class="sheet-title">

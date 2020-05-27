@@ -87,7 +87,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 	<clay:row>
 		<c:if test="<%= !displaySchedulerOnly %>">
 			<clay:col
-				className='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>'
+				cssClass='<%= "calendar-portlet-column-options " + (columnOptionsVisible ? StringPool.BLANK : "hide") %>'
 				id='<%= renderResponse.getNamespace() + "columnOptions" %>'
 				md="3"
 			>

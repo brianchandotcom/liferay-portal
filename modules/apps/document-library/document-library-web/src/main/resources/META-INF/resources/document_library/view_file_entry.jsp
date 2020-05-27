@@ -98,7 +98,7 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <clay:container-fluid
-	className='<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>'
+	cssClass='<%= portletTitleBasedNavigation ? StringPool.BLANK : "closed sidenav-container sidenav-right" %>'
 	id='<%= renderResponse.getNamespace() + (portletTitleBasedNavigation ? "FileEntry" : "infoPanelId") %>'
 >
 	<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />

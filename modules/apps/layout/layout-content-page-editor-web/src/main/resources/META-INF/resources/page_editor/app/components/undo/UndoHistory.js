@@ -17,8 +17,10 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayDropDownDivider from '@clayui/drop-down/lib/Divider';
 import React, {useState} from 'react';
 
+import {config} from '../../config/index';
 import {useDispatch, useSelector} from '../../store/index';
 import multipleUndo from '../../thunks/multipleUndo';
+import getSegmentsExperienceName from '../../utils/getSegmentsExperienceName';
 import {getActionLabel} from './getActionLabel';
 
 export default function UndoHistory() {
@@ -70,6 +72,16 @@ export default function UndoHistory() {
 								}
 							>
 								{getActionLabel(undoHistoryItem)}
+
+								{undoHistoryItem.segmentsExperienceId !==
+									config.defaultSegmentsExperienceId && (
+									<span>
+										{getSegmentsExperienceName(
+											undoHistoryItem.segmentsExperienceId,
+											store.availableSegmentsExperiences
+										)}
+									</span>
+								)}
 							</ClayDropDown.Item>
 						))}
 					<ClayDropDownDivider />

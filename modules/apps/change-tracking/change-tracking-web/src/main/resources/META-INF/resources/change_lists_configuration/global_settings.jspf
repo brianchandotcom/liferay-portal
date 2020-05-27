@@ -14,11 +14,11 @@
  */
 --%>
 
-<div class="sheet-header">
+<clay:sheet-header>
 	<h2 class="sheet-title"><liferay-ui:message key="global-settings" /></h2>
-</div>
+</clay:sheet-header>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="enable-change-lists" /></h3>
 
 	<div class="sheet-text"><liferay-ui:message key="change-lists-help" /></div>
@@ -26,13 +26,13 @@
 	<div class="form-group">
 		<aui:input label="" name="enableChangeLists" onClick='<%= renderResponse.getNamespace() + "updateSubmitRedirectToOverview()" %>' type="toggle-switch" value="<%= changeListsConfigurationDisplayContext.isChangeListsEnabled() %>" />
 	</div>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-footer">
+<clay:sheet-footer>
 	<aui:button primary="<%= true %>" type="submit" value="submit" />
 
 	<aui:button disabled="<%= !changeListsConfigurationDisplayContext.isChangeListsEnabled() %>" name="submitRedirectToOverview" onClick='<%= renderResponse.getNamespace() + "doSubmitRedirectToOverview()" %>' primary="<%= false %>" type="submit" value="save-and-go-to-overview" />
-</div>
+</clay:sheet-footer>
 
 <script>
 	function <portlet:namespace />doSubmitRedirectToOverview() {

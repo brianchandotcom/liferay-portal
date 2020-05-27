@@ -61,7 +61,7 @@ portletDisplay.setShowBackIcon(true);
 <liferay-ui:error exception="<%= CTCollectionDescriptionException.class %>" message="the-publication-description-is-too-long" />
 <liferay-ui:error exception="<%= CTCollectionNameException.class %>" message="the-publication-name-is-too-long" />
 
-<div class="custom-sheet sheet sheet-lg">
+<clay:sheet>
 	<aui:form action='<%= actionURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="editChangeListFm">
 		<aui:input name="ctCollectionId" type="hidden" value="<%= ctCollectionId %>" />
 
@@ -93,4 +93,4 @@ portletDisplay.setShowBackIcon(true);
 			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
-</div>
+</clay:sheet>

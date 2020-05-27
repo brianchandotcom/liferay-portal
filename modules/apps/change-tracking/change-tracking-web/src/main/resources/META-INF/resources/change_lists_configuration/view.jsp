@@ -23,8 +23,8 @@
 		<aui:input name="navigation" type="hidden" value="<%= changeListsConfigurationDisplayContext.getNavigation() %>" />
 		<aui:input name="redirectToOverview" type="hidden" value="<%= false %>" />
 
-		<div class="sheet sheet-lg">
+		<clay:sheet>
 			<%@ include file="/change_lists_configuration/global_settings.jspf" %>
-		</div>
+		</clay:sheet>
 	</aui:form>
 </clay:container-fluid>

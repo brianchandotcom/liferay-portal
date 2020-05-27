@@ -1386,7 +1386,7 @@ AUI.add(
 						message,
 						toastProps: {
 							autoClose: 10000,
-							className: {left: '0px', top: '0px'},
+							style: {left: 0, top: 0},
 						},
 						type: 'warning',
 					});

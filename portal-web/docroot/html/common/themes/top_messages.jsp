@@ -49,7 +49,7 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 			toastProps: {
 				autoClose: <%= timeout %>,
 				className: '<%= cssClass %>',
-				style: {top: '0px'},
+				style: {top: 0},
 			}
 		});
 	</aui:script>

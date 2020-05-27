@@ -176,9 +176,9 @@ AUI.add(
 				return Liferay.Util.openToast({
 					message,
 					toastProps: {
-						autoClose: timeout || 10000,
+						autoClose: timeout,
 					},
-					type: type || 'warning',
+					type,
 				});
 			},
 

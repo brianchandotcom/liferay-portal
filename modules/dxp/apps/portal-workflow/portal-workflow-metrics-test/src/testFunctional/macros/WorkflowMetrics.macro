@@ -79,10 +79,10 @@ definition {
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
 		AssertElementPresent(
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			name_of_the_assignee = "Test Test");
+			key_nameOfAssignee = "Test Test");
 		AssertElementNotPresent(
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			name_of_the_assignee = "userfn userls");
+			key_nameOfAssignee = "userfn userls");
 	}
 	macro assertBulkCount {
 		Click(
@@ -182,7 +182,7 @@ definition {
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
 		AssertElementPresent(
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			name_of_the_assignee = "No results found.");
+			key_nameOfAssignee = "No results found.");
 	}
 
 	macro assertWorkloadByAssigneeCardEmptyMessage {
@@ -659,7 +659,7 @@ definition {
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
 		Click(
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			name_of_the_assignee = "Test Test");
+			key_nameOfAssignee = "Test Test");
 		Click(locator1 = "WorkflowReassignModal#REASSIGN_BUTTON");
 	}
 

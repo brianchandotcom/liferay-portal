@@ -12,6 +12,7 @@ Import-Package:\
 	*
 Main-Class: com.liferay.portal.tools.service.builder.ServiceBuilder
 -includeresource:\
+	com/liferay/account/service.xml=../../../modules/apps/account/account-service/service.xml,\
 	com/liferay/counter/service.xml=../../../portal-impl/src/com/liferay/counter/service.xml,\
 	com/liferay/dynamic/data/lists/service.xml=../../../modules/apps/dynamic-data-lists/dynamic-data-lists-service/service.xml,\
 	com/liferay/dynamic/data/mapping/service.xml=../../../modules/apps/dynamic-data-mapping/dynamic-data-mapping-service/service.xml,\

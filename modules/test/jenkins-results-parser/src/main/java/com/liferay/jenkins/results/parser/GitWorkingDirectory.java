@@ -559,6 +559,13 @@ public class GitWorkingDirectory {
 		LocalGitBranch localGitBranch, boolean noTags,
 		RemoteGitRef remoteGitRef) {
 
+		return fetch(localGitBranch, noTags, remoteGitRef, 3);
+	}
+
+	public LocalGitBranch fetch(
+		LocalGitBranch localGitBranch, boolean noTags,
+		RemoteGitRef remoteGitRef, int retries) {
+
 		if (remoteGitRef == null) {
 			throw new IllegalArgumentException("Remote Git reference is null");
 		}
@@ -642,7 +649,7 @@ public class GitWorkingDirectory {
 		long start = System.currentTimeMillis();
 
 		GitUtil.ExecutionResult executionResult = executeBashCommands(
-			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 15, sb.toString());
+			retries, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 15, sb.toString());
 
 		long duration = System.currentTimeMillis() - start;
 
@@ -711,6 +718,10 @@ public class GitWorkingDirectory {
 
 	public LocalGitBranch fetch(RemoteGitRef remoteGitRef) {
 		return fetch(null, true, remoteGitRef);
+	}
+
+	public LocalGitBranch fetch(RemoteGitRef remoteGitRef, int retries) {
+		return fetch(null, true, remoteGitRef, retries);
 	}
 
 	public void fetch(RemoteGitRepository remoteGitRepository) {

@@ -124,7 +124,7 @@ public class GitHubDevSyncUtil {
 						gitWorkingDirectory.getRemoteGitBranch(
 							cacheBranchName, gitHubDevGitRemote, true);
 
-					gitWorkingDirectory.fetch(cachedRemoteGitBranch);
+					gitWorkingDirectory.fetch(cachedRemoteGitBranch, 1);
 
 					return cachedRemoteGitBranch;
 				}

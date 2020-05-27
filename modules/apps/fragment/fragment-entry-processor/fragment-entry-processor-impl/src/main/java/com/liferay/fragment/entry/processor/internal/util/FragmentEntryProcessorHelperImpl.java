@@ -25,12 +25,18 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
-import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.template.StringTemplateResource;
@@ -109,31 +115,37 @@ public class FragmentEntryProcessorHelperImpl
 			className = FileEntry.class.getName();
 		}
 
-		InfoDisplayContributor<Object> infoDisplayContributor =
-			(InfoDisplayContributor<Object>)
-				_infoDisplayContributorTracker.getInfoDisplayContributor(
-					className);
+		InfoItemFormProvider<Object> infoItemFormProvider =
+			_infoItemFormProviderTracker.getInfoItemFormProvider(className);
 
-		if (infoDisplayContributor == null) {
+		if (infoItemFormProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						className);
+			}
+
 			return null;
 		}
 
-		Object fieldValue = infoDisplayContributor.getInfoDisplayFieldValue(
+		InfoFieldValue infoFieldValue = infoItemFormProvider.getInfoFieldValue(
 			displayObjectOptional.get(),
-			jsonObject.getString("collectionFieldId"),
+			jsonObject.getString("collectionFieldId"));
+
+		if (infoFieldValue == null) {
+			return null;
+		}
+
+		Object value = infoFieldValue.getValue(
 			fragmentEntryProcessorContext.getLocale());
 
-		if (fieldValue == null) {
-			return null;
+		if (value instanceof ContentAccessor) {
+			ContentAccessor contentAccessor = (ContentAccessor)infoFieldValue;
+
+			value = contentAccessor.getContent();
 		}
 
-		if (fieldValue instanceof ContentAccessor) {
-			ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
-
-			fieldValue = contentAccessor.getContent();
-		}
-
-		return fieldValue;
+		return value;
 	}
 
 	@Override
@@ -191,13 +203,29 @@ public class FragmentEntryProcessorHelperImpl
 			return null;
 		}
 
+		InfoItemFormProvider infoItemFormProvider =
+			_infoItemFormProviderTracker.getInfoItemFormProvider(className);
+
+		if (infoItemFormProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						className);
+			}
+
+			return null;
+		}
+
 		Object object = infoDisplayObjectProvider.getDisplayObject();
 
 		Map<String, Object> fieldsValues = infoDisplaysFieldValues.get(classPK);
 
-		if (MapUtil.isEmpty(fieldsValues)) {
-			fieldsValues = infoDisplayContributor.getInfoDisplayFieldsValues(
-				object, fragmentEntryProcessorContext.getLocale());
+		if (fieldsValues == null) {
+			InfoFormValues infoFormValues =
+				infoItemFormProvider.getInfoFormValues(object);
+
+			fieldsValues = infoFormValues.getMap(
+				fragmentEntryProcessorContext.getLocale());
 
 			infoDisplaysFieldValues.put(classPK, fieldsValues);
 		}
@@ -344,11 +372,17 @@ public class FragmentEntryProcessorHelperImpl
 		return true;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryProcessorHelperImpl.class);
+
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	@Reference
+	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
 
 	@Reference
 	private Portal _portal;

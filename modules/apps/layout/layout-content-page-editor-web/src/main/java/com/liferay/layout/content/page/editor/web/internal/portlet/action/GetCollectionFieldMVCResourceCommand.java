@@ -16,8 +16,12 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
@@ -35,6 +39,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -47,7 +53,6 @@ import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
@@ -100,6 +105,8 @@ public class GetCollectionFieldMVCResourceCommand
 				themeDisplay.getLocale(), segmentsExperienceId, size);
 		}
 		catch (Exception exception) {
+			_log.error("Unable to get collection field", exception);
+
 			jsonObject.put(
 				"error",
 				LanguageUtil.get(
@@ -143,14 +150,9 @@ public class GetCollectionFieldMVCResourceCommand
 					setSegmentsExperienceIdsOptional(
 						new long[] {segmentsExperienceId});
 
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
 				ListObjectReference listObjectReference =
 					listObjectReferenceFactory.getListObjectReference(
 						layoutObjectReferenceJSONObject);
-
-				List<Object> list = layoutListRetriever.getList(
-					listObjectReference, defaultLayoutListRetrieverContext);
 
 				// LPS-111037
 
@@ -162,15 +164,29 @@ public class GetCollectionFieldMVCResourceCommand
 					itemType = FileEntry.class.getName();
 				}
 
-				InfoDisplayContributor<Object> infoDisplayContributor =
-					(InfoDisplayContributor<Object>)
-						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(itemType);
+				InfoItemFormProvider<Object> infoItemFormProvider =
+					_infoItemFormProviderTracker.getInfoItemFormProvider(
+						itemType);
+
+				if (infoItemFormProvider == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to get info item form provdier for class " +
+								itemType);
+					}
+
+					return JSONFactoryUtil.createJSONObject();
+				}
+
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				List<Object> list = layoutListRetriever.getList(
+					listObjectReference, defaultLayoutListRetrieverContext);
 
 				for (Object object : list) {
 					jsonArray.put(
 						_getDisplayObjectJSONObject(
-							infoDisplayContributor, object, locale));
+							infoItemFormProvider, object, locale));
 				}
 
 				InfoListRenderer infoListRenderer =
@@ -212,41 +228,49 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private JSONObject _getDisplayObjectJSONObject(
-			InfoDisplayContributor<Object> infoDisplayContributor,
-			Object object, Locale locale)
-		throws PortalException {
+		InfoItemFormProvider<Object> infoItemFormProvider, Object object,
+		Locale locale) {
 
 		JSONObject displayObjectJSONObject = JSONFactoryUtil.createJSONObject();
 
-		Map<String, Object> infoDisplayFieldsValues =
-			infoDisplayContributor.getInfoDisplayFieldsValues(object, locale);
+		InfoFormValues infoFormValues = infoItemFormProvider.getInfoFormValues(
+			object);
 
-		for (Map.Entry<String, Object> entry :
-				infoDisplayFieldsValues.entrySet()) {
+		for (InfoFieldValue infoFieldValue :
+				infoFormValues.getInfoFieldValues()) {
 
-			Object fieldValue = entry.getValue();
+			Object value = infoFieldValue.getValue(locale);
 
-			if (fieldValue instanceof ContentAccessor) {
-				ContentAccessor contentAccessor = (ContentAccessor)fieldValue;
+			if (value instanceof ContentAccessor) {
+				ContentAccessor contentAccessor = (ContentAccessor)value;
 
-				fieldValue = contentAccessor.getContent();
+				value = contentAccessor.getContent();
 			}
 
-			displayObjectJSONObject.put(entry.getKey(), fieldValue);
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			displayObjectJSONObject.put(infoField.getName(), value);
 		}
 
-		displayObjectJSONObject.put(
-			"className", infoDisplayContributor.getClassName()
-		).put(
-			"classPK",
-			infoDisplayContributor.getInfoDisplayObjectClassPK(object)
-		);
+		InfoItemClassPKReference infoItemClassPKReference =
+			infoFormValues.getInfoItemClassPKReference();
+
+		if (infoItemClassPKReference != null) {
+			displayObjectJSONObject.put(
+				"className", infoItemClassPKReference.getClassName()
+			).put(
+				"classPK", infoItemClassPKReference.getClassPK()
+			);
+		}
 
 		return displayObjectJSONObject;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetCollectionFieldMVCResourceCommand.class);
+
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
 
 	@Reference
 	private InfoListRendererTracker _infoListRendererTracker;

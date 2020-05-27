@@ -15,14 +15,17 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
-import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayField;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoForm;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -33,7 +36,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Objects;
-import java.util.Set;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -43,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
+ * @author Jorge Ferrer
  */
 @Component(
 	immediate = true,
@@ -68,10 +71,16 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 			itemType = FileEntry.class.getName();
 		}
 
-		InfoDisplayContributor<?> infoDisplayContributor =
-			_infoDisplayContributorTracker.getInfoDisplayContributor(itemType);
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemFormProviderTracker.getInfoItemFormProvider(itemType);
 
-		if (infoDisplayContributor == null) {
+		if (infoItemFormProvider == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get info item form provider for class " +
+						itemType);
+			}
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONFactoryUtil.createJSONArray());
@@ -88,18 +97,19 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 		try {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-			Set<InfoDisplayField> infoDisplayFields =
-				infoDisplayContributor.getInfoDisplayFields(
-					GetterUtil.getLong(itemSubtype), themeDisplay.getLocale());
+			InfoForm infoForm = infoItemFormProvider.getInfoForm(
+				GetterUtil.getLong(itemSubtype));
 
-			for (InfoDisplayField infoDisplayField : infoDisplayFields) {
+			for (InfoField infoField : infoForm.getAllInfoFields()) {
 				jsonArray.put(
 					JSONUtil.put(
-						"key", infoDisplayField.getKey()
+						"key", infoField.getName()
 					).put(
-						"label", infoDisplayField.getLabel()
+						"label", infoField.getLabel(themeDisplay.getLocale())
 					).put(
-						"type", infoDisplayField.getType()
+						"type",
+						infoField.getInfoFieldType(
+						).getName()
 					));
 			}
 
@@ -107,6 +117,8 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 				resourceRequest, resourceResponse, jsonArray);
 		}
 		catch (Exception exception) {
+			_log.error("Unable to get collection mapping fields", exception);
+
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
 				JSONUtil.put(
@@ -117,7 +129,10 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 		}
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetCollectionMappingFieldsMVCResourceCommand.class);
+
 	@Reference
-	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
 
 }

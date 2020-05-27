@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
@@ -43,23 +42,23 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Julio Camarero
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
 		"product.navigation.control.menu.category.key=" + ProductNavigationControlMenuCategoryKeys.TOOLS,
-		"product.navigation.control.menu.entry.order:Integer=100"
+		"product.navigation.control.menu.entry.order:Integer=10"
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class PortletHeaderProductNavigationControlMenuEntry
+public class CompanyLogoProductNavigationControlMenuEntry
 	extends BaseJSPProductNavigationControlMenuEntry
 	implements ProductNavigationControlMenuEntry {
 
 	@Override
 	public String getIconJspPath() {
-		return "/entries/portlet_header.jsp";
+		return "/entries/company_logo.jsp";
 	}
 
 	@Override
@@ -89,9 +88,7 @@ public class PortletHeaderProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (_isEnableGlobalMenu(themeDisplay.getCompanyId()) &&
-			_isGlobalMenuApp(themeDisplay)) {
-
+		if (!_isEnableGlobalMenu(themeDisplay.getCompanyId())) {
 			return false;
 		}
 
@@ -104,6 +101,13 @@ public class PortletHeaderProductNavigationControlMenuEntry
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (portletDisplay == null) {
+			return false;
+		}
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
 			return false;
 		}
 
@@ -140,29 +144,8 @@ public class PortletHeaderProductNavigationControlMenuEntry
 		return false;
 	}
 
-	private boolean _isGlobalMenuApp(ThemeDisplay themeDisplay) {
-		if (Validator.isNull(themeDisplay.getPpid())) {
-			return false;
-		}
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if ((layout != null) && !layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortletHeaderProductNavigationControlMenuEntry.class);
+		CompanyLogoProductNavigationControlMenuEntry.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

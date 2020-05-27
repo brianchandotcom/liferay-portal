@@ -11,6 +11,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-soy")
+	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:map:map-taglib")
 	compileOnly project(":apps:portal:portal-upgrade-api")
 	compileOnly project(":core:petra:petra-function")

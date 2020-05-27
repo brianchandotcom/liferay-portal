@@ -14,9 +14,11 @@
 
 package com.liferay.external.reference.service;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.BaseLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
@@ -44,6 +46,13 @@ public interface ERAccountEntryLocalService extends BaseLocalService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ERAccountEntryLocalServiceUtil} to access the er account entry local service. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERAccountEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public AccountEntry addOrUpdateAccountEntry(
+			String externalReferenceCode, long userId,
+			long parentAccountEntryId, String name, String description,
+			boolean deleteLogo, String[] domains, byte[] logoBytes,
+			String taxId, String type, int status,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.

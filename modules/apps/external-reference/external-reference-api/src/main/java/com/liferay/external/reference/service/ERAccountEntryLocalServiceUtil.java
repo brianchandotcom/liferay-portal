@@ -37,6 +37,20 @@ public class ERAccountEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.external.reference.service.impl.ERAccountEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.account.model.AccountEntry
+			addOrUpdateAccountEntry(
+				String externalReferenceCode, long userId,
+				long parentAccountEntryId, String name, String description,
+				boolean deleteLogo, String[] domains, byte[] logoBytes,
+				String taxId, String type, int status,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addOrUpdateAccountEntry(
+			externalReferenceCode, userId, parentAccountEntryId, name,
+			description, deleteLogo, domains, logoBytes, taxId, type, status,
+			serviceContext);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.

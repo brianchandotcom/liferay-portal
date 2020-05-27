@@ -188,6 +188,28 @@ public class FileInstallConfigTest {
 			"testUntypedString", properties.get("configUntypedString"));
 	}
 
+	@Test
+	public void testConfigurationWithComment() throws Exception {
+		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
+			".testConfigurationWithComment");
+
+		_configurationPath = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			configurationPid.concat(".config"));
+
+		String testKey = "testKey";
+		String testValue = "testValue";
+
+		_configuration = _createConfiguration(
+			configurationPid,
+			StringBundler.concat(
+				"#comment\n", testKey, StringPool.EQUAL, testValue));
+
+		Dictionary<String, Object> dictionary = _configuration.getProperties();
+
+		Assert.assertEquals("testValue", dictionary.get(testKey));
+	}
+
 	private Configuration _createConfiguration(
 			String configurationPid, String content)
 		throws Exception {

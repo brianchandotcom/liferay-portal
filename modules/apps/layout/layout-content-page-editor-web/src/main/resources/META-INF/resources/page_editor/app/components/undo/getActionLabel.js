@@ -50,7 +50,11 @@ export function getActionLabel(action) {
 				action.itemName
 			);
 		case SELECT_SEGMENTS_EXPERIENCE:
-			return Liferay.Language.get('change-experience');
+			return Liferay.Util.sub(
+				Liferay.Language.get('select-x-experience'),
+				action.segmentsExperienceName
+			);
+
 		case UPDATE_COL_SIZE_START:
 			return Liferay.Language.get('update-column-size');
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:

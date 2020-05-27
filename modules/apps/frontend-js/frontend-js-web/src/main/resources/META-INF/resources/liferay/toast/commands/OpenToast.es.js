@@ -17,6 +17,8 @@ import {render} from 'frontend-js-react-web';
 import React from 'react';
 import {unmountComponentAtNode} from 'react-dom';
 
+import UnsafeHTML from './UnsafeHTML.es';
+
 const DEFAULT_ALERT_CONTAINER_ID = 'alertContainer';
 
 const DEFAULT_RENDER_DATA = {
@@ -25,9 +27,11 @@ const DEFAULT_RENDER_DATA = {
 
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
-const Text = ({allowHTML, string}) => {
-	if (allowHTML) {
-		return <div dangerouslySetInnerHTML={{__html: string}} />;
+const HTML_REGEX = /<[^>]*>|&[^;]+;/;
+
+const SanitizeText = ({string}) => {
+	if (HTML_REGEX.test(string)) {
+		return <UnsafeHTML markup={string} />;
 	}
 
 	return string;
@@ -49,8 +53,8 @@ const getDefaultAlertContainer = () => {
  * Function that implements the Toast pattern, which allows to present feedback
  * to user actions as a toast message in the lower left corner of the page
  *
- * @param {string} message The message to show in the toast notification
- * @param {string} title The title associated with the message
+ * @param {string|HTML} message The message to show in the toast notification
+ * @param {string|HTML} title The title associated with the message
  * @param {string} displayType The displayType of notification to show. It can be one of the
  * following: 'danger', 'info', 'success', 'warning'
  * @return {ClayToast} The Alert toast created
@@ -83,13 +87,11 @@ function openToast({
 				displayType={type}
 				onClick={(event) => onClick({event, onClose})}
 				onClose={onClose}
-				title={
-					title ? <Text allowHTML={htmlTitle} string={title} /> : null
-				}
+				title={title ? <SanitizeText string={title} /> : null}
 				variant={variant}
 				{...toastProps}
 			>
-				<Text allowHTML={htmlMessage} string={message} />
+				<SanitizeText string={message} />
 			</ClayAlert>
 		</ClayAlert.ToastContainer>,
 		renderData,

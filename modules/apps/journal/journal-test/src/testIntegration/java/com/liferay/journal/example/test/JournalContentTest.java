@@ -46,8 +46,8 @@ import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.spring.mock.web.portlet.MockPortletResponse;
-import com.liferay.spring.mock.web.portlet.MockRenderRequest;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletResponse;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 
 import java.util.Collections;
 import java.util.List;

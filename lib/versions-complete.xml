@@ -5231,7 +5231,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/portletmvc4spring-test.jar</file-name>
-				<version>5.2.0</version>
+				<version>5.2.1</version>
 				<project-name>PortletMVC4Spring</project-name>
 				<project-url>https://github.com/liferay/portletmvc4spring</project-url>
 				<licenses>

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.spring.mock.web.portlet.MockActionResponse;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 
 import javax.portlet.ActionRequest;
 

@@ -30,7 +30,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.spring.mock.web.portlet.MockPortletRequest;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 
 import java.lang.reflect.Field;
 

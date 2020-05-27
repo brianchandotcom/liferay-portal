@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portlet.internal.PortalContextImpl;
-import com.liferay.spring.mock.web.portlet.MockPortletURL;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletURL;
 
 import java.net.URI;
 import java.net.URISyntaxException;

@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.spring.mock.web.portlet.MockPortletRequest;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;

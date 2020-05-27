@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.spring.mock.web.portlet.MockPortletSession;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletSession;
 
 import java.io.IOException;
 

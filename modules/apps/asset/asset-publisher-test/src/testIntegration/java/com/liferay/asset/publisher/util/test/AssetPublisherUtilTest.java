@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.spring.mock.web.portlet.MockPortletPreferences;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletPreferences;
 
 import java.util.Arrays;
 import java.util.List;

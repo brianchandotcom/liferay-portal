@@ -26,8 +26,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.index.IndexInformation;
 import com.liferay.portal.util.HttpImpl;
-import com.liferay.spring.mock.web.portlet.MockRenderRequest;
-import com.liferay.spring.mock.web.portlet.MockRenderResponse;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderResponse;
 
 import javax.portlet.RenderRequest;
 

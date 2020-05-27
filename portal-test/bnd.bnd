@@ -18,7 +18,7 @@ Export-Package:\
 	com.liferay.portlet.dynamicdatamapping.util.test,\
 	com.liferay.portlet.expando.util.test,\
 	com.liferay.portlet.passwordpoliciesadmin.util.test,\
-	com.liferay.spring.mock.web.portlet,\
+	com.liferay.portletmvc4spring.test.mock.web.portlet,\
 	\
 	junit.*,\
 	\

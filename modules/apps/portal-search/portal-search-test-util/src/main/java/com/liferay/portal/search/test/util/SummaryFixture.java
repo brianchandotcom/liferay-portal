@@ -30,8 +30,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.spring.mock.web.portlet.MockPortletResponse;
-import com.liferay.spring.mock.web.portlet.MockRenderRequest;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletResponse;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockRenderRequest;
 
 import java.util.Collections;
 import java.util.Locale;

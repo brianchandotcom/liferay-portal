@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsImpl;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.spring.mock.web.portlet.MockPortletRequest;
 
 import java.util.Collections;
 import java.util.List;

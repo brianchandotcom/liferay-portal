@@ -39,8 +39,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.spring.mock.web.portlet.MockPortletPreferences;
-import com.liferay.spring.mock.web.portlet.MockPortletRequest;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletPreferences;
+import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 
 import java.util.ArrayList;
 import java.util.List;

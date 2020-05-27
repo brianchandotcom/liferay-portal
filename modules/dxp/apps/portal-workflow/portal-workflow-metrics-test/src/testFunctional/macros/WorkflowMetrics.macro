@@ -75,6 +75,15 @@ definition {
 		}
 	}
 
+	macro assertAssignees {
+		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+		AssertElementPresent(
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
+			name_of_the_assignee = "Test Test");
+		AssertElementNotPresent(
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
+			name_of_the_assignee = "userfn userls");
+	}
 	macro assertBulkCount {
 		Click(
 			key_rowNumber = "1",
@@ -86,9 +95,8 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
 	}
-
+	
 	macro assertBulkModalTable {
-		echo("Checking table");
 
 		AssertTextEquals(
 			key_columnName = "ID",
@@ -168,6 +176,13 @@ definition {
 		AssertTextEquals(
 			locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART_UNIT_LABEL",
 			value1 = "inst / day");
+	}
+
+	macro assertNoAssignees {
+		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+		AssertElementPresent(
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
+			name_of_the_assignee = "No results found.");
 	}
 
 	macro assertWorkloadByAssigneeCardEmptyMessage {
@@ -511,6 +526,15 @@ definition {
 		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_${key_workflowFilterOption}_ITEMS_TITLE");
 	}
 
+	macro goToReassignSelectTask {
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
+	}
+
 	macro goToWorkflowAllItems {
 		ProductMenu.gotoPortlet(
 			category = "Workflow",
@@ -631,6 +655,14 @@ definition {
 		Click(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CUSTOM_RANGE_APPLY");
 	}
 
+	macro selectNewAssignee {
+		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+		Click(
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
+			name_of_the_assignee = "Test Test");
+		Click(locator1 = "WorkflowReassignModal#REASSIGN_BUTTON");
+	}
+
 	macro selectNewAssigneeBulkTask {
 		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
 		Click(locator1 = "WorkflowReassignModal#BULK_NEW_ASSIGNEE");
@@ -725,6 +757,26 @@ definition {
 		if (IsElementPresent(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME")) {
 			Click(locator1 = "WorkflowMetrics#METRICS_WORKLOAD_BY_ASSIGNEE_SEARCH_ASSIGNEE_NAME");
 		}
+	}
+
+	macro singleReassignSetup {
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry Title 1");
 	}
 
 	macro tearDown {
@@ -1084,88 +1136,4 @@ definition {
 		}
 	}
 
-	macro assertBulkModalTable {
-		echo("Checking table");
-
-		AssertTextEquals(
-			key_columnName = "ID",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "ID");
-
-		AssertElementPresent(
-			key_columnName = "Item Subject",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
-
-		AssertElementPresent(
-			key_columnName = "Process Step",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
-
-		AssertElementPresent(
-			key_columnName = "Current Assignee",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
-	}
-
-	macro goToWorkflowAllItems {
-		ProductMenu.gotoPortlet(
-			category = "Workflow",
-			panel = "Control Panel",
-			portlet = "Metrics");
-
-		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
-
-		Click(locator1 = "WorkflowMetrics#DASHBOARD_TOTAL_PENDING_ITEMS_VALUE");
-	}
-
-	macro goToBulkReassignSelectNewAssignee {
-		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
-		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
-	}
-
-	macro goToBulkReassignSelectTasks {
-		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
-		Click(
-			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
-			task = "1");
-		Click(locator1 = "WorkflowAllItems#REASSIGN_TASK_DROPDOWN");
-	}
-
-	macro bulkReassignSetup {
-
-		WorkflowMetrics.createUsersAndInstancesWithGroovy(
-			numberOfBlogInstances = "3",
-			numberOfUsers = "3");
-	}
-
-	macro selectNewAssigneeBulkTask {
-		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
-		Click(locator1 = "WorkflowReassignModal#BULK_NEW_ASSIGNEE");
-		Click(
-			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			name_of_the_assignee = "Test Test");
-		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
-	}
-
-	macro createUsersAndInstancesWithGroovy {
-		var iterator = "1";
-		var numberOfBlogInstances = MathUtil.sum("${numberOfBlogInstances}", "1");
-
-		WorkflowMetrics.createUsersGroovy(numberOfUsers = "${numberOfUsers}");
-
-		ProductMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Site Administration",
-			portlet = "Workflow");
-
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
-
-		while ("${iterator}" != "${numberOfBlogInstances}") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry ${iterator} Content",
-				entryTitle = "Blogs Entry Title ${iterator}");
-
-			var iterator = MathUtil.sum("${iterator}", "1");
-		}
-	}
 }

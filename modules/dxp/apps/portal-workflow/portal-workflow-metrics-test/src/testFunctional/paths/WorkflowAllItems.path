@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REASSIGN_ICON</td>
+	<td>xpath=(//div[@class="quick-action-menu"]//button[1])[${task}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REASSIGN_TASK_DROPDOWN</td>
 	<td>//div[@class='dropdown-menu show']//button[@class='dropdown-item'][contains(text(),'Reassign Task')]</td>
 	<td></td>
@@ -136,6 +141,11 @@
 <tr>
 	<td>WORKFLOW_INSTANCE_NAME</td>
 	<td>//td[contains(text(),'${key_workflowInstanceName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLEAR_ALL_BUTTON</td>
+	<td>//button[@data-testid='clearAll']</td>
 	<td></td>
 </tr>
 </tbody>

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REASSIGN_MODAL</td>
+	<td>//div[@data-testid="reassignModal"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ALL</td>
 	<td>xpath=(//div[@data-testid="bulkReassignModal"]//label)</td>
 	<td></td>
@@ -21,6 +26,11 @@
 <tr>
 	<td>NEXT_BUTTON</td>
 	<td>//button[@data-testid="nextButton"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REASSIGN_BUTTON</td>
+	<td>//button[@data-testid="reassignButton"]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +61,11 @@
 <tr>
 	<td>BULK_NEW_ASSIGNEE</td>
 	<td>//input[contains(@placeholder,'Search for an Assignee')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_NEW_ASSIGNEE</td>
+	<td>//input[contains(@data-testid,'autocompleteInput')]</td>
 	<td></td>
 </tr>
 <tr>

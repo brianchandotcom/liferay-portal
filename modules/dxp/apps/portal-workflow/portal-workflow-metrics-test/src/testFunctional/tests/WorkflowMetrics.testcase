@@ -69,75 +69,6 @@ definition {
 		}
 	}
 
-	test ReassignWorkflowInstance {
-		property portal.acceptance = "false";
-
-		WorkflowMetrics.bulkReassignSetup();
-
-		WorkflowMetrics.goToWorkflowAllItems();
-
-		WorkflowMetrics.goToBulkReassignSelectTasks();
-		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
-		WorkflowMetrics.assertBulkModalTable();
-		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
-		WorkflowMetrics.assertBulkModalTable();
-		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
-		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
-		WorkflowMetrics.selectNewAssigneeBulkTask();
-		WorkflowMetrics.goToWorkflowAllItems();
-
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 1",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-		echo("Checked Bulk");
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 1",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 2",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 3",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-	}
-
-
-	test BulkReassignWorkflowInstances {
-		property portal.acceptance = "false";
-
-		WorkflowMetrics.bulkReassignSetup();
-
-		WorkflowMetrics.goToWorkflowAllItems();
-
-		WorkflowMetrics.goToBulkReassignSelectTasks();
-		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
-		WorkflowMetrics.assertBulkModalTable();
-		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
-		WorkflowMetrics.assertBulkModalTable();
-		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
-		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
-		WorkflowMetrics.selectNewAssigneeBulkTask();
-		WorkflowMetrics.goToWorkflowAllItems();
-
-		AssertElementPresent(
-			key_workflowInstanceAssignee = "Test Test",
-			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 1",
-			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
-		echo("Checked Bulk");
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 1",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 2",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-		AssertElementPresent(
-			key_workflowAssetTitle = "Blogs Entry Title 3",
-			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
-	}
-
 	@description = "LRQA-53648 Automate LPS-89014: [SLA] Create new SLA for total process resolution"
 	@priority = "5"
 	test AddSLAForTotalProcessResolution {
@@ -1059,6 +990,40 @@ definition {
 			isNotPresent = "1user user1,2user user2,3user user3,Unassigned",
 			isPresent = "Blogs Entry Title 1,Blogs Entry Title 2,Blogs Entry Title 3,Blogs Entry Title 4",
 			taskName = "Completed");
+	}
+
+	test ReassignWorkflowInstance {
+		property portal.acceptance = "false";
+		WorkflowMetrics.singleReassignSetup();
+		WorkflowMetrics.goToWorkflowAllItems();
+		WorkflowMetrics.goToReassignSelectTask();
+		WorkflowMetrics.assertBulkModalTable();
+		AssertElementPresent(locator1 = "WorkflowReassignModal#REASSIGN_MODAL");
+		WorkflowMetrics.assertAssignees();
+		WorkflowMetrics.selectNewAssignee();
+		MouseOver(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+		Click(
+			locator1 = "WorkflowAllItems#REASSIGN_ICON",
+			task = "1");
+		AssertElementPresent(locator1 = "WorkflowReassignModal#REASSIGN_MODAL");
+		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+		WorkflowMetrics.assertNoAssignees();
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+		WorkflowMetrics.goToWorkflowAllItems();
+		Click(locator1 = "WorkflowAllItems#CLEAR_ALL_BUTTON");
+		MouseOver(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+		AssertElementNotPresent(
+			locator1 = "WorkflowAllItems#REASSIGN_ICON",
+			task = "1");
 	}
 
 	@description = "LRQA-53638 Automate LPS-100677: [Performance] Search for a step in all steps performance list and LRQA-53637 Automate LPS-100678: [Performance] Filter all step performance by completion period"

@@ -16,8 +16,8 @@ package com.liferay.depot.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.depot.configuration.DepotConfiguration;
-import com.liferay.depot.web.internal.constants.DepotAdminPanelCategoryKeys;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.app.order:Integer=100",
-		"panel.category.key=" + DepotAdminPanelCategoryKeys.CONTROL_PANEL_DEPOT_ADMIN
+		"panel.category.key=" + PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS_CONTENT
 	},
 	service = PanelApp.class
 )

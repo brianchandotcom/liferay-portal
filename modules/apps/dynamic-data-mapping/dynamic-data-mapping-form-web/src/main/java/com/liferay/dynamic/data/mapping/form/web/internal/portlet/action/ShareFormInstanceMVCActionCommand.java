@@ -53,7 +53,7 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		try {
-			_ddmFormInstanceService.sendShareFormInstanceEmail(
+			_ddmFormInstanceService.sendEmail(
 				ParamUtil.getLong(actionRequest, "formInstanceId"),
 				ParamUtil.getString(actionRequest, "message"),
 				ParamUtil.getString(actionRequest, "subject"),

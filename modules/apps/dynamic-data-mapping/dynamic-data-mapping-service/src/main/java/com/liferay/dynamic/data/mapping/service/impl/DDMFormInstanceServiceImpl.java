@@ -187,7 +187,7 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public void sendShareFormInstanceEmail(
+	public void sendEmail(
 			long formInstanceId, String message, String subject,
 			String[] toEmailAddresses)
 		throws Exception {
@@ -195,7 +195,7 @@ public class DDMFormInstanceServiceImpl extends DDMFormInstanceServiceBaseImpl {
 		_ddmFormInstanceModelResourcePermission.check(
 			getPermissionChecker(), formInstanceId, ActionKeys.UPDATE);
 
-		ddmFormInstanceLocalService.sendShareFormInstanceEmail(
+		ddmFormInstanceLocalService.sendEmail(
 			getUserId(), message, subject, toEmailAddresses);
 	}
 

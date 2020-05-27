@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LIST_ENTRY_INFO</td>
+	<td>//li[contains(.,'${key_listEntry}')]//*[contains(@class,'label')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ENTRY_STATUS</td>
+	<td>//li[contains(.,'${key_listEntry}')]//*[contains(@class,'label-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LIST_ENTRY_ELLIPSIS</td>
 	<td>//li[@data-qa-id='row'][contains(.,'${key_listEntry}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

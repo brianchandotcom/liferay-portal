@@ -81,32 +81,13 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		Layout draftLayout = _layoutLocalService.getLayout(
 			themeDisplay.getPlid());
 
-		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
-
-		draftLayout = _layoutLocalService.updateLayout(draftLayout);
-
 		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
 
 		LayoutPermissionUtil.check(
 			themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(draftLayout.getClassPK());
-
-		LayoutStructureUtil.deleteMarkedForDeletionItems(
-			draftLayout.getCompanyId(), _contentPageEditorListenerTracker,
-			draftLayout.getGroupId(), draftLayout.getPlid(), _portletRegistry);
-
-		_layoutCopyHelper.copyLayout(draftLayout, layout);
-
-		_layoutPageTemplateEntryService.updateStatus(
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			new Date());
+			_publishLayoutPageTemplateEntry(draftLayout, layout);
 
 		String portletId = _portal.getPortletId(actionRequest);
 
@@ -129,6 +110,35 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		MultiSessionMessages.add(actionRequest, key);
 
 		sendRedirect(actionRequest, actionResponse);
+	}
+
+	private LayoutPageTemplateEntry _publishLayoutPageTemplateEntry(
+			Layout draftLayout, Layout layout)
+		throws Exception {
+
+		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		draftLayout = _layoutLocalService.updateLayout(draftLayout);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(draftLayout.getClassPK());
+
+		LayoutStructureUtil.deleteMarkedForDeletionItems(
+			draftLayout.getCompanyId(), _contentPageEditorListenerTracker,
+			draftLayout.getGroupId(), draftLayout.getPlid(), _portletRegistry);
+
+		_layoutCopyHelper.copyLayout(draftLayout, layout);
+
+		_layoutPageTemplateEntryService.updateStatus(
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		_layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			new Date());
+
+		return layoutPageTemplateEntry;
 	}
 
 	@Reference

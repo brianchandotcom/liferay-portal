@@ -84,22 +84,22 @@ const RatingsThumbs = ({
 	});
 
 	const {negativeVotes, positiveVotes, pressed} = state;
-	const [buttonUpAnimation, setButtonUpAnimation] = useState(false);
-	const [buttonDownAnimation, setButtonDownAnimation] = useState(false);
+	const [animatedButtonUp, setAnimatedButtonUp] = useState(false);
+	const [animatedButtonDown, setAnimatedButtonDown] = useState(false);
 
 	const isMounted = useIsMounted();
 
-	const AnimationEndUp = () => {
-		setButtonUpAnimation(false);
+	const handleAnimationEndUp = () => {
+		setAnimatedButtonUp(false);
 	};
 
-	const AnimationEndDown = () => {
-		setButtonDownAnimation(false);
+	const handleAnimationEndDown = () => {
+		setAnimatedButtonDown(false);
 	};
 
 	const voteUp = useCallback(() => {
 		if (pressed !== PRESSED_UP) {
-			setButtonUpAnimation(true);
+			setAnimatedButtonUp(true);
 		}
 
 		dispatch({type: VOTE_UP});
@@ -110,7 +110,7 @@ const RatingsThumbs = ({
 
 	const voteDown = useCallback(() => {
 		if (pressed !== PRESSED_DOWN) {
-			setButtonDownAnimation(true);
+			setAnimatedButtonDown(true);
 		}
 
 		dispatch({type: VOTE_DOWN});
@@ -170,7 +170,7 @@ const RatingsThumbs = ({
 				aria-pressed={pressed === PRESSED_UP}
 				borderless
 				className={classNames('btn-thumbs-up', {
-					'btn-animation': buttonUpAnimation,
+					'btn-animated': animatedButtonUp,
 				})}
 				disabled={disabled}
 				displayType="secondary"
@@ -183,7 +183,7 @@ const RatingsThumbs = ({
 					<span className="off">
 						<ClayIcon symbol="thumbs-up" />
 					</span>
-					<span className="on" onAnimationEnd={AnimationEndUp}>
+					<span className="on" onAnimationEnd={handleAnimationEndUp}>
 						<ClayIcon symbol="thumbs-up-full" />
 					</span>
 				</span>
@@ -195,7 +195,7 @@ const RatingsThumbs = ({
 				aria-pressed={pressed === PRESSED_DOWN}
 				borderless
 				className={classNames('btn-thumbs-down', {
-					'btn-animation': buttonDownAnimation,
+					'btn-animated': animatedButtonDown,
 				})}
 				disabled={disabled}
 				displayType="secondary"
@@ -208,7 +208,10 @@ const RatingsThumbs = ({
 					<span className="off">
 						<ClayIcon symbol="thumbs-down" />
 					</span>
-					<span className="on" onAnimationEnd={AnimationEndDown}>
+					<span
+						className="on"
+						onAnimationEnd={handleAnimationEndDown}
+					>
 						<ClayIcon symbol="thumbs-down-full" />
 					</span>
 				</span>

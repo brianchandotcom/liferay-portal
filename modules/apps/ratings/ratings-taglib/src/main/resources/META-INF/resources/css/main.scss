@@ -5,19 +5,19 @@
 	.btn {
 		overflow: hidden;
 
-		.inline-item .animated-counter {
+		.inline-item .counter {
 			font-size: 0.875rem;
 		}
 	}
 
-	.animated-counter {
+	.counter {
 		$animation-duration: 300ms;
 
 		display: inline-flex;
 		justify-content: center;
 		position: relative;
 
-		&.animating-down {
+		&.counter-animated-down {
 			.current {
 				animation-duration: $animation-duration;
 				animation-name: fadeInDown;
@@ -29,7 +29,7 @@
 			}
 		}
 
-		&.animating-up {
+		&.counter-animated-up {
 			.current {
 				animation-duration: $animation-duration;
 				animation-name: fadeInUp;
@@ -83,7 +83,7 @@
 			}
 		}
 
-		&.btn-animation {
+		&.btn-animated {
 			&[aria-pressed='true'] {
 				.on {
 					animation-duration: $animation-duration;
@@ -107,7 +107,7 @@
 			color: $red;
 		}
 
-		&.btn-animation {
+		&.btn-animated {
 			&[aria-pressed='true'] .on {
 				animation-name: heart-on;
 			}
@@ -121,7 +121,7 @@
 			color: $primary;
 		}
 
-		&.btn-animation {
+		&.btn-animated {
 			&[aria-pressed='true'] {
 				.on {
 					animation-name: thumbs-on;

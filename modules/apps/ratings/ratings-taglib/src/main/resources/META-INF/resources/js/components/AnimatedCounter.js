@@ -28,14 +28,14 @@ function usePrevious(value) {
 }
 
 function SlidingText({current, previous}) {
-	const [animating, setAnimating] = useState(false);
+	const [animated, setAnimated] = useState(false);
 	const direction = current > previous ? 'up' : 'down';
 	const isMounted = useIsMounted();
 	const maxLength = current.toString().length + 1;
 
 	const finishAnimation = () => {
 		if (isMounted) {
-			setAnimating(false);
+			setAnimated(false);
 		}
 	};
 
@@ -45,14 +45,14 @@ function SlidingText({current, previous}) {
 			Number.isInteger(previous) &&
 			current !== previous
 		) {
-			setAnimating(true);
+			setAnimated(true);
 		}
 	}, [current, previous]);
 
 	return (
 		<span
-			className={classNames('animated-counter', {
-				[`animating-${direction}`]: animating,
+			className={classNames('counter', {
+				[`counter-animated-${direction}`]: animated,
 			})}
 			onAnimationEnd={finishAnimation}
 			style={{
@@ -60,7 +60,7 @@ function SlidingText({current, previous}) {
 			}}
 		>
 			<span className="current">{current}</span>
-			{animating && <span className="previous">{previous}</span>}
+			{animated && <span className="previous">{previous}</span>}
 		</span>
 	);
 }

@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
 import org.dom4j.Element;
 
 import org.json.JSONObject;
@@ -23,7 +21,18 @@ import org.json.JSONObject;
 /**
  * @author Kenji Heigel
  */
-public class PoshiTestResult extends BaseTestResult {
+public class PoshiJunitTestResult extends JunitTestResult {
+
+	@Override
+	public String getDisplayName() {
+		String testName = getTestName();
+
+		if (testName.startsWith("test[")) {
+			return testName.substring(5, testName.length() - 1);
+		}
+
+		return getSimpleClassName() + "." + testName;
+	}
 
 	@Override
 	public Element getGitHubElement() {
@@ -62,30 +71,8 @@ public class PoshiTestResult extends BaseTestResult {
 		return downstreamBuildListItemElement;
 	}
 
-	protected PoshiTestResult(Build build, JSONObject caseJSONObject) {
+	protected PoshiJunitTestResult(Build build, JSONObject caseJSONObject) {
 		super(build, caseJSONObject);
-	}
-
-	protected String getConsoleOutputURL() {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getTestrayLogsURL());
-		sb.append("/jenkins-console.txt.gz");
-
-		return sb.toString();
-	}
-
-	protected String getLiferayLogURL() {
-		StringBuilder sb = new StringBuilder();
-
-		String name = getDisplayName();
-
-		sb.append(getTestrayLogsURL());
-		sb.append("/");
-		sb.append(name.replace('#', '_'));
-		sb.append("/liferay-log.txt.gz");
-
-		return sb.toString();
 	}
 
 	protected String getPoshiReportURL() {
@@ -112,20 +99,6 @@ public class PoshiTestResult extends BaseTestResult {
 		sb.append("/summary.html.gz");
 
 		return sb.toString();
-	}
-
-	protected boolean hasLiferayLog() {
-		String liferayLog = null;
-
-		try {
-			liferayLog = JenkinsResultsParserUtil.toString(
-				getLiferayLogURL(), false, 0, 0, 0);
-		}
-		catch (IOException ioException) {
-			return false;
-		}
-
-		return !liferayLog.isEmpty();
 	}
 
 }

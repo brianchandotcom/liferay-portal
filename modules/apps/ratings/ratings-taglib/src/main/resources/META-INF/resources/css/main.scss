@@ -47,32 +47,11 @@
 	}
 }
 
-.ratings-like {
-	button {
-		&:hover:not(:disabled) .lexicon-icon {
-			transform: scale(1.3);
-		}
-	}
-
-	.lexicon-icon {
-		transition: all 0.3s ease-in-out;
-	}
-
-	.lexicon-icon-heart-full {
-		fill: red;
-	}
-
-	.likes {
-		margin-left: 0.5rem;
-	}
-}
-
+.ratings-like,
 .ratings-thumbs {
 	$animation-duration: 500ms;
 
-	.btn {
-		position: relative;
-
+	button {
 		&:hover:not(:disabled) .lexicon-icon {
 			transform: scale(1.3);
 		}
@@ -81,6 +60,10 @@
 			opacity: 0;
 			position: absolute;
 			visibility: hidden;
+
+			.lexicon-icon {
+				color: transparent;
+			}
 		}
 
 		.off {
@@ -92,10 +75,6 @@
 			.on {
 				opacity: 1;
 				visibility: visible;
-
-				.lexicon-icon {
-					color: $primary;
-				}
 			}
 
 			.off {
@@ -109,8 +88,43 @@
 				.on {
 					animation-duration: $animation-duration;
 					animation-fill-mode: forwards;
-					animation-name: thumbs-on;
 					animation-timing-function: ease-in-out;
+				}
+			}
+		}
+	}
+
+	.lexicon-icon {
+		transition: all 0.3s ease-in-out;
+	}
+}
+
+.ratings-like {
+	$animation-duration: 500ms;
+
+	button {
+		&[aria-pressed='true'] .on .lexicon-icon {
+			color: $red;
+		}
+
+		&.btn-animation {
+			&[aria-pressed='true'] .on {
+				animation-name: heart-on;
+			}
+		}
+	}
+}
+
+.ratings-thumbs {
+	.btn {
+		&[aria-pressed='true'] .on .lexicon-icon {
+			color: $primary;
+		}
+
+		&.btn-animation {
+			&[aria-pressed='true'] {
+				.on {
+					animation-name: thumbs-on;
 				}
 
 				&.btn-thumbs-up .on {
@@ -122,10 +136,6 @@
 				}
 			}
 		}
-	}
-
-	.lexicon-icon {
-		transition: all 0.2s ease-in-out;
 	}
 }
 

@@ -1,23 +1,16 @@
 function ${jsNamespace}compareVersionDialog(eventUri) {
-	Liferay.Util.selectEntity(
-		{
-			dialog: {
-				constrain: true,
-				destroyOnHide: true,
-				modal: true
-			},
-			eventName: '${namespace}selectFileVersionFm',
-			id: '${jsNamespace}compareFileVersions',
-			title: '${dialogTitle}',
-			uri: eventUri
-		},
-		function(event) {
+	Liferay.Util.openModal({
+		id: '${jsNamespace}compareFileVersions',
+		onSelect: function(selectedItem) {
 			var uri = '${compareVersionURL}';
 
-			uri = Liferay.Util.addParams('${namespace}sourceFileVersionId=' + event.sourceversion, uri);
-			uri = Liferay.Util.addParams('${namespace}targetFileVersionId=' + event.targetversion, uri);
+			uri = Liferay.Util.addParams('${namespace}sourceFileVersionId=' + selectedItem.sourceversion, uri);
+			uri = Liferay.Util.addParams('${namespace}targetFileVersionId=' + selectedItem.targetversion, uri);
 
-			location.href = uri;
-		}
-	);
+			Liferay.Util.navigate(uri);
+		},
+		selectEventName: '${namespace}selectFileVersionFm',
+		title: '${dialogTitle}',
+		url: eventUri
+	});
 }

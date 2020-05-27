@@ -249,20 +249,9 @@ if (portletTitleBasedNavigation) {
 	) {
 		var namespace = '<portlet:namespace />';
 
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-					width: 680,
-				},
-				id: namespace + 'selectFolder',
-				title:
-					'<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
-				uri: '<%= selectFolderURL.toString() %>',
-			},
-			function (event) {
+		Liferay.Util.openModal({
+			id: namespace + 'selectFolder',
+			onSelect: function (selectedItem) {
 				var form = document.getElementById(namespace + 'fm');
 
 				if (parameterName && parameterValue) {
@@ -275,11 +264,16 @@ if (portletTitleBasedNavigation) {
 				form.setAttribute('enctype', 'multipart/form-data');
 
 				form.elements[namespace + 'cmd'].value = 'move';
-				form.elements[namespace + 'newFolderId'].value = event.folderid;
+				form.elements[namespace + 'newFolderId'].value =
+					selectedItem.folderid;
 
 				submitForm(form, actionUrl, false);
-			}
-		);
+			},
+			selectEventName: namespace + 'selectFolder',
+			title:
+				'<liferay-ui:message arguments="<%= 1 %>" key="select-destination-folder-for-x-items" translateArguments="<%= false %>" />',
+			url: '<%= selectFolderURL.toString() %>',
+		});
 	}
 </aui:script>
 

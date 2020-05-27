@@ -282,35 +282,27 @@ renderResponse.setTitle(headerTitle);
 
 								if (selectFolderButton) {
 									selectFolderButton.addEventListener('click', function (event) {
-										Liferay.Util.selectEntity(
-											{
-												dialog: {
-													constrain: true,
-													destroyOnHide: true,
-													modal: true,
-													width: 680,
-												},
-												id: '<portlet:namespace />selectFolder',
-												title:
-													'<liferay-ui:message arguments="folder" key="select-x" />',
-
-												<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-													<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
-												</liferay-portlet:renderURL>
-
-												uri: '<%= selectFolderURL.toString() %>',
-											},
-											function (event) {
+										Liferay.Util.openModal({
+											id: '<portlet:namespace />selectFolder',
+											onSelect: function (selectedItem) {
 												var folderData = {
 													idString: 'folderId',
-													idValue: event.folderid,
+													idValue: selectedItem.folderid,
 													nameString: 'folderName',
-													nameValue: event.foldername,
+													nameValue: selectedItem.foldername,
 												};
 
 												Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
-											}
-										);
+											},
+											selectEventName: '<portlet:namespace />selectFolder',
+											title: '<liferay-ui:message arguments="folder" key="select-x" />',
+
+											<liferay-portlet:renderURL var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+												<portlet:param name="mvcRenderCommandName" value="/document_library/select_folder" />
+											</liferay-portlet:renderURL>
+
+											url: '<%= selectFolderURL.toString() %>',
+										});
 									});
 								}
 							</script>

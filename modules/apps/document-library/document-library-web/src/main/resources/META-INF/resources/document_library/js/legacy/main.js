@@ -534,31 +534,26 @@ AUI.add(
 						);
 					}
 
-					Liferay.Util.selectEntity(
-						{
-							dialog: {
-								constrain: true,
-								destroyOnHide: true,
-								modal: true,
-								width: 680,
-							},
-							id: namespace + 'selectFolder',
-							title: Lang.sub(dialogTitle, [selectedItems]),
-							uri: instance.get('selectFolderURL'),
-						},
-						(event) => {
+					Liferay.Util.openModal({
+						id: namespace + 'selectFolder',
+						onSelect: (selectedItem) => {
 							if (parameterName && parameterValue) {
 								instance._moveSingleElement(
-									event.folderid,
+									selectedItem.folderid,
 									parameterName,
 									parameterValue
 								);
 							}
 							else {
-								instance._moveCurrentSelection(event.folderid);
+								instance._moveCurrentSelection(
+									selectedItem.folderid
+								);
 							}
-						}
-					);
+						},
+						selectEventName: namespace + 'selectFolder',
+						title: Lang.sub(dialogTitle, [selectedItems]),
+						url: instance.get('selectFolderURL'),
+					});
 				},
 			},
 		});

@@ -70,31 +70,45 @@ else {
 	</div>
 </div>
 
-<aui:script use="liferay-util-window">
-	var webdavAction = A.one('.<%= randomNamespace %>-webdav-action');
+<aui:script>
+	(function () {
+		var webdavContentContainer = document.getElementById(
+			'<%= randomNamespace %>webDav'
+		);
 
-	if (webdavAction) {
-		webdavAction.on('click', function (event) {
-			event.preventDefault();
+		var html = '';
 
-			var webdavDialog = Liferay.Util.Window.getWindow({
-				dialog: {
-					bodyContent: A.one('#<%= randomNamespace %>webDav').html(),
-					destroyOnHide: true,
-				},
-				title:
-					'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
+		if (webdavContentContainer) {
+			html = webdavContentContainer.innerHTML;
+
+			webdavContentContainer.remove();
+		}
+
+		var webdavActionLink = document.querySelector(
+			'.<%= randomNamespace %>-webdav-action'
+		);
+
+		if (webdavActionLink) {
+			webdavActionLink.addEventListener('click', function (event) {
+				event.preventDefault();
+
+				if (webdavContentContainer) {
+					Liferay.Util.openModal({
+						bodyHTML: html,
+						onOpen: function (event) {
+							var webdavURLInput = document.getElementById(
+								'<portlet:namespace />webDavURL'
+							);
+
+							if (webdavURLInput) {
+								webdavURLInput.focus();
+							}
+						},
+						title:
+							'<%= UnicodeLanguageUtil.get(request, "access-from-desktop") %>',
+					});
+				}
 			});
-
-			webdavDialog.after('render', function (event) {
-				var webdavURLInput = webdavDialog
-					.get('boundingBox')
-					.one('#<portlet:namespace />webDavURL');
-
-				webdavURLInput.focus();
-			});
-
-			webdavDialog.render();
-		});
-	}
+		}
+	})();
 </aui:script>

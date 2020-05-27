@@ -84,41 +84,34 @@ if (fileEntryType != null) {
 
 <aui:script>
 	function <portlet:namespace />openDDMStructureSelector() {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				eventName: '<portlet:namespace />selectDDMStructure',
-				id: '<portlet:namespace />selectDDMStructure',
-				title:
-					'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
-				uri:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>',
-			},
-			function (event) {
+		Liferay.Util.openModal({
+			id: '<portlet:namespace />selectDDMStructure',
+			onSelect: function (selectedItem) {
 				var searchContainer = Liferay.SearchContainer.get(
 					'<portlet:namespace />ddmStructuresSearchContainer'
 				);
 
 				var data = searchContainer.getData(false);
 
-				if (!data.includes(event.ddmstructureid)) {
+				if (!data.includes(selectedItem.ddmstructureid)) {
 					var ddmStructureLink =
 						'<a class="modify-link" data-rowId="' +
-						event.ddmstructureid +
+						selectedItem.ddmstructureid +
 						'" href="javascript:;" title="<%= LanguageUtil.get(request, "remove") %>"><%= UnicodeFormatter.toString(removeStructureIcon) %></a>';
 
 					searchContainer.addRow(
-						[event.name, ddmStructureLink],
-						event.ddmstructureid
+						[selectedItem.name, ddmStructureLink],
+						selectedItem.ddmstructureid
 					);
 
 					searchContainer.updateDataStore();
 				}
-			}
-		);
+			},
+			selectEventName: '<portlet:namespace />selectDDMStructure',
+			title: '<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
+			url:
+				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" /></portlet:renderURL>',
+		});
 	}
 </aui:script>
 

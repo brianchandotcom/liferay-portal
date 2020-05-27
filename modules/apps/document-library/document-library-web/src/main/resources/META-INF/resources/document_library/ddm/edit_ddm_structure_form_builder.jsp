@@ -195,25 +195,16 @@ renderResponse.setTitle(title);
 
 <aui:script>
 	function <portlet:namespace />openParentDDMStructureSelector() {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				eventName: '<portlet:namespace />selectDDMStructure',
-				id: '<portlet:namespace />selectDDMStructure',
-				title:
-					'<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
-				uri:
-					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(dlEditDDMStructureDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>',
-			},
-			function (event) {
+		Liferay.Util.openModal({
+			id: '<portlet:namespace />selectDDMStructure',
+			onSelect: function (selectedItem) {
 				var form = document.<portlet:namespace />fm;
 
 				Liferay.Util.setFormValues(form, {
-					parentDDMStructureId: event.ddmstructureid,
-					parentDDMStructureName: Liferay.Util.unescape(event.name),
+					parentDDMStructureId: selectedItem.ddmstructureid,
+					parentDDMStructureName: Liferay.Util.unescape(
+						selectedItem.name
+					),
 				});
 
 				var removeParentDDMStructureButton = Liferay.Util.getFormElement(
@@ -227,8 +218,12 @@ renderResponse.setTitle(title);
 						false
 					);
 				}
-			}
-		);
+			},
+			selectEventName: '<portlet:namespace />selectDDMStructure',
+			title: '<%= UnicodeLanguageUtil.get(request, "select-structure") %>',
+			url:
+				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/ddm/select_ddm_structure.jsp" /><portlet:param name="ddmStructureId" value="<%= String.valueOf(dlEditDDMStructureDisplayContext.getDDMStructureId()) %>" /></portlet:renderURL>',
+		});
 	}
 
 	function <portlet:namespace />removeParentDDMStructure() {

@@ -770,12 +770,11 @@ public class UIItemsBuilder {
 				"Unable to create permissions URL", exception);
 		}
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("Liferay.Util.openWindow({dialogIframe: {bodyCssClass: ");
-		sb.append("'dialog-with-footer'}, title: '");
+		sb.append("Liferay.Util.openModal({title: '");
 		sb.append(UnicodeLanguageUtil.get(_resourceBundle, "permissions"));
-		sb.append("', uri: '");
+		sb.append("', url: '");
 		sb.append(HtmlUtil.escapeJS(permissionsURL));
 		sb.append("'});");
 

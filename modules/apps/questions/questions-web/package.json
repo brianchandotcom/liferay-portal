@@ -2,6 +2,7 @@
 	"dependencies": {
 		"@apollo/client": "^3.0.0-beta.50",
 		"@clayui/button": "3.3.1",
+		"@clayui/empty-state": "3.2.0",
 		"@clayui/form": "3.8.0",
 		"@clayui/icon": "3.0.5",
 		"@clayui/label": "3.3.0",

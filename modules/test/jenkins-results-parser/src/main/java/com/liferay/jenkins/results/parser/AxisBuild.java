@@ -130,7 +130,7 @@ public class AxisBuild extends BaseBuild {
 		Element unorderedListElement = Dom4JUtil.getNewElement("ul");
 
 		for (TestResult testResult : getTestResults(null)) {
-			if (!(testResult instanceof PoshiTestResult)) {
+			if (!(testResult instanceof PoshiJunitTestResult)) {
 				continue;
 			}
 
@@ -146,17 +146,18 @@ public class AxisBuild extends BaseBuild {
 			Element poshiReportListItemElement = Dom4JUtil.getNewElement(
 				"li", reportLinksUnorderedListElement);
 
-			PoshiTestResult poshiTestResult = (PoshiTestResult)testResult;
+			PoshiJunitTestResult poshiJunitTestResult =
+				(PoshiJunitTestResult)testResult;
 
 			Dom4JUtil.getNewAnchorElement(
-				poshiTestResult.getPoshiReportURL(), poshiReportListItemElement,
-				"Poshi Report");
+				poshiJunitTestResult.getPoshiReportURL(),
+				poshiReportListItemElement, "Poshi Report");
 
 			Element poshiSummaryListItemElement = Dom4JUtil.getNewElement(
 				"li", reportLinksUnorderedListElement);
 
 			Dom4JUtil.getNewAnchorElement(
-				poshiTestResult.getPoshiSummaryURL(),
+				poshiJunitTestResult.getPoshiSummaryURL(),
 				poshiSummaryListItemElement, "Poshi Summary");
 		}
 

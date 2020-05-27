@@ -146,7 +146,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 				LinkedHashMap<String, Object> organizationParams =
 					LinkedHashMapBuilder.<String, Object>put(
-						"organizationsTree",
+						"accountsOrgsTree",
 						ListUtil.filter(
 							user.getOrganizations(true),
 							organization -> _hasManageAccountsPermission(

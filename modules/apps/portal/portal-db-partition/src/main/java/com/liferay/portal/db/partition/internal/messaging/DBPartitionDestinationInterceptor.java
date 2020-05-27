@@ -14,26 +14,21 @@
 
 package com.liferay.portal.db.partition.internal.messaging;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionConfiguration;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationInterceptor;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusInterceptor;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -48,83 +43,38 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.db.partition.internal.configuration.DBPartitionConfiguration",
-	immediate = true, service = DestinationInterceptor.class
+	immediate = true, service = MessageBusInterceptor.class
 )
 public class DBPartitionDestinationInterceptor
-	implements DestinationInterceptor {
+	implements MessageBusInterceptor {
 
 	@Override
-	public void send(Destination destination, Message message) {
-		if (!_databasePartitionEnabled) {
-			destination.send(message);
+	public boolean intercept(
+		MessageBus messageBus, String destinationName, Message message) {
 
-			return;
+		if (_databasePartitionEnabled &&
+			(message.getLong("companyId") == CompanyConstants.SYSTEM) &&
+			!destinationName.equals(DestinationNames.SCHEDULER_ENGINE) &&
+			!_excludedMessageBusDestinationNames.contains(destinationName) &&
+			!_excludedSchedulerJobNames.contains(
+				message.getString(SchedulerEngine.JOB_NAME))) {
+
+			List<Long> companyIds = new ArrayList<>();
+
+			for (Company company : _companyLocalService.getCompanies(false)) {
+				if (!company.isActive()) {
+					continue;
+				}
+
+				companyIds.add(company.getCompanyId());
+			}
+
+			message.remove("companyId");
+
+			message.put("companyIds", companyIds.toArray(new Long[0]));
 		}
 
-		String destinationName = destination.getName();
-		String jobName = message.getString(SchedulerEngine.JOB_NAME);
-
-		long companyId = message.getLong("companyId");
-
-		long currentCompanyId = CompanyThreadLocal.getCompanyId();
-
-		String taskName = destination.getName();
-
-		if (Validator.isNotNull(jobName)) {
-			taskName += StringPool.POUND + jobName;
-		}
-
-		if (companyId != CompanyConstants.SYSTEM) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Executing ", taskName, " for partition with company ",
-						"id ", companyId));
-			}
-
-			try {
-				CompanyThreadLocal.setCompanyId(companyId);
-
-				destination.send(message);
-			}
-			finally {
-				CompanyThreadLocal.setCompanyId(currentCompanyId);
-			}
-
-			return;
-		}
-
-		if (isExcluded(destinationName, jobName)) {
-			destination.send(message);
-
-			return;
-		}
-
-		List<Company> companies = _companyLocalService.getCompanies(false);
-
-		for (Company company : companies) {
-			if (!company.isActive()) {
-				continue;
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Executing ", taskName, " for partition with company ",
-						"id ", company.getCompanyId()));
-			}
-
-			message.put("companyId", company.getCompanyId());
-
-			try {
-				CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
-				destination.send(message);
-			}
-			finally {
-				CompanyThreadLocal.setCompanyId(currentCompanyId);
-			}
-		}
+		return false;
 	}
 
 	@Activate
@@ -143,22 +93,6 @@ public class DBPartitionDestinationInterceptor
 		_databasePartitionEnabled = GetterUtil.getBoolean(
 			_props.get("database.partition.enabled"));
 	}
-
-	protected boolean isExcluded(
-		String destinationName, String schedulerJobName) {
-
-		if (destinationName.equals(DestinationNames.SCHEDULER_ENGINE) ||
-			_excludedMessageBusDestinationNames.contains(destinationName) ||
-			_excludedSchedulerJobNames.contains(schedulerJobName)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DBPartitionDestinationInterceptor.class);
 
 	private static boolean _databasePartitionEnabled;
 

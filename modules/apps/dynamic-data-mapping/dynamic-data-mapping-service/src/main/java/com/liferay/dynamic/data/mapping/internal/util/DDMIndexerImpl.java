@@ -324,20 +324,33 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return sb.toString();
 	}
 
+	@Override
+	public String getValueFieldName(String indexType, Locale locale) {
+		String valueFieldName = DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX;
+
+		if (indexType != null) {
+			valueFieldName =
+				valueFieldName.concat(
+					StringUtil.upperCaseFirstLetter(indexType));
+		}
+
+		if (locale != null) {
+			valueFieldName =
+				StringBundler.concat(
+					valueFieldName, StringPool.UNDERLINE,
+					LocaleUtil.toLanguageId(locale));
+		}
+
+		return valueFieldName;
+	}
+
 	protected Document createDocument(
 			String indexType, String type, Serializable value, Locale locale)
 		throws JSONException {
 
 		Document document = new DocumentImpl();
 
-		String name =
-			DDMIndexer.DDM_VALUE_FIELD_NAME_PREFIX +
-				StringUtil.upperCaseFirstLetter(indexType);
-
-		if (locale != null) {
-			name =
-				name + StringPool.UNDERLINE + LocaleUtil.toLanguageId(locale);
-		}
+		String name = getValueFieldName(indexType, locale);
 
 		if (value instanceof BigDecimal) {
 			document.addNumberSortable(name, (BigDecimal)value);

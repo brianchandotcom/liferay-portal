@@ -144,6 +144,12 @@ definition {
 		Pause(locator1 = "3000");
 
 		LexiconEntry.gotoAdd();
+
+		if (isSet(publishTemplateName)) {
+			var key_publishTemplateName = "${publishTemplateName}";
+
+			Click(locator1 = "Staging#STAGING_PUBLISH_TEMPLATE_LINK");
+		}
 	}
 
 	macro addEventRepeatDaily {

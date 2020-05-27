@@ -52,7 +52,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 
 			<aui:fieldset>
 				<div class="lfr-form-content">
-					<div class="sheet sheet-lg">
+					<clay:sheet>
 						<liferay-ui:search-container
 							emptyResultsMessage="no-forms-were-found"
 							iteratorURL="<%= configurationRenderURL %>"
@@ -123,7 +123,7 @@ DDMFormInstance selFormInstance = DDMFormInstanceServiceUtil.fetchFormInstance(f
 								searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 							/>
 						</liferay-ui:search-container>
-					</div>
+					</clay:sheet>
 				</div>
 			</aui:fieldset>
 		</clay:container-fluid>

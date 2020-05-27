@@ -400,7 +400,7 @@ public interface DDMFormInstanceLocalService
 		long companyId, long groupId, String[] names, String[] descriptions,
 		boolean andOperator);
 
-	public void sendShareFormInstanceEmail(
+	public void sendEmail(
 			long userId, String message, String subject,
 			String[] toEmailAddresses)
 		throws Exception;

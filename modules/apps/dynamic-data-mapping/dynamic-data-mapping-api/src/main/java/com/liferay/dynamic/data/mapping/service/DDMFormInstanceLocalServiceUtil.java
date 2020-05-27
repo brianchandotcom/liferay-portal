@@ -537,13 +537,12 @@ public class DDMFormInstanceLocalServiceUtil {
 			companyId, groupId, names, descriptions, andOperator);
 	}
 
-	public static void sendShareFormInstanceEmail(
+	public static void sendEmail(
 			long userId, String message, String subject,
 			String[] toEmailAddresses)
 		throws Exception {
 
-		getService().sendShareFormInstanceEmail(
-			userId, message, subject, toEmailAddresses);
+		getService().sendEmail(userId, message, subject, toEmailAddresses);
 	}
 
 	/**

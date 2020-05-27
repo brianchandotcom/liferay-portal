@@ -552,12 +552,12 @@ public class DDMFormInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public void sendShareFormInstanceEmail(
+	public void sendEmail(
 			long userId, String message, String subject,
 			String[] toEmailAddresses)
 		throws Exception {
 
-		_ddmFormInstanceLocalService.sendShareFormInstanceEmail(
+		_ddmFormInstanceLocalService.sendEmail(
 			userId, message, subject, toEmailAddresses);
 	}
 

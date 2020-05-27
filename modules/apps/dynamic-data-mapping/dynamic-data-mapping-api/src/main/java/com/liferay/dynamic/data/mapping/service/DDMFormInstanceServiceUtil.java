@@ -153,12 +153,12 @@ public class DDMFormInstanceServiceUtil {
 			companyId, groupId, names, descriptions, andOperator);
 	}
 
-	public static void sendShareFormInstanceEmail(
+	public static void sendEmail(
 			long formInstanceId, String message, String subject,
 			String[] toEmailAddresses)
 		throws Exception {
 
-		getService().sendShareFormInstanceEmail(
+		getService().sendEmail(
 			formInstanceId, message, subject, toEmailAddresses);
 	}
 

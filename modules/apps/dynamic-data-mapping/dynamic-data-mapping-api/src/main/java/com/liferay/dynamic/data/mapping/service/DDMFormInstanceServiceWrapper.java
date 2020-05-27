@@ -154,12 +154,12 @@ public class DDMFormInstanceServiceWrapper
 	}
 
 	@Override
-	public void sendShareFormInstanceEmail(
+	public void sendEmail(
 			long formInstanceId, String message, String subject,
 			String[] toEmailAddresses)
 		throws Exception {
 
-		_ddmFormInstanceService.sendShareFormInstanceEmail(
+		_ddmFormInstanceService.sendEmail(
 			formInstanceId, message, subject, toEmailAddresses);
 	}
 

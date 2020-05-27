@@ -525,15 +525,15 @@ public class DDMFormInstanceServiceHttp {
 		}
 	}
 
-	public static void sendShareFormInstanceEmail(
+	public static void sendEmail(
 			HttpPrincipal httpPrincipal, long formInstanceId, String message,
 			String subject, String[] toEmailAddresses)
 		throws Exception {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				DDMFormInstanceServiceUtil.class, "sendShareFormInstanceEmail",
-				_sendShareFormInstanceEmailParameterTypes12);
+				DDMFormInstanceServiceUtil.class, "sendEmail",
+				_sendEmailParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, formInstanceId, message, subject, toEmailAddresses);
@@ -698,10 +698,9 @@ public class DDMFormInstanceServiceHttp {
 	private static final Class<?>[] _searchCountParameterTypes11 = new Class[] {
 		long.class, long.class, String[].class, String[].class, boolean.class
 	};
-	private static final Class<?>[]
-		_sendShareFormInstanceEmailParameterTypes12 = new Class[] {
-			long.class, String.class, String.class, String[].class
-		};
+	private static final Class<?>[] _sendEmailParameterTypes12 = new Class[] {
+		long.class, String.class, String.class, String[].class
+	};
 	private static final Class<?>[] _updateFormInstanceParameterTypes13 =
 		new Class[] {
 			long.class,

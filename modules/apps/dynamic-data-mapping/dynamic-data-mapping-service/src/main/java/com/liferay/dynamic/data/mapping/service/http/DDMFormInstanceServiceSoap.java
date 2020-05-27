@@ -319,13 +319,13 @@ public class DDMFormInstanceServiceSoap {
 		}
 	}
 
-	public static void sendShareFormInstanceEmail(
+	public static void sendEmail(
 			long formInstanceId, String message, String subject,
 			String[] toEmailAddresses)
 		throws RemoteException {
 
 		try {
-			DDMFormInstanceServiceUtil.sendShareFormInstanceEmail(
+			DDMFormInstanceServiceUtil.sendEmail(
 				formInstanceId, message, subject, toEmailAddresses);
 		}
 		catch (Exception exception) {

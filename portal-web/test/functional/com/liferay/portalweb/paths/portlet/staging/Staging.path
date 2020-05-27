@@ -244,7 +244,7 @@
 <!--PUBLICATION_SUMMARY-->
 <tr>
 	<td>PUBLICATION_CONTENT</td>
-	<td>//div[@class='process-summary-section' and contains(.,'${key_contentName}')]</td>
+	<td>//div[@class='process-summary-subsection' and contains(.,'${key_contentName}')]</td>
 	<td></td>
 </tr>
 <tr>

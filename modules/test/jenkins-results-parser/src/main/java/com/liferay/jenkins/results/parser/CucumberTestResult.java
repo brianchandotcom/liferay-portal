@@ -26,6 +26,14 @@ public class CucumberTestResult extends BaseTestResult {
 		return null;
 	}
 
+	public CucumberFeatureResult getCucumberFeatureResult() {
+		return _cucumberFeatureResult;
+	}
+
+	public CucumberScenarioResult getCucumberScenarioResult() {
+		return _cucumberScenarioResult;
+	}
+
 	@Override
 	public String getDisplayName() {
 		return _cucumberScenarioResult.getScenarioName();

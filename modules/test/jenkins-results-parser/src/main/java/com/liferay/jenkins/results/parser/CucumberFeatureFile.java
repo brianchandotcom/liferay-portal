@@ -38,23 +38,19 @@ public class CucumberFeatureFile {
 	}
 
 	public File getFile() {
-		String targetFeaturePath = null;
+		return new File(_faroDir, getRelativePath());
+	}
 
+	public String getRelativePath() {
 		for (String featurePath : _getFeaturePathsFromFeatureName()) {
 			Set<String> featurePaths = _getFeaturePathsFromScenarioName();
 
 			if (featurePaths.contains(featurePath)) {
-				targetFeaturePath = featurePath;
-
-				break;
+				return featurePath;
 			}
 		}
 
-		if (targetFeaturePath == null) {
-			throw new RuntimeException("Could not find a matching file");
-		}
-
-		return new File(_faroDir, targetFeaturePath);
+		throw new RuntimeException("Could not find a matching file");
 	}
 
 	private Set<String> _getFeaturePaths(String name) {

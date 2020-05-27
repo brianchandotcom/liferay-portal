@@ -73,7 +73,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 						<clay:container-fluid>
 							<h1 class="ddm-form-name"><%= HtmlUtil.escape(GetterUtil.getString(title.getString(displayLocale), title.getString(title.getDefaultLocale()))) %></h1>
 
-							<h5 class="ddm-form-description"><%= HtmlUtil.escape(GetterUtil.getString(body.getString(displayLocale), body.getString(body.getDefaultLocale()))) %></h5>
+							<p class="ddm-form-description"><%= HtmlUtil.escape(GetterUtil.getString(body.getString(displayLocale), body.getString(body.getDefaultLocale()))) %></p>
 						</clay:container-fluid>
 					</div>
 				</div>
@@ -165,7 +165,7 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">
-									<h5 class="ddm-form-description"><%= description %></h5>
+									<p class="ddm-form-description"><%= description %></p>
 								</c:if>
 							</clay:container-fluid>
 						</div>

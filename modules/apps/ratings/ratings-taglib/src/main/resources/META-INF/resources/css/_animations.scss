@@ -63,15 +63,20 @@
 		transform: scale(0.1);
 	}
 
-	33% {
-		transform: scale(1.2);
-	}
-
-	66% {
-		transform: scale(0.8);
-	}
-
-	100% {
+	14% {
 		opacity: 1;
+		transform: scale(1.3);
+	}
+
+	28% {
+		transform: scale(1);
+	}
+
+	42% {
+		transform: scale(1.3);
+	}
+
+	70% {
+		transform: scale(1);
 	}
 }

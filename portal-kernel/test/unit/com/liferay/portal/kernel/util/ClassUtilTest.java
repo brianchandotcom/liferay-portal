@@ -145,7 +145,7 @@ public class ClassUtilTest {
 	public void testGetClassName() {
 		Assert.assertEquals(
 			"java.lang.Object", ClassUtil.getClassName(new Object()));
-		Assert.assertEquals(null, ClassUtil.getClassName(null));
+		Assert.assertNull(ClassUtil.getClassName(null));
 	}
 
 	@Test

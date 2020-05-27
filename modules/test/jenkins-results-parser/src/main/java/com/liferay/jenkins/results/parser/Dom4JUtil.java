@@ -26,9 +26,11 @@ import java.util.List;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.Text;
+import org.dom4j.XPath;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
@@ -151,6 +153,24 @@ public class Dom4JUtil {
 		}
 
 		return childElement;
+	}
+
+	public static Node getNodeByXPath(Document document, String xpathString) {
+		List<Node> nodes = getNodesByXPath(document, xpathString);
+
+		if (nodes.isEmpty()) {
+			return null;
+		}
+
+		return nodes.get(0);
+	}
+
+	public static List<Node> getNodesByXPath(
+		Document document, String xpathString) {
+
+		XPath xPath = DocumentHelper.createXPath(xpathString);
+
+		return xPath.selectNodes(document);
 	}
 
 	public static Element getOrderedListElement(

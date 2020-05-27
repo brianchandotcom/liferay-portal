@@ -46,6 +46,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-language']
+		requires: []
 	}
 );

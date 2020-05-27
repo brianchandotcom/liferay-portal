@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.DocumentType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -604,7 +605,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	@Override
 	public void read(
 			String servletContextName, ClassLoader classLoader, String source)
-		throws Exception {
+		throws DocumentException, ResourceActionsException {
 
 		_read(servletContextName, classLoader, source, null);
 	}
@@ -613,7 +614,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public void read(
 			String servletContextName, ClassLoader classLoader,
 			String... sources)
-		throws Exception {
+		throws DocumentException, ResourceActionsException {
 
 		for (String source : sources) {
 			read(servletContextName, classLoader, source);
@@ -624,7 +625,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public void readAndCheck(
 			String servletContextName, ClassLoader classLoader,
 			String... sources)
-		throws Exception {
+		throws DocumentException, ResourceActionsException {
 
 		Set<String> portletNames = new HashSet<>();
 
@@ -973,7 +974,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	private void _read(
 			String servletContextName, ClassLoader classLoader, String source,
 			Set<String> portletNames)
-		throws Exception {
+		throws DocumentException, ResourceActionsException {
 
 		InputStream inputStream = classLoader.getResourceAsStream(source);
 
@@ -1031,7 +1032,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	private void _read(
 			String servletContextName, Document document,
 			Set<String> portletNames)
-		throws Exception {
+		throws ResourceActionsException {
 
 		Element rootElement = document.getRootElement();
 

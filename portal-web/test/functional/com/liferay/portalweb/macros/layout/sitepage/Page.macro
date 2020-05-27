@@ -644,6 +644,12 @@ definition {
 			locator1 = "SitePages#LIST_GROUP_ITEM");
 	}
 
+	macro viewActiveURL {
+		AssertVisible(
+			key_activeURL = "${activeURL}",
+			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+	}
+
 	macro viewChildPageDropdown {
 		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 
@@ -867,6 +873,17 @@ definition {
 		AssertElementNotPresent(
 			key_vocabularyName = "${vocabularyName}",
 			locator1 = "AssetCategorization#CATEGORY_SELECT");
+	}
+
+	macro viewOldFriendlyURL {
+		if (isSet(lastOldFriendlyURL)) {
+			AssertVisible(
+				key_oldFriendlyURL = "${lastOldFriendlyURL}",
+				locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM_LAST");
+		}
+		AssertVisible(
+			key_oldFriendlyURL = "${oldFriendlyURL}",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
 	macro viewPageFriendlyURLPG {

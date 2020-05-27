@@ -13,8 +13,9 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
-import React, {useEffect, useState} from 'react';
+import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayDropDownDivider from '@clayui/drop-down/lib/Divider';
+import React, {useState} from 'react';
 
 import {useDispatch, useSelector} from '../../store/index';
 import multipleUndo from '../../thunks/multipleUndo';
@@ -25,54 +26,17 @@ export default function UndoHistory() {
 	const store = useSelector((state) => state);
 	const undoHistory = useSelector((state) => state.undoHistory);
 
-	const [items, setItems] = useState([]);
+	const [active, setActive] = useState(false);
 
 	const isSelectedAction = (index) => index === 0;
 
-	useEffect(() => {
-		if (undoHistory && undoHistory.length) {
-			setItems([
-				...undoHistory.map((undoHistoryItem, index) => {
-					return {
-						disabled: isSelectedAction(index),
-						label: getActionLabel(undoHistoryItem),
-						onClick: (event) => {
-							event.preventDefault();
-
-							dispatch(
-								multipleUndo({
-									numberOfActions: index,
-									store,
-								})
-							);
-						},
-						symbolRight: isSelectedAction(index) ? 'check' : '',
-					};
-				}),
-				{
-					label: Liferay.Language.get('undo-all'),
-					onClick: (event) => {
-						event.preventDefault();
-
-						dispatch(
-							multipleUndo({
-								numberOfActions: undoHistory.length,
-								store,
-							})
-						);
-					},
-				},
-			]);
-		}
-	}, [dispatch, store, undoHistory]);
-
 	return (
 		<>
-			<ClayDropDownWithItems
+			<ClayDropDown
+				active={active}
 				alignmentPosition={Align.BottomRight}
 				className="mr-3"
-				items={items}
-				searchable={false}
+				onActiveChange={setActive}
 				trigger={
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('undo-history')}
@@ -84,7 +48,49 @@ export default function UndoHistory() {
 						title={Liferay.Language.get('undo-history')}
 					/>
 				}
-			/>
+			>
+				<ClayDropDown.ItemList>
+					{undoHistory &&
+						undoHistory.map((undoHistoryItem, index) => (
+							<ClayDropDown.Item
+								disabled={isSelectedAction(index)}
+								key={index}
+								onClick={(event) => {
+									event.preventDefault();
+
+									dispatch(
+										multipleUndo({
+											numberOfActions: index,
+											store,
+										})
+									);
+								}}
+								symbolRight={
+									isSelectedAction(index) ? 'check' : ''
+								}
+							>
+								{getActionLabel(undoHistoryItem)}
+							</ClayDropDown.Item>
+						))}
+					<ClayDropDownDivider />
+					<ClayDropDown.Item
+						onClick={(event) => {
+							event.preventDefault();
+
+							dispatch(
+								multipleUndo({
+									numberOfActions: undoHistory.length,
+									store,
+								})
+							);
+
+							setActive(false);
+						}}
+					>
+						{Liferay.Language.get('undo-all')}
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
 		</>
 	);
 }

@@ -65,7 +65,7 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 	}
 	%>
 
-	<div class="sheet-section">
+	<clay:sheet-section>
 		<h3 class="sheet-subtitle"><liferay-ui:message key="master" /></h3>
 
 		<p>
@@ -89,7 +89,7 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 				style="<%= false %>"
 			/>
 		</div>
-	</div>
+	</clay:sheet-section>
 </c:if>
 
 <liferay-util:buffer
@@ -116,7 +116,10 @@ else {
 }
 %>
 
-<div class="sheet-section <%= (selLayout.getMasterLayoutPlid() <= 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />themeContainer">
+<clay:sheet-section
+	className='<%= (selLayout.getMasterLayoutPlid() <= 0) ? StringPool.BLANK : "hide" %>'
+	id='<%= renderResponse.getNamespace() + "themeContainer" %>'
+>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="theme" /></h3>
 
 	<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
@@ -136,7 +139,7 @@ else {
 	<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
 		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</div>
-</div>
+</clay:sheet-section>
 
 <aui:script>
 	Liferay.Util.toggleRadio(

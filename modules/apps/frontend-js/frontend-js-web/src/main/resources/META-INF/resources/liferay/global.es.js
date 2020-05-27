@@ -96,6 +96,10 @@ Liferay.Address = {
  */
 Liferay.DynamicSelect = DynamicSelect;
 
+Liferay.Language = {
+	get: (key) => key,
+};
+
 Liferay.LayoutExporter = {
 	all: hideLayoutPane,
 	details: toggleLayoutDetails,

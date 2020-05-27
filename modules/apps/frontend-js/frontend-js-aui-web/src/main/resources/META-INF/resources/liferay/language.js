@@ -12,52 +12,7 @@
  * details.
  */
 
-(function (A, Liferay) {
-	var Language = {};
-
-	Language.get = function (key) {
-		return key;
-	};
-
-	A.use('io-base', (A) => {
-		Language.get = A.cached((key, extraParams) => {
-			var url =
-				themeDisplay.getPathContext() +
-				'/language/' +
-				themeDisplay.getLanguageId() +
-				'/' +
-				key +
-				'/';
-
-			if (extraParams) {
-				if (typeof extraParams == 'string') {
-					url += extraParams;
-				}
-				else if (Array.isArray(extraParams)) {
-					url += extraParams.join('/');
-				}
-			}
-
-			var headers = {
-				'X-CSRF-Token': Liferay.authToken,
-			};
-
-			var value = '';
-
-			A.io(url, {
-				headers,
-				method: 'GET',
-				on: {
-					complete(i, o) {
-						value = o.responseText;
-					},
-				},
-				sync: true,
-			});
-
-			return value;
-		});
-	});
-
-	Liferay.Language = Language;
-})(AUI(), Liferay);
+/**
+ * @deprecated As of Athanasius (7.3.x), replaced by `Liferay.Language`.
+ */
+(function () {})();

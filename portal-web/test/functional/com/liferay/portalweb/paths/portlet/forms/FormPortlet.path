@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_PAGE_DESCRIPTION</td>
-	<td>//div[contains(@class,'basic-info')]//h5[contains(.,'${key_successPageDescription}')]</td>
+	<td>//div[contains(@class,'basic-info')]//p[contains(.,'${key_successPageDescription}')]</td>
 	<td></td>
 </tr>
 </tbody>

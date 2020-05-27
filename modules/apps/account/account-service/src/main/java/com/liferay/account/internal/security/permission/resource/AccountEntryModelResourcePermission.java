@@ -14,6 +14,7 @@
 
 package com.liferay.account.internal.security.permission.resource;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.permission.OrganizationPermission;
 
 import java.util.List;
 
@@ -96,12 +98,33 @@ public class AccountEntryModelResourcePermission
 				_organizationLocalService.fetchOrganization(
 					accountEntryOrganizationRel.getOrganizationId());
 
-			if ((organization != null) &&
-				permissionChecker.hasPermission(
+			if (organization == null) {
+				continue;
+			}
+
+			if (permissionChecker.hasPermission(
 					organization.getGroupId(), AccountEntry.class.getName(),
 					accountEntryId, actionId)) {
 
 				return true;
+			}
+
+			while (!organization.isRoot()) {
+				Organization parentOrganization =
+					organization.getParentOrganization();
+
+				if (_organizationPermission.contains(
+						permissionChecker, parentOrganization,
+						AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS) &&
+					permissionChecker.hasPermission(
+						parentOrganization.getGroupId(),
+						AccountEntry.class.getName(), accountEntryId,
+						actionId)) {
+
+					return true;
+				}
+
+				organization = parentOrganization;
 			}
 		}
 
@@ -132,6 +155,9 @@ public class AccountEntryModelResourcePermission
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
+
+	@Reference
+	private OrganizationPermission _organizationPermission;
 
 	@Reference(
 		target = "(resource.name=" + AccountConstants.RESOURCE_NAME + ")"

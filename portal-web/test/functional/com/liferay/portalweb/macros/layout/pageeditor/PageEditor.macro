@@ -142,6 +142,25 @@ definition {
 			locator1 = "Fragment#MESSAGE_INFO");
 	}
 
+	macro addDisplayPageContent {
+		Pause(locator1 = "10000");
+
+		PageEditor.gotoTab(tabName = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "Content Display");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+			locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+			value1 = "");
+
+		AssertVisible(
+			key_fragmentName = "${fragmentName}",
+			key_messageIfo = "The display page content will be shown here.",
+			locator1 = "Fragment#MESSAGE_INFO");
+	}
+
 	macro addExperience {
 		var key_experienceName = "${experienceName}";
 

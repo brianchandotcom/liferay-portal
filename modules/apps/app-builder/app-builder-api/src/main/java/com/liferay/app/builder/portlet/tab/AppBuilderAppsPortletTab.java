@@ -16,9 +16,12 @@ package com.liferay.app.builder.portlet.tab;
 
 import java.util.Locale;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Inácio Nery
  */
+@ProviderType
 public interface AppBuilderAppsPortletTab {
 
 	public String getEditEntryPoint();
@@ -26,5 +29,14 @@ public interface AppBuilderAppsPortletTab {
 	public String getLabel(Locale locale);
 
 	public String getListEntryPoint();
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getListEntryPoint()}
+	 */
+	@Deprecated
+	public default String getPluginEntryPoint() {
+		return getListEntryPoint();
+	}
 
 }

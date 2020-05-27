@@ -143,6 +143,11 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 			key = "displayPagePublished";
 		}
+		else if (layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) {
+
+			key = "masterPagePublished";
+		}
 
 		MultiSessionMessages.add(actionRequest, key);
 

@@ -33,6 +33,8 @@ MasterLayoutManagementToolbarDisplayContext masterLayoutManagementToolbarDisplay
 	displayContext="<%= masterLayoutManagementToolbarDisplayContext %>"
 />
 
+<liferay-ui:success key="masterPagePublished" message="the-master-page-was-published-succesfully" />
+
 <portlet:actionURL name="/layout_page_template/delete_master_layout" var="deleteMasterLayoutURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>

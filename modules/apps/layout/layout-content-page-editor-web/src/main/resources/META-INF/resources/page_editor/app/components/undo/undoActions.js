@@ -59,6 +59,7 @@ export function getDerivedStateForUndo({action, state, type}) {
 	return {
 		...undoAction.getDerivedStateForUndo({action, state}),
 		itemName: getItemNameFromAction({action, state}),
+		segmentsExperienceId: state.segmentsExperienceId,
 		type,
 	};
 }

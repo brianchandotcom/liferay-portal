@@ -1073,13 +1073,22 @@ public class DataDefinitionResourceImpl
 				new DataDefinitionField() {
 					{
 						customProperties = HashMapBuilder.<String, Object>put(
+							"fieldNamespace", StringPool.BLANK
+						).put(
 							"native-field", "native-field"
 						).build();
 						label = HashMapBuilder.<String, Object>put(
 							contextAcceptLanguage.getPreferredLanguageId(),
-							column.getName()
+							GetterUtil.getString(
+								dataEngineNativeObjectField.getCustomName(),
+								column.getName())
 						).build();
+						localizable = true;
 						name = column.getName();
+						tip = HashMapBuilder.<String, Object>put(
+							contextAcceptLanguage.getPreferredLanguageId(),
+							StringPool.BLANK
+						).build();
 					}
 				}
 			);
@@ -1089,6 +1098,28 @@ public class DataDefinitionResourceImpl
 					dataEngineNativeObjectField.getCustomType(),
 					column.getSQLType()));
 			dataDefinitionField.setRequired(!column.isNullAllowed());
+
+			if (Objects.equals(dataDefinitionField.getFieldType(), "radio") ||
+				Objects.equals(dataDefinitionField.getFieldType(), "select")) {
+
+				Map<String, Object> customProperties =
+					dataDefinitionField.getCustomProperties();
+
+				if (MapUtil.isEmpty((Map)customProperties.get("options"))) {
+					customProperties.put(
+						"options",
+						HashMapBuilder.<String, Object>put(
+							contextAcceptLanguage.getPreferredLanguageId(),
+							new String[] {
+								JSONUtil.put(
+									"label", "Option"
+								).put(
+									"value", "option"
+								).toJSONString()
+							}
+						).build());
+				}
+			}
 
 			list.add(dataDefinitionField);
 		}

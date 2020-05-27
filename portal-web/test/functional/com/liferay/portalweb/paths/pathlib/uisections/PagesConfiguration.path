@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
-	<td>//label[contains(.,'${key_contentName}')]//following-sibling::span</td>
+	<td>//label[contains(.,'${key_contentName}')]//following-sibling::span | //label[contains(.,'${key_contentName}')]//following-sibling::span/../input</td>
 	<td></td>
 </tr>
 <tr>

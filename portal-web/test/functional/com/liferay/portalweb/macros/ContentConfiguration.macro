@@ -159,7 +159,7 @@ definition {
 	macro uncheckSubSubContent {
 		var key_contentName = "${contentName}";
 
-		Click(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
+		Check(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
 
 		AssertClick(
 			locator1 = "ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK",

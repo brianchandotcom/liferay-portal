@@ -21,6 +21,7 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.form.values.factory,\
 	com.liferay.dynamic.data.mapping.form.values.query,\
 	com.liferay.dynamic.data.mapping.info.display.field,\
+	com.liferay.dynamic.data.mapping.info.item.provider,\
 	com.liferay.dynamic.data.mapping.io,\
 	com.liferay.dynamic.data.mapping.io.exporter,\
 	com.liferay.dynamic.data.mapping.model,\

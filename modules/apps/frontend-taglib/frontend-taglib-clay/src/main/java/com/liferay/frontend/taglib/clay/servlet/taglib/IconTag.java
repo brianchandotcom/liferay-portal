@@ -109,20 +109,20 @@ public class IconTag extends BaseContainerTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClass(String)}
+	 *             #processCssClasses(String)}
 	 */
 	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		return processCssClass(className);
+		return processCssClasses(className);
 	}
 
 	@Override
-	protected String processCssClass(Set<String> cssClass) {
-		cssClass.add("lexicon-icon");
-		cssClass.add("lexicon-icon-" + _symbol);
+	protected String processCssClasses(Set<String> cssClasses) {
+		cssClasses.add("lexicon-icon");
+		cssClasses.add("lexicon-icon-" + _symbol);
 
-		return super.processCssClass(cssClass);
+		return super.processCssClasses(cssClasses);
 	}
 
 	@Override

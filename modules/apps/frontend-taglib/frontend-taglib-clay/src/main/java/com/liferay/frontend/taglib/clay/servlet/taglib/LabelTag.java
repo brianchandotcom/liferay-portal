@@ -203,28 +203,28 @@ public class LabelTag extends BaseContainerTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClass(String)}
+	 *             #processCssClasses(String)}
 	 */
 	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		return processCssClass(className);
+		return processCssClasses(className);
 	}
 
 	@Override
-	protected String processCssClass(Set<String> cssClass) {
-		cssClass.add("label");
-		cssClass.add("label-" + _displayType);
+	protected String processCssClasses(Set<String> cssClasses) {
+		cssClasses.add("label");
+		cssClasses.add("label-" + _displayType);
 
 		if (_dismissible) {
-			cssClass.add("label-dismissible");
+			cssClasses.add("label-dismissible");
 		}
 
 		if (_large) {
-			cssClass.add("label-lg");
+			cssClasses.add("label-lg");
 		}
 
-		return super.processCssClass(cssClass);
+		return super.processCssClasses(cssClasses);
 	}
 
 	@Override

@@ -1,0 +1,1057 @@
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Exception during pool initialization.]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: BeanLocator is null]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Portal property "minifier.inline.content.cache.size" is obsolete]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: Skipping email because the sender is not specified]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: TLD contains multiple tags with name "sheet"; keeping only the last one.]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: TLD contains multiple tags with name "sheet"; keeping only the last one.]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.portal.kernel.dao.orm.ORMException: {"agreedToTermsOfUse":true,"comments":"","companyId":"20098","contactId":"20128","createDate":1589571362197,"ctCollectionId":"0","defaultUser":false,"emailAddress":"","emailAddressVerified":true,"externalReferenceCode":"","facebookId":"0","failedLoginAttempts":0,"firstName":"Test","googleUserId":"","graceLoginCount":0,"greeting":"Welcome Test Test!","jobTitle":"","languageId":"en_US","lastFailedLoginDate":null,"lastLoginDate":1589571642577,"lastLoginIP":"127.0.0.1","lastName":"Test","ldapServerId":"-1","lockout":false,"lockoutDate":null,"loginDate":1589572304745,"loginIP":"127.0.0.1","middleName":"","modifiedDate":1589572304746,"mvccVersion":"4","openId":"","portraitId":"0","reminderQueryAnswer":"","reminderQueryQuestion":"","screenName":"test","status":0,"timeZoneId":"UTC","userId":"20126","uuid":"b8e5bc0b-ed2b-462d-5f26-0e83951f216d"} is stale in comparison to {"agreedToTermsOfUse":true,"comments":"","companyId":"20098","contactId":"20128","createDate":1589571362197,"ctCollectionId":"0","defaultUser":false,"emailAddress":"","emailAddressVerified":true,"externalReferenceCode":"","facebookId":"0","failedLoginAttempts":0,"firstName":"Test","googleUserId":"","graceLoginCount":0,"greeting":"Welcome Test Test!","jobTitle":"","languageId":"en_US","lastFailedLoginDate":null,"lastLoginDate":1589571642577,"lastLoginIP":"127.0.0.1","lastName":"Test","ldapServerId":"-1","lockout":false,"lockoutDate":null,"loginDate":1589572297739,"loginIP":"127.0.0.1","middleName":"","modifiedDate":1589572297749,"mvccVersion":"5","openId":"","portraitId":"0","reminderQueryAnswer":"","reminderQueryQuestion":"","screenName":"test","status":0,"timeZoneId":"UTC","userId":"20126","uuid":"b8e5bc0b-ed2b-462d-5f26-0e83951f216d"}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to load com.liferay.portal.events.SessionDestroyAction with the portal class loader or the current context class loader]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to load com.liferay.portal.events.SessionDestroyAction with the portal class loader or the current context class loader]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m46s509ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2m46s504ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=37m14s560ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=37m13s867ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s719ms), soft-evicting connections from pool.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/portal-client.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@23f784b3, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h27s961ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h27s963ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@2a35d369, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@28b601ba, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/asm-util.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@4e6aa77d, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/rhino.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@6cf3fa, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h28s222ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h28s229ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h29s785ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/commons-codec.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@39c3d162, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@26e1a3e5, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h28s553ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h27s751ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h27s758ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/nekohtml.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@64051beb, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@7fbc5327, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h27s627ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h27s624ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/xuggle-xuggler-noarch.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@541ffc39, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@5f39896d, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@e402fd1, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/xbean.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h7m58s114ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h7m58s109ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: TLD contains multiple tags with name "sheet"; keeping only the last one.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to load com.liferay.portal.events.SessionDestroyAction with the portal class loader or the current context class loader]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/portal-impl.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@d3bce31, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/aspectj-weaver.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@38e95cfd, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@23dd421a, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m59s958ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=5m59s950ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m15s379ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=3m15s377ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.RuntimeException: You must first upgrade the portal to the required schema version 8.8.0]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Portal property "minifier.inline.content.cache.size" is obsolete]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: java.lang.Exception: org.springframework.orm.hibernate3.HibernateOptimisticLockingFailureException: Object of class [com.liferay.portal.model.impl.LayoutImpl] with identifier [14]: optimistic locking failed; nested exception is org.hibernate.StaleObjectStateException: Row was updated or deleted by another transaction (or unsaved-value mapping was incorrect): [com.liferay.portal.model.impl.LayoutImpl#14]]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m32s615ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@14546c8f, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=34m32s616ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to load com.liferay.portal.events.SessionDestroyAction with the portal class loader or the current context class loader]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@7a98d773, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=36m27s388ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@6f4176e8, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@714fa270, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@123e7ab0, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/xbean.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=36m27s387ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@70728d5, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@ab323b8, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/util-slf4j.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@55ca6365, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h34m23s52ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h34m23s43ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m21s481ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=3m21s487ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=4m39s250ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m39s258ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h25s523ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h26s485ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@2f46b7d5, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@8067ac6, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/rometools-utils.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@7284843, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@718b911b, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/asm-util.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@710d1865, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@51b8185, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h26s645ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h26s645ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h5s313ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@76ca0968, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/httpmime.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@53c17b3b, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@4526bc95, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h5s313ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h27s119ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h28s565ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@163fa127, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/mchange-commons-java.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@65e1ba05, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@81ad1de, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h28s589ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h28s591ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@77a9bae7, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@5829d35b, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/httpmime.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@4418e01a, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@3253e089, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@59108d54, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h28s641ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h28s634ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@1b925b0, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h10m12s814ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@6b757d5c, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/commons-codec.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@47adf139, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h10m12s931ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m40s525ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@611c9f3, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=4m40s529ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@781f067b, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.segments.internal.messaging.SegmentsEntryRelIndexerMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@5e420b4e, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.trash.web.internal.messaging.CheckEntryMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: java.lang.IllegalStateException: java.io.FileNotFoundException: /Users/jose.balsas/dev/liferay/portal/master/bundles/tomcat-9.0.33/webapps/ROOT/WEB-INF/lib/jfreechart.jar (Too many open files in system)]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@5d71475e, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m32s320ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=49m35s76ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.test.personal.menu-1.0.0.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Caught unexpected exception]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to process message {destinationName=liferay/scheduler_dispatch, response=null, responseDestinationName=null, responseId=null, payload=null, values={GROUP_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener, companyId=0, groupId=0, DESTINATION_NAME=liferay/scheduler_dispatch, EXCEPTIONS_MAX_SIZE=0, JOB_STATE=com.liferay.portal.kernel.scheduler.JobState@7c1c6d45, STORAGE_TYPE=MEMORY_CLUSTERED, JOB_NAME=com.liferay.journal.web.internal.messaging.CheckArticleMessageListener}}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.test.personal.menu-1.0.0.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.test.personal.menu-1.0.0.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.test.personal.menu-1.0.0.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.test.personal.menu-1.0.0.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.test.personal.menu-1.0.0.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.monitoring.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.push.notifications.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.trash.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.teams.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.seo.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.buildings.site.initializer.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.bookmark.twitter.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.directory.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.display.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.list.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.password.policies.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.page.template.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.link.to.page.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.adaptive.media.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.headless.admin.content.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.user.groups.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.recent.bloggers.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.roles.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.list.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.oauth2.provider.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.exportimport.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.display.page.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.preview.video.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.browser.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.blogs.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.menu.item.layout.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.notifications.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.settings.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.organizations.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.security.sso.openid.login.authentication.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.panel.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.search.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.workflow.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.image.editor.integration.document.library.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.search.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.security.wedeploy.auth.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.tags.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.workflow.task.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.image.editor.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.settings.authentication.ldap.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.info.list.provider.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.security.service.access.policy.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.my.sites.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.instances.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.link.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.search.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.requests.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sync.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.server.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.taglib.chart.sample.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.simulation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.login.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.test.personal.menu-1.0.0.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.plugins.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.configuration.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.map.google.maps.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.document.library.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.memberships.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.item.selector.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.bookmarks.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.app.builder.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.marketplace.app.manager.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.staging.configuration.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.bookmarks.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.comment.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.categories.navigation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.engine.creole.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.content.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.user.personal.bar.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.invitation.invite.members.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.redirect.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.editor.link.browse.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.roles.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.users.admin.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.image.uploader.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.control.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.categories.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.tags.navigation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.flags.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.users.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.form.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.info.display.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.info.display.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.form.report.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.mobile.device.rules.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.microblogs.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.analytics.settings.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.connected.app.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.bookmark.linkedin.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.list.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.knowledge.base.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.personal.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.user.associated.data.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.breadcrumb.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.segments.simulation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.polls.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.depot.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.nested.portlets.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.conversions.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.search.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.full.page.application.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.expando.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.notifications.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.form.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.knowledge.base.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.taglib.util.freemarker.contributor.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.category.property.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.segments.context.vocabulary.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.page.template.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.entry.processor.drop.zone.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.simulation.device.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.bookmark.facebook.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.contacts.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.menu.item.url.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.tags.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.search.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.menu.item.node.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.opener.google.drive.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.editor.ckeditor.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.item.selector.upload.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.rss.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.preview.audio.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.my.subscriptions.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.announcements.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.data.engine.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.layout.prototype.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.ratings.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.display.page.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.staging.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.staging.bar.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.entry.processor.portlet.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.login.authentication.opensso.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.terms.of.use.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.calendar.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.navigation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.asset.display.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.content.page.editor.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.user.groups.admin.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.iframe.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.categories.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.set.prototype.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.rss.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.related.assets.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.page.template.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.display.page.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.map.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.login.authentication.openid.connect.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.language.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.portlet.configuration.css.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.activity.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.comment.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.flags.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.ratings.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.segments.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.activities.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.preview.image.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.global.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.portlet.configuration.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.editor.alloyeditor.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.preview.document.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.entry.query.processor.custom.user.attributes.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.site.administration.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.mentions.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.item.selector.url.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.ratings.page.ratings.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.questions.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.site.map.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.layout.prototype.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.comments.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.message.boards.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.locales.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.lists.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.account.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.license.manager.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.group.statistics.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.entry.processor.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.analytics.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.browser.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.expando.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.product.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.activities.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.staging.processes.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.change.tracking.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.headless.discovery.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.exportimport.changeset.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.comment.page.comments.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.exportimport.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.display.page.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.user.statistics.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.roles.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.portlet.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.gogo.shell.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.data.provider.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.taglib.clay.sample.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.publisher.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.test.personal.menu-1.0.0.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h11s946ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h11s948ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8m54s612ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=8m54s607ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m22s751ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m22s743ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m23s924ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m23s917ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m23s292ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m23s292ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m23s301ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m23s462ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m47s510ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m25s752ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h22s358ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h20m7s589ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h20m7s612ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m33s355ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m33s344ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h20m23s623ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m25s117ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m25s114ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=24m54s793ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h39m11s53ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.RuntimeException: You must first upgrade the portal to the required schema version 8.9.0]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.RuntimeException: You must first upgrade the portal to the required schema version 8.9.0]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Portal property "minifier.inline.content.cache.size" is obsolete]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: Skipping email because the sender is not specified]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=36m40s740ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=36m40s749ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: User 20126 is not allowed to access URL http://localhost:8080/group/guest/~/control_panel/manage and portlet com_liferay_blogs_web_portlet_BlogsAdminPortlet: User 20126 did not provide a valid CSRF token for com.liferay.portlet.SecurityPortletContainerWrapper]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to dispatch request: /view.jsp(74,8) PWC6131: Attribute elementClasses invalid for tag icon according to TLD]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: org.apache.jasper.JasperException: /view.jsp(74,8) PWC6131: Attribute elementClasses invalid for tag icon according to TLD]]></value>
+<value><![CDATA[LIFERAY_ERROR: ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to dispatch request: /view.jsp(74,8) PWC6131: Attribute elementClasses invalid for tag icon according to TLD]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: org.apache.jasper.JasperException: /view.jsp(74,8) PWC6131: Attribute elementClasses invalid for tag icon according to TLD]]></value>
+<value><![CDATA[LIFERAY_ERROR: ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/badges.jsp(29,2) PWC6339: Cannot find a setter method for the attribute label of the tag handler com.liferay.frontend.taglib.clay.servlet.taglib.BadgeTag]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/badges.jsp(29,2) PWC6239: According to TLD, tag clay:badge must be empty, but is not]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/badges.jsp(29,2) PWC6130: According to the TLD or the tag file, attribute label is mandatory for tag badge]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/badges.jsp(29,2) PWC6131: Attribute role invalid for tag badge according to TLD]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to dispatch request: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: javax.servlet.ServletException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error executing FreeMarker template]]></value>
+<value><![CDATA[LIFERAY_ERROR: User ID 20126]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4]]></value>
+<value><![CDATA[LIFERAY_ERROR: Referer null]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.template.TemplateException: Unable to process template classic-theme_SERVLET_CONTEXT_/templates/portal_normal.ftl]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to dispatch request: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: javax.servlet.ServletException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: java.lang.NullPointerException: The String argument to write(String,int,int) may not be null]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: java.lang.NullPointerException: The String argument to write(String,int,int) may not be null]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m13s560ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m13s280ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m19s97ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m19s102ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m18s712ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m18s712ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m18s187ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m18s185ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m18s397ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m18s401ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m18s862ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m18s858ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m2s72ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=7m2s79ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m1s638ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2m1s641ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /group/control_panel/manage?p_p_id=com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet_mvcRenderCommandName=%2Fadmin%2Fassign_scopes&_com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet_navigation=assign_scopes&_com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet_redirect=http%3A%2F%2Flocalhost%3A8080%2Fgroup%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview&_com_liferay_oauth2_provider_web_internal_portlet_OAuth2AdminPortlet_oAuth2ApplicationId=1 generates exception: /admin/assign_scopes.jsp(74,7) /admin/assign_scopes_tab1.jspf(191,11) PWC6239: According to TLD, tag clay:badge must be empty, but is not]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: Skipping email because the sender is not specified]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: Skipping email because the sender is not specified]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: Skipping email because the sender is not specified]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m20s738ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=18m20s738ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m6s575ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1m6s566ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=38m29s365ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=38m29s357ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h28s429ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h28s431ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h20s435ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h27s176ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h27s167ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h27s344ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h27s344ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2h28s545ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=2h28s546ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m23s446ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=34m23s445ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h37m45s489ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h37m45s488ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8m35s184ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=8m35s184ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/labels.jsp(30,7) PWC6339: Cannot find a setter method for the attribute size of the tag handler com.liferay.frontend.taglib.clay.servlet.taglib.LabelTag]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/labels.jsp(30,7) PWC6339: Cannot find a setter method for the attribute size of the tag handler com.liferay.frontend.taglib.clay.servlet.taglib.LabelTag]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/labels.jsp(90,2) PWC6339: Cannot find a setter method for the attribute href of the tag handler com.liferay.frontend.taglib.clay.servlet.taglib.LabelTag]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/labels.jsp(103,2) PWC6130: According to the TLD or the tag file, attribute label is mandatory for tag label]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: /partials/labels.jsp(112,5) PWC6130: According to the TLD or the tag file, attribute symbol is mandatory for tag icon]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m56s832ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=13m56s833ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5h17s119ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h45m56s520ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h45m56s528ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m48s583ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1m48s576ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8m33s637ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=8m33s641ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13h57m43s397ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=13h57m43s189ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m7s968ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m18s776ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m19s653ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m19s650ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m19s20ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m19s24ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m18s910ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m18s904ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m19s416ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m19s411ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m19s259ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m19s251ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m51s567ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=4m51s574ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m19s422ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m19s421ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m18s955ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=15m18s956ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m36s562ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=14m36s384ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=29m44s317ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h45m48s542ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to dispatch request: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: javax.servlet.ServletException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /web/guest/4 generates exception: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20122&p_p_auth=KXlAWDyc generates exception: PWC6033: Error in Javac compilation for JSP__PWC6197: An error occurred at line: 24 in the jsp file: /mime_type_sticker/page.jsp_PWC6199: Generated servlet error:_cannot find symbol_  symbol:   variable StringPool_  location: class org.apache.jsp.mime_005ftype_005fsticker.page_jsp__ [Sanitized]]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m37s132ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=5m37s137ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=26m28s81ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=26m28s78ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m20s325ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=6m20s335ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=38m50s409ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=38m50s399ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=9m14s376ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: org.apache.jasper.JasperException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to dispatch request: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: javax.servlet.ServletException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: ]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: org.apache.jasper.JasperException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to dispatch request: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: javax.servlet.ServletException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: ]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: org.apache.jasper.JasperException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Unable to dispatch request: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: javax.portlet.PortletException: javax.servlet.ServletException: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: ]]></value>
+<value><![CDATA[LIFERAY_ERROR: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Portal property "minifier.inline.content.cache.size" is obsolete]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /group/guest/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_journal_web_portlet_JournalPortlet_mvcPath=%2Fedit_article.jsp&_com_liferay_journal_web_portlet_JournalPortlet_redirect=%2Fgroup%2Fguest%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_journal_web_portlet_JournalPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D20122%26p_p_auth%3DsODGvKJp&_com_liferay_journal_web_portlet_JournalPortlet_groupId=20122&_com_liferay_journal_web_portlet_JournalPortlet_folderId=0&_com_liferay_journal_web_portlet_JournalPortlet_ddmStructureKey=BASIC-WEB-CONTENT&p_p_auth=sODGvKJp generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: User 20126 is not allowed to access URL http://localhost:8080/group/guest/~/control_panel/manage and portlet com_liferay_blogs_web_portlet_BlogsAdminPortlet: User 20126 did not provide a valid CSRF token for com.liferay.portlet.SecurityPortletContainerWrapper]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.dynamic.data.mapping.service:5.1.6 (437)[com.liferay.dynamic.data.mapping.internal.template.TemplateHandlerRegistryImpl(1629)] : waitForTracked timed out: 46 ceiling: 45 missing: [37, 38, 39, 40, 41, 42, 43, 44],  Expect further errors ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.dynamic.data.mapping.service:5.1.6 (437)[com.liferay.dynamic.data.mapping.internal.template.TemplateHandlerRegistryImpl(1629)] :  Component deactivation threw an exception ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.dynamic.data.mapping.service:5.1.6 (437)[com.liferay.dynamic.data.mapping.internal.template.TemplateHandlerRegistryImpl(1629)] : DependencyManager : invokeUnbindMethod : timeout on close latch TemplateHandler ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.dynamic.data.mapping.service:5.1.6 (437)[com.liferay.dynamic.data.mapping.internal.template.TemplateHandlerRegistryImpl(1629)] :  Component deactivation threw an exception ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.portal.aop.impl:2.0.3 (245)[com.liferay.portal.aop.internal.AopServiceManager(837)] : The deactivate method has thrown an exception ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.journal.service:6.0.22 (545)[com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl(2167)] : The activate method has thrown an exception ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent WARNING ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.portal.aop.impl:2.0.3 (245)[com.liferay.portal.aop.internal.AopServiceManager(837)] : The activate method has thrown an exception ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: [fileinstall-/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules] Invocation of 'stop' failed. ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.portal.pop.notifications:5.0.5 (147)[com.liferay.portal.pop.notifications.internal.messaging.POPNotificationsMessageListener(239)] : waitForTracked timed out: 6 ceiling: 6 missing: [5],  Expect further errors ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.portal.search.elasticsearch6.impl:4.0.16 (207)[com.liferay.portal.search.elasticsearch6.internal.ElasticsearchEngineConfigurator(458)] :  Component deactivation threw an exception ]]></value>
+<value><![CDATA[LIFERAY_ERROR: FrameworkEvent ERROR ]]></value>
+<value><![CDATA[LIFERAY_ERROR: bundle com.liferay.dynamic.data.mapping.service:5.1.6 (437)[com.liferay.dynamic.data.mapping.internal.template.TemplateHandlerRegistryImpl(1629)] : DependencyManager : invokeUnbindMethod : timeout on close latch TemplateHandler ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="400", msg="", uri=/o/dynamic-data-mapping-form-context-provider/}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="400", msg="", uri=/o/dynamic-data-mapping-form-context-provider/}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="400", msg="", uri=/o/dynamic-data-mapping-form-context-provider/}]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="400", msg="", uri=/o/dynamic-data-mapping-form-context-provider/}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="400", msg="", uri=/o/dynamic-data-mapping-form-context-provider/}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="404", msg="/apple-touch-icon-precomposed.png", uri=/apple-touch-icon-precomposed.png}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="404", msg="/apple-touch-icon.png", uri=/apple-touch-icon.png}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="404", msg="/apple-touch-icon-precomposed.png", uri=/apple-touch-icon-precomposed.png}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="404", msg="/apple-touch-icon.png", uri=/apple-touch-icon.png}]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.frontend.js.aui.web.internal.configuration.AUIConfiguration generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="404", msg="/apple-touch-icon-precomposed.png", uri=/apple-touch-icon-precomposed.png}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="404", msg="/apple-touch-icon.png", uri=/apple-touch-icon.png}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="400", msg="", uri=/o/dynamic-data-mapping-form-context-provider/}]]></value>
+<value><![CDATA[LIFERAY_ERROR: {code="405", msg="HTTP method GET is not supported by this URL", uri=/o/dynamic-data-mapping-form-context-provider/}]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=46s493ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=46s500ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20122&p_p_auth=PC7xN1J9 generates exception: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL /group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_v_l_s_g_id=20122&p_p_auth=PC7xN1J9 generates exception: java.lang.NullPointerException]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.monitoring.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.push.notifications.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.trash.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.teams.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.seo.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.buildings.site.initializer.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.bookmark.twitter.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.directory.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.display.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.list.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.password.policies.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.page.template.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.link.to.page.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.adaptive.media.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.headless.admin.content.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.user.groups.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.recent.bloggers.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.roles.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.list.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.oauth2.provider.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.exportimport.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.display.page.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.preview.video.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.browser.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.blogs.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.menu.item.layout.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.notifications.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.organizations.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.panel.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.image.editor.integration.document.library.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.tags.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.image.editor.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.info.list.provider.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.my.sites.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.link.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.requests.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sync.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.server.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.taglib.chart.sample.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.simulation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.login.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.plugins.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.configuration.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.map.google.maps.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.document.library.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.memberships.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.item.selector.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.bookmarks.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.app.builder.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.marketplace.app.manager.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.staging.configuration.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.bookmarks.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.comment.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.categories.navigation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.engine.creole.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.content.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.user.personal.bar.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.invitation.invite.members.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.redirect.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.editor.link.browse.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.roles.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.users.admin.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.image.uploader.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.control.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.categories.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.tags.navigation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.flags.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.users.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.form.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.info.display.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.info.display.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.form.report.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.mobile.device.rules.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.microblogs.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.analytics.settings.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.connected.app.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.bookmark.linkedin.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.list.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.knowledge.base.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.personal.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.user.associated.data.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.breadcrumb.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.segments.simulation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.polls.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.depot.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.nested.portlets.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.conversions.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.search.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.full.page.application.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.expando.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.notifications.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.form.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.knowledge.base.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.taglib.util.freemarker.contributor.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.category.property.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.segments.context.vocabulary.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.page.template.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.entry.processor.drop.zone.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.simulation.device.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.bookmark.facebook.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.contacts.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.menu.item.url.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.tags.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.search.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.menu.item.node.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.opener.google.drive.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.editor.ckeditor.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.item.selector.upload.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.rss.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.preview.audio.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.my.subscriptions.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.announcements.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.data.engine.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.layout.prototype.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.ratings.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.display.page.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.staging.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.staging.bar.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.entry.processor.portlet.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.login.authentication.opensso.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.terms.of.use.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.calendar.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.wiki.navigation.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.asset.display.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.content.page.editor.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.user.groups.admin.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.iframe.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.sharing.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.categories.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.set.prototype.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.rss.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.related.assets.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.page.template.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.display.page.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.api.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.map.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.login.authentication.openid.connect.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.language.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.portlet.configuration.css.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.activity.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.comment.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.flags.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.service.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.ratings.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.segments.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.activities.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.preview.image.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.global.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.portlet.configuration.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.editor.alloyeditor.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.preview.document.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.entry.query.processor.custom.user.attributes.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.site.administration.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.mentions.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.item.selector.url.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.ratings.page.ratings.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.questions.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.site.map.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.blogs.layout.prototype.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.comments.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.message.boards.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.journal.content.asset.addon.entry.locales.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.lists.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.account.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.navigation.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.license.manager.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.group.statistics.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.fragment.entry.processor.impl.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.analytics.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.browser.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.expando.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.product.navigation.product.menu.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.activities.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.staging.processes.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.change.tracking.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.headless.discovery.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.exportimport.changeset.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.document.library.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.comment.page.comments.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.exportimport.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.display.page.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.social.user.statistics.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.site.taglib.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.roles.item.selector.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.layout.type.controller.portlet.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.gogo.shell.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.dynamic.data.mapping.data.provider.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.frontend.taglib.clay.sample.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/modules/com.liferay.asset.publisher.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.settings.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.security.sso.openid.login.authentication.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.search.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.workflow.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.search.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.security.wedeploy.auth.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.workflow.task.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.settings.authentication.ldap.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.security.service.access.policy.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.instances.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Error while starting bundle: file:/Users/jose.balsas/dev/liferay/portal/master/bundles/osgi/portal/com.liferay.portal.search.admin.web.jar ]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=51m5s292ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=51m5s295ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m22s869ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m22s868ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m21s937ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m21s807ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m23s727ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m23s726ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=22m40s803ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m26s52ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m26s44ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=20m27s320ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m26s545ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m26s798ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m26s238ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=20m25s958ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=4h14s22ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4h14s132ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=19m54s748ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=19m54s852ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=28m55s136ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=28m55s142ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h3m23s508ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=34m57s114ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m57s128ms).]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Conversion failed: 5","7; <--- java.lang.NumberFormatException: For input string: "5","7"]]></value>
+<value><![CDATA[LIFERAY_ERROR: Conversion failed: 6","8; <--- java.lang.NumberFormatException: For input string: "6","8"]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.]]></value>
+<value><![CDATA[LIFERAY_ERROR: Portal property "minifier.inline.content.cache.size" is obsolete]]></value>
+<value><![CDATA[LIFERAY_ERROR: Email test@liferay.com will be ignored because it is included in mail.send.blacklist]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>
+<value><![CDATA[LIFERAY_ERROR: Current URL / generates exception: com.liferay.portal.kernel.exception.SystemException: com.liferay.petra.encryptor.EncryptorException: com.liferay.petra.encryptor.EncryptorException: javax.crypto.BadPaddingException: Given final block not properly padded]]></value>

@@ -117,7 +117,7 @@ export default function FloatingToolbar({
 	);
 
 	useEffect(() => {
-		setShow(isActive(item.itemId) && itemElement);
+		setShow(isActive(item.itemId) && !!itemElement);
 	}, [isActive, item.itemId, itemElement]);
 
 	useEffect(() => {

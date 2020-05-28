@@ -46,7 +46,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "new-ranking"));
 %>
 
 <clay:sheet
-	className="result-rankings-alert-container"
+	cssClass="result-rankings-alert-container"
 >
 	<liferay-ui:error exception="<%= DuplicateQueryStringException.class %>" message="ranking-with-that-search-query-already-exists" />
 	<liferay-ui:error exception="<%= Exception.class %>" message="an-unexpected-error-occurred" />

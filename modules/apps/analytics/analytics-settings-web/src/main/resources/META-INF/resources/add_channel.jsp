@@ -54,7 +54,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<clay:sheet
-		className="portlet-analytics-settings"
+		cssClass="portlet-analytics-settings"
 	>
 		<h2>
 			<liferay-ui:message key="new-property" />

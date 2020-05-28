@@ -58,7 +58,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(resourceBundle, "
 	<aui:input name="channelId" type="hidden" value="<%= channelId %>" />
 
 	<clay:sheet
-		className="portlet-analytics-settings"
+		cssClass="portlet-analytics-settings"
 	>
 		<h2>
 			<liferay-ui:message arguments="<%= channelName %>" key="sites-to-sync-x" />

@@ -149,7 +149,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 							</clay:content-col>
 
 							<clay:content-col
-								className="inline-item-after"
+								cssClass="inline-item-after"
 								verticaAlign="end"
 							>
 								<liferay-util:include page="/layout_page_template_collection_action.jsp" servletContext="<%= application %>" />

@@ -58,7 +58,7 @@ RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingR
 	<c:choose>
 		<c:when test="<%= rankingResultContentDisplayContext.isVisible() %>">
 			<clay:sheet
-				className="result-rankings-view-content-container"
+				cssClass="result-rankings-view-content-container"
 			>
 				<clay:content-row>
 					<clay:content-col
@@ -70,7 +70,7 @@ RankingResultContentDisplayContext rankingResultContentDisplayContext = rankingR
 					</clay:content-col>
 
 					<clay:content-col
-						className="visible-interaction"
+						cssClass="visible-interaction"
 					>
 						<c:if test="<%= rankingResultContentDisplayContext.hasEditPermission() %>">
 							<div class="asset-actions lfr-meta-actions">

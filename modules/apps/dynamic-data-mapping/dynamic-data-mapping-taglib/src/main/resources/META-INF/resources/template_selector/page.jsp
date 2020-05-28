@@ -29,7 +29,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	verticaAlign="center"
 >
 	<clay:content-col
-		className="inline-item-before"
+		cssClass="inline-item-before"
 	>
 		<aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
 

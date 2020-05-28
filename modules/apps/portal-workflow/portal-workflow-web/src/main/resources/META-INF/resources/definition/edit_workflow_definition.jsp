@@ -119,7 +119,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 				<div class="sidebar-header">
 					<clay:content-row
-						className="sidebar-section"
+						cssClass="sidebar-section"
 					>
 						<clay:content-col
 							expand="true"

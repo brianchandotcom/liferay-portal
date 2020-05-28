@@ -38,7 +38,7 @@ User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 <div class="card panel">
 	<div class="panel-heading">
 		<clay:content-row
-			className="card-body"
+			cssClass="card-body"
 			padded="true"
 		>
 			<clay:content-col>

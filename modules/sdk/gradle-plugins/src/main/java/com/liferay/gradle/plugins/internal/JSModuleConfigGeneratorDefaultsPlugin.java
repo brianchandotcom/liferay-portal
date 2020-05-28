@@ -39,12 +39,16 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		Project project,
 		JSModuleConfigGeneratorPlugin jsModuleConfigGeneratorPlugin) {
 
+		// Extensions
+
 		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
 			GradleUtil.getExtension(
 				project, JSModuleConfigGeneratorExtension.class);
 
 		_configureExtensionJSModuleConfigGenerator(
 			project, jsModuleConfigGeneratorExtension);
+
+		// Tasks
 
 		TaskProvider<ConfigJSModulesTask> configJSModulesTaskProvider =
 			GradleUtil.getTaskProvider(

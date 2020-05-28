@@ -54,6 +54,8 @@ public class TestIntegrationDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, TestIntegrationPlugin testIntegrationPlugin) {
 
+		// Extensions
+
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension =
@@ -66,10 +68,14 @@ public class TestIntegrationDefaultsPlugin
 		_configureExtensionTestIntegrationTomcat(
 			liferayExtension, testIntegrationTomcatExtension, tomcatAppServer);
 
+		// Configurations
+
 		Configuration testModulesConfiguration = GradleUtil.getConfiguration(
 			project, TestIntegrationPlugin.TEST_MODULES_CONFIGURATION_NAME);
 
 		_configureConfigurationTestModules(project, testModulesConfiguration);
+
+		// Tasks
 
 		TaskProvider<Task> copyTestModulesTaskProvider =
 			GradleUtil.getTaskProvider(

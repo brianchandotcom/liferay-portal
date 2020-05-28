@@ -55,10 +55,14 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	protected void applyPluginDefaults(
 		Project project, final IdeaPlugin ideaPlugin) {
 
+		// Tasks
+
 		TaskProvider<Task> ideaTaskProvider = GradleUtil.getTaskProvider(
 			project, _IDEA_TASK_NAME);
 
 		_configureTaskIdeaProvider(ideaTaskProvider);
+
+		// Other
 
 		IdeaModel ideaModel = ideaPlugin.getModel();
 

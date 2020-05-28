@@ -61,6 +61,9 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+
+		// Tasks
+
 		TaskProvider<Sync> buildBundleDirTaskProvider =
 			GradleUtil.addTaskProvider(
 				project, BUILD_BUNDLE_DIR_TASK_NAME, Sync.class);

@@ -166,52 +166,10 @@ definition {
 		}
 	}
 
-	test AssertNonAdminsCannotAddCertainWidgets {
-		property custom.properties = "jsonws.web.service.paths.excludes=";
-
-		JSONRole.addRegularRole(
-			roleKey = "Can Add Widgets",
-			roleTitle = "Can Add Widgets");
-
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "MANAGE_LAYOUTS",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Can Add Widgets");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
-
-		JSONRole.assignRoleToUser(
-			roleTitle = "Can Add Widgets",
-			userEmailAddress = "userea@liferay.com");
-
-		User.logoutPG();
-
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "userea@liferay.com");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
-
-		Portlet.viewCannotAddPG(portletName = "Low Level Search Options");
-
-		Refresh();
-
-		Portlet.viewCannotAddPG(portletName = "Search Insights");
-	}
-
 	@priority = "4"
-	test AssertSearchFunctionalityWhenSettingIndexOnStartupToTrue {
+	test AssertIndexOnStartup {
 		property test.assert.warning.exceptions = "true";
-		property test.name.skip.portal.instance = "Search#AssertSearchFunctionalityWhenSettingIndexOnStartupToTrue";
+		property test.name.skip.portal.instance = "Search#AssertIndexOnStartup";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",
@@ -268,6 +226,48 @@ definition {
 		SearchResultPortlet.viewMultipleSearchResults(
 			resultsList = "WC WebContent Title/Web Content Article,Blogs Entry Title/Blogs Entry,DM Document Title/Document",
 			searchTerm = "test");
+	}
+
+	test AssertNonAdminsCannotAddCertainWidgets {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONRole.addRegularRole(
+			roleKey = "Can Add Widgets",
+			roleTitle = "Can Add Widgets");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "MANAGE_LAYOUTS",
+			resourceName = "com.liferay.portal.kernel.model.Group",
+			roleTitle = "Can Add Widgets");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Can Add Widgets",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutPG();
+
+		User.loginPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
+
+		Portlet.viewCannotAddPG(portletName = "Low Level Search Options");
+
+		Refresh();
+
+		Portlet.viewCannotAddPG(portletName = "Search Insights");
 	}
 
 	@description = "This is a use case for LPS-89561."

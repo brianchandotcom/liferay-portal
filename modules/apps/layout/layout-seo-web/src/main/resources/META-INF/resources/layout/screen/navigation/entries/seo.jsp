@@ -59,6 +59,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<h4><liferay-ui:message key="general-settings" /></h4>
 
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+
 			<c:choose>
 				<c:when test="<%= !selLayout.isTypeAssetDisplay() %>">
 					<aui:input helpMessage="html-title-help" id="title" label="html-title" name="title" placeholder="title" />
@@ -161,7 +162,14 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 					/>
 				</c:when>
 				<c:otherwise>
-					React component 
+					<div class="dpt-mapping">
+						<aui:input disabled="<%= true %>" helpMessage="html-title-help" id="title" label="html-title" localized="<%= false %>" name="title" placeholder="title" />
+
+						<react:component
+							module="js/seo/display_page_templates/SeoMapping"
+							servletContext="<%= application %>"
+						/>
+					</div>
 				</c:otherwise>
 			</c:choose>
 

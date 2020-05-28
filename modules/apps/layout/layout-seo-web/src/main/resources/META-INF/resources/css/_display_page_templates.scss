@@ -1,0 +1,25 @@
+.dpt-mapping {
+	.dpt-mapping-label {
+		display: block;
+		font-weight: 400;
+		margin-bottom: 0;
+	}
+
+	.control-label {
+		font-weight: 600;
+		margin-bottom: 0.25rem;
+	}
+
+	.dpt-mapping-input {
+		pointer-events: none;
+	}
+
+	.dpt-mapping-btn {
+		color: $purple;
+
+		&:focus,
+		&:hover {
+			background-color: fade_out($purple, 0.9);
+		}
+	}
+}

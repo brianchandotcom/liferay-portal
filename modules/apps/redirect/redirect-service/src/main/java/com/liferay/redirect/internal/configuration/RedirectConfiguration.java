@@ -26,10 +26,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	description = "redirect-configuration-description",
-	id = "com.liferay.redirect.internal.configuration.FFRedirectConfiguration",
+	id = "com.liferay.redirect.internal.configuration.RedirectConfiguration",
 	localization = "content/Language", name = "redirect-configuration-name"
 )
-public interface FFRedirectConfiguration {
+public interface RedirectConfiguration {
 
 	@Meta.AD(
 		deflt = "30", name = "redirect-not-found-entry-max-age",

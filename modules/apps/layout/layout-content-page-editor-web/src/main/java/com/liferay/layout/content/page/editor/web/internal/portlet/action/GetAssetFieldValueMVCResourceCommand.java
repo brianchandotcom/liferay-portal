@@ -120,12 +120,9 @@ public class GetAssetFieldValueMVCResourceCommand
 		InfoFieldValue infoFieldValue = infoItemFormProvider.getInfoFieldValue(
 			object, fieldId);
 
-		Object value = null;
+		Object value = StringPool.BLANK;
 
-		if (infoFieldValue == null) {
-			value = StringPool.BLANK;
-		}
-		else {
+		if (infoFieldValue != null) {
 			value = infoFieldValue.getValue(
 				LocaleUtil.fromLanguageId(languageId));
 		}

@@ -64,11 +64,11 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String[] domains = ParamUtil.getStringValues(actionRequest, "domains");
-		String taxId = ParamUtil.getString(actionRequest, "taxId");
+		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
 
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,
-			domains, _getLogoBytes(actionRequest), taxId,
+			domains, _getLogoBytes(actionRequest), taxIdNumber,
 			_getStatus(actionRequest),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));
@@ -130,11 +130,11 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 		String[] domains = ParamUtil.getStringValues(actionRequest, "domains");
-		String taxId = ParamUtil.getString(actionRequest, "taxId");
+		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
 
 		_accountEntryLocalService.updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
-			domains, _getLogoBytes(actionRequest), taxId,
+			domains, _getLogoBytes(actionRequest), taxIdNumber,
 			_getStatus(actionRequest),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));

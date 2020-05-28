@@ -100,7 +100,7 @@ const SectionWithControls = React.forwardRef(
 					<FloatingToolbar
 						buttons={buttons}
 						item={item}
-						itemRef={ref}
+						itemElement={ref.current}
 						onButtonClick={handleButtonClick}
 					/>
 

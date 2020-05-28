@@ -71,7 +71,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 				@Override
 				public void execute(Project project) {
-					_configureIdeaModuleExcludeDirs(project, ideaModule);
+					_configureIdeaModuleAfterEvaluate(project, ideaModule);
 				}
 
 			});
@@ -85,7 +85,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	private IdeaDefaultsPlugin() {
 	}
 
-	private void _configureIdeaModuleExcludeDirs(
+	private void _configureIdeaModuleAfterEvaluate(
 		Project project, IdeaModule ideaModule) {
 
 		Set<File> excludeDirs = ideaModule.getExcludeDirs();

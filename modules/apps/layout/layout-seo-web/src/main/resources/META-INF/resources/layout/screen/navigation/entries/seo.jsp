@@ -59,107 +59,111 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<h4><liferay-ui:message key="general-settings" /></h4>
 
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+			<c:choose>
+				<c:when test="<%= !selLayout.isTypeAssetDisplay() %>">
+					<aui:input helpMessage="html-title-help" id="title" label="html-title" name="title" placeholder="title" />
+					<aui:input helpMessage="description-help" id="descriptionSEO" name="description" placeholder="description" />
 
-			<c:if test="<%= !selLayout.isTypeAssetDisplay() %>">
-				<aui:input helpMessage="html-title-help" id="title" label="html-title" name="title" placeholder="title" />
-				<aui:input helpMessage="description-help" id="descriptionSEO" name="description" placeholder="description" />
+					<%
+					LayoutSEOEntry selLayoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
+					%>
 
-				<%
-				LayoutSEOEntry selLayoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
-				%>
-
-				<liferay-util:buffer
-					var="infoCanonicalURL"
-				>
-					<clay:alert
-						message='<%= LanguageUtil.get(resourceBundle, "use-custom-canonical-url-alert-info") %>'
-						title='<%= LanguageUtil.get(request, "info") + ":" %>'
-					/>
-				</liferay-util:buffer>
-
-				<c:choose>
-					<c:when test="<%= selLayoutSEOEntry != null %>">
-						<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
-
-						<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
-
-						<div id="<portlet:namespace />customCanonicalURLSettings">
-							<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>">
-								<aui:validator name="url" />
-							</aui:input>
-						</div>
-
-						<div class='<%= selLayoutSEOEntry.isCanonicalURLEnabled() ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />canonicalURLAlert">
-							<%= infoCanonicalURL %>
-						</div>
-
-						<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
-					</c:when>
-					<c:otherwise>
-						<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
-
-						<div id="<portlet:namespace />customCanonicalURLSettings">
-							<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>" type="text">
-								<aui:validator name="url" />
-							</aui:input>
-						</div>
-
-						<div class="hide" id="<portlet:namespace />canonicalURLAlert">
-							<%= infoCanonicalURL %>
-						</div>
-					</c:otherwise>
-				</c:choose>
-
-				<aui:input name="keywords" placeholder="keywords" />
-
-				<div class="form-group">
-					<label><liferay-ui:message key="preview" /></label>
-
-					<div>
-
-						<%
-						Map<String, Object> data = HashMapBuilder.<String, Object>put(
-							"targets",
-							HashMapBuilder.<String, Object>put(
-								"description",
-								HashMapBuilder.put(
-									"defaultValue", selLayout.getDescription(locale)
-								).put(
-									"id", "descriptionSEO"
-								).build()
-							).put(
-								"title",
-								HashMapBuilder.<String, Object>put(
-									"defaultValue", layoutsSEODisplayContext.getDefaultPageTitleMap()
-								).put(
-									"id", "title"
-								).build()
-							).put(
-								"url",
-								HashMapBuilder.<String, Object>put(
-									"defaultValue", layoutsSEODisplayContext.getDefaultCanonicalURLMap()
-								).put(
-									"id", "canonicalURL"
-								).build()
-							).build()
-						).put(
-							"titleSuffix", layoutsSEODisplayContext.getPageTitleSuffix()
-						).build();
-						%>
-
-						<react:component
-							data="<%= data %>"
-							module="js/seo/PreviewSeo.es"
-							servletContext="<%= application %>"
+					<liferay-util:buffer
+						var="infoCanonicalURL"
+					>
+						<clay:alert
+							message='<%= LanguageUtil.get(resourceBundle, "use-custom-canonical-url-alert-info") %>'
+							title='<%= LanguageUtil.get(request, "info") + ":" %>'
 						/>
-					</div>
-				</div>
+					</liferay-util:buffer>
 
-				<liferay-frontend:component
-					module="js/seo/seo.es"
-					servletContext="<%= application %>"
-				/>
-			</c:if>
+					<c:choose>
+						<c:when test="<%= selLayoutSEOEntry != null %>">
+							<aui:model-context bean="<%= selLayoutSEOEntry %>" model="<%= LayoutSEOEntry.class %>" />
+
+							<aui:input checked="<%= selLayoutSEOEntry.isCanonicalURLEnabled() %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
+
+							<div id="<portlet:namespace />customCanonicalURLSettings">
+								<aui:input disabled="<%= !selLayoutSEOEntry.isCanonicalURLEnabled() %>" label="<%= StringPool.BLANK %>" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>">
+									<aui:validator name="url" />
+								</aui:input>
+							</div>
+
+							<div class='<%= selLayoutSEOEntry.isCanonicalURLEnabled() ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />canonicalURLAlert">
+								<%= infoCanonicalURL %>
+							</div>
+
+							<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+						</c:when>
+						<c:otherwise>
+							<aui:input checked="<%= false %>" helpMessage="use-custom-canonical-url-help" label="use-custom-canonical-url" name="canonicalURLEnabled" type="checkbox" wrapperCssClass="mb-1" />
+
+							<div id="<portlet:namespace />customCanonicalURLSettings">
+								<aui:input disabled="<%= true %>" label="<%= StringPool.BLANK %>" localized="<%= true %>" name="canonicalURL" placeholder="<%= layoutsSEODisplayContext.getDefaultCanonicalURL() %>" type="text">
+									<aui:validator name="url" />
+								</aui:input>
+							</div>
+
+							<div class="hide" id="<portlet:namespace />canonicalURLAlert">
+								<%= infoCanonicalURL %>
+							</div>
+						</c:otherwise>
+					</c:choose>
+
+					<aui:input name="keywords" placeholder="keywords" />
+
+					<div class="form-group">
+						<label><liferay-ui:message key="preview" /></label>
+
+						<div>
+
+							<%
+							Map<String, Object> data = HashMapBuilder.<String, Object>put(
+								"targets",
+								HashMapBuilder.<String, Object>put(
+									"description",
+									HashMapBuilder.put(
+										"defaultValue", selLayout.getDescription(locale)
+									).put(
+										"id", "descriptionSEO"
+									).build()
+								).put(
+									"title",
+									HashMapBuilder.<String, Object>put(
+										"defaultValue", layoutsSEODisplayContext.getDefaultPageTitleMap()
+									).put(
+										"id", "title"
+									).build()
+								).put(
+									"url",
+									HashMapBuilder.<String, Object>put(
+										"defaultValue", layoutsSEODisplayContext.getDefaultCanonicalURLMap()
+									).put(
+										"id", "canonicalURL"
+									).build()
+								).build()
+							).put(
+								"titleSuffix", layoutsSEODisplayContext.getPageTitleSuffix()
+							).build();
+							%>
+
+							<react:component
+								data="<%= data %>"
+								module="js/seo/PreviewSeo.es"
+								servletContext="<%= application %>"
+							/>
+						</div>
+					</div>
+
+					<liferay-frontend:component
+						module="js/seo/seo.es"
+						servletContext="<%= application %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					React component 
+				</c:otherwise>
+			</c:choose>
 
 			<aui:input name="robots" placeholder="robots" />
 

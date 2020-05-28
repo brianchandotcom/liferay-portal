@@ -34,7 +34,7 @@ public class AccountEntryTable {
 		{"modifiedDate", Types.TIMESTAMP},
 		{"parentAccountEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"domains", Types.VARCHAR},
-		{"logoId", Types.BIGINT}, {"taxId", Types.VARCHAR},
+		{"logoId", Types.BIGINT}, {"taxIdNumber", Types.VARCHAR},
 		{"status", Types.INTEGER}
 	};
 
@@ -66,13 +66,13 @@ TABLE_COLUMNS_MAP.put("domains", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
 
-TABLE_COLUMNS_MAP.put("taxId", Types.VARCHAR);
+TABLE_COLUMNS_MAP.put("taxIdNumber", Types.VARCHAR);
 
 TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 
 }
 	public static final String TABLE_SQL_CREATE =
-"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,taxId VARCHAR(75) null,status INTEGER)";
+"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,taxIdNumber VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 

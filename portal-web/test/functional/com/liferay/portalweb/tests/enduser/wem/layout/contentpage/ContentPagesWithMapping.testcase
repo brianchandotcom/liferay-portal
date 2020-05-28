@@ -196,4 +196,70 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_CONTENTS_LIST_TITLE");
 	}
 
+	@description = "This is a test for LPS-96794. In a Permission mode, the edit actions associated that will show a modal with the permission information. In an edit mode, the edit actions associated that will show a modal with the usages of the web content."
+	@priority = "4"
+	test ViewPermissionsAndUsageViaSidebarWithMappedWebContent {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WebContent Title");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			contributed = "true",
+			fragmentName = "Heading",
+			id = "text");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WebContent Title",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+			menuItem = "Permissions",
+			rowEntry = "WebContent Title");
+
+		IFrame.selectPermissionsFrame();
+
+		Role.viewPermissionPG(
+			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
+			permissionFlagged = "true",
+			roleTitle = "Owner");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.gotoTab(tabName = "Contents");
+
+		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
+			menuItem = "View Usages",
+			rowEntry = "WebContent Title");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		AssertElementPresent(
+			locator1 = "AssetLists#ASSET_LIST_USAGES",
+			usageAmount = "2",
+			usageType = "Pages");
+	}
+
 }

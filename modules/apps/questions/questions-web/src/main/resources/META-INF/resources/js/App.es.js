@@ -29,11 +29,11 @@ import NewQuestion from './pages/questions/NewQuestion.es';
 import Question from './pages/questions/Question.es';
 import Questions from './pages/questions/Questions.es';
 import Tags from './pages/tags/Tags.es';
-import {createClient} from './utils/client.es';
+import {client} from './utils/client.es';
 
 export default (props) => (
 	<AppContextProvider {...props}>
-		<ApolloProvider client={createClient()}>
+		<ApolloProvider client={client}>
 			<Router>
 				<ErrorBoundary>
 					<div>

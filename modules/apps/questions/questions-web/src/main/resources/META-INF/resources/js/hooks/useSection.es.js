@@ -15,7 +15,7 @@
 import {useQuery} from '@apollo/client';
 import {useState} from 'react';
 
-import {createClient, getSectionQuery} from '../utils/client.es';
+import {client, getSectionQuery} from '../utils/client.es';
 
 export default function useSection(sectionTitle, siteKey) {
 	const [section, setSection] = useState({});
@@ -23,8 +23,6 @@ export default function useSection(sectionTitle, siteKey) {
 	useQuery(getSectionQuery, {
 		onCompleted(data) {
 			const section = data.messageBoardSections.items[0];
-
-			const client = createClient();
 
 			Promise.resolve(section)
 				.then((section) => {

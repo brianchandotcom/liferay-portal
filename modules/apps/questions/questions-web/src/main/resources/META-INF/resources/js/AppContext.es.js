@@ -14,7 +14,7 @@
 
 import React, {createContext, useEffect, useState} from 'react';
 
-import {createClient, hasListPermissionsQuery} from './utils/client.es';
+import {client, hasListPermissionsQuery} from './utils/client.es';
 
 const AppContext = createContext({});
 
@@ -23,8 +23,6 @@ const AppContextProvider = ({children, ...context}) => {
 	const [section, setSection] = useState({});
 
 	useEffect(() => {
-		const client = createClient();
-
 		client
 			.query({
 				query: hasListPermissionsQuery,

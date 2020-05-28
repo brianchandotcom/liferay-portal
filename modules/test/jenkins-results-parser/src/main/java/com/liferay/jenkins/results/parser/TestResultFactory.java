@@ -33,10 +33,10 @@ public class TestResultFactory {
 		String className = caseJSONObject.getString("className");
 
 		if (className.contains("com.liferay.poshi.runner.PoshiRunner")) {
-			return new PoshiJunitTestResult(build, caseJSONObject);
+			return new PoshiJUnitTestResult(build, caseJSONObject);
 		}
 
-		return new JunitTestResult(build, caseJSONObject);
+		return new JUnitTestResult(build, caseJSONObject);
 	}
 
 }

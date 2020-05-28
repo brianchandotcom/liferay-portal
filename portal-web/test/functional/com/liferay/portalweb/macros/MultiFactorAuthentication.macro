@@ -84,6 +84,24 @@ definition {
 				value1 = "${retryTimeout}");
 		}
 
+		var emailOTPSentSubject = "${emailOTPSentSubject}";
+
+		if (isSet(emailOTPSentSubject)) {
+			Type(
+				key_fieldName = "emailOTPSentSubject",
+				locator1 = "MultiFactorAuthentication#EMAIL_OTP_TEMPLATE_FIELD",
+				value1 = "${emailOTPSentSubject}");
+		}
+
+		var emailOTPSentBody = "${emailOTPSentBody}";
+
+		if (isSet(emailOTPSentBody)) {
+			Type(
+				key_fieldName = "emailOTPSentBody",
+				locator1 = "MultiFactorAuthentication#EMAIL_OTP_TEMPLATE_FIELD",
+				value1 = "${emailOTPSentBody}");
+		}
+
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();
 		}

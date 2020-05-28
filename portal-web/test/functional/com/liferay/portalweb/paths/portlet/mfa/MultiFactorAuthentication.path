@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMAIL_OTP_TEMPLATE_FIELD</td>
+	<td>//div[contains(@data-field-name,'${key_fieldName}')]//div//textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

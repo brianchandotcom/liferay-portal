@@ -135,6 +135,59 @@ definition {
 			userPassword = "test");
 	}
 
+	@description = "This is a use case for LPS-102467 and LPS-110444"
+	@priority = "5"
+	test EditEmailTemplate {
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#EditEmailTemplate";
+
+		var portalURL = PropsUtil.get("portal.url");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureOTP(enableOTP = "true");
+
+		MultiFactorAuthentication.configureOTPEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		MultiFactorAuthentication.viewOTPEmailSenderCP(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		AssertElementPresent(
+			key_fieldName = "emailOTPSentSubject",
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_TEMPLATE_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "emailOTPSentBody",
+			locator1 = "MultiFactorAuthentication#EMAIL_OTP_TEMPLATE_FIELD");
+
+		MultiFactorAuthentication.emailOTPConfiguration(
+			emailOTPSentBody = "One-Time Password for test is:[$ONE_TIME_PASSWORD$]",
+			emailOTPSentSubject = "[$PORTAL_URL$]: Your One-Time Password for test");
+
+		SignOut.signOut();
+
+		SignIn.signIn(userEmailAddress = "test@liferay.com");
+
+		MultiFactorAuthentication.sendOTPEmailPG();
+
+		MockMock.viewMailForOTP(
+			asset = "${portalURL}: Your One-Time Password for test",
+			content = "One-Time Password for test is:",
+			sender = "Joe Bloggs <test@liferay.com>",
+			subject = "${portalURL}: Your One-Time Password for test");
+	}
+
 	@description = "This is a use case for LPS-101720"
 	@priority = "5"
 	test EnableOTPForInstanceAsInstanceAdminUser {

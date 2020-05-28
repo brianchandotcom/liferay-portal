@@ -45,12 +45,12 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsSEODisplayContext.isPrivateLayout() %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsSEODisplayContext.getLayoutId() %>" />
 
-	<div class="sheet sheet-lg">
-		<div class="sheet-header">
+	<clay:sheet>
+		<clay:sheet-header>
 			<h2 class="sheet-title"><liferay-ui:message key="seo" /></h2>
-		</div>
+		</clay:sheet-header>
 
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<liferay-ui:error-marker
 				key="<%= WebKeys.ERROR_SECTION %>"
 				value="seo"
@@ -198,12 +198,12 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 					<aui:option label="never" />
 				</aui:select>
 			</c:if>
-		</div>
+		</clay:sheet-section>
 
-		<div class="sheet-footer">
+		<clay:sheet-footer>
 			<aui:button primary="<%= true %>" type="submit" />
 
 			<aui:button href="<%= backURL %>" type="cancel" />
-		</div>
-	</div>
+		</clay:sheet-footer>
+	</clay:sheet>
 </aui:form>

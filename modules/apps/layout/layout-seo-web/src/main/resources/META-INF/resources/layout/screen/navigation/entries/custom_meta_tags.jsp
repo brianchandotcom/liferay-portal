@@ -35,14 +35,14 @@ if (Validator.isNull(backURL)) {
 	<aui:input name="privateLayout" type="hidden" value="<%= layoutsSEODisplayContext.isPrivateLayout() %>" />
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsSEODisplayContext.getLayoutId() %>" />
 
-	<div class="sheet sheet-lg">
-		<div class="sheet-header">
+	<clay:sheet>
+		<clay:sheet-header>
 			<h2 class="sheet-title"><liferay-ui:message key="custom-meta-tags" /></h2>
 
 			<p class="text-muted">
 				<liferay-ui:message key="custom-meta-tags-description" />
 			</p>
-		</div>
+		</clay:sheet-header>
 
 		<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
 
@@ -66,10 +66,10 @@ if (Validator.isNull(backURL)) {
 			requestedLocale="<%= locale %>"
 		/>
 
-		<div class="sheet-footer">
+		<clay:sheet-footer>
 			<aui:button primary="<%= true %>" type="submit" />
 
 			<aui:button href="<%= backURL %>" type="cancel" />
-		</div>
-	</div>
+		</clay:sheet-footer>
+	</clay:sheet>
 </aui:form>

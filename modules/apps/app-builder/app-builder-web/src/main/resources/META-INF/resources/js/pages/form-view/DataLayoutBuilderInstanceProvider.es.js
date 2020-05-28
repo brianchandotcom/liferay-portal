@@ -99,7 +99,8 @@ export default ({children, dataLayoutBuilder}) => {
 
 		if (
 			Object.keys(fieldHovered).length &&
-			fieldHovered.type === 'fieldset'
+			fieldHovered.type === 'fieldset' &&
+			!fieldHovered.ddmStructureId
 		) {
 			fieldActions = [
 				duplicateAction,

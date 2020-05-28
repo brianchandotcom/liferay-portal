@@ -838,10 +838,7 @@ LayoutProvider.STATE = {
 	 * @memberof LayoutProvider
 	 * @type {?object}
 	 */
-	fieldHovered: Config.shapeOf({
-		fieldName: Config.string().value(''),
-		type: Config.string().value(''),
-	}).value({}),
+	fieldHovered: Config.object().value({}),
 
 	/**
 	 * @default {}

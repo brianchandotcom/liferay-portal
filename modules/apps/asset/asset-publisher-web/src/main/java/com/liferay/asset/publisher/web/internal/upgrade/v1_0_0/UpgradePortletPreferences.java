@@ -46,6 +46,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 
@@ -246,8 +248,18 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			if (values.length == 3) {
 				long structureId = GetterUtil.getLong(values[1]);
 
+				String fieldName = values[2];
+
+				Matcher matcher = _invalidFieldNameCharsPattern.matcher(
+					fieldName);
+
+				if (matcher.find()) {
+					fieldName = fieldName.replaceAll(
+						_INVALID_FIELD_NAME_CHARS_REGEX, StringPool.BLANK);
+				}
+
 				DDMFormField ddmFormField = getDDMFormField(
-					getDDMForm(structureId), values[2]);
+					getDDMForm(structureId), fieldName);
 
 				if ((ddmFormField != null) &&
 					Validator.isNotNull(ddmFormField.getIndexType())) {
@@ -260,7 +272,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 					sb.append(_DDM_FIELD_SEPARATOR);
 					sb.append(values[1]);
 					sb.append(_DDM_FIELD_SEPARATOR);
-					sb.append(values[2]);
+					sb.append(fieldName);
 
 					value = sb.toString();
 				}
@@ -316,9 +328,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			else if (journalFilterByFieldEnable) {
 				upgradeJournalDateFieldValue(portletPreferences);
 			}
-
-			upgradeOrderByColumns(portletPreferences);
 		}
+
+		upgradeOrderByColumns(portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
@@ -383,6 +395,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	private static final String _DL_FILTER_BY_FIELD_ENABLED_KEY =
 		"subtypeFieldsFilterEnabledDLFileEntryAssetRendererFactory";
 
+	private static final String _INVALID_FIELD_NAME_CHARS_REGEX =
+		"([\\p{Punct}&&[^_]]|\\p{Space})+";
+
 	private static final String _JOURNAL_CLASS_TYPE =
 		"anyClassTypeJournalArticleAssetRendererFactory";
 
@@ -395,6 +410,8 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	private static final Map<Long, DDMForm> _ddmSructureDDMForms =
 		new HashMap<>();
+	private static final Pattern _invalidFieldNameCharsPattern =
+		Pattern.compile(_INVALID_FIELD_NAME_CHARS_REGEX);
 
 	private final DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 	private final DDMStructureLocalService _ddmStructureLocalService;

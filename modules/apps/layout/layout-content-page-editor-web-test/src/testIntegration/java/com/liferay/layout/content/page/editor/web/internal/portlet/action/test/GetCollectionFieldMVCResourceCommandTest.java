@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -100,6 +101,11 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 		_infoListProviderServiceRegistration = registry.registerService(
 			InfoListProvider.class, new TestInfoListProvider());
+
+		_originalThemeDisplayDefaultLocale =
+			LocaleThreadLocal.getThemeDisplayLocale();
+
+		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
 	}
 
 	@After
@@ -109,6 +115,9 @@ public class GetCollectionFieldMVCResourceCommandTest {
 		if (_infoListProviderServiceRegistration != null) {
 			_infoListProviderServiceRegistration.unregister();
 		}
+
+		LocaleThreadLocal.setThemeDisplayLocale(
+			_originalThemeDisplayDefaultLocale);
 	}
 
 	@Test
@@ -282,6 +291,8 @@ public class GetCollectionFieldMVCResourceCommandTest {
 
 	@Inject(filter = "mvc.command.name=/content_layout/get_collection_field")
 	private MVCResourceCommand _mvcResourceCommand;
+
+	private Locale _originalThemeDisplayDefaultLocale;
 
 	@Inject
 	private Portal _portal;

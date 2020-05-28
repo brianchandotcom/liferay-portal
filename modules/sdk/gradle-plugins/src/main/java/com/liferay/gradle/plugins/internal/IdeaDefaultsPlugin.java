@@ -34,6 +34,7 @@ import org.gradle.api.XmlProvider;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskProvider;
 import org.gradle.plugins.ide.idea.IdeaPlugin;
 import org.gradle.plugins.ide.idea.model.IdeaModel;
 import org.gradle.plugins.ide.idea.model.IdeaModule;
@@ -54,8 +55,12 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	protected void applyPluginDefaults(
 		Project project, final IdeaPlugin ideaPlugin) {
 
+		TaskProvider<Task> ideaTaskProvider = GradleUtil.getTaskProvider(
+			project, _IDEA_TASK_NAME);
+
+		_configureTaskIdeaProvider(ideaTaskProvider);
+
 		_configureIdeaModuleIml(project, ideaPlugin);
-		_configureTaskIdea(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -103,8 +108,12 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		}
 
 		if (GradleUtil.hasPlugin(project, NodePlugin.class)) {
-			NpmInstallTask npmInstallTask = (NpmInstallTask)GradleUtil.getTask(
-				project, NodePlugin.NPM_INSTALL_TASK_NAME);
+			TaskProvider<NpmInstallTask> npmInstallTaskProvider =
+				GradleUtil.getTaskProvider(
+					project, NodePlugin.NPM_INSTALL_TASK_NAME,
+					NpmInstallTask.class);
+
+			NpmInstallTask npmInstallTask = npmInstallTaskProvider.get();
 
 			excludeDirs.add(npmInstallTask.getNodeModulesDir());
 		}
@@ -187,10 +196,18 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		ideaModuleIml.withXml(closure);
 	}
 
-	private void _configureTaskIdea(Project project) {
-		Task task = GradleUtil.getTask(project, _IDEA_TASK_NAME);
+	private void _configureTaskIdeaProvider(
+		TaskProvider<Task> ideaTaskProvider) {
 
-		task.dependsOn(_CLEAN_IDEA_TASK_NAME);
+		ideaTaskProvider.configure(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task ideaTask) {
+					ideaTask.dependsOn(_CLEAN_IDEA_TASK_NAME);
+				}
+
+			});
 	}
 
 	private IdeaModule _getIdeaModule(IdeaPlugin ideaPlugin) {

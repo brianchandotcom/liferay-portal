@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
@@ -33,9 +32,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.fragment.util.comparator.FragmentCollectionContributorNameComparator;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorCriterion;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelector;
@@ -174,6 +173,7 @@ public class ContentPageEditorDisplayContext {
 		FragmentRendererTracker fragmentRendererTracker,
 		HttpServletRequest httpServletRequest,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		InfoItemFormProviderTracker infoItemFormProviderTracker,
 		ItemSelector itemSelector, PortletRequest portletRequest,
 		RenderResponse renderResponse) {
 
@@ -192,6 +192,7 @@ public class ContentPageEditorDisplayContext {
 
 		this.httpServletRequest = httpServletRequest;
 		this.infoDisplayContributorTracker = infoDisplayContributorTracker;
+		this.infoItemFormProviderTracker = infoItemFormProviderTracker;
 
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -587,6 +588,7 @@ public class ContentPageEditorDisplayContext {
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final InfoDisplayContributorTracker infoDisplayContributorTracker;
+	protected final InfoItemFormProviderTracker infoItemFormProviderTracker;
 	protected final ThemeDisplay themeDisplay;
 
 	private Map<String, Object> _getAvailableLanguages() {
@@ -1328,23 +1330,16 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private List<String> _getInfoDisplayContributorsClassNames() {
-		List<String> infoDisplayContributorsClassNames = new ArrayList<>();
+		List<String> infoDisplayContributorsClassNames =
+			infoItemFormProviderTracker.getInfoItemClassNames();
 
-		for (InfoDisplayContributor<?> infoDisplayContributor :
-				infoDisplayContributorTracker.getInfoDisplayContributors()) {
+		if (infoDisplayContributorsClassNames.contains(
+				FileEntry.class.getName())) {
 
-			// LPS-111037
-
-			String className = infoDisplayContributor.getClassName();
-
-			if (Objects.equals(FileEntry.class.getName(), className)) {
-				className = DLFileEntryConstants.getClassName();
-			}
-
-			infoDisplayContributorsClassNames.add(className);
+			infoDisplayContributorsClassNames.remove(FileEntry.class.getName());
+			infoDisplayContributorsClassNames.add(
+				DLFileEntryConstants.getClassName());
 		}
-
-		infoDisplayContributorsClassNames.add(AssetEntry.class.getName());
 
 		return infoDisplayContributorsClassNames;
 	}

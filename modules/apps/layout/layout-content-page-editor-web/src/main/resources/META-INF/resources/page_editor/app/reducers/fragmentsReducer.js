@@ -93,7 +93,7 @@ export default function fragmentsReducer(fragments = [], action) {
 				});
 			}
 
-			if (contentDisplayCollection) {
+			if (contentDisplayCollection && config.fragmentPanelEnabled) {
 				newFragments.splice(2, 0, {
 					...contentDisplayCollection,
 
@@ -111,6 +111,9 @@ export default function fragmentsReducer(fragments = [], action) {
 						},
 					],
 				});
+			}
+			else {
+				newFragments.splice(2, 0, contentDisplayCollection);
 			}
 
 			return newFragments;

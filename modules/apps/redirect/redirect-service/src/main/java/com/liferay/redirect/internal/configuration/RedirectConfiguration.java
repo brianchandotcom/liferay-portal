@@ -32,8 +32,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface RedirectConfiguration {
 
 	@Meta.AD(
-		deflt = "30", name = "redirect-not-found-entry-max-age",
-		required = false
+		deflt = "30", description = "redirect-not-found-entry-max-age-help",
+		name = "redirect-not-found-entry-max-age", required = false
 	)
 	public int redirectNotFoundEntryMaxAge();
 

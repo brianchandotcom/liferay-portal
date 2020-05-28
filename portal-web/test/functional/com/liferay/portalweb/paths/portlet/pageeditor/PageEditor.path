@@ -197,7 +197,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
-	<td>//*[@class='collapse-icon sheet-subtitle'][normalize-space()='${key_collectionName}']</td>
+	<td>//*[contains(@class,'sheet-subtitle') and not(contains(@class,'collapsed'))][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>

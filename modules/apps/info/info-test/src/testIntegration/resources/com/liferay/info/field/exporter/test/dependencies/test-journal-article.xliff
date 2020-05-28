@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+
+<xliff srcLang="en_US" trgLang="es_ES" version="2.0">
+	<file id="com.liferay.journal.model.JournalArticle">
+		<unit id="title">
+			<segment>
+				<source><![CDATA[Test Article]]></source>
+				<target><![CDATA[Test Article]]></target>
+			</segment>
+		</unit>
+		<unit id="description">
+			<segment>
+				<source><![CDATA[]]></source>
+				<target><![CDATA[]]></target>
+			</segment>
+		</unit>
+		<unit id="authorName">
+			<segment>
+				<source><![CDATA[Test Test]]></source>
+				<target><![CDATA[Test Test]]></target>
+			</segment>
+		</unit>
+		<unit id="lastEditorName">
+			<segment>
+				<source><![CDATA[Test Test]]></source>
+				<target><![CDATA[Test Test]]></target>
+			</segment>
+		</unit>
+		<unit id="publishDate">
+			<segment>
+				<source><![CDATA[01/02/65 00:00]]></source>
+				<target><![CDATA[01/02/65 00:00]]></target>
+			</segment>
+		</unit>
+		<unit id="categories">
+			<segment>
+				<source><![CDATA[]]></source>
+				<target><![CDATA[]]></target>
+			</segment>
+		</unit>
+		<unit id="tagNames">
+			<segment>
+				<source><![CDATA[]]></source>
+				<target><![CDATA[]]></target>
+			</segment>
+		</unit>
+		<unit id="HTML4acl">
+			<segment>
+				<source><![CDATA[<p>Some HTML</p>]]></source>
+				<target><![CDATA[<p>Un poco de HTML</p>]]></target>
+			</segment>
+		</unit>
+		<unit id="Text1gf6">
+			<segment>
+				<source><![CDATA[Some Text]]></source>
+				<target><![CDATA[Un poco de texto]]></target>
+			</segment>
+		</unit>
+	</file>
+</xliff>

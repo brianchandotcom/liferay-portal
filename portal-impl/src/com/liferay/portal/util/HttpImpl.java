@@ -353,7 +353,9 @@ public class HttpImpl implements Http {
 		}
 
 		path = StringUtil.replace(path, CharPool.SLASH, _TEMP_SLASH);
+		path = StringUtil.replace(path, CharPool.TILDE, _TEMP_TILDE);
 		path = URLCodec.encodeURL(path, true);
+		path = StringUtil.replace(path, _TEMP_TILDE, StringPool.TILDE);
 		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
 
 		return path;
@@ -2023,6 +2025,8 @@ public class HttpImpl implements Http {
 		PropsUtil.get(HttpImpl.class.getName() + ".proxy.username"));
 
 	private static final String _TEMP_SLASH = "_LIFERAY_TEMP_SLASH_";
+
+	private static final String _TEMP_TILDE = "_LIFERAY_TEMP_TILDE_";
 
 	private static final int _TIMEOUT = GetterUtil.getInteger(
 		PropsUtil.get(HttpImpl.class.getName() + ".timeout"), 5000);

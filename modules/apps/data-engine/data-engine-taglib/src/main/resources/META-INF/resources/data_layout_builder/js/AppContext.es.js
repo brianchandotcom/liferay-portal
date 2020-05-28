@@ -42,6 +42,7 @@ import generateDataDefinitionFieldName from './utils/generateDataDefinitionField
 const AppContext = createContext();
 
 const initialState = {
+	appProps: {},
 	config: {
 		allowFieldSets: false,
 		allowNestedFields: true,

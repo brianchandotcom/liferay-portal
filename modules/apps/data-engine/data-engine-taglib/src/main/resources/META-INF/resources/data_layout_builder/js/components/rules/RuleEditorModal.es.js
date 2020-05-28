@@ -203,7 +203,7 @@ const RuleEditorModal = ({isVisible, onClose, rule}) => {
 
 	return (
 		<ClayModal
-			className="data-layout-builder-rule-editor-modal"
+			className="data-layout-builder-editor-modal"
 			observer={observer}
 			size="full-screen"
 		>

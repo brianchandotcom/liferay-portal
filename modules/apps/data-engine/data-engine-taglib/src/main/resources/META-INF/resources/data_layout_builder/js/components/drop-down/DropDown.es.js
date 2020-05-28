@@ -18,14 +18,15 @@ import React, {useState} from 'react';
 
 const {Item, ItemList} = ClayDropDown;
 
-export default ({actions}) => {
+export default ({actions, disabled, dropDownSymbol = 'ellipsis-v'}) => {
 	const [active, setActive] = useState(false);
 
 	const DropdownButton = (
 		<ClayButtonWithIcon
 			className="page-link"
+			disabled={disabled}
 			displayType="unstyled"
-			symbol="ellipsis-v"
+			symbol={dropDownSymbol}
 		/>
 	);
 

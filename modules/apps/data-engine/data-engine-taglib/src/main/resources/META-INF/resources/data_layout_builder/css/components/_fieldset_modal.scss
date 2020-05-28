@@ -1,0 +1,15 @@
+body.has-control-menu .fieldset-modal {
+	.multi-panel-sidebar {
+		position: absolute;
+		top: 0;
+	}
+
+	.multi-panel-sidebar-content {
+		position: absolute;
+	}
+
+	.add-fieldset,
+	.tbar-item:not(.tbar-item--fields) {
+		display: none;
+	}
+}

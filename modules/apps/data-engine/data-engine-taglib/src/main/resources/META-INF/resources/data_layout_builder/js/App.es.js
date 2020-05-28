@@ -40,7 +40,9 @@ const parseProps = ({
 });
 
 const AppContent = ({
+	caller,
 	dataLayoutBuilder,
+	setChildrenContext,
 	setDataLayoutBuilder,
 	sidebarConfig,
 	...props
@@ -53,7 +55,10 @@ const AppContent = ({
 		if (dataLayoutBuilder) {
 			dataLayoutBuilder.emit('contextUpdated', state);
 		}
-	}, [dataLayoutBuilder, state]);
+		if (caller) {
+			setChildrenContext({dispatch, state});
+		}
+	}, [caller, dataLayoutBuilder, dispatch, setChildrenContext, state]);
 
 	return (
 		<>
@@ -83,6 +88,7 @@ const AppContent = ({
 
 const App = (props) => {
 	const {
+		caller = 'App',
 		config,
 		contentType,
 		dataDefinitionId,
@@ -92,8 +98,8 @@ const App = (props) => {
 		groupId,
 	} = parseProps(props);
 
+	window[caller] = props;
 	const sidebarConfig = initializeSidebarConfig(props);
-
 	const [loaded, setLoaded] = useState(false);
 	const [dataLayoutBuilder, setDataLayoutBuilder] = useState(null);
 

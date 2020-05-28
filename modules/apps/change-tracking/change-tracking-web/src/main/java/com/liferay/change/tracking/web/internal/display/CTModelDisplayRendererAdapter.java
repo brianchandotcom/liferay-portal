@@ -15,14 +15,22 @@
 package com.liferay.change.tracking.web.internal.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.portal.kernel.dao.orm.ORMException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.InputStream;
 import java.io.Writer;
+
+import java.sql.Blob;
+import java.sql.SQLException;
 
 import java.text.Format;
 
@@ -40,9 +48,40 @@ import javax.servlet.http.HttpServletResponse;
 public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 	implements CTDisplayRenderer<T> {
 
-	@SuppressWarnings("unchecked")
-	public static <T extends BaseModel<T>> CTDisplayRenderer<T> getInstance() {
-		return (CTDisplayRenderer<T>)_INSTANCE;
+	public CTModelDisplayRendererAdapter(
+		CTDisplayRendererRegistry ctDisplayRendererRegistry) {
+
+		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
+	}
+
+	@Override
+	public InputStream getDownloadInputStream(T model, String key) {
+		if (model instanceof CTModel<?>) {
+			CTModel<?> ctModel = (CTModel<?>)model;
+
+			CTService<?> ctService = _ctDisplayRendererRegistry.getCTService(
+				ctModel);
+
+			return ctService.updateWithUnsafeFunction(
+				ctPersistence -> {
+					Map<String, Function<T, Object>> attributeGetterFunctions =
+						model.getAttributeGetterFunctions();
+
+					Function<T, Object> function = attributeGetterFunctions.get(
+						key);
+
+					Blob blob = (Blob)function.apply(model);
+
+					try {
+						return blob.getBinaryStream();
+					}
+					catch (SQLException sqlException) {
+						throw new ORMException(sqlException);
+					}
+				});
+		}
+
+		return null;
 	}
 
 	@Override
@@ -56,7 +95,7 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 	}
 
 	@Override
-	public String getTitle(Locale locale, T model) throws PortalException {
+	public String getTitle(Locale locale, T model) {
 		return null;
 	}
 
@@ -66,10 +105,10 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 	}
 
 	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, T model)
-		throws Exception {
+	public void render(DisplayContext<T> displayContext) throws Exception {
+		HttpServletRequest httpServletRequest = displayContext.getRequest();
+		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		T model = displayContext.getModel();
 
 		Writer writer = httpServletResponse.getWriter();
 
@@ -96,7 +135,29 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 
 			Object attributeValue = function.apply(model);
 
-			if (attributeValue instanceof Date) {
+			if (attributeValue instanceof Blob) {
+				String downloadURL = displayContext.getDownloadURL(
+					entry.getKey(), 0, null);
+
+				if (downloadURL == null) {
+					writer.write(
+						LanguageUtil.get(
+							themeDisplay.getLocale(), "no-download"));
+				}
+				else {
+					writer.write("<a href=\"");
+
+					writer.write(downloadURL);
+
+					writer.write("\" >");
+
+					writer.write(
+						LanguageUtil.get(themeDisplay.getLocale(), "download"));
+
+					writer.write("</a>");
+				}
+			}
+			else if (attributeValue instanceof Date) {
 				writer.write(format.format(attributeValue));
 			}
 			else if (attributeValue instanceof String) {
@@ -112,10 +173,6 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 		writer.write("</table></div>");
 	}
 
-	private CTModelDisplayRendererAdapter() {
-	}
-
-	private static final CTDisplayRenderer<?> _INSTANCE =
-		new CTModelDisplayRendererAdapter<>();
+	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 }

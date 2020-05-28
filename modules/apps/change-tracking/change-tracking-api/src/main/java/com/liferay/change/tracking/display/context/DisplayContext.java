@@ -12,16 +12,25 @@
  * details.
  */
 
-package com.liferay.change.tracking.web.internal.constants;
+package com.liferay.change.tracking.display.context;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
- * @author Samuel Trong Tran
+ * @author Preston Crary
  */
-public class CTWebConstants {
+@ProviderType
+public interface DisplayContext<T> {
 
-	public static final String CT_DOCUMENTS_SERVLET_PATH =
-		"/change_tracking/documents/*";
+	public String getDownloadURL(String key, long size, String title);
 
-	public static final int USER_FILTER_ALL = -1;
+	public T getModel();
+
+	public HttpServletRequest getRequest();
+
+	public HttpServletResponse getResponse();
 
 }

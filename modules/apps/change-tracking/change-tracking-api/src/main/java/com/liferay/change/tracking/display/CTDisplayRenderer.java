@@ -14,17 +14,25 @@
 
 package com.liferay.change.tracking.display;
 
+import com.liferay.change.tracking.display.context.DisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.io.InputStream;
 
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Samuel Trong Tran
  */
 public interface CTDisplayRenderer<T> {
+
+	public default InputStream getDownloadInputStream(T model, String key)
+		throws PortalException {
+
+		return null;
+	}
 
 	public String getEditURL(HttpServletRequest httpServletRequest, T model)
 		throws Exception;
@@ -35,9 +43,6 @@ public interface CTDisplayRenderer<T> {
 
 	public String getTypeName(Locale locale);
 
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, T model)
-		throws Exception;
+	public void render(DisplayContext<T> displayContext) throws Exception;
 
 }

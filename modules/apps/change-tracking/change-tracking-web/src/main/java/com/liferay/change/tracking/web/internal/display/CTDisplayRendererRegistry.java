@@ -99,6 +99,26 @@ public class CTDisplayRendererRegistry {
 			modelClassPK);
 	}
 
+	@SuppressWarnings("unchecked")
+	public <T extends BaseModel<T>> CTDisplayRenderer<T> getCTDisplayRenderer(
+		long modelClassNameId) {
+
+		CTDisplayRenderer<T> ctDisplayRenderer =
+			(CTDisplayRenderer<T>)_ctDisplayServiceTrackerMap.getService(
+				modelClassNameId);
+
+		if (ctDisplayRenderer == null) {
+			ctDisplayRenderer = _getDefaultRenderer();
+		}
+
+		return ctDisplayRenderer;
+	}
+
+	public CTService<?> getCTService(CTModel<?> ctModel) {
+		return _ctServiceServiceTrackerMap.getService(
+			_classNameLocalService.getClassNameId(ctModel.getModelClass()));
+	}
+
 	public CTSQLModeThreadLocal.CTSQLMode getCTSQLMode(
 		long ctCollectionId, CTEntry ctEntry) {
 
@@ -337,7 +357,7 @@ public class CTDisplayRendererRegistry {
 	public <T extends BaseModel<T>> void renderCTEntry(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long ctCollectionId,
-			CTEntry ctEntry)
+			CTEntry ctEntry, String type)
 		throws Exception {
 
 		CTSQLModeThreadLocal.CTSQLMode ctSQLMode = getCTSQLMode(
@@ -353,14 +373,14 @@ public class CTDisplayRendererRegistry {
 
 		renderCTEntry(
 			httpServletRequest, httpServletResponse, ctCollectionId, ctSQLMode,
-			model, ctEntry.getModelClassNameId());
+			ctEntry.getCtEntryId(), model, ctEntry.getModelClassNameId(), type);
 	}
 
 	public <T extends BaseModel<T>> void renderCTEntry(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long ctCollectionId,
-			CTSQLModeThreadLocal.CTSQLMode ctSQLMode, T model,
-			long modelClassNameId)
+			CTSQLModeThreadLocal.CTSQLMode ctSQLMode, long ctEntryId, T model,
+			long modelClassNameId, String type)
 		throws Exception {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
@@ -368,10 +388,12 @@ public class CTDisplayRendererRegistry {
 				modelClassNameId);
 
 		if (ctDisplayRenderer == null) {
-			ctDisplayRenderer = CTModelDisplayRendererAdapter.getInstance();
+			ctDisplayRenderer = _getDefaultRenderer();
 
 			ctDisplayRenderer.render(
-				httpServletRequest, httpServletResponse, model);
+				new DisplayContextImpl<>(
+					httpServletRequest, httpServletResponse, model, ctEntryId,
+					type));
 
 			return;
 		}
@@ -387,7 +409,9 @@ public class CTDisplayRendererRegistry {
 					httpServletResponse, unsyncStringWriter);
 
 			ctDisplayRenderer.render(
-				httpServletRequest, pipingServletResponse, model);
+				new DisplayContextImpl<>(
+					httpServletRequest, pipingServletResponse, model, ctEntryId,
+					type));
 
 			StringBundler sb = unsyncStringWriter.getStringBundler();
 
@@ -398,10 +422,12 @@ public class CTDisplayRendererRegistry {
 				_log.warn(exception, exception);
 			}
 
-			ctDisplayRenderer = CTModelDisplayRendererAdapter.getInstance();
+			ctDisplayRenderer = _getDefaultRenderer();
 
 			ctDisplayRenderer.render(
-				httpServletRequest, httpServletResponse, model);
+				new DisplayContextImpl<>(
+					httpServletRequest, httpServletResponse, model, ctEntryId,
+					type));
 		}
 	}
 
@@ -437,12 +463,21 @@ public class CTDisplayRendererRegistry {
 						_classNameLocalService.getClassNameId(
 							ctService.getModelClass()));
 				});
+
+		_defaultCTDisplayRenderer = new CTModelDisplayRendererAdapter<>(this);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_ctDisplayServiceTrackerMap.close();
 		_ctServiceServiceTrackerMap.close();
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T extends BaseModel<T>> CTDisplayRenderer<T>
+		_getDefaultRenderer() {
+
+		return (CTDisplayRenderer<T>)_defaultCTDisplayRenderer;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -461,6 +496,7 @@ public class CTDisplayRendererRegistry {
 	private CTEntryLocalService _ctEntryLocalService;
 
 	private ServiceTrackerMap<Long, CTService<?>> _ctServiceServiceTrackerMap;
+	private CTDisplayRenderer<?> _defaultCTDisplayRenderer;
 
 	@Reference
 	private Html _html;

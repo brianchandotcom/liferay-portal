@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.change.tracking.conflict,\
 	com.liferay.change.tracking.constants,\
 	com.liferay.change.tracking.display,\
+	com.liferay.change.tracking.display.context,\
 	com.liferay.change.tracking.exception,\
 	com.liferay.change.tracking.listener,\
 	com.liferay.change.tracking.model,\

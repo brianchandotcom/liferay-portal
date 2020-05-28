@@ -16,6 +16,7 @@ package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.change.tracking.web.internal.display.CTEntryDiffDisplay;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +41,8 @@ public class ViewEntryDisplayContext {
 
 		_ctDisplayRendererRegistry.renderCTEntry(
 			httpServletRequest, httpServletResponse,
-			_ctEntry.getCtCollectionId(), _ctEntry);
+			_ctEntry.getCtCollectionId(), _ctEntry,
+			CTEntryDiffDisplay.TYPE_AFTER);
 	}
 
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;

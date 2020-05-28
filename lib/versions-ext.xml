@@ -516,7 +516,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/mail.jar</file-name>
-				<version>1.4</version>
+				<version>1.6.2</version>
 				<project-name>JavaMail</project-name>
 				<project-url>http://java.sun.com/products/javamail</project-url>
 				<licenses>

@@ -19,7 +19,7 @@ import com.liferay.info.field.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.item.provider.InfoItemProviderTracker;
+import com.liferay.info.item.provider.InfoItemObjectProviderTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -83,7 +83,8 @@ public class GetAssetMappingFieldsMVCResourceCommand
 		}
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemProviderTracker.getInfoItemObjectProvider(itemClassName);
+			_infoItemObjectProviderTracker.getInfoItemObjectProvider(
+				itemClassName);
 
 		if (infoItemObjectProvider == null) {
 			JSONPortletResponseUtil.writeJSON(
@@ -137,7 +138,7 @@ public class GetAssetMappingFieldsMVCResourceCommand
 	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
 
 	@Reference
-	private InfoItemProviderTracker _infoItemProviderTracker;
+	private InfoItemObjectProviderTracker _infoItemObjectProviderTracker;
 
 	@Reference
 	private Portal _portal;

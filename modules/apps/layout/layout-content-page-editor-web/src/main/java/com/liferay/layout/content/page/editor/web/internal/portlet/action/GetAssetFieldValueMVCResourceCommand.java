@@ -19,7 +19,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.item.provider.InfoItemProviderTracker;
+import com.liferay.info.item.provider.InfoItemObjectProviderTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -83,7 +83,7 @@ public class GetAssetFieldValueMVCResourceCommand
 		}
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemProviderTracker.getInfoItemObjectProvider(className);
+			_infoItemObjectProviderTracker.getInfoItemObjectProvider(className);
 
 		if (infoItemObjectProvider == null) {
 			return;
@@ -149,7 +149,7 @@ public class GetAssetFieldValueMVCResourceCommand
 	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
 
 	@Reference
-	private InfoItemProviderTracker _infoItemProviderTracker;
+	private InfoItemObjectProviderTracker _infoItemObjectProviderTracker;
 
 	@Reference
 	private Portal _portal;

@@ -6322,59 +6322,30 @@ go</echo>
 					<then>
 						<delete dir="${test.app.server.liferay.home}/osgi/state" />
 					</then>
-					<elseif>
-						<not>
-							<equals arg1="${delete.index.data}" arg2="true" />
-						</not>
-						<then>
-							<if>
-								<not>
-									<equals arg1="${keep.cached.app.server.data}" arg2="true" />
-								</not>
-								<then>
-									<delete failonerror="false" includeemptydirs="true">
-										<fileset
-											dir="${test.app.server.liferay.home}/data"
-										>
-											<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.lobs" />
-											<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.properties" />
-											<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.script" />
-										</fileset>
-									</delete>
-								</then>
-							</if>
-
-							<delete dir="${test.app.server.liferay.home}/logs" />
-							<delete dir="${test.app.server.liferay.home}/osgi/state" />
-							<delete dir="${test.app.server.liferay.home}/work" />
-
-							<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
-						</then>
-					</elseif>
-				</if>
-
-				<if>
-					<equals arg1="${delete.index.data}" arg2="true" />
-					<then>
+					<else>
 						<if>
-							<contains string="${env.CI_TEST_SUITE}" substring="search" />
+							<not>
+								<equals arg1="${keep.cached.app.server.data}" arg2="true" />
+							</not>
 							<then>
-								<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
-								<if>
-									<equals arg1="${suite.search.engine}" arg2="elasticsearch7" />
-									<then>
-										<delete dir="${test.app.server.liferay.home}/data/elasticsearch7" />
-									</then>
-									<else>
-										<delete dir="${test.app.server.liferay.home}/data/elasticsearch6" />
-									</else>
-								</if>
+								<delete failonerror="false" includeemptydirs="true">
+									<fileset
+										dir="${test.app.server.liferay.home}/data"
+									>
+										<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.lobs" />
+										<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.properties" />
+										<exclude if:true="${keep.hypersonicdb}" name="hypersonic/lportal.script" />
+									</fileset>
+								</delete>
 							</then>
-							<else>
-								<delete dir="${test.app.server.liferay.home}/data/elasticsearch6" />
-							</else>
 						</if>
-					</then>
+
+						<delete dir="${test.app.server.liferay.home}/logs" />
+						<delete dir="${test.app.server.liferay.home}/osgi/state" />
+						<delete dir="${test.app.server.liferay.home}/work" />
+
+						<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
+					</else>
 				</if>
 			</then>
 		</if>
@@ -8494,17 +8465,6 @@ mail.session.mail.smtp.port=25000</echo>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-deploy</echo>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${index.on.startup}" arg2="true" />
-			<then>
-				<echo append="true" file="portal-impl/src/portal-ext.properties">
-
-index.on.startup=true
-
-index.on.startup.delay=5</echo>
 			</then>
 		</if>
 

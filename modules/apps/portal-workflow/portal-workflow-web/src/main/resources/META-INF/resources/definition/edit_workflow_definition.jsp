@@ -118,15 +118,19 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 				</div>
 
 				<div class="sidebar-header">
-					<div class="autofit-row sidebar-section">
-						<div class="autofit-col autofit-col-expand">
+					<clay:content-row
+						className="sidebar-section"
+					>
+						<clay:content-col
+							expand="true"
+						>
 							<h4 class="component-title">
 								<span class="text-truncate-inline">
 									<span class="text-truncate"><%= HtmlUtil.escape(workflowDefinition.getTitle(LanguageUtil.getLanguageId(request))) %></span>
 								</span>
 							</h4>
-						</div>
-					</div>
+						</clay:content-col>
+					</clay:content-row>
 				</div>
 
 				<div class="sidebar-body">

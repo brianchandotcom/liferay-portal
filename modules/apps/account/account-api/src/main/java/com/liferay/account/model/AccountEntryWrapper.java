@@ -54,7 +54,7 @@ public class AccountEntryWrapper
 		attributes.put("description", getDescription());
 		attributes.put("domains", getDomains());
 		attributes.put("logoId", getLogoId());
-		attributes.put("taxId", getTaxId());
+		attributes.put("taxIdNumber", getTaxIdNumber());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -135,10 +135,10 @@ public class AccountEntryWrapper
 			setLogoId(logoId);
 		}
 
-		String taxId = (String)attributes.get("taxId");
+		String taxIdNumber = (String)attributes.get("taxIdNumber");
 
-		if (taxId != null) {
-			setTaxId(taxId);
+		if (taxIdNumber != null) {
+			setTaxIdNumber(taxIdNumber);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -279,13 +279,13 @@ public class AccountEntryWrapper
 	}
 
 	/**
-	 * Returns the tax ID of this account entry.
+	 * Returns the tax ID number of this account entry.
 	 *
-	 * @return the tax ID of this account entry
+	 * @return the tax ID number of this account entry
 	 */
 	@Override
-	public String getTaxId() {
-		return model.getTaxId();
+	public String getTaxIdNumber() {
+		return model.getTaxIdNumber();
 	}
 
 	/**
@@ -444,13 +444,13 @@ public class AccountEntryWrapper
 	}
 
 	/**
-	 * Sets the tax ID of this account entry.
+	 * Sets the tax ID number of this account entry.
 	 *
-	 * @param taxId the tax ID of this account entry
+	 * @param taxIdNumber the tax ID number of this account entry
 	 */
 	@Override
-	public void setTaxId(String taxId) {
-		model.setTaxId(taxId);
+	public void setTaxIdNumber(String taxIdNumber) {
+		model.setTaxIdNumber(taxIdNumber);
 	}
 
 	/**

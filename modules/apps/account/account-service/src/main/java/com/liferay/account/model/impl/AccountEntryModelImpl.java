@@ -77,7 +77,7 @@ public class AccountEntryModelImpl
 		{"modifiedDate", Types.TIMESTAMP},
 		{"parentAccountEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"domains", Types.VARCHAR},
-		{"logoId", Types.BIGINT}, {"taxId", Types.VARCHAR},
+		{"logoId", Types.BIGINT}, {"taxIdNumber", Types.VARCHAR},
 		{"status", Types.INTEGER}
 	};
 
@@ -97,12 +97,12 @@ public class AccountEntryModelImpl
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("domains", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("taxId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("taxIdNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,taxId VARCHAR(75) null,status INTEGER)";
+		"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,taxIdNumber VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
@@ -156,7 +156,7 @@ public class AccountEntryModelImpl
 		model.setDescription(soapModel.getDescription());
 		model.setDomains(soapModel.getDomains());
 		model.setLogoId(soapModel.getLogoId());
-		model.setTaxId(soapModel.getTaxId());
+		model.setTaxIdNumber(soapModel.getTaxIdNumber());
 		model.setStatus(soapModel.getStatus());
 
 		return model;
@@ -361,9 +361,11 @@ public class AccountEntryModelImpl
 		attributeGetterFunctions.put("logoId", AccountEntry::getLogoId);
 		attributeSetterBiConsumers.put(
 			"logoId", (BiConsumer<AccountEntry, Long>)AccountEntry::setLogoId);
-		attributeGetterFunctions.put("taxId", AccountEntry::getTaxId);
+		attributeGetterFunctions.put(
+			"taxIdNumber", AccountEntry::getTaxIdNumber);
 		attributeSetterBiConsumers.put(
-			"taxId", (BiConsumer<AccountEntry, String>)AccountEntry::setTaxId);
+			"taxIdNumber",
+			(BiConsumer<AccountEntry, String>)AccountEntry::setTaxIdNumber);
 		attributeGetterFunctions.put("status", AccountEntry::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
@@ -565,18 +567,18 @@ public class AccountEntryModelImpl
 
 	@JSON
 	@Override
-	public String getTaxId() {
-		if (_taxId == null) {
+	public String getTaxIdNumber() {
+		if (_taxIdNumber == null) {
 			return "";
 		}
 		else {
-			return _taxId;
+			return _taxIdNumber;
 		}
 	}
 
 	@Override
-	public void setTaxId(String taxId) {
-		_taxId = taxId;
+	public void setTaxIdNumber(String taxIdNumber) {
+		_taxIdNumber = taxIdNumber;
 	}
 
 	@JSON
@@ -650,7 +652,7 @@ public class AccountEntryModelImpl
 		accountEntryImpl.setDescription(getDescription());
 		accountEntryImpl.setDomains(getDomains());
 		accountEntryImpl.setLogoId(getLogoId());
-		accountEntryImpl.setTaxId(getTaxId());
+		accountEntryImpl.setTaxIdNumber(getTaxIdNumber());
 		accountEntryImpl.setStatus(getStatus());
 
 		accountEntryImpl.resetOriginalValues();
@@ -793,12 +795,12 @@ public class AccountEntryModelImpl
 
 		accountEntryCacheModel.logoId = getLogoId();
 
-		accountEntryCacheModel.taxId = getTaxId();
+		accountEntryCacheModel.taxIdNumber = getTaxIdNumber();
 
-		String taxId = accountEntryCacheModel.taxId;
+		String taxIdNumber = accountEntryCacheModel.taxIdNumber;
 
-		if ((taxId != null) && (taxId.length() == 0)) {
-			accountEntryCacheModel.taxId = null;
+		if ((taxIdNumber != null) && (taxIdNumber.length() == 0)) {
+			accountEntryCacheModel.taxIdNumber = null;
 		}
 
 		accountEntryCacheModel.status = getStatus();
@@ -894,7 +896,7 @@ public class AccountEntryModelImpl
 	private String _description;
 	private String _domains;
 	private long _logoId;
-	private String _taxId;
+	private String _taxIdNumber;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

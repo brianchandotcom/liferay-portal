@@ -260,19 +260,19 @@ public interface AccountEntryModel
 	public void setLogoId(long logoId);
 
 	/**
-	 * Returns the tax ID of this account entry.
+	 * Returns the tax ID number of this account entry.
 	 *
-	 * @return the tax ID of this account entry
+	 * @return the tax ID number of this account entry
 	 */
 	@AutoEscape
-	public String getTaxId();
+	public String getTaxIdNumber();
 
 	/**
-	 * Sets the tax ID of this account entry.
+	 * Sets the tax ID number of this account entry.
 	 *
-	 * @param taxId the tax ID of this account entry
+	 * @param taxIdNumber the tax ID number of this account entry
 	 */
-	public void setTaxId(String taxId);
+	public void setTaxIdNumber(String taxIdNumber);
 
 	/**
 	 * Returns the status of this account entry.

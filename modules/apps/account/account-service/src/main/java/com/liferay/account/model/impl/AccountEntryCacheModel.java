@@ -103,8 +103,8 @@ public class AccountEntryCacheModel
 		sb.append(domains);
 		sb.append(", logoId=");
 		sb.append(logoId);
-		sb.append(", taxId=");
-		sb.append(taxId);
+		sb.append(", taxIdNumber=");
+		sb.append(taxIdNumber);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -167,11 +167,11 @@ public class AccountEntryCacheModel
 
 		accountEntryImpl.setLogoId(logoId);
 
-		if (taxId == null) {
-			accountEntryImpl.setTaxId("");
+		if (taxIdNumber == null) {
+			accountEntryImpl.setTaxIdNumber("");
 		}
 		else {
-			accountEntryImpl.setTaxId(taxId);
+			accountEntryImpl.setTaxIdNumber(taxIdNumber);
 		}
 
 		accountEntryImpl.setStatus(status);
@@ -200,7 +200,7 @@ public class AccountEntryCacheModel
 		domains = objectInput.readUTF();
 
 		logoId = objectInput.readLong();
-		taxId = objectInput.readUTF();
+		taxIdNumber = objectInput.readUTF();
 
 		status = objectInput.readInt();
 	}
@@ -250,11 +250,11 @@ public class AccountEntryCacheModel
 
 		objectOutput.writeLong(logoId);
 
-		if (taxId == null) {
+		if (taxIdNumber == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(taxId);
+			objectOutput.writeUTF(taxIdNumber);
 		}
 
 		objectOutput.writeInt(status);
@@ -272,7 +272,7 @@ public class AccountEntryCacheModel
 	public String description;
 	public String domains;
 	public long logoId;
-	public String taxId;
+	public String taxIdNumber;
 	public int status;
 
 }

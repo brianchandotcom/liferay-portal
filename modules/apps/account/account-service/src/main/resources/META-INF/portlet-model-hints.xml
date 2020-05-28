@@ -21,7 +21,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="logoId" type="long" />
-		<field name="taxId" type="String" />
+		<field name="taxIdNumber" type="String" />
 		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.account.model.AccountEntryOrganizationRel">

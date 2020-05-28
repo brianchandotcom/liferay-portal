@@ -54,8 +54,6 @@ public class TestIntegrationDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, TestIntegrationPlugin testIntegrationPlugin) {
 
-		String portalVersion = PortalTools.getPortalVersion(project);
-
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension =
@@ -68,7 +66,10 @@ public class TestIntegrationDefaultsPlugin
 		_configureExtensionTestIntegrationTomcat(
 			liferayExtension, testIntegrationTomcatExtension, tomcatAppServer);
 
-		_configureConfigurationTestModules(project, portalVersion);
+		Configuration testModulesConfiguration = GradleUtil.getConfiguration(
+			project, TestIntegrationPlugin.TEST_MODULES_CONFIGURATION_NAME);
+
+		_configureConfigurationTestModules(project, testModulesConfiguration);
 
 		TaskProvider<Task> copyTestModulesTaskProvider =
 			GradleUtil.getTaskProvider(
@@ -103,32 +104,27 @@ public class TestIntegrationDefaultsPlugin
 	private TestIntegrationDefaultsPlugin() {
 	}
 
-	private void _addDependenciesTestModules(
-		Project project, String portalVersion) {
-
-		if (PortalTools.PORTAL_VERSION_7_0_X.equals(portalVersion) ||
-			PortalTools.PORTAL_VERSION_7_1_X.equals(portalVersion) ||
-			PortalTools.PORTAL_VERSION_7_2_X.equals(portalVersion)) {
-
-			GradleUtil.addDependency(
-				project, TestIntegrationPlugin.TEST_MODULES_CONFIGURATION_NAME,
-				"com.liferay.portal", "com.liferay.portal.test.integration",
-				"3.0.0");
-		}
-	}
-
 	private void _configureConfigurationTestModules(
-		Project project, final String portalVersion) {
+		final Project project, Configuration testModulesConfiguration) {
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, TestIntegrationPlugin.TEST_MODULES_CONFIGURATION_NAME);
-
-		configuration.defaultDependencies(
+		testModulesConfiguration.defaultDependencies(
 			new Action<DependencySet>() {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addDependenciesTestModules(project, portalVersion);
+					String version = PortalTools.getPortalVersion(project);
+
+					if (PortalTools.PORTAL_VERSION_7_0_X.equals(version) ||
+						PortalTools.PORTAL_VERSION_7_1_X.equals(version) ||
+						PortalTools.PORTAL_VERSION_7_2_X.equals(version)) {
+
+						GradleUtil.addDependency(
+							project,
+							TestIntegrationPlugin.
+								TEST_MODULES_CONFIGURATION_NAME,
+							"com.liferay.portal",
+							"com.liferay.portal.test.integration", "3.0.0");
+					}
 				}
 
 			});

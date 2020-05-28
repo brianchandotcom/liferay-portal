@@ -16,7 +16,9 @@ package com.liferay.redirect.configuration;
 
 /**
  * @author Alejandro Tardín
+ * @deprecated As of Athanasius (7.3.x)
  */
+@Deprecated
 public interface RedirectConfiguration {
 
 	public boolean isEnabled();

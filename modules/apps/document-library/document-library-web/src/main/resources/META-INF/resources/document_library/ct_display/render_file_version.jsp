@@ -39,7 +39,6 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 </p>
 
 <p>
-
 	<clay:link
 		buttonStyle="primary"
 		elementClasses="btn-sm"

@@ -464,7 +464,7 @@ paths:
             tags: ["DataDefinition"]
     "/data-definitions/{dataDefinitionId}/data-definition-field-links":
         get:
-            operationId: getDataDefinitionDataDefinitionFieldLinks
+            operationId: getDataDefinitionDataDefinitionFieldLinkPage
             parameters:
                 - in: path
                   name: dataDefinitionId
@@ -481,13 +481,17 @@ paths:
                     content:
                         application/json:
                             schema:
-                                type: string
+                                items:
+                                    $ref: "#/components/schemas/DataDefinitionFieldLink"
+                                type: array
                         application/xml:
                             schema:
-                                type: string
+                                items:
+                                    $ref: "#/components/schemas/DataDefinitionFieldLink"
+                                type: array
                     description:
                         ""
-            tags: ["DataDefinition"]
+            tags: ["DataDefinitionFieldLink"]
     "/data-definitions/{dataDefinitionId}/data-layouts":
         delete:
             operationId: deleteDataLayoutsDataDefinition

@@ -14,11 +14,10 @@
 
 import {useDrop as useDndDrop} from 'react-dnd';
 
-import {usePage} from './usePage.es';
+import {PAGE_TYPES, usePage} from './usePage.es';
 
 const defaultSpec = {
 	accept: [],
-	drop: () => {},
 };
 
 export const DND_ORIGIN_TYPE = {
@@ -26,13 +25,24 @@ export const DND_ORIGIN_TYPE = {
 	FIELD: 'field',
 };
 
-export const useDrop = (item) => {
-	const {store} = usePage();
-	const {spec} = store.dnd ?? {spec: defaultSpec};
+export const useDrop = (sourceItem) => {
+	const {
+		dispatch,
+		store: {dnd},
+	} = usePage();
+	const spec = dnd ?? defaultSpec;
 
 	const [{canDrop, overTarget}, drop] = useDndDrop({
 		...spec,
-		drop: (...args) => spec.drop(...args, item),
+		collect: (monitor) => ({
+			canDrop: monitor.canDrop(),
+			overTarget: monitor.isOver(),
+		}),
+		drop: (item, monitor) =>
+			dispatch({
+				payload: {item, monitor, sourceItem},
+				type: PAGE_TYPES.DND_DROP,
+			}),
 	});
 
 	return {

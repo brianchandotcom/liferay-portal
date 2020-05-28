@@ -23,10 +23,11 @@ import {
 	UPDATE_FOCUSED_FIELD,
 	UPDATE_PAGES,
 } from '../actions.es';
+import {getHandlerDrop} from '../drag-and-drop/getHandlerDrop.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
 export default ({children, dataLayoutBuilder}) => {
-	const [, dispatch] = useContext(AppContext);
+	const [{dataDefinition}, dispatch] = useContext(AppContext);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
@@ -105,6 +106,15 @@ export default ({children, dataLayoutBuilder}) => {
 
 		dispatch({payload: {fieldTypes}, type: UPDATE_FIELD_TYPES});
 	}, [dataLayoutBuilder, dispatch]);
+
+	useEffect(() => {
+		const provider = dataLayoutBuilder.getLayoutProvider();
+		const onDrop = getHandlerDrop({dataDefinition, dataLayoutBuilder});
+
+		const eventHandler = provider.on('fieldDrop', onDrop);
+
+		return () => eventHandler.removeListener();
+	}, [dataLayoutBuilder, dataDefinition]);
 
 	return (
 		<DataLayoutBuilderContext.Provider

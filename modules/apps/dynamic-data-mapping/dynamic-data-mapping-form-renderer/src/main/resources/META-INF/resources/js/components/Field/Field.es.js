@@ -22,6 +22,7 @@ import React, {Suspense, lazy, useCallback, useRef, useState} from 'react';
 import {usePage} from '../../hooks/usePage.es';
 import {ErrorBoundary} from '../ErrorBoundary.es';
 import {MetalComponentAdapter} from './MetalComponentAdapter.es';
+import {ParentFieldContext} from './ParentFieldContext.es';
 
 const getModule = (fieldTypes, fieldType) => {
 	const field = fieldTypes.find((field) => field.name === fieldType);
@@ -145,18 +146,27 @@ export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
 	return (
 		<ErrorBoundary onError={() => setHasError(true)}>
 			<Suspense fallback={<ClayLoadingIndicator />}>
-				<div className="ddm-field" data-field-name={field.fieldName}>
-					<FieldLazy
-						visible
-						{...field}
-						{...otherProps}
-						onBlur={(event) => onBlur(mountStruct(event, field))}
-						onChange={(event, value) =>
-							onChange(mountStruct(event, field, value))
-						}
-						onFocus={(event) => onFocus(mountStruct(event, field))}
-					/>
-				</div>
+				<ParentFieldContext.Provider value={field}>
+					<div
+						className="ddm-field"
+						data-field-name={field.fieldName}
+					>
+						<FieldLazy
+							visible
+							{...field}
+							{...otherProps}
+							onBlur={(event) =>
+								onBlur(mountStruct(event, field))
+							}
+							onChange={(event, value) =>
+								onChange(mountStruct(event, field, value))
+							}
+							onFocus={(event) =>
+								onFocus(mountStruct(event, field))
+							}
+						/>
+					</div>
+				</ParentFieldContext.Provider>
 			</Suspense>
 		</ErrorBoundary>
 	);

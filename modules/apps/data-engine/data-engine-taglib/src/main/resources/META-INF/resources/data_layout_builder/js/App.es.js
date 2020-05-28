@@ -23,7 +23,7 @@ import MultiPanelSidebar from './components/sidebar/MultiPanelSidebar.es';
 import initializeSidebarConfig from './components/sidebar/initializeSidebarConfig.es';
 import DataLayoutBuilder from './data-layout-builder/DataLayoutBuilder.es';
 import DataLayoutBuilderContextProvider from './data-layout-builder/DataLayoutBuilderContextProvider.es';
-import DataLayoutBuilderDragAndDrop from './drag-and-drop/DataLayoutBuilderDragAndDrop.es';
+import DragLayer from './drag-and-drop/DragLayer.es';
 
 const parseProps = ({
 	dataDefinitionId,
@@ -74,9 +74,7 @@ const AppContent = ({
 						variant={sidebarVariant}
 					/>
 
-					<DataLayoutBuilderDragAndDrop
-						dataLayoutBuilder={dataLayoutBuilder}
-					/>
+					<DragLayer />
 				</DataLayoutBuilderContextProvider>
 			)}
 		</>

@@ -22,7 +22,6 @@ import SearchInput, {
 	SearchInputWithForm,
 } from './components/search-input/SearchInput.es';
 import Sidebar from './components/sidebar/Sidebar.es';
-import DataLayoutBuilderDragAndDrop from './drag-and-drop/DataLayoutBuilderDragAndDrop.es';
 import DragLayer from './drag-and-drop/DragLayer.es';
 import * as DragTypes from './drag-and-drop/dragTypes.es';
 import withDragAndDropContext from './drag-and-drop/withDragAndDropContext.es';
@@ -34,7 +33,6 @@ export {
 	DataLayoutBuilderActions,
 	DataLayoutBuilderContext,
 	DataLayoutBuilderContextProvider,
-	DataLayoutBuilderDragAndDrop,
 	DataLayoutVisitor,
 	DragLayer,
 	DragTypes,

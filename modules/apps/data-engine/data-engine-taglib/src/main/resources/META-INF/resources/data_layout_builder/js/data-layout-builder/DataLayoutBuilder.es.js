@@ -62,18 +62,11 @@ class DataLayoutBuilder extends React.Component {
 				},
 				formBuilderProps: {
 					dnd: {
-						spec: {
-							accept: [
-								DRAG_DATA_DEFINITION_FIELD,
-								DRAG_FIELDSET,
-								DRAG_FIELD_TYPE,
-							],
-							collect: (monitor) => ({
-								canDrop: monitor.canDrop(),
-								overTarget: monitor.isOver(),
-							}),
-							drop: () => {},
-						},
+						accept: [
+							DRAG_DATA_DEFINITION_FIELD,
+							DRAG_FIELDSET,
+							DRAG_FIELD_TYPE,
+						],
 					},
 					fieldTypes,
 					portletNamespace,

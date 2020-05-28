@@ -13,9 +13,10 @@
  */
 
 import classnames from 'classnames';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {DND_ORIGIN_TYPE, useDrop} from '../../hooks/useDrop.es';
+import {ParentFieldContext} from '../Field/ParentFieldContext.es';
 
 export const Container = ({
 	activePage,
@@ -189,10 +190,12 @@ export const Placeholder = ({
 	rowIndex,
 	size,
 }) => {
+	const parentField = useContext(ParentFieldContext);
 	const {drop, overTarget} = useDrop({
 		columnIndex: columnIndex ?? 0,
 		origin: DND_ORIGIN_TYPE.EMPTY,
 		pageIndex,
+		parentField,
 		rowIndex,
 	});
 

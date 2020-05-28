@@ -19,6 +19,7 @@ const PageContext = React.createContext({});
 
 export const PAGE_TYPES = {
 	CHANGE_ACTIVE_PAGE: 'activePageUpdated',
+	DND_DROP: 'fieldDrop',
 	FIELD_BLUR: 'fieldBlurred',
 	FIELD_CHANGE: 'fieldEdited',
 	FIELD_FOCUS: 'fieldFocused',
@@ -59,6 +60,7 @@ export const PageProvider = ({children, dispatch, emit, value}) => {
 	const onDispatch = ({payload, type}) => {
 		switch (type) {
 			case PAGE_TYPES.CHANGE_ACTIVE_PAGE:
+			case PAGE_TYPES.DND_DROP:
 			case PAGE_TYPES.PAGE_ADDED:
 			case PAGE_TYPES.PAGE_DELETED:
 			case PAGE_TYPES.PAGE_RESET:

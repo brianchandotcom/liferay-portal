@@ -29,6 +29,8 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 if (message.isAnonymous() || thread.isInTrash()) {
 	showRecentPosts = false;
 }
+
+User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 %>
 
 <a id="<portlet:namespace />message_<%= message.getMessageId() %>"></a>
@@ -100,8 +102,6 @@ if (message.isAnonymous() || thread.isInTrash()) {
 				if (!message.isAnonymous()) {
 					ranks = MBStatsUserLocalServiceUtil.getUserRank(themeDisplay.getSiteGroupId(), themeDisplay.getLanguageId(), message.getUserId());
 				}
-
-				User messageUser = UserLocalServiceUtil.fetchUser(message.getUserId());
 				%>
 
 				<c:if test="<%= (messageUser != null) && !messageUser.isDefaultUser() %>">

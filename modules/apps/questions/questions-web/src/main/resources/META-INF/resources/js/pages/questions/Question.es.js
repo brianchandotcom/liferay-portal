@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -34,29 +34,18 @@ import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
-import {
-	createAnswerQuery,
-	deleteMessageBoardThreadQuery,
-	getMessages,
-	getThread,
-	markAsAnswerMessageBoardMessageQuery,
-} from '../../utils/client.es';
+import {createAnswerQuery, deleteMessageBoardThreadQuery, getMessages, getThreadQuery, markAsAnswerMessageBoardMessageQuery,} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {
-	dateToBriefInternationalHuman,
-	getCKEditorConfig,
-	onBeforeLoadCKEditor,
-} from '../../utils/utils.es';
+import {dateToBriefInternationalHuman, getCKEditorConfig, onBeforeLoadCKEditor,} from '../../utils/utils.es';
 
 export default withRouter(
 	({
-		history,
-		location: key,
-		match: {
-			params: {questionId},
-			url,
-		},
-	}) => {
+		 history,
+		 match: {
+			 params: {questionId},
+			 url,
+		 },
+	 }) => {
 		const context = useContext(AppContext);
 
 		const [answers, setAnswers] = useState({});
@@ -64,16 +53,15 @@ export default withRouter(
 		const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
-		const [question, setQuestion] = useState();
 		const [sort, setSort] = useState('active');
 
-		useEffect(() => {
-			getThread(questionId, context.siteKey).then((data) => {
-				setQuestion(data);
-
-				return data;
-			});
-		}, [key, context.siteKey, questionId]);
+		const {loading, data} = useQuery(getThreadQuery, {
+			variables: {
+				friendlyUrlPath: questionId,
+				siteKey: context.siteKey
+			}
+		})
+		// {nestedFields: 'lastPostDate'}
 
 		useEffect(() => {
 			if (question) {
@@ -178,15 +166,16 @@ export default withRouter(
 		return (
 			<section className="c-mt-5 questions-section questions-section-single">
 				<div className="questions-container">
-					{question && (
+					{!loading && (
+						{question = }
 						<div className="row">
 							<div className="col-md-1 text-md-center">
 								<Rating
 									aggregateRating={question.aggregateRating}
 									entityId={question.id}
 									myRating={
-										question.myRating &&
-										question.myRating.ratingValue
+					 question.myRating &&
+					 question.myRating.ratingValue
 									}
 									type={'Thread'}
 								/>
@@ -197,16 +186,16 @@ export default withRouter(
 									<div className="c-mt-4 c-mt-md-0 col-md-9">
 										{!!question.messageBoardSection
 											.numberOfMessageBoardSections && (
-											<Link
-												to={`/questions/${question.messageBoardSection.title}`}
-											>
-												<SectionLabel
-													section={
-														question.messageBoardSection
-													}
-												/>
-											</Link>
-										)}
+											 <Link
+												 to={`/questions/${question.messageBoardSection.title}`}
+											 >
+												 <SectionLabel
+													 section={
+														 question.messageBoardSection
+													 }
+												 />
+											 </Link>
+										 )}
 
 										<h1 className="c-mt-2 question-headline">
 											{question.headline}
@@ -241,14 +230,9 @@ export default withRouter(
 										>
 											{question.actions.subscribe && (
 												<Subscription
-													onSubscription={(
-														subscribed
-													) =>
-														setQuestion({
-															...question,
-															subscribed,
-														})
-													}
+													onSubscription={(subscribed) => {
+														question.subscribed = subscribed;
+													}}
 													question={question}
 												/>
 											)}
@@ -263,7 +247,7 @@ export default withRouter(
 															deleteThread({
 																variables: {
 																	messageBoardThreadId:
-																		question.id,
+																	question.id,
 																},
 															});
 														}}
@@ -291,7 +275,7 @@ export default withRouter(
 															)
 														}
 													>
-														<ClayIcon symbol="trash" />
+														<ClayIcon symbol="trash"/>
 													</ClayButton>
 												</>
 											)}
@@ -314,11 +298,11 @@ export default withRouter(
 								</div>
 
 								<div className="c-mt-4">
-									<TagList tags={question.keywords} />
+									<TagList tags={question.keywords}/>
 								</div>
 
 								<div className="c-mt-4 position-relative questions-creator text-center text-md-right">
-									<CreatorRow question={question} />
+									<CreatorRow question={question}/>
 								</div>
 
 								<h3 className="c-mt-4 text-secondary">
@@ -400,67 +384,67 @@ export default withRouter(
 								</div>
 
 								{question &&
-									question.actions &&
-									question.actions['reply-to-thread'] && (
-										<div className="c-mt-5">
-											<ClayForm>
-												<ClayForm.Group className="form-group-sm">
-													<label htmlFor="basicInput">
-														{Liferay.Language.get(
-															'your-answer'
-														)}
+								 question.actions &&
+								 question.actions['reply-to-thread'] && (
+									 <div className="c-mt-5">
+										 <ClayForm>
+											 <ClayForm.Group className="form-group-sm">
+												 <label htmlFor="basicInput">
+													 {Liferay.Language.get(
+														 'your-answer'
+													 )}
 
-														<span className="c-ml-2 reference-mark">
-															<ClayIcon symbol="asterisk" />
+													 <span className="c-ml-2 reference-mark">
+															<ClayIcon symbol="asterisk"/>
 														</span>
-													</label>
+												 </label>
 
-													<div className="c-mt-2">
-														<Editor
-															config={getCKEditorConfig()}
-															data={articleBody}
-															onBeforeLoad={(
-																editor
-															) =>
-																onBeforeLoadCKEditor(
-																	editor,
-																	context.imageBrowseURL
-																)
-															}
-															onChange={(event) =>
-																setArticleBody(
-																	event.editor.getData()
-																)
-															}
-														/>
-													</div>
-												</ClayForm.Group>
-											</ClayForm>
+												 <div className="c-mt-2">
+													 <Editor
+														 config={getCKEditorConfig()}
+														 data={articleBody}
+														 onBeforeLoad={(
+															 editor
+														 ) =>
+															 onBeforeLoadCKEditor(
+																 editor,
+																 context.imageBrowseURL
+															 )
+														 }
+														 onChange={(event) =>
+															 setArticleBody(
+																 event.editor.getData()
+															 )
+														 }
+													 />
+												 </div>
+											 </ClayForm.Group>
+										 </ClayForm>
 
-											<ClayButton
-												disabled={!articleBody}
-												displayType="primary"
-												onClick={() => {
-													createAnswer({
-														variables: {
-															articleBody,
-															messageBoardThreadId:
-																question.id,
-														},
-													});
-												}}
-											>
-												{Liferay.Language.get(
-													'post-answer'
-												)}
-											</ClayButton>
-										</div>
-									)}
+										 <ClayButton
+											 disabled={!articleBody}
+											 displayType="primary"
+											 onClick={() => {
+												 createAnswer({
+													 variables: {
+														 articleBody,
+														 messageBoardThreadId:
+														 question.id,
+													 },
+												 });
+											 }}
+										 >
+											 {Liferay.Language.get(
+												 'post-answer'
+											 )}
+										 </ClayButton>
+									 </div>
+								 )}
 							</div>
 						</div>
 					)}
 					{question && question.id && (
-						<RelatedQuestions question={question} />
+						<RelatedQuestions question={question}/>
 					)}
 				</div>
 			</section>

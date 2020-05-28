@@ -163,48 +163,43 @@ export const getMessageQuery = gq`query messageBoardMessageByFriendlyUrlPath($fr
 	}
 }`;
 
-export const getThread = (friendlyUrlPath, siteKey) =>
-	request(
-		gql`
-        query {
-            messageBoardThreadByFriendlyUrlPath(friendlyUrlPath: ${friendlyUrlPath}, siteKey: ${siteKey}){
-            	actions
-                aggregateRating {
-                    ratingAverage
-                    ratingCount
-                    ratingValue
-                }
-                articleBody 
-                creator {
-                    id
-                    name
-                } 
-                creatorStatistics {
-					joinDate
-					lastPostDate
-					postsNumber
-					rank
-				}
-                dateCreated
-                dateModified
-                encodingFormat
-                friendlyUrlPath
-                headline
-				id
-				keywords
-                messageBoardSection {
-                	numberOfMessageBoardSections
-                	title
-                }
-                myRating {
-                    ratingValue
-                }
-                subscribed
-                viewCount
-            }
-        }`,
-		{nestedFields: 'lastPostDate'}
-	);
+export const getThreadQuery = gq`query messageBoardThreadByFriendlyUrlPath($friendlyUrlPath: String!, $siteKey: String!) {
+	messageBoardThreadByFriendlyUrlPath(friendlyUrlPath: $friendlyUrlPath, siteKey: $siteKey) {
+		actions
+		aggregateRating {
+			ratingAverage
+			ratingCount
+			ratingValue
+		}
+		articleBody 
+		creator {
+			id
+			name
+		} 
+		creatorStatistics {
+			joinDate
+			lastPostDate
+			postsNumber
+			rank
+		}
+		dateCreated
+		dateModified
+		encodingFormat
+		friendlyUrlPath
+		headline
+		id
+		keywords
+		messageBoardSection {
+			numberOfMessageBoardSections
+			title
+		}
+		myRating {
+			ratingValue
+		}
+		subscribed
+		viewCount
+	}
+}`;
 
 export const getMessageBoardThreadByIdQuery = gq`query messageBoardThread($messageBoardThreadId: Long!){
 	messageBoardThread(messageBoardThreadId: $messageBoardThreadId){

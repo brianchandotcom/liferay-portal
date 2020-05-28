@@ -78,6 +78,10 @@ class FieldActionsDropDown extends Component {
 		const {fieldTypes, pages} = this.props;
 		const field = FormSupport.findFieldByFieldName(pages, fieldName);
 
+		if (field && isFieldSet(field)) {
+			return Liferay.Language.get('fieldset');
+		}
+
 		return (
 			field &&
 			fieldTypes.find((fieldType) => {

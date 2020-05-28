@@ -19,12 +19,11 @@ import {addItem} from '../../utils/client.es';
 import {errorToast, successToast} from '../../utils/toast.es';
 import FormViewContext from './FormViewContext.es';
 
-export default () => {
+export default ({dataLayoutBuilder}) => {
 	const [{dataDefinition, fieldSets}, dispatch] = useContext(FormViewContext);
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 	return (fieldName) => {
-		const customProperties = {};
 		const {
 			customProperties: {rows},
 			label,
@@ -70,10 +69,7 @@ export default () => {
 			fieldSetDefinition
 		)
 			.then((dataDefinitionFieldSet) => {
-				customProperties.ddmStructureId = dataDefinitionFieldSet.id;
-				customProperties.ddmStructureLayoutId =
-					dataDefinitionFieldSet.defaultDataLayout.id;
-
+				const ddmStructureId = dataDefinitionFieldSet.id;
 				dispatch({
 					payload: {
 						fieldSets: [...fieldSets, dataDefinitionFieldSet],
@@ -87,10 +83,12 @@ export default () => {
 							return {
 								...definitionField,
 								customProperties: {
-									...customProperties,
+									ddmStructureId,
+									ddmStructureLayoutId:
+										dataDefinitionFieldSet.defaultDataLayout
+											.id,
 									rows: '',
 								},
-								nestedDataDefinitionFields: [],
 							};
 						}
 
@@ -106,6 +104,11 @@ export default () => {
 						},
 					},
 					type: DataLayoutBuilderActions.UPDATE_DATA_DEFINITION,
+				});
+
+				dataLayoutBuilder.dispatch('fieldEdited', {
+					propertyName: 'ddmStructureId',
+					propertyValue: ddmStructureId,
 				});
 
 				successToast(Liferay.Language.get('fieldset-saved'));

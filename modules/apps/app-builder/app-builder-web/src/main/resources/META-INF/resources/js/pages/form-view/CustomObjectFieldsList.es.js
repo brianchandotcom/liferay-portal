@@ -28,13 +28,13 @@ import useDeleteDefinitionField from './useDeleteDefinitionField.es';
 import useDeleteDefinitionFieldModal from './useDeleteDefinitionFieldModal.es';
 
 const createFieldSet = ({
-	dataDefinitionFields,
 	defaultLanguageId,
 	fieldSetName,
+	nestedDataDefinitionFields,
 }) => {
 	return {
 		availableLanguageIds: [defaultLanguageId],
-		dataDefinitionFields,
+		dataDefinitionFields: nestedDataDefinitionFields,
 		defaultLanguageId,
 		description: {},
 		name: {
@@ -45,14 +45,11 @@ const createFieldSet = ({
 
 const getFieldSet = (data) => {
 	const {defaultLanguageId = 'en_US', fieldSetName, fieldSets} = data;
-	let fieldSet = fieldSets.find(
+	const fieldSet = fieldSets.find(
 		({name}) => name[defaultLanguageId] === fieldSetName
 	);
-	if (!fieldSet) {
-		fieldSet = createFieldSet({...data, defaultLanguageId});
-	}
 
-	return fieldSet;
+	return fieldSet || createFieldSet({...data, defaultLanguageId});
 };
 
 const getFieldTypes = ({
@@ -120,9 +117,9 @@ const getFieldTypes = ({
 			isFieldSet,
 			...(isFieldGroup && {
 				fieldSet: getFieldSet({
-					dataDefinitionFields: nestedDataDefinitionFields,
 					fieldSetName: label,
 					fieldSets,
+					nestedDataDefinitionFields,
 				}),
 				useFieldName: name,
 			}),
@@ -175,37 +172,32 @@ export default ({keywords}) => {
 			name
 		);
 
-		if (fieldType !== 'fieldset') {
+		if (fieldType === 'fieldset') {
 			return dataLayoutBuilder.dispatch(
-				'fieldAdded',
-				DataLayoutBuilderActions.dropCustomObjectField({
-					addedToPlaceholder: true,
-					dataDefinition,
-					dataDefinitionFieldName: name,
+				'fieldSetAdded',
+				DataLayoutBuilderActions.dropFieldSet({
 					dataLayoutBuilder,
+					fieldName: name,
+					fieldSet: getFieldSet({
+						defaultLanguageId,
+						fieldSetName: label[defaultLanguageId],
+						fieldSets,
+						nestedDataDefinitionFields,
+					}),
 					indexes,
+					useFieldName: name,
 				})
 			);
 		}
 
-		const payload = {
-			dataLayoutBuilder,
-			fieldName: name,
-			indexes,
-			useFieldName: name,
-		};
-
-		const fieldSet = getFieldSet({
-			dataDefinitionFields: nestedDataDefinitionFields,
-			fieldSetName: label[defaultLanguageId],
-			fieldSets,
-		});
-
-		return dataLayoutBuilder.dispatch(
-			'fieldSetAdded',
-			DataLayoutBuilderActions.dropFieldSet({
-				...payload,
-				fieldSet,
+		dataLayoutBuilder.dispatch(
+			'fieldAdded',
+			DataLayoutBuilderActions.dropCustomObjectField({
+				addedToPlaceholder: true,
+				dataDefinition,
+				dataDefinitionFieldName: name,
+				dataLayoutBuilder,
+				indexes,
 			})
 		);
 	};

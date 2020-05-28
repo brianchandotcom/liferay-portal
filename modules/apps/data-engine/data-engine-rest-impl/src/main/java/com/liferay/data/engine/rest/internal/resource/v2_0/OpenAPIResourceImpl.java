@@ -71,6 +71,8 @@ public class OpenAPIResourceImpl {
 		{
 			add(DataDefinitionResourceImpl.class);
 
+			add(DataDefinitionFieldLinkResourceImpl.class);
+
 			add(DataLayoutResourceImpl.class);
 
 			add(DataListViewResourceImpl.class);

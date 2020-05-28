@@ -14,11 +14,9 @@
 
 package com.liferay.data.engine.rest.resource.v2_0;
 
-import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
-import com.liferay.portal.kernel.search.Sort;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionFieldLink;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Locale;
 
@@ -27,7 +25,6 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -42,61 +39,15 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface DataDefinitionResource {
+public interface DataDefinitionFieldLinkResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<DataDefinition> getDataDefinitionByContentTypeContentTypePage(
-			String contentType, String keywords, Pagination pagination,
-			Sort[] sorts)
-		throws Exception;
-
-	public DataDefinition postDataDefinitionByContentType(
-			String contentType, DataDefinition dataDefinition)
-		throws Exception;
-
-	public String getDataDefinitionDataDefinitionFieldFieldTypes()
-		throws Exception;
-
-	public void deleteDataDefinition(Long dataDefinitionId) throws Exception;
-
-	public Response deleteDataDefinitionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public DataDefinition getDataDefinition(Long dataDefinitionId)
-		throws Exception;
-
-	public DataDefinition putDataDefinition(
-			Long dataDefinitionId, DataDefinition dataDefinition)
-		throws Exception;
-
-	public Response putDataDefinitionBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getDataDefinitionPermissionsPage(
-				Long dataDefinitionId, String roleNames)
-		throws Exception;
-
-	public void putDataDefinitionPermission(
-			Long dataDefinitionId,
-			com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public Page<DataDefinition>
-			getSiteDataDefinitionByContentTypeContentTypePage(
-				Long siteId, String contentType, String keywords,
-				Pagination pagination, Sort[] sorts)
-		throws Exception;
-
-	public DataDefinition postSiteDataDefinitionByContentType(
-			Long siteId, String contentType, DataDefinition dataDefinition)
-		throws Exception;
-
-	public DataDefinition getSiteDataDefinitionByContentTypeByDataDefinitionKey(
-			Long siteId, String contentType, String dataDefinitionKey)
+	public Page<DataDefinitionFieldLink>
+			getDataDefinitionDataDefinitionFieldLinkPage(
+				Long dataDefinitionId, String fieldName)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -129,7 +80,7 @@ public interface DataDefinitionResource {
 	@ProviderType
 	public interface Builder {
 
-		public DataDefinitionResource build();
+		public DataDefinitionFieldLinkResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

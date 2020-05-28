@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.graphql.servlet.v2_0;
 
 import com.liferay.data.engine.rest.internal.graphql.mutation.v2_0.Mutation;
 import com.liferay.data.engine.rest.internal.graphql.query.v2_0.Query;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionFieldLinkResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
@@ -55,6 +56,8 @@ public class ServletDataImpl implements ServletData {
 
 		Query.setDataDefinitionResourceComponentServiceObjects(
 			_dataDefinitionResourceComponentServiceObjects);
+		Query.setDataDefinitionFieldLinkResourceComponentServiceObjects(
+			_dataDefinitionFieldLinkResourceComponentServiceObjects);
 		Query.setDataLayoutResourceComponentServiceObjects(
 			_dataLayoutResourceComponentServiceObjects);
 		Query.setDataListViewResourceComponentServiceObjects(
@@ -99,5 +102,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<DataRecordCollectionResource>
 		_dataRecordCollectionResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<DataDefinitionFieldLinkResource>
+		_dataDefinitionFieldLinkResourceComponentServiceObjects;
 
 }

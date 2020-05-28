@@ -15,11 +15,13 @@
 package com.liferay.data.engine.rest.internal.graphql.query.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionFieldLink;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage;
 import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.dto.v2_0.DataRecordCollection;
+import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionFieldLinkResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataLayoutResource;
 import com.liferay.data.engine.rest.resource.v2_0.DataListViewResource;
@@ -63,6 +65,15 @@ public class Query {
 
 		_dataDefinitionResourceComponentServiceObjects =
 			dataDefinitionResourceComponentServiceObjects;
+	}
+
+	public static void
+		setDataDefinitionFieldLinkResourceComponentServiceObjects(
+			ComponentServiceObjects<DataDefinitionFieldLinkResource>
+				dataDefinitionFieldLinkResourceComponentServiceObjects) {
+
+		_dataDefinitionFieldLinkResourceComponentServiceObjects =
+			dataDefinitionFieldLinkResourceComponentServiceObjects;
 	}
 
 	public static void setDataLayoutResourceComponentServiceObjects(
@@ -159,26 +170,6 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataDefinitionFieldLinks(dataDefinitionId: ___, fieldName: ___){}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public String dataDefinitionDataDefinitionFieldLinks(
-			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
-			@GraphQLName("fieldName") String fieldName)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_dataDefinitionResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			dataDefinitionResource ->
-				dataDefinitionResource.
-					getDataDefinitionDataDefinitionFieldLinks(
-						dataDefinitionId, fieldName));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionPermissions(dataDefinitionId: ___, roleNames: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -241,6 +232,26 @@ public class Query {
 				dataDefinitionResource.
 					getSiteDataDefinitionByContentTypeByDataDefinitionKey(
 						Long.valueOf(siteKey), contentType, dataDefinitionKey));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {dataDefinitionDataDefinitionFieldLink(dataDefinitionId: ___, fieldName: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public DataDefinitionFieldLinkPage dataDefinitionDataDefinitionFieldLink(
+			@GraphQLName("dataDefinitionId") Long dataDefinitionId,
+			@GraphQLName("fieldName") String fieldName)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_dataDefinitionFieldLinkResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			dataDefinitionFieldLinkResource -> new DataDefinitionFieldLinkPage(
+				dataDefinitionFieldLinkResource.
+					getDataDefinitionDataDefinitionFieldLinkPage(
+						dataDefinitionId, fieldName)));
 	}
 
 	/**
@@ -580,33 +591,6 @@ public class Query {
 	}
 
 	@GraphQLTypeExtension(DataDefinition.class)
-	public class GetDataDefinitionDataDefinitionFieldLinksTypeExtension {
-
-		public GetDataDefinitionDataDefinitionFieldLinksTypeExtension(
-			DataDefinition dataDefinition) {
-
-			_dataDefinition = dataDefinition;
-		}
-
-		@GraphQLField
-		public String dataDefinitionFieldLinks(
-				@GraphQLName("fieldName") String fieldName)
-			throws Exception {
-
-			return _applyComponentServiceObjects(
-				_dataDefinitionResourceComponentServiceObjects,
-				Query.this::_populateResourceContext,
-				dataDefinitionResource ->
-					dataDefinitionResource.
-						getDataDefinitionDataDefinitionFieldLinks(
-							_dataDefinition.getId(), fieldName));
-		}
-
-		private DataDefinition _dataDefinition;
-
-	}
-
-	@GraphQLTypeExtension(DataDefinition.class)
 	public class GetDataDefinitionDataRecordCollectionTypeExtension {
 
 		public GetDataDefinitionDataRecordCollectionTypeExtension(
@@ -676,6 +660,34 @@ public class Query {
 		}
 
 		private DataRecordCollection _dataRecordCollection;
+
+	}
+
+	@GraphQLTypeExtension(DataDefinition.class)
+	public class GetDataDefinitionDataDefinitionFieldLinkPageTypeExtension {
+
+		public GetDataDefinitionDataDefinitionFieldLinkPageTypeExtension(
+			DataDefinition dataDefinition) {
+
+			_dataDefinition = dataDefinition;
+		}
+
+		@GraphQLField
+		public DataDefinitionFieldLinkPage dataDefinitionFieldLink(
+				@GraphQLName("fieldName") String fieldName)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_dataDefinitionFieldLinkResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				dataDefinitionFieldLinkResource ->
+					new DataDefinitionFieldLinkPage(
+						dataDefinitionFieldLinkResource.
+							getDataDefinitionDataDefinitionFieldLinkPage(
+								_dataDefinition.getId(), fieldName)));
+		}
+
+		private DataDefinition _dataDefinition;
 
 	}
 
@@ -941,6 +953,38 @@ public class Query {
 
 	}
 
+	@GraphQLName("DataDefinitionFieldLinkPage")
+	public class DataDefinitionFieldLinkPage {
+
+		public DataDefinitionFieldLinkPage(Page dataDefinitionFieldLinkPage) {
+			actions = dataDefinitionFieldLinkPage.getActions();
+			items = dataDefinitionFieldLinkPage.getItems();
+			lastPage = dataDefinitionFieldLinkPage.getLastPage();
+			page = dataDefinitionFieldLinkPage.getPage();
+			pageSize = dataDefinitionFieldLinkPage.getPageSize();
+			totalCount = dataDefinitionFieldLinkPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<DataDefinitionFieldLink> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("DataLayoutPage")
 	public class DataLayoutPage {
 
@@ -1102,6 +1146,21 @@ public class Query {
 		dataDefinitionResource.setContextUser(_user);
 	}
 
+	private void _populateResourceContext(
+			DataDefinitionFieldLinkResource dataDefinitionFieldLinkResource)
+		throws Exception {
+
+		dataDefinitionFieldLinkResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		dataDefinitionFieldLinkResource.setContextCompany(_company);
+		dataDefinitionFieldLinkResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		dataDefinitionFieldLinkResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		dataDefinitionFieldLinkResource.setContextUriInfo(_uriInfo);
+		dataDefinitionFieldLinkResource.setContextUser(_user);
+	}
+
 	private void _populateResourceContext(DataLayoutResource dataLayoutResource)
 		throws Exception {
 
@@ -1153,6 +1212,8 @@ public class Query {
 
 	private static ComponentServiceObjects<DataDefinitionResource>
 		_dataDefinitionResourceComponentServiceObjects;
+	private static ComponentServiceObjects<DataDefinitionFieldLinkResource>
+		_dataDefinitionFieldLinkResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataLayoutResource>
 		_dataLayoutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<DataListViewResource>

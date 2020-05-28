@@ -199,8 +199,12 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 						/>
 					</c:if>
 
-					<div class="autofit-float autofit-row">
-						<div class="autofit-col autofit-col-expand">
+					<clay:content-row
+						floatElements="end"
+					>
+						<clay:content-col
+							expand="true"
+						>
 							<c:choose>
 								<c:when test="<%= category != null %>">
 									<h3><%= HtmlUtil.escape(category.getName()) %></h3>
@@ -219,9 +223,9 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 									/>
 								</c:otherwise>
 							</c:choose>
-						</div>
+						</clay:content-col>
 
-						<div class="autofit-col autofit-col-end">
+						<clay:content-col>
 							<div class="btn-group">
 								<c:if test="<%= showAddCategoryButton %>">
 									<portlet:renderURL var="editCategoryURL">
@@ -381,8 +385,8 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 									</c:choose>
 								</liferay-ui:icon-menu>
 							</div>
-						</div>
-					</div>
+						</clay:content-col>
+					</clay:content-row>
 
 					<%
 					SearchContainer categoryEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, mbListDisplayContext.getCategoryEntriesDelta(), PortletURLUtil.clone(portletURL, renderResponse), null, "there-are-no-threads-or-categories");
@@ -437,12 +441,16 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 				<div class="main-content-body">
 					<c:choose>
 						<c:when test="<%= mbListDisplayContext.isShowRecentPosts() %>">
-							<div class="autofit-float autofit-row">
-								<div class="autofit-col autofit-col-expand">
+							<clay:content-row
+								floatElements="end"
+							>
+								<clay:content-col
+									expand="true"
+								>
 									<h3><liferay-ui:message key="recent-posts" /></h3>
-								</div>
+								</clay:content-col>
 
-								<div class="autofit-col autofit-col-end">
+								<clay:content-col>
 									<div class="btn-group">
 										<c:if test="<%= enableRSS %>">
 											<liferay-ui:icon-menu
@@ -462,8 +470,8 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 											</liferay-ui:icon-menu>
 										</c:if>
 									</div>
-								</div>
-							</div>
+								</clay:content-col>
+							</clay:content-row>
 
 							<c:if test="<%= groupThreadsUserId > 0 %>">
 								<div class="alert alert-info">
@@ -479,12 +487,16 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 							}
 							%>
 
-							<div class="autofit-float autofit-row">
-								<div class="autofit-col autofit-col-expand">
+							<clay:content-row
+								floatElements="end"
+							>
+								<clay:content-col
+									expand="true"
+								>
 									<h3><liferay-ui:message key="my-posts" /></h3>
-								</div>
+								</clay:content-col>
 
-								<div class="autofit-col autofit-col-end">
+								<clay:content-col>
 									<div class="btn-group">
 										<c:if test="<%= enableRSS %>">
 											<liferay-ui:icon-menu
@@ -504,8 +516,8 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 											</liferay-ui:icon-menu>
 										</c:if>
 									</div>
-								</div>
-							</div>
+								</clay:content-col>
+							</clay:content-row>
 						</c:otherwise>
 					</c:choose>
 

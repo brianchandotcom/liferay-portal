@@ -58,12 +58,16 @@ if (portletTitleBasedNavigation) {
 %>
 
 <c:if test="<%= !portletTitleBasedNavigation %>">
-	<div class="autofit-float autofit-row">
-		<div class="autofit-col autofit-col-expand">
+	<clay:content-row
+		floatElements="end"
+	>
+		<clay:content-col
+			expand="true"
+		>
 			<h3><%= HtmlUtil.escape(message.getSubject()) %></h3>
-		</div>
+		</clay:content-col>
 
-		<div class="autofit-col autofit-col-end">
+		<clay:content-col>
 			<div class="btn-group">
 				<liferay-ui:icon-menu
 					direction="left-side"
@@ -196,8 +200,8 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 				</liferay-ui:icon-menu>
 			</div>
-		</div>
-	</div>
+		</clay:content-col>
+	</clay:content-row>
 </c:if>
 
 <div class="thread-container">

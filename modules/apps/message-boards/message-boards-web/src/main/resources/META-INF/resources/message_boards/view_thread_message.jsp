@@ -35,16 +35,21 @@ if (message.isAnonymous() || thread.isInTrash()) {
 
 <div class="card panel">
 	<div class="panel-heading">
-		<div class="autofit-padded autofit-row card-body">
-			<div class="autofit-col">
+		<clay:content-row
+			className="card-body"
+			padded="true"
+		>
+			<clay:content-col>
 				<div class="list-group-card-icon">
 					<liferay-ui:user-portrait
 						userId="<%= !message.isAnonymous() ? message.getUserId() : 0 %>"
 					/>
 				</div>
-			</div>
+			</clay:content-col>
 
-			<div class="autofit-col autofit-col-expand">
+			<clay:content-col
+				expand="true"
+			>
 
 				<%
 				String messageUserName = "anonymous";
@@ -181,9 +186,9 @@ if (message.isAnonymous() || thread.isInTrash()) {
 						</c:if>
 					</div>
 				</c:if>
-			</div>
+			</clay:content-col>
 
-			<div class="autofit-col">
+			<clay:content-col>
 				<c:if test="<%= editable %>">
 
 					<%
@@ -383,8 +388,8 @@ if (message.isAnonymous() || thread.isInTrash()) {
 						</liferay-ui:icon-menu>
 					</c:if>
 				</c:if>
-			</div>
-		</div>
+			</clay:content-col>
+		</clay:content-row>
 	</div>
 
 	<div class="divider"></div>

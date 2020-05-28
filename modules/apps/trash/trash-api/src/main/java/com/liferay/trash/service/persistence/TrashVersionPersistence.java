@@ -15,6 +15,7 @@
 package com.liferay.trash.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.trash.exception.NoSuchVersionException;
 import com.liferay.trash.model.TrashVersion;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface TrashVersionPersistence extends BasePersistence<TrashVersion> {
+public interface TrashVersionPersistence
+	extends BasePersistence<TrashVersion>, CTPersistence<TrashVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

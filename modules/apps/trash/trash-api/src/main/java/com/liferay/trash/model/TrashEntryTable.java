@@ -35,6 +35,8 @@ public class TrashEntryTable extends BaseTable<TrashEntryTable> {
 
 	public final Column<TrashEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<TrashEntryTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<TrashEntryTable, Long> entryId = createColumn(
 		"entryId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<TrashEntryTable, Long> groupId = createColumn(

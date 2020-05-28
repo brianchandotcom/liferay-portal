@@ -15,6 +15,7 @@
 package com.liferay.trash.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.trash.exception.NoSuchEntryException;
 import com.liferay.trash.model.TrashEntry;
 
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface TrashEntryPersistence extends BasePersistence<TrashEntry> {
+public interface TrashEntryPersistence
+	extends BasePersistence<TrashEntry>, CTPersistence<TrashEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

@@ -124,6 +124,8 @@ public class TrashVersionPersistenceTest {
 
 		newTrashVersion.setMvccVersion(RandomTestUtil.nextLong());
 
+		newTrashVersion.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newTrashVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		newTrashVersion.setEntryId(RandomTestUtil.nextLong());
@@ -144,6 +146,9 @@ public class TrashVersionPersistenceTest {
 		Assert.assertEquals(
 			existingTrashVersion.getMvccVersion(),
 			newTrashVersion.getMvccVersion());
+		Assert.assertEquals(
+			existingTrashVersion.getCtCollectionId(),
+			newTrashVersion.getCtCollectionId());
 		Assert.assertEquals(
 			existingTrashVersion.getVersionId(),
 			newTrashVersion.getVersionId());
@@ -212,9 +217,9 @@ public class TrashVersionPersistenceTest {
 
 	protected OrderByComparator<TrashVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"TrashVersion", "mvccVersion", true, "versionId", true, "companyId",
-			true, "entryId", true, "classNameId", true, "classPK", true,
-			"status", true);
+			"TrashVersion", "mvccVersion", true, "ctCollectionId", true,
+			"versionId", true, "companyId", true, "entryId", true,
+			"classNameId", true, "classPK", true, "status", true);
 	}
 
 	@Test
@@ -453,6 +458,8 @@ public class TrashVersionPersistenceTest {
 		TrashVersion trashVersion = _persistence.create(pk);
 
 		trashVersion.setMvccVersion(RandomTestUtil.nextLong());
+
+		trashVersion.setCtCollectionId(RandomTestUtil.nextLong());
 
 		trashVersion.setCompanyId(RandomTestUtil.nextLong());
 

@@ -33,6 +33,8 @@ public class TrashVersionTable extends BaseTable<TrashVersionTable> {
 
 	public final Column<TrashVersionTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<TrashVersionTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<TrashVersionTable, Long> versionId = createColumn(
 		"versionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<TrashVersionTable, Long> companyId = createColumn(

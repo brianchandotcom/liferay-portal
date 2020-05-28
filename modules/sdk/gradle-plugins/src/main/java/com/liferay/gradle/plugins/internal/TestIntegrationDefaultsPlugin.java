@@ -83,12 +83,12 @@ public class TestIntegrationDefaultsPlugin
 				project, TestIntegrationPlugin.STOP_TESTABLE_TOMCAT_TASK_NAME,
 				StopAppServerTask.class);
 
-		_configureTaskCopyTestModules(copyTestModulesTaskProvider);
-		_configureTaskSetUpTestableTomcat(
+		_configureTaskCopyTestModulesProvider(copyTestModulesTaskProvider);
+		_configureTaskSetUpTestableTomcatProvider(
 			project, setUpTestableTomcatTaskProvider, tomcatAppServer);
-		_configureTaskStartTestableTomcat(
+		_configureTaskStartTestableTomcatProvider(
 			project, startTestableTomcatTaskProvider, tomcatAppServer);
-		_configureTaskStopTestableTomcat(
+		_configureTaskStopTestableTomcatProvider(
 			stopTestableTomcatTaskProvider, tomcatAppServer);
 	}
 
@@ -131,7 +131,7 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
-	private void _configureTaskCopyTestModules(
+	private void _configureTaskCopyTestModulesProvider(
 		TaskProvider<Task> copyTestModulesTaskProvider) {
 
 		copyTestModulesTaskProvider.configure(
@@ -147,7 +147,7 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
-	private void _configureTaskSetUpTestableTomcat(
+	private void _configureTaskSetUpTestableTomcatProvider(
 		final Project project,
 		TaskProvider<SetUpTestableTomcatTask> setUpTestableTomcatTaskProvider,
 		final TomcatAppServer tomcatAppServer) {
@@ -187,7 +187,7 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
-	private void _configureTaskStartTestableTomcat(
+	private void _configureTaskStartTestableTomcatProvider(
 		final Project project,
 		TaskProvider<StartTestableTomcatTask> startTestableTomcatTaskProvider,
 		final TomcatAppServer tomcatAppServer) {
@@ -238,7 +238,7 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
-	private void _configureTaskStopTestableTomcat(
+	private void _configureTaskStopTestableTomcatProvider(
 		TaskProvider<StopAppServerTask> stopTestableTomcatTaskProvider,
 		final TomcatAppServer tomcatAppServer) {
 

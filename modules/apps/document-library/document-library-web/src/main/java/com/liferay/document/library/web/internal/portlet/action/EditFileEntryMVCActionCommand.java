@@ -44,12 +44,13 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredException;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -677,6 +678,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private DDMStructure _fetchDDMStructure(DLFileEntryType dlFileEntryType)
 		throws PortalException {
 
+		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
+			return _ddmStructureLocalService.fetchDDMStructure(
+				dlFileEntryType.getDataDefinitionId());
+		}
+
 		List<DDMStructureLink> ddmStructureLinks =
 			_ddmStructureLinkLocalService.getStructureLinks(
 				_portal.getClassNameId(DLFileEntryType.class),
@@ -962,17 +968,32 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		DDMStructure ddmStructure = _fetchDDMStructure(
-			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId));
+		String className =
+			com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
+				getName();
 
-		if (ddmStructure != null) {
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
+
+		DDMStructure ddmStructure = _fetchDDMStructure(dlFileEntryType);
+
+		if (ddmStructure == null) {
+			return;
+		}
+
+		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
+			serviceContext.getRequest(), ddmStructure.getDDMForm());
+
+		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
 			serviceContext.setAttribute(
-				DDMFormValues.class.getName() + StringPool.POUND +
-					ddmStructure.getStructureId(),
-				DDMBeanTranslatorUtil.translate(
-					_ddmFormValuesFactory.create(
-						serviceContext.getRequest(),
-						ddmStructure.getDDMForm())));
+				className + StringPool.POUND +
+					dlFileEntryType.getDataDefinitionId(),
+				DDMBeanTranslatorUtil.translate(ddmFormValues));
+		}
+		else {
+			serviceContext.setAttribute(
+				className + StringPool.POUND + ddmStructure.getStructureId(),
+				DDMBeanTranslatorUtil.translate(ddmFormValues));
 		}
 	}
 
@@ -1133,6 +1154,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DLAppService _dlAppService;

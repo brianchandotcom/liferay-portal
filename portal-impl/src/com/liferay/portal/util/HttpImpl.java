@@ -352,11 +352,13 @@ public class HttpImpl implements Http {
 			return path;
 		}
 
-		path = StringUtil.replace(path, CharPool.SLASH, _TEMP_SLASH);
-		path = StringUtil.replace(path, CharPool.TILDE, _TEMP_TILDE);
+		path = StringUtil.replace(
+			path, new char[] {CharPool.SLASH, CharPool.TILDE},
+			new String[] {_TEMP_SLASH, _TEMP_TILDE});
 		path = URLCodec.encodeURL(path, true);
-		path = StringUtil.replace(path, _TEMP_TILDE, StringPool.TILDE);
-		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
+		path = StringUtil.replace(
+			path, new String[] {_TEMP_SLASH, _TEMP_TILDE},
+			new String[] {StringPool.SLASH, StringPool.TILDE});
 
 		return path;
 	}

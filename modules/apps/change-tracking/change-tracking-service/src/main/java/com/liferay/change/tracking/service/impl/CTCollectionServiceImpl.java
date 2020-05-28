@@ -170,7 +170,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 			permissionChecker, null, CTActionKeys.ADD_PUBLICATION);
 
 		return ctCollectionLocalService.undoCTCollection(
-			userId, ctCollectionId, name, description);
+			ctCollectionId, userId, name, description);
 	}
 
 	@Override

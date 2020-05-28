@@ -46,14 +46,20 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 
 						<c:choose>
 							<c:when test="<%= ListUtil.isNotEmpty(layoutPageTemplateCollections) %>">
-								<div class="autofit-row autofit-row-center">
-									<div class="autofit-col autofit-col-expand">
+								<clay:content-row
+									verticaAlign="center"
+								>
+									<clay:content-col
+										expand="true"
+									>
 										<strong class="text-uppercase">
 											<liferay-ui:message key="collections" />
 										</strong>
-									</div>
+									</clay:content-col>
 
-									<div class="autofit-col autofit-col-end">
+									<clay:content-col
+										verticaAlign="end"
+									>
 										<ul class="navbar-nav">
 											<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
 												<li>
@@ -73,8 +79,8 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 												/>
 											</li>
 										</ul>
-									</div>
-								</div>
+									</clay:content-col>
+								</clay:content-row>
 
 								<ul class="nav nav-stacked">
 
@@ -129,25 +135,32 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 			%>
 
 			<c:if test="<%= layoutPageTemplateCollection != null %>">
-				<div class="sheet">
+				<clay:sheet>
 					<h2 class="sheet-title">
-						<div class="autofit-row autofit-row-center">
-							<div class="autofit-col autofit-col-expand">
+						<clay:content-row
+							verticaAlign="center"
+						>
+							<clay:content-col
+								expand="true"
+							>
 								<span class="text-uppercase">
 									<%= HtmlUtil.escape(layoutPageTemplateCollection.getName()) %>
 								</span>
-							</div>
+							</clay:content-col>
 
-							<div class="autofit-col autofit-col-end inline-item-after">
+							<clay:content-col
+								className="inline-item-after"
+								verticaAlign="end"
+							>
 								<liferay-util:include page="/layout_page_template_collection_action.jsp" servletContext="<%= application %>" />
-							</div>
-						</div>
+							</clay:content-col>
+						</clay:content-row>
 					</h2>
 
-					<div class="sheet-section">
+					<clay:sheet-section>
 						<liferay-util:include page="/view_layout_page_template_entries.jsp" servletContext="<%= application %>" />
-					</div>
-				</div>
+					</clay:sheet-section>
+				</clay:sheet>
 			</c:if>
 		</clay:col>
 	</clay:row>

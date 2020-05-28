@@ -135,7 +135,8 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 				project, CONFIGURATION_NAME, "javax.activation", "activation",
 				"1.1");
 			GradleUtil.addDependency(
-				project, CONFIGURATION_NAME, "javax.mail", "mail", "1.4");
+				project, CONFIGURATION_NAME, "com.sun.mail", "javax.mail",
+				"1.6.2");
 			GradleUtil.addDependency(
 				project, CONFIGURATION_NAME, "org.apache.axis", "axis-jaxrpc",
 				"1.4");

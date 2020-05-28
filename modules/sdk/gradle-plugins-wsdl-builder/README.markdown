@@ -124,7 +124,7 @@ following dependencies:
 - `commons-discovery:commons-discovery:0.2`
 - `commons-logging:commons-logging:1.0.4`
 - `javax.activation:activation:1.1`
-- `javax.mail:mail:1.4`
+- `com.sun.mail:javax.mail:1.6.2`
 - `org.apache.axis:axis-jaxrpc:1.4`
 - `org.apache.axis:axis-saaj:1.4`
 

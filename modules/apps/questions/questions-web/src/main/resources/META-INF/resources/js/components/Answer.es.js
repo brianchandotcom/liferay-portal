@@ -68,16 +68,6 @@ export default withRouter(
 			}
 		);
 
-		const _ratingChange = useCallback(
-			(ratingValue) => {
-				answer.aggregateRating = {
-					...answer.aggregateRating,
-					ratingValue,
-				};
-			},
-			[answer]
-		);
-
 		useEffect(() => {
 			setShowAsAnswer(answer.showAsAnswer);
 		}, [answer.showAsAnswer]);
@@ -98,7 +88,6 @@ export default withRouter(
 									answer.myRating &&
 									answer.myRating.ratingValue
 								}
-								ratingChange={_ratingChange}
 								type={'Message'}
 							/>
 						</div>

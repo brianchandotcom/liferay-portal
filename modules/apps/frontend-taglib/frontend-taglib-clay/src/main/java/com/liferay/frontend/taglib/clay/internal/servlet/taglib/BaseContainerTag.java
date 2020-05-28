@@ -186,19 +186,19 @@ public class BaseContainerTag extends IncludeTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClass(String)}
+	 *             #processCssClasses(String)}
 	 */
 	@Deprecated
 	protected String processClassName(Set<String> className) {
-		return processCssClass(className);
+		return processCssClasses(className);
 	}
 
-	protected String processCssClass(Set<String> cssClass) {
+	protected String processCssClasses(Set<String> cssClasses) {
 		if (Validator.isNotNull(_cssClass)) {
-			cssClass.addAll(StringUtil.split(_cssClass, CharPool.SPACE));
+			cssClasses.addAll(StringUtil.split(_cssClass, CharPool.SPACE));
 		}
 
-		return StringUtil.merge(cssClass, StringPool.SPACE);
+		return StringUtil.merge(cssClasses, StringPool.SPACE);
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class BaseContainerTag extends IncludeTag {
 		jspWriter.write("<");
 		jspWriter.write(_containerElement);
 		jspWriter.write(" class=\"");
-		jspWriter.write(processCssClass(new LinkedHashSet<>()));
+		jspWriter.write(processCssClasses(new LinkedHashSet<>()));
 		jspWriter.write("\"");
 
 		if (Validator.isNotNull(_id)) {

@@ -44,19 +44,19 @@ public class RowTag extends BaseContainerTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClass(String)}
+	 *             #processCssClasses(String)}
 	 */
 	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		return processCssClass(className);
+		return processCssClasses(className);
 	}
 
 	@Override
-	protected String processCssClass(Set<String> cssClass) {
-		cssClass.add("row");
+	protected String processCssClasses(Set<String> cssClasses) {
+		cssClasses.add("row");
 
-		return super.processCssClass(cssClass);
+		return super.processCssClasses(cssClasses);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:row:";

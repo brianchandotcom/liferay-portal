@@ -171,39 +171,39 @@ public class StickerTag extends BaseContainerTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClass(String)}
+	 *             #processCssClasses(String)}
 	 */
 	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		return processCssClass(className);
+		return processCssClasses(className);
 	}
 
 	@Override
-	protected String processCssClass(Set<String> cssClass) {
-		cssClass.add("sticker");
+	protected String processCssClasses(Set<String> cssClasses) {
+		cssClasses.add("sticker");
 
 		if (Validator.isNotNull(_displayType)) {
-			cssClass.add("sticker-" + _displayType);
+			cssClasses.add("sticker-" + _displayType);
 		}
 
 		if (Validator.isNotNull(_position)) {
-			cssClass.add("sticker-" + _position);
+			cssClasses.add("sticker-" + _position);
 
 			if (_outside) {
-				cssClass.add("sticker-outside");
+				cssClasses.add("sticker-outside");
 			}
 		}
 
 		if (Validator.isNotNull(_shape)) {
-			cssClass.add("sticker-" + _shape);
+			cssClasses.add("sticker-" + _shape);
 		}
 
 		if (Validator.isNotNull(_size)) {
-			cssClass.add("sticker-" + _size);
+			cssClasses.add("sticker-" + _size);
 		}
 
-		return super.processCssClass(cssClass);
+		return super.processCssClasses(cssClasses);
 	}
 
 	@Override

@@ -88,45 +88,45 @@ public class ContentRowTag extends BaseContainerTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClass(String)}
+	 *             #processCssClasses(String)}
 	 */
 	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		return processCssClass(className);
+		return processCssClasses(className);
 	}
 
 	@Override
-	protected String processCssClass(Set<String> cssClass) {
-		cssClass.add("autofit-row");
+	protected String processCssClasses(Set<String> cssClasses) {
+		cssClasses.add("autofit-row");
 
 		if (_floatElements != null) {
 			if (_floatElements.equals(StringPool.BLANK)) {
-				cssClass.add("autofit-float");
+				cssClasses.add("autofit-float");
 			}
 			else {
-				cssClass.add("autofit-float-" + _floatElements);
+				cssClasses.add("autofit-float-" + _floatElements);
 			}
 		}
 
 		if (_padded) {
-			cssClass.add("autofit-padded");
+			cssClasses.add("autofit-padded");
 		}
 
 		if (_noGutters != null) {
 			if (_noGutters.equals("x") || _noGutters.equals("y")) {
-				cssClass.add("autofit-padded-no-gutters-" + _noGutters);
+				cssClasses.add("autofit-padded-no-gutters-" + _noGutters);
 			}
 			else {
-				cssClass.add("autofit-padded-no-gutters");
+				cssClasses.add("autofit-padded-no-gutters");
 			}
 		}
 
 		if (Validator.isNotNull(_verticalAlign)) {
-			cssClass.add("autofit-row-" + _verticalAlign);
+			cssClasses.add("autofit-row-" + _verticalAlign);
 		}
 
-		return super.processCssClass(cssClass);
+		return super.processCssClasses(cssClasses);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:content-row:";

@@ -92,20 +92,20 @@ public class BadgeTag extends BaseContainerTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClass(String)}
+	 *             #processCssClasses(String)}
 	 */
 	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		return processCssClass(className);
+		return processCssClasses(className);
 	}
 
 	@Override
-	protected String processCssClass(Set<String> cssClass) {
-		cssClass.add("badge");
-		cssClass.add("badge-" + _displayType);
+	protected String processCssClasses(Set<String> cssClasses) {
+		cssClasses.add("badge");
+		cssClasses.add("badge-" + _displayType);
 
-		return super.processCssClass(cssClass);
+		return super.processCssClasses(cssClasses);
 	}
 
 	@Override

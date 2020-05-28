@@ -96,41 +96,41 @@ public class ColTag extends BaseContainerTag {
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClass(String)}
+	 *             #processCssClasses(String)}
 	 */
 	@Deprecated
 	@Override
 	protected String processClassName(Set<String> className) {
-		return processCssClass(className);
+		return processCssClasses(className);
 	}
 
 	@Override
-	protected String processCssClass(Set<String> cssClass) {
+	protected String processCssClasses(Set<String> cssClasses) {
 		if (Validator.isNotNull(_size)) {
-			cssClass.add("col-" + _size);
+			cssClasses.add("col-" + _size);
 		}
 
 		if (Validator.isNotNull(_lg)) {
-			cssClass.add("col-lg-" + _lg);
+			cssClasses.add("col-lg-" + _lg);
 		}
 
 		if (Validator.isNotNull(_md)) {
-			cssClass.add("col-md-" + _md);
+			cssClasses.add("col-md-" + _md);
 		}
 
 		if (Validator.isNotNull(_sm)) {
-			cssClass.add("col-sm-" + _sm);
+			cssClasses.add("col-sm-" + _sm);
 		}
 
 		if (Validator.isNotNull(_xl)) {
-			cssClass.add("col-xl-" + _xl);
+			cssClasses.add("col-xl-" + _xl);
 		}
 
-		if (cssClass.isEmpty()) {
-			cssClass.add("col");
+		if (cssClasses.isEmpty()) {
+			cssClasses.add("col");
 		}
 
-		return super.processCssClass(cssClass);
+		return super.processCssClasses(cssClasses);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:col:";

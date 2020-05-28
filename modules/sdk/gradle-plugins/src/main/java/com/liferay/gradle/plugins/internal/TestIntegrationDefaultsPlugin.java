@@ -130,6 +130,82 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
+	private void _configureExtensionTestIntegrationTomcat(
+		final LiferayExtension liferayExtension,
+		TestIntegrationTomcatExtension testIntegrationTomcatExtension,
+		final TomcatAppServer tomcatAppServer) {
+
+		testIntegrationTomcatExtension.setCheckPath(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return tomcatAppServer.getCheckPath();
+				}
+
+			});
+
+		testIntegrationTomcatExtension.setPortNumber(
+			new Callable<Integer>() {
+
+				@Override
+				public Integer call() throws Exception {
+					return tomcatAppServer.getPortNumber();
+				}
+
+			});
+
+		testIntegrationTomcatExtension.setDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return tomcatAppServer.getDir();
+				}
+
+			});
+
+		testIntegrationTomcatExtension.setJmxRemotePort(
+			new Callable<Integer>() {
+
+				@Override
+				public Integer call() throws Exception {
+					return liferayExtension.getJmxRemotePort();
+				}
+
+			});
+
+		testIntegrationTomcatExtension.setLiferayHome(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return liferayExtension.getLiferayHome();
+				}
+
+			});
+
+		testIntegrationTomcatExtension.setManagerPassword(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return tomcatAppServer.getManagerPassword();
+				}
+
+			});
+
+		testIntegrationTomcatExtension.setManagerUserName(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return tomcatAppServer.getManagerUserName();
+				}
+
+			});
+	}
+
 	private void _configureTaskCopyTestModulesProvider(
 		TaskProvider<Task> copyTestModulesTaskProvider) {
 
@@ -265,82 +341,6 @@ public class TestIntegrationDefaultsPlugin
 							}
 
 						});
-				}
-
-			});
-	}
-
-	private void _configureExtensionTestIntegrationTomcat(
-		final LiferayExtension liferayExtension,
-		TestIntegrationTomcatExtension testIntegrationTomcatExtension,
-		final TomcatAppServer tomcatAppServer) {
-
-		testIntegrationTomcatExtension.setCheckPath(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getCheckPath();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setPortNumber(
-			new Callable<Integer>() {
-
-				@Override
-				public Integer call() throws Exception {
-					return tomcatAppServer.getPortNumber();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return tomcatAppServer.getDir();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setJmxRemotePort(
-			new Callable<Integer>() {
-
-				@Override
-				public Integer call() throws Exception {
-					return liferayExtension.getJmxRemotePort();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setLiferayHome(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return liferayExtension.getLiferayHome();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setManagerPassword(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getManagerPassword();
-				}
-
-			});
-
-		testIntegrationTomcatExtension.setManagerUserName(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return tomcatAppServer.getManagerUserName();
 				}
 
 			});

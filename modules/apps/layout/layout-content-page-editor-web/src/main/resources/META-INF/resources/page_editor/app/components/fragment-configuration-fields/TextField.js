@@ -14,25 +14,22 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
+import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
 export const TextField = ({field, onValueSelect, value}) => {
-	const initialValue = value || field.defaultValue || '';
-
-	const [currentValue, setCurrentValue] = useState(initialValue);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	useEffect(() => {
-		setCurrentValue((currentValue) => {
-			if (currentValue !== value) {
-				return value;
-			}
+	const initialValue =
+		value === undefined
+			? field.defaultValue === undefined
+				? ''
+				: field.defaultValue
+			: value;
 
-			return currentValue;
-		});
-	}, [field.defaultValue, value]);
+	const [nextValue, setNextValue] = useControlledState(initialValue);
 
 	const {additionalProps = {}, type = 'text'} = parseTypeOptions(
 		field.typeOptions
@@ -48,8 +45,8 @@ export const TextField = ({field, onValueSelect, value}) => {
 					if (event.target.checkValidity()) {
 						setErrorMessage('');
 
-						if (currentValue !== initialValue) {
-							onValueSelect(field.name, currentValue);
+						if (nextValue !== initialValue) {
+							onValueSelect(field.name, nextValue);
 						}
 					}
 				}}
@@ -69,14 +66,14 @@ export const TextField = ({field, onValueSelect, value}) => {
 						setErrorMessage(validationErrorMessage);
 					}
 
-					setCurrentValue(event.target.value);
+					setNextValue(event.target.value);
 				}}
 				placeholder={
 					field.typeOptions ? field.typeOptions.placeholder : ''
 				}
 				sizing="sm"
 				type={type}
-				value={currentValue}
+				value={nextValue}
 				{...additionalProps}
 			/>
 

@@ -16,20 +16,26 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 
-export const CheckboxField = ({field, onValueSelect, value}) => (
-	<ClayForm.Group>
-		<ClayCheckbox
-			aria-label={field.label}
-			checked={value}
-			label={field.label}
-			onChange={(event) => {
-				onValueSelect(field.name, event.target.checked);
-			}}
-		/>
-	</ClayForm.Group>
-);
+export const CheckboxField = ({field, onValueSelect, value}) => {
+	const [nextValue, setNextValue] = useControlledState(!!value);
+
+	return (
+		<ClayForm.Group>
+			<ClayCheckbox
+				aria-label={field.label}
+				checked={nextValue}
+				label={field.label}
+				onChange={(event) => {
+					setNextValue(event.target.checked);
+					onValueSelect(field.name, event.target.checked);
+				}}
+			/>
+		</ClayForm.Group>
+	);
+};
 
 CheckboxField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,

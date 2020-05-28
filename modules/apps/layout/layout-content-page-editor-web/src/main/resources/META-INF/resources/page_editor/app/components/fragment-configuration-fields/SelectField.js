@@ -16,26 +16,38 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
+import {useId} from '../../utils/useId';
 
-export const SelectField = ({field, onValueSelect, value}) => (
-	<ClayForm.Group small>
-		<label htmlFor={field.name}>{field.label}</label>
+export const SelectField = ({field, onValueSelect, value}) => {
+	const inputId = useId();
+	const [firstOption = {}] = field.typeOptions.validValues;
 
-		<ClaySelectWithOption
-			aria-label={field.label}
-			id={field.name}
-			onChange={(event) => {
-				onValueSelect(
-					field.name,
-					event.target.options[event.target.selectedIndex].value
-				);
-			}}
-			options={field.typeOptions.validValues}
-			value={value || field.defaultValue}
-		/>
-	</ClayForm.Group>
-);
+	const [nextValue, setNextValue] = useControlledState(
+		value || field.defaultValue || firstOption.value
+	);
+
+	return (
+		<ClayForm.Group small>
+			<label htmlFor={inputId}>{field.label}</label>
+
+			<ClaySelectWithOption
+				aria-label={field.label}
+				id={inputId}
+				onChange={(event) => {
+					const nextValue =
+						event.target.options[event.target.selectedIndex].value;
+
+					setNextValue(nextValue);
+					onValueSelect(field.name, nextValue);
+				}}
+				options={field.typeOptions.validValues}
+				value={nextValue}
+			/>
+		</ClayForm.Group>
+	);
+};
 
 SelectField.propTypes = {
 	field: PropTypes.shape({

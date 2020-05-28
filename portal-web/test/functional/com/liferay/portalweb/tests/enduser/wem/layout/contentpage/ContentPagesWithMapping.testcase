@@ -140,7 +140,7 @@ definition {
 			value1 = "Approved");
 
 		AssertTextEquals(
-			key_listEntry = "WebContent Title 2 Edit",
+			key_listEntry = "WebContent Title 2",
 			locator1 = "LexiconList#LIST_ENTRY_STATUS",
 			value1 = "draft");
 

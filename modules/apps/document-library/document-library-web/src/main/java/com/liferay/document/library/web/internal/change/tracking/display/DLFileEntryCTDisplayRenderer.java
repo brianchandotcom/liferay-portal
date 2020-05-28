@@ -18,9 +18,6 @@ import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
-import com.liferay.petra.lang.SafeClosable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -104,27 +101,15 @@ public class DLFileEntryCTDisplayRenderer
 			HttpServletResponse httpServletResponse, DLFileEntry dlFileEntry)
 		throws Exception {
 
-		DLFileVersion dlFileVersion = null;
-
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					dlFileEntry.getCtCollectionId())) {
-
-			dlFileVersion = _dlFileVersionLocalService.getFileVersion(
-				dlFileEntry.getFileEntryId(), dlFileEntry.getVersion());
-		}
-
 		_ctDisplayRenderer.render(
-			httpServletRequest, httpServletResponse, dlFileVersion);
+			httpServletRequest, httpServletResponse,
+			dlFileEntry.getFileVersion());
 	}
 
 	@Reference(
 		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileVersion)"
 	)
 	private CTDisplayRenderer<DLFileVersion> _ctDisplayRenderer;
-
-	@Reference
-	private DLFileVersionLocalService _dlFileVersionLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

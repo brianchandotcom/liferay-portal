@@ -16,14 +16,13 @@ package com.liferay.document.library.web.internal.change.tracking.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.document.library.kernel.model.DLFileVersion;
-import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.petra.lang.SafeClosable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -82,18 +81,9 @@ public class DLFileVersionCTDisplayRenderer
 			DLFileVersion dlFileVersion)
 		throws Exception {
 
-		FileEntry fileEntry = null;
-		FileVersion fileVersion = null;
-
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(
-					dlFileVersion.getCtCollectionId())) {
-
-			fileEntry = _dlAppService.getFileEntry(
-				dlFileVersion.getFileEntryId());
-			fileVersion = _dlAppService.getFileVersion(
-				dlFileVersion.getFileVersionId());
-		}
+		FileEntry fileEntry = new LiferayFileEntry(
+			dlFileVersion.getFileEntry());
+		FileVersion fileVersion = new LiferayFileVersion(dlFileVersion);
 
 		httpServletRequest.setAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
@@ -106,9 +96,6 @@ public class DLFileVersionCTDisplayRenderer
 
 		requestDispatcher.include(httpServletRequest, httpServletResponse);
 	}
-
-	@Reference
-	private DLAppService _dlAppService;
 
 	@Reference
 	private Language _language;

@@ -25,7 +25,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
-import com.liferay.redirect.test.util.RedirectTestUtil;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -96,14 +95,6 @@ public class RedirectNotFoundEntryLocalServiceTest {
 			_addOrUpdateRedirectNotFoundEntry(null);
 
 		Assert.assertEquals(1, redirectNotFoundEntry.getHits());
-	}
-
-	@Test
-	public void testAddOrUpdateRedirectNotFoundEntryWithRedirectDisabled()
-		throws Exception {
-
-		RedirectTestUtil.withRedirectDisabled(
-			() -> Assert.assertNull(_addOrUpdateRedirectNotFoundEntry("url")));
 	}
 
 	@Test

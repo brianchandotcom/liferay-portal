@@ -28,7 +28,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.RedirectNotFoundEntryLocalService;
-import com.liferay.redirect.test.util.RedirectTestUtil;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -96,43 +95,6 @@ public class RedirectNotFoundEntriesMessageListenerTest {
 			redirectNotFoundEntries.size());
 		Assert.assertEquals(
 			redirectNotFoundEntry, redirectNotFoundEntries.get(0));
-	}
-
-	@Test
-	public void testDoesNotDeleteEntriesOlderThan30DaysWhenDisabled()
-		throws Exception {
-
-		Instant instant = Instant.now();
-
-		_addOrUpdateRedirectNotFoundEntry(
-			"url1", Date.from(instant.minus(Duration.ofDays(31))));
-		_addOrUpdateRedirectNotFoundEntry(
-			"url2", Date.from(instant.minus(Duration.ofDays(29))));
-
-		RedirectTestUtil.withRedirectDisabled(
-			() -> {
-				List<RedirectNotFoundEntry> redirectNotFoundEntries =
-					_redirectNotFoundEntryLocalService.
-						getRedirectNotFoundEntries(
-							_group.getGroupId(), null, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS, null);
-
-				Assert.assertEquals(
-					redirectNotFoundEntries.toString(), 2,
-					redirectNotFoundEntries.size());
-
-				_redirectNotFoundEntriesMessageListener.receive(new Message());
-
-				redirectNotFoundEntries =
-					_redirectNotFoundEntryLocalService.
-						getRedirectNotFoundEntries(
-							_group.getGroupId(), null, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS, null);
-
-				Assert.assertEquals(
-					redirectNotFoundEntries.toString(), 2,
-					redirectNotFoundEntries.size());
-			});
 	}
 
 	private RedirectNotFoundEntry _addOrUpdateRedirectNotFoundEntry(

@@ -156,6 +156,15 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 				</c:if>
 			</liferay-ui:error>
 
+			<liferay-ui:error exception="<%= ReservedFieldNameException.class %>">
+
+				<%
+				ReservedFieldNameException rfne = (ReservedFieldNameException)errorException;
+				%>
+
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(rfne.getFieldName()) %>" key="you-cannot-use-x-as-field-name" translateArguments="<%= false %>" />
+			</liferay-ui:error>
+
 			<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
 			<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
 			<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />

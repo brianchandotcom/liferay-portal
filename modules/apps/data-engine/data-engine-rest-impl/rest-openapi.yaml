@@ -106,6 +106,22 @@ components:
                 visible:
                     type: boolean
             type: object
+        DataDefinitionFieldLink:
+            properties:
+                dataDefinition:
+                    allOf:
+                        - $ref: "#/components/schemas/DataDefinition"
+                dataLayouts:
+                    items:
+                        $ref: "#/components/schemas/DataLayout"
+                    type:
+                        array
+                dataListViews:
+                    items:
+                        $ref: "#/components/schemas/DataListView"
+                    type:
+                        array
+            type: object
         DataLayout:
             properties:
                 contentType:

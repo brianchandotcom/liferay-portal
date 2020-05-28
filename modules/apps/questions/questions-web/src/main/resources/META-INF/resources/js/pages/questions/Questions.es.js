@@ -13,7 +13,6 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayResultsBar} from '@clayui/management-toolbar';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -83,9 +82,9 @@ export default withRouter(
 				section,
 				siteKey
 			)
-				.then((data) => setQuestions(data || []))
-				.then(() => {
-					setLoading(false);
+				.then(({data, loading}) => {
+					setQuestions(data || []);
+					setLoading(loading);
 					if (searchCallback) {
 						searchCallback(false);
 					}
@@ -172,27 +171,24 @@ export default withRouter(
 						)}
 
 						<div className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
-							{loading ? (
-								<ClayLoadingIndicator />
-							) : (
-								<PaginatedList
-									activeDelta={pageSize}
-									activePage={page}
-									changeDelta={setPageSize}
-									changePage={changePage}
-									data={questions}
-								>
-									{(question) => (
-										<QuestionRow
-											key={question.id}
-											question={question}
-											showSectionLabel={
-												!!section.numberOfMessageBoardSections
-											}
-										/>
-									)}
-								</PaginatedList>
-							)}
+							<PaginatedList
+								activeDelta={pageSize}
+								activePage={page}
+								changeDelta={setPageSize}
+								changePage={changePage}
+								data={questions}
+								loading={loading}
+							>
+								{(question) => (
+									<QuestionRow
+										key={question.id}
+										question={question}
+										showSectionLabel={
+											!!section.numberOfMessageBoardSections
+										}
+									/>
+								)}
+							</PaginatedList>
 
 							<Error error={error} />
 						</div>

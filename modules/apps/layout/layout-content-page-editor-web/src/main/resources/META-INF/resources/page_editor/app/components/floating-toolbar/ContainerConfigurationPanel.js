@@ -12,150 +12,507 @@
  * details.
  */
 
-import ClayForm, {ClaySelectWithOption} from '@clayui/form';
+import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
-import React, {useState} from 'react';
+import React from 'react';
 
-import ColorPalette from '../../../common/components/ColorPalette';
 import FormRow from '../../../common/components/FormRow';
 import {ImageSelector} from '../../../common/components/ImageSelector';
-import MappingSelector from '../../../common/components/MappingSelector';
 import {
 	BackgroundImagePropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
-import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
 import {config} from '../../config/index';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
-import {useId} from '../../utils/useId';
-import isMapped from '../fragment-content/isMapped';
-
-const CONTAINER_PADDING_LABELS = {
-	paddingBottom: Liferay.Language.get('padding-bottom'),
-	paddingHorizontal: Liferay.Language.get('padding-horizontal'),
-	paddingLeft: Liferay.Language.get('padding-left'),
-	paddingRight: Liferay.Language.get('padding-right'),
-	paddingTop: Liferay.Language.get('padding-top'),
-};
-
-const CONTAINER_TYPE_LABELS = {
-	fixed: Liferay.Language.get('fixed-width'),
-	fluid: Liferay.Language.get('fluid'),
-};
-
-const DEFAULT_HORIZONTAL_PADDING = 0;
+import {ColorPaletteField} from '../fragment-configuration-fields/ColorPaletteField';
+import {SelectField} from '../fragment-configuration-fields/SelectField';
+import {TextField} from '../fragment-configuration-fields/TextField';
 
 export const ContainerConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
-	const containerPaddingId = useId();
-	const containerTypeId = useId();
 
-	const handleConfigurationValueChanged = (itemConfig) => {
+	const restoreConfig = () => {
 		dispatch(
 			updateItemConfig({
-				itemConfig,
+				itemConfig: {},
 				itemId: item.itemId,
 				segmentsExperienceId,
 			})
 		);
 	};
 
-	const paddingIdentifiers =
-		item.config.type === 'fluid'
-			? ['paddingTop', 'paddingBottom', 'paddingHorizontal']
-			: ['paddingTop', 'paddingBottom'];
+	const handleValueSelect = (name, value) => {
+		const config = {[name]: value};
+
+		if (name === 'contentDisplay' && value === 'block') {
+			config.justify = '';
+			config.align = '';
+		}
+
+		if (name === 'containerWidth' && value === 'fixed') {
+			config.marginLeft = 'auto';
+			config.marginRight = 'auto';
+		}
+
+		dispatch(
+			updateItemConfig({
+				itemConfig: {...item.config, ...config},
+				itemId: item.itemId,
+				segmentsExperienceId,
+			})
+		);
+	};
+
+	const Section = ({children, label}) => (
+		<>
+			<h2 className="border-bottom h5 mt-3 pb-1">{label}</h2>
+			{children}
+		</>
+	);
 
 	return (
-		<ClayForm.Group small>
-			<ClayForm.Group>
-				<p className="mb-3 sheet-subtitle">
-					{Liferay.Language.get('layout')}
-				</p>
+		<ClayForm>
+			<ClayForm.Group small>
+				<h1 className="sr-only">
+					{Liferay.Language.get('container-configuration')}
+				</h1>
 
-				<ClayForm.Group>
-					<label htmlFor={containerTypeId}>
-						{Liferay.Language.get('container')}
-					</label>
-
-					<ClaySelectWithOption
-						id={containerTypeId}
-						onChange={({target: {value}}) => {
-							handleConfigurationValueChanged({
-								paddingHorizontal:
-									value === 'fixed'
-										? item.config.paddingHorizontal
-										: DEFAULT_HORIZONTAL_PADDING,
-								type: value,
-							});
-						}}
-						options={Object.entries(
-							CONTAINER_TYPE_LABELS
-						).map(([value, label]) => ({label, value}))}
-						value={item.config.type}
-					/>
-				</ClayForm.Group>
-
-				<FormRow>
-					{Object.values(paddingIdentifiers).map(
-						(configurationKey) => {
-							const inputId = `${containerPaddingId}${configurationKey}`;
-							const label =
-								CONTAINER_PADDING_LABELS[configurationKey];
-							const value = String(item.config[configurationKey]);
-
-							const handleChange = ({target: {value}}) =>
-								handleConfigurationValueChanged({
-									[configurationKey]: Number(value),
-								});
-
-							return (
-								<FormRow.Column key={configurationKey}>
-									<label htmlFor={inputId}>{label}</label>
-									<ClaySelectWithOption
-										id={inputId}
-										onChange={handleChange}
-										options={config.paddingOptions}
-										value={value}
-									/>
-								</FormRow.Column>
-							);
-						}
-					)}
-				</FormRow>
-			</ClayForm.Group>
-
-			<ClayForm.Group>
-				<p className="mb-3 sheet-subtitle">
-					{Liferay.Language.get('background-color')}
-				</p>
-				<ColorPalette
-					onClear={() =>
-						handleConfigurationValueChanged({
-							backgroundColorCssClass: '',
-						})
-					}
-					onColorSelect={(value) =>
-						handleConfigurationValueChanged({
-							backgroundColorCssClass: value,
-						})
-					}
-					selectedColor={item.config.backgroundColorCssClass}
-				></ColorPalette>
-			</ClayForm.Group>
-
-			<ClayForm.Group>
-				<p className="mb-3 sheet-subtitle">
-					{Liferay.Language.get('background-image')}
-				</p>
-				<ContainerBackgroundImageConfiguration
-					backgroundImage={item.config.backgroundImage || {}}
-					onValueChange={handleConfigurationValueChanged}
+				<SelectField
+					field={{
+						label: Liferay.Language.get('content-display'),
+						name: 'contentDisplay',
+						typeOptions: {
+							validValues: [
+								{
+									label: Liferay.Language.get('block'),
+									value: 'block',
+								},
+								{
+									label: Liferay.Language.get('flex'),
+									value: 'flex',
+								},
+							],
+						},
+					}}
+					onValueSelect={handleValueSelect}
+					value={item.config.contentDisplay}
 				/>
+
+				{item.config.contentDisplay === 'flex' && (
+					<FormRow>
+						<FormRow.Column>
+							<SelectField
+								field={{
+									label: Liferay.Language.get(
+										'horizontal-align'
+									),
+									name: 'justify',
+									typeOptions: {
+										validValues: [
+											{
+												label: Liferay.Language.get(
+													'none'
+												),
+												value: '',
+											},
+											{
+												label: Liferay.Language.get(
+													'start'
+												),
+												value: 'justify-content-start',
+											},
+											{
+												label: Liferay.Language.get(
+													'center'
+												),
+												value: 'justify-content-center',
+											},
+											{
+												label: Liferay.Language.get(
+													'end'
+												),
+												value: 'justify-content-end',
+											},
+											{
+												label: Liferay.Language.get(
+													'space-between'
+												),
+												value:
+													'justify-content-between',
+											},
+											{
+												label: Liferay.Language.get(
+													'space-around'
+												),
+												value: 'justify-content-around',
+											},
+										],
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.horizontalAlign}
+							/>
+						</FormRow.Column>
+
+						<FormRow.Column>
+							<SelectField
+								field={{
+									label: Liferay.Language.get(
+										'vertical-align'
+									),
+									name: 'align',
+									typeOptions: {
+										validValues: [
+											{
+												label: Liferay.Language.get(
+													'none'
+												),
+												value: '',
+											},
+											{
+												label: Liferay.Language.get(
+													'start'
+												),
+												value: 'align-items-start',
+											},
+											{
+												label: Liferay.Language.get(
+													'center'
+												),
+												value: 'align-items-center',
+											},
+											{
+												label: Liferay.Language.get(
+													'end'
+												),
+												value: 'align-items-end',
+											},
+											{
+												label: Liferay.Language.get(
+													'stretch'
+												),
+												value: 'align-items-stretch',
+											},
+										],
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.verticalAlign}
+							/>
+						</FormRow.Column>
+					</FormRow>
+				)}
+
+				<SelectField
+					field={{
+						label: Liferay.Language.get('container-width'),
+						name: 'containerWidth',
+						typeOptions: {
+							validValues: [
+								{
+									label: Liferay.Language.get('fluid'),
+									value: 'fluid',
+								},
+								{
+									label: Liferay.Language.get('fixed-width'),
+									value: 'fixed',
+								},
+							],
+						},
+					}}
+					onValueSelect={handleValueSelect}
+					value={item.config.containerWidth}
+				/>
+
+				<Section label={Liferay.Language.get('margin')}>
+					<FormRow>
+						<FormRow.Column>
+							<SelectField
+								disabled={
+									item.config.containerWidth === 'fixed'
+								}
+								field={{
+									label: Liferay.Language.get('left'),
+									name: 'marginLeft',
+									typeOptions: {
+										validValues: config.marginOptions,
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.marginLeft}
+							/>
+						</FormRow.Column>
+
+						<FormRow.Column>
+							<SelectField
+								disabled={
+									item.config.containerWidth === 'fixed'
+								}
+								field={{
+									label: Liferay.Language.get('right'),
+									name: 'marginRight',
+									typeOptions: {
+										validValues: config.marginOptions,
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.marginRight}
+							/>
+						</FormRow.Column>
+
+						<FormRow.Column>
+							<SelectField
+								field={{
+									label: Liferay.Language.get('top'),
+									name: 'marginTop',
+									typeOptions: {
+										validValues: config.marginOptions,
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.marginTop}
+							/>
+						</FormRow.Column>
+
+						<FormRow.Column>
+							<SelectField
+								field={{
+									label: Liferay.Language.get('bottom'),
+									name: 'marginBottom',
+									typeOptions: {
+										validValues: config.marginOptions,
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.marginBottom}
+							/>
+						</FormRow.Column>
+					</FormRow>
+				</Section>
+
+				<Section label={Liferay.Language.get('padding')}>
+					<FormRow>
+						<FormRow.Column>
+							<SelectField
+								field={{
+									label: Liferay.Language.get('left'),
+									name: 'paddingLeft',
+									typeOptions: {
+										validValues: config.paddingOptions,
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.paddingLeft}
+							/>
+						</FormRow.Column>
+
+						<FormRow.Column>
+							<SelectField
+								field={{
+									label: Liferay.Language.get('right'),
+									name: 'paddingRight',
+									typeOptions: {
+										validValues: config.paddingOptions,
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.paddingRight}
+							/>
+						</FormRow.Column>
+
+						<FormRow.Column>
+							<SelectField
+								field={{
+									label: Liferay.Language.get('top'),
+									name: 'paddingTop',
+									typeOptions: {
+										validValues: config.paddingOptions,
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.paddingTop}
+							/>
+						</FormRow.Column>
+
+						<FormRow.Column>
+							<SelectField
+								field={{
+									label: Liferay.Language.get('bottom'),
+									name: 'paddingBottom',
+									typeOptions: {
+										validValues: config.paddingOptions,
+									},
+								}}
+								onValueSelect={handleValueSelect}
+								value={item.config.paddingBottom}
+							/>
+						</FormRow.Column>
+					</FormRow>
+				</Section>
+
+				<Section label={Liferay.Language.get('background')}>
+					<ColorPaletteField
+						field={{
+							label: Liferay.Language.get('color'),
+							name: 'backgroundColor',
+						}}
+						onValueSelect={handleValueSelect}
+						value={item.config.backgroundColor}
+					/>
+
+					<ImageSelector
+						imageTitle={
+							(item.config.backgroundImage &&
+								item.config.backgroundImage.title) ||
+							''
+						}
+						label={Liferay.Language.get('image')}
+						onClearButtonPressed={() =>
+							handleValueSelect('backgroundImage', {})
+						}
+						onImageSelected={(image) =>
+							handleValueSelect('backgroundImage', image)
+						}
+					/>
+				</Section>
+
+				<Section label={Liferay.Language.get('borders')}>
+					<TextField
+						field={{
+							defaultValue: 0,
+							label: Liferay.Language.get('border-width'),
+							name: 'borderWidth',
+							typeOptions: {
+								validation: {
+									max: 100,
+									min: 0,
+									type: 'number',
+								},
+							},
+						}}
+						onValueSelect={handleValueSelect}
+						value={
+							typeof item.config.borderWidth !== 'undefined'
+								? Number(item.config.borderWidth)
+								: undefined
+						}
+					/>
+					<SelectField
+						field={{
+							label: Liferay.Language.get('border-radius'),
+							name: 'borderRadius',
+							typeOptions: {
+								validValues: [
+									{
+										label: Liferay.Language.get('none'),
+										value: '',
+									},
+									{
+										label: Liferay.Language.get('regular'),
+										value: 'rounded',
+									},
+									{
+										label: Liferay.Language.get('large'),
+										value: 'rounded-lg',
+									},
+									{
+										label: Liferay.Language.get('pill'),
+										value: 'rounded-pill',
+									},
+									{
+										label: Liferay.Language.get('circle'),
+										value: 'rounded-circle',
+									},
+								],
+							},
+						}}
+						onValueSelect={handleValueSelect}
+						value={item.config.borderRadius}
+					/>
+
+					<ColorPaletteField
+						field={{
+							label: Liferay.Language.get('border-color'),
+							name: 'borderColor',
+						}}
+						onValueSelect={handleValueSelect}
+						value={item.config.borderColor}
+					/>
+				</Section>
+
+				<Section label={Liferay.Language.get('effects')}>
+					<TextField
+						field={{
+							defaultValue: 100,
+							label: Liferay.Language.get('opacity'),
+							name: 'opacity',
+							typeOptions: {
+								validation: {
+									max: 100,
+									min: 0,
+									type: 'number',
+								},
+							},
+						}}
+						onValueSelect={handleValueSelect}
+						value={
+							typeof item.config.opacity !== 'undefined'
+								? Number(item.config.opacity)
+								: undefined
+						}
+					/>
+
+					<SelectField
+						field={{
+							label: Liferay.Language.get('drop-shadow'),
+							name: 'dropShadow',
+							typeOptions: {
+								validValues: [
+									{
+										label: Liferay.Language.get('none'),
+										value: 'shadow-none',
+									},
+									{
+										label: Liferay.Language.get('small'),
+										value: 'shadow-sm',
+									},
+									{
+										label: Liferay.Language.get('regular'),
+										value: 'shadow',
+									},
+									{
+										label: Liferay.Language.get('large'),
+										value: 'shadow-lg',
+									},
+								],
+							},
+						}}
+						onValueSelect={handleValueSelect}
+						value={item.config.dropShadow}
+					/>
+				</Section>
 			</ClayForm.Group>
-		</ClayForm.Group>
+
+			<ClayForm.Group>
+				<ClayButton
+					borderless
+					className="w-100"
+					displayType="secondary"
+					onClick={restoreConfig}
+					small
+				>
+					<ClayIcon symbol="restore" />
+					<span className="ml-2">
+						{Liferay.Language.get('restore-values')}
+					</span>
+				</ClayButton>
+			</ClayForm.Group>
+		</ClayForm>
 	);
 };
 
@@ -168,95 +525,4 @@ ContainerConfigurationPanel.propTypes = {
 			paddingTop: PropTypes.number,
 		}),
 	}),
-};
-
-function ContainerBackgroundImageConfiguration({
-	backgroundImage,
-	onValueChange,
-}) {
-	const containerBackgroundImageId = useId();
-
-	const imageSourceOptions = {
-		mapping: {
-			label: Liferay.Language.get('content-mapping'),
-			value: 'content_mapping',
-		},
-
-		selection: {
-			label: Liferay.Language.get('manual-selection'),
-			value: 'manual_selection',
-		},
-	};
-
-	const [imageSource, setImageSource] = useState(() =>
-		backgroundImage.fieldId || backgroundImage.mappedField
-			? imageSourceOptions.mapping.value
-			: imageSourceOptions.selection.value
-	);
-
-	return (
-		<>
-			<ClayForm.Group>
-				<label htmlFor={containerBackgroundImageId}>
-					{Liferay.Language.get('image-source')}
-				</label>
-				<ClaySelectWithOption
-					id={containerBackgroundImageId}
-					onChange={({target: {value}}) => {
-						setImageSource(value);
-
-						if (
-							isMapped(backgroundImage) ||
-							backgroundImage.url ||
-							backgroundImage.title
-						) {
-							onValueChange({
-								backgroundImage: {},
-							});
-						}
-					}}
-					options={Object.values(imageSourceOptions)}
-					value={imageSource}
-				/>
-			</ClayForm.Group>
-
-			{imageSource === imageSourceOptions.selection.value ? (
-				<ImageSelector
-					imageTitle={backgroundImage.title}
-					label={Liferay.Language.get('background-image')}
-					onClearButtonPressed={() =>
-						onValueChange({
-							backgroundImage: {
-								title: '',
-								url: '',
-							},
-						})
-					}
-					onImageSelected={(image) =>
-						onValueChange({
-							backgroundImage: {
-								title: image.title,
-								url: image.url,
-							},
-						})
-					}
-				/>
-			) : (
-				<MappingSelector
-					fieldType={EDITABLE_TYPES.image}
-					mappedItem={backgroundImage}
-					onMappingSelect={(mappedItem) => {
-						onValueChange({
-							backgroundImage: mappedItem,
-						});
-					}}
-				/>
-			)}
-		</>
-	);
-}
-
-ContainerBackgroundImageConfiguration.propTypes = {
-	backgroundImage: BackgroundImagePropTypes,
-	onValueChange: PropTypes.func.isRequired,
 };

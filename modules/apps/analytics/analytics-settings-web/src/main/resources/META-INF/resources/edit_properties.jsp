@@ -33,7 +33,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <clay:sheet
-	className="pb-2 portlet-analytics-settings"
+	cssClass="pb-2 portlet-analytics-settings"
 >
 	<h2>
 		<liferay-ui:message key="sync-sites-to-property" />

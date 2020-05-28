@@ -83,7 +83,7 @@ portletDisplay.setURLBack(backURL);
 						<td>
 							<clay:content-row>
 								<clay:content-col
-									className="user-portrait-wrapper"
+									cssClass="user-portrait-wrapper"
 								>
 									<liferay-ui:user-portrait
 										userId="<%= ctEntry.getUserId() %>"
@@ -189,7 +189,7 @@ portletDisplay.setURLBack(backURL);
 						<td>
 							<clay:content-row>
 								<clay:content-col
-									className="user-portrait-wrapper"
+									cssClass="user-portrait-wrapper"
 								>
 									<liferay-ui:user-portrait
 										userId="<%= ctEntry.getUserId() %>"

@@ -24,7 +24,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 	<div class="ddm-form-report-header">
 		<clay:container-fluid>
 			<clay:content-row
-				className="align-items-center"
+				cssClass="align-items-center"
 			>
 				<span class="ddm-form-report-header-title text-truncate">
 					<liferay-ui:message arguments="<%= totalItems %>" key="x-entries" />
@@ -32,7 +32,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 			</clay:content-row>
 
 			<clay:content-row
-				className="align-items-center"
+				cssClass="align-items-center"
 			>
 				<span class="ddm-form-report-header-subtitle text-truncate">
 					<c:choose>

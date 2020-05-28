@@ -34,7 +34,7 @@ Set<String> syncedUserGroupIds = SetUtil.fromArray(analyticsConfiguration.synced
 <portlet:actionURL name="/analytics/edit_synced_contacts" var="editSyncedContactsURL" />
 
 <clay:sheet
-	className="portlet-analytics-settings"
+	cssClass="portlet-analytics-settings"
 >
 	<h2>
 		<liferay-ui:message key="contact-data" />

@@ -55,7 +55,7 @@ SearchEngineDisplayContext
 				</c:when>
 				<c:otherwise>
 					<clay:sheet
-						className="connection-info-item connection-info-item-header"
+						cssClass="connection-info-item connection-info-item-header"
 					>
 						<div class="connection-info-data-container">
 							<div class="data-item">
@@ -91,7 +91,7 @@ SearchEngineDisplayContext
 							%>
 
 								<clay:sheet
-									className="connection-info-item"
+									cssClass="connection-info-item"
 								>
 									<div class="connection-info-item-header">
 										<div class="connection-info-item-header-block">

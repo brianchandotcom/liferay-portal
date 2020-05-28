@@ -36,7 +36,7 @@ if (mvcPath.startsWith("/edit_entry.jsp")) {
 			cssClass="p-0"
 		>
 			<clay:content-row
-				className="app-builder-standalone-menu"
+				cssClass="app-builder-standalone-menu"
 			>
 				<clay:content-col
 					expand="true"
@@ -57,7 +57,7 @@ if (mvcPath.startsWith("/edit_entry.jsp")) {
 				</div>
 
 				<clay:content-col
-					className="text-right"
+					cssClass="text-right"
 				>
 					<liferay-portlet:runtime
 						portletProviderAction="<%= PortletProvider.Action.VIEW %>"

@@ -107,13 +107,13 @@ public class AccountEntryLocalServiceWrapper
 	public com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxId, int status,
+			String taxIdNumber, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			taxId, status, serviceContext);
+			taxIdNumber, status, serviceContext);
 	}
 
 	/**
@@ -477,13 +477,13 @@ public class AccountEntryLocalServiceWrapper
 	public com.liferay.account.model.AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
-			byte[] logoBytes, String taxId, int status,
+			byte[] logoBytes, String taxIdNumber, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryLocalService.updateAccountEntry(
 			accountEntryId, parentAccountEntryId, name, description, deleteLogo,
-			domains, logoBytes, taxId, status, serviceContext);
+			domains, logoBytes, taxIdNumber, status, serviceContext);
 	}
 
 	@Override

@@ -107,7 +107,7 @@ public interface AccountEntryLocalService
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxId, int status, ServiceContext serviceContext)
+			String taxIdNumber, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -342,7 +342,7 @@ public interface AccountEntryLocalService
 	public AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
-			byte[] logoBytes, String taxId, int status,
+			byte[] logoBytes, String taxIdNumber, int status,
 			ServiceContext serviceContext)
 		throws PortalException;
 

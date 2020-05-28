@@ -82,7 +82,7 @@ public interface AccountEntryService extends BaseService {
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxId, int status, ServiceContext serviceContext)
+			String taxIdNumber, int status, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -20,9 +20,11 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
+import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
+import {getResponsiveColumnSizeConfig} from '../../utils/getResponsiveColumnSizeConfig';
 import {NotDraggableArea} from '../../utils/useDragAndDrop';
 import {useIsActive} from '../Controls';
 import TopperEmpty from '../TopperEmpty';
@@ -36,22 +38,40 @@ import {
 
 const ROW_SIZE = 12;
 
-const updateNewLayoutDataContext = (layoutDataContext, columnInfo) => {
-	const newColumnInfo = Object.keys(columnInfo).reduce((acc, key) => {
-		return {
-			...acc,
-			[key]: {
-				...layoutDataContext.items[key],
-				config: {size: columnInfo[key]},
-			},
-		};
-	}, {});
+const getNewResponsiveConfig = (columnSize, config, viewportSize) => {
+	return viewportSize === VIEWPORT_SIZES.desktop
+		? {...config, size: columnSize}
+		: {...config, [viewportSize]: {size: columnSize}};
+};
+
+const updateNewLayoutDataContext = (
+	layoutDataContext,
+	columnSizeConfig,
+	config,
+	selectedViewportSize
+) => {
+	const newColumnSizeConfig = Object.keys(columnSizeConfig).reduce(
+		(acc, key) => {
+			return {
+				...acc,
+				[key]: {
+					...layoutDataContext.items[key],
+					config: getNewResponsiveConfig(
+						columnSizeConfig[key],
+						config[key],
+						selectedViewportSize
+					),
+				},
+			};
+		},
+		{}
+	);
 
 	return {
 		...layoutDataContext,
 		items: {
 			...layoutDataContext.items,
-			...newColumnInfo,
+			...newColumnSizeConfig,
 		},
 	};
 };
@@ -63,6 +83,9 @@ const ColumnWithControls = React.forwardRef(
 		const resizeInfo = useRef();
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 		const [selectedColumn, setColumnSelected] = useState(null);
+		const selectedViewportSize = useSelector(
+			(state) => state.selectedViewportSize
+		);
 
 		const resizing = useResizeContext();
 		const setResizing = useSetResizeContext();
@@ -75,7 +98,11 @@ const ColumnWithControls = React.forwardRef(
 		const columnRangeIsComplete = (columnRange) => {
 			const sum = columnRange
 				.map(
-					(columnId) => layoutDataContext.items[columnId].config.size
+					(columnId) =>
+						getResponsiveColumnSizeConfig(
+							layoutDataContext.items[columnId].config,
+							selectedViewportSize
+						).size
 				)
 				.reduce((acc, value) => {
 					return acc + value;
@@ -96,7 +123,11 @@ const ColumnWithControls = React.forwardRef(
 			const previousResizableColumns = parentItem.children
 				.slice(0, columnIndex)
 				.filter(
-					(columnId) => layoutData.items[columnId].config.size > 1
+					(columnId) =>
+						getResponsiveColumnSizeConfig(
+							layoutData.items[columnId].config,
+							selectedViewportSize
+						).size > 1
 				);
 
 			return previousResizableColumns[
@@ -110,22 +141,32 @@ const ColumnWithControls = React.forwardRef(
 
 			const leftColumn =
 				layoutData.items[parentItem.children[columnIndex - 1]];
-
 			const rightColumn = item;
+
+			const leftColumnResponsiveConfig = getResponsiveColumnSizeConfig(
+				leftColumn.config,
+				selectedViewportSize
+			);
+			const rightColumnResponsiveConfig = getResponsiveColumnSizeConfig(
+				item.config,
+				selectedViewportSize
+			);
 
 			resizeInfo.current = {
 				columnWidth:
 					ref.current.getBoundingClientRect().width /
-					item.config.size,
+					rightColumnResponsiveConfig.size,
 				initialClientX: event.clientX,
+				leftColumnConfig: leftColumn.config,
 				leftColumnId: leftColumn.itemId,
-				leftColumnInitialSize: leftColumn.config.size,
+				leftColumnInitialSize: leftColumnResponsiveConfig.size,
 				maxColumnDiff: isLastColumnOfRow()
-					? rightColumn.config.size
-					: rightColumn.config.size - 1,
-				minColumnDiff: -leftColumn.config.size + 1,
+					? rightColumnResponsiveConfig.size
+					: rightColumnResponsiveConfig.size - 1,
+				minColumnDiff: -leftColumnResponsiveConfig.size + 1,
+				rightColumnConfig: item.config,
 				rightColumnId: rightColumn.itemId,
-				rightColumnInitialSize: rightColumn.config.size,
+				rightColumnInitialSize: rightColumnResponsiveConfig.size,
 				rightColumnIsFirst: isFirstColumnOfRow(),
 			};
 		};
@@ -137,10 +178,12 @@ const ColumnWithControls = React.forwardRef(
 					const {
 						columnWidth,
 						initialClientX,
+						leftColumnConfig,
 						leftColumnId,
 						leftColumnInitialSize,
 						maxColumnDiff,
 						minColumnDiff,
+						rightColumnConfig,
 						rightColumnId,
 						rightColumnInitialSize,
 						rightColumnIsFirst,
@@ -157,8 +200,10 @@ const ColumnWithControls = React.forwardRef(
 							newLeftColumnId = getPreviousResizableColumnId();
 
 							leftColumnSize =
-								layoutData.items[newLeftColumnId].config.size -
-								1;
+								getResponsiveColumnSizeConfig(
+									layoutData.items[newLeftColumnId].config,
+									selectedViewportSize
+								).size - 1;
 						}
 
 						if (!isLastColumnOfRow()) {
@@ -167,14 +212,27 @@ const ColumnWithControls = React.forwardRef(
 									parentItem.children[columnIndex + 1]
 								].itemId;
 
+							const nextColumnConfig =
+								layoutDataContext.items[nextColumnId].config;
+
+							const nextColumnResponsiveConfig = getResponsiveColumnSizeConfig(
+								nextColumnConfig,
+								selectedViewportSize
+							);
+
 							const nextColumnSize =
-								layoutDataContext.items[nextColumnId].config
-									.size + rightColumnInitialSize;
+								nextColumnResponsiveConfig.size +
+								rightColumnInitialSize;
+
 							layoutDataContext = updateNewLayoutDataContext(
 								layoutDataContext,
 								{
 									[nextColumnId]: nextColumnSize,
-								}
+								},
+								{
+									[nextColumnId]: nextColumnConfig,
+								},
+								selectedViewportSize
 							);
 						}
 
@@ -183,7 +241,12 @@ const ColumnWithControls = React.forwardRef(
 							{
 								[newLeftColumnId]: leftColumnSize,
 								[rightColumnId]: rightColumnSize,
-							}
+							},
+							{
+								[newLeftColumnId]: leftColumnConfig,
+								[rightColumnId]: rightColumnConfig,
+							},
+							selectedViewportSize
 						);
 						setUpdatedLayoutData(layoutDataContext);
 
@@ -222,7 +285,12 @@ const ColumnWithControls = React.forwardRef(
 							{
 								[leftColumnId]: leftColumnSize,
 								[rightColumnId]: rightColumnSize,
-							}
+							},
+							{
+								[leftColumnId]: leftColumnConfig,
+								[rightColumnId]: rightColumnConfig,
+							},
+							selectedViewportSize
 						);
 
 						setUpdatedLayoutData(layoutDataContext);

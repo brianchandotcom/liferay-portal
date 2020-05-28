@@ -58,12 +58,15 @@ public class TestIntegrationDefaultsPlugin
 
 		LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
+		TestIntegrationTomcatExtension testIntegrationTomcatExtension =
+			GradleUtil.getExtension(
+				project, TestIntegrationTomcatExtension.class);
 
 		TomcatAppServer tomcatAppServer =
 			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
 
-		_configureTestIntegrationTomcat(
-			project, liferayExtension, tomcatAppServer);
+		_configureExtensionTestIntegrationTomcat(
+			liferayExtension, testIntegrationTomcatExtension, tomcatAppServer);
 
 		_configureConfigurationTestModules(project, portalVersion);
 
@@ -271,13 +274,10 @@ public class TestIntegrationDefaultsPlugin
 			});
 	}
 
-	private void _configureTestIntegrationTomcat(
-		Project project, final LiferayExtension liferayExtension,
+	private void _configureExtensionTestIntegrationTomcat(
+		final LiferayExtension liferayExtension,
+		TestIntegrationTomcatExtension testIntegrationTomcatExtension,
 		final TomcatAppServer tomcatAppServer) {
-
-		TestIntegrationTomcatExtension testIntegrationTomcatExtension =
-			GradleUtil.getExtension(
-				project, TestIntegrationTomcatExtension.class);
 
 		testIntegrationTomcatExtension.setCheckPath(
 			new Callable<String>() {

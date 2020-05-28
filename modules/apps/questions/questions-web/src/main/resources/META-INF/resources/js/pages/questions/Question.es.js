@@ -34,71 +34,110 @@ import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
-import {createAnswerQuery, deleteMessageBoardThreadQuery, getMessages, getThreadQuery, markAsAnswerMessageBoardMessageQuery,} from '../../utils/client.es';
+import {
+	createAnswerQuery,
+	deleteMessageBoardThreadQuery,
+	getMessagesQuery,
+	getThreadQuery,
+	markAsAnswerMessageBoardMessageQuery,
+} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {dateToBriefInternationalHuman, getCKEditorConfig, onBeforeLoadCKEditor,} from '../../utils/utils.es';
+import {
+	dateToBriefInternationalHuman,
+	getCKEditorConfig,
+	onBeforeLoadCKEditor,
+} from '../../utils/utils.es';
 
 export default withRouter(
 	({
-		 history,
-		 match: {
-			 params: {questionId},
-			 url,
-		 },
-	 }) => {
+		history,
+		match: {
+			params: {questionId},
+			url,
+		},
+	}) => {
 		const context = useContext(AppContext);
 
-		const [answers, setAnswers] = useState({});
 		const [articleBody, setArticleBody] = useState();
 		const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
 		const [sort, setSort] = useState('active');
 
-		const {loading, data} = useQuery(getThreadQuery, {
+		const {
+			loading,
+			data: {messageBoardThreadByFriendlyUrlPath: question = {}} = {},
+		} = useQuery(getThreadQuery, {
+			context: {
+				uri: '/o/graphql?nestedFields=lastPostDate',
+			},
 			variables: {
 				friendlyUrlPath: questionId,
-				siteKey: context.siteKey
-			}
-		})
-		// {nestedFields: 'lastPostDate'}
+				siteKey: context.siteKey,
+			},
+		});
+
+		const {
+			data: {messageBoardThreadMessageBoardMessages = {}} = {},
+			refetch,
+		} = useQuery(getMessagesQuery, {
+			context: {
+				uri: '/o/graphql?nestedFields=lastPostDate',
+			},
+			skip: !question || !question.id,
+			variables: {
+				messageBoardThreadId: question.id,
+				page: sort === 'votes' ? 1 : page,
+				pageSize: sort === 'votes' ? 100 : pageSize,
+				sort:
+					sort === 'votes' || sort === 'active'
+						? 'dateModified:desc'
+						: 'dateCreated:desc',
+			},
+		});
+
+		const [answers, setAnswers] = useState({});
 
 		useEffect(() => {
-			if (question) {
-				getMessages(question.id, page, pageSize, sort).then((data) => {
-					setAnswers(data);
-				});
+			if (messageBoardThreadMessageBoardMessages.totalCount) {
+				if (pageSize !== 100) {
+					setAnswers({...messageBoardThreadMessageBoardMessages});
+				}
+				else {
+					setAnswers({
+						...messageBoardThreadMessageBoardMessages,
+						items: [
+							...messageBoardThreadMessageBoardMessages.items,
+						].sort((answer1, answer2) => {
+							if (answer2.showAsAnswer) {
+								return 1;
+							}
+							if (answer1.showAsAnswer) {
+								return -1;
+							}
+
+							const ratingValue1 =
+								(answer1.aggregateRating &&
+									answer1.aggregateRating.ratingValue) ||
+								0;
+							const ratingValue2 =
+								(answer2.aggregateRating &&
+									answer2.aggregateRating.ratingValue) ||
+								0;
+
+							return ratingValue2 - ratingValue1;
+						}),
+					});
+				}
 			}
-		}, [question, page, pageSize, sort]);
+		}, [messageBoardThreadMessageBoardMessages, pageSize]);
 
 		const [createAnswer] = useMutation(createAnswerQuery, {
 			onCompleted() {
 				setArticleBody('');
-
-				return getMessages(question.id, page, pageSize, sort).then(
-					(data) => {
-						setAnswers(data);
-					}
-				);
+				refetch();
 			},
 		});
-
-		const updateMarkAsAnswer = useCallback(
-			(answerId) => {
-				setAnswers({
-					...answers,
-					items: [
-						...answers.items.map((otherAnswer) => {
-							otherAnswer.showAsAnswer =
-								otherAnswer.id === answerId;
-
-							return otherAnswer;
-						}),
-					],
-				});
-			},
-			[answers]
-		);
 
 		const [deleteThread] = useMutation(deleteMessageBoardThreadQuery, {
 			onCompleted() {
@@ -123,23 +162,8 @@ export default withRouter(
 		const [markAsAnswerMessageBoardMessage] = useMutation(
 			markAsAnswerMessageBoardMessageQuery,
 			{
-				onCompleted(data) {
-					setAnswers({
-						...answers,
-						items: [
-							...answers.items.map((otherAnswer) => {
-								if (
-									otherAnswer.id ===
-									data.patchMessageBoardMessage.id
-								) {
-									otherAnswer.showAsAnswer =
-										data.patchMessageBoardMessage.showAsAnswer;
-								}
-
-								return otherAnswer;
-							}),
-						],
-					});
+				onCompleted() {
+					refetch();
 				},
 			}
 		);
@@ -158,24 +182,22 @@ export default withRouter(
 						},
 					});
 				}
-				updateMarkAsAnswer(answerId);
 			},
-			[answers.items, markAsAnswerMessageBoardMessage, updateMarkAsAnswer]
+			[markAsAnswerMessageBoardMessage, answers.items]
 		);
 
 		return (
 			<section className="c-mt-5 questions-section questions-section-single">
 				<div className="questions-container">
 					{!loading && (
-						{question = }
 						<div className="row">
 							<div className="col-md-1 text-md-center">
 								<Rating
 									aggregateRating={question.aggregateRating}
 									entityId={question.id}
 									myRating={
-					 question.myRating &&
-					 question.myRating.ratingValue
+										question.myRating &&
+										question.myRating.ratingValue
 									}
 									type={'Thread'}
 								/>
@@ -186,16 +208,16 @@ export default withRouter(
 									<div className="c-mt-4 c-mt-md-0 col-md-9">
 										{!!question.messageBoardSection
 											.numberOfMessageBoardSections && (
-											 <Link
-												 to={`/questions/${question.messageBoardSection.title}`}
-											 >
-												 <SectionLabel
-													 section={
-														 question.messageBoardSection
-													 }
-												 />
-											 </Link>
-										 )}
+											<Link
+												to={`/questions/${question.messageBoardSection.title}`}
+											>
+												<SectionLabel
+													section={
+														question.messageBoardSection
+													}
+												/>
+											</Link>
+										)}
 
 										<h1 className="c-mt-2 question-headline">
 											{question.headline}
@@ -230,7 +252,9 @@ export default withRouter(
 										>
 											{question.actions.subscribe && (
 												<Subscription
-													onSubscription={(subscribed) => {
+													onSubscription={(
+														subscribed
+													) => {
 														question.subscribed = subscribed;
 													}}
 													question={question}
@@ -247,7 +271,7 @@ export default withRouter(
 															deleteThread({
 																variables: {
 																	messageBoardThreadId:
-																	question.id,
+																		question.id,
 																},
 															});
 														}}
@@ -275,7 +299,7 @@ export default withRouter(
 															)
 														}
 													>
-														<ClayIcon symbol="trash"/>
+														<ClayIcon symbol="trash" />
 													</ClayButton>
 												</>
 											)}
@@ -298,11 +322,11 @@ export default withRouter(
 								</div>
 
 								<div className="c-mt-4">
-									<TagList tags={question.keywords}/>
+									<TagList tags={question.keywords} />
 								</div>
 
 								<div className="c-mt-4 position-relative questions-creator text-center text-md-right">
-									<CreatorRow question={question}/>
+									<CreatorRow question={question} />
 								</div>
 
 								<h3 className="c-mt-4 text-secondary">
@@ -384,67 +408,67 @@ export default withRouter(
 								</div>
 
 								{question &&
-								 question.actions &&
-								 question.actions['reply-to-thread'] && (
-									 <div className="c-mt-5">
-										 <ClayForm>
-											 <ClayForm.Group className="form-group-sm">
-												 <label htmlFor="basicInput">
-													 {Liferay.Language.get(
-														 'your-answer'
-													 )}
+									question.actions &&
+									question.actions['reply-to-thread'] && (
+										<div className="c-mt-5">
+											<ClayForm>
+												<ClayForm.Group className="form-group-sm">
+													<label htmlFor="basicInput">
+														{Liferay.Language.get(
+															'your-answer'
+														)}
 
-													 <span className="c-ml-2 reference-mark">
-															<ClayIcon symbol="asterisk"/>
+														<span className="c-ml-2 reference-mark">
+															<ClayIcon symbol="asterisk" />
 														</span>
-												 </label>
+													</label>
 
-												 <div className="c-mt-2">
-													 <Editor
-														 config={getCKEditorConfig()}
-														 data={articleBody}
-														 onBeforeLoad={(
-															 editor
-														 ) =>
-															 onBeforeLoadCKEditor(
-																 editor,
-																 context.imageBrowseURL
-															 )
-														 }
-														 onChange={(event) =>
-															 setArticleBody(
-																 event.editor.getData()
-															 )
-														 }
-													 />
-												 </div>
-											 </ClayForm.Group>
-										 </ClayForm>
+													<div className="c-mt-2">
+														<Editor
+															config={getCKEditorConfig()}
+															data={articleBody}
+															onBeforeLoad={(
+																editor
+															) =>
+																onBeforeLoadCKEditor(
+																	editor,
+																	context.imageBrowseURL
+																)
+															}
+															onChange={(event) =>
+																setArticleBody(
+																	event.editor.getData()
+																)
+															}
+														/>
+													</div>
+												</ClayForm.Group>
+											</ClayForm>
 
-										 <ClayButton
-											 disabled={!articleBody}
-											 displayType="primary"
-											 onClick={() => {
-												 createAnswer({
-													 variables: {
-														 articleBody,
-														 messageBoardThreadId:
-														 question.id,
-													 },
-												 });
-											 }}
-										 >
-											 {Liferay.Language.get(
-												 'post-answer'
-											 )}
-										 </ClayButton>
-									 </div>
-								 )}
+											<ClayButton
+												disabled={!articleBody}
+												displayType="primary"
+												onClick={() => {
+													createAnswer({
+														variables: {
+															articleBody,
+															messageBoardThreadId:
+																question.id,
+														},
+													});
+												}}
+											>
+												{Liferay.Language.get(
+													'post-answer'
+												)}
+											</ClayButton>
+										</div>
+									)}
 							</div>
 						</div>
 					)}
 					{question && question.id && (
-						<RelatedQuestions question={question}/>
+						<RelatedQuestions question={question} />
 					)}
 				</div>
 			</section>

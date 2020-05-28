@@ -310,10 +310,15 @@ class LayoutProvider extends Component {
 	}
 
 	_fieldNameGeneratorValueFn() {
-		return (desiredName, currentName) => {
+		return (desiredName, currentName, blacklist = []) => {
 			const {pages} = this.state;
 
-			return generateFieldName(pages, desiredName, currentName);
+			return generateFieldName(
+				pages,
+				desiredName,
+				currentName,
+				blacklist
+			);
 		};
 	}
 

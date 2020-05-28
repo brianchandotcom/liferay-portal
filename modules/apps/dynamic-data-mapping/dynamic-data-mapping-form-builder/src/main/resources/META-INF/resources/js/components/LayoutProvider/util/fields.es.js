@@ -18,13 +18,21 @@ import {
 } from 'dynamic-data-mapping-form-renderer';
 import {findFieldByFieldName} from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormSupport.es';
 
-export const generateFieldName = (pages, desiredName, currentName = null) => {
+export const generateFieldName = (
+	pages,
+	desiredName,
+	currentName = null,
+	blacklist = []
+) => {
 	let counter = 0;
 	let fieldName = normalizeFieldName(desiredName);
 
 	let existingField = findFieldByFieldName(pages, fieldName);
 
-	while (existingField && existingField.fieldName !== currentName) {
+	while (
+		(existingField && existingField.fieldName !== currentName) ||
+		blacklist.includes(fieldName)
+	) {
 		if (counter > 0) {
 			fieldName = normalizeFieldName(desiredName) + counter;
 		}

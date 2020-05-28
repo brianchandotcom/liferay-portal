@@ -16,16 +16,22 @@ import {normalizeFieldName} from 'dynamic-data-mapping-form-renderer';
 
 import {findFieldByName} from './findFieldByName.es';
 
-export default ({dataDefinitionFields}, desiredName, currentName = null) => {
+export default (
+	{dataDefinitionFields},
+	desiredName,
+	currentName = null,
+	blacklist = []
+) => {
 	let counter = 0;
 	let name = normalizeFieldName(desiredName);
 
 	let existingField;
 
 	while (
-		(existingField = findFieldByName(dataDefinitionFields, name)) &&
-		existingField &&
-		existingField.name !== currentName
+		((existingField = findFieldByName(dataDefinitionFields, name)) &&
+			existingField &&
+			existingField.name !== currentName) ||
+		blacklist.includes(name)
 	) {
 		name = normalizeFieldName(`${desiredName}${++counter}`);
 	}

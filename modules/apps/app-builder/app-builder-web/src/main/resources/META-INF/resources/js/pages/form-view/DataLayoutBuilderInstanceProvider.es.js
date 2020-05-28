@@ -90,12 +90,14 @@ export default ({children, dataLayoutBuilder}) => {
 
 		provider.props.fieldNameGenerator = (
 			desiredFieldName,
-			currentFieldName
+			currentFieldName,
+			blacklist
 		) =>
 			generateDataDefinitionFieldName(
 				dataDefinition,
 				desiredFieldName,
-				currentFieldName
+				currentFieldName,
+				blacklist
 			);
 	}, [dataDefinition, dataLayoutBuilder]);
 

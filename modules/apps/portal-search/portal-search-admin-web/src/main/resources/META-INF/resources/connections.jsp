@@ -54,7 +54,9 @@ SearchEngineDisplayContext
 					</div>
 				</c:when>
 				<c:otherwise>
-					<div class="connection-info-item connection-info-item-header sheet sheet-lg">
+					<clay:sheet
+						className="connection-info-item connection-info-item-header"
+					>
 						<div class="connection-info-data-container">
 							<div class="data-item">
 								<div class="key"><liferay-ui:message key="search-engine-vendor" /></div>
@@ -66,7 +68,7 @@ SearchEngineDisplayContext
 								<div class="value"><%= searchEngineDisplayContext.getClientVersionString() %></div>
 							</div>
 						</div>
-					</div>
+					</clay:sheet>
 
 					<%
 					List<ConnectionInformation> connectionInformationList = searchEngineDisplayContext.getConnectionInformationList();
@@ -88,7 +90,9 @@ SearchEngineDisplayContext
 							for (ConnectionInformation connectionInformation : connectionInformationList) {
 							%>
 
-								<div class="connection-info-item sheet sheet-lg">
+								<clay:sheet
+									className="connection-info-item"
+								>
 									<div class="connection-info-item-header">
 										<div class="connection-info-item-header-block">
 											<h4 class="connection-id">
@@ -181,7 +185,7 @@ SearchEngineDisplayContext
 											title='<%= LanguageUtil.get(request, "error") %>'
 										/>
 									</c:if>
-								</div>
+								</clay:sheet>
 
 							<%
 							}

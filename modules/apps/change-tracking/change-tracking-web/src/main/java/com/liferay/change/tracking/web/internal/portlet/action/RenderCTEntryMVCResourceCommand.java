@@ -72,7 +72,8 @@ public class RenderCTEntryMVCResourceCommand extends BaseMVCResourceCommand {
 			_portal.getHttpServletRequest(resourceRequest),
 			_portal.getHttpServletResponse(resourceResponse),
 			CTConstants.CT_COLLECTION_ID_PRODUCTION,
-			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, model, modelClassNameId);
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, 0, model, modelClassNameId,
+			null);
 	}
 
 	@Reference

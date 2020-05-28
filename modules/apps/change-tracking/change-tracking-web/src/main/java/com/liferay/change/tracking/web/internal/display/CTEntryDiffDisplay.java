@@ -33,6 +33,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class CTEntryDiffDisplay {
 
+	public static final String TYPE_AFTER = "after";
+
+	public static final String TYPE_BEFORE = "before";
+
 	public CTEntryDiffDisplay(
 		CTCollection ctCollection,
 		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry,
@@ -98,12 +102,12 @@ public class CTEntryDiffDisplay {
 		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
 			_ctDisplayRendererRegistry.renderCTEntry(
 				_httpServletRequest, _httpServletResponse,
-				_ctEntry.getCtCollectionId(), _ctEntry);
+				_ctEntry.getCtCollectionId(), _ctEntry, TYPE_BEFORE);
 		}
 		else {
 			_ctDisplayRendererRegistry.renderCTEntry(
 				_httpServletRequest, _httpServletResponse,
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, _ctEntry);
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, _ctEntry, TYPE_BEFORE);
 		}
 	}
 
@@ -114,12 +118,12 @@ public class CTEntryDiffDisplay {
 
 			_ctDisplayRendererRegistry.renderCTEntry(
 				_httpServletRequest, _httpServletResponse, ctCollectionId,
-				_ctEntry);
+				_ctEntry, TYPE_AFTER);
 		}
 		else {
 			_ctDisplayRendererRegistry.renderCTEntry(
 				_httpServletRequest, _httpServletResponse,
-				_ctCollection.getCtCollectionId(), _ctEntry);
+				_ctCollection.getCtCollectionId(), _ctEntry, TYPE_AFTER);
 		}
 	}
 

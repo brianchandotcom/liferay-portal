@@ -199,11 +199,15 @@ definition {
 
 		AntCommand(
 			locator1 = "build-test.xml",
-			value1 = "prepare-portal-ext-properties -Dindex.on.startup=true");
+			value1 = "delete-portal-elasticsearch-dir");
 
-		Portlet.startServer(
-			deleteindexdata = "true",
-			deleteLiferayHome = "true");
+		var newProperty = "index.on.startup=true";
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=${newProperty}");
+
+		Portlet.startServer(deleteLiferayHome = "false");
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/guest/asset-publisher-page");
 

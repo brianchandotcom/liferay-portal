@@ -474,7 +474,6 @@ paths:
                       type: integer
                 - in: query
                   name: fieldName
-                  required: true
                   schema:
                       type: string
             responses:

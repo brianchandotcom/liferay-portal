@@ -56,6 +56,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			SharingWebKeys.SHARING_REACT_DATA,
 			HashMapBuilder.<String, Object>put(
+				"autocompleteUserURL", _getAutocompleteUserURL(renderResponse)
+			).put(
 				"classNameId", ParamUtil.getLong(renderRequest, "classNameId")
 			).put(
 				"classPK", ParamUtil.getLong(renderRequest, "classPK")
@@ -78,14 +80,19 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 					ParamUtil.getLong(renderRequest, "classPK"),
 					themeDisplay.getScopeGroupId(), themeDisplay.getLocale())
 			).put(
-				"sharingUserAutocompleteURL",
-				_getSharingUserAutocompleteURL(renderResponse)
-			).put(
 				"sharingVerifyEmailAddressURL",
 				_getSharingVerifyEmailAddressURL(renderResponse)
 			).build());
 
 		return "/sharing/view.jsp";
+	}
+
+	private String _getAutocompleteUserURL(RenderResponse renderResponse) {
+		ResourceURL autocompleteUserURL = renderResponse.createResourceURL();
+
+		autocompleteUserURL.setResourceID("/sharing/users");
+
+		return autocompleteUserURL.toString();
 	}
 
 	private String _getShareActionURL(RenderResponse renderResponse) {
@@ -95,17 +102,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			ActionRequest.ACTION_NAME, "/sharing/share");
 
 		return shareActionURL.toString();
-	}
-
-	private String _getSharingUserAutocompleteURL(
-		RenderResponse renderResponse) {
-
-		ResourceURL sharingUserAutocompleteURL =
-			renderResponse.createResourceURL();
-
-		sharingUserAutocompleteURL.setResourceID("/sharing/users");
-
-		return sharingUserAutocompleteURL.toString();
 	}
 
 	private String _getSharingVerifyEmailAddressURL(

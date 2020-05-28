@@ -55,7 +55,7 @@ class ShareFormModal extends Component {
 	}
 
 	render() {
-		const {sharingUserAutocompleteURL, spritemap, url} = this.props;
+		const {autocompleteUserURL, spritemap, url} = this.props;
 
 		return (
 			<div class="share-form-modal">
@@ -77,13 +77,13 @@ class ShareFormModal extends Component {
 								<div class="popover-body">
 									{
 										<Email
+											autocompleteUserURL={
+												autocompleteUserURL
+											}
 											localizedName={
 												this.props.localizedName
 											}
 											ref="emailRef"
-											sharingUserAutocompleteURL={
-												sharingUserAutocompleteURL
-											}
 											spritemap={spritemap}
 											url={url}
 										/>
@@ -173,6 +173,14 @@ ShareFormModal.PROPS = {
 	 * @default undefined
 	 * @instance
 	 * @memberof ShareFormModal
+	 * @type {!string}
+	 */
+	autocompleteUserURL: Config.string(),
+
+	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof ShareFormModal
 	 * @type {!object}
 	 */
 	localizedName: Config.object(),
@@ -192,14 +200,6 @@ ShareFormModal.PROPS = {
 	 * @type {!string}
 	 */
 	shareFormInstanceURL: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof ShareFormModal
-	 * @type {!string}
-	 */
-	sharingUserAutocompleteURL: Config.string(),
 
 	/**
 	 * @default undefined

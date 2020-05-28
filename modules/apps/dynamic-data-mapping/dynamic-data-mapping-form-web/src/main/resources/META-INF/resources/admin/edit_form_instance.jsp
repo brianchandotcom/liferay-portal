@@ -195,6 +195,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 					Liferay.Forms.instance = new packageName.Form(
 						{
+							autocompleteUserURL:
+								'<%= ddmFormAdminDisplayContext.getAutocompleteUserURL() %>',
 							context: context,
 							dataProviderInstanceParameterSettingsURL:
 								'<%= dataProviderInstanceParameterSettingsURL %>',
@@ -219,8 +221,6 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 							saved: <%= formInstance != null %>,
 							shareFormInstanceURL:
 								'<%= ddmFormAdminDisplayContext.getShareFormInstanceURL() %>',
-							sharingUserAutocompleteURL:
-								'<%= ddmFormAdminDisplayContext.getSharingUserAutocompleteURL() %>',
 							showPublishAlert: <%= ddmFormAdminDisplayContext.isShowPublishAlert() %>,
 							spritemap: Liferay.DDM.FormSettings.spritemap,
 							strings: Liferay.DDM.FormSettings.strings,

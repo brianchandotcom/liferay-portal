@@ -390,6 +390,7 @@ class Form extends Component {
 	render() {
 		const {ComposedFormBuilder} = this;
 		const {
+			autocompleteUserURL,
 			context,
 			dataProviderInstanceParameterSettingsURL,
 			dataProviderInstancesURL,
@@ -408,7 +409,6 @@ class Form extends Component {
 			rolesURL,
 			rules,
 			shareFormInstanceURL,
-			sharingUserAutocompleteURL,
 			spritemap,
 			view,
 		} = this.props;
@@ -550,12 +550,10 @@ class Form extends Component {
 					/>
 					{published && (
 						<ShareFormModal
+							autocompleteUserURL={autocompleteUserURL}
 							localizedName={localizedName}
 							portletNamespace={namespace}
 							shareFormInstanceURL={shareFormInstanceURL}
-							sharingUserAutocompleteURL={
-								sharingUserAutocompleteURL
-							}
 							spritemap={spritemap}
 							url={this._createFormURL()}
 						/>
@@ -1085,6 +1083,15 @@ class Form extends Component {
 Form.PROPS = {
 
 	/**
+	 * @default undefined
+	 * @instance
+	 * @memberof Form
+	 * @type {!string}
+	 */
+
+	autocompleteUserURL: Config.string(),
+
+	/**
 	 * The context for rendering a layout that represents a form.
 	 * @default undefined
 	 * @instance
@@ -1290,15 +1297,6 @@ Form.PROPS = {
 	 */
 
 	shareFormInstanceURL: Config.string(),
-
-	/**
-	 * @default undefined
-	 * @instance
-	 * @memberof Form
-	 * @type {!string}
-	 */
-
-	sharingUserAutocompleteURL: Config.string(),
 
 	/**
 	 * Whether to show an alert telling the user about the result of the

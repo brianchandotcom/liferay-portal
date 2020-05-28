@@ -55,12 +55,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-		"mvc.command.name=/admin/sharing_user_autocomplete"
+		"mvc.command.name=/admin/autocomplete_user"
 	},
 	service = MVCResourceCommand.class
 )
-public class SharingUserAutocompleteMVCResourceCommand
-	extends BaseMVCResourceCommand {
+public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(

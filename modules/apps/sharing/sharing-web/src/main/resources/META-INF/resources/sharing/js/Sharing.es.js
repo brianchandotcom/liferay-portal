@@ -39,6 +39,7 @@ function filterDuplicateItems(items) {
 }
 
 const Sharing = ({
+	autocompleteUserURL,
 	classNameId,
 	classPK,
 	dialogId,
@@ -46,7 +47,6 @@ const Sharing = ({
 	shareActionURL,
 	sharingEntryPermissionDisplayActionId,
 	sharingEntryPermissionDisplays,
-	sharingUserAutocompleteURL,
 	sharingVerifyEmailAddressURL,
 }) => {
 	const [emailAddressErrorMessages, setEmailAddressErrorMessages] = useState(
@@ -228,7 +228,7 @@ const Sharing = ({
 		fetchRetry: {
 			attempts: 0,
 		},
-		link: multiSelectValue ? sharingUserAutocompleteURL : undefined,
+		link: multiSelectValue ? autocompleteUserURL : undefined,
 		variables: {
 			[`${portletNamespace}query`]: multiSelectValue,
 		},

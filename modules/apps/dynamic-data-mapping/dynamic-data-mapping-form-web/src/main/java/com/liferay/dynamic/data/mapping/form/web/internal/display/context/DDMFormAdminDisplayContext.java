@@ -200,6 +200,16 @@ public class DDMFormAdminDisplayContext {
 		).build();
 	}
 
+	public String getAutocompleteUserURL() {
+		LiferayPortletURL autocompleteUserURL =
+			(LiferayPortletURL)renderResponse.createResourceURL();
+
+		autocompleteUserURL.setCopyCurrentRenderParameters(false);
+		autocompleteUserURL.setResourceID("/admin/autocomplete_user");
+
+		return autocompleteUserURL.toString();
+	}
+
 	public int getAutosaveInterval() {
 		return _ddmFormWebConfiguration.autosaveInterval();
 	}
@@ -952,17 +962,6 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		return shareFormInstanceURL.toString();
-	}
-
-	public String getSharingUserAutocompleteURL() {
-		LiferayPortletURL sharingUserAutocompleteURL =
-			(LiferayPortletURL)renderResponse.createResourceURL();
-
-		sharingUserAutocompleteURL.setCopyCurrentRenderParameters(false);
-		sharingUserAutocompleteURL.setResourceID(
-			"/admin/sharing_user_autocomplete");
-
-		return sharingUserAutocompleteURL.toString();
 	}
 
 	public String getSortingURL() throws Exception {

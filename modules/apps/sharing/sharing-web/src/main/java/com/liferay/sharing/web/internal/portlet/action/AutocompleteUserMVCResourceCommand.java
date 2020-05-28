@@ -60,8 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCResourceCommand.class
 )
-public class SharingUserAutocompleteMVCResourceCommand
-	extends BaseMVCResourceCommand {
+public class AutocompleteUserMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Override
 	protected void doServeResource(

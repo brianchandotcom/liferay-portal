@@ -60,14 +60,18 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 
 		_configureTaskIdeaProvider(ideaTaskProvider);
 
-		_configureIdeaModuleIml(project, ideaPlugin);
+		IdeaModel ideaModel = ideaPlugin.getModel();
+
+		final IdeaModule ideaModule = ideaModel.getModule();
+
+		_configureIdeaModule(project, ideaModule);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					_configureIdeaModuleExcludeDirs(project, ideaPlugin);
+					_configureIdeaModuleExcludeDirs(project, ideaModule);
 				}
 
 			});
@@ -82,9 +86,7 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	}
 
 	private void _configureIdeaModuleExcludeDirs(
-		Project project, IdeaPlugin ideaPlugin) {
-
-		IdeaModule ideaModule = _getIdeaModule(ideaPlugin);
+		Project project, IdeaModule ideaModule) {
 
 		Set<File> excludeDirs = ideaModule.getExcludeDirs();
 
@@ -121,10 +123,8 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		ideaModule.setExcludeDirs(excludeDirs);
 	}
 
-	private void _configureIdeaModuleIml(
-		final Project project, IdeaPlugin ideaPlugin) {
-
-		IdeaModule ideaModule = _getIdeaModule(ideaPlugin);
+	private void _configureIdeaModule(
+		final Project project, IdeaModule ideaModule) {
 
 		IdeaModuleIml ideaModuleIml = ideaModule.getIml();
 
@@ -208,12 +208,6 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 				}
 
 			});
-	}
-
-	private IdeaModule _getIdeaModule(IdeaPlugin ideaPlugin) {
-		IdeaModel ideaModel = ideaPlugin.getModel();
-
-		return ideaModel.getModule();
 	}
 
 	private static final String _CLEAN_IDEA_TASK_NAME = "cleanIdea";

@@ -112,10 +112,24 @@ public class HttpImplTest {
 	}
 
 	@Test
+	public void testDecodeControlPanelPagePath() {
+		Assert.assertEquals(
+			"/group/guest/~/control_panel/manage",
+			_httpImpl.decodePath("/group/guest/~/control_panel/manage"));
+	}
+
+	@Test
 	public void testDecodeMultipleCharacterEncodedPath() {
 		Assert.assertEquals(
 			"http://foo?p=$param",
 			_httpImpl.decodePath("http://foo%3Fp%3D%24param"));
+	}
+
+	@Test
+	public void testDecodeNoAsciiPagePath() {
+		Assert.assertEquals(
+			"/web/guest/página1",
+			_httpImpl.decodePath("/web/guest/p%C3%83%C2%A1gina1"));
 	}
 
 	@Test
@@ -149,10 +163,24 @@ public class HttpImplTest {
 	}
 
 	@Test
+	public void testEncodeControlPanelPagePath() {
+		Assert.assertEquals(
+			"/group/guest/~/control_panel/manage",
+			_httpImpl.encodePath("/group/guest/~/control_panel/manage"));
+	}
+
+	@Test
 	public void testEncodeMultipleCharacterEncodedPath() {
 		Assert.assertEquals(
 			"http%3A//foo%3Fp%3D%24param",
 			_httpImpl.encodePath("http://foo?p=$param"));
+	}
+
+	@Test
+	public void testEncodeNoAsciiPagePath() {
+		Assert.assertEquals(
+			"/web/guest/p%C3%83%C2%A1gina1",
+			_httpImpl.encodePath("/web/guest/página1"));
 	}
 
 	@Test

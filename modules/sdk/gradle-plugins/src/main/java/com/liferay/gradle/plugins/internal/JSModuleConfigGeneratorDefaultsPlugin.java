@@ -39,7 +39,12 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		Project project,
 		JSModuleConfigGeneratorPlugin jsModuleConfigGeneratorPlugin) {
 
-		_configureJSModuleConfigGenerator(project);
+		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
+			GradleUtil.getExtension(
+				project, JSModuleConfigGeneratorExtension.class);
+
+		_configureExtensionJSModuleConfigGenerator(
+			project, jsModuleConfigGeneratorExtension);
 
 		TaskProvider<ConfigJSModulesTask> configJSModulesTaskProvider =
 			GradleUtil.getTaskProvider(
@@ -58,10 +63,9 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 	private JSModuleConfigGeneratorDefaultsPlugin() {
 	}
 
-	private void _configureJSModuleConfigGenerator(final Project project) {
-		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
-			GradleUtil.getExtension(
-				project, JSModuleConfigGeneratorExtension.class);
+	private void _configureExtensionJSModuleConfigGenerator(
+		Project project,
+		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension) {
 
 		String version = GradleUtil.getProperty(
 			project, "nodejs.liferay.module.config.generator.version",

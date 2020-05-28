@@ -21,9 +21,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Alejandro Tardín
  */
-@ExtendedObjectClassDefinition(generateUI = false)
+@ExtendedObjectClassDefinition(
+	category = "pages", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
-	id = "com.liferay.redirect.internal.configuration.FFRedirectConfiguration"
+	description = "redirect-configuration-description",
+	id = "com.liferay.redirect.internal.configuration.FFRedirectConfiguration",
+	localization = "content/Language", name = "redirect-configuration-name"
 )
 public interface FFRedirectConfiguration {
 

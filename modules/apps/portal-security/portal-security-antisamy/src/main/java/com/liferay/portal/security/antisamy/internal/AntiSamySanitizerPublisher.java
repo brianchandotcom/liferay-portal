@@ -50,7 +50,7 @@ public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 
 	@Override
 	public void deleted(String pid) {
-		String className = _antiSamyClassNameConfigurationByPid.get(pid);
+		String className = _classNames.get(pid);
 
 		_antiSamySanitizerImpl.removeAntiSamySanitizerByClassName(className);
 	}
@@ -82,7 +82,7 @@ public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 					antiSamyClassNameConfiguration.configurationFileURL());
 		}
 
-		_antiSamyClassNameConfigurationByPid.put(pid, className);
+		_classNames.put(pid, className);
 		_antiSamySanitizerImpl.addAntiSamySanitizerByClassName(className, url);
 	}
 
@@ -135,9 +135,8 @@ public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 		activate(bundleContext, properties);
 	}
 
-	private final Map<String, String> _antiSamyClassNameConfigurationByPid =
-		new ConcurrentHashMap<>();
 	private AntiSamySanitizerImpl _antiSamySanitizerImpl;
+	private final Map<String, String> _classNames = new ConcurrentHashMap<>();
 	private ServiceRegistration<Sanitizer> _sanitizerServiceRegistration;
 
 }

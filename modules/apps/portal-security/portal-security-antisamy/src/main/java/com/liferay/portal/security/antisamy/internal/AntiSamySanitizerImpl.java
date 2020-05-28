@@ -125,10 +125,10 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 
 		try {
 			if (isConfigured(className, classPK)) {
-				Policy policyByClassName = _policies.get(className);
+				Policy policy = _policies.get(className);
 
 				CleanResults cleanResults = antiSamy.scan(
-					content, policyByClassName, AntiSamy.SAX);
+					content, policy, AntiSamy.SAX);
 
 				return cleanResults.getCleanHTML();
 			}
@@ -147,8 +147,8 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 	protected boolean isConfigured(String className, long classPK) {
 		String classNameAndClassPK = className + StringPool.POUND + classPK;
 
-		for (String configuredClassName : _policies.keySet()) {
-			if (classNameAndClassPK.startsWith(configuredClassName)) {
+		for (String policyClassName : _policies.keySet()) {
+			if (classNameAndClassPK.startsWith(policyClassName)) {
 				return true;
 			}
 		}

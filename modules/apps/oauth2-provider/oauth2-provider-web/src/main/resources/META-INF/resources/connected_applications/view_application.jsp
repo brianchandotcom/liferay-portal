@@ -85,17 +85,19 @@ renderResponse.setTitle(oAuth2Application.getName());
 					%>
 
 						<li class="list-group-item list-group-item-flex">
-							<div class="autofit-col">
+							<clay:content-col>
 								<clay:icon
 									symbol="check"
 								/>
-							</div>
+							</clay:content-col>
 
-							<div class="autofit-col autofit-col-expand">
+							<clay:content-col
+								expand="true"
+							>
 								<h4 class="list-group-title text-truncate"><%= HtmlUtil.escape(assignableScopes.getApplicationDescription(applicationName)) %></h4>
 
 								<p class="list-group-subtitle text-truncate"><%= applicationScopeDescription %></p>
-							</div>
+							</clay:content-col>
 						</li>
 
 					<%

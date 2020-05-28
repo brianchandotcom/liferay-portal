@@ -35,14 +35,14 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 <clay:container-fluid
 	cssClass="container-view"
 >
-	<div class="sheet">
-		<div class="sheet-header">
+	<clay:sheet>
+		<clay:sheet-header>
 			<h2 class="sheet-title"><liferay-ui:message key="scopes" /></h2>
 
 			<div class="sheet-text"><liferay-ui:message key="scopes-description" /></div>
-		</div>
+		</clay:sheet-header>
 
-		<div class="sheet-section">
+		<clay:sheet-section>
 			<liferay-ui:error exception="<%= OAuth2ApplicationClientCredentialUserIdException.class %>">
 
 				<%
@@ -138,8 +138,8 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 					</aui:form>
 				</div>
 			</clay:row>
-		</div>
-	</div>
+		</clay:sheet-section>
+	</clay:sheet>
 </clay:container-fluid>
 
 <aui:script require="metal-dom/src/dom as dom">

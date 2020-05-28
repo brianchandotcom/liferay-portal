@@ -60,7 +60,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 			</liferay-ui:error>
 
 			<clay:row>
-				<div class="col-lg-12">
+				<clay:col>
 					<portlet:actionURL name="/admin/assign_scopes" var="assignScopesURL">
 						<portlet:param name="mvcRenderCommandName" value="/admin/assign_scopes" />
 						<portlet:param name="navigation" value="assign_scopes" />
@@ -136,7 +136,7 @@ pageContext.setAttribute("scopeAliasesDescriptionsMap", scopeAliasesDescriptions
 							<aui:button href="<%= PortalUtil.escapeRedirect(redirect) %>" type="cancel" />
 						</aui:button-row>
 					</aui:form>
-				</div>
+				</clay:col>
 			</clay:row>
 		</clay:sheet-section>
 	</clay:sheet>

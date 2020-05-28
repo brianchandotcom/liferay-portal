@@ -78,28 +78,26 @@ public class RedirectNotFoundEntriesMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		if (_ffRedirectConfiguration.enabled()) {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_redirectNotFoundEntryLocalService.getActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			_redirectNotFoundEntryLocalService.getActionableDynamicQuery();
 
-			int redirectNotFoundEntryMaxAge =
-				_ffRedirectConfiguration.redirectNotFoundEntryMaxAge();
+		int redirectNotFoundEntryMaxAge =
+			_ffRedirectConfiguration.redirectNotFoundEntryMaxAge();
 
-			Date thresholdDate = new Date(
-				System.currentTimeMillis() -
-					(redirectNotFoundEntryMaxAge * Time.DAY));
+		Date thresholdDate = new Date(
+			System.currentTimeMillis() -
+				(redirectNotFoundEntryMaxAge * Time.DAY));
 
-			actionableDynamicQuery.setAddCriteriaMethod(
-				dynamicQuery -> dynamicQuery.add(
-					RestrictionsFactoryUtil.lt("modifiedDate", thresholdDate)));
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.lt("modifiedDate", thresholdDate)));
 
-			actionableDynamicQuery.setPerformActionMethod(
-				(RedirectNotFoundEntry redirectNotFoundEntry) ->
-					_redirectNotFoundEntryLocalService.
-						deleteRedirectNotFoundEntry(redirectNotFoundEntry));
+		actionableDynamicQuery.setPerformActionMethod(
+			(RedirectNotFoundEntry redirectNotFoundEntry) ->
+				_redirectNotFoundEntryLocalService.deleteRedirectNotFoundEntry(
+					redirectNotFoundEntry));
 
-			actionableDynamicQuery.performActions();
-		}
+		actionableDynamicQuery.performActions();
 	}
 
 	private volatile FFRedirectConfiguration _ffRedirectConfiguration;

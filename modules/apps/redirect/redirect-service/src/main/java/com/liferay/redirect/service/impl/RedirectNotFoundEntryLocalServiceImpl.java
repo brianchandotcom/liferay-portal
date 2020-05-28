@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.redirect.configuration.RedirectConfiguration;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.base.RedirectNotFoundEntryLocalServiceBaseImpl;
 
@@ -32,7 +31,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -48,10 +46,6 @@ public class RedirectNotFoundEntryLocalServiceImpl
 	@Override
 	public RedirectNotFoundEntry addOrUpdateRedirectNotFoundEntry(
 		Group group, String url) {
-
-		if (!_redirectConfiguration.isEnabled()) {
-			return null;
-		}
 
 		RedirectNotFoundEntry redirectNotFoundEntry =
 			redirectNotFoundEntryPersistence.fetchByG_U(
@@ -194,8 +188,5 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 		return redirectNotFoundEntriesDynamicQuery;
 	}
-
-	@Reference
-	private RedirectConfiguration _redirectConfiguration;
 
 }

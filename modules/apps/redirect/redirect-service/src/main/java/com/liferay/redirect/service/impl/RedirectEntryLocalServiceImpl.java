@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.redirect.configuration.RedirectConfiguration;
 import com.liferay.redirect.exception.CircularRedirectEntryException;
 import com.liferay.redirect.exception.DuplicateRedirectEntrySourceURLException;
 import com.liferay.redirect.exception.RequiredRedirectEntryDestinationURLException;
@@ -165,10 +164,6 @@ public class RedirectEntryLocalServiceImpl
 	@Override
 	public RedirectEntry fetchRedirectEntry(
 		long groupId, String sourceURL, boolean updateLastOccurrenceDate) {
-
-		if (!_redirectConfiguration.isEnabled()) {
-			return null;
-		}
 
 		RedirectEntry redirectEntry = redirectEntryPersistence.fetchByG_S(
 			groupId, sourceURL);
@@ -413,9 +408,6 @@ public class RedirectEntryLocalServiceImpl
 			throw new RequiredRedirectEntrySourceURLException();
 		}
 	}
-
-	@Reference
-	private RedirectConfiguration _redirectConfiguration;
 
 	@Reference
 	private RedirectNotFoundEntryLocalService

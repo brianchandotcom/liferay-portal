@@ -284,7 +284,7 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
-		return new String[] {"name", "account-owner", "parent-account"};
+		return new String[] {"name", "parent-account"};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

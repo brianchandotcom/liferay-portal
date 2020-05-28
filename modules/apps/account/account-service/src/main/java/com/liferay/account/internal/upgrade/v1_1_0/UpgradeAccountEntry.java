@@ -24,10 +24,10 @@ public class UpgradeAccountEntry extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasColumn("AccountEntry", "taxId")) {
+		if (!hasColumn("AccountEntry", "taxIdNumber")) {
 			alter(
 				AccountEntryTable.class,
-				new AlterTableAddColumn("taxId", "VARCHAR(75)"));
+				new AlterTableAddColumn("taxIdNumber", "VARCHAR(75)"));
 		}
 	}
 

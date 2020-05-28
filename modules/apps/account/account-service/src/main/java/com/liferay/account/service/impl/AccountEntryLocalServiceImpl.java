@@ -136,7 +136,7 @@ public class AccountEntryLocalServiceImpl
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxId, int status, ServiceContext serviceContext)
+			String taxIdNumber, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Account entry
@@ -175,7 +175,7 @@ public class AccountEntryLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxHeight(),
 			_userFileUploadsSettings.getImageMaxWidth());
 
-		accountEntry.setTaxId(taxId);
+		accountEntry.setTaxIdNumber(taxIdNumber);
 		accountEntry.setStatus(status);
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
@@ -372,7 +372,7 @@ public class AccountEntryLocalServiceImpl
 	public AccountEntry updateAccountEntry(
 			Long accountEntryId, long parentAccountEntryId, String name,
 			String description, boolean deleteLogo, String[] domains,
-			byte[] logoBytes, String taxId, int status,
+			byte[] logoBytes, String taxIdNumber, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -397,7 +397,7 @@ public class AccountEntryLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxHeight(),
 			_userFileUploadsSettings.getImageMaxWidth());
 
-		accountEntry.setTaxId(taxId);
+		accountEntry.setTaxIdNumber(taxIdNumber);
 		accountEntry.setStatus(status);
 
 		// Asset

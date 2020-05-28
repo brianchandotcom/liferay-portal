@@ -22,7 +22,7 @@ import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
-import {getUserActivity} from '../../utils/client.es';
+import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
 import NavigationBar from '../NavigationBar.es';
 
@@ -46,7 +46,7 @@ export default withRouter(
 			setPage(isNaN(pageNumber) ? 1 : parseInt(pageNumber, 10));
 		}, [queryParams]);
 
-		const {data, loading} = useQuery(getUserActivity, {
+		const {data, loading} = useQuery(getUserActivityQuery, {
 			variables: {
 				filter: `creatorId eq ${creatorId}`,
 				page,

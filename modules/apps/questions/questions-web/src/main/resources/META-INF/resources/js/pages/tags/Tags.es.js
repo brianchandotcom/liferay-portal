@@ -22,7 +22,7 @@ import {withRouter} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
-import {getTags} from '../../utils/client.es';
+import {getTagsQuery} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {useDebounceCallback} from '../../utils/utils.es';
 
@@ -38,7 +38,7 @@ export default withRouter(
 		const [pageSize, setPageSize] = useState(20);
 		const [search, setSearch] = useState('');
 
-		const {data, loading} = useQuery(getTags, {
+		const {data, loading} = useQuery(getTagsQuery, {
 			variables: {page, pageSize, search, siteKey: context.siteKey},
 		});
 

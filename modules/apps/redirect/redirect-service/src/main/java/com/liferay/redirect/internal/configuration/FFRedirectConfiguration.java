@@ -31,9 +31,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FFRedirectConfiguration {
 
-	@Meta.AD(deflt = "true", name = "enabled", required = false)
-	public boolean enabled();
-
 	@Meta.AD(
 		deflt = "30", name = "redirect-not-found-entry-max-age",
 		required = false

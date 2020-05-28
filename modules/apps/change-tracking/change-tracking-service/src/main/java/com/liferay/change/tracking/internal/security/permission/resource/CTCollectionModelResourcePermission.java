@@ -16,16 +16,12 @@ package com.liferay.change.tracking.internal.security.permission.resource;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.reference.closure.CTClosureFactory;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -108,21 +104,9 @@ public class CTCollectionModelResourcePermission
 	}
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CTClosureFactory _ctClosureFactory;
-
-	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(resource.name=" + CTConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
-
-	@Reference
-	private RoleLocalService _roleLocalService;
 
 }

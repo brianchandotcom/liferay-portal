@@ -79,11 +79,11 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		}
 	}
 
-	public void addAntiSamySanitizerByModel(String model, URL url) {
+	public void addAntiSamySanitizerByClassName(String className, URL url) {
 		try (InputStream inputstream = url.openStream()) {
 			Policy policy = Policy.getInstance(inputstream);
 
-			_modelMap.put(model, policy);
+			_classNamePolicyMap.put(className, policy);
 		}
 		catch (Exception exception) {
 			throw new IllegalStateException(
@@ -91,8 +91,8 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		}
 	}
 
-	public void removeAntiSamySanitizerByModel(String model) {
-		_modelMap.remove(model);
+	public void removeAntiSamySanitizerByClassName(String className) {
+		_classNamePolicyMap.remove(className);
 	}
 
 	@Override
@@ -124,11 +124,11 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		AntiSamy antiSamy = new AntiSamy();
 
 		try {
-			if (isModeled(className, classPK)) {
-				Policy policyByModel = _modelMap.get(className);
+			if (isConfigured(className, classPK)) {
+				Policy policyByClassName = _classNamePolicyMap.get(className);
 
 				CleanResults cleanResults = antiSamy.scan(
-					content, policyByModel, AntiSamy.SAX);
+					content, policyByClassName, AntiSamy.SAX);
 
 				return cleanResults.getCleanHTML();
 			}
@@ -144,11 +144,11 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		}
 	}
 
-	protected boolean isModeled(String className, long classPK) {
+	protected boolean isConfigured(String className, long classPK) {
 		String classNameAndClassPK = className + StringPool.POUND + classPK;
 
-		for (String model : _modelMap.keySet()) {
-			if (classNameAndClassPK.startsWith(model)) {
+		for (String configuredClassName : _classNamePolicyMap.keySet()) {
+			if (classNameAndClassPK.startsWith(configuredClassName)) {
 				return true;
 			}
 		}
@@ -196,7 +196,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		AntiSamySanitizerImpl.class);
 
 	private final List<String> _blacklist = new ArrayList<>();
-	private Map<String, Policy> _modelMap = new HashMap<>();
+	private Map<String, Policy> _classNamePolicyMap = new HashMap<>();
 	private final Policy _policy;
 	private final List<String> _whitelist = new ArrayList<>();
 

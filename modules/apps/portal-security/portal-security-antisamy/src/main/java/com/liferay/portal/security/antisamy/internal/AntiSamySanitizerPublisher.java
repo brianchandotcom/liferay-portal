@@ -16,8 +16,8 @@ package com.liferay.portal.security.antisamy.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.security.antisamy.configuration.AntiSamyClassNameConfiguration;
 import com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration;
-import com.liferay.portal.security.antisamy.configuration.AntiSamyModelConfiguration;
 
 import java.net.URL;
 
@@ -43,16 +43,16 @@ import org.osgi.service.component.annotations.Modified;
 @Component(
 	configurationPid = "com.liferay.portal.security.antisamy.configuration.AntiSamyConfiguration",
 	immediate = true,
-	property = Constants.SERVICE_PID + "=com.liferay.portal.security.antisamy.configuration.AntiSamyModelConfiguration",
+	property = Constants.SERVICE_PID + "=com.liferay.portal.security.antisamy.configuration.AntiSamyClassNameConfiguration",
 	service = ManagedServiceFactory.class
 )
 public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 
 	@Override
 	public void deleted(String pid) {
-		String model = _antiSamyModelConfigurationByPid.get(pid);
+		String className = _antiSamyClassNameConfigurationByPid.get(pid);
 
-		_antiSamySanitizerImpl.removeAntiSamySanitizerByModel(model);
+		_antiSamySanitizerImpl.removeAntiSamySanitizerByClassName(className);
 	}
 
 	@Override
@@ -64,26 +64,26 @@ public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 	public void updated(String pid, Dictionary<String, ?> properties)
 		throws ConfigurationException {
 
-		AntiSamyModelConfiguration antiSamyModelConfiguration =
+		AntiSamyClassNameConfiguration antiSamyClassNameConfiguration =
 			ConfigurableUtil.createConfigurable(
-				AntiSamyModelConfiguration.class, properties);
+				AntiSamyClassNameConfiguration.class, properties);
 
-		String model = antiSamyModelConfiguration.model();
+		String className = antiSamyClassNameConfiguration.className();
 
 		Bundle bundle = FrameworkUtil.getBundle(
-			AntiSamyModelConfiguration.class);
+			AntiSamyClassNameConfiguration.class);
 
 		URL url = bundle.getResource(
-			antiSamyModelConfiguration.configurationFileURL());
+			antiSamyClassNameConfiguration.configurationFileURL());
 
 		if (url == null) {
 			throw new IllegalStateException(
 				"Unable to find " +
-					antiSamyModelConfiguration.configurationFileURL());
+					antiSamyClassNameConfiguration.configurationFileURL());
 		}
 
-		_antiSamyModelConfigurationByPid.put(pid, model);
-		_antiSamySanitizerImpl.addAntiSamySanitizerByModel(model, url);
+		_antiSamyClassNameConfigurationByPid.put(pid, className);
+		_antiSamySanitizerImpl.addAntiSamySanitizerByClassName(className, url);
 	}
 
 	@Activate
@@ -135,7 +135,7 @@ public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 		activate(bundleContext, properties);
 	}
 
-	private final Map<String, String> _antiSamyModelConfigurationByPid =
+	private final Map<String, String> _antiSamyClassNameConfigurationByPid =
 		new ConcurrentHashMap<>();
 	private AntiSamySanitizerImpl _antiSamySanitizerImpl;
 	private ServiceRegistration<Sanitizer> _sanitizerServiceRegistration;

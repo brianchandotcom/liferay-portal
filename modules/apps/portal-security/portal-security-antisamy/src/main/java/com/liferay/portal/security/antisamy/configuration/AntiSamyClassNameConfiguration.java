@@ -22,19 +22,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Marta Medio
  */
 @ExtendedObjectClassDefinition(
-	category = "security-tools", factoryInstanceLabelAttribute = "model",
+	category = "security-tools", factoryInstanceLabelAttribute = "className",
 	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.antisamy.configuration.AntiSamyModelConfiguration",
+	id = "com.liferay.portal.security.antisamy.configuration.AntiSamyClassNameConfiguration",
 	localization = "content/Language",
-	name = "anti-samy-model-configuration-name"
+	name = "anti-samy-class-name-configuration-name"
 )
-public interface AntiSamyModelConfiguration {
+public interface AntiSamyClassNameConfiguration {
 
-	@Meta.AD(deflt = "", name = "model")
-	public String model();
+	@Meta.AD(deflt = "", name = "class-name")
+	public String className();
 
 	@Meta.AD(
 		deflt = "/META-INF/resources/sanitizer-configuration.xml",

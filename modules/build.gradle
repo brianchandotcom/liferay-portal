@@ -145,6 +145,14 @@ gradle.beforeProject {
 				}
 			}
 
+			pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
+				if (!GradleUtil.getProperty(project, "com.liferay.portal.tools.service.builder.ignore.local", true)) {
+					buildService {
+						dependsOn ":util:portal-tools-service-builder:deploy"
+					}
+				}
+			}
+
 			pluginManager.withPlugin("eclipse") {
 				if (tasks.eclipse.ext.has("gradleVersion")) {
 					String gradleVersion = tasks.eclipse.ext.get("gradleVersion")

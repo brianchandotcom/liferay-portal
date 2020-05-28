@@ -16,81 +16,91 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import {
-	BackgroundImagePropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import InfoItemService from '../../services/InfoItemService';
-import {useDispatch} from '../../store/index';
 
 const Container = React.forwardRef(({children, className, data, item}, ref) => {
 	const {
-		backgroundColorCssClass,
+		align,
+		backgroundColor,
 		backgroundImage,
+		borderColor,
+		borderRadius,
+		borderWidth,
+		containerWidth,
+		contentDisplay,
+		dropShadow,
+		justify,
+		marginBottom,
+		marginLeft,
+		marginRight,
+		marginTop,
+		opacity,
 		paddingBottom,
-		paddingHorizontal,
+		paddingLeft,
+		paddingRight,
 		paddingTop,
-		type,
 	} = item.config;
 
-	const dispatch = useDispatch();
-
+	const backgroundColorCssClass = backgroundColor && backgroundColor.cssClass;
 	const [backgroundImageValue, setBackgroundImageValue] = useState('');
+	const borderColorCssClass = borderColor && borderColor.cssClass;
 
 	useEffect(() => {
-		if (typeof backgroundImage.url === 'string') {
-			setBackgroundImageValue(backgroundImage.url);
-		}
-		else if (backgroundImage.fieldId) {
-			InfoItemService.getAssetFieldValue({
-				classNameId: backgroundImage.classNameId,
-				classPK: backgroundImage.classPK,
-				fieldId: backgroundImage.fieldId,
-				onNetworkStatus: dispatch,
-			}).then((response) => {
-				const {fieldValue} = response;
+		loadBackgroundImage(backgroundImage).then(setBackgroundImageValue);
+	}, [backgroundImage]);
 
-				if (fieldValue && fieldValue.url !== backgroundImageValue) {
-					setBackgroundImageValue(fieldValue.url);
-				}
-			});
-		}
-		else {
-			setBackgroundImageValue('');
-		}
-	}, [backgroundImage, backgroundImageValue, dispatch, item]);
+	const style = {
+		boxSizing: 'border-box',
+	};
+
+	if (backgroundImageValue) {
+		style.backgroundImage = `url(${backgroundImageValue})`;
+		style.backgroundPosition = '50% 50%';
+		style.backgroundRepeat = 'no-repeat';
+		style.backgroundSize = 'cover';
+	}
+
+	if (borderWidth) {
+		style.borderStyle = 'solid';
+		style.borderWidth = `${borderWidth}px`;
+	}
+
+	if (opacity) {
+		style.opacity = Number(opacity / 100) || 1;
+	}
 
 	return (
 		<div
+			{...data}
 			className={classNames(
 				className,
-				`pb-${paddingBottom} pt-${paddingTop}`,
+				`pb-${paddingBottom || 0}`,
+				`pl-${paddingLeft || 0}`,
+				`pr-${paddingRight || 0}`,
+				`pt-${paddingTop || 0}`,
 				{
+					[align]: !!align,
+					[borderRadius]: !!borderRadius,
+					container: containerWidth === 'fixed',
+					'container-fluid': containerWidth !== 'fixed',
+					'd-block': contentDisplay === 'block',
+					'd-flex': contentDisplay === 'flex',
+					[dropShadow]: !!dropShadow,
+					empty: item.children.length === 0,
+					[justify]: !!justify,
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3,
+					[`border-${borderColorCssClass}`]: !!borderColorCssClass,
+					[`mb-${marginBottom}`]: isValidMargin(marginBottom),
+					[`ml-${marginLeft}`]: isValidMargin(marginLeft),
+					[`mr-${marginRight}`]: isValidMargin(marginRight),
+					[`mt-${marginTop}`]: isValidMargin(marginTop),
 				}
 			)}
 			ref={ref}
-			style={
-				backgroundImageValue
-					? {
-							backgroundImage: `url(${backgroundImageValue})`,
-							backgroundPosition: '50% 50%',
-							backgroundRepeat: 'no-repeat',
-							backgroundSize: 'cover',
-					  }
-					: {}
-			}
+			style={style}
 		>
-			<div
-				{...data}
-				className={classNames({
-					container: type === 'fixed',
-					'container-fluid': type === 'fluid',
-				})}
-			>
-				{children}
-			</div>
+			{children}
 		</div>
 	);
 });
@@ -99,15 +109,37 @@ Container.displayName = 'Container';
 
 Container.propTypes = {
 	item: getLayoutDataItemPropTypes({
-		config: PropTypes.shape({
-			backgroundColorCssClass: PropTypes.string,
-			backgroundImage: BackgroundImagePropTypes,
-			paddingBottom: PropTypes.number,
-			paddingHorizontal: PropTypes.number,
-			paddingTop: PropTypes.number,
-			type: PropTypes.oneOf(['fluid', 'fixed']),
-		}),
+		config: PropTypes.shape({}),
 	}).isRequired,
+};
+
+const loadBackgroundImage = (backgroundImage) => {
+	if (!backgroundImage) {
+		return Promise.resolve('');
+	}
+	else if (typeof backgroundImage.url === 'string') {
+		return Promise.resolve(backgroundImage.url);
+	}
+	else if (backgroundImage.fieldId) {
+		return InfoItemService.getAssetFieldValue({
+			classNameId: backgroundImage.classNameId,
+			classPK: backgroundImage.classPK,
+			fieldId: backgroundImage.fieldId,
+			onNetworkStatus: () => {},
+		}).then((response) => {
+			if (response.fieldValue && response.fieldValue.url) {
+				return response.fieldValue.url;
+			}
+
+			return '';
+		});
+	}
+
+	return Promise.resolve('');
+};
+
+const isValidMargin = (margin) => {
+	return margin !== 'auto' && !isNaN(Number(margin));
 };
 
 export default Container;

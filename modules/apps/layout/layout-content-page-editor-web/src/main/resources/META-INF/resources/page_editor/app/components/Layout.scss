@@ -72,8 +72,7 @@
 	}
 
 	&__container,
-	&__container > .container:before,
-	&__container > .container-fluid:before,
+	&__container:before,
 	&__section,
 	&__section > .container:before,
 	&__section > .container-fluid:before,
@@ -82,8 +81,6 @@
 	}
 
 	&__col,
-	&__container > .container,
-	&__container > .container-fluid,
 	&__section > .container,
 	&__section > .container-fluid,
 	&__row,
@@ -132,8 +129,7 @@
 		}
 	}
 
-	&__container.empty > .container,
-	&__container.empty > .container-fluid,
+	&__container.empty,
 	&__section.empty > .container,
 	&__section.empty > .container-fluid,
 	&__row.empty {

@@ -92,38 +92,40 @@ const ContainerWithControls = React.forwardRef(
 		);
 
 		return (
-			<Topper
-				item={item}
-				itemElement={itemElement}
-				layoutData={layoutData}
-			>
-				<Container
-					className={classNames('page-editor__container', {
-						empty: !item.children.length,
-					})}
+			<>
+				<FloatingToolbar
+					buttons={buttons}
 					item={item}
-					ref={setRef}
-				>
-					<FloatingToolbar
-						buttons={buttons}
-						item={item}
-						itemElement={itemElement}
-						onButtonClick={handleButtonClick}
+					itemElement={itemElement}
+					onButtonClick={handleButtonClick}
+				/>
+
+				{openSaveFragmentCompositionModal && (
+					<SaveFragmentCompositionModal
+						errorMessage={''}
+						itemId={item.itemId}
+						observer={observer}
+						onClose={onClose}
+						onErrorDismiss={() => true}
 					/>
+				)}
 
-					{children}
-
-					{openSaveFragmentCompositionModal && (
-						<SaveFragmentCompositionModal
-							errorMessage={''}
-							itemId={item.itemId}
-							observer={observer}
-							onClose={onClose}
-							onErrorDismiss={() => true}
-						/>
-					)}
-				</Container>
-			</Topper>
+				<Topper
+					item={item}
+					itemElement={itemElement}
+					layoutData={layoutData}
+				>
+					<Container
+						className={classNames('page-editor__container', {
+							empty: !item.children.length,
+						})}
+						item={item}
+						ref={setRef}
+					>
+						{children}
+					</Container>
+				</Topper>
+			</>
 		);
 	}
 );

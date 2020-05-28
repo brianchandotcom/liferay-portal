@@ -52,7 +52,7 @@ definition {
 	macro mapEditableFieldToAsset {
 		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_ASSET_SELECT_POPUP_BUTTON");
 
-		if (IsVisible(key_option = "Select Content",locator1 = "Dropdown#RESULT")) {
+		if (IsElementPresent(key_option = "Select Content",locator1 = "Dropdown#RESULT")) {
 
 			if (isSet(contentItem)) {
 				AssertClick(

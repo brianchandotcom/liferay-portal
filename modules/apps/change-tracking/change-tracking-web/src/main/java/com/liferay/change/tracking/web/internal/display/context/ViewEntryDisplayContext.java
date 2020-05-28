@@ -58,7 +58,8 @@ public class ViewEntryDisplayContext {
 		}
 
 		_ctDisplayRendererRegistry.renderCTEntry(
-			httpServletRequest, httpServletResponse, model, modelClassNameId);
+			httpServletRequest, httpServletResponse, ctCollectionId, model,
+			modelClassNameId);
 	}
 
 	private final BasePersistenceRegistry _basePersistenceRegistry;

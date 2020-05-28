@@ -72,8 +72,8 @@ public class RenderCTEntryMVCResourceCommand extends BaseMVCResourceCommand {
 
 		_ctDisplayRendererRegistry.renderCTEntry(
 			_portal.getHttpServletRequest(resourceRequest),
-			_portal.getHttpServletResponse(resourceResponse), model,
-			modelClassNameId);
+			_portal.getHttpServletResponse(resourceResponse), ctCollectionId,
+			model, modelClassNameId);
 	}
 
 	@Reference

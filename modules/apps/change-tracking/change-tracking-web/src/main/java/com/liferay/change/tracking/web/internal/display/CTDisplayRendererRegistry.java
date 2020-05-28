@@ -310,14 +310,14 @@ public class CTDisplayRendererRegistry {
 		}
 
 		renderCTEntry(
-			httpServletRequest, httpServletResponse, model,
+			httpServletRequest, httpServletResponse, ctCollectionId, model,
 			ctEntry.getModelClassNameId());
 	}
 
 	public <T extends BaseModel<T>> void renderCTEntry(
 			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, T model,
-			long modelClassNameId)
+			HttpServletResponse httpServletResponse, long ctCollectionId,
+			T model, long modelClassNameId)
 		throws Exception {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
@@ -333,7 +333,10 @@ public class CTDisplayRendererRegistry {
 			return;
 		}
 
-		try (UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId);
+			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
+
 			PipingServletResponse pipingServletResponse =
 				new PipingServletResponse(
 					httpServletResponse, unsyncStringWriter);

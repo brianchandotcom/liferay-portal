@@ -21,7 +21,7 @@
 <aui:form action="<%= installLocalAppURL %>" cssClass="container-fluid container-fluid-max-xl container-view install-apps" enctype="multipart/form-data" method="post" name="fm1">
 	<aui:input name="mvcPath" type="hidden" value="/install_local_app.jsp" />
 
-	<div class="sheet sheet-lg">
+	<clay:sheet>
 		<c:if test="<%= CompanyLocalServiceUtil.getCompaniesCount(false) > 1 %>">
 			<div class="alert alert-info">
 				<liferay-ui:message key="installed-apps-are-available-to-all-portal-instances.-go-to-plugins-configuration-within-each-portal-instance-to-enable-disable-each-app" />
@@ -40,8 +40,8 @@
 
 		<aui:input cssClass="file-input" label="" name="file" type="file" />
 
-		<div class="sheet-footer">
+		<clay:sheet-footer>
 			<aui:button type="submit" value="install" />
-		</div>
-	</div>
+		</clay:sheet-footer>
+	</clay:sheet>
 </aui:form>

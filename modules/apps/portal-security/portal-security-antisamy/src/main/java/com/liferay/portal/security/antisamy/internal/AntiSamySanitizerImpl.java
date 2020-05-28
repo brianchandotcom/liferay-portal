@@ -83,7 +83,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		try (InputStream inputstream = url.openStream()) {
 			Policy policy = Policy.getInstance(inputstream);
 
-			_classNamePolicyMap.put(className, policy);
+			_policies.put(className, policy);
 		}
 		catch (Exception exception) {
 			throw new IllegalStateException(
@@ -92,7 +92,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 	}
 
 	public void removeAntiSamySanitizerByClassName(String className) {
-		_classNamePolicyMap.remove(className);
+		_policies.remove(className);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 
 		try {
 			if (isConfigured(className, classPK)) {
-				Policy policyByClassName = _classNamePolicyMap.get(className);
+				Policy policyByClassName = _policies.get(className);
 
 				CleanResults cleanResults = antiSamy.scan(
 					content, policyByClassName, AntiSamy.SAX);
@@ -147,7 +147,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 	protected boolean isConfigured(String className, long classPK) {
 		String classNameAndClassPK = className + StringPool.POUND + classPK;
 
-		for (String configuredClassName : _classNamePolicyMap.keySet()) {
+		for (String configuredClassName : _policies.keySet()) {
 			if (classNameAndClassPK.startsWith(configuredClassName)) {
 				return true;
 			}
@@ -196,7 +196,7 @@ public class AntiSamySanitizerImpl implements Sanitizer {
 		AntiSamySanitizerImpl.class);
 
 	private final List<String> _blacklist = new ArrayList<>();
-	private Map<String, Policy> _classNamePolicyMap = new HashMap<>();
+	private Map<String, Policy> _policies = new HashMap<>();
 	private final Policy _policy;
 	private final List<String> _whitelist = new ArrayList<>();
 

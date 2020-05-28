@@ -15,14 +15,24 @@
 import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {subscribeQuery, unsubscribeQuery} from '../utils/client.es';
 
-export default ({onSubscription, question}) => {
+export default ({
+	onSubscription,
+	question: {id: messageBoardThreadId, subscribed},
+}) => {
+	const [subscription, setSubscription] = useState(false);
+
+	useEffect(() => {
+		setSubscription(subscribed);
+	}, [subscribed]);
+
 	const onCompleted = () => {
+		setSubscription(!subscription);
 		if (onSubscription) {
-			onSubscription(!question.subscribed);
+			onSubscription(subscription);
 		}
 	};
 
@@ -30,17 +40,17 @@ export default ({onSubscription, question}) => {
 	const [unsubscribe] = useMutation(unsubscribeQuery, {onCompleted});
 
 	const changeSubscription = () => {
-		if (question.subscribed) {
-			subscribe({variables: {messageBoardThreadId: question.id}});
+		if (subscription) {
+			unsubscribe({variables: {messageBoardThreadId}});
 		}
 		else {
-			unsubscribe({variables: {messageBoardThreadId: question.id}});
+			subscribe({variables: {messageBoardThreadId}});
 		}
 	};
 
 	return (
 		<ClayButton
-			displayType={question.subscribed ? 'primary' : 'secondary'}
+			displayType={subscription ? 'primary' : 'secondary'}
 			monospaced
 			onClick={changeSubscription}
 		>

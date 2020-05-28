@@ -49,10 +49,10 @@ export default ({
 
 	const changeSubscription = () => {
 		if (subscription) {
-			subscribeSection({variables: {messageBoardSectionId}});
+			unsubscribeSection({variables: {messageBoardSectionId}});
 		}
 		else {
-			unsubscribeSection({variables: {messageBoardSectionId}});
+			subscribeSection({variables: {messageBoardSectionId}});
 		}
 	};
 

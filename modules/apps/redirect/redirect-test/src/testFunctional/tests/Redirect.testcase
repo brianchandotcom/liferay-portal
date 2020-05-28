@@ -40,12 +40,10 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -81,12 +79,10 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "New Test Destination Page");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -113,12 +109,9 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			redirectType = "Temporary (302)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -152,11 +145,9 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "New Test Destination Page");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -181,12 +172,9 @@ definition {
 	test AddDuplicateSourceURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			redirectType = "Temporary (302)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -210,11 +198,9 @@ definition {
 				layoutName = "Test Page${i}");
 		}
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-page1");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -254,11 +240,9 @@ definition {
 				layoutName = "Test Page${i}");
 		}
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-page1");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -295,11 +279,9 @@ definition {
 	test AddExpiredEntryFromActive404 {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -332,12 +314,10 @@ definition {
 	test AddExpiredEntryFromIgnored404 {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -394,11 +374,9 @@ definition {
 	test AddPermanentEntryFromActive404 {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -430,11 +408,9 @@ definition {
 	test AddPermanentEntryFromIgnored404 {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -469,12 +445,10 @@ definition {
 	test AddTempEntryFromActive404 {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -504,12 +478,10 @@ definition {
 	test AddTempEntryFromIgnored404 {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -550,11 +522,9 @@ definition {
 				layoutName = "Test Page${i}");
 		}
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-page1");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -639,11 +609,9 @@ definition {
 				layoutName = "Test Page${i}");
 		}
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-page1");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -682,17 +650,15 @@ definition {
 		for (var pageCount : list "1,2,3") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
-				layoutName = "Test Source Page ${pageCount}");
+				layoutName = "Test Source Page${pageCount}");
 		}
 
 		for (var pageCount : list "1,2,3") {
-			Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-			Redirect.addEntry(
+			JSONRedirect.addRedirect(
 				destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-				redirectType = "Permanent (301)",
-				siteName = "test-site-name",
-				sourceURL = "test-source-page-${pageCount}");
+				groupName = "Test Site Name",
+				permanent = "true",
+				sourceURL = "test-source-page${pageCount}");
 		}
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -701,7 +667,7 @@ definition {
 			Redirect.viewEntry(
 				destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
 				redirectType = "Permanent",
-				sourceURL = "${portalURL}/web/test-site-name/test-source-page-${pageCount}");
+				sourceURL = "${portalURL}/web/test-site-name/test-source-page${pageCount}");
 		}
 
 		PortletEntry.selectAll();
@@ -718,12 +684,10 @@ definition {
 	test DeleteEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -744,13 +708,11 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "12/31/2024",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			expirationDate = "2024-12-31",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -786,11 +748,9 @@ definition {
 	test IgnoreURLAfterReactivation {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -838,18 +798,14 @@ definition {
 			groupName = "Test Site Name",
 			layoutName = "Test Source Page2");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page2",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page2");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -994,13 +950,11 @@ definition {
 	test ResetExpiredEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "12/31/2013",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			expirationDate = "2013-12-31",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -1056,12 +1010,12 @@ definition {
 	test SearchEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		for (var searchTerm : list "source,destination") {
 			Redirect.viewResultEntryTitle(
@@ -1207,18 +1161,14 @@ definition {
 				layoutName = "Test Page${i}");
 		}
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-page2",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-page1");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-page4",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-page3");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -1264,12 +1214,10 @@ definition {
 		}
 
 		for (var i : list "1,2,3") {
-			Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-			Redirect.addEntry(
+			JSONRedirect.addRedirect(
 				destinationURL = "${portalURL}/web/test-site-name/test-destination-page${i}",
-				redirectType = "Permanent (301)",
-				siteName = "test-site-name",
+				groupName = "Test Site Name",
+				permanent = "true",
 				sourceURL = "test-source-page${i}");
 		}
 
@@ -1308,11 +1256,9 @@ definition {
 	test ViewEntryInfo {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -1338,13 +1284,10 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "12/31/2013",
-			redirectType = "Temporary (302)",
-			siteName = "test-site-name",
+			expirationDate = "2013-12-31",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -1375,13 +1318,11 @@ definition {
 	test ViewExpiredPermanentEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "12/31/2013",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			expirationDate = "2013-12-31",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -1398,13 +1339,10 @@ definition {
 	test ViewExpiredTempEntry {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
-			expirationDate = "12/31/2013",
-			redirectType = "Temporary (302)",
-			siteName = "test-site-name",
+			expirationDate = "2013-12-31",
+			groupName = "Test Site Name",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -1456,12 +1394,10 @@ definition {
 	test ViewIgnoredURL {
 		var portalURL = PropsUtil.get("portal.url");
 
-		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
-
-		Redirect.addEntry(
+		JSONRedirect.addRedirect(
 			destinationURL = "${portalURL}/web/test-site-name/test-destination-page1",
-			redirectType = "Permanent (301)",
-			siteName = "test-site-name",
+			groupName = "Test Site Name",
+			permanent = "true",
 			sourceURL = "test-source-page");
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");

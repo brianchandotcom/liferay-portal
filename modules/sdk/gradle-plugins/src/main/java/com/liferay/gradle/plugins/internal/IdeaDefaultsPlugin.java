@@ -85,44 +85,6 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	private IdeaDefaultsPlugin() {
 	}
 
-	private void _configureIdeaModuleAfterEvaluate(
-		Project project, IdeaModule ideaModule) {
-
-		Set<File> excludeDirs = ideaModule.getExcludeDirs();
-
-		if (GradleUtil.hasPlugin(project, JavaPlugin.class)) {
-			SourceSet sourceSet = GradleUtil.getSourceSet(
-				project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-			File javaClassesDir = FileUtil.getJavaClassesDir(sourceSet);
-
-			if (!FileUtil.isChild(javaClassesDir, project.getBuildDir())) {
-				excludeDirs.add(javaClassesDir);
-			}
-
-			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-			File resourcesDir = sourceSetOutput.getResourcesDir();
-
-			if (!FileUtil.isChild(resourcesDir, project.getBuildDir())) {
-				excludeDirs.add(resourcesDir);
-			}
-		}
-
-		if (GradleUtil.hasPlugin(project, NodePlugin.class)) {
-			TaskProvider<NpmInstallTask> npmInstallTaskProvider =
-				GradleUtil.getTaskProvider(
-					project, NodePlugin.NPM_INSTALL_TASK_NAME,
-					NpmInstallTask.class);
-
-			NpmInstallTask npmInstallTask = npmInstallTaskProvider.get();
-
-			excludeDirs.add(npmInstallTask.getNodeModulesDir());
-		}
-
-		ideaModule.setExcludeDirs(excludeDirs);
-	}
-
 	private void _configureIdeaModule(
 		final Project project, IdeaModule ideaModule) {
 
@@ -194,6 +156,44 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 		};
 
 		ideaModuleIml.withXml(closure);
+	}
+
+	private void _configureIdeaModuleAfterEvaluate(
+		Project project, IdeaModule ideaModule) {
+
+		Set<File> excludeDirs = ideaModule.getExcludeDirs();
+
+		if (GradleUtil.hasPlugin(project, JavaPlugin.class)) {
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+			File javaClassesDir = FileUtil.getJavaClassesDir(sourceSet);
+
+			if (!FileUtil.isChild(javaClassesDir, project.getBuildDir())) {
+				excludeDirs.add(javaClassesDir);
+			}
+
+			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+			File resourcesDir = sourceSetOutput.getResourcesDir();
+
+			if (!FileUtil.isChild(resourcesDir, project.getBuildDir())) {
+				excludeDirs.add(resourcesDir);
+			}
+		}
+
+		if (GradleUtil.hasPlugin(project, NodePlugin.class)) {
+			TaskProvider<NpmInstallTask> npmInstallTaskProvider =
+				GradleUtil.getTaskProvider(
+					project, NodePlugin.NPM_INSTALL_TASK_NAME,
+					NpmInstallTask.class);
+
+			NpmInstallTask npmInstallTask = npmInstallTaskProvider.get();
+
+			excludeDirs.add(npmInstallTask.getNodeModulesDir());
+		}
+
+		ideaModule.setExcludeDirs(excludeDirs);
 	}
 
 	private void _configureTaskIdeaProvider(

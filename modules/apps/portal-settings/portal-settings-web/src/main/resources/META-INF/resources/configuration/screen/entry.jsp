@@ -30,14 +30,21 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 
 <portlet:actionURL var="editCompanyURL" />
 
-<div class="sheet sheet-lg">
-	<h2 class="autofit-row">
-		<span class="autofit-col autofit-col-expand">
+<clay:sheet>
+	<clay:content-row
+		containerElement="h2"
+	>
+		<clay:content-col
+			containerElement="span"
+			expand="true"
+		>
 			<liferay-ui:message key="<%= portalSettingsConfigurationScreenContributor.getName(locale) %>" />
-		</span>
+		</clay:content-col>
 
 		<c:if test="<%= Validator.isNotNull(portalSettingsConfigurationScreenContributor.getDeleteMVCActionCommandName()) || Validator.isNotNull(portalSettingsConfigurationScreenContributor.getTestButtonOnClick(renderRequest, renderResponse)) %>">
-			<span class="autofit-col">
+			<clay:content-col
+				containerElement="span"
+			>
 				<liferay-ui:icon-menu
 					cssClass="float-right"
 					direction="right"
@@ -70,9 +77,9 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 						/>
 					</c:if>
 				</liferay-ui:icon-menu>
-			</span>
+			</clay:content-col>
 		</c:if>
-	</h2>
+	</clay:content-row>
 
 	<aui:form action="<%= editCompanyURL %>" data-senna-off="true" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
@@ -83,7 +90,7 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 
 		<liferay-util:include page="<%= portalSettingsConfigurationScreenContributor.getJspPath() %>" servletContext="<%= portalSettingsConfigurationScreenContributor.getServletContext() %>" />
 
-		<div class="sheet-footer">
+		<clay:sheet-footer>
 			<div class="btn-group">
 				<div class="btn-group-item">
 					<aui:button type="submit" value="save" />
@@ -93,6 +100,6 @@ PortalSettingsConfigurationScreenContributor portalSettingsConfigurationScreenCo
 					<aui:button href="<%= redirect %>" name="cancel" type="cancel" />
 				</div>
 			</div>
-		</div>
+		</clay:sheet-footer>
 	</aui:form>
-</div>
+</clay:sheet>

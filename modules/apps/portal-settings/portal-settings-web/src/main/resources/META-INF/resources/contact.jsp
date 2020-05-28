@@ -30,26 +30,26 @@ request.setAttribute("websites.classPK", company.getAccountId());
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="addresses" /></h3>
 
 	<%@ include file="/addresses.jsp" %>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="phone-numbers" /></h3>
 
 	<%@ include file="/phone_numbers.jsp" %>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="additional-email-addresses" /></h3>
 
 	<%@ include file="/additional_email_addresses.jsp" %>
-</div>
+</clay:sheet-section>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<h3 class="sheet-subtitle"><liferay-ui:message key="websites" /></h3>
 
 	<%@ include file="/websites.jsp" %>
-</div>
+</clay:sheet-section>

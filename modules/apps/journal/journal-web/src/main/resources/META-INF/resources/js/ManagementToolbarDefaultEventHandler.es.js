@@ -12,31 +12,15 @@
  * details.
  */
 
-import {DefaultEventHandler, addParams, openModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	addParams,
+	navigate,
+	openModal,
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
-	created() {
-		const addArticleURL = this.addArticleURL;
-		const namespace = this.namespace;
-
-		Liferay.on(this.ns('selectAddMenuItem'), (event) => {
-			const selectAddMenuItemWindow = Liferay.Util.Window.getById(
-				namespace + 'selectAddMenuItem'
-			);
-
-			selectAddMenuItemWindow.set('destroyOnHide', false);
-
-			Liferay.fire('closeWindow', {
-				id: namespace + 'selectAddMenuItem',
-				redirect: addParams(
-					namespace + 'ddmStructureKey=' + event.ddmStructureKey,
-					addArticleURL
-				),
-			});
-		});
-	}
-
 	deleteEntries() {
 		let message = Liferay.Language.get(
 			'are-you-sure-you-want-to-delete-the-selected-entries'
@@ -66,21 +50,20 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	handleCreationMenuMoreButtonClicked(event) {
 		event.preventDefault();
 
-		Liferay.Util.openWindow({
-			dialog: {
-				after: {
-					destroy(event) {
-						if (event.target.get('destroyOnHide')) {
-							window.location.reload();
-						}
-					},
-				},
-				destroyOnHide: true,
-				modal: true,
+		openModal({
+			onSelect: (selectedItem) => {
+				navigate(
+					addParams(
+						this.namespace +
+							'ddmStructureKey=' +
+							selectedItem.ddmStructureKey,
+						this.addArticleURL
+					)
+				);
 			},
-			id: this.ns('selectAddMenuItem'),
+			selectEventName: this.ns('selectAddMenuItem'),
 			title: Liferay.Language.get('more'),
-			uri: this.openViewMoreStructuresURL,
+			url: this.openViewMoreStructuresURL,
 		});
 	}
 

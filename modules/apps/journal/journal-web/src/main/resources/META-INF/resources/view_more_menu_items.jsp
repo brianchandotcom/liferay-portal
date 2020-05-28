@@ -111,7 +111,5 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 				),
 			}
 		);
-
-		Util.getWindow().destroy();
 	});
 </aui:script>

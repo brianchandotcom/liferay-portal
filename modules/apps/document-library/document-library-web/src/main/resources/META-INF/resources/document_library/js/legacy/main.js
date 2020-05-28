@@ -380,18 +380,13 @@ AUI.add(
 				},
 
 				handleCreationMenuMoreButtonClicked(event) {
-					event.preventDefault();
-
 					var instance = this;
 
-					Liferay.Util.openWindow({
-						dialog: {
-							destroyOnHide: true,
-							modal: true,
-						},
-						id: instance.ns('selectAddMenuItem'),
+					event.preventDefault();
+
+					Liferay.Util.openModal({
 						title: Liferay.Language.get('more'),
-						uri: instance.get('openViewMoreFileEntryTypesURL'),
+						url: instance.get('openViewMoreFileEntryTypesURL'),
 					});
 				},
 

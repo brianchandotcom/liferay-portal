@@ -92,8 +92,6 @@ DLViewMoreMenuItemsDisplayContext dlViewMoreMenuItemsDisplayContext = new DLView
 					),
 				}
 			);
-
-			Util.getWindow().destroy();
 		},
 		'.selector-button'
 	);

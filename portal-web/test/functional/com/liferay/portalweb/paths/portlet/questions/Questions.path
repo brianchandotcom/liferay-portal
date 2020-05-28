@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>TAGS_LIST_TAB_USED_TIMES</td>
-	<td>//a[contains(@href, '${key_tagName}')]//*[contains(@class, 'card-body')]//p[contains(.,'${key_amountOfUsedTimes} Times')]</td>
+	<td>//a[contains(@href, '${key_tagName}')]//*[contains(.,'Used ${key_amountOfUsedTimes} Times')]</td>
 	<td></td>
 </tr>
 </tbody>

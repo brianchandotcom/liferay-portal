@@ -15,9 +15,12 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.journal.exception.NoSuchArticleException;
+import com.liferay.journal.exception.ReservedFieldNameException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFeed;
@@ -65,6 +68,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -503,6 +507,30 @@ public class ActionUtil {
 		}
 
 		return true;
+	}
+
+	public static void validateFieldNames(DDMForm ddmForm) throws Exception {
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		if (ddmFormFieldsMap.containsKey("attributes")) {
+			throw new ReservedFieldNameException("attributes");
+		}
+		else if (ddmFormFieldsMap.containsKey("data")) {
+			throw new ReservedFieldNameException("data");
+		}
+		else if (ddmFormFieldsMap.containsKey("name")) {
+			throw new ReservedFieldNameException("name");
+		}
+		else if (ddmFormFieldsMap.containsKey("options")) {
+			throw new ReservedFieldNameException("options");
+		}
+		else if (ddmFormFieldsMap.containsKey("optionsMap")) {
+			throw new ReservedFieldNameException("optionsMap");
+		}
+		else if (ddmFormFieldsMap.containsKey("type")) {
+			throw new ReservedFieldNameException("type");
+		}
 	}
 
 	protected static String getElementInstanceId(

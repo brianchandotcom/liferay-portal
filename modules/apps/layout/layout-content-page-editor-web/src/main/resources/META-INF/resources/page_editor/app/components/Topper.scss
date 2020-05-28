@@ -109,8 +109,7 @@
 		}
 	}
 
-	&.drag-over-middle .page-editor__container > .container:before,
-	&.drag-over-middle .page-editor__container > .container-fluid:before,
+	&.drag-over-middle .page-editor__container,
 	&.drag-over-middle .page-editor__section > .container:before,
 	&.drag-over-middle .page-editor__section > .container-fluid:before,
 	&.drag-over-middle.page-editor__col:before,
@@ -136,8 +135,7 @@
 		border: 1px solid $danger;
 	}
 
-	&.not-droppable .page-editor__container > .container:before,
-	&.not-droppable .page-editor__container > .container-fluid:before,
+	&.not-droppable .page-editor__container:before,
 	&.not-droppable .page-editor__section > .container:before,
 	&.not-droppable .page-editor__section > .container-fluid:before,
 	&.not-droppable.page-editor__collection-item:before {

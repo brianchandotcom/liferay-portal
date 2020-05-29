@@ -86,7 +86,7 @@ const NewAppPopover = (
 
 						<span className="font-weight-light text-secondary">
 							{Liferay.Language.get(
-								'create-an-app-to-manage-the-data-of-an-object'
+								'create-an-app-to-collect-and-manage-an-objects-data'
 							)}
 						</span>
 					</>

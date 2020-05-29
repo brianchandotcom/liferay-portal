@@ -30,10 +30,10 @@ export default (props) => {
 	}
 
 	const {listEntryPoint, ...otherProps} = appsTabs[tab];
-	const navTabs = Object.values(appsTabs).map(({label, tabKey}) => ({
-		active: tab === tabKey,
+	const navTabs = Object.values(appsTabs).map(({label, scope}) => ({
+		active: tab === scope,
 		label,
-		path: () => `/${tabKey}`,
+		path: () => `/${scope}`,
 	}));
 	const TabContent = useLazy();
 

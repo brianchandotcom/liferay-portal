@@ -28,14 +28,17 @@ export default (props) => {
 
 	const appProps = {appsTabsKeys, ...props};
 
-	const editRoutes = appsTabsKeys.map((tabKey) => {
-		appsTabs[tabKey] = {
-			...appsTabs[tabKey],
-			editPath: `/${tabKey}/:dataDefinitionId(\\d+)?/deploy/:appId(\\d+)?`,
-			tabKey,
+	const editRoutes = appsTabsKeys.map((scope) => {
+		appsTabs[scope] = {
+			...appsTabs[scope],
+			editPath: [
+				`/${scope}/:dataDefinitionId(\\d+)?/deploy`,
+				`/${scope}/:dataDefinitionId(\\d+)?/:appId(\\d+)`,
+			],
+			scope,
 		};
 
-		const {editEntryPoint, editPath} = appsTabs[tabKey];
+		const {editEntryPoint, editPath} = appsTabs[scope];
 
 		return {
 			component: (props) => (

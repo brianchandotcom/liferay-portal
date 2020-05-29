@@ -430,7 +430,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	private static final String _FIND_SECURITY_BUGS_INCLUDE_FILE_NAME =
 		"fsb-include.xml";
 
-	private static final String _VERSION = "1.9.0.LIFERAY-PATCHED-1";
+	private static final String _VERSION = "1.10.1.LIFERAY-PATCHED-1";
 
 	private static final Transformer<File, Task> _reportsFileGetter =
 		new Transformer<File, Task>() {

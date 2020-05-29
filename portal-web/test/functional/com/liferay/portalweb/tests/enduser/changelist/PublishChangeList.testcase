@@ -11,18 +11,18 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
 
 		ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "disable");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Overview");
 
 		ChangeList.addNewChangeList(
@@ -37,9 +37,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Change Lists",
-				panel = "Control Panel",
+				panel = "Applications",
 				portlet = "Settings");
 
 			ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
@@ -66,16 +66,16 @@ definition {
 
 		Button.clickPublishToChangeList();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Overview");
 
 		ChangeList.publishChangeList(changeListName = "Change List Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Overview");
 
 		ChangeList.addNewChangeList(
@@ -87,9 +87,9 @@ definition {
 			changeListName = "Change List Name",
 			changeListPublishedBy = "Test Test");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Overview");
 
 		ChangeList.viewNoChangeListInSelectDropdown(changeListName = "Change List Name");

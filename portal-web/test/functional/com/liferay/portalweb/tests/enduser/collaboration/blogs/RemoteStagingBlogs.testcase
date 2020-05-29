@@ -106,9 +106,9 @@ definition {
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		NavItem.gotoConfiguration();

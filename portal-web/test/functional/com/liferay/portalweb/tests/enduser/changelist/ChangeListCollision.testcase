@@ -11,9 +11,9 @@ definition {
 
 		User.firstLoginPG();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
@@ -28,9 +28,9 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Change Lists",
-				panel = "Control Panel",
+				panel = "Applications",
 				portlet = "Settings");
 
 			ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
@@ -54,9 +54,9 @@ definition {
 			templateDescription = "WC Template Description",
 			templateName = "WC Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Overview");
 
 		ChangeList.addNewChangeList(
@@ -86,9 +86,9 @@ definition {
 			templateName = "WC Template Name Modified in The First Change List",
 			templatePreviousName = "WC Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Overview");
 
 		AssertElementNotPresent(locator1 = "ChangeList#COLLISION_DETECTED");
@@ -109,16 +109,16 @@ definition {
 			templateName = "WC Template Name Modified in The Second Change List",
 			templatePreviousName = "WC Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Overview");
 
 		ChangeList.publishChangeList(changeListName = "Second Change List Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Overview");
 
 		Click(

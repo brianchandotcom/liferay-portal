@@ -28,11 +28,12 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging");
+			portlet = "Staging",
+			site = "Guest");
 
 		Staging.activateStagingCP(siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Control Panel",
 			portlet = "Settings");
@@ -43,9 +44,9 @@ definition {
 	@description = "Check Supported Content Types"
 	@priority = "4"
 	test CheckSupportedContentTypes {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Settings");
 
 		for (var changeListContentType : list "Web Content") {
@@ -62,9 +63,9 @@ definition {
 	test EnableChangeListAndGoToOverview {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Settings");
 
 		ChangeList.enableChangeList(gotoOverview = "true");
@@ -79,20 +80,25 @@ definition {
 
 		AssertElementPresent(locator1 = "ChangeList#INDICATOR");
 
-		ChangeList.viewNoStagingMenuitemsNotAvailable();
+		ChangeList.viewNoStagingMenuitemsNotAvailable(site = "Guest");
 
 		ChangeList.viewWarningOnSiteExportImport(portletName = "Export");
 
 		ChangeList.viewWarningOnSiteExportImport(portletName = "Import");
 
-		ChangeList.viewWarningOnPortletExport(portletName = "Web Content");
+		ChangeList.viewWarningOnPortletExport(
+			portletName = "Web Content",
+			site = "Guest");
 
-		ChangeList.viewWarningOnPortletImport(portletName = "Web Content");
+		ChangeList.viewWarningOnPortletImport(
+			portletName = "Web Content",
+			site = "Guest");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
-			portlet = "Settings");
+			panel = "Applications",
+			portlet = "Settings",
+			site = "Guest");
 
 		ChangeList.disableChangeList();
 
@@ -104,16 +110,16 @@ definition {
 	@description = "Enable and Disable Change List"
 	@priority = "5"
 	test EnableDisableChangeList {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Settings");
 
 		ChangeList.disableChangeList();

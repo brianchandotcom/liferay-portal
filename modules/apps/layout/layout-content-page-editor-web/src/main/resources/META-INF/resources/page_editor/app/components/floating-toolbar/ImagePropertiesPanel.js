@@ -48,7 +48,7 @@ export function ImagePropertiesPanel({item}) {
 	);
 
 	useEffect(() => {
-		const editableConfig = editableValue ? editableValue.config : {};
+		const editableConfig = editableValue ? editableValue.config || {} : {};
 
 		setImageDescription((imageDescription) => {
 			if (imageDescription !== editableConfig.alt) {

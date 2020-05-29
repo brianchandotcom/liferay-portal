@@ -144,7 +144,7 @@ export default function FragmentContentInteractionsFilter({
 		editableElements.forEach((editableElement) => {
 			if (editableValues) {
 				const editableValue =
-					editableValues[getEditableElementId(editableElement)];
+					editableValues[getEditableElementId(editableElement)] || {};
 
 				const editableUniqueId = getEditableUniqueId(
 					fragmentEntryLinkId,

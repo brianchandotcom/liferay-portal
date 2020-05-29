@@ -254,7 +254,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 					segmentsExperienceId, data);
 		}
 
-		_updateClassedModel(classNameId, classPK);
+		_updateLayoutStatus(classPK);
 
 		return layoutPageTemplateStructure;
 	}
@@ -296,28 +296,12 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		return LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
 	}
 
-	private void _updateClassedModel(long classNameId, long classPK)
-		throws PortalException {
+	private void _updateLayoutStatus(long classPK) throws PortalException {
+		Layout layout = _layoutLocalService.getLayout(classPK);
 
-		if (classNameId == _portal.getClassNameId(Layout.class)) {
-			Layout layout = _layoutLocalService.getLayout(classPK);
+		layout.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-			_layoutLocalService.updateLayout(layout);
-		}
-		else if (classNameId == _portal.getClassNameId(
-					LayoutPageTemplateEntry.class)) {
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
-					classPK);
-
-			layoutPageTemplateEntry.setModifiedDate(new Date());
-
-			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
-				layoutPageTemplateEntry);
-		}
+		_layoutLocalService.updateLayout(layout);
 	}
 
 	@Reference

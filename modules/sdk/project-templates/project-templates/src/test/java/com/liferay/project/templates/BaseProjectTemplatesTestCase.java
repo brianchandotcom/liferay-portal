@@ -181,8 +181,6 @@ public interface BaseProjectTemplatesTestCase {
 			File buildFile, String... dependencies)
 		throws IOException {
 
-		String dependenciesBegin = "dependencies {";
-
 		Path buildFilePath = buildFile.toPath();
 
 		List<String> lines = Files.readAllLines(
@@ -194,7 +192,7 @@ public interface BaseProjectTemplatesTestCase {
 			for (String line : lines) {
 				FileTestUtil.write(bufferedWriter, line);
 
-				if (line.contains(dependenciesBegin)) {
+				if (line.contains("dependencies {")) {
 					FileTestUtil.write(bufferedWriter, dependencies);
 				}
 			}

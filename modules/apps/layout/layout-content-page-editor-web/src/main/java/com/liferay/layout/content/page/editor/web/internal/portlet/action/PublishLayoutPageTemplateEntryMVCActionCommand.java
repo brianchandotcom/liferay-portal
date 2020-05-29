@@ -121,6 +121,12 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			Layout draftLayout, Layout layout)
 		throws Exception {
 
+		LayoutStructureUtil.deleteMarkedForDeletionItems(
+			draftLayout.getCompanyId(), _contentPageEditorListenerTracker,
+			draftLayout.getGroupId(), draftLayout.getPlid(), _portletRegistry);
+
+		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
+
 		draftLayout.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		draftLayout = _layoutLocalService.updateLayout(draftLayout);
@@ -128,10 +134,6 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(draftLayout.getClassPK());
-
-		LayoutStructureUtil.deleteMarkedForDeletionItems(
-			draftLayout.getCompanyId(), _contentPageEditorListenerTracker,
-			draftLayout.getGroupId(), draftLayout.getPlid(), _portletRegistry);
 
 		_layoutCopyHelper.copyLayout(draftLayout, layout);
 

@@ -6476,10 +6476,10 @@ public class JournalArticleLocalServiceImpl
 
 		Date expirationDate = article.getExpirationDate();
 
-		if (status == WorkflowConstants.STATUS_APPROVED) {
-			if ((expirationDate != null) && expirationDate.before(now)) {
-				article.setExpirationDate(null);
-			}
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(expirationDate != null) && expirationDate.before(now)) {
+
+			article.setExpirationDate(null);
 		}
 
 		if ((status == WorkflowConstants.STATUS_EXPIRED) &&

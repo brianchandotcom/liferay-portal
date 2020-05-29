@@ -17,7 +17,6 @@ package com.liferay.site.internal.change.tracking.reference;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLTable;
-import com.liferay.portal.kernel.model.LayoutSetTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutFriendlyURLPersistence;
@@ -43,19 +42,8 @@ public class LayoutFriendlyURLTableReferenceDefinition
 			LayoutFriendlyURLTable.INSTANCE.uuid
 		).singleColumnReference(
 			LayoutFriendlyURLTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				LayoutSetTable.INSTANCE
-			).innerJoinON(
-				LayoutFriendlyURLTable.INSTANCE,
-				LayoutFriendlyURLTable.INSTANCE.groupId.eq(
-					LayoutSetTable.INSTANCE.groupId
-				).and(
-					LayoutFriendlyURLTable.INSTANCE.privateLayout.eq(
-						LayoutSetTable.INSTANCE.privateLayout)
-				)
-			)
 		).nonreferenceColumns(
+			LayoutFriendlyURLTable.INSTANCE.privateLayout,
 			LayoutFriendlyURLTable.INSTANCE.friendlyURL,
 			LayoutFriendlyURLTable.INSTANCE.languageId,
 			LayoutFriendlyURLTable.INSTANCE.lastPublishDate

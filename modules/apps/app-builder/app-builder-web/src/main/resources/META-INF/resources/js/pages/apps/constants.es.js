@@ -12,6 +12,33 @@
  * details.
  */
 
+const COLUMNS = [
+	{
+		key: 'name',
+		sortable: true,
+		value: Liferay.Language.get('name'),
+	},
+	{
+		key: 'type',
+		value: Liferay.Language.get('deployed-as'),
+	},
+	{
+		key: 'dateCreated',
+		sortable: true,
+		value: Liferay.Language.get('create-date'),
+	},
+	{
+		asc: false,
+		key: 'dateModified',
+		sortable: true,
+		value: Liferay.Language.get('modified-date'),
+	},
+	{
+		key: 'status',
+		value: Liferay.Language.get('status'),
+	},
+];
+
 const DEPLOYMENT_ACTION = {
 	deploy: Liferay.Language.get('deploy'),
 	undeploy: Liferay.Language.get('undeploy'),
@@ -43,4 +70,32 @@ const STATUSES = {
 	inactive: Liferay.Language.get('undeployed'),
 };
 
-export {DEPLOYMENT_ACTION, DEPLOYMENT_TYPES, FILTER_NAMES, STATUSES};
+const FILTERS = [
+	{
+		items: [
+			{label: DEPLOYMENT_TYPES.productMenu, value: 'productMenu'},
+			{label: DEPLOYMENT_TYPES.standalone, value: 'standalone'},
+			{label: DEPLOYMENT_TYPES.widget, value: 'widget'},
+		],
+		key: 'deploymentTypes',
+		multiple: true,
+		name: 'deployment-type',
+	},
+	{
+		items: [
+			{label: STATUSES.active, value: 'true'},
+			{label: STATUSES.inactive, value: 'false'},
+		],
+		key: 'active',
+		name: 'status',
+	},
+];
+
+export {
+	COLUMNS,
+	DEPLOYMENT_ACTION,
+	DEPLOYMENT_TYPES,
+	FILTERS,
+	FILTER_NAMES,
+	STATUSES,
+};

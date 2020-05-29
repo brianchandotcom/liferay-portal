@@ -361,7 +361,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
 				layout.getRobotsMap(), layout.getType(),
 				layout.getTypeSettings(), true, true, Collections.emptyMap(),
-				serviceContext);
+				layout.getMasterLayoutPlid(), serviceContext);
 		}
 
 		try {

@@ -337,7 +337,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Submissions");
 
 		Workflow.withdrawTaskByActions(

@@ -102,7 +102,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(

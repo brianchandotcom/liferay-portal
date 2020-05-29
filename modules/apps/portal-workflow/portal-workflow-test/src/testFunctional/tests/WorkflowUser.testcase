@@ -34,7 +34,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -103,7 +103,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Navigator.gotoNavItem(navItem = "Configuration");

@@ -417,7 +417,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Click(
@@ -673,7 +673,7 @@ definition {
 	macro tearDownPortalWorkflow {
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Navigator.gotoNavItem(navItem = "Schemes");
@@ -715,7 +715,7 @@ definition {
 	macro tearDownSpecificWorkflowDefinition {
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		var key_workflowDefinitionTitle = "${workflowDefinitionTitle}";
@@ -725,7 +725,7 @@ definition {
 
 			GlobalMenu.gotoPortlet(
 				category = "Workflow",
-				panel = "Control Panel",
+				panel = "Applications",
 				portlet = "Process Builder");
 
 			Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "${workflowDefinitionTitle}");
@@ -737,7 +737,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		while (IsElementPresent(locator1 = "WorkflowDefinition#DEFINITION_TABLE_TITLE")) {

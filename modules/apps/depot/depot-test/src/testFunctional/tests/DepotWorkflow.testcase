@@ -125,7 +125,7 @@ definition {
 	test ApproveWCArticle {
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Navigator.gotoNavItem(navItem = "Configuration");
@@ -448,7 +448,7 @@ definition {
 	test RejectAndResubmitWC {
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Navigator.gotoNavItem(navItem = "Configuration");

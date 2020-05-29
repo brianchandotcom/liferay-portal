@@ -1,6 +1,20 @@
 @default = "doubleClick"
 definition {
 
+	function javaScriptDoubleClick {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible();
+
+		selenium.mouseOver();
+
+		selenium.javaScriptDoubleClick();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function doubleClick {
 		WaitForSPARefresh();
 

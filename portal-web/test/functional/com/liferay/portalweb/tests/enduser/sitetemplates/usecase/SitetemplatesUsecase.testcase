@@ -862,4 +862,44 @@ definition {
 			locator1 = "Home#PAGE");
 	}
 
+	@description = "This is a use case for LPS-113145."
+	@priority = "3"
+	test ViewPortletConfigurationOfGlobalTemplatesPageCopyFromSitesTemplate {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		SiteTemplates.addCP(
+			siteTemplateActive = "Yes",
+			siteTemplateName = "Site Template Name");
+
+		var siteTemplateID = SiteTemplates.getSiteTemplateID(siteTemplateName = "Site Template Name");
+
+		SiteTemplates.addSitePageViaSiteTemplateCP(
+			inheritChanges = "disable",
+			pageName = "Page Name",
+			pageTemplateName = "Blog",
+			siteTemplateName = "Site Template Name");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteTemplateID}/page-name");
+
+		Portlet.addPG(portletName = "Asset Publisher");
+
+		AssetPublisherPortlet.configureManualAssetSelectionPG();
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteTemplateID}/page-name");
+
+		AssetPublisherPortlet.viewManualAssetSelectionConfigurationPG(portletName = "Asset Publisher");
+
+		Site.openSitesAdmin();
+
+		Site.addSiteTemplateCP(
+			siteName = "Site Name",
+			siteTemplateName = "Site Template Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Page Name",
+			siteName = "Site Name");
+
+		AssetPublisherPortlet.viewManualAssetSelectionConfigurationPG(portletName = "Asset Publisher");
+	}
+
 }

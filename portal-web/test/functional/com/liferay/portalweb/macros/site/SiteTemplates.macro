@@ -106,6 +106,10 @@ definition {
 
 		SelectFrame.selectFrameTop();
 
+		if (isSet(inheritChanges)) {
+			Page.togglePageTemplateInheritChanges(toggleValue = "${inheritChanges}");
+		}
+
 		if ("${sitePageType}" != "Content Page") {
 			Button.click(button = "Save");
 		}

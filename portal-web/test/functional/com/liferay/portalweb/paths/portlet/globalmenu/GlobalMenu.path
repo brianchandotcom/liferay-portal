@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>GlobalMenu</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">GlobalMenu</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CATEGORY</td>
+	<td>//ul[contains(@class,'list') and not(contains(@class,'rounded'))]//li[contains(@class,'dropdown-subheader') and contains(.,'${key_category}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GLOBAL_MENU_HIDDEN</td>
+	<td>//div[contains(@class,'dropdown-global-app')]/ul[contains(@class,'dropdown-menu') and not(contains(@class,'show'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GLOBAL_MENU_SHOWN</td>
+	<td>//div[contains(@class,'dropdown-global-app')]/ul[contains(@class,'dropdown-menu') and contains(@class,'show')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET</td>
+	<td>//li[contains(@class,'dropdown-subheader') and contains(.,'${key_category}')]/following-sibling::li/a[normalize-space(text())='${key_portlet}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_LINK</td>
+	<td>//div[contains(@aria-labelledby,'GlobalMenuPortlet') and contains(@class,'active')]//a[span][normalize-space(text())='${key_site}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE</td>
+	<td>//button[contains(@class,'dropdown-toggle') and @*='Global Menu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_ALL_LINK</td>
+	<td>//div[contains(@aria-labelledby,'GlobalMenuPortlet') and contains(@class,'active')]//button[contains(@class,'btn-link') and contains(.,'View All')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

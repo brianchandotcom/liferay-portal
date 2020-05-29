@@ -121,6 +121,23 @@ public class ProjectTemplatesServiceWrapperTest
 			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
 			File mavenOutputDir = new File(mavenProjectDir, "target");
 
+			if (_liferayVersion.equals("7.3.2")) {
+				File buildGradle = testExists(gradleProjectDir, "build.gradle");
+				File pomXmlFile = testExists(mavenProjectDir, "pom.xml");
+
+				BaseProjectTemplatesTestCase.addGradleDependency(
+					buildGradle,
+					"compileOnly group: \"com.liferay\", name: " +
+						"\"com.liferay.petra.function\"");
+
+				editXml(
+					pomXmlFile,
+					document ->
+						BaseProjectTemplatesTestCase.addMavenDependencyElement(
+							document, "com.liferay",
+							"com.liferay.petra.function", "provided"));
+			}
+
 			buildProjects(
 				_gradleDistribution, mavenExecutor, gradleWorkspaceDir,
 				mavenProjectDir, gradleOutputDir, mavenOutputDir,

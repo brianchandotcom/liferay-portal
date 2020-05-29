@@ -30,6 +30,7 @@ import difflib.Delta;
 import difflib.DiffUtils;
 import difflib.Patch;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FilenameFilter;
@@ -175,6 +176,58 @@ public interface BaseProjectTemplatesTestCase {
 			".*com\\.liferay\\.portal\\.tools\\.bundle\\.support" +
 				":([0-9]+\\.[0-9]+\\.[0-9]+).*",
 			Pattern.DOTALL | Pattern.MULTILINE);
+
+	public static void addGradleDependency(
+			File buildFile, String... dependencies)
+		throws IOException {
+
+		String dependenciesBegin = "dependencies {";
+
+		Path buildFilePath = buildFile.toPath();
+
+		List<String> lines = Files.readAllLines(
+			buildFilePath, StandardCharsets.UTF_8);
+
+		try (BufferedWriter bufferedWriter = Files.newBufferedWriter(
+				buildFilePath, StandardCharsets.UTF_8)) {
+
+			for (String line : lines) {
+				FileTestUtil.write(bufferedWriter, line);
+
+				if (line.contains(dependenciesBegin)) {
+					FileTestUtil.write(bufferedWriter, dependencies);
+				}
+			}
+		}
+	}
+
+	public static void addMavenDependencyElement(
+		Document document, String groupId, String artifactId, String scope) {
+
+		Element projectElement = document.getDocumentElement();
+
+		Element dependenciesElement = XMLTestUtil.getChildElement(
+			projectElement, "dependencies");
+
+		Element dependencyElement = document.createElement("dependency");
+		Element artifactIdElement = document.createElement("artifactId");
+		Element groupdIdElement = document.createElement("groupId");
+		Element scopeElement = document.createElement("scope");
+
+		groupdIdElement.appendChild(document.createTextNode(groupId));
+
+		dependencyElement.appendChild(groupdIdElement);
+
+		artifactIdElement.appendChild(document.createTextNode(artifactId));
+
+		dependencyElement.appendChild(artifactIdElement);
+
+		scopeElement.appendChild(document.createTextNode(scope));
+
+		dependencyElement.appendChild(scopeElement);
+
+		dependenciesElement.appendChild(dependencyElement);
+	}
 
 	public static File findParentFile(
 		File dir, String[] fileNames, boolean checkParents) {

@@ -264,6 +264,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			});
 
 		javaExec.setClasspath(classpath);
+		javaExec.setDebug(Boolean.getBoolean("findSecurityBugs.debug"));
 		javaExec.setDescription("Runs FindSecurityBugs on this project.");
 		javaExec.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 		javaExec.setIgnoreExitValue(true);

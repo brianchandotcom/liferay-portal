@@ -30,6 +30,7 @@ import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingTo
 import {config} from '../../config/index';
 import {useSelector} from '../../store/index';
 import {useHoverItem, useIsActive} from '../Controls';
+import {useUpdatedLayoutDataContext} from '../ResizeContext';
 
 export default function FloatingToolbar({
 	buttons,
@@ -47,6 +48,7 @@ export default function FloatingToolbar({
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [windowWidth, setWindowWidth] = useState(0);
 	const [show, setShow] = useState(false);
+	const updatedLayoutData = useUpdatedLayoutDataContext();
 
 	const languageId = useSelector((state) => state.languageId);
 	const selectedViewportSize = useSelector(
@@ -169,6 +171,7 @@ export default function FloatingToolbar({
 		itemElement,
 		panelId,
 		selectedViewportSize,
+		updatedLayoutData,
 		show,
 		windowScrollPosition,
 		windowWidth,

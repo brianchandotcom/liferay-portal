@@ -19,7 +19,7 @@ import React from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../store/index';
 import {getResponsiveColumnSizeConfig} from '../../utils/getResponsiveColumnSizeConfig';
-import {useUpdatedLayoutDataContext} from './RowWithControls';
+import {useUpdatedLayoutDataContext} from '../ResizeContext';
 
 const Column = React.forwardRef(
 	({children, className, item, ...props}, ref) => {

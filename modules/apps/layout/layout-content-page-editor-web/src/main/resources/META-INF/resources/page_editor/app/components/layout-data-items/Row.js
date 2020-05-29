@@ -23,7 +23,7 @@ import {
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
-import {useCustomRowContext} from './RowWithControls';
+import {useCustomRowContext} from '../ResizeContext';
 
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 	const customRow = useCustomRowContext();

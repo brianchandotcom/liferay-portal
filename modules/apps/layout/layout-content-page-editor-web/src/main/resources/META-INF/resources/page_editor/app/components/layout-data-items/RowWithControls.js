@@ -16,7 +16,7 @@ import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {
@@ -27,6 +27,7 @@ import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layou
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {ResizeContextProvider} from '../ResizeContext';
 import Topper from '../Topper';
 import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import SaveFragmentCompositionModal from '../floating-toolbar/SaveFragmentCompositionModal';
@@ -118,7 +119,7 @@ const RowWithControls = React.forwardRef(
 					layoutData={layoutData}
 					ref={setRef}
 				>
-					<ResizeContext.Provider
+					<ResizeContextProvider
 						value={{
 							customRow,
 							resizing,
@@ -135,7 +136,7 @@ const RowWithControls = React.forwardRef(
 							onButtonClick={handleButtonClick}
 						/>
 						{children}
-					</ResizeContext.Provider>
+					</ResizeContextProvider>
 
 					{openSaveFragmentCompositionModal && (
 						<SaveFragmentCompositionModal
@@ -158,38 +159,5 @@ RowWithControls.propTypes = {
 	}).isRequired,
 	layoutData: LayoutDataPropTypes.isRequired,
 };
-
-const ResizeContext = React.createContext({
-	customRow: false,
-	resizing: false,
-	setCustomRow: () => {},
-	setResizing: () => {},
-	setUpdatedLayoutData: () => {},
-	updatedLayoutData: null,
-});
-
-export function useResizeContext() {
-	return useContext(ResizeContext).resizing;
-}
-
-export function useSetResizeContext() {
-	return useContext(ResizeContext).setResizing;
-}
-
-export function useSetUpdatedLayoutDataContext() {
-	return useContext(ResizeContext).setUpdatedLayoutData;
-}
-
-export function useUpdatedLayoutDataContext() {
-	return useContext(ResizeContext).updatedLayoutData;
-}
-
-export function useCustomRowContext() {
-	return useContext(ResizeContext).customRow;
-}
-
-export function useSetCustomRowContext() {
-	return useContext(ResizeContext).setCustomRow;
-}
 
 export default RowWithControls;

@@ -30,7 +30,7 @@ import {
 	useCustomRowContext,
 	useSetCustomRowContext,
 	useSetUpdatedLayoutDataContext,
-} from '../layout-data-items/RowWithControls';
+} from '../ResizeContext';
 
 const CUSTOM_ROW = 'custom';
 

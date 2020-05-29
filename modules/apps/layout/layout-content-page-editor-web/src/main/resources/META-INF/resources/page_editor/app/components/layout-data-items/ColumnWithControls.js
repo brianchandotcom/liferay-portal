@@ -27,15 +27,15 @@ import resizeColumns from '../../thunks/resizeColumns';
 import {getResponsiveColumnSizeConfig} from '../../utils/getResponsiveColumnSizeConfig';
 import {NotDraggableArea} from '../../utils/useDragAndDrop';
 import {useIsActive} from '../Controls';
-import TopperEmpty from '../TopperEmpty';
-import Column from './Column';
 import {
 	useResizeContext,
 	useSetCustomRowContext,
 	useSetResizeContext,
 	useSetUpdatedLayoutDataContext,
 	useUpdatedLayoutDataContext,
-} from './RowWithControls';
+} from '../ResizeContext';
+import TopperEmpty from '../TopperEmpty';
+import Column from './Column';
 
 const ROW_SIZE = 12;
 

@@ -30,6 +30,32 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 }
 
+processDefaultSanitizerConfiguration {
+	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
+
+	ext {
+		autoClean = false
+	}
+
+	filter {
+		return _filterDefaultSanitizer(it)
+	}
+
+	from {
+		FileUtil.get(project, sanitizerConfigurationUrl)
+	}
+
+	into sanitizerConfigurationFile.parentFile
+
+	onlyIf {
+		!sanitizerConfigurationFile.exists()
+	}
+
+	rename {
+		sanitizerConfigurationFile.name
+	}
+}
+
 processKnowledgeBaseSanitizerConfiguration {
 	dependsOn processDefaultSanitizerConfiguration
 
@@ -45,32 +71,6 @@ processKnowledgeBaseSanitizerConfiguration {
 
 	from {
 		processDefaultSanitizerConfiguration.outputs.files.singleFile
-	}
-
-	into sanitizerConfigurationFile.parentFile
-
-	onlyIf {
-		!sanitizerConfigurationFile.exists()
-	}
-
-	rename {
-		sanitizerConfigurationFile.name
-	}
-}
-
-processDefaultSanitizerConfiguration {
-	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
-
-	ext {
-		autoClean = false
-	}
-
-	filter {
-		return _filterDefaultSanitizer(it)
-	}
-
-	from {
-		FileUtil.get(project, sanitizerConfigurationUrl)
 	}
 
 	into sanitizerConfigurationFile.parentFile

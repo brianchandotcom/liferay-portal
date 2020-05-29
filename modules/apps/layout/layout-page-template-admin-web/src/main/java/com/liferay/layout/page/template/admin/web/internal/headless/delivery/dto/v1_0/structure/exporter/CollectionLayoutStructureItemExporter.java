@@ -58,12 +58,16 @@ public class CollectionLayoutStructureItemExporter
 					{
 						collectionConfig = _getCollectionConfig(
 							collectionLayoutStructureItem);
+						listItemStyle =
+							collectionLayoutStructureItem.getListItemStyle();
 						listStyle =
 							collectionLayoutStructureItem.getListStyle();
 						numberOfColumns =
 							collectionLayoutStructureItem.getNumberOfColumns();
 						numberOfItems =
 							collectionLayoutStructureItem.getNumberOfItems();
+						templateKey =
+							collectionLayoutStructureItem.getTemplateKey();
 					}
 				};
 				type = PageElement.Type.COLLECTION;

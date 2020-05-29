@@ -75,12 +75,16 @@ public class CollectionLayoutStructureItemImporter
 					_getCollectionConfigAsJSONObject(collectionConfig));
 			}
 
+			collectionLayoutStructureItem.setListItemStyle(
+				(String)definitionMap.get("listItemStyle"));
 			collectionLayoutStructureItem.setListStyle(
 				(String)definitionMap.get("listStyle"));
 			collectionLayoutStructureItem.setNumberOfColumns(
 				(Integer)definitionMap.get("numberOfColumns"));
 			collectionLayoutStructureItem.setNumberOfItems(
 				(Integer)definitionMap.get("numberOfItems"));
+			collectionLayoutStructureItem.setTemplateKey(
+				(String)definitionMap.get("templateKey"));
 		}
 
 		return collectionLayoutStructureItem;

@@ -82,6 +82,34 @@ public class PageCollectionDefinition {
 	protected CollectionConfig collectionConfig;
 
 	@Schema
+	public String getListItemStyle() {
+		return listItemStyle;
+	}
+
+	public void setListItemStyle(String listItemStyle) {
+		this.listItemStyle = listItemStyle;
+	}
+
+	@JsonIgnore
+	public void setListItemStyle(
+		UnsafeSupplier<String, Exception> listItemStyleUnsafeSupplier) {
+
+		try {
+			listItemStyle = listItemStyleUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String listItemStyle;
+
+	@Schema
 	public String getListStyle() {
 		return listStyle;
 	}
@@ -165,6 +193,34 @@ public class PageCollectionDefinition {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfItems;
 
+	@Schema
+	public String getTemplateKey() {
+		return templateKey;
+	}
+
+	public void setTemplateKey(String templateKey) {
+		this.templateKey = templateKey;
+	}
+
+	@JsonIgnore
+	public void setTemplateKey(
+		UnsafeSupplier<String, Exception> templateKeyUnsafeSupplier) {
+
+		try {
+			templateKey = templateKeyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String templateKey;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -203,6 +259,20 @@ public class PageCollectionDefinition {
 			sb.append(String.valueOf(collectionConfig));
 		}
 
+		if (listItemStyle != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"listItemStyle\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(listItemStyle));
+
+			sb.append("\"");
+		}
+
 		if (listStyle != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -235,6 +305,20 @@ public class PageCollectionDefinition {
 			sb.append("\"numberOfItems\": ");
 
 			sb.append(numberOfItems);
+		}
+
+		if (templateKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"templateKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(templateKey));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

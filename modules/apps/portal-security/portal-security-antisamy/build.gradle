@@ -40,88 +40,7 @@ processKnowledgeBaseSanitizerConfiguration {
 	}
 
 	filter {
-		String line ->
-
-		if (line.contains('<directive name="embedStyleSheets" value="false"/>')) {
-			line = """\
-				|	${line}
-				|	<directive name="allowDynamicAttributes" value="true"/>""".stripMargin()
-		}
-		if (line.contains('</global-tag-attributes>')) {
-			line = """\
-				|	${line}
-				|	<dynamic-tag-attributes>
-				|		<attribute name="data-"/>
-				|	</dynamic-tag-attributes>""".stripMargin()
-		}
-		if (line.contains('<common-attributes>')) {
-			line = """\
-				|	${line}
-				|		<attribute name="data-" description="Allows the HTML5 'data-' attribute to be added to elements">
-				|			<regexp-list>
-				|				<regexp name="anything"/>
-				|			</regexp-list>
-				|		</attribute>""".stripMargin()
-		}
-		if (line.contains('<literal value="hr"/>')) {
-			line = """\
-				|	${line}
-				|	<literal value="iframe"/>""".stripMargin()
-		}
-		else if (line.contains('<tag name="iframe" action="remove"/>')) {
-			line = """\
-			|	<tag name="iframe" action="validate">
-			|		<attribute name="allow">
-			|			<regexp-list>
-			|				<regexp name="anything"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="allowfullscreen">
-			|			<regexp-list>
-			|				<regexp name="anything"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="allowTransparency">
-			|			<regexp-list>
-			|				<regexp name="boolean"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="frameborder">
-			|			<regexp-list>
-			|				<regexp name="integer"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="height"/>
-			|		<attribute name="mozallowfullscreen">
-			|			<regexp-list>
-			|				<regexp name="anything"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="scrolling">
-			|			<regexp-list>
-			|				<regexp name="anything"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="src">
-			|			<regexp-list>
-			|				<regexp name="anything"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="style">
-			|			<regexp-list>
-			|				<regexp name="anything"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="webkitallowfullscreen">
-			|			<regexp-list>
-			|				<regexp name="boolean"/>
-			|			</regexp-list>
-			|		</attribute>
-			|		<attribute name="width"/>
-			|	</tag>""".stripMargin()
-		}
-
-		return line
+		return _filterKnowledgeBaseSanitizer(it)
 	}
 
 	from {
@@ -147,117 +66,7 @@ processDefaultSanitizerConfiguration {
 	}
 
 	filter {
-		String line ->
-
-		if (line.contains('<directive name="maxInputSize" value="20000"/>')) {
-			line = line.replace "20000", "200000"
-		}
-
-		if (line.contains('<regexp name="onsiteURL" value=')) {
-			line = '		<regexp name="onsiteURL" value="^(?![\\p{L}\\p{N}\\\\\\.\\#@\\$%\\*\\+&amp;;\\-_~,\\?=/!]*(&amp;colon))[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\*\\+&amp;;\\-_~,\\?=/!]*"/>'
-		}
-		else if (line.contains('<regexp name="offsiteURL" value=')) {
-			line = '		<regexp name="offsiteURL" value="(\\s)*((ht|f)tp(s?)://|mailto:)[\\p{L}\\p{N}]+[\\p{L}\\p{N}\\p{Zs}\\.\\#@\\$%\\*\\+&amp;;:\\-_~,\\?=/!\\(\\)]*(\\s)*"/>'
-		}
-		else if (line.contains('<tag-rules>')) {
-			line = """\
-				|	<allowed-empty-tags>
-				|		<literal-list>
-				|			<literal value="br"/>
-				|			<literal value="hr"/>
-				|			<literal value="a"/>
-				|			<literal value="img"/>
-				|			<literal value="param"/>
-				|			<literal value="input"/>
-				|			<literal value="textarea"/>
-				|			<literal value="basefont"/>
-				|			<literal value="col"/>
-				|			<literal value="div"/>
-				|			<literal value="source"/>
-				|		</literal-list>
-				|	</allowed-empty-tags>
-				|
-				|${line}
-				|		<tag name="article" action="validate" />
-				|		<tag name="aside" action="validate" />
-				|		<tag name="bdi" action="validate" />
-				|		<tag name="details" action="validate" />
-				|		<tag name="dialog" action="validate" />
-				|		<tag name="figcaption" action="validate" />
-				|		<tag name="figure" action="validate" />
-				|		<tag name="footer" action="validate" />
-				|		<tag name="header" action="validate" />
-				|		<tag name="main" action="validate" />
-				|		<tag name="mark" action="validate" />
-				|		<tag name="meter" action="validate" />
-				|		<tag name="nav" action="validate" />
-				|		<tag name="picture" action="validate">
-				|			<attribute name="data-fileentryid" onInvalid="removeAttribute">
-				|				<regexp-list>
-				|					<regexp name="positiveInteger" />
-				|				</regexp-list>
-				|			</attribute>
-				|		</tag>
-				|		<tag name="progress" action="validate" />
-				|		<tag name="rp" action="validate" />
-				|		<tag name="rt" action="validate" />
-				|		<tag name="ruby" action="validate" />
-				|		<tag name="section" action="validate" />
-				|		<tag name="source" action="validate">
-				|			<attribute name="srcset">
-				|				<regexp-list>
-				|					<regexp name="anything"/>
-				|				</regexp-list>
-				|			</attribute>
-				|			<attribute name="media">
-				|				<regexp-list>
-				|					<regexp name="anything" />
-				|				</regexp-list>
-				|			</attribute>
-				|			<attribute name="type">
-				|				<regexp-list>
-				|					<regexp value="[a-zA-Z0-9\\-]+/[a-zA-Z0-9\\-]+" />
-				|				</regexp-list>
-				|			</attribute>
-				|		</tag>
-				|		<tag name="summary" action="validate" />
-				|		<tag name="time" action="validate" />
-				|		<tag name="wbr" action="validate" />""".stripMargin()
-		}
-		else if (line.contains('<tag name="a" action="validate">')) {
-			line = """\
-				|		<tag name="a" action="validate">
-				|			<attribute name="target">
-				|				<regexp-list>
-				|					<regexp name="htmlId"/>
-				|				</regexp-list>
-				|			</attribute>""".stripMargin()
-		}
-		else if (line.contains('<tag name="img"')) {
-			line = """\
-				|${line}
-				|			<attribute name="data-fileentryid" onInvalid="removeAttribute">
-				|				<regexp-list>
-				|					<regexp name="positiveInteger"/>
-				|				</regexp-list>
-				|			</attribute>""".stripMargin()
-		}
-		else if (line.contains('<tag name="ol" action="validate"/>')) {
-			line = """\
-				|		<tag name="ol" action="validate">
-				|			<attribute name="type">
-				|				<literal-list>
-				|					<literal value="1"/>
-				|					<literal value="a"/>
-				|					<literal value="A"/>
-				|					<literal value="i"/>
-				|					<literal value="I"/>
-				|				</literal-list>
-				|			</attribute>
-				|		</tag>""".stripMargin()
-		}
-
-		return line
+		return _filterDefaultSanitizer(it)
 	}
 
 	from {
@@ -278,4 +87,199 @@ processDefaultSanitizerConfiguration {
 processResources {
 	dependsOn processDefaultSanitizerConfiguration
 	dependsOn processKnowledgeBaseSanitizerConfiguration
+}
+
+private String _filterDefaultSanitizer(String line) {
+	if (line.contains('<directive name="maxInputSize" value="20000"/>')) {
+		line = line.replace "20000", "200000"
+	}
+
+	if (line.contains('<regexp name="onsiteURL" value=')) {
+		line = '		<regexp name="onsiteURL" value="^(?![\\p{L}\\p{N}\\\\\\.\\#@\\$%\\*\\+&amp;;\\-_~,\\?=/!]*(&amp;colon))[\\p{L}\\p{N}\\\\\\.\\#@\\$%\\*\\+&amp;;\\-_~,\\?=/!]*"/>'
+	}
+	else if (line.contains('<regexp name="offsiteURL" value=')) {
+		line = '		<regexp name="offsiteURL" value="(\\s)*((ht|f)tp(s?)://|mailto:)[\\p{L}\\p{N}]+[\\p{L}\\p{N}\\p{Zs}\\.\\#@\\$%\\*\\+&amp;;:\\-_~,\\?=/!\\(\\)]*(\\s)*"/>'
+	}
+	else if (line.contains('<tag-rules>')) {
+		line = """\
+			|	<allowed-empty-tags>
+			|		<literal-list>
+			|			<literal value="br"/>
+			|			<literal value="hr"/>
+			|			<literal value="a"/>
+			|			<literal value="img"/>
+			|			<literal value="param"/>
+			|			<literal value="input"/>
+			|			<literal value="textarea"/>
+			|			<literal value="basefont"/>
+			|			<literal value="col"/>
+			|			<literal value="div"/>
+			|			<literal value="source"/>
+			|		</literal-list>
+			|	</allowed-empty-tags>
+			|
+			|${line}
+			|		<tag name="article" action="validate" />
+			|		<tag name="aside" action="validate" />
+			|		<tag name="bdi" action="validate" />
+			|		<tag name="details" action="validate" />
+			|		<tag name="dialog" action="validate" />
+			|		<tag name="figcaption" action="validate" />
+			|		<tag name="figure" action="validate" />
+			|		<tag name="footer" action="validate" />
+			|		<tag name="header" action="validate" />
+			|		<tag name="main" action="validate" />
+			|		<tag name="mark" action="validate" />
+			|		<tag name="meter" action="validate" />
+			|		<tag name="nav" action="validate" />
+			|		<tag name="picture" action="validate">
+			|			<attribute name="data-fileentryid" onInvalid="removeAttribute">
+			|				<regexp-list>
+			|					<regexp name="positiveInteger" />
+			|				</regexp-list>
+			|			</attribute>
+			|		</tag>
+			|		<tag name="progress" action="validate" />
+			|		<tag name="rp" action="validate" />
+			|		<tag name="rt" action="validate" />
+			|		<tag name="ruby" action="validate" />
+			|		<tag name="section" action="validate" />
+			|		<tag name="source" action="validate">
+			|			<attribute name="srcset">
+			|				<regexp-list>
+			|					<regexp name="anything"/>
+			|				</regexp-list>
+			|			</attribute>
+			|			<attribute name="media">
+			|				<regexp-list>
+			|					<regexp name="anything" />
+			|				</regexp-list>
+			|			</attribute>
+			|			<attribute name="type">
+			|				<regexp-list>
+			|					<regexp value="[a-zA-Z0-9\\-]+/[a-zA-Z0-9\\-]+" />
+			|				</regexp-list>
+			|			</attribute>
+			|		</tag>
+			|		<tag name="summary" action="validate" />
+			|		<tag name="time" action="validate" />
+			|		<tag name="wbr" action="validate" />""".stripMargin()
+	}
+	else if (line.contains('<tag name="a" action="validate">')) {
+		line = """\
+			|		<tag name="a" action="validate">
+			|			<attribute name="target">
+			|				<regexp-list>
+			|					<regexp name="htmlId"/>
+			|				</regexp-list>
+			|			</attribute>""".stripMargin()
+	}
+	else if (line.contains('<tag name="img"')) {
+		line = """\
+			|${line}
+			|			<attribute name="data-fileentryid" onInvalid="removeAttribute">
+			|				<regexp-list>
+			|					<regexp name="positiveInteger"/>
+			|				</regexp-list>
+			|			</attribute>""".stripMargin()
+	}
+	else if (line.contains('<tag name="ol" action="validate"/>')) {
+		line = """\
+			|		<tag name="ol" action="validate">
+			|			<attribute name="type">
+			|				<literal-list>
+			|					<literal value="1"/>
+			|					<literal value="a"/>
+			|					<literal value="A"/>
+			|					<literal value="i"/>
+			|					<literal value="I"/>
+			|				</literal-list>
+			|			</attribute>
+			|		</tag>""".stripMargin()
+	}
+
+	return line
+}
+
+private String _filterKnowledgeBaseSanitizer(String line) {
+	if (line.contains('<directive name="embedStyleSheets" value="false"/>')) {
+		line = """\
+			|	${line}
+			|	<directive name="allowDynamicAttributes" value="true"/>""".stripMargin()
+	}
+	if (line.contains('</global-tag-attributes>')) {
+		line = """\
+			|	${line}
+			|	<dynamic-tag-attributes>
+			|		<attribute name="data-"/>
+			|	</dynamic-tag-attributes>""".stripMargin()
+	}
+	if (line.contains('<common-attributes>')) {
+		line = """\
+			|	${line}
+			|		<attribute name="data-" description="Allows the HTML5 'data-' attribute to be added to elements">
+			|			<regexp-list>
+			|				<regexp name="anything"/>
+			|			</regexp-list>
+			|		</attribute>""".stripMargin()
+	}
+	if (line.contains('<literal value="hr"/>')) {
+		line = """\
+			|	${line}
+			|	<literal value="iframe"/>""".stripMargin()
+	}
+	else if (line.contains('<tag name="iframe" action="remove"/>')) {
+		line = """\
+		|	<tag name="iframe" action="validate">
+		|		<attribute name="allow">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="allowfullscreen">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="allowTransparency">
+		|			<regexp-list>
+		|				<regexp name="boolean"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="frameborder">
+		|			<regexp-list>
+		|				<regexp name="integer"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="height"/>
+		|		<attribute name="mozallowfullscreen">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="scrolling">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="src">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="style">
+		|			<regexp-list>
+		|				<regexp name="anything"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="webkitallowfullscreen">
+		|			<regexp-list>
+		|				<regexp name="boolean"/>
+		|			</regexp-list>
+		|		</attribute>
+		|		<attribute name="width"/>
+		|	</tag>""".stripMargin()
+	}
+
+	return line
 }

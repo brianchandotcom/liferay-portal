@@ -63,20 +63,6 @@ public class DataDefinitionResourceTest
 	}
 
 	@Override
-	public void testGetDataDefinitionDataDefinitionFieldLinks()
-		throws Exception {
-
-		DataDefinition postDataDefinition =
-			testGetDataDefinition_addDataDefinition();
-
-		String fieldLinks =
-			dataDefinitionResource.getDataDefinitionDataDefinitionFieldLinks(
-				postDataDefinition.getId(), "");
-
-		Assert.assertTrue(Validator.isNotNull(fieldLinks));
-	}
-
-	@Override
 	@Test
 	public void testGetSiteDataDefinitionByContentTypeContentTypePage()
 		throws Exception {

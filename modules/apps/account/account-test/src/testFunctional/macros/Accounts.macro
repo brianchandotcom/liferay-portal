@@ -206,7 +206,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");

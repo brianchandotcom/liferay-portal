@@ -90,7 +90,7 @@ definition {
 
 	@priority = "4"
 	test AddUserCalendarToOtherCalendars {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -172,7 +172,7 @@ definition {
 	test ViewUserCanAddSiteCalendarsWithCalendarPermissions {
 		property portal.upstream = "quarantine";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -181,7 +181,7 @@ definition {
 
 		Role.add(roleTitle = "Calendar Site Role Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -192,7 +192,7 @@ definition {
 			roleTitle = "Calendar Site Role Name",
 			roleType = "Site");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -203,7 +203,7 @@ definition {
 			roleTitle = "Authenticated",
 			roleUser = "User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -214,7 +214,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -224,14 +224,14 @@ definition {
 			userScreenName = "usersn");
 
 		for (var siteName : list "Site A,Site B,Site C") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
 				portlet = "Sites");
 
 			Site.addBlankCP(siteName = "${siteName}");
 
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
 				portlet = "Users and Organizations");

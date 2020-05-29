@@ -18,7 +18,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -536,7 +536,7 @@ definition {
 
 		AppBuilderAdmin.save();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -913,7 +913,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -936,7 +936,7 @@ definition {
 
 		AppBuilderAdmin.validateFieldIsOnTable(fieldLabel = "Upload");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -1520,7 +1520,7 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -1551,7 +1551,7 @@ definition {
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -1624,7 +1624,7 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2205,7 +2205,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Password Policies");
@@ -2215,7 +2215,7 @@ definition {
 			passwordPolicyName = "Default Password Policy",
 			passwordPolicyPanel = "Password Changes");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -2239,7 +2239,7 @@ definition {
 			resourceName = "com.liferay.app.builder",
 			roleTitle = "User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2273,7 +2273,7 @@ definition {
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "App Admin");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2352,7 +2352,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Password Policies");
@@ -2362,7 +2362,7 @@ definition {
 			passwordPolicyName = "Default Password Policy",
 			passwordPolicyPanel = "Password Changes");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -2371,7 +2371,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2440,7 +2440,7 @@ definition {
 					userLoginEmailAddress = "test@liferay.com",
 					userLoginFullName = "Test Test");
 
-				ProductMenu.gotoPortlet(
+				GlobalMenu.gotoPortlet(
 					category = "App Builder",
 					panel = "Control Panel",
 					portlet = "Objects");
@@ -2645,7 +2645,7 @@ definition {
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2662,7 +2662,7 @@ definition {
 
 		Navigator.closeWindow();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2675,7 +2675,7 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2697,7 +2697,7 @@ definition {
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2719,7 +2719,7 @@ definition {
 
 		AppBuilderAdmin.validateUndeployedApp();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2741,7 +2741,7 @@ definition {
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App B");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2839,7 +2839,7 @@ definition {
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Test App A");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2898,7 +2898,7 @@ definition {
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Changed Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -2925,7 +2925,7 @@ definition {
 
 		AppBuilderAdmin.validateWidgetApp(appName = "Changed Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");

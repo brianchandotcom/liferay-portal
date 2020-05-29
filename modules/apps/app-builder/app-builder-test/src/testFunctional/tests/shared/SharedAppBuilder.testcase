@@ -18,7 +18,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -944,7 +944,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "4");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -978,7 +978,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "3");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "4");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -1019,7 +1019,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "2");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");

@@ -336,7 +336,7 @@ definition {
 	macro teardownAppBuilder {
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");

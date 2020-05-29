@@ -666,7 +666,31 @@ class LayoutProvider extends Component {
 	}
 
 	_successPageSettingsValueFn() {
-		return this.props.initialSuccessPageSettings;
+		const {editingLanguageId, initialSuccessPageSettings} = this.props;
+
+		if (Object.keys(initialSuccessPageSettings.body).length > 1) {
+			return initialSuccessPageSettings;
+		}
+
+		const {body, title, ...otherProps} = initialSuccessPageSettings;
+
+		return {
+			...otherProps,
+			body: {
+				[editingLanguageId]:
+					body[editingLanguageId] === ''
+						? Liferay.Language.get(
+								'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
+						  )
+						: body[editingLanguageId],
+			},
+			title: {
+				[editingLanguageId]:
+					title[editingLanguageId] === ''
+						? Liferay.Language.get('thank-you')
+						: title[editingLanguageId],
+			},
+		};
 	}
 }
 

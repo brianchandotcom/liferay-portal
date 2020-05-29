@@ -14,18 +14,12 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
 import {setValue} from '../../util/i18n.es';
 
-export const Container = ({
-	children,
-	pages,
-	strings = {
-		'success-page': Liferay.Language.get('success-page'),
-	},
-}) => {
+export const Container = ({children, pages, strings = {}}) => {
 	const {
 		dispatch,
 		store: {editingLanguageId},
@@ -36,7 +30,8 @@ export const Container = ({
 			<div className="ddm-page-success-layout sheet simple-page">
 				<div className="form-builder-layout">
 					<h5 className="pagination">
-						{strings != null ? strings['success-page'] : ''}
+						{strings['success-page'] ??
+							Liferay.Language.get('success-page')}
 					</h5>
 
 					{children}
@@ -111,20 +106,14 @@ export const Page = ({page}) => {
 				className="form-builder-page-header-title form-control p-0"
 				onChange={(event) => onChange(event, 'title')}
 				type="text"
-				value={title === '' ? Liferay.Language.get('thank-you') : title}
+				value={title}
 			/>
 
 			<input
 				className="form-builder-page-header-description form-control p-0"
 				onChange={(event) => onChange(event, 'body')}
 				type="text"
-				value={
-					body === ''
-						? Liferay.Language.get(
-								'your-information-was-successfully-received-thank-you-for-filling-out-the-form'
-						  )
-						: body
-				}
+				value={body}
 			/>
 		</div>
 	);

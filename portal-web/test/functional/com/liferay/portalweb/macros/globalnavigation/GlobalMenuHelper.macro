@@ -1,0 +1,35 @@
+definition {
+
+	macro closeGlobalMenu {
+		if (IsElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_SHOWN")) {
+			Click(locator1 = "GlobalMenu#TOGGLE");
+		}
+
+		AssertElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_HIDDEN");
+	}
+
+	macro gotoPortlet {
+		AssertClick(
+			key_category = "${category}",
+			key_portlet = "${portlet}",
+			locator1 = "GlobalMenu#PORTLET",
+			value1 = "${portlet}");
+	}
+
+	macro openGlobalMenu {
+		if (IsElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_HIDDEN")) {
+			Click(locator1 = "GlobalMenu#TOGGLE");
+		}
+
+		AssertElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_SHOWN");
+	}
+
+	macro openWorkspace {
+		if (IsElementNotPresent(locator1 = "Portlet#MODAL_TITLE")) {
+			Click(locator1 = "GlobalMenu#VIEW_ALL_LINK");
+
+			AssertVisible(locator1 = "Portlet#MODAL_TITLE");
+		}
+	}
+
+}

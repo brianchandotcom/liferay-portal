@@ -1,0 +1,62 @@
+definition {
+
+	@summary = "Navigate to Global Menu > ${site}"
+	macro gotoLocalizedSite {
+		GlobalMenuHelper.openGlobalMenu();
+
+		AssertClick(
+			key_site = "${site}",
+			locator1 = "GlobalMenu#SITE_LINK",
+			value1 = "${site}");
+	}
+
+	@summary = "Navigate to Global Menu > ${panel} > ${category} > ${portlet}"
+	macro gotoPortlet {
+		GlobalMenuHelper.openGlobalMenu();
+
+		Navigator.gotoNavTab(navTab = "${panel}");
+
+		GlobalMenuHelper.gotoPortlet(
+			category = "${category}",
+			portlet = "${portlet}");
+	}
+
+	@summary = "Navigate to Global Menu > ${site}"
+	macro gotoSite {
+		GlobalMenuHelper.openGlobalMenu();
+
+		AssertClick(
+			key_site = "${site}",
+			locator1 = "GlobalMenu#SITE_LINK",
+			value1 = "${site}");
+	}
+
+	@summary = "Navigate to Global Menu > Sites > Sites Modal > ${site}"
+	macro gotoSiteViaViewAll {
+		GlobalMenuHelper.openGlobalMenu();
+
+		GlobalMenuHelper.openWorkspace();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Pause(locator1 = "3000");
+
+		if (isSet(depotName)) {
+			Navigator.gotoNavItem(navItem = "Asset Libraries");
+
+			LexiconCard.clickCard(card = "${depotName}");
+		}
+		else {
+			Navigator.gotoNavItem(navItem = "My Sites");
+
+			SiteSelector.selectSite(site = "${site}");
+
+			ProductMenuHelper.expandPanel(panel = "Site Administration");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+				value1 = "${site}");
+		}
+	}
+
+}

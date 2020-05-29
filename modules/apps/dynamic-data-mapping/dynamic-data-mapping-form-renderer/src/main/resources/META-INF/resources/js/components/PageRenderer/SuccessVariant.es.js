@@ -16,7 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
 
-import {PAGE_TYPES, usePage} from '../../hooks/usePage.es';
+import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
 import {setValue} from '../../util/i18n.es';
 
 export const Container = ({
@@ -56,11 +56,11 @@ export const Container = ({
 										enabled: false,
 										title: {[editingLanguageId]: ''},
 									},
-									type: PAGE_TYPES.SUCCESS_CHANGED,
+									type: EVENT_TYPES.SUCCESS_CHANGED,
 								});
 								dispatch({
 									payload: pages.length - 1,
-									type: PAGE_TYPES.CHANGE_ACTIVE_PAGE,
+									type: EVENT_TYPES.CHANGE_ACTIVE_PAGE,
 								});
 							},
 						},
@@ -101,7 +101,7 @@ export const Page = ({page}) => {
 				setting,
 				event.target.value
 			),
-			type: PAGE_TYPES.SUCCESS_CHANGED,
+			type: EVENT_TYPES.SUCCESS_CHANGED,
 		});
 	};
 

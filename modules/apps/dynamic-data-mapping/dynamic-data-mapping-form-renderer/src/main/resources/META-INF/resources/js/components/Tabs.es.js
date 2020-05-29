@@ -15,7 +15,7 @@
 import ClayTabs from '@clayui/tabs';
 import React from 'react';
 
-import {PAGE_TYPES, usePage} from '../hooks/usePage.es';
+import {EVENT_TYPES, usePage} from '../hooks/usePage.es';
 
 export const Tabs = ({activePage, pages}) => {
 	const {dispatch} = usePage();
@@ -32,7 +32,7 @@ export const Tabs = ({activePage, pages}) => {
 							onClick={() =>
 								dispatch({
 									payload: {pageIndex: index},
-									type: PAGE_TYPES.PAGINATION,
+									type: EVENT_TYPES.PAGINATION,
 								})
 							}
 						>

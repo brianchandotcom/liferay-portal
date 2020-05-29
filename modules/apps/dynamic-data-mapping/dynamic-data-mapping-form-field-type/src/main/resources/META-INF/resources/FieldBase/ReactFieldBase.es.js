@@ -20,7 +20,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {
 	Layout,
-	PAGE_TYPES,
+	EVENT_TYPES,
 	getRepeatedIndex,
 	usePage,
 } from 'dynamic-data-mapping-form-renderer';
@@ -97,7 +97,7 @@ function FieldBase({
 								onClick={() =>
 									dispatch({
 										payload: name,
-										type: PAGE_TYPES.REMOVED,
+										type: EVENT_TYPES.REMOVED,
 									})
 								}
 								small
@@ -114,7 +114,7 @@ function FieldBase({
 							onClick={() =>
 								dispatch({
 									payload: name,
-									type: PAGE_TYPES.REPEATED,
+									type: EVENT_TYPES.REPEATED,
 								})
 							}
 							small

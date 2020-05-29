@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import {PAGE_TYPES, usePage} from '../../hooks/usePage.es';
+import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
 import {Field} from '../Field/Field.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
@@ -52,19 +52,19 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 									onBlur={(event) =>
 										dispatch({
 											payload: event,
-											type: PAGE_TYPES.FIELD_BLUR,
+											type: EVENT_TYPES.FIELD_BLUR,
 										})
 									}
 									onChange={(event) =>
 										dispatch({
 											payload: event,
-											type: PAGE_TYPES.FIELD_CHANGE,
+											type: EVENT_TYPES.FIELD_CHANGE,
 										})
 									}
 									onFocus={(event) =>
 										dispatch({
 											payload: event,
-											type: PAGE_TYPES.FIELD_FOCUS,
+											type: EVENT_TYPES.FIELD_FOCUS,
 										})
 									}
 									pageIndex={pageIndex}

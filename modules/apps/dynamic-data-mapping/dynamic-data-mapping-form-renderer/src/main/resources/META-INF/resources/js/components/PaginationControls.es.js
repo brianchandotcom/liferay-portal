@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {PAGE_TYPES, usePage} from '../hooks/usePage.es';
+import {EVENT_TYPES, usePage} from '../hooks/usePage.es';
 
 export const PaginationControls = ({
 	activePage,
@@ -35,7 +35,7 @@ export const PaginationControls = ({
 				<ClayButton
 					className="lfr-ddm-form-pagination-prev"
 					onClick={() =>
-						dispatch({type: PAGE_TYPES.PAGINATION_PREVIOUS})
+						dispatch({type: EVENT_TYPES.PAGINATION_PREVIOUS})
 					}
 					type="button"
 				>
@@ -49,7 +49,9 @@ export const PaginationControls = ({
 			{activePage < total - 1 && (
 				<ClayButton
 					className="float-right lfr-ddm-form-pagination-next"
-					onClick={() => dispatch({type: PAGE_TYPES.PAGINATION_NEXT})}
+					onClick={() =>
+						dispatch({type: EVENT_TYPES.PAGINATION_NEXT})
+					}
 					type="button"
 				>
 					{strings !== null

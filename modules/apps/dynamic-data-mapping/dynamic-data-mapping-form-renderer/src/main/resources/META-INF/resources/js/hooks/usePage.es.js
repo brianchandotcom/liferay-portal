@@ -17,11 +17,11 @@ import React, {useContext, useEffect, useState} from 'react';
 
 const PageContext = React.createContext({});
 
-export const PAGE_TYPES = {
+export const EVENT_TYPES = {
 	CHANGE_ACTIVE_PAGE: 'activePageUpdated',
-	DND_DROP: 'fieldDrop',
 	FIELD_BLUR: 'fieldBlurred',
 	FIELD_CHANGE: 'fieldEdited',
+	FIELD_DROP: 'FIELD_DROP',
 	FIELD_FOCUS: 'fieldFocused',
 	PAGE_ADDED: 'pageAdded',
 	PAGE_DELETED: 'pageDeleted',
@@ -59,24 +59,24 @@ export const PageProvider = ({children, dispatch, emit, value}) => {
 
 	const onDispatch = ({payload, type}) => {
 		switch (type) {
-			case PAGE_TYPES.CHANGE_ACTIVE_PAGE:
-			case PAGE_TYPES.DND_DROP:
-			case PAGE_TYPES.PAGE_ADDED:
-			case PAGE_TYPES.PAGE_DELETED:
-			case PAGE_TYPES.PAGE_RESET:
-			case PAGE_TYPES.PAGINATION:
-			case PAGE_TYPES.REMOVED:
-			case PAGE_TYPES.REPEATED:
-			case PAGE_TYPES.SUCCESS_CHANGED:
+			case EVENT_TYPES.CHANGE_ACTIVE_PAGE:
+			case EVENT_TYPES.FIELD_DROP:
+			case EVENT_TYPES.PAGE_ADDED:
+			case EVENT_TYPES.PAGE_DELETED:
+			case EVENT_TYPES.PAGE_RESET:
+			case EVENT_TYPES.PAGINATION:
+			case EVENT_TYPES.REMOVED:
+			case EVENT_TYPES.REPEATED:
+			case EVENT_TYPES.SUCCESS_CHANGED:
 				dispatch(type, payload);
 				break;
-			case PAGE_TYPES.PAGINATION_NEXT:
-			case PAGE_TYPES.PAGINATION_PREVIOUS:
+			case EVENT_TYPES.PAGINATION_NEXT:
+			case EVENT_TYPES.PAGINATION_PREVIOUS:
 				dispatch(type);
 				break;
-			case PAGE_TYPES.FIELD_BLUR:
-			case PAGE_TYPES.FIELD_CHANGE:
-			case PAGE_TYPES.FIELD_FOCUS:
+			case EVENT_TYPES.FIELD_BLUR:
+			case EVENT_TYPES.FIELD_CHANGE:
+			case EVENT_TYPES.FIELD_FOCUS:
 				emit(type, payload);
 				break;
 			default:

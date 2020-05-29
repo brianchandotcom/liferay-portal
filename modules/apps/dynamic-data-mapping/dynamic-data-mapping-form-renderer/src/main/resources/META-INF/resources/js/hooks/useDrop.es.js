@@ -14,7 +14,7 @@
 
 import {useDrop as useDndDrop} from 'react-dnd';
 
-import {PAGE_TYPES, usePage} from './usePage.es';
+import {EVENT_TYPES, usePage} from './usePage.es';
 
 const defaultSpec = {
 	accept: [],
@@ -41,7 +41,7 @@ export const useDrop = (sourceItem) => {
 		drop: (item, monitor) =>
 			dispatch({
 				payload: {item, monitor, sourceItem},
-				type: PAGE_TYPES.DND_DROP,
+				type: EVENT_TYPES.FIELD_DROP,
 			}),
 	});
 

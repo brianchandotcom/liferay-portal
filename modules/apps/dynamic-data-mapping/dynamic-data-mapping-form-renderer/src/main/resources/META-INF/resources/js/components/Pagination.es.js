@@ -16,7 +16,7 @@ import ClayPagination from '@clayui/pagination';
 import classnames from 'classnames';
 import React from 'react';
 
-import {PAGE_TYPES, usePage} from '../hooks/usePage.es';
+import {EVENT_TYPES, usePage} from '../hooks/usePage.es';
 
 export const Pagination = ({activePage, pages}) => {
 	const {dispatch} = usePage();
@@ -31,7 +31,7 @@ export const Pagination = ({activePage, pages}) => {
 				<button
 					className="page-link"
 					onClick={() =>
-						dispatch({type: PAGE_TYPES.PAGINATION_PREVIOUS})
+						dispatch({type: EVENT_TYPES.PAGINATION_PREVIOUS})
 					}
 					type="button"
 				>
@@ -50,7 +50,7 @@ export const Pagination = ({activePage, pages}) => {
 					onClick={() =>
 						dispatch({
 							payload: {pageIndex: index},
-							type: PAGE_TYPES.PAGINATION,
+							type: EVENT_TYPES.PAGINATION,
 						})
 					}
 				>
@@ -68,7 +68,9 @@ export const Pagination = ({activePage, pages}) => {
 			>
 				<button
 					className="page-link"
-					onClick={() => dispatch({type: PAGE_TYPES.PAGINATION_NEXT})}
+					onClick={() =>
+						dispatch({type: EVENT_TYPES.PAGINATION_NEXT})
+					}
 					type="button"
 				>
 					»

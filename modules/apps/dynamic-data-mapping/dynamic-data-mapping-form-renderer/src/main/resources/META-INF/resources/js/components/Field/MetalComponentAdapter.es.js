@@ -14,7 +14,7 @@
 
 import React, {useEffect, useRef} from 'react';
 
-import {PAGE_TYPES, usePage} from '../../hooks/usePage.es';
+import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
 import MetalFieldAdapter from './MetalFieldAdapter.es';
 
 class NoRender extends React.Component {
@@ -57,12 +57,12 @@ export const MetalComponentAdapter = ({
 					onRemoved: (_, event) =>
 						dispatch({
 							payload: event,
-							type: PAGE_TYPES.REMOVED,
+							type: EVENT_TYPES.REMOVED,
 						}),
 					onRepeated: (_, event) =>
 						dispatch({
 							payload: event,
-							type: PAGE_TYPES.REPEATED,
+							type: EVENT_TYPES.REPEATED,
 						}),
 					pageIndex,
 					spritemap,

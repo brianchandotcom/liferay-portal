@@ -17,7 +17,7 @@ import './Panel.scss';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {PAGE_TYPES, usePage} from 'dynamic-data-mapping-form-renderer';
+import {EVENT_TYPES, usePage} from 'dynamic-data-mapping-form-renderer';
 import React from 'react';
 
 import useHeightTransition from './useHeightTransition.es';
@@ -97,7 +97,7 @@ const Panel = ({
 
 												dispatch({
 													payload: name,
-													type: PAGE_TYPES.REMOVED,
+													type: EVENT_TYPES.REMOVED,
 												});
 											}}
 											small
@@ -117,7 +117,7 @@ const Panel = ({
 
 											dispatch({
 												payload: name,
-												type: PAGE_TYPES.REPEATED,
+												type: EVENT_TYPES.REPEATED,
 											});
 										}}
 										small

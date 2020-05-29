@@ -15,7 +15,7 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import {PAGE_TYPES, usePage} from '../hooks/usePage.es';
+import {EVENT_TYPES, usePage} from '../hooks/usePage.es';
 
 export const MultiStep = ({activePage, editable, pages}) => {
 	const {dispatch} = usePage();
@@ -34,7 +34,7 @@ export const MultiStep = ({activePage, editable, pages}) => {
 						onClick={() =>
 							dispatch({
 								payload: {pageIndex: index},
-								type: PAGE_TYPES.PAGINATION,
+								type: EVENT_TYPES.PAGINATION,
 							})
 						}
 					>

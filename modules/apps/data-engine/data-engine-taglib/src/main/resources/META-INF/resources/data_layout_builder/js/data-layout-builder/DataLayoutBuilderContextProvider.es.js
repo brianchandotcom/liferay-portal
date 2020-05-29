@@ -12,6 +12,7 @@
  * details.
  */
 
+import {EVENT_TYPES} from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useEffect} from 'react';
 
 import AppContext from '../AppContext.es';
@@ -111,7 +112,7 @@ export default ({children, dataLayoutBuilder}) => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
 		const onDrop = getDropHandler({dataDefinition, dataLayoutBuilder});
 
-		const eventHandler = provider.on('fieldDrop', onDrop);
+		const eventHandler = provider.on(EVENT_TYPES.FIELD_DROP, onDrop);
 
 		return () => eventHandler.removeListener();
 	}, [dataLayoutBuilder, dataDefinition]);

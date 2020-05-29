@@ -128,6 +128,14 @@ definition {
 					value1 = "");
 			}
 		}
+		else if (isSet(entryName)) {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_entryTitle = "${entryName}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator2 = "PageEditor#COLLECTION_CELL",
+				value1 = "");
+		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_fragmentName = "${fragmentName}",
@@ -135,11 +143,14 @@ definition {
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 				value1 = "");
 		}
-
-		AssertVisible(
-			key_fragmentName = "${fragmentName}",
-			key_messageIfo = "The selected content will be shown here.",
-			locator1 = "Fragment#MESSAGE_INFO");
+		if ("${fragmentName}" == "Content") {
+			if (!(isSet(entryName))) {
+				AssertVisible(
+					key_fragmentName = "${fragmentName}",
+					key_messageIfo = "The selected content will be shown here.",
+					locator1 = "Fragment#MESSAGE_INFO");
+			}
+		}
 	}
 
 	macro addDisplayPageContent {

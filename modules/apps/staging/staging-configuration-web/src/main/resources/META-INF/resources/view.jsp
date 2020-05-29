@@ -42,7 +42,9 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.MANAGE_STAGING) && GroupPermissionUtil.contains(permissionChecker, liveGroup, ActionKeys.VIEW_STAGING) %>">
 		<%@ include file="/staging_configuration_exceptions.jspf" %>
 
-		<div class="custom-sheet sheet sheet-lg">
+		<clay:sheet
+			cssClass="custom-sheet"
+		>
 			<liferay-ui:success key="stagingDisabled" message="staging-is-successfully-disabled" />
 
 			<liferay-ui:success key="localStagingModified" message="local-staging-configuration-is-successfully-modified" />
@@ -65,11 +67,11 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 				<aui:input name="forceDisable" type="hidden" value="<%= false %>" />
 
 				<c:if test="<%= !privateLayoutSet.isLayoutSetPrototypeLinkActive() && !publicLayoutSet.isLayoutSetPrototypeLinkActive() %>">
-					<div class="sheet-header">
+					<clay:sheet-header>
 						<div class="sheet-title">
 							<liferay-ui:message key="javax.portlet.title.com_liferay_staging_configuration_web_portlet_StagingConfigurationPortlet" />
 						</div>
-					</div>
+					</clay:sheet-header>
 
 					<%@ include file="/staging_configuration_select_staging_type.jspf" %>
 
@@ -77,7 +79,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 
 					<%@ include file="/staging_configuration_staged_portlets.jspf" %>
 
-					<div class="sheet-footer">
+					<clay:sheet-footer>
 						<div class="btn-group-item">
 							<div class="btn-group-item">
 								<button class="btn btn-primary">
@@ -87,7 +89,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 								</button>
 							</div>
 						</div>
-					</div>
+					</clay:sheet-footer>
 
 					<aui:script require="metal-dom/src/dom as dom">
 						var pwcWarning = document.getElementById('<portlet:namespace />pwcWarning');
@@ -142,7 +144,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskMan
 					</aui:script>
 				</c:if>
 			</aui:form>
-		</div>
+		</clay:sheet>
 	</c:when>
 	<c:otherwise>
 		<liferay-staging:alert

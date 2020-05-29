@@ -12,14 +12,14 @@ definition {
 		property layouttpl.plugins.includes = "1-2-1-columns-layouttpl";
 		var appName = "1-2-1 Columns Layout";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.uninstallAppCP(appName = "${appName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
 			portlet = "App Manager");

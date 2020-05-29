@@ -20,7 +20,7 @@ definition {
 
 		var appName = "test-app-portlet";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
 			portlet = "App Manager");
@@ -44,7 +44,7 @@ definition {
 	test ViewIndependentModulesIsNotNestedWithinItself {
 		property test.name.skip.portal.instance = "AppManagerUsecase#ViewIndependentModulesIsNotNestedWithinItself";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
 			portlet = "App Manager");
@@ -61,7 +61,7 @@ definition {
 	test ViewLicenseManager {
 		property test.name.skip.portal.instance = "AppManagerUsecase#ViewLicenseManager";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
 			portlet = "License Manager");

@@ -20,7 +20,7 @@ definition {
 	test AddAMIWithHighDensityResolution {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -51,7 +51,7 @@ definition {
 
 	@priority = "5"
 	test AddAMIWithZeroPixels {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -62,7 +62,7 @@ definition {
 			maxWidth = "0",
 			zero = "true");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -72,7 +72,7 @@ definition {
 
 	@priority = "4"
 	test AddAndEditEntriesWithSpecialCharacters {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -103,7 +103,7 @@ definition {
 
 	@priority = "5"
 	test AddAndUpdateAMIWithImagesInDM {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -125,7 +125,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -160,7 +160,7 @@ definition {
 
 	@priority = "4"
 	test AddDuplicateImageResolution {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -173,7 +173,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -187,7 +187,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -197,7 +197,7 @@ definition {
 
 	@priority = "4"
 	test AddImageResolutionWithNoDimensions {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -208,7 +208,7 @@ definition {
 			maxWidth = "",
 			noDimensions = "true");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -218,7 +218,7 @@ definition {
 
 	@priority = "4"
 	test AddImageResolutionWithSingleDimension {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -356,7 +356,7 @@ definition {
 
 	@priority = "5"
 	test CannotAddNonNumericWidthOrHeight {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -366,7 +366,7 @@ definition {
 			maxHeight = "notallowed",
 			maxWidth = "notallowed");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -376,7 +376,7 @@ definition {
 
 	@priority = "5"
 	test EditAndDeleteDisabledAMI {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -416,7 +416,7 @@ definition {
 
 	@priority = "5"
 	test EditImageResolutionWithAdaptedImages {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -453,7 +453,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -471,7 +471,7 @@ definition {
 
 	@priority = "4"
 	test EditImageResolutionWithNoDimensions {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -493,7 +493,7 @@ definition {
 			maxWidthEdit = "",
 			noDimensions = "true");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -503,7 +503,7 @@ definition {
 
 	@priority = "5"
 	test EditImageResolutionWithoutAdaptedImage {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -537,7 +537,7 @@ definition {
 
 	@priority = "4"
 	test EditImageResolutionWithSingleDimension {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -582,7 +582,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -607,7 +607,7 @@ definition {
 
 	@priority = "4"
 	test ViewAutomaticAndCustomImageVariantIDs {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -621,7 +621,7 @@ definition {
 
 		AdaptiveMedia.viewImageVariantID(imageVariantID = "small-image-variant");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -634,7 +634,7 @@ definition {
 
 		AdaptiveMedia.viewImageVariantID(imageVariantID = "edited-small-image-variant");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -649,7 +649,7 @@ definition {
 
 		AdaptiveMedia.viewImageVariantID(imageVariantID = "custom-id");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -667,7 +667,7 @@ definition {
 	test ViewNoImageResolutionInNewVirtualInstance {
 		property test.name.skip.portal.instance = "AdaptiveMedia#ViewNoImageResolutionInNewVirtualInstance";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -679,7 +679,7 @@ definition {
 
 		PortalInstances.viewCP(virtualHost = "www.able.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -696,7 +696,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -710,7 +710,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -735,7 +735,7 @@ definition {
 				sourceFileName = "Document_${entryCount}.jpg");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");
@@ -759,7 +759,7 @@ definition {
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Adaptive Media");

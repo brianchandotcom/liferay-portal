@@ -207,7 +207,7 @@ definition {
 		property test.name.skip.portal.instance = "FragmentsDeploy#CannotDeleteSystemScopedReadOnlyDeployedFragmentInOtherVirtualInstance";
 
 		task ("Add a new Virtual Instance") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");
@@ -300,7 +300,7 @@ definition {
 		property test.name.skip.portal.instance = "FragmentsDeploy#DeployFragmentsToSpecificVirtualInstance";
 
 		task ("Add a new Virtual Instance") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");
@@ -418,7 +418,7 @@ definition {
 		}
 
 		task ("Assert new fragment exists in future virtual instance") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");

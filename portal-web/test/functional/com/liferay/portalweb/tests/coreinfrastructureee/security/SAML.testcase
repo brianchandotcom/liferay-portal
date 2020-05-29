@@ -29,7 +29,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Server Administration");
@@ -44,7 +44,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -53,7 +53,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -88,7 +88,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "User Groups");
@@ -99,7 +99,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -233,7 +233,7 @@ definition {
 
 		Navigator.gotoLoginPage();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -257,7 +257,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -349,7 +349,7 @@ definition {
 
 		User.viewLoggedInPG();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -526,7 +526,7 @@ definition {
 			Navigator.gotoLoginPage();
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -558,7 +558,7 @@ definition {
 
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -589,7 +589,7 @@ definition {
 
 		User.viewLoggedInPG();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -614,7 +614,7 @@ definition {
 
 		User.viewLoggedInPG();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -625,7 +625,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -652,7 +652,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -670,7 +670,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -702,7 +702,7 @@ definition {
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");
@@ -717,7 +717,7 @@ definition {
 
 		Navigator.gotoLoginPage();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");
@@ -746,14 +746,14 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -777,7 +777,7 @@ definition {
 			Navigator.gotoLoginPage();
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -800,7 +800,7 @@ definition {
 			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -824,7 +824,7 @@ definition {
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Server Administration");
@@ -1071,7 +1071,7 @@ definition {
 			specificURL = "http://www.able.com:9080",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -1086,7 +1086,7 @@ definition {
 
 		Navigator.gotoLoginPage();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -1126,7 +1126,7 @@ definition {
 			samlEntityID = "samlsp",
 			spURL = "http://www.able.com:9080/");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Server Administration");
@@ -1291,7 +1291,7 @@ definition {
 			specificURL = "http://www.baker.com:10080",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
@@ -1319,7 +1319,7 @@ definition {
 			specificURL = "http://www.baker.com:10080",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "SAML Admin");

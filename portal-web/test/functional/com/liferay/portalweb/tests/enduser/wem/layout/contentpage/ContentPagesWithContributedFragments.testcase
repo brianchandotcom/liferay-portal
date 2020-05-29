@@ -663,7 +663,7 @@ definition {
 		}
 
 		task ("Disable autogenerate structure key") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "System Settings");

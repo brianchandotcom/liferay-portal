@@ -33,7 +33,7 @@ definition {
 	test AssertSearchAdmin {
 		property test.name.skip.portal.instance = "Elasticsearch7#AssertSearchAdmin";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -142,7 +142,7 @@ definition {
 
 		property test.name.skip.portal.instance = "Elasticsearch7#AssertSystemSettingsPropogateToModule";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -237,7 +237,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -247,7 +247,7 @@ definition {
 			engineVendor = "Elasticsearch",
 			serverVersion = "7.3.0");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -257,7 +257,7 @@ definition {
 			configurationName = "Elasticsearch 7",
 			configurationScope = "System Scope");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
 			portlet = "App Manager");
@@ -307,7 +307,7 @@ definition {
 
 		Pause(locator1 = "5000");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -428,7 +428,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");

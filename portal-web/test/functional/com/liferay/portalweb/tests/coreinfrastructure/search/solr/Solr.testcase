@@ -34,7 +34,7 @@ definition {
 	test AssertSearchAdmin {
 		property test.name.skip.portal.instance = "Solr#AssertSearchAdmin";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -113,11 +113,13 @@ definition {
 
 	@priority = "3"
 	test AssertSearchTuningDisabled {
-		ProductMenuHelper.expandPanel(panel = "Control Panel");
+		GlobalMenuHelper.openGlobalMenu();
+
+		Navigator.gotoNavTab(navTab = "Control Panel");
 
 		AssertElementNotPresent(
 			key_panel = "Search Tuning",
-			locator1 = "ProductMenu#PORTLET");
+			locator1 = "GlobalMenu#PORTLET");
 	}
 
 	@description = "This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal."
@@ -148,7 +150,7 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "Apple");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -216,7 +218,7 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "Apple");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -277,7 +279,7 @@ definition {
 			dmDocumentFile = "Document_1.txt",
 			dmDocumentTitle = "Apple");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");

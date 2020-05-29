@@ -47,7 +47,7 @@ definition {
 	@description = "This is a use case for LPS-102790"
 	@priority = "4"
 	test ViewSystemAndPortalProperties {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Server Administration");

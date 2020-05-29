@@ -28,7 +28,7 @@ definition {
 	test AddPortalInstance {
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#AddPortalInstance";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -45,7 +45,7 @@ definition {
 	test DeletePortalInstance {
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#DeletePortalInstance";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -62,7 +62,7 @@ definition {
 	test PermissionCheckPortalInstances {
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#PermissionCheckPortalInstances";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -119,7 +119,7 @@ definition {
 	test ViewDeactivatedPortalInstance {
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewDeactivatedPortalInstance";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -133,7 +133,7 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -220,7 +220,7 @@ definition {
 
 		User.loginPG();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -303,7 +303,7 @@ definition {
 	test ViewVirtualInstanceInheritsSystemSettings {
 		property test.name.skip.portal.instance = "PortalconfigurationUsecase#ViewVirtualInstanceInheritsSystemSettings";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -321,7 +321,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");

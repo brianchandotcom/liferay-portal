@@ -27,7 +27,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.upstream = "quarantine";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -111,7 +111,7 @@ definition {
 	test AddAndEditOAuthSAPEntries {
 		property test.name.skip.portal.instance = "OAuth2#AddAndEditOAuthSAPEntries";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Service Access Policy");
@@ -123,7 +123,7 @@ definition {
 			serviceClass = "com.liferay.portal.kernel.service.PortalService",
 			title = "read Portal version");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -159,7 +159,7 @@ definition {
 			fail("JSON-WS call failed to return Portal version");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Service Access Policy");
@@ -174,7 +174,7 @@ definition {
 			fail("Access denied message was not returned");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -184,7 +184,7 @@ definition {
 			removedScope = "read.portalversion",
 			resourcePanels = "Portal Services");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Service Access Policy");
@@ -205,7 +205,7 @@ definition {
 			policyName = "OAUTH2_read.portalversion",
 			title = "read Portal build number");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -246,7 +246,7 @@ definition {
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "OAuth2#AssertAuthorizationCodeWorksInCluster";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -270,7 +270,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -293,7 +293,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -334,7 +334,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Service Access Policy");
@@ -352,7 +352,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -425,7 +425,7 @@ definition {
 	test AssertExpandPanelsOnGlobalScopes {
 		property test.name.skip.portal.instance = "OAuth2#AssertExpandPanelsOnGlobalScopes";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -439,7 +439,7 @@ definition {
 
 		SystemSettings.deleteConfiguration();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -467,7 +467,7 @@ definition {
 	test AuthorizeExternalApplication {
 		property custom.properties = "virtual.hosts.default.site.name=Guest";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -520,7 +520,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration-default.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;true&quot;";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -534,7 +534,7 @@ definition {
 
 		SystemSettings.deleteConfiguration();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -614,7 +614,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;5&quot;";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -679,7 +679,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.rest.internal.spi.bearer.token.provider.configuration.DefaultBearerTokenProviderConfiguration.config:com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration.config";
 		property osgi.module.configurations = "access.token.expires.in=&quot;5&quot;${line.separator}refresh.token.expires.in=&quot;10&quot;:oauth2.expired.authorizations.afterlife.duration=&quot;5&quot;${line.separator}oauth2.expired.authorizations.check.interval=&quot;1&quot;";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -741,7 +741,7 @@ definition {
 	test UpdateScopeBundlePrefixes {
 		property liferay.dependency.jars = "com.liferay.oauth2.provider.scope.sample.qa.jar";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -757,7 +757,7 @@ definition {
 			resourcePanels = "Portal Services,Sample QA app",
 			scopeAliasList = "liferay-json-web-services.everything,liferay-oauth2-scope-sample-qa-app.example-scope-1");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -771,7 +771,7 @@ definition {
 
 		SystemSettings.deleteConfiguration();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -787,7 +787,7 @@ definition {
 			separator = "_",
 			serviceProperties = "osgi.jaxrs.application.base");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -803,7 +803,7 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.oauth2.provider.scope.internal.configuration.ConfigurableScopeMapperConfiguration-liferay-oauth2-scope-sample-qa-app.config";
 		property osgi.module.configurations = "mapping=[&quot;example-scope-1,example-scope-2\=everything.read,everything.write&quot;]${line.separator}osgi.jaxrs.name=&quot;liferay-oauth2-scope-sample-qa-app&quot;${line.separator}passthrough=&quot;false&quot;";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -817,7 +817,7 @@ definition {
 
 		SystemSettings.deleteConfiguration();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -839,7 +839,7 @@ definition {
 		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -910,7 +910,7 @@ definition {
 		property osgi.module.configurations = "include.bundle.symbolic.name=&quot;false&quot;${line.separator}osgi.jaxrs.name=&quot;Default&quot;${line.separator}separator=&quot;&quot;${line.separator}service.properties=&quot;&quot;";
 		property test.name.skip.portal.instance = "OAuth2#ViewAuthPromptRequestedScopes";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");
@@ -966,7 +966,7 @@ definition {
 			key_resourceName = "sample-app",
 			locator1 = "OAuth2#AUTHORIZATION_REQUEST_RESOURCE_NAME");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "OAuth 2 Administration");

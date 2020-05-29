@@ -30,7 +30,7 @@ definition {
 	test AssertSearchAdmin {
 		property test.name.skip.portal.instance = "Elasticsearch6#AssertSearchAdmin";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -138,7 +138,7 @@ definition {
 
 		property test.name.skip.portal.instance = "Elasticsearch6#AssertSystemSettingsPropogateToModule";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -248,7 +248,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");

@@ -43,7 +43,7 @@ definition {
 	@description = "This test covers LPS-95501. It asserts added wiki attachment file via item selector."
 	@priority = "4"
 	test ActivateInitialStagingWithAttachment {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");

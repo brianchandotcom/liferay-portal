@@ -553,7 +553,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -604,7 +604,7 @@ definition {
 
 		LAR.downloadLar();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -1567,7 +1567,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -1780,7 +1780,7 @@ definition {
 			larFileName = "${larFileName}",
 			siteName = "Site C");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -2006,7 +2006,7 @@ definition {
 	test PublishWebContentWithBrokenLink {
 		property test.name.skip.portal.instance = "ExportImport#PublishWebContentWithBrokenLink";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

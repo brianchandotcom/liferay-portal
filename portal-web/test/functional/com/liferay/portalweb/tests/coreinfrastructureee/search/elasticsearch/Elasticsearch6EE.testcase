@@ -282,7 +282,7 @@ definition {
 			groupName = "Guest",
 			title = "Charlie");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");
@@ -712,7 +712,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STARTED ${appName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -722,7 +722,7 @@ definition {
 			configurationName = "Learning to Rank",
 			configurationScope = "System Scope");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
 			portlet = "App Manager");
@@ -762,7 +762,7 @@ definition {
 			locator1 = "build-test-elasticsearch6.xml",
 			value1 = "add-ltr-linear-regression-model -Dbackup.index=.ltrstore -Delasticsearch.port=9200");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Server Administration");

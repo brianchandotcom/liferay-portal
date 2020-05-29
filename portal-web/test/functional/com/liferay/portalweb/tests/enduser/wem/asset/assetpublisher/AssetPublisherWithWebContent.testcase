@@ -450,7 +450,7 @@ definition {
 	test ViewWebContentViaAPAsGuestWithViewPermission {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");
@@ -461,7 +461,7 @@ definition {
 			roleTitle = "Guest",
 			siteNameScope = "${siteName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Roles");

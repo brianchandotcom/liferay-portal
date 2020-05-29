@@ -244,7 +244,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Usuarios",
 			panel = "Control Panel",
 			portlet = "Usuarios y organizaciones");
@@ -260,7 +260,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Usuarios",
 			panel = "Control Panel",
 			portlet = "Usuarios y organizaciones");
@@ -437,7 +437,7 @@ definition {
 			pageName = "Site Page 1",
 			siteName = "Site Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuración",
 			panel = "Control Panel",
 			portlet = "Configuración de instancia");
@@ -564,14 +564,14 @@ definition {
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
 
 		SiteTemplates.viewNoSiteOrWorkflowLinksCP();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");

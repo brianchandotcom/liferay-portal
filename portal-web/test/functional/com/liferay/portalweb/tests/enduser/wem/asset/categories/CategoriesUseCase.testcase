@@ -241,7 +241,7 @@ definition {
 	test AddSubcategoryConfigureParentCategory {
 		property test.name.skip.portal.instance = "CategoriesUseCase#AddSubcategoryConfigureParentCategory";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -1416,7 +1416,7 @@ definition {
 	test ViewFlattenedTreeCategoryNavigationDisplayStyle {
 		property test.name.skip.portal.instance = "CategoriesUseCase#ViewFlattenedTreeCategoryNavigationDisplayStyle";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

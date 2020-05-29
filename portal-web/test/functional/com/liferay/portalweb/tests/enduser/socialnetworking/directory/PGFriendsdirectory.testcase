@@ -63,7 +63,7 @@ definition {
 		var userMiddleName = "usermn";
 		var userScreenName = "usersn";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");

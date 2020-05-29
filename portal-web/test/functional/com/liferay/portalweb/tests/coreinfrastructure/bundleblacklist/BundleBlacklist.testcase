@@ -25,7 +25,7 @@ definition {
 	test BlacklistComponent {
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistComponent";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -51,12 +51,12 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleJar";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -82,7 +82,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
@@ -94,12 +94,12 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "BundleBlacklist#BlacklistModuleLPKG";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -141,7 +141,7 @@ definition {
 			pageName = "Search",
 			themeName = "Classic Theme");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");
@@ -177,7 +177,7 @@ definition {
 	test ExportBundleBlacklistConfig {
 		property test.name.skip.portal.instance = "BundleBlacklist#ExportBundleBlacklistConfig";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

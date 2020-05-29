@@ -29,7 +29,7 @@ definition {
 		property osgi.app.includes = "bookmarks";
 		property portal.release = "false";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -39,7 +39,7 @@ definition {
 			customFieldType = "Text Area",
 			resourceName = "Blogs Entry");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -49,7 +49,7 @@ definition {
 			customFieldType = "Date",
 			resourceName = "Bookmarks Entry");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -60,7 +60,7 @@ definition {
 			customInputDataType = "Integer",
 			resourceName = "Bookmarks Folder");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -70,7 +70,7 @@ definition {
 			customFieldType = "Dropdown",
 			resourceName = "Calendar Event");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -80,7 +80,7 @@ definition {
 			customFieldType = "Checkbox",
 			resourceName = "Document");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -90,7 +90,7 @@ definition {
 			customFieldType = "Geolocation",
 			resourceName = "Documents Folder");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -101,7 +101,7 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "Knowledge Base Article");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -111,7 +111,7 @@ definition {
 			customFieldType = "Text Area",
 			resourceName = "Knowledge Base Folder");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -122,7 +122,7 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "Message Boards Category");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -133,7 +133,7 @@ definition {
 			customInputDataType = "Integer",
 			resourceName = "Message Boards Message");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -143,7 +143,7 @@ definition {
 			customFieldType = "Dropdown",
 			resourceName = "Organization");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -153,7 +153,7 @@ definition {
 			customFieldType = "Checkbox",
 			resourceName = "Page");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -163,7 +163,7 @@ definition {
 			customFieldType = "Radio",
 			resourceName = "Role");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -173,7 +173,7 @@ definition {
 			customFieldType = "Geolocation",
 			resourceName = "Site");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -183,7 +183,7 @@ definition {
 			customFieldType = "Geolocation",
 			resourceName = "User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -193,7 +193,7 @@ definition {
 			customFieldType = "Date",
 			resourceName = "User Group");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -205,7 +205,7 @@ definition {
 			localization = "true",
 			resourceName = "Web Content Article");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -216,7 +216,7 @@ definition {
 			localization = "true",
 			resourceName = "Web Content Folder");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -230,7 +230,7 @@ definition {
 
 	@priority = "5"
 	test AddCustomFieldUserTextField {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -248,7 +248,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -268,7 +268,7 @@ definition {
 		property environment.acceptance = "true";
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -279,7 +279,7 @@ definition {
 			customInputDataType = "Text",
 			resourceName = "User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -296,7 +296,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -311,7 +311,7 @@ definition {
 
 	@priority = "4"
 	test EditRevertCustomFieldWikiPage {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");
@@ -415,7 +415,7 @@ definition {
 			roleTitle = "Update DM Role",
 			userEmailAddress = "userea@liferay.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -424,7 +424,7 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Custom Fields");

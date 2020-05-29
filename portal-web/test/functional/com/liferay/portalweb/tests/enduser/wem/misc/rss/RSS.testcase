@@ -567,7 +567,7 @@ definition {
 		property test.name.skip.portal.instance = "RSS#UpdateRSSFeedViaAssetpublisher";
 		property testray.component.names = "Asset Publisher,RSS";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

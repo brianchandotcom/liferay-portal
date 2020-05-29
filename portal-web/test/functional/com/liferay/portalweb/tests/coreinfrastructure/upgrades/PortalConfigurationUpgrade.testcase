@@ -15,7 +15,7 @@ definition {
 
 		AssertLocation(value1 = "${portalURL}/web/test/home");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");

@@ -108,7 +108,7 @@ definition {
 
 		AssertTextNotPresent(value1 = "Announcements Entry Title");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Announcements and Alerts");
@@ -139,7 +139,7 @@ definition {
 
 	@priority = "3"
 	test AddAnnouncementsEntrySite {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");

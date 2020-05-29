@@ -35,7 +35,7 @@ definition {
 
 		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -52,7 +52,7 @@ definition {
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -66,7 +66,7 @@ definition {
 
 		Portlet.viewNoPortletsPresentPG();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -100,7 +100,7 @@ definition {
 			disableChanges = "true",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -126,7 +126,7 @@ definition {
 
 		SiteTemplates.viewCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -137,7 +137,7 @@ definition {
 			siteTemplateActiveEdit = "No",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -153,12 +153,12 @@ definition {
 	test DeactivateDefaultSiteTemplate {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -167,7 +167,7 @@ definition {
 			siteTemplateActiveEdit = "No",
 			siteTemplateName = "Community Site");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -178,7 +178,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "guest");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -195,14 +195,14 @@ definition {
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
 
 		SiteTemplates.deleteCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -226,7 +226,7 @@ definition {
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -235,7 +235,7 @@ definition {
 			siteName = "Site Name",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -244,7 +244,7 @@ definition {
 			associatedToSite = "true",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -312,7 +312,7 @@ definition {
 			siteTemplateDescription = "This is a site template description",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -321,7 +321,7 @@ definition {
 			siteTemplateDescription = "Site Template Description Edit",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -339,7 +339,7 @@ definition {
 			siteTemplateActive = "Yes",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -348,7 +348,7 @@ definition {
 			siteName = "Site Name",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -357,7 +357,7 @@ definition {
 			siteTemplateActiveEdit = "No",
 			siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -371,7 +371,7 @@ definition {
 	test LocalizeDefaultSiteTemplates {
 		property test.name.skip.portal.instance = "CPSitetemplates#LocalizeDefaultSiteTemplates";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -387,7 +387,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sitios web",
 			panel = "Control Panel",
 			portlet = "Plantillas de sitio web");
@@ -407,7 +407,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Site Templates");
@@ -421,7 +421,7 @@ definition {
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -441,7 +441,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -523,7 +523,7 @@ definition {
 
 		Close.closeAndSelectWindow(locator1 = "Site Templates - Control Panel - ${siteName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");
@@ -557,7 +557,7 @@ definition {
 			siteTemplateActive = "Yes",
 			siteTemplateName = '''<script>alert(123);</script>''');
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
 			portlet = "Sites");

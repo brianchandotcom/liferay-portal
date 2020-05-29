@@ -116,7 +116,7 @@ definition {
 
 		if (IsNotVisible(locator1 = "ManagementBar#FILTER_AND_ORDER")) {
 
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Search");
@@ -271,7 +271,7 @@ definition {
 		property test.name.skip.portal.instance = "SiteMemberships#OrganizationsView";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Search");

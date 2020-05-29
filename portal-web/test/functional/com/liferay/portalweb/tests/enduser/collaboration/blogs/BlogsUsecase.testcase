@@ -342,7 +342,7 @@ definition {
 			entryContent = "Blogs Entry2 Content",
 			entryTitle = "Blogs Entry2 Title");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
@@ -1323,7 +1323,7 @@ definition {
 
 		Click(locator1 = "Icon#TIMES");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -1333,7 +1333,7 @@ definition {
 				orgName = "${orgName}",
 				orgType = "Organization");
 
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
@@ -1349,7 +1349,7 @@ definition {
 			orgName = "Organization3 Name",
 			parentOrgName = "Organization1 Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -1361,7 +1361,7 @@ definition {
 			parentOrgName = "Organization1 Name",
 			subOrgName = "Organization3 Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");

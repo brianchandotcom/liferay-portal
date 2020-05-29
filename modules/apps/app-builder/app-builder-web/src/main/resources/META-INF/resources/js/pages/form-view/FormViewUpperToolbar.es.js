@@ -128,7 +128,7 @@ export default ({appsPortlet, newCustomObject}) => {
 
 				<UpperToolbar.Button
 					disabled={
-						!dataLayout.name[editingLanguageId] ||
+						!dataLayout.name[defaultLanguageId] ||
 						DataLayoutVisitor.isDataLayoutEmpty(
 							dataLayout.dataLayoutPages
 						)

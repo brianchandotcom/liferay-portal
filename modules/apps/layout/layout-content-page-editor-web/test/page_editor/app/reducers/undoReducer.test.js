@@ -37,9 +37,15 @@ import undoReducer from '../../../../src/main/resources/META-INF/resources/page_
 import {SELECT_SEGMENTS_EXPERIENCE} from '../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions';
 import selectExperience from '../../../../src/main/resources/META-INF/resources/page_editor/plugins/experience/actions/selectExperience';
 
+const STATE = {
+	availableSegmentsExperiences: {0: {name: 'default'}},
+	layoutData: {items: []},
+	undoHistory: [],
+};
+
 describe('undoReducer', () => {
 	it('allows only having 20 maximun undo items', () => {
-		const initialState = {layoutData: {items: []}, undoHistory: []};
+		const initialState = {...STATE};
 
 		const actions = new Array(25).fill({
 			actionType: DUPLICATE_ITEM,
@@ -55,7 +61,7 @@ describe('undoReducer', () => {
 
 	it('saves needed state for undo when dispatching ADD_FRAGMENT_ENTRY_LINKS action', () => {
 		const ITEM_ID = 'itemId';
-		const initialState = {layoutData: {items: []}, undoHistory: []};
+		const initialState = {...STATE};
 
 		const action = addFragmentEntryLinks({addedItemId: ITEM_ID});
 
@@ -72,7 +78,7 @@ describe('undoReducer', () => {
 
 	it('saves needed state for undo when dispatching ADD_FRAGMENT_ENTRY_LINKS action', () => {
 		const ITEM_ID = 'itemId';
-		const initialState = {layoutData: {items: []}, undoHistory: []};
+		const initialState = {...STATE};
 
 		const action = addFragmentEntryLinks({addedItemId: ITEM_ID});
 
@@ -89,7 +95,7 @@ describe('undoReducer', () => {
 
 	it('saves needed state for undo when dispatching DUPLICATE_ITEM action', () => {
 		const ITEM_ID = 'itemId';
-		const initialState = {layoutData: {items: []}, undoHistory: []};
+		const initialState = {...STATE};
 
 		const action = duplicateItem({itemId: ITEM_ID});
 
@@ -107,9 +113,8 @@ describe('undoReducer', () => {
 	it('saves needed state for undo when dispatching SELECT_SEGMENTS_EXPERIENCE action', () => {
 		const SEGMENTS_EXPERIENCE_ID = '2';
 		const initialState = {
-			layoutData: {items: []},
+			...STATE,
 			segmentsExperienceId: SEGMENTS_EXPERIENCE_ID,
-			undoHistory: [],
 		};
 
 		const action = selectExperience({
@@ -130,9 +135,8 @@ describe('undoReducer', () => {
 	it('saves needed state for undo when dispatching UPDATE_LANGUAGE_ID action', () => {
 		const LANGUAGE_ID = 'es_ES';
 		const initialState = {
+			...STATE,
 			languageId: LANGUAGE_ID,
-			layoutData: {items: []},
-			undoHistory: [],
 		};
 
 		const action = updateLanguageId({
@@ -198,14 +202,13 @@ describe('undoReducer', () => {
 		};
 
 		const initialState = {
+			...STATE,
 			fragmentEntryLinks: {
 				[FRAGMENT_ENTRY_LINK_ID]: {
 					editableValues: EDITABLE_VALUES,
 					fragmentEntryLinkId: FRAGMENT_ENTRY_LINK_ID,
 				},
 			},
-			layoutData: {items: []},
-			undoHistory: [],
 		};
 
 		const action = updateFragmentEntryLinkConfiguration({
@@ -267,8 +270,8 @@ describe('undoReducer', () => {
 		};
 
 		const initialState = {
+			...STATE,
 			layoutData: LAYOUT_DATA,
-			undoHistory: [],
 		};
 
 		layoutDataActionTypes.forEach((type) => {

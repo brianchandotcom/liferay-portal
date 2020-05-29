@@ -376,6 +376,15 @@ public class DEDataDefinitionFieldLinkLocalServiceUtil {
 			classNameId, ddmStructureId, fieldNames);
 	}
 
+	public static java.util.List
+		<com.liferay.data.engine.model.DEDataDefinitionFieldLink>
+			getDEDataDefinitionFieldLinks(
+				long ddmStructureId, String[] fieldNames) {
+
+		return getService().getDEDataDefinitionFieldLinks(
+			ddmStructureId, fieldNames);
+	}
+
 	/**
 	 * Returns all the de data definition field links matching the UUID and company.
 	 *

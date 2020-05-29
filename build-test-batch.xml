@@ -5803,6 +5803,7 @@ ${output.content}</echo>
 			<test-action>
 				<sequential>
 					<ant dir="${release.tool.dir}" inheritAll="false" target="dist" useNativeBasedir="true">
+						<property name="override.decrement.module.bnd.versions" value="true" />
 						<property name="project.release.dir.native" value="${release.tool.dir}" />
 					</ant>
 				</sequential>

@@ -1278,10 +1278,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		dir = dir.getCanonicalFile();
 
-		for (File file : dir.listFiles()) {
-			if (file.isFile()) {
-				method.invoke(configInstaller, file);
-			}
+		for (File file : _listConfigs(dir)) {
+			method.invoke(configInstaller, file);
 		}
 	}
 
@@ -1382,6 +1380,42 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		return true;
+	}
+
+	private List<File> _listConfigs(File directory) {
+		if (!directory.isDirectory()) {
+			return Collections.<File>emptyList();
+		}
+
+		BundleContext bundleContext = _framework.getBundleContext();
+
+		String subdirMode = bundleContext.getProperty(
+			"felix.fileinstall.subdir.mode");
+
+		boolean recurse = false;
+
+		if (Objects.equals(subdirMode, "recurse")) {
+			recurse = true;
+		}
+
+		List<File> files = new ArrayList<>();
+
+		for (File file : directory.listFiles()) {
+			if (file.isDirectory()) {
+				if (recurse) {
+					files.addAll(_listConfigs(file));
+				}
+			}
+			else {
+				String name = file.getName();
+
+				if (name.endsWith(".cfg") || name.endsWith(".config")) {
+					files.add(file);
+				}
+			}
+		}
+
+		return files;
 	}
 
 	private String _parseBundleSymbolicName(Attributes attributes) {

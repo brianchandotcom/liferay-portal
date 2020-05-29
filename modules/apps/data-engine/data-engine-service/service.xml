@@ -40,6 +40,10 @@
 			<finder-column name="classNameId" />
 			<finder-column name="ddmStructureId" />
 		</finder>
+		<finder name="DDMSI_F" return-type="Collection">
+			<finder-column name="ddmStructureId" />
+			<finder-column arrayable-operator="OR" name="fieldName" />
+		</finder>
 		<finder name="C_DDMSI_F" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="ddmStructureId" />

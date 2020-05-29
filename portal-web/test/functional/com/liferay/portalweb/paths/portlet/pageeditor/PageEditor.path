@@ -494,10 +494,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--FRAGMENTS_AND_WIDGETS-->
+<tr>
+	<td>FRAGMENTS_AND_WIDGETS_TAB_ITEM</td>
+	<td>//li[contains(@class,'page-editor__fragments-widgets__tab-item')][normalize-space()='${key_fragmentName}']</td>
+	<td></td>
+</tr>
 <!--SECTION_BUILDER-->
 <tr>
 	<td>SECTION_BUILDER_FRAGMENTS</td>
-	<td>//div[contains(@class,'page-editor')]//div[contains(@class,'card') and contains(.,'${key_fragmentName}')]</td>
+	<td>//li[contains(@class,'page-editor__fragments-widgets')]//div[contains(@class,'title') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>

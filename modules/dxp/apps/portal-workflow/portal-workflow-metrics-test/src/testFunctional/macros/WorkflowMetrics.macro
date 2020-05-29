@@ -77,13 +77,16 @@ definition {
 
 	macro assertAssignees {
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+
 		AssertElementPresent(
-			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			key_nameOfAssignee = "Test Test");
+			key_nameOfAssignee = "Test Test",
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+
 		AssertElementNotPresent(
-			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			key_nameOfAssignee = "userfn userls");
+			key_nameOfAssignee = "userfn userls",
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
 	}
+
 	macro assertBulkCount {
 		Click(
 			key_rowNumber = "1",
@@ -95,7 +98,7 @@ definition {
 
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
 	}
-	
+
 	macro assertBulkModalTable {
 
 		AssertTextEquals(
@@ -103,17 +106,25 @@ definition {
 			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
 			value1 = "ID");
 
-		AssertElementPresent(
+		AssertTextEquals(
 			key_columnName = "Item Subject",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Item Subject");
 
-		AssertElementPresent(
+		AssertTextEquals(
 			key_columnName = "Process Step",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Process Step");
 
-		AssertElementPresent(
+		AssertTextEquals(
 			key_columnName = "Current Assignee",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK");
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Current Assignee");
+
+		AssertTextEquals(
+			key_columnName = "New Assignee",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "New Assignee");
 	}
 
 	macro assertChartIsPresent {
@@ -180,9 +191,10 @@ definition {
 
 	macro assertNoAssignees {
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+
 		AssertElementPresent(
-			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			key_nameOfAssignee = "No results found.");
+			key_nameOfAssignee = "No results found.",
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
 	}
 
 	macro assertWorkloadByAssigneeCardEmptyMessage {
@@ -657,18 +669,23 @@ definition {
 
 	macro selectNewAssignee {
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
+
 		Click(
-			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN",
-			key_nameOfAssignee = "Test Test");
+			key_nameOfAssignee = "Test Test",
+			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+
 		Click(locator1 = "WorkflowReassignModal#REASSIGN_BUTTON");
 	}
 
 	macro selectNewAssigneeBulkTask {
 		Click(locator1 = "WorkflowReassignModal#SELECT_ALL");
+
 		Click(locator1 = "WorkflowReassignModal#BULK_NEW_ASSIGNEE");
+
 		Click(
 			key_nameOfAssignee = "${nameOfAssignee}",
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+
 		Click(locator1 = "WorkflowReassignModal#NEXT_BUTTON");
 	}
 
@@ -769,11 +786,13 @@ definition {
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Blogs Entry");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry 1 Content",
 			entryTitle = "Blogs Entry Title 1");

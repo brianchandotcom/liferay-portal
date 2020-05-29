@@ -992,14 +992,20 @@ definition {
 			taskName = "Completed");
 	}
 
+	@description = "LRQA-55452 Automate LPS-102663: [Dashboard] Reassign Workflow instances individually"
+	@priority = "5"
 	test ReassignWorkflowInstance {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
+
 		WorkflowMetrics.singleReassignSetup();
 		WorkflowMetrics.goToWorkflowAllItems();
 		WorkflowMetrics.goToReassignSelectTask();
 		WorkflowMetrics.assertBulkModalTable();
+
 		AssertElementPresent(locator1 = "WorkflowReassignModal#REASSIGN_MODAL");
+
 		WorkflowMetrics.assertAssignees();
+
 		WorkflowMetrics.selectNewAssignee();
 		MouseOver(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
@@ -1010,8 +1016,8 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowReassignModal#REASSIGN_MODAL");
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
 		WorkflowMetrics.assertNoAssignees();
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 		Workflow.approveTaskByActions(
 			workflowAssetTitle = "Blogs Entry Title 1",
 			workflowAssetType = "Blogs Entry",

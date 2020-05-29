@@ -355,7 +355,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "https://localhost:8443/web/test-site-name/test-page-name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages");
@@ -371,7 +371,7 @@ definition {
 			pageName = "Test Page Name",
 			uploadFileName = "Document_1.jpg");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "System Settings");

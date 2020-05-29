@@ -359,7 +359,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "user1");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -369,7 +369,7 @@ definition {
 			userEmailAddress = "user1@liferay.com",
 			userScreenName = "user1");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");

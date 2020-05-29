@@ -123,7 +123,7 @@ definition {
 	@description = "This ensures that the approved WC article from a depot is available to use in its connected site."
 	@priority = "5"
 	test ApproveWCArticle {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
 			portlet = "Process Builder");
@@ -446,7 +446,7 @@ definition {
 	@description = "This ensures that the resubmitted WC article from a depot is available to use in its connected site."
 	@priority = "5"
 	test RejectAndResubmitWC {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Control Panel",
 			portlet = "Process Builder");

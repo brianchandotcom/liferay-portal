@@ -9,9 +9,13 @@ definition {
 			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD",
 			value1 = "${fieldFieldLabel}");
 
-		AssertClick(
-			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON",
-			value1 = "Save");
+		Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+		}
 	}
 
 	macro addField {
@@ -320,9 +324,13 @@ definition {
 			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD",
 			value1 = "${fieldName}");
 
-		AssertClick(
-			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON",
-			value1 = "Save");
+		Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+		}
 	}
 
 	macro editFieldNameInvalidCharacter {
@@ -350,9 +358,13 @@ definition {
 			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD",
 			value1 = "${fieldName}");
 
-		AssertClick(
-			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON",
-			value1 = "Save");
+		Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+		}
 	}
 
 	macro editFieldNestedWithDuplicateName {
@@ -396,9 +408,13 @@ definition {
 			}
 		}
 
-		AssertClick(
-			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON",
-			value1 = "Save");
+		Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+		}
 
 		DynamicDataMapping.viewFieldOptionsCmd(
 			field = "${field}",
@@ -455,9 +471,13 @@ definition {
 				value1 = "${fieldPredefinedValue}");
 		}
 
-		AssertClick(
-			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON",
-			value1 = "Save");
+		Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+		}
 
 		AssertTextEquals(
 			locator1 = "DDMEditStructure#SETTINGS_PREDEFINED_VALUE",
@@ -565,9 +585,13 @@ definition {
 			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_TEXT_AREA",
 			value1 = "${fieldTip}");
 
-		AssertClick(
-			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON",
-			value1 = "Save");
+		Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON");
+		}
 
 		AssertTextEquals(
 			locator1 = "DDMEditStructure#SETTINGS_TIP",

@@ -22,7 +22,7 @@ definition {
 	}
 
 	test AssertCannotAddDuplicateQueriesAndAliases {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -51,7 +51,7 @@ definition {
 
 		Alert.viewErrorMessage(errorMessage = "A ranking with that search query already exists.");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -93,7 +93,7 @@ definition {
 			var content = StringUtil.replaceFirst("${content}", "Article ", "");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -116,7 +116,7 @@ definition {
 			searchAssetTitle = "Article 2",
 			searchAssetType = "Web Content Article");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -135,7 +135,7 @@ definition {
 	}
 
 	test AssertResultRankingsMiscUI {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -232,14 +232,14 @@ definition {
 			groupName = "Guest",
 			title = "Journal 2");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
 		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -266,14 +266,14 @@ definition {
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Journal 1,Journal 2");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
 		SearchTuning.deleteSynonymSet(synonymSet = "Article, Journal");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -302,7 +302,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Journal 1,Journal 2");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -333,7 +333,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "Article 2/Web Content Article,Journal 1/Web Content Article,Journal 2/Web Content Article");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -348,14 +348,14 @@ definition {
 
 		Button.clickSave();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Synonyms");
 
 		SearchTuning.addSynonymSet(synonyms = "Article,Journal");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -396,7 +396,7 @@ definition {
 	}
 
 	test AssertSynonymBulkActions {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Synonyms");
@@ -480,7 +480,7 @@ definition {
 			var content = StringUtil.replaceFirst("${content}", "Article ", "");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -555,7 +555,7 @@ definition {
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "apple");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -631,7 +631,7 @@ definition {
 			groupName = "Guest",
 			title = "WC Title 3");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -674,7 +674,7 @@ definition {
 
 		SearchResultPortlet.viewMultipleSearchResultsNotPresent(noResultsList = "WC Title 1/Web Content Article,WC Title 2/Web Content Article");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -711,7 +711,7 @@ definition {
 
 		SearchResultPortlet.viewNoSearchResults(searchTerm = "banana");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -756,7 +756,7 @@ definition {
 			groupName = "New Site",
 			title = "New Site Journal");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -787,7 +787,7 @@ definition {
 
 		SearchResultPortlet.viewSearchResultsSpecificOrder(resultsList = "Liferay Journal,New Site Article,New Site Journal,Liferay Article");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");
@@ -823,7 +823,7 @@ definition {
 				title = "${title}");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Synonyms");
@@ -850,7 +850,7 @@ definition {
 				searchTerm = "${searchTerm}");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Synonyms");
@@ -892,7 +892,7 @@ definition {
 			resultsList = "red apple/Web Content Article,blue.berry!/Web Content Article,&quot;xigua&quot;/Web Content Article",
 			searchTerm = "red apple");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Synonyms");
@@ -917,7 +917,7 @@ definition {
 			resultsList = "red apple/Web Content Article,citrus-orange/Web Content Article",
 			searchTerm = "citrus-orange");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Synonyms");
@@ -942,7 +942,7 @@ definition {
 			groupName = "Guest",
 			title = "Web Content Article Apple");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",
 			portlet = "Result Rankings");

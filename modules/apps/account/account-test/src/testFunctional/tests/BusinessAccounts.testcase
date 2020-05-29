@@ -236,7 +236,7 @@ definition {
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "userfn",
-			rowStatus = "INACTIVE");
+			rowStatus = "Inactive");
 	}
 
 	@priority = "4"
@@ -560,7 +560,7 @@ definition {
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Accounts Name for Test",
-			rowStatus = "ACTIVE");
+			rowStatus = "Active");
 	}
 
 	@priority = "4"
@@ -645,7 +645,7 @@ definition {
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Update Accounts Name for Test",
-			rowStatus = "INACTIVE");
+			rowStatus = "Inactive");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 
@@ -681,7 +681,7 @@ definition {
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Update Accounts Name via Name Link",
-			rowStatus = "ACTIVE");
+			rowStatus = "Active");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Update Accounts Name for Test");
 	}
@@ -762,7 +762,7 @@ definition {
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Accounts Name for Test",
-			rowStatus = "INACTIVE");
+			rowStatus = "Inactive");
 
 		LexiconEntry.gotoEntry(rowEntry = "Accounts Name for Test");
 
@@ -784,7 +784,7 @@ definition {
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Update Accounts Name via Name Link",
-			rowStatus = "INACTIVE");
+			rowStatus = "Inactive");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 	}

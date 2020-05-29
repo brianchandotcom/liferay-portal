@@ -12,8 +12,6 @@
  * details.
  */
 
-import './EditablePageHeader.soy';
-
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
 import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';

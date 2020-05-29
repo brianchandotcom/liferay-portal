@@ -56,6 +56,12 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutPageTemplateStructureLocalServiceImpl
 	extends LayoutPageTemplateStructureLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addLayoutPageTemplateStructure(long, long, long, long,
+	 *             String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
 			long userId, long groupId, long classNameId, long classPK,
@@ -166,6 +172,11 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		return layoutPageTemplateStructure;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #deleteLayoutPageTemplateStructure(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
 			long groupId, long classNameId, long classPK)
@@ -197,6 +208,11 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		return rebuildLayoutPageTemplateStructure(groupId, plid);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #fetchLayoutPageTemplateStructure(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
 		long groupId, long classNameId, long classPK) {
@@ -204,6 +220,11 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		return fetchLayoutPageTemplateStructure(groupId, classPK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #fetchLayoutPageTemplateStructure(long, long, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
 			long groupId, long classNameId, long classPK,
@@ -244,6 +265,11 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #rebuildLayoutPageTemplateStructure(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateStructure rebuildLayoutPageTemplateStructure(
 			long groupId, long classNameId, long classPK)
@@ -252,16 +278,27 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		return rebuildLayoutPageTemplateStructure(groupId, classPK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateLayoutPageTemplateStructureData(long, long, long,
+	 *             String)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
 			long groupId, long classNameId, long classPK,
 			long segmentsExperienceId, String data)
 		throws PortalException {
 
-		return updateLayoutPageTemplateStructure(
+		return updateLayoutPageTemplateStructureData(
 			groupId, classPK, segmentsExperienceId, data);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateLayoutPageTemplateStructureData(long, long, String)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
 			long groupId, long classNameId, long classPK, String data)

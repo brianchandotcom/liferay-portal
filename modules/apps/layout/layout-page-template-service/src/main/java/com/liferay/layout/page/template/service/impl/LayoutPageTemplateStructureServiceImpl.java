@@ -40,6 +40,12 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutPageTemplateStructureServiceImpl
 	extends LayoutPageTemplateStructureServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateLayoutPageTemplateStructureData(long, long, long,
+	 *             String)}
+	 */
+	@Deprecated
 	@Override
 	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
 			long groupId, long classNameId, long classPK,

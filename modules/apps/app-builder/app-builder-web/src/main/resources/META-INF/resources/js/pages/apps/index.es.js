@@ -42,7 +42,7 @@ export default (props) => {
 
 		return {
 			component: (props) => (
-				<EditPage module={editEntryPoint} props={props} />
+				<EditPage module={editEntryPoint} props={{scope, ...props}} />
 			),
 			path: editPath,
 		};

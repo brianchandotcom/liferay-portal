@@ -30,6 +30,7 @@ export default ({
 	match: {
 		params: {appId, dataDefinitionId},
 	},
+	scope,
 }) => {
 	const [currentStep, setCurrentStep] = useState(0);
 	const [isLoading, setLoading] = useState(false);
@@ -43,6 +44,7 @@ export default ({
 			name: {
 				en_US: '',
 			},
+			scope,
 		},
 	});
 

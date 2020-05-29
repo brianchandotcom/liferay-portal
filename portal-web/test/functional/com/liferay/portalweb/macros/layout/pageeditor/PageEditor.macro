@@ -369,6 +369,10 @@ definition {
 			key_fragmentName = "${portletName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");
 
+		Type(
+			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+			value1 = "");
+
 		PageEditor.closeSidebar(tabName = "Widgets");
 	}
 

@@ -25,6 +25,10 @@ definition {
 		MenuItem.click(menuItem = "Basic Web Content");
 
 		AssertVisible(locator1 = "TextInput#TITLE");
+
+		while (IsElementNotPresent(locator1 = "WCEditWebContent#SIDEBAR")) {
+			Pause(locator1 = "1000");
+		}
 	}
 
 	macro gotoAddWithStructureCP {

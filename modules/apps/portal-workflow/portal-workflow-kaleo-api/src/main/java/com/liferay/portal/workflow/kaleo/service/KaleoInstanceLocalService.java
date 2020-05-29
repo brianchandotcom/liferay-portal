@@ -206,6 +206,10 @@ public interface KaleoInstanceLocalService
 	public KaleoInstance fetchKaleoInstance(long kaleoInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KaleoInstance fetchKaleoInstance(
+		long kaleoInstanceId, long companyId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -253,6 +253,14 @@ public class KaleoInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.workflow.kaleo.model.KaleoInstance
+		fetchKaleoInstance(long kaleoInstanceId, long companyId, long userId) {
+
+		return _kaleoInstanceLocalService.fetchKaleoInstance(
+			kaleoInstanceId, companyId, userId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

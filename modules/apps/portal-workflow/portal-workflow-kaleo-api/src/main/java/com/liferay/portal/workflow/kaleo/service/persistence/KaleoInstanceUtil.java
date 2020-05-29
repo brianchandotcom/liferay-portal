@@ -1059,6 +1059,88 @@ public class KaleoInstanceUtil {
 	}
 
 	/**
+	 * Returns the kaleo instance where kaleoInstanceId = &#63; and companyId = &#63; and userId = &#63; or throws a <code>NoSuchInstanceException</code> if it could not be found.
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching kaleo instance
+	 * @throws NoSuchInstanceException if a matching kaleo instance could not be found
+	 */
+	public static KaleoInstance findByKII_C_U(
+			long kaleoInstanceId, long companyId, long userId)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchInstanceException {
+
+		return getPersistence().findByKII_C_U(
+			kaleoInstanceId, companyId, userId);
+	}
+
+	/**
+	 * Returns the kaleo instance where kaleoInstanceId = &#63; and companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
+	 */
+	public static KaleoInstance fetchByKII_C_U(
+		long kaleoInstanceId, long companyId, long userId) {
+
+		return getPersistence().fetchByKII_C_U(
+			kaleoInstanceId, companyId, userId);
+	}
+
+	/**
+	 * Returns the kaleo instance where kaleoInstanceId = &#63; and companyId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
+	 */
+	public static KaleoInstance fetchByKII_C_U(
+		long kaleoInstanceId, long companyId, long userId,
+		boolean useFinderCache) {
+
+		return getPersistence().fetchByKII_C_U(
+			kaleoInstanceId, companyId, userId, useFinderCache);
+	}
+
+	/**
+	 * Removes the kaleo instance where kaleoInstanceId = &#63; and companyId = &#63; and userId = &#63; from the database.
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the kaleo instance that was removed
+	 */
+	public static KaleoInstance removeByKII_C_U(
+			long kaleoInstanceId, long companyId, long userId)
+		throws com.liferay.portal.workflow.kaleo.exception.
+			NoSuchInstanceException {
+
+		return getPersistence().removeByKII_C_U(
+			kaleoInstanceId, companyId, userId);
+	}
+
+	/**
+	 * Returns the number of kaleo instances where kaleoInstanceId = &#63; and companyId = &#63; and userId = &#63;.
+	 *
+	 * @param kaleoInstanceId the kaleo instance ID
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the number of matching kaleo instances
+	 */
+	public static int countByKII_C_U(
+		long kaleoInstanceId, long companyId, long userId) {
+
+		return getPersistence().countByKII_C_U(
+			kaleoInstanceId, companyId, userId);
+	}
+
+	/**
 	 * Returns all the kaleo instances where companyId = &#63; and kaleoDefinitionName = &#63; and kaleoDefinitionVersion = &#63; and completionDate = &#63;.
 	 *
 	 * @param companyId the company ID

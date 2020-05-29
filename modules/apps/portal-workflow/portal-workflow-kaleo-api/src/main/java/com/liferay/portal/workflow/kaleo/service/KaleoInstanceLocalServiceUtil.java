@@ -241,6 +241,13 @@ public class KaleoInstanceLocalServiceUtil {
 		return getService().fetchKaleoInstance(kaleoInstanceId);
 	}
 
+	public static com.liferay.portal.workflow.kaleo.model.KaleoInstance
+		fetchKaleoInstance(long kaleoInstanceId, long companyId, long userId) {
+
+		return getService().fetchKaleoInstance(
+			kaleoInstanceId, companyId, userId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

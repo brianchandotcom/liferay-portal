@@ -104,8 +104,12 @@
 					"title": "The collectionConfig Schema",
 					"type": "object"
 				},
+				"listItemStyle": {
+					"title": "The listItemStyle Schema",
+					"type": "string"
+				},
 				"listStyle": {
-					"title": "The listType Schema",
+					"title": "The listStyle Schema",
 					"type": "string"
 				},
 				"numberOfColumns": {
@@ -117,6 +121,10 @@
 					"minimum": 0,
 					"title": "The numberOfItems Schema",
 					"type": "integer"
+				},
+				"templateKey": {
+					"title": "The templateKey Schema",
+					"type": "string"
 				}
 			},
 			"title": "The CollectionDefinition Schema",

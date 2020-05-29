@@ -68,11 +68,11 @@
 				</aui:fieldset>
 
 				<aui:fieldset cssClass="options-group">
-					<div class="sheet-section">
+					<clay:sheet-section>
 						<h3 class="sheet-subtitle"><liferay-ui:message key="date" /></h3>
 
 						<%@ include file="/new_publication/publish_layouts_scheduler.jspf" %>
-					</div>
+					</clay:sheet-section>
 				</aui:fieldset>
 
 				<liferay-staging:deletions

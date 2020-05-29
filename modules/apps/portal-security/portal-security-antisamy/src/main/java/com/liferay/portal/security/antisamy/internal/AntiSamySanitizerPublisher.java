@@ -82,8 +82,8 @@ public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 					antiSamyClassNameConfiguration.configurationFileURL());
 		}
 
-		_classNames.put(pid, className);
 		_antiSamySanitizerImpl.addPolicy(className, url);
+		_classNames.put(pid, className);
 	}
 
 	@Activate

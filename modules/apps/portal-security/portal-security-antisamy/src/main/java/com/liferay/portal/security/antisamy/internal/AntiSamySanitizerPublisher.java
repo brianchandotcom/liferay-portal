@@ -52,7 +52,7 @@ public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 	public void deleted(String pid) {
 		String className = _classNames.get(pid);
 
-		_antiSamySanitizerImpl.removeAntiSamySanitizerByClassName(className);
+		_antiSamySanitizerImpl.removePolicy(className);
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class AntiSamySanitizerPublisher implements ManagedServiceFactory {
 		}
 
 		_classNames.put(pid, className);
-		_antiSamySanitizerImpl.addAntiSamySanitizerByClassName(className, url);
+		_antiSamySanitizerImpl.addPolicy(className, url);
 	}
 
 	@Activate

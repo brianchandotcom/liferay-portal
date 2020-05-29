@@ -62,6 +62,10 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 						themeDisplay.getRequest(),
 						"/o/frontend-css-web/main.css")))
 		).put(
+			"contentsLangDirection",
+			HtmlUtil.escapeJS(
+				getContentsLanguageDir(inputEditorTaglibAttributes))
+		).put(
 			"contextmenu_contentsCss",
 			JSONUtil.putAll(
 				HtmlUtil.escape(
@@ -75,15 +79,12 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 				HtmlUtil.escape(
 					PortalUtil.getStaticResourceURL(
 						themeDisplay.getRequest(),
-						"/o/frontend-editor-ckeditor-web/ckeditor/skins/moono-lisa/editor.css")),
+						"/o/frontend-editor-ckeditor-web/ckeditor/skins" +
+							"/moono-lisa/editor.css")),
 				HtmlUtil.escape(
 					PortalUtil.getStaticResourceURL(
 						themeDisplay.getRequest(),
 						"/o/frontend-css-web/main.css")))
-		).put(
-			"contentsLangDirection",
-			HtmlUtil.escapeJS(
-				getContentsLanguageDir(inputEditorTaglibAttributes))
 		);
 
 		String contentsLanguageId = getContentsLanguageId(

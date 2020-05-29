@@ -1,3 +1,31 @@
+components:
+    schemas:
+        AppWorkflowAction:
+            properties:
+                name:
+                    type: string
+                primary:
+                    type: boolean
+                transitionTo:
+                    type: string
+            type: object
+        AppWorkflowTask:
+            properties:
+                appId:
+                    format: int64
+                    type: integer
+                appWorkflowActions:
+                    items:
+                        $ref: "#/components/schemas/AppWorkflowAction"
+                    type: array
+                dataLayoutIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                name:
+                    type: string
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
@@ -8,3 +36,67 @@ info:
     title: "App Builder Workflow"
     version: v1.0
 openapi: 3.0.1
+paths:
+    "/apps/{appId}/app-workflow-tasks":
+        get:
+            operationId: getAppWorkflowTasksPage
+            parameters:
+                - in: path
+                  name: appId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AppWorkflowTask"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AppWorkflowTask"
+                                type: array
+                    description:
+                        ""
+            tags: ["AppWorkflowTask"]
+        post:
+            operationId: postAppWorkflowTasks
+            parameters:
+                - in: path
+                  name: appId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/AppWorkflowTask"
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                $ref: "#/components/schemas/AppWorkflowTask"
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AppWorkflowTask"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AppWorkflowTask"
+                                type: array
+                    description:
+                        ""
+            tags: ["AppWorkflowTask"]

@@ -207,6 +207,7 @@ private String _filterKnowledgeBaseSanitizer(String line) {
 			|	${line}
 			|	<directive name="allowDynamicAttributes" value="true"/>""".stripMargin()
 	}
+
 	if (line.contains('</global-tag-attributes>')) {
 		line = """\
 			|	${line}
@@ -214,6 +215,7 @@ private String _filterKnowledgeBaseSanitizer(String line) {
 			|		<attribute name="data-"/>
 			|	</dynamic-tag-attributes>""".stripMargin()
 	}
+
 	if (line.contains('<common-attributes>')) {
 		line = """\
 			|	${line}
@@ -223,6 +225,7 @@ private String _filterKnowledgeBaseSanitizer(String line) {
 			|			</regexp-list>
 			|		</attribute>""".stripMargin()
 	}
+
 	if (line.contains('<literal value="hr"/>')) {
 		line = """\
 			|	${line}

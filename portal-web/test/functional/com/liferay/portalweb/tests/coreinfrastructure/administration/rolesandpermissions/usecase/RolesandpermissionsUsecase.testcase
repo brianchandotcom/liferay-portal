@@ -246,7 +246,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Guest");
 
 		SitePages.addPublicPage(pageName = "Bookmarks Page");
 
@@ -699,7 +700,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Guest");
 
 		SitePages.addPublicPage(pageName = "Dynamic Data Lists Page");
 
@@ -963,7 +965,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Guest");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Page");
 
@@ -1702,7 +1705,9 @@ definition {
 			pageName = "USA Ice Hockey Team Blog",
 			pageTemplateName = "Blog");
 
-		PermissionsInline.gotoPagePG(pageName = "USA Ice Hockey Team Blog");
+		PermissionsInline.gotoPagePG(
+			pageName = "USA Ice Hockey Team Blog",
+			site = "Site Name");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
@@ -1858,7 +1863,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships");
+			portlet = "Memberships",
+			site = "Guest");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "UG UserGroup Name");
 

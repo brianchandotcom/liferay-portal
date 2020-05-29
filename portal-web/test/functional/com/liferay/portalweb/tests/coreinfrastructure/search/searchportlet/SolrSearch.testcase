@@ -37,7 +37,7 @@ definition {
 
 			Vocabulary.tearDownCP();
 
-			Tag.tearDownCP();
+			Tag.tearDownCP(site = "Guest");
 
 			Page.tearDownCP();
 		}
@@ -2503,7 +2503,7 @@ definition {
 			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 
-		ProductMenu.gotoLiveSite();
+		ProductMenu.gotoLiveSite(site = "Site Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 
@@ -2556,7 +2556,7 @@ definition {
 			searchAssetTitle = "Apple",
 			searchAssetType = "Web Content Article");
 
-		ProductMenu.gotoLiveSite();
+		ProductMenu.gotoLiveSite(site = "Site Name");
 
 		SearchPortlets.searchEmbedded(searchTerm = "Apple");
 

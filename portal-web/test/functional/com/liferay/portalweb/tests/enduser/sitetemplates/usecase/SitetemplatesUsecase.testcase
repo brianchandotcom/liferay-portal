@@ -199,7 +199,9 @@ definition {
 			pageName = "Home",
 			siteName = "Site Name");
 
-		PermissionsInline.gotoSiteTemplateCP(page = "Home");
+		PermissionsInline.gotoSiteTemplateCP(
+			page = "Home",
+			site = "Site Name");
 
 		Role.definePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",

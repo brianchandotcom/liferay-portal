@@ -325,7 +325,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Guest");
 
 		SitePages.addPublicPage(pageName = "Wiki Test Page");
 

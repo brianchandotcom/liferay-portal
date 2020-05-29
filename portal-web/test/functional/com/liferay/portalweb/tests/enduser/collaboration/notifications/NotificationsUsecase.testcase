@@ -56,7 +56,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Guest");
 
 		SitePages.addPublicPage(
 			pageName = "Blogs Page",
@@ -206,7 +207,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Subscribe Site");
 
-		ProductMenu.gotoLiveSite();
+		ProductMenu.gotoLiveSite(site = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

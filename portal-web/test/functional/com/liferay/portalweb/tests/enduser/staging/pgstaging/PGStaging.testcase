@@ -558,7 +558,7 @@ definition {
 
 		Page.viewLayoutLogoPG(assertLayoutLogoPresent = "true");
 
-		ProductMenu.gotoStagingSite();
+		ProductMenu.gotoStagingSite(site = "Site Name");
 
 		Page.deleteLogoPG(page = "Staging Test Page");
 
@@ -589,7 +589,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging");
+			portlet = "Staging",
+			site = "Site Name");
 
 		Staging.activateStagingCP(
 			pageVersioningEnabled = "true",
@@ -687,7 +688,7 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoLiveSite();
+		ProductMenu.gotoLiveSite(site = "Site Name");
 
 		var key_portletTitleName = "Web Content Display";
 

@@ -592,11 +592,15 @@ definition {
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsPortlet.viewBannedUserCP(userScreenName = "userfn1 userln1");
+		MessageboardsPortlet.viewBannedUserCP(
+			site = "Guest",
+			userScreenName = "userfn1 userln1");
 
 		Navigator.gotoPage(pageName = "Message Boards Page");
 
-		MessageboardsPortlet.viewBannedUserCP(userScreenName = "userfn2 userln2");
+		MessageboardsPortlet.viewBannedUserCP(
+			site = "Guest",
+			userScreenName = "userfn2 userln2");
 	}
 
 	@ignore = "true"

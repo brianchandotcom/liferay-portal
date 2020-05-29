@@ -1123,7 +1123,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			siteName = "${siteName}");
 
 		SitePages.addPublicPage(
 			pageName = "Documents and Media Page",

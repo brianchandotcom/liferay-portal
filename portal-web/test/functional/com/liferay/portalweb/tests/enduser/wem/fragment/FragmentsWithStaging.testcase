@@ -98,7 +98,7 @@ definition {
 		}
 
 		task ("Navigate to the live site") {
-			ProductMenu.gotoLiveSite(site = "Site Name");
+			ProductMenu.gotoLiveSite(site = "Test Site Name");
 		}
 
 		task ("Assert fragments admin is not accessible in the live site") {

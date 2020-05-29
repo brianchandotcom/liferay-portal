@@ -561,7 +561,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Guest");
 
 		SitePages.addPublicPage(pageName = "site Page Name");
 
@@ -932,7 +933,9 @@ definition {
 			teamName = "Site Team Name",
 			userScreenName = "usersn1");
 
-		PermissionsInline.gotoPagePG(pageName = "Blog Page Template");
+		PermissionsInline.gotoPagePG(
+			pageName = "Blog Page Template",
+			site = "Site Name");
 
 		Role.removePermissionPG(
 			permissionDefinitionKey = "CONTENT_PERMISSIONS_VIEW_CHECKBOX",
@@ -942,7 +945,9 @@ definition {
 			pageName = "Blog Page Template",
 			siteName = "Site Name");
 
-		PermissionsInline.gotoPagePG(pageName = "Blog Page Template");
+		PermissionsInline.gotoPagePG(
+			pageName = "Blog Page Template",
+			site = "Site Name");
 
 		for (var permissionsInLineUncheckListsCount : list "CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX,CONTENT_PERMISSIONS_VIEW_CHECKBOX") {
 			Role.removePermissionPG(
@@ -954,7 +959,9 @@ definition {
 			pageName = "Blog Page Template",
 			siteName = "Site Name");
 
-		PermissionsInline.gotoPagePG(pageName = "Blog Page Template");
+		PermissionsInline.gotoPagePG(
+			pageName = "Blog Page Template",
+			site = "Site Name");
 
 		for (var permissionsInLineCheckListsCount : list "ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW") {
 			Team.definePermissionPG(

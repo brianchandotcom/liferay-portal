@@ -26,7 +26,7 @@ definition {
 		property database.types = "db2";
 		property portal.version = "6.2.10.21";
 
-		Upgrade.addDataDefinitionWithDB2();
+		Upgrade.addDataDefinitionWithDB2(site = "Guest");
 	}
 
 }

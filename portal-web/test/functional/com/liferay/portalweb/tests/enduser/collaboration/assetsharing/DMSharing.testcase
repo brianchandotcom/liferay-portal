@@ -750,7 +750,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Memberships");
+			portlet = "Memberships",
+			site = "Guest");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",

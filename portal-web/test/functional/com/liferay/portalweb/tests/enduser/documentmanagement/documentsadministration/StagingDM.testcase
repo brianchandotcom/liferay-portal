@@ -227,7 +227,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish the selected folder?",
 			entry = "DM Folder 1");
 
-		ProductMenu.gotoLiveSite();
+		ProductMenu.gotoLiveSite(site = "Guest");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -315,7 +315,7 @@ definition {
 			confirmMessage = "Are you sure you want to publish the selected folder?",
 			entry = "DM Folder 1");
 
-		ProductMenu.gotoLiveSite();
+		ProductMenu.gotoLiveSite(site = "Guest");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

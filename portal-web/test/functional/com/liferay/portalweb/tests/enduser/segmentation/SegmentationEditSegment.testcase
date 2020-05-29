@@ -40,7 +40,8 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "People",
 				panel = "Site Administration",
-				portlet = "Segments");
+				portlet = "Segments",
+				site = "Guest");
 
 			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 				Segmentation.tearDown();
@@ -86,7 +87,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Segments");
+			portlet = "Segments",
+			site = "Guest");
 
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation.editSegment();
@@ -174,7 +176,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",
-			portlet = "Segments");
+			portlet = "Segments",
+			site = "Guest");
 
 		while (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {
 			Segmentation.editSegment();

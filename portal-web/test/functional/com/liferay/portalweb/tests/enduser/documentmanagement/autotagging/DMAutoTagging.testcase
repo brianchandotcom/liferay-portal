@@ -148,7 +148,7 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoLiveSite();
+		ProductMenu.gotoLiveSite(site = "Site Name");
 
 		Navigator.gotoSitePage(
 			pageName = "Documents and Media Page",
@@ -180,7 +180,9 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Site AutoTag Disabled");
 
-		AutoTagging.disableAutoTagging(disableAutoTaggingFor = "Settings");
+		AutoTagging.disableAutoTagging(
+			disableAutoTaggingFor = "Settings",
+			site = "Site AutoTag Disabled");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",

@@ -475,7 +475,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content");
+			portlet = "Web Content",
+			site = "Guest");
 
 		WebContentNavigator.gotoAddCP();
 

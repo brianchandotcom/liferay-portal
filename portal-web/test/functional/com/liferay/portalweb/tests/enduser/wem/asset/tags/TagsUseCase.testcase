@@ -18,7 +18,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Tag.tearDownCP();
+			Tag.tearDownCP(site = "Guest");
 
 			Site.tearDownCP();
 		}
@@ -94,11 +94,6 @@ definition {
 		property testray.component.names = "Blogs,Tags";
 
 		JSONGroup.addGroup(groupName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",

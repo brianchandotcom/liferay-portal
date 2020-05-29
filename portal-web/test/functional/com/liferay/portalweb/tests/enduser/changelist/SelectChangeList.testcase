@@ -64,7 +64,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content");
+			portlet = "Web Content",
+			site = "Guest");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -86,7 +87,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content");
+			portlet = "Web Content",
+			site = "Guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -108,7 +110,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content");
+			portlet = "Web Content",
+			site = "Guest");
 
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
@@ -214,7 +217,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Web Content");
+			portlet = "Web Content",
+			site = "Guest");
 
 		WebContentNavigator.gotoAddCP();
 

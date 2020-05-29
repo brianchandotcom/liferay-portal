@@ -75,13 +75,8 @@ body.open .app-builder-upper-toolbar {
 }
 
 .empty-state-dropdown-menu {
-	padding-bottom: 1.3rem;
-	padding-top: 1.3rem;
-	text-align: center;
-
-	.emptyButton {
-		margin-top: 1rem;
-	}
+	padding: 1.3rem 0.5rem;
+	text-align: left;
 }
 
 .error-state-dropdown-menu {
@@ -188,6 +183,10 @@ body.open .app-builder-upper-toolbar {
 	max-height: 200px;
 	max-width: 418px;
 	width: 100%;
+
+	.dropdown-section {
+		padding: 0.5rem;
+	}
 
 	ul > li > button {
 		height: 40px;

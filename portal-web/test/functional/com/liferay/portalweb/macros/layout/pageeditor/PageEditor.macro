@@ -373,7 +373,7 @@ definition {
 			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
 			value1 = "");
 
-		PageEditor.closeSidebar(tabName = "Widgets");
+		PageEditor.closeSidebar(tabName = "Fragments and Widgets");
 	}
 
 	macro assertFragmentSidebarLoaded {

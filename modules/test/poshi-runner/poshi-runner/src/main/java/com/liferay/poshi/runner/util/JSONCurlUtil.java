@@ -275,7 +275,8 @@ public class JSONCurlUtil {
 		private static Pattern _escapePattern = Pattern.compile(
 			"<CURL_DATA\\[([\\s\\S]*?)\\]CURL_DATA>");
 		private static Pattern _requestPattern = Pattern.compile(
-			"(-[\\w#:\\.]|--[\\w#:\\.-]{2,}|https?:[^\\s]+)(\\s+|\\Z)");
+			"(-[\\w#:\\.]|--[\\w#:\\.-]{2,}|(?:[\\s]|^)https?:[^\\s]+)" +
+				"(\\s+|\\Z)");
 
 		private Map<String, String> _curlDataMap = new HashMap<>();
 		private final String _requestMethod;

@@ -25,7 +25,15 @@ export default ({
 		params: {dataDefinitionId},
 	},
 }) => {
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+	const languageId = Liferay.ThemeDisplay.getLanguageId();
+
 	const {basePortletURL} = useContext(AppContext);
+
+	const getItemName = (item) =>
+		item.name[languageId]
+			? item.name[languageId]
+			: item.name[defaultLanguageId];
 
 	const getItemURL = (item) =>
 		Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
@@ -106,11 +114,7 @@ export default ({
 				dateCreated: fromNow(item.dateCreated),
 				dateModified: fromNow(item.dateModified),
 				id: item.id,
-				name: (
-					<a href={getItemURL(item)}>
-						{item.name[Liferay.ThemeDisplay.getDefaultLanguageId()]}
-					</a>
-				),
+				name: <a href={getItemURL(item)}>{getItemName(item)}</a>,
 			})}
 		</ListView>
 	);

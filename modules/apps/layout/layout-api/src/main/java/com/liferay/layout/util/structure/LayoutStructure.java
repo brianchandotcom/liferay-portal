@@ -754,10 +754,10 @@ public class LayoutStructure {
 		if (viewportSizeConfigurationJSONObject.has("modulesPerRow")) {
 			viewportSizeConfigurationJSONObject.put(
 				"modulesPerRow", numberOfColumns);
-
-			_updateColumnSizes(
-				rowLayoutStructureItem, viewportSizeId, numberOfColumns, false);
 		}
+
+		_updateColumnSizes(
+			rowLayoutStructureItem, viewportSizeId, numberOfColumns, false);
 	}
 
 	private static final int[][] _COLUMN_SIZES = {

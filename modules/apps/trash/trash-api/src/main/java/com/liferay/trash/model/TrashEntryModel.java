@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,7 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface TrashEntryModel
-	extends AttachedModel, BaseModel<TrashEntry>, MVCCModel, ShardedModel {
+	extends AttachedModel, BaseModel<TrashEntry>, CTModel<TrashEntry>,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -50,6 +52,7 @@ public interface TrashEntryModel
 	 *
 	 * @return the primary key of this trash entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -57,6 +60,7 @@ public interface TrashEntryModel
 	 *
 	 * @param primaryKey the primary key of this trash entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -74,6 +78,22 @@ public interface TrashEntryModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this trash entry.
+	 *
+	 * @return the ct collection ID of this trash entry
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this trash entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this trash entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the entry ID of this trash entry.

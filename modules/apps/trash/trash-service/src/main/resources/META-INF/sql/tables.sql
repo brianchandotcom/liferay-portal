@@ -1,6 +1,7 @@
 create table TrashEntry (
 	mvccVersion LONG default 0 not null,
-	entryId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	entryId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -10,16 +11,19 @@ create table TrashEntry (
 	classPK LONG,
 	systemEventSetKey LONG,
 	typeSettings TEXT null,
-	status INTEGER
+	status INTEGER,
+	primary key (entryId, ctCollectionId)
 );
 
 create table TrashVersion (
 	mvccVersion LONG default 0 not null,
-	versionId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	versionId LONG not null,
 	companyId LONG,
 	entryId LONG,
 	classNameId LONG,
 	classPK LONG,
 	typeSettings TEXT null,
-	status INTEGER
+	status INTEGER,
+	primary key (versionId, ctCollectionId)
 );

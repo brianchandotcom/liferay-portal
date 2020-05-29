@@ -15,6 +15,7 @@
 package com.liferay.trash.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.trash.model.TrashEntry;
 
 /**
  * Provides a wrapper for {@link TrashEntryService}.
@@ -120,16 +121,14 @@ public class TrashEntryServiceWrapper
 	@Override
 	public com.liferay.trash.model.TrashEntryList getEntries(
 			long groupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.trash.model.TrashEntry> obc)
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry> obc)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _trashEntryService.getEntries(groupId, start, end, obc);
 	}
 
 	@Override
-	public java.util.List<com.liferay.trash.model.TrashEntry> getEntries(
-			long groupId, String className)
+	public java.util.List<TrashEntry> getEntries(long groupId, String className)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _trashEntryService.getEntries(groupId, className);
@@ -151,8 +150,7 @@ public class TrashEntryServiceWrapper
 	@Override
 	public com.liferay.trash.model.TrashEntryList getEntries(
 			long groupId, String className, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.trash.model.TrashEntry> obc)
+			com.liferay.portal.kernel.util.OrderByComparator<TrashEntry> obc)
 		throws com.liferay.portal.kernel.security.auth.PrincipalException {
 
 		return _trashEntryService.getEntries(
@@ -209,7 +207,7 @@ public class TrashEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.trash.model.TrashEntry restoreEntry(long entryId)
+	public TrashEntry restoreEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _trashEntryService.restoreEntry(entryId);
@@ -250,7 +248,7 @@ public class TrashEntryServiceWrapper
 	 * @return the restored trash entry
 	 */
 	@Override
-	public com.liferay.trash.model.TrashEntry restoreEntry(
+	public TrashEntry restoreEntry(
 			long entryId, long overrideClassPK, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -258,15 +256,14 @@ public class TrashEntryServiceWrapper
 	}
 
 	@Override
-	public com.liferay.trash.model.TrashEntry restoreEntry(
-			String className, long classPK)
+	public TrashEntry restoreEntry(String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _trashEntryService.restoreEntry(className, classPK);
 	}
 
 	@Override
-	public com.liferay.trash.model.TrashEntry restoreEntry(
+	public TrashEntry restoreEntry(
 			String className, long classPK, long overrideClassPK, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

@@ -1917,12 +1917,16 @@ components:
                         - collectionReference
                         - collectionType
                     type: object
+                listItemStyle:
+                    type: string
                 listStyle:
                     type: string
                 numberOfColumns:
                     type: integer
                 numberOfItems:
                     type: integer
+                templateKey:
+                    type: string
             type: object
         PageCollectionItemDefinition:
             description:

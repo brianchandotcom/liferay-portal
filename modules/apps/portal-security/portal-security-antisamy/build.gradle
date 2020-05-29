@@ -1,5 +1,8 @@
 import com.liferay.gradle.util.FileUtil
 
+task processDefaultSanitizerConfiguration(type: Copy)
+task processKnowledgeBaseSanitizerConfiguration(type: Copy)
+
 String sanitizerConfigurationUrl = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/owaspantisamy/antisamy-ebay-1.4.4.xml"
 
 dependencies {
@@ -26,9 +29,6 @@ dependencies {
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-string")
 }
-
-task processDefaultSanitizerConfiguration(type: Copy)
-task processKnowledgeBaseSanitizerConfiguration(type: Copy)
 
 processKnowledgeBaseSanitizerConfiguration {
 	dependsOn processDefaultSanitizerConfiguration

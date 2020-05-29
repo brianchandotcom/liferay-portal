@@ -84,6 +84,10 @@ definition {
 	}
 
 	macro gotoDepotViaSpaceIcon {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			GlobalMenu.gotoSite(site = "Guest");
+		}
+
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
 		ProductMenuHelper.openWorkspace();

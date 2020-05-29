@@ -3,7 +3,9 @@ definition {
 	macro addCollectionDisplay {
 		Pause(locator1 = "10000");
 
-		PageEditor.gotoTab(tabName = "Fragments");
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Content Display");
 
@@ -108,7 +110,9 @@ definition {
 	macro addContentDisplay {
 		Pause(locator1 = "10000");
 
-		PageEditor.gotoTab(tabName = "Fragments");
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Content Display");
 
@@ -156,7 +160,9 @@ definition {
 	macro addDisplayPageContent {
 		Pause(locator1 = "10000");
 
-		PageEditor.gotoTab(tabName = "Fragments");
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Content Display");
 
@@ -203,7 +209,9 @@ definition {
 	macro addFragment {
 		Pause(locator1 = "10000");
 
-		PageEditor.gotoTab(tabName = "Fragments");
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
@@ -243,7 +251,9 @@ definition {
 	macro addLayoutRow {
 		Pause(locator1 = "10000");
 
-		PageEditor.gotoTab(tabName = "Fragments");
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
@@ -282,7 +292,9 @@ definition {
 	macro addLayoutSection {
 		Pause(locator1 = "10000");
 
-		PageEditor.gotoTab(tabName = "Fragments");
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
 
 		PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
@@ -320,7 +332,9 @@ definition {
 	macro addWidget {
 		Pause(locator1 = "10000");
 
-		PageEditor.gotoTab(tabName = "Widgets");
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Widgets");
 
 		Type.sendKeysApplicationSearch(
 			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",

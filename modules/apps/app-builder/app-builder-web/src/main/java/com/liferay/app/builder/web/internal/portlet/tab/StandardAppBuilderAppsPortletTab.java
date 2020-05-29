@@ -51,7 +51,7 @@ public class StandardAppBuilderAppsPortletTab
 	@Override
 	public String getListEntryPoint() {
 		return _npmResolver.resolveModuleName(
-			"app-builder-web/js/pages/apps/ListApps.es");
+			"app-builder-web/js/pages/apps/ListStandardApps.es");
 	}
 
 	@Reference

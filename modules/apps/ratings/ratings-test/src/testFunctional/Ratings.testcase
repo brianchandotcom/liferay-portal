@@ -625,7 +625,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Guest");
 
 		SitePages.configurePage(
 			columnName = "1 Column",

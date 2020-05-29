@@ -75,7 +75,8 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				panel = "Site Administration",
-				portlet = "Categories");
+				portlet = "Categories",
+				site = "Guest");
 
 			Category.addCP(
 				categoryName = "${categoryName}",
@@ -129,7 +130,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Categories");
+			portlet = "Categories",
+			site = "Guest");
 
 		Category.addCP(
 			categoryName = "Books",
@@ -342,7 +344,8 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
 				panel = "Site Administration",
-				portlet = "Categories");
+				portlet = "Categories",
+				site = "Guest");
 
 			Category.addCP(
 				categoryName = "${categoryName}",

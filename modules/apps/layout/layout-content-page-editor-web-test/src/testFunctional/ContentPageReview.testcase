@@ -287,7 +287,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging");
+			portlet = "Staging",
+			site = "Test Site Name");
 
 		Staging.deactivateStagingCP(siteName = "Test Site Name");
 

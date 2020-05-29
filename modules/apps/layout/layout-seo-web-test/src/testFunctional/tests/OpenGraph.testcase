@@ -118,7 +118,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Settings",
+			site = "Test Site Name");
 
 		AssertElementNotPresent(
 			key_panel = "open graph",
@@ -141,7 +142,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Settings");
+			portlet = "Settings",
+			site = "Test Site Name");
 
 		OpenGraph.disableOpenGraphAtSiteLevel();
 

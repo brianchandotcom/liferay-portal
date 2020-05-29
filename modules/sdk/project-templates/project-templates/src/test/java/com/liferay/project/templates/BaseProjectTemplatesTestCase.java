@@ -207,8 +207,8 @@ public interface BaseProjectTemplatesTestCase {
 		Element dependenciesElement = XMLTestUtil.getChildElement(
 			projectElement, "dependencies");
 
-		Element dependencyElement = document.createElement("dependency");
 		Element artifactIdElement = document.createElement("artifactId");
+		Element dependencyElement = document.createElement("dependency");
 		Element groupdIdElement = document.createElement("groupId");
 		Element scopeElement = document.createElement("scope");
 

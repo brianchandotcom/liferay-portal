@@ -37,7 +37,7 @@ public class WorkflowAppBuilderAppsPortletTab
 	@Override
 	public String getEditEntryPoint() {
 		return _npmResolver.resolveModuleName(
-			"app-builder-workflow-web/js/pages/edit/EditApp.es");
+			"app-builder-workflow-web/js/pages/apps/edit/EditApp.es");
 	}
 
 	@Override

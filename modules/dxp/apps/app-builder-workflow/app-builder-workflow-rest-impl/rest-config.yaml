@@ -1,0 +1,9 @@
+apiDir: "../app-builder-workflow-rest-api/src/main/java"
+apiPackagePath: "com.liferay.app.builder.workflow.rest"
+application:
+    baseURI: "/app-builder-workflow"
+    className: "AppBuilderWorkflowRESTApplication"
+    name: "Liferay.App.Builder.Workflow.REST"
+author: "Rafael Praxedes"
+clientDir: "../app-builder-workflow-rest-client/src/main/java"
+testDir: "../app-builder-workflow-rest-test/src/testIntegration/java"

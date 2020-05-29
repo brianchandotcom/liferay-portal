@@ -61,18 +61,16 @@ definition {
 
 	@priority = "4"
 	test ViewInvalidSourceXMLNotRemainsAfterTabSwitch {
-		property portal.upstream = "quarantine";
-
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = "INVALID",
-			line = "6");
+			line = "4");
 
 		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.viewSourceXMLLine(
 			invalid = "true",
 			kdSourceXML = "INVALID",
-			line = "6");
+			line = "4");
 	}
 
 	@description = "This is a use case for LPS-46657."

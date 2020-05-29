@@ -457,8 +457,6 @@ definition {
 	@description = "This is a use case for LPS-37209."
 	@priority = "4"
 	test ConfigureTaskTimersViaViewTab {
-		property portal.upstream = "quarantine";
-
 		property test.name.skip.portal.instance = "Kaleodesigner#ConfigureTaskTimersViaViewTab";
 
 		ProductMenu.gotoPortlet(
@@ -497,10 +495,22 @@ definition {
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Timer Name</name>''',
-			line = "17");
+			line = "13");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<description>Timer Description</description>''',
+			line = "14");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<duration>5</duration>''',
+			line = "16");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<scale>hour</scale>''',
+			line = "17");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<duration>6</duration>''',
 			line = "20");
 
 		KaleoDesigner.viewSourceXMLLine(
@@ -508,32 +518,28 @@ definition {
 			line = "21");
 
 		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<duration>6</duration>''',
-			line = "24");
-
-		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<scale>hour</scale>''',
-			line = "25");
+			kdSourceXML = '''<blocking>true</blocking>''',
+			line = "23");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<timer-action>''',
-			line = "29");
+			line = "25");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>Blocker Name</name>''',
-			line = "30");
+			line = "26");
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<description>Blocker Description</description>''',
-			line = "31");
-
-		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''Test Script''',
-			line = "33");
-
-		KaleoDesigner.viewSourceXMLLine(
-			kdSourceXML = '''<blocking>true</blocking>''',
 			line = "27");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<script><![CDATA[Test Script]]></script>''',
+			line = "28");
+
+		KaleoDesigner.viewSourceXMLLine(
+			kdSourceXML = '''<script-language>groovy</script-language>''',
+			line = "29");
 	}
 
 	@priority = "5"
@@ -673,8 +679,6 @@ definition {
 	@description = "This is a use case for LPS-71924."
 	@priority = "5"
 	test PublishDefaultWorkflowDefinition {
-		property portal.upstream = "quarantine";
-
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishDefaultWorkflowDefinition";
 
 		ProductMenu.gotoPortlet(
@@ -686,7 +690,7 @@ definition {
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<script-language>groovy</script-language>''',
-			line = "32");
+			line = "24");
 
 		PortletEntry.publish();
 	}
@@ -705,7 +709,7 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = '''<name>NAME EDIT''',
-			line = "5");
+			line = "3");
 
 		PortletEntry.publish();
 
@@ -722,7 +726,7 @@ definition {
 
 		KaleoDesigner.viewSourceXMLLine(
 			kdSourceXML = '''<name>NAME EDIT</name>''',
-			line = "5");
+			line = "3");
 	}
 
 	@priority = "3"
@@ -1265,8 +1269,6 @@ definition {
 	@description = "This is a use case for LPS-48590."
 	@priority = "4"
 	test ViewSourceXMLNotErasedWhenInvalid {
-		property portal.upstream = "quarantine";
-
 		property test.name.skip.portal.instance = "Kaleodesigner#ViewSourceXMLNotErasedWhenInvalid";
 
 		ProductMenu.gotoPortlet(
@@ -1278,15 +1280,15 @@ definition {
 
 		KaleoDesigner.editSourceXML(
 			kdSourceXML = " ",
-			line = "18");
+			line = "14");
 
 		KaleoDesigner.viewViewTab();
 
 		KaleoDesigner.viewNodeNotPresent(nodeNodeLabel = "EndNode");
 
 		KaleoDesigner.editSourceXML(
-			kdSourceXML = '''</transitions></state>''',
-			line = "18");
+			kdSourceXML = '''</transitions>''',
+			line = "14");
 
 		KaleoDesigner.viewViewTab();
 

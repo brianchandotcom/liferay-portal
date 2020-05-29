@@ -25,7 +25,7 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 }
 
-task processDefaultSanitizerConfiguration(type: DefaultAntiSamyTask)
+task processDefaultSanitizerConfiguration(type: AntiSamyTask)
 task processKnowledgeBaseSanitizerConfiguration(type: AntiSamyTask)
 
 processKnowledgeBaseSanitizerConfiguration {
@@ -116,6 +116,10 @@ processKnowledgeBaseSanitizerConfiguration {
 		}
 
 		return line
+	}
+
+	from {
+		processDefaultSanitizerConfiguration.outputs.files.singleFile
 	}
 }
 
@@ -235,26 +239,14 @@ processDefaultSanitizerConfiguration {
 	}
 }
 
-class AntiSamyTask extends DefaultAntiSamyTask{
-	AntiSamyTask(){
-
-		from('src/main/resources/META-INF/resources/')
-
-		into('src/main/resources/META-INF/resources/')
-
-		include('sanitizer-configuration.xml')
-
-	}
-}
-
-class DefaultAntiSamyTask extends Copy {
+class AntiSamyTask extends Copy {
 	@Input
 	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
 
 	@Input
 	String sanitizerConfigurationUrl = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/owaspantisamy/antisamy-ebay-1.4.4.xml"
 
-	DefaultAntiSamyTask() {
+	AntiSamyTask() {
 		ext {
 			autoClean = false
 		}

@@ -125,6 +125,8 @@ public class TrashEntryPersistenceTest {
 
 		newTrashEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newTrashEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newTrashEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newTrashEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -153,6 +155,9 @@ public class TrashEntryPersistenceTest {
 		Assert.assertEquals(
 			existingTrashEntry.getMvccVersion(),
 			newTrashEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingTrashEntry.getCtCollectionId(),
+			newTrashEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingTrashEntry.getEntryId(), newTrashEntry.getEntryId());
 		Assert.assertEquals(
@@ -244,10 +249,10 @@ public class TrashEntryPersistenceTest {
 
 	protected OrderByComparator<TrashEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"TrashEntry", "mvccVersion", true, "entryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "classNameId", true, "classPK", true, "systemEventSetKey",
-			true, "status", true);
+			"TrashEntry", "mvccVersion", true, "ctCollectionId", true,
+			"entryId", true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "classNameId", true,
+			"classPK", true, "systemEventSetKey", true, "status", true);
 	}
 
 	@Test
@@ -479,6 +484,8 @@ public class TrashEntryPersistenceTest {
 		TrashEntry trashEntry = _persistence.create(pk);
 
 		trashEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		trashEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		trashEntry.setGroupId(RandomTestUtil.nextLong());
 

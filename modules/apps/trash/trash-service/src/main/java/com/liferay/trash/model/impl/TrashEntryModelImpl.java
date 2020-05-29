@@ -74,12 +74,13 @@ public class TrashEntryModelImpl
 	public static final String TABLE_NAME = "TrashEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"entryId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"systemEventSetKey", Types.BIGINT},
-		{"typeSettings", Types.CLOB}, {"status", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"entryId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"systemEventSetKey", Types.BIGINT}, {"typeSettings", Types.CLOB},
+		{"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -87,6 +88,7 @@ public class TrashEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -101,7 +103,7 @@ public class TrashEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table TrashEntry (mvccVersion LONG default 0 not null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER)";
+		"create table TrashEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,entryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER,primary key (entryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table TrashEntry";
 
@@ -149,6 +151,7 @@ public class TrashEntryModelImpl
 		TrashEntry model = new TrashEntryImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -314,6 +317,11 @@ public class TrashEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<TrashEntry, Long>)TrashEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", TrashEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<TrashEntry, Long>)TrashEntry::setCtCollectionId);
 		attributeGetterFunctions.put("entryId", TrashEntry::getEntryId);
 		attributeSetterBiConsumers.put(
 			"entryId", (BiConsumer<TrashEntry, Long>)TrashEntry::setEntryId);
@@ -371,6 +379,17 @@ public class TrashEntryModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -635,6 +654,7 @@ public class TrashEntryModelImpl
 		TrashEntryImpl trashEntryImpl = new TrashEntryImpl();
 
 		trashEntryImpl.setMvccVersion(getMvccVersion());
+		trashEntryImpl.setCtCollectionId(getCtCollectionId());
 		trashEntryImpl.setEntryId(getEntryId());
 		trashEntryImpl.setGroupId(getGroupId());
 		trashEntryImpl.setCompanyId(getCompanyId());
@@ -736,6 +756,8 @@ public class TrashEntryModelImpl
 		TrashEntryCacheModel trashEntryCacheModel = new TrashEntryCacheModel();
 
 		trashEntryCacheModel.mvccVersion = getMvccVersion();
+
+		trashEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		trashEntryCacheModel.entryId = getEntryId();
 
@@ -855,6 +877,7 @@ public class TrashEntryModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _entryId;
 	private long _groupId;
 	private long _originalGroupId;

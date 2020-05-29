@@ -18,14 +18,17 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Page.tearDownCP();
+
+			JSONUser.tearDownNonAdminUsers();
+		}
 	}
 
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on guest page level after page refresh."
 	@priority = "5"
 	test RefreshHomePage {
-		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
-		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RefreshHomePage";
+		property portal.acceptance = "true";
 
 		Navigator.gotoPage(pageName = "Home");
 
@@ -51,8 +54,7 @@ definition {
 	@description = "This is a use case for LPS-95157. It checks the nav-bar menu icons on admin page level after page refresh."
 	@priority = "5"
 	test RefreshWebContent {
-		property portal.acceptance = "false";
-		property test.name.skip.portal.instance = "UIInfrastructureUsecase#RefreshWebContent";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -218,7 +220,7 @@ definition {
 	@description = "Checks for each portlet having defined boundaries."
 	@priority = "5"
 	test ViewPortletBoundaries {
-		property portal.acceptance = "false";
+		property portal.acceptance = "true";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

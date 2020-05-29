@@ -1095,4 +1095,102 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
+	@priority = "5"
+	test ViewWebContentViaContentInCollectionDisplay {
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${i}",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Dynamic Asset List Test");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addContentDisplay(fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title 3",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title ${i}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title 1",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+		}
+
+		PageEditor.addContentDisplay(
+			entryName = "WC WebContent Title 3",
+			fragmentName = "Content");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Content 3",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Content ${i}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Content 1",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.gotoConfiguration(fragmentName = "Content");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Default Template");
+	}
+
 }

@@ -18,7 +18,6 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.servlet.filters.uploadservletrequest.UploadServletRequestFilter;
 
 import java.io.InputStream;
 
@@ -103,8 +102,7 @@ public class LiferayInputStreamTest {
 		throws Exception {
 
 		_mockHttpServletRequest.setAttribute(
-			UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE,
-			Boolean.FALSE);
+			LiferayInputStream.COPY_MULTIPART_STREAM_TO_FILE, Boolean.FALSE);
 
 		testInitialRead(_UNCACHEABLE_BYTES);
 	}
@@ -157,7 +155,7 @@ public class LiferayInputStreamTest {
 		_mockHttpServletRequest.setContent(content);
 
 		_mockHttpServletRequest.setAttribute(
-			UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE, readable);
+			LiferayInputStream.COPY_MULTIPART_STREAM_TO_FILE, readable);
 
 		_liferayInputStream = new LiferayInputStream(_mockHttpServletRequest);
 

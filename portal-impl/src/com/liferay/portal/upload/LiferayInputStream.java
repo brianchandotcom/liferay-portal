@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.servlet.filters.uploadservletrequest.UploadServletRequestFilter;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
@@ -44,6 +43,9 @@ import javax.servlet.http.HttpSession;
  * @author Harry Mark
  */
 public class LiferayInputStream extends ServletInputStreamAdapter {
+
+	public static final String COPY_MULTIPART_STREAM_TO_FILE =
+		LiferayInputStream.class.getName() + "#COPY_MULTIPART_STREAM_TO_FILE";
 
 	public static final long THRESHOLD_SIZE = GetterUtil.getLong(
 		PropsUtil.get(LiferayInputStream.class.getName() + ".threshold.size"));
@@ -66,8 +68,7 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		_totalSize = totalSize;
 
 		boolean createTempFile = GetterUtil.getBoolean(
-			httpServletRequest.getAttribute(
-				UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE),
+			httpServletRequest.getAttribute(COPY_MULTIPART_STREAM_TO_FILE),
 			Boolean.TRUE);
 
 		if ((_totalSize >= THRESHOLD_SIZE) && createTempFile) {
@@ -76,8 +77,7 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		else {
 			_tempFile = null;
 
-			httpServletRequest.removeAttribute(
-				UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE);
+			httpServletRequest.removeAttribute(COPY_MULTIPART_STREAM_TO_FILE);
 		}
 	}
 

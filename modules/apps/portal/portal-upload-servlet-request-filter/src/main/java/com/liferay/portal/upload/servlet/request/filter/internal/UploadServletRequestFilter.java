@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
+import com.liferay.portal.upload.LiferayInputStream;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -49,10 +50,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Filter.class
 )
 public class UploadServletRequestFilter extends BasePortalFilter {
-
-	public static final String COPY_MULTIPART_STREAM_TO_FILE =
-		UploadServletRequestFilter.class.getName() +
-			"#COPY_MULTIPART_STREAM_TO_FILE";
 
 	@Override
 	public boolean isFilterEnabled(
@@ -103,8 +100,7 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 					!liferayPortletConfig.isWARFile()) {
 
 					httpServletRequest.setAttribute(
-						UploadServletRequestFilter.
-							COPY_MULTIPART_STREAM_TO_FILE,
+						LiferayInputStream.COPY_MULTIPART_STREAM_TO_FILE,
 						Boolean.FALSE);
 				}
 

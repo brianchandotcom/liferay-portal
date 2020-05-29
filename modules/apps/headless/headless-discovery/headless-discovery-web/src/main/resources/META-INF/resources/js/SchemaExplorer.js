@@ -31,7 +31,7 @@ const SchemaExplorer = ({category, schemas}) => {
 				</h3>
 			</div>
 
-			{Object.keys(schemas).map((key) => (
+			{Object.keys(schemas).sort().map((key) => (
 				<SchemaDisplay key={key} name={key} schema={schemas[key]} />
 			))}
 		</div>

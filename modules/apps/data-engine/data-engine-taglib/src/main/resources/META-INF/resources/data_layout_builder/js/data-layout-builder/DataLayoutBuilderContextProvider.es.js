@@ -23,7 +23,7 @@ import {
 	UPDATE_FOCUSED_FIELD,
 	UPDATE_PAGES,
 } from '../actions.es';
-import {getHandlerDrop} from '../drag-and-drop/getHandlerDrop.es';
+import {getDropHandler} from '../drag-and-drop/getDropHandler.es';
 import DataLayoutBuilderContext from './DataLayoutBuilderContext.es';
 
 export default ({children, dataLayoutBuilder}) => {
@@ -109,7 +109,7 @@ export default ({children, dataLayoutBuilder}) => {
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
-		const onDrop = getHandlerDrop({dataDefinition, dataLayoutBuilder});
+		const onDrop = getDropHandler({dataDefinition, dataLayoutBuilder});
 
 		const eventHandler = provider.on('fieldDrop', onDrop);
 

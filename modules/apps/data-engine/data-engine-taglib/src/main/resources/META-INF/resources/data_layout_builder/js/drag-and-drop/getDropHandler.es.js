@@ -23,7 +23,7 @@ import {
 	DRAG_FIELD_TYPE,
 } from './dragTypes.es';
 
-export const getHandlerDrop = ({dataDefinition, dataLayoutBuilder}) => {
+export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {
 	return ({item, monitor, sourceItem}) => {
 		const {data, type} = item;
 		const {fieldName, origin, parentField, ...indexes} = sourceItem;

@@ -45,6 +45,10 @@ public class DisplayContextImpl<T> implements DisplayContext<T> {
 
 	@Override
 	public String getDownloadURL(String key, long size, String title) {
+		if (_ctEntryId <= 0) {
+			return null;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

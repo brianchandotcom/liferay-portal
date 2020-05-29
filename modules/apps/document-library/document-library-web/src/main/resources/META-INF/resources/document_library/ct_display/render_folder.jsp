@@ -17,23 +17,23 @@
 <%@ include file="/document_library/ct_display/init.jsp" %>
 
 <%
-Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
+DLFolder dlFolder = (DLFolder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 %>
 
 <p>
-	<b><liferay-ui:message key="id" /></b>: <%= folder.getFolderId() %>
+	<b><liferay-ui:message key="id" /></b>: <%= dlFolder.getFolderId() %>
 </p>
 
 <p>
-	<b><liferay-ui:message key="name" /></b>: <%= HtmlUtil.escape(folder.getName()) %>
+	<b><liferay-ui:message key="name" /></b>: <%= HtmlUtil.escape(dlFolder.getName()) %>
 </p>
 
 <p>
-	<b><liferay-ui:message key="description" /></b>: <%= HtmlUtil.escape(folder.getDescription()) %>
+	<b><liferay-ui:message key="description" /></b>: <%= HtmlUtil.escape(dlFolder.getDescription()) %>
 </p>
 
 <p>
-	<b><liferay-ui:message key="folders" /></b>: <%= DLAppServiceUtil.getFoldersCount(folder.getRepositoryId(), folder.getFolderId()) %>
+	<b><liferay-ui:message key="folders" /></b>: <%= DLAppServiceUtil.getFoldersCount(dlFolder.getRepositoryId(), dlFolder.getFolderId()) %>
 </p>
 
 <%
@@ -43,7 +43,7 @@ if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 
-int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), status);
+int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(dlFolder.getRepositoryId(), dlFolder.getFolderId(), status);
 %>
 
 <p>

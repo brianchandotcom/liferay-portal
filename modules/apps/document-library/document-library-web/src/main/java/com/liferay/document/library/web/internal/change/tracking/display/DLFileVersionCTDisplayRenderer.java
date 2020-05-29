@@ -15,14 +15,17 @@
 package com.liferay.document.library.web.internal.change.tracking.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
+import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
+import com.liferay.portlet.documentlibrary.store.StoreFactory;
+
+import java.io.InputStream;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -45,6 +48,22 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DLFileVersionCTDisplayRenderer
 	implements CTDisplayRenderer<DLFileVersion> {
+
+	@Override
+	public InputStream getDownloadInputStream(
+			DLFileVersion dlFileVersion, String version)
+		throws PortalException {
+
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore();
+
+		DLFileEntry dlFileEntry = dlFileVersion.getFileEntry();
+
+		return store.getFileAsStream(
+			dlFileVersion.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), dlFileVersion.getVersion());
+	}
 
 	@Override
 	public String getEditURL(
@@ -75,20 +94,19 @@ public class DLFileVersionCTDisplayRenderer
 	}
 
 	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			DLFileVersion dlFileVersion)
+	public void render(DisplayContext<DLFileVersion> displayContext)
 		throws Exception {
 
-		FileEntry fileEntry = new LiferayFileEntry(
-			dlFileVersion.getFileEntry());
-		FileVersion fileVersion = new LiferayFileVersion(dlFileVersion);
+		HttpServletRequest httpServletRequest = displayContext.getRequest();
+		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		DLFileVersion dlFileVersion = displayContext.getModel();
 
 		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, fileEntry);
+			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, dlFileVersion.getFileEntry());
 		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, fileVersion);
+			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, dlFileVersion);
+
+		httpServletRequest.setAttribute("displayContext", displayContext);
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(

@@ -15,6 +15,7 @@
 package com.liferay.document.library.web.internal.change.tracking.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
+import com.liferay.change.tracking.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.language.Language;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -97,13 +97,15 @@ public class DLFolderCTDisplayRenderer implements CTDisplayRenderer<DLFolder> {
 	}
 
 	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, DLFolder dlFolder)
+	public void render(DisplayContext<DLFolder> displayContext)
 		throws Exception {
 
+		HttpServletRequest httpServletRequest = displayContext.getRequest();
+		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		DLFolder dlFolder = displayContext.getModel();
+
 		httpServletRequest.setAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FOLDER, new LiferayFolder(dlFolder));
+			WebKeys.DOCUMENT_LIBRARY_FOLDER, dlFolder);
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(

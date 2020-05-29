@@ -62,7 +62,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				{"spring", "guestbook", "com.liferay.docs.guestbook", "7.0.6"},
 				{"spring", "guestbook", "com.liferay.docs.guestbook", "7.1.3"},
 				{"ds", "guestbook", "com.liferay.docs.guestbook", "7.2.1"},
-				{"ds", "guestbook", "com.liferay.docs.guestbook", "7.3.1"},
+				{"ds", "guestbook", "com.liferay.docs.guestbook", "7.3.2"},
 				{
 					"spring", "backend-integration",
 					"com.liferay.docs.guestbook", "7.0.6"
@@ -77,7 +77,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"ds", "backend-integration", "com.liferay.docs.guestbook",
-					"7.3.1"
+					"7.3.2"
 				},
 				{
 					"spring", "backend-integration",
@@ -85,12 +85,12 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				},
 				{
 					"spring", "backend-integration",
-					"com.liferay.docs.guestbook", "7.3.1"
+					"com.liferay.docs.guestbook", "7.3.2"
 				},
 				{"spring", "sample", "com.test.sample", "7.0.6"},
 				{"spring", "sample", "com.test.sample", "7.1.3"},
 				{"ds", "sample", "com.test.sample", "7.2.1"},
-				{"ds", "sample", "com.test.sample", "7.3.1"}
+				{"ds", "sample", "com.test.sample", "7.3.2"}
 			});
 	}
 
@@ -204,7 +204,7 @@ public class ProjectTemplatesServiceBuilderWorkspaceTest
 				"com.liferay.petra.string", "org.osgi.annotation.versioning",
 				"com.liferay.portal.aop.api");
 
-			if (_liferayVersion.equals("7.3.1")) {
+			if (_liferayVersion.equals("7.3.2")) {
 				testContains(
 					gradleProjectDir, _name + "-service/build.gradle",
 					"com.liferay.petra.sql.dsl.api");

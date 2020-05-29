@@ -297,12 +297,13 @@ public class JournalArticleInfoItemFormProvider
 		return infoFieldValues;
 	}
 
-	private String _getDisplayPageURL(JournalArticle journalArticle)
+	private String _getDisplayPageURL(
+			JournalArticle journalArticle, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 			JournalArticle.class.getName(), journalArticle.getResourcePrimKey(),
-			_getThemeDisplay());
+			themeDisplay);
 	}
 
 	private JSONObject _getImageJSONObject(String alt, String url) {
@@ -340,12 +341,14 @@ public class JournalArticleInfoItemFormProvider
 				new InfoFieldValue<>(
 					_descriptionInfoField, journalArticle.getDescription()));
 
-			journalArticleFieldValues.add(
-				new InfoFieldValue<>(
-					_smallImageInfoField,
-					_getImageJSONObject(
-						null,
-						journalArticle.getArticleImageURL(themeDisplay))));
+			if (themeDisplay != null) {
+				journalArticleFieldValues.add(
+					new InfoFieldValue<>(
+						_smallImageInfoField,
+						_getImageJSONObject(
+							null,
+							journalArticle.getArticleImageURL(themeDisplay))));
+			}
 
 			User user = _getLastVersionUser(journalArticle);
 
@@ -354,12 +357,14 @@ public class JournalArticleInfoItemFormProvider
 					new InfoFieldValue<>(
 						_authorNameInfoField, user.getFullName()));
 
-				journalArticleFieldValues.add(
-					new InfoFieldValue<>(
-						_authorProfileImageInfoField,
-						_getImageJSONObject(
-							user.getFullName(),
-							user.getPortraitURL(themeDisplay))));
+				if (themeDisplay != null) {
+					journalArticleFieldValues.add(
+						new InfoFieldValue<>(
+							_authorProfileImageInfoField,
+							_getImageJSONObject(
+								user.getFullName(),
+								user.getPortraitURL(themeDisplay))));
+				}
 			}
 
 			User lastEditorUser = _userLocalService.fetchUser(
@@ -371,12 +376,14 @@ public class JournalArticleInfoItemFormProvider
 						_lastEditorNameInfoField,
 						lastEditorUser.getFullName()));
 
-				journalArticleFieldValues.add(
-					new InfoFieldValue<>(
-						_lastEditorProfileImageInfoField,
-						_getImageJSONObject(
-							lastEditorUser.getFullName(),
-							lastEditorUser.getPortraitURL(themeDisplay))));
+				if (themeDisplay != null) {
+					journalArticleFieldValues.add(
+						new InfoFieldValue<>(
+							_lastEditorProfileImageInfoField,
+							_getImageJSONObject(
+								lastEditorUser.getFullName(),
+								lastEditorUser.getPortraitURL(themeDisplay))));
+				}
 			}
 
 			journalArticleFieldValues.add(
@@ -384,10 +391,12 @@ public class JournalArticleInfoItemFormProvider
 					_publishDateInfoField,
 					_getDateValue(journalArticle.getDisplayDate())));
 
-			journalArticleFieldValues.add(
-				new InfoFieldValue<>(
-					_displayPageUrlInfoField,
-					_getDisplayPageURL(journalArticle)));
+			if (themeDisplay != null) {
+				journalArticleFieldValues.add(
+					new InfoFieldValue<>(
+						_displayPageUrlInfoField,
+						_getDisplayPageURL(journalArticle, themeDisplay)));
+			}
 
 			return journalArticleFieldValues;
 		}

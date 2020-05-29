@@ -14,14 +14,15 @@
 
 // For details about this file see: LPS-2155
 
+/**
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
+ */
 (function (A, Liferay) {
 	var Util = Liferay.Util;
 
 	var Lang = A.Lang;
 
-	var AArray = A.Array;
 	var AObject = A.Object;
-	var AString = A.Lang.String;
 
 	var htmlEscapedValues = [];
 	var htmlUnescapedValues = [];
@@ -47,20 +48,9 @@
 
 	var REGEX_DASH = /-([a-z])/gi;
 
-	var STR_LEFT_SQUARE_BRACKET = '[';
-
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
-	var REGEX_HTML_ESCAPE = new RegExp(
-		STR_LEFT_SQUARE_BRACKET +
-			htmlUnescapedValues.join('') +
-			STR_RIGHT_SQUARE_BRACKET,
-		'g'
-	);
-
 	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
-
-	Util.MAP_HTML_CHARS_ESCAPED = MAP_HTML_CHARS_ESCAPED;
 
 	Util.actsAsAspect = function (object) {
 		object.yield = null;
@@ -174,47 +164,6 @@
 		return Math.min(Math.max(value, min), max);
 	};
 
-	Util.escapeHTML = function (str, preventDoubleEscape, entities) {
-		var regex = REGEX_HTML_ESCAPE;
-
-		var entitiesList = [];
-
-		var entitiesValues;
-
-		if (Lang.isObject(entities)) {
-			entitiesValues = [];
-
-			AObject.each(entities, (item, index) => {
-				entitiesList.push(index);
-
-				entitiesValues.push(item);
-			});
-
-			regex = new RegExp(
-				STR_LEFT_SQUARE_BRACKET +
-					AString.escapeRegEx(entitiesList.join('')) +
-					STR_RIGHT_SQUARE_BRACKET,
-				'g'
-			);
-		}
-		else {
-			entities = MAP_HTML_CHARS_ESCAPED;
-
-			entitiesValues = htmlEscapedValues;
-		}
-
-		return str.replace(
-			regex,
-			A.bind(
-				'_escapeHTML',
-				Util,
-				!!preventDoubleEscape,
-				entities,
-				entitiesValues
-			)
-		);
-	};
-
 	Util.isEditorPresent = function (editorName) {
 		return Liferay.EDITORS && Liferay.EDITORS[editorName];
 	};
@@ -314,40 +263,6 @@
 		}
 
 		return str.replace(regex, A.bind('_unescapeHTML', Util, entitiesMap));
-	};
-
-	Util._escapeHTML = function (
-		preventDoubleEscape,
-		entities,
-		entitiesValues,
-		match
-	) {
-		var result;
-
-		if (preventDoubleEscape) {
-			var arrayArgs = AArray(arguments);
-
-			var length = arrayArgs.length;
-
-			var offset = arrayArgs[length - 2];
-			var string = arrayArgs[length - 1];
-
-			var nextSemicolonIndex = string.indexOf(';', offset);
-
-			if (nextSemicolonIndex >= 0) {
-				var entity = string.substring(offset, nextSemicolonIndex + 1);
-
-				if (entitiesValues.indexOf(entity) >= 0) {
-					result = match;
-				}
-			}
-		}
-
-		if (!result) {
-			result = entities[match];
-		}
-
-		return result;
 	};
 
 	Util._unescapeHTML = function (entities, match) {

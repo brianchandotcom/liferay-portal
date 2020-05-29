@@ -96,6 +96,11 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 	}
 
 	@Override
+	public long getCtCollectionId() {
+		return _expandoColumn.getCtCollectionId();
+	}
+
+	@Override
 	public String getDefaultData() {
 		return _expandoColumn.getDefaultData();
 	}
@@ -239,6 +244,11 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 
 	@Override
 	public void setCreateDate(Date date) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
 		throw new UnsupportedOperationException();
 	}
 

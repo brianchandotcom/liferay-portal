@@ -81,6 +81,11 @@ public class StagedExpandoTableImpl implements StagedExpandoTable {
 	}
 
 	@Override
+	public long getCtCollectionId() {
+		return _expandoTable.getCtCollectionId();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return null;
 	}
@@ -202,6 +207,11 @@ public class StagedExpandoTableImpl implements StagedExpandoTable {
 
 	@Override
 	public void setCreateDate(Date date) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -153,4 +153,12 @@ public class DEDataDefinitionFieldLinkLocalServiceImpl
 			classNameId, ddmStructureId, fieldNames);
 	}
 
+	@Override
+	public List<DEDataDefinitionFieldLink> getDEDataDefinitionFieldLinks(
+		long ddmStructureId, String[] fieldNames) {
+
+		return deDataDefinitionFieldLinkPersistence.findByDDMSI_F(
+			ddmStructureId, fieldNames);
+	}
+
 }

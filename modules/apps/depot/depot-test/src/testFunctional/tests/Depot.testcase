@@ -491,7 +491,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Asset Libraries",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Asset Libraries");
 
 		Depot.addDepot(

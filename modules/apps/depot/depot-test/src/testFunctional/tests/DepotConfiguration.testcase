@@ -23,11 +23,13 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DepotConfiguration#DisableDepot";
 
-		ProductMenuHelper.expandPanel(panel = "Control Panel");
+		GlobalMenuHelper.openGlobalMenu();
+
+		Navigator.gotoNavTab(navTab = "Applications");
 
 		AssertElementNotPresent(
 			key_category = "Asset Libraries",
-			locator1 = "ProductMenu#CATEGORY");
+			locator1 = "GlobalMenu#CATEGORY");
 	}
 
 }

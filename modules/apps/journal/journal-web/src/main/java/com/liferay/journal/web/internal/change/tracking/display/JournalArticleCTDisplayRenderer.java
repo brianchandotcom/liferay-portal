@@ -15,6 +15,7 @@
 package com.liferay.journal.web.internal.change.tracking.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
+import com.liferay.change.tracking.display.context.DisplayContext;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;
@@ -101,11 +102,12 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse,
-			JournalArticle journalArticle)
+	public void render(DisplayContext<JournalArticle> displayContext)
 		throws Exception {
+
+		HttpServletRequest httpServletRequest = displayContext.getRequest();
+		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		JournalArticle journalArticle = displayContext.getModel();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

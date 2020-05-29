@@ -17,34 +17,36 @@
 <%@ include file="/document_library/ct_display/init.jsp" %>
 
 <%
-FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
+DisplayContext<?> displayContext = (DisplayContext<?>)request.getAttribute("displayContext");
 
-FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
+DLFileEntry dlFileEntry = (DLFileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
+
+DLFileVersion dlFileVersion = (DLFileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
 %>
 
 <p>
-	<b><liferay-ui:message key="id" /></b>: <%= fileEntry.getFileEntryId() %>
+	<b><liferay-ui:message key="id" /></b>: <%= dlFileEntry.getFileEntryId() %>
 </p>
 
 <p>
-	<b><liferay-ui:message key="version" /></b>: <%= fileVersion.getVersion() %>
+	<b><liferay-ui:message key="version" /></b>: <%= dlFileVersion.getVersion() %>
 </p>
 
 <p>
-	<b><liferay-ui:message key="title" /></b>: <%= HtmlUtil.escape(fileVersion.getTitle()) %>
+	<b><liferay-ui:message key="title" /></b>: <%= HtmlUtil.escape(dlFileVersion.getTitle()) %>
 </p>
 
 <p>
-	<b><liferay-ui:message key="description" /></b>: <%= HtmlUtil.escape(fileVersion.getDescription()) %>
+	<b><liferay-ui:message key="description" /></b>: <%= HtmlUtil.escape(dlFileVersion.getDescription()) %>
 </p>
 
 <p>
 	<clay:link
 		buttonStyle="primary"
 		elementClasses="btn-sm"
-		href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, true, true) %>"
+		href="<%= displayContext.getDownloadURL(dlFileVersion.getVersion(), dlFileVersion.getSize(), dlFileVersion.getFileName()) %>"
 		icon="download"
 		label='<%= LanguageUtil.get(resourceBundle, "download") %>'
-		title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'
+		title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(dlFileVersion.getSize(), locale), false) %>'
 	/>
 </p>

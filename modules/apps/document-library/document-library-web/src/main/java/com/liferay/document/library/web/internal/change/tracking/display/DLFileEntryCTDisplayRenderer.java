@@ -15,9 +15,11 @@
 package com.liferay.document.library.web.internal.change.tracking.display;
 
 import com.liferay.change.tracking.display.CTDisplayRenderer;
+import com.liferay.change.tracking.display.context.DisplayContext;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.store.Store;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -25,6 +27,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.documentlibrary.store.StoreFactory;
+
+import java.io.InputStream;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -32,6 +37,8 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,6 +51,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = CTDisplayRenderer.class)
 public class DLFileEntryCTDisplayRenderer
 	implements CTDisplayRenderer<DLFileEntry> {
+
+	@Override
+	public InputStream getDownloadInputStream(
+			DLFileEntry dlFileEntry, String version)
+		throws PortalException {
+
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore();
+
+		return store.getFileAsStream(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), version);
+	}
 
 	@Override
 	public String getEditURL(
@@ -96,20 +117,27 @@ public class DLFileEntryCTDisplayRenderer
 	}
 
 	@Override
-	public void render(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, DLFileEntry dlFileEntry)
+	public void render(DisplayContext<DLFileEntry> displayContext)
 		throws Exception {
 
-		_ctDisplayRenderer.render(
-			httpServletRequest, httpServletResponse,
-			dlFileEntry.getFileVersion());
-	}
+		HttpServletRequest httpServletRequest = displayContext.getRequest();
+		HttpServletResponse httpServletResponse = displayContext.getResponse();
+		DLFileEntry dlFileEntry = displayContext.getModel();
 
-	@Reference(
-		target = "(model.class.name=com.liferay.document.library.kernel.model.DLFileVersion)"
-	)
-	private CTDisplayRenderer<DLFileVersion> _ctDisplayRenderer;
+		httpServletRequest.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY, dlFileEntry);
+		httpServletRequest.setAttribute(
+			WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
+			dlFileEntry.getFileVersion());
+
+		httpServletRequest.setAttribute("displayContext", displayContext);
+
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(
+				"/document_library/ct_display/render_file_version.jsp");
+
+		requestDispatcher.include(httpServletRequest, httpServletResponse);
+	}
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -119,5 +147,10 @@ public class DLFileEntryCTDisplayRenderer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)"
+	)
+	private ServletContext _servletContext;
 
 }

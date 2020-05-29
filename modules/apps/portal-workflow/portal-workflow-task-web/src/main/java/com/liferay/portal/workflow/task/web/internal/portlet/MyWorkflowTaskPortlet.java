@@ -132,7 +132,9 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			workflowTask.getOptionalAttributes(), "groupId",
 			themeDisplay.getSiteGroupId());
 
-		if (!_workflowTaskPermissionChecker.hasPermission(
+		if ((workflowTask.isCompleted() &&
+			 (workflowTask.getAssigneeUserId() != themeDisplay.getUserId())) ||
+			!_workflowTaskPermissionChecker.hasPermission(
 				groupId, workflowTask, themeDisplay.getPermissionChecker())) {
 
 			throw new PrincipalException(

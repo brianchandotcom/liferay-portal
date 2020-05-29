@@ -40,6 +40,7 @@ const RowWithControls = React.forwardRef(
 		const isMounted = useIsMounted();
 		const [resizing, setResizing] = useState(false);
 		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
+		const [customRow, setCustomRow] = useState(false);
 
 		const [
 			openSaveFragmentCompositionModal,
@@ -117,21 +118,22 @@ const RowWithControls = React.forwardRef(
 					layoutData={layoutData}
 					ref={setRef}
 				>
-					<FloatingToolbar
-						buttons={buttons}
-						item={item}
-						itemElement={itemElement}
-						onButtonClick={handleButtonClick}
-					/>
-
 					<ResizeContext.Provider
 						value={{
+							customRow,
 							resizing,
+							setCustomRow,
 							setResizing,
 							setUpdatedLayoutData,
 							updatedLayoutData,
 						}}
 					>
+						<FloatingToolbar
+							buttons={buttons}
+							item={item}
+							itemElement={itemElement}
+							onButtonClick={handleButtonClick}
+						/>
 						{children}
 					</ResizeContext.Provider>
 
@@ -158,7 +160,9 @@ RowWithControls.propTypes = {
 };
 
 const ResizeContext = React.createContext({
+	customRow: false,
 	resizing: false,
+	setCustomRow: () => {},
 	setResizing: () => {},
 	setUpdatedLayoutData: () => {},
 	updatedLayoutData: null,
@@ -178,6 +182,14 @@ export function useSetUpdatedLayoutDataContext() {
 
 export function useUpdatedLayoutDataContext() {
 	return useContext(ResizeContext).updatedLayoutData;
+}
+
+export function useCustomRowContext() {
+	return useContext(ResizeContext).customRow;
+}
+
+export function useSetCustomRowContext() {
+	return useContext(ResizeContext).setCustomRow;
 }
 
 export default RowWithControls;

@@ -23,14 +23,15 @@ import {
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelector} from '../../store/index';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {useCustomRowContext} from './RowWithControls';
 
 const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
+	const customRow = useCustomRowContext();
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
-
 	const {modulesPerRow, reverseOrder} = itemConfig;
 
 	const rowContent = (
@@ -41,7 +42,7 @@ const Row = React.forwardRef(({children, className, item, layoutData}, ref) => {
 					!item.children.some(
 						(childId) => layoutData.items[childId].children.length
 					),
-				'flex-column': modulesPerRow === 1,
+				'flex-column': customRow && modulesPerRow === 1,
 				'flex-column-reverse':
 					item.config.numberOfColumns === 2 &&
 					modulesPerRow === 1 &&

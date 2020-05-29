@@ -26,6 +26,13 @@ import updateItemConfig from '../../thunks/updateItemConfig';
 import updateRowColumns from '../../thunks/updateRowColumns';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {useId} from '../../utils/useId';
+import {
+	useCustomRowContext,
+	useSetCustomRowContext,
+	useSetUpdatedLayoutDataContext,
+} from '../layout-data-items/RowWithControls';
+
+const CUSTOM_ROW = 'custom';
 
 const MODULES_PER_ROW_OPTIONS = [
 	[1],
@@ -35,6 +42,9 @@ const MODULES_PER_ROW_OPTIONS = [
 	[2, 5],
 	[2, 3, 6],
 ];
+const MODULES_PER_ROW_OPTIONS_WITH_CUSTOM = MODULES_PER_ROW_OPTIONS.map(
+	(option) => [CUSTOM_ROW, ...option]
+);
 
 const NUMBER_OF_COLUMNS_OPTIONS = ['1', '2', '3', '4', '5', '6'];
 
@@ -59,8 +69,14 @@ export const RowConfigurationPanel = ({item}) => {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
+	const setUpdatedLayoutData = useSetUpdatedLayoutDataContext();
+	const setCustomRow = useSetCustomRowContext();
+	const customRow = useCustomRowContext();
 
 	const handleConfigurationValueChanged = (identifier, value) => {
+		setCustomRow(false);
+		setUpdatedLayoutData(null);
+
 		let itemConfig = {[identifier]: value};
 
 		if (
@@ -113,6 +129,9 @@ export const RowConfigurationPanel = ({item}) => {
 
 	const rowConfig = getResponsiveConfig(item.config, selectedViewportSize);
 	const viewportSize = availableViewportSizes[selectedViewportSize];
+	const modulesPerRowOptions = customRow
+		? MODULES_PER_ROW_OPTIONS_WITH_CUSTOM
+		: MODULES_PER_ROW_OPTIONS;
 
 	return (
 		<>
@@ -157,16 +176,20 @@ export const RowConfigurationPanel = ({item}) => {
 						configurationKey="modulesPerRow"
 						handleChange={handleConfigurationValueChanged}
 						label={Liferay.Language.get('layout')}
-						options={MODULES_PER_ROW_OPTIONS[
+						options={modulesPerRowOptions[
 							rowConfig.numberOfColumns - 1
 						].map((option) => ({
-							label: Liferay.Util.sub(
-								getModulesPerRowOptionLabel(option),
-								option
-							),
+							disabled: option === CUSTOM_ROW,
+							label:
+								option === CUSTOM_ROW
+									? Liferay.Language.get('custom')
+									: Liferay.Util.sub(
+											getModulesPerRowOptionLabel(option),
+											option
+									  ),
 							value: option,
 						}))}
-						value={rowConfig.modulesPerRow}
+						value={customRow ? CUSTOM_ROW : rowConfig.modulesPerRow}
 					/>
 
 					{rowConfig.numberOfColumns === 2 &&

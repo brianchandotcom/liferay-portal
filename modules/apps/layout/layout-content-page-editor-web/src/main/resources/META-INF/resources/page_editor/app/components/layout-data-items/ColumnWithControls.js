@@ -31,6 +31,7 @@ import TopperEmpty from '../TopperEmpty';
 import Column from './Column';
 import {
 	useResizeContext,
+	useSetCustomRowContext,
 	useSetResizeContext,
 	useSetUpdatedLayoutDataContext,
 	useUpdatedLayoutDataContext,
@@ -88,6 +89,7 @@ const ColumnWithControls = React.forwardRef(
 		);
 
 		const resizing = useResizeContext();
+		const setCustomRow = useSetCustomRowContext();
 		const setResizing = useSetResizeContext();
 		const setUpdatedLayoutData = useSetUpdatedLayoutDataContext();
 		const updatedLayoutData = useUpdatedLayoutDataContext();
@@ -138,6 +140,7 @@ const ColumnWithControls = React.forwardRef(
 		const handleMouseDown = (event) => {
 			setColumnSelected(item);
 			setResizing(true);
+			setCustomRow(true);
 
 			const leftColumn =
 				layoutData.items[parentItem.children[columnIndex - 1]];

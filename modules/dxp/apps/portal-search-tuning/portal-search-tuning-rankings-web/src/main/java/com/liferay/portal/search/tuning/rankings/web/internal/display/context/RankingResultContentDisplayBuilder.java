@@ -17,9 +17,10 @@ package com.liferay.portal.search.tuning.rankings.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.tuning.rankings.web.internal.util.RankingResultUtil;
 
 import java.util.Locale;
@@ -84,18 +85,18 @@ public class RankingResultContentDisplayBuilder {
 				hasEditPermission);
 
 			if (hasEditPermission) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				rankingResultContentDisplayContext.setIconEditTarget(title);
-
-				PortletURL redirectPortletURL =
-					_renderResponse.createRenderURL();
-
-				redirectPortletURL.setParameter(
-					"mvcPath", "/edit_content_redirect.jsp");
 
 				PortletURL editPortletURL = assetRenderer.getURLEdit(
 					_portal.getLiferayPortletRequest(_renderRequest),
-					_portal.getLiferayPortletResponse(_renderResponse),
-					LiferayWindowState.POP_UP, redirectPortletURL);
+					_portal.getLiferayPortletResponse(_renderResponse));
+
+				editPortletURL.setParameter(
+					"redirect", themeDisplay.getURLCurrent());
 
 				rankingResultContentDisplayContext.setIconURLString(
 					editPortletURL.toString());

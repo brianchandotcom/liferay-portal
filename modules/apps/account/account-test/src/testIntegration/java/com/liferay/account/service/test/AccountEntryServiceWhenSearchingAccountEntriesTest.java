@@ -49,11 +49,12 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -81,30 +82,30 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 
 		_companyAdminUser = UserTestUtil.addCompanyAdminUser(company);
 
-		Organization rootOrganization =
-			_organizationLocalService.addOrganization(
-				_companyAdminUser.getUserId(),
-				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
-				RandomTestUtil.randomString(), false);
-
-		Organization organization = _organizationLocalService.addOrganization(
-			_companyAdminUser.getUserId(), rootOrganization.getOrganizationId(),
+		_rootOrganization = _organizationLocalService.addOrganization(
+			_companyAdminUser.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(), false);
 
-		Organization suborganization =
-			_organizationLocalService.addOrganization(
-				_companyAdminUser.getUserId(), organization.getOrganizationId(),
-				RandomTestUtil.randomString(), false);
+		_organizationAccountEntryMap.put(
+			_rootOrganization,
+			_addAccountEntryWithOrganization(_rootOrganization));
 
-		_organizations.add(suborganization);
+		_organization = _organizationLocalService.addOrganization(
+			_companyAdminUser.getUserId(),
+			_rootOrganization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
 
-		_organizations.add(organization);
+		_organizationAccountEntryMap.put(
+			_organization, _addAccountEntryWithOrganization(_organization));
 
-		_organizations.add(rootOrganization);
+		_suborganization = _organizationLocalService.addOrganization(
+			_companyAdminUser.getUserId(), _organization.getOrganizationId(),
+			RandomTestUtil.randomString(), false);
 
-		for (Organization curOrganization : _organizations) {
-			_addAccountEntryWithOrganization(curOrganization);
-		}
+		_organizationAccountEntryMap.put(
+			_suborganization,
+			_addAccountEntryWithOrganization(_suborganization));
 
 		_user = UserTestUtil.addUser(company);
 
@@ -131,14 +132,17 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 
 		_userLocalService.addRoleUser(role.getRoleId(), _user);
 
-		_assertSearch(_accountEntries);
+		_assertSearch(
+			ListUtil.fromCollection(_organizationAccountEntryMap.values()));
 	}
 
 	@Test
 	public void testShouldReturnNoAccountEntriesWithoutManageAccountsPermission()
 		throws Exception {
 
-		for (Organization organization : _organizations) {
+		for (Organization organization :
+				_organizationAccountEntryMap.keySet()) {
+
 			_userLocalService.addOrganizationUser(
 				organization.getOrganizationId(), _user);
 		}
@@ -150,11 +154,8 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	public void testShouldReturnOrganizationAccountEntriesWithManageAccountsPermission()
 		throws Exception {
 
-		Organization rootOrganization = _organizations.get(
-			_organizations.size() - 1);
-
 		_userLocalService.addOrganizationUser(
-			rootOrganization.getOrganizationId(), _user);
+			_rootOrganization.getOrganizationId(), _user);
 
 		Role role = _addOrganizationRole();
 
@@ -164,20 +165,20 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 			AccountActionKeys.MANAGE_ACCOUNTS);
 
 		_userGroupRoleLocalService.addUserGroupRole(
-			_user.getUserId(), rootOrganization.getGroupId(), role.getRoleId());
+			_user.getUserId(), _rootOrganization.getGroupId(),
+			role.getRoleId());
 
 		_assertSearch(
-			ListUtil.toList(_accountEntries.get(_accountEntries.size() - 1)));
+			ListUtil.toList(
+				_organizationAccountEntryMap.get(_rootOrganization)));
 	}
 
 	@Test
 	public void testShouldReturnSuborganizationsAccountEntries()
 		throws Exception {
 
-		Organization organization = _organizations.get(1);
-
 		_userLocalService.addOrganizationUser(
-			organization.getOrganizationId(), _user);
+			_organization.getOrganizationId(), _user);
 
 		Role role = _addOrganizationRole();
 
@@ -187,17 +188,20 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 			AccountActionKeys.MANAGE_ACCOUNTS);
 
 		_userGroupRoleLocalService.addUserGroupRole(
-			_user.getUserId(), organization.getGroupId(), role.getRoleId());
+			_user.getUserId(), _organization.getGroupId(), role.getRoleId());
 
-		_assertSearch(ListUtil.toList(_accountEntries.get(1)));
+		AccountEntry accountEntry = _organizationAccountEntryMap.get(
+			_organization);
+
+		_assertSearch(ListUtil.toList(accountEntry));
 
 		RoleTestUtil.addResourcePermission(
 			role, Organization.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 			AccountActionKeys.MANAGE_SUBORGANIZATIONS_ACCOUNTS);
 
-		AccountEntry accountEntry = _accountEntries.get(1);
-		AccountEntry suborgAccountEntry = _accountEntries.get(0);
+		AccountEntry suborgAccountEntry = _organizationAccountEntryMap.get(
+			_suborganization);
 
 		_assertSearch(Arrays.asList(accountEntry, suborgAccountEntry));
 
@@ -234,8 +238,6 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
-
-		_accountEntries.add(accountEntry);
 
 		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
 			accountEntry.getAccountEntryId(), organization.getOrganizationId());
@@ -283,8 +285,6 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 		return false;
 	}
 
-	private final List<AccountEntry> _accountEntries = new ArrayList<>();
-
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -296,16 +296,20 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	private AccountEntryService _accountEntryService;
 
 	private User _companyAdminUser;
+	private Organization _organization;
+	private final Map<Organization, AccountEntry> _organizationAccountEntryMap =
+		new LinkedHashMap<>();
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
-	private final List<Organization> _organizations = new ArrayList<>();
 	private PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
 
+	private Organization _rootOrganization;
+	private Organization _suborganization;
 	private User _user;
 
 	@Inject

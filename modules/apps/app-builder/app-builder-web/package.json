@@ -20,6 +20,7 @@
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"moment": "^2.24.0",
+		"path-to-regexp": "3.0.0",
 		"prop-types": "15.7.2",
 		"qs": "6.7.0",
 		"react": "16.12.0",

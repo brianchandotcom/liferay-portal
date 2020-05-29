@@ -245,8 +245,27 @@ public class FragmentEntryLocalServiceImpl
 		// Preview image
 
 		if (fragmentEntry.getPreviewFileEntryId() > 0) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				fragmentEntry.getPreviewFileEntryId());
+			boolean deletePreviewFileEntry = true;
+
+			if (fragmentEntry.isDraft() &&
+				(fragmentEntry.getHeadId() !=
+					fragmentEntry.getFragmentEntryId())) {
+
+				FragmentEntry publishedFragmentEntry = fetchFragmentEntry(
+					fragmentEntry.getHeadId());
+
+				if ((publishedFragmentEntry != null) &&
+					(fragmentEntry.getPreviewFileEntryId() ==
+						publishedFragmentEntry.getPreviewFileEntryId())) {
+
+					deletePreviewFileEntry = false;
+				}
+			}
+
+			if (deletePreviewFileEntry) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					fragmentEntry.getPreviewFileEntryId());
+			}
 		}
 
 		if (fragmentEntry.isDraft()) {

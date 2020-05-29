@@ -75,7 +75,7 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 		<clay:col
 			md="9"
 		>
-			<div class="sheet sheet-lg">
+			<clay:sheet>
 				<aui:form action="<%= segmentsContextVocabularyConfigurationDisplayContext.getActionURL() %>" method="post" name="fm">
 					<aui:input name="factoryPid" type="hidden" value="<%= segmentsContextVocabularyConfigurationDisplayContext.getFactoryPid() %>" />
 					<aui:input name="pid" type="hidden" value="<%= segmentsContextVocabularyConfigurationDisplayContext.getPid() %>" />
@@ -154,7 +154,7 @@ segmentsContextVocabularyConfigurationDisplayContext.addPortletBreadcrumbEntries
 						<aui:button href="<%= String.valueOf(segmentsContextVocabularyConfigurationDisplayContext.getRedirect()) %>" name="cancel" type="cancel" />
 					</aui:button-row>
 				</aui:form>
-			</div>
+			</clay:sheet>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>

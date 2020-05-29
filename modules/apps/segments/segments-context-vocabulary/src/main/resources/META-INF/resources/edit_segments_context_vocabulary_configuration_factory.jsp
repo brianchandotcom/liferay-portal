@@ -20,25 +20,34 @@
 SegmentsContextVocabularyConfigurationFactoryDisplayContext segmentsContextVocabularyConfigurationFactoryDisplayContext = new SegmentsContextVocabularyConfigurationFactoryDisplayContext(renderRequest, renderResponse);
 %>
 
-<div class="sheet sheet-lg">
-	<div class="autofit-row">
-		<div class="autofit-col">
+<clay:sheet>
+	<clay:content-row>
+		<clay:content-col>
 			<h2><liferay-ui:message key="segments-context-vocabulary-configuration-name" /></h2>
-		</div>
-	</div>
+		</clay:content-col>
+	</clay:content-row>
 
-	<h3 class="autofit-row sheet-subtitle">
-		<span class="autofit-col autofit-col-expand">
+	<clay:content-row
+		containerElement="h3"
+		cssClass="sheet-subtitle"
+	>
+		<clay:content-col
+			containerElement="span"
+			expand="true"
+		>
 			<span class="heading-text">
 				<liferay-ui:message key="configuration-entries" />
 			</span>
-		</span>
-		<span class="autofit-col">
+		</clay:content-col>
+
+		<clay:content-col
+			containerElement="span"
+		>
 			<span class="heading-end">
 				<a class="btn btn-secondary btn-sm" href="<%= segmentsContextVocabularyConfigurationFactoryDisplayContext.getAddConfigurationURL() %>"><liferay-ui:message key="add" /></a>
 			</span>
-		</span>
-	</h3>
+		</clay:content-col>
+	</clay:content-row>
 
 	<liferay-ui:search-container
 		emptyResultsMessage="<%= segmentsContextVocabularyConfigurationFactoryDisplayContext.getEmptyResultMessage() %>"
@@ -91,4 +100,4 @@ SegmentsContextVocabularyConfigurationFactoryDisplayContext segmentsContextVocab
 		>
 		</liferay-ui:search-iterator>
 	</liferay-ui:search-container>
-</div>
+</clay:sheet>

@@ -124,7 +124,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_fragmentName = "Fragment Name",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -287,7 +287,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_fragmentName = "Image",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -411,7 +411,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -519,7 +519,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -618,7 +618,7 @@ definition {
 				key_columnNumber = "1",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -647,7 +647,7 @@ definition {
 				key_columnNumber = "2",
 				key_fragmentName = "Image",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -673,7 +673,7 @@ definition {
 				key_columnNumber = "3",
 				key_fragmentName = "HTML",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -792,7 +792,7 @@ definition {
 				key_columnNumber = "1",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -821,7 +821,7 @@ definition {
 				key_columnNumber = "2",
 				key_fragmentName = "Image",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -847,7 +847,7 @@ definition {
 				key_columnNumber = "3",
 				key_fragmentName = "HTML",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 

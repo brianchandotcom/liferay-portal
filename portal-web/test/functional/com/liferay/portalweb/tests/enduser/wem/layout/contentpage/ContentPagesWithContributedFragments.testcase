@@ -107,7 +107,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_entryTitle = "Third Web Content",
 				key_fragmentName = "Button",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#COLLECTION_CELL",
 				value1 = "");
 
@@ -405,7 +405,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_entryTitle = "Third Web Content",
 				key_fragmentName = "Heading",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#COLLECTION_CELL",
 				value1 = "");
 
@@ -846,7 +846,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_entryTitle = "Third Document",
 				key_fragmentName = "Heading",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#COLLECTION_CELL",
 				value1 = "");
 

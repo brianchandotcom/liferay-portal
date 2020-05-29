@@ -86,7 +86,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -109,7 +109,7 @@ definition {
 				key_columnNumber = "1",
 				key_fragmentName = "Button",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 

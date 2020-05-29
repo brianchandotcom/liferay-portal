@@ -1,0 +1,53 @@
+{
+	"availableLanguageIds": [
+		"en_US",
+		"pt_BR"
+	],
+	"dataDefinitionFields": [
+		{
+			"fieldType": "text",
+			"label": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			},
+			"name": "Text"
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": "Page Description",
+					"pt_BR": "Descrção da Página"
+				},
+				"title": {
+					"en_US": "Page Title",
+					"pt_BR": "Título da Página"
+				}
+			}
+		],
+		"name": {
+			"en_US": "Structure",
+			"pt_BR": "Estrutura"
+		},
+		"paginationMode": "wizard"
+	},
+	"defaultLanguageId": "en_US",
+	"name": {
+		"en_US": "Structure",
+		"pt_BR": "Estrutura"
+	},
+	"storageType": "json"
+}

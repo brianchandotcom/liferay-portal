@@ -14,16 +14,105 @@
 
 package com.liferay.data.engine.rest.resource.v2_0.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import static com.liferay.portal.kernel.json.JSONUtil.put;
 
-import org.junit.Ignore;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinition;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionFieldLink;
+import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.client.resource.v2_0.DataDefinitionResource;
+import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUtil;
+import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 /**
  * @author Jeyvison Nascimento
  */
-@Ignore
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class DataDefinitionFieldLinkResourceTest
 	extends BaseDataDefinitionFieldLinkResourceTestCase {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		DataDefinitionResource.Builder builder =
+			DataDefinitionResource.builder();
+
+		_dataDefinitionResource = builder.locale(
+			LocaleUtil.getDefault()
+		).build();
+	}
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_dataDefinition =
+			_dataDefinitionResource.postDataDefinitionByContentType(
+				"app-builder",
+				DataDefinition.toDTO(
+					DataDefinitionTestUtil.read("data-definition-basic.json")));
+	}
+
+	@Override
+	protected DataDefinitionFieldLink randomDataDefinitionFieldLink()
+		throws Exception {
+
+		DataDefinition dataDefinition = DataDefinition.toDTO(
+			DataDefinitionTestUtil.read("data-definition-fieldset.json"));
+
+		DataLayout dataLayout = _dataDefinition.getDefaultDataLayout();
+
+		DataDefinitionField[] dataDefinitionFields =
+			dataDefinition.getDataDefinitionFields();
+
+		DataDefinitionField dataDefinitionField = dataDefinitionFields[0];
+
+		dataDefinitionField.setCustomProperties(
+			HashMapBuilder.<String, Object>put(
+				"ddmStructureId", _dataDefinition.getId()
+			).put(
+				"ddmStructureLayoutId", dataLayout.getId()
+			).build());
+
+		DataDefinitionFieldLink dataDefinitionFieldLink =
+			new DataDefinitionFieldLink();
+
+		dataDefinitionFieldLink.setDataDefinition(dataDefinition);
+		dataDefinitionFieldLink.setDataLayouts(new DataLayout[] {dataLayout});
+
+		return dataDefinitionFieldLink;
+	}
+
+	protected DataDefinitionFieldLink
+			testGetDataDefinitionDataDefinitionFieldLinkPage_addDataDefinitionFieldLink(
+				Long dataDefinitionId,
+				DataDefinitionFieldLink dataDefinitionFieldLink)
+		throws Exception {
+
+		_dataDefinitionResource.postDataDefinitionByContentType(
+			"app-builder", dataDefinitionFieldLink.getDataDefinition());
+
+		return dataDefinitionFieldLink;
+	}
+
+	@Override
+	protected Long
+			testGetDataDefinitionDataDefinitionFieldLinkPage_getDataDefinitionId()
+		throws Exception {
+
+		return _dataDefinition.getId();
+	}
+
+	private static DataDefinitionResource _dataDefinitionResource;
+
+	private DataDefinition _dataDefinition;
+
 }

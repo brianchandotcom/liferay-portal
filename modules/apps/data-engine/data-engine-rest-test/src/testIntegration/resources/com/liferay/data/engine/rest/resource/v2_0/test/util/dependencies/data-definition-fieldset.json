@@ -1,0 +1,53 @@
+{
+	"availableLanguageIds": [
+		"en_US",
+		"pt_BR"
+	],
+	"dataDefinitionFields": [
+		{
+			"fieldType": "fieldset",
+			"label": {
+				"en_US": "Field Set",
+				"pt_BR": "Grupo de Fields"
+			},
+			"name": "fieldset1"
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"fieldset1"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"en_US": "Page Description",
+					"pt_BR": "Descrção da Página"
+				},
+				"title": {
+					"en_US": "Page Title",
+					"pt_BR": "Título da Página"
+				}
+			}
+		],
+		"name": {
+			"en_US": "Fieldset Structure",
+			"pt_BR": "Estrutura do Fieldset"
+		},
+		"paginationMode": "wizard"
+	},
+	"defaultLanguageId": "en_US",
+	"name": {
+		"en_US": "Fieldset Structure",
+		"pt_BR": "Estrutura do Fieldset"
+	},
+	"storageType": "json"
+}

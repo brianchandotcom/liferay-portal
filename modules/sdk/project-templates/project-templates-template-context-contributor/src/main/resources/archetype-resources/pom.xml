@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 #end
 	</properties>
-<!--	<dependencyManagement>
+<!--<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.liferay.portal</groupId>

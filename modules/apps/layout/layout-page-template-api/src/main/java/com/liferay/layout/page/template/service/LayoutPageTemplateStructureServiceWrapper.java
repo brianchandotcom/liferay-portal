@@ -44,6 +44,12 @@ public class LayoutPageTemplateStructureServiceWrapper
 		return _layoutPageTemplateStructureService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateLayoutPageTemplateStructureData(long, long, long,
+	 String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 			updateLayoutPageTemplateStructure(
@@ -54,6 +60,17 @@ public class LayoutPageTemplateStructureServiceWrapper
 		return _layoutPageTemplateStructureService.
 			updateLayoutPageTemplateStructure(
 				groupId, classNameId, classPK, segmentsExperienceId, data);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			updateLayoutPageTemplateStructureData(
+				long groupId, long plid, long segmentsExperienceId, String data)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureService.
+			updateLayoutPageTemplateStructureData(
+				groupId, plid, segmentsExperienceId, data);
 	}
 
 	@Override

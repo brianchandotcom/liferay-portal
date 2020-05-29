@@ -47,6 +47,12 @@ public class LayoutPageTemplateStructureServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateLayoutPageTemplateStructureData(long, long, long,
+	 String)}
+	 */
+	@Deprecated
 	public static
 		com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 				updateLayoutPageTemplateStructure(
@@ -56,6 +62,17 @@ public class LayoutPageTemplateStructureServiceUtil {
 
 		return getService().updateLayoutPageTemplateStructure(
 			groupId, classNameId, classPK, segmentsExperienceId, data);
+	}
+
+	public static
+		com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+				updateLayoutPageTemplateStructureData(
+					long groupId, long plid, long segmentsExperienceId,
+					String data)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateLayoutPageTemplateStructureData(
+			groupId, plid, segmentsExperienceId, data);
 	}
 
 	public static LayoutPageTemplateStructureService getService() {

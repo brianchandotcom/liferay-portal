@@ -51,6 +51,12 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 			addLayoutPageTemplateStructure(layoutPageTemplateStructure);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addLayoutPageTemplateStructure(long, long, long, long,
+	 String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 			addLayoutPageTemplateStructure(
@@ -62,6 +68,18 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 		return _layoutPageTemplateStructureLocalService.
 			addLayoutPageTemplateStructure(
 				userId, groupId, classNameId, classPK, data, serviceContext);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			addLayoutPageTemplateStructure(
+				long userId, long groupId, long plid, String data,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureLocalService.
+			addLayoutPageTemplateStructure(
+				userId, groupId, plid, data, serviceContext);
 	}
 
 	/**
@@ -123,6 +141,20 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 			deleteLayoutPageTemplateStructure(layoutPageTemplateStructureId);
 	}
 
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			deleteLayoutPageTemplateStructure(long groupId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureLocalService.
+			deleteLayoutPageTemplateStructure(groupId, plid);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #deleteLayoutPageTemplateStructure(long, long)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 			deleteLayoutPageTemplateStructure(
@@ -253,6 +285,29 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+		fetchLayoutPageTemplateStructure(long groupId, long plid) {
+
+		return _layoutPageTemplateStructureLocalService.
+			fetchLayoutPageTemplateStructure(groupId, plid);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			fetchLayoutPageTemplateStructure(
+				long groupId, long plid, boolean rebuildStructure)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureLocalService.
+			fetchLayoutPageTemplateStructure(groupId, plid, rebuildStructure);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #fetchLayoutPageTemplateStructure(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 		fetchLayoutPageTemplateStructure(
 			long groupId, long classNameId, long classPK) {
 
@@ -260,6 +315,11 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 			fetchLayoutPageTemplateStructure(groupId, classNameId, classPK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #fetchLayoutPageTemplateStructure(long, long, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 			fetchLayoutPageTemplateStructure(
@@ -445,6 +505,20 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			rebuildLayoutPageTemplateStructure(long groupId, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureLocalService.
+			rebuildLayoutPageTemplateStructure(groupId, plid);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #rebuildLayoutPageTemplateStructure(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 			rebuildLayoutPageTemplateStructure(
 				long groupId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -469,6 +543,12 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 			updateLayoutPageTemplateStructure(layoutPageTemplateStructure);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateLayoutPageTemplateStructureData(long, long, long,
+	 String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 			updateLayoutPageTemplateStructure(
@@ -481,6 +561,11 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 				groupId, classNameId, classPK, segmentsExperienceId, data);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateLayoutPageTemplateStructureData(long, long, String)}
+	 */
+	@Deprecated
 	@Override
 	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
 			updateLayoutPageTemplateStructure(
@@ -490,6 +575,27 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 		return _layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(
 				groupId, classNameId, classPK, data);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			updateLayoutPageTemplateStructureData(
+				long groupId, long plid, long segmentsExperienceId, String data)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				groupId, plid, segmentsExperienceId, data);
+	}
+
+	@Override
+	public com.liferay.layout.page.template.model.LayoutPageTemplateStructure
+			updateLayoutPageTemplateStructureData(
+				long groupId, long plid, String data)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(groupId, plid, data);
 	}
 
 	@Override

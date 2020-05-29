@@ -68,4 +68,6 @@ public interface LayoutPageTemplateStructure
 	public String getData(long[] segmentsExperienceIds)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public long getPlid();
+
 }

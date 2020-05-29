@@ -235,6 +235,11 @@ public class LayoutPageTemplateStructureWrapper
 		return model.getMvccVersion();
 	}
 
+	@Override
+	public long getPlid() {
+		return model.getPlid();
+	}
+
 	/**
 	 * Returns the primary key of this layout page template structure.
 	 *

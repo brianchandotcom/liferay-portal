@@ -1,5 +1,11 @@
 # Liferay Gradle Plugins Defaults Change Log
 
+## 6.1.282 - 2020-05-29
+
+### Commits
+ - [LPS-114616]: Update the [Find Security Bugs] dependency to version
+ 1.10.1.LIFERAY-PATCHED-1.
+
 ## 6.1.207 - 2020-03-17
 
 ### Commits

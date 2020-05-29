@@ -100,7 +100,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(
 			new Version(8, 11, 0),
 			new UpgradeCTModel(
-				"ExpandoColumn", "ExpandoRow", "ExpandoTable", "ExpandoValue"));
+				"ExpandoColumn", "ExpandoRow", "ExpandoTable", "ExpandoValue",
+				"RatingsEntry", "RatingsStats"));
 	}
 
 }

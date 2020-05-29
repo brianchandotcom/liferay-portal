@@ -45,9 +45,16 @@ definition {
 
 			AssertElementPresent(locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK");
 
-			AssertClick.assertTextClickAt(
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "safari") {
+				Click(locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK");
+			}
+			else {
+				AssertClick.assertTextClickAt(
 				locator1 = "DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK",
 				value1 = "${structureName}");
+			}
 
 			SelectFrameTop();
 		}

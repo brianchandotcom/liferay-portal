@@ -13,7 +13,7 @@
  */
 
 import {waitForElementToBeRemoved} from '@testing-library/dom';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {render} from '@testing-library/react';
 import React from 'react';
 
 import ListApps from '../../../../src/main/resources/META-INF/resources/js/pages/apps/ListApps.es';
@@ -21,7 +21,7 @@ import * as time from '../../../../src/main/resources/META-INF/resources/js/util
 import AppContextProviderWrapper from '../../AppContextProviderWrapper.es';
 import {RESPONSES} from '../../constants.es';
 
-const DRODOWN_VALUES = {
+const DROPDOWN_VALUES = {
 	items: [
 		{
 			id: 37568,
@@ -32,24 +32,28 @@ const DRODOWN_VALUES = {
 	],
 };
 
+const routeProps = {
+	match: {
+		params: {dataDefinitionId: '123', objectType: 'custom-object'},
+	},
+};
+
 describe('ListApps', () => {
 	beforeEach(() => {
 		jest.spyOn(time, 'fromNow').mockImplementation(() => 'months ago');
 	});
 
 	afterEach(() => {
-		cleanup();
 		jest.restoreAllMocks();
 	});
 
 	it('renders', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.ONE_ITEM));
-		fetch.mockResponse(JSON.stringify(DRODOWN_VALUES));
+		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
-		const {asFragment} = render(
-			<ListApps match={{params: {dataDefinitionId: ''}, url: '/'}} />,
-			{wrapper: AppContextProviderWrapper}
-		);
+		const {asFragment} = render(<ListApps {...routeProps} />, {
+			wrapper: AppContextProviderWrapper,
+		});
 
 		await waitForElementToBeRemoved(() =>
 			document.querySelector('span.loading-animation')
@@ -58,68 +62,28 @@ describe('ListApps', () => {
 		expect(asFragment()).toMatchSnapshot();
 	});
 
-	it('renders with dataDefinitionId and 5 apps in the list', async () => {
+	it('renders with 5 apps in the list', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
-		fetch.mockResponse(JSON.stringify(DRODOWN_VALUES));
+		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
-		const {container} = render(
-			<ListApps match={{params: {dataDefinitionId: '1'}, url: '/'}} />,
-			{wrapper: AppContextProviderWrapper}
-		);
+		const {container} = render(<ListApps {...routeProps} />, {
+			wrapper: AppContextProviderWrapper,
+		});
 
 		await waitForElementToBeRemoved(() =>
 			document.querySelector('span.loading-animation')
 		);
 
 		expect(container.querySelector('tbody').children.length).toEqual(5);
-	});
-
-	it('renders with no dataDefinitionId, opens a new app popover and lists 5 apps', async () => {
-		fetch.mockResponseOnce(JSON.stringify(RESPONSES.MANY_ITEMS(5)));
-		fetch.mockResponse(JSON.stringify(DRODOWN_VALUES));
-
-		const {container} = render(
-			<ListApps match={{params: {dataDefinitionId: ''}, url: '/'}} />,
-			{wrapper: AppContextProviderWrapper}
-		);
-
-		await waitForElementToBeRemoved(() =>
-			document.querySelector('span.loading-animation')
-		);
-
-		expect(container.querySelector('tbody').children.length).toEqual(5);
-
-		const newAppButton = document.querySelector(
-			'.nav-btn.nav-btn-monospaced.btn.btn-monospaced.btn-primary'
-		);
-
-		fireEvent.click(newAppButton);
-
-		expect(
-			document.querySelector('.popover.apps-popover.mw-100')
-		).toBeTruthy();
-
-		fireEvent.click(newAppButton);
-
-		expect(document.querySelector('.popover.apps-popover.mw-100.hide'));
-
-		await fireEvent.click(newAppButton);
-
-		await fireEvent.click(
-			document.querySelector('.d-flex.justify-content-end').children[0]
-		);
-
-		expect(document.querySelector('.popover.apps-popover.mw-100.hide'));
 	});
 
 	it('renders with empty state', async () => {
 		fetch.mockResponseOnce(JSON.stringify(RESPONSES.NO_ITEMS));
-		fetch.mockResponse(JSON.stringify(DRODOWN_VALUES));
+		fetch.mockResponse(JSON.stringify(DROPDOWN_VALUES));
 
-		const {container} = render(
-			<ListApps match={{params: {dataDefinitionId: ''}, url: '/'}} />,
-			{wrapper: AppContextProviderWrapper}
-		);
+		const {container} = render(<ListApps {...routeProps} />, {
+			wrapper: AppContextProviderWrapper,
+		});
 
 		await waitForElementToBeRemoved(() =>
 			document.querySelector('span.loading-animation')

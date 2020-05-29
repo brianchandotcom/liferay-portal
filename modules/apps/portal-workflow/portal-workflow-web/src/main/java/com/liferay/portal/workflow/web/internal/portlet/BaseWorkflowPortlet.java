@@ -17,7 +17,6 @@ package com.liferay.portal.workflow.web.internal.portlet;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.portlet.tab.WorkflowPortletTab;
@@ -73,9 +72,7 @@ public abstract class BaseWorkflowPortlet extends MVCPortlet {
 				actionRequest, actionResponse);
 		}
 
-		if (SessionErrors.isEmpty(actionRequest)) {
-			super.processAction(actionRequest, actionResponse);
-		}
+		super.processAction(actionRequest, actionResponse);
 	}
 
 	@Override

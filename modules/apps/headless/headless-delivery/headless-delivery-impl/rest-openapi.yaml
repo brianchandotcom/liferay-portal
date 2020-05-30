@@ -1789,6 +1789,13 @@ components:
             description:
                 ""
             properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -1845,7 +1852,6 @@ components:
                 name_i18n:
                     additionalProperties:
                         type: string
-                    readOnly: true
                     type: object
                 navigationMenuItems:
                     items:

@@ -67,11 +67,10 @@ renderResponse.setTitle(journalEditDDMTemplateDisplayContext.getTitle());
 						<aui:button cssClass="btn-sm mr-3" onClick="<%= taglibOnClickSaveTemplate %>" type="submit" value="save" />
 
 						<clay:button
+							borderless="<%= true %>"
 							icon="cog"
 							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
-							monospaced="<%= true %>"
-							size="sm"
-							style="borderless"
+							small="<%= true %>"
 						/>
 					</div>
 				</li>

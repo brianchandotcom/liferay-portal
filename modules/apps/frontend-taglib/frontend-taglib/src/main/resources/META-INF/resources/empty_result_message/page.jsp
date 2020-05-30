@@ -71,8 +71,8 @@
 								componentId="<%= componentId %>"
 								data='<%= (HashMap)actionDropdownItem.get("data") %>'
 								defaultEventHandler="<%= defaultEventHandler %>"
+								displayType="<%= buttonCssClass %>"
 								label='<%= String.valueOf(actionDropdownItem.get("label")) %>'
-								style="<%= buttonCssClass %>"
 							/>
 						</c:otherwise>
 					</c:choose>

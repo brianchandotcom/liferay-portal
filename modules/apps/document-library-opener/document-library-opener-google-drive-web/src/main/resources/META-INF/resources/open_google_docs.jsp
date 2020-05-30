@@ -56,7 +56,7 @@ String googleDocsRedirect = ParamUtil.getString(request, "googleDocsRedirect");
 							icon="angle-left"
 							id="closeAndCheckinBtn"
 							label='<%= LanguageUtil.format(resourceBundle, "save-and-return-to-x", themeDisplay.getSiteGroupName()) %>'
-							size="sm"
+							small="<%= true %>"
 							type="submit"
 						/>
 					</form>
@@ -73,8 +73,8 @@ String googleDocsRedirect = ParamUtil.getString(request, "googleDocsRedirect");
 				<form action="<%= cancelCheckoutURL %>" method="post">
 					<clay:button
 						id="discardChangesBtn"
-						label='<%= LanguageUtil.get(resourceBundle, "discard-changes") %>'
-						size="sm"
+						label="discard-changes"
+						small="<%= true %>"
 						type="submit"
 					/>
 				</form>

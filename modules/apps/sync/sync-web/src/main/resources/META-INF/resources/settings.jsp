@@ -126,8 +126,8 @@ if (deployed && oAuthEnabled) {
 			<div class="btn-group">
 				<div class="btn-group-item">
 					<clay:button
-						label='<%= LanguageUtil.get(request, "save") %>'
-						style="primary"
+						displayType="primary"
+						label="save"
 						type="submit"
 					/>
 				</div>

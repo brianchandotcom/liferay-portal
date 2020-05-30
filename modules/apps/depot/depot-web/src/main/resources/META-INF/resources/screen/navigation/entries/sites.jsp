@@ -36,12 +36,11 @@ List<DepotEntryGroupRel> depotEntryGroupRels = depotAdminSitesDisplayContext.get
 		<clay:content-col>
 			<span class="heading-end">
 				<clay:button
-					elementClasses="btn-secondary"
+					displayType="secondary"
 					id='<%= renderResponse.getNamespace() + "addConnectedSiteButton" %>'
-					label='<%= LanguageUtil.get(request, "add") %>'
-					size="sm"
-					style="secondary"
-					title='<%= LanguageUtil.get(request, "connect-to-a-site") %>'
+					label="add"
+					small="<%= true %>"
+					title="connect-to-a-site"
 				/>
 			</span>
 		</clay:content-col>

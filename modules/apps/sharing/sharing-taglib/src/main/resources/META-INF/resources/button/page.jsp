@@ -23,11 +23,10 @@ String buttonComponentId = randomNamespace + "shareButton";
 %>
 
 <clay:button
-	elementClasses="btn-secondary"
+	displayType="secondary"
 	id="<%= buttonComponentId %>"
-	label='<%= LanguageUtil.get(request, "share") %>'
-	size="sm"
-	style="secondary"
+	label="share"
+	small="<%= true %>"
 />
 
 <aui:script>

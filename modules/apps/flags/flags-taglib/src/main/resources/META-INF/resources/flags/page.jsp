@@ -28,23 +28,23 @@ boolean onlyIcon = GetterUtil.getBoolean(request.getAttribute("liferay-flags:fla
 	<c:choose>
 		<c:when test="<%= onlyIcon %>">
 			<clay:button
+				borderless="<%= true %>"
+				cssClass="lfr-portal-tooltip"
 				disabled="<%= true %>"
-				elementClasses="btn-outline-borderless btn-outline-secondary lfr-portal-tooltip"
+				displayType="secondary"
 				icon="flag-empty"
-				monospaced="<%= true %>"
-				size="sm"
-				style="secondary"
+				small="<%= true %>"
 				title="<%= message %>"
 			/>
 		</c:when>
 		<c:otherwise>
 			<clay:button
+				borderless="<%= true %>"
 				disabled="<%= true %>"
-				elementClasses="btn-outline-borderless btn-outline-secondary"
+				displayType="secondary"
 				icon="flag-empty"
-				label="<%= message %>"
-				size="sm"
-				style="secondary"
+				label="message"
+				small="<%= true %>"
 			/>
 		</c:otherwise>
 	</c:choose>

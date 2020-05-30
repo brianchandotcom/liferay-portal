@@ -75,12 +75,12 @@ Map<String, Object> contextObjects = HashMapBuilder.<String, Object>put(
 					<aui:input cssClass="custom-filter-value-input" data-qa-id="customFilterValueInput" disabled="<%= customFilterDisplayContext.isImmutable() %>" id="<%= renderResponse.getNamespace() + StringUtil.randomId() %>" label="" name="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getParameterName()) %>" useNamespace="<%= false %>" value="<%= HtmlUtil.escapeAttribute(customFilterDisplayContext.getFilterValue()) %>" />
 
 					<clay:button
-						ariaLabel='<%= LanguageUtil.get(request, "apply") %>'
+						aria-label='<%= LanguageUtil.get(request, "apply") %>'
+						cssClass="custom-filter-apply-button"
 						disabled="<%= customFilterDisplayContext.isImmutable() %>"
-						elementClasses="custom-filter-apply-button"
-						label='<%= LanguageUtil.get(request, "apply") %>'
-						size="sm"
-						style="secondary"
+						displayType="secondary"
+						label="apply"
+						small="<%= true %>"
 						type="submit"
 					/>
 				</liferay-ui:panel>

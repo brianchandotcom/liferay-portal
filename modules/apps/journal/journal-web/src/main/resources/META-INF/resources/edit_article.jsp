@@ -88,11 +88,10 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						</c:if>
 
 						<clay:button
+							borderless="<%= true %>"
 							icon="cog"
 							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
-							monospaced="<%= true %>"
-							size="sm"
-							style="borderless"
+							small="<%= true %>"
 						/>
 					</div>
 				</li>

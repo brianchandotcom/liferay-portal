@@ -17,8 +17,9 @@
 <%@ include file="/repository_entry_browser/init.jsp" %>
 
 <clay:button
-	elementClasses="btn-outline-borderless btn-outline-secondary component-action icon-view"
+	borderless="<%= true %>"
+	displayType="secondary"
+	elementClasses="component-action icon-view"
 	icon="view"
 	monospaced="<%= true %>"
-	style="outline-secondary"
 />

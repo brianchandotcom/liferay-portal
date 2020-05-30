@@ -54,19 +54,11 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 					%>
 
 					<c:if test="<%= curLayout != null %>">
-
-						<%
-						Map<String, String> data = HashMapBuilder.put(
-							"href", layoutClassedModelUsagesDisplayContext.getPreviewURL(layoutClassedModelUsage)
-						).build();
-						%>
-
 						<clay:button
-							data="<%= data %>"
-							elementClasses="preview-layout-classed-model-usage table-action-link"
+							cssClass="preview-layout-classed-model-usage table-action-link"
+							data-href="<%= layoutClassedModelUsagesDisplayContext.getPreviewURL(layoutClassedModelUsage) %>"
+							displayType="secondary"
 							icon="view"
-							monospaced="<%= true %>"
-							style="secondary"
 						/>
 					</c:if>
 				</c:if>

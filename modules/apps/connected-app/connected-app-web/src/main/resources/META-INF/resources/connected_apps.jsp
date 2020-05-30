@@ -56,18 +56,11 @@
 					</div>
 
 					<div class="autofit-col">
-
-						<%
-						Map<String, String> data = HashMapBuilder.put(
-							"key", connectedApp.getKey()
-						).build();
-						%>
-
 						<clay:button
-							data="<%= data %>"
-							elementClasses="btn-secondary"
-							label='<%= LanguageUtil.get(resourceBundle, "revoke") %>'
-							size="sm"
+							data-key="<%= connectedApp.getKey() %>"
+							displayType="secondary"
+							label="revoke"
+							small="<%= true %>"
 							type="submit"
 						/>
 					</div>

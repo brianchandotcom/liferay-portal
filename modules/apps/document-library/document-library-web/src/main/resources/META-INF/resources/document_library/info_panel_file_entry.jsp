@@ -239,10 +239,6 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 						}
 
 						String urlInputId = liferayPortletResponse.getNamespace() + "urlInput";
-
-						Map<String, String> urlButtonData = HashMapBuilder.put(
-							"clipboard-target", "#" + urlInputId
-						).build();
 						%>
 
 						<div class="form-group">
@@ -255,11 +251,11 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 								<span class="input-group-append input-group-item input-group-item-shrink">
 									<clay:button
-										data="<%= urlButtonData %>"
-										elementClasses="btn-secondary dm-infopanel-copy-clipboard lfr-portal-tooltip"
+										cssClass="dm-infopanel-copy-clipboard lfr-portal-tooltip"
+										data-clipboard-target='<%= "#" + urlInputId %>'
+										displayType="secondary"
 										icon="paste"
-										style="secondary"
-										title='<%= LanguageUtil.get(resourceBundle, "copy-link") %>'
+										title="copy-link"
 									/>
 								</span>
 							</div>
@@ -278,10 +274,6 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 							}
 
 							String webDavURLInputId = liferayPortletResponse.getNamespace() + "webDavURLInput";
-
-							Map<String, String> webDavButtonData = HashMapBuilder.put(
-								"clipboard-target", "#" + webDavURLInputId
-							).build();
 							%>
 
 							<div class="form-group">
@@ -298,11 +290,11 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 
 									<span class="input-group-append input-group-item input-group-item-shrink">
 										<clay:button
-											data="<%= webDavButtonData %>"
-											elementClasses="btn-secondary dm-infopanel-copy-clipboard lfr-portal-tooltip"
+											cssClass="dm-infopanel-copy-clipboard lfr-portal-tooltip"
+											data-clipboard-target='<%= "#" + webDavURLInputId %>'
+											displayType="secondary"
 											icon="paste"
-											style="secondary"
-											title='<%= LanguageUtil.get(resourceBundle, "copy-link") %>'
+											title="copy-link"
 										/>
 									</span>
 								</div>

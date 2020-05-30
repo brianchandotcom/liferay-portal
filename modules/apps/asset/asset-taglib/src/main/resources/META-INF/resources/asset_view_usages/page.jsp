@@ -54,19 +54,11 @@ AssetEntryUsagesDisplayContext assetEntryUsagesDisplayContext = new AssetEntryUs
 					%>
 
 					<c:if test="<%= curLayout != null %>">
-
-						<%
-						Map<String, String> data = HashMapBuilder.put(
-							"href", assetEntryUsagesDisplayContext.getPreviewURL(assetEntryUsage)
-						).build();
-						%>
-
 						<clay:button
-							data="<%= data %>"
-							elementClasses="preview-asset-entry-usage table-action-link"
+							cssClass="preview-asset-entry-usage table-action-link"
+							data-href="<%= assetEntryUsagesDisplayContext.getPreviewURL(assetEntryUsage) %>"
+							displayType="secondary"
 							icon="view"
-							monospaced="<%= true %>"
-							style="secondary"
 						/>
 					</c:if>
 				</c:if>

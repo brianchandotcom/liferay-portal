@@ -39,10 +39,9 @@
 	<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeDefault() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
 		<div class="input-group-item input-group-item-shrink">
 			<clay:button
+				displayType="secondary"
 				icon="view"
 				id='<%= liferayPortletResponse.getNamespace() + "previewDefaultDisplayPageButton" %>'
-				monospaced="<%= true %>"
-				style="secondary"
 			/>
 		</div>
 	</c:if>
@@ -62,10 +61,9 @@
 		<c:if test="<%= selectAssetDisplayPageDisplayContext.isAssetDisplayPageTypeSpecific() && selectAssetDisplayPageDisplayContext.isShowViewInContextLink() && selectAssetDisplayPageDisplayContext.isURLViewInContext() %>">
 			<div class="input-group-item input-group-item-shrink">
 				<clay:button
-					elementClasses="btn-secondary"
+					displayType="secondary"
 					icon="view"
 					id='<%= liferayPortletResponse.getNamespace() + "previewSpecificDisplayPageButton" %>'
-					monospaced="<%= true %>"
 				/>
 			</div>
 		</c:if>

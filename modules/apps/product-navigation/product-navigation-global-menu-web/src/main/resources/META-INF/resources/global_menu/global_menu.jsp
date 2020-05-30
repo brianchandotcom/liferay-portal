@@ -22,12 +22,11 @@ GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext
 
 <li class="control-menu-nav-item control-menu-nav-item-separator">
 	<clay:button
-		elementClasses="lfr-portal-tooltip"
+		cssClass="lfr-portal-tooltip"
+		displayType="unstyled"
 		icon="grid"
-		monospaced="<%= true %>"
-		size="sm"
-		style="unstyled"
-		title='<%= LanguageUtil.get(request, "global-menu") %>'
+		small="<%= true %>"
+		title="global-menu"
 	/>
 
 	<react:component

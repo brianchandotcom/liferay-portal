@@ -70,11 +70,10 @@ editDDMStructureURL.setParameter("mvcPath", "/edit_ddm_structure.jsp");
 						<aui:button cssClass="btn-sm mr-3" type="submit" value="<%= journalEditDDMStructuresDisplayContext.getSaveButtonLabel() %>" />
 
 						<clay:button
+							borderless="<%= true %>"
 							icon="cog"
 							id='<%= renderResponse.getNamespace() + "contextualSidebarButton" %>'
-							monospaced="<%= true %>"
-							size="sm"
-							style="borderless"
+							small="<%= true %>"
 						/>
 					</div>
 				</li>

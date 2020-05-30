@@ -74,19 +74,18 @@ if ((layoutPageTemplateEntry == null) || !Objects.equals(layoutPageTemplateEntry
 
 		<div class="button-holder">
 			<clay:button
-				elementClasses='<%= (masterLayoutPageTemplateEntry == null) ? "btn-secondary hide" : "btn-secondary" %>'
+				cssClass='<%= (masterLayoutPageTemplateEntry == null) ? "hide" : StringPool.BLANK %>'
+				displayType="secondary"
 				id='<%= renderResponse.getNamespace() + "editMasterLayoutButton" %>'
-				label='<%= LanguageUtil.get(request, "edit-master") %>'
-				size="sm"
-				style="<%= false %>"
+				label="edit-master"
+				small="<%= true %>"
 			/>
 
 			<clay:button
-				elementClasses="btn-secondary"
+				displaytype="secondary"
 				id='<%= renderResponse.getNamespace() + "changeMasterLayoutButton" %>'
-				label='<%= LanguageUtil.get(request, "change-master") %>'
-				size="sm"
-				style="<%= false %>"
+				label="change-master"
+				small="<%= true %>"
 			/>
 		</div>
 	</clay:sheet-section>

@@ -988,8 +988,9 @@ create table PortletPreferences (
 
 create table RatingsEntry (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	entryId LONG not null primary key,
+	entryId LONG not null,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
@@ -997,12 +998,14 @@ create table RatingsEntry (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	score DOUBLE
+	score DOUBLE,
+	primary key (entryId, ctCollectionId)
 );
 
 create table RatingsStats (
 	mvccVersion LONG default 0 not null,
-	statsId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	statsId LONG not null,
 	companyId LONG,
 	createDate DATE null,
 	modifiedDate DATE null,
@@ -1010,7 +1013,8 @@ create table RatingsStats (
 	classPK LONG,
 	totalEntries INTEGER,
 	totalScore DOUBLE,
-	averageScore DOUBLE
+	averageScore DOUBLE,
+	primary key (statsId, ctCollectionId)
 );
 
 create table RecentLayoutBranch (

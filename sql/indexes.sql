@@ -354,11 +354,13 @@ create index IX_C77A74AD on PortletPreferences (plid, ctCollectionId);
 create index IX_67E205D4 on PortletPreferences (plid, portletId[$COLUMN_LENGTH:200$], ctCollectionId);
 create index IX_8D0717FF on PortletPreferences (portletId[$COLUMN_LENGTH:200$], ctCollectionId);
 
-create index IX_A1A8CB8B on RatingsEntry (classNameId, classPK, score);
-create unique index IX_B47E3C11 on RatingsEntry (userId, classNameId, classPK);
-create index IX_9F242DF6 on RatingsEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
+create index IX_FD0395B5 on RatingsEntry (classNameId, classPK, ctCollectionId);
+create index IX_66592BE9 on RatingsEntry (classNameId, classPK, score, ctCollectionId);
+create unique index IX_B938D06F on RatingsEntry (userId, classNameId, classPK, ctCollectionId);
+create index IX_CBD05854 on RatingsEntry (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
+create index IX_A4389D50 on RatingsEntry (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 
-create unique index IX_A6E99284 on RatingsStats (classNameId, classPK);
+create unique index IX_C286E0E2 on RatingsStats (classNameId, classPK, ctCollectionId);
 create index IX_5EC6007D on RatingsStats (classNameId, createDate);
 create index IX_11A5584A on RatingsStats (classNameId, modifiedDate);
 

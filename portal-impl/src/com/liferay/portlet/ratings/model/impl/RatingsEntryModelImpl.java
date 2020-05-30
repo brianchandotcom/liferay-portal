@@ -75,12 +75,12 @@ public class RatingsEntryModelImpl
 	public static final String TABLE_NAME = "RatingsEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"entryId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"score", Types.DOUBLE}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"entryId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"score", Types.DOUBLE}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,6 +88,7 @@ public class RatingsEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -101,7 +102,7 @@ public class RatingsEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table RatingsEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE)";
+		"create table RatingsEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,entryId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE,primary key (entryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table RatingsEntry";
 
@@ -160,6 +161,7 @@ public class RatingsEntryModelImpl
 		RatingsEntry model = new RatingsEntryImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -331,6 +333,11 @@ public class RatingsEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"mvccVersion",
 			(BiConsumer<RatingsEntry, Long>)RatingsEntry::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", RatingsEntry::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<RatingsEntry, Long>)RatingsEntry::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", RatingsEntry::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<RatingsEntry, String>)RatingsEntry::setUuid);
@@ -386,6 +393,17 @@ public class RatingsEntryModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -664,6 +682,7 @@ public class RatingsEntryModelImpl
 		RatingsEntryImpl ratingsEntryImpl = new RatingsEntryImpl();
 
 		ratingsEntryImpl.setMvccVersion(getMvccVersion());
+		ratingsEntryImpl.setCtCollectionId(getCtCollectionId());
 		ratingsEntryImpl.setUuid(getUuid());
 		ratingsEntryImpl.setEntryId(getEntryId());
 		ratingsEntryImpl.setCompanyId(getCompanyId());
@@ -771,6 +790,8 @@ public class RatingsEntryModelImpl
 			new RatingsEntryCacheModel();
 
 		ratingsEntryCacheModel.mvccVersion = getMvccVersion();
+
+		ratingsEntryCacheModel.ctCollectionId = getCtCollectionId();
 
 		ratingsEntryCacheModel.uuid = getUuid();
 
@@ -892,6 +913,7 @@ public class RatingsEntryModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;

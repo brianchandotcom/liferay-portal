@@ -15,6 +15,7 @@
 package com.liferay.ratings.kernel.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.ratings.kernel.exception.NoSuchEntryException;
 import com.liferay.ratings.kernel.model.RatingsEntry;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
+public interface RatingsEntryPersistence
+	extends BasePersistence<RatingsEntry>, CTPersistence<RatingsEntry> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

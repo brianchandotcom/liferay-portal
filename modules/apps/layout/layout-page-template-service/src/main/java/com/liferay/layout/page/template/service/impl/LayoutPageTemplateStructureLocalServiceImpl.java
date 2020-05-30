@@ -62,6 +62,16 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			String data, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addLayoutPageTemplateStructure(
+			userId, groupId, classPK, data, serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
+			long userId, long groupId, long plid, String data,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Layout page template structure
 
 		User user = userLocalService.getUser(userId);
@@ -81,8 +91,9 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		layoutPageTemplateStructure.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		layoutPageTemplateStructure.setClassNameId(classNameId);
-		layoutPageTemplateStructure.setClassPK(classPK);
+		layoutPageTemplateStructure.setClassNameId(
+			_portal.getClassNameId(Layout.class));
+		layoutPageTemplateStructure.setClassPK(plid);
 
 		layoutPageTemplateStructure =
 			layoutPageTemplateStructurePersistence.update(
@@ -91,11 +102,11 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		int count =
 			_fragmentEntryLinkLocalService.
 				getClassedModelFragmentEntryLinksCount(
-					groupId, classNameId, classPK);
+					groupId, _portal.getClassNameId(Layout.class), plid);
 
 		if (count > 0) {
 			_fragmentEntryLinkLocalService.updateClassedModel(
-				classNameId, classPK);
+				_portal.getClassNameId(Layout.class), plid);
 		}
 
 		// Layout page template structure rel
@@ -142,12 +153,12 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
-			long groupId, long classNameId, long classPK)
+			long groupId, long plid)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			layoutPageTemplateStructurePersistence.findByG_C_C(
-				groupId, classNameId, classPK);
+				groupId, _portal.getClassNameId(Layout.class), plid);
 
 		layoutPageTemplateStructureLocalService.
 			deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
@@ -156,11 +167,41 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateStructure deleteLayoutPageTemplateStructure(
+			long groupId, long classNameId, long classPK)
+		throws PortalException {
+
+		return deleteLayoutPageTemplateStructure(groupId, classPK);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+		long groupId, long plid) {
+
+		return layoutPageTemplateStructurePersistence.fetchByG_C_C(
+			groupId, _portal.getClassNameId(Layout.class), plid);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
+			long groupId, long plid, boolean rebuildStructure)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			fetchLayoutPageTemplateStructure(groupId, plid);
+
+		if ((layoutPageTemplateStructure != null) || !rebuildStructure) {
+			return layoutPageTemplateStructure;
+		}
+
+		return rebuildLayoutPageTemplateStructure(groupId, plid);
+	}
+
+	@Override
 	public LayoutPageTemplateStructure fetchLayoutPageTemplateStructure(
 		long groupId, long classNameId, long classPK) {
 
-		return layoutPageTemplateStructurePersistence.fetchByG_C_C(
-			groupId, classNameId, classPK);
+		return fetchLayoutPageTemplateStructure(groupId, classPK);
 	}
 
 	@Override
@@ -169,15 +210,38 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			boolean rebuildStructure)
 		throws PortalException {
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			fetchLayoutPageTemplateStructure(groupId, classNameId, classPK);
+		return fetchLayoutPageTemplateStructure(
+			groupId, classPK, rebuildStructure);
+	}
 
-		if ((layoutPageTemplateStructure != null) || !rebuildStructure) {
-			return layoutPageTemplateStructure;
+	@Override
+	public LayoutPageTemplateStructure rebuildLayoutPageTemplateStructure(
+			long groupId, long plid)
+		throws PortalException {
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+				groupId, _portal.getClassNameId(Layout.class), plid);
+
+		JSONObject jsonObject =
+			LayoutPageTemplateStructureHelperUtil.
+				generateContentLayoutStructure(
+					fragmentEntryLinks,
+					_getLayoutPageTemplateEntryType(
+						_layoutLocalService.getLayout(plid)));
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			fetchLayoutPageTemplateStructure(groupId, plid);
+
+		if (layoutPageTemplateStructure != null) {
+			return updateLayoutPageTemplateStructureData(
+				groupId, plid, jsonObject.toString());
 		}
 
-		return rebuildLayoutPageTemplateStructure(
-			groupId, classNameId, classPK);
+		return addLayoutPageTemplateStructure(
+			PrincipalThreadLocal.getUserId(), groupId, plid,
+			jsonObject.toString(),
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Override
@@ -185,29 +249,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			long groupId, long classNameId, long classPK)
 		throws PortalException {
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				groupId, classNameId, classPK);
-
-		JSONObject jsonObject =
-			LayoutPageTemplateStructureHelperUtil.
-				generateContentLayoutStructure(
-					fragmentEntryLinks,
-					_getLayoutPageTemplateEntryType(
-						_layoutLocalService.getLayout(classPK)));
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			fetchLayoutPageTemplateStructure(groupId, classNameId, classPK);
-
-		if (layoutPageTemplateStructure != null) {
-			return updateLayoutPageTemplateStructure(
-				groupId, classNameId, classPK, jsonObject.toString());
-		}
-
-		return addLayoutPageTemplateStructure(
-			PrincipalThreadLocal.getUserId(), groupId, classNameId, classPK,
-			jsonObject.toString(),
-			ServiceContextThreadLocal.getServiceContext());
+		return rebuildLayoutPageTemplateStructure(groupId, classPK);
 	}
 
 	@Override
@@ -216,11 +258,28 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			long segmentsExperienceId, String data)
 		throws PortalException {
 
+		return updateLayoutPageTemplateStructure(
+			groupId, classPK, segmentsExperienceId, data);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
+			long groupId, long classNameId, long classPK, String data)
+		throws PortalException {
+
+		return updateLayoutPageTemplateStructureData(groupId, classPK, data);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
+			long groupId, long plid, long segmentsExperienceId, String data)
+		throws PortalException {
+
 		// Layout page template structure
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			layoutPageTemplateStructurePersistence.findByG_C_C(
-				groupId, classNameId, classPK);
+				groupId, _portal.getClassNameId(Layout.class), plid);
 
 		layoutPageTemplateStructure.setModifiedDate(new Date());
 
@@ -254,19 +313,19 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 					segmentsExperienceId, data);
 		}
 
-		_updateLayoutStatus(classPK);
+		_updateLayoutStatus(plid);
 
 		return layoutPageTemplateStructure;
 	}
 
 	@Override
-	public LayoutPageTemplateStructure updateLayoutPageTemplateStructure(
-			long groupId, long classNameId, long classPK, String data)
+	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
+			long groupId, long plid, String data)
 		throws PortalException {
 
 		return layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructure(
-				groupId, classNameId, classPK,
+				groupId, _portal.getClassNameId(Layout.class), plid,
 				SegmentsExperienceConstants.ID_DEFAULT, data);
 	}
 
@@ -296,8 +355,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		return LayoutPageTemplateEntryTypeConstants.TYPE_BASIC;
 	}
 
-	private void _updateLayoutStatus(long classPK) throws PortalException {
-		Layout layout = _layoutLocalService.getLayout(classPK);
+	private void _updateLayoutStatus(long plid) throws PortalException {
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		layout.setStatus(WorkflowConstants.STATUS_DRAFT);
 

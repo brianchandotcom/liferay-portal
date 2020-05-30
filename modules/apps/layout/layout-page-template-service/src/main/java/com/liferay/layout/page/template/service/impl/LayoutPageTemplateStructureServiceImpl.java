@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateStructureServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
@@ -45,20 +46,28 @@ public class LayoutPageTemplateStructureServiceImpl
 			long segmentsExperienceId, String data)
 		throws PortalException {
 
+		return updateLayoutPageTemplateStructureData(
+			groupId, classPK, segmentsExperienceId, data);
+	}
+
+	@Override
+	public LayoutPageTemplateStructure updateLayoutPageTemplateStructureData(
+			long groupId, long plid, long segmentsExperienceId, String data)
+		throws PortalException {
+
 		Boolean containsPermission =
 			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-				getPermissionChecker(), groupId,
-				_portal.getClassName(classNameId), classPK, ActionKeys.UPDATE);
+				getPermissionChecker(), groupId, Layout.class.getName(), plid,
+				ActionKeys.UPDATE);
 
 		if (!containsPermission) {
 			throw new PrincipalException.MustHavePermission(
-				getUserId(), _portal.getClassName(classNameId), classPK,
-				ActionKeys.UPDATE);
+				getUserId(), Layout.class.getName(), plid, ActionKeys.UPDATE);
 		}
 
 		return layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				groupId, classNameId, classPK, segmentsExperienceId, data);
+			updateLayoutPageTemplateStructureData(
+				groupId, plid, segmentsExperienceId, data);
 	}
 
 	@Reference

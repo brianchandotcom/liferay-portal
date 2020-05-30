@@ -19,7 +19,7 @@ import {useId} from '../../../app/utils/useId';
 import Collapse from '../../../common/components/Collapse';
 import TabItem from './TabItem';
 
-const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
+const INITIAL_EXPANDED_ITEM_COLLECTIONS = 0;
 
 export default function TabsPanel({tabs}) {
 	const [activeTabId, setActiveTabId] = useState(0);

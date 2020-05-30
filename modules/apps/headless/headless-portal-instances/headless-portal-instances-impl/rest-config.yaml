@@ -1,0 +1,9 @@
+apiDir: "../headless-portal-instances-api/src/main/java"
+apiPackagePath: "com.liferay.headless.portal.instances"
+application:
+    baseURI: "/headless-portal-instances"
+    className: "HeadlessPortalInstancesApplication"
+    name: "Liferay.Headless.Portal.Instances"
+author: "Alberto Chaparro"
+generateBatch: false
+generateGraphQL: false

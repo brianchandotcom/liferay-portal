@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,7 +38,9 @@ import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -79,6 +82,11 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		Long siteId, Pagination pagination) {
 
 		return Page.of(
+			Collections.singletonMap(
+				"create",
+				addAction(
+					"ADD_SITE_NAVIGATION_MENU", "postSiteNavigationMenu",
+					"com.liferay.site.navigation", siteId)),
 			transform(
 				_siteNavigationMenuService.getSiteNavigationMenus(
 					siteId, pagination.getStartPosition(),
@@ -133,7 +141,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		throws Exception {
 
 		String unicodeProperties = _getUnicodeProperties(
-			navigationMenuItem, siteId);
+			true, navigationMenuItem, siteId);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
@@ -267,7 +275,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private String _getUnicodeProperties(
-			NavigationMenuItem navigationMenuItem, long siteId)
+			boolean add, NavigationMenuItem navigationMenuItem, long siteId)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
@@ -284,18 +292,24 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 		}
 		else {
-			String preferredLanguageId =
-				contextAcceptLanguage.getPreferredLanguageId();
+			Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				navigationMenuItem.getName(),
+				navigationMenuItem.getName_i18n());
 
-			if (preferredLanguageId == null) {
-				preferredLanguageId = LocaleUtil.toLanguageId(
-					LocaleUtil.getDefault());
+			LocalizedMapUtil.validateI18n(
+				add, LocaleUtil.getSiteDefault(), "Navigation Menu item",
+				nameMap, new HashSet<>());
+
+			unicodeProperties.setProperty(
+				"defaultLanguageId",
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+			for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+				unicodeProperties.setProperty(
+					"name_" + LocaleUtil.toLanguageId(entry.getKey()),
+					nameMap.get(entry.getKey()));
 			}
-
-			unicodeProperties.setProperty(
-				"defaultLanguageId", preferredLanguageId);
-			unicodeProperties.setProperty(
-				"name_" + preferredLanguageId, navigationMenuItem.getName());
 
 			if (navigationMenuItem.getUrl() != null) {
 				unicodeProperties.setProperty(
@@ -339,6 +353,18 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						siteNavigationMenuItem, siteNavigationMenuItemsMap),
 					NavigationMenuItem.class);
 				siteId = siteNavigationMenu.getGroupId();
+
+				setActions(
+					() -> HashMapBuilder.put(
+						"delete",
+						addAction(
+							"DELETE", siteNavigationMenu,
+							"deleteNavigationMenu")
+					).put(
+						"replace",
+						addAction(
+							"UPDATE", siteNavigationMenu, "putNavigationMenu")
+					).build());
 			}
 		};
 	}
@@ -394,7 +420,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 							typeSettingsUnicodeProperties.getProperty(
 								"name_" + defaultLanguageId));
 
-						if (name == null) {
+						if ((name == null) && (layout != null)) {
 							name = layout.getName(
 								contextAcceptLanguage.getPreferredLocale());
 						}
@@ -464,7 +490,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 							updateSiteNavigationMenuItem(
 								navigationMenuItemId,
 								_getUnicodeProperties(
-									navigationMenuItem, siteId),
+									false, navigationMenuItem, siteId),
 								ServiceContextUtil.createServiceContext(
 									siteId, null));
 

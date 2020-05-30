@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -218,6 +219,8 @@ public class DocumentDTOConverter
 
 		return new DocumentType() {
 			{
+				availableLanguages = LocaleUtil.toW3cLanguageIds(
+					dlFileEntryType.getAvailableLanguageIds());
 				description = dlFileEntryType.getDescription(
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getI18nMap(

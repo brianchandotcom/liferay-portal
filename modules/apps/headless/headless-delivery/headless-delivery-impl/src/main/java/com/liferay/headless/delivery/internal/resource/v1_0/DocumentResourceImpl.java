@@ -121,20 +121,18 @@ public class DocumentResourceImpl
 					"com.liferay.document.library", folder.getGroupId())
 			).build(),
 			booleanQuery -> {
-				if (documentFolderId != null) {
-					BooleanFilter booleanFilter =
-						booleanQuery.getPreBooleanFilter();
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
 
-					String field = Field.FOLDER_ID;
+				String field = Field.FOLDER_ID;
 
-					if (GetterUtil.getBoolean(flatten)) {
-						field = "treePath";
-					}
-
-					booleanFilter.add(
-						new TermFilter(field, String.valueOf(documentFolderId)),
-						BooleanClauseOccur.MUST);
+				if (GetterUtil.getBoolean(flatten)) {
+					field = "treePath";
 				}
+
+				booleanFilter.add(
+					new TermFilter(field, String.valueOf(documentFolderId)),
+					BooleanClauseOccur.MUST);
 			},
 			filter, search, pagination, sorts);
 	}
@@ -516,8 +514,9 @@ public class DocumentResourceImpl
 						"com.liferay.document.library.kernel.model.DLFileEntry",
 						fileEntry.getGroupId())
 				).build(),
-				_dtoConverterRegistry, fileEntry.getFileEntryId(), null,
-				contextUriInfo, contextUser));
+				_dtoConverterRegistry, fileEntry.getFileEntryId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
 
 	@Reference

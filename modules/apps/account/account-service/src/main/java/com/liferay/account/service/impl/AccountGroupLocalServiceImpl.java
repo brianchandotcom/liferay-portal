@@ -65,18 +65,6 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
-	public AccountGroup deleteAccountGroup(AccountGroup accountGroup) {
-		return super.deleteAccountGroup(accountGroup);
-	}
-
-	@Override
-	public AccountGroup deleteAccountGroup(long accountGroupId)
-		throws PortalException {
-
-		return deleteAccountGroup(getAccountGroup(accountGroupId));
-	}
-
-	@Override
 	public AccountGroup updateAccountGroup(
 			long accountGroupId, long userId, String name, String description)
 		throws PortalException {

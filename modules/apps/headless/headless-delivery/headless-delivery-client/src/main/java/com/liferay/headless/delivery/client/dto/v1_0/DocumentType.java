@@ -33,6 +33,27 @@ public class DocumentType implements Cloneable {
 		return DocumentTypeSerDes.toDTO(json);
 	}
 
+	public String[] getAvailableLanguages() {
+		return availableLanguages;
+	}
+
+	public void setAvailableLanguages(String[] availableLanguages) {
+		this.availableLanguages = availableLanguages;
+	}
+
+	public void setAvailableLanguages(
+		UnsafeSupplier<String[], Exception> availableLanguagesUnsafeSupplier) {
+
+		try {
+			availableLanguages = availableLanguagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] availableLanguages;
+
 	public ContentField[] getContentFields() {
 		return contentFields;
 	}

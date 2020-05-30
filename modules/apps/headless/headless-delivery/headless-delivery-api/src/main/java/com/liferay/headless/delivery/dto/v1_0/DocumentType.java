@@ -52,6 +52,34 @@ public class DocumentType {
 	}
 
 	@Schema
+	public String[] getAvailableLanguages() {
+		return availableLanguages;
+	}
+
+	public void setAvailableLanguages(String[] availableLanguages) {
+		this.availableLanguages = availableLanguages;
+	}
+
+	@JsonIgnore
+	public void setAvailableLanguages(
+		UnsafeSupplier<String[], Exception> availableLanguagesUnsafeSupplier) {
+
+		try {
+			availableLanguages = availableLanguagesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String[] availableLanguages;
+
+	@Schema
 	@Valid
 	public ContentField[] getContentFields() {
 		return contentFields;
@@ -220,6 +248,30 @@ public class DocumentType {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (availableLanguages != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"availableLanguages\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < availableLanguages.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(availableLanguages[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < availableLanguages.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
 
 		if (contentFields != null) {
 			if (sb.length() > 1) {

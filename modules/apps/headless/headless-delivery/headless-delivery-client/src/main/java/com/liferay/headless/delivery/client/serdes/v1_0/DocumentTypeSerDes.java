@@ -57,6 +57,32 @@ public class DocumentTypeSerDes {
 
 		sb.append("{");
 
+		if (documentType.getAvailableLanguages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"availableLanguages\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < documentType.getAvailableLanguages().length;
+				 i++) {
+
+				sb.append("\"");
+
+				sb.append(_escape(documentType.getAvailableLanguages()[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < documentType.getAvailableLanguages().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (documentType.getContentFields() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -144,6 +170,15 @@ public class DocumentTypeSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (documentType.getAvailableLanguages() == null) {
+			map.put("availableLanguages", null);
+		}
+		else {
+			map.put(
+				"availableLanguages",
+				String.valueOf(documentType.getAvailableLanguages()));
+		}
+
 		if (documentType.getContentFields() == null) {
 			map.put("contentFields", null);
 		}
@@ -205,7 +240,13 @@ public class DocumentTypeSerDes {
 			DocumentType documentType, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "contentFields")) {
+			if (Objects.equals(jsonParserFieldName, "availableLanguages")) {
+				if (jsonParserFieldValue != null) {
+					documentType.setAvailableLanguages(
+						toStrings((Object[])jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentFields")) {
 				if (jsonParserFieldValue != null) {
 					documentType.setContentFields(
 						Stream.of(

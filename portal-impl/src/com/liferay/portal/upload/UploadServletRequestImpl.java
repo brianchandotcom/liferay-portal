@@ -90,6 +90,9 @@ public class UploadServletRequestImpl
 
 			ServletFileUpload servletFileUpload;
 
+			long uploadServletRequestImplMaxSize =
+				UploadServletRequestConfigurationHelperUtil.getMaxSize();
+
 			if (fileSizeThreshold > 0) {
 				servletFileUpload = new ServletFileUpload(
 					new LiferayFileItemFactory(
@@ -97,15 +100,23 @@ public class UploadServletRequestImpl
 			}
 			else {
 				servletFileUpload = new ServletFileUpload(
-					new LiferayFileItemFactory(getTempDir()));
+					new LiferayFileItemFactory(
+						getTempDir(), (int)uploadServletRequestImplMaxSize));
 			}
 
 			if (maxRequestSize > 0) {
 				servletFileUpload.setSizeMax(maxRequestSize);
 			}
+			else {
+				servletFileUpload.setSizeMax(uploadServletRequestImplMaxSize);
+			}
 
 			if (maxFileSize > 0) {
 				servletFileUpload.setFileSizeMax(maxFileSize);
+			}
+			else {
+				servletFileUpload.setFileSizeMax(
+					uploadServletRequestImplMaxSize);
 			}
 
 			liferayServletRequest = new LiferayServletRequest(
@@ -116,8 +127,6 @@ public class UploadServletRequestImpl
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
 
-			long uploadServletRequestImplMaxSize =
-				UploadServletRequestConfigurationHelperUtil.getMaxSize();
 			long uploadServletRequestImplSize = 0;
 
 			int contentLength = httpServletRequest.getContentLength();

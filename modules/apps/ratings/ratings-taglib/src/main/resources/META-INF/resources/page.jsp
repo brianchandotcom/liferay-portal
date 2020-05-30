@@ -35,11 +35,16 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 <c:choose>
 	<c:when test="<%= type.equals(RatingsType.LIKE.getValue()) %>">
 		<div>
-			<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" disabled type="button">
-				<svg class="lexicon-icon lexicon-icon-heart">
-					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#heart" />
-				</svg>
-			</button>
+			<clay:button
+				borderless="<%= true %>"
+				disabled="<%= true %>"
+				displayType="secondary"
+				small="<%= true %>"
+			>
+				<clay:icon
+					symbol="heart"
+				/>
+			</clay:button>
 
 			<react:component
 				data="<%= data %>"
@@ -48,18 +53,29 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 		</div>
 	</c:when>
 	<c:when test="<%= type.equals(RatingsType.THUMBS.getValue()) %>">
-		<div>
-			<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" disabled type="button">
-				<svg class="lexicon-icon lexicon-icon-thumbs-up">
-					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-up" />
-				</svg>
-			</button>
+		<div class="rating">
+			<clay:button
+				borderless="<%= true %>"
+				disabled="<%= true %>"
+				displayType="secondary"
+				small="<%= true %>"
+			>
+				<clay:icon
+					symbol="thumbs-up"
+				/>
+			</clay:button>
 
-			<button class="btn btn-outline-borderless btn-outline-secondary btn-sm" disabled type="button">
-				<svg class="lexicon-icon lexicon-icon-thumbs-down">
-					<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#thumbs-down" />
-				</svg>
-			</button>
+			<clay:button
+				borderless="<%= true %>"
+				disabled="<%= true %>"
+				displayType="secondary"
+				icon="thumbs-down"
+				small="<%= true %>"
+			>
+				<clay:icon
+					symbol="thumbs-down"
+				/>
+			</clay:button>
 
 			<react:component
 				data="<%= data %>"
@@ -69,25 +85,35 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ratings
 	</c:when>
 	<c:when test="<%= type.equals(RatingsType.STARS.getValue()) %>">
 		<div>
-			<div class="autofit-row autofit-row-center ratings ratings-stars">
-				<div class="autofit-col">
+			<clay:content-row
+				cssClass="ratings ratings-stars"
+				verticalAlign="center"
+			>
+				<clay:content-col>
 					<div class="dropdown">
-						<button class="btn btn-outline-borderless btn-outline-secondary dropdown-toggle btn-sm" disabled type="button">
-							<svg class="lexicon-icon lexicon-icon-star-o">
-								<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star-o" />
-							</svg>
+						<clay:button
+							borderless="<%= true %>"
+							cssClass="dropdown-toggle"
+							disabled="<%= true %>"
+							displayType="secondary"
+							small="<%= true %>"
+						>
+							<clay:icon
+								symbol="star-o"
+							/>
 
 							<span>-</span>
-						</button>
+						</clay:button>
 					</div>
-				</div>
+				</clay:content-col>
 
-				<div class="autofit-col">
-					<svg class="lexicon-icon lexicon-icon-star ratings-stars-average-icon">
-						<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg#star" />
-					</svg>
-				</div>
-			</div>
+				<clay:content-col>
+					<clay:icon
+						cssClass="ratings-stars-average-icon"
+						symbol="star"
+					/>
+				</clay:content-col>
+			</clay:content-row>
 
 			<react:component
 				data="<%= data %>"

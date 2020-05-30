@@ -313,11 +313,11 @@ public class AccountGroupLocalServiceUtil {
 	}
 
 	public static com.liferay.account.model.AccountGroup updateAccountGroup(
-			long accountGroupId, long userId, String name, String description)
+			long accountGroupId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateAccountGroup(
-			accountGroupId, userId, name, description);
+			accountGroupId, name, description);
 	}
 
 	public static AccountGroupLocalService getService() {

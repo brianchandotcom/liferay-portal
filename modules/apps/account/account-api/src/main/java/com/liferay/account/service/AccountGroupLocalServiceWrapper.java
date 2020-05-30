@@ -329,11 +329,11 @@ public class AccountGroupLocalServiceWrapper
 
 	@Override
 	public com.liferay.account.model.AccountGroup updateAccountGroup(
-			long accountGroupId, long userId, String name, String description)
+			long accountGroupId, String name, String description)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountGroupLocalService.updateAccountGroup(
-			accountGroupId, userId, name, description);
+			accountGroupId, name, description);
 	}
 
 	@Override

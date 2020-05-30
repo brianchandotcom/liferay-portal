@@ -66,15 +66,11 @@ public class AccountGroupLocalServiceImpl
 
 	@Override
 	public AccountGroup updateAccountGroup(
-			long accountGroupId, long userId, String name, String description)
+			long accountGroupId, String name, String description)
 		throws PortalException {
 
 		AccountGroup accountGroup = accountGroupPersistence.fetchByPrimaryKey(
 			accountGroupId);
-
-		User user = userLocalService.getUser(userId);
-
-		accountGroup.setCompanyId(user.getCompanyId());
 
 		accountGroup.setName(name);
 		accountGroup.setDescription(description);

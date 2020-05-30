@@ -264,7 +264,7 @@ public interface AccountGroupLocalService
 	public AccountGroup updateAccountGroup(AccountGroup accountGroup);
 
 	public AccountGroup updateAccountGroup(
-			long accountGroupId, long userId, String name, String description)
+			long accountGroupId, String name, String description)
 		throws PortalException;
 
 }

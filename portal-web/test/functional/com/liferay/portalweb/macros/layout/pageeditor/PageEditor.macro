@@ -136,7 +136,7 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_entryTitle = "${entryName}",
 				key_fragmentName = "${fragmentName}",
-				locator1 = "PageEditor#SECTION_BUILDER_FRAGMENTS",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
 				locator2 = "PageEditor#COLLECTION_CELL",
 				value1 = "");
 		}

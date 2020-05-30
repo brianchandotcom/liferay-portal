@@ -154,20 +154,20 @@ public class ActionUtil {
 			return null;
 		}
 
+		Method method = _getMethod(clazz, methodName);
+
+		String httpMethodName = _getHttpMethodName(clazz, method);
+
 		if ((object != null) &&
 			OAuth2ProviderScopeLiferayAccessControlContext.
 				isOAuth2AuthVerified()) {
 
 			ScopeChecker scopeChecker = (ScopeChecker)object;
 
-			if (!scopeChecker.checkScope(methodName)) {
+			if (!scopeChecker.checkScope(httpMethodName)) {
 				return null;
 			}
 		}
-
-		Method method = _getMethod(clazz, methodName);
-
-		String httpMethodName = _getHttpMethodName(clazz, method);
 
 		URI baseURI = uriInfo.getBaseUri();
 

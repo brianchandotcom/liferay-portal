@@ -2160,9 +2160,9 @@ definition {
 		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithUploadedDefinition";
 		property testray.component.names = "Training";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
@@ -3105,9 +3105,9 @@ definition {
 	test EditProcessWorkflowAfterFormSubmission {
 		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessWorkflowAfterFormSubmission";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(
@@ -3263,9 +3263,9 @@ definition {
 	test EditProcessWorkflowBeforeFormSubmission {
 		property test.name.skip.portal.instance = "KaleoformsUsecase#EditProcessWorkflowBeforeFormSubmission";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Workflow",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Process Builder");
 
 		Workflow.uploadDefinition(

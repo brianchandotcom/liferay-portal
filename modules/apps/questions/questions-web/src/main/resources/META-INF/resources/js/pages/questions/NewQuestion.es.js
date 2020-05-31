@@ -24,7 +24,7 @@ import {AppContext} from '../../AppContext.es';
 import Link from '../../components/Link.es';
 import TagSelector from '../../components/TagSelector.es';
 import useSection from '../../hooks/useSection.es';
-import {createQuestionQuery} from '../../utils/client.es';
+import {client, createQuestionQuery} from '../../utils/client.es';
 import {
 	getCKEditorConfig,
 	historyPushWithSlug,
@@ -59,6 +59,7 @@ export default withRouter(
 
 		const [createQuestion] = useMutation(createQuestionQuery, {
 			onCompleted() {
+				client.resetStore();
 				debounceCallback();
 			},
 		});

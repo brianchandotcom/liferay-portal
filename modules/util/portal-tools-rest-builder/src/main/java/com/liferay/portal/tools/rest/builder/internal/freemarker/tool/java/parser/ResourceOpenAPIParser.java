@@ -502,7 +502,13 @@ public class ResourceOpenAPIParser {
 		}
 
 		if (!requestBodyMediaTypes.isEmpty()) {
-			if (!requestBodyMediaTypes.contains("multipart/form-data")) {
+			if (requestBodyMediaTypes.contains(
+					"application/x-www-form-urlencoded")) {
+
+				throw new RuntimeException(
+					"application/x-www-form-urlencoded is not supported");
+			}
+			else if (!requestBodyMediaTypes.contains("multipart/form-data")) {
 				RequestBody requestBody = operation.getRequestBody();
 
 				Map<String, Content> contents = requestBody.getContent();
@@ -514,33 +520,25 @@ public class ResourceOpenAPIParser {
 				String parameterType = OpenAPIParserUtil.getJavaDataType(
 					javaDataTypeMap, content.getSchema());
 
-				if (Long.class.isInstance(parameterType)) {
-					javaMethodParameters.add(
-						new JavaMethodParameter("referenceId", parameterType));
+				String simpleClassName = parameterType.substring(
+					parameterType.lastIndexOf(".") + 1);
+
+				String parameterName = TextFormatter.format(
+					simpleClassName, TextFormatter.I);
+
+				if (parameterType.startsWith("[")) {
+					String elementClassName =
+						OpenAPIParserUtil.getElementClassName(parameterType);
+
+					simpleClassName = elementClassName.substring(
+						elementClassName.lastIndexOf(".") + 1);
+
+					parameterName = TextFormatter.formatPlural(
+						TextFormatter.format(simpleClassName, TextFormatter.I));
 				}
-				else if (parameterType != null) {
-					String simpleClassName = parameterType.substring(
-						parameterType.lastIndexOf(".") + 1);
 
-					String parameterName = TextFormatter.format(
-						simpleClassName, TextFormatter.I);
-
-					if (parameterType.startsWith("[")) {
-						String elementClassName =
-							OpenAPIParserUtil.getElementClassName(
-								parameterType);
-
-						simpleClassName = elementClassName.substring(
-							elementClassName.lastIndexOf(".") + 1);
-
-						parameterName = TextFormatter.formatPlural(
-							TextFormatter.format(
-								simpleClassName, TextFormatter.I));
-					}
-
-					javaMethodParameters.add(
-						new JavaMethodParameter(parameterName, parameterType));
-				}
+				javaMethodParameters.add(
+					new JavaMethodParameter(parameterName, parameterType));
 			}
 			else {
 				javaMethodParameters.add(

@@ -250,6 +250,16 @@ public class ResourceOpenAPIParser {
 				javaMethodSignature.getPath(),
 				"/{" + StringUtil.lowerCaseFirstLetter(schemaName) + "Id}");
 
+			for (JavaMethodSignature existingJavaMethodSignature :
+					javaMethodSignatures) {
+
+				String path = existingJavaMethodSignature.getPath();
+
+				if (path.equals(batchPath + "/batch")) {
+					return;
+				}
+			}
+
 			Operation batchOperation = _getBatchOperation(
 				javaMethodSignature, methodName, schemaName);
 

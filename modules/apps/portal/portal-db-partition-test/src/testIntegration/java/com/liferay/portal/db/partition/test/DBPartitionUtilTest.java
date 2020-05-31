@@ -17,16 +17,23 @@ package com.liferay.portal.db.partition.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.init.DBInitUtil;
 import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
-import com.liferay.portal.db.partition.test.util.DBPartitionTestUtil;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
@@ -42,6 +49,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
+
 /**
  * @author Alberto Chaparro
  */
@@ -50,25 +59,31 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_dbPartitionEnabled = GetterUtil.getBoolean(
+			_props.get("database.partition.enabled"));
+
+		_lazyConnectionDataSourceProxy =
+			(LazyConnectionDataSourceProxy)PortalBeanLocatorUtil.locate(
+				"liferayDataSource");
+
 		_connection = DataAccess.getConnection();
 
 		_defaultSchemaName = _connection.getCatalog();
 
-		DBPartitionTestUtil.enableDBPartition();
+		_enableDBPartition();
 
 		getDB().runSQL(
-			"create schema " + DBPartitionTestUtil.getSchemaName(_COMPANY_ID) +
+			"create schema " + _getSchemaName(_COMPANY_ID) +
 				" character set utf8");
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		getDB().runSQL(
-			"drop schema " + DBPartitionTestUtil.getSchemaName(_COMPANY_ID));
+		getDB().runSQL("drop schema " + _getSchemaName(_COMPANY_ID));
 
 		DataAccess.cleanUp(_connection);
 
-		DBPartitionTestUtil.disableDBPartition();
+		_disableDBPartition();
 	}
 
 	@After
@@ -87,8 +102,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			statement.executeUpdate(
 				StringBundler.concat(
-					"create table ",
-					DBPartitionTestUtil.getSchemaName(_COMPANY_ID),
+					"create table ", _getSchemaName(_COMPANY_ID),
 					".TestTable (testColumn int)"));
 
 			statement.execute("select 1 from TestTable");
@@ -140,9 +154,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 			try (Statement statement = _connection.createStatement()) {
 				statement.execute(
-					"select 1 from " +
-						DBPartitionTestUtil.getSchemaName(_COMPANY_ID) +
-							".CompanyInfo");
+					"select 1 from " + _getSchemaName(_COMPANY_ID) +
+						".CompanyInfo");
 			}
 		}
 		finally {
@@ -158,12 +171,78 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			DBPartitionUtil.addDBPartition(_portal.getDefaultCompanyId()));
 	}
 
+	private static void _disableDBPartition() {
+		if (_dbPartitionEnabled) {
+			return;
+		}
+
+		ReflectionTestUtil.setFieldValue(
+			DBInitUtil.class, "_dataSource", _currentDataSource);
+		ReflectionTestUtil.setFieldValue(
+			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", false);
+		ReflectionTestUtil.setFieldValue(
+			DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
+			StringPool.BLANK);
+
+		_lazyConnectionDataSourceProxy.setTargetDataSource(_currentDataSource);
+
+		ReflectionTestUtil.setFieldValue(
+			InfrastructureUtil.class, "_dataSource",
+			_lazyConnectionDataSourceProxy);
+	}
+
+	private static void _enableDBPartition() throws Exception {
+		if (_dbPartitionEnabled) {
+			return;
+		}
+
+		ReflectionTestUtil.setFieldValue(
+			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
+
+		ReflectionTestUtil.setFieldValue(
+			DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
+			_DB_PARTITION_INSTANCE_ID);
+
+		DBPartitionUtil.setDefaultCompanyId(PortalUtil.getDefaultCompanyId());
+
+		DataSource dbPartitionDataSource = DBPartitionUtil.wrapDataSource(
+			_currentDataSource);
+
+		_lazyConnectionDataSourceProxy.setTargetDataSource(
+			dbPartitionDataSource);
+
+		ReflectionTestUtil.setFieldValue(
+			DBInitUtil.class, "_dataSource", dbPartitionDataSource);
+
+		ReflectionTestUtil.setFieldValue(
+			InfrastructureUtil.class, "_dataSource",
+			_lazyConnectionDataSourceProxy);
+	}
+
+	private static String _getSchemaName(long companyId) {
+		if (_dbPartitionEnabled) {
+			return PropsUtil.get("database.partition.instance.id") +
+				StringPool.UNDERLINE + companyId;
+		}
+
+		return _DB_PARTITION_INSTANCE_ID + StringPool.UNDERLINE + companyId;
+	}
+
 	private static final long _COMPANY_ID = 1L;
 
+	private static final String _DB_PARTITION_INSTANCE_ID = "dbPartitionTest";
+
 	private static Connection _connection;
+	private static final DataSource _currentDataSource =
+		ReflectionTestUtil.getFieldValue(DBInitUtil.class, "_dataSource");
+	private static boolean _dbPartitionEnabled;
 	private static String _defaultSchemaName;
+	private static LazyConnectionDataSourceProxy _lazyConnectionDataSourceProxy;
 
 	@Inject
 	private static Portal _portal;
+
+	@Inject
+	private static Props _props;
 
 }

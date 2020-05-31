@@ -15,9 +15,7 @@
 package com.liferay.portal.db.partition.messaging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
-import com.liferay.portal.db.partition.test.util.DBPartitionTestUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
@@ -57,8 +55,6 @@ public class DBPartitionMessageBusInterceptorTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		DBPartitionTestUtil.enableDBPartition();
-
 		_company = CompanyTestUtil.addCompany();
 
 		List<Company> companies = _companyLocalService.getCompanies(false);
@@ -101,23 +97,11 @@ public class DBPartitionMessageBusInterceptorTest
 
 		destination.destroy();
 
-		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", false);
-
 		_companyLocalService.deleteCompany(_company);
-
-		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
-
-		DBPartitionTestUtil.disableDBPartition();
 
 		ReflectionTestUtil.setFieldValue(
 			_dbPartitionMessageBusInterceptor, "_databasePartitionEnabled",
 			_currentDatabasePartitionEnabled);
-
-		getDB().runSQL(
-			"drop schema " +
-				DBPartitionTestUtil.getSchemaName(_company.getCompanyId()));
 	}
 
 	@Before

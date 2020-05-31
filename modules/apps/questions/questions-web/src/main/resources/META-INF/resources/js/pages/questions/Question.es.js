@@ -35,6 +35,7 @@ import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
 import {
+	client,
 	createAnswerQuery,
 	deleteMessageBoardThreadQuery,
 	getMessagesQuery,
@@ -141,6 +142,7 @@ export default withRouter(
 
 		const [deleteThread] = useMutation(deleteMessageBoardThreadQuery, {
 			onCompleted() {
+				client.resetStore();
 				history.goBack();
 			},
 		});

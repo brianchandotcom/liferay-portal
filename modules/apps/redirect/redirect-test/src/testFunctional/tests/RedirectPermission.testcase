@@ -133,8 +133,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Redirection",
-			site = "Guest");
+			portlet = "Redirection");
 
 		Redirect.addEntry(
 			destinationURL = "${portalURL}/web/guest/test-destination-page",
@@ -328,8 +327,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Redirection",
-			site = "Guest");
+			portlet = "Redirection");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Edit",
@@ -541,8 +539,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Redirection",
-			site = "Guest");
+			portlet = "Redirection");
 
 		LexiconEntry.viewNoEntryMenuItem(
 			menuItem = "Delete",
@@ -748,8 +745,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Redirection",
-			site = "Guest");
+			portlet = "Redirection");
 
 		Redirect.viewEntry(
 			destinationURL = "${portalURL}/web/guest/test-destination-page",

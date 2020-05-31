@@ -166,8 +166,6 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Process Builder");
 
-		ProductMenuHelper.closeProductMenu();
-
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		KaleoDesigner.selectNode(nodeNodeLabel = "StartNode");

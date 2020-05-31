@@ -24,7 +24,7 @@ definition {
 
 	@priority = "4"
 	test AddAccountUser {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -33,7 +33,7 @@ definition {
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -45,7 +45,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -55,7 +55,7 @@ definition {
 
 	@priority = "4"
 	test AddAccountWithMultiDomains {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -65,7 +65,7 @@ definition {
 			accountName = "Account with Multi Domains",
 			domainNames = "liferay.com,Google.com,si-na.com,9teen.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -81,7 +81,7 @@ definition {
 
 	@priority = "4"
 	test AssignExistingUserToAccount {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -90,7 +90,7 @@ definition {
 			accountDescription = "This is an account with user.",
 			accountName = "Account Name");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -102,7 +102,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -119,7 +119,7 @@ definition {
 			assigneeName = "userfn",
 			assigneeType = "Users");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -137,7 +137,7 @@ definition {
 			organizationName = "Organization for Account",
 			organizationSite = "true");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -153,7 +153,7 @@ definition {
 			assigneeName = "Organization for Account",
 			assigneeType = "Organizations");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -167,7 +167,7 @@ definition {
 
 	@priority = "4"
 	test CancelAccountCreation {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -186,7 +186,7 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Accounts");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -198,7 +198,7 @@ definition {
 
 	@priority = "4"
 	test DeactivateActivateUser {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -207,7 +207,7 @@ definition {
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -219,7 +219,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -238,7 +238,7 @@ definition {
 	@priority = "4"
 	test DeleteAccount {
 		for (var accountNumber : list "1,2,3") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Accounts",
 				panel = "Control Panel",
 				portlet = "Accounts");
@@ -248,7 +248,7 @@ definition {
 				accountName = "Delete Accounts Name ${accountNumber} for Test");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -257,7 +257,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts Name 1 for Test");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -268,7 +268,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts Name 2 for Test");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -279,7 +279,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "Delete Accounts Name 3 for Test");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -294,7 +294,7 @@ definition {
 	@description = "This is a use case for LPS-101315."
 	@priority = "4"
 	test DeleteInactiveAccount {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -304,7 +304,7 @@ definition {
 			accountName = "Accounts Name for Test",
 			accountStatus = "Inactive");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -321,7 +321,7 @@ definition {
 	@description = "This is a use case for LPS-107598."
 	@priority = "4"
 	test FilterAccountUserInTheUsersAdminPortlet {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -330,7 +330,7 @@ definition {
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -348,7 +348,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -374,7 +374,7 @@ definition {
 	test ImpersonateUser {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -383,7 +383,7 @@ definition {
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -395,7 +395,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -410,7 +410,7 @@ definition {
 	@priority = "4"
 	test InactiveAccount {
 		for (var accountNumber : list "1,2,3") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Accounts",
 				panel = "Control Panel",
 				portlet = "Accounts");
@@ -420,7 +420,7 @@ definition {
 				accountName = "Accounts Name ${accountNumber} for Test");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -429,7 +429,7 @@ definition {
 
 		Accounts.viewInactiveAccount(accountName = "Accounts Name 1 for Test");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -440,7 +440,7 @@ definition {
 
 		Accounts.viewInactiveAccount(accountName = "Accounts Name 2 for Test");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -454,7 +454,7 @@ definition {
 
 	@priority = "4"
 	test RemoveDomain {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -464,7 +464,7 @@ definition {
 			accountName = "Remove Account Domain",
 			domainNames = "liferay.com,Google.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -473,7 +473,7 @@ definition {
 			accountName = "Remove Account Domain",
 			domainName = "Google.com");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -491,7 +491,7 @@ definition {
 
 	@priority = "4"
 	test RemoveUserFromAccount {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -500,7 +500,7 @@ definition {
 			accountDescription = "This is a test to remove account user.",
 			accountName = "Remove Account User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -512,7 +512,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -525,7 +525,7 @@ definition {
 			assigneeName = "userfn",
 			assigneeType = "Users");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -537,14 +537,14 @@ definition {
 
 	@priority = "5"
 	test Smoke {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
 
 		Accounts.addCP(accountName = "Accounts Name for Test");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -564,7 +564,7 @@ definition {
 			organizationName = "Organization for Account",
 			organizationSite = "true");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -580,7 +580,7 @@ definition {
 			assigneeName = "Organization for Account",
 			assigneeType = "Organizations");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -593,7 +593,7 @@ definition {
 			assigneeName = "Organization for Account",
 			assigneeType = "Organizations");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -605,7 +605,7 @@ definition {
 
 	@priority = "4"
 	test UpdateAccount {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -616,7 +616,7 @@ definition {
 
 		AssertElementPresent(locator1 = "Icon#BACK");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -629,7 +629,7 @@ definition {
 			accountNameEdit = "Update Accounts Name for Test",
 			accountStatusEdit = "Inactive");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -644,7 +644,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -667,7 +667,7 @@ definition {
 			locator1 = "Portlet#HEADER",
 			value1 = "Edit Update Accounts Name via Name Link");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -683,7 +683,7 @@ definition {
 
 	@priority = "4"
 	test UpdateAccountUser {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -692,7 +692,7 @@ definition {
 			accountDescription = "This is an Account with User.",
 			accountName = "Account with User");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -704,7 +704,7 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
@@ -713,14 +713,14 @@ definition {
 			accountUser = "userfn userln",
 			editFirstName = "edituserfn");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Account Users");
 
 		LexiconEntry.viewEntryName(rowEntry = "edituserfn userln");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -735,7 +735,7 @@ definition {
 	@description = "This is a use case for LPS-101221."
 	@priority = "4"
 	test UpdateInactiveAccountViaNameLink {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");
@@ -786,7 +786,7 @@ definition {
 	@priority = "4"
 	test ViewAccountPagination {
 		for (var accountNum : list "1,2,3,4,5,6") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Accounts",
 				panel = "Control Panel",
 				portlet = "Accounts");
@@ -794,7 +794,7 @@ definition {
 			Accounts.addCP(accountName = "Accounts Name ${accountNum}");
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
 			portlet = "Accounts");

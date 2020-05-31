@@ -570,7 +570,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Server Administration");
@@ -648,7 +648,7 @@ definition {
 		var portalURL = PropsUtil.get("portal.url");
 		property test.assert.javascript.errors = "false";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Server Administration");

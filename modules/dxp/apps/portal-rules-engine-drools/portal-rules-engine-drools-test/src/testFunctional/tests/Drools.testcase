@@ -46,7 +46,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			panel = "Site Administration",
-			portlet = "Tags");
+			portlet = "Tags",
+			site = "Guest");
 
 		Tag.addCP(tagName = "americas");
 

@@ -22,8 +22,6 @@ definition {
 
 		Navigator.openURL();
 
-		Navigator.openURL();
-
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

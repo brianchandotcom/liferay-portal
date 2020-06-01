@@ -154,7 +154,7 @@ public class JSONCurlUtil {
 					"Command finished with exit value: " + process.exitValue());
 			}
 
-			return response;
+			return response.replaceAll("\\\\r\\\\n|\\\\n|\\\\r", "%0A");
 		}
 
 		private String _encodeCurlData(String requestString) {

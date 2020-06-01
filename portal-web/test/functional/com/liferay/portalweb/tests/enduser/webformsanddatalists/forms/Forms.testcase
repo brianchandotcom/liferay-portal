@@ -1065,7 +1065,7 @@ definition {
 	@description = "This is a use case for LPS-60520."
 	@priority = "4"
 	test DeleteDateFieldAndViewEntries {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Forms#DeleteDateFieldAndViewEntries";
 
 		Navigator.openURL();

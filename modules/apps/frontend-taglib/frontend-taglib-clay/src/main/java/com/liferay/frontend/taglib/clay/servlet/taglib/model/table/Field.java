@@ -22,7 +22,9 @@ import java.util.Map;
 
 /**
  * @author Iván Zaera Avellón
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public class Field {
 
 	public Field(String fieldName, String label) {

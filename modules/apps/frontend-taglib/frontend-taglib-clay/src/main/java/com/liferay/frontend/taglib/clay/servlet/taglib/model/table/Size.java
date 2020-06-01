@@ -16,7 +16,9 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.model.table;
 
 /**
  * @author Iván Zaera Avellón
+ * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
+@Deprecated
 public enum Size {
 
 	EXTRA_LARGE("xl"), LARGE("lg"), MEDIUM("md"), SMALL("sm");

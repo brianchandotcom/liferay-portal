@@ -1,3 +1,6 @@
+$fieldTypeFieldGroup: #0b5fff;
+$fieldTypeFieldSet: #5aca75;
+
 .field-type {
 	border: 2px solid transparent;
 	border-radius: 4px;
@@ -46,5 +49,63 @@
 		border-color: #80acff;
 		box-shadow: 0 8px 16px rgba(39, 40, 51, 0.16);
 		cursor: grabbing;
+	}
+}
+
+.field-type-list {
+	.field-type-fieldgroup {
+		.field-type-header {
+			&:hover {
+				background-color: rgba($fieldTypeFieldGroup, 0.05) !important;
+			}
+
+			.data-layout-builder-field-sticker {
+				background-color: rgba($fieldTypeFieldGroup, 0.1) !important;
+
+				.sticker-overlay {
+					svg {
+						color: $fieldTypeFieldGroup !important;
+					}
+				}
+			}
+		}
+
+		.field-type-item:before {
+			border-color: rgba($fieldTypeFieldGroup, 0.2);
+		}
+	}
+
+	.field-type-fieldset {
+		.field-type-header {
+			&:hover {
+				background-color: rgba($fieldTypeFieldSet, 0.1) !important;
+			}
+
+			.data-layout-builder-field-sticker {
+				background-color: rgba($fieldTypeFieldSet, 0.2) !important;
+
+				.sticker-overlay {
+					svg {
+						color: $fieldTypeFieldSet !important;
+					}
+				}
+			}
+		}
+
+		.field-type-item:before {
+			border-color: rgba($fieldTypeFieldSet, 0.2);
+		}
+	}
+
+	.field-type-item:before {
+		border-left: 2px solid;
+		content: '';
+		height: calc(100% - 15px);
+		position: absolute;
+		width: 0;
+	}
+
+	.panel-body {
+		padding-right: 0;
 	}
 }

@@ -92,8 +92,8 @@ export default ({
 				<div className="field-type-list">
 					<CollapsablePanel
 						className={classNames({
-							'field-type-primary': !isFieldSet,
-							'field-type-success': isFieldSet,
+							'field-type-fieldgroup': !isFieldSet,
+							'field-type-fieldset': isFieldSet,
 						})}
 						Header={Header}
 						key={index}

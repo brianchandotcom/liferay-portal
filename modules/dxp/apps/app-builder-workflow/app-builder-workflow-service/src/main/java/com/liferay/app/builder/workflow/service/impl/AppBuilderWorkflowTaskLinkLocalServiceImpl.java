@@ -63,12 +63,8 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 	}
 
 	public void deleteAppBuilderWorkflowTaskLinks(long appBuilderAppId) {
-		for (AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink :
-				getAppBuilderWorkflowTaskLinks(appBuilderAppId)) {
-
-			appBuilderWorkflowTaskLinkPersistence.remove(
-				appBuilderWorkflowTaskLink);
-		}
+		appBuilderWorkflowTaskLinkPersistence.removeByAppBuilderAppId(
+			appBuilderAppId);
 	}
 
 	public List<AppBuilderWorkflowTaskLink> getAppBuilderWorkflowTaskLinks(

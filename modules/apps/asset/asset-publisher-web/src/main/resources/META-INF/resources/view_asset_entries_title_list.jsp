@@ -71,16 +71,18 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 
 		<li class="list-group-item list-group-item-flex <%= ((previewClassNameId == assetEntry.getClassNameId()) && (previewClassPK == assetEntry.getClassPK())) ? "active" : StringPool.BLANK %>" <%= AUIUtil.buildData(fragmentsEditorData) %>>
 			<c:if test="<%= assetPublisherDisplayContext.isShowAuthor() %>">
-				<div class="autofit-col">
+				<clay:content-col>
 					<span class="inline-item">
 						<liferay-ui:user-portrait
 							userId="<%= assetEntry.getUserId() %>"
 						/>
 					</span>
-				</div>
+				</clay:content-col>
 			</c:if>
 
-			<div class="autofit-col autofit-col-expand">
+			<clay:content-col
+				expand="true"
+			>
 				<h4 class="list-group-title text-truncate">
 					<span class="asset-anchor lfr-asset-anchor" id="<%= assetEntry.getEntryId() %>"></span>
 
@@ -126,11 +128,11 @@ AssetEntryResult assetEntryResult = (AssetEntryResult)request.getAttribute("view
 						</c:if>
 					</div>
 				</c:if>
-			</div>
+			</clay:content-col>
 
-			<div class="autofit-col">
+			<clay:content-col>
 				<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
-			</div>
+			</clay:content-col>
 		</li>
 
 	<%

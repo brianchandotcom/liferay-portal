@@ -23,7 +23,7 @@ public class CucumberTestResult extends BaseTestResult {
 
 	@Override
 	public String getClassName() {
-		return null;
+		return _cucumberFeatureResult.getName();
 	}
 
 	public CucumberFeatureResult getCucumberFeatureResult() {
@@ -90,7 +90,7 @@ public class CucumberTestResult extends BaseTestResult {
 	}
 
 	public String getSimpleClassName() {
-		return null;
+		return _cucumberFeatureResult.getName();
 	}
 
 	@Override

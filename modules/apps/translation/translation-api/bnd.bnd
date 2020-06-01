@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Translation API
+Bundle-SymbolicName: com.liferay.translation.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.translation.exporter

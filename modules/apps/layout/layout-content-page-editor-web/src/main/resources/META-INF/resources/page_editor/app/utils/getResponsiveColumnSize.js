@@ -21,7 +21,7 @@ const ORDERED_VIEWPORT_SIZES = [
 	VIEWPORT_SIZES.portraitMobile,
 ];
 
-export function getResponsiveColumnSizeConfig(config, viewportSize) {
+export function getResponsiveColumnSize(config, viewportSize) {
 	const getViewportSize = (config, viewportSize) => {
 		const viewportSizePosition = ORDERED_VIEWPORT_SIZES.indexOf(
 			viewportSize
@@ -41,5 +41,5 @@ export function getResponsiveColumnSizeConfig(config, viewportSize) {
 
 	const newViewportSize = getViewportSize(config, viewportSize);
 
-	return config[newViewportSize] || config;
+	return config[newViewportSize] ? config[newViewportSize].size : config.size;
 }

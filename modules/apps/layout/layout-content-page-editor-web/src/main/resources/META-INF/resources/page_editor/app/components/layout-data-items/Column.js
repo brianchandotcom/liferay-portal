@@ -18,7 +18,7 @@ import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {useSelector} from '../../store/index';
-import {getResponsiveColumnSizeConfig} from '../../utils/getResponsiveColumnSizeConfig';
+import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {useUpdatedLayoutDataContext} from '../ResizeContext';
 
 const Column = React.forwardRef(
@@ -32,12 +32,10 @@ const Column = React.forwardRef(
 			? updatedLayoutData.items[item.itemId].config
 			: item.config;
 
-		const responsiveConfig = getResponsiveColumnSizeConfig(
+		const columnSize = getResponsiveColumnSize(
 			itemConfig,
 			selectedViewportSize
 		);
-
-		const columnSize = responsiveConfig.size;
 
 		return (
 			<div

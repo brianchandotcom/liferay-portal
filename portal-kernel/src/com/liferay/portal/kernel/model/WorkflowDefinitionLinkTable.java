@@ -37,6 +37,9 @@ public class WorkflowDefinitionLinkTable
 	public final Column<WorkflowDefinitionLinkTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<WorkflowDefinitionLinkTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<WorkflowDefinitionLinkTable, Long>
 		workflowDefinitionLinkId = createColumn(
 			"workflowDefinitionLinkId", Long.class, Types.BIGINT,

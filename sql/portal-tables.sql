@@ -1564,7 +1564,8 @@ create table Website (
 
 create table WorkflowDefinitionLink (
 	mvccVersion LONG default 0 not null,
-	workflowDefinitionLinkId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	workflowDefinitionLinkId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1575,12 +1576,14 @@ create table WorkflowDefinitionLink (
 	classPK LONG,
 	typePK LONG,
 	workflowDefinitionName VARCHAR(75) null,
-	workflowDefinitionVersion INTEGER
+	workflowDefinitionVersion INTEGER,
+	primary key (workflowDefinitionLinkId, ctCollectionId)
 );
 
 create table WorkflowInstanceLink (
 	mvccVersion LONG default 0 not null,
-	workflowInstanceLinkId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	workflowInstanceLinkId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1589,5 +1592,6 @@ create table WorkflowInstanceLink (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	workflowInstanceId LONG
+	workflowInstanceId LONG,
+	primary key (workflowInstanceLinkId, ctCollectionId)
 );

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class WorkflowDefinitionLinkWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put(
 			"workflowDefinitionLinkId", getWorkflowDefinitionLinkId());
 		attributes.put("groupId", getGroupId());
@@ -68,6 +71,12 @@ public class WorkflowDefinitionLinkWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long workflowDefinitionLinkId = (Long)attributes.get(
@@ -194,6 +203,16 @@ public class WorkflowDefinitionLinkWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this workflow definition link.
+	 *
+	 * @return the ct collection ID of this workflow definition link
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -357,6 +376,16 @@ public class WorkflowDefinitionLinkWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this workflow definition link.
+	 *
+	 * @param ctCollectionId the ct collection ID of this workflow definition link
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the group ID of this workflow definition link.
 	 *
 	 * @param groupId the group ID of this workflow definition link
@@ -464,6 +493,20 @@ public class WorkflowDefinitionLinkWrapper
 	@Override
 	public void setWorkflowDefinitionVersion(int workflowDefinitionVersion) {
 		model.setWorkflowDefinitionVersion(workflowDefinitionVersion);
+	}
+
+	@Override
+	public Map<String, Function<WorkflowDefinitionLink, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<WorkflowDefinitionLink, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

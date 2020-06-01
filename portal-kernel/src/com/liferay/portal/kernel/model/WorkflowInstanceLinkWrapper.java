@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class WorkflowInstanceLinkWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("workflowInstanceLinkId", getWorkflowInstanceLinkId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -64,6 +67,12 @@ public class WorkflowInstanceLinkWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		Long workflowInstanceLinkId = (Long)attributes.get(
@@ -176,6 +185,16 @@ public class WorkflowInstanceLinkWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this workflow instance link.
+	 *
+	 * @return the ct collection ID of this workflow instance link
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -319,6 +338,16 @@ public class WorkflowInstanceLinkWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this workflow instance link.
+	 *
+	 * @param ctCollectionId the ct collection ID of this workflow instance link
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the group ID of this workflow instance link.
 	 *
 	 * @param groupId the group ID of this workflow instance link
@@ -406,6 +435,20 @@ public class WorkflowInstanceLinkWrapper
 	@Override
 	public void setWorkflowInstanceLinkId(long workflowInstanceLinkId) {
 		model.setWorkflowInstanceLinkId(workflowInstanceLinkId);
+	}
+
+	@Override
+	public Map<String, Function<WorkflowInstanceLink, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<WorkflowInstanceLink, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

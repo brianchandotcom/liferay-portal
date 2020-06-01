@@ -641,6 +641,8 @@ definition {
 
 		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 

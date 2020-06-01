@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.info.display.request.attributes.contributor,\
 	com.liferay.info.display.url.provider,\
 	com.liferay.info.field,\
-	com.liferay.info.field.exporter,\
 	com.liferay.info.field.type,\
 	com.liferay.info.form,\
 	com.liferay.info.item,\

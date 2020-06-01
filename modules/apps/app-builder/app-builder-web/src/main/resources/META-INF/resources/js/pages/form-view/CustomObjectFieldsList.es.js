@@ -44,7 +44,11 @@ const createFieldSet = ({
 };
 
 const getFieldSet = (data) => {
-	const {defaultLanguageId = 'en_US', fieldSetName, fieldSets} = data;
+	const {
+		defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId(),
+		fieldSetName,
+		fieldSets,
+	} = data;
 	const fieldSet = fieldSets.find(
 		({name}) => name[defaultLanguageId] === fieldSetName
 	);
@@ -96,18 +100,24 @@ const getFieldTypes = ({
 			? Liferay.Language.get('fieldset')
 			: fieldTypeSettings.label;
 
+		const getDescription = () => {
+			let description = '';
+
+			if (isFieldGroup && !nested) {
+				description = `- ${
+					nestedDataDefinitionFields.length
+				} ${Liferay.Language.get('fields')}`;
+			}
+
+			return `${FieldTypeLabel} ${description}`;
+		};
+
 		const dataDefintionField = {
 			active: name === focusedCustomObjectField.name,
 			className: nested
 				? 'custom-object-field-children'
 				: 'custom-object-field',
-			description: `${FieldTypeLabel} ${
-				isFieldGroup && !nested
-					? `- ${
-							nestedDataDefinitionFields.length
-					  } ${Liferay.Language.get('fields')}`
-					: ''
-			}`,
+			description: getDescription(),
 			disabled: DataLayoutVisitor.containsField(dataLayoutPages, name),
 			dragAlignment: 'right',
 			dragType: isFieldGroup

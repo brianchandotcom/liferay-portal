@@ -847,6 +847,8 @@ definition {
 			menuItem = "Convert to content page...",
 			pageName = "Test Page Name");
 
+		WaitForElementPresent(locator1 = "//script[contains(@src,'FragmentsSidebar.js')]");
+
 		Button.clickPublish();
 
 		Navigator.gotoSitePage(

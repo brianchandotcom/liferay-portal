@@ -305,6 +305,7 @@ definition {
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
 
 		Asset.share(
+			liferayEvent = "true",
 			sharingPermissions = "View",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");

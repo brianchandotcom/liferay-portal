@@ -52,6 +52,7 @@ definition {
 		DepotNavigator.gotoShare(dmDocumentTitle = "Document_1.doc");
 
 		Asset.share(
+			liferayEvent = "true",
 			noAutocomplete = "true",
 			sharingPermissions = "View",
 			userEmailAddress = "userea@liferay.com",

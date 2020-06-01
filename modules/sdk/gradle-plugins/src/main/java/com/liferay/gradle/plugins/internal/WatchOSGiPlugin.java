@@ -97,23 +97,22 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 			new Action<Sync>() {
 
 				@Override
-				public void execute(Sync buildBundleDirTask) {
-					buildBundleDirTask.dependsOn(jarTaskProvider);
+				public void execute(Sync buildBundleDirSync) {
+					buildBundleDirSync.dependsOn(jarTaskProvider);
 
-					buildBundleDirTask.from(
+					buildBundleDirSync.from(
 						new Callable<FileTree>() {
 
 							@Override
 							public FileTree call() throws Exception {
-								Jar jarTask = jarTaskProvider.get();
+								Jar jar = jarTaskProvider.get();
 
-								return project.zipTree(
-									jarTask.getArchivePath());
+								return project.zipTree(jar.getArchivePath());
 							}
 
 						});
 
-					buildBundleDirTask.into(
+					buildBundleDirSync.into(
 						new Callable<File>() {
 
 							@Override
@@ -125,7 +124,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 						});
 
-					buildBundleDirTask.setDescription(
+					buildBundleDirSync.setDescription(
 						"Unzips the project's JAR file into a temporary " +
 							"directory.");
 				}
@@ -142,9 +141,9 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(
-					ExecuteBndTask jarCompileIncludeFragmentTask) {
+					ExecuteBndTask jarCompileIncludeFragmentExecuteBndTask) {
 
-					jarCompileIncludeFragmentTask.property(
+					jarCompileIncludeFragmentExecuteBndTask.property(
 						Constants.BUNDLE_NAME,
 						new Callable<String>() {
 
@@ -158,7 +157,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 						});
 
-					jarCompileIncludeFragmentTask.property(
+					jarCompileIncludeFragmentExecuteBndTask.property(
 						Constants.BUNDLE_SYMBOLICNAME,
 						new Callable<String>() {
 
@@ -172,10 +171,10 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 						});
 
-					jarCompileIncludeFragmentTask.property(
+					jarCompileIncludeFragmentExecuteBndTask.property(
 						Constants.BUNDLE_VERSION, "1.0.0");
 
-					jarCompileIncludeFragmentTask.property(
+					jarCompileIncludeFragmentExecuteBndTask.property(
 						Constants.FRAGMENT_HOST,
 						new Callable<String>() {
 
@@ -187,7 +186,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 						});
 
-					jarCompileIncludeFragmentTask.property(
+					jarCompileIncludeFragmentExecuteBndTask.property(
 						Constants.INCLUDERESOURCE,
 						new IncludeResourceCompileIncludeInstruction(
 							new Callable<Iterable<File>>() {
@@ -210,7 +209,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 							}));
 
-					jarCompileIncludeFragmentTask.onlyIf(
+					jarCompileIncludeFragmentExecuteBndTask.onlyIf(
 						new Spec<Task>() {
 
 							@Override
@@ -229,18 +228,18 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 					SourceSet sourceSet = GradleUtil.getSourceSet(
 						project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-					jarCompileIncludeFragmentTask.setClasspath(
+					jarCompileIncludeFragmentExecuteBndTask.setClasspath(
 						sourceSet.getCompileClasspath());
 
-					jarCompileIncludeFragmentTask.setDescription(
+					jarCompileIncludeFragmentExecuteBndTask.setDescription(
 						"Generates an OSGi fragment containing all " +
 							"dependencies of " +
 								LiferayOSGiPlugin.
 									COMPILE_INCLUDE_CONFIGURATION_NAME + ".");
-					jarCompileIncludeFragmentTask.setGroup(
+					jarCompileIncludeFragmentExecuteBndTask.setGroup(
 						BasePlugin.BUILD_GROUP);
 
-					jarCompileIncludeFragmentTask.setOutputFile(
+					jarCompileIncludeFragmentExecuteBndTask.setOutputFile(
 						new Callable<File>() {
 
 							@Override
@@ -253,9 +252,9 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 						});
 
-					jarCompileIncludeFragmentTask.setResourceDirs(
+					jarCompileIncludeFragmentExecuteBndTask.setResourceDirs(
 						project.files());
-					jarCompileIncludeFragmentTask.setSourceDirs(
+					jarCompileIncludeFragmentExecuteBndTask.setSourceDirs(
 						project.files());
 				}
 
@@ -273,16 +272,16 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(WatchTask watchTask) {
-					Sync buildBundleDirTask = buildBundleDirTaskProvider.get();
+					Sync buildBundleDirSync = buildBundleDirTaskProvider.get();
 
-					watchTask.dependsOn(buildBundleDirTask);
+					watchTask.dependsOn(buildBundleDirSync);
 
 					watchTask.setBundleDir(
 						new Callable<File>() {
 
 							@Override
 							public File call() throws Exception {
-								return buildBundleDirTask.getDestinationDir();
+								return buildBundleDirSync.getDestinationDir();
 							}
 
 						});
@@ -293,7 +292,7 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 							@Override
 							public String call() throws Exception {
 								File manifestFile = new File(
-									buildBundleDirTask.getDestinationDir(),
+									buildBundleDirSync.getDestinationDir(),
 									"META-INF/MANIFEST.MF");
 
 								if (manifestFile.exists()) {
@@ -320,11 +319,11 @@ public class WatchOSGiPlugin implements Plugin<Project> {
 						"Continuously redeploys the project's OSGi bundle.");
 					watchTask.setGroup(BasePlugin.BUILD_GROUP);
 
-					ExecuteBndTask jarCompileIncludeFragmentTask =
+					ExecuteBndTask jarCompileIncludeFragmentExecuteBndTask =
 						jarCompileIncludeFragmentTaskProvider.get();
 
 					TaskOutputs taskOutputs =
-						jarCompileIncludeFragmentTask.getOutputs();
+						jarCompileIncludeFragmentExecuteBndTask.getOutputs();
 
 					watchTask.setFragments(taskOutputs.getFiles());
 				}

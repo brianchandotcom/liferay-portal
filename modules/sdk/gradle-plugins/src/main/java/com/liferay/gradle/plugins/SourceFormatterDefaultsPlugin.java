@@ -116,9 +116,10 @@ public class SourceFormatterDefaultsPlugin
 
 						@Override
 						public void execute(
-							FormatSourceTask checkSourceFormattingTask) {
+							FormatSourceTask
+								checkSourceFormattingFormatSourceTask) {
 
-							checkSourceFormattingTask.finalizedBy(
+							checkSourceFormattingFormatSourceTask.finalizedBy(
 								packageRunCheckFormatTaskProvider);
 						}
 

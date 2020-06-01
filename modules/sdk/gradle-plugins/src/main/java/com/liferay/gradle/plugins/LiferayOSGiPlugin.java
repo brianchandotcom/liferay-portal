@@ -518,8 +518,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<JavaExec>() {
 
 				@Override
-				public void execute(JavaExec runTask) {
-					runTask.classpath(compileIncludeConfiguration);
+				public void execute(JavaExec runJavaExec) {
+					runJavaExec.classpath(compileIncludeConfiguration);
 				}
 
 			});
@@ -593,7 +593,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						directDeployTask.getTemporaryDir());
 					directDeployTask.setAppServerType("tomcat");
 
-					final Jar jarTask = jarTaskProvider.get();
+					final Jar jar = jarTaskProvider.get();
 
 					directDeployTask.setWebAppFile(
 						new Callable<File>() {
@@ -601,8 +601,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							@Override
 							public File call() throws Exception {
 								return FileUtil.replaceExtension(
-									jarTask.getArchivePath(),
-									War.WAR_EXTENSION);
+									jar.getArchivePath(), War.WAR_EXTENSION);
 							}
 
 						});
@@ -614,7 +613,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(Task task) {
-								File jarFile = jarTask.getArchivePath();
+								File jarFile = jar.getArchivePath();
 
 								jarFile.renameTo(
 									directDeployTask.getWebAppFile());
@@ -650,7 +649,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							public void execute(Task task) {
 								String deployedPluginDirName =
 									FileUtil.stripExtension(
-										jarTask.getArchiveName());
+										jar.getArchiveName());
 
 								File deployedPluginDir = new File(
 									directDeployTask.getAppServerDeployDir(),
@@ -667,7 +666,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 									_logger.warn(
 										"Unable to automatically update " +
 											"web.xml in " +
-												jarTask.getArchivePath());
+												jar.getArchivePath());
 
 									return;
 								}
@@ -701,7 +700,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 									project, warFile, "preserve", true,
 									filesets);
 
-								warFile.renameTo(jarTask.getArchivePath());
+								warFile.renameTo(jar.getArchivePath());
 							}
 
 						});
@@ -726,7 +725,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					TaskInputs taskInputs = directDeployTask.getInputs();
 
-					taskInputs.file((Callable<File>)jarTask::getArchivePath);
+					taskInputs.file((Callable<File>)jar::getArchivePath);
 				}
 
 			});
@@ -735,8 +734,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Jar>() {
 
 				@Override
-				public void execute(Jar jarTask) {
-					jarTask.finalizedBy(directDeployTaskProvider);
+				public void execute(Jar jar) {
+					jar.finalizedBy(directDeployTaskProvider);
 				}
 
 			});
@@ -754,12 +753,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Jar>() {
 
 				@Override
-				public void execute(Jar buildWSDDJarTask) {
-					buildWSDDJarTask.setActions(Collections.emptyList());
+				public void execute(Jar buildWSDDJar) {
+					buildWSDDJar.setActions(Collections.emptyList());
 
-					buildWSDDJarTask.dependsOn(buildWSDDTask);
+					buildWSDDJar.dependsOn(buildWSDDTask);
 
-					buildWSDDJarTask.doLast(
+					buildWSDDJar.doLast(
 						new Action<Task>() {
 
 							@Override
@@ -924,13 +923,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					if (taskName.equals(
 							WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME)) {
 
-						buildWSDDJarTask.setAppendix("wsdd");
+						buildWSDDJar.setAppendix("wsdd");
 					}
 					else {
-						buildWSDDJarTask.setAppendix("wsdd-" + taskName);
+						buildWSDDJar.setAppendix("wsdd-" + taskName);
 					}
 
-					buildWSDDTask.finalizedBy(buildWSDDJarTask);
+					buildWSDDTask.finalizedBy(buildWSDDJar);
 				}
 
 			});
@@ -953,30 +952,30 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Delete>() {
 
 				@Override
-				public void execute(Delete cleanTask) {
-					cleanTask.delete(
+				public void execute(Delete cleanDelete) {
+					cleanDelete.delete(
 						new Callable<File>() {
 
 							@Override
 							public File call() throws Exception {
 								boolean cleanDeployed = GradleUtil.getProperty(
-									cleanTask, CLEAN_DEPLOYED_PROPERTY_NAME,
+									cleanDelete, CLEAN_DEPLOYED_PROPERTY_NAME,
 									true);
 
 								if (!cleanDeployed) {
 									return null;
 								}
 
-								Copy deployTask = deployTaskProvider.get();
-								Jar jarTask = jarTaskProvider.get();
+								Copy deployCopy = deployTaskProvider.get();
+								Jar jar = jarTaskProvider.get();
 
 								Closure<String> deployedFileNameClosure =
 									liferayExtension.
 										getDeployedFileNameClosure();
 
 								return new File(
-									deployTask.getDestinationDir(),
-									deployedFileNameClosure.call(jarTask));
+									deployCopy.getDestinationDir(),
+									deployedFileNameClosure.call(jar));
 							}
 
 						});
@@ -992,7 +991,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Delete>() {
 
 				@Override
-				public void execute(Delete cleanTask) {
+				public void execute(Delete cleanDelete) {
 					Closure<Set<String>> c = new Closure<Set<String>>(project) {
 
 						@SuppressWarnings("unused")
@@ -1057,7 +1056,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					};
 
-					cleanTask.dependsOn(c);
+					cleanDelete.dependsOn(c);
 				}
 
 			});
@@ -1071,15 +1070,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Copy>() {
 
 				@Override
-				public void execute(Copy deployDependenciesTask) {
+				public void execute(Copy deployDependenciesCopy) {
 					boolean keepVersions = Boolean.getBoolean(
 						"deploy.dependencies.keep.versions");
 
 					GradleUtil.setProperty(
-						deployDependenciesTask,
+						deployDependenciesCopy,
 						LiferayOSGiPlugin.AUTO_CLEAN_PROPERTY_NAME, false);
 					GradleUtil.setProperty(
-						deployDependenciesTask, "keepVersions", keepVersions);
+						deployDependenciesCopy, "keepVersions", keepVersions);
 
 					String renameSuffix = ".jar";
 
@@ -1088,16 +1087,16 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					}
 
 					GradleUtil.setProperty(
-						deployDependenciesTask, "renameSuffix", renameSuffix);
+						deployDependenciesCopy, "renameSuffix", renameSuffix);
 
-					deployDependenciesTask.into(
+					deployDependenciesCopy.into(
 						(Callable<File>)liferayExtension::getDeployDir);
 
-					deployDependenciesTask.setDescription(
+					deployDependenciesCopy.setDescription(
 						"Deploys additional dependencies.");
 
 					TaskOutputs taskOutputs =
-						deployDependenciesTask.getOutputs();
+						deployDependenciesCopy.getOutputs();
 
 					taskOutputs.upToDateWhen(
 						new Spec<Task>() {
@@ -1120,8 +1119,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Copy>() {
 
 				@Override
-				public void execute(Copy deployDependenciesTask) {
-					deployDependenciesTask.eachFile(
+				public void execute(Copy deployDependenciesCopy) {
+					deployDependenciesCopy.eachFile(
 						new RenameDependencyAction(
 							Boolean.getBoolean(
 								"deploy.dependencies.keep.versions")));
@@ -1141,15 +1140,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Copy>() {
 
 				@Override
-				public void execute(Copy deployFastTask) {
-					deployFastTask.setDescription(
+				public void execute(Copy deployFastCopy) {
+					deployFastCopy.setDescription(
 						"Builds and deploys resources to the Liferay work " +
 							"directory.");
-					deployFastTask.setGroup(LifecycleBasePlugin.BUILD_GROUP);
+					deployFastCopy.setGroup(LifecycleBasePlugin.BUILD_GROUP);
 
-					deployFastTask.setDestinationDir(
+					deployFastCopy.setDestinationDir(
 						liferayExtension.getLiferayHome());
-					deployFastTask.setIncludeEmptyDirs(false);
+					deployFastCopy.setIncludeEmptyDirs(false);
 
 					String bundleSymbolicName = BndUtil.getInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
@@ -1165,7 +1164,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					final String pathName = sb.toString();
 
-					deployFastTask.from(
+					deployFastCopy.from(
 						compileJSPTaskProvider,
 						new Closure<Void>(project) {
 
@@ -1176,7 +1175,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						});
 
-					deployFastTask.from(
+					deployFastCopy.from(
 						processResourcesTaskProvider,
 						new Closure<Void>(project) {
 
@@ -1235,12 +1234,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						});
 
-					deployFastTask.dependsOn(classesTaskProvider);
+					deployFastCopy.dependsOn(classesTaskProvider);
 
 					SourceSet mainSourceSet = GradleUtil.getSourceSet(
 						project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-					deployFastTask.from(
+					deployFastCopy.from(
 						mainSourceSet.getOutput(),
 						new Closure<Void>(project) {
 
@@ -1306,17 +1305,17 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Copy>() {
 
 				@Override
-				public void execute(Copy deployTask) {
-					final Jar jarTask = jarTaskProvider.get();
+				public void execute(Copy deployCopy) {
+					final Jar jar = jarTaskProvider.get();
 
-					Object sourcePath = jarTask;
+					Object sourcePath = jar;
 
 					if (lazy) {
 						sourcePath = new Callable<File>() {
 
 							@Override
 							public File call() throws Exception {
-								return jarTask.getArchivePath();
+								return jar.getArchivePath();
 							}
 
 						};
@@ -1334,7 +1333,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 											liferayExtension.
 												getDeployedFileNameClosure();
 
-										return closure.call(jarTask);
+										return closure.call(jar);
 									}
 
 								});
@@ -1342,7 +1341,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					};
 
-					deployTask.from(sourcePath, copySpecClosure);
+					deployCopy.from(sourcePath, copySpecClosure);
 				}
 
 			});
@@ -1356,8 +1355,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Copy>() {
 
 				@Override
-				public void execute(Copy deployTask) {
-					deployTask.finalizedBy(deployDependenciesTaskProvider);
+				public void execute(Copy deployCopy) {
+					deployCopy.finalizedBy(deployDependenciesTaskProvider);
 				}
 
 			});
@@ -1370,20 +1369,20 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Jar>() {
 
 				@Override
-				public void execute(Jar jarTask) {
-					Convention convention = jarTask.getConvention();
+				public void execute(Jar jar) {
+					Convention convention = jar.getConvention();
 
 					Map<String, Object> plugins = convention.getPlugins();
 
 					final BundleTaskConvention bundleTaskConvention =
-						new BundleTaskConvention(jarTask);
+						new BundleTaskConvention(jar);
 
 					plugins.put("bundle", bundleTaskConvention);
 
-					jarTask.setDescription(
+					jar.setDescription(
 						"Assembles a bundle containing the main classes.");
 
-					jarTask.doFirst(
+					jar.doFirst(
 						new Action<Task>() {
 
 							@Override
@@ -1422,7 +1421,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 						});
 
-					jarTask.doLast(
+					jar.doLast(
 						new Action<Task>() {
 
 							@Override
@@ -1438,7 +1437,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						return;
 					}
 
-					TaskInputs taskInputs = jarTask.getInputs();
+					TaskInputs taskInputs = jar.getInputs();
 
 					taskInputs.file(bndFile);
 				}
@@ -1472,11 +1471,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Javadoc>() {
 
 				@Override
-				public void execute(Javadoc javadocTask) {
+				public void execute(Javadoc javadoc) {
 					String title = String.format(
 						"%s %s API", bundleName, bundleVersion);
 
-					javadocTask.setTitle(title);
+					javadoc.setTitle(title);
 				}
 
 			});
@@ -1493,12 +1492,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			new Action<Test>() {
 
 				@Override
-				public void execute(Test testTask) {
-					testTask.jvmArgs(
+				public void execute(Test test) {
+					test.jvmArgs(
 						"-Djava.net.preferIPv4Stack=true",
 						"-Dliferay.mode=test", "-Duser.timezone=GMT");
 
-					testTask.setForkEvery(1L);
+					test.setForkEvery(1L);
 				}
 
 			});

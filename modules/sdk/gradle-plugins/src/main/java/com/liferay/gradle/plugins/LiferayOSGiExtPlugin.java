@@ -77,7 +77,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		final Configuration originalModuleConfiguration =
 			_addConfigurationOriginalModule(project);
 
-		Sync unzipOriginalModuleTask = _addTaskUnzipOriginalModule(
+		Sync unzipOriginalModuleSync = _addTaskUnzipOriginalModule(
 			project, originalModuleConfiguration);
 
 		_configureConfigurationCompileOnly(
@@ -86,7 +86,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		_configureLiferay(project);
 		_configureTaskDeploy(project, jar);
 
-		_configureTaskJar(jar, unzipOriginalModuleTask);
+		_configureTaskJar(jar, unzipOriginalModuleSync);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -253,16 +253,16 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 
 	@SuppressWarnings("serial")
 	private Jar _configureTaskJar(
-		final Jar jar, final Sync unzipOriginalModuleTask) {
+		final Jar jar, final Sync unzipOriginalModuleSync) {
 
-		jar.dependsOn(unzipOriginalModuleTask);
+		jar.dependsOn(unzipOriginalModuleSync);
 
 		jar.from(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return unzipOriginalModuleTask.getDestinationDir();
+					return unzipOriginalModuleSync.getDestinationDir();
 				}
 
 			});
@@ -289,7 +289,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 				@Override
 				public File call() {
 					return new File(
-						unzipOriginalModuleTask.getDestinationDir(),
+						unzipOriginalModuleSync.getDestinationDir(),
 						"META-INF/MANIFEST.MF");
 				}
 

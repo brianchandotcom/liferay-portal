@@ -266,10 +266,10 @@ public class ServiceBuilderDefaultsPlugin
 			new Action<Copy>() {
 
 				@Override
-				public void execute(Copy processResourcesTask) {
-					processResourcesTask.into(
+				public void execute(Copy processResourcesCopy) {
+					processResourcesCopy.into(
 						"META-INF",
-						new Closure<Void>(processResourcesTask) {
+						new Closure<Void>(processResourcesCopy) {
 
 							@SuppressWarnings("unused")
 							public void doCall(CopySpec copySpec) {

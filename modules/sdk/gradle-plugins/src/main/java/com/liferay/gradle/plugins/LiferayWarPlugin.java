@@ -44,9 +44,9 @@ public class LiferayWarPlugin implements Plugin<Project> {
 
 		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
-		Sync buildWarDirTask = _addTaskBuildWarDir(project, war);
+		Sync buildWarDirSync = _addTaskBuildWarDir(project, war);
 
-		_addTaskWatch(buildWarDirTask, war);
+		_addTaskWatch(buildWarDirSync, war);
 	}
 
 	private Sync _addTaskBuildWarDir(final Project project, final War war) {
@@ -82,18 +82,18 @@ public class LiferayWarPlugin implements Plugin<Project> {
 		return sync;
 	}
 
-	private WatchTask _addTaskWatch(final Sync buildWarDirTask, final War war) {
+	private WatchTask _addTaskWatch(final Sync buildWarDirSync, final War war) {
 		WatchTask watchTask = GradleUtil.addTask(
-			buildWarDirTask.getProject(), WATCH_TASK_NAME, WatchTask.class);
+			buildWarDirSync.getProject(), WATCH_TASK_NAME, WatchTask.class);
 
-		watchTask.dependsOn(buildWarDirTask);
+		watchTask.dependsOn(buildWarDirSync);
 
 		watchTask.setBundleDir(
 			new Callable<File>() {
 
 				@Override
 				public File call() throws Exception {
-					return buildWarDirTask.getDestinationDir();
+					return buildWarDirSync.getDestinationDir();
 				}
 
 			});

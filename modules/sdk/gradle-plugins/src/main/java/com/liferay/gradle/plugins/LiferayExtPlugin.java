@@ -107,13 +107,13 @@ public class LiferayExtPlugin implements Plugin<Project> {
 			war, warPluginConvention, EXT_IMPL_SOURCESET_NAME,
 			compileClasspath);
 
-		Sync buildExtInfoBaseDirTask = _addTaskBuildExtInfoBaseDir(war);
+		Sync buildExtInfoBaseDirSync = _addTaskBuildExtInfoBaseDir(war);
 
 		BuildExtInfoTask buildExtInfoTask = _addTaskBuildExtInfo(
-			buildExtInfoBaseDirTask, war, portalConfiguration);
+			buildExtInfoBaseDirSync, war, portalConfiguration);
 
 		_configureTaskBuildExtInfoBaseDir(
-			buildExtInfoBaseDirTask, buildExtInfoTask);
+			buildExtInfoBaseDirSync, buildExtInfoTask);
 
 		_configureTaskExtImplJar(
 			extImplJar, utilBridgesJar, utilJavaJar, utilTaglibJar);
@@ -197,14 +197,14 @@ public class LiferayExtPlugin implements Plugin<Project> {
 	}
 
 	private BuildExtInfoTask _addTaskBuildExtInfo(
-		final Sync buildExtInfoBaseDirTask, final War war,
+		final Sync buildExtInfoBaseDirSync, final War war,
 		FileCollection classpath) {
 
 		final BuildExtInfoTask buildExtInfoTask = GradleUtil.addTask(
-			buildExtInfoBaseDirTask.getProject(), BUILD_EXT_INFO_TASK_NAME,
+			buildExtInfoBaseDirSync.getProject(), BUILD_EXT_INFO_TASK_NAME,
 			BuildExtInfoTask.class);
 
-		buildExtInfoTask.dependsOn(buildExtInfoBaseDirTask);
+		buildExtInfoTask.dependsOn(buildExtInfoBaseDirSync);
 
 		buildExtInfoTask.setBaseDir(
 			new Callable<File>() {
@@ -212,7 +212,7 @@ public class LiferayExtPlugin implements Plugin<Project> {
 				@Override
 				public File call() throws Exception {
 					return new File(
-						buildExtInfoBaseDirTask.getDestinationDir(), "WEB-INF");
+						buildExtInfoBaseDirSync.getDestinationDir(), "WEB-INF");
 				}
 
 			});
@@ -298,9 +298,9 @@ public class LiferayExtPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskBuildExtInfoBaseDir(
-		Sync buildExtInfoBaseDirTask, final BuildExtInfoTask buildExtInfoTask) {
+		Sync buildExtInfoBaseDirSync, final BuildExtInfoTask buildExtInfoTask) {
 
-		buildExtInfoBaseDirTask.exclude(
+		buildExtInfoBaseDirSync.exclude(
 			new Spec<FileTreeElement>() {
 
 				@Override

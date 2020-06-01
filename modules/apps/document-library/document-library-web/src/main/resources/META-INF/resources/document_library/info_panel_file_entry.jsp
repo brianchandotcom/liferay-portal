@@ -81,8 +81,12 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 			<liferay-dynamic-section:dynamic-section
 				name="com.liferay.document.library.web#/document_library/info_panel_file_entry.jsp#fileEntryOwner"
 			>
-				<div class="autofit-row sidebar-panel widget-metadata">
-					<div class="autofit-col inline-item-before">
+				<clay:content-row
+					cssClass="sidebar-panel widget-metadata"
+				>
+					<clay:content-col
+						cssClass="inline-item-before"
+					>
 
 						<%
 						User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
@@ -91,11 +95,15 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 						<liferay-ui:user-portrait
 							user="<%= owner %>"
 						/>
-					</div>
+					</clay:content-col>
 
-					<div class="autofit-col autofit-col-expand">
-						<div class="autofit-row">
-							<div class="autofit-col autofit-col-expand">
+					<clay:content-col
+						expand="true"
+					>
+						<clay:content-row>
+							<clay:content-col
+								expand="true"
+							>
 								<div class="component-title h4 username">
 									<c:if test="<%= owner != null %>">
 										<a href="<%= owner.isDefaultUser() ? StringPool.BLANK : owner.getDisplayURL(themeDisplay) %>"><%= HtmlUtil.escape(owner.getFullName()) %></a>
@@ -105,10 +113,10 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 								<small class="text-muted">
 									<liferay-ui:message key="owner" />
 								</small>
-							</div>
-						</div>
-					</div>
-				</div>
+							</clay:content-col>
+						</clay:content-row>
+					</clay:content-col>
+				</clay:content-row>
 			</liferay-dynamic-section:dynamic-section>
 
 			<c:if test="<%= dlViewFileVersionDisplayContext.isDownloadLinkVisible() || dlViewFileVersionDisplayContext.isSharingLinkVisible() %>">

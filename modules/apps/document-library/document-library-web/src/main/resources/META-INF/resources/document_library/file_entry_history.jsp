@@ -34,7 +34,9 @@
 	%>
 
 		<li class="list-group-item list-group-item-flex">
-			<div class="autofit-col autofit-col-expand">
+			<clay:content-col
+				expand="true"
+			>
 				<div class="list-group-title">
 					<liferay-ui:message arguments="<%= fileVersion.getVersion() %>" key="version-x" />
 				</div>
@@ -53,11 +55,11 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-			</div>
+			</clay:content-col>
 
-			<div class="autofit-col">
+			<clay:content-col>
 				<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
-			</div>
+			</clay:content-col>
 		</li>
 
 	<%

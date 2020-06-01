@@ -206,7 +206,7 @@ definition {
 
 		Click(locator1 = "Staging#STAGING_MENU_MANAGE_PAGE_VARIATION");
 
-		SelectFrame(locator1 = "IFrame#PAGE_VARIATION_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_VARIATION_IFRAME");
 
 		AssertClick(
 			locator1 = "Button#ADD_PAGE_VARIATION",

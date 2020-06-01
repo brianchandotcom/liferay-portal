@@ -67,6 +67,8 @@ definition {
 			portletOption = "${optionName}",
 			siteTemplate = "${siteTemplate}");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 

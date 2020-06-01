@@ -32,6 +32,8 @@ definition {
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
 			echo("Selecting configuration iframe");
 
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
 			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 		}
 	}

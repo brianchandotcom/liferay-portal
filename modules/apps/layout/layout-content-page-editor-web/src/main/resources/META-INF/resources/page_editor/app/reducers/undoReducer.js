@@ -17,8 +17,10 @@ import {
 	switchLayoutData,
 } from '../../plugins/experience/reducers/utils';
 import {
+	ADD_REDO_ACTION,
 	ADD_UNDO_ACTION,
 	UPDATE_MULTIPLE_UNDO_STATE,
+	UPDATE_REDO_ACTIONS,
 	UPDATE_UNDO_ACTIONS,
 } from '../actions/types';
 import {getDerivedStateForUndo} from '../components/undo/undoActions';
@@ -29,6 +31,19 @@ const MAX_UNDO_ACTIONS = 20;
 
 export default function undoReducer(state, action) {
 	switch (action.type) {
+		case ADD_REDO_ACTION: {
+			const {actionType} = action;
+
+			const nextRedoHistory = state.redoHistory || [];
+
+			return {
+				...state,
+				redoHistory: [
+					getDerivedStateForUndo({action, state, type: actionType}),
+					...nextRedoHistory,
+				],
+			};
+		}
 		case ADD_UNDO_ACTION: {
 			const {actionType} = action;
 
@@ -122,6 +137,12 @@ export default function undoReducer(state, action) {
 			}
 
 			return nextState;
+		}
+		case UPDATE_REDO_ACTIONS: {
+			return {
+				...state,
+				redoHistory: action.redoHistory,
+			};
 		}
 		case UPDATE_UNDO_ACTIONS: {
 			return {

@@ -87,24 +87,26 @@ export default function MultiPanelSidebar({
 			document.querySelector('.product-menu-toggle')
 		);
 
-		const onCloseSidebar = () => {
-			dispatch({
-				payload: {
-					sidebarOpen: false,
-					sidebarPanelId: null,
-				},
-				type: 'SWITCH_SIDEBAR_PANEL',
-			});
-		};
+		if (sideNavigation) {
+			const onCloseSidebar = () => {
+				dispatch({
+					payload: {
+						sidebarOpen: false,
+						sidebarPanelId: null,
+					},
+					type: 'SWITCH_SIDEBAR_PANEL',
+				});
+			};
 
-		const sideNavigationListener = sideNavigation.on(
-			'openStart.lexicon.sidenav',
-			onCloseSidebar
-		);
+			const sideNavigationListener = sideNavigation.on(
+				'openStart.lexicon.sidenav',
+				onCloseSidebar
+			);
 
-		return () => {
-			sideNavigationListener.removeListener();
-		};
+			return () => {
+				sideNavigationListener.removeListener();
+			};
+		}
 	}, []);
 
 	const SidebarPanel = useLazy(

@@ -6,5 +6,6 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaVerifyUpgradeConnectionCheck" files="journal-service/src/main/java/com/liferay/journal/internal/upgrade/v1_1_0/UpgradeJournalArticleLocalizedValues\.java" />
+		<suppress checks="XMLServiceFileCheck" files="journal-service/service\.xml" />
 	</source-check>
 </suppressions>

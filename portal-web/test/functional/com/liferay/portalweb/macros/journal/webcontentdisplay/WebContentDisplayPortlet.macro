@@ -329,8 +329,6 @@ definition {
 			portletName = "Web Content Display",
 			portletOption = "Configuration");
 
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Pause(locator1 = "3000");

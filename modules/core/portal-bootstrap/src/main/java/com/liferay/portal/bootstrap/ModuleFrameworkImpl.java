@@ -1394,38 +1394,46 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		String subdirMode = bundleContext.getProperty(
 			"felix.fileinstall.subdir.mode");
 
-		boolean recurse = false;
-
 		if (Objects.equals(subdirMode, "recurse")) {
-			recurse = true;
-		}
+			Queue<File> directories = new LinkedList<>();
 
-		Queue<File> directories = new LinkedList<>();
+			directories.add(directory);
 
-		directories.add(directory);
+			List<File> files = new ArrayList<>();
 
-		List<File> files = new ArrayList<>();
+			File curDir = null;
 
-		File curDir = null;
-
-		while ((curDir = directories.poll()) != null) {
-			for (File file : curDir.listFiles()) {
-				if (file.isDirectory()) {
-					if (recurse) {
+			while ((curDir = directories.poll()) != null) {
+				for (File file : curDir.listFiles()) {
+					if (file.isDirectory()) {
 						directories.add(file);
 					}
-				}
-				else {
-					String name = file.getName();
+					else {
+						String name = file.getName();
 
-					if (name.endsWith(".cfg") || name.endsWith(".config")) {
-						files.add(file);
+						if (name.endsWith(".cfg") || name.endsWith(".config")) {
+							files.add(file);
+						}
 					}
 				}
 			}
+
+			return files;
 		}
 
-		return files;
+		return Arrays.asList(
+			directory.listFiles(
+				file -> {
+					if (file.isFile()) {
+						String name = file.getName();
+
+						if (name.endsWith(".cfg") || name.endsWith(".config")) {
+							return true;
+						}
+					}
+
+					return false;
+				}));
 	}
 
 	private String _parseBundleSymbolicName(Attributes attributes) {

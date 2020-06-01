@@ -39,24 +39,16 @@ public class FormInstancePermissionCheckerHelper {
 			DDMActionKeys.ADD_FORM_INSTANCE);
 	}
 
-	public boolean isShowCopyButton() {
-		return isShowAddButton();
-	}
-
-	public boolean isShowCopyURLIcon(DDMFormInstance formInstance)
-		throws PortalException {
-
-		return DDMFormInstancePermission.contains(
-			_formAdminRequestHelper.getPermissionChecker(), formInstance,
-			ActionKeys.VIEW);
-	}
-
 	public boolean isShowDeleteIcon(DDMFormInstance formInstance)
 		throws PortalException {
 
 		return DDMFormInstancePermission.contains(
 			_formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.DELETE);
+	}
+
+	public boolean isShowDuplicateIcon() {
+		return isShowAddButton();
 	}
 
 	public boolean isShowEditIcon(DDMFormInstance formInstance)
@@ -81,6 +73,14 @@ public class FormInstancePermissionCheckerHelper {
 		return DDMFormInstancePermission.contains(
 			_formAdminRequestHelper.getPermissionChecker(), formInstance,
 			ActionKeys.PERMISSIONS);
+	}
+
+	public boolean isShowShareIcon(DDMFormInstance formInstance)
+		throws PortalException {
+
+		return DDMFormInstancePermission.contains(
+			_formAdminRequestHelper.getPermissionChecker(), formInstance,
+			ActionKeys.VIEW);
 	}
 
 	public boolean isShowViewEntriesIcon(DDMFormInstance formInstance)

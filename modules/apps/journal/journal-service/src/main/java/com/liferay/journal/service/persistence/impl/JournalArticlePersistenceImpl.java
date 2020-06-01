@@ -33175,33 +33175,33 @@ public class JournalArticlePersistenceImpl
 	private FinderPath _finderPathWithPaginationCountByG_F_C_NotST;
 
 	/**
-	 * Returns all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns all the journal articles where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @return the matching journal articles
 	 */
 	@Override
 	public List<JournalArticle> findByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status) {
+		long groupId, long folderId, long classNameId, int status) {
 
 		return findByG_F_C_NotST(
-			groupId, classNameId, folderId, status, QueryUtil.ALL_POS,
+			groupId, folderId, classNameId, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns a range of all the journal articles where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
@@ -33209,23 +33209,23 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public List<JournalArticle> findByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status, int start,
+		long groupId, long folderId, long classNameId, int status, int start,
 		int end) {
 
 		return findByG_F_C_NotST(
-			groupId, classNameId, folderId, status, start, end, null);
+			groupId, folderId, classNameId, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns an ordered range of all the journal articles where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
@@ -33234,24 +33234,24 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public List<JournalArticle> findByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status, int start,
+		long groupId, long folderId, long classNameId, int status, int start,
 		int end, OrderByComparator<JournalArticle> orderByComparator) {
 
 		return findByG_F_C_NotST(
-			groupId, classNameId, folderId, status, start, end,
+			groupId, folderId, classNameId, status, start, end,
 			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns an ordered range of all the journal articles where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
@@ -33261,7 +33261,7 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public List<JournalArticle> findByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status, int start,
+		long groupId, long folderId, long classNameId, int status, int start,
 		int end, OrderByComparator<JournalArticle> orderByComparator,
 		boolean useFinderCache) {
 
@@ -33273,7 +33273,7 @@ public class JournalArticlePersistenceImpl
 
 		finderPath = _finderPathWithPaginationFindByG_F_C_NotST;
 		finderArgs = new Object[] {
-			groupId, classNameId, folderId, status, start, end,
+			groupId, folderId, classNameId, status, start, end,
 			orderByComparator
 		};
 
@@ -33286,8 +33286,8 @@ public class JournalArticlePersistenceImpl
 			if ((list != null) && !list.isEmpty()) {
 				for (JournalArticle journalArticle : list) {
 					if ((groupId != journalArticle.getGroupId()) ||
-						(classNameId != journalArticle.getClassNameId()) ||
 						(folderId != journalArticle.getFolderId()) ||
+						(classNameId != journalArticle.getClassNameId()) ||
 						(status == journalArticle.getStatus())) {
 
 						list = null;
@@ -33313,9 +33313,9 @@ public class JournalArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_F_C_NOTST_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
-
 			sb.append(_FINDER_COLUMN_G_F_C_NOTST_FOLDERID_2);
+
+			sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
 
 			sb.append(_FINDER_COLUMN_G_F_C_NOTST_STATUS_2);
 
@@ -33340,9 +33340,9 @@ public class JournalArticlePersistenceImpl
 
 				queryPos.add(groupId);
 
-				queryPos.add(classNameId);
-
 				queryPos.add(folderId);
+
+				queryPos.add(classNameId);
 
 				queryPos.add(status);
 
@@ -33371,11 +33371,11 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns the first journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns the first journal article in the ordered set where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching journal article
@@ -33383,12 +33383,12 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public JournalArticle findByG_F_C_NotST_First(
-			long groupId, long classNameId, long folderId, int status,
+			long groupId, long folderId, long classNameId, int status,
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
 		JournalArticle journalArticle = fetchByG_F_C_NotST_First(
-			groupId, classNameId, folderId, status, orderByComparator);
+			groupId, folderId, classNameId, status, orderByComparator);
 
 		if (journalArticle != null) {
 			return journalArticle;
@@ -33401,11 +33401,11 @@ public class JournalArticlePersistenceImpl
 		sb.append("groupId=");
 		sb.append(groupId);
 
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
 		sb.append(", folderId=");
 		sb.append(folderId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 
 		sb.append(", status!=");
 		sb.append(status);
@@ -33416,22 +33416,22 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns the first journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns the first journal article in the ordered set where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
 	 */
 	@Override
 	public JournalArticle fetchByG_F_C_NotST_First(
-		long groupId, long classNameId, long folderId, int status,
+		long groupId, long folderId, long classNameId, int status,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
 		List<JournalArticle> list = findByG_F_C_NotST(
-			groupId, classNameId, folderId, status, 0, 1, orderByComparator);
+			groupId, folderId, classNameId, status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -33441,11 +33441,11 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns the last journal article in the ordered set where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching journal article
@@ -33453,12 +33453,12 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public JournalArticle findByG_F_C_NotST_Last(
-			long groupId, long classNameId, long folderId, int status,
+			long groupId, long folderId, long classNameId, int status,
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
 		JournalArticle journalArticle = fetchByG_F_C_NotST_Last(
-			groupId, classNameId, folderId, status, orderByComparator);
+			groupId, folderId, classNameId, status, orderByComparator);
 
 		if (journalArticle != null) {
 			return journalArticle;
@@ -33471,11 +33471,11 @@ public class JournalArticlePersistenceImpl
 		sb.append("groupId=");
 		sb.append(groupId);
 
-		sb.append(", classNameId=");
-		sb.append(classNameId);
-
 		sb.append(", folderId=");
 		sb.append(folderId);
+
+		sb.append(", classNameId=");
+		sb.append(classNameId);
 
 		sb.append(", status!=");
 		sb.append(status);
@@ -33486,28 +33486,28 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns the last journal article in the ordered set where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
 	 */
 	@Override
 	public JournalArticle fetchByG_F_C_NotST_Last(
-		long groupId, long classNameId, long folderId, int status,
+		long groupId, long folderId, long classNameId, int status,
 		OrderByComparator<JournalArticle> orderByComparator) {
 
-		int count = countByG_F_C_NotST(groupId, classNameId, folderId, status);
+		int count = countByG_F_C_NotST(groupId, folderId, classNameId, status);
 
 		if (count == 0) {
 			return null;
 		}
 
 		List<JournalArticle> list = findByG_F_C_NotST(
-			groupId, classNameId, folderId, status, count - 1, count,
+			groupId, folderId, classNameId, status, count - 1, count,
 			orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -33518,12 +33518,12 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param id the primary key of the current journal article
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next journal article
@@ -33531,7 +33531,7 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public JournalArticle[] findByG_F_C_NotST_PrevAndNext(
-			long id, long groupId, long classNameId, long folderId, int status,
+			long id, long groupId, long folderId, long classNameId, int status,
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
@@ -33545,13 +33545,13 @@ public class JournalArticlePersistenceImpl
 			JournalArticle[] array = new JournalArticleImpl[3];
 
 			array[0] = getByG_F_C_NotST_PrevAndNext(
-				session, journalArticle, groupId, classNameId, folderId, status,
+				session, journalArticle, groupId, folderId, classNameId, status,
 				orderByComparator, true);
 
 			array[1] = journalArticle;
 
 			array[2] = getByG_F_C_NotST_PrevAndNext(
-				session, journalArticle, groupId, classNameId, folderId, status,
+				session, journalArticle, groupId, folderId, classNameId, status,
 				orderByComparator, false);
 
 			return array;
@@ -33566,7 +33566,7 @@ public class JournalArticlePersistenceImpl
 
 	protected JournalArticle getByG_F_C_NotST_PrevAndNext(
 		Session session, JournalArticle journalArticle, long groupId,
-		long classNameId, long folderId, int status,
+		long folderId, long classNameId, int status,
 		OrderByComparator<JournalArticle> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -33584,9 +33584,9 @@ public class JournalArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
-
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_FOLDERID_2);
+
+		sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
 
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_STATUS_2);
 
@@ -33661,9 +33661,9 @@ public class JournalArticlePersistenceImpl
 
 		queryPos.add(groupId);
 
-		queryPos.add(classNameId);
-
 		queryPos.add(folderId);
+
+		queryPos.add(classNameId);
 
 		queryPos.add(status);
 
@@ -33687,33 +33687,33 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @return the matching journal articles that the user has permission to view
 	 */
 	@Override
 	public List<JournalArticle> filterFindByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status) {
+		long groupId, long folderId, long classNameId, int status) {
 
 		return filterFindByG_F_C_NotST(
-			groupId, classNameId, folderId, status, QueryUtil.ALL_POS,
+			groupId, folderId, classNameId, status, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
@@ -33721,23 +33721,23 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public List<JournalArticle> filterFindByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status, int start,
+		long groupId, long folderId, long classNameId, int status, int start,
 		int end) {
 
 		return filterFindByG_F_C_NotST(
-			groupId, classNameId, folderId, status, start, end, null);
+			groupId, folderId, classNameId, status, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param start the lower bound of the range of journal articles
 	 * @param end the upper bound of the range of journal articles (not inclusive)
@@ -33746,12 +33746,12 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public List<JournalArticle> filterFindByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status, int start,
+		long groupId, long folderId, long classNameId, int status, int start,
 		int end, OrderByComparator<JournalArticle> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_F_C_NotST(
-				groupId, classNameId, folderId, status, start, end,
+				groupId, folderId, classNameId, status, start, end,
 				orderByComparator);
 		}
 
@@ -33775,9 +33775,9 @@ public class JournalArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
-
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_FOLDERID_2);
+
+		sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
 
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_STATUS_2);
 
@@ -33829,9 +33829,9 @@ public class JournalArticlePersistenceImpl
 
 			queryPos.add(groupId);
 
-			queryPos.add(classNameId);
-
 			queryPos.add(folderId);
+
+			queryPos.add(classNameId);
 
 			queryPos.add(status);
 
@@ -33847,12 +33847,12 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param id the primary key of the current journal article
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next journal article
@@ -33860,13 +33860,13 @@ public class JournalArticlePersistenceImpl
 	 */
 	@Override
 	public JournalArticle[] filterFindByG_F_C_NotST_PrevAndNext(
-			long id, long groupId, long classNameId, long folderId, int status,
+			long id, long groupId, long folderId, long classNameId, int status,
 			OrderByComparator<JournalArticle> orderByComparator)
 		throws NoSuchArticleException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_F_C_NotST_PrevAndNext(
-				id, groupId, classNameId, folderId, status, orderByComparator);
+				id, groupId, folderId, classNameId, status, orderByComparator);
 		}
 
 		JournalArticle journalArticle = findByPrimaryKey(id);
@@ -33879,13 +33879,13 @@ public class JournalArticlePersistenceImpl
 			JournalArticle[] array = new JournalArticleImpl[3];
 
 			array[0] = filterGetByG_F_C_NotST_PrevAndNext(
-				session, journalArticle, groupId, classNameId, folderId, status,
+				session, journalArticle, groupId, folderId, classNameId, status,
 				orderByComparator, true);
 
 			array[1] = journalArticle;
 
 			array[2] = filterGetByG_F_C_NotST_PrevAndNext(
-				session, journalArticle, groupId, classNameId, folderId, status,
+				session, journalArticle, groupId, folderId, classNameId, status,
 				orderByComparator, false);
 
 			return array;
@@ -33900,7 +33900,7 @@ public class JournalArticlePersistenceImpl
 
 	protected JournalArticle filterGetByG_F_C_NotST_PrevAndNext(
 		Session session, JournalArticle journalArticle, long groupId,
-		long classNameId, long folderId, int status,
+		long folderId, long classNameId, int status,
 		OrderByComparator<JournalArticle> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -33924,9 +33924,9 @@ public class JournalArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
-
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_FOLDERID_2);
+
+		sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
 
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_STATUS_2);
 
@@ -34038,9 +34038,9 @@ public class JournalArticlePersistenceImpl
 
 		queryPos.add(groupId);
 
-		queryPos.add(classNameId);
-
 		queryPos.add(folderId);
+
+		queryPos.add(classNameId);
 
 		queryPos.add(status);
 
@@ -34064,20 +34064,20 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Removes all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63; from the database.
+	 * Removes all the journal articles where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 */
 	@Override
 	public void removeByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status) {
+		long groupId, long folderId, long classNameId, int status) {
 
 		for (JournalArticle journalArticle :
 				findByG_F_C_NotST(
-					groupId, classNameId, folderId, status, QueryUtil.ALL_POS,
+					groupId, folderId, classNameId, status, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null)) {
 
 			remove(journalArticle);
@@ -34085,17 +34085,17 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns the number of journal articles where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @return the number of matching journal articles
 	 */
 	@Override
 	public int countByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status) {
+		long groupId, long folderId, long classNameId, int status) {
 
 		boolean productionMode = ctPersistenceHelper.isProductionMode(
 			JournalArticle.class);
@@ -34108,7 +34108,7 @@ public class JournalArticlePersistenceImpl
 		if (productionMode) {
 			finderPath = _finderPathWithPaginationCountByG_F_C_NotST;
 
-			finderArgs = new Object[] {groupId, classNameId, folderId, status};
+			finderArgs = new Object[] {groupId, folderId, classNameId, status};
 
 			count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 		}
@@ -34120,9 +34120,9 @@ public class JournalArticlePersistenceImpl
 
 			sb.append(_FINDER_COLUMN_G_F_C_NOTST_GROUPID_2);
 
-			sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
-
 			sb.append(_FINDER_COLUMN_G_F_C_NOTST_FOLDERID_2);
+
+			sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
 
 			sb.append(_FINDER_COLUMN_G_F_C_NOTST_STATUS_2);
 
@@ -34139,9 +34139,9 @@ public class JournalArticlePersistenceImpl
 
 				queryPos.add(groupId);
 
-				queryPos.add(classNameId);
-
 				queryPos.add(folderId);
+
+				queryPos.add(classNameId);
 
 				queryPos.add(status);
 
@@ -34167,20 +34167,20 @@ public class JournalArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns the number of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 * Returns the number of journal articles that the user has permission to view where groupId = &#63; and folderId = &#63; and classNameId = &#63; and status &ne; &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param classNameId the class name ID
 	 * @param folderId the folder ID
+	 * @param classNameId the class name ID
 	 * @param status the status
 	 * @return the number of matching journal articles that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_F_C_NotST(
-		long groupId, long classNameId, long folderId, int status) {
+		long groupId, long folderId, long classNameId, int status) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_F_C_NotST(groupId, classNameId, folderId, status);
+			return countByG_F_C_NotST(groupId, folderId, classNameId, status);
 		}
 
 		StringBundler sb = new StringBundler(5);
@@ -34189,9 +34189,9 @@ public class JournalArticlePersistenceImpl
 
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
-
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_FOLDERID_2);
+
+		sb.append(_FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2);
 
 		sb.append(_FINDER_COLUMN_G_F_C_NOTST_STATUS_2);
 
@@ -34213,9 +34213,9 @@ public class JournalArticlePersistenceImpl
 
 			queryPos.add(groupId);
 
-			queryPos.add(classNameId);
-
 			queryPos.add(folderId);
+
+			queryPos.add(classNameId);
 
 			queryPos.add(status);
 
@@ -34234,11 +34234,11 @@ public class JournalArticlePersistenceImpl
 	private static final String _FINDER_COLUMN_G_F_C_NOTST_GROUPID_2 =
 		"journalArticle.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2 =
-		"journalArticle.classNameId = ? AND ";
-
 	private static final String _FINDER_COLUMN_G_F_C_NOTST_FOLDERID_2 =
 		"journalArticle.folderId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_F_C_NOTST_CLASSNAMEID_2 =
+		"journalArticle.classNameId = ? AND ";
 
 	private static final String _FINDER_COLUMN_G_F_C_NOTST_STATUS_2 =
 		"journalArticle.status != ?";

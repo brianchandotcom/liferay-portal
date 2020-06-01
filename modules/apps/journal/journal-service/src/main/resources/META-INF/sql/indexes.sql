@@ -16,9 +16,9 @@ create unique index IX_D3ACAD4A on JournalArticle (groupId, articleId[$COLUMN_LE
 create index IX_8A0FEBBE on JournalArticle (groupId, classNameId, DDMStructureKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_20E66853 on JournalArticle (groupId, classNameId, DDMTemplateKey[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_E748358 on JournalArticle (groupId, classNameId, classPK, ctCollectionId);
-create index IX_F54203EA on JournalArticle (groupId, classNameId, folderId, status, ctCollectionId);
 create index IX_6CA45D20 on JournalArticle (groupId, classNameId, layoutUuid[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_1ED664C3 on JournalArticle (groupId, ctCollectionId);
+create index IX_8868DCD0 on JournalArticle (groupId, folderId, classNameId, status, ctCollectionId);
 create index IX_74060760 on JournalArticle (groupId, folderId, ctCollectionId);
 create index IX_D36D9846 on JournalArticle (groupId, folderId, status, ctCollectionId);
 create index IX_E6BD667C on JournalArticle (groupId, layoutUuid[$COLUMN_LENGTH:75$], ctCollectionId);

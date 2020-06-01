@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.translation.exporter.InfoFormTranslationExporter;
+import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class XLIFFInfoFormTranslationExporterTest {
+public class XLIFFTranslationInfoFormValuesExporterTest {
 
 	@ClassRule
 	@Rule
@@ -58,13 +58,13 @@ public class XLIFFInfoFormTranslationExporterTest {
 	}
 
 	@Test
-	public void testConvertReturnsTheXLIFFRepresentationOfAJournalArticle()
+	public void testExportReturnsTheXLIFFRepresentationOfAJournalArticle()
 		throws Exception {
 
 		Assert.assertEquals(
 			_readFileToString("dependencies/test-journal-article.xliff"),
 			StreamUtil.toString(
-				_xliffInfoFormTranslationExporter.export(
+				_xliffTranslationInfoFormValuesExporter.export(
 					_infoItemFormProviderTracker.getInfoItemFormProvider(
 						JournalArticle.class.getName()),
 					_getJournalArticle(), LocaleUtil.getDefault(),
@@ -105,6 +105,7 @@ public class XLIFFInfoFormTranslationExporterTest {
 	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
 
 	@Inject(filter = "content.type=application/xliff+xml")
-	private InfoFormTranslationExporter _xliffInfoFormTranslationExporter;
+	private TranslationInfoFormValuesExporter
+		_xliffTranslationInfoFormValuesExporter;
 
 }

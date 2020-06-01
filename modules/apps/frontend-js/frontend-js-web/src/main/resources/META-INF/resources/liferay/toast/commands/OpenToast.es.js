@@ -27,7 +27,7 @@ const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
 const Text = ({allowHTML, string}) => {
 	if (allowHTML) {
-		return <UnsafeHTML markup={string} />;
+		return <div dangerouslySetInnerHTML={{__html: string}} />;
 	}
 
 	return string;

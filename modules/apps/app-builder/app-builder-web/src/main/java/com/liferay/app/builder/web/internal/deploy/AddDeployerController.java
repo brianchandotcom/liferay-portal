@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.app.builder.web.internal.activator;
+package com.liferay.app.builder.web.internal.deploy;
 
 import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.service.AppBuilderAppLocalServiceUtil;
@@ -22,26 +22,29 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
 
-import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Jeyvison Nascimento
  */
-public class AppBuilderWebBundleActivator implements BundleActivator {
+@Component(immediate = true, service = {})
+public class AddDeployerController {
 
-	@Override
-	public void start(BundleContext bundleContext) throws Exception {
+	@Activate
+	protected void activate(BundleContext bundleContext) {
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext, AppDeployer.class,
 			new AppDeployerServiceTrackerCustomizer(bundleContext));
 	}
 
-	@Override
-	public void stop(BundleContext bundleContext) throws Exception {
+	@Deactivate
+	protected void deactivate() {
 		_serviceTracker.close();
 	}
 

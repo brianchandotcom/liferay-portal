@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.app.builder.web.internal.activator.AppBuilderWebBundleActivator
 Bundle-Name: Liferay App Builder Web
 Bundle-SymbolicName: com.liferay.app.builder.web
 Bundle-Version: 1.0.32

@@ -49,8 +49,11 @@ export default function undoReducer(state, action) {
 
 			const nextUndoHistory = state.undoHistory || [];
 
+			const nextRedoHistory = action.isRedo ? state.redoHistory : [];
+
 			return {
 				...state,
+				redoHistory: nextRedoHistory,
 				undoHistory: [
 					getDerivedStateForUndo({action, state, type: actionType}),
 					...nextUndoHistory.slice(0, MAX_UNDO_ACTIONS - 1),

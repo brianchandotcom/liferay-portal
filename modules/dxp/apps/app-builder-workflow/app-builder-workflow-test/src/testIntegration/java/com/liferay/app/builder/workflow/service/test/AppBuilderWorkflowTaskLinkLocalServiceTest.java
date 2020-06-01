@@ -14,7 +14,6 @@
 
 package com.liferay.app.builder.workflow.service.test;
 
-import com.liferay.app.builder.exception.NoSuchAppException;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.workflow.exception.DuplicateAppBuilderWorkflowTaskLinkException;
@@ -44,18 +43,16 @@ public class AppBuilderWorkflowTaskLinkLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test(expected = NoSuchAppException.class)
-	public void testAddAppBuilderWorkflowTaskLinkWithInvalidApp()
-		throws Exception {
-
-		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
-			TestPropsValues.getCompanyId(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), "A");
-	}
-
 	@Test(expected = DuplicateAppBuilderWorkflowTaskLinkException.class)
 	public void testAddDuplicatedAppBuilderWorkflowTaskLink() throws Exception {
-		AppBuilderApp appBuilderApp = _createAppBuilderApp();
+		AppBuilderApp appBuilderApp =
+			_appBuilderAppLocalService.addAppBuilderApp(
+				TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), true, RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomString());
 
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
 			TestPropsValues.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
@@ -63,15 +60,6 @@ public class AppBuilderWorkflowTaskLinkLocalServiceTest {
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
 			TestPropsValues.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
 			appBuilderApp.getDdmStructureLayoutId(), "A");
-	}
-
-	private AppBuilderApp _createAppBuilderApp() throws Exception {
-		return _appBuilderAppLocalService.addAppBuilderApp(
-			TestPropsValues.getGroupId(), TestPropsValues.getCompanyId(),
-			TestPropsValues.getUserId(), true, RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString());
 	}
 
 	@Inject

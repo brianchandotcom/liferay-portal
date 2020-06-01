@@ -114,7 +114,7 @@ public class AppWorkflowTaskResourceTest
 	}
 
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"name"};
+		return new String[] {"appId", "dataLayoutIds", "name"};
 	}
 
 	@Override

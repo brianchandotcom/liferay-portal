@@ -77,8 +77,8 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 	%>
 
 	<ul class="list-group system-action-group">
-		<li class="clearfix list-group-item">
-			<div class="float-left">
+		<li class="list-group-item list-group-item-flex">
+			<div class="autofit-col autofit-col-expand">
 				<liferay-ui:message key="reindex-all-search-indexes" />
 			</div>
 
@@ -93,7 +93,7 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 			}
 			%>
 
-			<div class="float-right index-action-wrapper" data-type="portal">
+			<div class="autofit-col index-action-wrapper" data-type="portal">
 				<c:choose>
 					<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
 
@@ -109,12 +109,12 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 				</c:choose>
 			</div>
 		</li>
-		<li class="clearfix list-group-item">
-			<div class="float-left">
+		<li class="list-group-item list-group-item-flex">
+			<div class="autofit-col autofit-col-expand">
 				<liferay-ui:message key="reindex-all-spell-check-indexes" />
 			</div>
 
-			<div class="float-right">
+			<div class="autofit-col">
 				<aui:button cssClass="save-server-button" data-cmd="reindexDictionaries" value="execute" />
 			</div>
 		</li>
@@ -128,12 +128,12 @@ portletURL.setParameter("mvcRenderCommandName", "/search_admin/view");
 			backgroundTaskDisplay = classNameToBackgroundTaskDisplayMap.get(indexer.getClassName());
 		%>
 
-			<li class="clearfix list-group-item">
-				<div class="float-left">
+			<li class="list-group-item list-group-item-flex">
+				<div class="autofit-col autofit-col-expand">
 					<liferay-ui:message arguments="<%= indexer.getClassName() %>" key="reindex-x" />
 				</div>
 
-				<div class="float-right index-action-wrapper" data-type="<%= indexer.getClassName() %>">
+				<div class="autofit-col index-action-wrapper" data-type="<%= indexer.getClassName() %>">
 					<c:choose>
 						<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
 							<aui:button cssClass="save-server-button" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />

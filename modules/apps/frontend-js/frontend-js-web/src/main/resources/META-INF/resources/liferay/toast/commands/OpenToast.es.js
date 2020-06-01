@@ -62,8 +62,9 @@ function openToast({
 	htmlMessage,
 	htmlTitle,
 	message = '',
+	onClick = () => {},
 	renderData = DEFAULT_RENDER_DATA,
-	title = Liferay.Language.get('success'),
+	title,
 	toastProps = {},
 	type = 'success',
 	variant,
@@ -80,6 +81,7 @@ function openToast({
 			<ClayAlert
 				autoClose={TOAST_AUTO_CLOSE_INTERVAL}
 				displayType={type}
+				onClick={(event) => onClick({event, onClose})}
 				onClose={onClose}
 				title={
 					title ? <Text allowHTML={htmlTitle} string={title} /> : null

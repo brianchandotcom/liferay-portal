@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.security.permission;
 
 import com.liferay.portal.kernel.exception.NoSuchResourceActionException;
+import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.Role;
@@ -159,17 +160,17 @@ public interface ResourceActions {
 
 	public void read(
 			String servletContextName, ClassLoader classLoader, String source)
-		throws Exception;
+		throws ResourceActionsException;
 
 	public void read(
 			String servletContextName, ClassLoader classLoader,
 			String... sources)
-		throws Exception;
+		throws ResourceActionsException;
 
 	public void readAndCheck(
 			String servletContextName, ClassLoader classLoader,
 			String... sources)
-		throws Exception;
+		throws ResourceActionsException;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement

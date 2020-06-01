@@ -605,7 +605,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	@Override
 	public void read(
 			String servletContextName, ClassLoader classLoader, String source)
-		throws DocumentException, ResourceActionsException {
+		throws ResourceActionsException {
 
 		_read(servletContextName, classLoader, source, null);
 	}
@@ -614,7 +614,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public void read(
 			String servletContextName, ClassLoader classLoader,
 			String... sources)
-		throws DocumentException, ResourceActionsException {
+		throws ResourceActionsException {
 
 		for (String source : sources) {
 			read(servletContextName, classLoader, source);
@@ -625,7 +625,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	public void readAndCheck(
 			String servletContextName, ClassLoader classLoader,
 			String... sources)
-		throws DocumentException, ResourceActionsException {
+		throws ResourceActionsException {
 
 		Set<String> portletNames = new HashSet<>();
 
@@ -974,7 +974,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	private void _read(
 			String servletContextName, ClassLoader classLoader, String source,
 			Set<String> portletNames)
-		throws DocumentException, ResourceActionsException {
+		throws ResourceActionsException {
 
 		InputStream inputStream = classLoader.getResourceAsStream(source);
 
@@ -992,40 +992,49 @@ public class ResourceActionsImpl implements ResourceActions {
 			_log.debug("Loading " + source);
 		}
 
-		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
+		try {
+			Document document = UnsecureSAXReaderUtil.read(inputStream, true);
 
-		DocumentType documentType = document.getDocumentType();
+			DocumentType documentType = document.getDocumentType();
 
-		String publicId = GetterUtil.getString(documentType.getPublicId());
+			String publicId = GetterUtil.getString(documentType.getPublicId());
 
-		if (publicId.equals(
-				"-//Liferay//DTD Resource Action Mapping 6.0.0//EN")) {
+			if (publicId.equals(
+					"-//Liferay//DTD Resource Action Mapping 6.0.0//EN")) {
 
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Please update " + source + " to use the 6.1.0 format");
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Please update " + source + " to use the 6.1.0 format");
+				}
+			}
+
+			Element rootElement = document.getRootElement();
+
+			for (Element resourceElement : rootElement.elements("resource")) {
+				String file = StringUtil.trim(
+					resourceElement.attributeValue("file"));
+
+				_read(servletContextName, classLoader, file, portletNames);
+
+				String extFileName = StringUtil.replace(
+					file, ".xml", "-ext.xml");
+
+				_read(
+					servletContextName, classLoader, extFileName, portletNames);
+			}
+
+			_read(servletContextName, document, portletNames);
+
+			if (source.endsWith(".xml") && !source.endsWith("-ext.xml")) {
+				String extFileName = StringUtil.replace(
+					source, ".xml", "-ext.xml");
+
+				_read(
+					servletContextName, classLoader, extFileName, portletNames);
 			}
 		}
-
-		Element rootElement = document.getRootElement();
-
-		for (Element resourceElement : rootElement.elements("resource")) {
-			String file = StringUtil.trim(
-				resourceElement.attributeValue("file"));
-
-			_read(servletContextName, classLoader, file, portletNames);
-
-			String extFileName = StringUtil.replace(file, ".xml", "-ext.xml");
-
-			_read(servletContextName, classLoader, extFileName, portletNames);
-		}
-
-		_read(servletContextName, document, portletNames);
-
-		if (source.endsWith(".xml") && !source.endsWith("-ext.xml")) {
-			String extFileName = StringUtil.replace(source, ".xml", "-ext.xml");
-
-			_read(servletContextName, classLoader, extFileName, portletNames);
+		catch (DocumentException documentException) {
+			throw new ResourceActionsException(documentException);
 		}
 	}
 

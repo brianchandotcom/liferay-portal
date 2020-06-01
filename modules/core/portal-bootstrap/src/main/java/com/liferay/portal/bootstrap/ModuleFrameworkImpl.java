@@ -84,10 +84,12 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
@@ -1398,19 +1400,27 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			recurse = true;
 		}
 
+		Queue<File> directories = new LinkedList<>();
+
+		directories.add(directory);
+
 		List<File> files = new ArrayList<>();
 
-		for (File file : directory.listFiles()) {
-			if (file.isDirectory()) {
-				if (recurse) {
-					files.addAll(_listConfigs(file));
-				}
-			}
-			else {
-				String name = file.getName();
+		File curDir = null;
 
-				if (name.endsWith(".cfg") || name.endsWith(".config")) {
-					files.add(file);
+		while ((curDir = directories.poll()) != null) {
+			for (File file : curDir.listFiles()) {
+				if (file.isDirectory()) {
+					if (recurse) {
+						directories.add(file);
+					}
+				}
+				else {
+					String name = file.getName();
+
+					if (name.endsWith(".cfg") || name.endsWith(".config")) {
+						files.add(file);
+					}
 				}
 			}
 		}

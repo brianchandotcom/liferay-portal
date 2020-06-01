@@ -85,17 +85,11 @@ DLEditFileEntryTypeDisplayContext dlEditFileEntryTypeDisplayContext = (DLEditFil
 	var availableFields;
 
 	var displayWarning = function (message) {
-		new Liferay.Notification({
-			closeable: true,
-			delay: {
-				hide: 5000,
-				show: 0,
-			},
-			duration: 500,
+		Liferay.Util.openToast({
 			message: message,
 			title: Liferay.Language.get('warning'),
 			type: 'warning',
-		}).render('body');
+		});
 	};
 
 	var formEditor;

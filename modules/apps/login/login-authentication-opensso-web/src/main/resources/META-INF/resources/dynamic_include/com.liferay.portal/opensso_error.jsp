@@ -40,19 +40,10 @@ String openSSOSubjectScreenName = (String)request.getAttribute(OpenSSOWebKeys.OP
 	<a href="<%= themeDisplay.getURLSignOut() %>"><liferay-ui:message arguments='<%= "<strong>" + HtmlUtil.escapeAttribute(openSSOSubjectScreenName) + "</strong>" %>' key="not-x" /></a>
 </liferay-util:buffer>
 
-<script type="text/javascript">
-	AUI().use('liferay-notification', function (A) {
-		new Liferay.Notification({
-			closeable: true,
-			delay: {
-				hide: 10000,
-				show: 0,
-			},
-			duration: 500,
-			message: '<%= HtmlUtil.escapeJS(msg) %>',
-			render: true,
-			title: '<liferay-ui:message key="warning" />',
-			type: 'warning',
-		}).render('body');
+<aui:script>
+	Liferay.Util.openToast({
+		message: '<%= HtmlUtil.escapeJS(msg) %>',
+		title: '<liferay-ui:message key="warning" />',
+		type: 'warning',
 	});
-</script>
+</aui:script>

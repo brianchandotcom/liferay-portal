@@ -24,7 +24,6 @@
 						path: 'alloyeditor.js',
 						requires: [
 							'aui-component',
-							'liferay-notification',
 							'liferay-portlet-base',
 							'timers',
 						],

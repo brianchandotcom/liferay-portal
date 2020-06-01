@@ -178,18 +178,10 @@ AUI.add(
 				},
 
 				_portletFeedback() {
-					new Liferay.Notification({
-						closeable: true,
-						delay: {
-							hide: 5000,
-							show: 0,
-						},
-						duration: 500,
-						message: Liferay.Language.get(
-							'the-application-was-added-to-the-page'
-						),
+					Liferay.Util.openToast({
+						message: Liferay.Language.get('the-application-was-added-to-the-page'),
 						type: 'success',
-					}).render('body');
+					})
 				},
 
 				addPortlet(portlet, options) {
@@ -405,7 +397,6 @@ AUI.add(
 			'aui-base',
 			'liferay-layout',
 			'liferay-layout-column',
-			'liferay-notification',
 			'liferay-product-navigation-control-menu',
 			'transition',
 		],

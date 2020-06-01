@@ -113,7 +113,7 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 	}
 </aui:script>
 
-<aui:script use="aui-loading-mask-deprecated,aui-parse-content,aui-toggler,autocomplete-base,autocomplete-filters,liferay-notification">
+<aui:script use="aui-loading-mask-deprecated,aui-parse-content,aui-toggler,autocomplete-base,autocomplete-filters">
 	var AParseContent = A.Plugin.ParseContent;
 
 	var permissionNavigationDataContainer = A.one(
@@ -301,15 +301,8 @@ if (!portletName.equals(PortletKeys.SERVER_ADMIN)) {
 
 						permissionContentContainerNode.unplug(A.LoadingMask);
 
-						new Liferay.Notification({
-							closeable: true,
-							delay: {
-								hide: 0,
-								show: 0,
-							},
-							duration: 500,
+						Liferay.Util.openToast({
 							message: error.message,
-							render: true,
 							title: '<liferay-ui:message key="warning" />',
 							type: 'warning',
 						});

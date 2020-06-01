@@ -464,18 +464,11 @@ AUI.add(
 						remainingTime = warningLength;
 					}
 
-					var banner = instance._getBanner();
-
-					var counterTextNode = banner
-						.one('.countdown-timer')
-						.getDOMNode();
-
-					instance._uiSetRemainingTime(
+					var bannerConfig = {
 						remainingTime,
-						counterTextNode
-					);
+					};
 
-					banner.show();
+					instance._renderBanner(bannerConfig);
 
 					instance._intervalId = host.registerInterval(
 						(
@@ -494,7 +487,11 @@ AUI.add(
 										remainingTime = warningLength;
 									}
 
-									banner.show();
+									var bannerConfig = {
+										remainingTime,
+									};
+
+									instance._renderBanner(bannerConfig);
 								}
 
 								elapsed =
@@ -503,30 +500,11 @@ AUI.add(
 									) * 1000;
 
 								remainingTime = sessionLength - elapsed;
-
-								instance._uiSetRemainingTime(
-									remainingTime,
-									counterTextNode
-								);
 							}
 
 							remainingTime -= interval;
 						}
 					);
-				},
-
-				_destroyBanner() {
-					var instance = this;
-
-					instance._banner = false;
-
-					var notificationContainer = A.one(
-						'.lfr-notification-container'
-					);
-
-					if (notificationContainer) {
-						notificationContainer.remove();
-					}
 				},
 
 				_formatNumber(value) {
@@ -560,66 +538,6 @@ AUI.add(
 					return time;
 				},
 
-				_getBanner() {
-					var instance = this;
-
-					var banner = instance._banner;
-
-					if (!banner) {
-						banner = new Liferay.Notification({
-							closeable: true,
-							delay: {
-								hide: 0,
-								show: 0,
-							},
-							duration: 500,
-							message: instance._warningText,
-							on: {
-								click(event) {
-									if (
-										event.domEvent.target.test(
-											'.alert-link'
-										)
-									) {
-										event.domEvent.preventDefault();
-										instance._host.extend();
-									}
-									else if (
-										event.domEvent.target.test('.close')
-									) {
-										instance._destroyBanner();
-										instance._alertClosed = true;
-									}
-								},
-								focus(event) {
-									if (instance._alert) {
-										var notificationContainer = A.one(
-											'.lfr-notification-container'
-										);
-
-										if (
-											!notificationContainer.contains(
-												event.domEvent.relatedTarget
-											)
-										) {
-											instance._alert.setAttribute(
-												'role',
-												'alert'
-											);
-										}
-									}
-								},
-							},
-							title: Liferay.Language.get('warning'),
-							type: 'warning',
-						}).render('body');
-
-						instance._banner = banner;
-					}
-
-					return banner;
-				},
-
 				_onHostSessionStateChange(event) {
 					var instance = this;
 
@@ -628,54 +546,76 @@ AUI.add(
 					}
 				},
 
+				_renderBanner(config) {
+					var instance = this;
+
+					var remainingTimeFormatted = instance._formatTime(
+						config.remainingTime
+					);
+
+					instance._updateRemainingTimeTitle(remainingTimeFormatted);
+
+					return Liferay.Util.openToast(
+						Object.assign(config, {
+							htmlMessage: true,
+							message:
+								config.remainingTime >= 0
+									? Lang.sub(instance._warningText, [
+											remainingTimeFormatted,
+									  ])
+									: instance._expiredText,
+							onClick(eventPayload) {
+								var event = eventPayload.event;
+								var onClose = eventPayload.onClose;
+
+								if (
+									event.target.classList.contains(
+										'alert-link'
+									)
+								) {
+									event.preventDefault();
+
+									instance._host.extend();
+
+									onClose();
+
+									instance._alertClosed = true;
+								}
+							},
+							title: Liferay.Language.get('warning'),
+							toastProps: {
+								autoClose: config.remainingTime,
+								role: 'alert',
+							},
+							type: 'warning',
+						})
+					);
+				},
+
 				_uiSetActivated() {
 					var instance = this;
 
 					DOC.title = instance.reset('pageTitle').get('pageTitle');
 
 					instance._host.unregisterInterval(instance._intervalId);
-
-					var banner = instance._getBanner();
-
-					if (banner) {
-						instance._destroyBanner();
-					}
 				},
 
 				_uiSetExpired() {
 					var instance = this;
 
-					var banner = instance._getBanner();
-
-					banner.setAttrs({
+					var bannerConfig = {
 						message: instance._expiredText,
 						title: Liferay.Language.get('danger'),
 						type: 'danger',
-					});
+					};
+
+					instance._renderBanner(bannerConfig);
 
 					DOC.title = instance.get('pageTitle');
 				},
 
-				_uiSetRemainingTime(remainingTime, counterTextNode) {
+				_updateRemainingTimeTitle(remainingTime) {
 					var instance = this;
-
-					remainingTime = instance._formatTime(remainingTime);
-
-					if (!instance._alertClosed) {
-						var alert = counterTextNode.closest(
-							'div[role="alert"]'
-						);
-
-						// Prevent screen reader from rereading alert
-
-						if (alert) {
-							alert.removeAttribute('role');
-
-							instance._alert = alert;
-						}
-
-						counterTextNode.innerHTML = remainingTime;
-					}
 
 					DOC.title =
 						Lang.sub(Liferay.Language.get('session-expires-in-x'), [
@@ -683,14 +623,6 @@ AUI.add(
 						]) +
 						' | ' +
 						instance.get('pageTitle');
-				},
-
-				destructor() {
-					var instance = this;
-
-					if (instance._banner) {
-						instance._destroyBanner();
-					}
 				},
 
 				initializer() {
@@ -751,6 +683,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-timer', 'cookie', 'liferay-notification'],
+		requires: ['aui-timer', 'cookie'],
 	}
 );

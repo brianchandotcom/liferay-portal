@@ -87,17 +87,11 @@ if ((ddmForm != null) && (ddmForm.getDefaultLocale() != null)) {
 	var STR_VALUE = 'value';
 
 	var displayWarning = function (message) {
-		new Liferay.Notification({
-			closeable: true,
-			delay: {
-				hide: 5000,
-				show: 0,
-			},
-			duration: 500,
+		Liferay.Util.openToast({
 			message: message,
 			title: '<liferay-ui:message key="warning" />',
 			type: 'warning',
-		}).render('body');
+		});
 	};
 
 	var formEditor;

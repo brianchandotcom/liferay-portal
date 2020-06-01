@@ -214,17 +214,11 @@ AUI.add(
 				},
 
 				_onError(event) {
-					new Liferay.Notification({
-						closeable: true,
-						delay: {
-							hide: 5000,
-							show: 0,
-						},
-						duration: 500,
+					Liferay.Util.openToast({
 						message: event.data,
 						title: Liferay.Language.get('error'),
 						type: 'danger',
-					}).render();
+					});
 				},
 
 				_onFocus(event) {
@@ -575,11 +569,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: [
-			'aui-component',
-			'liferay-notification',
-			'liferay-portlet-base',
-			'timers',
-		],
+		requires: ['aui-component', 'liferay-portlet-base', 'timers'],
 	}
 );

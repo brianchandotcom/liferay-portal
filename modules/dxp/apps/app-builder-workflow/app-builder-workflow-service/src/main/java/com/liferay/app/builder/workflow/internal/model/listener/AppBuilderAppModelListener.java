@@ -43,7 +43,7 @@ public class AppBuilderAppModelListener
 		}
 		catch (Exception exception) {
 			_log.error(
-				"Unable to delete app builder workfloe task links", exception);
+				"Unable to delete app builder workflow task links", exception);
 		}
 	}
 

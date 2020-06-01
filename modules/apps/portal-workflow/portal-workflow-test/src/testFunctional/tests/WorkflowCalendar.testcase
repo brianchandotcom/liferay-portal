@@ -20,6 +20,8 @@ definition {
 				portlet = "Search");
 
 			SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
+			GlobalMenu.gotoSite(site = "Guest");
 		}
 
 		ProductMenu.gotoPortlet(

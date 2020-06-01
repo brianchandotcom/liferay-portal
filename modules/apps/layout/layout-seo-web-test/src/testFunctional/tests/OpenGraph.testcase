@@ -137,7 +137,7 @@ definition {
 	test DisableConfigurationAtSiteLevel {
 		property test.name.skip.portal.instance = "OpenGraph#DisableConfigurationAtSiteLevel";
 
-		ProductMenu.gotoSite(site = "Test Site Name");
+		GlobalMenu.gotoSite(site = "Test Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",

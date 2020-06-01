@@ -19,7 +19,6 @@ import userEvent from '@testing-library/user-event';
 
 import Checkbox from '../../../src/main/resources/META-INF/resources/Checkbox/Checkbox.es';
 
-let component;
 const spritemap = 'icons.svg';
 
 const CheckboxWithProvider = (props) => (

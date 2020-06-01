@@ -19,7 +19,6 @@ import userEvent from '@testing-library/user-event';
 
 import CheckboxMultiple from '../../../src/main/resources/META-INF/resources/CheckboxMultiple/CheckboxMultiple.es';
 
-let component;
 const spritemap = 'icons.svg';
 
 const CheckboxMultipleWithProvider = (props) => (

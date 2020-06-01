@@ -20,6 +20,22 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "Content &amp; Data",
+				panel = "Site Administration",
+				portlet = "Forms");
+
+			FormsAdmin.teardownForms();
+
+			Navigator.gotoNavItem(navItem = "Data Providers");
+
+			FormsAdmin.teardownDataProviders();
+
+			Page.tearDownCP();
+		}
 	}
 
 	@priority = "5"
@@ -376,6 +392,8 @@ definition {
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",
 			selectOption = "Afghanistan");
+
+		User.loginUserPG();
 	}
 
 }

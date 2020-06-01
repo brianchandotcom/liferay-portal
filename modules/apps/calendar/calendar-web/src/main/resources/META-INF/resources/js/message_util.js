@@ -16,7 +16,6 @@ AUI.add(
 	'liferay-calendar-message-util',
 	(A) => {
 		var Lang = A.Lang;
-		var LString = Lang.String;
 
 		var STR_BLANK = '';
 
@@ -102,7 +101,7 @@ AUI.add(
 							Liferay.Language.get(
 								'you-are-about-to-make-changes-that-will-only-affect-your-calendar-x'
 							),
-							[LString.escapeHTML(data.calendarName)]
+							[Liferay.Util.escapeHTML(data.calendarName)]
 						),
 						'</p>',
 					].join(STR_BLANK);

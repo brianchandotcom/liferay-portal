@@ -527,7 +527,7 @@ String signature = ParamUtil.getString(request, "signature");
 						'<%= jsonWebServiceActionMapping.getPath() %>',
 						formEl,
 						function(obj) {
-							serviceOutput.html(A.Lang.String.escapeHTML(JSON.stringify(obj, null, 2)));
+							serviceOutput.html(Liferay.Util.escapeHTML(JSON.stringify(obj, null, 2)));
 
 							output.removeClass('loading-results');
 

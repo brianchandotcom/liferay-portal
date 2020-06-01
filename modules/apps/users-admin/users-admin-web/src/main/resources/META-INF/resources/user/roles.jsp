@@ -834,7 +834,10 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 					var rowColumns = [];
 
 					rowColumns.push(
-						'<i class="' + iconCssClass + '"></i> ' + LString.escapeHTML(name)
+						'<i class="' +
+							iconCssClass +
+							'"></i> ' +
+							Liferay.Util.escapeHTML(name)
 					);
 
 					if (groupName) {

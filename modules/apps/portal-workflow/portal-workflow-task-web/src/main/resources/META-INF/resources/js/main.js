@@ -99,7 +99,7 @@ AUI.add(
 						},
 						width: 896,
 					},
-					title: A.Lang.String.escapeHTML(title),
+					title: Liferay.Util.escapeHTML(title),
 				});
 			},
 

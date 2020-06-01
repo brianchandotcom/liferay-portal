@@ -584,7 +584,7 @@ AUI.add(
 
 				_syncInviteesContent(contentNode, calendarResources) {
 					var values = calendarResources.map((item) => {
-						return Lang.String.escapeHTML(item.name);
+						return Liferay.Util.escapeHTML(item.name);
 					});
 
 					contentNode = A.one(contentNode);

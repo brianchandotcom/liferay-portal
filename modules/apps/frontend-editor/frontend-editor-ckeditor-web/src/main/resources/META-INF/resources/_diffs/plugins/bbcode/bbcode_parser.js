@@ -15,8 +15,6 @@
 (function () {
 	var A = AUI();
 
-	var LString = A.Lang.String;
-
 	var entities = A.merge(Liferay.Util.MAP_HTML_CHARS_ESCAPED, {
 		'(': '&#40;',
 		')': '&#41;',
@@ -26,8 +24,8 @@
 
 	var BBCodeUtil = Liferay.namespace('BBCodeUtil');
 
-	BBCodeUtil.escape = A.rbind('escapeHTML', LString, true, entities);
-	BBCodeUtil.unescape = A.rbind('unescapeHTML', LString, entities);
+	BBCodeUtil.escape = A.rbind('escapeHTML', Liferay.Util, true, entities);
+	BBCodeUtil.unescape = A.rbind('unescapeHTML', Liferay.Util, entities);
 })();
 (function () {
 	// eslint-disable-next-line no-control-regex
@@ -315,8 +313,6 @@
 	Liferay.BBCodeParser = Parser;
 })();
 (function () {
-	var A = AUI();
-
 	var BBCodeUtil = Liferay.BBCodeUtil;
 	var CKTools = CKEDITOR.tools;
 
@@ -479,7 +475,7 @@
 	};
 
 	Converter.prototype = {
-		_escapeHTML: A.Lang.String.escapeHTML,
+		_escapeHTML: Liferay.Util.escapeHTML,
 
 		_extractData(toTagName, consume) {
 			var instance = this;

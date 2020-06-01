@@ -16,7 +16,6 @@ AUI.add(
 	'liferay-calendar-remote-services',
 	(A) => {
 		var Lang = A.Lang;
-		var LString = Lang.String;
 
 		var isString = Lang.isString;
 		var toInt = Lang.toInt;
@@ -511,7 +510,7 @@ AUI.add(
 							startTimeMinute: startDate.getMinutes(),
 							startTimeMonth: startDate.getMonth(),
 							startTimeYear: startDate.getFullYear(),
-							title: LString.unescapeHTML(
+							title: Liferay.Util.unescapeHTML(
 								schedulerEvent.get('content')
 							),
 							updateInstance,

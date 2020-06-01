@@ -11,7 +11,6 @@
 
 AUI().use('escape', 'aui-lang', (A) => {
 	var AEscape = A.Escape;
-	var ALang = A.Lang;
 
 	var TPL_TAG_FORM =
 		'<div class="form-inline {key}" >' +
@@ -244,7 +243,7 @@ AUI().use('escape', 'aui-lang', (A) => {
 		_sendMessage(message) {
 			var instance = this;
 
-			message = ALang.String.unescapeHTML(message);
+			message = Liferay.Util.unescapeHTML(message);
 
 			var portletMessageContainer = instance._portletMessageContainer;
 

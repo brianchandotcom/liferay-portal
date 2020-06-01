@@ -371,7 +371,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			.get('node')
 			.attr(
 				'title',
-				A.Lang.String.unescapeHTML(schedulerEvent.get('content'))
+				Liferay.Util.unescapeHTML(schedulerEvent.get('content'))
 			);
 	};
 

@@ -26,8 +26,6 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var LString = Lang.String;
-
 		var booleanParse = A.DataType.Boolean.parse;
 		var camelize = Lang.String.camelize;
 
@@ -506,7 +504,7 @@ AUI.add(
 					}
 
 					linkNode.setAttribute('href', url);
-					linkNode.setContent(LString.escapeHTML(title));
+					linkNode.setContent(Liferay.Util.escapeHTML(title));
 				},
 
 				_uiSetValue(val) {
@@ -698,7 +696,7 @@ AUI.add(
 						contentBox.prepend(linkNode);
 					}
 
-					linkNode.setContent(LString.escapeHTML(title));
+					linkNode.setContent(Liferay.Util.escapeHTML(title));
 				},
 
 				_uiSetValue(val) {

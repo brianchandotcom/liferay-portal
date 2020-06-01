@@ -91,7 +91,7 @@ AUI.add(
 			"' ]}></div>",
 			'<span class="',
 			CSS_CALENDAR_LIST_ITEM_LABEL,
-			'">{[LString.escapeHTML(parent.calendars[$i].getDisplayName())]}</span>',
+			'">{[Liferay.Util.escapeHTML(parent.calendars[$i].getDisplayName())]}</span>',
 			'<div class="',
 			CSS_CALENDAR_LIST_ITEM_ARROW,
 			'">',

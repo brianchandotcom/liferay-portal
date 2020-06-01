@@ -19,7 +19,6 @@ AUI.add(
 
 		var DateMath = A.DataType.DateMath;
 		var Lang = A.Lang;
-		var LString = Lang.String;
 
 		var CalendarWorkflow = Liferay.CalendarWorkflow;
 
@@ -83,7 +82,7 @@ AUI.add(
 						var content = val;
 
 						if (val) {
-							content = LString.escapeHTML(val);
+							content = Liferay.Util.escapeHTML(val);
 						}
 
 						return content;
@@ -92,7 +91,7 @@ AUI.add(
 						var content = val;
 
 						if (val) {
-							content = LString.unescapeHTML(val + '');
+							content = Liferay.Util.unescapeHTML(val + '');
 						}
 
 						return content;

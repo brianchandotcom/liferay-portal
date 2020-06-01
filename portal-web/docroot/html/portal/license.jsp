@@ -542,8 +542,8 @@ dateFormatDateTime.setTimeZone(timeZone);
 
 									addColumn(row, productEntryName);
 									addColumn(row, getLicenseState(message[i].licenseState));
-									addColumn(row, LString.escapeHTML(message[i].owner));
-									addColumn(row, LString.escapeHTML(message[i].description));
+									addColumn(row, Liferay.Util.escapeHTML(message[i].owner));
+									addColumn(row, Liferay.Util.escapeHTML(message[i].description));
 									addColumn(row, message[i].type);
 
 									var maxProcessorCores = '';

@@ -831,7 +831,7 @@ AUI.add(
 					var value = '';
 
 					if (inputNode) {
-						value = Lang.String.unescapeHTML(inputNode.val());
+						value = Liferay.Util.unescapeHTML(inputNode.val());
 					}
 
 					return value;

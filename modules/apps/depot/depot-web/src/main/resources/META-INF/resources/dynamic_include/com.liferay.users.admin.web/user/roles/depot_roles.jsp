@@ -269,7 +269,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 						'<i class="' +
 							event.iconcssclass +
 							'"></i> ' +
-							LString.escapeHTML(event.rolename)
+							Liferay.Util.escapeHTML(event.rolename)
 					);
 
 					rowColumns.push(event.groupdescriptivename);

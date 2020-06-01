@@ -10,6 +10,7 @@ Export-Package:\
 	com.liferay.info.display.url.provider,\
 	com.liferay.info.field,\
 	com.liferay.info.field.type,\
+	com.liferay.info.form,\
 	com.liferay.info.item,\
 	com.liferay.info.item.field.reader,\
 	com.liferay.info.item.provider,\

@@ -66,18 +66,17 @@ public class AppResourceTest extends BaseAppResourceTestCase {
 		super.setUp();
 
 		_ddmStructure = _addDDMStructure(testGroup);
-		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
-
-		_ddmStructureLayout = _addDDMStructureLayout(
-			_ddmStructure.getStructureId());
 
 		_ddlRecordSet = _addDDLRecordSet(_ddmStructure);
-
+		_ddmStructureLayout = _addDDMStructureLayout(
+			_ddmStructure.getStructureId());
 		_deDataListView = _deDataListViewLocalService.addDEDataListView(
 			testGroup.getGroupId(), testCompany.getCompanyId(),
 			testGroup.getCreatorUserId(), StringPool.BLANK,
 			_ddmStructure.getStructureId(), StringPool.BLANK, null,
 			StringPool.BLANK);
+
+		_irrelevantDDMStructure = _addDDMStructure(irrelevantGroup);
 	}
 
 	@Override

@@ -495,7 +495,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms");
+			portlet = "Forms",
+			site = "Guest");
 
 		FormsAdminNavigator.gotoAddForm();
 

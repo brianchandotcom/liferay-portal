@@ -12,84 +12,92 @@
  * details.
  */
 
-import {fireEvent} from '@testing-library/react';
+import React from 'react';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import {cleanup, render, act} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import ColorPicker from '../../../src/main/resources/META-INF/resources/ColorPicker/ColorPicker.es';
-import withContextMock from '../__mocks__/withContextMock.es';
 
-let component;
 const name = 'colorPicker';
 const spritemap = 'icons.svg';
 
-const ColorPickerWithContextMock = withContextMock(ColorPicker);
+const ColorPickerWithProvider = (props) => (
+	<PageProvider value={{editingLanguageId: 'en_US'}}>
+		<ColorPicker {...props} />
+	</PageProvider>
+);
 
 describe('Field Color Picker', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		jest.useFakeTimers();
+		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
 	it('renders field disabled', () => {
-		component = new ColorPickerWithContextMock({
-			name,
-			readOnly: false,
-			spritemap,
+		const {container} = render(<ColorPickerWithProvider name={name} readOnly={false} spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders field with helptext', () => {
-		component = new ColorPickerWithContextMock({
-			name,
-			spritemap,
-			tip: 'Helptext',
+		const {container} = render(<ColorPickerWithProvider name={name} spritemap={spritemap} tip="Helptext" />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders field with label', () => {
-		component = new ColorPickerWithContextMock({
-			label: 'Label',
-			name,
-			spritemap,
+		const {container} = render(<ColorPickerWithProvider label="label" name={name} tip="Helptext" spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders with basic color', () => {
 		const color = '#FF67AA';
 
-		component = new ColorPickerWithContextMock({
-			name,
-			readOnly: true,
-			spritemap,
-			value: color,
+		const {container} = render(<ColorPickerWithProvider name={name} readOnly value={color} spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component.element.querySelector('input').value).toBe(color);
+		expect(container.querySelector('input').value).toBe(color);
 	});
 
-	it.skip('emits field edit event on field change', (done) => {
-		const handleFieldEdited = () => {
-			const inputEl = component.element.querySelector('input');
-			expect(inputEl.value).toBe('ffffff');
-			done();
-		};
+	it.skip('should call the onChange callback on the field change', () => {
+		const handleFieldEdited = jest.fn();
 
-		const events = {fieldEdited: handleFieldEdited};
+		render(
+			<ColorPickerWithProvider
+				name={name}
+				onChange={handleFieldEdited}
+				spritemap={spritemap}
+			/>
+		);
 
-		component = new ColorPickerWithContextMock({
-			events,
-			name,
-			spritemap,
+		userEvent.click(document.body.querySelector('input'), {target: {value: 'ffffff'}});
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		const inputEl = component.element.querySelector('input');
+		expect(handleFieldEdited).toHaveBeenCalled();
 
-		fireEvent.input(inputEl, {target: {value: 'ffffff'}});
+		const inputEl = document.body.querySelector('input');
+		expect(inputEl.value).toBe('ffffff');
 	});
 });

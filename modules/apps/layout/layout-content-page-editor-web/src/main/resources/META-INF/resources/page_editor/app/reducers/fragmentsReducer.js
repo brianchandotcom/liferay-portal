@@ -17,6 +17,12 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
 const CONTENT_DISPLAY_COLLECTION_ID = 'content-display';
 
+const DEFAULT_CONTENT_DISPLAY_COLLECTION = {
+	fragmentCollectionId: 'collection-display',
+	fragmentEntries: [],
+	name: Liferay.Language.get('collection-display'),
+};
+
 export default function fragmentsReducer(fragments = [], action) {
 	switch (action.type) {
 		case ADD_FRAGMENT_COMPOSITION: {
@@ -90,25 +96,27 @@ export default function fragmentsReducer(fragments = [], action) {
 				name: Liferay.Language.get('layout-elements'),
 			});
 
-			if (contentDisplayCollection) {
-				newFragments.splice(2, 0, {
-					...contentDisplayCollection,
+			newFragments.splice(2, 0, {
+				...(contentDisplayCollection ||
+					DEFAULT_CONTENT_DISPLAY_COLLECTION),
 
-					fragmentEntries: [
-						...contentDisplayCollection.fragmentEntries,
+				fragmentEntries: [
+					...(
+						contentDisplayCollection ||
+						DEFAULT_CONTENT_DISPLAY_COLLECTION
+					).fragmentEntries,
 
-						{
-							data: {
-								itemType: LAYOUT_DATA_ITEM_TYPES.collection,
-							},
-							icon: 'list',
-							itemId: 'collection-display',
-							label: Liferay.Language.get('collection-display'),
-							type: LAYOUT_DATA_ITEM_TYPES.collection,
+					{
+						data: {
+							itemType: LAYOUT_DATA_ITEM_TYPES.collection,
 						},
-					],
-				});
-			}
+						icon: 'list',
+						itemId: 'collection-display',
+						label: Liferay.Language.get('collection-display'),
+						type: LAYOUT_DATA_ITEM_TYPES.collection,
+					},
+				],
+			});
 
 			return newFragments;
 		}

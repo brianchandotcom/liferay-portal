@@ -15,6 +15,7 @@
 package com.liferay.redirect.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.redirect.exception.CircularRedirectEntryException;
@@ -188,6 +190,52 @@ public class RedirectEntryLocalServiceTest {
 		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
 			_group.getGroupId(), "groupBaseURL/sourceURL", null, "groupBaseURL",
 			false, "sourceURL", false,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test(expected = LayoutFriendlyURLException.class)
+	public void testAddRedirectEntryFailsWhenSourceURLDoubleSlash()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "a//a",
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test(expected = LayoutFriendlyURLException.class)
+	public void testAddRedirectEntryFailsWhenSourceURLEndSlash()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "a/",
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test(expected = LayoutFriendlyURLException.class)
+	public void testAddRedirectEntryFailsWhenSourceURLInvalidChar()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "~",
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test(expected = LayoutFriendlyURLException.class)
+	public void testAddRedirectEntryFailsWhenSourceURLStartSlash()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false, "/a",
+			ServiceContextTestUtil.getServiceContext());
+	}
+
+	@Test(expected = LayoutFriendlyURLException.class)
+	public void testAddRedirectEntryFailsWhenSourceURLTooLong()
+		throws Exception {
+
+		_redirectEntry = _redirectEntryLocalService.addRedirectEntry(
+			_group.getGroupId(), "destinationURL", null, false,
+			StringUtil.randomString(256),
 			ServiceContextTestUtil.getServiceContext());
 	}
 

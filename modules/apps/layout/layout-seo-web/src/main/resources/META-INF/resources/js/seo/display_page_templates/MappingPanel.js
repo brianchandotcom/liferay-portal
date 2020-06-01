@@ -12,34 +12,21 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import React from 'react';
-
-import MappingPanel from './MappingPanel';
 
 export default function () {
 	return (
-		<>
-			<ClayForm.Group>
-				<label className="dpt-mapping-label" htmlFor="titleSelector">
-					<div className="control-label">
-						{Liferay.Language.get('html-title')}
-					</div>
-					<ClayInput.Group>
-						<ClayInput.GroupItem>
-							<ClayInput
-								className="dpt-mapping-input"
-								id="title"
-								readOnly
-								type="text"
-							/>
-						</ClayInput.GroupItem>
-						<ClayInput.GroupItem shrink>
-							<MappingPanel />
-						</ClayInput.GroupItem>
-					</ClayInput.Group>
-				</label>
-			</ClayForm.Group>
-		</>
+		<div className="dpt-mapping-panel-wrapper">
+			<ClayButton
+				className="dpt-mapping-btn"
+				displayType="secondary"
+				id="titleSelector"
+				monospaced
+			>
+				<ClayIcon symbol="bolt" />
+			</ClayButton>
+		</div>
 	);
 }

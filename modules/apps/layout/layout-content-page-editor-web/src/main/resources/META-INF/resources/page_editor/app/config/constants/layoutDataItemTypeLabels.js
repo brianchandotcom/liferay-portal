@@ -25,5 +25,4 @@ export const LAYOUT_DATA_ITEM_TYPE_LABELS = {
 	fragment: Liferay.Language.get('fragment'),
 	root: Liferay.Language.get('root'),
 	row: Liferay.Language.get('row'),
-	section: Liferay.Language.get('section'),
 };

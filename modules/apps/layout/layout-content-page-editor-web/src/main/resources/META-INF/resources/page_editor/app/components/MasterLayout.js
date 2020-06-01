@@ -51,7 +51,6 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: Root,
 	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
 	[LAYOUT_DATA_ITEM_TYPES.row]: Row,
-	[LAYOUT_DATA_ITEM_TYPES.section]: Section,
 };
 
 export default function MasterPage() {

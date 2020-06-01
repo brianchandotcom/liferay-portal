@@ -1,0 +1,130 @@
+@component-name = "app-builder-workflow"
+definition {
+
+	property custom.properties = "default.layout.template.id=1_column";
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "App Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "My Custom Object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		FormViewBuilder.addFormView(
+			fieldType = "Text",
+			formViewName = "My Form View");
+
+		TableViewBuilder.addBasicTableView(
+			fieldType = "Text",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "My App",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Apps");
+	}
+
+	tearDown {
+
+		AppBuilderAdmin.teardownAppBuilder();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Automate LPS-111262 & LPS-111681"
+	@priority = "5"
+	test ValidateListOfStandardApps {
+		property portal.acceptance = "true";
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Objects");
+		AppBuilderAdmin.openItem(itemName = "My Custom Object");
+		AppBuilderAdmin.switchTab(tabName = "Apps");
+		App.add(
+			appTitle = "Standalone App",
+			deployOption = "Standalone",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+		App.add(
+			appTitle = "Widget App",
+			deployOption = "Widget",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		ProductMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Apps");
+
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My App");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Standalone App");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Widget App");
+
+		AppBuilderWorkflow.validateColumns();
+
+		AppBuilderAdmin.undeployApp(itemName = "My App");
+
+		AppBuilderAdmin.deployApp(itemName = "My App");
+
+		AppBuilderAdmin.searchByItem(itemName = "Ap");
+		AppBuilderWorkflow.validateSearchItemCount(
+			itemCount = "3",
+			itemName = "Ap");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My App");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Standalone App");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Widget App");
+
+		AppBuilderAdmin.searchByItem(itemName = "Widget");
+		AppBuilderWorkflow.validateSearchItemCount(
+			itemCount = "1",
+			itemName = "Widget");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "My App");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Standalone App");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Widget App");
+
+		AppBuilderAdmin.searchByItem(itemName = "No Result Validation");
+		AppBuilderAdmin.validateIfSearchItemIsNotFound(itemName = "No Result Validation");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "My App");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Standalone App");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Widget App");
+
+		AppBuilderAdmin.clearSearch();
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "My App");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Standalone App");
+		AppBuilderAdmin.validateItemNameOnTable(itemName = "Widget App");
+
+		AppBuilderAdmin.openStandAloneApp(itemName = "Standalone App");
+		SelectWindow.selectPopUp(locator1 = "null");
+		AppBuilderAdmin.validateStandAloneApp();
+		Navigator.closeWindow();
+
+		AppBuilderAdmin.deleteApp(itemName = "My App");
+	}
+
+}

@@ -7921,6 +7921,271 @@ public interface JournalArticlePersistence
 		long classNameId, Date expirationDate, int status);
 
 	/**
+	 * Returns all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @return the matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status);
+
+	/**
+	 * Returns a range of all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @return the range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching journal articles
+	 */
+	public java.util.List<JournalArticle> findByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	public JournalArticle findByG_F_C_NotST_First(
+			long groupId, long classNameId, long folderId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the first journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	public JournalArticle fetchByG_F_C_NotST_First(
+		long groupId, long classNameId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article
+	 * @throws NoSuchArticleException if a matching journal article could not be found
+	 */
+	public JournalArticle findByG_F_C_NotST_Last(
+			long groupId, long classNameId, long folderId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns the last journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching journal article, or <code>null</code> if a matching journal article could not be found
+	 */
+	public JournalArticle fetchByG_F_C_NotST_Last(
+		long groupId, long classNameId, long folderId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns the journal articles before and after the current journal article in the ordered set where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param id the primary key of the current journal article
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article
+	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
+	 */
+	public JournalArticle[] findByG_F_C_NotST_PrevAndNext(
+			long id, long groupId, long classNameId, long folderId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Returns all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @return the matching journal articles that the user has permission to view
+	 */
+	public java.util.List<JournalArticle> filterFindByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status);
+
+	/**
+	 * Returns a range of all the journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @return the range of matching journal articles that the user has permission to view
+	 */
+	public java.util.List<JournalArticle> filterFindByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the journal articles that the user has permissions to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>JournalArticleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of journal articles
+	 * @param end the upper bound of the range of journal articles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching journal articles that the user has permission to view
+	 */
+	public java.util.List<JournalArticle> filterFindByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+			orderByComparator);
+
+	/**
+	 * Returns the journal articles before and after the current journal article in the ordered set of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param id the primary key of the current journal article
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next journal article
+	 * @throws NoSuchArticleException if a journal article with the primary key could not be found
+	 */
+	public JournalArticle[] filterFindByG_F_C_NotST_PrevAndNext(
+			long id, long groupId, long classNameId, long folderId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<JournalArticle>
+				orderByComparator)
+		throws NoSuchArticleException;
+
+	/**
+	 * Removes all the journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 */
+	public void removeByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status);
+
+	/**
+	 * Returns the number of journal articles where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @return the number of matching journal articles
+	 */
+	public int countByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status);
+
+	/**
+	 * Returns the number of journal articles that the user has permission to view where groupId = &#63; and classNameId = &#63; and folderId = &#63; and status &ne; &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param folderId the folder ID
+	 * @param status the status
+	 * @return the number of matching journal articles that the user has permission to view
+	 */
+	public int filterCountByG_F_C_NotST(
+		long groupId, long classNameId, long folderId, int status);
+
+	/**
 	 * Caches the journal article in the entity cache if it is enabled.
 	 *
 	 * @param journalArticle the journal article

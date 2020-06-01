@@ -14,52 +14,18 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
-import {AppContext} from '../../AppContext.es';
-import isClickOutside from '../../utils/clickOutside.es';
-import {addItem, getItem} from '../../utils/client.es';
-import CustomObjectPopover from '../custom-object/CustomObjectPopover.es';
+import {getItem} from '../../utils/client.es';
 import DropDownWithSearch from './DropDownWithSearch.es';
 
 export default ({onSelect, selectedValue, visible}) => {
-	const {basePortletURL} = useContext(AppContext);
 	const [state, setState] = useState({
 		error: null,
 		isLoading: true,
 	});
-	const [isPopoverVisible, setPopoverVisible] = useState(false);
 	const [items, setItems] = useState([]);
-
-	const popoverRef = useRef();
-
 	const selectRef = useRef();
-
-	const onClick = () => {
-		setPopoverVisible(!isPopoverVisible);
-	};
-	const onSubmit = ({isAddFormView, name}) => {
-		const addURL = `/o/data-engine/v2.0/data-definitions/by-content-type/app-builder`;
-
-		addItem(addURL, {
-			availableLanguageIds: ['en_US'],
-			dataDefinitionFields: [],
-			name: {
-				value: name,
-			},
-		}).then(({id}) => {
-			if (isAddFormView) {
-				Liferay.Util.navigate(
-					Liferay.Util.PortletURL.createRenderURL(basePortletURL, {
-						appsPortlet: true,
-						dataDefinitionId: id,
-						mvcRenderCommandName: '/edit_form_view',
-						newCustomObject: true,
-					})
-				);
-			}
-		});
-	};
 
 	const doFetch = () => {
 		const params = {keywords: '', page: -1, pageSize: -1, sort: ''};
@@ -110,15 +76,6 @@ export default ({onSelect, selectedValue, visible}) => {
 
 	const stateProps = {
 		emptyProps: {
-			children: (
-				<ClayButton
-					className="emptyButton"
-					displayType="secondary"
-					onClick={onClick}
-				>
-					{Liferay.Language.get('new-custom-object')}
-				</ClayButton>
-			),
 			label: Liferay.Language.get('there-are-no-objects-yet'),
 		},
 		errorProps: {
@@ -133,24 +90,6 @@ export default ({onSelect, selectedValue, visible}) => {
 			label: Liferay.Language.get('retrieving-all-objects'),
 		},
 	};
-
-	useEffect(() => {
-		const handler = ({target}) => {
-			const isOutside = isClickOutside(
-				target,
-				selectRef.current,
-				popoverRef.current
-			);
-
-			if (isOutside) {
-				setPopoverVisible(false);
-			}
-		};
-
-		window.addEventListener('click', handler);
-
-		return () => window.removeEventListener('click', handler);
-	}, [popoverRef]);
 
 	return (
 		<>
@@ -188,16 +127,6 @@ export default ({onSelect, selectedValue, visible}) => {
 					onSelect={handleOnSelect}
 				/>
 			</DropDownWithSearch>
-
-			<CustomObjectPopover
-				alignElement={selectRef.current}
-				onCancel={() => {
-					setPopoverVisible(false);
-				}}
-				onSubmit={onSubmit}
-				ref={popoverRef}
-				visible={isPopoverVisible}
-			/>
 		</>
 	);
 };

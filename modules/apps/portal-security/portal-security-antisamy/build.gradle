@@ -3,6 +3,7 @@ import com.liferay.gradle.util.FileUtil
 task processDefaultSanitizerConfiguration(type: Copy)
 task processKnowledgeBaseSanitizerConfiguration(type: Copy)
 
+File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
 String sanitizerConfigurationUrl = "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/owaspantisamy/antisamy-ebay-1.4.4.xml"
 
 dependencies {
@@ -31,8 +32,6 @@ dependencies {
 }
 
 processDefaultSanitizerConfiguration {
-	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
-
 	ext {
 		autoClean = false
 	}
@@ -70,7 +69,7 @@ processKnowledgeBaseSanitizerConfiguration {
 	}
 
 	from {
-		processDefaultSanitizerConfiguration.outputs.files.singleFile
+		sanitizerConfigurationFile
 	}
 
 	into sanitizerConfigurationFile.parentFile

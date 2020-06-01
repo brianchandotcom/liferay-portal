@@ -23,11 +23,11 @@ public class PortalTopLevelBuild extends DefaultTopLevelBuild {
 		super(url, topLevelBuild);
 	}
 
-	public BranchInformation getAsahBranchInformation() {
+	public BranchInformation getOSBAsahBranchInformation() {
 		return getBranchInformation("osb.asah");
 	}
 
-	public BranchInformation getFaroBranchInformation() {
+	public BranchInformation getOSBFaroBranchInformation() {
 		return getBranchInformation("osb.faro");
 	}
 

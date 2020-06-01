@@ -152,12 +152,16 @@ public class DLReferencesExportImportContentProcessor
 	protected Map<String, String[]> getDLReferenceParameters(
 		long groupId, String content, int beginPos, int endPos) {
 
+		ObjectValuePair<String, Integer> dlReferenceEndPosObjectValuePair =
+			getDLReferenceEndPosObjectValuePair(content, beginPos, endPos);
+
+		if (dlReferenceEndPosObjectValuePair == null) {
+			return null;
+		}
+
 		boolean legacyURL = isLegacyURL(content, beginPos);
 
 		Map<String, String[]> map = new HashMap<>();
-
-		ObjectValuePair<String, Integer> dlReferenceEndPosObjectValuePair =
-			getDLReferenceEndPosObjectValuePair(content, beginPos, endPos);
 
 		String dlReference = dlReferenceEndPosObjectValuePair.getKey();
 
@@ -612,6 +616,12 @@ public class DLReferencesExportImportContentProcessor
 			Map<String, String[]> dlReferenceParameters =
 				getDLReferenceParameters(
 					groupId, content, beginPos + pathContext.length(), endPos);
+
+			if (dlReferenceParameters == null) {
+				endPos = beginPos - 1;
+
+				continue;
+			}
 
 			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
 

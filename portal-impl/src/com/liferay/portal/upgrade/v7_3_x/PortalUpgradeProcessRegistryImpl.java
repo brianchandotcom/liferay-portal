@@ -110,6 +110,14 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 13, 0),
 			new UpgradeCTModel(
 				"WorkflowDefinitionLink", "WorkflowInstanceLink"));
+
+		upgradeProcesses.put(
+			new Version(8, 14, 0),
+			new UpgradeCTModel(
+				"SocialActivity", "SocialActivityAchievement",
+				"SocialActivityCounter", "SocialActivityLimit",
+				"SocialActivitySet", "SocialActivitySetting", "SocialRelation",
+				"SocialRequest"));
 	}
 
 }

@@ -786,6 +786,8 @@ definition {
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
 			IFrame.closeFrame();
 		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro publishToLiveNowViaPortletCP {

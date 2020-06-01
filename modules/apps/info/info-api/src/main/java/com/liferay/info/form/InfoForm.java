@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.info.field;
+package com.liferay.info.form;
 
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.lang.HashUtil;
 

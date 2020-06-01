@@ -34,6 +34,7 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 
 	<aui:script>
 		Liferay.Util.openToast({
+			htmlMessage: true,
 			message: "
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(jspPath) %>">
@@ -46,6 +47,7 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 			renderData: {
 				portletId: <%= portletId %>
 			},
+			title: null,
 			toastProps: {
 				autoClose: <%= timeout %>,
 				className: '<%= cssClass %>',

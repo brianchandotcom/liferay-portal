@@ -138,7 +138,11 @@ export const RowConfigurationPanel = ({item}) => {
 			<Select
 				configurationKey="numberOfColumns"
 				handleChange={handleConfigurationValueChanged}
-				label={Liferay.Language.get('number-of-columns')}
+				label={
+					config.responsiveEnabled
+						? Liferay.Language.get('number-of-modules')
+						: Liferay.Language.get('number-of-columns')
+				}
 				options={NUMBER_OF_COLUMNS_OPTIONS.map((option) => ({
 					label: option,
 				}))}

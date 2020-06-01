@@ -36,8 +36,14 @@ String googleDocsRedirect = ParamUtil.getString(request, "googleDocsRedirect");
 	</head>
 
 	<body>
-		<div class="autofit-padded autofit-row autofit-row-center google-docs-toolbar">
-			<div class="autofit-col autofit-col-expand">
+		<clay:content-row
+			cssClass="google-docs-toolbar"
+			padded="true"
+			verticalAlign="center"
+		>
+			<clay:content-col
+				expand="true"
+			>
 				<div class="autofit-section">
 					<portlet:actionURL name="/document_library/edit_in_google_docs" var="checkInURL">
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECKIN %>" />
@@ -55,9 +61,9 @@ String googleDocsRedirect = ParamUtil.getString(request, "googleDocsRedirect");
 						/>
 					</form>
 				</div>
-			</div>
+			</clay:content-col>
 
-			<div class="autofit-col">
+			<clay:content-col>
 				<portlet:actionURL name="/document_library/edit_in_google_docs" var="cancelCheckoutURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CANCEL_CHECKOUT %>" />
 					<portlet:param name="redirect" value="<%= googleDocsRedirect %>" />
@@ -72,8 +78,8 @@ String googleDocsRedirect = ParamUtil.getString(request, "googleDocsRedirect");
 						type="submit"
 					/>
 				</form>
-			</div>
-		</div>
+			</clay:content-col>
+		</clay:content-row>
 
 		<iframe class="google-docs-iframe" frameborder="0" id="<portlet:namespace />gDocsIFrame" src="<%= GoogleDriveBackgroundTaskConstants.DOCS_GOOGLE_COM_URL + HtmlUtil.escapeAttribute(googleDocsEditURL) %>"></iframe>
 	</body>

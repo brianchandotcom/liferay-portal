@@ -15,7 +15,7 @@
 import ExperienceService from '../../../app/services/ExperienceService';
 import selectExperienceAction from '../actions/selectExperience';
 
-export default function selectExperience({id, isUndo = false}) {
+export default function selectExperience({id}) {
 	return (dispatch) => {
 		return ExperienceService.selectExperience({
 			body: {
@@ -26,7 +26,6 @@ export default function selectExperience({id, isUndo = false}) {
 			.then((portletIds) => {
 				return dispatch(
 					selectExperienceAction({
-						isUndo,
 						portletIds,
 						segmentsExperienceId: id,
 					})

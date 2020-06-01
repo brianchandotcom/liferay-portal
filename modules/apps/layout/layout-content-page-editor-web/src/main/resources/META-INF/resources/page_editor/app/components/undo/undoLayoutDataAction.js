@@ -12,7 +12,6 @@
  * details.
  */
 
-import {updateLayoutData} from '../../actions/index';
 import LayoutService from '../../services/LayoutService';
 
 function undoAction({action, store}) {
@@ -24,7 +23,7 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(() => {
-			dispatch(updateLayoutData({isUndo: true, layoutData}));
+			dispatch({layoutData, type: action.type});
 		});
 	};
 }

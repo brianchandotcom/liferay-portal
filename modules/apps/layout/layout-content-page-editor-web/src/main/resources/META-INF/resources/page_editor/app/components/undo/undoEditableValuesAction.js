@@ -17,7 +17,6 @@ import updateEditableValues from '../../thunks/updateEditableValues';
 function undoAction({action, store}) {
 	return updateEditableValues({
 		...action,
-		isUndo: true,
 		segmentsExperienceId: store.segmentsExperienceId,
 	});
 }

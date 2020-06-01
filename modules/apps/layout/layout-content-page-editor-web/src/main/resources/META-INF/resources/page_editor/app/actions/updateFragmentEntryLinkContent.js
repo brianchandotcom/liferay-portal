@@ -18,13 +18,11 @@ export default function updateFragmentEntryLinkContent({
 	collectionItemIndex,
 	content,
 	fragmentEntryLinkId,
-	isUndo = false,
 }) {
 	return {
 		collectionItemIndex,
 		content,
 		fragmentEntryLinkId,
-		isUndo,
 		type: UPDATE_FRAGMENT_ENTRY_LINK_CONTENT,
 	};
 }

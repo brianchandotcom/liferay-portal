@@ -27,8 +27,12 @@ export default function undo({store}) {
 
 		dispatch({type: UPDATE_UNDO_ACTIONS, undoHistory: undos});
 
+		const undoDispatch = (action) => {
+			return dispatch({...action, isUndo: true});
+		};
+
 		promise = promise.then(() =>
-			undoAction({action: lastUndo, store})(dispatch)
+			undoAction({action: lastUndo, store})(undoDispatch)
 		);
 	};
 }

@@ -20,7 +20,7 @@ import {config} from '../config/index';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
-export default function deleteItem({isUndo = false, itemId, store}) {
+export default function deleteItem({itemId, store}) {
 	return (dispatch) => {
 		const {fragmentEntryLinks, layoutData, segmentsExperienceId} = store;
 
@@ -57,7 +57,6 @@ export default function deleteItem({isUndo = false, itemId, store}) {
 
 					dispatch(
 						deleteItemAction({
-							isUndo,
 							itemId,
 							layoutData,
 							portletIds,

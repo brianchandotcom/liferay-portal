@@ -28,7 +28,6 @@ function undoAction({action}) {
 				updateFragmentEntryLinkConfiguration({
 					fragmentEntryLink,
 					fragmentEntryLinkId,
-					isUndo: true,
 					layoutData,
 				})
 			);

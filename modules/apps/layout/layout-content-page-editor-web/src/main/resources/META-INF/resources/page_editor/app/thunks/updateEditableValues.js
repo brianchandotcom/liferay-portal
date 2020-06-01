@@ -20,7 +20,6 @@ import InfoItemService from '../services/InfoItemService';
 export default function updateEditableValues({
 	editableValues,
 	fragmentEntryLinkId,
-	isUndo = false,
 	segmentsExperienceId,
 }) {
 	return (dispatch) => {
@@ -34,7 +33,6 @@ export default function updateEditableValues({
 					updateEditableValuesAction({
 						editableValues,
 						fragmentEntryLinkId,
-						isUndo,
 						segmentsExperienceId,
 					})
 				);

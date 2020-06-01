@@ -12,8 +12,7 @@
  * details.
  */
 
-import addUsedWigets from '../../actions/addUsedWidgets';
-import {updateLayoutData} from '../../actions/index';
+import addItem from '../../actions/addItem';
 import LayoutService from '../../services/LayoutService';
 
 function undoAction({action, store}) {
@@ -25,8 +24,7 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(() => {
-			dispatch(updateLayoutData({isUndo: true, layoutData}));
-			dispatch(addUsedWigets({portletIds}));
+			dispatch(addItem({layoutData, portletIds}));
 		});
 	};
 }

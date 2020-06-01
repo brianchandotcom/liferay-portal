@@ -34,52 +34,15 @@ export {MAP_HTML_CHARS_ESCAPED};
 
 const MAP_HTML_CHARS_UNESCAPED = {};
 
-const htmlEscapedValues = [];
-
-const htmlUnescapedValues = [];
-
-Object.entries(MAP_HTML_CHARS_ESCAPED).forEach((entry) => {
-	MAP_HTML_CHARS_UNESCAPED[entry[1]] = entry[0];
-
-	htmlEscapedValues.push(entry[1]);
-	htmlUnescapedValues.push(entry[0]);
+Object.keys(MAP_HTML_CHARS_ESCAPED).forEach(([char, escapedChar]) => {
+	MAP_HTML_CHARS_UNESCAPED[escapedChar] = char;
 });
 
-const LEFT_SQUARE_BRACKET = '[';
-const RIGHT_SQUARE_BRACKET = ']';
+const HTML_ESCAPED_VALUES = Object.values(MAP_HTML_CHARS_ESCAPED);
 
-const HTML_ESCAPE = new RegExp(
-	LEFT_SQUARE_BRACKET + htmlUnescapedValues.join('') + RIGHT_SQUARE_BRACKET,
-	'g'
-);
+const HTML_UNESCAPED_VALUES = Object.keys(MAP_HTML_CHARS_ESCAPED);
 
-function _escapeHTML(preventDoubleEscape, entities, entitiesValues, match) {
-	let result;
-
-	if (preventDoubleEscape) {
-		const argumentsArray = Array.from(arguments);
-		const length = argumentsArray.length;
-
-		const offset = argumentsArray[length - 2];
-		const string = argumentsArray[length - 1];
-
-		const nextSemicolonIndex = string.indexOf(';', offset);
-
-		if (nextSemicolonIndex >= 0) {
-			const entity = string.substring(offset, nextSemicolonIndex + 1);
-
-			if (entitiesValues.indexOf(entity) >= 0) {
-				result = match;
-			}
-		}
-	}
-
-	if (!result) {
-		result = entities[match];
-	}
-
-	return result;
-}
+const HTML_ESCAPE = new RegExp('[' + HTML_UNESCAPED_VALUES.join('') + ']', 'g');
 
 export default function escapeHTML(string, preventDoubleEscape, entities) {
 	let regex = HTML_ESCAPE;

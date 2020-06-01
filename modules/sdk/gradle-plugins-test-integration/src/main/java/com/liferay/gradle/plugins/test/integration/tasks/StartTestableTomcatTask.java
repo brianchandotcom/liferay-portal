@@ -85,6 +85,8 @@ public class StartTestableTomcatTask extends StartAppServerTask {
 				}
 
 			});
+
+		waitForReachable();
 	}
 
 	private void _deleteLiferayHome() {

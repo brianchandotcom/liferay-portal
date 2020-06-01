@@ -400,9 +400,7 @@ definition {
 				value1 = "${userLastName}");
 		}
 
-		AssertClick(
-			locator1 = "Button#SUBMIT",
-			value1 = "Save");
+		Button.clickSave();
 	}
 
 	macro addCreateAccountPG {

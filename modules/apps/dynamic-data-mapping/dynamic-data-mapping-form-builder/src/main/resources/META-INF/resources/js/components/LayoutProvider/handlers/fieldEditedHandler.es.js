@@ -14,6 +14,7 @@
 
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
+import {getField} from '../../../util/fieldSupport.es';
 import {updateRulesReferences} from '../util/rules.es';
 import {
 	updateField,
@@ -119,10 +120,15 @@ export const updateState = (props, state, propertyName, propertyValue) => {
 };
 
 export const handleFieldEdited = (props, state, event) => {
-	const {propertyName, propertyValue} = event;
+	const {fieldName, propertyName, propertyValue} = event;
 	let newState = {};
 
 	if (propertyName !== 'name' || propertyValue !== '') {
+		state = {
+			...state,
+			...(fieldName && {focusedField: getField(state.pages, fieldName)}),
+		};
+
 		newState = updateState(props, state, propertyName, propertyValue);
 	}
 

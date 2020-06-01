@@ -107,6 +107,7 @@ export default ({dataLayoutBuilder}) => {
 				});
 
 				dataLayoutBuilder.dispatch('fieldEdited', {
+					fieldName,
 					propertyName: 'ddmStructureId',
 					propertyValue: ddmStructureId,
 				});

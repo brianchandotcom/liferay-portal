@@ -14,7 +14,6 @@
 
 package com.liferay.app.builder.workflow.service.impl;
 
-import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.workflow.exception.DuplicateAppBuilderWorkflowTaskLinkException;
 import com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink;
 import com.liferay.app.builder.workflow.service.base.AppBuilderWorkflowTaskLinkLocalServiceBaseImpl;
@@ -25,7 +24,6 @@ import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -49,8 +47,6 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 		if (Objects.nonNull(appBuilderWorkflowTaskLink)) {
 			throw new DuplicateAppBuilderWorkflowTaskLinkException();
 		}
-
-		_appBuilderAppLocalService.getAppBuilderApp(appBuilderAppId);
 
 		appBuilderWorkflowTaskLink =
 			appBuilderWorkflowTaskLinkPersistence.create(
@@ -88,8 +84,5 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 		return appBuilderWorkflowTaskLinkPersistence.findByA_W(
 			appBuilderAppId, workflowTaskName);
 	}
-
-	@Reference
-	private AppBuilderAppLocalService _appBuilderAppLocalService;
 
 }

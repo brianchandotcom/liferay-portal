@@ -12,30 +12,42 @@
  * details.
  */
 
-package com.liferay.portal.servlet.filters.uploadservletrequest;
+package com.liferay.portal.upload.servlet.request.filter.internal;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
-import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
+import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Preston Crary
  */
+@Component(
+	enabled = true, immediate = true,
+	property = {
+		"dispatcher=REQUEST", "servlet-context-name=",
+		"servlet-filter-name=Upload Servlet Request Filter", "url-pattern=/*"
+	},
+	service = Filter.class
+)
 public class UploadServletRequestFilter extends BasePortalFilter {
 
 	public static final String COPY_MULTIPART_STREAM_TO_FILE =
@@ -73,8 +85,8 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 		long maxFileSize = 0;
 
 		if (Validator.isNotNull(portletId)) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				PortalUtil.getCompanyId(httpServletRequest), portletId);
+			Portlet portlet = _portletLocalService.getPortletById(
+				_portal.getCompanyId(httpServletRequest), portletId);
 
 			if (portlet != null) {
 				ServletContext servletContext =
@@ -104,7 +116,7 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 		}
 
 		UploadServletRequest uploadServletRequest =
-			PortalUtil.getUploadServletRequest(
+			_portal.getUploadServletRequest(
 				httpServletRequest, fileSizeThreshold, location, maxRequestSize,
 				maxFileSize);
 
@@ -117,5 +129,11 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 			uploadServletRequest.cleanUp();
 		}
 	}
+
+	@Reference
+	private Portal _portal;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

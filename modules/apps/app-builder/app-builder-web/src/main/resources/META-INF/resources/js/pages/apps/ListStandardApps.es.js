@@ -49,15 +49,15 @@ export default ({scope, ...restProps}) => {
 	};
 
 	useEffect(() => {
-		const handler = ({target}) => {
+		const clickHandler = ({target}) => {
 			if (isClickOutside(target, popoverRef.current)) {
 				setPopoverVisible(false);
 			}
 		};
 
-		window.addEventListener('click', handler);
+		window.addEventListener('click', clickHandler);
 
-		return () => window.removeEventListener('click', handler);
+		return () => window.removeEventListener('click', clickHandler);
 	}, [popoverRef]);
 
 	const [firstColumn, ...otherColumns] = COLUMNS;

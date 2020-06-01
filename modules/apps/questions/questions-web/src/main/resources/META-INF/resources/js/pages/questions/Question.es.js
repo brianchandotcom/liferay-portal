@@ -16,7 +16,6 @@ import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -34,6 +33,7 @@ import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
+import useQueryParams from '../../hooks/useQueryParams.es';
 import {
 	client,
 	createAnswerQuery,
@@ -48,6 +48,7 @@ import {dateToBriefInternationalHuman} from '../../utils/utils.es';
 export default withRouter(
 	({
 		history,
+		location,
 		match: {
 			params: {questionId},
 			url,
@@ -55,11 +56,14 @@ export default withRouter(
 	}) => {
 		const context = useContext(AppContext);
 
+		const queryParams = useQueryParams(location);
+
+		const sort = queryParams.get('sort') || 'active';
+
 		const [articleBody, setArticleBody] = useState();
 		const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
-		const [sort, setSort] = useState('active');
 
 		const {
 			loading,
@@ -338,49 +342,40 @@ export default withRouter(
 											<ClayNavigationBar.Item
 												active={sort === 'active'}
 											>
-												<ClayLink
-													className="nav-link"
-													displayType="unstyled"
-													onClick={() =>
-														setSort('active')
-													}
+												<Link
+													className="link-unstyled nav-link"
+													to={`${url}?sort=active`}
 												>
 													{Liferay.Language.get(
 														'active'
 													)}
-												</ClayLink>
+												</Link>
 											</ClayNavigationBar.Item>
 
 											<ClayNavigationBar.Item
 												active={sort === 'oldest'}
 											>
-												<ClayLink
-													className="nav-link"
-													displayType="unstyled"
-													onClick={() =>
-														setSort('oldest')
-													}
+												<Link
+													className="link-unstyled nav-link"
+													to={`${url}?sort=oldest`}
 												>
 													{Liferay.Language.get(
 														'oldest'
 													)}
-												</ClayLink>
+												</Link>
 											</ClayNavigationBar.Item>
 
 											<ClayNavigationBar.Item
 												active={sort === 'votes'}
 											>
-												<ClayLink
-													className="nav-link"
-													displayType="unstyled"
-													onClick={() =>
-														setSort('votes')
-													}
+												<Link
+													className="link-unstyled nav-link"
+													to={`${url}?sort=votes`}
 												>
 													{Liferay.Language.get(
 														'votes'
 													)}
-												</ClayLink>
+												</Link>
 											</ClayNavigationBar.Item>
 										</ClayNavigationBar>
 									</div>

@@ -207,6 +207,7 @@ const GlobalMenu = ({panelAppsURL}) => {
 		>
 			<ClayButtonWithIcon
 				className="dropdown-toggle lfr-portal-tooltip"
+				data-qa-id="globalMenu"
 				displayType="unstyled"
 				onClick={handleButtonOnClick}
 				onFocus={fetchCategories}

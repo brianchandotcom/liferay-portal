@@ -14,10 +14,11 @@
 
 import {ADD_ITEM} from './types';
 
-export default function addItem({itemId, layoutData}) {
+export default function addItem({itemId, layoutData, portletIds = []}) {
 	return {
 		itemId,
 		layoutData,
+		portletIds,
 		type: ADD_ITEM,
 	};
 }

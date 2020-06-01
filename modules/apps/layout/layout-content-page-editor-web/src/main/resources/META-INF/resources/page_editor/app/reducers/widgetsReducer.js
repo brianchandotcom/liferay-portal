@@ -14,7 +14,7 @@
 
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
-	ADD_USED_WIDGET,
+	ADD_ITEM,
 	DELETE_ITEM,
 	DELETE_WIDGETS,
 } from '../actions/types';
@@ -47,7 +47,7 @@ export default function widgetsReducer(widgets, action) {
 
 			return nextWidgets;
 		}
-		case ADD_USED_WIDGET: {
+		case ADD_ITEM: {
 			const portletIds = action.portletIds || [];
 			let nextWidgets = widgets;
 

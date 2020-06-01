@@ -57,7 +57,12 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 			) {
 				event.preventDefault();
 
-				onUndo();
+				if (event.shiftKey) {
+					onRedo();
+				}
+				else {
+					onUndo();
+				}
 			}
 		},
 		true,

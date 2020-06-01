@@ -84,14 +84,14 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 				<clay:content-row
 					cssClass="sidebar-panel widget-metadata"
 				>
+
+					<%
+					User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
+					%>
+
 					<clay:content-col
 						cssClass="inline-item-before"
 					>
-
-						<%
-						User owner = UserLocalServiceUtil.fetchUser(fileEntry.getUserId());
-						%>
-
 						<liferay-ui:user-portrait
 							user="<%= owner %>"
 						/>

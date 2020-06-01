@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Tina Tian
  */
-public class UpgradeResourceActions extends UpgradeProcess {
+public class UpgradeResourceAction extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

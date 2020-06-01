@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
-import com.liferay.portal.upgrade.v7_0_6.UpgradeResourceActions;
+import com.liferay.portal.upgrade.v7_0_6.UpgradeResourceAction;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  * @author Michael Bowerman
  */
 @RunWith(Arquillian.class)
-public class UpgradeResourceActionsTest {
+public class UpgradeResourceActionTest {
 
 	@ClassRule
 	@Rule
@@ -89,8 +89,8 @@ public class UpgradeResourceActionsTest {
 		_assertResourceAction(_NAME_2, _ACTION_ID_1, false);
 		_assertResourceAction(_NAME_2, _ACTION_ID_2, false);
 
-		UpgradeResourceActions upgradeResourceActions =
-			new UpgradeResourceActions();
+		UpgradeResourceAction upgradeResourceActions =
+			new UpgradeResourceAction();
 
 		upgradeResourceActions.upgrade();
 

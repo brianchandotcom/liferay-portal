@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.internal.upgrade.v1_0_2;
+package com.liferay.portal.upgrade.v7_3_x;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 
 /**
- * @author Tina Tian
+ * @author Dante Wang
  */
-public class UpgradeResourceActions extends UpgradeProcess {
+public class UpgradeResourceAction extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
-			"delete from ResourceAction where name = '" +
-				PortalSettingsPortletKeys.PORTAL_SETTINGS + "'");
+			"delete from ResourceAction where name in ('136', '150', '151', " +
+				"'152', '153', '157', '158')");
 	}
 
 }

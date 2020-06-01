@@ -15,7 +15,7 @@
 package com.liferay.portal.security.audit.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
-import com.liferay.portal.security.audit.web.internal.upgrade.v1_0_0.UpgradeResourceActions;
+import com.liferay.portal.security.audit.web.internal.upgrade.v1_0_0.UpgradeResourceAction;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,7 +30,7 @@ public class PortalSecurityAuditWebUpgrade implements UpgradeStepRegistrator {
 	public void register(Registry registry) {
 		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
 
-		registry.register("0.0.1", "1.0.0", new UpgradeResourceActions());
+		registry.register("0.0.1", "1.0.0", new UpgradeResourceAction());
 	}
 
 }

@@ -95,7 +95,7 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(8, 9, 0), new UpgradeRatingsMVCCVersion());
 
 		upgradeProcesses.put(
-			new Version(8, 10, 0), new UpgradeResourceActions());
+			new Version(8, 10, 0), new UpgradeResourceAction());
 
 		upgradeProcesses.put(
 			new Version(8, 11, 0),

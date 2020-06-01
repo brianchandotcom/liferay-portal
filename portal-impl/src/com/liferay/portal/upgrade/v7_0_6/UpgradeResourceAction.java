@@ -26,7 +26,7 @@ import java.sql.ResultSet;
 /**
  * @author Michael Bowerman
  */
-public class UpgradeResourceActions extends UpgradeProcess {
+public class UpgradeResourceAction extends UpgradeProcess {
 
 	protected void deleteDuplicateBitwiseValuesOnResource() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -84,6 +84,6 @@ public class UpgradeResourceActions extends UpgradeProcess {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradeResourceActions.class);
+		UpgradeResourceAction.class);
 
 }

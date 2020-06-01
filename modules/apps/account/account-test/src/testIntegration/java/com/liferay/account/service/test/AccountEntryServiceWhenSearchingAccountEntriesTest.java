@@ -140,9 +140,7 @@ public class AccountEntryServiceWhenSearchingAccountEntriesTest {
 	public void testShouldReturnNoAccountEntriesWithoutManageAccountsPermission()
 		throws Exception {
 
-		for (Organization organization :
-				_organizationAccountEntries.keySet()) {
-
+		for (Organization organization : _organizationAccountEntries.keySet()) {
 			_userLocalService.addOrganizationUser(
 				organization.getOrganizationId(), _user);
 		}

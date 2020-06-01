@@ -217,8 +217,6 @@ definition {
 
 		Search.searchCP(searchTerm = "Parent");
 
-		ProductMenuHelper.closeProductMenu();
-
 		AssertTextEquals.assertPartialText(
 			locator1 = "Sites#SITE_TABLE_NAME",
 			value1 = "Parent Site Name");

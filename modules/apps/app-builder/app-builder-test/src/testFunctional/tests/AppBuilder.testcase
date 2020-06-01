@@ -564,7 +564,6 @@ definition {
 	test DeleteFormViewFieldFromObject {
 		property test.name.skip.portal.instance = "AppBuilder#DeleteFormViewFieldFromObject";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",
@@ -1888,7 +1887,6 @@ definition {
 	@priority = "5"
 	test RemoveFieldInMultipleFormViews {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

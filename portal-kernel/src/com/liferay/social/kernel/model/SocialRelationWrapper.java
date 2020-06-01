@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -42,6 +44,7 @@ public class SocialRelationWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("relationId", getRelationId());
 		attributes.put("companyId", getCompanyId());
@@ -59,6 +62,12 @@ public class SocialRelationWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -122,6 +131,16 @@ public class SocialRelationWrapper
 	@Override
 	public long getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the ct collection ID of this social relation.
+	 *
+	 * @return the ct collection ID of this social relation
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	/**
@@ -220,6 +239,16 @@ public class SocialRelationWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this social relation.
+	 *
+	 * @param ctCollectionId the ct collection ID of this social relation
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the mvcc version of this social relation.
 	 *
 	 * @param mvccVersion the mvcc version of this social relation
@@ -287,6 +316,20 @@ public class SocialRelationWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<SocialRelation, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<SocialRelation, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

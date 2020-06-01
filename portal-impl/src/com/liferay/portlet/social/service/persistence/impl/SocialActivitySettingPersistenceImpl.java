@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -41,7 +43,12 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -154,25 +161,28 @@ public class SocialActivitySettingPersistenceImpl
 		OrderByComparator<SocialActivitySetting> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByGroupId;
 				finderArgs = new Object[] {groupId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByGroupId;
 			finderArgs = new Object[] {groupId, start, end, orderByComparator};
 		}
 
 		List<SocialActivitySetting> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SocialActivitySetting>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -228,12 +238,12 @@ public class SocialActivitySettingPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -542,12 +552,22 @@ public class SocialActivitySettingPersistenceImpl
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
-		FinderPath finderPath = _finderPathCountByGroupId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
 
-		Object[] finderArgs = new Object[] {groupId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByGroupId;
+
+			finderArgs = new Object[] {groupId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -571,10 +591,14 @@ public class SocialActivitySettingPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -672,18 +696,21 @@ public class SocialActivitySettingPersistenceImpl
 		OrderByComparator<SocialActivitySetting> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_C;
 				finderArgs = new Object[] {groupId, classNameId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_C;
 			finderArgs = new Object[] {
 				groupId, classNameId, start, end, orderByComparator
@@ -692,7 +719,7 @@ public class SocialActivitySettingPersistenceImpl
 
 		List<SocialActivitySetting> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SocialActivitySetting>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -755,12 +782,12 @@ public class SocialActivitySettingPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1087,12 +1114,22 @@ public class SocialActivitySettingPersistenceImpl
 	 */
 	@Override
 	public int countByG_C(long groupId, long classNameId) {
-		FinderPath finderPath = _finderPathCountByG_C;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
 
-		Object[] finderArgs = new Object[] {groupId, classNameId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_C;
+
+			finderArgs = new Object[] {groupId, classNameId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1120,10 +1157,14 @@ public class SocialActivitySettingPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1224,18 +1265,21 @@ public class SocialActivitySettingPersistenceImpl
 		OrderByComparator<SocialActivitySetting> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_A;
 				finderArgs = new Object[] {groupId, activityType};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_A;
 			finderArgs = new Object[] {
 				groupId, activityType, start, end, orderByComparator
@@ -1244,7 +1288,7 @@ public class SocialActivitySettingPersistenceImpl
 
 		List<SocialActivitySetting> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SocialActivitySetting>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1307,12 +1351,12 @@ public class SocialActivitySettingPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -1639,12 +1683,22 @@ public class SocialActivitySettingPersistenceImpl
 	 */
 	@Override
 	public int countByG_A(long groupId, int activityType) {
-		FinderPath finderPath = _finderPathCountByG_A;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
 
-		Object[] finderArgs = new Object[] {groupId, activityType};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_A;
+
+			finderArgs = new Object[] {groupId, activityType};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -1672,10 +1726,14 @@ public class SocialActivitySettingPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -1783,18 +1841,21 @@ public class SocialActivitySettingPersistenceImpl
 		OrderByComparator<SocialActivitySetting> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByG_C_A;
 				finderArgs = new Object[] {groupId, classNameId, activityType};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByG_C_A;
 			finderArgs = new Object[] {
 				groupId, classNameId, activityType, start, end,
@@ -1804,7 +1865,7 @@ public class SocialActivitySettingPersistenceImpl
 
 		List<SocialActivitySetting> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SocialActivitySetting>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -1873,12 +1934,12 @@ public class SocialActivitySettingPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -2226,12 +2287,22 @@ public class SocialActivitySettingPersistenceImpl
 	 */
 	@Override
 	public int countByG_C_A(long groupId, long classNameId, int activityType) {
-		FinderPath finderPath = _finderPathCountByG_C_A;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
 
-		Object[] finderArgs = new Object[] {groupId, classNameId, activityType};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_C_A;
+
+			finderArgs = new Object[] {groupId, classNameId, activityType};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(4);
@@ -2263,10 +2334,14 @@ public class SocialActivitySettingPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2370,9 +2445,12 @@ public class SocialActivitySettingPersistenceImpl
 
 		name = Objects.toString(name, "");
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
+
 		Object[] finderArgs = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			finderArgs = new Object[] {
 				groupId, classNameId, activityType, name
 			};
@@ -2380,7 +2458,7 @@ public class SocialActivitySettingPersistenceImpl
 
 		Object result = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			result = FinderCacheUtil.getResult(
 				_finderPathFetchByG_C_A_N, finderArgs, this);
 		}
@@ -2444,7 +2522,7 @@ public class SocialActivitySettingPersistenceImpl
 				List<SocialActivitySetting> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByG_C_A_N, finderArgs, list);
 					}
@@ -2454,7 +2532,7 @@ public class SocialActivitySettingPersistenceImpl
 						Collections.sort(list, Collections.reverseOrder());
 
 						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
+							if (!productionMode || !useFinderCache) {
 								finderArgs = new Object[] {
 									groupId, classNameId, activityType, name
 								};
@@ -2475,7 +2553,7 @@ public class SocialActivitySettingPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(
 						_finderPathFetchByG_C_A_N, finderArgs);
 				}
@@ -2530,14 +2608,24 @@ public class SocialActivitySettingPersistenceImpl
 
 		name = Objects.toString(name, "");
 
-		FinderPath finderPath = _finderPathCountByG_C_A_N;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
 
-		Object[] finderArgs = new Object[] {
-			groupId, classNameId, activityType, name
-		};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByG_C_A_N;
+
+			finderArgs = new Object[] {
+				groupId, classNameId, activityType, name
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(5);
@@ -2584,10 +2672,14 @@ public class SocialActivitySettingPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(finderPath, finderArgs);
+				}
 
 				throw processException(exception);
 			}
@@ -2632,6 +2724,12 @@ public class SocialActivitySettingPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(SocialActivitySetting socialActivitySetting) {
+		if (socialActivitySetting.getCtCollectionId() != 0) {
+			socialActivitySetting.resetOriginalValues();
+
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
 			SocialActivitySettingImpl.class,
@@ -2661,6 +2759,12 @@ public class SocialActivitySettingPersistenceImpl
 
 		for (SocialActivitySetting socialActivitySetting :
 				socialActivitySettings) {
+
+			if (socialActivitySetting.getCtCollectionId() != 0) {
+				socialActivitySetting.resetOriginalValues();
+
+				continue;
+			}
 
 			if (EntityCacheUtil.getResult(
 					SocialActivitySettingModelImpl.ENTITY_CACHE_ENABLED,
@@ -2870,6 +2974,10 @@ public class SocialActivitySettingPersistenceImpl
 	protected SocialActivitySetting removeImpl(
 		SocialActivitySetting socialActivitySetting) {
 
+		if (!CTPersistenceHelperUtil.isRemove(socialActivitySetting)) {
+			return socialActivitySetting;
+		}
+
 		Session session = null;
 
 		try {
@@ -2932,7 +3040,18 @@ public class SocialActivitySettingPersistenceImpl
 		try {
 			session = openSession();
 
-			if (socialActivitySetting.isNew()) {
+			if (CTPersistenceHelperUtil.isInsert(socialActivitySetting)) {
+				if (!isNew) {
+					SocialActivitySetting oldSocialActivitySetting =
+						(SocialActivitySetting)session.get(
+							SocialActivitySettingImpl.class,
+							socialActivitySetting.getPrimaryKeyObj());
+
+					if (oldSocialActivitySetting != null) {
+						session.evict(oldSocialActivitySetting);
+					}
+				}
+
 				session.save(socialActivitySetting);
 
 				socialActivitySetting.setNew(false);
@@ -2947,6 +3066,12 @@ public class SocialActivitySettingPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (socialActivitySetting.getCtCollectionId() != 0) {
+			socialActivitySetting.resetOriginalValues();
+
+			return socialActivitySetting;
 		}
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -3148,12 +3273,128 @@ public class SocialActivitySettingPersistenceImpl
 	/**
 	 * Returns the social activity setting with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the social activity setting
+	 * @return the social activity setting, or <code>null</code> if a social activity setting with the primary key could not be found
+	 */
+	@Override
+	public SocialActivitySetting fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				SocialActivitySetting.class)) {
+
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		SocialActivitySetting socialActivitySetting = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			socialActivitySetting = (SocialActivitySetting)session.get(
+				SocialActivitySettingImpl.class, primaryKey);
+
+			if (socialActivitySetting != null) {
+				cacheResult(socialActivitySetting);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return socialActivitySetting;
+	}
+
+	/**
+	 * Returns the social activity setting with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param activitySettingId the primary key of the social activity setting
 	 * @return the social activity setting, or <code>null</code> if a social activity setting with the primary key could not be found
 	 */
 	@Override
 	public SocialActivitySetting fetchByPrimaryKey(long activitySettingId) {
 		return fetchByPrimaryKey((Serializable)activitySettingId);
+	}
+
+	@Override
+	public Map<Serializable, SocialActivitySetting> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(
+				SocialActivitySetting.class)) {
+
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, SocialActivitySetting> map =
+			new HashMap<Serializable, SocialActivitySetting>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			SocialActivitySetting socialActivitySetting = fetchByPrimaryKey(
+				primaryKey);
+
+			if (socialActivitySetting != null) {
+				map.put(primaryKey, socialActivitySetting);
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler(primaryKeys.size() * 2 + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (SocialActivitySetting socialActivitySetting :
+					(List<SocialActivitySetting>)query.list()) {
+
+				map.put(
+					socialActivitySetting.getPrimaryKeyObj(),
+					socialActivitySetting);
+
+				cacheResult(socialActivitySetting);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -3221,25 +3462,28 @@ public class SocialActivitySettingPersistenceImpl
 		OrderByComparator<SocialActivitySetting> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<SocialActivitySetting> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<SocialActivitySetting>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -3277,12 +3521,12 @@ public class SocialActivitySettingPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.removeResult(finderPath, finderArgs);
 				}
 
@@ -3314,8 +3558,15 @@ public class SocialActivitySettingPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			SocialActivitySetting.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -3328,12 +3579,16 @@ public class SocialActivitySettingPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
+				if (productionMode) {
+					FinderCacheUtil.removeResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY);
+				}
 
 				throw processException(exception);
 			}
@@ -3361,8 +3616,65 @@ public class SocialActivitySettingPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.get(ctColumnResolutionType);
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return SocialActivitySettingModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "SocialActivitySetting";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctIgnoreColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("groupId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("classNameId");
+		ctStrictColumnNames.add("activityType");
+		ctStrictColumnNames.add("name");
+		ctStrictColumnNames.add("value");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.IGNORE, ctIgnoreColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("activitySettingId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 	}
 
 	/**

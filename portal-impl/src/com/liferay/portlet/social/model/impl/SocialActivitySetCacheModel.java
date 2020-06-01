@@ -75,10 +75,12 @@ public class SocialActivitySetCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", activitySetId=");
 		sb.append(activitySetId);
 		sb.append(", groupId=");
@@ -112,6 +114,7 @@ public class SocialActivitySetCacheModel
 			new SocialActivitySetImpl();
 
 		socialActivitySetImpl.setMvccVersion(mvccVersion);
+		socialActivitySetImpl.setCtCollectionId(ctCollectionId);
 		socialActivitySetImpl.setActivitySetId(activitySetId);
 		socialActivitySetImpl.setGroupId(groupId);
 		socialActivitySetImpl.setCompanyId(companyId);
@@ -140,6 +143,8 @@ public class SocialActivitySetCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		activitySetId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -165,6 +170,8 @@ public class SocialActivitySetCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(activitySetId);
 
@@ -195,6 +202,7 @@ public class SocialActivitySetCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long activitySetId;
 	public long groupId;
 	public long companyId;

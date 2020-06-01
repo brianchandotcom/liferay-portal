@@ -33,6 +33,9 @@ public class SocialRelationTable extends BaseTable<SocialRelationTable> {
 
 	public final Column<SocialRelationTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<SocialRelationTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SocialRelationTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SocialRelationTable, Long> relationId = createColumn(

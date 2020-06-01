@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.social.kernel.model.SocialRequest;
 
 /**
  * Provides a wrapper for {@link SocialRequestService}.
@@ -43,7 +44,7 @@ public class SocialRequestServiceWrapper
 	}
 
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest updateRequest(
+	public SocialRequest updateRequest(
 			long requestId, int status,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {

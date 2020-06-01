@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.exception.NoSuchActivityAchievementException;
 import com.liferay.social.kernel.model.SocialActivityAchievement;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SocialActivityAchievementPersistence
-	extends BasePersistence<SocialActivityAchievement> {
+	extends BasePersistence<SocialActivityAchievement>,
+			CTPersistence<SocialActivityAchievement> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

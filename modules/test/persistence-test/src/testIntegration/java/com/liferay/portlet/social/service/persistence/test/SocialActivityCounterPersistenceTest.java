@@ -128,6 +128,8 @@ public class SocialActivityCounterPersistenceTest {
 
 		newSocialActivityCounter.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSocialActivityCounter.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newSocialActivityCounter.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivityCounter.setCompanyId(RandomTestUtil.nextLong());
@@ -162,6 +164,9 @@ public class SocialActivityCounterPersistenceTest {
 		Assert.assertEquals(
 			existingSocialActivityCounter.getMvccVersion(),
 			newSocialActivityCounter.getMvccVersion());
+		Assert.assertEquals(
+			existingSocialActivityCounter.getCtCollectionId(),
+			newSocialActivityCounter.getCtCollectionId());
 		Assert.assertEquals(
 			existingSocialActivityCounter.getActivityCounterId(),
 			newSocialActivityCounter.getActivityCounterId());
@@ -279,11 +284,11 @@ public class SocialActivityCounterPersistenceTest {
 
 	protected OrderByComparator<SocialActivityCounter> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SocialActivityCounter", "mvccVersion", true, "activityCounterId",
-			true, "groupId", true, "companyId", true, "classNameId", true,
-			"classPK", true, "name", true, "ownerType", true, "currentValue",
-			true, "totalValue", true, "graceValue", true, "startPeriod", true,
-			"endPeriod", true, "active", true);
+			"SocialActivityCounter", "mvccVersion", true, "ctCollectionId",
+			true, "activityCounterId", true, "groupId", true, "companyId", true,
+			"classNameId", true, "classPK", true, "name", true, "ownerType",
+			true, "currentValue", true, "totalValue", true, "graceValue", true,
+			"startPeriod", true, "endPeriod", true, "active", true);
 	}
 
 	@Test
@@ -603,6 +608,8 @@ public class SocialActivityCounterPersistenceTest {
 		SocialActivityCounter socialActivityCounter = _persistence.create(pk);
 
 		socialActivityCounter.setMvccVersion(RandomTestUtil.nextLong());
+
+		socialActivityCounter.setCtCollectionId(RandomTestUtil.nextLong());
 
 		socialActivityCounter.setGroupId(RandomTestUtil.nextLong());
 

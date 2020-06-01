@@ -14,7 +14,10 @@
 
 package com.liferay.social.kernel.service;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.social.kernel.model.SocialRequest;
 
 /**
  * Provides a wrapper for {@link SocialRequestLocalService}.
@@ -54,7 +57,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the social request
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest addRequest(
+	public SocialRequest addRequest(
 			long userId, long groupId, String className, long classPK, int type,
 			String extraData, long receiverUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -71,9 +74,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the social request that was added
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest addSocialRequest(
-		com.liferay.social.kernel.model.SocialRequest socialRequest) {
-
+	public SocialRequest addSocialRequest(SocialRequest socialRequest) {
 		return _socialRequestLocalService.addSocialRequest(socialRequest);
 	}
 
@@ -95,9 +96,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the new social request
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest createSocialRequest(
-		long requestId) {
-
+	public SocialRequest createSocialRequest(long requestId) {
 		return _socialRequestLocalService.createSocialRequest(requestId);
 	}
 
@@ -141,9 +140,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @param request the social request to be removed
 	 */
 	@Override
-	public void deleteRequest(
-		com.liferay.social.kernel.model.SocialRequest request) {
-
+	public void deleteRequest(SocialRequest request) {
 		_socialRequestLocalService.deleteRequest(request);
 	}
 
@@ -160,8 +157,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @throws PortalException if a social request with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest deleteSocialRequest(
-			long requestId)
+	public SocialRequest deleteSocialRequest(long requestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _socialRequestLocalService.deleteSocialRequest(requestId);
@@ -174,9 +170,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the social request that was removed
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest deleteSocialRequest(
-		com.liferay.social.kernel.model.SocialRequest socialRequest) {
-
+	public SocialRequest deleteSocialRequest(SocialRequest socialRequest) {
 		return _socialRequestLocalService.deleteSocialRequest(socialRequest);
 	}
 
@@ -287,9 +281,7 @@ public class SocialRequestLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest fetchSocialRequest(
-		long requestId) {
-
+	public SocialRequest fetchSocialRequest(long requestId) {
 		return _socialRequestLocalService.fetchSocialRequest(requestId);
 	}
 
@@ -301,8 +293,8 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the matching social request, or <code>null</code> if a matching social request could not be found
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest
-		fetchSocialRequestByUuidAndGroupId(String uuid, long groupId) {
+	public SocialRequest fetchSocialRequestByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _socialRequestLocalService.fetchSocialRequestByUuidAndGroupId(
 			uuid, groupId);
@@ -362,8 +354,8 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialRequest>
-		getReceiverUserRequests(long receiverUserId, int start, int end) {
+	public java.util.List<SocialRequest> getReceiverUserRequests(
+		long receiverUserId, int start, int end) {
 
 		return _socialRequestLocalService.getReceiverUserRequests(
 			receiverUserId, start, end);
@@ -390,9 +382,8 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialRequest>
-		getReceiverUserRequests(
-			long receiverUserId, int status, int start, int end) {
+	public java.util.List<SocialRequest> getReceiverUserRequests(
+		long receiverUserId, int status, int start, int end) {
 
 		return _socialRequestLocalService.getReceiverUserRequests(
 			receiverUserId, status, start, end);
@@ -432,8 +423,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @throws PortalException if a social request with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest getSocialRequest(
-			long requestId)
+	public SocialRequest getSocialRequest(long requestId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _socialRequestLocalService.getSocialRequest(requestId);
@@ -448,8 +438,8 @@ public class SocialRequestLocalServiceWrapper
 	 * @throws PortalException if a matching social request could not be found
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest
-			getSocialRequestByUuidAndGroupId(String uuid, long groupId)
+	public SocialRequest getSocialRequestByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _socialRequestLocalService.getSocialRequestByUuidAndGroupId(
@@ -468,9 +458,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the range of social requests
 	 */
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialRequest>
-		getSocialRequests(int start, int end) {
-
+	public java.util.List<SocialRequest> getSocialRequests(int start, int end) {
 		return _socialRequestLocalService.getSocialRequests(start, end);
 	}
 
@@ -482,8 +470,8 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the matching social requests, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialRequest>
-		getSocialRequestsByUuidAndCompanyId(String uuid, long companyId) {
+	public java.util.List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
 		return _socialRequestLocalService.getSocialRequestsByUuidAndCompanyId(
 			uuid, companyId);
@@ -500,12 +488,10 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the range of matching social requests, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialRequest>
-		getSocialRequestsByUuidAndCompanyId(
-			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.social.kernel.model.SocialRequest>
-					orderByComparator) {
+	public java.util.List<SocialRequest> getSocialRequestsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SocialRequest>
+			orderByComparator) {
 
 		return _socialRequestLocalService.getSocialRequestsByUuidAndCompanyId(
 			uuid, companyId, start, end, orderByComparator);
@@ -540,8 +526,8 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialRequest>
-		getUserRequests(long userId, int start, int end) {
+	public java.util.List<SocialRequest> getUserRequests(
+		long userId, int start, int end) {
 
 		return _socialRequestLocalService.getUserRequests(userId, start, end);
 	}
@@ -567,8 +553,8 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the range of matching social requests
 	 */
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialRequest>
-		getUserRequests(long userId, int status, int start, int end) {
+	public java.util.List<SocialRequest> getUserRequests(
+		long userId, int status, int start, int end) {
 
 		return _socialRequestLocalService.getUserRequests(
 			userId, status, start, end);
@@ -663,7 +649,7 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the updated social request
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest updateRequest(
+	public SocialRequest updateRequest(
 			long requestId, int status,
 			com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -679,10 +665,28 @@ public class SocialRequestLocalServiceWrapper
 	 * @return the social request that was updated
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialRequest updateSocialRequest(
-		com.liferay.social.kernel.model.SocialRequest socialRequest) {
-
+	public SocialRequest updateSocialRequest(SocialRequest socialRequest) {
 		return _socialRequestLocalService.updateSocialRequest(socialRequest);
+	}
+
+	@Override
+	public CTPersistence<SocialRequest> getCTPersistence() {
+		return _socialRequestLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<SocialRequest> getModelClass() {
+		return _socialRequestLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<SocialRequest>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _socialRequestLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

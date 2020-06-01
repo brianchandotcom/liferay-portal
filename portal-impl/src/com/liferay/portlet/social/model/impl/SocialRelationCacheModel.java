@@ -75,10 +75,12 @@ public class SocialRelationCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", relationId=");
@@ -103,6 +105,7 @@ public class SocialRelationCacheModel
 		SocialRelationImpl socialRelationImpl = new SocialRelationImpl();
 
 		socialRelationImpl.setMvccVersion(mvccVersion);
+		socialRelationImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			socialRelationImpl.setUuid("");
@@ -126,6 +129,8 @@ public class SocialRelationCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		relationId = objectInput.readLong();
@@ -144,6 +149,8 @@ public class SocialRelationCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -166,6 +173,7 @@ public class SocialRelationCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long relationId;
 	public long companyId;

@@ -1664,6 +1664,7 @@
 	</model>
 	<model name="com.liferay.social.kernel.model.SocialActivity">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="activityId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1684,6 +1685,7 @@
 	</model>
 	<model name="com.liferay.social.kernel.model.SocialActivityAchievement">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="activityAchievementId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1694,6 +1696,7 @@
 	</model>
 	<model name="com.liferay.social.kernel.model.SocialActivityCounter">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="activityCounterId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1710,6 +1713,7 @@
 	</model>
 	<model name="com.liferay.social.kernel.model.SocialActivityLimit">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="activityLimitId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1722,6 +1726,7 @@
 	</model>
 	<model name="com.liferay.social.kernel.model.SocialActivitySet">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="activitySetId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1739,6 +1744,7 @@
 	</model>
 	<model name="com.liferay.social.kernel.model.SocialActivitySetting">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="activitySettingId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -1751,6 +1757,7 @@
 	</model>
 	<model name="com.liferay.social.kernel.model.SocialRelation">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="relationId" type="long" />
 		<field name="companyId" type="long" />
@@ -1761,6 +1768,7 @@
 	</model>
 	<model name="com.liferay.social.kernel.model.SocialRequest">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="requestId" type="long" />
 		<field name="groupId" type="long" />

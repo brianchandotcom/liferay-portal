@@ -123,6 +123,8 @@ public class SocialActivityPersistenceTest {
 
 		newSocialActivity.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSocialActivity.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newSocialActivity.setGroupId(RandomTestUtil.nextLong());
 
 		newSocialActivity.setCompanyId(RandomTestUtil.nextLong());
@@ -157,6 +159,9 @@ public class SocialActivityPersistenceTest {
 		Assert.assertEquals(
 			existingSocialActivity.getMvccVersion(),
 			newSocialActivity.getMvccVersion());
+		Assert.assertEquals(
+			existingSocialActivity.getCtCollectionId(),
+			newSocialActivity.getCtCollectionId());
 		Assert.assertEquals(
 			existingSocialActivity.getActivityId(),
 			newSocialActivity.getActivityId());
@@ -320,11 +325,11 @@ public class SocialActivityPersistenceTest {
 
 	protected OrderByComparator<SocialActivity> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SocialActivity", "mvccVersion", true, "activityId", true,
-			"groupId", true, "companyId", true, "userId", true, "createDate",
-			true, "activitySetId", true, "mirrorActivityId", true,
-			"classNameId", true, "classPK", true, "parentClassNameId", true,
-			"parentClassPK", true, "type", true, "extraData", true,
+			"SocialActivity", "mvccVersion", true, "ctCollectionId", true,
+			"activityId", true, "groupId", true, "companyId", true, "userId",
+			true, "createDate", true, "activitySetId", true, "mirrorActivityId",
+			true, "classNameId", true, "classPK", true, "parentClassNameId",
+			true, "parentClassPK", true, "type", true, "extraData", true,
 			"receiverUserId", true);
 	}
 
@@ -596,6 +601,8 @@ public class SocialActivityPersistenceTest {
 		SocialActivity socialActivity = _persistence.create(pk);
 
 		socialActivity.setMvccVersion(RandomTestUtil.nextLong());
+
+		socialActivity.setCtCollectionId(RandomTestUtil.nextLong());
 
 		socialActivity.setGroupId(RandomTestUtil.nextLong());
 

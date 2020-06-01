@@ -68,12 +68,13 @@ public class SocialActivitySetModelImpl
 	public static final String TABLE_NAME = "SocialActivitySet";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"activitySetId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"createDate", Types.BIGINT},
-		{"modifiedDate", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"type_", Types.INTEGER},
-		{"extraData", Types.VARCHAR}, {"activityCount", Types.INTEGER}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"activitySetId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"createDate", Types.BIGINT}, {"modifiedDate", Types.BIGINT},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
+		{"type_", Types.INTEGER}, {"extraData", Types.VARCHAR},
+		{"activityCount", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -81,6 +82,7 @@ public class SocialActivitySetModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activitySetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -95,7 +97,7 @@ public class SocialActivitySetModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivitySet (mvccVersion LONG default 0 not null,activitySetId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,activityCount INTEGER)";
+		"create table SocialActivitySet (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,activitySetId LONG not null,groupId LONG,companyId LONG,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,activityCount INTEGER,primary key (activitySetId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SocialActivitySet";
 
@@ -279,6 +281,12 @@ public class SocialActivitySetModelImpl
 			(BiConsumer<SocialActivitySet, Long>)
 				SocialActivitySet::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", SocialActivitySet::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<SocialActivitySet, Long>)
+				SocialActivitySet::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"activitySetId", SocialActivitySet::getActivitySetId);
 		attributeSetterBiConsumers.put(
 			"activitySetId",
@@ -351,6 +359,16 @@ public class SocialActivitySetModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -604,6 +622,7 @@ public class SocialActivitySetModelImpl
 			new SocialActivitySetImpl();
 
 		socialActivitySetImpl.setMvccVersion(getMvccVersion());
+		socialActivitySetImpl.setCtCollectionId(getCtCollectionId());
 		socialActivitySetImpl.setActivitySetId(getActivitySetId());
 		socialActivitySetImpl.setGroupId(getGroupId());
 		socialActivitySetImpl.setCompanyId(getCompanyId());
@@ -720,6 +739,8 @@ public class SocialActivitySetModelImpl
 
 		socialActivitySetCacheModel.mvccVersion = getMvccVersion();
 
+		socialActivitySetCacheModel.ctCollectionId = getCtCollectionId();
+
 		socialActivitySetCacheModel.activitySetId = getActivitySetId();
 
 		socialActivitySetCacheModel.groupId = getGroupId();
@@ -822,6 +843,7 @@ public class SocialActivitySetModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _activitySetId;
 	private long _groupId;
 	private long _originalGroupId;

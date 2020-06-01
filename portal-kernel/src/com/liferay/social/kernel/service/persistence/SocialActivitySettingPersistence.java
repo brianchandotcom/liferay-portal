@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.social.kernel.exception.NoSuchActivitySettingException;
 import com.liferay.social.kernel.model.SocialActivitySetting;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SocialActivitySettingPersistence
-	extends BasePersistence<SocialActivitySetting> {
+	extends BasePersistence<SocialActivitySetting>,
+			CTPersistence<SocialActivitySetting> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

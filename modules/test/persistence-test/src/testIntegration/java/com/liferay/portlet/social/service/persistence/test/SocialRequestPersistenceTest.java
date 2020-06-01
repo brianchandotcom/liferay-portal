@@ -124,6 +124,8 @@ public class SocialRequestPersistenceTest {
 
 		newSocialRequest.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSocialRequest.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newSocialRequest.setUuid(RandomTestUtil.randomString());
 
 		newSocialRequest.setGroupId(RandomTestUtil.nextLong());
@@ -156,6 +158,9 @@ public class SocialRequestPersistenceTest {
 		Assert.assertEquals(
 			existingSocialRequest.getMvccVersion(),
 			newSocialRequest.getMvccVersion());
+		Assert.assertEquals(
+			existingSocialRequest.getCtCollectionId(),
+			newSocialRequest.getCtCollectionId());
 		Assert.assertEquals(
 			existingSocialRequest.getUuid(), newSocialRequest.getUuid());
 		Assert.assertEquals(
@@ -318,11 +323,11 @@ public class SocialRequestPersistenceTest {
 
 	protected OrderByComparator<SocialRequest> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SocialRequest", "mvccVersion", true, "uuid", true, "requestId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "type", true, "extraData", true, "receiverUserId",
-			true, "status", true);
+			"SocialRequest", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "requestId", true, "groupId", true, "companyId", true,
+			"userId", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "type", true, "extraData",
+			true, "receiverUserId", true, "status", true);
 	}
 
 	@Test
@@ -585,6 +590,8 @@ public class SocialRequestPersistenceTest {
 		SocialRequest socialRequest = _persistence.create(pk);
 
 		socialRequest.setMvccVersion(RandomTestUtil.nextLong());
+
+		socialRequest.setCtCollectionId(RandomTestUtil.nextLong());
 
 		socialRequest.setUuid(RandomTestUtil.randomString());
 

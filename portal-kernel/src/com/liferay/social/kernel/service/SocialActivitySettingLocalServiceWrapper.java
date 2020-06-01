@@ -14,7 +14,10 @@
 
 package com.liferay.social.kernel.service;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.social.kernel.model.SocialActivitySetting;
 
 /**
  * Provides a wrapper for {@link SocialActivitySettingLocalService}.
@@ -40,10 +43,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	 * @return the social activity setting that was added
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialActivitySetting
-		addSocialActivitySetting(
-			com.liferay.social.kernel.model.SocialActivitySetting
-				socialActivitySetting) {
+	public SocialActivitySetting addSocialActivitySetting(
+		SocialActivitySetting socialActivitySetting) {
 
 		return _socialActivitySettingLocalService.addSocialActivitySetting(
 			socialActivitySetting);
@@ -68,8 +69,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	 * @return the new social activity setting
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialActivitySetting
-		createSocialActivitySetting(long activitySettingId) {
+	public SocialActivitySetting createSocialActivitySetting(
+		long activitySettingId) {
 
 		return _socialActivitySettingLocalService.createSocialActivitySetting(
 			activitySettingId);
@@ -108,8 +109,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	 * @throws PortalException if a social activity setting with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialActivitySetting
-			deleteSocialActivitySetting(long activitySettingId)
+	public SocialActivitySetting deleteSocialActivitySetting(
+			long activitySettingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _socialActivitySettingLocalService.deleteSocialActivitySetting(
@@ -123,10 +124,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	 * @return the social activity setting that was removed
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialActivitySetting
-		deleteSocialActivitySetting(
-			com.liferay.social.kernel.model.SocialActivitySetting
-				socialActivitySetting) {
+	public SocialActivitySetting deleteSocialActivitySetting(
+		SocialActivitySetting socialActivitySetting) {
 
 		return _socialActivitySettingLocalService.deleteSocialActivitySetting(
 			socialActivitySetting);
@@ -230,8 +229,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.social.kernel.model.SocialActivitySetting
-		fetchSocialActivitySetting(long activitySettingId) {
+	public SocialActivitySetting fetchSocialActivitySetting(
+		long activitySettingId) {
 
 		return _socialActivitySettingLocalService.fetchSocialActivitySetting(
 			activitySettingId);
@@ -263,8 +262,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialActivitySetting>
-		getActivitySettings(long groupId) {
+	public java.util.List<SocialActivitySetting> getActivitySettings(
+		long groupId) {
 
 		return _socialActivitySettingLocalService.getActivitySettings(groupId);
 	}
@@ -307,8 +306,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	 * @throws PortalException if a social activity setting with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialActivitySetting
-			getSocialActivitySetting(long activitySettingId)
+	public SocialActivitySetting getSocialActivitySetting(
+			long activitySettingId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _socialActivitySettingLocalService.getSocialActivitySetting(
@@ -327,8 +326,8 @@ public class SocialActivitySettingLocalServiceWrapper
 	 * @return the range of social activity settings
 	 */
 	@Override
-	public java.util.List<com.liferay.social.kernel.model.SocialActivitySetting>
-		getSocialActivitySettings(int start, int end) {
+	public java.util.List<SocialActivitySetting> getSocialActivitySettings(
+		int start, int end) {
 
 		return _socialActivitySettingLocalService.getSocialActivitySettings(
 			start, end);
@@ -405,13 +404,31 @@ public class SocialActivitySettingLocalServiceWrapper
 	 * @return the social activity setting that was updated
 	 */
 	@Override
-	public com.liferay.social.kernel.model.SocialActivitySetting
-		updateSocialActivitySetting(
-			com.liferay.social.kernel.model.SocialActivitySetting
-				socialActivitySetting) {
+	public SocialActivitySetting updateSocialActivitySetting(
+		SocialActivitySetting socialActivitySetting) {
 
 		return _socialActivitySettingLocalService.updateSocialActivitySetting(
 			socialActivitySetting);
+	}
+
+	@Override
+	public CTPersistence<SocialActivitySetting> getCTPersistence() {
+		return _socialActivitySettingLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<SocialActivitySetting> getModelClass() {
+		return _socialActivitySettingLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<SocialActivitySetting>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _socialActivitySettingLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

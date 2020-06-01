@@ -1162,7 +1162,8 @@ create table ServiceComponent (
 
 create table SocialActivity (
 	mvccVersion LONG default 0 not null,
-	activityId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	activityId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1175,23 +1176,27 @@ create table SocialActivity (
 	parentClassPK LONG,
 	type_ INTEGER,
 	extraData STRING null,
-	receiverUserId LONG
+	receiverUserId LONG,
+	primary key (activityId, ctCollectionId)
 );
 
 create table SocialActivityAchievement (
 	mvccVersion LONG default 0 not null,
-	activityAchievementId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	activityAchievementId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	createDate LONG,
 	name VARCHAR(75) null,
-	firstInGroup BOOLEAN
+	firstInGroup BOOLEAN,
+	primary key (activityAchievementId, ctCollectionId)
 );
 
 create table SocialActivityCounter (
 	mvccVersion LONG default 0 not null,
-	activityCounterId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	activityCounterId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	classNameId LONG,
@@ -1203,12 +1208,14 @@ create table SocialActivityCounter (
 	graceValue INTEGER,
 	startPeriod INTEGER,
 	endPeriod INTEGER,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	primary key (activityCounterId, ctCollectionId)
 );
 
 create table SocialActivityLimit (
 	mvccVersion LONG default 0 not null,
-	activityLimitId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	activityLimitId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1216,12 +1223,14 @@ create table SocialActivityLimit (
 	classPK LONG,
 	activityType INTEGER,
 	activityCounterName VARCHAR(75) null,
-	value VARCHAR(75) null
+	value VARCHAR(75) null,
+	primary key (activityLimitId, ctCollectionId)
 );
 
 create table SocialActivitySet (
 	mvccVersion LONG default 0 not null,
-	activitySetId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	activitySetId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1231,35 +1240,41 @@ create table SocialActivitySet (
 	classPK LONG,
 	type_ INTEGER,
 	extraData STRING null,
-	activityCount INTEGER
+	activityCount INTEGER,
+	primary key (activitySetId, ctCollectionId)
 );
 
 create table SocialActivitySetting (
 	mvccVersion LONG default 0 not null,
-	activitySettingId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	activitySettingId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	classNameId LONG,
 	activityType INTEGER,
 	name VARCHAR(75) null,
-	value VARCHAR(1024) null
+	value VARCHAR(1024) null,
+	primary key (activitySettingId, ctCollectionId)
 );
 
 create table SocialRelation (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	relationId LONG not null primary key,
+	relationId LONG not null,
 	companyId LONG,
 	createDate LONG,
 	userId1 LONG,
 	userId2 LONG,
-	type_ INTEGER
+	type_ INTEGER,
+	primary key (relationId, ctCollectionId)
 );
 
 create table SocialRequest (
 	mvccVersion LONG default 0 not null,
+	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
-	requestId LONG not null primary key,
+	requestId LONG not null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -1270,7 +1285,8 @@ create table SocialRequest (
 	type_ INTEGER,
 	extraData STRING null,
 	receiverUserId LONG,
-	status INTEGER
+	status INTEGER,
+	primary key (requestId, ctCollectionId)
 );
 
 create table SystemEvent (

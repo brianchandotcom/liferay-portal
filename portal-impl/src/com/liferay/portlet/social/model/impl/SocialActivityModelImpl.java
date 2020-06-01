@@ -73,14 +73,14 @@ public class SocialActivityModelImpl
 	public static final String TABLE_NAME = "SocialActivity";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"activityId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"createDate", Types.BIGINT},
-		{"activitySetId", Types.BIGINT}, {"mirrorActivityId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"parentClassNameId", Types.BIGINT}, {"parentClassPK", Types.BIGINT},
-		{"type_", Types.INTEGER}, {"extraData", Types.VARCHAR},
-		{"receiverUserId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"activityId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"createDate", Types.BIGINT}, {"activitySetId", Types.BIGINT},
+		{"mirrorActivityId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"parentClassNameId", Types.BIGINT},
+		{"parentClassPK", Types.BIGINT}, {"type_", Types.INTEGER},
+		{"extraData", Types.VARCHAR}, {"receiverUserId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -88,6 +88,7 @@ public class SocialActivityModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activityId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -105,7 +106,7 @@ public class SocialActivityModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivity (mvccVersion LONG default 0 not null,activityId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,parentClassNameId LONG,parentClassPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG)";
+		"create table SocialActivity (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,activityId LONG not null,groupId LONG,companyId LONG,userId LONG,createDate LONG,activitySetId LONG,mirrorActivityId LONG,classNameId LONG,classPK LONG,parentClassNameId LONG,parentClassPK LONG,type_ INTEGER,extraData STRING null,receiverUserId LONG,primary key (activityId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SocialActivity";
 
@@ -170,6 +171,7 @@ public class SocialActivityModelImpl
 		SocialActivity model = new SocialActivityImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setActivityId(soapModel.getActivityId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -348,6 +350,12 @@ public class SocialActivityModelImpl
 			"mvccVersion",
 			(BiConsumer<SocialActivity, Long>)SocialActivity::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", SocialActivity::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<SocialActivity, Long>)
+				SocialActivity::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"activityId", SocialActivity::getActivityId);
 		attributeSetterBiConsumers.put(
 			"activityId",
@@ -430,6 +438,17 @@ public class SocialActivityModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -800,6 +819,7 @@ public class SocialActivityModelImpl
 		SocialActivityImpl socialActivityImpl = new SocialActivityImpl();
 
 		socialActivityImpl.setMvccVersion(getMvccVersion());
+		socialActivityImpl.setCtCollectionId(getCtCollectionId());
 		socialActivityImpl.setActivityId(getActivityId());
 		socialActivityImpl.setGroupId(getGroupId());
 		socialActivityImpl.setCompanyId(getCompanyId());
@@ -943,6 +963,8 @@ public class SocialActivityModelImpl
 
 		socialActivityCacheModel.mvccVersion = getMvccVersion();
 
+		socialActivityCacheModel.ctCollectionId = getCtCollectionId();
+
 		socialActivityCacheModel.activityId = getActivityId();
 
 		socialActivityCacheModel.groupId = getGroupId();
@@ -1051,6 +1073,7 @@ public class SocialActivityModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _activityId;
 	private long _groupId;
 	private long _originalGroupId;

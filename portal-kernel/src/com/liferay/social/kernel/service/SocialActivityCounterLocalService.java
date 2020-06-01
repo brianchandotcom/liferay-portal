@@ -15,6 +15,7 @@
 package com.liferay.social.kernel.service;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -57,7 +60,8 @@ import org.osgi.annotation.versioning.ProviderType;
 	rollbackFor = {PortalException.class, SystemException.class}
 )
 public interface SocialActivityCounterLocalService
-	extends BaseLocalService, PersistedModelLocalService {
+	extends BaseLocalService, CTService<SocialActivityCounter>,
+			PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -598,5 +602,20 @@ public interface SocialActivityCounterLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public SocialActivityCounter updateSocialActivityCounter(
 		SocialActivityCounter socialActivityCounter);
+
+	@Override
+	@Transactional(enabled = false)
+	public CTPersistence<SocialActivityCounter> getCTPersistence();
+
+	@Override
+	@Transactional(enabled = false)
+	public Class<SocialActivityCounter> getModelClass();
+
+	@Override
+	@Transactional(rollbackFor = Throwable.class)
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<SocialActivityCounter>, R, E>
+				updateUnsafeFunction)
+		throws E;
 
 }

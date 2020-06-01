@@ -35,6 +35,9 @@ public class SocialActivityLimitTable
 	public final Column<SocialActivityLimitTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<SocialActivityLimitTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SocialActivityLimitTable, Long> activityLimitId =
 		createColumn(
 			"activityLimitId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);

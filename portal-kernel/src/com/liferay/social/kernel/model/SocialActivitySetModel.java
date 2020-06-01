@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -34,8 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SocialActivitySetModel
-	extends AttachedModel, BaseModel<SocialActivitySet>, MVCCModel,
-			ShardedModel {
+	extends AttachedModel, BaseModel<SocialActivitySet>,
+			CTModel<SocialActivitySet>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -48,6 +49,7 @@ public interface SocialActivitySetModel
 	 *
 	 * @return the primary key of this social activity set
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -55,6 +57,7 @@ public interface SocialActivitySetModel
 	 *
 	 * @param primaryKey the primary key of this social activity set
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -72,6 +75,22 @@ public interface SocialActivitySetModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this social activity set.
+	 *
+	 * @return the ct collection ID of this social activity set
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this social activity set.
+	 *
+	 * @param ctCollectionId the ct collection ID of this social activity set
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the activity set ID of this social activity set.

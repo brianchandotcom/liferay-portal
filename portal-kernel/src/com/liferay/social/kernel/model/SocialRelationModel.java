@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -34,7 +35,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SocialRelationModel
-	extends BaseModel<SocialRelation>, MVCCModel, ShardedModel {
+	extends BaseModel<SocialRelation>, CTModel<SocialRelation>, MVCCModel,
+			ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -47,6 +49,7 @@ public interface SocialRelationModel
 	 *
 	 * @return the primary key of this social relation
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -54,6 +57,7 @@ public interface SocialRelationModel
 	 *
 	 * @param primaryKey the primary key of this social relation
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -71,6 +75,22 @@ public interface SocialRelationModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this social relation.
+	 *
+	 * @return the ct collection ID of this social relation
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this social relation.
+	 *
+	 * @param ctCollectionId the ct collection ID of this social relation
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this social relation.

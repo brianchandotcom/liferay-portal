@@ -34,6 +34,7 @@ public class SocialActivityAchievementSoap implements Serializable {
 			new SocialActivityAchievementSoap();
 
 		soapModel.setMvccVersion(model.getMvccVersion());
+		soapModel.setCtCollectionId(model.getCtCollectionId());
 		soapModel.setActivityAchievementId(model.getActivityAchievementId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -112,6 +113,14 @@ public class SocialActivityAchievementSoap implements Serializable {
 		_mvccVersion = mvccVersion;
 	}
 
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
+	}
+
 	public long getActivityAchievementId() {
 		return _activityAchievementId;
 	}
@@ -173,6 +182,7 @@ public class SocialActivityAchievementSoap implements Serializable {
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _activityAchievementId;
 	private long _groupId;
 	private long _companyId;

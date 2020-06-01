@@ -71,10 +71,11 @@ public class SocialActivitySettingModelImpl
 	public static final String TABLE_NAME = "SocialActivitySetting";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"activitySettingId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"activityType", Types.INTEGER},
-		{"name", Types.VARCHAR}, {"value", Types.VARCHAR}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"activitySettingId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"classNameId", Types.BIGINT},
+		{"activityType", Types.INTEGER}, {"name", Types.VARCHAR},
+		{"value", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -82,6 +83,7 @@ public class SocialActivitySettingModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activitySettingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -92,7 +94,7 @@ public class SocialActivitySettingModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SocialActivitySetting (mvccVersion LONG default 0 not null,activitySettingId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,activityType INTEGER,name VARCHAR(75) null,value VARCHAR(1024) null)";
+		"create table SocialActivitySetting (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,activitySettingId LONG not null,groupId LONG,companyId LONG,classNameId LONG,activityType INTEGER,name VARCHAR(75) null,value VARCHAR(1024) null,primary key (activitySettingId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SocialActivitySetting";
@@ -150,6 +152,7 @@ public class SocialActivitySettingModelImpl
 		SocialActivitySetting model = new SocialActivitySettingImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setActivitySettingId(soapModel.getActivitySettingId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
@@ -327,6 +330,12 @@ public class SocialActivitySettingModelImpl
 			(BiConsumer<SocialActivitySetting, Long>)
 				SocialActivitySetting::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", SocialActivitySetting::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<SocialActivitySetting, Long>)
+				SocialActivitySetting::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"activitySettingId", SocialActivitySetting::getActivitySettingId);
 		attributeSetterBiConsumers.put(
 			"activitySettingId",
@@ -382,6 +391,17 @@ public class SocialActivitySettingModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -576,6 +596,7 @@ public class SocialActivitySettingModelImpl
 			new SocialActivitySettingImpl();
 
 		socialActivitySettingImpl.setMvccVersion(getMvccVersion());
+		socialActivitySettingImpl.setCtCollectionId(getCtCollectionId());
 		socialActivitySettingImpl.setActivitySettingId(getActivitySettingId());
 		socialActivitySettingImpl.setGroupId(getGroupId());
 		socialActivitySettingImpl.setCompanyId(getCompanyId());
@@ -673,6 +694,8 @@ public class SocialActivitySettingModelImpl
 			new SocialActivitySettingCacheModel();
 
 		socialActivitySettingCacheModel.mvccVersion = getMvccVersion();
+
+		socialActivitySettingCacheModel.ctCollectionId = getCtCollectionId();
 
 		socialActivitySettingCacheModel.activitySettingId =
 			getActivitySettingId();
@@ -777,6 +800,7 @@ public class SocialActivitySettingModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _activitySettingId;
 	private long _groupId;
 	private long _originalGroupId;

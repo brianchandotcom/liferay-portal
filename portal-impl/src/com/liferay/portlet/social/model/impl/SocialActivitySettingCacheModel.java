@@ -76,10 +76,12 @@ public class SocialActivitySettingCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", activitySettingId=");
 		sb.append(activitySettingId);
 		sb.append(", groupId=");
@@ -105,6 +107,7 @@ public class SocialActivitySettingCacheModel
 			new SocialActivitySettingImpl();
 
 		socialActivitySettingImpl.setMvccVersion(mvccVersion);
+		socialActivitySettingImpl.setCtCollectionId(ctCollectionId);
 		socialActivitySettingImpl.setActivitySettingId(activitySettingId);
 		socialActivitySettingImpl.setGroupId(groupId);
 		socialActivitySettingImpl.setCompanyId(companyId);
@@ -134,6 +137,8 @@ public class SocialActivitySettingCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		activitySettingId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -150,6 +155,8 @@ public class SocialActivitySettingCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(activitySettingId);
 
@@ -177,6 +184,7 @@ public class SocialActivitySettingCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long activitySettingId;
 	public long groupId;
 	public long companyId;

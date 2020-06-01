@@ -43,12 +43,16 @@ public class InfoFieldValue<T> {
 		return _infoField;
 	}
 
-	public T getValue(Locale locale) {
-		T value = _value;
-
+	public T getValue() {
 		if (_valueSupplier != null) {
-			value = _valueSupplier.get();
+			return _valueSupplier.get();
 		}
+
+		return _value;
+	}
+
+	public T getValue(Locale locale) {
+		T value = getValue();
 
 		if (value instanceof InfoLocalizedValue) {
 			InfoLocalizedValue<T> infoLocalizedValue =

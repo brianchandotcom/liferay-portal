@@ -65,7 +65,6 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: Root,
 	[LAYOUT_DATA_ITEM_TYPES.root]: Root,
 	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls,
-	[LAYOUT_DATA_ITEM_TYPES.section]: SectionWithControls,
 };
 
 export default function Layout({mainItemId}) {

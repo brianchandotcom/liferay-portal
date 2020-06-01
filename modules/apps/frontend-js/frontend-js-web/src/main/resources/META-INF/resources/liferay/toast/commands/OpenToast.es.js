@@ -27,10 +27,8 @@ const DEFAULT_RENDER_DATA = {
 
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
-const HTML_REGEX = /<[^>]*>|&[^;]+;/;
-
-const SanitizeText = ({string}) => {
-	if (HTML_REGEX.test(string)) {
+const Text = ({allowHTML, string}) => {
+	if (allowHTML) {
 		return <UnsafeHTML markup={string} />;
 	}
 
@@ -87,11 +85,13 @@ function openToast({
 				displayType={type}
 				onClick={(event) => onClick({event, onClose})}
 				onClose={onClose}
-				title={title ? <SanitizeText string={title} /> : null}
+				title={
+					title ? <Text allowHTML={htmlTitle} string={title} /> : null
+				}
 				variant={variant}
 				{...toastProps}
 			>
-				<SanitizeText string={message} />
+				<Text allowHTML={htmlMessage} string={message} />
 			</ClayAlert>
 		</ClayAlert.ToastContainer>,
 		renderData,

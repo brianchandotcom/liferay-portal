@@ -46,10 +46,9 @@ export default (props) => {
 		icon,
 		label,
 		name,
-		onClick = () => {},
-		onClickIcon = () => {},
+		onClick,
 		onDelete,
-		onDoubleClick = () => {},
+		onDoubleClick,
 	} = props;
 
 	const [{dragging}, drag, preview] = useDrag({
@@ -69,10 +68,6 @@ export default (props) => {
 	}, [preview]);
 
 	const handleOnClick = () => {
-		if (disabled) {
-			return;
-		}
-
 		onClick({...props});
 	};
 
@@ -103,8 +98,8 @@ export default (props) => {
 				}
 			)}
 			data-field-type-name={name}
-			onClick={() => handleOnClick()}
-			onDoubleClick={() => handleOnDoubleClick()}
+			onClick={onClick && handleOnClick}
+			onDoubleClick={onDoubleClick && handleOnDoubleClick}
 			ref={drag}
 		>
 			{dragAlignment === 'left' && (
@@ -121,7 +116,6 @@ export default (props) => {
 				<ClaySticker
 					className="data-layout-builder-field-sticker"
 					displayType="light"
-					onClick={onClickIcon}
 					size="md"
 				>
 					<ClayIcon symbol={fieldIcon} />

@@ -40,10 +40,11 @@ export default ({
 	const FieldTypeWrapper = ({
 		expanded,
 		fieldType,
-		setExpanded = () => {},
 		showArrows,
+		...otherProps
 	}) => (
 		<FieldType
+			{...otherProps}
 			{...fieldType}
 			deleteLabel={deleteLabel}
 			icon={
@@ -53,15 +54,19 @@ export default ({
 						: 'angle-right'
 					: fieldType.icon
 			}
-			onClick={onClick}
-			onClickIcon={() => setExpanded(!expanded)}
-			onDelete={onDelete}
-			onDoubleClick={onDoubleClick}
 		/>
 	);
 
 	return fieldTypeList.map((fieldType, index) => {
 		const {isFieldSet, nestedDataDefinitionFields = []} = fieldType;
+
+		const handleOnClick = (props) => {
+			if (fieldType.disabled || !onClick) {
+				return;
+			}
+
+			onClick(props);
+		};
 
 		if (nestedDataDefinitionFields.length) {
 			const Header = ({expanded, setExpanded}) => (
@@ -71,6 +76,13 @@ export default ({
 						...fieldType,
 						className: `${fieldType.className} field-type-header`,
 					}}
+					onClick={(props) => {
+						setExpanded(!expanded);
+
+						handleOnClick(props);
+					}}
+					onDelete={onDelete}
+					onDoubleClick={onDoubleClick}
 					setExpanded={setExpanded}
 					showArrows
 				/>
@@ -90,6 +102,7 @@ export default ({
 							{nestedDataDefinitionFields.map(
 								(nestedFieldType) => (
 									<FieldTypeWrapper
+										draggable={false}
 										fieldType={{
 											...nestedFieldType,
 											disabled: fieldType.disabled,
@@ -104,6 +117,14 @@ export default ({
 			);
 		}
 
-		return <FieldTypeWrapper fieldType={fieldType} key={index} />;
+		return (
+			<FieldTypeWrapper
+				fieldType={fieldType}
+				key={index}
+				onClick={handleOnClick}
+				onDelete={onDelete}
+				onDoubleClick={onDoubleClick}
+			/>
+		);
 	});
 };

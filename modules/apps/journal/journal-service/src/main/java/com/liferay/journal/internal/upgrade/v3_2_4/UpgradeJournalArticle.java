@@ -24,8 +24,8 @@ public class UpgradeJournalArticle extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		runSQL(
-			"create index IX_F54203EA on JournalArticle (groupId, " +
-				"classNameId, folderId, status, ctCollectionId)");
+			"create index IX_8868DCD0 on JournalArticle (groupId, folderId, " +
+				"classNameId, status, ctCollectionId)");
 	}
 
 }

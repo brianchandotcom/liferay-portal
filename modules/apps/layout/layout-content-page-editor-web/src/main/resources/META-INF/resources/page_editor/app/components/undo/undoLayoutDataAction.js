@@ -12,10 +12,13 @@
  * details.
  */
 
+import {ADD_ITEM, DELETE_ITEM} from '../../actions/types';
 import LayoutService from '../../services/LayoutService';
 
 function undoAction({action, store}) {
 	const {layoutData} = action;
+
+	const type = action.type === ADD_ITEM ? DELETE_ITEM : action.type;
 
 	return (dispatch) => {
 		return LayoutService.updateLayoutData({
@@ -23,13 +26,16 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(() => {
-			dispatch({layoutData, type: action.type});
+			dispatch({itemId: action.itemId, layoutData, type});
 		});
 	};
 }
 
 function getDerivedStateForUndo({action, state}) {
-	return {itemId: action.itemId, layoutData: state.layoutData};
+	return {
+		itemId: action.itemId,
+		layoutData: state.layoutData,
+	};
 }
 
 export {undoAction, getDerivedStateForUndo};

@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.info.internal.field.exporter;
+package com.liferay.translation.web.internal.exporter;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoForm;
 import com.liferay.info.field.InfoFormValues;
-import com.liferay.info.field.exporter.InfoFormTranslationExporter;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.translation.exporter.InfoFormTranslationExporter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

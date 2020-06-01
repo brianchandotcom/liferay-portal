@@ -20,7 +20,7 @@ import useControlledState from '../../../core/hooks/useControlledState';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {useId} from '../../utils/useId';
 
-export const SelectField = ({field, onValueSelect, value}) => {
+export const SelectField = ({disabled, field, onValueSelect, value}) => {
 	const inputId = useId();
 	const [firstOption = {}] = field.typeOptions.validValues;
 
@@ -34,6 +34,7 @@ export const SelectField = ({field, onValueSelect, value}) => {
 
 			<ClaySelectWithOption
 				aria-label={field.label}
+				disabled={!!disabled}
 				id={inputId}
 				onChange={(event) => {
 					const nextValue =
@@ -50,6 +51,8 @@ export const SelectField = ({field, onValueSelect, value}) => {
 };
 
 SelectField.propTypes = {
+	disabled: PropTypes.bool,
+
 	field: PropTypes.shape({
 		...ConfigurationFieldPropTypes,
 		typeOptions: PropTypes.shape({

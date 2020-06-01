@@ -108,6 +108,26 @@ public class LocalizedValueUtil {
 		return localizedValue;
 	}
 
+	public static LocalizedValue toLocalizedValue(
+		Map<String, Object> localizedValues, Locale locale) {
+
+		if (localizedValues == null) {
+			return null;
+		}
+
+		LocalizedValue localizedValue = new LocalizedValue();
+
+		for (Map.Entry<String, Object> entry : localizedValues.entrySet()) {
+			localizedValue.addString(
+				LocaleUtil.fromLanguageId(entry.getKey()),
+				GetterUtil.getString(entry.getValue()));
+
+			localizedValue.setDefaultLocale(locale);
+		}
+
+		return localizedValue;
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */

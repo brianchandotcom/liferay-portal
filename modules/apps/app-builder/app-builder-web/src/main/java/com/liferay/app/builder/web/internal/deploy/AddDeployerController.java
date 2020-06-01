@@ -15,7 +15,7 @@
 package com.liferay.app.builder.web.internal.deploy;
 
 import com.liferay.app.builder.deploy.AppDeployer;
-import com.liferay.app.builder.service.AppBuilderAppLocalServiceUtil;
+import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,6 +27,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -48,6 +49,9 @@ public class AddDeployerController {
 		_serviceTracker.close();
 	}
 
+	@Reference
+	private AppBuilderAppLocalService _appBuilderAppLocalService;
+
 	private ServiceTracker<AppDeployer, AppDeployer> _serviceTracker;
 
 	private class AppDeployerServiceTrackerCustomizer
@@ -58,7 +62,7 @@ public class AddDeployerController {
 			ServiceReference<AppDeployer> serviceReference) {
 
 			List<Long> appBuilderAppIds =
-				AppBuilderAppLocalServiceUtil.getAppBuilderAppIds(
+				_appBuilderAppLocalService.getAppBuilderAppIds(
 					true,
 					(String)serviceReference.getProperty(
 						"app.builder.deploy.type"));

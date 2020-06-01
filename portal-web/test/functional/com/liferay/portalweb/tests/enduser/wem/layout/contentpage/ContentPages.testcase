@@ -1662,6 +1662,8 @@ definition {
 	@description = "This is a test for LPS-109717. The restriction visual feedback is shown when the Section draggable card is placed over the container of another Section."
 	@priority = "5"
 	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverAnotherOne {
+		property portal.acceptance = "true";
+
 		task ("Add a Section to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
@@ -1705,6 +1707,8 @@ definition {
 	@description = "This is a test for LPS-109717. The restriction visual feedback is shown when the Section draggable card is placed over the column of Row."
 	@priority = "5"
 	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverColumnOfRow {
+		property portal.acceptance = "true";
+
 		task ("Add a Row to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",

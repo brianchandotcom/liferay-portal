@@ -12,169 +12,166 @@
  * details.
  */
 
+import React from 'react';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import {cleanup, render, act} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
 import CheckboxMultiple from '../../../src/main/resources/META-INF/resources/CheckboxMultiple/CheckboxMultiple.es';
 
 let component;
 const spritemap = 'icons.svg';
 
+const CheckboxMultipleWithProvider = (props) => (
+	<PageProvider value={{editingLanguageId: 'en_US'}}>
+		<CheckboxMultiple {...props} />
+	</PageProvider>
+);
+
 describe('Field Checkbox Multiple', () => {
+	afterEach(cleanup);
+
 	beforeEach(() => {
 		jest.useFakeTimers();
-	});
-
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
+		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
 	it('is not edidable', () => {
-		component = new CheckboxMultiple({
-			readOnly: false,
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider readOnly={false} spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a helptext', () => {
-		component = new CheckboxMultiple({
-			spritemap,
-			tip: 'Type something',
+		const {container} = render(<CheckboxMultipleWithProvider spritemap={spritemap} tip="Type something" />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has an id', () => {
-		component = new CheckboxMultiple({
-			id: 'ID',
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider id="ID" spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a label', () => {
-		component = new CheckboxMultiple({
-			label: 'label',
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider label="label" spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a predefined Value', () => {
-		component = new CheckboxMultiple({
-			placeholder: 'Option 1',
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider placeholder="Option 1" spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is not required', () => {
-		component = new CheckboxMultiple({
-			required: false,
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider required={false} spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is shown as a switcher', () => {
-		component = new CheckboxMultiple({
-			showAsSwitcher: true,
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider showAsSwitcher spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is shown as checkbox', () => {
-		component = new CheckboxMultiple({
-			showAsSwitcher: false,
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider showAsSwitcher={false} spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new CheckboxMultiple({
-			label: 'text',
-			showLabel: true,
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider label="text" showLabel spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a spritemap', () => {
-		component = new CheckboxMultiple({
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new CheckboxMultiple({
-			spritemap,
-			value: true,
+		const {container} = render(<CheckboxMultipleWithProvider value={true} spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a key', () => {
-		component = new CheckboxMultiple({
-			key: 'key',
-			spritemap,
+		const {container} = render(<CheckboxMultipleWithProvider key="key" spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
-	it('emits field edit event on field change', (done) => {
+	it('should call the onChange callback on the field change', () => {
 		const handleFieldEdited = jest.fn();
 
-		const events = {fieldEdited: handleFieldEdited};
+		render(
+			<CheckboxMultipleWithProvider
+				onChange={handleFieldEdited}
+				spritemap={spritemap}
+			/>
+		);
 
-		component = new CheckboxMultiple({
-			events,
-			spritemap,
+		userEvent.click(document.body.querySelector('input'));
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		component.on('fieldEdited', () => {
-			expect(handleFieldEdited).toHaveBeenCalled();
-
-			done();
-		});
-
-		component.handleInputChangeEvent({
-			delegateTarget: {
-				checked: true,
-			},
-		});
-
-		jest.runAllTimers();
-	});
-
-	it('propagates the field edit event on field change', () => {
-		component = new CheckboxMultiple({
-			spritemap,
-		});
-
-		const spy = jest.spyOn(component, 'emit');
-
-		component.handleInputChangeEvent({
-			delegateTarget: {
-				checked: true,
-			},
-		});
-
-		expect(spy).toHaveBeenCalled();
-		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.any(Object));
+		expect(handleFieldEdited).toHaveBeenCalled();
 	});
 });

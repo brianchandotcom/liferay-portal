@@ -43,22 +43,29 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 <c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
 	<article class='lfr-discussion <%= (rootDiscussionComment.getCommentId() == discussionComment.getParentCommentId()) ? "lfr-discussion-container" : "" %>'>
 		<div class="comment-container">
-			<div class="autofit-padded-no-gutters-x autofit-row widget-metadata">
-				<div class="autofit-col">
+			<clay:content-row
+				cssClass="widget-metadata"
+				noGutters="x"
+			>
+				<clay:content-col>
 					<liferay-ui:user-portrait
 						cssClass="sticker-lg"
 						userId="<%= discussionComment.getUserId() %>"
 						userName="<%= discussionComment.getUserName() %>"
 					/>
-				</div>
+				</clay:content-col>
 
 				<%
 				User messageUser = discussionComment.getUser();
 				%>
 
-				<div class="autofit-col autofit-col-expand">
-					<div class="autofit-row">
-						<div class="autofit-col autofit-col-expand">
+				<clay:content-col
+					expand="true"
+				>
+					<clay:content-row>
+						<clay:content-col
+							expand="true"
+						>
 							<div class="text-truncate">
 								<liferay-util:whitespace-remover>
 									<aui:a cssClass="username" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
@@ -93,15 +100,19 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										User parentMessageUser = parentDiscussionComment.getUser();
 										%>
 
-										<div class="autofit-padded-no-gutters-x autofit-row">
-											<div class="autofit-col">
+										<clay:content-row
+											noGutters="x"
+										>
+											<clay:content-col>
 												<liferay-ui:user-portrait
 													cssClass="sticker-lg"
 													user="<%= parentMessageUser %>"
 												/>
-											</div>
+											</clay:content-col>
 
-											<div class="autofit-col autofit-col-expand">
+											<clay:content-col
+												expand="true"
+											>
 												<div class="username">
 													<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
 												</div>
@@ -113,8 +124,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 												<div class="text-secondary">
 													<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - parentDiscussionCreateDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 												</div>
-											</div>
-										</div>
+											</clay:content-col>
+										</clay:content-row>
 									</liferay-util:buffer>
 
 									<%
@@ -161,12 +172,12 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= workflowableComment.getStatus() %>" />
 								</c:if>
 							</div>
-						</div>
-					</div>
-				</div>
+						</clay:content-col>
+					</clay:content-row>
+				</clay:content-col>
 
 				<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && (index > 0) %>">
-					<div class="autofit-col">
+					<clay:content-col>
 						<liferay-ui:icon-menu
 							cssClass="actions-menu"
 							direction="left-side"
@@ -189,9 +200,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								/>
 							</c:if>
 						</liferay-ui:icon-menu>
-					</div>
+					</clay:content-col>
 				</c:if>
-			</div>
+			</clay:content-row>
 
 			<div class="lfr-discussion-body">
 				<div id="<%= randomNamespace %>messageScroll<%= discussionComment.getCommentId() %>">
@@ -232,9 +243,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</c:if>
 				</div>
 
-				<div class="autofit-row lfr-discussion-controls">
+				<clay:content-row
+					cssClass="lfr-discussion-controls"
+				>
 					<c:if test="<%= commentTreeDisplayContext.isActionControlsVisible() && commentTreeDisplayContext.isReplyActionControlVisible() %>">
-						<div class="autofit-col">
+						<clay:content-col>
 							<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 								<c:choose>
 									<c:when test="<%= commentTreeDisplayContext.isReplyButtonVisible() %>">
@@ -249,11 +262,11 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</c:otherwise>
 								</c:choose>
 							</c:if>
-						</div>
+						</clay:content-col>
 					</c:if>
 
 					<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
-						<div class="autofit-col">
+						<clay:content-col>
 							<liferay-ratings:ratings
 								className="<%= CommentConstants.getDiscussionClassName() %>"
 								classPK="<%= discussionComment.getCommentId() %>"
@@ -261,23 +274,29 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								ratingsEntry="<%= discussionComment.getRatingsEntry() %>"
 								ratingsStats="<%= discussionComment.getRatingsStats() %>"
 							/>
-						</div>
+						</clay:content-col>
 					</c:if>
-				</div>
+				</clay:content-row>
 			</div>
 		</div>
 
 		<div class="lfr-discussion lfr-discussion-form-reply" id='<%= namespace + "postReplyForm" + index %>' style="display: none;">
 			<div class="lfr-discussion-reply-container">
-				<div class="autofit-padded-no-gutters autofit-row">
-					<div class="autofit-col lfr-discussion-details">
+				<clay:content-row
+					noGutters="true"
+				>
+					<clay:content-col
+						cssClass="lfr-discussion-details"
+					>
 						<liferay-ui:user-portrait
 							cssClass="sticker-lg"
 							user="<%= user %>"
 						/>
-					</div>
+					</clay:content-col>
 
-					<div class="autofit-col autofit-col-expand">
+					<clay:content-col
+						expand="true"
+					>
 						<div class="editor-wrapper"></div>
 
 						<aui:button-row>
@@ -298,8 +317,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								);
 							};
 						</aui:script>
-					</div>
-				</div>
+					</clay:content-col>
+				</clay:content-row>
 			</div>
 		</div>
 

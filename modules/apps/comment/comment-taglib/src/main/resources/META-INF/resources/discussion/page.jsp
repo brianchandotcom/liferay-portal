@@ -91,12 +91,19 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 						String subscriptionOnClick = randomNamespace + "subscribeToComments(" + !subscribed + ");";
 						%>
 
-						<div class="autofit-row mb-4">
-							<span class="autofit-col autofit-col-expand text-secondary text-uppercase">
+						<clay:content-row
+							cssClass="mb-4"
+							floatElements="end"
+						>
+							<clay:content-col
+								containerElement="span"
+								cssClass="text-secondary text-uppercase"
+								expand="true"
+							>
 								<strong><liferay-ui:message arguments="<%= discussion.getDiscussionCommentsCount() %>" key='<%= (discussion.getDiscussionCommentsCount() == 1) ? "x-comment" : "x-comments" %>' /></strong>
-							</span>
+							</clay:content-col>
 
-							<div class="autofit-col autofit-col-end">
+							<clay:content-col>
 								<c:if test="<%= canSubscribe %>">
 									<c:choose>
 										<c:when test="<%= subscribed %>">
@@ -111,8 +118,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 										</c:otherwise>
 									</c:choose>
 								</c:if>
-							</div>
-						</div>
+							</clay:content-col>
+						</clay:content-row>
 
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<aui:input name="emailAddress" type="hidden" />
@@ -120,14 +127,21 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 							<c:choose>
 								<c:when test="<%= commentSectionDisplayContext.isReplyButtonVisible() %>">
 									<div class="lfr-discussion-reply-container">
-										<div class="autofit-padded-no-gutters autofit-row">
-											<div class="autofit-col lfr-discussion-details">
+										<clay:content-row
+											noGutters="true"
+										>
+											<clay:content-col
+												cssClass="lfr-discussion-details"
+											>
 												<liferay-ui:user-portrait
 													user="<%= user %>"
 												/>
-											</div>
+											</clay:content-col>
 
-											<div class="autofit-col autofit-col-expand lfr-discussion-editor">
+											<clay:content-col
+												cssClass="lfr-discussion-editor"
+												expand="true"
+											>
 												<liferay-editor:editor
 													configKey="commentEditor"
 													contents=""
@@ -144,8 +158,8 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 												<aui:button-row>
 													<aui:button cssClass="btn-comment btn-primary btn-sm" disabled="<%= true %>" id="postReplyButton0" onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 												</aui:button-row>
-											</div>
-										</div>
+											</clay:content-col>
+										</clay:content-row>
 									</div>
 								</c:when>
 								<c:otherwise>

@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_DISABLED</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]][@disabled='']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASTERISK</td>
 	<td>//span[*[name()='svg'][contains(@class,'icon-asterisk')]] | //span[contains(@class,'icon-asterisk')] | //label[*[name()='svg'][contains(@class,'icon-asterisk')] and not(contains(@class,'required-warning'))]</td>
 	<td></td>

@@ -79,8 +79,8 @@ public class CucumberAxisBuild extends AxisBuild {
 		return testResults;
 	}
 
-	protected CucumberAxisBuild(String url, BatchBuild parentBuild) {
-		super(JenkinsResultsParserUtil.getLocalURL(url), parentBuild);
+	protected CucumberAxisBuild(String url, BatchBuild parentBatchBuild) {
+		super(JenkinsResultsParserUtil.getLocalURL(url), parentBatchBuild);
 	}
 
 	private List<CucumberScenarioResult> _getCucumberScenarioResults() {

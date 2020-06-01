@@ -208,6 +208,12 @@
 			<finder-column name="expirationDate" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_F_C_NotST" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="folderId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
 
 		<!-- References -->
 

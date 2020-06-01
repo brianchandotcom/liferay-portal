@@ -17,8 +17,6 @@ import {render} from 'frontend-js-react-web';
 import React from 'react';
 import {unmountComponentAtNode} from 'react-dom';
 
-import UnsafeHTML from './UnsafeHTML.es';
-
 const DEFAULT_ALERT_CONTAINER_ID = 'alertContainer';
 
 const DEFAULT_RENDER_DATA = {
@@ -29,7 +27,7 @@ const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
 const Text = ({allowHTML, string}) => {
 	if (allowHTML) {
-		return <UnsafeHTML markup={string} />;
+		return <div dangerouslySetInnerHTML={{__html: string}} />;
 	}
 
 	return string;

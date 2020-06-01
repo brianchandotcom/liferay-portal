@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.translation.exporter.InfoFormTranslationExporter;
+import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -39,10 +39,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = "content.type=application/xliff+xml",
-	service = InfoFormTranslationExporter.class
+	service = TranslationInfoFormValuesExporter.class
 )
 public class XLIFFInfoFormTranslationExporter<T>
-	implements InfoFormTranslationExporter<T> {
+	implements TranslationInfoFormValuesExporter<T> {
 
 	@Override
 	public InputStream export(

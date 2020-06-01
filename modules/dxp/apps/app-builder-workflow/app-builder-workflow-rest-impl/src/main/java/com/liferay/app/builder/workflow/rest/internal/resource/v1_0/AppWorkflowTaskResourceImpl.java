@@ -67,7 +67,7 @@ public class AppWorkflowTaskResourceImpl
 				appBuilderWorkflowTaskLinks.add(
 					_appBuilderWorkflowTaskLinkLocalService.
 						addAppBuilderWorkflowTaskLink(
-							appId, contextCompany.getCompanyId(), dataLayoutId,
+							contextCompany.getCompanyId(), appId, dataLayoutId,
 							appWorkflowTask.getName()));
 			}
 		}

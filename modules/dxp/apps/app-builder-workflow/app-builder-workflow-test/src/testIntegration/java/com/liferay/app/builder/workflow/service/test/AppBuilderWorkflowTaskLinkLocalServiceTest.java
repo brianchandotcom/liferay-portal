@@ -49,7 +49,7 @@ public class AppBuilderWorkflowTaskLinkLocalServiceTest {
 		throws Exception {
 
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
-			RandomTestUtil.nextLong(), TestPropsValues.getCompanyId(),
+			TestPropsValues.getCompanyId(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), "A");
 	}
 
@@ -58,10 +58,10 @@ public class AppBuilderWorkflowTaskLinkLocalServiceTest {
 		AppBuilderApp appBuilderApp = _createAppBuilderApp();
 
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
-			appBuilderApp.getAppBuilderAppId(), TestPropsValues.getCompanyId(),
+			TestPropsValues.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
 			appBuilderApp.getDdmStructureLayoutId(), "A");
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
-			appBuilderApp.getAppBuilderAppId(), TestPropsValues.getCompanyId(),
+			TestPropsValues.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
 			appBuilderApp.getDdmStructureLayoutId(), "A");
 	}
 

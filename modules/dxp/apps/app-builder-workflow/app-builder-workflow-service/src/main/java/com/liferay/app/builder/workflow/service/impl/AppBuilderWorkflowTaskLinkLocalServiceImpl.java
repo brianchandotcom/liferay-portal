@@ -36,7 +36,7 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 	extends AppBuilderWorkflowTaskLinkLocalServiceBaseImpl {
 
 	public AppBuilderWorkflowTaskLink addAppBuilderWorkflowTaskLink(
-			long appBuilderAppId, long companyId, long ddmStructureLayoutId,
+			long companyId, long appBuilderAppId, long ddmStructureLayoutId,
 			String workflowTaskName)
 		throws PortalException {
 

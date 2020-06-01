@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoForm;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.provider.InfoItemFormProvider;

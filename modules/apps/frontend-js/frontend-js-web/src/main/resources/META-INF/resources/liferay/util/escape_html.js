@@ -53,27 +53,39 @@ export default function escapeHTML(string, preventDoubleEscape, entities) {
 	if (entities && typeof entities === 'object') {
 		entitiesValues = [];
 
-		Object.keys(entities).forEach((entry) => {
-			entitiesList.push(entry[1]);
+		Object.keys(entities).forEach(([char, escapedChar]) => {
+			entitiesList.push(escapedChar);
 
-			entitiesValues.push(entry[0]);
+			entitiesValues.push(char);
 		});
 
-		regex = new RegExp(
-			LEFT_SQUARE_BRACKET +
-				escapeRegEx(entitiesList.join('')) +
-				RIGHT_SQUARE_BRACKET,
-			'g'
-		);
+		regex = new RegExp('[' + escapeRegEx(entitiesList.join('')) + ']', 'g');
 	}
 	else {
 		entities = MAP_HTML_CHARS_ESCAPED;
 
-		entitiesValues = htmlEscapedValues;
+		entitiesValues = HTML_ESCAPED_VALUES;
 	}
 
-	return string.replace(
-		regex,
-		_escapeHTML.bind(null, !!preventDoubleEscape, entities, entitiesValues)
-	);
+	return string.replace(regex, (match, offset, string) => {
+		let result;
+
+		if (preventDoubleEscape) {
+			const nextSemicolonIndex = string.indexOf(';', offset);
+
+			if (nextSemicolonIndex >= 0) {
+				const entity = string.substring(offset, nextSemicolonIndex + 1);
+
+				if (entitiesValues.indexOf(entity) >= 0) {
+					result = match;
+				}
+			}
+		}
+
+		if (!result) {
+			result = entities[match];
+		}
+
+		return result;
+	});
 }

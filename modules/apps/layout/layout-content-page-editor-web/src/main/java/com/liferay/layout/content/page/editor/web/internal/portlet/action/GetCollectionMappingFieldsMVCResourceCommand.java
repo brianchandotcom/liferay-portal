@@ -16,7 +16,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.field.InfoField;
-import com.liferay.info.field.InfoForm;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;

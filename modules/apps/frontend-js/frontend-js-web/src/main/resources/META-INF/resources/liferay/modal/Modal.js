@@ -275,7 +275,10 @@ const Modal = ({
 								<Iframe
 									disableSelectedItems={disableSelectedItems}
 									iframeBodyCssClass={iframeBodyCssClass}
-									iframeProps={iframeProps}
+									iframeProps={{
+										id: `${id}_iframe_`,
+										...iframeProps,
+									}}
 									onOpen={onOpen}
 									processClose={processClose}
 									title={title}

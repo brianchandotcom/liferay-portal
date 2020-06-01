@@ -106,10 +106,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	if (openFolderSelectorButton) {
 		openFolderSelectorButton.addEventListener('click', function (event) {
 			Liferay.Util.getOpener().Liferay.Util.openModal({
-				iframeProps: {
-					id:
-						'_<%= HtmlUtil.escapeJS(igRequestHelper.getPortletResource()) %>_selectFolder_iframe',
-				},
+				id: '_<%= HtmlUtil.escapeJS(igRequestHelper.getPortletResource()) %>_selectFolder',
 				onSelect: function (selectedItem) {
 					var folderData = {
 						idString: 'rootFolderId',

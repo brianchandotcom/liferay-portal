@@ -225,7 +225,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "Staging");
+			portlet = "Staging",
+			site = "${site}");
 
 		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Staging and change lists cannot be used together.");
 	}
@@ -256,7 +257,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "${portletName}");
+			portlet = "${portletName}",
+			site = "${site}");
 
 		LAR._gotoExportImport();
 
@@ -271,7 +273,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "${portletName}");
+			portlet = "${portletName}",
+			site = "${site}");
 
 		LAR._gotoExportImport();
 
@@ -288,7 +291,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
 			panel = "Site Administration",
-			portlet = "${portletName}");
+			portlet = "${portletName}",
+			site = "${site}");
 
 		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Export/Import and change lists cannot be used together.");
 	}

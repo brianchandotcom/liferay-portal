@@ -2,6 +2,10 @@ definition {
 
 	@summary = "Navigate to the Live site"
 	macro gotoLiveSite {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			GlobalMenu.gotoSite(site = "${site}");
+		}
+
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
 		AssertClick(
@@ -11,6 +15,10 @@ definition {
 
 	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
 	macro gotoLocalizedSite {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			GlobalMenu.gotoSite(site = "Global");
+		}
+
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
 		ProductMenuHelper.openWorkspace();
@@ -43,6 +51,10 @@ definition {
 
 	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${portlet}"
 	macro gotoPortlet {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			GlobalMenu.gotoSite(site = "${site}");
+		}
+
 		ProductMenuHelper.expandPanel(panel = "${panel}");
 
 		ProductMenuHelper.expandCategory(category = "${category}");
@@ -63,6 +75,10 @@ definition {
 
 	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
 	macro gotoSite {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			GlobalMenu.gotoSite(site = "${site}");
+		}
+
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
 		ProductMenuHelper.openWorkspace();
@@ -92,6 +108,10 @@ definition {
 
 	@summary = "Navigate to ${site} via the 'Go to Site' link"
 	macro gotoSiteViaLink {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			GlobalMenu.gotoSite(site = "Global");
+		}
+
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
 		AssertClick(
@@ -101,6 +121,10 @@ definition {
 
 	@summary = "Navigate to the Staging site"
 	macro gotoStagingSite {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			GlobalMenu.gotoSite(site = "${site}");
+		}
+
 		if (IsElementNotPresent(locator1 = "ProductMenu#STAGING_SELECTED")) {
 			ProductMenuHelper.expandPanel(panel = "Site Administration");
 
@@ -114,6 +138,10 @@ definition {
 
 	@summary = "View ${site} is not available in the product menu."
 	macro viewNoSite {
+		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
+			GlobalMenu.gotoSite(site = "Guest");
+		}
+
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
 
 		if ((IsElementPresent(locator1 = "ProductMenu#BACK_ARROW")) && (IsVisible(locator1 = "ProductMenu#BACK_ARROW"))) {

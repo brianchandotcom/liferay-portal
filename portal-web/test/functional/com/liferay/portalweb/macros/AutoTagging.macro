@@ -41,7 +41,8 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Site Administration",
-				portlet = "Settings");
+				portlet = "Settings",
+				site = "${site}");
 
 			Panel.expandPanel(panel = "Asset Auto Tagging");
 
@@ -97,7 +98,8 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Site Administration",
-				portlet = "Settings");
+				portlet = "Settings",
+				site = "${site}");
 
 			Panel.expandPanel(panel = "Asset Auto Tagging");
 

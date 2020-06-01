@@ -195,7 +195,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Dynamic Data Lists");
+			portlet = "Dynamic Data Lists",
+			site = "${site}");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
@@ -245,7 +246,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Forms");
+			portlet = "Forms",
+			site = "${site}");
 
 		AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
 
@@ -934,7 +936,7 @@ definition {
 
 		AssertElementNotPresent(locator1 = "Home#PORTLET");
 
-		ProductMenu.gotoStagingSite();
+		ProductMenu.gotoStagingSite(site = "Staging Site");
 
 		WebContent.viewPGViaWCD(
 			webContentContent = "Web Content Content",
@@ -944,7 +946,7 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoLiveSite();
+		ProductMenu.gotoLiveSite(site = "Staging Site");
 
 		WebContent.viewPGViaWCD(
 			webContentContent = "Web Content Content",

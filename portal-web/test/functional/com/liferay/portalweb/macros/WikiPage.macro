@@ -7,7 +7,8 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Wiki");
+				portlet = "Wiki",
+				site = "${site}");
 
 			WikiNavigator.gotoNode(wikiNodeName = "${wikiNodeName}");
 
@@ -1565,6 +1566,7 @@ definition {
 		Pause(locator1 = "3000");
 
 		WikiPage._checkForRSSTitleCP(
+			site = "${site}",
 			wikiNodeName = "${wikiNodeName}",
 			wikiPageContent = "${wikiPageContent}",
 			wikiPageTitle = "${wikiPageTitle}");

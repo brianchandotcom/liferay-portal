@@ -39,7 +39,8 @@ definition {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
 				panel = "Site Administration",
-				portlet = "Documents and Media");
+				portlet = "Documents and Media",
+				site = "${siteName}");
 		}
 
 		DMFolder.viewEntryPresent(dmFolderName = "${dmFolderName}");
@@ -376,7 +377,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Documents and Media");
+			portlet = "Documents and Media",
+			site = "${site}");
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
 			Check(locator1 = "DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX");

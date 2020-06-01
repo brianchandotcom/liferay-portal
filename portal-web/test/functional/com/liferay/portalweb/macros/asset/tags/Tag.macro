@@ -102,7 +102,7 @@ definition {
 
 	macro tearDownCP {
 		if ("${stagingSite}" == "true") {
-			ProductMenu.gotoStagingSite();
+			ProductMenu.gotoStagingSite(site = "${site}");
 		}
 		else {
 			Navigator.openURL();

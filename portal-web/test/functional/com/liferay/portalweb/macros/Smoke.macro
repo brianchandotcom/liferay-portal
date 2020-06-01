@@ -24,7 +24,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Site Name");
 
 		SitePages.addPublicPage(pageName = "Test Page1");
 

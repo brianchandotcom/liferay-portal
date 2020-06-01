@@ -208,7 +208,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
-			portlet = "Polls");
+			portlet = "Polls",
+			site = "${site}");
 
 		Click(
 			key_pollsQuestionTitle = "${pollsQuestionTitle}",

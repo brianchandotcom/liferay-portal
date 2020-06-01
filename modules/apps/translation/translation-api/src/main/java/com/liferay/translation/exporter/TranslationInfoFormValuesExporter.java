@@ -14,7 +14,7 @@
 
 package com.liferay.translation.exporter;
 
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.field.InfoFormValues;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ import java.util.Locale;
 public interface TranslationInfoFormValuesExporter<T> {
 
 	public InputStream export(
-			InfoItemFormProvider<T> infoFormProvider, T t, Locale sourceLocale,
+			InfoFormValues infoFormValues, Locale sourceLocale,
 			Locale targetLocale)
 		throws IOException;
 

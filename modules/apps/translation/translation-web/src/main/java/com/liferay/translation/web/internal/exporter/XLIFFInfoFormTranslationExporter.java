@@ -16,9 +16,9 @@ package com.liferay.translation.web.internal.exporter;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoForm;
 import com.liferay.info.field.InfoFormValues;
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -46,7 +46,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 	@Override
 	public InputStream export(
-			InfoItemFormProvider<T> infoFormProvider, T t, Locale sourceLocale,
+			InfoFormValues infoFormValues, Locale sourceLocale,
 			Locale targetLocale)
 		throws IOException {
 
@@ -64,11 +64,13 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 		Element fileElement = xliffElement.addElement("file");
 
-		InfoForm infoForm = infoFormProvider.getInfoForm(t);
+		InfoItemClassPKReference infoItemClassPKReference =
+			infoFormValues.getInfoItemClassPKReference();
 
-		fileElement.addAttribute("id", infoForm.getName());
-
-		InfoFormValues infoFormValues = infoFormProvider.getInfoFormValues(t);
+		fileElement.addAttribute(
+			"id",
+			infoItemClassPKReference.getClassName() + StringPool.COLON +
+				infoItemClassPKReference.getClassPK());
 
 		Collection<InfoFieldValue<Object>> infoFieldValues =
 			infoFormValues.getInfoFieldValues();

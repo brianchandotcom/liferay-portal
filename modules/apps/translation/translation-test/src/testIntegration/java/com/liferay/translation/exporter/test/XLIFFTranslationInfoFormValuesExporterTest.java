@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRespons
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
@@ -61,13 +63,21 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 	public void testExportReturnsTheXLIFFRepresentationOfAJournalArticle()
 		throws Exception {
 
+		InfoItemFormProvider infoItemFormProvider =
+			_infoItemFormProviderTracker.getInfoItemFormProvider(
+				JournalArticle.class.getName());
+
+		JournalArticle journalArticle = _getJournalArticle();
+
 		Assert.assertEquals(
-			_readFileToString("dependencies/test-journal-article.xliff"),
+			StringUtil.replace(
+				_readFileToString("dependencies/test-journal-article.xliff"),
+				"$ARTICLE_ID",
+				String.valueOf(journalArticle.getResourcePrimKey())),
 			StreamUtil.toString(
 				_xliffTranslationInfoFormValuesExporter.export(
-					_infoItemFormProviderTracker.getInfoItemFormProvider(
-						JournalArticle.class.getName()),
-					_getJournalArticle(), LocaleUtil.getDefault(),
+					infoItemFormProvider.getInfoFormValues(journalArticle),
+					LocaleUtil.getDefault(),
 					LocaleUtil.fromLanguageId("es_ES"))));
 	}
 

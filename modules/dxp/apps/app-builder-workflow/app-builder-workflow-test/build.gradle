@@ -1,7 +1,6 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationCompile project(":apps:app-builder:app-builder-api")
-	testIntegrationCompile project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationCompile project(":core:petra:petra-string")
 	testIntegrationCompile project(":dxp:apps:app-builder-workflow:app-builder-workflow-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")

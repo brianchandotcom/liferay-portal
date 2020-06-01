@@ -3290,7 +3290,7 @@
 		<reference entity="ListType" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="WorkflowDefinitionLink" remote-service="false" uad-application-name="Portal Workflow" uad-dir-path="../modules/apps/portal-workflow/portal-workflow-uad/src/main/java" uad-package-path="com.liferay.portal.workflow">
+	<entity change-tracking-enabled="true" local-service="true" name="WorkflowDefinitionLink" remote-service="false" uad-application-name="Portal Workflow" uad-dir-path="../modules/apps/portal-workflow/portal-workflow-uad/src/main/java" uad-package-path="com.liferay.portal.workflow">
 
 		<!-- PK fields -->
 
@@ -3356,7 +3356,7 @@
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="WorkflowInstanceLink" remote-service="false">
+	<entity change-tracking-enabled="true" local-service="true" name="WorkflowInstanceLink" remote-service="false">
 
 		<!-- PK fields -->
 

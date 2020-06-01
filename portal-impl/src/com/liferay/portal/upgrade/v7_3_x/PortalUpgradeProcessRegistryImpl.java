@@ -105,6 +105,11 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeProcesses.put(
 			new Version(8, 12, 0),
 			new UpgradeCTModel("RatingsEntry", "RatingsStats"));
+
+		upgradeProcesses.put(
+			new Version(8, 13, 0),
+			new UpgradeCTModel(
+				"WorkflowDefinitionLink", "WorkflowInstanceLink"));
 	}
 
 }

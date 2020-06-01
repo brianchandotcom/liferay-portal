@@ -4671,7 +4671,7 @@ definition {
 	test ViewSuccessPage {
 		property test.name.skip.portal.instance = "Forms#ViewSuccessPage";
 		property testray.component.names = "Training";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

@@ -25,6 +25,14 @@ const DEFAULT_RENDER_DATA = {
 
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
+const Text = ({allowHTML, string}) => {
+	if (allowHTML) {
+		return <UnsafeHTML markup={string} />;
+	}
+
+	return string;
+};
+
 const getDefaultAlertContainer = () => {
 	let container = document.getElementById(DEFAULT_ALERT_CONTAINER_ID);
 
@@ -51,6 +59,8 @@ const getDefaultAlertContainer = () => {
 
 function openToast({
 	containerId,
+	htmlMessage,
+	htmlTitle,
 	message = '',
 	renderData = DEFAULT_RENDER_DATA,
 	title = Liferay.Language.get('success'),
@@ -71,11 +81,13 @@ function openToast({
 				autoClose={TOAST_AUTO_CLOSE_INTERVAL}
 				displayType={type}
 				onClose={onClose}
-				title={title}
+				title={
+					title ? <Text allowHTML={htmlTitle} string={title} /> : null
+				}
 				variant={variant}
 				{...toastProps}
 			>
-				{message}
+				<Text allowHTML={htmlMessage} string={message} />
 			</ClayAlert>
 		</ClayAlert.ToastContainer>,
 		renderData,

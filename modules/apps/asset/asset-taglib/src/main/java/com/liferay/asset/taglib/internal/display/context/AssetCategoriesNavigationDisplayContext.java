@@ -22,6 +22,10 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -76,6 +80,23 @@ public class AssetCategoriesNavigationDisplayContext {
 		sb.append("</ul></div>");
 
 		return sb.toString();
+	}
+
+	public JSONArray getCategoriesJSONArray() throws PortalException {
+		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (AssetVocabulary vocabulary : getVocabularies()) {
+			List<AssetCategory> categories =
+				AssetCategoryServiceUtil.getVocabularyRootCategories(
+					vocabulary.getGroupId(), vocabulary.getVocabularyId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (AssetCategory category : categories) {
+				categoriesJSONArray.put(_getCategoryJSONObject(category));
+			}
+		}
+
+		return categoriesJSONArray;
 	}
 
 	public long getCategoryId() {
@@ -162,6 +183,49 @@ public class AssetCategoriesNavigationDisplayContext {
 
 			sb.append("</li>");
 		}
+	}
+
+	private JSONObject _getCategoryJSONObject(AssetCategory category)
+		throws PortalException {
+
+		return JSONUtil.put(
+			"categoryId", category.getCategoryId()
+		).put(
+			"children", _getChildCategoriesJSONArray(category.getCategoryId())
+		).put(
+			"name",
+			HtmlUtil.escape(category.getTitle(_themeDisplay.getLocale()))
+		).put(
+			"url", _getPortletURL(category.getCategoryId())
+		);
+	}
+
+	private JSONArray _getChildCategoriesJSONArray(long categoryId)
+		throws PortalException {
+
+		JSONArray childCategoriesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		List<AssetCategory> childCategories =
+			AssetCategoryServiceUtil.getChildCategories(categoryId);
+
+		for (AssetCategory childCategory : childCategories) {
+			childCategoriesJSONArray.put(_getCategoryJSONObject(childCategory));
+		}
+
+		return childCategoriesJSONArray;
+	}
+
+	private String _getPortletURL(long categoryId) {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		if (getCategoryId() == categoryId) {
+			portletURL.setParameter("categoryId", StringPool.BLANK);
+		}
+		else {
+			portletURL.setParameter("categoryId", String.valueOf(categoryId));
+		}
+
+		return HtmlUtil.escape(portletURL.toString());
 	}
 
 	private Long _categoryId;

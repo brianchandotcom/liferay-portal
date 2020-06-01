@@ -34,7 +34,7 @@ export {MAP_HTML_CHARS_ESCAPED};
 
 const MAP_HTML_CHARS_UNESCAPED = {};
 
-Object.keys(MAP_HTML_CHARS_ESCAPED).forEach(([char, escapedChar]) => {
+Object.entries(MAP_HTML_CHARS_ESCAPED).forEach(([char, escapedChar]) => {
 	MAP_HTML_CHARS_UNESCAPED[escapedChar] = char;
 });
 
@@ -44,7 +44,9 @@ const HTML_UNESCAPED_VALUES = Object.keys(MAP_HTML_CHARS_ESCAPED);
 
 const HTML_ESCAPE = new RegExp('[' + HTML_UNESCAPED_VALUES.join('') + ']', 'g');
 
-export default function escapeHTML(string, preventDoubleEscape, entities) {
+const HTML_UNESCAPE = new RegExp(HTML_ESCAPED_VALUES.join('|'), 'gi');
+
+export function escapeHTML(string, preventDoubleEscape, entities) {
 	let regex = HTML_ESCAPE;
 
 	const entitiesList = [];
@@ -88,4 +90,24 @@ export default function escapeHTML(string, preventDoubleEscape, entities) {
 
 		return result;
 	});
+}
+
+export function unescapeHTML(string, entities) {
+	let regex = HTML_UNESCAPE;
+
+	let entitiesMap = MAP_HTML_CHARS_UNESCAPED;
+
+	if (entities) {
+		const entitiesValues = Object.keys(entities);
+
+		entitiesMap = {};
+
+		Object.keys(entities).forEach(([escapedChar, char]) => {
+			entitiesMap[escapedChar] = char;
+		});
+
+		regex = new RegExp(entitiesValues.join('|'), 'gi');
+	}
+
+	return string.replace(regex, (match) => entitiesMap[match]);
 }

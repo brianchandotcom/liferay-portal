@@ -43,7 +43,6 @@ import SideNavigation from './side_navigation.es';
 import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
-import escapeHTML, {MAP_HTML_CHARS_ESCAPED} from './util/escape_html';
 import fetch from './util/fetch.es';
 import focusFormField from './util/focus_form_field';
 import getFormElement from './util/form/get_form_element.es';
@@ -57,6 +56,11 @@ import getDOM from './util/get_dom';
 import getElement from './util/get_element';
 import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
+import {
+	MAP_HTML_CHARS_ESCAPED,
+	escapeHTML,
+	unescapeHTML,
+} from './util/html_util';
 import inBrowserView from './util/in_browser_view';
 import isPhone from './util/is_phone';
 import isTablet from './util/is_tablet';
@@ -261,5 +265,6 @@ Liferay.Util.Session = {
 };
 
 Liferay.Util.unescape = unescape;
+Liferay.Util.unescapeHTML = unescapeHTML;
 
 export {portlet};

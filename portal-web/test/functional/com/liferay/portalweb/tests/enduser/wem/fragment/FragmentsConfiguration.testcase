@@ -45,20 +45,6 @@ definition {
 
 		FragmentsEditor.gotoCodeTab();
 
-		task ("Assert there is an error message in the fragment editor preview") {
-			SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
-
-			Alert.viewErrorMessage(errorMessage = "Fragment configuration is invalid.");
-
-			Alert.viewErrorMessage(errorMessage = "/fieldSets/0/fields/0: required key [defaultValue] not found");
-
-			Alert.viewErrorMessage(errorMessage = "fieldSets/0/fields/0/typeOptions: required key [validValues] not found");
-
-			Alert.viewErrorMessage(errorMessage = "/fieldSets/0/fields/0/typeOptions: extraneous key [values] is not permitted");
-
-			SelectFrame.selectFrameTop();
-		}
-
 		task ("Publish the fragment and assert there is an error message") {
 			Button.clickPublish();
 

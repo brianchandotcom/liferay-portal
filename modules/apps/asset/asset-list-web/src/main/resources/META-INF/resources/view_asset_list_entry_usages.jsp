@@ -105,7 +105,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 		<clay:col
 			lg="9"
 		>
-			<div class="sheet">
+			<clay:sheet>
 				<h3 class="sheet-title">
 					<c:choose>
 						<c:when test='<%= Objects.equals(assetListEntryUsagesDisplayContext.getNavigation(), "pages") %>'>
@@ -163,7 +163,7 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 					/>
 				</liferay-ui:search-container>
-			</div>
+			</clay:sheet>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>

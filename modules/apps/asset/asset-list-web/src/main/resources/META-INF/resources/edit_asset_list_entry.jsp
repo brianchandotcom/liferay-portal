@@ -50,14 +50,18 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 
 						<c:choose>
 							<c:when test="<%= assetEntryListSegmentsEntryRels.size() > 1 %>">
-								<div class="autofit-row autofit-row-center">
-									<div class="autofit-col autofit-col-expand">
+								<clay:content-row
+									verticalAlign="center"
+								>
+									<clay:content-col
+										expand="true"
+									>
 										<strong class="text-uppercase">
 											<liferay-ui:message key="personalized-variations" />
 										</strong>
-									</div>
+									</clay:content-col>
 
-									<div class="autofit-col autofit-col-end">
+									<clay:content-col>
 										<ul class="navbar-nav">
 											<li>
 												<c:if test="<%= availableSegmentsEntries.size() > 0 %>">
@@ -71,8 +75,8 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 												</c:if>
 											</li>
 										</ul>
-									</div>
-								</div>
+									</clay:content-col>
+								</clay:content-row>
 
 								<ul class="nav nav-stacked">
 

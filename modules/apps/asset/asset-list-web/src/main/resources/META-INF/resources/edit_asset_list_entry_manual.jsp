@@ -34,25 +34,38 @@
 
 	<liferay-frontend:edit-form-body>
 		<h3 class="sheet-title">
-			<div class="autofit-row autofit-row-center">
-				<div class="autofit-col">
+			<clay:content-row
+				verticalAlign="center"
+			>
+				<clay:content-col>
 					<%= HtmlUtil.escape(editAssetListDisplayContext.getSegmentsEntryName(editAssetListDisplayContext.getSegmentsEntryId(), locale)) %>
-				</div>
+				</clay:content-col>
 
-				<div class="autofit-col autofit-col-end inline-item-after">
+				<clay:content-col
+					cssClass="inline-item-after"
+				>
 					<liferay-util:include page="/asset_list_entry_variation_action.jsp" servletContext="<%= application %>" />
-				</div>
-			</div>
+				</clay:content-col>
+			</clay:content-row>
 		</h3>
 
 		<h3 class="sheet-title text-uppercase">
-			<span class="autofit-padded-no-gutters autofit-row">
-				<span class="autofit-col autofit-col-expand">
+			<clay:content-row
+				containerElement="span"
+				noGutters="true"
+			>
+				<clay:content-col
+					containerElement="span"
+					expand="true"
+				>
 					<span class="heading-text">
 						<liferay-ui:message key="asset-entries" />
 					</span>
-				</span>
-				<span class="autofit-col">
+				</clay:content-col>
+
+				<clay:content-col
+					containerElement="span"
+				>
 					<liferay-ui:icon-menu
 						direction="right"
 						message="select"
@@ -80,8 +93,8 @@
 						%>
 
 					</liferay-ui:icon-menu>
-				</span>
-			</span>
+				</clay:content-col>
+			</clay:content-row>
 		</h3>
 
 		<liferay-ui:search-container

@@ -89,10 +89,10 @@ public class UpgradeResourceActionTest {
 		_assertResourceAction(_NAME_2, _ACTION_ID_1, false);
 		_assertResourceAction(_NAME_2, _ACTION_ID_2, false);
 
-		UpgradeResourceAction upgradeResourceActions =
+		UpgradeResourceAction upgradeResourceAction =
 			new UpgradeResourceAction();
 
-		upgradeResourceActions.upgrade();
+		upgradeResourceAction.upgrade();
 
 		_assertResourceAction(_NAME_1, _ACTION_ID_1, false);
 		_assertResourceAction(_NAME_1, _ACTION_ID_2, true);

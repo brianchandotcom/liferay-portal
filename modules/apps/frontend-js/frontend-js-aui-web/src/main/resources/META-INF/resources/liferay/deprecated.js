@@ -14,9 +14,6 @@
 
 // For details about this file see: LPS-2155
 
-/**
- * @deprecated As of Athanasius (7.3.x), with no direct replacement
- */
 (function (A, Liferay) {
 	var Util = Liferay.Util;
 
@@ -50,8 +47,9 @@
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
-	var REGEX_HTML_UNESCAPE = new RegExp(htmlEscapedValues.join('|'), 'gi');
-
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.actsAsAspect = function (object) {
 		object.yield = null;
 		object.rv = {};
@@ -87,6 +85,9 @@
 		};
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.addInputFocus = function () {
 		A.use('aui-base', (A) => {
 			var handleFocus = function (event) {
@@ -121,6 +122,9 @@
 		Util.addInputFocus = function () {};
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.addInputType = function (el) {
 		Util.addInputType = Lang.emptyFn;
 
@@ -146,6 +150,9 @@
 		return Util.addInputType(el);
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.camelize = function (value, separator) {
 		var regex = REGEX_DASH;
 
@@ -160,18 +167,30 @@
 		return value;
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.clamp = function (value, min, max) {
 		return Math.min(Math.max(value, min), max);
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.isEditorPresent = function (editorName) {
 		return Liferay.EDITORS && Liferay.EDITORS[editorName];
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.randomMinMax = function (min, max) {
 		return Math.round(Math.random() * (max - min)) + min;
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.selectAndCopy = function (el) {
 		el.focus();
 		el.select();
@@ -183,6 +202,9 @@
 		}
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.setBox = function (oldBox, newBox) {
 		for (var i = oldBox.length - 1; i > -1; i--) {
 			oldBox.options[i] = null;
@@ -195,10 +217,16 @@
 		oldBox.options[0].selected = true;
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.startsWith = function (str, x) {
 		return str.indexOf(x) === 0;
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.textareaTabs = function (event) {
 		var el = event.currentTarget.getDOM();
 
@@ -231,6 +259,9 @@
 		}
 	};
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Util.uncamelize = function (value, separator) {
 		separator = separator || ' ';
 
@@ -243,32 +274,9 @@
 		return value;
 	};
 
-	Util.unescapeHTML = function (str, entities) {
-		var regex = REGEX_HTML_UNESCAPE;
-
-		var entitiesMap = MAP_HTML_CHARS_UNESCAPED;
-
-		if (entities) {
-			var entitiesValues = [];
-
-			entitiesMap = {};
-
-			AObject.each(entities, (item, index) => {
-				entitiesMap[item] = index;
-
-				entitiesValues.push(item);
-			});
-
-			regex = new RegExp(entitiesValues.join('|'), 'gi');
-		}
-
-		return str.replace(regex, A.bind('_unescapeHTML', Util, entitiesMap));
-	};
-
-	Util._unescapeHTML = function (entities, match) {
-		return entities[match];
-	};
-
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Liferay.provide(
 		Util,
 		'check',
@@ -282,6 +290,9 @@
 		['aui-base']
 	);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Liferay.provide(
 		Util,
 		'disableSelectBoxes',
@@ -312,6 +323,9 @@
 		['aui-base']
 	);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Liferay.provide(
 		Util,
 		'disableTextareaTabs',
@@ -327,6 +341,9 @@
 		['aui-base']
 	);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Liferay.provide(
 		Util,
 		'enableTextareaTabs',
@@ -342,6 +359,9 @@
 		['aui-base']
 	);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Liferay.provide(
 		Util,
 		'removeItem',
@@ -362,6 +382,9 @@
 		['aui-base']
 	);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Liferay.provide(
 		Util,
 		'resizeTextarea',
@@ -461,6 +484,9 @@
 		['aui-base']
 	);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Liferay.provide(
 		Util,
 		'setSelectedValue',
@@ -476,6 +502,9 @@
 		['aui-base']
 	);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
 	Liferay.provide(
 		Util,
 		'switchEditor',

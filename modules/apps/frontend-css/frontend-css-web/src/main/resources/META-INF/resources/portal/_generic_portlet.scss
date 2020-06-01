@@ -3,8 +3,14 @@
 	margin-left: 0;
 }
 
-.controls-hidden .portlet-topper-toolbar {
-	display: none !important;
+.controls-hidden {
+	.lfr-configurator-visibility {
+		display: none;
+	}
+
+	.portlet-topper-toolbar {
+		display: none !important;
+	}
 }
 
 .lfr-button {

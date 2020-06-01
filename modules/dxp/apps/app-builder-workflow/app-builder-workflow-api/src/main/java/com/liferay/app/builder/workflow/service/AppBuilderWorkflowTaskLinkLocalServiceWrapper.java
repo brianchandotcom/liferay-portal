@@ -54,13 +54,13 @@ public class AppBuilderWorkflowTaskLinkLocalServiceWrapper
 	@Override
 	public com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
 			addAppBuilderWorkflowTaskLink(
-				long appBuilderAppId, long companyId, long ddmStructureLayoutId,
+				long companyId, long appBuilderAppId, long ddmStructureLayoutId,
 				String workflowTaskName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _appBuilderWorkflowTaskLinkLocalService.
 			addAppBuilderWorkflowTaskLink(
-				appBuilderAppId, companyId, ddmStructureLayoutId,
+				companyId, appBuilderAppId, ddmStructureLayoutId,
 				workflowTaskName);
 	}
 

@@ -1,0 +1,43 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ADJACENT_SLASHES %>">
+	<liferay-ui:message key="please-enter-a-source-url-that-does-not-have-adjacent-slashes" />
+</c:if>
+
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.DOES_NOT_START_WITH_SLASH %>">
+	<liferay-ui:message key="please-enter-a-source-url-that-begins-with-a-slash" />
+</c:if>
+
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_SLASH %>">
+	<liferay-ui:message key="please-enter-a-source-url-that-does-not-end-with-a-slash" />
+</c:if>
+
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.INVALID_CHARACTERS %>">
+	<liferay-ui:message key="please-enter-a-source-url-with-valid-characters" />
+</c:if>
+
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.KEYWORD_CONFLICT %>">
+	<liferay-ui:message arguments="<%= lfurle.getKeywordConflict() %>" key="please-enter-a-source-url-that-does-not-conflict-with-the-keyword-x" translateArguments="<%= false %>" />
+</c:if>
+
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_LONG %>">
+	<liferay-ui:message key="the-source-url-is-too-long" />
+</c:if>
+
+<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_SHORT %>">
+	<liferay-ui:message key="please-enter-a-source-url-that-is-at-least-two-characters-long" />
+</c:if>

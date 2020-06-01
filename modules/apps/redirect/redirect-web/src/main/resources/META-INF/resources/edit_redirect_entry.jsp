@@ -56,6 +56,15 @@ else {
 	</c:if>
 
 	<liferay-frontend:edit-form-body>
+		<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>" focusField="sourceURL">
+
+			<%
+				LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)errorException;
+			%>
+
+			<%@ include file="/error_source_url_exception.jspf" %>
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= CircularRedirectEntryException.DestinationURLMustNotBeEqualToSourceURL.class %>" focusField="destinationURL" message="destination-url-cannot-be-the-same-as-source-url" />
 		<liferay-ui:error exception="<%= CircularRedirectEntryException.MustNotFormALoopWithAnotherRedirectEntry.class %>" focusField="sourceURL" message="please-change-the-source-or-destination-url-to-avoid-redirect-loop" />
 		<liferay-ui:error exception="<%= DuplicateRedirectEntrySourceURLException.class %>" focusField="sourceURL" message="there-is-already-a-redirect-set-for-the-same-source-url" />

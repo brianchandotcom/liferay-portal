@@ -58,7 +58,7 @@ processDefaultSanitizerConfiguration {
 processKnowledgeBaseSanitizerConfiguration {
 	dependsOn processDefaultSanitizerConfiguration
 
-	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/knowledge-base-sanitizer-configuration.xml")
+	File knowledgeBaseSanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/knowledge-base-sanitizer-configuration.xml")
 
 	ext {
 		autoClean = false
@@ -72,14 +72,14 @@ processKnowledgeBaseSanitizerConfiguration {
 		sanitizerConfigurationFile
 	}
 
-	into sanitizerConfigurationFile.parentFile
+	into knowledgeBaseSanitizerConfigurationFile.parentFile
 
 	onlyIf {
-		!sanitizerConfigurationFile.exists()
+		!knowledgeBaseSanitizerConfigurationFile.exists()
 	}
 
 	rename {
-		sanitizerConfigurationFile.name
+		knowledgeBaseSanitizerConfigurationFile.name
 	}
 }
 

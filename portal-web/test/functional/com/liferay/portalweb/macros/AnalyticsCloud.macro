@@ -17,7 +17,7 @@ definition {
 	}
 
 	macro syncAnalyticsCloud {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");
@@ -60,7 +60,7 @@ definition {
 	}
 
 	macro teardownAnalyticsCloud {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");

@@ -19,7 +19,7 @@ definition {
 	}
 
 	macro tearDownConfiguration {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",
 			portlet = "Akismet");

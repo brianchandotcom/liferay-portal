@@ -71,7 +71,7 @@ definition {
 
 		Alert.viewSuccessMessage();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -419,7 +419,7 @@ definition {
 			var userEmailAddress = "${userEmail}";
 			var userName = StringUtil.replace("${userEmail}", "@liferay.com", "");
 
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
 				portlet = "Users and Organizations");
@@ -2365,7 +2365,7 @@ definition {
 	}
 
 	macro tearDownCP {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -2402,7 +2402,7 @@ definition {
 	}
 
 	macro tearDownSpecificUser {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
@@ -2702,8 +2702,6 @@ definition {
 	}
 
 	macro viewLoggedInPG {
-		ProductMenuHelper.expandPanel(panel = "Control Panel");
-
 		if ("${authenticationMethod}" == "By Screen Name") {
 			AssertElementNotPresent(locator1 = "TextInput#SCREEN_NAME");
 		}

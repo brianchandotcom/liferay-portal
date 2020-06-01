@@ -614,7 +614,7 @@ definition {
 	}
 
 	macro gotoConfiguration {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");
@@ -626,7 +626,7 @@ definition {
 	}
 
 	macro gotoPortalSettings {
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Instance Settings");

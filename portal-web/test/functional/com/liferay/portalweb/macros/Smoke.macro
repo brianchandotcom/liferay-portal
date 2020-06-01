@@ -6,14 +6,14 @@ definition {
 	@summary-ignore = "true"
 	macro runSmoke {
 		task ("Ensure that the super admin can add a Blank Site") {
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
 				portlet = "Sites");
 
 			Site.addBlankCP(siteName = "Site Name");
 
-			ProductMenu.gotoPortlet(
+			GlobalMenu.gotoPortlet(
 				category = "Sites",
 				panel = "Control Panel",
 				portlet = "Sites");

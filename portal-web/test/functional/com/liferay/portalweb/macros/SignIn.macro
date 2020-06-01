@@ -73,7 +73,7 @@ definition {
 			SignIn.setPasswordReminder();
 		}
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");

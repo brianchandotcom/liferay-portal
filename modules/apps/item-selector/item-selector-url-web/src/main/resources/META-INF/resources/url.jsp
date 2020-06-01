@@ -25,12 +25,12 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 %>
 
 <div class="lfr-form-content">
-	<div class="sheet sheet-lg">
+	<clay:sheet>
 		<div class="panel-group panel-group-flush">
 			<react:component
 				data="<%= data %>"
 				module="js/ItemSelectorUrl.es"
 			/>
 		</div>
-	</div>
+	</clay:sheet>
 </div>

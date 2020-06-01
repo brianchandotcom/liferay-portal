@@ -19,6 +19,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 import com.liferay.jenkins.results.parser.ParallelExecutor;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -253,7 +254,7 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			String.valueOf(getID()), ".aspx");
 	}
 
-	public static class Result {
+	public static class Result implements Serializable {
 
 		public Result(
 			SpiraTestCaseObject spiraTestCaseObject, RunnerFormat runnerFormat,
@@ -418,7 +419,8 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 		private final List<SpiraCustomProperty.Value>
 			_spiraCustomPropertyValues;
 		private SpiraTestCaseObject _spiraTestCaseObject;
-		private Supplier<SpiraTestCaseObject> _spiraTestCaseObjectSupplier;
+		private transient Supplier<SpiraTestCaseObject>
+			_spiraTestCaseObjectSupplier;
 		private final Status _status;
 
 	}

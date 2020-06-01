@@ -27,6 +27,7 @@ import * as Actions from '../actions/index';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
 import {useDispatch, useSelector} from '../store/index';
+import redo from '../thunks/redo';
 import undo from '../thunks/undo';
 import {useDropClear} from '../utils/useDragAndDrop';
 import {useSelectItem} from './Controls';
@@ -175,6 +176,10 @@ function ToolbarBody() {
 		dispatch(undo({store}));
 	};
 
+	const onRedo = () => {
+		dispatch(redo({store}));
+	};
+
 	const deselectItem = (event) => {
 		if (event.target === event.currentTarget) {
 			selectItem(null);
@@ -269,7 +274,7 @@ function ToolbarBody() {
 
 			<ul className="navbar-nav" onClick={deselectItem}>
 				<NetworkStatusBar {...network} />
-				{config.undoEnabled && <Undo onUndo={onUndo} />}
+				{config.undoEnabled && <Undo onRedo={onRedo} onUndo={onUndo} />}
 
 				<li className="nav-item">
 					<ClayButton

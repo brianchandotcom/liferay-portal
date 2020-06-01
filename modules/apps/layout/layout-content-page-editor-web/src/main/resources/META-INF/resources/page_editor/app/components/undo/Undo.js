@@ -65,6 +65,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 	);
 
 	const undoHistory = useSelector((state) => state.undoHistory);
+	const redoHistory = useSelector((state) => state.redoHistory);
 
 	return (
 		<>
@@ -82,7 +83,7 @@ export default function Undo({onRedo = () => {}, onUndo = () => {}}) {
 				<ClayButtonWithIcon
 					aria-label={Liferay.Language.get('redo')}
 					className="btn-monospaced"
-					disabled
+					disabled={!redoHistory || !redoHistory.length}
 					displayType="secondary"
 					onClick={onRedo}
 					small

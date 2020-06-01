@@ -2567,7 +2567,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description></description>
+		<description>Deprecated as of Athanasius (7.3.x), with no direct replacement.</description>
 		<name>table</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.TableTag</tag-class>
 		<body-content>empty</body-content>

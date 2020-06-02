@@ -1876,7 +1876,7 @@ definition {
 	@priority = "4"
 	test EditTranslatedGridField {
 		property test.name.skip.portal.instance = "Forms#EditTranslatedGridField";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 
@@ -2174,7 +2174,7 @@ definition {
 	@priority = "3"
 	test ReorderFieldOptions {
 		property test.name.skip.portal.instance = "Forms#ReorderFieldOptions";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

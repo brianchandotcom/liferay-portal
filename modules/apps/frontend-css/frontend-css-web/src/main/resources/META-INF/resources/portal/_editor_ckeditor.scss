@@ -21,11 +21,11 @@
 				.cke_toolgroup {
 					a.cke_button {
 						border: none;
-						border-radius: 4px;
 						margin: 0 2px;
 						padding: 7px 8px;
 
-						&:last-child:after, &.cke_button_disabled:hover:last-child:after {
+						&:last-child:after,
+						&.cke_button_disabled:hover:last-child:after {
 							border-right: 1px solid $secondary-l3;
 							height: 24px;
 							right: -7px;
@@ -85,16 +85,16 @@
 			&:hover {
 				background-color: $primary-l3;
 			}
-			
+
 			.cke_menubutton_icon {
 				background-color: transparent;
 				padding: 10px 16px 9px;
 			}
-			
+
 			.cke_menubutton_shortcut {
 				padding: 10px 16px 9px;
 			}
-			
+
 			.cke_menubutton_label:not(.cke_menubutton_shortcut) {
 				min-width: 66px;
 			}

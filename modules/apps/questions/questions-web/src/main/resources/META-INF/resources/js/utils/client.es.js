@@ -239,6 +239,7 @@ export const getMessageBoardThreadByIdQuery = gql`
 			friendlyUrlPath
 			id
 			messageBoardSection {
+				numberOfMessageBoardSections
 				title
 			}
 		}
@@ -453,6 +454,7 @@ export const getThreadsQuery = gql`
 				headline
 				id
 				messageBoardSection {
+					numberOfMessageBoardSections
 					title
 				}
 				numberOfMessageBoardMessages
@@ -554,6 +556,7 @@ export const getRankedThreadsQuery = gql`
 				id
 				keywords
 				messageBoardSection {
+					numberOfMessageBoardSections
 					title
 				}
 				numberOfMessageBoardMessages
@@ -591,6 +594,7 @@ export const getRelatedThreadsQuery = gql`
 				headline
 				id
 				messageBoardSection {
+					numberOfMessageBoardSections
 					title
 				}
 			}
@@ -654,9 +658,7 @@ export const getUserActivityQuery = gql`
 				id
 				keywords
 				messageBoardSection {
-					title
-				}
-				messageBoardSection {
+					numberOfMessageBoardSections
 					title
 				}
 				numberOfMessageBoardMessages

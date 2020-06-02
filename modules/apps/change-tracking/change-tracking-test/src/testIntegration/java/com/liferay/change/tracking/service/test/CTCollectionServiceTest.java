@@ -145,9 +145,9 @@ public class CTCollectionServiceTest {
 		catch (CTEnclosureException ctEnclosureException) {
 			Assert.assertEquals(
 				StringBundler.concat(
-					"{ctCollectionId=", _ctCollection.getCtCollectionId(),
-					", classNameId=", folderClassNameId, ", classPK=",
-					folder.getPrimaryKey(), "}"),
+					"{classNameId=", folderClassNameId, ", classPK=",
+					folder.getPrimaryKey(), ", ctCollectionId=",
+					_ctCollection.getCtCollectionId(), "}"),
 				ctEnclosureException.getMessage());
 		}
 

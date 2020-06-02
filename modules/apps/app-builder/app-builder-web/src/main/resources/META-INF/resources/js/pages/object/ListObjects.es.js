@@ -21,6 +21,7 @@ import ListView from '../../components/list-view/ListView.es';
 import PermissionsModal from '../../components/permissions/PermissionsModal.es';
 import {ACTIONS} from '../../pages/entry/PermissionsContext.es';
 import {getItem, updateItem} from '../../utils/client.es';
+import lang from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 
 const COLUMNS = [
@@ -50,8 +51,6 @@ export default ({history, listViewProps = {}, objectType}) => {
 		dataDefinitionId: null,
 		endpoint: null,
 	});
-
-	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 	const {actions = []} = listViewProps;
 
@@ -132,7 +131,10 @@ export default ({history, listViewProps = {}, objectType}) => {
 					dateModified: fromNow(item.dateModified),
 					name: (
 						<Link to={`/${objectType}/${item.id}/form-views`}>
-							{item.name[defaultLanguageId]}
+							{lang.getLocalizedValue(
+								item.defaultLanguageId,
+								item.name
+							)}
 						</Link>
 					),
 				})}

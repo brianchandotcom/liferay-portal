@@ -17,7 +17,7 @@ import React from 'react';
 
 import MappingPanel from './MappingPanel';
 
-export default function () {
+function SeoMapping() {
 	return (
 		<>
 			<ClayForm.Group>
@@ -41,5 +41,14 @@ export default function () {
 				</label>
 			</ClayForm.Group>
 		</>
+	);
+}
+
+export default function (props) {
+	return (
+		<SeoMapping
+			{...props}
+			portletNamespace={`_${props.portletNamespace}_`}
+		/>
 	);
 }

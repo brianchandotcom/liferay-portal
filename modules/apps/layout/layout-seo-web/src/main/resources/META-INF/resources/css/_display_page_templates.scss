@@ -14,6 +14,10 @@
 		pointer-events: none;
 	}
 
+	.dpt-mapping-panel-wrapper {
+		position: relative;
+	}
+
 	.dpt-mapping-btn {
 		color: $purple;
 
@@ -21,5 +25,18 @@
 		&:hover {
 			background-color: fade_out($purple, 0.9);
 		}
+	}
+
+	.dpt-mapping-panel {
+		max-height: 250px;
+		min-width: 288px;
+		position: absolute;
+		top: 3rem;
+		transform: translateX(-100%) translateX(40px);
+		transition: opacity ease 0.3s;
+	}
+
+	.popover-scrollable {
+		overflow: auto;
 	}
 }

@@ -13,10 +13,21 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import React from 'react';
+import React, {useState} from 'react';
 
-export default function () {
+function normalizeFields(fields = []) {
+	return fields.map(({key, label}) => ({
+		label,
+		value: key,
+	}));
+}
+
+function MappingPanel({fields, initialSeletedField, selectedSource}) {
+	const [isPanelOpen, setIsPanelOpen] = useState(false);
+	const [seletedField, setSeletedField] = useState(initialSeletedField);
+
 	return (
 		<div className="dpt-mapping-panel-wrapper">
 			<ClayButton
@@ -24,9 +35,44 @@ export default function () {
 				displayType="secondary"
 				id="titleSelector"
 				monospaced
+				onClick={() => {
+					setIsPanelOpen((state) => !state);
+				}}
 			>
 				<ClayIcon symbol="bolt" />
 			</ClayButton>
+			{isPanelOpen && (
+				<div
+					className="dpt-mapping-panel popover popover-scrollable"
+					onClick={(event) => event.stopPropagation()}
+				>
+					<div className="popover-body">
+						<ClayForm.Group small>
+							<label htmlFor="mappingSelectorSourceSelect">
+								{Liferay.Language.get('source')}
+							</label>
+							<ClayInput readOnly value={selectedSource} />
+						</ClayForm.Group>
+						<ClayForm.Group small>
+							<label htmlFor="mappingSelectorSourceSelect">
+								{Liferay.Language.get('source')}
+							</label>
+							<ClaySelectWithOption
+								aria-label={Liferay.Language.get('source')}
+								id="mappingSelectorSourceSelect"
+								onChange={(event) => {
+									const {value} = event.target;
+									setSeletedField(value);
+								}}
+								options={normalizeFields(fields)}
+								value={seletedField}
+							/>
+						</ClayForm.Group>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
+
+export default MappingPanel;

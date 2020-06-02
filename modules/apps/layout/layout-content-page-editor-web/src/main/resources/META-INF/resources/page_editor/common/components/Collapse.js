@@ -19,7 +19,7 @@ import React, {useEffect, useState} from 'react';
 
 export default function Collapse(props) {
 	const [open, setOpen] = useState(props.open);
-	const collapseIcon = open ? 'angle-down' : 'angle-right';
+	const collapseIcon = open ? 'angle-down-small' : 'angle-right-small';
 	const collapseIconClassName = open ? 'open' : 'closed';
 
 	useEffect(() => {
@@ -45,9 +45,11 @@ export default function Collapse(props) {
 				)}
 				onClick={handleClick}
 			>
-				{props.label}
-				<span className={`collapse-icon-${collapseIconClassName}`}>
-					<ClayIcon key={collapseIcon} symbol={collapseIcon} />
+				<span className="c-inner" tabIndex="-1">
+					{props.label}
+					<span className={`collapse-icon-${collapseIconClassName}`}>
+						<ClayIcon key={collapseIcon} symbol={collapseIcon} />
+					</span>
 				</span>
 			</button>
 			{open && props.children}

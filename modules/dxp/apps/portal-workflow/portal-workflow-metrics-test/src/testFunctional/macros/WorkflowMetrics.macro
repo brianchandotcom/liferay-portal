@@ -292,7 +292,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow");
+			portlet = "Workflow",
+			site = "${site}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -320,7 +321,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow");
+			portlet = "Workflow",
+			site = "${site}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

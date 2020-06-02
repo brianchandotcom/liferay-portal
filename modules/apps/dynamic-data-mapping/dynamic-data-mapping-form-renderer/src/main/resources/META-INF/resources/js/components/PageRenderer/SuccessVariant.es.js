@@ -14,7 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
 import {setValue} from '../../util/i18n.es';

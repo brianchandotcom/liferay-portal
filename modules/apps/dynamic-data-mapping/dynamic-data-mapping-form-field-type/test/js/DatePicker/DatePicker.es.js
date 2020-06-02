@@ -35,6 +35,29 @@ const DatePickerWithProvider = (props) => (
 );
 
 describe('DatePicker', () => {
+	// eslint-disable-next-line no-console
+	const originalWarn = console.warn;
+
+	beforeAll(() => {
+		// eslint-disable-next-line no-console
+		console.warn = (...args) => {
+			if (
+				/DataProvider: Trying/.test(args[0]) ||
+				/Deprecation warning: value provided is not in a recognized RFC2822 or ISO format/.test(
+					args[0]
+				)
+			) {
+				return;
+			}
+			originalWarn.call(console, ...args);
+		};
+	});
+
+	afterAll(() => {
+		// eslint-disable-next-line no-console
+		console.warn = originalWarn;
+	});
+
 	afterEach(cleanup);
 
 	beforeEach(() => {

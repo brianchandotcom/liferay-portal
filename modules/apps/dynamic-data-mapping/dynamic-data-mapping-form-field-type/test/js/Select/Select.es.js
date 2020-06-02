@@ -35,7 +35,23 @@ const SelectWithProvider = (props) => (
 );
 
 describe('Select', () => {
+	// eslint-disable-next-line no-console
+	const originalWarn = console.warn;
+
+	afterAll(() => {
+		// eslint-disable-next-line no-console
+		console.warn = originalWarn;
+	});
+
 	beforeAll(() => {
+		// eslint-disable-next-line no-console
+		console.warn = (...args) => {
+			if (/DataProvider: Trying/.test(args[0])) {
+				return;
+			}
+			originalWarn.call(console, ...args);
+		};
+
 		ReactDOM.createPortal = jest.fn((element) => {
 			return element;
 		});

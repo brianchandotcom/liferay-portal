@@ -500,6 +500,11 @@
 	<td>//button[normalize-space()='${key_collectionName}']/following-sibling::ul/li[contains(@class,'page-editor__fragments-widgets__tab-item')][normalize-space()='${key_fragmentName}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FRAGMENTS_AND_WIDGETS_TAB_WIDGET</td>
+	<td>//li[contains(@class,'page-editor__fragments-widgets__tab-item')][normalize-space()='${key_portletName}']</td>
+	<td></td>
+</tr>
 <!--WIDGETS-->
 <tr>
 	<td>WIDGETS_APPLICATION_SEARCH_FIELD</td>

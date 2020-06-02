@@ -55,6 +55,8 @@ public class DataDefinitionUtilTest extends PowerMockito {
 			SetUtil.fromArray(new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}),
 			LocaleUtil.US);
 
+		Locale defaultLocale = ddmForm.getDefaultLocale();
+
 		ddmForm.addDDMFormField(
 			new DDMFormField() {
 				{
@@ -65,7 +67,8 @@ public class DataDefinitionUtilTest extends PowerMockito {
 								"en_US", "label1"
 							).put(
 								"pt_BR", "rótulo1"
-							).build()));
+							).build(),
+							defaultLocale));
 					setLocalizable(true);
 					setName("name1");
 					setPredefinedValue(
@@ -74,7 +77,8 @@ public class DataDefinitionUtilTest extends PowerMockito {
 								"en_US", "enter a text"
 							).put(
 								"pt_BR", "insira um texto"
-							).build()));
+							).build(),
+							defaultLocale));
 					setReadOnly(true);
 					setRepeatable(true);
 					setRequired(true);
@@ -85,7 +89,8 @@ public class DataDefinitionUtilTest extends PowerMockito {
 								"en_US", "tip1"
 							).put(
 								"pt_BR", "ajuda1"
-							).build()));
+							).build(),
+							defaultLocale));
 					setType("text");
 				}
 			});
@@ -99,7 +104,8 @@ public class DataDefinitionUtilTest extends PowerMockito {
 								"en_US", "label2"
 							).put(
 								"pt_BR", "rótulo2"
-							).build()));
+							).build(),
+							defaultLocale));
 					setName("name2");
 					setLocalizable(false);
 					setPredefinedValue(
@@ -108,7 +114,8 @@ public class DataDefinitionUtilTest extends PowerMockito {
 								"en_US", "select an option"
 							).put(
 								"pt_BR", "selecione uma opção"
-							).build()));
+							).build(),
+							defaultLocale));
 					setReadOnly(false);
 					setRepeatable(false);
 					setRequired(false);
@@ -119,7 +126,8 @@ public class DataDefinitionUtilTest extends PowerMockito {
 								"en_US", "tip2"
 							).put(
 								"pt_BR", "ajuda2"
-							).build()));
+							).build(),
+							defaultLocale));
 					setType("select");
 				}
 			});

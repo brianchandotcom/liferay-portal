@@ -141,6 +141,10 @@ public class HistogramMetricResourceTest
 
 		_instances.add(instance);
 
+		if (startLocalDateTime.equals(endLocalDateTime)) {
+			endLocalDateTime = endLocalDateTime.plusSeconds(1);
+		}
+
 		assertEquals(
 			_createHistogramMetric(
 				histograms,

@@ -48,7 +48,9 @@ definition {
 
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.addLayoutRow();
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Row");
 
 		AssertElementNotPresent(
 			key_elementType = "Section",
@@ -72,7 +74,9 @@ definition {
 
 		PageEditor.assertFragmentSidebarLoaded();
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			fragmentName = "Content",

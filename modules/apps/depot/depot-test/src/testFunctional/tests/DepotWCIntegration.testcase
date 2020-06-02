@@ -194,7 +194,9 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			depotName = "Test Depot Name",
@@ -233,7 +235,9 @@ definition {
 
 		DisplayPageTemplatesAdmin.addDisplayPage(displayPageName = "Display Page Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			depotName = "Test Depot Name",

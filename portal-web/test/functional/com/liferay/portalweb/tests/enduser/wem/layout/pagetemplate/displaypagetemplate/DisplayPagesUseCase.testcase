@@ -248,7 +248,9 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Section");
 
 		PageEditor.editLayoutSection(
 			backgroundImage = "Content Mapping",
@@ -481,7 +483,9 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Section");
 
 		PageEditor.editLayoutSection(
 			backgroundImage = "Content Mapping",

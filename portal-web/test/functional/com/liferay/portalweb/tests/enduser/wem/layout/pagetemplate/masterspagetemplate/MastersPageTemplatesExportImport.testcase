@@ -74,7 +74,11 @@ definition {
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
 
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				dropTarget = "Footer",
+				fragmentName = "Section",
+				scope = "Master");
 
 			Click(
 				key_elementType = "Section",
@@ -97,8 +101,10 @@ definition {
 				key_position = "1",
 				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
 
-			PageEditor.addLayoutRow(
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
 				dropTarget = "Footer",
+				fragmentName = "Row",
 				scope = "Master");
 
 			PageEditor.gotoTab(tabName = "Fragments");
@@ -186,7 +192,11 @@ definition {
 				item = "Edit",
 				masterLayoutName = "Custom Masters Page Template");
 
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				dropTarget = "Footer",
+				fragmentName = "Section",
+				scope = "Master");
 
 			PageEditor.editLayoutSection(
 				backgroundImage = "Manual Selection",

@@ -88,7 +88,9 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Section");
 
 		PageEditor.editLayoutSection(
 			backgroundImage = "Manual Selection",
@@ -147,7 +149,9 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Section");
 
 		PageEditor.editLayoutSection(
 			backgroundImage = "Manual Selection",

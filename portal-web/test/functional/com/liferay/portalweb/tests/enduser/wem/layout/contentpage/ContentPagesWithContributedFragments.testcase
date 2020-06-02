@@ -90,7 +90,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
 		task ("Select the dynamic collection") {
@@ -100,18 +102,10 @@ definition {
 		}
 
 		task ("Add a Button fragment to the first cell") {
-			PageEditor.gotoTab(tabName = "Fragments");
-
-			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_entryTitle = "Third Web Content",
-				key_fragmentName = "Button",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
-				locator2 = "PageEditor#COLLECTION_CELL",
-				value1 = "");
-
-			PageEditor.waitForAutoSave();
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Third Web Content",
+				fragmentName = "Button");
 
 			AssertElementPresent(
 				key_colPosition = "1",
@@ -260,7 +254,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
 		task ("Assert both collections are unavailable to Collection Display") {
@@ -292,7 +288,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			fragmentName = "Content",
@@ -340,7 +338,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			blogs = "true",
@@ -388,7 +388,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
 		task ("Select the dynamic collection") {
@@ -489,7 +491,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			documentandmedia = "true",
@@ -519,7 +523,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			fragmentName = "Content",
@@ -828,7 +834,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
 		task ("Select the dynamic collection and 3 Columns") {
@@ -934,7 +942,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			customWebcontenttemplate = "WC Template Name",
@@ -1011,7 +1021,9 @@ definition {
 				pageName = "Content Page Name",
 				siteName = "Test Site Name");
 
-			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 		}
 
 		task ("Select the dynamic collection") {
@@ -1080,7 +1092,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.clickPublish();
 
@@ -1119,7 +1133,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Collection Display");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
 
 		PageEditor.editCollectionDisplay(
 			assetListName = "Dynamic Asset List Test",
@@ -1152,7 +1168,8 @@ definition {
 			}
 		}
 
-		PageEditor.addContentDisplay(
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
 			entryName = "Blogs Entry Title 3",
 			fragmentName = "Content");
 
@@ -1217,7 +1234,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addContentDisplay(fragmentName = "Collection Display");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
 
 		PageEditor.editCollectionDisplay(
 			assetListName = "Dynamic Asset List Test",
@@ -1250,7 +1269,8 @@ definition {
 			}
 		}
 
-		PageEditor.addContentDisplay(
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
 			entryName = "WC WebContent Title 3",
 			fragmentName = "Content");
 

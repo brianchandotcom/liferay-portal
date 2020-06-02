@@ -37,7 +37,9 @@ definition {
 	@description = "This is a test for LPS-108463. Assert no Section fragment is outside when add a Row fragment to display page template."
 	@priority = "4"
 	test AddRowWithoutSection {
-		PageEditor.addLayoutRow();
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Row");
 
 		AssertElementNotPresent(
 			key_elementType = "Section",
@@ -53,7 +55,9 @@ definition {
 			groupName = "Test Site Name",
 			title = "WebContent Title");
 
-		PageEditor.addContentDisplay(fragmentName = "Content");
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Content");
 
 		PageEditor.editContentDisplay(
 			fragmentName = "Content",

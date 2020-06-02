@@ -108,7 +108,9 @@ definition {
 		}
 
 		task ("Add a Section to page") {
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Section");
 		}
 
 		task ("Add the created fragment into Section") {
@@ -175,8 +177,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		AssertElementPresent(
 			key_elementHeader = "/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
@@ -271,7 +273,9 @@ definition {
 		}
 
 		task ("Add a Section to page") {
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Section");
 		}
 
 		task ("Add an Image fragment into Section") {
@@ -357,8 +361,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Saved Fragments",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		AssertVisible(
 			key_fragmentClass = "content",
@@ -381,7 +385,9 @@ definition {
 		}
 
 		task ("Add a Section to page") {
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Section");
 		}
 
 		JSONDocument.addFileWithUploadedFile(
@@ -466,8 +472,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Saved Fragments",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		task ("View the Section fragment style") {
 			AssertVisible(locator1 = "//div[contains(@class,'page-editor__topper')]//div[contains(@style,'Document_1.jpg')]");
@@ -503,7 +509,9 @@ definition {
 		}
 
 		task ("Add a Section to page") {
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Section");
 		}
 
 		task ("Add the Heading fragment into Section") {
@@ -582,8 +590,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Saved Fragments",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		AssertTextEquals(
 			key_fragmentName = "heading",
@@ -606,7 +614,9 @@ definition {
 		}
 
 		task ("Add a Row to page") {
-			PageEditor.addLayoutRow();
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Row");
 		}
 
 		task ("Add a Heading fragment to column 1") {
@@ -728,8 +738,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Saved Fragments",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		PageEditor.clickEditableField(
 			contributed = "true",
@@ -780,7 +790,9 @@ definition {
 		}
 
 		task ("Add a Row to page") {
-			PageEditor.addLayoutRow();
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Row");
 		}
 
 		task ("Add a Heading fragment to column 1") {
@@ -904,8 +916,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Saved Fragments",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		PageEditor.clickEditableField(
 			contributed = "true",
@@ -977,8 +989,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		AssertElementPresent(locator1 = "//div[contains(@class,'col-4')]//li[contains(@class,'title')][contains(.,'Heading')]");
 
@@ -1024,8 +1036,8 @@ definition {
 		task ("Assert changes from fragment are propagated to composition of fragment") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "New Fragment Name",
-				withSection = "true");
+				composition = "true",
+				fragmentName = "New Fragment Name");
 
 			AssertElementPresent(
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name')]//li[contains(@class,'title')]",
@@ -1099,8 +1111,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		AssertTextEquals(
 			key_elementHeader = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",

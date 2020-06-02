@@ -71,9 +71,13 @@ definition {
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
-			PageEditor.addCollectionDisplay(fragmentName = "Collection Display");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
 
-			PageEditor.addDisplayPageContent(fragmentName = "Display Page Content");
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
 
 			PageEditor.clickPublish();
 		}

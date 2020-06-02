@@ -130,7 +130,9 @@ definition {
 		}
 
 		task ("Assert add a Row fragment to Section") {
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Section");
 
 			Click(
 				key_elementType = "Section",
@@ -579,7 +581,9 @@ definition {
 		}
 
 		task ("Add a section") {
-			PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Section");
 		}
 
 		task ("Configure the section") {
@@ -599,7 +603,9 @@ definition {
 		}
 
 		task ("Add a row") {
-			PageEditor.addLayoutRow();
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Row");
 		}
 
 		task ("Duplicate the fragment") {
@@ -897,7 +903,9 @@ definition {
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addLayoutSection(dropTarget = "//div[contains(@class,'page-editor__root page-editor__topper')]");
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Section");
 
 		PageEditor.gotoTab(tabName = "Fragments");
 
@@ -935,8 +943,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
-			fragmentName = "New Fragment Name",
-			withSection = "true");
+			composition = "true",
+			fragmentName = "New Fragment Name");
 
 		AssertElementPresent(
 			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name 2')]//li[contains(@class,'title')]",

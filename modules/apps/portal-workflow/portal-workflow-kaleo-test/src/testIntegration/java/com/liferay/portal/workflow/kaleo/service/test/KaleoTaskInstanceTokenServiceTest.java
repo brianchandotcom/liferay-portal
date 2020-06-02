@@ -17,9 +17,11 @@ package com.liferay.portal.workflow.kaleo.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -49,6 +51,11 @@ public class KaleoTaskInstanceTokenServiceTest
 		User user = UserTestUtil.addUser();
 
 		_roleLocalService.clearUserRoles(user.getUserId());
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
+		serviceContext.setUserId(user.getUserId());
 
 		int count = kaleoTaskInstanceTokenLocalService.searchCount(
 			null, null, false, true, serviceContext);

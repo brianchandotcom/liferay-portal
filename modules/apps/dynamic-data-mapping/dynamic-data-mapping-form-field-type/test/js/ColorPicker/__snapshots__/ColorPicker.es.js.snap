@@ -27,6 +27,7 @@ exports[`Field Color Picker renders field disabled 1`] = `
             <button
               aria-label="Select a color"
               class="btn clay-color-btn dropdown-toggle"
+              disabled=""
               style="border-width: 0px; background: rgb(0, 0, 0); height: 28px; width: 28px;"
               title="000000"
               type="button"
@@ -39,6 +40,7 @@ exports[`Field Color Picker renders field disabled 1`] = `
           <input
             aria-label="Color selection is 000000"
             class="form-control input-group-inset input-group-inset-before"
+            disabled=""
             type="text"
             value="000000"
           />

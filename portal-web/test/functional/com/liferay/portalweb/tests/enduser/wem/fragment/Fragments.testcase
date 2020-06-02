@@ -140,9 +140,10 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
 				key_fragmentName = "Row",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -154,9 +155,10 @@ definition {
 
 		task ("Assert add second Row fragment to the same Section") {
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
 				key_fragmentName = "Row",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -917,9 +919,10 @@ definition {
 			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "Collection Name",
 			key_fragmentName = "Fragment Name 2",
 			key_position = "1",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 			locator2 = "PageEditor#SECTION_CONTAINER",
 			value1 = "");
 

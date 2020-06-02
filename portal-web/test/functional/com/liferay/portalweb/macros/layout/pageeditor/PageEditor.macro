@@ -108,23 +108,26 @@ definition {
 		if ("${scope}" == "Master") {
 			if ("${dropTarget}" == "Header") {
 				DragAndDrop.javaScriptDragAndDropToUp(
+					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 					locator2 = "PageEditor#HEADER_DROP_TARGET",
 					value1 = "");
 			}
 			else if ("${dropTarget}" == "Footer") {
 				DragAndDrop.javaScriptDragAndDropToObject(
+					key_collectionName = "${collectionName}",
 					key_fragmentName = "${fragmentName}",
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "${collectionName}",
 				key_fragmentName = "${fragmentName}",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 				value1 = "");
 		}
@@ -202,9 +205,10 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "${collectionName}",
 			key_entryTitle = "${entryTitle}",
 			key_fragmentName = "${fragmentName}",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 			locator2 = "PageEditor#COLLECTION_CELL",
 			value1 = "");
 
@@ -232,25 +236,25 @@ definition {
 			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
 			value1 = "${portletName}");
 
-		var key_fragmentName = "${portletName}";
+		var key_portletName = "${portletName}";
 
 		if ("${scope}" == "Master") {
 			if ("${dropTarget}" == "Header") {
 				DragAndDrop.javaScriptDragAndDropToUp(
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 					locator2 = "PageEditor#HEADER_DROP_TARGET",
 					value1 = "");
 			}
 			else if ("${dropTarget}" == "Footer") {
 				DragAndDrop.javaScriptDragAndDropToObject(
-					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 					value1 = "");
 			}
 		}
 		else {
 			DragAndDrop.javaScriptDragAndDropToObject(
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
 				value1 = "${portletName}");
 		}
@@ -1164,8 +1168,9 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
 		DragAndDrop(
+			key_collectionName = "${collectionName}",
 			key_fragmentName = "${fragmentName}",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 			locator2 = "PageEditor#OUTSIDE_OF_DROP_ZONE",
 			value1 = "");
 

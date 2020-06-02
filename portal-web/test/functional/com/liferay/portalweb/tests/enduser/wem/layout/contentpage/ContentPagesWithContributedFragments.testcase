@@ -440,9 +440,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_entryTitle = "Third Web Content",
 				key_fragmentName = "Heading",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#COLLECTION_CELL",
 				value1 = "");
 
@@ -887,9 +888,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_entryTitle = "Third Document",
 				key_fragmentName = "Heading",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#COLLECTION_CELL",
 				value1 = "");
 

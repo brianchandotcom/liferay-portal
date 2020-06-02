@@ -88,9 +88,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -112,10 +113,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "1",
 				key_fragmentName = "Button",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 

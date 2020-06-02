@@ -124,9 +124,10 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Collection Name",
 				key_fragmentName = "Fragment Name",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -289,9 +290,10 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Image",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -415,9 +417,10 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -525,9 +528,10 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -625,10 +629,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "1",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -654,10 +659,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "2",
 				key_fragmentName = "Image",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -680,10 +686,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "3",
 				key_fragmentName = "HTML",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -801,10 +808,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "1",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -830,10 +838,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "2",
 				key_fragmentName = "Image",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -856,10 +865,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "3",
 				key_fragmentName = "HTML",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 

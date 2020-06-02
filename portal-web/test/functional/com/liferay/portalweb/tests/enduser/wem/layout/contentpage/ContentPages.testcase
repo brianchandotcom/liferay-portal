@@ -239,10 +239,11 @@ definition {
 
 		task ("Assert add the second Row in column 1 of the first Row") {
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
 				key_fragmentName = "Row",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -257,10 +258,11 @@ definition {
 
 		task ("Assert add the third Row in column 1 of the first Row") {
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
 				key_fragmentName = "Row",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -334,9 +336,9 @@ definition {
 				value1 = "Language Selector");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
-				key_fragmentName = "Language Selector",
+				key_portletName = "Language Selector",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "Language Selector");
 
@@ -658,9 +660,10 @@ definition {
 		PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "Basic Components",
 			key_fragmentName = "Button",
 			key_index = "2",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
 			value1 = "");
 
@@ -690,9 +693,10 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
 				key_fragmentName = "Row",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -736,9 +740,9 @@ definition {
 
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_columnNumber = "1",
-				key_fragmentName = "Web Content Display",
+				key_portletName = "Web Content Display",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "Web Content Display");
 
@@ -757,10 +761,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "2",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -777,10 +782,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_columnNumber = "3",
 				key_fragmentName = "Button",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -838,9 +844,10 @@ definition {
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
 				key_fragmentName = "Row",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -1353,9 +1360,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -1420,9 +1428,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -1641,9 +1650,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -1758,9 +1768,10 @@ definition {
 
 		task ("Assert restriction visual feedback shown when drag Section card over another one") {
 			DragOver(
+				key_collectionName = "Layout Elements",
 				key_fragmentName = "Section",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER");
 
 			AssertVisible(
@@ -1776,9 +1787,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
 				key_fragmentName = "Section",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -1806,10 +1818,11 @@ definition {
 
 		task ("Assert restriction visual feedback shown when drag Section card over column of Row") {
 			DragOver(
+				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
 				key_fragmentName = "Section",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN");
 
 			AssertVisible(
@@ -1826,10 +1839,11 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Layout Elements");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Layout Elements",
 				key_columnNumber = "1",
 				key_fragmentName = "Section",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#ROW_COLUMN",
 				value1 = "");
 
@@ -1860,9 +1874,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 
@@ -1947,9 +1962,10 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "Basic Components",
 				key_fragmentName = "Heading",
 				key_position = "1",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 				locator2 = "PageEditor#SECTION_CONTAINER",
 				value1 = "");
 

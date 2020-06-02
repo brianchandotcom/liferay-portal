@@ -182,6 +182,8 @@ definition {
 		ProductMenuHelper.openProductMenu();
 
 		Click(locator1 = "Link#STAGING");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro openNodePort {

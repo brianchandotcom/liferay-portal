@@ -223,6 +223,8 @@ definition {
 		Alert.viewSuccessMessage();
 
 		IFrame.closeFrame();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro addPublishTemplate {

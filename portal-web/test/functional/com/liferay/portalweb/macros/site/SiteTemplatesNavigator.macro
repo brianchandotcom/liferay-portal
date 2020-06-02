@@ -12,6 +12,8 @@ definition {
 		SelectWindow(locator1 = "Home - ${siteTemplateName} - ${siteName}");
 
 		Navigator._gotoPage(pageName = "${pageName}");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro openSiteTemplatesAdmin {

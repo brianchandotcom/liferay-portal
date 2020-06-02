@@ -20,7 +20,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Objects");
 	}
 
@@ -946,7 +946,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
@@ -980,7 +980,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
@@ -1021,7 +1021,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");

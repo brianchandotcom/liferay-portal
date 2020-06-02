@@ -34,11 +34,7 @@ export function initializeConfig(backendConfig) {
 	const augmentedPanels = augmentPanelData(pluginsRootPath, sidebarPanels);
 
 	const syntheticItems = {
-		marginOptions: [
-			{label: Liferay.Language.get('auto'), value: 'auto'},
-			...backendConfig.paddingOptions,
-		],
-
+		marginOptions: [...backendConfig.paddingOptions],
 		panels: generatePanels(augmentedPanels),
 		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,

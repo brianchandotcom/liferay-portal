@@ -144,6 +144,11 @@ definition {
 				roleTitle = "Depot Regrole Name");
 		}
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet",
+			roleTitle = "Depot Regrole Name");
+
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(

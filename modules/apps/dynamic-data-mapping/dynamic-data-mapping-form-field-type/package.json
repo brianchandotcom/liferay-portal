@@ -34,7 +34,6 @@
 			"metal-jest-serializer"
 		],
 		"testPathIgnorePatterns": [
-			"DatePicker",
 			"FieldBase",
 			"Tooltip",
 			"withContextMock"

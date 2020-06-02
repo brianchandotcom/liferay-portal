@@ -12,11 +12,15 @@
  * details.
  */
 
-import dom from 'metal-dom';
+import {wait} from '@testing-library/dom';
+import {act, cleanup, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import moment from 'moment';
+import React from 'react';
 
 import DatePicker from '../../../src/main/resources/META-INF/resources/DatePicker/DatePicker.es';
 
-let component;
 const spritemap = 'icons.svg';
 
 const defaultDatePickerConfig = {
@@ -24,163 +28,127 @@ const defaultDatePickerConfig = {
 	spritemap,
 };
 
+const DatePickerWithProvider = (props) => (
+	<PageProvider value={{editingLanguageId: 'en_US'}}>
+		<DatePicker {...props} />
+	</PageProvider>
+);
+
 describe('DatePicker', () => {
-	afterEach(() => {
-		component.dispose();
-	});
+	afterEach(cleanup);
 
 	beforeEach(() => {
 		jest.useFakeTimers();
+		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
 	it('has a helptext', () => {
-		component = new DatePicker({
-			...defaultDatePickerConfig,
-			tip: 'Type something',
+		const {container} = render(
+			<DatePickerWithProvider
+				{...defaultDatePickerConfig}
+				tip="Type something"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has an id', () => {
-		component = new DatePicker({
-			...defaultDatePickerConfig,
-			id: 'ID',
+		const {container} = render(
+			<DatePickerWithProvider {...defaultDatePickerConfig} id="ID" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a label', () => {
-		component = new DatePicker({
-			...defaultDatePickerConfig,
-			label: 'label',
+		const {container} = render(
+			<DatePickerWithProvider
+				{...defaultDatePickerConfig}
+				label="label"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a predefinedValue', () => {
-		component = new DatePicker({
-			...defaultDatePickerConfig,
-			predefinedValue: '05/05/2019',
+		const {container} = render(
+			<DatePickerWithProvider
+				{...defaultDatePickerConfig}
+				predefinedValue="06/02/2020"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
-	it('expands the datepicker when clicking the calendar icon', () => {
-		component = new DatePicker({
-			...defaultDatePickerConfig,
-		});
-
-		const spy = jest.spyOn(component, 'emit');
-
-		dom.triggerEvent(
-			component.element.querySelector('.input-group-item button'),
-			'click'
+	it('expands the datepicker when clicking the calendar icon', async () => {
+		const {container} = render(
+			<DatePickerWithProvider {...defaultDatePickerConfig} />
 		);
 
-		const event = {};
+		userEvent.click(
+			container.querySelector('.date-picker-dropdown-toggle')
+		);
 
-		component._handleToggle(event);
+		act(() => {
+			jest.runAllTimers();
+		});
 
-		expect(spy).toBeCalled();
+		await wait(() =>
+			expect(
+				document.body.querySelector('.date-picker-dropdown-menu.show')
+			).toBeTruthy()
+		);
 	});
 
-	it('fills the input with the current date selected on Date Picker', () => {
-		component = new DatePicker({
-			...defaultDatePickerConfig,
+	it('fills the input with the current date selected on Date Picker', async () => {
+		const handleFieldEdited = jest.fn();
+
+		const {container, getAllByDisplayValue, getByLabelText} = render(
+			<DatePickerWithProvider
+				{...defaultDatePickerConfig}
+				onChange={handleFieldEdited}
+			/>
+		);
+
+		userEvent.click(
+			container.querySelector('.date-picker-dropdown-toggle')
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		const spy = jest.spyOn(component, 'emit');
+		userEvent.click(getByLabelText('Select current date'));
 
-		dom.triggerEvent(
-			component.element.querySelector('.input-group-item button'),
-			'click'
-		);
-
-		jest.runAllTimers();
-
-		dom.triggerEvent(
-			component.element.querySelector("[aria-label='live']"),
-			'click'
-		);
-
-		jest.runAllTimers();
-
-		expect(spy).toHaveBeenCalledWith('fieldEdited', expect.anything());
-	});
-
-	it('decreases the current month when the back arrow is selected on Date Picker', () => {
-		component = new DatePicker({
-			...defaultDatePickerConfig,
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		dom.triggerEvent(
-			component.element.querySelector('.input-group-item button'),
-			'click'
+		await wait(() =>
+			expect(
+				getAllByDisplayValue(moment().format('MM/DD/YYYY'))
+			).toBeTruthy()
 		);
 
-		jest.runAllTimers();
-
-		dom.triggerEvent(
-			component.element.querySelector("[aria-label='live']"),
-			'click'
-		);
-
-		const monthBefore = component._month;
-
-		jest.runAllTimers();
-
-		dom.triggerEvent(
-			component.element.querySelector("[aria-label='angle-left']"),
-			'click'
-		);
-
-		jest.runAllTimers();
-
-		if (monthBefore > 0) {
-			expect(component._month).toEqual(monthBefore - 1);
-		}
-		else if (monthBefore == 0) {
-			expect(component._month).toEqual(11);
-		}
-	});
-
-	it('increases the current month when the forward arrow is selected on Date Picker', () => {
-		component = new DatePicker({
-			...defaultDatePickerConfig,
-		});
-
-		dom.triggerEvent(
-			component.element.querySelector('.input-group-item button'),
-			'click'
-		);
-
-		jest.runAllTimers();
-
-		dom.triggerEvent(
-			component.element.querySelector("[aria-label='live']"),
-			'click'
-		);
-
-		const monthBefore = component._month;
-
-		jest.runAllTimers();
-
-		dom.triggerEvent(
-			component.element.querySelector("[aria-label='angle-right']"),
-			'click'
-		);
-
-		jest.runAllTimers();
-
-		if (monthBefore < 11) {
-			expect(component._month).toEqual(monthBefore + 1);
-		}
-		else if (monthBefore == 11) {
-			expect(component._month).toEqual(0);
-		}
+		expect(handleFieldEdited).toHaveBeenCalled();
 	});
 });

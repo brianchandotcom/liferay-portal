@@ -33,6 +33,8 @@ public class LayoutConstants {
 
 	public static final String TYPE_ASSET_DISPLAY = "asset_display";
 
+	public static final String TYPE_COLLECTION = "collection";
+
 	public static final String TYPE_CONTENT = "content";
 
 	public static final String TYPE_CONTROL_PANEL = "control_panel";

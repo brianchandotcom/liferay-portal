@@ -298,7 +298,8 @@ definition {
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
 			numberOfBlogInstances = "3",
-			numberOfUsers = "3");
+			numberOfUsers = "3",
+			site = "Guest");
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
 
@@ -1114,7 +1115,8 @@ definition {
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
 			numberOfBlogInstances = "3",
-			numberOfUsers = "3");
+			numberOfUsers = "3",
+			site = "Guest");
 
 		WorkflowMetrics.executeWorkflowScript(scriptName = "CompleteTasksAssignedToUsers.groovy");
 
@@ -1796,7 +1798,8 @@ definition {
 
 		WorkflowMetrics.createUsersAndAssignInstancesWithGroovy(
 			numberOfBlogInstances = "1",
-			numberOfUsers = "1");
+			numberOfUsers = "1",
+			site = "Guest");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 

@@ -12,10 +12,12 @@
  * details.
  */
 
-import Radio from '../../../src/main/resources/META-INF/resources/Radio/Radio.es';
-import withContextMock from '../__mocks__/withContextMock.es';
+import {act, cleanup, render} from '@testing-library/react';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import React from 'react';
 
-let component;
+import Radio from '../../../src/main/resources/META-INF/resources/Radio/Radio.es';
+
 const spritemap = 'icons.svg';
 
 const defaultRadioConfig = {
@@ -23,130 +25,161 @@ const defaultRadioConfig = {
 	spritemap,
 };
 
-const RadioWithContextMock = withContextMock(Radio);
+const RadioWithProvider = (props) => (
+	<PageProvider value={{editingLanguageId: 'en_US'}}>
+		<Radio {...props} />
+	</PageProvider>
+);
 
 describe('Field Radio', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		jest.useFakeTimers();
+		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
-	it('is not edidable', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			readOnly: false,
+	it('is not editable', () => {
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} readOnly />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a helptext', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			tip: 'Type something',
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} tip="Type something" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders options', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			options: [
-				{
-					checked: false,
-					disabled: false,
-					id: 'id',
-					inline: false,
-					label: 'label',
-					name: 'name',
-					showLabel: true,
-					value: 'item',
-				},
-				{
-					checked: false,
-					disabled: false,
-					id: 'id',
-					inline: false,
-					label: 'label2',
-					name: 'name',
-					showLabel: true,
-					value: 'item2',
-				},
-			],
+		const {container} = render(
+			<RadioWithProvider
+				{...defaultRadioConfig}
+				options={[
+					{
+						checked: false,
+						disabled: false,
+						id: 'id',
+						inline: false,
+						label: 'label',
+						name: 'name',
+						showLabel: true,
+						value: 'item',
+					},
+					{
+						checked: false,
+						disabled: false,
+						id: 'id',
+						inline: false,
+						label: 'label2',
+						name: 'name',
+						showLabel: true,
+						value: 'item2',
+					},
+				]}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders no options when options is empty', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			options: [],
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} options={[]} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has an id', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			id: 'ID',
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} id="Id" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a label', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			label: 'label',
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} label="label" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
-	it('has a predefined Value', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			placeholder: 'Option 1',
+	it('has a placeholder', () => {
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} placeholder="Option 1" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is not required', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			required: false,
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} required={false} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			label: 'text',
-			showLabel: true,
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} label="text" showLabel />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
-	});
-
-	it('has a spritemap', () => {
-		component = new RadioWithContextMock(defaultRadioConfig);
-
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new RadioWithContextMock({
-			...defaultRadioConfig,
-			value: 'value',
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} value="value" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 });

@@ -167,7 +167,7 @@ const Options = ({
 	};
 
 	const synchroniseValue = (fields, languageId) => {
-		if (defaultLanguageId === editingLanguageId) {
+		if (defaultLanguageId === languageId) {
 			return [...fields];
 		}
 

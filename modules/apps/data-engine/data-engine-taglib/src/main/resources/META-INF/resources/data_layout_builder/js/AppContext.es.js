@@ -23,6 +23,7 @@ import {
 	DELETE_DATA_LAYOUT_RULE,
 	EDIT_CUSTOM_OBJECT_FIELD,
 	SWITCH_SIDEBAR_PANEL,
+	UPDATE_APP_PROPS,
 	UPDATE_CONFIG,
 	UPDATE_DATA_DEFINITION,
 	UPDATE_DATA_LAYOUT,
@@ -322,6 +323,12 @@ const createReducer = (dataLayoutBuilder) => {
 					...state,
 					sidebarOpen,
 					sidebarPanelId,
+				};
+			}
+			case UPDATE_APP_PROPS: {
+				return {
+					...state,
+					appProps: action.payload,
 				};
 			}
 			case UPDATE_DATA_DEFINITION: {

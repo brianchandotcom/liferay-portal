@@ -26,42 +26,50 @@ import FieldSetModal from './FieldSetModal.es';
 
 export default function FieldSets() {
 	const [{appProps, dataDefinition, fieldSets}] = useContext(AppContext);
-	const [fieldSetState, setFieldSetState] = useState({
-		context: {},
+	const [state, setState] = useState({
 		fieldSet: null,
 		isVisible: false,
+		otherProps: {},
 	});
 
-	const toggleFieldSet = fieldSet => {
-		let context = {};
+	const toggleFieldSet = (fieldSet) => {
+		let otherProps = {
+			context: {},
+		};
+
 		if (fieldSet) {
+			const {context, fieldTypes} = appProps;
 			const DataLayout = new DataLayoutBuilder({
 				editingLanguageId: 'en_US',
-				fieldTypes: window.App.fieldTypes,
+				fieldTypes,
 			});
 
-			const ctx = DataLayout.getDDMForm(fieldSet);
-			const pages = ctx.pages;
+			const ddmForm = DataLayout.getDDMForm(fieldSet);
+			const [pages] = ddmForm.pages;
 
-			delete ctx.pages;
+			delete ddmForm.pages;
 
-			context = {
-				...window.App.context,
-				pages: [
-					{
-						...ctx,
-						description: '',
-						rows: pages[0].rows,
-						title: '',
-					},
-				],
+			otherProps = {
+				context: {
+					...context,
+					pages: [
+						{
+							...ddmForm,
+							description: '',
+							rows: pages.rows,
+							title: '',
+						},
+					],
+				},
+				dataDefinitionId: fieldSet.id,
+				dataLayoutId: fieldSet.defaultDataLayout.id,
 			};
 		}
 
-		setFieldSetState({
-			context,
+		setState({
 			fieldSet,
-			isVisible: !fieldSetState.isVisible,
+			isVisible: !state.isVisible,
+			otherProps,
 		});
 	};
 
@@ -97,7 +105,7 @@ export default function FieldSets() {
 			</ClayButton>
 
 			<div className="mt-3">
-				{fieldSets.map(fieldSet => {
+				{fieldSets.map((fieldSet) => {
 					const dropDownActions = [
 						{
 							action: () => toggleFieldSet(fieldSet),
@@ -105,15 +113,11 @@ export default function FieldSets() {
 						},
 						{
 							action: () => {
-								const confirmed = confirm(
+								confirm(
 									Liferay.Language.get(
 										'are-you-sure-you-want-to-delete-this'
 									)
 								);
-
-								if (confirmed) {
-									alert('Removeu');
-								}
 							},
 							name: Liferay.Language.get('delete'),
 						},
@@ -141,11 +145,10 @@ export default function FieldSets() {
 			</div>
 
 			<FieldSetModal
-				caller="Fieldset"
-				context={fieldSetState.context}
-				fieldSet={fieldSetState.fieldSet}
-				isVisible={fieldSetState.isVisible}
+				fieldSet={state.fieldSet}
+				isVisible={state.isVisible}
 				onClose={() => toggleFieldSet()}
+				otherProps={state.otherProps}
 			/>
 		</>
 	);

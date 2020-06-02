@@ -15,41 +15,45 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import App from '../../App.es';
+import AppContext from '../../AppContext.es';
 import {UPDATE_FIELDSETS} from '../../actions.es';
 
-export default ({context, fieldSet, isVisible, onClose}) => {
-	const AppProps = window.App;
-	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
+export default ({fieldSet, isVisible, onClose, otherProps}) => {
+	const [{appProps, fieldSets}, dispatch] = useContext(AppContext);
 	const [fieldSetName, setFieldSetName] = useState('');
 	const [
-		{dispatch: childrenDispatch, state: childrenState},
+		{dispatch: childrenDispatch, state: childrenContext},
 		setChildrenContext,
 	] = useState({
 		dispatch: () => {},
 		state: {},
 	});
 
-	const childrenStringify = JSON.stringify(childrenState);
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+	const childrenStringify = JSON.stringify(childrenContext);
 
 	const {observer} = useModal({
 		onClose,
 	});
 
+	const getFieldSetName = useCallback(({name}) => name[defaultLanguageId], [
+		defaultLanguageId,
+	]);
+
 	useEffect(() => {
 		if (fieldSet) {
-			setFieldSetName(fieldSet.name[defaultLanguageId]);
+			setFieldSetName(getFieldSetName(fieldSet));
 		}
-	}, [defaultLanguageId, fieldSet]);
+	}, [fieldSet, getFieldSetName]);
 
 	useEffect(() => {
-		const state = JSON.parse(childrenStringify);
+		let {fieldSets = []} = JSON.parse(childrenStringify);
 
-		if (state && state.fieldSets && state.fieldSets.length) {
-			const fieldSets = state.fieldSets.map(fieldset => {
+		if (fieldSets.length) {
+			fieldSets = fieldSets.map((fieldset) => {
 				if (fieldset.name[defaultLanguageId] === fieldSetName) {
 					fieldset.disabled = true;
 				}
@@ -58,7 +62,6 @@ export default ({context, fieldSet, isVisible, onClose}) => {
 			});
 			childrenDispatch({payload: {fieldSets}, type: UPDATE_FIELDSETS});
 		}
-
 	}, [childrenDispatch, childrenStringify, defaultLanguageId, fieldSetName]);
 
 	if (!isVisible) {
@@ -66,8 +69,33 @@ export default ({context, fieldSet, isVisible, onClose}) => {
 	}
 
 	const saveAsFieldset = () => {
+		let updatedFieldSets;
+		if (fieldSet) {
+			const {
+				dataDefinition: {dataDefinitionFields},
+			} = childrenContext;
 
-	}
+			updatedFieldSets = fieldSets.map((field) => {
+				if (fieldSetName === getFieldSetName(field)) {
+					return {
+						...field,
+						dataDefinitionFields,
+					};
+				}
+
+				return field;
+			});
+
+			dispatch({
+				payload: {
+					fieldSets: updatedFieldSets,
+				},
+				type: UPDATE_FIELDSETS,
+			});
+		}
+
+		onClose();
+	};
 
 	return (
 		<ClayModal
@@ -103,12 +131,11 @@ export default ({context, fieldSet, isVisible, onClose}) => {
 			<ClayModal.Body>
 				<div className="pl-4 pr-4">
 					<App
-						{...AppProps}
-						caller="Fieldset"
-						context={context}
-						dataLayoutBuilderId={`${AppProps.dataLayoutBuilderId}_2`}
+						{...appProps}
+						dataLayoutBuilderId={`${appProps.dataLayoutBuilderId}_2`}
 						defaultLanguageId={defaultLanguageId}
 						setChildrenContext={setChildrenContext}
+						{...otherProps}
 					/>
 				</div>
 			</ClayModal.Body>

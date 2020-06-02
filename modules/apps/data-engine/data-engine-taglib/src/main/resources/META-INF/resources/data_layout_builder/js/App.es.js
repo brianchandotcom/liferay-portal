@@ -40,7 +40,6 @@ const parseProps = ({
 });
 
 const AppContent = ({
-	caller,
 	dataLayoutBuilder,
 	setChildrenContext,
 	setDataLayoutBuilder,
@@ -48,17 +47,24 @@ const AppContent = ({
 	...props
 }) => {
 	const [state, dispatch] = useContext(AppContext);
-
 	const {panels, sidebarPanels, sidebarVariant} = sidebarConfig;
+	const appProps = JSON.stringify(props);
 
 	useEffect(() => {
 		if (dataLayoutBuilder) {
 			dataLayoutBuilder.emit('contextUpdated', state);
 		}
-		if (caller) {
+		if (setChildrenContext) {
 			setChildrenContext({dispatch, state});
 		}
-	}, [caller, dataLayoutBuilder, dispatch, setChildrenContext, state]);
+	}, [dataLayoutBuilder, dispatch, setChildrenContext, state]);
+
+	useEffect(() => {
+		const payload = JSON.parse(appProps);
+		if (!setChildrenContext) {
+			dispatch({payload, type: 'UPDATE_APP_PROPS'});
+		}
+	}, [appProps, dispatch, setChildrenContext]);
 
 	return (
 		<>
@@ -88,7 +94,6 @@ const AppContent = ({
 
 const App = (props) => {
 	const {
-		caller = 'App',
 		config,
 		contentType,
 		dataDefinitionId,
@@ -98,7 +103,6 @@ const App = (props) => {
 		groupId,
 	} = parseProps(props);
 
-	window[caller] = props;
 	const sidebarConfig = initializeSidebarConfig(props);
 	const [loaded, setLoaded] = useState(false);
 	const [dataLayoutBuilder, setDataLayoutBuilder] = useState(null);

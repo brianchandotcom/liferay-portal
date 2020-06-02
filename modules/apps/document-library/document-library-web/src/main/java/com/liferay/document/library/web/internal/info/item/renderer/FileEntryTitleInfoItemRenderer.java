@@ -32,7 +32,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Pavel Savinov
  */
-@Component(service = InfoItemRenderer.class)
+@Component(
+	property = "service.ranking:Integer=200", service = InfoItemRenderer.class
+)
 public class FileEntryTitleInfoItemRenderer
 	implements InfoItemRenderer<FileEntry> {
 

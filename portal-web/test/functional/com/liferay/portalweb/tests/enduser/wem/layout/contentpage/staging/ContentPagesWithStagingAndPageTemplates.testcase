@@ -160,4 +160,59 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for for LPS-111548. Undo can make the content page template editor come back to previous state in Staging site."
+	@priority = "4"
+	test UndoPageTemplateChangeTwice {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "undoEnabled = true";
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name-staging");
+
+		Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+		PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.waitForAutoSave();
+
+		AssertVisible(
+			key_text = "undo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		PageEditor.gotoConfiguration(fragmentName = "Button");
+
+		PageEditor.configureFragment(alignment = "Center");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "center",
+			fragmentName = "button");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "left",
+			fragmentName = "button");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewNoFragment(fragmentName = "Button");
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
 }

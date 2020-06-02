@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -96,6 +97,20 @@ public class DDMFormInstanceRecordSearchTest {
 		_ddmFormInstanceRecordTestHelper = new DDMFormInstanceRecordTestHelper(
 			_group, ddmFormInstance);
 		_searchContext = getSearchContext(_group, _user, ddmFormInstance);
+	}
+
+	@Test
+	public void testBasicSearchWithGroupUser() throws Exception {
+		User user = UserTestUtil.addGroupUser(
+			_group, RoleConstants.SITE_MEMBER);
+
+		addDDMFormInstanceRecord("Joe Bloggs", "Simple description");
+
+		_searchContext.setKeywords("Simple description");
+
+		_searchContext.setUserId(user.getUserId());
+
+		assertSearch("description", 1);
 	}
 
 	@Test

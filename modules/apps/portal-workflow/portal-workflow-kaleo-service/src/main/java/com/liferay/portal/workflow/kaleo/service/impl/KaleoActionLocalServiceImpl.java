@@ -141,15 +141,8 @@ public class KaleoActionLocalServiceImpl
 		long companyId, String kaleoClassName, long kaleoClassPK,
 		String executionType) {
 
-		return doSearch(
-			companyId,
-			HashMapBuilder.put(
-				"executionType", (Serializable)executionType
-			).put(
-				"kaleoClassName", kaleoClassName
-			).put(
-				"kaleoClassPK", kaleoClassPK
-			).build());
+		return kaleoActionPersistence.findByKCN_KCPK_ET(
+			kaleoClassName, kaleoClassPK, executionType);
 	}
 
 	/**

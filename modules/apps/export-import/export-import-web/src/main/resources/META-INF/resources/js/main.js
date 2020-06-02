@@ -1373,10 +1373,6 @@ AUI.add(
 				showNotification(dateChecker, rangeEndsLater) {
 					var instance = this;
 
-					if (instance._notice) {
-						instance._notice.remove();
-					}
-
 					var message = instance._getNotificationMessage(
 						dateChecker,
 						rangeEndsLater

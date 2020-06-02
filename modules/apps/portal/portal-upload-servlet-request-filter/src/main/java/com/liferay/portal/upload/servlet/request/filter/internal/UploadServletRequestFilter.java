@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"dispatcher=REQUEST", "servlet-context-name=",
+		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=Upload Servlet Request Filter", "url-pattern=/*"
 	},
 	service = Filter.class

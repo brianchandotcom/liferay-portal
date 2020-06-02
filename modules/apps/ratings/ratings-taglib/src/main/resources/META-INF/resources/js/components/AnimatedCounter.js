@@ -13,19 +13,9 @@
  */
 
 import classNames from 'classnames';
-import {useIsMounted} from 'frontend-js-react-web';
+import {useIsMounted, usePrevious} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
-
-function usePrevious(value) {
-	const ref = useRef();
-
-	useEffect(() => {
-		ref.current = value;
-	});
-
-	return ref.current;
-}
+import React, {useEffect, useState} from 'react';
 
 function SlidingText({current, previous}) {
 	const [animated, setAnimated] = useState(false);

@@ -246,6 +246,10 @@ definition {
 			portletName = "${portletName}",
 			portletOption = "Configuration");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrameTop();
+
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(displayTemplate)) {

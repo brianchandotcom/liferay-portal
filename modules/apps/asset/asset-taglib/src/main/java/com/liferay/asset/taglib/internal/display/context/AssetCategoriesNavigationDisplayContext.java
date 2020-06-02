@@ -193,6 +193,8 @@ public class AssetCategoriesNavigationDisplayContext {
 		).put(
 			"children", _getChildCategoriesJSONArray(category.getCategoryId())
 		).put(
+			"id", category.getCategoryId()
+		).put(
 			"name",
 			HtmlUtil.escape(category.getTitle(_themeDisplay.getLocale()))
 		).put(

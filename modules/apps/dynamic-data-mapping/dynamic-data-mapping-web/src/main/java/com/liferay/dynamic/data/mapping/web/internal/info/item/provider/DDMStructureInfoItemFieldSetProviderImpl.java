@@ -14,12 +14,12 @@
 
 package com.liferay.dynamic.data.mapping.web.internal.info.item.provider;
 
+import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
-import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
-import com.liferay.dynamic.data.mapping.kernel.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -45,8 +46,8 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 		throws NoSuchStructureException {
 
 		try {
-			DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
-				ddmStructureId);
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			InfoFieldSet infoFieldSet = new InfoFieldSet(
 				InfoLocalizedValue.builder(
@@ -98,5 +99,8 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 		"checkbox", "ddm-date", "ddm-decimal", "ddm-image", "ddm-integer",
 		"ddm-number", "ddm-text-html", "radio", "select", "text", "textarea"
 	};
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

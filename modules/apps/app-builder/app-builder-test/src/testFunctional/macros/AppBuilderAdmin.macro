@@ -217,13 +217,14 @@ definition {
 	}
 
 	macro gotoCustomAppCP {
-		Refresh();
+		Navigator.openURL();
 
-		ProductMenuHelper.expandPanel(panel = "${panel}");
+		ProductMenuHelper.closeProductMenu();
 
-		Click(
-			key_portlet = "${portlet}",
-			locator1 = "AppBuilder#CUSTOM_PORTLET");
+		GlobalMenu.gotoPortlet(
+			category = "${portlet}",
+			panel = "Control Panel",
+			portlet = "${portlet}");
 	}
 
 	macro openActionMenu {
@@ -335,7 +336,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Applications",
+			panel = "Control Panel",
 			portlet = "Objects");
 
 		Pause(locator1 = "2000");
@@ -372,11 +373,15 @@ definition {
 	macro validateAppIsNotPresentOnControlPanel {
 		Navigator.openURL();
 
-		ProductMenuHelper.expandPanel(panel = "Control Panel");
+		ProductMenuHelper.closeProductMenu();
+
+		GlobalMenuHelper.openGlobalMenu();
+
+		Navigator.gotoNavTab(navTab = "Control Panel");
 
 		AssertElementNotPresent(
-			key_portlet = "${portlet}",
-			locator1 = "AppBuilder#CUSTOM_PORTLET");
+			key_category = "${portlet}",
+			locator1 = "GlobalMenu#CATEGORY");
 	}
 
 	macro validateAppIsNotPresentOnSite {

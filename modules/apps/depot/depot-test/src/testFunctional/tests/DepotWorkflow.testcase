@@ -218,6 +218,112 @@ definition {
 		PortletEntry.submitForPublication();
 	}
 
+	@description = "This test covers LPS-113392. It ensures that an asset library WC article can be approved by the content reviewer."
+	@priority = "5"
+	test ApproveWCArticleByContentReviewer {
+		JSONUser.addUser(
+			userEmailAddress = "user1@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.editPasswordCP(
+			password = "password",
+			userEmailAddress = "user1@liferay.com",
+			userScreenName = "usersn");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "People",
+			depotName = "Test Depot Name",
+			portlet = "Memberships");
+
+		Depot.assignUserAsMember(
+			depotName = "Test Depot Name",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		ProductMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.assignAssetLibraryRole(
+			roleTitle = "Asset Library Content Reviewer",
+			userScreenName = "usersn");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoDepotPortlet(
+			category = "Configuration",
+			depotName = "Test Depot Name",
+			portlet = "Workflow");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Web Content Article");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addWithWorkflowCP(
+			webContentContent = "Depot WebContent Content",
+			webContentTitle = "Depot WebContent Title");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Pending",
+			webContentTitle = "Depot WebContent Title");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user1@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Web Content Article",
+			user = "Test Test");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		WorkflowAsset.gotoViaNotification(
+			assetType = "Web Content Article",
+			user = "Test Test");
+
+		Workflow.assignByDetails(user = "userfn userln");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "user1@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Navigator.gotoNavTab(navTab = "Assigned to Me");
+
+		Workflow.approveTaskByActions(
+			workflowAssetTitle = "Depot WebContent Title",
+			workflowAssetType = "Web Content Article",
+			workflowTask = "Review");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-depot-name");
+
+		WebContentNavigator.gotoViewStatus(
+			webContentStatus = "Approved",
+			webContentTitle = "Depot WebContent Title");
+	}
+
 	@description = "This ensures that the approved WC article in folder from a depot is available to use in its connected site."
 	@priority = "5"
 	test ApproveWCInFolder {

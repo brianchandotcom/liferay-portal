@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
@@ -64,7 +65,7 @@ public class KaleoActionLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 
 		kaleoActions = kaleoActionLocalService.getKaleoActions(
 			companyId, KaleoNode.class.getName(), kaleoNode.getKaleoNodeId(),
-			"onAssignment");
+			ExecutionType.ON_ASSIGNMENT.getValue());
 
 		Assert.assertEquals(kaleoActions.toString(), 1, kaleoActions.size());
 		Assert.assertEquals(kaleoAction, kaleoActions.get(0));

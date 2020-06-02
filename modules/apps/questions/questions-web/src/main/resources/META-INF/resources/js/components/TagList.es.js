@@ -18,16 +18,14 @@ import {withRouter} from 'react-router-dom';
 
 import Link from '../components/Link.es';
 
-export default withRouter(({tags = [], match: {params: {sectionTitle}}}) => (
+export default withRouter(({tags = [], sectionTitle = ''}) => (
 	<ul className="c-mb-0 d-flex flex-wrap list-unstyled stretched-link-layer">
 		{tags.map((tag) => (
 			<li key={tag}>
 				<ClayLabel displayType="secondary">
 					<Link
 						key={tag}
-						to={`/questions/${
-							sectionTitle ? sectionTitle + '/' : ''
-						}tag/${tag}`}
+						to={`/questions/${sectionTitle}/tag/${tag}`}
 					>
 						{tag}
 					</Link>

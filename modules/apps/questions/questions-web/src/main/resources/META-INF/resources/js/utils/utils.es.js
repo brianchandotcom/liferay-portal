@@ -17,63 +17,6 @@ import {useRef} from 'react';
 
 import lang from './lang.es';
 
-export function getCKEditorConfig() {
-	const config = {
-		allowedContent: true,
-		codeSnippet_theme: 'monokai_sublime',
-		extraPlugins: 'codesnippet,itemselector',
-		height: 216,
-		removePlugins: 'elementspath',
-	};
-
-	config.toolbar = [
-		['Bold', 'Italic', 'Underline', 'Strike'],
-		['NumberedList', 'BulletedList'],
-		['Outdent', 'Indent'],
-		['Blockquote'],
-		['CodeSnippet', 'ImageSelector'],
-		['Link', 'Unlink'],
-		['Undo', 'Redo'],
-		['Source'],
-	];
-
-	return config;
-}
-
-export function getCKEditorReadOnlyConfig(includeContextPath = '') {
-	const config = {
-		allowedContent: true,
-		autoGrow_minHeight: 200,
-		autoGrow_onStartup: true,
-		bodyClass: 'cke_readonly_body',
-		codeSnippet_theme: 'monokai_sublime',
-		contentsCss: includeContextPath + '/css/main.css',
-		extraPlugins: 'autogrow,codesnippet',
-		readOnly: true,
-		removePlugins: 'elementspath',
-	};
-
-	config.toolbar = [];
-
-	return config;
-}
-
-export function onBeforeLoadCKEditor(CKEditor, url) {
-	if (CKEditor) {
-		CKEditor.disableAutoInline = true;
-		CKEditor.getNextZIndex = () => 1000;
-
-		if (url) {
-			CKEditor.on('instanceCreated', ({editor}) => {
-				editor.config.filebrowserImageBrowseUrl = url.replace(
-					'EDITOR_NAME_',
-					editor.name
-				);
-			});
-		}
-	}
-}
-
 export function dateToInternationalHuman(
 	ISOString,
 	localeKey = navigator.language

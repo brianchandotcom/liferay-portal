@@ -16,13 +16,12 @@ import {useLazyQuery, useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import QuestionsEditor from '../../components/QuestionsEditor';
 import {getMessageQuery, updateMessageQuery} from '../../utils/client.es';
-import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -63,19 +62,12 @@ export default withRouter(
 										</span>
 									</label>
 
-									<Editor
-										config={getCKEditorConfig()}
-										data={
+									<QuestionsEditor
+										contents={
 											data &&
 											data
 												.messageBoardMessageByFriendlyUrlPath
 												.articleBody
-										}
-										onBeforeLoad={(editor) =>
-											onBeforeLoadCKEditor(
-												editor,
-												context.imageBrowseURL
-											)
 										}
 										onChange={(event) =>
 											setArticleBody(
@@ -83,8 +75,6 @@ export default withRouter(
 											)
 										}
 										onInstanceReady={() => getMessage()}
-										required
-										type="text"
 									/>
 
 									<ClayForm.FeedbackGroup>

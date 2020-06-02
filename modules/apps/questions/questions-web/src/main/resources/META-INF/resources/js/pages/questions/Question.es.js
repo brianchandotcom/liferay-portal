@@ -18,7 +18,6 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -29,6 +28,7 @@ import CreatorRow from '../../components/CreatorRow.es';
 import Link from '../../components/Link.es';
 import Modal from '../../components/Modal.es';
 import PaginatedList from '../../components/PaginatedList.es';
+import QuestionsEditor from '../../components/QuestionsEditor';
 import Rating from '../../components/Rating.es';
 import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
@@ -43,11 +43,7 @@ import {
 	markAsAnswerMessageBoardMessageQuery,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {
-	dateToBriefInternationalHuman,
-	getCKEditorConfig,
-	onBeforeLoadCKEditor,
-} from '../../utils/utils.es';
+import {dateToBriefInternationalHuman} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -426,22 +422,17 @@ export default withRouter(
 													</label>
 
 													<div className="c-mt-2">
-														<Editor
-															config={getCKEditorConfig()}
-															data={articleBody}
-															onBeforeLoad={(
-																editor
-															) =>
-																onBeforeLoadCKEditor(
-																	editor,
-																	context.imageBrowseURL
-																)
+														<QuestionsEditor
+															contents={
+																articleBody
 															}
-															onChange={(event) =>
+															onChange={(
+																event
+															) => {
 																setArticleBody(
 																	event.editor.getData()
-																)
-															}
+																);
+															}}
 														/>
 													</div>
 												</ClayForm.Group>

@@ -16,15 +16,14 @@ import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {Editor} from 'frontend-editor-ckeditor-web';
 import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Link from '../../components/Link.es';
+import QuestionsEditor from '../../components/QuestionsEditor';
 import TagSelector from '../../components/TagSelector.es';
 import {getThreadContentQuery, updateThreadQuery} from '../../utils/client.es';
-import {getCKEditorConfig, onBeforeLoadCKEditor} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -118,21 +117,13 @@ export default withRouter(
 										</span>
 									</label>
 
-									<Editor
-										config={getCKEditorConfig()}
-										data={articleBody}
-										onBeforeLoad={(editor) =>
-											onBeforeLoadCKEditor(
-												editor,
-												context.imageBrowseURL
-											)
-										}
-										onChange={(event) =>
+									<QuestionsEditor
+										contents={articleBody}
+										onChange={(event) => {
 											setArticleBody(
 												event.editor.getData()
-											)
-										}
-										required
+											);
+										}}
 									/>
 
 									<ClayForm.FeedbackGroup>

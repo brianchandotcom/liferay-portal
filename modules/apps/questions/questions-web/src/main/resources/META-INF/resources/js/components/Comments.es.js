@@ -15,14 +15,12 @@
 import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 
-import {AppContext} from '../AppContext.es';
 import {createCommentQuery} from '../utils/client.es';
 import lang from '../utils/lang.es';
-import {getCKEditorConfig, onBeforeLoadCKEditor} from '../utils/utils.es';
 import Comment from './Comment.es';
+import QuestionsEditor from './QuestionsEditor';
 
 export default ({
 	comments,
@@ -32,8 +30,6 @@ export default ({
 	showNewCommentChange,
 }) => {
 	const [comment, setComment] = useState('');
-
-	const context = useContext(AppContext);
 
 	const [createComment] = useMutation(createCommentQuery, {
 		onCompleted(data) {
@@ -72,18 +68,11 @@ export default ({
 			{showNewComment && (
 				<>
 					<ClayForm.Group small>
-						<Editor
-							config={getCKEditorConfig()}
-							data={comment}
-							onBeforeLoad={(editor) =>
-								onBeforeLoadCKEditor(
-									editor,
-									context.imageBrowseURL
-								)
-							}
-							onChange={(event) =>
-								setComment(event.editor.getData())
-							}
+						<QuestionsEditor
+							contents={comment}
+							onChange={(event) => {
+								setComment(event.editor.getData());
+							}}
 						/>
 
 						{comment.length < 15 && (

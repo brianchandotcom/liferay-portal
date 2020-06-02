@@ -244,10 +244,6 @@
 			<contains>No binary licenses found</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LRQA-46637, temporarily ignore metadata errors">
-			<contains>Unable to save metadata for file version</contains>
-			<matches></matches>
-		</ignore-error>
 		<ignore-error description="WCM-202">
 			<contains>No score point assigners available</contains>
 			<matches></matches>

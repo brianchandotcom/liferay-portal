@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(
-	enabled = true, immediate = true,
+	immediate = true,
 	property = {
 		"dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=Upload Servlet Request Filter", "url-pattern=/*"

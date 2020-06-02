@@ -12,274 +12,302 @@
  * details.
  */
 
-import {fireEvent} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import React from 'react';
 
 import Grid from '../../../src/main/resources/META-INF/resources/Grid/Grid.es';
-import withContextMock from '../__mocks__/withContextMock.es';
 
-let component;
 const spritemap = 'icons.svg';
 
-const GridWithContextMock = withContextMock(Grid);
+const GridWithProvider = (props) => (
+	<PageProvider value={{editingLanguageId: 'en_US'}}>
+		<Grid {...props} />
+	</PageProvider>
+);
 
 describe('Grid', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		jest.useFakeTimers();
+		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
 	it('renders columns', () => {
-		component = new Grid({
-			columns: [
-				{
-					label: 'col1',
-					value: 'fieldId',
-				},
-				{
-					label: 'col2',
-					value: 'fieldId',
-				},
-			],
-			spritemap,
+		const {container} = render(
+			<GridWithProvider
+				columns={[
+					{
+						label: 'col1',
+						value: 'fieldId',
+					},
+					{
+						label: 'col2',
+						value: 'fieldId',
+					},
+				]}
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders no columns when columns comes empty', () => {
-		component = new Grid({
-			columns: [],
-			spritemap,
+		const {container} = render(
+			<GridWithProvider columns={[]} spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
-	it('is not edidable', () => {
-		component = new Grid({
-			readOnly: false,
-			spritemap,
+	it('is not editable', () => {
+		const {container} = render(
+			<GridWithProvider readOnly={true} spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a tip', () => {
-		component = new Grid({
-			spritemap,
-			tip: 'Type something',
+		const {container} = render(
+			<GridWithProvider spritemap={spritemap} tip="Type something" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has an id', () => {
-		component = new Grid({
-			id: 'ID',
-			spritemap,
+		const {container} = render(
+			<GridWithProvider id="Id" spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a label', () => {
-		component = new Grid({
-			label: 'label',
-			spritemap,
+		const {container} = render(
+			<GridWithProvider label="label" spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is not required', () => {
-		component = new Grid({
-			required: false,
-			spritemap,
+		const {container} = render(
+			<GridWithProvider required={false} spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders rows', () => {
-		component = new Grid({
-			rows: [
-				{
-					label: 'row1',
-					value: 'fieldId',
-				},
-				{
-					label: 'row2',
-					value: 'fieldId',
-				},
-			],
-			spritemap,
+		const {container} = render(
+			<GridWithProvider
+				rows={[
+					{
+						label: 'row1',
+						value: 'fieldId',
+					},
+					{
+						label: 'row2',
+						value: 'fieldId',
+					},
+				]}
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders no rows when row comes empty', () => {
-		component = new Grid({
-			rows: [],
-			spritemap,
+		const {container} = render(
+			<GridWithProvider rows={[]} spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new Grid({
-			label: 'text',
-			showLabel: true,
-			spritemap,
+		const {container} = render(
+			<GridWithProvider label="text" showLabel spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
-	it('emits a fieldBlurred event when blurring the radio input', (done) => {
-		const handleFieldBlurred = (data) => {
-			expect(data).toEqual(
-				expect.objectContaining({
-					value: 'colFieldId1',
-				})
-			);
-			done();
-		};
+	it('emits a fieldBlurred event when blurring the radio input', () => {
+		const handleFieldBlurred = jest.fn();
 
-		const events = {fieldBlurred: handleFieldBlurred};
+		const {container} = render(
+			<GridWithProvider
+				columns={[
+					{
+						label: 'col1',
+						value: 'colFieldId1',
+					},
+					{
+						label: 'col2',
+						value: 'colFieldId2',
+					},
+				]}
+				onBlur={handleFieldBlurred}
+				readOnly={false}
+				rows={[
+					{
+						label: 'row1',
+						value: 'rowFieldId1',
+					},
+					{
+						label: 'row2',
+						value: 'rowFieldId2',
+					},
+				]}
+				spritemap={spritemap}
+			/>
+		);
 
-		component = new GridWithContextMock({
-			columns: [
-				{
-					label: 'col1',
-					value: 'colFieldId1',
-				},
-				{
-					label: 'col2',
-					value: 'colFieldId2',
-				},
-			],
-			events,
-			readOnly: false,
-			rows: [
-				{
-					label: 'row1',
-					value: 'rowFieldId1',
-				},
-				{
-					label: 'row2',
-					value: 'rowFieldId2',
-				},
-			],
-			spritemap,
-		});
-
-		const radioInputElement = component.element.querySelector(
+		const radioInputElement = container.querySelector(
 			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
 		);
 
 		fireEvent.blur(radioInputElement);
-	});
 
-	// This test needs to be investigated further, it is failing at metal-events because it
-	// has no events adding, strange that we are adding but only this one is failing.
-	// This is not reproducible in manual tests.
-
-	it.skip('emits a fieldEdited event when changing the state of radio input', (done) => {
-		const handleFieldEdited = (data) => {
-			expect(data).toEqual(
-				expect.objectContaining({
-					fieldInstance: expect.any(Object),
-					originalEvent: expect.any(Object),
-					value: {
-						rowFieldId1: 'colFieldId1',
-					},
-				})
-			);
-			done();
-		};
-
-		const events = {fieldEdited: handleFieldEdited};
-
-		component = new GridWithContextMock({
-			columns: [
-				{
-					label: 'col1',
-					value: 'colFieldId1',
-				},
-				{
-					label: 'col2',
-					value: 'colFieldId2',
-				},
-			],
-			events,
-			readOnly: false,
-			rows: [
-				{
-					label: 'row1',
-					value: 'rowFieldId1',
-				},
-				{
-					label: 'row2',
-					value: 'rowFieldId2',
-				},
-			],
-			spritemap,
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		const radioInputElement = component.element.querySelector(
+		expect(handleFieldBlurred).toHaveBeenCalled();
+	});
+
+	it('emits a fieldEdited event when changing the state of radio input', () => {
+		const handleFieldEdited = jest.fn();
+
+		const {container} = render(
+			<GridWithProvider
+				columns={[
+					{
+						label: 'col1',
+						value: 'colFieldId1',
+					},
+					{
+						label: 'col2',
+						value: 'colFieldId2',
+					},
+				]}
+				onChange={handleFieldEdited}
+				readOnly={false}
+				rows={[
+					{
+						label: 'row1',
+						value: 'rowFieldId1',
+					},
+					{
+						label: 'row2',
+						value: 'rowFieldId2',
+					},
+				]}
+				spritemap={spritemap}
+			/>
+		);
+
+		const radioInputElement = container.querySelector(
 			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
 		);
 
-		fireEvent.click(radioInputElement);
-	});
+		userEvent.click(radioInputElement);
 
-	it('emits a fieldFocused event when focusing a radio input', (done) => {
-		const handleFieldFocused = (data) => {
-			expect(data).toEqual(
-				expect.objectContaining({
-					fieldInstance: expect.any(Object),
-					originalEvent: expect.any(Object),
-					value: 'colFieldId1',
-				})
-			);
-			done();
-		};
-
-		const events = {fieldFocused: handleFieldFocused};
-
-		component = new GridWithContextMock({
-			columns: [
-				{
-					label: 'col1',
-					value: 'colFieldId1',
-				},
-				{
-					label: 'col2',
-					value: 'colFieldId2',
-				},
-			],
-			events,
-			readOnly: false,
-			rows: [
-				{
-					label: 'row1',
-					value: 'rowFieldId1',
-				},
-				{
-					label: 'row2',
-					value: 'rowFieldId2',
-				},
-			],
-			spritemap,
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		const radioInputElement = component.element.querySelector(
+		expect(handleFieldEdited).toHaveBeenCalled();
+	});
+
+	it('emits a fieldFocused event when focusing a radio input', () => {
+		const handleFieldFocused = jest.fn();
+
+		const {container} = render(
+			<GridWithProvider
+				columns={[
+					{
+						label: 'col1',
+						value: 'colFieldId1',
+					},
+					{
+						label: 'col2',
+						value: 'colFieldId2',
+					},
+				]}
+				onFocus={handleFieldFocused}
+				readOnly={false}
+				rows={[
+					{
+						label: 'row1',
+						value: 'rowFieldId1',
+					},
+					{
+						label: 'row2',
+						value: 'rowFieldId2',
+					},
+				]}
+				spritemap={spritemap}
+			/>
+		);
+
+		const radioInputElement = container.querySelector(
 			'input[value][type="radio"][name="rowFieldId1"]:not([value="colFieldId2"])'
 		);
 
 		fireEvent.focus(radioInputElement);
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(handleFieldFocused).toHaveBeenCalled();
 	});
 });

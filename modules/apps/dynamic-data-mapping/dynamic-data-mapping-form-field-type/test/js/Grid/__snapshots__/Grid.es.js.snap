@@ -1,23 +1,74 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Grid has a label 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <p class="ddm-label">label</p>
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <p
+      class="ddm-label"
+    >
+      label
+    </p>
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr name="jehf" class="">
-              <td class="">row</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_0" name="jehf" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_0"
+                      class="custom-control-input form-builder-grid-field"
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -29,49 +80,148 @@ exports[`Grid has a label 1`] = `
 `;
 
 exports[`Grid has a tip 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr name="jehf" class="">
-              <td class="">row</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_0" name="jehf" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_0"
+                      class="custom-control-input form-builder-grid-field"
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-    </div><span class="form-text">Type something</span>
+    </div>
+    <span
+      class="form-text"
+    >
+      Type something
+    </span>
   </div>
 </div>
 `;
 
 exports[`Grid has an id 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr name="jehf" class="">
-              <td class="">row</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_0" name="jehf" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_0"
+                      class="custom-control-input form-builder-grid-field"
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -82,23 +232,65 @@ exports[`Grid has an id 1`] = `
 </div>
 `;
 
-exports[`Grid is not edidable 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+exports[`Grid is not editable 1`] = `
+<div>
+  <div
+    class="form-group hide"
+  >
+    <div
+      class="table-responsive"
+    >
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr name="jehf" class="">
-              <td class="">row</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_0" name="jehf" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_0"
+                      class="custom-control-input form-builder-grid-field"
+                      disabled=""
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -110,22 +302,69 @@ exports[`Grid is not edidable 1`] = `
 `;
 
 exports[`Grid is not required 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr name="jehf" class="">
-              <td class="">row</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_0" name="jehf" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_0"
+                      class="custom-control-input form-builder-grid-field"
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -137,23 +376,74 @@ exports[`Grid is not required 1`] = `
 `;
 
 exports[`Grid renders Label if showLabel is true 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <p class="ddm-label">text</p>
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <p
+      class="ddm-label"
+    >
+      text
+    </p>
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr name="jehf" class="">
-              <td class="">row</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_0" name="jehf" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_0"
+                      class="custom-control-input form-builder-grid-field"
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -165,26 +455,95 @@ exports[`Grid renders Label if showLabel is true 1`] = `
 `;
 
 exports[`Grid renders columns 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
-              <th class="">col2</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
+              <th
+                class=""
+              >
+                col2
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr name="jehf" class="">
-              <td class="">row</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_0" name="jehf" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
               </td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_1" name="jehf" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_0"
+                      class="custom-control-input form-builder-grid-field"
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_1"
+                      class="custom-control-input form-builder-grid-field"
+                      name="jehf"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -196,19 +555,44 @@ exports[`Grid renders columns 1`] = `
 `;
 
 exports[`Grid renders no columns when columns comes empty 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
             </tr>
           </thead>
           <tbody>
-            <tr name="jehf" class="">
-              <td class="">row</td>
+            <tr
+              class=""
+              name="jehf"
+            >
+              <td
+                class=""
+              >
+                row
+              </td>
             </tr>
           </tbody>
         </table>
@@ -219,18 +603,34 @@ exports[`Grid renders no columns when columns comes empty 1`] = `
 `;
 
 exports[`Grid renders no rows when row comes empty 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <div class="table-responsive">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <div
+      class="table-responsive"
+    >
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody />
         </table>
       </div>
     </div>
@@ -239,28 +639,106 @@ exports[`Grid renders no rows when row comes empty 1`] = `
 `;
 
 exports[`Grid renders rows 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <div class="table-responsive"><input aria-label="grid_hidden" type="hidden" class="form-control" value=""><input aria-label="grid_hidden" type="hidden" class="form-control" value="">
-      <div class="table-responsive">
-        <table class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped">
+<div>
+  <div
+    class="form-group hide"
+  >
+    <div
+      class="table-responsive"
+    >
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <input
+        aria-label="grid_hidden"
+        class="form-control"
+        type="hidden"
+        value=""
+      />
+      <div
+        class="table-responsive"
+      >
+        <table
+          class="table table-autofit show-quick-actions-on-hover table-hover table-list table-striped"
+        >
           <thead>
-            <tr class="">
-              <th class=""></th>
-              <th class="">col1</th>
+            <tr
+              class=""
+            >
+              <th
+                class=""
+              />
+              <th
+                class=""
+              >
+                col1
+              </th>
             </tr>
           </thead>
           <tbody>
-            <tr name="fieldId" class="">
-              <td class="">row1</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_0_0" name="fieldId" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="fieldId"
+            >
+              <td
+                class=""
+              >
+                row1
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_0_0"
+                      class="custom-control-input form-builder-grid-field"
+                      name="fieldId"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
-            <tr name="fieldId" class="">
-              <td class="">row2</td>
-              <td class="">
-                <div class="custom-control custom-radio"><label><input aria-label="grid_1_0" name="fieldId" class="custom-control-input form-builder-grid-field" role="radio" type="radio" value="fieldId"><span class="custom-control-label"></span></label></div>
+            <tr
+              class=""
+              name="fieldId"
+            >
+              <td
+                class=""
+              >
+                row2
+              </td>
+              <td
+                class=""
+              >
+                <div
+                  class="custom-control custom-radio"
+                >
+                  <label>
+                    <input
+                      aria-label="grid_1_0"
+                      class="custom-control-input form-builder-grid-field"
+                      name="fieldId"
+                      role="radio"
+                      type="radio"
+                      value="fieldId"
+                    />
+                    <span
+                      class="custom-control-label"
+                    />
+                  </label>
+                </div>
               </td>
             </tr>
           </tbody>

@@ -18,6 +18,18 @@ import React from 'react';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
 import FieldType from './FieldType.es';
 
+const FieldTypeWrapper = ({expanded, fieldType, showArrows, ...otherProps}) => {
+	const getIcon = () => {
+		if (showArrows) {
+			return expanded ? 'angle-down' : 'angle-right';
+		}
+
+		return fieldType.icon;
+	};
+
+	return <FieldType {...otherProps} {...fieldType} icon={getIcon()} />;
+};
+
 export default ({
 	deleteLabel,
 	fieldTypes,
@@ -37,26 +49,6 @@ export default ({
 			return regex.test(description) || regex.test(label);
 		});
 
-	const FieldTypeWrapper = ({
-		expanded,
-		fieldType,
-		showArrows,
-		...otherProps
-	}) => (
-		<FieldType
-			{...otherProps}
-			{...fieldType}
-			deleteLabel={deleteLabel}
-			icon={
-				showArrows
-					? expanded
-						? 'angle-down'
-						: 'angle-right'
-					: fieldType.icon
-			}
-		/>
-	);
-
 	return fieldTypeList.map((fieldType, index) => {
 		const {isFieldSet, nestedDataDefinitionFields = []} = fieldType;
 
@@ -71,6 +63,7 @@ export default ({
 		if (nestedDataDefinitionFields.length) {
 			const Header = ({expanded, setExpanded}) => (
 				<FieldTypeWrapper
+					deleteLabel={deleteLabel}
 					expanded={expanded}
 					fieldType={{
 						...fieldType,
@@ -119,6 +112,7 @@ export default ({
 
 		return (
 			<FieldTypeWrapper
+				deleteLabel={deleteLabel}
 				fieldType={fieldType}
 				key={index}
 				onClick={handleOnClick}

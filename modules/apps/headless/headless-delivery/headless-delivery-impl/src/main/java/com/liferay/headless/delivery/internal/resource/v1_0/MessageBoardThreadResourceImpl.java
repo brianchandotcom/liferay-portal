@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -189,6 +190,11 @@ public class MessageBoardThreadResourceImpl
 	public MessageBoardThread getMessageBoardThread(Long messageBoardThreadId)
 		throws Exception {
 
+		_viewCountManager.incrementViewCount(
+			contextCompany.getCompanyId(),
+			_classNameLocalService.getClassNameId(MBThread.class),
+			messageBoardThreadId, 1);
+
 		return _toMessageBoardThread(
 			_mbThreadLocalService.getMBThread(messageBoardThreadId));
 	}
@@ -261,6 +267,11 @@ public class MessageBoardThreadResourceImpl
 				"No message thread exists with friendly URL path " +
 					friendlyUrlPath);
 		}
+
+		_viewCountManager.incrementViewCount(
+			contextCompany.getCompanyId(),
+			_classNameLocalService.getClassNameId(MBThread.class),
+			mbMessage.getThreadId(), 1);
 
 		return _toMessageBoardThread(mbMessage);
 	}
@@ -789,5 +800,8 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private ViewCountManager _viewCountManager;
 
 }

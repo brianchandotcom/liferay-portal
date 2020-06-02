@@ -36,6 +36,9 @@ import com.liferay.asset.list.service.AssetListEntryAssetEntryRelLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -279,11 +282,30 @@ public class AssetListAssetEntryProviderImpl
 			Validator.isNotNull(ddmStructureFieldValue) &&
 			(classTypeIds.length == 1)) {
 
-			assetEntryQuery.setAttribute(
-				"ddmStructureFieldName",
-				DDMIndexerUtil.encodeName(
-					classTypeIds[0], ddmStructureFieldName,
-					LocaleUtil.getMostRelevantLocale()));
+			DLFileEntryType dlFileEntryType =
+				_dlFileEntryTypeLocalService.fetchFileEntryType(
+					classTypeIds[0]);
+
+			List<DDMStructure> ddmStructures =
+				dlFileEntryType.getDDMStructures();
+
+			if (!ddmStructures.isEmpty()) {
+				DDMStructure ddmStructure = ddmStructures.get(0);
+
+				assetEntryQuery.setAttribute(
+					"ddmStructureFieldName",
+					DDMIndexerUtil.encodeName(
+						ddmStructure.getStructureId(), ddmStructureFieldName,
+						LocaleUtil.getMostRelevantLocale()));
+			}
+			else {
+				assetEntryQuery.setAttribute(
+					"ddmStructureFieldName",
+					DDMIndexerUtil.encodeName(
+						classTypeIds[0], ddmStructureFieldName,
+						LocaleUtil.getMostRelevantLocale()));
+			}
+
 			assetEntryQuery.setAttribute(
 				"ddmStructureFieldValue", ddmStructureFieldValue);
 		}
@@ -945,6 +967,9 @@ public class AssetListAssetEntryProviderImpl
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
+
+	@Reference
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
 	private Portal _portal;

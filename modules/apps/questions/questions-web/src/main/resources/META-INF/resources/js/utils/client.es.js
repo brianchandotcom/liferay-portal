@@ -204,6 +204,7 @@ export const getThreadQuery = gql`
 			articleBody
 			creator {
 				id
+				image
 				name
 			}
 			creatorStatistics {
@@ -284,6 +285,7 @@ export const getMessagesQuery = gql`
 				articleBody
 				creator {
 					id
+					image
 					name
 				}
 				creatorStatistics {
@@ -301,6 +303,7 @@ export const getMessagesQuery = gql`
 						articleBody
 						creator {
 							id
+							image
 							name
 						}
 						encodingFormat
@@ -580,6 +583,7 @@ export const getRelatedThreadsQuery = gql`
 				}
 				creator {
 					id
+					image
 					name
 				}
 				dateModified

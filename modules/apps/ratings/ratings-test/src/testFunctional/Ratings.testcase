@@ -475,7 +475,23 @@ definition {
 
 	@priority = "4"
 	test RateBlogsEntry {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Administrator",
+			userEmailAddress = "userea@liferay.com");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -497,6 +513,16 @@ definition {
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
 
+		Ratings.rateThumb(ratingResult = "Rate this as bad");
+
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as good",
+			voteCount = "0");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as bad",
+			voteCount = "1");
+
 		Ratings.rateThumb(ratingResult = "Rate this as good");
 
 		Ratings.viewRateThumb(
@@ -507,11 +533,33 @@ definition {
 			ratingResult = "Rate this as bad",
 			voteCount = "0");
 
+		User.logoutPG();
+
+		User.loginUserPG(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
+
+		Navigator.gotoPage(pageName = "Blogs Page");
+
+		BlogsNavigator.gotoEntryPG(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Ratings.rateThumb(ratingResult = "Rate this as good");
+
+		Ratings.viewRateThumb(
+			ratingResult = "You have rated this as good",
+			voteCount = "2");
+
+		Ratings.viewRateThumb(
+			ratingResult = "Rate this as bad",
+			voteCount = "0");
+
 		Ratings.rateThumb(ratingResult = "Rate this as bad");
 
 		Ratings.viewRateThumb(
 			ratingResult = "Rate this as good",
-			voteCount = "0");
+			voteCount = "1");
 
 		Ratings.viewRateThumb(
 			ratingResult = "You have rated this as bad",

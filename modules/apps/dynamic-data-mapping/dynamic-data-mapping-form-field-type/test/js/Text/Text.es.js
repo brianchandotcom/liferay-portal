@@ -12,12 +12,12 @@
  * details.
  */
 
-import {fireEvent} from '@testing-library/react';
+import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import React from 'react';
 
 import Text from '../../../src/main/resources/META-INF/resources/Text/Text.es';
-import withContextMock from '../__mocks__/withContextMock.es';
 
-let component;
 const spritemap = 'icons.svg';
 
 const defaultTextConfig = {
@@ -25,120 +25,142 @@ const defaultTextConfig = {
 	spritemap,
 };
 
-const TextWithContextMock = withContextMock(Text);
+const TextWithProvider = (props) => (
+	<PageProvider value={{editingLanguageId: 'en_US'}}>
+		<Text {...props} />
+	</PageProvider>
+);
 
 describe('Field Text', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		jest.useFakeTimers();
+		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
 	it('is not readOnly', () => {
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			readOnly: false,
+		const {container} = render(
+			<TextWithProvider {...defaultTextConfig} readOnly={false} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a helptext', () => {
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			tip: 'Type something',
+		const {container} = render(
+			<TextWithProvider {...defaultTextConfig} tip="Type something" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has an id', () => {
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			id: 'ID',
+		const {container} = render(
+			<TextWithProvider {...defaultTextConfig} id="Id" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a label', () => {
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			label: 'label',
+		const {container} = render(
+			<TextWithProvider {...defaultTextConfig} label="label" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a placeholder', () => {
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			placeholder: 'Placeholder',
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				placeholder="Placeholder"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is not required', () => {
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			required: false,
+		const {container} = render(
+			<TextWithProvider {...defaultTextConfig} required={false} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			label: 'text',
-			showLabel: true,
+		const {container} = render(
+			<TextWithProvider {...defaultTextConfig} label="text" showLabel />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
-	});
-
-	it('has a spritemap', () => {
-		component = new TextWithContextMock(defaultTextConfig);
-
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			value: 'value',
+		const {container} = render(
+			<TextWithProvider {...defaultTextConfig} value="value" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
-	it('emits a field edit with correct parameters', (done) => {
-		const handleFieldEdited = (data) => {
-			expect(data).toEqual(
-				expect.objectContaining({
-					fieldInstance: expect.any(Object),
-					originalEvent: expect.any(Object),
-					value: expect.any(String),
-				})
-			);
-			done();
-		};
+	it('emits a field edit with correct parameters', () => {
+		const onChange = jest.fn();
 
-		const events = {fieldEdited: handleFieldEdited};
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				key="input"
+				onChange={onChange}
+			/>
+		);
 
-		component = new TextWithContextMock({
-			...defaultTextConfig,
-			events,
-			key: 'input',
-		});
-
-		const input = component.element.querySelector('input');
+		const input = container.querySelector('input');
 
 		fireEvent.change(input, {
 			target: {
 				value: 'test',
 			},
 		});
+
+		act(() => {
+			jest.runAllTimers();
+		});
+
+		expect(onChange).toHaveBeenCalled();
 	});
 });

@@ -118,6 +118,24 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 				));
 		}
 
+		for (PanelApp panelApp : _panelAppRegistry.getPanelApps(key)) {
+			Portlet portlet = _portletLocalService.getPortletById(
+				themeDisplay.getCompanyId(), panelApp.getPortletId());
+
+			childPanelCategoriesJSONArray.put(
+				JSONUtil.put(
+					"key", panelApp.getKey()
+				).put(
+					"label",
+					_portal.getPortletTitle(portlet, themeDisplay.getLocale())
+				).put(
+					"panelApps",
+					JSONUtil.putAll(
+						_getPanelAppJSONObject(
+							httpServletRequest, panelApp, themeDisplay))
+				));
+		}
+
 		return childPanelCategoriesJSONArray;
 	}
 
@@ -143,6 +161,23 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 		);
 	}
 
+	private JSONObject _getPanelAppJSONObject(
+			HttpServletRequest httpServletRequest, PanelApp panelApp,
+			ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			themeDisplay.getCompanyId(), panelApp.getPortletId());
+
+		return JSONUtil.put(
+			"label", _portal.getPortletTitle(portlet, themeDisplay.getLocale())
+		).put(
+			"portletId", panelApp.getPortletId()
+		).put(
+			"url", panelApp.getPortletURL(httpServletRequest)
+		);
+	}
+
 	private JSONArray _getPanelAppsJSONArray(
 			HttpServletRequest httpServletRequest, String key,
 			ThemeDisplay themeDisplay)
@@ -153,18 +188,9 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(key);
 
 		for (PanelApp panelApp : panelApps) {
-			Portlet portlet = _portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(), panelApp.getPortletId());
-
 			panelAppsJSONArray.put(
-				JSONUtil.put(
-					"label",
-					_portal.getPortletTitle(portlet, themeDisplay.getLocale())
-				).put(
-					"portletId", panelApp.getPortletId()
-				).put(
-					"url", panelApp.getPortletURL(httpServletRequest)
-				));
+				_getPanelAppJSONObject(
+					httpServletRequest, panelApp, themeDisplay));
 		}
 
 		return panelAppsJSONArray;

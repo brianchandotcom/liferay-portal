@@ -302,6 +302,25 @@ definition {
 		}
 	}
 
+	macro addFragmentToCollectionDisplay {
+		Pause(locator1 = "10000");
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		Navigator.gotoNavTab(navTab = "Fragments");
+
+		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_entryTitle = "${entryTitle}",
+			key_fragmentName = "${fragmentName}",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_ITEM",
+			locator2 = "PageEditor#COLLECTION_CELL",
+			value1 = "");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro addLayoutRow {
 		Pause(locator1 = "10000");
 

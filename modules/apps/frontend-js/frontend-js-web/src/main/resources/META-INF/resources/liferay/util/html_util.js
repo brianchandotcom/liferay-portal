@@ -12,14 +12,6 @@
  * details.
  */
 
-const ESCAPE_REGEX = /([.*+?^$(){}|[\]/\\])/g;
-
-// See: https://github.com/liferay/alloy-ui/blob/835547dd7302c7cd7f5d0c329230f9dd15b93d62/src/aui-base/js/aui-lang.js#L216-L219
-
-function escapeRegEx(str) {
-	return str.replace(ESCAPE_REGEX, '\\$1');
-}
-
 const MAP_HTML_CHARS_ESCAPED = {
 	'"': '&#034;',
 	'&': '&amp;',
@@ -42,72 +34,20 @@ const HTML_ESCAPED_VALUES = Object.values(MAP_HTML_CHARS_ESCAPED);
 
 const HTML_UNESCAPED_VALUES = Object.keys(MAP_HTML_CHARS_ESCAPED);
 
-const HTML_ESCAPE = new RegExp('[' + HTML_UNESCAPED_VALUES.join('') + ']', 'g');
+const HTML_ESCAPE = new RegExp(`[${HTML_UNESCAPED_VALUES.join('')}]`, 'g');
 
 const HTML_UNESCAPE = new RegExp(HTML_ESCAPED_VALUES.join('|'), 'gi');
 
-export function escapeHTML(string, preventDoubleEscape, entities) {
-	let regex = HTML_ESCAPE;
-
-	const entitiesList = [];
-	let entitiesValues;
-
-	if (entities && typeof entities === 'object') {
-		entitiesValues = [];
-
-		Object.keys(entities).forEach(([char, escapedChar]) => {
-			entitiesList.push(escapedChar);
-
-			entitiesValues.push(char);
-		});
-
-		regex = new RegExp('[' + escapeRegEx(entitiesList.join('')) + ']', 'g');
-	}
-	else {
-		entities = MAP_HTML_CHARS_ESCAPED;
-
-		entitiesValues = HTML_ESCAPED_VALUES;
-	}
-
-	return string.replace(regex, (match, offset, string) => {
-		let result;
-
-		if (preventDoubleEscape) {
-			const nextSemicolonIndex = string.indexOf(';', offset);
-
-			if (nextSemicolonIndex >= 0) {
-				const entity = string.substring(offset, nextSemicolonIndex + 1);
-
-				if (entitiesValues.indexOf(entity) >= 0) {
-					result = match;
-				}
-			}
-		}
-
-		if (!result) {
-			result = entities[match];
-		}
-
-		return result;
-	});
+export function escapeHTML(string) {
+	return string.replace(
+		HTML_ESCAPE,
+		(match) => MAP_HTML_CHARS_ESCAPED[match]
+	);
 }
 
-export function unescapeHTML(string, entities) {
-	let regex = HTML_UNESCAPE;
-
-	let entitiesMap = MAP_HTML_CHARS_UNESCAPED;
-
-	if (entities) {
-		const entitiesValues = Object.keys(entities);
-
-		entitiesMap = {};
-
-		Object.keys(entities).forEach(([escapedChar, char]) => {
-			entitiesMap[escapedChar] = char;
-		});
-
-		regex = new RegExp(entitiesValues.join('|'), 'gi');
-	}
-
-	return string.replace(regex, (match) => entitiesMap[match]);
+export function unescapeHTML(string) {
+	return string.replace(
+		HTML_UNESCAPE,
+		(match) => MAP_HTML_CHARS_UNESCAPED[match]
+	);
 }

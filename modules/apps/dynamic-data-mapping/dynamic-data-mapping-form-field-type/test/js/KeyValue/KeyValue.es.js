@@ -12,118 +12,170 @@
  * details.
  */
 
-import KeyValue from '../../../src/main/resources/META-INF/resources/KeyValue/KeyValue.es';
-import withContextMock from '../__mocks__/withContextMock.es';
+import {act, cleanup, render} from '@testing-library/react';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import React from 'react';
 
-let component;
+import KeyValue from '../../../src/main/resources/META-INF/resources/KeyValue/KeyValue.es';
+
 const spritemap = 'icons.svg';
 
-const KeyValueWithContextMock = withContextMock(KeyValue);
+const KeyValueWithProvider = (props) => (
+	<PageProvider value={{editingLanguageId: 'en_US'}}>
+		<KeyValue {...props} />
+	</PageProvider>
+);
 
 describe('KeyValue', () => {
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		jest.useFakeTimers();
+		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
-	it('is not edidable', () => {
-		component = new KeyValueWithContextMock({
-			name: 'keyValue',
-			readOnly: false,
-			spritemap,
+	it('is not editable', () => {
+		const {container} = render(
+			<KeyValueWithProvider
+				name="keyValue"
+				readOnly={true}
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a helptext', () => {
-		component = new KeyValueWithContextMock({
-			name: 'keyValue',
-			spritemap,
-			tip: 'Type something',
+		const {container} = render(
+			<KeyValueWithProvider
+				name="keyValue"
+				spritemap={spritemap}
+				tip="Type something"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has an id', () => {
-		component = new KeyValueWithContextMock({
-			id: 'ID',
-			name: 'keyValue',
-			spritemap,
+		const {container} = render(
+			<KeyValueWithProvider
+				id="Id"
+				name="keyValue"
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a label', () => {
-		component = new KeyValueWithContextMock({
-			label: 'label',
-			name: 'keyValue',
-			spritemap,
+		const {container} = render(
+			<KeyValueWithProvider
+				label="label"
+				name="keyValue"
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a predefined Value', () => {
-		component = new KeyValueWithContextMock({
-			name: 'keyValue',
-			placeholder: 'Option 1',
-			spritemap,
+		const {container} = render(
+			<KeyValueWithProvider
+				name="keyValue"
+				placeholder="Option 1"
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is not required', () => {
-		component = new KeyValueWithContextMock({
-			name: 'keyValue',
-			required: false,
-			spritemap,
+		const {container} = render(
+			<KeyValueWithProvider
+				name="keyValue"
+				required={false}
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new KeyValueWithContextMock({
-			label: 'text',
-			name: 'keyValue',
-			showLabel: true,
-			spritemap,
+		const {container} = render(
+			<KeyValueWithProvider
+				label="text"
+				name="keyValue"
+				showLabel={true}
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
-	});
-
-	it('has a spritemap', () => {
-		component = new KeyValueWithContextMock({
-			name: 'keyValue',
-			spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new KeyValueWithContextMock({
-			name: 'keyValue',
-			spritemap,
-			value: 'value',
+		const {container} = render(
+			<KeyValueWithProvider
+				name="keyValue"
+				spritemap={spritemap}
+				value="value"
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders component with a key', () => {
-		component = new KeyValueWithContextMock({
-			keyword: 'key',
-			name: 'keyValue',
-			spritemap,
+		const {container} = render(
+			<KeyValueWithProvider
+				keyword="key"
+				name="keyValue"
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 });

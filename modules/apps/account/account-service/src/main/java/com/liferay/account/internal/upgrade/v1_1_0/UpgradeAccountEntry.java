@@ -29,6 +29,12 @@ public class UpgradeAccountEntry extends UpgradeProcess {
 				AccountEntryTable.class,
 				new AlterTableAddColumn("taxIdNumber", "VARCHAR(75)"));
 		}
+
+		if (!hasColumn("AccountEntry", "type_")) {
+			alter(
+				AccountEntryTable.class,
+				new AlterTableAddColumn("type_", "VARCHAR(75)"));
+		}
 	}
 
 }

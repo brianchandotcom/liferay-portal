@@ -145,7 +145,7 @@ export default withRouter(
 											<span className="text-truncate">
 												{lang.sub(
 													Liferay.Language.get(
-														'x-results-for-query-with-terms-x'
+														'x-results-for-x'
 													),
 													[
 														questions.totalCount,

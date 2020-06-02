@@ -12,10 +12,10 @@
  * details.
  */
 
-import React from 'react';
-import {PageProvider} from 'dynamic-data-mapping-form-renderer';
-import {cleanup, render, act} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import React from 'react';
 
 import ColorPicker from '../../../src/main/resources/META-INF/resources/ColorPicker/ColorPicker.es';
 
@@ -37,7 +37,13 @@ describe('Field Color Picker', () => {
 	});
 
 	it('renders field disabled', () => {
-		const {container} = render(<ColorPickerWithProvider name={name} readOnly={false} spritemap={spritemap} />);
+		const {container} = render(
+			<ColorPickerWithProvider
+				name={name}
+				readOnly={false}
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -47,7 +53,13 @@ describe('Field Color Picker', () => {
 	});
 
 	it('renders field with helptext', () => {
-		const {container} = render(<ColorPickerWithProvider name={name} spritemap={spritemap} tip="Helptext" />);
+		const {container} = render(
+			<ColorPickerWithProvider
+				name={name}
+				spritemap={spritemap}
+				tip="Helptext"
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -57,7 +69,14 @@ describe('Field Color Picker', () => {
 	});
 
 	it('renders field with label', () => {
-		const {container} = render(<ColorPickerWithProvider label="label" name={name} tip="Helptext" spritemap={spritemap} />);
+		const {container} = render(
+			<ColorPickerWithProvider
+				label="label"
+				name={name}
+				spritemap={spritemap}
+				tip="Helptext"
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -69,7 +88,14 @@ describe('Field Color Picker', () => {
 	it('renders with basic color', () => {
 		const color = '#FF67AA';
 
-		const {container} = render(<ColorPickerWithProvider name={name} readOnly value={color} spritemap={spritemap} />);
+		const {container} = render(
+			<ColorPickerWithProvider
+				name={name}
+				readOnly
+				spritemap={spritemap}
+				value={color}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -89,7 +115,9 @@ describe('Field Color Picker', () => {
 			/>
 		);
 
-		userEvent.click(document.body.querySelector('input'), {target: {value: 'ffffff'}});
+		userEvent.click(document.body.querySelector('input'), {
+			target: {value: 'ffffff'},
+		});
 
 		act(() => {
 			jest.runAllTimers();

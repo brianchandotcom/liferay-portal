@@ -12,10 +12,10 @@
  * details.
  */
 
-import React from 'react';
-import {PageProvider} from 'dynamic-data-mapping-form-renderer';
-import {cleanup, render, act} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import React from 'react';
 
 import CheckboxMultiple from '../../../src/main/resources/META-INF/resources/CheckboxMultiple/CheckboxMultiple.es';
 
@@ -36,7 +36,12 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('is not edidable', () => {
-		const {container} = render(<CheckboxMultipleWithProvider readOnly={false} spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				readOnly={false}
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -46,7 +51,12 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a helptext', () => {
-		const {container} = render(<CheckboxMultipleWithProvider spritemap={spritemap} tip="Type something" />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				spritemap={spritemap}
+				tip="Type something"
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -56,7 +66,9 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has an id', () => {
-		const {container} = render(<CheckboxMultipleWithProvider id="ID" spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider id="ID" spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -66,7 +78,9 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a label', () => {
-		const {container} = render(<CheckboxMultipleWithProvider label="label" spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider label="label" spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -76,7 +90,12 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a predefined Value', () => {
-		const {container} = render(<CheckboxMultipleWithProvider placeholder="Option 1" spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				placeholder="Option 1"
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -86,7 +105,12 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('is not required', () => {
-		const {container} = render(<CheckboxMultipleWithProvider required={false} spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				required={false}
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -96,7 +120,12 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('is shown as a switcher', () => {
-		const {container} = render(<CheckboxMultipleWithProvider showAsSwitcher spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				showAsSwitcher
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -106,7 +135,12 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('is shown as checkbox', () => {
-		const {container} = render(<CheckboxMultipleWithProvider showAsSwitcher={false} spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				showAsSwitcher={false}
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -116,7 +150,13 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		const {container} = render(<CheckboxMultipleWithProvider label="text" showLabel spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				label="text"
+				showLabel
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -126,7 +166,9 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a spritemap', () => {
-		const {container} = render(<CheckboxMultipleWithProvider spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -136,7 +178,9 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a value', () => {
-		const {container} = render(<CheckboxMultipleWithProvider value={true} spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider spritemap={spritemap} value={true} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -146,7 +190,9 @@ describe('Field Checkbox Multiple', () => {
 	});
 
 	it('has a key', () => {
-		const {container} = render(<CheckboxMultipleWithProvider key="key" spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxMultipleWithProvider key="key" spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();

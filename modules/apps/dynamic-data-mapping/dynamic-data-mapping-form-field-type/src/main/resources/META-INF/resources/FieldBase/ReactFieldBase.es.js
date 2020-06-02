@@ -19,8 +19,8 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {
-	Layout,
 	EVENT_TYPES,
+	Layout,
 	getRepeatedIndex,
 	usePage,
 } from 'dynamic-data-mapping-form-renderer';

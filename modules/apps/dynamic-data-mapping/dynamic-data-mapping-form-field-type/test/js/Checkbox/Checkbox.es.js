@@ -12,10 +12,10 @@
  * details.
  */
 
-import React from 'react';
-import {PageProvider} from 'dynamic-data-mapping-form-renderer';
-import {cleanup, render, act} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import React from 'react';
 
 import Checkbox from '../../../src/main/resources/META-INF/resources/Checkbox/Checkbox.es';
 
@@ -36,7 +36,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('is not edidable', () => {
-		const {container} = render(<CheckboxWithProvider readOnly={false} spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider readOnly={false} spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -46,7 +48,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('has a helptext', () => {
-		const {container} = render(<CheckboxWithProvider tip="Type something" spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider spritemap={spritemap} tip="Type something" />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -56,7 +60,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('has an id', () => {
-		const {container} = render(<CheckboxWithProvider id="ID" spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider id="ID" spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -66,7 +72,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('has a label', () => {
-		const {container} = render(<CheckboxWithProvider label="label" spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider label="label" spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -76,7 +84,12 @@ describe('Field Checkbox', () => {
 	});
 
 	it('has a predefined Value', () => {
-		const {container} = render(<CheckboxWithProvider placeholder="Option 1" spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider
+				placeholder="Option 1"
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -86,7 +99,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('is not required', () => {
-		const {container} = render(<CheckboxWithProvider required={false} spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider required={false} spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -96,7 +111,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('is shown as a switcher', () => {
-		const {container} = render(<CheckboxWithProvider showAsSwitcher spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider showAsSwitcher spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -106,7 +123,12 @@ describe('Field Checkbox', () => {
 	});
 
 	it('is shown as checkbox', () => {
-		const {container} = render(<CheckboxWithProvider showAsSwitcher={false} spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider
+				showAsSwitcher={false}
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -116,7 +138,13 @@ describe('Field Checkbox', () => {
 	});
 
 	it('renders Label if showLabel is true', () => {
-		const {container} = render(<CheckboxWithProvider label={true} showLabel={true} spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider
+				label={true}
+				showLabel={true}
+				spritemap={spritemap}
+			/>
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -126,7 +154,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('has a spritemap', () => {
-		const {container} = render(<CheckboxWithProvider spritemap={spritemap} />);
+		const {container} = render(
+			<CheckboxWithProvider spritemap={spritemap} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -136,7 +166,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('has a value', () => {
-		const {container} = render(<CheckboxWithProvider spritemap={spritemap} value={true} />);
+		const {container} = render(
+			<CheckboxWithProvider spritemap={spritemap} value={true} />
+		);
 
 		act(() => {
 			jest.runAllTimers();
@@ -146,7 +178,9 @@ describe('Field Checkbox', () => {
 	});
 
 	it('has a key', () => {
-		const {container} = render(<CheckboxWithProvider key="key" value={true} />);
+		const {container} = render(
+			<CheckboxWithProvider key="key" value={true} />
+		);
 
 		act(() => {
 			jest.runAllTimers();

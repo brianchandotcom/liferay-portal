@@ -138,8 +138,10 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 <c:choose>
 	<c:when test="<%= group != null %>">
 		<a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= (group != null) ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %> site-administration-toggler" data-parent="#<portlet:namespace />Accordion" data-qa-id="productMenuSiteAdministrationPanelCategory" data-toggle="liferay-collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= (group != null) ? "role=\"button\"" : StringPool.BLANK %>>
-			<div class="autofit-row autofit-row-center">
-				<div class="autofit-col">
+			<clay:content-row
+				verticalAlign="center"
+			>
+				<clay:content-col>
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
 							<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
@@ -151,9 +153,12 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 							/>
 						</c:otherwise>
 					</c:choose>
-				</div>
+				</clay:content-col>
 
-				<div class="autofit-col autofit-col-expand mr-4">
+				<clay:content-col
+					cssClass="mr-4"
+					expand="true"
+				>
 					<div class="depot-type">
 						<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "asset-library" : "site" %>' />
 					</div>
@@ -165,8 +170,8 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 							<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
 						</c:if>
 					</div>
-				</div>
-			</div>
+				</clay:content-col>
+			</clay:content-row>
 
 			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
 				<clay:sticker

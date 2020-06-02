@@ -54,8 +54,12 @@ ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new Cont
 					Group curScopeGroup = themeDisplay.getScopeGroup();
 					%>
 
-					<div class="autofit-row autofit-row-center">
-						<div class="autofit-col autofit-col-expand">
+					<clay:content-row
+						verticalAlign="center"
+					>
+						<clay:content-col
+							expand="true"
+						>
 							<span class="scope-name">
 								<c:choose>
 									<c:when test="<%= curScopeGroup.isLayout() %>">
@@ -66,16 +70,16 @@ ContentPanelCategoryDisplayContext contentPanelCategoryDisplayContext = new Cont
 									</c:otherwise>
 								</c:choose>
 							</span>
-						</div>
+						</clay:content-col>
 
-						<div class="autofit-col autofit-col-end">
+						<clay:content-col>
 							<clay:dropdown-menu
 								dropdownItems="<%= contentPanelCategoryDisplayContext.getScopesDropdownItemList() %>"
 								icon="cog"
 								triggerCssClasses="dropdown-toggle icon-monospaced text-light"
 							/>
-						</div>
-					</div>
+						</clay:content-col>
+					</clay:content-row>
 
 					<liferay-application-list:panel-category-body
 						panelCategory="<%= panelCategory %>"

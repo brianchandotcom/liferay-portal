@@ -35,9 +35,9 @@ describe('Field Checkbox', () => {
 		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
-	it('is not edidable', () => {
+	it('is not editable', () => {
 		const {container} = render(
-			<CheckboxWithProvider readOnly={false} spritemap={spritemap} />
+			<CheckboxWithProvider readOnly={true} spritemap={spritemap} />
 		);
 
 		act(() => {
@@ -189,7 +189,7 @@ describe('Field Checkbox', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should call the onChange callback on the field change', () => {
+	it('call the onChange callback on the field change', () => {
 		const handleFieldEdited = jest.fn();
 
 		render(

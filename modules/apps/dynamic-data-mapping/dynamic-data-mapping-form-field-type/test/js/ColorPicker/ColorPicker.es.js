@@ -40,7 +40,7 @@ describe('Field Color Picker', () => {
 		const {container} = render(
 			<ColorPickerWithProvider
 				name={name}
-				readOnly={false}
+				readOnly={true}
 				spritemap={spritemap}
 			/>
 		);

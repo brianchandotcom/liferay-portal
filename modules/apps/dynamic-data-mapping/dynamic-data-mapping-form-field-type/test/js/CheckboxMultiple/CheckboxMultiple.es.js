@@ -35,10 +35,10 @@ describe('Field Checkbox Multiple', () => {
 		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
-	it('is not edidable', () => {
+	it('is not editable', () => {
 		const {container} = render(
 			<CheckboxMultipleWithProvider
-				readOnly={false}
+				readOnly={true}
 				spritemap={spritemap}
 			/>
 		);
@@ -201,7 +201,7 @@ describe('Field Checkbox Multiple', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should call the onChange callback on the field change', () => {
+	it('call the onChange callback on the field change', () => {
 		const handleFieldEdited = jest.fn();
 
 		render(

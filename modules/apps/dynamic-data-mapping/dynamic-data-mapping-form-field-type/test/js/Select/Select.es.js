@@ -13,16 +13,26 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {fireEvent, getByTestId, waitForElement} from '@testing-library/react';
-import ReactDOM from 'react';
+import {
+	act,
+	cleanup,
+	fireEvent,
+	render,
+	waitForElement,
+} from '@testing-library/react';
+import {PageProvider} from 'dynamic-data-mapping-form-renderer';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import Select from '../../../src/main/resources/META-INF/resources/Select/Select.es';
-import withContextMock from '../__mocks__/withContextMock.es';
 
-let component;
 const spritemap = 'icons.svg';
 
-const SelectWithContextMock = withContextMock(Select);
+const SelectWithProvider = (props) => (
+	<PageProvider value={{editingLanguageId: 'en_US'}}>
+		<Select {...props} />
+	</PageProvider>
+);
 
 describe('Select', () => {
 	beforeAll(() => {
@@ -31,16 +41,18 @@ describe('Select', () => {
 		});
 	});
 
-	afterEach(() => {
-		if (component) {
-			component.dispose();
-		}
+	afterEach(cleanup);
+
+	beforeEach(() => {
+		jest.useFakeTimers();
+		fetch.mockResponse(JSON.stringify({}));
 	});
 
 	it('is not editable', () => {
-		component = new SelectWithContextMock({
-			readOnly: true,
-			spritemap,
+		render(<SelectWithProvider readOnly spritemap={spritemap} />);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
 		const dropdownTrigger = document.body.querySelector(
@@ -51,382 +63,317 @@ describe('Select', () => {
 	});
 
 	it('has a help text', () => {
-		component = new Select({
-			spritemap,
-			tip: 'Type something',
+		const {container} = render(
+			<SelectWithProvider spritemap={spritemap} tip="Type something" />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has an id', () => {
-		component = new Select({
-			id: 'ID',
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider id="Id" spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders options', () => {
-		component = new Select({
-			options: [
-				{
-					checked: false,
-					disabled: false,
-					id: 'id',
-					inline: false,
-					label: 'label',
-					name: 'name',
-					showLabel: true,
-					value: 'item',
-				},
-			],
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider
+				options={[
+					{
+						checked: false,
+						disabled: false,
+						id: 'id',
+						inline: false,
+						label: 'label',
+						name: 'name',
+						showLabel: true,
+						value: 'item',
+					},
+				]}
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders no options when options come empty', () => {
-		component = new Select({
-			options: [],
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider options={[]} spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a label', () => {
-		component = new Select({
-			label: 'label',
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider label="label" spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is closed by default', () => {
-		component = new Select({
-			open: false,
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider open={false} spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it("has class dropdown-opened when it's opened", () => {
-		component = new Select({
-			open: true,
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider open spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a placeholder', () => {
-		component = new Select({
-			placeholder: 'Placeholder',
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider
+				placeholder="Placeholder"
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a predefinedValue', () => {
-		component = new Select({
-			predefinedValue: ['Select'],
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider
+				predefinedValue={['Select']}
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('is not required', () => {
-		component = new Select({
-			required: false,
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider required={false} spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('puts an asterisk when field is required', () => {
-		component = new Select({
-			label: 'This is the label',
-			required: true,
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider
+				label="This is the label"
+				required
+				spritemap={spritemap}
+			/>
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('renders Label if showLabel is true', () => {
-		component = new Select({
-			label: 'text',
-			showLabel: true,
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider label="text" showLabel spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
-	});
-
-	it('has a spritemap', () => {
-		component = new Select({
-			spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a value', () => {
-		component = new Select({
-			spritemap,
-			value: ['value'],
+		const {container} = render(
+			<SelectWithProvider spritemap={spritemap} value={['value']} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
 	it('has a key', () => {
-		component = new Select({
-			key: 'key',
-			spritemap,
+		const {container} = render(
+			<SelectWithProvider key="key" spritemap={spritemap} />
+		);
+
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		expect(component).toMatchSnapshot();
+		expect(container).toMatchSnapshot();
 	});
 
-	it('emits a field edit event when an item is selected', async () => {
-		const handleFieldEdited = (data) => {
-			expect(data).toEqual(
-				expect.objectContaining({
-					fieldInstance: expect.any(Object),
-					originalEvent: expect.any(Object),
-					value: [],
-				})
-			);
-		};
+	it('calls onChange callback when an item is selected', async () => {
+		const handleFieldEdited = jest.fn();
 
-		const events = {fieldEdited: handleFieldEdited};
+		const {container, getByTestId} = render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				onChange={handleFieldEdited}
+				options={[
+					{
+						label: 'label',
+						value: 'item',
+					},
+					{
+						label: 'label2',
+						value: 'item2',
+					},
+				]}
+				spritemap={spritemap}
+			/>
+		);
 
-		component = new SelectWithContextMock({
-			dataSourceType: 'manual',
-			events,
-			options: [
-				{
-					label: 'label',
-					value: 'item',
-				},
-				{
-					label: 'label2',
-					value: 'item2',
-				},
-			],
-			spritemap,
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		const dropdownTrigger = component.element.querySelector(
+		const dropdownTrigger = container.querySelector(
 			'.form-builder-select-field.input-group-container'
 		);
 
 		fireEvent.click(dropdownTrigger);
 
+		act(() => {
+			jest.runAllTimers();
+		});
+
 		const dropdownItem = await waitForElement(() =>
-			getByTestId(document.body, 'dropdownItem-0')
+			getByTestId('dropdownItem-0')
 		);
 
 		fireEvent.click(dropdownItem);
-	});
 
-	it('emits a field edit event when an item is selected using multiselect', async () => {
-		const handleFieldEdited = (data) => {
-			expect(data).toEqual(
-				expect.objectContaining({
-					fieldInstance: expect.any(Object),
-					originalEvent: expect.any(Object),
-					value: ['item7'],
-				})
-			);
-		};
-
-		const events = {fieldEdited: handleFieldEdited};
-
-		component = new SelectWithContextMock({
-			dataSourceType: 'manual',
-			events,
-			multiple: true,
-			options: [
-				{
-					label: 'label1',
-					name: 'name1',
-					value: 'item1',
-				},
-				{
-					label: 'label2',
-					name: 'name2',
-					value: 'item2',
-				},
-				{
-					label: 'label3',
-					name: 'name3',
-					value: 'item3',
-				},
-				{
-					label: 'label4',
-					name: 'name4',
-					value: 'item4',
-				},
-				{
-					label: 'label5',
-					name: 'name5',
-					value: 'item5',
-				},
-				{
-					label: 'label6',
-					name: 'name6',
-					value: 'item6',
-				},
-				{
-					label: 'label7',
-					name: 'name7',
-					value: 'item7',
-				},
-			],
-			spritemap,
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		const dropdownTrigger = component.element.querySelector(
+		expect(handleFieldEdited).toHaveBeenCalled();
+	});
+
+	it('calls onChange callback when an item is selected using multiselect', async () => {
+		const handleFieldEdited = jest.fn();
+
+		const {container, getByTestId} = render(
+			<SelectWithProvider
+				dataSourceType="manual"
+				multiple={true}
+				onChange={handleFieldEdited}
+				options={[
+					{
+						label: 'label1',
+						name: 'name1',
+						value: 'item1',
+					},
+					{
+						label: 'label2',
+						name: 'name2',
+						value: 'item2',
+					},
+					{
+						label: 'label3',
+						name: 'name3',
+						value: 'item3',
+					},
+					{
+						label: 'label4',
+						name: 'name4',
+						value: 'item4',
+					},
+					{
+						label: 'label5',
+						name: 'name5',
+						value: 'item5',
+					},
+					{
+						label: 'label6',
+						name: 'name6',
+						value: 'item6',
+					},
+					{
+						label: 'label7',
+						name: 'name7',
+						value: 'item7',
+					},
+				]}
+				spritemap={spritemap}
+			/>
+		);
+
+		const dropdownTrigger = container.querySelector(
 			'.form-builder-select-field.input-group-container'
 		);
 
 		fireEvent.click(dropdownTrigger);
 
+		act(() => {
+			jest.runAllTimers();
+		});
+
 		const labelItem = await waitForElement(() =>
-			getByTestId(document.body, 'labelItem-item7')
+			getByTestId('labelItem-item7')
 		);
 
 		fireEvent.click(labelItem);
 
-		expect(component).toMatchSnapshot();
-	});
-
-	it('emits a field edit event when an item is selected using multiselect', async (done) => {
-		const handleFieldEdited = (data) => {
-			expect(data).toEqual(
-				expect.objectContaining({
-					fieldInstance: expect.any(Object),
-					originalEvent: expect.any(Object),
-					value: ['item7', 'item2'],
-				})
-			);
-
-			done();
-		};
-
-		const events = {fieldEdited: handleFieldEdited};
-
-		component = new SelectWithContextMock({
-			dataSourceType: 'manual',
-			events,
-			multiple: true,
-			options: [
-				{
-					label: 'label1',
-					name: 'name1',
-					value: 'item1',
-				},
-				{
-					label: 'label2',
-					name: 'name2',
-					value: 'item2',
-				},
-				{
-					label: 'label3',
-					name: 'name3',
-					value: 'item3',
-				},
-				{
-					label: 'label4',
-					name: 'name4',
-					value: 'item4',
-				},
-				{
-					label: 'label5',
-					name: 'name5',
-					value: 'item5',
-				},
-				{
-					label: 'label6',
-					name: 'name6',
-					value: 'item6',
-				},
-				{
-					label: 'label7',
-					name: 'name7',
-					value: 'item7',
-				},
-			],
-			spritemap,
-			value: ['item7', 'item3', 'item2'],
+		act(() => {
+			jest.runAllTimers();
 		});
 
-		const dropdownTrigger = component.element.querySelector(
-			'.form-builder-select-field.input-group-container'
-		);
-
-		fireEvent.click(dropdownTrigger);
-
-		const labelItemCloseButton = await waitForElement(() => {
-			return getByTestId(dropdownTrigger, 'closeButtonitem3');
-		});
-
-		fireEvent.click(labelItemCloseButton);
-	});
-
-	it('renders the dropdown with search when there are more than six options', () => {
-		component = new Select({
-			dataSourceType: 'manual',
-			options: [
-				{
-					label: 'label',
-					name: 'name',
-					value: 'item',
-				},
-				{
-					label: 'label',
-					name: 'name',
-					value: 'item',
-				},
-				{
-					label: 'label',
-					name: 'name',
-					value: 'item',
-				},
-				{
-					label: 'label',
-					name: 'name',
-					value: 'item',
-				},
-				{
-					label: 'label',
-					name: 'name',
-					value: 'item',
-				},
-				{
-					label: 'label',
-					name: 'name',
-					value: 'item',
-				},
-				{
-					label: 'label',
-					name: 'name',
-					value: 'item',
-				},
-			],
-			spritemap,
-		});
-
-		expect(component).toMatchSnapshot();
+		expect(handleFieldEdited).toHaveBeenCalledWith(expect.any(Object), [
+			'item7',
+		]);
+		expect(container).toMatchSnapshot();
 	});
 });

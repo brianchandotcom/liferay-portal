@@ -1,17 +1,301 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Select emits a field edit event when an item is selected using multiselect 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" size="7" class="form-control form-control">
-      <option value="item7">label7</option>
+exports[`Select calls onChange callback when an item is selected using multiselect 1`] = `
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+      size="7"
+    >
+      <option
+        value="item7"
+      >
+        label7
+      </option>
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger multiple-label-list" tabindex="0">
-        <li><span value="item7" class="label ddm-select-option-label label-dismissible label-secondary"><span class="label-item label-item-expand">label7</span><span class="label-item label-item-after"><button data-testid="closeButtonitem7" class="close" type="button"><svg class="lexicon-icon lexicon-icon-times" role="presentation">
-                  <use xlink:href="icons.svg#times"></use>
-                </svg></button></span></span></li><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger multiple-label-list"
+        tabindex="0"
+      >
+        <li>
+          <span
+            class="label ddm-select-option-label label-dismissible label-secondary"
+            value="item7"
+          >
+            <span
+              class="label-item label-item-expand"
+            >
+              label7
+            </span>
+            <span
+              class="label-item label-item-after"
+            >
+              <button
+                class="close"
+                data-testid="closeButtonitem7"
+                type="button"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-times"
+                  role="presentation"
+                >
+                  <use
+                    xlink:href="#times"
+                  />
+                </svg>
+              </button>
+            </span>
+          </span>
+        </li>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown show"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="label1"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    aria-label="label1"
+                    class="custom-control-input"
+                    data-testid="labelItem-item1"
+                    type="checkbox"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      label1
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </button>
+          </li>
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-1"
+              label="label2"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    aria-label="label2"
+                    class="custom-control-input"
+                    data-testid="labelItem-item2"
+                    type="checkbox"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      label2
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </button>
+          </li>
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-2"
+              label="label3"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    aria-label="label3"
+                    class="custom-control-input"
+                    data-testid="labelItem-item3"
+                    type="checkbox"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      label3
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </button>
+          </li>
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-3"
+              label="label4"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    aria-label="label4"
+                    class="custom-control-input"
+                    data-testid="labelItem-item4"
+                    type="checkbox"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      label4
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </button>
+          </li>
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-4"
+              label="label5"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    aria-label="label5"
+                    class="custom-control-input"
+                    data-testid="labelItem-item5"
+                    type="checkbox"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      label5
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </button>
+          </li>
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-5"
+              label="label6"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    aria-label="label6"
+                    class="custom-control-input"
+                    data-testid="labelItem-item6"
+                    type="checkbox"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      label6
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </button>
+          </li>
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-6"
+              label="label7"
+            >
+              <div
+                class="custom-control custom-checkbox"
+              >
+                <label>
+                  <input
+                    aria-label="label7"
+                    class="custom-control-input"
+                    data-testid="labelItem-item7"
+                    type="checkbox"
+                  />
+                  <span
+                    class="custom-control-label"
+                  >
+                    <span
+                      class="custom-control-label-text"
+                    >
+                      label7
+                    </span>
+                  </span>
+                </label>
+              </div>
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -19,31 +303,142 @@ exports[`Select emits a field edit event when an item is selected using multisel
 `;
 
 exports[`Select has a help text 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
       </div>
-    </div><span class="form-text">Type something</span>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <span
+      class="form-text"
+    >
+      Type something
+    </span>
   </div>
 </div>
 `;
 
 exports[`Select has a key 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -51,16 +446,73 @@ exports[`Select has a key 1`] = `
 `;
 
 exports[`Select has a label 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <p class="ddm-label">label</p><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <p
+      class="ddm-label"
+    >
+      label
+    </p>
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -68,15 +520,68 @@ exports[`Select has a label 1`] = `
 `;
 
 exports[`Select has a placeholder 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -84,31 +589,68 @@ exports[`Select has a placeholder 1`] = `
 `;
 
 exports[`Select has a predefinedValue 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
       </div>
     </div>
-  </div>
-</div>
-`;
-
-exports[`Select has a spritemap 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -116,15 +658,68 @@ exports[`Select has a spritemap 1`] = `
 `;
 
 exports[`Select has a value 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -132,15 +727,69 @@ exports[`Select has a value 1`] = `
 `;
 
 exports[`Select has an id 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" id="ID" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        id="Id"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -148,15 +797,68 @@ exports[`Select has an id 1`] = `
 `;
 
 exports[`Select has class dropdown-opened when it's opened 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -164,15 +866,68 @@ exports[`Select has class dropdown-opened when it's opened 1`] = `
 `;
 
 exports[`Select is closed by default 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -180,15 +935,68 @@ exports[`Select is closed by default 1`] = `
 `;
 
 exports[`Select is not required 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -196,18 +1004,85 @@ exports[`Select is not required 1`] = `
 `;
 
 exports[`Select puts an asterisk when field is required 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <p class="ddm-label">This is the label<span class="reference-mark"><svg class="lexicon-icon lexicon-icon-asterisk" role="presentation">
-          <use xlink:href="icons.svg#asterisk"></use>
-        </svg></span></p><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <p
+      class="ddm-label"
+    >
+      This is the label
+      <span
+        class="reference-mark"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-asterisk"
+          role="presentation"
+        >
+          <use
+            xlink:href="#asterisk"
+          />
+        </svg>
+      </span>
+    </p>
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -215,16 +1090,73 @@ exports[`Select puts an asterisk when field is required 1`] = `
 `;
 
 exports[`Select renders Label if showLabel is true 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group">
-    <p class="ddm-label">text</p><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <p
+      class="ddm-label"
+    >
+      text
+    </p>
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -232,15 +1164,68 @@ exports[`Select renders Label if showLabel is true 1`] = `
 `;
 
 exports[`Select renders no options when options come empty 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -248,31 +1233,79 @@ exports[`Select renders no options when options come empty 1`] = `
 `;
 
 exports[`Select renders options 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
+<div>
+  <div
+    class="form-group hide"
+  >
+    <select
+      aria-label="select"
+      class="form-control form-control"
+      hidden=""
+      multiple=""
+    >
+      <option
+        disabled=""
+        value=""
+      />
     </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div
+      class="form-builder-select-field input-group-container"
+      style=""
+    >
+      <div
+        class="form-control results-chosen select-field-trigger"
+        tabindex="0"
+      >
+        <div
+          class="option-selected option-selected-placeholder"
+        >
+          choose-an-option
+        </div>
+        <a
+          class="select-arrow-down-container"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-caret-double"
+            role="presentation"
+          >
+            <use
+              xlink:href="#caret-double"
+            />
+          </svg>
+        </a>
       </div>
     </div>
-  </div>
-</div>
-`;
-
-exports[`Select renders the dropdown with search when there are more than six options 1`] = `
-<div class="react-component-adapter">
-  <div class="form-group"><select multiple="" aria-label="select" hidden="" class="form-control form-control">
-      <option disabled="" value=""></option>
-    </select>
-    <div class="form-builder-select-field input-group-container" style="">
-      <div class="form-control results-chosen select-field-trigger" tabindex="0">
-        <div class="option-selected option-selected-placeholder">choose-an-option</div><a class="select-arrow-down-container"><svg class="lexicon-icon lexicon-icon-caret-double" role="presentation">
-            <use xlink:href="icons.svg#caret-double"></use>
-          </svg></a>
+    <div>
+      <div
+        class="dropdown-menu ddm-btn-full ddm-select-dropdown"
+        style="left: -999px; top: -995px;"
+      >
+        <ul
+          class="list-unstyled"
+        >
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-0"
+              label="choose-an-option"
+            >
+              choose-an-option
+            </button>
+          </li>
+          <li
+            aria-selected="false"
+          >
+            <button
+              class="dropdown-item"
+              data-testid="dropdownItem-1"
+              label="label"
+            >
+              label
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

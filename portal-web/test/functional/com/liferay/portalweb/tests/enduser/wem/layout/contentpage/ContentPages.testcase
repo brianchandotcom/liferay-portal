@@ -1282,7 +1282,9 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addLayoutRow();
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Row");
 
 		PageEditor.viewRowStyle(
 			columnCount = "3",

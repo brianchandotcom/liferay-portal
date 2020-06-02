@@ -24,7 +24,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 
 <aui:input id='<%= refererPortletName + "ddmTemplateKey" %>' name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.isDefaultTemplate() ? StringPool.BLANK : journalContentDisplayContext.getDDMTemplateKey() %>" />
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<div class="sheet-subtitle">
 		<liferay-ui:message key="layout.types.article" />
 	</div>
@@ -46,12 +46,12 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<aui:button cssClass="selector-button" name="removeWebContent" value="remove" />
 		</c:if>
 	</div>
-</div>
+</clay:sheet-section>
 
 <c:if test="<%= article != null %>">
 	<liferay-util:include page="/journal_template.jsp" servletContext="<%= application %>" />
 
-	<div class="sheet-section">
+	<clay:sheet-section>
 		<div class="sheet-subtitle">
 			<liferay-ui:message key="user-tools" />
 		</div>
@@ -68,9 +68,9 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		}
 		%>
 
-	</div>
+	</clay:sheet-section>
 
-	<div class="sheet-section">
+	<clay:sheet-section>
 		<div class="sheet-subtitle">
 			<liferay-ui:message key="content-metadata" />
 		</div>
@@ -87,13 +87,13 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		}
 		%>
 
-	</div>
+	</clay:sheet-section>
 
-	<div class="sheet-section">
+	<clay:sheet-section>
 		<div class="sheet-subtitle">
 			<liferay-ui:message key="enable" />
 		</div>
 
 		<aui:input label="view-count-increment" name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
-	</div>
+	</clay:sheet-section>
 </c:if>

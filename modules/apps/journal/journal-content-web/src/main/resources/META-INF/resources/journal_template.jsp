@@ -23,7 +23,7 @@ DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
 String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 %>
 
-<div class="sheet-section">
+<clay:sheet-section>
 	<div class="sheet-subtitle">
 		<liferay-ui:message key="template" />
 	</div>
@@ -64,7 +64,7 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 
 		<aui:button id='<%= refererPortletName + "clearddmTemplateButton" %>' useNamespace="<%= false %>" value="clear" />
 	</div>
-</div>
+</clay:sheet-section>
 
 <%
 AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);

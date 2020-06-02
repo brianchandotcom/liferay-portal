@@ -141,7 +141,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 		<clay:container-fluid
 			cssClass="container-view"
 		>
-			<div class="sheet sheet-lg">
+			<clay:sheet>
 				<aui:model-context bean="<%= article %>" defaultLanguageId="<%= journalEditArticleDisplayContext.getDefaultArticleLanguageId() %>" model="<%= JournalArticle.class %>" />
 
 				<liferay-ui:error exception="<%= ArticleContentException.class %>" message="please-enter-valid-content" />
@@ -276,7 +276,7 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 						</c:otherwise>
 					</c:choose>
 				</div>
-			</div>
+			</clay:sheet>
 		</clay:container-fluid>
 	</div>
 </aui:form>

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_ENABLED</td>
+	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]][not(@disabled='')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_DISABLED</td>
 	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]][@disabled='']</td>
 	<td></td>

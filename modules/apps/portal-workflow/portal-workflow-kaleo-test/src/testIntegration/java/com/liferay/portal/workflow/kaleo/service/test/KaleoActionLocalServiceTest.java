@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
@@ -68,5 +69,8 @@ public class KaleoActionLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 		Assert.assertEquals(kaleoActions.toString(), 1, kaleoActions.size());
 		Assert.assertEquals(kaleoAction, kaleoActions.get(0));
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 }

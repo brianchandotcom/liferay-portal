@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
+import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
@@ -202,6 +203,9 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 					}
 				}));
 	}
+
+	@Rule
+	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	@Inject(type = KaleoWorkflowModelConverter.class)
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;

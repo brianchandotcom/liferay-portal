@@ -210,7 +210,10 @@ export default function MultiPanelSidebar({
 
 								return (
 									<li
-										className={classNames('tbar-item', `tbar-item--${panel.sidebarPanelId}`)}
+										className={classNames(
+											'tbar-item',
+											`tbar-item--${panel.sidebarPanelId}`
+										)}
 										key={panel.sidebarPanelId}
 									>
 										{isLink ? (

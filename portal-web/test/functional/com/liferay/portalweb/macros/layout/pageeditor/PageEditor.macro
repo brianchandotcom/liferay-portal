@@ -531,6 +531,18 @@ definition {
 			Pause(locator1 = "2000");
 		}
 
+		if (isSet(numberOfTabs)) {
+			Type(
+				key_fieldLabel = "Number Of Tabs",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${numberOfTabs}");
+
+			AssertTextEquals(
+				key_fieldLabel = "Number Of Tabs",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${numberOfTabs}");
+		}
+
 		if (isSet(size)) {
 			Select(
 				key_fieldLabel = "Size",

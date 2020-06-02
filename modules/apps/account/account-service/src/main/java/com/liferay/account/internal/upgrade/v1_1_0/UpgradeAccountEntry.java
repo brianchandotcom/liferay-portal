@@ -14,8 +14,11 @@
 
 package com.liferay.account.internal.upgrade.v1_1_0;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.internal.upgrade.v1_1_0.util.AccountEntryTable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Drew Brokke
@@ -34,6 +37,11 @@ public class UpgradeAccountEntry extends UpgradeProcess {
 			alter(
 				AccountEntryTable.class,
 				new AlterTableAddColumn("type_", "VARCHAR(75)"));
+
+			String defaultType = StringUtil.quote(
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, StringPool.QUOTE);
+
+			runSQL("update AccountEntry set type_ = " + defaultType);
 		}
 	}
 

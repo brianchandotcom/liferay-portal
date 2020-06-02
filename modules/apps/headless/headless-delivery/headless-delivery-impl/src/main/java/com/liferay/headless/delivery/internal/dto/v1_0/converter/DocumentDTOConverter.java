@@ -66,8 +66,11 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -174,6 +177,31 @@ public class DocumentDTOConverter
 		);
 	}
 
+	private List<DDMFormValues> _getDDMFormValues(
+			DLFileEntryType dlFileEntryType, DLFileVersion dlFileVersion)
+		throws Exception {
+
+		List<DDMFormValues> ddmFormValues = new ArrayList<>();
+
+		for (DDMStructure ddmStructure : dlFileEntryType.getDDMStructures()) {
+			DLFileEntryMetadata dlFileEntryMetadata =
+				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+					ddmStructure.getStructureId(),
+					dlFileVersion.getFileVersionId());
+
+			if (dlFileEntryMetadata == null) {
+				continue;
+			}
+
+			ddmFormValues.add(
+				_ddmBeanTranslator.translate(
+					StorageEngineManagerUtil.getDDMFormValues(
+						dlFileEntryMetadata.getDDMStorageId())));
+		}
+
+		return ddmFormValues;
+	}
+
 	private <T, S> T _getValue(
 		AdaptiveMedia<S> adaptiveMedia, AMAttribute<S, T> amAttribute) {
 
@@ -217,10 +245,11 @@ public class DocumentDTOConverter
 
 		DLFileEntryType dlFileEntryType = dlFileVersion.getDLFileEntryType();
 
+		List<DDMFormValues> ddmFormValues = _getDDMFormValues(
+			dlFileEntryType, dlFileVersion);
+
 		return new DocumentType() {
 			{
-				availableLanguages = LocaleUtil.toW3cLanguageIds(
-					dlFileEntryType.getAvailableLanguageIds());
 				description = dlFileEntryType.getDescription(
 					dtoConverterContext.getLocale());
 				description_i18n = LocalizedMapUtil.getI18nMap(
@@ -231,31 +260,26 @@ public class DocumentDTOConverter
 					dtoConverterContext.isAcceptAllLanguages(),
 					dlFileEntryType.getNameMap());
 
+				setAvailableLanguages(
+					() -> {
+						Set<Locale> locales = new HashSet<>();
+
+						for (DDMFormValues ddmFormValue : ddmFormValues) {
+							locales.addAll(ddmFormValue.getAvailableLocales());
+						}
+
+						return LocaleUtil.toW3cLanguageIds(
+							locales.toArray(new Locale[0]));
+					});
+
 				setContentFields(
 					() -> {
 						List<DDMFormFieldValue> ddmFormFieldValues =
 							new ArrayList<>();
 
-						for (DDMStructure ddmStructure :
-								dlFileEntryType.getDDMStructures()) {
-
-							DLFileEntryMetadata dlFileEntryMetadata =
-								_dlFileEntryMetadataLocalService.
-									fetchFileEntryMetadata(
-										ddmStructure.getStructureId(),
-										dlFileVersion.getFileVersionId());
-
-							if (dlFileEntryMetadata == null) {
-								continue;
-							}
-
-							DDMFormValues ddmFormValues =
-								_ddmBeanTranslator.translate(
-									StorageEngineManagerUtil.getDDMFormValues(
-										dlFileEntryMetadata.getDDMStorageId()));
-
+						for (DDMFormValues ddmFormValue : ddmFormValues) {
 							ddmFormFieldValues.addAll(
-								ddmFormValues.getDDMFormFieldValues());
+								ddmFormValue.getDDMFormFieldValues());
 						}
 
 						return TransformUtil.transformToArray(

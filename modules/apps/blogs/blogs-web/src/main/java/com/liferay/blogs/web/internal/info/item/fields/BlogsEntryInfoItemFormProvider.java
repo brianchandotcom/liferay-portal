@@ -154,9 +154,7 @@ public class BlogsEntryInfoItemFormProvider
 						_getImageJSONObject(
 							blogsEntry.getSmallImageAlt(),
 							blogsEntry.getSmallImageURL(themeDisplay))));
-			}
 
-			if (themeDisplay != null) {
 				blogsEntryFieldValues.add(
 					new InfoFieldValue<>(
 						_coverImageInfoField,

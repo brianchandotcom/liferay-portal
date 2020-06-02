@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.kernel.LocalizedValue;
 import com.liferay.dynamic.data.mapping.kernel.NoSuchStructureException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
-import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -78,11 +77,9 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 						label.getDefaultLocale()
 					).build();
 
-				InfoFieldType itemFieldType = TextInfoFieldType.INSTANCE;
-
 				infoFieldSet.add(
 					new InfoField(
-						itemFieldType, labelInfoLocalizedValue,
+						TextInfoFieldType.INSTANCE, labelInfoLocalizedValue,
 						ddmFormField.getName()));
 			}
 

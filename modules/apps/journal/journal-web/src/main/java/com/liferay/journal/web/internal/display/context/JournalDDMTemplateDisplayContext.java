@@ -97,7 +97,9 @@ public class JournalDDMTemplateDisplayContext {
 		return ddmTemplateActionDropdownItems.getActionDropdownItems();
 	}
 
-	public SearchContainer getDDMTemplateSearch() throws Exception {
+	public SearchContainer<DDMTemplate> getDDMTemplateSearch()
+		throws Exception {
+
 		if (_ddmTemplateSearch != null) {
 			return _ddmTemplateSearch;
 		}
@@ -106,7 +108,7 @@ public class JournalDDMTemplateDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		SearchContainer ddmTemplateSearch = new SearchContainer(
+		SearchContainer<DDMTemplate> ddmTemplateSearch = new SearchContainer(
 			_renderRequest, _getPortletURL(), null, "there-are-no-templates");
 
 		if (Validator.isNotNull(_getKeywords())) {
@@ -133,7 +135,7 @@ public class JournalDDMTemplateDisplayContext {
 				themeDisplay.getScopeGroupId());
 		}
 
-		List<DDMStructure> results = null;
+		List<DDMTemplate> results = null;
 		int total = 0;
 
 		if (Validator.isNotNull(_getKeywords())) {
@@ -270,7 +272,7 @@ public class JournalDDMTemplateDisplayContext {
 
 	private Long _classPK;
 	private DDMStructure _ddmStructure;
-	private SearchContainer _ddmTemplateSearch;
+	private SearchContainer<DDMTemplate> _ddmTemplateSearch;
 	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final JournalWebConfiguration _journalWebConfiguration;

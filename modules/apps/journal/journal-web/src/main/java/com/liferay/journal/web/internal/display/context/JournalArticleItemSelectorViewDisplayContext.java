@@ -226,26 +226,23 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer getSearchContainer() throws Exception {
+	public SearchContainer<?> getSearchContainer() throws Exception {
 		if (_articleSearchContainer != null) {
 			return _articleSearchContainer;
 		}
 
-		SearchContainer articleSearchContainer = new SearchContainer(
-			_portletRequest, getPortletURL(), null, null);
-
-		OrderByComparator<JournalArticle> orderByComparator =
-			JournalPortletUtil.getArticleOrderByComparator(
-				_getOrderByCol(), _getOrderByType());
-
-		articleSearchContainer.setOrderByCol(_getOrderByCol());
-		articleSearchContainer.setOrderByComparator(orderByComparator);
-		articleSearchContainer.setOrderByType(_getOrderByType());
-
 		if (Validator.isNotNull(getDDMStructureKey())) {
-			OrderByComparator<JournalArticle> structuresOrderByComparator =
+			SearchContainer<JournalArticle> articleSearchContainer =
+				new SearchContainer(
+					_portletRequest, getPortletURL(), null, null);
+
+			OrderByComparator<JournalArticle> orderByComparator =
 				JournalPortletUtil.getArticleOrderByComparator(
 					_getOrderByCol(), _getOrderByType());
+
+			articleSearchContainer.setOrderByCol(_getOrderByCol());
+			articleSearchContainer.setOrderByComparator(orderByComparator);
+			articleSearchContainer.setOrderByType(_getOrderByType());
 
 			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
 				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
@@ -258,12 +255,22 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
 					WorkflowConstants.STATUS_APPROVED,
 					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(),
-					structuresOrderByComparator);
+					articleSearchContainer.getEnd(), orderByComparator);
 
 			articleSearchContainer.setResults(results);
+
+			_articleSearchContainer = articleSearchContainer;
+
+			return _articleSearchContainer;
 		}
-		else if (isSearch()) {
+
+		SearchContainer<Object> articleAndFolderSearchContainer =
+			new SearchContainer(_portletRequest, getPortletURL(), null, null);
+
+		articleAndFolderSearchContainer.setOrderByCol(_getOrderByCol());
+		articleAndFolderSearchContainer.setOrderByType(_getOrderByType());
+
+		if (isSearch()) {
 			List<Long> folderIds = new ArrayList<>(1);
 
 			if (_getFolderId() !=
@@ -302,14 +309,14 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			Indexer<?> indexer = JournalSearcher.getInstance();
 
 			SearchContext searchContext = buildSearchContext(
-				folderIds, articleSearchContainer.getStart(),
-				articleSearchContainer.getEnd(), sort);
+				folderIds, articleAndFolderSearchContainer.getStart(),
+				articleAndFolderSearchContainer.getEnd(), sort);
 
 			Hits hits = indexer.search(searchContext);
 
 			int total = hits.getLength();
 
-			articleSearchContainer.setTotal(total);
+			articleAndFolderSearchContainer.setTotal(total);
 
 			List<Object> results = new ArrayList<>();
 
@@ -333,14 +340,14 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				}
 			}
 
-			articleSearchContainer.setResults(results);
+			articleAndFolderSearchContainer.setResults(results);
 		}
 		else {
 			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
 				_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
 				_infoItemItemSelectorCriterion.getStatus());
 
-			articleSearchContainer.setTotal(total);
+			articleAndFolderSearchContainer.setTotal(total);
 
 			OrderByComparator<Object> folderOrderByComparator = null;
 
@@ -368,13 +375,14 @@ public class JournalArticleItemSelectorViewDisplayContext {
 					_themeDisplay.getScopeGroupId(), 0, _getFolderId(),
 					_infoItemItemSelectorCriterion.getStatus(),
 					_themeDisplay.getLocale(),
-					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(), folderOrderByComparator);
+					articleAndFolderSearchContainer.getStart(),
+					articleAndFolderSearchContainer.getEnd(),
+					folderOrderByComparator);
 
-			articleSearchContainer.setResults(results);
+			articleAndFolderSearchContainer.setResults(results);
 		}
 
-		_articleSearchContainer = articleSearchContainer;
+		_articleSearchContainer = articleAndFolderSearchContainer;
 
 		return _articleSearchContainer;
 	}
@@ -544,7 +552,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _journalArticleItemSelectorView.getTitle(locale);
 	}
 
-	private SearchContainer _articleSearchContainer;
+	private SearchContainer<?> _articleSearchContainer;
 	private String _ddmStructureKey;
 	private String _displayStyle;
 	private JournalFolder _folder;

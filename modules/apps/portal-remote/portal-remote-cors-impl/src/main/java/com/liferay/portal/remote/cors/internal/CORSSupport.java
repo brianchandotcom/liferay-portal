@@ -80,7 +80,7 @@ public class CORSSupport {
 		return headers;
 	}
 
-	public boolean isCORSRequest(
+	public static boolean isCORSRequest(
 		Function<String, String> requestHeadersFunction) {
 
 		String origin = requestHeadersFunction.apply(ORIGIN);

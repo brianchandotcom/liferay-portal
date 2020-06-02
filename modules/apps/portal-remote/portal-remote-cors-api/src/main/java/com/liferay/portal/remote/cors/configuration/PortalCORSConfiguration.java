@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(
 	category = "security-tools",
 	factoryInstanceLabelAttribute = "configuration.name",
-	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	description = "portal-cors-configuration-description", factory = true,

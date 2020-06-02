@@ -32,7 +32,7 @@ GroupFragmentEntryUsageManagementToolbarDisplayContext groupFragmentEntryUsageMa
 <clay:container-fluid
 	cssClass="container-form-lg"
 >
-	<div class="sheet">
+	<clay:sheet>
 		<clay:row>
 			<clay:col
 				lg="12"
@@ -77,7 +77,7 @@ GroupFragmentEntryUsageManagementToolbarDisplayContext groupFragmentEntryUsageMa
 				</aui:form>
 			</clay:col>
 		</clay:row>
-	</div>
+	</clay:sheet>
 </clay:container-fluid>
 
 <liferay-frontend:component

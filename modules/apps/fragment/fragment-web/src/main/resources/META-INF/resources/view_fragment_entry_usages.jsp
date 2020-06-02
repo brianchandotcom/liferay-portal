@@ -101,10 +101,12 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 		<clay:col
 			lg="9"
 		>
-			<div class="sheet">
+			<clay:sheet>
 				<h2 class="sheet-title">
-					<div class="autofit-row autofit-row-center">
-						<div class="autofit-col">
+					<clay:content-row
+						verticalAlign="center"
+					>
+						<clay:content-col>
 							<c:choose>
 								<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") %>'>
 									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
@@ -119,8 +121,8 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getAllUsageCount() %>" key="all-x" />
 								</c:otherwise>
 							</c:choose>
-						</div>
-					</div>
+						</clay:content-col>
+					</clay:content-row>
 				</h2>
 
 				<clay:management-toolbar
@@ -172,7 +174,7 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 						/>
 					</liferay-ui:search-container>
 				</aui:form>
-			</div>
+			</clay:sheet>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>

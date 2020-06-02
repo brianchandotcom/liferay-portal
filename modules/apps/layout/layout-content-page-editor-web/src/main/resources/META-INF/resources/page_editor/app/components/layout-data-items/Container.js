@@ -75,6 +75,10 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 			{...data}
 			className={classNames(
 				className,
+				`mb-${marginBottom || 0}`,
+				`ml-${marginLeft || 0}`,
+				`mr-${marginRight || 0}`,
+				`mt-${marginTop || 0}`,
 				`pb-${paddingBottom || 0}`,
 				`pl-${paddingLeft || 0}`,
 				`pr-${paddingRight || 0}`,
@@ -83,7 +87,6 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 					[align]: !!align,
 					[borderRadius]: !!borderRadius,
 					container: containerWidth === 'fixed',
-					'container-fluid': containerWidth !== 'fixed',
 					'd-block': contentDisplay === 'block',
 					'd-flex': contentDisplay === 'flex',
 					[dropShadow]: !!dropShadow,
@@ -91,10 +94,6 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 					[justify]: !!justify,
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
 					[`border-${borderColorCssClass}`]: !!borderColorCssClass,
-					[`mb-${marginBottom}`]: isValidMargin(marginBottom),
-					[`ml-${marginLeft}`]: isValidMargin(marginLeft),
-					[`mr-${marginRight}`]: isValidMargin(marginRight),
-					[`mt-${marginTop}`]: isValidMargin(marginTop),
 				}
 			)}
 			ref={ref}
@@ -136,10 +135,6 @@ const loadBackgroundImage = (backgroundImage) => {
 	}
 
 	return Promise.resolve('');
-};
-
-const isValidMargin = (margin) => {
-	return margin !== 'auto' && !isNaN(Number(margin));
 };
 
 export default Container;

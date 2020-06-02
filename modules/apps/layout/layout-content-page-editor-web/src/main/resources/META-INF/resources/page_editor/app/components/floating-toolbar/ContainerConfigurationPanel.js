@@ -55,8 +55,8 @@ export const ContainerConfigurationPanel = ({item}) => {
 		}
 
 		if (name === 'containerWidth' && value === 'fixed') {
-			config.marginLeft = 'auto';
-			config.marginRight = 'auto';
+			config.marginLeft = '';
+			config.marginRight = '';
 		}
 
 		dispatch(

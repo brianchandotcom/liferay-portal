@@ -156,6 +156,7 @@ export default withRouter(
 							(otherAnswer) => answer.id !== otherAnswer.id
 						),
 					],
+					totalCount: answers.totalCount - 1,
 				});
 			},
 			[answers]

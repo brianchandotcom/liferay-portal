@@ -25,8 +25,10 @@ String pagesTreeState = SessionClicks.get(request, "com.liferay.product.navigati
 	<div class="sidebar-header">
 		<h1 class="sr-only"><liferay-ui:message key="product-admin-menu" /></h1>
 
-		<div class="autofit-row">
-			<div class="autofit-col autofit-col-expand">
+		<clay:content-row>
+			<clay:content-col
+				expand="true"
+			>
 				<a href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">
 					<span class="company-details text-truncate">
 						<img alt="" class="company-logo" src='<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>' />
@@ -34,12 +36,12 @@ String pagesTreeState = SessionClicks.get(request, "com.liferay.product.navigati
 						<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>
 					</span>
 				</a>
-			</div>
+			</clay:content-col>
 
-			<div class="autofit-col">
+			<clay:content-col>
 				<aui:icon cssClass="d-inline-block d-md-none icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
-			</div>
-		</div>
+			</clay:content-col>
+		</clay:content-row>
 	</div>
 
 	<div class="sidebar-body">

@@ -40,13 +40,22 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	<liferay-util:buffer
 		var="linkTemplate"
 	>
-		<span class="autofit-row">
-			<span className="autofit-col">
+		<clay:content-row
+			containerElement="span"
+		>
+			<clay:content-col
+				containerElement="span"
+			>
 				<a class="{cssClass}" data-regular-url="{regularURL}" data-url="{url}" data-uuid="{uuid}" href="{url}" id="{id}" title="{title}">
 					{label}
 				</a>
-			</span>
-			<span class="autofit-col autofit-col-expand pages-tree-dropdown">
+			</clay:content-col>
+
+			<clay:content-col
+				containerElement="span"
+				cssClass="pages-tree-dropdown"
+				expand="true"
+			>
 				<span class="d-sm-block dropdown text-right">
 					<button class="btn btn-unstyled dropdown-toggle ml-1 taglib-icon" data-toggle="liferay-dropdown">
 						<aui:icon image="ellipsis-v" markupView="lexicon" />
@@ -59,29 +68,49 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 					<ul class="dropdown-menu dropdown-menu-left" role="menu">
 						<c:if test="<%= (stagingGroup == null) || Objects.equals(scopeGroupId, stagingGroupId) %>">
 							<li>
-								<a class="autofit-row dropdown-item layout-action" href="<%= layoutsTreeDisplayContext.getAddChildURLTemplate() %>">
-									<span class="autofit-col autofit-col-expand">
-										<span class="autofit-section text-left">
+								<clay:content-row
+									containerElement="a"
+									cssClass="dropdown-item layout-action"
+									href="<%= layoutsTreeDisplayContext.getAddChildURLTemplate() %>"
+								>
+									<clay:content-col
+										containerElement="span"
+										expand="true"
+									>
+										<clay:content-section
+											containerElement="span"
+											cssClass="text-left"
+										>
 											<liferay-ui:message key="add-child-page" />
-										</span>
-									</span>
-								</a>
+										</clay:content-section>
+									</clay:content-col>
+								</clay:content-row>
 							</li>
 						</c:if>
 
 						<li>
-							<a class="autofit-row dropdown-item layout-action" href="<%= layoutsTreeDisplayContext.getConfigureLayoutURLTemplate() %>">
-								<span class="autofit-col autofit-col-expand">
-									<span class="autofit-section text-left">
+							<clay:content-row
+								containerElement="a"
+								cssClass="dropdown-item layout-action"
+								href="<%= layoutsTreeDisplayContext.getConfigureLayoutURLTemplate() %>"
+							>
+								<clay:content-col
+									containerElement="span"
+									expand="true"
+								>
+									<clay:content-section
+										containerElement="span"
+										cssClass="text-left"
+									>
 										<liferay-ui:message key="configure" />
-									</span>
-								</span>
-							</a>
+									</clay:content-section>
+								</clay:content-col>
+							</clay:content-row>
 						</li>
 					</ul>
 				</span>
-			</span>
-		</span>
+			</clay:content-col>
+		</clay:content-row>
 	</liferay-util:buffer>
 
 	<%

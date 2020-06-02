@@ -280,6 +280,41 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for for LPS-111548. Reloading the page will clean all Undo states."
+	@priority = "4"
+	test ConfigureHeadingFragmentAndRefreshPageWithUndoEnabled {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "undoEnabled = true";
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.waitForAutoSave();
+
+		AssertVisible(
+			key_text = "undo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+		PageEditor.configureFragment(textAlign = "Center");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "center",
+			fragmentName = "heading");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
 	@description = "Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
 	@priority = "4"
 	test DeletedContentInContentDisplayFragmentIsNotVisible {

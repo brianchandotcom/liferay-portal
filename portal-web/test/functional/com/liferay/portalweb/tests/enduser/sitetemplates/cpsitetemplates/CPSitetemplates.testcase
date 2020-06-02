@@ -49,6 +49,7 @@ definition {
 	test AddSiteTemplateApplySiteTemplateChangesToSite {
 		property portal.acceptance = "true";
 		property portal.release = "false";
+		property portal.upstream = "quarantine";
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
@@ -472,6 +473,7 @@ definition {
 	@priority = "5"
 	test ResetPageChanges {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPSitetemplates#ResetPageChanges";
 		property testray.component.names = "Training";
 

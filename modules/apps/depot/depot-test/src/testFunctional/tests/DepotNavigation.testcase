@@ -61,6 +61,7 @@ definition {
 	@priority = "5"
 	test AccessViaSiteNavigation {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

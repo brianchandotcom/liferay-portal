@@ -1249,6 +1249,7 @@ definition {
 	@priority = "5"
 	test VerifyAllItemsFilterFromMetrics {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#VerifyAllItemsFilterFromMetrics";
 
 		var key_workflowInstanceName = "Blog Entry Title";
@@ -1347,6 +1348,7 @@ definition {
 	@priority = "5"
 	test VerifyCustomRangeDateInput {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
@@ -1500,6 +1502,7 @@ definition {
 	@priority = "5"
 	test ViewPendingItems {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPendingItems";
 
@@ -1589,6 +1592,7 @@ definition {
 	@priority = "5"
 	test ViewPerformanceByAssigneePage {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewPerformanceByAssigneePage";
 
 		WorkflowMetrics.createUsersAndAssignInstances(
@@ -2020,6 +2024,7 @@ definition {
 	@priority = "5"
 	test ViewWorkloadByAssigneePage {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneePage";
 
 		WorkflowMetrics.createUsersAndAssignInstances(

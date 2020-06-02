@@ -18,24 +18,33 @@ import ClayIcon from '@clayui/icon';
 import {PropTypes} from 'prop-types';
 import React, {useState} from 'react';
 
-function normalizeFields(fields = []) {
-	return fields.map(({key, label}) => ({
-		label,
-		value: key,
-	}));
-}
+const noop = () => {};
 
-function MappingPanel({fields, initialSeletedField, selectedSource}) {
+const normalizeField = ({key, label}) => ({
+	label,
+	value: key,
+});
+
+function MappingPanel({
+	fields,
+	initialSeletedField,
+	initialSelectedSource,
+	onChange = noop,
+}) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
-	const [seletedField, setSeletedField] = useState(initialSeletedField);
+	const [seletedFieldValue, setSeletedFieldValue] = useState(
+		normalizeField(initialSeletedField).value
+	);
 
 	const handleChangeField = (event) => {
 		const {value} = event.target;
-		setSeletedField(value);
+		setSeletedFieldValue(value);
+
+		const field = normalizeField(fields.find(({key}) => key === value));
 
 		onChange({
-			field: value,
-			source: selectedSource,
+			field,
+			source: initialSelectedSource,
 		});
 	};
 
@@ -62,7 +71,10 @@ function MappingPanel({fields, initialSeletedField, selectedSource}) {
 							<label htmlFor="mappingSelectorSourceSelect">
 								{Liferay.Language.get('source')}
 							</label>
-							<ClayInput readOnly value={selectedSource} />
+							<ClayInput
+								readOnly
+								value={initialSelectedSource.label}
+							/>
 						</ClayForm.Group>
 						<ClayForm.Group small>
 							<label htmlFor="mappingSelectorFieldSelect">
@@ -71,8 +83,8 @@ function MappingPanel({fields, initialSeletedField, selectedSource}) {
 							<ClaySelectWithOption
 								id="mappingSelectorFieldSelect"
 								onChange={handleChangeField}
-								options={normalizeFields(fields)}
-								value={seletedField}
+								options={fields.map(normalizeField)}
+								value={seletedFieldValue.value}
 							/>
 						</ClayForm.Group>
 					</div>

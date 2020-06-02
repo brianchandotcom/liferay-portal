@@ -21,7 +21,7 @@ function SeoMapping() {
 	const [title, setTitle] = useState('');
 
 	const handleMappingTitle = ({field, source}) => {
-		setTitle(`${source}: ${field}`);
+		setTitle(`${source.label}: ${field.label}`);
 	};
 
 	return (

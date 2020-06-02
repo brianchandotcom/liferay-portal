@@ -28,9 +28,9 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.asset.util.AssetPublisherAddItemHolder;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -564,7 +564,7 @@ public class AssetHelperImpl implements AssetHelper {
 		throws Exception {
 
 		String[] sortFields = StringUtil.split(
-			sortField, DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
+			sortField, DDMIndexer.DDM_FIELD_SEPARATOR);
 
 		long ddmStructureId = GetterUtil.getLong(sortFields[2]);
 
@@ -576,8 +576,7 @@ public class AssetHelperImpl implements AssetHelper {
 	}
 
 	private String _getDDMFormFieldType(String sortField) throws Exception {
-		String[] sortFields = sortField.split(
-			DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
+		String[] sortFields = sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR);
 
 		long ddmStructureId = GetterUtil.getLong(sortFields[2]);
 		String fieldName = sortFields[3];
@@ -592,9 +591,7 @@ public class AssetHelperImpl implements AssetHelper {
 		String sortField, String fieldType, boolean fieldLocalizable,
 		int sortType, Locale locale) {
 
-		if (sortField.startsWith(
-				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
-
+		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(sortField);
@@ -636,9 +633,7 @@ public class AssetHelperImpl implements AssetHelper {
 		boolean ddmFormFieldLocalizable = true;
 		String ddmFormFieldType = sortField;
 
-		if (ddmFormFieldType.startsWith(
-				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX)) {
-
+		if (ddmFormFieldType.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
 			ddmFormFieldLocalizable = _getDDMFormFieldLocalizable(sortField);
 
 			ddmFormFieldType = _getDDMFormFieldType(ddmFormFieldType);
@@ -651,9 +646,7 @@ public class AssetHelperImpl implements AssetHelper {
 			_getOrderByCol(
 				sortField, ddmFormFieldType, ddmFormFieldLocalizable, sortType,
 				locale),
-			!sortField.startsWith(
-				DDMStructureManager.STRUCTURE_INDEXER_FIELD_PREFIX),
-			orderByType);
+			!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX), orderByType);
 	}
 
 	private Sort[] _getSorts(AssetEntryQuery assetEntryQuery, Locale locale)

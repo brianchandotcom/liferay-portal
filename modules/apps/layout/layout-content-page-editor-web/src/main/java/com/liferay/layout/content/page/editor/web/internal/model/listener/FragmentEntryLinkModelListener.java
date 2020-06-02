@@ -14,10 +14,10 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManager;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
@@ -195,7 +195,7 @@ public class FragmentEntryLinkModelListener
 		String ddmTemplateKey = mappedField.substring(
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX.length());
 
-		DDMTemplate ddmTemplate = _ddmTemplateManager.fetchTemplate(
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			fragmentEntryLink.getGroupId(),
 			_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
 
@@ -267,7 +267,7 @@ public class FragmentEntryLinkModelListener
 	private DDMTemplateLinkLocalService _ddmTemplateLinkLocalService;
 
 	@Reference
-	private DDMTemplateManager _ddmTemplateManager;
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

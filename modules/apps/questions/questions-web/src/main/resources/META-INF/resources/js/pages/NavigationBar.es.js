@@ -12,13 +12,14 @@
  * details.
  */
 
+import {useLazyQuery} from '@apollo/client';
 import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React, {useContext, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../AppContext.es';
-import {getSections} from '../utils/client.es';
+import {getSectionsQuery} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 
 export default withRouter(
@@ -40,16 +41,20 @@ export default withRouter(
 
 		const context = useContext(AppContext);
 
+		const [getSections] = useLazyQuery(getSectionsQuery, {
+			onCompleted({messageBoardSections}) {
+				context.setSection(messageBoardSections.items[0].title);
+			},
+		});
+
 		useEffect(() => {
 			if (sectionTitle) {
 				context.setSection(sectionTitle);
 			}
 			else if (Object.keys(context.section).length === 0) {
-				getSections(context.siteKey).then((sections) =>
-					context.setSection(sections.items[0].title)
-				);
+				getSections({variables: {siteKey: context.siteKey}});
 			}
-		}, [context, sectionTitle]);
+		}, [context, getSections, sectionTitle]);
 
 		const historyPushParser = historyPushWithSlug(history.push);
 

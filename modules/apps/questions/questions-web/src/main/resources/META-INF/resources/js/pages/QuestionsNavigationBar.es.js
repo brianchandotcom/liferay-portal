@@ -238,7 +238,17 @@ export default withRouter(
 								className="bg-transparent"
 								tag="span"
 							>
-								{loading && <ClayLoadingIndicator small />}
+								{loading && (
+									<button
+										className="btn btn-monospaced btn-unstyled"
+										type="submit"
+									>
+										<ClayLoadingIndicator
+											className="mb-0 mt-0"
+											small
+										/>
+									</button>
+								)}
 								{!loading && (
 									<ClayButtonWithIcon
 										displayType="unstyled"

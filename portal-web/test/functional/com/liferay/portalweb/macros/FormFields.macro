@@ -293,7 +293,7 @@ definition {
 	}
 
 	macro moveGridOptionsRow {
-		DragAndDrop.dragAndDropPortletToObject(
+		DragAndDrop.javaScriptDragAndDropToObject(
 			key_gridField = "${gridField}",
 			key_rowNumber1 = "${rowNumberStart}",
 			key_rowNumber2 = "${rowNumberEnd}",
@@ -306,7 +306,7 @@ definition {
 		var key_rowNumber1 = "${rowNumberStart}";
 		var key_rowNumber2 = "${rowNumberEnd}";
 
-		DragAndDrop.dragAndDropPortletToObject(
+		DragAndDrop.javaScriptDragAndDropToObject(
 			locator1 = "FormFields#OPTIONS_DRAG_ICON_1",
 			locator2 = "FormFields#OPTIONS_DRAG_ICON_2",
 			value1 = "");

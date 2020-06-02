@@ -39,16 +39,16 @@ export default withRouter(
 
 		const [deleteMessage] = useMutation(deleteMessageQuery, {
 			onCompleted() {
-				deleteAnswer(answer);
 				if (answer.messageBoardMessages) {
 					return Promise.all(
 						answer.messageBoardMessages.items.map(({id}) =>
 							deleteMessage({
-								variables: {$messageBoardMessageId: id},
+								variables: {messageBoardMessageId: id},
 							})
 						)
 					);
 				}
+				deleteAnswer(answer);
 			},
 		});
 

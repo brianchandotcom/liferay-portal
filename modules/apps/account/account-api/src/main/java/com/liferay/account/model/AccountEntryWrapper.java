@@ -55,6 +55,7 @@ public class AccountEntryWrapper
 		attributes.put("domains", getDomains());
 		attributes.put("logoId", getLogoId());
 		attributes.put("taxIdNumber", getTaxIdNumber());
+		attributes.put("type", getType());
 		attributes.put("status", getStatus());
 
 		return attributes;
@@ -139,6 +140,12 @@ public class AccountEntryWrapper
 
 		if (taxIdNumber != null) {
 			setTaxIdNumber(taxIdNumber);
+		}
+
+		String type = (String)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -286,6 +293,16 @@ public class AccountEntryWrapper
 	@Override
 	public String getTaxIdNumber() {
 		return model.getTaxIdNumber();
+	}
+
+	/**
+	 * Returns the type of this account entry.
+	 *
+	 * @return the type of this account entry
+	 */
+	@Override
+	public String getType() {
+		return model.getType();
 	}
 
 	/**
@@ -451,6 +468,16 @@ public class AccountEntryWrapper
 	@Override
 	public void setTaxIdNumber(String taxIdNumber) {
 		model.setTaxIdNumber(taxIdNumber);
+	}
+
+	/**
+	 * Sets the type of this account entry.
+	 *
+	 * @param type the type of this account entry
+	 */
+	@Override
+	public void setType(String type) {
+		model.setType(type);
 	}
 
 	/**

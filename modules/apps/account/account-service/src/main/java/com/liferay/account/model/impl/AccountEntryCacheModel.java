@@ -77,7 +77,7 @@ public class AccountEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -105,6 +105,8 @@ public class AccountEntryCacheModel
 		sb.append(logoId);
 		sb.append(", taxIdNumber=");
 		sb.append(taxIdNumber);
+		sb.append(", type=");
+		sb.append(type);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append("}");
@@ -174,6 +176,13 @@ public class AccountEntryCacheModel
 			accountEntryImpl.setTaxIdNumber(taxIdNumber);
 		}
 
+		if (type == null) {
+			accountEntryImpl.setType("");
+		}
+		else {
+			accountEntryImpl.setType(type);
+		}
+
 		accountEntryImpl.setStatus(status);
 
 		accountEntryImpl.resetOriginalValues();
@@ -201,6 +210,7 @@ public class AccountEntryCacheModel
 
 		logoId = objectInput.readLong();
 		taxIdNumber = objectInput.readUTF();
+		type = objectInput.readUTF();
 
 		status = objectInput.readInt();
 	}
@@ -257,6 +267,13 @@ public class AccountEntryCacheModel
 			objectOutput.writeUTF(taxIdNumber);
 		}
 
+		if (type == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(type);
+		}
+
 		objectOutput.writeInt(status);
 	}
 
@@ -273,6 +290,7 @@ public class AccountEntryCacheModel
 	public String domains;
 	public long logoId;
 	public String taxIdNumber;
+	public String type;
 	public int status;
 
 }

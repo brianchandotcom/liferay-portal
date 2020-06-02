@@ -42,12 +42,14 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1913,6 +1915,12 @@ public class AccountEntryPersistenceImpl
 		"accountEntry.status = ?";
 
 	public AccountEntryPersistenceImpl() {
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("type", "type_");
+
+		setDBColumnNames(dbColumnNames);
+
 		setModelClass(AccountEntry.class);
 
 		setModelImplClass(AccountEntryImpl.class);
@@ -2499,6 +2507,11 @@ public class AccountEntryPersistenceImpl
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected EntityCache getEntityCache() {
 		return entityCache;
 	}
@@ -2676,6 +2689,9 @@ public class AccountEntryPersistenceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountEntryPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"type"});
 
 	static {
 		try {

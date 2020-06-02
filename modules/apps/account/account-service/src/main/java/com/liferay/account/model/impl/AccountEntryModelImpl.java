@@ -78,7 +78,7 @@ public class AccountEntryModelImpl
 		{"parentAccountEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"domains", Types.VARCHAR},
 		{"logoId", Types.BIGINT}, {"taxIdNumber", Types.VARCHAR},
-		{"status", Types.INTEGER}
+		{"type_", Types.VARCHAR}, {"status", Types.INTEGER}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,11 +98,12 @@ public class AccountEntryModelImpl
 		TABLE_COLUMNS_MAP.put("domains", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("logoId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("taxIdNumber", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,taxIdNumber VARCHAR(75) null,status INTEGER)";
+		"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,taxIdNumber VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
@@ -157,6 +158,7 @@ public class AccountEntryModelImpl
 		model.setDomains(soapModel.getDomains());
 		model.setLogoId(soapModel.getLogoId());
 		model.setTaxIdNumber(soapModel.getTaxIdNumber());
+		model.setType(soapModel.getType());
 		model.setStatus(soapModel.getStatus());
 
 		return model;
@@ -366,6 +368,9 @@ public class AccountEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"taxIdNumber",
 			(BiConsumer<AccountEntry, String>)AccountEntry::setTaxIdNumber);
+		attributeGetterFunctions.put("type", AccountEntry::getType);
+		attributeSetterBiConsumers.put(
+			"type", (BiConsumer<AccountEntry, String>)AccountEntry::setType);
 		attributeGetterFunctions.put("status", AccountEntry::getStatus);
 		attributeSetterBiConsumers.put(
 			"status",
@@ -583,6 +588,22 @@ public class AccountEntryModelImpl
 
 	@JSON
 	@Override
+	public String getType() {
+		if (_type == null) {
+			return "";
+		}
+		else {
+			return _type;
+		}
+	}
+
+	@Override
+	public void setType(String type) {
+		_type = type;
+	}
+
+	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -653,6 +674,7 @@ public class AccountEntryModelImpl
 		accountEntryImpl.setDomains(getDomains());
 		accountEntryImpl.setLogoId(getLogoId());
 		accountEntryImpl.setTaxIdNumber(getTaxIdNumber());
+		accountEntryImpl.setType(getType());
 		accountEntryImpl.setStatus(getStatus());
 
 		accountEntryImpl.resetOriginalValues();
@@ -803,6 +825,14 @@ public class AccountEntryModelImpl
 			accountEntryCacheModel.taxIdNumber = null;
 		}
 
+		accountEntryCacheModel.type = getType();
+
+		String type = accountEntryCacheModel.type;
+
+		if ((type != null) && (type.length() == 0)) {
+			accountEntryCacheModel.type = null;
+		}
+
 		accountEntryCacheModel.status = getStatus();
 
 		return accountEntryCacheModel;
@@ -897,6 +927,7 @@ public class AccountEntryModelImpl
 	private String _domains;
 	private long _logoId;
 	private String _taxIdNumber;
+	private String _type;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

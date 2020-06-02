@@ -275,6 +275,21 @@ public interface AccountEntryModel
 	public void setTaxIdNumber(String taxIdNumber);
 
 	/**
+	 * Returns the type of this account entry.
+	 *
+	 * @return the type of this account entry
+	 */
+	@AutoEscape
+	public String getType();
+
+	/**
+	 * Sets the type of this account entry.
+	 *
+	 * @param type the type of this account entry
+	 */
+	public void setType(String type);
+
+	/**
 	 * Returns the status of this account entry.
 	 *
 	 * @return the status of this account entry

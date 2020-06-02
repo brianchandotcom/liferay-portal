@@ -146,6 +146,8 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setTaxIdNumber(RandomTestUtil.randomString());
 
+		newAccountEntry.setType(RandomTestUtil.randomString());
+
 		newAccountEntry.setStatus(RandomTestUtil.nextInt());
 
 		_accountEntries.add(_persistence.update(newAccountEntry));
@@ -187,6 +189,8 @@ public class AccountEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAccountEntry.getTaxIdNumber(),
 			newAccountEntry.getTaxIdNumber());
+		Assert.assertEquals(
+			existingAccountEntry.getType(), newAccountEntry.getType());
 		Assert.assertEquals(
 			existingAccountEntry.getStatus(), newAccountEntry.getStatus());
 	}
@@ -235,7 +239,7 @@ public class AccountEntryPersistenceTest {
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "parentAccountEntryId", true, "name",
 			true, "description", true, "domains", true, "logoId", true,
-			"taxIdNumber", true, "status", true);
+			"taxIdNumber", true, "type", true, "status", true);
 	}
 
 	@Test
@@ -479,6 +483,8 @@ public class AccountEntryPersistenceTest {
 		accountEntry.setLogoId(RandomTestUtil.nextLong());
 
 		accountEntry.setTaxIdNumber(RandomTestUtil.randomString());
+
+		accountEntry.setType(RandomTestUtil.randomString());
 
 		accountEntry.setStatus(RandomTestUtil.nextInt());
 

@@ -13,7 +13,7 @@
  */
 
 import {DataLayoutBuilderActions, DataLayoutVisitor} from 'data-engine-taglib';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import TranslationManager from '../../components/translation-manager/TranslationManager.es';
@@ -23,14 +23,19 @@ import FormViewContext from './FormViewContext.es';
 import saveFormView from './saveFormView.es';
 
 export default ({newCustomObject}) => {
-	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+	const [defaultLanguageId, setDefaultLanguageId] = useState();
+
+	const [editingLanguageId, setEditingLanguageId] = useState();
 
 	const [state, dispatch] = useContext(FormViewContext);
-	const {dataDefinitionId, dataLayout} = state;
+	const {dataDefinition, dataDefinitionId, dataLayout} = state;
 
-	const [editingLanguageId, setEditingLanguageId] = useState(
-		defaultLanguageId
-	);
+	useEffect(() => {
+		if (dataDefinition.defaultLanguageId) {
+			setDefaultLanguageId(dataDefinition.defaultLanguageId);
+			setEditingLanguageId(dataDefinition.defaultLanguageId);
+		}
+	}, [dataDefinition.defaultLanguageId]);
 
 	const {basePortletURL} = useContext(AppContext);
 	const listUrl = `${basePortletURL}/#/custom-object/${dataDefinitionId}/form-views`;
@@ -100,10 +105,11 @@ export default ({newCustomObject}) => {
 			});
 	};
 
-	return (
+	return defaultLanguageId ? (
 		<UpperToolbar>
 			<UpperToolbar.Group>
 				<TranslationManager
+					defaultLanguageId={defaultLanguageId}
 					editingLanguageId={editingLanguageId}
 					onEditingLanguageIdChange={onEditingLanguageIdChange}
 					translatedLanguageIds={dataLayout.name}
@@ -135,5 +141,5 @@ export default ({newCustomObject}) => {
 				</UpperToolbar.Button>
 			</UpperToolbar.Group>
 		</UpperToolbar>
-	);
+	) : null;
 };

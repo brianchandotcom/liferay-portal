@@ -179,9 +179,11 @@ AUI.add(
 
 				_portletFeedback() {
 					Liferay.Util.openToast({
-						message: Liferay.Language.get('the-application-was-added-to-the-page'),
+						message: Liferay.Language.get(
+							'the-application-was-added-to-the-page'
+						),
 						type: 'success',
-					})
+					});
 				},
 
 				addPortlet(portlet, options) {

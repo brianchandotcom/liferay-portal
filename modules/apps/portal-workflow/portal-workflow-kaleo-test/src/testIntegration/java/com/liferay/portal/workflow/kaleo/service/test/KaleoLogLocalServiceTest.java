@@ -207,7 +207,7 @@ public class KaleoLogLocalServiceTest extends BaseKaleoLocalServiceTestCase {
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
-	@Inject(type = KaleoWorkflowModelConverter.class)
+	@Inject
 	private KaleoWorkflowModelConverter _kaleoWorkflowModelConverter;
 
 	@Inject

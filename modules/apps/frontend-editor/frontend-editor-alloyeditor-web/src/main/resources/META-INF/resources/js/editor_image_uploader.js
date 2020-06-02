@@ -324,6 +324,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-progressbar', 'uploader'],
+		requires: ['aui-alert', 'aui-base', 'aui-progressbar', 'uploader'],
 	}
 );

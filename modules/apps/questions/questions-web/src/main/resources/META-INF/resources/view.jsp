@@ -32,8 +32,6 @@ String questionsRootElementId = renderResponse.getNamespace() + "-questions-root
 	).put(
 		"imageBrowseURL", renderRequest.getAttribute(QuestionsWebKeys.IMAGE_BROWSE_URL)
 	).put(
-		"includeContextPath", renderRequest.getAttribute("javax.servlet.include.context_path")
-	).put(
 		"isOmniAdmin", permissionChecker.isOmniadmin()
 	).put(
 		"redirectToLogin", questionsConfiguration.enableRedirectToLogin()

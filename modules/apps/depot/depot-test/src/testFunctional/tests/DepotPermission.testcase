@@ -116,12 +116,6 @@ definition {
 	@description = "This ensures that the user can only view memberships with view permissions."
 	@priority = "5"
 	test AccessMembershipWithViewOnlyPermissions {
-		JSONUser.addUser(
-			userEmailAddress = "userea1@liferay.com",
-			userFirstName = "userfn1",
-			userLastName = "userln1",
-			userScreenName = "usersn1");
-
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(

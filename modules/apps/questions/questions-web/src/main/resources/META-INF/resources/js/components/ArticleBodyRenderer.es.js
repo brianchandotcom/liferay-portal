@@ -13,11 +13,8 @@
  */
 
 import parser from 'bbcode-to-react';
-import {Editor} from 'frontend-editor-ckeditor-web';
-import React, {useContext} from 'react';
-
-import {AppContext} from '../AppContext.es';
-import {getCKEditorReadOnlyConfig} from '../utils/utils.es';
+import React from 'react';
+import Highlight from 'react-highlight';
 
 export default ({
 	articleBody,
@@ -26,8 +23,6 @@ export default ({
 	id,
 	signature,
 }) => {
-	const context = useContext(AppContext);
-
 	return (
 		<>
 			{encodingFormat === 'bbcode' && (
@@ -41,13 +36,7 @@ export default ({
 			)}
 			{encodingFormat !== 'bbcode' && !compactMode && (
 				<div className={`cke_readonly questions-article-body-${id}`}>
-					<Editor
-						config={getCKEditorReadOnlyConfig(
-							context.includeContextPath
-						)}
-						data={articleBody}
-						required
-					/>
+					<Highlight innerHTML={true}>{articleBody}</Highlight>
 				</div>
 			)}
 

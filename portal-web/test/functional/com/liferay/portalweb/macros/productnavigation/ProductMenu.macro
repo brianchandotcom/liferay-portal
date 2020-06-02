@@ -16,7 +16,7 @@ definition {
 	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
 	macro gotoLocalizedSite {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "Global");
+			GlobalMenu.gotoSite(site = "Guest");
 		}
 
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
@@ -109,7 +109,7 @@ definition {
 	@summary = "Navigate to ${site} via the 'Go to Site' link"
 	macro gotoSiteViaLink {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "Global");
+			GlobalMenu.gotoSite(site = "Guest");
 		}
 
 		ProductMenuHelper.expandPanel(panel = "Site Administration");

@@ -555,7 +555,7 @@ AUI.add(
 
 					instance._updateRemainingTimeTitle(remainingTimeFormatted);
 
-					return Liferay.Util.openToast(
+					Liferay.Util.openToast(
 						Object.assign(config, {
 							htmlMessage: true,
 							message:

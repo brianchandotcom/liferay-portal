@@ -1876,7 +1876,7 @@ AUI.add(
 				},
 
 				showNotice(message) {
-					return Liferay.Util.openToast({
+					Liferay.Util.openToast({
 						message,
 						type: 'warning',
 					});

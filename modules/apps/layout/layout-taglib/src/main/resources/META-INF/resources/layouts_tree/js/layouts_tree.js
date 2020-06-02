@@ -173,7 +173,7 @@ AUI.add(
 			},
 
 			_displayNotice(message, type, timeout) {
-				return Liferay.Util.openToast({
+				Liferay.Util.openToast({
 					message,
 					toastProps: {
 						autoClose: timeout,

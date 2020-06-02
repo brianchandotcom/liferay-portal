@@ -34,7 +34,7 @@
 		opacity: 0;
 
 		.lexicon-icon {
-			fill: $secondary;
+			fill: $secondary-l1;
 		}
 
 		&:focus {
@@ -48,6 +48,10 @@
 		font-size: 14px;
 		text-align: center;
 		width: calc(100% - 24px);
+
+		.lexicon-icon {
+			transform: translateY(1px);
+		}
 
 		.title {
 			font-size: 12px;

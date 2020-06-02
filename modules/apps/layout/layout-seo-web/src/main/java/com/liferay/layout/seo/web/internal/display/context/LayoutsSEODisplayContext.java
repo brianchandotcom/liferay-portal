@@ -21,11 +21,14 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -34,6 +37,7 @@ import com.liferay.layout.seo.service.LayoutSEOEntryLocalServiceUtil;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -54,8 +58,10 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
@@ -71,7 +77,9 @@ public class LayoutsSEODisplayContext {
 
 	public LayoutsSEODisplayContext(
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
+		InfoItemFormProviderTracker infoItemFormProviderTracker,
 		ItemSelector itemSelector,
+		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
 		LayoutSEOLinkManager layoutSEOLinkManager,
 		LayoutSEOSiteLocalService layoutSEOSiteLocalService,
@@ -81,7 +89,10 @@ public class LayoutsSEODisplayContext {
 
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
+		_infoItemFormProviderTracker = infoItemFormProviderTracker;
 		_itemSelector = itemSelector;
+		_layoutPageTemplateEntryLocalService =
+			layoutPageTemplateEntryLocalService;
 		_layoutSEOCanonicalURLProvider = layoutSEOCanonicalURLProvider;
 		_layoutSEOLinkManager = layoutSEOLinkManager;
 		_layoutSEOSiteLocalService = layoutSEOSiteLocalService;
@@ -372,6 +383,30 @@ public class LayoutsSEODisplayContext {
 			layout.getLayoutId());
 	}
 
+	public HashMap<String, Object> getSEOMappingData() {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(_selPlid);
+
+		return HashMapBuilder.<String, Object>put(
+			"fields",
+			_infoItemFormProviderTracker.getInfoItemFormProvider(
+				layoutPageTemplateEntry.getClassName()
+			).getInfoForm(
+			).getAllInfoFields(
+			).stream(
+			).map(
+				infoField -> JSONUtil.put(
+					"key", infoField.getName()
+				).put(
+					"label", infoField.getLabel(_themeDisplay.getLocale())
+				)
+			).collect(
+				Collectors.toList()
+			)
+		).build();
+	}
+
 	public boolean isPrivateLayout() {
 		if (_privateLayout != null) {
 			return _privateLayout;
@@ -426,8 +461,11 @@ public class LayoutsSEODisplayContext {
 	private final DLURLHelper _dlurlHelper;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemFormProviderTracker _infoItemFormProviderTracker;
 	private final ItemSelector _itemSelector;
 	private Long _layoutId;
+	private final LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 	private final LayoutSEOCanonicalURLProvider _layoutSEOCanonicalURLProvider;
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;
 	private final LayoutSEOSiteLocalService _layoutSEOSiteLocalService;

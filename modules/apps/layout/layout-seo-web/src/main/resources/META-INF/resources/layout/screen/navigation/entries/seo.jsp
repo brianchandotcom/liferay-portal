@@ -166,6 +166,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						<aui:input disabled="<%= true %>" helpMessage="html-title-help" id="title" label="html-title" localized="<%= false %>" name="title" placeholder="title" />
 
 						<react:component
+							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"
 							module="js/seo/display_page_templates/SeoMapping"
 							servletContext="<%= application %>"
 						/>

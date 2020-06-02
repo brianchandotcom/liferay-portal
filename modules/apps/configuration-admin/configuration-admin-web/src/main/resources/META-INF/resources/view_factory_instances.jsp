@@ -74,14 +74,14 @@ renderResponse.setTitle(categoryDisplayName);
 		<clay:col
 			md="9"
 		>
-			<div class="sheet sheet-lg">
-				<div class="autofit-row">
-					<div class="autofit-col">
+			<clay:sheet>
+				<clay:content-row>
+					<clay:content-col>
 						<h2><%= factoryConfigurationModelName %></h2>
-					</div>
+					</clay:content-col>
 
 					<c:if test="<%= configurationModelIterator.getTotal() > 0 %>">
-						<div class="autofit-col">
+						<clay:content-col>
 							<liferay-ui:icon-menu
 								cssClass="float-right"
 								direction="right"
@@ -99,17 +99,26 @@ renderResponse.setTitle(categoryDisplayName);
 									url="<%= exportEntriesURL %>"
 								/>
 							</liferay-ui:icon-menu>
-						</div>
+						</clay:content-col>
 					</c:if>
-				</div>
+				</clay:content-row>
 
-				<h3 class="autofit-row sheet-subtitle">
-					<span class="autofit-col autofit-col-expand">
+				<clay:content-row
+					containerElement="h3"
+					cssClass="sheet-subtitle"
+				>
+					<clay:content-col
+						containerElement="span"
+						expand="true"
+					>
 						<span class="heading-text">
 							<liferay-ui:message key="configuration-entries" />
 						</span>
-					</span>
-					<span class="autofit-col">
+					</clay:content-col>
+
+					<clay:content-col
+						containerElement="span"
+					>
 						<span class="heading-end">
 							<portlet:renderURL var="createFactoryConfigURL">
 								<portlet:param name="mvcRenderCommandName" value="/edit_configuration" />
@@ -119,8 +128,8 @@ renderResponse.setTitle(categoryDisplayName);
 
 							<a class="btn btn-secondary btn-sm" href="<%= createFactoryConfigURL %>"><liferay-ui:message key="add" /></a>
 						</span>
-					</span>
-				</h3>
+					</clay:content-col>
+				</clay:content-row>
 
 				<%
 				PortletURL iteratorURL = renderResponse.createRenderURL();
@@ -223,7 +232,7 @@ renderResponse.setTitle(categoryDisplayName);
 						searchResultCssClass="show-quick-actions-on-hover table table-autofit"
 					/>
 				</liferay-ui:search-container>
-			</div>
+			</clay:sheet>
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>

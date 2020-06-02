@@ -25,7 +25,7 @@ const DEFAULT_RENDER_DATA = {
 
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
-const Text = ({allowHTML, string}) => {
+const Text = ({allowHTML, string = null}) => {
 	if (allowHTML) {
 		return <div dangerouslySetInnerHTML={{__html: string}} />;
 	}
@@ -83,9 +83,7 @@ function openToast({
 				displayType={type}
 				onClick={(event) => onClick({event, onClose})}
 				onClose={onClose}
-				title={
-					title ? <Text allowHTML={htmlTitle} string={title} /> : null
-				}
+				title={<Text allowHTML={htmlTitle} string={title} />}
 				variant={variant}
 				{...toastProps}
 			>

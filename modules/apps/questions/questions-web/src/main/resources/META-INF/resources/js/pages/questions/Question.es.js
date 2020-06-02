@@ -101,13 +101,12 @@ export default withRouter(
 
 		useEffect(() => {
 			if (messageBoardThreadMessageBoardMessages.totalCount) {
-				if (pageSize !== 100) {
+				if (sort !== 'votes') {
 					setAnswers({...messageBoardThreadMessageBoardMessages});
 				}
 				else {
-					setAnswers({
-						...messageBoardThreadMessageBoardMessages,
-						items: [
+					const items = [
+						...[
 							...messageBoardThreadMessageBoardMessages.items,
 						].sort((answer1, answer2) => {
 							if (answer2.showAsAnswer) {
@@ -128,10 +127,15 @@ export default withRouter(
 
 							return ratingValue2 - ratingValue1;
 						}),
+					];
+
+					setAnswers({
+						...messageBoardThreadMessageBoardMessages,
+						items,
 					});
 				}
 			}
-		}, [messageBoardThreadMessageBoardMessages, pageSize]);
+		}, [messageBoardThreadMessageBoardMessages, pageSize, sort]);
 
 		const [createAnswer] = useMutation(createAnswerQuery, {
 			onCompleted() {

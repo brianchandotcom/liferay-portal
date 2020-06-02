@@ -29,6 +29,16 @@ function MappingPanel({fields, initialSeletedField, selectedSource}) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
 	const [seletedField, setSeletedField] = useState(initialSeletedField);
 
+	const handleChangeField = (event) => {
+		const {value} = event.target;
+		setSeletedField(value);
+
+		onChange({
+			field: value,
+			source: selectedSource,
+		});
+	};
+
 	return (
 		<div className="dpt-mapping-panel-wrapper">
 			<ClayButton
@@ -55,15 +65,12 @@ function MappingPanel({fields, initialSeletedField, selectedSource}) {
 							<ClayInput readOnly value={selectedSource} />
 						</ClayForm.Group>
 						<ClayForm.Group small>
-							<label htmlFor="mappingSelectorSourceSelect">
+							<label htmlFor="mappingSelectorFieldSelect">
 								{Liferay.Language.get('field')}
 							</label>
 							<ClaySelectWithOption
-								id="mappingSelectorSourceSelect"
-								onChange={(event) => {
-									const {value} = event.target;
-									setSeletedField(value);
-								}}
+								id="mappingSelectorFieldSelect"
+								onChange={handleChangeField}
 								options={normalizeFields(fields)}
 								value={seletedField}
 							/>

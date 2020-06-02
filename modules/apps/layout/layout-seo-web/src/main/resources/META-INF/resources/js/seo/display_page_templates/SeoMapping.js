@@ -13,11 +13,17 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import React from 'react';
+import React, {useState} from 'react';
 
 import MappingPanel from './MappingPanel';
 
 function SeoMapping() {
+	const [title, setTitle] = useState('');
+
+	const handleMappingTitle = ({field, source}) => {
+		setTitle(`${source}: ${field}`);
+	};
+
 	return (
 		<>
 			<ClayForm.Group>
@@ -32,10 +38,11 @@ function SeoMapping() {
 								id="title"
 								readOnly
 								type="text"
+								value={title}
 							/>
 						</ClayInput.GroupItem>
 						<ClayInput.GroupItem shrink>
-							<MappingPanel />
+							<MappingPanel onChange={handleMappingTitle} />
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 				</label>

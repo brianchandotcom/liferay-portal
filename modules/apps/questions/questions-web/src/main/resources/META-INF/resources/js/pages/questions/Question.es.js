@@ -324,7 +324,13 @@ export default withRouter(
 								</div>
 
 								<div className="c-mt-4">
-									<TagList tags={question.keywords} />
+									<TagList
+										sectionTitle={
+											question.messageBoardSection &&
+											question.messageBoardSection.title
+										}
+										tags={question.keywords}
+									/>
 								</div>
 
 								<div className="c-mt-4 position-relative questions-creator text-center text-md-right">

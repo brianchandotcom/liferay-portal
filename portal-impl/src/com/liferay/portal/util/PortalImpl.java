@@ -3557,7 +3557,7 @@ public class PortalImpl implements Portal {
 		String contextPath = getPathContext();
 
 		if (Validator.isNotNull(contextPath) &&
-			requestURI.contains(contextPath)) {
+			requestURI.startsWith(contextPath)) {
 
 			requestURI = requestURI.substring(contextPath.length());
 		}

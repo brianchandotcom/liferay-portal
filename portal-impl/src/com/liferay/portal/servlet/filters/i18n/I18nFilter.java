@@ -130,7 +130,7 @@ public class I18nFilter extends BasePortalFilter {
 		String requestURI = httpServletRequest.getRequestURI();
 
 		if (Validator.isNotNull(contextPath) &&
-			requestURI.contains(contextPath)) {
+			requestURI.startsWith(contextPath)) {
 
 			requestURI = requestURI.substring(contextPath.length());
 		}

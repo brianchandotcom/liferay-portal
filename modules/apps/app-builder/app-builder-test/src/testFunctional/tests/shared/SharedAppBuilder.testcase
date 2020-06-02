@@ -150,9 +150,7 @@ definition {
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
 
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "${myAppName}");
+		AppBuilderAdmin.gotoCustomAppCP(portlet = "${myAppName}");
 
 		AppBuilderAdmin.addEntry();
 
@@ -853,9 +851,7 @@ definition {
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.clickDeploy();
 
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
 
 		AppBuilderAdmin.addEntry();
 		FormViewBuilder.editText(
@@ -909,9 +905,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "4");
 
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "App Full");
+		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Full");
 
 		AppBuilderAdmin.viewItem(itemName = "1");
 		DetailsView.editEntry();
@@ -935,9 +929,7 @@ definition {
 			radioOption = "Dog");
 		AppBuilderAdmin.save();
 
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "1");
@@ -969,9 +961,7 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
@@ -997,9 +987,7 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
 
 		AppBuilderAdmin.addEntry();
 		FormViewBuilder.editText(
@@ -1044,9 +1032,7 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppCP(
-			panel = "Control Panel",
-			portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");

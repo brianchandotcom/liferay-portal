@@ -34,7 +34,6 @@
 			"metal-jest-serializer"
 		],
 		"testPathIgnorePatterns": [
-			"FieldBase",
 			"Tooltip",
 			"withContextMock"
 		]

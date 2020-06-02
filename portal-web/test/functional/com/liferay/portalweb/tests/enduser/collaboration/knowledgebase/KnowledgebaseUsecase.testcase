@@ -1991,7 +1991,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "Guest");
 
 		SitePages.addPublicChildPage(
 			childPageName = "Knowledge Base Display Page",

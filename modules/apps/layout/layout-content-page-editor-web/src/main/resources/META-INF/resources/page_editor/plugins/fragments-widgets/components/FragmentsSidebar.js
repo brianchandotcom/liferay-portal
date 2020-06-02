@@ -116,7 +116,7 @@ const normalizeFragmentEntry = (fragmentEntry) => {
 		icon: fragmentEntry.icon,
 		itemId: fragmentEntry.fragmentEntryKey,
 		label: fragmentEntry.name,
-		preview: fragmentEntry.imagePreviewURL,
+		preview: fragmentEntry.type ? null : fragmentEntry.imagePreviewURL,
 		type: LAYOUT_DATA_ITEM_TYPES.fragment,
 	};
 };

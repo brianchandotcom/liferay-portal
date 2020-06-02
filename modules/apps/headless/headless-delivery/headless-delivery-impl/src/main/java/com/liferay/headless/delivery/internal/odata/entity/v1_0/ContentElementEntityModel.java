@@ -56,7 +56,7 @@ public class ContentElementEntityModel implements EntityModel {
 				locale -> Field.getSortableFieldName(Field.MODIFIED_DATE),
 				locale -> Field.MODIFIED_DATE),
 			new EntityField(
-				"entryClassName", EntityField.Type.STRING,
+				"contentType", EntityField.Type.STRING,
 				locale -> Field.ENTRY_CLASS_NAME,
 				locale -> Field.ENTRY_CLASS_NAME,
 				object -> _getFilterableFieldFunction(

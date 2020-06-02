@@ -21,6 +21,7 @@ export default [
 						fields: [
 							{
 								fieldName: 'radio',
+								instanceId: '123njndk1',
 								label: 'Radio Field',
 								options: [
 									{
@@ -94,6 +95,7 @@ export default [
 						fields: [
 							{
 								fieldName: 'text1',
+								instanceId: '1fnjndk1',
 								label: 'Text Field 1',
 								required: true,
 								settingsContext: {
@@ -103,6 +105,7 @@ export default [
 							},
 							{
 								fieldName: 'text2',
+								instanceId: '193jndk1',
 								label: 'Text Field 2',
 								required: true,
 								settingsContext: {
@@ -117,6 +120,7 @@ export default [
 						fields: [
 							{
 								fieldName: 'select',
+								instanceId: '1fnjfqk1',
 								label: 'Select Field',
 								options: [
 									{
@@ -149,6 +153,7 @@ export default [
 						fields: [
 							{
 								fieldName: 'date',
+								instanceId: '1ffqwjndk1',
 								label: 'Date Field',
 								required: true,
 								settingsContext: {
@@ -167,6 +172,7 @@ export default [
 						fields: [
 							{
 								fieldName: 'numeric',
+								instanceId: '1ljqjndk1',
 								label: 'Numeric Field',
 								required: true,
 								settingsContext: {

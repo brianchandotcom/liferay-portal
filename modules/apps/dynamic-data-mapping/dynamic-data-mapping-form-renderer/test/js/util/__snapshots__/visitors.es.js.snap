@@ -10,6 +10,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "liferay",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -79,6 +80,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
                 "settingsContext": Object {
@@ -88,6 +90,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
@@ -102,6 +105,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "select",
+                "instanceId": "1fnjfqk1",
                 "label": "Select Field",
                 "options": Array [
                   Object {
@@ -134,6 +138,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -152,6 +157,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {
@@ -180,6 +186,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "liferay",
+                "instanceId": "123njndk1",
                 "label": "New label 0",
                 "options": Array [
                   Object {
@@ -249,6 +256,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "New label 0",
                 "required": true,
                 "settingsContext": Object {
@@ -258,6 +266,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "New label 1",
                 "required": true,
                 "settingsContext": Object {
@@ -272,6 +281,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "select",
+                "instanceId": "1fnjfqk1",
                 "label": "New label 0",
                 "options": Array [
                   Object {
@@ -304,6 +314,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "New label 0",
                 "required": true,
                 "settingsContext": Object {
@@ -322,6 +333,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "New label 0",
                 "required": true,
                 "settingsContext": Object {
@@ -350,6 +362,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "liferay",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -419,6 +432,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
                 "settingsContext": Object {
@@ -428,6 +442,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
@@ -442,6 +457,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "select",
+                "instanceId": "1fnjfqk1",
                 "label": "Select Field",
                 "options": Array [
                   Object {
@@ -474,6 +490,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -492,6 +509,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {

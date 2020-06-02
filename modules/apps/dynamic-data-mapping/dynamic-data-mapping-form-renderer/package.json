@@ -14,7 +14,9 @@
 		],
 		"testPathIgnorePatterns": [
 			"Evaluator",
-			"FormSupport"
+			"FormSupport",
+			"SuccessPage",
+			"PageRenderer"
 		]
 	},
 	"main": "index.js",

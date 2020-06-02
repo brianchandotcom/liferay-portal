@@ -114,6 +114,10 @@ definition {
 			portletName = "${portletName}",
 			portletOption = "Export / Import");
 
+		if (isSet(initializeLiferayEvent)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+		}
+
 		Pause(locator1 = "3000");
 	}
 
@@ -522,7 +526,7 @@ definition {
 	}
 
 	macro importPortlet {
-		LAR._gotoExportImport();
+		LAR._gotoExportImport(initializeLiferayEvent = "${initializeLiferayEvent}");
 
 		LAR._selectImportFile(
 			cannotImport = "${cannotImport}",

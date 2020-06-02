@@ -513,23 +513,10 @@ public class ActionUtil {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		if (ddmFormFieldsMap.containsKey("attributes")) {
-			throw new ReservedFieldNameException("attributes");
-		}
-		else if (ddmFormFieldsMap.containsKey("data")) {
-			throw new ReservedFieldNameException("data");
-		}
-		else if (ddmFormFieldsMap.containsKey("name")) {
-			throw new ReservedFieldNameException("name");
-		}
-		else if (ddmFormFieldsMap.containsKey("options")) {
-			throw new ReservedFieldNameException("options");
-		}
-		else if (ddmFormFieldsMap.containsKey("optionsMap")) {
-			throw new ReservedFieldNameException("optionsMap");
-		}
-		else if (ddmFormFieldsMap.containsKey("type")) {
-			throw new ReservedFieldNameException("type");
+		for (String reservedFieldName : _RESERVED_FIELD_NAMES) {
+			if (ddmFormFieldsMap.containsKey(reservedFieldName)) {
+				throw new ReservedFieldNameException(reservedFieldName);
+			}
 		}
 	}
 
@@ -627,5 +614,9 @@ public class ActionUtil {
 
 		return false;
 	}
+
+	private static final String[] _RESERVED_FIELD_NAMES = {
+		"attributes", "data", "name", "options", "optionsMap", "type"
+	};
 
 }

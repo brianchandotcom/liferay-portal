@@ -600,8 +600,8 @@ public class MessageBoardThreadResourceImpl
 				creator = CreatorUtil.toCreator(
 					_portal, _userLocalService.fetchUser(mbThread.getUserId()));
 				creatorStatistics = CreatorStatisticsUtil.toCreatorStatistics(
-					_mbStatsUserLocalService,
 					contextAcceptLanguage.getPreferredLanguageId(),
+					_mbStatsUserLocalService, mbMessage.getGroupId(),
 					contextUriInfo,
 					_userLocalService.fetchUser(mbThread.getUserId()));
 				customFields = CustomFieldsUtil.toCustomFields(

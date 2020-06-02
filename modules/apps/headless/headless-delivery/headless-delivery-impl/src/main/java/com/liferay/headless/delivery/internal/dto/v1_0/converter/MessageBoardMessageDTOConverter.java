@@ -130,8 +130,8 @@ public class MessageBoardMessageDTOConverter
 							dtoConverterContext.getUriInfoOptional();
 
 						return CreatorStatisticsUtil.toCreatorStatistics(
-							_mbStatsUserLocalService,
 							String.valueOf(dtoConverterContext.getLocale()),
+							_mbStatsUserLocalService, mbMessage.getGroupId(),
 							uriInfoOptional.orElse(null), user);
 					});
 				setParentMessageBoardMessageId(

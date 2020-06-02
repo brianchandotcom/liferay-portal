@@ -305,9 +305,14 @@ public class CapabilityRepository
 
 		Repository repository = getRepository();
 
+		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
 		_repositoryEventTrigger.trigger(
-			RepositoryEventType.Update.class, FileEntry.class,
-			repository.getFileEntry(fileEntryId));
+			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, FileVersion.class,
+			fileEntry.getFileVersion(version));
 
 		repository.deleteFileVersion(fileEntryId, version);
 	}

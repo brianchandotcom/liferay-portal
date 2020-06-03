@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.display;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.model.AccountEntryOrganizationRelModel;
@@ -106,6 +107,10 @@ public class AccountEntryDisplay {
 		return _taxIdNumber;
 	}
 
+	public String getType() {
+		return _type;
+	}
+
 	public boolean isActive() {
 		return _active;
 	}
@@ -122,6 +127,7 @@ public class AccountEntryDisplay {
 		_statusLabel = StringPool.BLANK;
 		_statusLabelStyle = StringPool.BLANK;
 		_taxIdNumber = StringPool.BLANK;
+		_type = AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
 	}
 
 	private AccountEntryDisplay(AccountEntry accountEntry) {
@@ -136,6 +142,7 @@ public class AccountEntryDisplay {
 		_statusLabel = _getStatusLabel(accountEntry);
 		_statusLabelStyle = _getStatusLabelStyle(accountEntry);
 		_taxIdNumber = accountEntry.getTaxIdNumber();
+		_type = accountEntry.getType();
 	}
 
 	private List<String> _getDomains(AccountEntry accountEntry) {
@@ -255,5 +262,6 @@ public class AccountEntryDisplay {
 	private final String _statusLabel;
 	private final String _statusLabelStyle;
 	private final String _taxIdNumber;
+	private final String _type;
 
 }

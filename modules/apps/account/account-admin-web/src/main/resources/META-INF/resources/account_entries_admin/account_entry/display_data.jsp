@@ -33,6 +33,20 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AccountEntry.class.getName(), "name") %></aui:validator>
 			</aui:input>
 
+			<aui:select disabled="<%= accountEntryDisplay.getAccountEntryId() > 0 %>" label="type" name="type">
+
+				<%
+				for (String type : AccountConstants.ACCOUNT_ENTRY_TYPES) {
+				%>
+
+					<aui:option label="<%= LanguageUtil.get(request, type) %>" selected="<%= type.equals(accountEntryDisplay.getType()) %>" value="<%= type %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
 			<aui:input helpMessage="tax-id-help" label="tax-id" name="taxIdNumber" type="text" value="<%= accountEntryDisplay.getTaxIdNumber() %>" />
 
 			<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">

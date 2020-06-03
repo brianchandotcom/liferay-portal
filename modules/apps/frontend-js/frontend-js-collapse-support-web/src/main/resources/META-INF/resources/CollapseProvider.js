@@ -71,6 +71,18 @@ class CollapseProvider {
 		trigger.classList.add(CssClass.COLLAPSED);
 		trigger.setAttribute('aria-expanded', false);
 
+		const prefersReducedMotion = window.matchMedia(
+			'(prefers-reduced-motion: reduce)'
+		).matches;
+
+		if (prefersReducedMotion) {
+			panel.classList.remove(CssClass.SHOW);
+
+			Liferay.fire(this.EVENT_HIDDEN, {panel, trigger});
+
+			return;
+		}
+
 		const dimension = this._getDimension(panel);
 
 		panel.style[dimension] = `${
@@ -138,6 +150,18 @@ class CollapseProvider {
 
 		trigger.classList.remove(CssClass.COLLAPSED);
 		trigger.setAttribute('aria-expanded', true);
+
+		const prefersReducedMotion = window.matchMedia(
+			'(prefers-reduced-motion: reduce)'
+		).matches;
+
+		if (prefersReducedMotion) {
+			panel.classList.add(CssClass.SHOW);
+
+			Liferay.fire(this.EVENT_SHOWN, {panel, trigger});
+
+			return;
+		}
 
 		const dimension = this._getDimension(panel);
 

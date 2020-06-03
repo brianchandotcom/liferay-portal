@@ -216,7 +216,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow");
+			portlet = "Workflow",
+			site = "${site}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver Alternative",
@@ -246,7 +247,8 @@ definition {
 
 		WorkflowMetrics.createUsersAndInstancesWithGroovy(
 			numberOfBlogInstances = "3",
-			numberOfUsers = "3");
+			numberOfUsers = "3",
+			site = "Guest");
 	}
 
 	macro checkPendingWorkflowValues {
@@ -375,7 +377,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow");
+			portlet = "Workflow",
+			site = "${site}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -783,7 +786,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow");
+			portlet = "Workflow",
+			site = "${site}");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

@@ -26,7 +26,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
 <clay:content-row
-	verticaAlign="center"
+	verticalAlign="center"
 >
 	<clay:content-col
 		cssClass="inline-item-before"

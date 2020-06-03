@@ -47,7 +47,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 						<c:choose>
 							<c:when test="<%= ListUtil.isNotEmpty(layoutPageTemplateCollections) %>">
 								<clay:content-row
-									verticaAlign="center"
+									verticalAlign="center"
 								>
 									<clay:content-col
 										expand="true"
@@ -58,7 +58,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 									</clay:content-col>
 
 									<clay:content-col
-										verticaAlign="end"
+										verticalAlign="end"
 									>
 										<ul class="navbar-nav">
 											<c:if test="<%= layoutPageTemplateDisplayContext.isShowAddButton(LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_COLLECTION) %>">
@@ -138,7 +138,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 				<clay:sheet>
 					<h2 class="sheet-title">
 						<clay:content-row
-							verticaAlign="center"
+							verticalAlign="center"
 						>
 							<clay:content-col
 								expand="true"
@@ -150,7 +150,7 @@ List<LayoutPageTemplateCollection> layoutPageTemplateCollections = layoutPageTem
 
 							<clay:content-col
 								cssClass="inline-item-after"
-								verticaAlign="end"
+								verticalAlign="end"
 							>
 								<liferay-util:include page="/layout_page_template_collection_action.jsp" servletContext="<%= application %>" />
 							</clay:content-col>

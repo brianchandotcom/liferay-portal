@@ -40,12 +40,15 @@ List<String> domains = accountEntryDisplay.getDomains();
 		cssClass="sheet-subtitle"
 	>
 		<clay:content-col
+			containerElement="span"
 			expand="true"
 		>
 			<span class="heading-text"><liferay-ui:message key="valid-domains" /></span>
 		</clay:content-col>
 
-		<clay:content-col>
+		<clay:content-col
+			containerElement="span"
+		>
 			<span class="heading-end">
 				<liferay-ui:icon
 					cssClass="modify-link"

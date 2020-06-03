@@ -270,7 +270,7 @@ public class JournalDisplayContext {
 		portletURL.setParameter("mvcPath", "/select_article_translations.jsp");
 
 		SearchContainer<JournalArticleTranslation>
-			articleTranslationsSearchContainer = new SearchContainer(
+			articleTranslationsSearchContainer = new SearchContainer<>(
 				_liferayPortletRequest, portletURL, null, null);
 
 		articleTranslationsSearchContainer.setId("articleTranslations");
@@ -941,7 +941,8 @@ public class JournalDisplayContext {
 	}
 
 	public int getVersionsTotal() throws PortalException {
-		SearchContainer<?> articleSearch = _getVersionsSearchContainer();
+		SearchContainer<JournalArticle> articleSearch =
+			_getVersionsSearchContainer();
 
 		return articleSearch.getTotal();
 	}
@@ -1150,15 +1151,16 @@ public class JournalDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	private SearchContainer _getArticlesSearchContainer()
+	private SearchContainer<?> _getArticlesSearchContainer()
 		throws PortalException {
 
 		if (_articleSearchContainer != null) {
 			return _articleSearchContainer;
 		}
 
-		SearchContainer articleSearchContainer = new SearchContainer(
-			_liferayPortletRequest, getPortletURL(), null, null);
+		SearchContainer<JournalArticle> articleSearchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<JournalArticle> orderByComparator =
 			JournalPortletUtil.getArticleOrderByComparator(
@@ -1230,8 +1232,8 @@ public class JournalDisplayContext {
 			return _articleSearchContainer;
 		}
 
-		SearchContainer articleAndFolderSearchContainer =
-			new SearchContainer(
+		SearchContainer<Object> articleAndFolderSearchContainer =
+			new SearchContainer<>(
 				_liferayPortletRequest, getPortletURL(), null, null);
 
 		articleAndFolderSearchContainer.setOrderByCol(getOrderByCol());
@@ -1311,7 +1313,7 @@ public class JournalDisplayContext {
 	private SearchContainer<MBMessage> _getCommentsSearchContainer()
 		throws PortalException {
 
-		SearchContainer<MBMessage> searchContainer = new SearchContainer(
+		SearchContainer<MBMessage> searchContainer = new SearchContainer<>(
 			_liferayPortletRequest, getPortletURL(), null, null);
 
 		SearchContext searchContext = SearchContextFactory.getInstance(
@@ -1478,15 +1480,16 @@ public class JournalDisplayContext {
 		return null;
 	}
 
-	private SearchContainer _getVersionsSearchContainer()
+	private SearchContainer<JournalArticle> _getVersionsSearchContainer()
 		throws PortalException {
 
 		if (_articleVersionsSearchContainer != null) {
 			return _articleVersionsSearchContainer;
 		}
 
-		SearchContainer articleVersionsSearchContainer = new SearchContainer(
-			_liferayPortletRequest, getPortletURL(), null, null);
+		SearchContainer<JournalArticle> articleVersionsSearchContainer =
+			new SearchContainer<>(
+				_liferayPortletRequest, getPortletURL(), null, null);
 
 		OrderByComparator<JournalArticle> orderByComparator =
 			JournalPortletUtil.getArticleOrderByComparator(
@@ -1542,10 +1545,10 @@ public class JournalDisplayContext {
 	private String[] _addMenuFavItems;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
-	private SearchContainer _articleSearchContainer;
+	private SearchContainer<?> _articleSearchContainer;
 	private SearchContainer<JournalArticleTranslation>
 		_articleTranslationsSearchContainer;
-	private SearchContainer _articleVersionsSearchContainer;
+	private SearchContainer<JournalArticle> _articleVersionsSearchContainer;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private String _ddmStructureKey;

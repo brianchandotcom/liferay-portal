@@ -206,7 +206,7 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 	private String _password;
 
 	@Parameter(
-		description = "Do not print any optional messages to console.",
+		description = "Do not print any optional messages to the console.",
 		hidden = true, names = {"-q", "--quiet"}
 	)
 	private boolean _quiet;

@@ -17,18 +17,10 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PortalTopLevelBuild extends DefaultTopLevelBuild {
+public class PluginsTopLevelBuild extends DefaultTopLevelBuild {
 
-	public PortalTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
+	public PluginsTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
-	}
-
-	public BranchInformation getOSBAsahBranchInformation() {
-		return getBranchInformation("osb.asah");
-	}
-
-	public BranchInformation getOSBFaroBranchInformation() {
-		return getBranchInformation("osb.faro");
 	}
 
 	public BranchInformation getPluginsBranchInformation() {

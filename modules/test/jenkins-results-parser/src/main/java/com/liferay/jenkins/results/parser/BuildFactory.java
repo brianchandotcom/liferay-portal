@@ -91,8 +91,16 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.contains("plugins")) {
+			return new PluginsTopLevelBuild(url, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.contains("portal")) {
 			return new PortalTopLevelBuild(url, (TopLevelBuild)parentBuild);
+		}
+
+		if (jobName.contains("qa-websites")) {
+			return new QAWebsitesTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}
 
 		return topLevelBuild;

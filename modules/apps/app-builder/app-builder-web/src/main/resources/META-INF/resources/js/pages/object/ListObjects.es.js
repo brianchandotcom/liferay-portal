@@ -125,19 +125,26 @@ export default ({history, listViewProps = {}, objectType}) => {
 			<AppNavigationBar />
 
 			<ListView columns={COLUMNS} {...listViewProps}>
-				{(item) => ({
-					...item,
-					dateCreated: fromNow(item.dateCreated),
-					dateModified: fromNow(item.dateModified),
-					name: (
-						<Link to={`/${objectType}/${item.id}/form-views`}>
-							{getLocalizedValue(
-								item.defaultLanguageId,
-								item.name
-							)}
-						</Link>
-					),
-				})}
+				{(item) => {
+					const {
+						dateCreated,
+						dateModified,
+						defaultLanguageId,
+						id,
+						name,
+					} = item;
+
+					return {
+						...item,
+						dateCreated: fromNow(dateCreated),
+						dateModified: fromNow(dateModified),
+						name: (
+							<Link to={`/${objectType}/${id}/form-views`}>
+								{getLocalizedValue(defaultLanguageId, name)}
+							</Link>
+						),
+					};
+				}}
 			</ListView>
 
 			<PermissionsModal

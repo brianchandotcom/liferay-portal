@@ -42,13 +42,8 @@ export default ({
 	useEffect(() => {
 		getItem(
 			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-		).then((dataDefinition) =>
-			setTitle(
-				getLocalizedValue(
-					dataDefinition.defaultLanguageId,
-					dataDefinition.name
-				)
-			)
+		).then(({defaultLanguageId, name}) =>
+			setTitle(getLocalizedValue(defaultLanguageId, name))
 		);
 	}, [dataDefinitionId]);
 

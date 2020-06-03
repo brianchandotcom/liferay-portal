@@ -17,6 +17,7 @@ package com.liferay.account.service.impl;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.exception.AccountEntryNameException;
+import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
@@ -100,7 +101,7 @@ public class AccountEntryLocalServiceImpl
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addAccountEntry(long, long, String, String, String[],
-	 *             byte[], String, int, ServiceContext)}
+	 *             byte[], String, String, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -111,13 +112,13 @@ public class AccountEntryLocalServiceImpl
 
 		return addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			null, status, null);
+			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, status, null);
 	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #addAccountEntry(long, long, String, String, String[],
-	 *             byte[], String, int, ServiceContext)}
+	 *             byte[], String, String, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -129,14 +130,16 @@ public class AccountEntryLocalServiceImpl
 
 		return addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			null, status, serviceContext);
+			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, status,
+			serviceContext);
 	}
 
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxIdNumber, int status, ServiceContext serviceContext)
+			String taxIdNumber, String type, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Account entry
@@ -176,6 +179,11 @@ public class AccountEntryLocalServiceImpl
 			_userFileUploadsSettings.getImageMaxWidth());
 
 		accountEntry.setTaxIdNumber(taxIdNumber);
+
+		_validateType(type);
+
+		accountEntry.setType(type);
+
 		accountEntry.setStatus(status);
 
 		accountEntry = accountEntryPersistence.update(accountEntry);
@@ -558,6 +566,12 @@ public class AccountEntryLocalServiceImpl
 	private void _validateName(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new AccountEntryNameException();
+		}
+	}
+
+	private void _validateType(String type) throws PortalException {
+		if (!ArrayUtil.contains(AccountConstants.ACCOUNT_ENTRY_TYPES, type)) {
+			throw new AccountEntryTypeException();
 		}
 	}
 

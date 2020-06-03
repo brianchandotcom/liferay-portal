@@ -75,7 +75,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		return addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			null, status, null);
+			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, status, null);
 	}
 
 	/**
@@ -93,14 +93,16 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		return addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			null, status, serviceContext);
+			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, status,
+			serviceContext);
 	}
 
 	@Override
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxIdNumber, int status, ServiceContext serviceContext)
+			String taxIdNumber, String type, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -108,7 +110,7 @@ public class AccountEntryServiceImpl extends AccountEntryServiceBaseImpl {
 
 		return accountEntryLocalService.addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			taxIdNumber, status, serviceContext);
+			taxIdNumber, type, status, serviceContext);
 	}
 
 	@Override

@@ -69,8 +69,8 @@ export default ({
 	useEffect(() => {
 		getItem(
 			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}`
-		).then((dataDefinition) => {
-			setDefaultLanguageId(dataDefinition.defaultLanguageId);
+		).then(({defaultLanguageId}) => {
+			setDefaultLanguageId(defaultLanguageId);
 		});
 	}, [dataDefinitionId]);
 
@@ -111,17 +111,21 @@ export default ({
 			}}
 			endpoint={`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-layouts`}
 		>
-			{(item) => ({
-				dataDefinitionId,
-				dateCreated: fromNow(item.dateCreated),
-				dateModified: fromNow(item.dateModified),
-				id: item.id,
-				name: (
-					<a href={getItemURL(item)}>
-						{getLocalizedValue(defaultLanguageId, item.name)}
-					</a>
-				),
-			})}
+			{(item) => {
+				const {dateCreated, dateModified, id, name} = item;
+
+				return {
+					dataDefinitionId,
+					dateCreated: fromNow(dateCreated),
+					dateModified: fromNow(dateModified),
+					id,
+					name: (
+						<a href={getItemURL(item)}>
+							{getLocalizedValue(defaultLanguageId, name)}
+						</a>
+					),
+				};
+			}}
 		</ListView>
 	);
 };

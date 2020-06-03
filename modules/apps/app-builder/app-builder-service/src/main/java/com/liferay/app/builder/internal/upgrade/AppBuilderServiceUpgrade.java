@@ -14,6 +14,7 @@
 
 package com.liferay.app.builder.internal.upgrade;
 
+import com.liferay.app.builder.internal.upgrade.v2_2_0.UpgradeSchema;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -43,7 +44,8 @@ public class AppBuilderServiceUpgrade implements UpgradeStepRegistrator {
 			"2.1.0", "2.2.0",
 			new com.liferay.app.builder.internal.upgrade.v2_2_0.
 				UpgradeAppBuilderApp(
-					_ddlRecordSetLocalService, _ddmStructureLocalService));
+					_ddlRecordSetLocalService, _ddmStructureLocalService),
+			new UpgradeSchema());
 	}
 
 	@Reference

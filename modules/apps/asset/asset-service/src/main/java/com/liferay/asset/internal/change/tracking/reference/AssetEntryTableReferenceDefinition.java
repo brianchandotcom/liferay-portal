@@ -18,7 +18,10 @@ import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.layout.model.LayoutClassedModelUsageTable;
+import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.LayoutTable;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.ratings.kernel.model.RatingsStatsTable;
 
@@ -76,6 +79,28 @@ public class AssetEntryTableReferenceDefinition
 		).nonreferenceColumns(
 			AssetEntryTable.INSTANCE.height, AssetEntryTable.INSTANCE.width,
 			AssetEntryTable.INSTANCE.priority
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				LayoutClassedModelUsageTable.INSTANCE
+			).innerJoinON(
+				AssetEntryTable.INSTANCE,
+				AssetEntryTable.INSTANCE.groupId.eq(
+					LayoutClassedModelUsageTable.INSTANCE.groupId
+				).and(
+					AssetEntryTable.INSTANCE.classNameId.eq(
+						LayoutClassedModelUsageTable.INSTANCE.classNameId)
+				).and(
+					AssetEntryTable.INSTANCE.classPK.eq(
+						LayoutClassedModelUsageTable.INSTANCE.classPK)
+				)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					LayoutClassedModelUsageTable.INSTANCE.containerType
+				).and(
+					ClassNameTable.INSTANCE.value.eq(Portlet.class.getName())
+				)
+			)
 		);
 	}
 

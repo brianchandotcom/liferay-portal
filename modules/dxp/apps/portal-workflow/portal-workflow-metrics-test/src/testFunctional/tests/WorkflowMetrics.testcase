@@ -603,7 +603,7 @@ definition {
 	test BulkReassignWorkflowInstances {
 		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowInstances";
 
-		WorkflowMetrics.bulkReassignSetup();
+		WorkflowMetrics.bulkReassignSetup(site = "Guest");
 
 		WorkflowMetrics.goToWorkflowAllItems();
 
@@ -648,7 +648,7 @@ definition {
 	test BulkReassignWorkflowInstancesExceptions {
 		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowModalExceptions";
 
-		WorkflowMetrics.bulkReassignSetup();
+		WorkflowMetrics.bulkReassignSetup(site = "Guest");
 		WorkflowMetrics.bulkReassignExceptionsSetup();
 		WorkflowMetrics.goToWorkflowAllItems();
 		WorkflowMetrics.assertBulkCount();
@@ -1005,7 +1005,7 @@ definition {
 	test ReassignWorkflowInstance {
 		property portal.acceptance = "true";
 
-		WorkflowMetrics.singleReassignSetup();
+		WorkflowMetrics.singleReassignSetup(site = "Guest");
 		WorkflowMetrics.goToWorkflowAllItems();
 		WorkflowMetrics.goToReassignSelectTask();
 		WorkflowMetrics.assertBulkModalTable();
@@ -1556,7 +1556,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow");
+			portlet = "Workflow",
+			site = "Guest");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
@@ -1612,7 +1613,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow");
+			portlet = "Workflow",
+			site = "Guest");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 

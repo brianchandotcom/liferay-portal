@@ -33,6 +33,7 @@ const translatedLanguageIds = {
 const TranslationManagerWrapper = (props) => (
 	<TranslationManager
 		{...props}
+		defaultLanguageId={'en_US'}
 		editingLanguageId={'en_US'}
 		translatedLanguageIds={translatedLanguageIds}
 	/>
@@ -41,6 +42,7 @@ const TranslationManagerWrapper = (props) => (
 const TranslationManagerLabelWrapper = (props) => (
 	<TranslationManagerLabel
 		{...props}
+		defaultLanguageId={'en_US'}
 		translatedLanguageIds={translatedLanguageIds}
 	/>
 );

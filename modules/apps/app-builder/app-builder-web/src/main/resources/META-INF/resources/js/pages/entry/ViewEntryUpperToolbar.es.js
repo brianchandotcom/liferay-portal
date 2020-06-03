@@ -20,7 +20,7 @@ import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
-import Lang from '../../utils/lang.es';
+import {sub} from '../../utils/lang.es';
 import {ACTIONS, PermissionsContext} from './PermissionsContext.es';
 
 export default withRouter(({onDelete, onEdit, onNext, onPrev, page, total}) => {
@@ -33,10 +33,7 @@ export default withRouter(({onDelete, onEdit, onNext, onPrev, page, total}) => {
 		<UpperToolbar className={appDeploymentType}>
 			<UpperToolbar.Item className="text-left" expand={true}>
 				<label>
-					{Lang.sub(Liferay.Language.get('x-of-x-entries'), [
-						page,
-						total,
-					])}
+					{sub(Liferay.Language.get('x-of-x-entries'), [page, total])}
 				</label>
 			</UpperToolbar.Item>
 

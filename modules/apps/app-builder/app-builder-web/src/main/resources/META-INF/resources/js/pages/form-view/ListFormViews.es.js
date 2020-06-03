@@ -18,7 +18,7 @@ import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
 import {confirmDelete, getItem} from '../../utils/client.es';
-import lang from '../../utils/lang.es';
+import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 
 export default ({
@@ -118,7 +118,7 @@ export default ({
 				id: item.id,
 				name: (
 					<a href={getItemURL(item)}>
-						{lang.getLocalizedValue(defaultLanguageId, item.name)}
+						{getLocalizedValue(defaultLanguageId, item.name)}
 					</a>
 				),
 			})}

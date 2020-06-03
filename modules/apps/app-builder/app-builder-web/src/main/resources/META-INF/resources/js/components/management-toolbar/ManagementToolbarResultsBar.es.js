@@ -17,7 +17,7 @@ import {ClayResultsBar} from '@clayui/management-toolbar';
 import React, {useContext} from 'react';
 
 import {FILTER_NAMES} from '../../pages/apps/constants.es';
-import lang from '../../utils/lang.es';
+import {sub} from '../../utils/lang.es';
 import {concatValues} from '../../utils/utils.es';
 import Button from '../button/Button.es';
 import SearchContext from './SearchContext.es';
@@ -82,10 +82,10 @@ export default ({filters = [], isLoading, totalCount}) => {
 					<ClayResultsBar.Item>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
-								{lang.sub(
-									Liferay.Language.get('x-results-for-x'),
-									[totalCount, keywords]
-								)}
+								{sub(Liferay.Language.get('x-results-for-x'), [
+									totalCount,
+									keywords,
+								])}
 							</span>
 						</span>
 					</ClayResultsBar.Item>

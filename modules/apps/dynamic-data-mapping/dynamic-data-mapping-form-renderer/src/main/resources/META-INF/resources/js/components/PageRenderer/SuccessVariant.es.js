@@ -64,6 +64,7 @@ export const Container = ({children, pages, strings = {}}) => {
 						<ClayButtonWithIcon
 							displayType="unstyled"
 							symbol="ellipsis-v"
+							title={Liferay.Language.get('page-options')}
 						/>
 					}
 				/>

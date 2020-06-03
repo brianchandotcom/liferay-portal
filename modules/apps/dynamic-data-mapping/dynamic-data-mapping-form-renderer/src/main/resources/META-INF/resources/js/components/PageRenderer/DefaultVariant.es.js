@@ -176,9 +176,9 @@ export const Page = ({
 
 export const PageHeader = ({description, title}) => (
 	<>
-		{title && <h3 className="lfr-ddm-form-page-title">{title}</h3>}
+		{title && <h2 className="lfr-ddm-form-page-title">{title}</h2>}
 		{description && (
-			<h4 className="lfr-ddm-form-page-description">{description}</h4>
+			<h3 className="lfr-ddm-form-page-description">{description}</h3>
 		)}
 	</>
 );

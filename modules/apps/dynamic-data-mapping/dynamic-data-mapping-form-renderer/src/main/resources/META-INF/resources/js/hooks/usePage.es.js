@@ -26,6 +26,7 @@ export const EVENT_TYPES = {
 	PAGE_ADDED: 'pageAdded',
 	PAGE_DELETED: 'pageDeleted',
 	PAGE_RESET: 'pageReset',
+	PAGE_SWAPPED: 'pagesSwapped',
 	PAGINATION: 'paginationItemClicked',
 	PAGINATION_NEXT: 'paginationNextClicked',
 	PAGINATION_PREVIOUS: 'paginationPreviousClicked',
@@ -64,6 +65,7 @@ export const PageProvider = ({children, dispatch, emit, value}) => {
 			case EVENT_TYPES.PAGE_ADDED:
 			case EVENT_TYPES.PAGE_DELETED:
 			case EVENT_TYPES.PAGE_RESET:
+			case EVENT_TYPES.PAGE_SWAPPED:
 			case EVENT_TYPES.PAGINATION:
 			case EVENT_TYPES.REMOVED:
 			case EVENT_TYPES.REPEATED:

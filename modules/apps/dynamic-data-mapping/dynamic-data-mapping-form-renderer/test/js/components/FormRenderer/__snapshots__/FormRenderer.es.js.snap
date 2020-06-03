@@ -9,7 +9,7 @@ exports[`FormRenderer does not render the layout with the field empty in non-edi
         <div class="ddm-layout-builder ddm-page-container-layout">
           <div class="form-builder-layout">
             <div class="active ddm-form-page lfr-ddm-form-page" data-ddm-page="0">
-              <h3 class="lfr-ddm-form-page-title">Untitled name</h3>
+              <h2 class="lfr-ddm-form-page-title">Untitled name</h2>
               <div>
                 <div class="position-relative row">
                   <div data-ddm-field-column="0" data-ddm-field-page="0" data-ddm-field-row="0" class="col-md-3 col-ddm"><span aria-hidden="true" class="loading-animation"></span></div>
@@ -54,7 +54,7 @@ exports[`FormRenderer renders a layout in editable mode 1`] = `
         <div class="ddm-layout-builder ddm-page-container-layout">
           <div class="form-builder-layout">
             <div class="active ddm-form-page lfr-ddm-form-page" data-ddm-page="0">
-              <h3 class="lfr-ddm-form-page-title">Untitled name</h3>
+              <h2 class="lfr-ddm-form-page-title">Untitled name</h2>
               <div>
                 <div class="placeholder row">
                   <div class="col col-ddm col-empty col-md-12" data-ddm-field-page="0" data-ddm-field-row="0">
@@ -158,7 +158,7 @@ exports[`FormRenderer renders a layout in pagination mode 1`] = `
         <div class="fade tab-pane active show" role="tabpanel">
           <div class="form-builder-layout">
             <div class="active ddm-form-page lfr-ddm-form-page" data-ddm-page="0">
-              <h3 class="lfr-ddm-form-page-title">Untitled name</h3>
+              <h2 class="lfr-ddm-form-page-title">Untitled name</h2>
               <div>
                 <div class="position-relative row">
                   <div data-ddm-field-column="0" data-ddm-field-page="0" data-ddm-field-row="0" class="col-md-3 col-ddm"><span aria-hidden="true" class="loading-animation"></span></div>
@@ -208,7 +208,7 @@ exports[`FormRenderer renders a layout in wizard mode 1`] = `
         <div class="ddm-layout-builder ddm-page-container-layout">
           <div class="form-builder-layout">
             <div class="active ddm-form-page lfr-ddm-form-page" data-ddm-page="0">
-              <h3 class="lfr-ddm-form-page-title">Untitled name</h3>
+              <h2 class="lfr-ddm-form-page-title">Untitled name</h2>
               <div>
                 <div class="position-relative row">
                   <div data-ddm-field-column="0" data-ddm-field-page="0" data-ddm-field-row="0" class="col-md-3 col-ddm"><span aria-hidden="true" class="loading-animation"></span></div>
@@ -253,7 +253,7 @@ exports[`FormRenderer renders a layout with an empty field only in editable mode
         <div class="ddm-layout-builder ddm-page-container-layout">
           <div class="form-builder-layout">
             <div class="active ddm-form-page lfr-ddm-form-page" data-ddm-page="0">
-              <h3 class="lfr-ddm-form-page-title">Untitled name</h3>
+              <h2 class="lfr-ddm-form-page-title">Untitled name</h2>
               <div>
                 <div class="placeholder row">
                   <div class="col col-ddm col-empty col-md-12" data-ddm-field-page="0" data-ddm-field-row="0">
@@ -361,7 +361,7 @@ exports[`FormRenderer renders a layout with pages in mode of list 1`] = `
         <div class="ddm-layout-builder ddm-page-container-layout">
           <div class="form-builder-layout">
             <div class="active ddm-form-page lfr-ddm-form-page" data-ddm-page="0">
-              <h3 class="lfr-ddm-form-page-title">Untitled name</h3>
+              <h2 class="lfr-ddm-form-page-title">Untitled name</h2>
               <div>
                 <div class="position-relative row">
                   <div data-ddm-field-column="0" data-ddm-field-page="0" data-ddm-field-row="0" class="col-md-3 col-ddm"><span aria-hidden="true" class="loading-animation"></span></div>

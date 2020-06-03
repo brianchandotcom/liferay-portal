@@ -127,26 +127,26 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	public String getConfigureLayoutURL() throws PortalException {
-		PortletURL configureLayoutSetURL = PortalUtil.getControlPanelPortletURL(
+		PortletURL configureLayoutURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
-		configureLayoutSetURL.setParameter(
+		configureLayoutURL.setParameter(
 			"mvcRenderCommandName", "/layout/edit_layout");
 
 		Layout layout = _themeDisplay.getLayout();
 
-		configureLayoutSetURL.setParameter(
+		configureLayoutURL.setParameter(
 			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
-		configureLayoutSetURL.setParameter(
+		configureLayoutURL.setParameter(
 			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
 
-		configureLayoutSetURL.setParameter(
+		configureLayoutURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
-		configureLayoutSetURL.setParameter(
+		configureLayoutURL.setParameter(
 			"privateLayout", String.valueOf(isPrivateLayout()));
 
-		return configureLayoutSetURL.toString();
+		return configureLayoutURL.toString();
 	}
 
 	public String getConfigureLayoutURLTemplate() throws Exception {

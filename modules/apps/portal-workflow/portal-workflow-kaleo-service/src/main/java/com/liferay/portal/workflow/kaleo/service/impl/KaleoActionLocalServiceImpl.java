@@ -127,13 +127,8 @@ public class KaleoActionLocalServiceImpl
 	public List<KaleoAction> getKaleoActions(
 		long companyId, String kaleoClassName, long kaleoClassPK) {
 
-		return doSearch(
-			companyId,
-			HashMapBuilder.put(
-				"kaleoClassName", (Serializable)kaleoClassName
-			).put(
-				"kaleoClassPK", kaleoClassPK
-			).build());
+		return kaleoActionPersistence.findByC_KCN_KCPK(
+			companyId, kaleoClassName, kaleoClassPK);
 	}
 
 	@Override
@@ -141,8 +136,8 @@ public class KaleoActionLocalServiceImpl
 		long companyId, String kaleoClassName, long kaleoClassPK,
 		String executionType) {
 
-		return kaleoActionPersistence.findByKCN_KCPK_ET(
-			kaleoClassName, kaleoClassPK, executionType);
+		return kaleoActionPersistence.findByC_KCN_KCPK_ET(
+			companyId, kaleoClassName, kaleoClassPK, executionType);
 	}
 
 	/**

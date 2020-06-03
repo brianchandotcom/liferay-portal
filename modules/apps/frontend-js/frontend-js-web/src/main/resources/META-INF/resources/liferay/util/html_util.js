@@ -30,13 +30,11 @@ Object.entries(MAP_HTML_CHARS_ESCAPED).forEach(([char, escapedChar]) => {
 	MAP_HTML_CHARS_UNESCAPED[escapedChar] = char;
 });
 
-const HTML_ESCAPED_VALUES = Object.values(MAP_HTML_CHARS_ESCAPED);
-
 const HTML_UNESCAPED_VALUES = Object.keys(MAP_HTML_CHARS_ESCAPED);
 
 const HTML_ESCAPE = new RegExp(`[${HTML_UNESCAPED_VALUES.join('')}]`, 'g');
 
-const HTML_UNESCAPE = new RegExp(HTML_ESCAPED_VALUES.join('|'), 'gi');
+const HTML_UNESCAPE = /&([^;]+);/g;
 
 export function escapeHTML(string) {
 	return string.replace(
@@ -46,8 +44,17 @@ export function escapeHTML(string) {
 }
 
 export function unescapeHTML(string) {
-	return string.replace(
-		HTML_UNESCAPE,
-		(match) => MAP_HTML_CHARS_UNESCAPED[match]
-	);
+	return string.replace(HTML_UNESCAPE, (match, entity) => {
+		let value = MAP_HTML_CHARS_UNESCAPED[match];
+
+		if (!value && entity.startsWith('#')) {
+			const charCode = Number(`0${entity.substr(1)}`);
+
+			if (!isNaN(charCode)) {
+				value = String.fromCharCode(charCode);
+			}
+		}
+
+		return value;
+	});
 }

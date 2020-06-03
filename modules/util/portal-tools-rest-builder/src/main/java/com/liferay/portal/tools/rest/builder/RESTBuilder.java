@@ -194,7 +194,9 @@ public class RESTBuilder {
 			Info info = openAPIYAML.getInfo();
 
 			if (Validator.isNull(info.getVersion())) {
-				continue;
+				throw new RuntimeException(
+					"Error in file \"" + file.getName() +
+						"\": field \"version\" in Info Object is required");
 			}
 
 			Map<String, Schema> allSchemas = OpenAPIUtil.getAllSchemas(

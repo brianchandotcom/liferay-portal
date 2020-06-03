@@ -74,7 +74,12 @@ DepotAdminManagementToolbarDisplayContext depotAdminManagementToolbarDisplayCont
 								</h5>
 
 								<h6>
-									<liferay-ui:message arguments="<%= new Object[] {depotAdminDisplayContext.getDepotEntryConnectedGroupsCount(depotEntry)} %>" key="x-connected-sites" />
+
+									<%
+									int depotEntryConnectedGroupsCount = depotAdminDisplayContext.getDepotEntryConnectedGroupsCount(depotEntry);
+									%>
+
+									<liferay-ui:message arguments="<%= new Object[] {depotEntryConnectedGroupsCount} %>" key='<%= (depotEntryConnectedGroupsCount != 1) ? "x-connected-sites" : "x-connected-site" %>' />
 								</h6>
 							</liferay-ui:search-container-column-text>
 

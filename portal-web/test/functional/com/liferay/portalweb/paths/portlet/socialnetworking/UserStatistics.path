@@ -15,17 +15,17 @@
 </tr>
 <tr>
 	<td>RANKING_TABLE_RANK</td>
-	<td>//div[contains(@class,'taglib-user-display') and contains(.,'${key_userName}')]//div[contains(.,'Rank') and contains(.,'${key_userRank}')]</td>
+	<td>//div[contains(@class,'taglib-user-display') and contains(.,'${key_userName}')]//div[contains(@class,'user-rank')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RANKING_TABLE_CONTRIBUTION_SCORE</td>
-	<td>//div[contains(@class,'taglib-user-display') and contains(.,'${key_userName}')]//div[contains(.,'Contribution Score') and contains(.,'${key_userContributionScore}')]</td>
+	<td>//div[contains(@class,'taglib-user-display') and contains(.,'${key_userName}')]//div[contains(@class,'contribution-score')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RANKING_TABLE_PARTICIPATION_SCORE</td>
-	<td>//div[contains(@class,'taglib-user-display') and contains(.,'${key_userName}')]//div[contains(.,'Participation Score') and contains(.,'${key_userParticipationScore}')]</td>
+	<td>//div[contains(@class,'taglib-user-display') and contains(.,'${key_userName}')]//div[contains(@class,'participation-score')]</td>
 	<td></td>
 </tr>
 </tbody>

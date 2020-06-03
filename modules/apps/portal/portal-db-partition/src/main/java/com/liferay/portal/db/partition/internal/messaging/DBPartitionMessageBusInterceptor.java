@@ -75,8 +75,15 @@ public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_databasePartitionEnabled = GetterUtil.getBoolean(
+			_props.get("database.partition.enabled"));
+
+		modified(properties);
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
 		DBPartitionConfiguration dbPartitionConfiguration =
 			ConfigurableUtil.createConfigurable(
 				DBPartitionConfiguration.class, properties);
@@ -86,9 +93,6 @@ public class DBPartitionMessageBusInterceptor implements MessageBusInterceptor {
 
 		_excludedSchedulerJobNames = SetUtil.fromArray(
 			dbPartitionConfiguration.excludedSchedulerJobNames());
-
-		_databasePartitionEnabled = GetterUtil.getBoolean(
-			_props.get("database.partition.enabled"));
 	}
 
 	private static boolean _databasePartitionEnabled;

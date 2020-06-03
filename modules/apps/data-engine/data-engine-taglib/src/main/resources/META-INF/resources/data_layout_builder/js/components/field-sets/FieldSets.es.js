@@ -23,9 +23,12 @@ import {DRAG_FIELDSET} from '../../drag-and-drop/dragTypes.es';
 import {containsFieldSet} from '../../utils/dataDefinition.es';
 import FieldType from '../field-types/FieldType.es';
 import FieldSetModal from './FieldSetModal.es';
+import useDeleteFieldSet from './actions/useDeleteFieldSet.es';
 
 export default function FieldSets() {
-	const [{appProps, dataDefinition, fieldSets}] = useContext(AppContext);
+	const [{appProps, dataDefinition, fieldSets}, dispatch] = useContext(
+		AppContext
+	);
 	const [state, setState] = useState({
 		fieldSet: null,
 		isVisible: false,
@@ -50,6 +53,7 @@ export default function FieldSets() {
 			delete ddmForm.pages;
 
 			otherProps = {
+				DataLayout,
 				context: {
 					...context,
 					pages: [
@@ -74,6 +78,7 @@ export default function FieldSets() {
 	};
 
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+	const deleteFieldSet = useDeleteFieldSet({dispatch, fieldSets});
 
 	const onDoubleClick = ({fieldSet: {name: fieldName}, fieldSet}) => {
 		const {activePage, pages} = dataLayoutBuilder.getStore();
@@ -112,13 +117,7 @@ export default function FieldSets() {
 							name: Liferay.Language.get('edit'),
 						},
 						{
-							action: () => {
-								confirm(
-									Liferay.Language.get(
-										'are-you-sure-you-want-to-delete-this'
-									)
-								);
-							},
+							action: () => deleteFieldSet(fieldSet),
 							name: Liferay.Language.get('delete'),
 						},
 					];

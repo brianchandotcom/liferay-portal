@@ -28,6 +28,7 @@ import {getActionLabel} from './getActionLabel';
 export default function UndoHistory() {
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
+	const redoHistory = useSelector((state) => state.redoHistory);
 	const undoHistory = useSelector((state) => state.undoHistory);
 
 	const [active, setActive] = useState(false);
@@ -52,6 +53,7 @@ export default function UndoHistory() {
 				}
 			>
 				<ClayDropDown.ItemList>
+					<History actions={redoHistory} type={UNDO_TYPES.redo} />
 					<History actions={undoHistory} type={UNDO_TYPES.undo} />
 					<ClayDropDownDivider />
 					<ClayDropDown.Item
@@ -64,8 +66,6 @@ export default function UndoHistory() {
 									store,
 								})
 							);
-
-							setActive(false);
 						}}
 					>
 						{Liferay.Language.get('undo-all')}
@@ -82,7 +82,10 @@ const History = ({actions = [], type}) => {
 
 	const isSelectedAction = (index) => type === UNDO_TYPES.undo && index === 0;
 
-	return actions.map((action, index) => (
+	const actionList =
+		type === UNDO_TYPES.undo ? actions : [...actions].reverse();
+
+	return actionList.map((action, index) => (
 		<ClayDropDown.Item
 			disabled={isSelectedAction(index)}
 			key={index}
@@ -91,7 +94,10 @@ const History = ({actions = [], type}) => {
 
 				dispatch(
 					multipleUndo({
-						numberOfActions: index,
+						numberOfActions:
+							type === UNDO_TYPES.undo
+								? index
+								: actionList.length - index,
 						store,
 					})
 				);

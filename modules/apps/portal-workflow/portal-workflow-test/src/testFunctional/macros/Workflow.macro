@@ -224,6 +224,8 @@ definition {
 			workflowAssetType = "${workflowAssetType}",
 			workflowTask = "${workflowTask}");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		Workflow.gotoTaskAssignedToMyRolesActionsCmd(
 			workflowAssetTitle = "${workflowAssetTitle}",
 			workflowTask = "${workflowTask}");

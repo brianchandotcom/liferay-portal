@@ -85,11 +85,11 @@ definition {
 	}
 
 	macro mergeTagsSelectAdditionalTags {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		Click(locator1 = "Button#SELECT");
 
 		SelectFrameTop();
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

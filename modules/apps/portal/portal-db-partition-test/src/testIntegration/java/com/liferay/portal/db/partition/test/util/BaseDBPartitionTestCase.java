@@ -37,15 +37,11 @@ public abstract class BaseDBPartitionTestCase {
 			new AssumeTestRule("assume"), new LiferayIntegrationTestRule());
 
 	public static void assume() {
-		_db = DBManagerUtil.getDB();
+		db = DBManagerUtil.getDB();
 
-		Assume.assumeTrue(_db.getDBType() == DBType.MYSQL);
+		Assume.assumeTrue(db.getDBType() == DBType.MYSQL);
 	}
 
-	public static DB getDB() {
-		return _db;
-	}
-
-	private static DB _db;
+	protected static DB db;
 
 }

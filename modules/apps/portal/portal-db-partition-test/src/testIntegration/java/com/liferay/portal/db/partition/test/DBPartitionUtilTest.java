@@ -72,14 +72,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		_enableDBPartition();
 
-		getDB().runSQL(
+		db.runSQL(
 			"create schema " + _getSchemaName(_COMPANY_ID) +
 				" character set utf8");
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		getDB().runSQL("drop schema " + _getSchemaName(_COMPANY_ID));
+		db.runSQL("drop schema " + _getSchemaName(_COMPANY_ID));
 
 		DataAccess.cleanUp(_connection);
 

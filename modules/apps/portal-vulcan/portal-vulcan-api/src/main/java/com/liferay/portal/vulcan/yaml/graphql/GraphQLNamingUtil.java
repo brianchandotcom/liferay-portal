@@ -48,8 +48,10 @@ public class GraphQLNamingUtil {
 			(returnType.contains("Page<") &&
 			 (methodName.lastIndexOf("Page") != -1))) {
 
-			methodName = methodName.substring(
-				0, methodName.lastIndexOf("Page"));
+			if (methodName.contains("Page")) {
+				methodName = methodName.substring(
+					0, methodName.lastIndexOf("Page"));
+			}
 		}
 
 		return StringUtil.lowerCaseFirstLetter(methodName);

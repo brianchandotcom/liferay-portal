@@ -101,6 +101,10 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 
 	@Override
 	public void onCompleted() {
+		if (isQuiet()) {
+			return;
+		}
+
 		System.out.println();
 	}
 

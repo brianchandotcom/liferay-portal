@@ -1792,7 +1792,6 @@ definition {
 	@priority = "5"
 	test ViewRestrictionVisualFeedbackWhenDragSectionCardOverColumnOfRow {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		task ("Add a Row to page") {
 			ContentPagesNavigator.openEditContentPage(

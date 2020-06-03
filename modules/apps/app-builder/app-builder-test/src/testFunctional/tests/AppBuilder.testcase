@@ -1660,7 +1660,6 @@ definition {
 	@priority = "5"
 	test PublishAppsInProductMenuAndReuseItsViews {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		var myFormViewName_1 = "My Form View 1";
 		var myFormViewName_2 = "My Form View 2";
@@ -2576,7 +2575,6 @@ definition {
 	@priority = "5"
 	test UnpublishAndRepublish {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		AppBuilderAdmin.addCustomObject(
 			customObjectName = "my custom object",

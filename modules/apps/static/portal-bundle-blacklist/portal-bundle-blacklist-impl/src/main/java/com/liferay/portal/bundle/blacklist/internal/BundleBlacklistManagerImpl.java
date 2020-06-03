@@ -152,10 +152,18 @@ public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 			properties = new HashMapDictionary<>();
 		}
 		else {
-			String value = (String)properties.get(
-				"blacklistBundleSymbolicNames");
 
-			blacklistBundleSymbolicNames = StringUtil.split(value);
+			// LPS-114840
+
+			Object value = properties.get("blacklistBundleSymbolicNames");
+
+			if (value instanceof String) {
+				blacklistBundleSymbolicNames = StringUtil.split((String)value);
+			}
+			else {
+				blacklistBundleSymbolicNames = (String[])properties.get(
+					"blacklistBundleSymbolicNames");
+			}
 		}
 
 		blacklistBundleSymbolicNames = updateFunction.apply(
@@ -170,8 +178,7 @@ public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 		}
 		else {
 			properties.put(
-				"blacklistBundleSymbolicNames",
-				StringUtil.merge(blacklistBundleSymbolicNames));
+				"blacklistBundleSymbolicNames", blacklistBundleSymbolicNames);
 		}
 
 		_updateConfiguration(configuration, properties);

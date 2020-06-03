@@ -23,29 +23,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.taglib.internal.display.context.AssetCategoriesNavigationDisplayContext" %><%@
 page import="com.liferay.asset.taglib.internal.util.AssetCategoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
-page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
-
-<%@ page import="java.util.Map" %>
-
-<%@ page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletResponse" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
-
-PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-String namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
-
-if (Validator.isNull(namespace)) {
-	namespace = AUIUtil.getNamespace(request);
-}
-%>

@@ -26,14 +26,21 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.aui.AUIUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
@@ -57,23 +64,6 @@ public class AssetCategoriesNavigationDisplayContext {
 			"liferay-asset:asset-tags-navigation:vocabularyIds");
 	}
 
-	public JSONArray getCategoriesJSONArray() throws PortalException {
-		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (AssetVocabulary vocabulary : getVocabularies()) {
-			List<AssetCategory> categories =
-				AssetCategoryServiceUtil.getVocabularyRootCategories(
-					vocabulary.getGroupId(), vocabulary.getVocabularyId(),
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-
-			for (AssetCategory category : categories) {
-				categoriesJSONArray.put(_getCategoryJSONObject(category));
-			}
-		}
-
-		return categoriesJSONArray;
-	}
-
 	public long getCategoryId() {
 		if (_categoryId != null) {
 			return _categoryId;
@@ -82,6 +72,38 @@ public class AssetCategoriesNavigationDisplayContext {
 		_categoryId = ParamUtil.getLong(_httpServletRequest, "categoryId");
 
 		return _categoryId;
+	}
+
+	public Map<String, Object> getData() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"categories", _getCategoriesJSONArray()
+		).put(
+			"namespace", getNamespace()
+		).put(
+			"vocabularies", getVocabularies()
+		).build();
+	}
+
+	public String getNamespace() {
+		if (_namespace != null) {
+			return _namespace;
+		}
+
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		_namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
+
+		if (Validator.isNull(_namespace)) {
+			_namespace = AUIUtil.getNamespace(_httpServletRequest);
+		}
+
+		return _namespace;
 	}
 
 	public List<AssetVocabulary> getVocabularies() throws PortalException {
@@ -111,6 +133,23 @@ public class AssetCategoriesNavigationDisplayContext {
 		_vocabularies = vocabularies;
 
 		return _vocabularies;
+	}
+
+	private JSONArray _getCategoriesJSONArray() throws PortalException {
+		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (AssetVocabulary vocabulary : getVocabularies()) {
+			List<AssetCategory> categories =
+				AssetCategoryServiceUtil.getVocabularyRootCategories(
+					vocabulary.getGroupId(), vocabulary.getVocabularyId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			for (AssetCategory category : categories) {
+				categoriesJSONArray.put(_getCategoryJSONObject(category));
+			}
+		}
+
+		return categoriesJSONArray;
 	}
 
 	private JSONObject _getCategoryJSONObject(AssetCategory category)
@@ -162,6 +201,7 @@ public class AssetCategoriesNavigationDisplayContext {
 
 	private Long _categoryId;
 	private final HttpServletRequest _httpServletRequest;
+	private String _namespace;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 	private List<AssetVocabulary> _vocabularies;

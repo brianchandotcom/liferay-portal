@@ -37,19 +37,9 @@ if (assetCategoriesNavigationDisplayContext.getCategoryId() > 0) {
 }
 %>
 
-<%
-Map<String, Object> data = HashMapBuilder.<String, Object>put(
-	"categories", assetCategoriesNavigationDisplayContext.getCategoriesJSONArray()
-).put(
-	"namespace", namespace
-).put(
-	"vocabularies", assetCategoriesNavigationDisplayContext.getVocabularies()
-).build();
-%>
-
 <div class="categories-tree container-fluid-1280" id="<portlet:namespace />categoriesContainer">
 	<react:component
-		data="<%= data %>"
+		data="<%= assetCategoriesNavigationDisplayContext.getData() %>"
 		module="asset_categories_navigation/js/AssetCategoriesNavigationTreeView"
 	/>
 </div>

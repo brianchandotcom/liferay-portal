@@ -83,7 +83,7 @@ public class DataDefinitionFieldLinkResourceImpl
 
 			_addDataDefinitionFieldLink(
 				dataDefinitionFieldLinksMap, dataDefinitionId,
-				deDataDefinitionFieldLink);
+				deDataDefinitionFieldLink, fieldName);
 		}
 
 		return Page.of(dataDefinitionFieldLinksMap.values());
@@ -92,7 +92,8 @@ public class DataDefinitionFieldLinkResourceImpl
 	private void _addDataDefinitionFieldLink(
 			Map<Long, DataDefinitionFieldLink> dataDefinitionFieldLinks,
 			Long dataDefinitionId,
-			DEDataDefinitionFieldLink deDataDefinitionFieldLink)
+			DEDataDefinitionFieldLink deDataDefinitionFieldLink,
+			String fieldName)
 		throws Exception {
 
 		if (_portal.getClassNameId(DDMStructure.class) ==
@@ -110,7 +111,9 @@ public class DataDefinitionFieldLinkResourceImpl
 				_ddmStructureLayoutLocalService.getStructureLayout(
 					deDataDefinitionFieldLink.getClassPK());
 
-			if (dataDefinitionId == ddmStructureLayout.getDDMStructureId()) {
+			if (Validator.isNull(fieldName) &&
+				(dataDefinitionId == ddmStructureLayout.getDDMStructureId())) {
+
 				return;
 			}
 

@@ -21,6 +21,10 @@ function undoAction({action}) {
 
 function getDerivedStateForUndo({action, state}) {
 	return {
+		previousSegmentsExperienceName: getSegmentsExperienceName(
+			state.segmentsExperienceId,
+			state.availableSegmentsExperiences
+		),
 		segmentsExperienceId: state.segmentsExperienceId,
 		segmentsExperienceName: getSegmentsExperienceName(
 			action.payload.segmentsExperienceId,

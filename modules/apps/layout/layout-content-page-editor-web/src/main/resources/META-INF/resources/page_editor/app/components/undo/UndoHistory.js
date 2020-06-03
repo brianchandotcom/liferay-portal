@@ -17,6 +17,7 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayDropDownDivider from '@clayui/drop-down/lib/Divider';
 import React, {useState} from 'react';
 
+import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
 import {UNDO_TYPES} from '../../config/constants/undoTypes';
 import {config} from '../../config/index';
 import {useDispatch, useSelector} from '../../store/index';
@@ -97,17 +98,18 @@ const History = ({actions = [], type}) => {
 			}}
 			symbolRight={isSelectedAction(index) ? 'check' : ''}
 		>
-			{getActionLabel(action)}
+			{getActionLabel(action, type)}
 
-			{action.segmentsExperienceId !==
-				config.defaultSegmentsExperienceId && (
-				<span>
-					{getSegmentsExperienceName(
-						action.segmentsExperienceId,
-						store.availableSegmentsExperiences
-					)}
-				</span>
-			)}
+			{action.type !== SELECT_SEGMENTS_EXPERIENCE &&
+				action.segmentsExperienceId !==
+					config.defaultSegmentsExperienceId && (
+					<span>
+						{getSegmentsExperienceName(
+							action.segmentsExperienceId,
+							store.availableSegmentsExperiences
+						)}
+					</span>
+				)}
 		</ClayDropDown.Item>
 	));
 };

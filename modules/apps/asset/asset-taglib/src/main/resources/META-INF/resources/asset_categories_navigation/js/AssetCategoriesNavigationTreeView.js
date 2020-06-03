@@ -28,7 +28,13 @@ function buildNodes(vocabularies, categories) {
 const AssetCategoriesNavigationTreeView = ({categories, vocabularies}) => {
 	const nodes = buildNodes(vocabularies, categories);
 
-	return <Treeview NodeComponent={Treeview.Card} nodes={nodes} />;
+	return (
+		<Treeview
+			multiSelection={false}
+			NodeComponent={Treeview.Card}
+			nodes={nodes}
+		/>
+	);
 };
 
 export default AssetCategoriesNavigationTreeView;

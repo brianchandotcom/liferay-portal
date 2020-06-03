@@ -27,18 +27,18 @@ const normalizeField = ({key, label}) => ({
 
 function MappingPanel({
 	fields,
-	initialSeletedField,
+	initialSelectedField,
 	initialSelectedSource,
 	onChange = noop,
 }) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
-	const [seletedFieldValue, setSeletedFieldValue] = useState(
-		normalizeField(initialSeletedField).value
+	const [selectedFieldValue, setSelectedFieldValue] = useState(
+		normalizeField(initialSelectedField).value
 	);
 
 	const handleChangeField = (event) => {
 		const {value} = event.target;
-		setSeletedFieldValue(value);
+		setSelectedFieldValue(value);
 
 		const field = normalizeField(fields.find(({key}) => key === value));
 
@@ -84,7 +84,7 @@ function MappingPanel({
 								id="mappingSelectorFieldSelect"
 								onChange={handleChangeField}
 								options={fields.map(normalizeField)}
-								value={seletedFieldValue.value}
+								value={selectedFieldValue.value}
 							/>
 						</ClayForm.Group>
 					</div>
@@ -101,7 +101,7 @@ MappingPanel.propTypes = {
 			label: PropTypes.string,
 		})
 	).isRequired,
-	initialSeletedField: PropTypes.shape({
+	initialSelectedField: PropTypes.shape({
 		key: PropTypes.string,
 		label: PropTypes.string,
 	}).isRequired,

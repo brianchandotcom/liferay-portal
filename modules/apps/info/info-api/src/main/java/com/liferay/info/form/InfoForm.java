@@ -37,6 +37,23 @@ public class InfoForm {
 		_name = name;
 	}
 
+	public InfoForm add(InfoFieldSet fieldSet) {
+		InfoFieldSetEntry infoFieldSetEntry = _entries.get(fieldSet.getName());
+
+		if ((infoFieldSetEntry != null) &&
+				(infoFieldSetEntry instanceof InfoFieldSet)) {
+
+			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+			infoFieldSet.addAll(fieldSet.getInfoFieldSetEntries());
+		}
+		else {
+			_entries.put(fieldSet.getName(), fieldSet);
+		}
+
+		return this;
+	}
+
 	public InfoForm add(InfoFieldSetEntry fieldSetEntry) {
 		_entries.put(fieldSetEntry.getName(), fieldSetEntry);
 

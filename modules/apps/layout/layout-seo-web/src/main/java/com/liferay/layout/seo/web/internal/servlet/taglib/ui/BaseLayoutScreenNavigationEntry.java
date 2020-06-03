@@ -19,6 +19,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
@@ -112,8 +113,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			LayoutSEOWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT,
 			new LayoutsSEODisplayContext(
-				dlAppService, dlurlHelper, infoItemFormProviderTracker,
-				itemSelector, layoutPageTemplateEntryLocalService,
+				dlAppService, dlurlHelper, infoDisplayContributorTracker,
+				infoItemFormProviderTracker, itemSelector,
+				layoutPageTemplateEntryLocalService,
 				layoutSEOCanonicalURLProvider, layoutSEOLinkManager,
 				layoutSEOSiteLocalService,
 				portal.getLiferayPortletRequest(
@@ -144,6 +146,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected DLURLHelper dlurlHelper;
+
+	@Reference
+	protected InfoDisplayContributorTracker infoDisplayContributorTracker;
 
 	@Reference
 	protected InfoItemFormProviderTracker infoItemFormProviderTracker;

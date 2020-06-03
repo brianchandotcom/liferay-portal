@@ -16,7 +16,6 @@ package com.liferay.asset.display.page.internal.change.tracking.reference;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
-import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
@@ -40,8 +39,10 @@ public class AssetDisplayPageEntryTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			AssetDisplayPageEntryTable.INSTANCE
-		).nonreferenceColumn(
-			AssetDisplayPageEntryTable.INSTANCE.uuid
+		).nonreferenceColumns(
+			AssetDisplayPageEntryTable.INSTANCE.uuid,
+			AssetDisplayPageEntryTable.INSTANCE.classNameId,
+			AssetDisplayPageEntryTable.INSTANCE.classPK
 		).singleColumnReference(
 			AssetDisplayPageEntryTable.INSTANCE.layoutPageTemplateEntryId,
 			LayoutPageTemplateEntryTable.INSTANCE.layoutPageTemplateEntryId
@@ -49,18 +50,6 @@ public class AssetDisplayPageEntryTableReferenceDefinition
 			AssetDisplayPageEntryTable.INSTANCE.type
 		).singleColumnReference(
 			AssetDisplayPageEntryTable.INSTANCE.plid, LayoutTable.INSTANCE.plid
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				AssetEntryTable.INSTANCE
-			).innerJoinON(
-				AssetDisplayPageEntryTable.INSTANCE,
-				AssetDisplayPageEntryTable.INSTANCE.classPK.eq(
-					AssetEntryTable.INSTANCE.classPK
-				).and(
-					AssetDisplayPageEntryTable.INSTANCE.classNameId.eq(
-						AssetEntryTable.INSTANCE.classNameId)
-				)
-			)
 		);
 	}
 

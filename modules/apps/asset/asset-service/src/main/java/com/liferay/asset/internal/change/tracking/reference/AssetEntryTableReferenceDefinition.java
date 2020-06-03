@@ -14,6 +14,7 @@
 
 package com.liferay.asset.internal.change.tracking.reference;
 
+import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.service.persistence.AssetEntryPersistence;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
@@ -41,6 +42,18 @@ public class AssetEntryTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			AssetEntryTable.INSTANCE
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				AssetDisplayPageEntryTable.INSTANCE
+			).innerJoinON(
+				AssetEntryTable.INSTANCE,
+				AssetEntryTable.INSTANCE.classNameId.eq(
+					AssetDisplayPageEntryTable.INSTANCE.classNameId
+				).and(
+					AssetEntryTable.INSTANCE.classPK.eq(
+						AssetDisplayPageEntryTable.INSTANCE.classPK)
+				)
+			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				RatingsStatsTable.INSTANCE

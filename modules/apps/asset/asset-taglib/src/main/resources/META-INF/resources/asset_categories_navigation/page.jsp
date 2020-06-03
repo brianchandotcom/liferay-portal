@@ -37,7 +37,7 @@ if (assetCategoriesNavigationDisplayContext.getCategoryId() > 0) {
 }
 %>
 
-<div class="categories-tree container-fluid-1280" id="<portlet:namespace />categoriesContainer">
+<div class="categories-tree container-fluid-1280" id="<%= assetCategoriesNavigationDisplayContext.getNamespace() %>categoriesContainer">
 	<react:component
 		data="<%= assetCategoriesNavigationDisplayContext.getData() %>"
 		module="asset_categories_navigation/js/AssetCategoriesNavigationTreeView"

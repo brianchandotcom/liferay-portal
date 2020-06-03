@@ -11,7 +11,7 @@
 <!--SELECT_SITE_MODAL-->
 <tr>
 	<td>SELECT_SITE_MODAL</td>
-	<td>//div[@id='selectSite' and contains(@class,'iframe-modal')]</td>
+	<td>//div[@id='selectSite' and contains(@class,'liferay-modal')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>SELECT_SITE_MODAL_HEADER</td>
-	<td>//h3[@class='modal-title']</td>
+	<td>//div[@class='modal-title']</td>
 	<td></td>
 </tr>
 <!--SITE_TABLE-->

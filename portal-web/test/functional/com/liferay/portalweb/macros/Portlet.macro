@@ -69,6 +69,8 @@ definition {
 			Portlet.addPGCmd(portletName = "${portletName}");
 		}
 
+		Click.clickAt(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL");
+
 		AssertElementPresent(locator1 = "Home#PORTLET");
 	}
 

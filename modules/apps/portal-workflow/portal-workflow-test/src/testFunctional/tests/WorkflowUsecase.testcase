@@ -301,7 +301,6 @@ definition {
 	@priority = "5"
 	test AddDDLRecordWithDoubleApproverDefinition {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowUsecase#AddDDLRecordWithDoubleApproverDefinition";
 		property testray.component.names = "Training";
 

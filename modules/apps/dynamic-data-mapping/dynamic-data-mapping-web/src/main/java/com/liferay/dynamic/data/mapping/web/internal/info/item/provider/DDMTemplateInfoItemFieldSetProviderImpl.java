@@ -53,11 +53,8 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			InfoFieldSet infoFieldSet = new InfoFieldSet(
-				InfoLocalizedValue.builder(
-				).addValues(
-					ddmStructure.getNameMap()
-				).build(),
-				ddmStructure.getStructureKey());
+				InfoLocalizedValue.localize(getClass(), "templates"),
+				"templates");
 
 			List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
 

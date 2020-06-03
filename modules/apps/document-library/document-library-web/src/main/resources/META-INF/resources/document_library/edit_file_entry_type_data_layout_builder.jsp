@@ -75,8 +75,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	>
 
 		<%
-		DLEditFileEntryTypeDataEngineDisplayContext
-			dlEditFileEntryTypeDataEngineDisplayContext = (DLEditFileEntryTypeDataEngineDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_ENTRY_TYPE_DATA_ENGINE_DISPLAY_CONTEXT);
+		DLEditFileEntryTypeDataEngineDisplayContext dlEditFileEntryTypeDataEngineDisplayContext = (DLEditFileEntryTypeDataEngineDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_ENTRY_TYPE_DATA_ENGINE_DISPLAY_CONTEXT);
 		%>
 
 		<liferay-data-engine:data-layout-builder

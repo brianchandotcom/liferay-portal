@@ -91,6 +91,10 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 		return _userName;
 	}
 
+	public boolean isQuiet() {
+		return _quiet;
+	}
+
 	public boolean isToken() {
 		return _token;
 	}
@@ -102,6 +106,10 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 
 	@Override
 	public void onProgress(long completed, long length) {
+		if (isQuiet()) {
+			return;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(FileUtil.getFileLength(completed));
@@ -118,6 +126,10 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 
 	@Override
 	public void onStarted() {
+		if (isQuiet()) {
+			return;
+		}
+
 		onStarted("Download " + _url);
 	}
 
@@ -127,6 +139,10 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 
 	public void setPassword(String password) {
 		_password = password;
+	}
+
+	public void setQuiet(boolean quiet) {
+		_quiet = quiet;
 	}
 
 	public void setToken(boolean token) {
@@ -146,6 +162,10 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 	}
 
 	protected void onProgress(String message) {
+		if (isQuiet()) {
+			return;
+		}
+
 		char[] chars = new char[80];
 
 		System.arraycopy(message.toCharArray(), 0, chars, 0, message.length());
@@ -158,6 +178,10 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 	}
 
 	protected void onStarted(String message) {
+		if (isQuiet()) {
+			return;
+		}
+
 		System.out.println(message);
 	}
 
@@ -176,6 +200,12 @@ public class DownloadCommand extends BaseCommand implements StreamLogger {
 		names = {"-p", "--password"}, password = true
 	)
 	private String _password;
+
+	@Parameter(
+		description = "Do not print any optional messages to console.",
+		hidden = true, names = {"-q", "--quiet"}
+	)
+	private boolean _quiet;
 
 	@Parameter(
 		description = "Use token authentication.", names = {"-t", "--token"}

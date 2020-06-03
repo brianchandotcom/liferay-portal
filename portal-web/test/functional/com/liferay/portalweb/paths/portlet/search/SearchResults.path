@@ -8,6 +8,12 @@
 <tr><td rowspan="1" colspan="3">SearchResults</td></tr>
 </thead>
 <tbody>
+<!--ASSET_DETAILS-->
+<tr>
+	<td>ASSET_DETAILS_TITLE</td>
+	<td>//div[contains(@id,'SearchResultsPortlet')]//span[contains(@class,'asset-title')]</td>
+	<td></td>
+</tr>
 <!--ASSET_TYPE_FACET-->
 <tr>
 	<td>ASSET_TYPE_FACET_ANY_ASSET</td>
@@ -105,6 +111,12 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--CLASSIC_ASSET_DETAILS-->
+<tr>
+	<td>CLASSIC_ASSET_DETAILS_TITLE</td>
+	<td>//section[contains(@id,'templateSearch')]//span[contains(@class,'asset-title')]</td>
 	<td></td>
 </tr>
 <!--CLASSIC_ASSET_ENTRY_TABLE-->

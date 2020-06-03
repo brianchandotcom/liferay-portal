@@ -111,7 +111,7 @@ definition {
 
 	macro viewSearchAssetDetailPage {
 		AssertTextEquals(
-			locator1 = "Portlet#H3_HEADER",
+			locator1 = "SearchResults#CLASSIC_ASSET_DETAILS_TITLE",
 			value1 = "${searchAssetTitle}");
 	}
 

@@ -206,7 +206,8 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x)
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateFileEntryType(long, Map, Map)}
 	 */
 	@Deprecated
 	@Override

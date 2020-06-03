@@ -990,6 +990,8 @@ definition {
 			configurationName = "Forms",
 			configurationScope = "Site Scope");
 
+		Pause(locator1 = "2000");
+
 		FormFields.viewTextLabel(
 			fieldLabel = "Autosave Interval",
 			fieldName = "autosaveInterval");
@@ -999,6 +1001,8 @@ definition {
 			fieldValue = "2");
 
 		SystemSettings.saveConfiguration();
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

@@ -1,0 +1,140 @@
+@component-name = "portal-social-networking"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Social Networking";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
+
+			BlogsEntry.tearDownCP();
+
+			Page.tearDownPG();
+		}
+	}
+
+	@description = "It ensures that the user statistics are counted when social tracking is enabled."
+	@priority = "5"
+	test CountUserStatisticsWhenEnablingSocialTracking {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "User Activity",
+			configurationName = "Social Activity",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewCheckboxChecked(fieldName = "enableUserSocialActivityTracking");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Social Activity");
+
+		SocialActivity.enableBlogsCP();
+
+		Button.clickSave();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Social Activity Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Social Activity Page",
+			widgetName = "User Statistics");
+
+		Navigator.gotoPage(pageName = "Social Activity Page");
+
+		AssertTextEquals(
+			key_portletName = "User Statistics",
+			locator1 = "Portlet#BODY",
+			value1 = "There are no active users for this period.");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Social Activity Page");
+
+		SocialActivity.viewPGViaUserStatistics(
+			contributionScore = "Contribution Score: 0 (Total: 0)",
+			participationScore = "Participation Score: 5 (Total: 5)",
+			userName = "Test Test",
+			userRank = "Rank: 1");
+	}
+
+	@description = "It ensures that the user statistics are not counted when social tracking is disabled."
+	@priority = "5"
+	test DisableSocialTracking {
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "User Activity",
+			configurationName = "Social Activity",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.disableCheckbox(fieldName = "enable");
+
+		PortletEntry.save();
+
+		FormFields.viewCheckboxNotChecked(fieldName = "enable");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Social Activity");
+
+		SocialActivity.enableBlogsCP();
+
+		Button.clickSave();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Social Activity Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Social Activity Page",
+			widgetName = "User Statistics");
+
+		Navigator.gotoPage(pageName = "Social Activity Page");
+
+		AssertTextEquals(
+			key_portletName = "User Statistics",
+			locator1 = "Portlet#BODY",
+			value1 = "There are no active users for this period.");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		Navigator.gotoPage(pageName = "Social Activity Page");
+
+		AssertTextEquals(
+			key_portletName = "User Statistics",
+			locator1 = "Portlet#BODY",
+			value1 = "There are no active users for this period.");
+	}
+
+}

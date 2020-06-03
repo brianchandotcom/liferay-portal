@@ -402,9 +402,9 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
 	@Deactivate
 	protected void deactivate() {
-		_messageListenerServiceTracker.close();
-
 		_serviceTrackerList.close();
+
+		_messageListenerServiceTracker.close();
 
 		shutdown(true);
 

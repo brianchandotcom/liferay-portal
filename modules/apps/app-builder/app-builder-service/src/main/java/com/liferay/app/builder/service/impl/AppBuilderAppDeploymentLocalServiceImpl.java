@@ -15,16 +15,19 @@
 package com.liferay.app.builder.service.impl;
 
 import com.liferay.app.builder.deploy.AppDeployer;
-import com.liferay.app.builder.deploy.AppDeployerTracker;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.service.base.AppBuilderAppDeploymentLocalServiceBaseImpl;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,7 +63,7 @@ public class AppBuilderAppDeploymentLocalServiceImpl
 		AppBuilderAppDeployment appBuilderAppDeployment =
 			getAppBuilderAppDeployment(appBuilderAppDeploymentId);
 
-		AppDeployer appDeployer = _appDeployerTracker.getAppDeployer(
+		AppDeployer appDeployer = _serviceTrackerMap.getService(
 			appBuilderAppDeployment.getType());
 
 		try {
@@ -96,7 +99,17 @@ public class AppBuilderAppDeploymentLocalServiceImpl
 			appBuilderAppId);
 	}
 
-	@Reference
-	private AppDeployerTracker _appDeployerTracker;
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, AppDeployer.class, "app.builder.deploy.type");
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	private ServiceTrackerMap<String, AppDeployer> _serviceTrackerMap;
 
 }

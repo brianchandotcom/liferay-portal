@@ -36,6 +36,7 @@ import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.YAMLUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.Application;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
+import com.liferay.portal.tools.rest.builder.internal.yaml.exception.OpenAPIValidatorException;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Components;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Content;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Info;
@@ -178,6 +179,8 @@ public class RESTBuilder {
 
 		File[] files = FileUtil.getFiles(_configDir, "rest-openapi", ".yaml");
 
+		List<String> validationErrorMessages = new ArrayList<>();
+
 		for (File file : files) {
 			try {
 				_checkOpenAPIYAMLFile(freeMarkerTool, file);
@@ -189,13 +192,15 @@ public class RESTBuilder {
 						exception.getMessage()));
 			}
 
-			OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(FileUtil.read(file));
+			String yamlString = FileUtil.read(file);
 
-			Info info = openAPIYAML.getInfo();
+			if (!_validateOpenAPIYAML(
+					file.getName(), yamlString, validationErrorMessages)) {
 
-			if (Validator.isNull(info.getVersion())) {
 				continue;
 			}
+
+			OpenAPIYAML openAPIYAML = _loadOpenAPIYAML(yamlString);
 
 			Map<String, Schema> allSchemas = OpenAPIUtil.getAllSchemas(
 				openAPIYAML);
@@ -303,6 +308,14 @@ public class RESTBuilder {
 						context, escapedVersion, schemaName);
 				}
 			}
+		}
+
+		if (!validationErrorMessages.isEmpty()) {
+			String validationErrors = StringUtil.merge(
+				validationErrorMessages, StringPool.NEW_LINE);
+
+			throw new RuntimeException(
+				"OpenAPI validation errors found: \n" + validationErrors);
 		}
 
 		FileUtil.deleteFiles(_configYAML.getApiDir(), _files);
@@ -1974,6 +1987,21 @@ public class RESTBuilder {
 					System.out.println(sb.toString());
 				}
 			}
+		}
+	}
+
+	private boolean _validateOpenAPIYAML(
+		String fileName, String yamlString, List<String> validationErrors) {
+
+		try {
+			YAMLUtil.validateOpenAPIYAML(fileName, yamlString);
+
+			return true;
+		}
+		catch (OpenAPIValidatorException openAPIValidatorException) {
+			validationErrors.add(openAPIValidatorException.getMessage());
+
+			return false;
 		}
 	}
 

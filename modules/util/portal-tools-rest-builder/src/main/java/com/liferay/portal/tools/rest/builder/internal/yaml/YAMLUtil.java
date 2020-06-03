@@ -17,6 +17,7 @@ package com.liferay.portal.tools.rest.builder.internal.yaml;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.Security;
 import com.liferay.portal.tools.rest.builder.internal.yaml.exception.InvalidYAMLException;
+import com.liferay.portal.tools.rest.builder.internal.yaml.exception.OpenAPIValidatorException;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
@@ -56,6 +57,12 @@ public class YAMLUtil {
 		catch (MarkedYAMLException markedYAMLException) {
 			throw new InvalidYAMLException(markedYAMLException);
 		}
+	}
+
+	public static void validateOpenAPIYAML(String fileName, String yamlString)
+		throws OpenAPIValidatorException {
+
+		OpenAPIValidator.validate(fileName, yamlString, _YAML_OPEN_API);
 	}
 
 	private static final Yaml _YAML_CONFIG;

@@ -31,10 +31,6 @@ if (hidePortletWhenEmpty) {
 
 <%
 }
-
-if (assetCategoriesNavigationDisplayContext.getCategoryId() > 0) {
-	AssetCategoryUtil.addPortletBreadcrumbEntries(assetCategoriesNavigationDisplayContext.getCategoryId(), request, renderResponse.createRenderURL(), false);
-}
 %>
 
 <div class="categories-tree container-fluid-1280" id="<%= assetCategoriesNavigationDisplayContext.getNamespace() %>categoriesContainer">
@@ -43,3 +39,9 @@ if (assetCategoriesNavigationDisplayContext.getCategoryId() > 0) {
 		module="asset_categories_navigation/js/AssetCategoriesNavigationTreeView"
 	/>
 </div>
+
+<%
+if (assetCategoriesNavigationDisplayContext.getCategoryId() > 0) {
+	AssetCategoryUtil.addPortletBreadcrumbEntries(assetCategoriesNavigationDisplayContext.getCategoryId(), request, renderResponse.createRenderURL(), false);
+}
+%>

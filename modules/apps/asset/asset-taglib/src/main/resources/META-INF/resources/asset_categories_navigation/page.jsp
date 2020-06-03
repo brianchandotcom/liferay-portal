@@ -18,25 +18,28 @@
 
 <%
 AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request, renderResponse);
-
-if (assetCategoriesNavigationDisplayContext.hidePortletWhenEmpty() && !assetCategoriesNavigationDisplayContext.hasCategories()) {
-	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 %>
 
-	<div class="alert alert-info">
-		<liferay-ui:message key="there-are-no-categories" />
-	</div>
+<c:choose>
+	<c:when test="<%= assetCategoriesNavigationDisplayContext.hidePortletWhenEmpty() && !assetCategoriesNavigationDisplayContext.hasCategories() %>">
 
-<%
-}
-%>
+		<%
+		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		%>
 
-<div class="categories-tree container-fluid-1280" id="<%= assetCategoriesNavigationDisplayContext.getNamespace() %>categoriesContainer">
-	<react:component
-		data="<%= assetCategoriesNavigationDisplayContext.getData() %>"
-		module="asset_categories_navigation/js/AssetCategoriesNavigationTreeView"
-	/>
-</div>
+		<div class="alert alert-info">
+			<liferay-ui:message key="there-are-no-categories" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="categories-tree container-fluid-1280" id="<%= assetCategoriesNavigationDisplayContext.getNamespace() %>categoriesContainer">
+			<react:component
+				data="<%= assetCategoriesNavigationDisplayContext.getData() %>"
+				module="asset_categories_navigation/js/AssetCategoriesNavigationTreeView"
+			/>
+		</div>
+	</c:otherwise>
+</c:choose>
 
 <%
 if (assetCategoriesNavigationDisplayContext.getCategoryId() > 0) {

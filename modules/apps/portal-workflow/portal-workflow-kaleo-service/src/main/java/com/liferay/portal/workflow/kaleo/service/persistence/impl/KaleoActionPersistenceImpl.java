@@ -1707,6 +1707,643 @@ public class KaleoActionPersistenceImpl
 	private static final String _FINDER_COLUMN_KCN_KCPK_KALEOCLASSPK_2 =
 		"kaleoAction.kaleoClassPK = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_KCN_KCPK;
+	private FinderPath _finderPathWithoutPaginationFindByC_KCN_KCPK;
+	private FinderPath _finderPathCountByC_KCN_KCPK;
+
+	/**
+	 * Returns all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @return the matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByC_KCN_KCPK(
+		long companyId, String kaleoClassName, long kaleoClassPK) {
+
+		return findByC_KCN_KCPK(
+			companyId, kaleoClassName, kaleoClassPK, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @return the range of matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByC_KCN_KCPK(
+		long companyId, String kaleoClassName, long kaleoClassPK, int start,
+		int end) {
+
+		return findByC_KCN_KCPK(
+			companyId, kaleoClassName, kaleoClassPK, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByC_KCN_KCPK(
+		long companyId, String kaleoClassName, long kaleoClassPK, int start,
+		int end, OrderByComparator<KaleoAction> orderByComparator) {
+
+		return findByC_KCN_KCPK(
+			companyId, kaleoClassName, kaleoClassPK, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByC_KCN_KCPK(
+		long companyId, String kaleoClassName, long kaleoClassPK, int start,
+		int end, OrderByComparator<KaleoAction> orderByComparator,
+		boolean useFinderCache) {
+
+		kaleoClassName = Objects.toString(kaleoClassName, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_KCN_KCPK;
+				finderArgs = new Object[] {
+					companyId, kaleoClassName, kaleoClassPK
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_KCN_KCPK;
+			finderArgs = new Object[] {
+				companyId, kaleoClassName, kaleoClassPK, start, end,
+				orderByComparator
+			};
+		}
+
+		List<KaleoAction> list = null;
+
+		if (useFinderCache) {
+			list = (List<KaleoAction>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoAction kaleoAction : list) {
+					if ((companyId != kaleoAction.getCompanyId()) ||
+						!kaleoClassName.equals(
+							kaleoAction.getKaleoClassName()) ||
+						(kaleoClassPK != kaleoAction.getKaleoClassPK())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					5 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(5);
+			}
+
+			sb.append(_SQL_SELECT_KALEOACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_COMPANYID_2);
+
+			boolean bindKaleoClassName = false;
+
+			if (kaleoClassName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSNAME_3);
+			}
+			else {
+				bindKaleoClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSNAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(KaleoActionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindKaleoClassName) {
+					queryPos.add(kaleoClassName);
+				}
+
+				queryPos.add(kaleoClassPK);
+
+				list = (List<KaleoAction>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo action
+	 * @throws NoSuchActionException if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction findByC_KCN_KCPK_First(
+			long companyId, String kaleoClassName, long kaleoClassPK,
+			OrderByComparator<KaleoAction> orderByComparator)
+		throws NoSuchActionException {
+
+		KaleoAction kaleoAction = fetchByC_KCN_KCPK_First(
+			companyId, kaleoClassName, kaleoClassPK, orderByComparator);
+
+		if (kaleoAction != null) {
+			return kaleoAction;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", kaleoClassName=");
+		sb.append(kaleoClassName);
+
+		sb.append(", kaleoClassPK=");
+		sb.append(kaleoClassPK);
+
+		sb.append("}");
+
+		throw new NoSuchActionException(sb.toString());
+	}
+
+	/**
+	 * Returns the first kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction fetchByC_KCN_KCPK_First(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		OrderByComparator<KaleoAction> orderByComparator) {
+
+		List<KaleoAction> list = findByC_KCN_KCPK(
+			companyId, kaleoClassName, kaleoClassPK, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo action
+	 * @throws NoSuchActionException if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction findByC_KCN_KCPK_Last(
+			long companyId, String kaleoClassName, long kaleoClassPK,
+			OrderByComparator<KaleoAction> orderByComparator)
+		throws NoSuchActionException {
+
+		KaleoAction kaleoAction = fetchByC_KCN_KCPK_Last(
+			companyId, kaleoClassName, kaleoClassPK, orderByComparator);
+
+		if (kaleoAction != null) {
+			return kaleoAction;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", kaleoClassName=");
+		sb.append(kaleoClassName);
+
+		sb.append(", kaleoClassPK=");
+		sb.append(kaleoClassPK);
+
+		sb.append("}");
+
+		throw new NoSuchActionException(sb.toString());
+	}
+
+	/**
+	 * Returns the last kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction fetchByC_KCN_KCPK_Last(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		OrderByComparator<KaleoAction> orderByComparator) {
+
+		int count = countByC_KCN_KCPK(companyId, kaleoClassName, kaleoClassPK);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<KaleoAction> list = findByC_KCN_KCPK(
+			companyId, kaleoClassName, kaleoClassPK, count - 1, count,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the kaleo actions before and after the current kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * @param kaleoActionId the primary key of the current kaleo action
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo action
+	 * @throws NoSuchActionException if a kaleo action with the primary key could not be found
+	 */
+	@Override
+	public KaleoAction[] findByC_KCN_KCPK_PrevAndNext(
+			long kaleoActionId, long companyId, String kaleoClassName,
+			long kaleoClassPK, OrderByComparator<KaleoAction> orderByComparator)
+		throws NoSuchActionException {
+
+		kaleoClassName = Objects.toString(kaleoClassName, "");
+
+		KaleoAction kaleoAction = findByPrimaryKey(kaleoActionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KaleoAction[] array = new KaleoActionImpl[3];
+
+			array[0] = getByC_KCN_KCPK_PrevAndNext(
+				session, kaleoAction, companyId, kaleoClassName, kaleoClassPK,
+				orderByComparator, true);
+
+			array[1] = kaleoAction;
+
+			array[2] = getByC_KCN_KCPK_PrevAndNext(
+				session, kaleoAction, companyId, kaleoClassName, kaleoClassPK,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KaleoAction getByC_KCN_KCPK_PrevAndNext(
+		Session session, KaleoAction kaleoAction, long companyId,
+		String kaleoClassName, long kaleoClassPK,
+		OrderByComparator<KaleoAction> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				6 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(5);
+		}
+
+		sb.append(_SQL_SELECT_KALEOACTION_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_KCN_KCPK_COMPANYID_2);
+
+		boolean bindKaleoClassName = false;
+
+		if (kaleoClassName.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSNAME_3);
+		}
+		else {
+			bindKaleoClassName = true;
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSNAME_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSPK_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(KaleoActionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		if (bindKaleoClassName) {
+			queryPos.add(kaleoClassName);
+		}
+
+		queryPos.add(kaleoClassPK);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(kaleoAction)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<KaleoAction> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 */
+	@Override
+	public void removeByC_KCN_KCPK(
+		long companyId, String kaleoClassName, long kaleoClassPK) {
+
+		for (KaleoAction kaleoAction :
+				findByC_KCN_KCPK(
+					companyId, kaleoClassName, kaleoClassPK, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(kaleoAction);
+		}
+	}
+
+	/**
+	 * Returns the number of kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @return the number of matching kaleo actions
+	 */
+	@Override
+	public int countByC_KCN_KCPK(
+		long companyId, String kaleoClassName, long kaleoClassPK) {
+
+		kaleoClassName = Objects.toString(kaleoClassName, "");
+
+		FinderPath finderPath = _finderPathCountByC_KCN_KCPK;
+
+		Object[] finderArgs = new Object[] {
+			companyId, kaleoClassName, kaleoClassPK
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_COUNT_KALEOACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_COMPANYID_2);
+
+			boolean bindKaleoClassName = false;
+
+			if (kaleoClassName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSNAME_3);
+			}
+			else {
+				bindKaleoClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSNAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSPK_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindKaleoClassName) {
+					queryPos.add(kaleoClassName);
+				}
+
+				queryPos.add(kaleoClassPK);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_COMPANYID_2 =
+		"kaleoAction.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSNAME_2 =
+		"kaleoAction.kaleoClassName = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSNAME_3 =
+		"(kaleoAction.kaleoClassName IS NULL OR kaleoAction.kaleoClassName = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_KALEOCLASSPK_2 =
+		"kaleoAction.kaleoClassPK = ?";
+
 	private FinderPath _finderPathWithPaginationFindByKCN_KCPK_ET;
 	private FinderPath _finderPathWithoutPaginationFindByKCN_KCPK_ET;
 	private FinderPath _finderPathCountByKCN_KCPK_ET;
@@ -2386,6 +3023,730 @@ public class KaleoActionPersistenceImpl
 	private static final String _FINDER_COLUMN_KCN_KCPK_ET_EXECUTIONTYPE_3 =
 		"(kaleoAction.executionType IS NULL OR kaleoAction.executionType = '')";
 
+	private FinderPath _finderPathWithPaginationFindByC_KCN_KCPK_ET;
+	private FinderPath _finderPathWithoutPaginationFindByC_KCN_KCPK_ET;
+	private FinderPath _finderPathCountByC_KCN_KCPK_ET;
+
+	/**
+	 * Returns all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @return the matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByC_KCN_KCPK_ET(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType) {
+
+		return findByC_KCN_KCPK_ET(
+			companyId, kaleoClassName, kaleoClassPK, executionType,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @return the range of matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByC_KCN_KCPK_ET(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType, int start, int end) {
+
+		return findByC_KCN_KCPK_ET(
+			companyId, kaleoClassName, kaleoClassPK, executionType, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByC_KCN_KCPK_ET(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType, int start, int end,
+		OrderByComparator<KaleoAction> orderByComparator) {
+
+		return findByC_KCN_KCPK_ET(
+			companyId, kaleoClassName, kaleoClassPK, executionType, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByC_KCN_KCPK_ET(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType, int start, int end,
+		OrderByComparator<KaleoAction> orderByComparator,
+		boolean useFinderCache) {
+
+		kaleoClassName = Objects.toString(kaleoClassName, "");
+		executionType = Objects.toString(executionType, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_KCN_KCPK_ET;
+				finderArgs = new Object[] {
+					companyId, kaleoClassName, kaleoClassPK, executionType
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_KCN_KCPK_ET;
+			finderArgs = new Object[] {
+				companyId, kaleoClassName, kaleoClassPK, executionType, start,
+				end, orderByComparator
+			};
+		}
+
+		List<KaleoAction> list = null;
+
+		if (useFinderCache) {
+			list = (List<KaleoAction>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (KaleoAction kaleoAction : list) {
+					if ((companyId != kaleoAction.getCompanyId()) ||
+						!kaleoClassName.equals(
+							kaleoAction.getKaleoClassName()) ||
+						(kaleoClassPK != kaleoAction.getKaleoClassPK()) ||
+						!executionType.equals(kaleoAction.getExecutionType())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					6 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(6);
+			}
+
+			sb.append(_SQL_SELECT_KALEOACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_COMPANYID_2);
+
+			boolean bindKaleoClassName = false;
+
+			if (kaleoClassName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSNAME_3);
+			}
+			else {
+				bindKaleoClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSNAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSPK_2);
+
+			boolean bindExecutionType = false;
+
+			if (executionType.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_EXECUTIONTYPE_3);
+			}
+			else {
+				bindExecutionType = true;
+
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_EXECUTIONTYPE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(KaleoActionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindKaleoClassName) {
+					queryPos.add(kaleoClassName);
+				}
+
+				queryPos.add(kaleoClassPK);
+
+				if (bindExecutionType) {
+					queryPos.add(executionType);
+				}
+
+				list = (List<KaleoAction>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo action
+	 * @throws NoSuchActionException if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction findByC_KCN_KCPK_ET_First(
+			long companyId, String kaleoClassName, long kaleoClassPK,
+			String executionType,
+			OrderByComparator<KaleoAction> orderByComparator)
+		throws NoSuchActionException {
+
+		KaleoAction kaleoAction = fetchByC_KCN_KCPK_ET_First(
+			companyId, kaleoClassName, kaleoClassPK, executionType,
+			orderByComparator);
+
+		if (kaleoAction != null) {
+			return kaleoAction;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", kaleoClassName=");
+		sb.append(kaleoClassName);
+
+		sb.append(", kaleoClassPK=");
+		sb.append(kaleoClassPK);
+
+		sb.append(", executionType=");
+		sb.append(executionType);
+
+		sb.append("}");
+
+		throw new NoSuchActionException(sb.toString());
+	}
+
+	/**
+	 * Returns the first kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction fetchByC_KCN_KCPK_ET_First(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType,
+		OrderByComparator<KaleoAction> orderByComparator) {
+
+		List<KaleoAction> list = findByC_KCN_KCPK_ET(
+			companyId, kaleoClassName, kaleoClassPK, executionType, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo action
+	 * @throws NoSuchActionException if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction findByC_KCN_KCPK_ET_Last(
+			long companyId, String kaleoClassName, long kaleoClassPK,
+			String executionType,
+			OrderByComparator<KaleoAction> orderByComparator)
+		throws NoSuchActionException {
+
+		KaleoAction kaleoAction = fetchByC_KCN_KCPK_ET_Last(
+			companyId, kaleoClassName, kaleoClassPK, executionType,
+			orderByComparator);
+
+		if (kaleoAction != null) {
+			return kaleoAction;
+		}
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", kaleoClassName=");
+		sb.append(kaleoClassName);
+
+		sb.append(", kaleoClassPK=");
+		sb.append(kaleoClassPK);
+
+		sb.append(", executionType=");
+		sb.append(executionType);
+
+		sb.append("}");
+
+		throw new NoSuchActionException(sb.toString());
+	}
+
+	/**
+	 * Returns the last kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction fetchByC_KCN_KCPK_ET_Last(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType,
+		OrderByComparator<KaleoAction> orderByComparator) {
+
+		int count = countByC_KCN_KCPK_ET(
+			companyId, kaleoClassName, kaleoClassPK, executionType);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<KaleoAction> list = findByC_KCN_KCPK_ET(
+			companyId, kaleoClassName, kaleoClassPK, executionType, count - 1,
+			count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the kaleo actions before and after the current kaleo action in the ordered set where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * @param kaleoActionId the primary key of the current kaleo action
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo action
+	 * @throws NoSuchActionException if a kaleo action with the primary key could not be found
+	 */
+	@Override
+	public KaleoAction[] findByC_KCN_KCPK_ET_PrevAndNext(
+			long kaleoActionId, long companyId, String kaleoClassName,
+			long kaleoClassPK, String executionType,
+			OrderByComparator<KaleoAction> orderByComparator)
+		throws NoSuchActionException {
+
+		kaleoClassName = Objects.toString(kaleoClassName, "");
+		executionType = Objects.toString(executionType, "");
+
+		KaleoAction kaleoAction = findByPrimaryKey(kaleoActionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KaleoAction[] array = new KaleoActionImpl[3];
+
+			array[0] = getByC_KCN_KCPK_ET_PrevAndNext(
+				session, kaleoAction, companyId, kaleoClassName, kaleoClassPK,
+				executionType, orderByComparator, true);
+
+			array[1] = kaleoAction;
+
+			array[2] = getByC_KCN_KCPK_ET_PrevAndNext(
+				session, kaleoAction, companyId, kaleoClassName, kaleoClassPK,
+				executionType, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KaleoAction getByC_KCN_KCPK_ET_PrevAndNext(
+		Session session, KaleoAction kaleoAction, long companyId,
+		String kaleoClassName, long kaleoClassPK, String executionType,
+		OrderByComparator<KaleoAction> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				7 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(6);
+		}
+
+		sb.append(_SQL_SELECT_KALEOACTION_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_COMPANYID_2);
+
+		boolean bindKaleoClassName = false;
+
+		if (kaleoClassName.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSNAME_3);
+		}
+		else {
+			bindKaleoClassName = true;
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSNAME_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSPK_2);
+
+		boolean bindExecutionType = false;
+
+		if (executionType.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_EXECUTIONTYPE_3);
+		}
+		else {
+			bindExecutionType = true;
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_EXECUTIONTYPE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(KaleoActionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		if (bindKaleoClassName) {
+			queryPos.add(kaleoClassName);
+		}
+
+		queryPos.add(kaleoClassPK);
+
+		if (bindExecutionType) {
+			queryPos.add(executionType);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(kaleoAction)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<KaleoAction> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 */
+	@Override
+	public void removeByC_KCN_KCPK_ET(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType) {
+
+		for (KaleoAction kaleoAction :
+				findByC_KCN_KCPK_ET(
+					companyId, kaleoClassName, kaleoClassPK, executionType,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(kaleoAction);
+		}
+	}
+
+	/**
+	 * Returns the number of kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63; and executionType = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoClassPK the kaleo class pk
+	 * @param executionType the execution type
+	 * @return the number of matching kaleo actions
+	 */
+	@Override
+	public int countByC_KCN_KCPK_ET(
+		long companyId, String kaleoClassName, long kaleoClassPK,
+		String executionType) {
+
+		kaleoClassName = Objects.toString(kaleoClassName, "");
+		executionType = Objects.toString(executionType, "");
+
+		FinderPath finderPath = _finderPathCountByC_KCN_KCPK_ET;
+
+		Object[] finderArgs = new Object[] {
+			companyId, kaleoClassName, kaleoClassPK, executionType
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_KALEOACTION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_COMPANYID_2);
+
+			boolean bindKaleoClassName = false;
+
+			if (kaleoClassName.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSNAME_3);
+			}
+			else {
+				bindKaleoClassName = true;
+
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSNAME_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSPK_2);
+
+			boolean bindExecutionType = false;
+
+			if (executionType.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_EXECUTIONTYPE_3);
+			}
+			else {
+				bindExecutionType = true;
+
+				sb.append(_FINDER_COLUMN_C_KCN_KCPK_ET_EXECUTIONTYPE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				if (bindKaleoClassName) {
+					queryPos.add(kaleoClassName);
+				}
+
+				queryPos.add(kaleoClassPK);
+
+				if (bindExecutionType) {
+					queryPos.add(executionType);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_ET_COMPANYID_2 =
+		"kaleoAction.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSNAME_2 =
+		"kaleoAction.kaleoClassName = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSNAME_3 =
+		"(kaleoAction.kaleoClassName IS NULL OR kaleoAction.kaleoClassName = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_ET_KALEOCLASSPK_2 =
+		"kaleoAction.kaleoClassPK = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_ET_EXECUTIONTYPE_2 =
+		"kaleoAction.executionType = ?";
+
+	private static final String _FINDER_COLUMN_C_KCN_KCPK_ET_EXECUTIONTYPE_3 =
+		"(kaleoAction.executionType IS NULL OR kaleoAction.executionType = '')";
+
 	public KaleoActionPersistenceImpl() {
 		setModelClass(KaleoAction.class);
 
@@ -2687,6 +4048,16 @@ public class KaleoActionPersistenceImpl
 				_finderPathWithoutPaginationFindByKCN_KCPK, args);
 
 			args = new Object[] {
+				kaleoActionModelImpl.getCompanyId(),
+				kaleoActionModelImpl.getKaleoClassName(),
+				kaleoActionModelImpl.getKaleoClassPK()
+			};
+
+			finderCache.removeResult(_finderPathCountByC_KCN_KCPK, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByC_KCN_KCPK, args);
+
+			args = new Object[] {
 				kaleoActionModelImpl.getKaleoClassName(),
 				kaleoActionModelImpl.getKaleoClassPK(),
 				kaleoActionModelImpl.getExecutionType()
@@ -2695,6 +4066,17 @@ public class KaleoActionPersistenceImpl
 			finderCache.removeResult(_finderPathCountByKCN_KCPK_ET, args);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindByKCN_KCPK_ET, args);
+
+			args = new Object[] {
+				kaleoActionModelImpl.getCompanyId(),
+				kaleoActionModelImpl.getKaleoClassName(),
+				kaleoActionModelImpl.getKaleoClassPK(),
+				kaleoActionModelImpl.getExecutionType()
+			};
+
+			finderCache.removeResult(_finderPathCountByC_KCN_KCPK_ET, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByC_KCN_KCPK_ET, args);
 
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
@@ -2769,6 +4151,31 @@ public class KaleoActionPersistenceImpl
 			}
 
 			if ((kaleoActionModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_KCN_KCPK.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					kaleoActionModelImpl.getOriginalCompanyId(),
+					kaleoActionModelImpl.getOriginalKaleoClassName(),
+					kaleoActionModelImpl.getOriginalKaleoClassPK()
+				};
+
+				finderCache.removeResult(_finderPathCountByC_KCN_KCPK, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByC_KCN_KCPK, args);
+
+				args = new Object[] {
+					kaleoActionModelImpl.getCompanyId(),
+					kaleoActionModelImpl.getKaleoClassName(),
+					kaleoActionModelImpl.getKaleoClassPK()
+				};
+
+				finderCache.removeResult(_finderPathCountByC_KCN_KCPK, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByC_KCN_KCPK, args);
+			}
+
+			if ((kaleoActionModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByKCN_KCPK_ET.
 					 getColumnBitmask()) != 0) {
 
@@ -2791,6 +4198,33 @@ public class KaleoActionPersistenceImpl
 				finderCache.removeResult(_finderPathCountByKCN_KCPK_ET, args);
 				finderCache.removeResult(
 					_finderPathWithoutPaginationFindByKCN_KCPK_ET, args);
+			}
+
+			if ((kaleoActionModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByC_KCN_KCPK_ET.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					kaleoActionModelImpl.getOriginalCompanyId(),
+					kaleoActionModelImpl.getOriginalKaleoClassName(),
+					kaleoActionModelImpl.getOriginalKaleoClassPK(),
+					kaleoActionModelImpl.getOriginalExecutionType()
+				};
+
+				finderCache.removeResult(_finderPathCountByC_KCN_KCPK_ET, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByC_KCN_KCPK_ET, args);
+
+				args = new Object[] {
+					kaleoActionModelImpl.getCompanyId(),
+					kaleoActionModelImpl.getKaleoClassName(),
+					kaleoActionModelImpl.getKaleoClassPK(),
+					kaleoActionModelImpl.getExecutionType()
+				};
+
+				finderCache.removeResult(_finderPathCountByC_KCN_KCPK_ET, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByC_KCN_KCPK_ET, args);
 			}
 		}
 
@@ -3148,6 +4582,35 @@ public class KaleoActionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKCN_KCPK",
 			new String[] {String.class.getName(), Long.class.getName()});
 
+		_finderPathWithPaginationFindByC_KCN_KCPK = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, KaleoActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_KCN_KCPK",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByC_KCN_KCPK = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, KaleoActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_KCN_KCPK",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName()
+			},
+			KaleoActionModelImpl.COMPANYID_COLUMN_BITMASK |
+			KaleoActionModelImpl.KALEOCLASSNAME_COLUMN_BITMASK |
+			KaleoActionModelImpl.KALEOCLASSPK_COLUMN_BITMASK |
+			KaleoActionModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByC_KCN_KCPK = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_KCN_KCPK",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName()
+			});
+
 		_finderPathWithPaginationFindByKCN_KCPK_ET = new FinderPath(
 			entityCacheEnabled, finderCacheEnabled, KaleoActionImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKCN_KCPK_ET",
@@ -3175,6 +4638,37 @@ public class KaleoActionPersistenceImpl
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				String.class.getName()
+			});
+
+		_finderPathWithPaginationFindByC_KCN_KCPK_ET = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, KaleoActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_KCN_KCPK_ET",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByC_KCN_KCPK_ET = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, KaleoActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_KCN_KCPK_ET",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), String.class.getName()
+			},
+			KaleoActionModelImpl.COMPANYID_COLUMN_BITMASK |
+			KaleoActionModelImpl.KALEOCLASSNAME_COLUMN_BITMASK |
+			KaleoActionModelImpl.KALEOCLASSPK_COLUMN_BITMASK |
+			KaleoActionModelImpl.EXECUTIONTYPE_COLUMN_BITMASK |
+			KaleoActionModelImpl.PRIORITY_COLUMN_BITMASK);
+
+		_finderPathCountByC_KCN_KCPK_ET = new FinderPath(
+			entityCacheEnabled, finderCacheEnabled, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_KCN_KCPK_ET",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), String.class.getName()
 			});
 	}
 

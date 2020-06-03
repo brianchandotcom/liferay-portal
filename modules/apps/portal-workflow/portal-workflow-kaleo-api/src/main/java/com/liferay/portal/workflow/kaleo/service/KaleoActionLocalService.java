@@ -73,7 +73,6 @@ public interface KaleoActionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public KaleoAction addKaleoAction(KaleoAction kaleoAction);
 
-	@Indexable(type = IndexableType.REINDEX)
 	public KaleoAction addKaleoAction(
 			String kaleoClassName, long kaleoClassPK, long kaleoDefinitionId,
 			long kaleoDefinitionVersionId, String kaleoNodeName, Action action,

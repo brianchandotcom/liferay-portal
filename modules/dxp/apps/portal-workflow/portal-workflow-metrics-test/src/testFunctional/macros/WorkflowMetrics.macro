@@ -246,8 +246,7 @@ definition {
 
 		WorkflowMetrics.createUsersAndInstancesWithGroovy(
 			numberOfBlogInstances = "3",
-			numberOfUsers = "3",
-			site = "${site}");
+			numberOfUsers = "3");
 	}
 
 	macro checkPendingWorkflowValues {
@@ -784,8 +783,7 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Site Administration",
-			portlet = "Workflow",
-			site = "${site}");
+			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",

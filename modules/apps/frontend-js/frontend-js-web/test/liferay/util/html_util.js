@@ -13,7 +13,6 @@
  */
 
 import {
-	MAP_HTML_CHARS_ESCAPED,
 	escapeHTML,
 	unescapeHTML,
 } from '../../../src/main/resources/META-INF/resources/liferay/util/html_util';
@@ -21,43 +20,58 @@ import {
 describe('Liferay.Util.escapeHTML and Liferay.Util.unescapeHTML', () => {
 	describe('Liferay.Util.escapeHTML', () => {
 		it('escapes HTML entities', () => {
-			const escapedEntities = Object.keys(MAP_HTML_CHARS_ESCAPED);
-
-			escapedEntities.forEach((entity) => {
-				expect(escapeHTML(entity)).toEqual(
-					MAP_HTML_CHARS_ESCAPED[entity]
-				);
-			});
+			expect(escapeHTML('"')).toEqual('&#034;');
+			expect(escapeHTML('&')).toEqual('&amp;');
+			expect(escapeHTML("'")).toEqual('&#039;');
+			expect(escapeHTML('/')).toEqual('&#047;');
+			expect(escapeHTML('<')).toEqual('&lt;');
+			expect(escapeHTML('>')).toEqual('&gt;');
+			expect(escapeHTML('`')).toEqual('&#096;');
 		});
 	});
 
 	describe('Liferay.Util.unescapeHTML', () => {
 		it('unescapes HTML entities', () => {
-			const entities = Object.values(MAP_HTML_CHARS_ESCAPED);
+			expect(unescapeHTML('&#034;')).toEqual('"');
+			expect(unescapeHTML('&amp;')).toEqual('&');
+			expect(unescapeHTML('&#039;')).toEqual("'");
+			expect(unescapeHTML('&#047;')).toEqual('/');
+			expect(unescapeHTML('&lt;')).toEqual('<');
+			expect(unescapeHTML('&gt;')).toEqual('>');
+			expect(unescapeHTML('&#096;')).toEqual('`');
 
-			const escapedEntities = Object.keys(MAP_HTML_CHARS_ESCAPED);
-
-			entities.forEach((entity, index) => {
-				expect(unescapeHTML(entity)).toEqual(escapedEntities[index]);
-			});
+			expect(unescapeHTML('&#040;')).toEqual('(');
+			expect(unescapeHTML('&#041;')).toEqual(')');
+			expect(unescapeHTML('&#043;')).toEqual('+');
+			expect(unescapeHTML('&#061;')).toEqual('=');
+			expect(unescapeHTML('&#064;')).toEqual('@');
+			expect(unescapeHTML('&#091;')).toEqual('[');
+			expect(unescapeHTML('&#093;')).toEqual(']');
 		});
 	});
 
-	describe('escapeHTML and unescapeHTML used together', () => {
+	describe('round-tripping from unescaped to escaped and back again', () => {
 		it('unescaping an escaped string', () => {
 			const string = "'hello' & <p>goodbye</p>";
+
 			const escaped = escapeHTML(string);
+
+			expect(escaped).toBe(
+				'&#039;hello&#039; &amp; &lt;p&gt;goodbye&lt;&#047;p&gt;'
+			);
+
 			const unescaped = unescapeHTML(escaped);
 
-			expect(unescaped).toEqual(string);
+			expect(unescaped).toBe(string);
 		});
 	});
 
-	describe('when using entities non entities', () => {
+	describe("when using string that look like entities but aren't", () => {
 		it("doesn't throw errors", () => {
 			expect(() =>
 				unescapeHTML('my test !"§$%&/()=?`@€<>|,.-;:_+*#~')
 			).not.toThrow();
+
 			expect(() =>
 				unescapeHTML('my test !"§$%&/()=?`@€<sth here>|,.-;:_+*#~')
 			).not.toThrow();

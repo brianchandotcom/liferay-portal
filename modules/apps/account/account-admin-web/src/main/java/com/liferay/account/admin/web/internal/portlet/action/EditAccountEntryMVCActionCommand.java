@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.portlet.action;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
@@ -65,10 +66,13 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		String description = ParamUtil.getString(actionRequest, "description");
 		String[] domains = ParamUtil.getStringValues(actionRequest, "domains");
 		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
+		String type = ParamUtil.getString(
+			actionRequest, "type",
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
 
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,
-			domains, _getLogoBytes(actionRequest), taxIdNumber,
+			domains, _getLogoBytes(actionRequest), taxIdNumber, type,
 			_getStatus(actionRequest),
 			ServiceContextFactory.getInstance(
 				AccountEntry.class.getName(), actionRequest));

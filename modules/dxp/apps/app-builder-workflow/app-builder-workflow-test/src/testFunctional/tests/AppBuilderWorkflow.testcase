@@ -14,7 +14,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -38,7 +38,7 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Apps");
@@ -60,7 +60,7 @@ definition {
 	test ValidateListOfStandardApps {
 		property portal.acceptance = "true";
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Objects");
@@ -77,7 +77,7 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		ProductMenu.gotoPortlet(
+		GlobalMenu.gotoPortlet(
 			category = "App Builder",
 			panel = "Control Panel",
 			portlet = "Apps");

@@ -119,7 +119,7 @@ public class AccountEntryServiceSoap {
 	public static com.liferay.account.model.AccountEntrySoap addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxIdNumber, int status,
+			String taxIdNumber, String type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 
@@ -127,7 +127,7 @@ public class AccountEntryServiceSoap {
 			com.liferay.account.model.AccountEntry returnValue =
 				AccountEntryServiceUtil.addAccountEntry(
 					userId, parentAccountEntryId, name, description, domains,
-					logoBytes, taxIdNumber, status, serviceContext);
+					logoBytes, taxIdNumber, type, status, serviceContext);
 
 			return com.liferay.account.model.AccountEntrySoap.toSoapModel(
 				returnValue);

@@ -84,7 +84,7 @@ public interface AccountEntryLocalService
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], String, int, ServiceContext)}
+	 byte[], String, String, int, ServiceContext)}
 	 */
 	@Deprecated
 	public AccountEntry addAccountEntry(
@@ -95,7 +95,7 @@ public interface AccountEntryLocalService
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 #addAccountEntry(long, long, String, String, String[],
-	 byte[], String, int, ServiceContext)}
+	 byte[], String, String, int, ServiceContext)}
 	 */
 	@Deprecated
 	public AccountEntry addAccountEntry(
@@ -107,7 +107,8 @@ public interface AccountEntryLocalService
 	public AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxIdNumber, int status, ServiceContext serviceContext)
+			String taxIdNumber, String type, int status,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

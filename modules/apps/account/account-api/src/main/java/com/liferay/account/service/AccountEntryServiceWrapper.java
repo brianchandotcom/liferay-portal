@@ -69,13 +69,13 @@ public class AccountEntryServiceWrapper
 	public com.liferay.account.model.AccountEntry addAccountEntry(
 			long userId, long parentAccountEntryId, String name,
 			String description, String[] domains, byte[] logoBytes,
-			String taxIdNumber, int status,
+			String taxIdNumber, String type, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _accountEntryService.addAccountEntry(
 			userId, parentAccountEntryId, name, description, domains, logoBytes,
-			taxIdNumber, status, serviceContext);
+			taxIdNumber, type, status, serviceContext);
 	}
 
 	@Override

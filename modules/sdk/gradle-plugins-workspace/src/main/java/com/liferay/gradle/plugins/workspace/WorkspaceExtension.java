@@ -179,7 +179,8 @@ public class WorkspaceExtension {
 					String defaultAppServerVersion =
 						_getDefaultAppServerVersion();
 
-					if (!getAppServerTomcatVersion().equals(
+					if (!Objects.equals(
+							getAppServerTomcatVersion(),
 							defaultAppServerVersion)) {
 
 						logger.lifecycle(
@@ -191,7 +192,9 @@ public class WorkspaceExtension {
 					String defaultProductBundleUrl =
 						_getDefaultProductBundleUrl();
 
-					if (!getBundleUrl().equals(defaultProductBundleUrl)) {
+					if (!Objects.equals(
+							getBundleUrl(), defaultProductBundleUrl)) {
+
 						logger.lifecycle(
 							String.format(
 								overridePropertyInfo,
@@ -200,7 +203,9 @@ public class WorkspaceExtension {
 
 					String defaultDockerImage = _getDefaultDockerImage();
 
-					if (!getDockerImageLiferay().equals(defaultDockerImage)) {
+					if (!Objects.equals(
+							getDockerImageLiferay(), defaultDockerImage)) {
+
 						logger.lifecycle(
 							String.format(
 								overridePropertyInfo,
@@ -210,7 +215,8 @@ public class WorkspaceExtension {
 					String defaultTargetplatformVersion =
 						_getDefaultTargetplatformVersion();
 
-					if (!getTargetPlatformVersion().equals(
+					if (!Objects.equals(
+							getTargetPlatformVersion(),
 							defaultTargetplatformVersion)) {
 
 						logger.lifecycle(

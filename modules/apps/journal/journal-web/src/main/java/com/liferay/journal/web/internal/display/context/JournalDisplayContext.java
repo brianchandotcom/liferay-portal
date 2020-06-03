@@ -1505,30 +1505,27 @@ public class JournalDisplayContext {
 
 		articleVersionsSearchContainer.setTotal(total);
 
-		List<Object> results = new ArrayList<>();
+		List<JournalArticle> results = new ArrayList<>();
 
 		Document[] documents = hits.getDocs();
 
 		for (Document document : documents) {
-			String className = document.get(Field.ENTRY_CLASS_NAME);
-			long classPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
+			if (!Objects.equals(
+					document.get(Field.ENTRY_CLASS_NAME),
+					JournalArticle.class.getName())) {
 
-			if (className.equals(JournalArticle.class.getName())) {
-				String articleId = document.get(Field.ARTICLE_ID);
-				long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
-				double version = GetterUtil.getDouble(
-					document.get(Field.VERSION));
-
-				JournalArticle article =
-					JournalArticleLocalServiceUtil.fetchArticle(
-						groupId, articleId, version);
-
-				results.add(article);
+				continue;
 			}
-			else if (className.equals(JournalFolder.class.getName())) {
-				results.add(JournalFolderLocalServiceUtil.getFolder(classPK));
-			}
+
+			String articleId = document.get(Field.ARTICLE_ID);
+			long groupId = GetterUtil.getLong(document.get(Field.GROUP_ID));
+			double version = GetterUtil.getDouble(document.get(Field.VERSION));
+
+			JournalArticle article =
+				JournalArticleLocalServiceUtil.fetchArticle(
+					groupId, articleId, version);
+
+			results.add(article);
 		}
 
 		articleVersionsSearchContainer.setResults(results);

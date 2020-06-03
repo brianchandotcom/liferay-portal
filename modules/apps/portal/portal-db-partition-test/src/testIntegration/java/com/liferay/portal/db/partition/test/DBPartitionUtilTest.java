@@ -137,14 +137,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			CurrentConnectionUtil.getCurrentConnection();
 
 		try {
-			CurrentConnection currentConnection = new CurrentConnection() {
-
-				@Override
-				public Connection getConnection(DataSource dataSource) {
-					return _connection;
-				}
-
-			};
+			CurrentConnection currentConnection = dataSource -> _connection;
 
 			ReflectionTestUtil.setFieldValue(
 				CurrentConnectionUtil.class, "_currentConnection",

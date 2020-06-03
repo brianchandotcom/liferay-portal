@@ -140,9 +140,7 @@ public class DBPartitionMessageBusInterceptorTest
 
 		_messageBus.sendMessage(_DESTINATION_NAME, new Message());
 
-		Assert.assertArrayEquals(
-			_activeCompanyIds,
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(_activeCompanyIds);
 
 		// Test 2
 
@@ -150,18 +148,15 @@ public class DBPartitionMessageBusInterceptorTest
 
 		_messageBus.sendMessage(_DESTINATION_NAME, new Message());
 
-		Assert.assertArrayEquals(
-			new Long[] {_company.getCompanyId()},
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(
+			_company.getCompanyId());
 	}
 
 	@Test
 	public void testSendMessageExcludingDestination() {
 		_messageBus.sendMessage(_DESTINATION_NAME, new Message());
 
-		Assert.assertArrayEquals(
-			_activeCompanyIds,
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(_activeCompanyIds);
 
 		ReflectionTestUtil.setFieldValue(
 			_dbPartitionMessageBusInterceptor,
@@ -170,9 +165,8 @@ public class DBPartitionMessageBusInterceptorTest
 
 		_messageBus.sendMessage(_DESTINATION_NAME, new Message());
 
-		Assert.assertArrayEquals(
-			new Long[] {CompanyConstants.SYSTEM},
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(
+			CompanyConstants.SYSTEM);
 	}
 
 	@Test
@@ -185,9 +179,7 @@ public class DBPartitionMessageBusInterceptorTest
 
 		_messageBus.sendMessage(_DESTINATION_NAME, message.clone());
 
-		Assert.assertArrayEquals(
-			_activeCompanyIds,
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(_activeCompanyIds);
 
 		ReflectionTestUtil.setFieldValue(
 			_dbPartitionMessageBusInterceptor, "_excludedSchedulerJobNames",
@@ -196,9 +188,8 @@ public class DBPartitionMessageBusInterceptorTest
 
 		_messageBus.sendMessage(_DESTINATION_NAME, message.clone());
 
-		Assert.assertArrayEquals(
-			new Long[] {CompanyConstants.SYSTEM},
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(
+			CompanyConstants.SYSTEM);
 	}
 
 	@Test
@@ -212,9 +203,7 @@ public class DBPartitionMessageBusInterceptorTest
 
 		_messageBus.sendMessage(_DESTINATION_NAME, message);
 
-		Assert.assertArrayEquals(
-			_activeCompanyIds,
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(_activeCompanyIds);
 
 		// Test 2
 
@@ -226,9 +215,7 @@ public class DBPartitionMessageBusInterceptorTest
 
 		_messageBus.sendMessage(_DESTINATION_NAME, message);
 
-		Assert.assertArrayEquals(
-			_activeCompanyIds,
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(_activeCompanyIds);
 
 		// Test 3
 
@@ -240,9 +227,8 @@ public class DBPartitionMessageBusInterceptorTest
 
 		_messageBus.sendMessage(_DESTINATION_NAME, message);
 
-		Assert.assertArrayEquals(
-			new Long[] {_company.getCompanyId()},
-			_testDBPartitionMessageListener.getAndResetThreadLocalCompanyIds());
+		_testDBPartitionMessageListener.assertCollected(
+			_company.getCompanyId());
 	}
 
 	private static final String _DESTINATION_NAME = "liferay/test_dbpartition";
@@ -275,20 +261,19 @@ public class DBPartitionMessageBusInterceptorTest
 	private static class TestDBPartitionMessageListener
 		extends BaseMessageListener {
 
-		public Long[] getAndResetThreadLocalCompanyIds() {
-			Long[] companyIds = _threadLocalCompanyIds.toArray(new Long[0]);
+		public void assertCollected(Long... companyIds) {
+			Assert.assertArrayEquals(
+				companyIds, _companyIds.toArray(new Long[0]));
 
-			_threadLocalCompanyIds.clear();
-
-			return companyIds;
+			_companyIds.clear();
 		}
 
 		@Override
 		protected void doReceive(Message message) {
-			_threadLocalCompanyIds.add(CompanyThreadLocal.getCompanyId());
+			_companyIds.add(CompanyThreadLocal.getCompanyId());
 		}
 
-		private final Set<Long> _threadLocalCompanyIds = new TreeSet<>();
+		private final Set<Long> _companyIds = new TreeSet<>();
 
 	}
 

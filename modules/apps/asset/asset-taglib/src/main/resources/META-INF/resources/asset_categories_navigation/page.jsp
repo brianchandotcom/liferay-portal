@@ -21,11 +21,14 @@ AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext 
 %>
 
 <c:choose>
-	<c:when test="<%= assetCategoriesNavigationDisplayContext.hidePortletWhenEmpty() && !assetCategoriesNavigationDisplayContext.hasCategories() %>">
+	<c:when test="<%= !assetCategoriesNavigationDisplayContext.hasCategories() %>">
+		<c:if test="<%= assetCategoriesNavigationDisplayContext.hidePortletWhenEmpty() %>">
 
-		<%
-		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
-		%>
+			<%
+			renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+			%>
+
+		</c:if>
 
 		<div class="alert alert-info">
 			<liferay-ui:message key="there-are-no-categories" />

@@ -146,4 +146,23 @@ if (Validator.isNotNull(title)) {
 			</c:choose>
 		</aui:form>
 	</div>
+
+	<%
+	Map<String, Object> exportProps = HashMapBuilder.<String, Object>put(
+		"pathModule", PortalUtil.getPathModule()
+	).build();
+
+	Map<String, Object> exportData = HashMapBuilder.<String, Object>put(
+		"context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace())
+	).put(
+		"props", exportProps
+	).build();
+	%>
+
+	<div>
+		<react:component
+			data="<%= exportData %>"
+			module="js/export_translation/ExportTranslation.es"
+		/>
+	</div>
 </clay:container-fluid>

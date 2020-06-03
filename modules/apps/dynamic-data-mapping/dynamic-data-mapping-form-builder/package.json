@@ -33,14 +33,21 @@
 		],
 		"testPathIgnorePatterns": [
 			"Evaluator",
+			"fieldSupport",
 			"FormBuilder",
 			"FormRenderer",
+			"LayoutProvider/handlers/columnResizedHandler",
 			"LayoutProvider/handlers/fieldDeletedHandler",
+			"LayoutProvider/handlers/fieldEditedHandler",
 			"LayoutProvider/handlers/fieldSetAddedHandler",
+			"LayoutProvider/handlers/focusedFieldEvaluationEndedHandler",
+			"LayoutProvider/LayoutProvider",
 			"LayoutProvider/util",
 			"PageRenderer",
 			"RuleBuilder",
-			"RuleEditor"
+			"RuleEditor",
+			"RuleList",
+			"Sidebar.es.js"
 		]
 	},
 	"main": "js/index.es.js",

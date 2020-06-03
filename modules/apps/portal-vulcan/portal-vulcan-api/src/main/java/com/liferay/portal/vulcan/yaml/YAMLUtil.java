@@ -18,6 +18,8 @@ import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.config.Security;
 import com.liferay.portal.vulcan.yaml.exception.InvalidYAMLException;
 import com.liferay.portal.vulcan.yaml.openapi.Items;
+import com.liferay.portal.vulcan.yaml.openapi.OpenAPIValidator;
+import com.liferay.portal.vulcan.yaml.openapi.OpenAPIValidatorException;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.vulcan.yaml.openapi.Parameter;
 import com.liferay.portal.vulcan.yaml.openapi.PathItem;
@@ -56,6 +58,12 @@ public class YAMLUtil {
 		catch (MarkedYAMLException markedYAMLException) {
 			throw new InvalidYAMLException(markedYAMLException);
 		}
+	}
+
+	public static void validateOpenAPIYAML(String fileName, String yamlString)
+		throws OpenAPIValidatorException {
+
+		OpenAPIValidator.validate(fileName, yamlString, _YAML_OPEN_API);
 	}
 
 	private static final Yaml _YAML_CONFIG;

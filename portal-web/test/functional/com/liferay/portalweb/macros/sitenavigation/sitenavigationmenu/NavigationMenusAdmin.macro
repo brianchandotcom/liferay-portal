@@ -60,6 +60,8 @@ definition {
 	}
 
 	macro addItem {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		LexiconEntry.gotoAddMenuItem(menuItem = "${item}");
 
 		Pause(locator1 = "1000");

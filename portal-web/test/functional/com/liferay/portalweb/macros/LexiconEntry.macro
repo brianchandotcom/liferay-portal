@@ -98,6 +98,8 @@ definition {
 			Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 		}
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		MenuItem.click(menuItem = "${menuItem}");
 	}
 

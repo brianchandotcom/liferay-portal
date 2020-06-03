@@ -9,7 +9,9 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:app-builder:app-builder-api")
 	compileOnly project(":apps:application-list:application-list-api")
+	compileOnly project(":apps:data-engine:data-engine-rest-api")
 	compileOnly project(":apps:data-engine:data-engine-taglib")
+	compileOnly project(":apps:dynamic-data-lists:dynamic-data-lists-api")
 	compileOnly project(":apps:frontend-js:frontend-js-loader-modules-extender-api")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib")
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-clay")

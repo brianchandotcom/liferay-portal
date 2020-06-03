@@ -17,7 +17,7 @@ import React, {useState} from 'react';
 
 import MappingPanel from './MappingPanel';
 
-function SeoMapping() {
+function SeoMapping({fields}) {
 	const [title, setTitle] = useState('');
 
 	const handleMappingTitle = ({field, source}) => {
@@ -42,7 +42,10 @@ function SeoMapping() {
 							/>
 						</ClayInput.GroupItem>
 						<ClayInput.GroupItem shrink>
-							<MappingPanel onChange={handleMappingTitle} />
+							<MappingPanel
+								fields={fields}
+								onChange={handleMappingTitle}
+							/>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
 				</label>

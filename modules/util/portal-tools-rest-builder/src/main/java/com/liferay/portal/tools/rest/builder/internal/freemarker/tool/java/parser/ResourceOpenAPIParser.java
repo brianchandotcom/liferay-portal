@@ -250,19 +250,24 @@ public class ResourceOpenAPIParser {
 				javaMethodSignature.getPath(),
 				"/{" + StringUtil.lowerCaseFirstLetter(schemaName) + "Id}");
 
+			Operation batchOperation = _getBatchOperation(
+				javaMethodSignature, methodName, schemaName);
+
 			for (JavaMethodSignature existingJavaMethodSignature :
 					javaMethodSignatures) {
 
+				String httpMethod = OpenAPIParserUtil.getHTTPMethod(
+					existingJavaMethodSignature.getOperation());
+
 				if (Objects.equals(
 						existingJavaMethodSignature.getPath(),
-						batchPath + "/batch")) {
+						batchPath + "/batch") &&
+					httpMethod.equals(
+						OpenAPIParserUtil.getHTTPMethod(batchOperation))) {
 
 					return;
 				}
 			}
-
-			Operation batchOperation = _getBatchOperation(
-				javaMethodSignature, methodName, schemaName);
 
 			List<JavaMethodParameter> javaMethodParameters = new ArrayList<>();
 

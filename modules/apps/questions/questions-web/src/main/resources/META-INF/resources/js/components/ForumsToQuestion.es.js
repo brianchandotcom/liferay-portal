@@ -15,9 +15,10 @@
 import {useQuery} from '@apollo/client';
 
 /*eslint-disable no-unused-vars*/
-import React from 'react';
+import React, {useContext} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import {AppContext} from '../AppContext.es';
 import {getMessageBoardThreadByIdQuery} from '../utils/client.es';
 import {historyPushWithSlug} from '../utils/utils.es';
 
@@ -28,16 +29,21 @@ export default withRouter(
 			params: {questionId},
 		},
 	}) => {
+		const context = useContext(AppContext);
+
 		const historyPushParser = historyPushWithSlug(history.push);
 
 		useQuery(getMessageBoardThreadByIdQuery, {
-			onCompleted({messageBoardThread}) {
-				historyPushParser(
-					`/questions/${messageBoardThread.messageBoardSection.title}/${messageBoardThread.friendlyUrlPath}`
-				);
+			onCompleted({messageBoardThreads}) {
+				if (messageBoardThreads.items) {
+					historyPushParser(
+						`/questions/${messageBoardThreads.items[0].messageBoardSection.title}/${messageBoardThreads.items[0].friendlyUrlPath}`
+					);
+				}
 			},
 			variables: {
-				messageBoardThreadId: questionId,
+				filter: `id eq '${questionId}'`,
+				siteKey: context.siteKey,
 			},
 		});
 

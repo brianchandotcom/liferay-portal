@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -60,16 +61,7 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 		PageContext pageContext = PageContextFactoryUtil.create(
 			httpServletRequest, httpServletResponse);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		if (Validator.isNotNull(themeDisplay.getPpid()) &&
-			panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
-
+		if (_isGlobalMenuApp(httpServletRequest)) {
 			return;
 		}
 
@@ -129,6 +121,31 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 	@Modified
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+	}
+
+	private boolean _isGlobalMenuApp(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (Validator.isNull(themeDisplay.getPpid())) {
+			return false;
+		}
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+			return false;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if ((layout != null) && !layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private BundleContext _bundleContext;

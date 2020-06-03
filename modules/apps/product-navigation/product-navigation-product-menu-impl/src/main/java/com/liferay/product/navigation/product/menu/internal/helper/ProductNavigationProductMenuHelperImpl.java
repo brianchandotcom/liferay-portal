@@ -19,6 +19,7 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -64,12 +65,7 @@ public class ProductNavigationProductMenuHelperImpl
 			return false;
 		}
 
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		if (Validator.isNotNull(themeDisplay.getPpid()) &&
-			panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
-
+		if (_isGlobalMenuApp(themeDisplay)) {
 			return false;
 		}
 
@@ -79,6 +75,27 @@ public class ProductNavigationProductMenuHelperImpl
 				themeDisplay.getScopeGroup());
 
 		if (childPanelCategories.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _isGlobalMenuApp(ThemeDisplay themeDisplay) {
+		if (Validator.isNull(themeDisplay.getPpid())) {
+			return false;
+		}
+
+		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
+			_panelAppRegistry, _panelCategoryRegistry);
+
+		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
+			return false;
+		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		if ((layout != null) && !layout.isTypeControlPanel()) {
 			return false;
 		}
 

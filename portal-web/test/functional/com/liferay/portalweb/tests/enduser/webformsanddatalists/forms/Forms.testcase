@@ -1385,7 +1385,7 @@ definition {
 	@priority = "4"
 	test EditAllFormFieldNames {
 		property test.name.skip.portal.instance = "Forms#EditAllFormFieldNames";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 
 		Navigator.openURL();

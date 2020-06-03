@@ -27,11 +27,11 @@ public abstract class BaseMessageListener implements MessageListener {
 		long companyId = message.getLong("companyId");
 
 		try {
-			if (companyId != CompanyConstants.SYSTEM) {
-				doReceive(message, companyId);
+			if (companyId == CompanyConstants.SYSTEM) {
+				doReceive(message);
 			}
 			else {
-				doReceive(message);
+				doReceive(message, companyId);
 			}
 		}
 		catch (MessageListenerException messageListenerException) {

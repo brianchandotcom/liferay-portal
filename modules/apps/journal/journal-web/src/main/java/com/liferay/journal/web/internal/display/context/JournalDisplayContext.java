@@ -1230,18 +1230,35 @@ public class JournalDisplayContext {
 			return _articleSearchContainer;
 		}
 
+		SearchContainer articleAndFolderSearchContainer =
+			new SearchContainer(
+				_liferayPortletRequest, getPortletURL(), null, null);
+
+		articleAndFolderSearchContainer.setOrderByCol(getOrderByCol());
+		articleAndFolderSearchContainer.setOrderByComparator(
+			_getFolderOrderByComparator());
+		articleAndFolderSearchContainer.setOrderByType(getOrderByType());
+		articleAndFolderSearchContainer.setRowChecker(_getEntriesChecker());
+
+		if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
+			EntriesMover entriesMover = new EntriesMover(
+				_trashHelper.isTrashEnabled(_themeDisplay.getScopeGroupId()));
+
+			articleAndFolderSearchContainer.setRowMover(entriesMover);
+		}
+
 		if (isSearch()) {
 			Indexer<?> indexer = JournalSearcher.getInstance();
 
 			SearchContext searchContext = buildSearchContext(
-				articleSearchContainer.getStart(),
-				articleSearchContainer.getEnd(), false);
+				articleAndFolderSearchContainer.getStart(),
+				articleAndFolderSearchContainer.getEnd(), false);
 
 			Hits hits = indexer.search(searchContext);
 
 			int total = hits.getLength();
 
-			articleSearchContainer.setTotal(total);
+			articleAndFolderSearchContainer.setTotal(total);
 
 			List<Object> results = new ArrayList<>();
 
@@ -1265,9 +1282,9 @@ public class JournalDisplayContext {
 				}
 			}
 
-			articleSearchContainer.setResults(results);
+			articleAndFolderSearchContainer.setResults(results);
 
-			_articleSearchContainer = articleSearchContainer;
+			_articleSearchContainer = articleAndFolderSearchContainer;
 
 			return _articleSearchContainer;
 		}
@@ -1275,16 +1292,18 @@ public class JournalDisplayContext {
 		int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
 			_themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus());
 
-		articleSearchContainer.setTotal(total);
+		articleAndFolderSearchContainer.setTotal(total);
 
 		List<Object> results = JournalFolderServiceUtil.getFoldersAndArticles(
 			_themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus(),
-			_themeDisplay.getLocale(), articleSearchContainer.getStart(),
-			articleSearchContainer.getEnd(), _getFolderOrderByComparator());
+			_themeDisplay.getLocale(),
+			articleAndFolderSearchContainer.getStart(),
+			articleAndFolderSearchContainer.getEnd(),
+			articleAndFolderSearchContainer.getOrderByComparator());
 
-		articleSearchContainer.setResults(results);
+		articleAndFolderSearchContainer.setResults(results);
 
-		_articleSearchContainer = articleSearchContainer;
+		_articleSearchContainer = articleAndFolderSearchContainer;
 
 		return _articleSearchContainer;
 	}

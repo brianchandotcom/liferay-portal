@@ -214,17 +214,17 @@
 <!--FRAGMENT_HEADER-->
 <tr>
 	<td>FRAGMENT_HEADER</td>
-	<td>//div[contains(@class,'page-editor')]//li[contains(.,'${key_fragmentName}')]</td>
+	<td>//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_HEADER_2</td>
-	<td>xpath=(//div[contains(@class,'page-editor')]//li[contains(.,'${key_fragmentName}')])[2]</td>
+	<td>xpath=(//li[contains(@class,'topper__title') and contains(.,'${key_fragmentName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FRAGMENT_HEADER_DRAG_HANDLER</td>
-	<td>//div[contains(@class,'page-editor')]//li[contains(.,'${key_dragFragmentName}')]/preceding-sibling::li[contains(@class,'drag-handler')]</td>
+	<td>//li[contains(@class,'topper__title') and contains(.,'${key_dragFragmentName}')]/preceding-sibling::li[contains(@class,'drag-handler')]</td>
 	<td></td>
 </tr>
 <tr>

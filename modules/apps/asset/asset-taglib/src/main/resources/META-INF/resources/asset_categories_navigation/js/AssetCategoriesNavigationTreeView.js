@@ -28,11 +28,26 @@ function buildNodes(vocabularies, categories) {
 const AssetCategoriesNavigationTreeView = ({categories, vocabularies}) => {
 	const nodes = buildNodes(vocabularies, categories);
 
+	const handleSelectionChange = (selectedNodeIds) => {
+		const selectedNodeId = [...selectedNodeIds][0];
+
+		if (selectedNodeId) {
+			const {url} = nodes[0].children.find(
+				(node) => node.id === selectedNodeId
+			);
+
+			if (url) {
+				Liferay.Util.navigate(url);
+			}
+		}
+	};
+
 	return (
 		<Treeview
 			multiSelection={false}
 			NodeComponent={Treeview.Card}
 			nodes={nodes}
+			onSelectedNodesChange={handleSelectionChange}
 		/>
 	);
 };

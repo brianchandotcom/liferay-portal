@@ -68,7 +68,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 ).build();
 %>
 
-<div>
+<div class="categories-tree container-fluid-1280" id="<portlet:namespace />categoriesContainer">
 	<react:component
 		data="<%= data %>"
 		module="asset_categories_navigation/js/AssetCategoriesNavigationTreeView"

@@ -31,21 +31,10 @@ function buildNodes(vocabularies, categories) {
 	}));
 }
 
-const AssetCategoriesNavigationTreeView = ({
-	categories,
-	namespace,
-	vocabularies,
-}) => {
+const AssetCategoriesNavigationTreeView = ({categories, vocabularies}) => {
 	const nodes = buildNodes(vocabularies, categories);
 
-	return (
-		<div
-			className="categories-tree container-fluid-1280"
-			id={`${namespace}categoriesContainer`}
-		>
-			<Treeview NodeComponent={Treeview.Card} nodes={nodes} />
-		</div>
-	);
+	return <Treeview NodeComponent={Treeview.Card} nodes={nodes} />;
 };
 
 export default AssetCategoriesNavigationTreeView;

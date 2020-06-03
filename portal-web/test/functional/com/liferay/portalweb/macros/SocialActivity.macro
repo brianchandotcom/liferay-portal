@@ -124,21 +124,15 @@ definition {
 			locator1 = "UserStatistics#RANKING_TABLE_USER_NAME",
 			value1 = "${userName}");
 
-		var key_userRank = "${userRank}";
-
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "UserStatistics#RANKING_TABLE_RANK",
 			value1 = "${userRank}");
 
-		var key_userContributionScore = "${contributionScore}";
-
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "UserStatistics#RANKING_TABLE_CONTRIBUTION_SCORE",
 			value1 = "${contributionScore}");
 
-		var key_userParticipationScore = "${participationScore}";
-
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "UserStatistics#RANKING_TABLE_PARTICIPATION_SCORE",
 			value1 = "${participationScore}");
 	}

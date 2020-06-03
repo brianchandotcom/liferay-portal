@@ -13,7 +13,7 @@
  */
 
 import {DataLayoutBuilderActions, DataLayoutVisitor} from 'data-engine-taglib';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import TranslationManager from '../../components/translation-manager/TranslationManager.es';
@@ -23,9 +23,8 @@ import FormViewContext from './FormViewContext.es';
 import saveFormView from './saveFormView.es';
 
 export default ({appsPortlet, newCustomObject}) => {
-	const [defaultLanguageId, setDefaultLanguageId] = useState();
-
-	const [editingLanguageId, setEditingLanguageId] = useState();
+	const [defaultLanguageId, setDefaultLanguageId] = useState('');
+	const [editingLanguageId, setEditingLanguageId] = useState('');
 
 	const [state, dispatch] = useContext(FormViewContext);
 	const {dataDefinition, dataDefinitionId, dataLayout} = state;
@@ -33,9 +32,10 @@ export default ({appsPortlet, newCustomObject}) => {
 	useEffect(() => {
 		if (dataDefinition.defaultLanguageId) {
 			setDefaultLanguageId(dataDefinition.defaultLanguageId);
-			setEditingLanguageId(dataDefinition.defaultLanguageId);
+
+			onEditingLanguageIdChange(dataDefinition.defaultLanguageId);
 		}
-	}, [dataDefinition.defaultLanguageId]);
+	}, [dataDefinition.defaultLanguageId, onEditingLanguageIdChange]);
 
 	const {basePortletURL} = useContext(AppContext);
 	let listUrl = basePortletURL;
@@ -56,14 +56,17 @@ export default ({appsPortlet, newCustomObject}) => {
 		});
 	};
 
-	const onEditingLanguageIdChange = (editingLanguageId) => {
-		setEditingLanguageId(editingLanguageId);
+	const onEditingLanguageIdChange = useCallback(
+		(editingLanguageId) => {
+			setEditingLanguageId(editingLanguageId);
 
-		dispatch({
-			payload: editingLanguageId,
-			type: DataLayoutBuilderActions.UPDATE_EDITING_LANGUAGE_ID,
-		});
-	};
+			dispatch({
+				payload: editingLanguageId,
+				type: DataLayoutBuilderActions.UPDATE_EDITING_LANGUAGE_ID,
+			});
+		},
+		[dispatch]
+	);
 
 	const onKeyDown = (event) => {
 		if (event.keyCode === 13) {
@@ -109,7 +112,11 @@ export default ({appsPortlet, newCustomObject}) => {
 			});
 	};
 
-	return defaultLanguageId ? (
+	if (!defaultLanguageId) {
+		return null;
+	}
+
+	return (
 		<UpperToolbar>
 			<UpperToolbar.Group>
 				<TranslationManager
@@ -145,5 +152,5 @@ export default ({appsPortlet, newCustomObject}) => {
 				</UpperToolbar.Button>
 			</UpperToolbar.Group>
 		</UpperToolbar>
-	) : null;
+	);
 };

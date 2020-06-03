@@ -1760,8 +1760,18 @@ public abstract class BaseBuild implements Build {
 
 			String consoleText = _build.getConsoleText();
 
-			int x = consoleText.indexOf(
-				"## git." + _repositoryType + ".properties");
+			int x = -1;
+
+			Pattern pattern = Pattern.compile(
+				JenkinsResultsParserUtil.combine(
+					"## (http://cloud-.*/)?git.", _repositoryType,
+					".properties"));
+
+			Matcher matcher = pattern.matcher(consoleText);
+
+			if (matcher.find()) {
+				x = matcher.start();
+			}
 
 			if (x == -1) {
 				return "";

@@ -19,6 +19,7 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -102,17 +103,21 @@ public class LayoutsTreeDisplayContext {
 		return administrationPortletURL.toString();
 	}
 
-	public String getConfigureLayoutSetURL() {
+	public String getConfigureLayoutSetURL() throws PortalException {
 		PortletURL configureLayoutSetURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
 		configureLayoutSetURL.setParameter(
 			"mvcRenderCommandName", "/layout/edit_layout_set");
+
+		Layout layout = _themeDisplay.getLayout();
+
 		configureLayoutSetURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
+			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
 		configureLayoutSetURL.setParameter(
-			"backURL", _themeDisplay.getURLCurrent());
+			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
+
 		configureLayoutSetURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
 		configureLayoutSetURL.setParameter(
@@ -121,17 +126,21 @@ public class LayoutsTreeDisplayContext {
 		return configureLayoutSetURL.toString();
 	}
 
-	public String getConfigureLayoutURL() {
+	public String getConfigureLayoutURL() throws PortalException {
 		PortletURL configureLayoutSetURL = PortalUtil.getControlPanelPortletURL(
 			_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
 			PortletRequest.RENDER_PHASE);
 
 		configureLayoutSetURL.setParameter(
 			"mvcRenderCommandName", "/layout/edit_layout");
+
+		Layout layout = _themeDisplay.getLayout();
+
 		configureLayoutSetURL.setParameter(
-			"redirect", _themeDisplay.getURLCurrent());
+			"redirect", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
 		configureLayoutSetURL.setParameter(
-			"backURL", _themeDisplay.getURLCurrent());
+			"backURL", PortalUtil.getLayoutFullURL(layout, _themeDisplay));
+
 		configureLayoutSetURL.setParameter(
 			"groupId", String.valueOf(_themeDisplay.getScopeGroupId()));
 		configureLayoutSetURL.setParameter(

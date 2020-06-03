@@ -79,7 +79,8 @@ definition {
 			task ("Add a basic '${fragmentName}' component") {
 				PageEditor.addFragment(
 					collectionName = "${collectionName}",
-					fragmentName = "${fragmentName}");
+					fragmentName = "${fragmentName}",
+					fragmentOrder = "4");
 			}
 
 			task ("Publish Content Page") {

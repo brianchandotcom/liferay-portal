@@ -124,12 +124,19 @@ definition {
 			}
 		}
 		else {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_collectionName = "${collectionName}",
-				key_fragmentName = "${fragmentName}",
-				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
-				value1 = "");
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "internetexplorer") {
+				DragAndDrop.javaScriptDragAndDropFragmentIE(fragmentOrder = "${fragmentOrder}");
+			}
+			else {
+				DragAndDrop.javaScriptDragAndDropToObject(
+					key_collectionName = "${collectionName}",
+					key_fragmentName = "${fragmentName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "PageEditor#FRAGMENT_DROP_TARGET",
+					value1 = "");
+			}
 		}
 
 		PageEditor.waitForAutoSave();

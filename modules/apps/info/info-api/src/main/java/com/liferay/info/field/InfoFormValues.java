@@ -16,8 +16,11 @@ package com.liferay.info.field;
 
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -34,7 +37,11 @@ public class InfoFormValues {
 
 		InfoField infoField = infoFieldValue.getInfoField();
 
-		_infoFieldValuesByName.put(infoField.getName(), infoFieldValue);
+		List<InfoFieldValue> infoFieldValues =
+			_infoFieldValuesByName.computeIfAbsent(
+				infoField.getName(), key -> new ArrayList<>());
+
+		infoFieldValues.add(infoFieldValue);
 
 		return this;
 	}
@@ -48,11 +55,23 @@ public class InfoFormValues {
 	}
 
 	public InfoFieldValue getInfoFieldValue(String fieldName) {
-		return _infoFieldValuesByName.get(fieldName);
+		List<InfoFieldValue> infoFieldValues = _infoFieldValuesByName.get(
+			fieldName);
+
+		if (!ListUtil.isEmpty(infoFieldValues)) {
+			return infoFieldValues.get(0);
+		}
+
+		return null;
 	}
 
 	public Collection<InfoFieldValue> getInfoFieldValues() {
 		return _infoFieldValues;
+	}
+
+	public List<InfoFieldValue> getInfoFieldValues(String fieldName) {
+		return _infoFieldValuesByName.getOrDefault(
+			fieldName, Collections.emptyList());
 	}
 
 	public InfoItemClassPKReference getInfoItemClassPKReference() {
@@ -90,7 +109,7 @@ public class InfoFormValues {
 
 	private final Collection<InfoFieldValue> _infoFieldValues =
 		new LinkedHashSet<>();
-	private final Map<String, InfoFieldValue> _infoFieldValuesByName =
+	private final Map<String, List<InfoFieldValue>> _infoFieldValuesByName =
 		new HashMap<>();
 	private InfoItemClassPKReference _infoItemClassPKReference;
 

@@ -18,15 +18,9 @@ import React from 'react';
 function buildNodes(vocabularies, categories) {
 	return vocabularies.map((vocabulary) => ({
 		...vocabulary,
-		children: categories
-			.map((category) => {
-				if (category.vocabularyId === vocabulary.vocabularyId) {
-					return {
-						...category,
-					};
-				}
-			})
-			.filter(Boolean),
+		children: categories.filter((category) => {
+			return category.vocabularyId === vocabulary.vocabularyId;
+		}),
 		id: vocabulary.vocabularyId,
 	}));
 }

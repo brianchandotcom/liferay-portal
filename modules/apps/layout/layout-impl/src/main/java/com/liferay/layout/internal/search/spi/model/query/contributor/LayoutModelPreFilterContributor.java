@@ -47,7 +47,9 @@ public class LayoutModelPreFilterContributor
 
 		String[] types = GetterUtil.getStringValues(
 			searchContext.getAttribute(Field.TYPE),
-			new String[] {LayoutConstants.TYPE_CONTENT});
+			new String[] {
+				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT
+			});
 
 		if (ArrayUtil.isNotEmpty(types)) {
 			TermsFilter typeTermsFilter = new TermsFilter(Field.TYPE);

@@ -393,7 +393,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				layout.getCompanyId(), layout.getGroupId(),
 				Layout.class.getName()) &&
-			Objects.equals(type, LayoutConstants.TYPE_CONTENT) && !system) {
+			(Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
+			 Objects.equals(type, LayoutConstants.TYPE_CONTENT)) &&
+			!system) {
 
 			layout.setStatus(WorkflowConstants.STATUS_DRAFT);
 		}
@@ -461,7 +463,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		// Draft layout
 
 		if (!system &&
-			(Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
+			(Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
+			 Objects.equals(type, LayoutConstants.TYPE_CONTENT) ||
 			 layout.isTypeAssetDisplay())) {
 
 			serviceContext.setModifiedDate(now);
@@ -3457,7 +3460,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setType(type);
 
-		if (Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION) ||
+			Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+
 			layout.setLayoutPrototypeUuid(StringPool.BLANK);
 			layout.setLayoutPrototypeLinkEnabled(false);
 		}

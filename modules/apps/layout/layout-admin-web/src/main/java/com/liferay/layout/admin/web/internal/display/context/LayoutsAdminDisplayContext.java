@@ -565,7 +565,8 @@ public class LayoutsAdminDisplayContext {
 		int layoutsCount = LayoutServiceUtil.getLayoutsCount(
 			getSelGroupId(), isPrivateLayout(), getKeywords(),
 			new String[] {
-				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
+				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
+				LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
 				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,
@@ -575,7 +576,8 @@ public class LayoutsAdminDisplayContext {
 		List<Layout> layouts = LayoutServiceUtil.getLayouts(
 			getSelGroupId(), isPrivateLayout(), getKeywords(),
 			new String[] {
-				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_EMBEDDED,
+				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
+				LayoutConstants.TYPE_EMBEDDED,
 				LayoutConstants.TYPE_LINK_TO_LAYOUT,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
 				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET,

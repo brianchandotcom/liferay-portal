@@ -115,8 +115,6 @@ definition {
 	test NavigateToMySites {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
-		ProductMenu.gotoSiteViaLink();
-
 		UserBar.gotoDropdownItem(dropdownItem = "My Sites");
 
 		Site.viewSelectSiteViaPersonalMenuMySites(siteName = "${siteName}");

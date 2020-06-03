@@ -88,6 +88,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		kaleoDefinitionVersion.setUserName(user.getFullName());
 		kaleoDefinitionVersion.setCreateDate(createDate);
 		kaleoDefinitionVersion.setModifiedDate(modifiedDate);
+		kaleoDefinitionVersion.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoDefinitionVersion.setName(name);
 		kaleoDefinitionVersion.setTitle(title);
 		kaleoDefinitionVersion.setDescription(description);

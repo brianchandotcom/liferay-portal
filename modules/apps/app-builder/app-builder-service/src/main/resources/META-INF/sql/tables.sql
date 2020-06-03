@@ -16,6 +16,13 @@ create table AppBuilderApp (
 	scope VARCHAR(75) null
 );
 
+create table AppBuilderAppDataRecordLink (
+	appBuilderAppDataRecordLinkId LONG not null primary key,
+	companyId LONG,
+	appBuilderAppId LONG,
+	ddlRecordId LONG
+);
+
 create table AppBuilderAppDeployment (
 	appBuilderAppDeploymentId LONG not null primary key,
 	companyId LONG,

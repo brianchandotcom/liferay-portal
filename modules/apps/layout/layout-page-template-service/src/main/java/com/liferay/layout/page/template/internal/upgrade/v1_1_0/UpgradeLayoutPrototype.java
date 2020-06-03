@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.internal.upgrade.v1_1_0;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -96,13 +97,15 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 					int i = 1;
 
 					while (true) {
-						name = name + i;
+						String newName = name + StringPool.DASH + i;
 
-						if (existingNames.contains(name)) {
+						if (existingNames.contains(newName)) {
 							i++;
 
 							continue;
 						}
+
+						name = newName;
 
 						break;
 					}

@@ -32,9 +32,20 @@ import {ColorPaletteField} from '../fragment-configuration-fields/ColorPaletteFi
 import {SelectField} from '../fragment-configuration-fields/SelectField';
 import {TextField} from '../fragment-configuration-fields/TextField';
 
+const MARGIN_AUTO_OPTION = {
+	label: Liferay.Language.get('auto'),
+	value: 'auto',
+};
+
 export const ContainerConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+
+	const isHorizontalMarginDisabled = item.config.containerWidth === 'fixed';
+
+	const horizontalMarginOptions = isHorizontalMarginDisabled
+		? [MARGIN_AUTO_OPTION]
+		: config.marginOptions;
 
 	const restoreConfig = () => {
 		dispatch(
@@ -233,35 +244,39 @@ export const ContainerConfigurationPanel = ({item}) => {
 					<FormRow>
 						<FormRow.Column>
 							<SelectField
-								disabled={
-									item.config.containerWidth === 'fixed'
-								}
+								disabled={isHorizontalMarginDisabled}
 								field={{
 									label: Liferay.Language.get('left'),
 									name: 'marginLeft',
 									typeOptions: {
-										validValues: config.marginOptions,
+										validValues: horizontalMarginOptions,
 									},
 								}}
 								onValueSelect={handleValueSelect}
-								value={item.config.marginLeft}
+								value={
+									isHorizontalMarginDisabled
+										? MARGIN_AUTO_OPTION.value
+										: item.config.marginLeft
+								}
 							/>
 						</FormRow.Column>
 
 						<FormRow.Column>
 							<SelectField
-								disabled={
-									item.config.containerWidth === 'fixed'
-								}
+								disabled={isHorizontalMarginDisabled}
 								field={{
 									label: Liferay.Language.get('right'),
 									name: 'marginRight',
 									typeOptions: {
-										validValues: config.marginOptions,
+										validValues: horizontalMarginOptions,
 									},
 								}}
 								onValueSelect={handleValueSelect}
-								value={item.config.marginRight}
+								value={
+									isHorizontalMarginDisabled
+										? MARGIN_AUTO_OPTION.value
+										: item.config.marginLeft
+								}
 							/>
 						</FormRow.Column>
 

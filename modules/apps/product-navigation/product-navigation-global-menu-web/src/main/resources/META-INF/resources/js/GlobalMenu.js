@@ -214,7 +214,7 @@ const GlobalMenu = ({panelAppsURL}) => {
 				displayType="unstyled"
 				onClick={handleButtonOnClick}
 				onFocus={fetchCategories}
-				onHover={fetchCategories}
+				onMouseOver={fetchCategories}
 				small
 				symbol="grid"
 				title={Liferay.Language.get('global-menu')}

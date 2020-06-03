@@ -97,6 +97,7 @@ page import="com.liferay.journal.exception.InvalidFolderException" %><%@
 page import="com.liferay.journal.exception.MaxAddMenuFavItemsException" %><%@
 page import="com.liferay.journal.exception.NoSuchArticleException" %><%@
 page import="com.liferay.journal.exception.NoSuchFolderException" %><%@
+page import="com.liferay.journal.exception.ReservedFieldNameException" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.journal.model.JournalArticleConstants" %><%@
 page import="com.liferay.journal.model.JournalArticleDisplay" %><%@

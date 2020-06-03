@@ -15,9 +15,12 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.mapping.exception.TemplateScriptException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.journal.exception.NoSuchArticleException;
+import com.liferay.journal.exception.ReservedFieldNameException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFeed;
@@ -65,6 +68,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -505,6 +509,17 @@ public class ActionUtil {
 		return true;
 	}
 
+	public static void validateFieldNames(DDMForm ddmForm) throws Exception {
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (String reservedFieldName : _RESERVED_FIELD_NAMES) {
+			if (ddmFormFieldsMap.containsKey(reservedFieldName)) {
+				throw new ReservedFieldNameException(reservedFieldName);
+			}
+		}
+	}
+
 	protected static String getElementInstanceId(
 			String content, String fieldName, int index)
 		throws Exception {
@@ -599,5 +614,9 @@ public class ActionUtil {
 
 		return false;
 	}
+
+	private static final String[] _RESERVED_FIELD_NAMES = {
+		"attributes", "data", "name", "options", "optionsMap", "type"
+	};
 
 }

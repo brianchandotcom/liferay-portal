@@ -546,5 +546,6 @@
 		<exception>FolderName</exception>
 		<exception>InvalidDDMStructure</exception>
 		<exception>InvalidFolder</exception>
+		<exception>ReservedFieldName</exception>
 	</exceptions>
 </service-builder>

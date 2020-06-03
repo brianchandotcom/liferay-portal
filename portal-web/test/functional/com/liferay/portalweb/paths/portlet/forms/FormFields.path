@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>REPEATABLE_HELP_TEXT</td>
-	<td>//div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]/span</td>
+	<td>//div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//p[@class='liferay-ddm-form-field-tip'] | //div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -203,12 +203,12 @@
 <!--TEXT-->
 <tr>
 	<td>REPEATABLE_TEXT_MULTILINE_FIELD</td>
-	<td>//div[contains(@class,'form-group')][${key_repeatableFieldNumber}]//textarea[contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]</td>
+	<td>//div[contains(@class,'form-group')][${key_repeatableFieldNumber}]//textarea[contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')] | //div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//textarea[contains(@id,'${key_fieldName}') or contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPEATABLE_TEXT_MULTILINE_LABEL</td>
-	<td>//div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//label[contains(.,'${key_fieldLabel}')]</td>
+	<td>//div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//label[contains(.,'${key_fieldLabel}')] | //div[contains(@class,'form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//p[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

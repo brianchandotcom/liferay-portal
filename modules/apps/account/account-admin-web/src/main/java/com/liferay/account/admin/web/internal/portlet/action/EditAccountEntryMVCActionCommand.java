@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Objects;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -60,15 +62,23 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long parentAccountEntryId = ParamUtil.getInteger(
-			actionRequest, "parentAccountEntryId");
+		long parentAccountEntryId = AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT;
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		String[] domains = ParamUtil.getStringValues(actionRequest, "domains");
+		String[] domains = new String[0];
 		String taxIdNumber = ParamUtil.getString(actionRequest, "taxIdNumber");
+
 		String type = ParamUtil.getString(
 			actionRequest, "type",
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+		if (Objects.equals(
+				AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, type)) {
+
+			domains = ParamUtil.getStringValues(actionRequest, "domains");
+			parentAccountEntryId = ParamUtil.getInteger(
+				actionRequest, "parentAccountEntryId");
+		}
 
 		return _accountEntryLocalService.addAccountEntry(
 			themeDisplay.getUserId(), parentAccountEntryId, name, description,

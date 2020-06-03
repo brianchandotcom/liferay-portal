@@ -21,7 +21,7 @@ import ListView from '../../components/list-view/ListView.es';
 import PermissionsModal from '../../components/permissions/PermissionsModal.es';
 import {ACTIONS} from '../../pages/entry/PermissionsContext.es';
 import {getItem, updateItem} from '../../utils/client.es';
-import lang from '../../utils/lang.es';
+import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 
 const COLUMNS = [
@@ -131,7 +131,7 @@ export default ({history, listViewProps = {}, objectType}) => {
 					dateModified: fromNow(item.dateModified),
 					name: (
 						<Link to={`/${objectType}/${item.id}/form-views`}>
-							{lang.getLocalizedValue(
+							{getLocalizedValue(
 								item.defaultLanguageId,
 								item.name
 							)}

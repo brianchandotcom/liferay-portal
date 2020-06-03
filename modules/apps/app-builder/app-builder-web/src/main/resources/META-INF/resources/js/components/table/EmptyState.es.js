@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import lang from '../../utils/lang.es';
+import {sub} from '../../utils/lang.es';
 
 const DEFAULT_EMPTY = {
 	empty: {
@@ -65,7 +65,7 @@ export const FilteredEmpty = (props) => {
 };
 
 export const SearchEmpty = ({keywords, ...otherProps}) => {
-	const description = lang.sub(
+	const description = sub(
 		Liferay.Language.get('there-are-no-results-for-x'),
 		[keywords]
 	);
@@ -74,7 +74,7 @@ export const SearchEmpty = ({keywords, ...otherProps}) => {
 };
 
 export const SearchAndFilteredEmpty = ({keywords, ...otherProps}) => {
-	const description = lang.sub(
+	const description = sub(
 		Liferay.Language.get(
 			'there-are-no-results-for-x-with-these-attributes'
 		),

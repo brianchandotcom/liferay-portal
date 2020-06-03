@@ -46,7 +46,7 @@ const sub = (langKey, args) => {
 	return keyArray.join('');
 };
 
-export default {
+export {
 	getLocalizedValue,
-	sub,
+	sub
 };

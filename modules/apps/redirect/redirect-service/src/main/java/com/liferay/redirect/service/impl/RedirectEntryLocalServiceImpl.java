@@ -410,12 +410,6 @@ public class RedirectEntryLocalServiceImpl
 			throw new RequiredRedirectEntrySourceURLException();
 		}
 
-		_validateSourceURL(sourceURL);
-	}
-
-	private void _validateSourceURL(String sourceURL)
-		throws LayoutFriendlyURLException {
-
 		if (sourceURL.startsWith(StringPool.SLASH)) {
 			throw new LayoutFriendlyURLException(
 				LayoutFriendlyURLException.DOES_NOT_START_WITH_SLASH);

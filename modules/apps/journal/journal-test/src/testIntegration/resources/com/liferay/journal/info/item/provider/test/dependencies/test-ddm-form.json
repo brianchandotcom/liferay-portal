@@ -1,0 +1,35 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "DDM_Text",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

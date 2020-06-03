@@ -286,17 +286,27 @@ public class AssetListAssetEntryProviderImpl
 				_dlFileEntryTypeLocalService.fetchFileEntryType(
 					classTypeIds[0]);
 
-			List<DDMStructure> ddmStructures =
-				dlFileEntryType.getDDMStructures();
+			if (dlFileEntryType != null) {
+				List<DDMStructure> ddmStructures =
+					dlFileEntryType.getDDMStructures();
 
-			if (!ddmStructures.isEmpty()) {
-				DDMStructure ddmStructure = ddmStructures.get(0);
+				if (!ddmStructures.isEmpty()) {
+					DDMStructure ddmStructure = ddmStructures.get(0);
 
-				assetEntryQuery.setAttribute(
-					"ddmStructureFieldName",
-					DDMIndexerUtil.encodeName(
-						ddmStructure.getStructureId(), ddmStructureFieldName,
-						LocaleUtil.getMostRelevantLocale()));
+					assetEntryQuery.setAttribute(
+						"ddmStructureFieldName",
+						DDMIndexerUtil.encodeName(
+							ddmStructure.getStructureId(),
+							ddmStructureFieldName,
+							LocaleUtil.getMostRelevantLocale()));
+				}
+				else {
+					assetEntryQuery.setAttribute(
+						"ddmStructureFieldName",
+						DDMIndexerUtil.encodeName(
+							classTypeIds[0], ddmStructureFieldName,
+							LocaleUtil.getMostRelevantLocale()));
+				}
 			}
 			else {
 				assetEntryQuery.setAttribute(

@@ -104,7 +104,8 @@ public class AccountResourceImpl
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			contextUser.getUserId(), _getParentAccountId(account),
 			account.getName(), account.getDescription(), _getDomains(account),
-			null, null, _getStatus(account), null);
+			null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			_getStatus(account), null);
 
 		_accountEntryOrganizationRelLocalService.
 			setAccountEntryOrganizationRels(

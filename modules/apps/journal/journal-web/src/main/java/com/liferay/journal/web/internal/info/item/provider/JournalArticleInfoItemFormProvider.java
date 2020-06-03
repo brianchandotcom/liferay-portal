@@ -20,9 +20,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMTemplateInfoItemFieldSetProvider;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
-import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
-import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
@@ -48,6 +45,7 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
+import com.liferay.journal.web.internal.info.display.field.DDMFormValuesInfoFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -199,8 +197,6 @@ public class JournalArticleInfoItemFormProvider
 	private List<InfoFieldValue<Object>> _getDDMStructureInfoFieldValues(
 		JournalArticle article) {
 
-		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
-
 		JournalArticleDDMFormValuesReader journalArticleDDMFormValuesReader =
 			new JournalArticleDDMFormValuesReader(article);
 
@@ -210,35 +206,12 @@ public class JournalArticleInfoItemFormProvider
 			_journalConverter);
 
 		try {
-			DDMFormValues ddmFormValues =
-				journalArticleDDMFormValuesReader.getDDMFormValues();
-
-			for (DDMFormFieldValue ddmFormFieldValue :
-					ddmFormValues.getDDMFormFieldValues()) {
-
-				String fieldName = ddmFormFieldValue.getName();
-
-				Value value = ddmFormFieldValue.getValue();
-
-				infoFieldValues.add(
-					new InfoFieldValue<>(
-						new InfoField(
-							TextInfoFieldType.INSTANCE,
-							InfoLocalizedValue.localize(getClass(), fieldName),
-							fieldName),
-						InfoLocalizedValue.builder(
-						).defaultLocale(
-							value.getDefaultLocale()
-						).addValues(
-							value.getValues()
-						).build()));
-			}
+			return _ddmFormValuesInfoFieldSetProvider.getInfoFieldValues(
+				article, journalArticleDDMFormValuesReader.getDDMFormValues());
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
-
-		return infoFieldValues;
 	}
 
 	private List<InfoFieldValue<Object>> _getDDMTemplateInfoFieldValues(
@@ -451,6 +424,10 @@ public class JournalArticleInfoItemFormProvider
 		InfoLocalizedValue.localize(
 			"com.liferay.journal.lang", "author-profile-image"),
 		"authorProfileImage");
+
+	@Reference
+	private DDMFormValuesInfoFieldSetProvider
+		_ddmFormValuesInfoFieldSetProvider;
 
 	@Reference
 	private DDMStructureInfoItemFieldSetProvider

@@ -41,7 +41,7 @@ public class InfoForm {
 		InfoFieldSetEntry infoFieldSetEntry = _entries.get(fieldSet.getName());
 
 		if ((infoFieldSetEntry != null) &&
-				(infoFieldSetEntry instanceof InfoFieldSet)) {
+			(infoFieldSetEntry instanceof InfoFieldSet)) {
 
 			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 

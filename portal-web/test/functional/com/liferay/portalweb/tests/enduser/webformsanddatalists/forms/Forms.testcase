@@ -580,10 +580,12 @@ definition {
 		Form.save();
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test AddFormWithSpanishAsDefaultPortalLanguage {
 		property test.name.skip.portal.instance = "Forms#AddFormWithSpanishAsDefaultPortalLanguage";
+		property portal.acceptance = "true";
+
+		Navigator.openURL();
 
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Localization",
@@ -663,6 +665,15 @@ definition {
 			fieldLabel = "Text Field On Spanish Portal",
 			fieldName = "TextFieldOnSpanishPortal",
 			fieldValue = "Text Field Value");
+
+		Navigator.openURL();
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "English (United States)");
 	}
 
 	@description = "This is a use case for LPS-75116 and LPS-79101."

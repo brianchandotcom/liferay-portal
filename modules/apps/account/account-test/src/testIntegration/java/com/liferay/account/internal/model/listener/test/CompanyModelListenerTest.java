@@ -14,6 +14,7 @@
 
 package com.liferay.account.internal.model.listener.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -58,6 +59,7 @@ public class CompanyModelListenerTest {
 		_accountEntry = _accountEntryLocalService.addAccountEntry(
 			_defaultUser.getUserId(), 0L, RandomTestUtil.randomString(50),
 			RandomTestUtil.randomString(50), null, null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 	}

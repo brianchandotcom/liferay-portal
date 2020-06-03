@@ -14,6 +14,7 @@
 
 package com.liferay.account.service.test;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -41,7 +42,8 @@ public class AccountEntryTestUtil {
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
 			RandomTestUtil.randomString(50), null, null,
-			RandomTestUtil.randomString(50), status,
+			RandomTestUtil.randomString(50),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, status,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
@@ -52,7 +54,9 @@ public class AccountEntryTestUtil {
 
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, name, description, null, null,
-			RandomTestUtil.randomString(50), WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(50),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
@@ -63,7 +67,9 @@ public class AccountEntryTestUtil {
 		return accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), 0L, RandomTestUtil.randomString(50),
 			RandomTestUtil.randomString(50), domains, null,
-			RandomTestUtil.randomString(50), WorkflowConstants.STATUS_APPROVED,
+			RandomTestUtil.randomString(50),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

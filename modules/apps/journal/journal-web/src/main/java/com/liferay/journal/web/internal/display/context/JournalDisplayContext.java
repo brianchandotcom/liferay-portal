@@ -1203,8 +1203,13 @@ public class JournalDisplayContext {
 					articleSearchContainer.getOrderByComparator());
 
 			articleSearchContainer.setResults(results);
+
+			_articleSearchContainer = articleSearchContainer;
+
+			return _articleSearchContainer;
 		}
-		else if (Validator.isNotNull(getDDMStructureKey())) {
+
+		if (Validator.isNotNull(getDDMStructureKey())) {
 			int total = JournalArticleServiceUtil.getArticlesCountByStructureId(
 				_themeDisplay.getScopeGroupId(), getDDMStructureKey(),
 				getStatus());
@@ -1219,8 +1224,13 @@ public class JournalDisplayContext {
 					articleSearchContainer.getOrderByComparator());
 
 			articleSearchContainer.setResults(results);
+
+			_articleSearchContainer = articleSearchContainer;
+
+			return _articleSearchContainer;
 		}
-		else if (isSearch()) {
+
+		if (isSearch()) {
 			Indexer<?> indexer = JournalSearcher.getInstance();
 
 			SearchContext searchContext = buildSearchContext(
@@ -1256,23 +1266,23 @@ public class JournalDisplayContext {
 			}
 
 			articleSearchContainer.setResults(results);
+
+			_articleSearchContainer = articleSearchContainer;
+
+			return _articleSearchContainer;
 		}
-		else {
-			int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
-				_themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus());
 
-			articleSearchContainer.setTotal(total);
+		int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(
+			_themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus());
 
-			List<Object> results =
-				JournalFolderServiceUtil.getFoldersAndArticles(
-					_themeDisplay.getScopeGroupId(), 0, getFolderId(),
-					getStatus(), _themeDisplay.getLocale(),
-					articleSearchContainer.getStart(),
-					articleSearchContainer.getEnd(),
-					_getFolderOrderByComparator());
+		articleSearchContainer.setTotal(total);
 
-			articleSearchContainer.setResults(results);
-		}
+		List<Object> results = JournalFolderServiceUtil.getFoldersAndArticles(
+			_themeDisplay.getScopeGroupId(), 0, getFolderId(), getStatus(),
+			_themeDisplay.getLocale(), articleSearchContainer.getStart(),
+			articleSearchContainer.getEnd(), _getFolderOrderByComparator());
+
+		articleSearchContainer.setResults(results);
 
 		_articleSearchContainer = articleSearchContainer;
 

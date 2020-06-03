@@ -109,7 +109,7 @@ definition {
 	@summary = "Navigate to ${site} via the 'Go to Site' link"
 	macro gotoSiteViaLink {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "Guest");
+			GlobalMenu.gotoSite(site = "${site}");
 		}
 
 		ProductMenuHelper.expandPanel(panel = "Site Administration");

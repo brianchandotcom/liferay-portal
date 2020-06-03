@@ -176,12 +176,9 @@ public class WorkspaceExtension {
 							"value managed by the liferay.workspace.product " +
 								"setting.";
 
-					String defaultAppServerVersion =
-						_getDefaultAppServerVersion();
-
 					if (!Objects.equals(
 							getAppServerTomcatVersion(),
-							defaultAppServerVersion)) {
+							_getDefaultAppServerVersion())) {
 
 						logger.lifecycle(
 							String.format(
@@ -189,11 +186,8 @@ public class WorkspaceExtension {
 								"app.server.tomcat.version"));
 					}
 
-					String defaultProductBundleUrl =
-						_getDefaultProductBundleUrl();
-
 					if (!Objects.equals(
-							getBundleUrl(), defaultProductBundleUrl)) {
+							getBundleUrl(), _getDefaultProductBundleUrl())) {
 
 						logger.lifecycle(
 							String.format(
@@ -201,10 +195,9 @@ public class WorkspaceExtension {
 								"liferay.workspace.bundle.url"));
 					}
 
-					String defaultDockerImage = _getDefaultDockerImage();
-
 					if (!Objects.equals(
-							getDockerImageLiferay(), defaultDockerImage)) {
+							getDockerImageLiferay(),
+							_getDefaultDockerImage())) {
 
 						logger.lifecycle(
 							String.format(
@@ -212,12 +205,9 @@ public class WorkspaceExtension {
 								"liferay.workspace.docker.image.liferay"));
 					}
 
-					String defaultTargetplatformVersion =
-						_getDefaultTargetplatformVersion();
-
 					if (!Objects.equals(
 							getTargetPlatformVersion(),
-							defaultTargetplatformVersion)) {
+							_getDefaultTargetplatformVersion())) {
 
 						logger.lifecycle(
 							String.format(

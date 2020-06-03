@@ -522,7 +522,8 @@ definition {
 
 		WorkflowMetrics.createUsersAndAssignInstances(
 			numberOfBlogInstances = "4",
-			numberOfUsers = "3");
+			numberOfUsers = "3",
+			site = "Guest");
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -649,7 +650,7 @@ definition {
 		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowModalExceptions";
 
 		WorkflowMetrics.bulkReassignSetup();
-		WorkflowMetrics.bulkReassignExceptionsSetup();
+		WorkflowMetrics.bulkReassignExceptionsSetup(site = "Guest");
 		WorkflowMetrics.goToWorkflowAllItems();
 		WorkflowMetrics.assertBulkCount();
 		WorkflowMetrics.goToBulkReassignSelectTasks();
@@ -1005,7 +1006,7 @@ definition {
 	test ReassignWorkflowInstance {
 		property portal.acceptance = "true";
 
-		WorkflowMetrics.singleReassignSetup();
+		WorkflowMetrics.singleReassignSetup(site = "Guest");
 		WorkflowMetrics.goToWorkflowAllItems();
 		WorkflowMetrics.goToReassignSelectTask();
 		WorkflowMetrics.assertBulkModalTable();

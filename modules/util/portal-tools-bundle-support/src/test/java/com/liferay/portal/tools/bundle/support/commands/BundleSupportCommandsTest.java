@@ -577,7 +577,8 @@ public class BundleSupportCommandsTest {
 	}
 
 	private static URL _getHttpServerUrl(String contextPath) throws Exception {
-		return new URL("http", "127.0.0.1", _HTTP_SERVER_PORT, contextPath);
+		return new URL(
+			"http", "localhost.localdomain", _HTTP_SERVER_PORT, contextPath);
 	}
 
 	private static int _getTestPort(int... excludedPorts) throws IOException {
@@ -665,7 +666,7 @@ public class BundleSupportCommandsTest {
 
 	private static HttpServer _startHttpServer() throws Exception {
 		HttpServer httpServer = HttpServer.create(
-			new InetSocketAddress("127.0.0.1", _HTTP_SERVER_PORT), 0);
+			new InetSocketAddress(_HTTP_SERVER_PORT), 0);
 
 		Authenticator authenticator = new BasicAuthenticator(
 			_HTTP_SERVER_REALM) {

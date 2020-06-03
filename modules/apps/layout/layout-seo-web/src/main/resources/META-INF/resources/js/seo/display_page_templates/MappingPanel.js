@@ -73,7 +73,11 @@ function MappingPanel({
 							</label>
 							<ClayInput
 								readOnly
-								value={initialSelectedSource.label}
+								value={
+									initialSelectedSource.classNameLabel +
+									' - ' +
+									initialSelectedSource.classTypeLabel
+								}
 							/>
 						</ClayForm.Group>
 						<ClayForm.Group small>
@@ -105,9 +109,11 @@ MappingPanel.propTypes = {
 		key: PropTypes.string,
 		label: PropTypes.string,
 	}).isRequired,
-	selectedSource: PropTypes.shape({
-		key: PropTypes.string,
-		label: PropTypes.string,
+	initialSelectedSource: PropTypes.shape({
+		className: PropTypes.string,
+		classNameLabel: PropTypes.string,
+		classTypeId: PropTypes.string,
+		classTypeLabel: PropTypes.string,
 	}).isRequired,
 };
 

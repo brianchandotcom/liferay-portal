@@ -47,7 +47,7 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 
 		List<DDMStructure> ddmStructures = getDDMStructures(ddmStructureLinks);
 
-		//LPS-104152
+		// See LPS-104152
 
 		if (ListUtil.isEmpty(ddmStructures)) {
 			DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(

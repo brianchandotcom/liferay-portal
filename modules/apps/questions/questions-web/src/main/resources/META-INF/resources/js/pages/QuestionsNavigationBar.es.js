@@ -91,8 +91,12 @@ export default withRouter(
 
 		const navigateToNewQuestion = () => {
 			if (context.redirectToLogin && !themeDisplay.isSignedIn()) {
+				var baseURL = window.location.href.substring(
+					window.location.origin.length,
+					window.location.href.indexOf('#')
+				);
 				window.location.replace(
-					`/c/portal/login?redirect=/#/questions/${sectionTitle}/new`
+					`/c/portal/login?redirect=${baseURL}#/questions/${sectionTitle}/new`
 				);
 			}
 			else {

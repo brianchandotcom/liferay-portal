@@ -13,6 +13,8 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+
+import 'product-navigation-global-apps/css/GlobalMenu.scss';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
@@ -69,6 +71,7 @@ const AppsPanel = ({categories = [], portletNamespace, sites}) => {
 				{categories.map(({childCategories}, index) => (
 					<ClayTabs.TabPane
 						aria-labelledby={`${portletNamespace}tab_${index}`}
+						className={'global-menu__tab-pane'}
 						key={`tabPane-${index}`}
 					>
 						<div className="c-p-md-3 row">

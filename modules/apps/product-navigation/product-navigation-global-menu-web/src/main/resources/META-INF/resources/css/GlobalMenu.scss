@@ -1,0 +1,7 @@
+$control-menu-height: 56px;
+$tab-header-height: 38px;
+
+.global-menu__tab-pane {
+	max-height: calc(100vh - #{$control-menu-height + $tab-header-height});
+	overflow-y: auto;
+}

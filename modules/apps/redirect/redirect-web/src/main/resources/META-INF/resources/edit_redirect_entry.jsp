@@ -56,18 +56,45 @@ else {
 	</c:if>
 
 	<liferay-frontend:edit-form-body>
-		<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>" focusField="sourceURL">
-
-			<%
-				LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)errorException;
-			%>
-
-			<%@ include file="/error_source_url_exception.jspf" %>
-		</liferay-ui:error>
-
 		<liferay-ui:error exception="<%= CircularRedirectEntryException.DestinationURLMustNotBeEqualToSourceURL.class %>" focusField="destinationURL" message="destination-url-cannot-be-the-same-as-source-url" />
 		<liferay-ui:error exception="<%= CircularRedirectEntryException.MustNotFormALoopWithAnotherRedirectEntry.class %>" focusField="sourceURL" message="please-change-the-source-or-destination-url-to-avoid-redirect-loop" />
 		<liferay-ui:error exception="<%= DuplicateRedirectEntrySourceURLException.class %>" focusField="sourceURL" message="there-is-already-a-redirect-set-for-the-same-source-url" />
+
+		<liferay-ui:error exception="<%= LayoutFriendlyURLException.class %>" focusField="sourceURL">
+
+			<%
+			LayoutFriendlyURLException lfurle = (LayoutFriendlyURLException)errorException;
+			%>
+
+			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ADJACENT_SLASHES %>">
+				<liferay-ui:message key="please-enter-a-source-url-that-does-not-have-adjacent-slashes" />
+			</c:if>
+
+			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.DOES_NOT_START_WITH_SLASH %>">
+				<liferay-ui:message key="please-enter-a-source-url-that-begins-with-a-slash" />
+			</c:if>
+
+			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.ENDS_WITH_SLASH %>">
+				<liferay-ui:message key="please-enter-a-source-url-that-does-not-end-with-a-slash" />
+			</c:if>
+
+			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.INVALID_CHARACTERS %>">
+				<liferay-ui:message key="please-enter-a-source-url-with-valid-characters" />
+			</c:if>
+
+			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.KEYWORD_CONFLICT %>">
+				<liferay-ui:message arguments="<%= lfurle.getKeywordConflict() %>" key="please-enter-a-source-url-that-does-not-conflict-with-the-keyword-x" translateArguments="<%= false %>" />
+			</c:if>
+
+			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_LONG %>">
+				<liferay-ui:message key="the-source-url-is-too-long" />
+			</c:if>
+
+			<c:if test="<%= lfurle.getType() == LayoutFriendlyURLException.TOO_SHORT %>">
+				<liferay-ui:message key="please-enter-a-source-url-that-is-at-least-two-characters-long" />
+			</c:if>
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= RequiredRedirectEntryDestinationURLException.class %>" focusField="destinationURL" message="the-destination-url-must-be-specified" />
 		<liferay-ui:error exception="<%= RequiredRedirectEntrySourceURLException.class %>" focusField="sourceURL" message="the-source-url-must-be-specified" />
 

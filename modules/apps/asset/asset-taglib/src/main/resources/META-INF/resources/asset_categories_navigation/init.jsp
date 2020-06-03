@@ -20,8 +20,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
-page import="com.liferay.asset.taglib.internal.display.context.AssetCategoriesNavigationDisplayContext" %><%@
+<%@ page import="com.liferay.asset.taglib.internal.display.context.AssetCategoriesNavigationDisplayContext" %><%@
 page import="com.liferay.asset.taglib.internal.util.AssetCategoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

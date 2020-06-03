@@ -20,28 +20,7 @@
 AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request, renderResponse);
 
 boolean hidePortletWhenEmpty = GetterUtil.getBoolean((String)request.getAttribute("liferay-asset:asset-tags-navigation:hidePortletWhenEmpty"));
-%>
 
-<liferay-ui:panel-container
-	cssClass="taglib-asset-categories-navigation"
-	extended="<%= true %>"
-	id='<%= namespace + "taglibAssetCategoriesNavigationPanel" %>'
-	persistState="<%= true %>"
->
-
-	<%
-	for (AssetVocabulary vocabulary : assetCategoriesNavigationDisplayContext.getVocabularies()) {
-		String vocabularyNavigation = assetCategoriesNavigationDisplayContext.buildVocabularyNavigation(vocabulary);
-
-		if (Validator.isNotNull(vocabularyNavigation)) {
-			hidePortletWhenEmpty = false;
-		}
-	}
-	%>
-
-</liferay-ui:panel-container>
-
-<%
 if (hidePortletWhenEmpty) {
 	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 %>

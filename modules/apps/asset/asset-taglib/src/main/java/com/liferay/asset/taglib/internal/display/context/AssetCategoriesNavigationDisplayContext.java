@@ -139,12 +139,26 @@ public class AssetCategoriesNavigationDisplayContext {
 		return _vocabularies;
 	}
 
+	public boolean hasCategories() throws PortalException {
+		JSONArray categoriesJSONArray = _getCategoriesJSONArray();
+
+		if (categoriesJSONArray.length() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean hidePortletWhenEmpty() {
 		return _hidePortletWhenEmpty;
 	}
 
 	private JSONArray _getCategoriesJSONArray() throws PortalException {
-		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray();
+		if (_categoriesJSONArray != null) {
+			return _categoriesJSONArray;
+		}
+
+		_categoriesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (AssetVocabulary vocabulary : getVocabularies()) {
 			List<AssetCategory> categories =
@@ -153,11 +167,11 @@ public class AssetCategoriesNavigationDisplayContext {
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			for (AssetCategory category : categories) {
-				categoriesJSONArray.put(_getCategoryJSONObject(category));
+				_categoriesJSONArray.put(_getCategoryJSONObject(category));
 			}
 		}
 
-		return categoriesJSONArray;
+		return _categoriesJSONArray;
 	}
 
 	private JSONObject _getCategoryJSONObject(AssetCategory category)
@@ -207,6 +221,7 @@ public class AssetCategoriesNavigationDisplayContext {
 		return HtmlUtil.escape(portletURL.toString());
 	}
 
+	private JSONArray _categoriesJSONArray;
 	private Long _categoryId;
 	private final boolean _hidePortletWhenEmpty;
 	private final HttpServletRequest _httpServletRequest;

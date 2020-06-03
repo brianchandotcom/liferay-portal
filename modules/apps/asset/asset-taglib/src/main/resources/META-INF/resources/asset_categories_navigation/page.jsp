@@ -19,7 +19,7 @@
 <%
 AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request, renderResponse);
 
-if (assetCategoriesNavigationDisplayContext.hidePortletWhenEmpty()) {
+if (assetCategoriesNavigationDisplayContext.hidePortletWhenEmpty() && !assetCategoriesNavigationDisplayContext.hasCategories()) {
 	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 %>
 

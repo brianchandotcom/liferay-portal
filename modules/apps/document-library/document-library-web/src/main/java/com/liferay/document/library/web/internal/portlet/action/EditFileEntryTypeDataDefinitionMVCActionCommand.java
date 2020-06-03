@@ -167,7 +167,7 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 			DLFileEntryType.class.getName(), actionRequest);
 
 		_dlFileEntryTypeService.addFileEntryType(
-			themeDisplay.getScopeGroupId(), dataDefinition.getId(),  null,
+			themeDisplay.getScopeGroupId(), dataDefinition.getId(), null,
 			nameMap, descriptionMap, serviceContext);
 	}
 

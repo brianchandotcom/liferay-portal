@@ -113,9 +113,7 @@ const mountStruct = (event, field, value) => {
 };
 
 export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
-	const {
-		store: {fieldTypes},
-	} = usePage();
+	const {fieldTypes} = usePage();
 	const [hasError, setHasError] = useState(false);
 	const loadField = useLazy();
 

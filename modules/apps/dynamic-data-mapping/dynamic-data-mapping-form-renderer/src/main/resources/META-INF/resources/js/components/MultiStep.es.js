@@ -15,10 +15,10 @@
 import classnames from 'classnames';
 import React from 'react';
 
-import {EVENT_TYPES, usePage} from '../hooks/usePage.es';
+import {EVENT_TYPES, useForm} from '../hooks/useForm.es';
 
 export const MultiStep = ({activePage, editable, pages}) => {
-	const {dispatch} = usePage();
+	const dispatch = useForm();
 
 	return (
 		<div className="ddm-form-pagination position-relative wizard-mode">

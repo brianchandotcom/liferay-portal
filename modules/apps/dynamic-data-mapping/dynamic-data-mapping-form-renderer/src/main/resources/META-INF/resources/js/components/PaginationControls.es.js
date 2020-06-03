@@ -16,7 +16,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import {EVENT_TYPES, usePage} from '../hooks/usePage.es';
+import {EVENT_TYPES, useForm} from '../hooks/useForm.es';
+import {usePage} from '../hooks/usePage.es';
 
 export const PaginationControls = ({
 	activePage,
@@ -26,8 +27,8 @@ export const PaginationControls = ({
 	submitLabel,
 	total,
 }) => {
-	const {dispatch, store} = usePage();
-	const {cancelLabel, redirectURL, showCancelButton} = store;
+	const {cancelLabel, redirectURL, showCancelButton} = usePage();
+	const dispatch = useForm();
 
 	return (
 		<div className="lfr-ddm-form-pagination-controls">

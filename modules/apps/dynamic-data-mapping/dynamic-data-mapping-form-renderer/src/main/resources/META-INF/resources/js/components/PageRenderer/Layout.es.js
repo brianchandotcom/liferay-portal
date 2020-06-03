@@ -14,15 +14,14 @@
 
 import React from 'react';
 
-import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
+import {EVENT_TYPES, useForm} from '../../hooks/useForm.es';
+import {usePage} from '../../hooks/usePage.es';
 import {Field} from '../Field/Field.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
 export const Layout = ({components: Components = DefaultVariant, rows}) => {
-	const {
-		dispatch,
-		store: {activePage, allowNestedFields, editable, pageIndex, spritemap},
-	} = usePage();
+	const {activePage, allowNestedFields, editable, pageIndex, spritemap} = usePage();
+	const dispatch = useForm();
 
 	return (
 		<Components.Rows

@@ -13,13 +13,24 @@
  */
 
 import Soy from 'metal-soy';
+import React from 'react';
 
 import FormRenderer from '../../components/FormRenderer/FormRenderer.es';
-import templates from '../../components/FormRenderer/FormRenderer.soy';
+import {FormProvider} from '../../hooks/useForm.es';
 import withStore from '../../store/withStore.es';
+import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
+import templates from './index.soy';
 
-const Form = withStore(FormRenderer);
+const FormProxy = ({instance, ...otherProps}) => (
+	<FormProvider on={(type, payload) => instance.emit(type, payload)}>
+		<FormRenderer {...otherProps} />
+	</FormProvider>
+);
 
-Soy.register(Form, templates);
+const ReactFormAdapter = withStore(
+	getConnectedReactComponentAdapter(FormProxy)
+);
 
-export default Form;
+Soy.register(ReactFormAdapter, templates);
+
+export default ReactFormAdapter;

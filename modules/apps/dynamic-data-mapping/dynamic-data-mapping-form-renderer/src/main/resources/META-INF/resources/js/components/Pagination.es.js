@@ -16,10 +16,10 @@ import ClayPagination from '@clayui/pagination';
 import classnames from 'classnames';
 import React from 'react';
 
-import {EVENT_TYPES, usePage} from '../hooks/usePage.es';
+import {EVENT_TYPES, useForm} from '../hooks/useForm.es';
 
 export const Pagination = ({activePage, pages}) => {
-	const {dispatch} = usePage();
+	const dispatch = useForm();
 
 	return (
 		<ClayPagination className="ddm-pagination justify-content-center">

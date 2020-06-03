@@ -14,16 +14,15 @@
 
 import './PageRenderer.soy';
 
+import {useResource} from '@clayui/data-provider';
+import {fetch} from 'frontend-js-web';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import classNames from 'classnames';
-import Soy from 'metal-soy';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
 import PageRenderer from '../PageRenderer/index';
-import templates from './index.soy';
 
 function getDisplayableValue({containerId, readOnly, viewMode}) {
 	return (
@@ -31,7 +30,15 @@ function getDisplayableValue({containerId, readOnly, viewMode}) {
 	);
 }
 
-function FormRenderer({
+const endpoint = `${window.location.origin}/o/dynamic-data-mapping-form-field-types`;
+
+const HEADERS = {
+	Accept: 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+};
+
+const FormRenderer = ({
 	activePage = 0,
 	cancelLabel = Liferay.Language.get('cancel'),
 	containerId,
@@ -45,7 +52,17 @@ function FormRenderer({
 	view,
 	viewMode,
 	...otherProps
-}) {
+}) => {
+	const {resource: fieldTypes} = useResource({
+		link: (variables) =>
+			fetch(`${endpoint}?${variables}`, {headers: HEADERS}).then((res) =>
+				res.json()
+			),
+		variables: {
+			p_auth: Liferay.authToken,
+		},
+	});
+
 	const currentPaginationMode = paginationMode ?? 'wizard';
 	const displayable =
 		initialDisplayableValue ||
@@ -73,7 +90,9 @@ function FormRenderer({
 						cancelLabel={cancelLabel}
 						editable={editable}
 						editingLanguageId={editingLanguageId}
+						fieldTypes={fieldTypes}
 						key={index}
+						page={page}
 						pageIndex={index}
 						pages={pages}
 						paginationMode={currentPaginationMode}
@@ -87,25 +106,12 @@ function FormRenderer({
 			</div>
 		</div>
 	);
-}
+};
 
-const FormRendererProxy = ({instance, ...otherProps}) => (
+export default (props) => (
 	<DndProvider backend={HTML5Backend} context={window}>
-		<ClayIconSpriteContext.Provider value={otherProps.spritemap}>
-			<FormRenderer
-				{...otherProps}
-				onBlur={(event) => instance.emit('fieldBlurred', event)}
-				onChange={(event) => instance.emit('fieldEdited', event)}
-				onFocus={(event) => instance.emit('fieldFocused', event)}
-			/>
+		<ClayIconSpriteContext.Provider value={props.spritemap}>
+			<FormRenderer {...props} />
 		</ClayIconSpriteContext.Provider>
 	</DndProvider>
 );
-
-const ReactComponentAdapter = getConnectedReactComponentAdapter(
-	FormRendererProxy
-);
-
-Soy.register(ReactComponentAdapter, templates);
-
-export default ReactComponentAdapter;

@@ -17,12 +17,13 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
+import {EVENT_TYPES, useForm} from '../../hooks/useForm.es';
+import {usePage} from '../../hooks/usePage.es';
 import {Placeholder} from './DefaultVariant.es';
 
 export const Container = ({children, empty, page, pageIndex, pages}) => {
-	const {dispatch, store} = usePage();
-	const {editingLanguageId, successPageSettings} = store;
+	const {editingLanguageId, successPageSettings} = usePage();
+	const dispatch = useForm();
 
 	const pageSettingsItems = [
 		empty

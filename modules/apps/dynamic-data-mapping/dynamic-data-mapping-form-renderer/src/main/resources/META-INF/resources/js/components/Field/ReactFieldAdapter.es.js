@@ -21,8 +21,6 @@ import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapte
 import {Field} from './Field.es';
 import templates from './ReactFieldAdapter.soy';
 
-const noop = () => {};
-
 /**
  * This creates a compatibility layer for the Field component on React, allowing
  * it to be called by Metal+Soy file.
@@ -47,7 +45,7 @@ export const ReactFieldAdapter = ({fieldType, instance, ...field}) => {
 	};
 
 	return (
-		<PageProvider dispatch={noop} value={field}>
+		<PageProvider value={field}>
 			<ClayIconSpriteContext.Provider value={field.spritemap}>
 				<Field
 					field={{

@@ -14,7 +14,8 @@
 
 import {useDrop as useDndDrop} from 'react-dnd';
 
-import {EVENT_TYPES, usePage} from './usePage.es';
+import {EVENT_TYPES, useForm} from '../hooks/useForm.es';
+import {usePage} from './usePage.es';
 
 const defaultSpec = {
 	accept: [],
@@ -26,10 +27,9 @@ export const DND_ORIGIN_TYPE = {
 };
 
 export const useDrop = (sourceItem) => {
-	const {
-		dispatch,
-		store: {dnd},
-	} = usePage();
+	const {dnd} = usePage();
+	const dispatch = useForm();
+
 	const spec = dnd ?? defaultSpec;
 
 	const [{canDrop, overTarget}, drop] = useDndDrop({

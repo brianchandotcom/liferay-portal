@@ -212,7 +212,7 @@ const Main = ({
 	value = '{}',
 	...otherProps
 }) => {
-	const {store} = usePage();
+	const {portletNamespace} = usePage();
 	const [currentValue, setCurrentValue] = useState(value);
 
 	const handleVisibleChange = (event) => {
@@ -271,7 +271,7 @@ const Main = ({
 				onSelectButtonClicked={() =>
 					handleSelectButtonClicked({
 						itemSelectorAuthToken,
-						portletNamespace: store.portletNamespace,
+						portletNamespace,
 					})
 				}
 				placeholder={placeholder}

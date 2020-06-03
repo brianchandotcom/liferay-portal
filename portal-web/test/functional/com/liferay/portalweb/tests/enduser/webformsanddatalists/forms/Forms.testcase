@@ -669,7 +669,7 @@ definition {
 	@priority = "4"
 	test ChangeFieldType {
 		property test.name.skip.portal.instance = "Forms#ChangeFieldType";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

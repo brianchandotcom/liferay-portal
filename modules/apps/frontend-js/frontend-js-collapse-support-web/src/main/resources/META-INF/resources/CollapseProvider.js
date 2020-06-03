@@ -71,18 +71,6 @@ class CollapseProvider {
 		trigger.classList.add(CssClass.COLLAPSED);
 		trigger.setAttribute('aria-expanded', false);
 
-		const prefersReducedMotion = window.matchMedia(
-			'(prefers-reduced-motion: reduce)'
-		).matches;
-
-		if (prefersReducedMotion) {
-			panel.classList.remove(CssClass.SHOW);
-
-			Liferay.fire(this.EVENT_HIDDEN, {panel, trigger});
-
-			return;
-		}
-
 		const dimension = this._getDimension(panel);
 
 		panel.style[dimension] = `${
@@ -98,7 +86,7 @@ class CollapseProvider {
 
 		this._transitioning = true;
 
-		dom.once(panel, this._transitionEndEvent, () => {
+		const onHidden = () => {
 			panel.classList.remove(CssClass.COLLAPSING);
 			panel.classList.remove(CssClass.SHOW);
 			panel.classList.add(CssClass.COLLAPSE);
@@ -106,10 +94,17 @@ class CollapseProvider {
 			this._transitioning = false;
 
 			Liferay.fire(this.EVENT_HIDDEN, {panel, trigger});
-		});
+		};
 
-		panel.classList.add(CssClass.COLLAPSING);
-		panel.style[dimension] = 0;
+		if (this._prefersReducedMotion()) {
+			onHidden();
+		}
+		else {
+			dom.once(panel, this._transitionEndEvent, onHidden);
+
+			panel.classList.add(CssClass.COLLAPSING);
+			panel.style[dimension] = 0;
+		}
 	};
 
 	show = ({panel, trigger}) => {
@@ -151,18 +146,6 @@ class CollapseProvider {
 		trigger.classList.remove(CssClass.COLLAPSED);
 		trigger.setAttribute('aria-expanded', true);
 
-		const prefersReducedMotion = window.matchMedia(
-			'(prefers-reduced-motion: reduce)'
-		).matches;
-
-		if (prefersReducedMotion) {
-			panel.classList.add(CssClass.SHOW);
-
-			Liferay.fire(this.EVENT_SHOWN, {panel, trigger});
-
-			return;
-		}
-
 		const dimension = this._getDimension(panel);
 
 		panel.classList.remove(CssClass.COLLAPSE);
@@ -171,7 +154,7 @@ class CollapseProvider {
 
 		this._transitioning = true;
 
-		dom.once(panel, this._transitionEndEvent, () => {
+		const onShown = () => {
 			panel.classList.remove(CssClass.COLLAPSING);
 			panel.classList.add(CssClass.COLLAPSE);
 			panel.classList.add(CssClass.SHOW);
@@ -180,13 +163,20 @@ class CollapseProvider {
 			this._transitioning = false;
 
 			Liferay.fire(this.EVENT_SHOWN, {panel, trigger});
-		});
+		};
 
-		const capitalizedDimension =
-			dimension[0].toUpperCase() + dimension.slice(1);
-		const scrollSize = `scroll${capitalizedDimension}`;
+		if (this._prefersReducedMotion()) {
+			onShown();
+		}
+		else {
+			dom.once(panel, this._transitionEndEvent, onShown);
 
-		panel.style[dimension] = `${panel[scrollSize]}px`;
+			const capitalizedDimension =
+				dimension[0].toUpperCase() + dimension.slice(1);
+			const scrollSize = `scroll${capitalizedDimension}`;
+
+			panel.style[dimension] = `${panel[scrollSize]}px`;
+		}
 	};
 
 	_getDimension(panel) {
@@ -221,6 +211,10 @@ class CollapseProvider {
 			}
 		}
 	};
+
+	_prefersReducedMotion() {
+		return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	}
 
 	_setTransitionEndEvent() {
 		const sampleElement = document.body;

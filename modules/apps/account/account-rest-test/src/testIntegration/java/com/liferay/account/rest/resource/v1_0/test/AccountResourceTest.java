@@ -119,7 +119,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), parentAccountEntryId, name,
-			description, domains, null, null, WorkflowConstants.STATUS_APPROVED,
+			description, domains, null, null,
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
 
 		_accountEntries.add(accountEntry);

@@ -37,16 +37,15 @@ export default ({
 					})),
 				})
 			),
-			description: dataLayoutPage.description || {
-				[defaultLanguageId]: '',
+			description: {
+				...dataLayout.description,
+				[defaultLanguageId]:
+					dataLayoutPage.description[defaultLanguageId] || '',
 			},
 			title: {
 				...dataLayoutPage.title,
-				...{
-					[defaultLanguageId]: dataLayoutPage.title[defaultLanguageId]
-						? dataLayoutPage.title[defaultLanguageId]
-						: '',
-				},
+				[defaultLanguageId]:
+					dataLayoutPage.title[defaultLanguageId] || '',
 			},
 		})),
 		dataRules: dataLayout.dataRules.map((rule) => {
@@ -67,24 +66,23 @@ export default ({
 			return accumulator;
 		}, {});
 
+	const toString = (value) =>
+		availableLanguageIds.reduce((accumulator, currentValue) => {
+			if (value[currentValue] && value[currentValue].length) {
+				accumulator[currentValue] = value[currentValue];
+			}
+			else {
+				accumulator[currentValue] = value[defaultLanguageId];
+			}
+
+			return accumulator;
+		}, {});
+
 	const normalizedDataDefinition = {
 		...dataDefinition,
 		availableLanguageIds,
 		dataDefinitionFields: dataDefinition.dataDefinitionFields.map(
 			(field) => {
-				const toString = (value) =>
-					availableLanguageIds.reduce((accumulator, currentValue) => {
-						if (value[currentValue] && value[currentValue].length) {
-							accumulator[currentValue] = value[currentValue];
-						}
-						else {
-							accumulator[currentValue] =
-								value[defaultLanguageId];
-						}
-
-						return accumulator;
-					}, {});
-
 				const normalizeField = (field) => {
 					const {defaultValue, label, tip} = field;
 					const {
@@ -133,11 +131,7 @@ export default ({
 		),
 		name: {
 			...dataDefinition.name,
-			...{
-				[defaultLanguageId]: dataDefinition.name[defaultLanguageId]
-					? dataDefinition.name[defaultLanguageId]
-					: '',
-			},
+			[defaultLanguageId]: dataDefinition.name[defaultLanguageId] || '',
 		},
 	};
 

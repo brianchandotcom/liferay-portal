@@ -129,6 +129,9 @@ definition {
 		else if ("${widgetName}" == "Type Facet") {
 			var portletId = "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet";
 		}
+		else if ("${widgetName}" == "User Statistics") {
+			var portletId = "com_liferay_social_user_statistics_web_portlet_SocialUserStatisticsPortlet";
+		}
 		else if ("${widgetName}" == "Web Content Display") {
 			var portletId = "com_liferay_journal_content_web_portlet_JournalContentPortlet";
 		}

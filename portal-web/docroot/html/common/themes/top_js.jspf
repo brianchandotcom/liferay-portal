@@ -116,21 +116,21 @@
 		Liferay.Data.notices = [
 			<c:if test="<%= permissionChecker.isOmniadmin() && PortalUtil.isUpdateAvailable() %>">
 				{
-					htmlMessage: true,
 					message: '<a class="update-available" href="<%= themeDisplay.getURLUpdateManager() %>"><liferay-ui:message key="updates-are-available-for-liferay" /></a>',
+					messageType: 'html',
 					title: null,
 				},
 			</c:if>
 
 			<c:if test="<%= ShutdownUtil.isInProcess() %>">
 				{
-					htmlMessage: true,
-					htmlTitle: true,
 					title: '<liferay-ui:message key="maintenance-alert" /> <span class="notice-date"><%= FastDateFormatFactoryUtil.getTime(locale).format(Time.getDate(CalendarFactoryUtil.getCalendar(timeZone))) %> <%= timeZone.getDisplayName(false, TimeZone.SHORT, locale) %></span> ',
+					titleType: 'html',
 					message: '<liferay-ui:message arguments="<%= String.valueOf((ShutdownUtil.getInProcess() / Time.MINUTE) + 1) %>" key="the-portal-will-shutdown-for-maintenance-in-x-minutes" translateArguments="<%= false %>" />
 						<c:if test="<%= Validator.isNotNull(ShutdownUtil.getMessage()) %>">
 							<span class="custom-shutdown-message"><%= HtmlUtil.escape(ShutdownUtil.getMessage()) %></span>
 						</c:if>',
+					messageType: 'html',
 					type: 'warning'
 				},
 			</c:if>

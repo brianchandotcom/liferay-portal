@@ -34,7 +34,6 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 
 	<aui:script>
 		Liferay.Util.openToast({
-			htmlMessage: true,
 			message: "
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(jspPath) %>">
@@ -44,6 +43,7 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 						<liferay-ui:message key="<%= message %>" />
 					</c:otherwise>
 				</c:choose>",
+			messageType: 'html',
 			renderData: {
 				portletId: <%= portletId %>
 			},

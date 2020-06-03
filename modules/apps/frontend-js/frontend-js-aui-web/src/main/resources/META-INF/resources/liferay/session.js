@@ -557,13 +557,13 @@ AUI.add(
 
 					Liferay.Util.openToast(
 						Object.assign(config, {
-							htmlMessage: true,
 							message:
 								config.remainingTime >= 0
 									? Lang.sub(instance._warningText, [
 											remainingTimeFormatted,
 									  ])
 									: instance._expiredText,
+							messageType: 'html',
 							onClick(eventPayload) {
 								var event = eventPayload.event;
 								var onClose = eventPayload.onClose;

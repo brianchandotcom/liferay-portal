@@ -45,6 +45,11 @@ const getDefaultAlertContainer = () => {
 	return container;
 };
 
+const TYPES = {
+	HTML: 'html',
+	TEXT: 'text',
+};
+
 /**
  * Function that implements the Toast pattern, which allows to present feedback
  * to user actions as a toast message in the lower left corner of the page
@@ -59,12 +64,12 @@ const getDefaultAlertContainer = () => {
 
 function openToast({
 	containerId,
-	htmlMessage,
-	htmlTitle,
 	message = '',
+	messageType = TYPES.TEXT,
 	onClick = () => {},
 	renderData = DEFAULT_RENDER_DATA,
 	title,
+	titleType = TYPES.TEXT,
 	toastProps = {},
 	type = 'success',
 	variant,
@@ -83,11 +88,13 @@ function openToast({
 				displayType={type}
 				onClick={(event) => onClick({event, onClose})}
 				onClose={onClose}
-				title={<Text allowHTML={htmlTitle} string={title} />}
+				title={
+					<Text allowHTML={titleType === TYPES.HTML} string={title} />
+				}
 				variant={variant}
 				{...toastProps}
 			>
-				<Text allowHTML={htmlMessage} string={message} />
+				<Text allowHTML={messageType === TYPES.HTML} string={message} />
 			</ClayAlert>
 		</ClayAlert.ToastContainer>,
 		renderData,

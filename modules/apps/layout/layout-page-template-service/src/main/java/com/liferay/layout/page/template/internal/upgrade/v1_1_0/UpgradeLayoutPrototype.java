@@ -93,9 +93,9 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 				String name = nameMap.get(defaultLocale);
 
 				if (existingNames.contains(name)) {
-					while (true) {
-						int i = 1;
+					int i = 1;
 
+					while (true) {
 						name = name + i;
 
 						if (existingNames.contains(name)) {

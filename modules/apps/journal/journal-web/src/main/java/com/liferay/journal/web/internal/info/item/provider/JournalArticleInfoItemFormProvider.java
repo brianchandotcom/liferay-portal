@@ -218,16 +218,14 @@ public class JournalArticleInfoItemFormProvider
 
 				String fieldName = ddmFormFieldValue.getName();
 
-				InfoField infoField = new InfoField(
-					TextInfoFieldType.INSTANCE,
-					InfoLocalizedValue.localize(getClass(), fieldName),
-					fieldName);
-
 				Value value = ddmFormFieldValue.getValue();
 
 				infoFieldValues.add(
 					new InfoFieldValue<>(
-						infoField,
+						new InfoField(
+							TextInfoFieldType.INSTANCE,
+							InfoLocalizedValue.localize(getClass(), fieldName),
+							fieldName),
 						InfoLocalizedValue.builder(
 						).defaultLocale(
 							value.getDefaultLocale()

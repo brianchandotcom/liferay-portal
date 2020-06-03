@@ -16,25 +16,19 @@ import {Treeview} from 'frontend-js-components-web';
 import React from 'react';
 
 function buildNodes(vocabularies, categories) {
-	const nodes = [];
-
-	vocabularies.forEach((vocabulary) => {
-		const child = {
-			...vocabulary,
-			children: [],
-			id: vocabulary.vocabularyId,
-		};
-
-		categories.forEach((category) => {
-			if (category.vocabularyId === child.id) {
-				child.children.push(category);
-			}
-		});
-
-		nodes.push(child);
-	});
-
-	return nodes;
+	return vocabularies.map((vocabulary) => ({
+		...vocabulary,
+		children: categories
+			.map((category) => {
+				if (category.vocabularyId === vocabulary.vocabularyId) {
+					return {
+						...category,
+					};
+				}
+			})
+			.filter(Boolean),
+		id: vocabulary.vocabularyId,
+	}));
 }
 
 const AssetCategoriesNavigationTreeView = ({

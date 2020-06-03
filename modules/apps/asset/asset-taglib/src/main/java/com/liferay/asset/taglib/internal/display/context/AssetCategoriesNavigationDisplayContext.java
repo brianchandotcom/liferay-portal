@@ -199,6 +199,8 @@ public class AssetCategoriesNavigationDisplayContext {
 			HtmlUtil.escape(category.getTitle(_themeDisplay.getLocale()))
 		).put(
 			"url", _getPortletURL(category.getCategoryId())
+		).put(
+			"vocabularyId", category.getVocabularyId()
 		);
 	}
 

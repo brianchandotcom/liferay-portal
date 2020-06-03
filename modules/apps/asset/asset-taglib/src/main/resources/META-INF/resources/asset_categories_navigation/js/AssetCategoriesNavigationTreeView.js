@@ -15,13 +15,41 @@
 import {Treeview} from 'frontend-js-components-web';
 import React from 'react';
 
-const AssetCategoriesNavigationTreeView = ({categories, namespace}) => {
+function buildNodes(vocabularies, categories) {
+	const nodes = [];
+
+	vocabularies.forEach((vocabulary) => {
+		const child = {
+			...vocabulary,
+			children: [],
+			id: vocabulary.vocabularyId,
+		};
+
+		categories.forEach((category) => {
+			if (category.vocabularyId === child.id) {
+				child.children.push(category);
+			}
+		});
+
+		nodes.push(child);
+	});
+
+	return nodes;
+}
+
+const AssetCategoriesNavigationTreeView = ({
+	categories,
+	namespace,
+	vocabularies,
+}) => {
+	const nodes = buildNodes(vocabularies, categories);
+
 	return (
 		<div
 			className="categories-tree container-fluid-1280"
 			id={`${namespace}categoriesContainer`}
 		>
-			<Treeview NodeComponent={Treeview.Card} nodes={categories} />
+			<Treeview NodeComponent={Treeview.Card} nodes={nodes} />
 		</div>
 	);
 };

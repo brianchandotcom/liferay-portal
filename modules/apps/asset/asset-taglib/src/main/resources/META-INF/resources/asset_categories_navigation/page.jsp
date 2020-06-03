@@ -63,6 +63,8 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 	"categories", assetCategoriesNavigationDisplayContext.getCategoriesJSONArray()
 ).put(
 	"namespace", namespace
+).put(
+	"vocabularies", assetCategoriesNavigationDisplayContext.getVocabularies()
 ).build();
 %>
 

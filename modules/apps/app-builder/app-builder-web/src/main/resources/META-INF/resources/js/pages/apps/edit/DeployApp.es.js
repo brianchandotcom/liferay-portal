@@ -54,7 +54,7 @@ export const DeploySettings = () => (
 			deploymentType="productMenu"
 			settings={ProductMenuSettings}
 			subtitle={Liferay.Language.get(
-				'deploy-to-the-control-panel-or-a-site-menu'
+				'deploy-into-applications-or-a-site-menu'
 			)}
 			title={Liferay.Language.get('product-menu')}
 		/>

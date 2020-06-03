@@ -31,7 +31,7 @@ const {Divider, Item, ItemList} = ClayDropDown;
 
 const SCOPES = [
 	{
-		label: Liferay.Language.get('control-panel'),
+		label: Liferay.Language.get('applications'),
 		value: ['global_menu.applications'],
 	},
 	{
@@ -39,7 +39,7 @@ const SCOPES = [
 		value: ['site_administration.content'],
 	},
 	{
-		label: Liferay.Language.get('control-panel-and-site-menu'),
+		label: Liferay.Language.get('applications-and-site-menu'),
 		value: ['global_menu.applications', 'site_administration.content'],
 	},
 ];

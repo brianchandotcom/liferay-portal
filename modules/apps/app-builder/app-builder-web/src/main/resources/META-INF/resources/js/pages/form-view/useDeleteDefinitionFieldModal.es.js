@@ -19,6 +19,7 @@ import {DataDefinitionUtils} from 'data-engine-taglib';
 import React, {useContext} from 'react';
 
 import {getItem} from '../../utils/client.es';
+import {getLocalizedValue} from '../../utils/lang.es';
 import FormViewContext from './FormViewContext.es';
 
 export default (callback) => {
@@ -38,8 +39,9 @@ export default (callback) => {
 
 		return getItem(
 			`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-definition-field-links?fieldName=${event.fieldName}`
-		).then((dataDefinitions) => {
-			const {dataLayouts, dataListViews} = dataDefinitions[0];
+		).then(({items}) => {
+			const {dataDefinition = {}, dataLayouts = [], dataListViews = []} =
+				items[0] || {};
 
 			dispatchModal({
 				payload: {
@@ -98,16 +100,17 @@ export default (callback) => {
 									displayType="secondary"
 								>
 									<ClayPanel.Body>
-										{dataLayouts.map(
-											(dataLayoutName, index) => (
-												<label
-													className="d-block"
-													key={index}
-												>{`${
-													index + 1
-												}. ${dataLayoutName}`}</label>
-											)
-										)}
+										{dataLayouts.map(({name}, index) => (
+											<label
+												className="d-block"
+												key={index}
+											>{`${
+												index + 1
+											}. ${getLocalizedValue(
+												dataDefinition.defaultLanguageId,
+												name
+											)}`}</label>
+										))}
 									</ClayPanel.Body>
 								</ClayPanel>
 							)}
@@ -121,16 +124,17 @@ export default (callback) => {
 									displayType="secondary"
 								>
 									<ClayPanel.Body>
-										{dataListViews.map(
-											(dataListViewName, index) => (
-												<label
-													className="d-block"
-													key={index}
-												>{`${
-													index + 1
-												}. ${dataListViewName}`}</label>
-											)
-										)}
+										{dataListViews.map(({name}, index) => (
+											<label
+												className="d-block"
+												key={index}
+											>{`${
+												index + 1
+											}. ${getLocalizedValue(
+												dataDefinition.defaultLanguageId,
+												name
+											)}`}</label>
+										))}
 									</ClayPanel.Body>
 								</ClayPanel>
 							)}

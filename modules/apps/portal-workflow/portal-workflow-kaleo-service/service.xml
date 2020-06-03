@@ -54,7 +54,18 @@
 			<finder-column name="kaleoClassName" />
 			<finder-column name="kaleoClassPK" />
 		</finder>
+		<finder name="C_KCN_KCPK" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="kaleoClassName" />
+			<finder-column name="kaleoClassPK" />
+		</finder>
 		<finder name="KCN_KCPK_ET" return-type="Collection">
+			<finder-column name="kaleoClassName" />
+			<finder-column name="kaleoClassPK" />
+			<finder-column name="executionType" />
+		</finder>
+		<finder name="C_KCN_KCPK_ET" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="kaleoClassName" />
 			<finder-column name="kaleoClassPK" />
 			<finder-column name="executionType" />

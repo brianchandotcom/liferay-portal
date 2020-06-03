@@ -18,11 +18,8 @@ import React, {useState} from 'react';
 import MappingPanel from './MappingPanel';
 
 function SeoMapping({fields, selectedSource}) {
-	const [title, setTitle] = useState('');
-
-	const handleMappingTitle = ({field, source}) => {
-		setTitle(`${source.label}: ${field.label}`);
-	};
+	const [source, setSource] = useState(selectedSource);
+	const [field, setField] = useState(fields[0]);
 
 	return (
 		<>
@@ -38,15 +35,22 @@ function SeoMapping({fields, selectedSource}) {
 								id="title"
 								readOnly
 								type="text"
-								value={title}
+								value={`${source.classNameLabel}${
+									source.classTypeLabel
+										? ' - ' + source.classTypeLabel
+										: ''
+								}: ${field.label}`}
 							/>
 						</ClayInput.GroupItem>
 						<ClayInput.GroupItem shrink>
 							<MappingPanel
+								field={field}
 								fields={fields}
-								initialSelectedField={fields[0]}
-								initialSelectedSource={selectedSource}
-								onChange={handleMappingTitle}
+								onChange={({field, source}) => {
+									setSource(source);
+									setField(field);
+								}}
+								source={source}
 							/>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>

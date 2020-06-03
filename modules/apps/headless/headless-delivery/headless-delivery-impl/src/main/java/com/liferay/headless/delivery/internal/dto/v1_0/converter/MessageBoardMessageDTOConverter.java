@@ -93,6 +93,7 @@ public class MessageBoardMessageDTOConverter
 						MBMessage.class.getName(), mbMessage.getMessageId()),
 					AssetTag.NAME_ACCESSOR);
 				messageBoardSectionId = mbMessage.getCategoryId();
+				messageBoardThreadId = mbMessage.getThreadId();
 				numberOfMessageBoardAttachments =
 					mbMessage.getAttachmentsFileEntriesCount();
 				numberOfMessageBoardMessages =

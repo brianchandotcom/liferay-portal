@@ -18,66 +18,12 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import classNames from 'classnames';
 import Soy from 'metal-soy';
 import React from 'react';
+import {DndProvider} from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
-import {DispatchProvider} from '../DispatchContext.es';
 import PageRenderer from '../PageRenderer/index';
 import templates from './index.soy';
-
-const noop = () => {};
-
-function PageRendererComponent({
-	activePage,
-	cancelLabel,
-	currentPage,
-	currentPaginationMode,
-	onBlur,
-	onChange,
-	onClick,
-	onFocus,
-	pages,
-	submitLabel,
-	...otherProps
-}) {
-	if (currentPaginationMode === 'tabbed') {
-		const page = pages[currentPage];
-
-		return (
-			<PageRenderer
-				{...otherProps}
-				activePage={activePage}
-				cancelLabel={cancelLabel}
-				onBlur={onBlur}
-				onChange={onChange}
-				onClick={onClick}
-				onFocus={onFocus}
-				page={page}
-				pageIndex={activePage}
-				pages={pages}
-				paginationMode={currentPaginationMode}
-				submitLabel={submitLabel}
-			/>
-		);
-	}
-
-	return pages.map((page, pageIndex) => (
-		<PageRenderer
-			{...otherProps}
-			activePage={activePage}
-			cancelLabel={cancelLabel}
-			key={`pageIndex${pageIndex}`}
-			onBlur={onBlur}
-			onChange={onChange}
-			onClick={onClick}
-			onFocus={onFocus}
-			page={page}
-			pageIndex={pageIndex}
-			pages={pages}
-			paginationMode={currentPaginationMode}
-			submitLabel={submitLabel}
-		/>
-	));
-}
 
 function getDisplayableValue({containerId, readOnly, viewMode}) {
 	return (
@@ -92,28 +38,26 @@ function FormRenderer({
 	displayable: initialDisplayableValue,
 	editable,
 	editingLanguageId = themeDisplay.getLanguageId(),
-	onBlur = noop,
-	onClick = noop,
-	onChange = noop,
-	onFocus = noop,
 	pages = [],
 	paginationMode,
 	readOnly,
-	showSubmitButton,
-	strings,
 	submitLabel = Liferay.Language.get('submit'),
+	view,
 	viewMode,
 	...otherProps
 }) {
-	const currentPaginationMode = paginationMode || 'wizard';
-	const currentPage = activePage || 0;
+	const currentPaginationMode = paginationMode ?? 'wizard';
 	const displayable =
 		initialDisplayableValue ||
 		getDisplayableValue({containerId, readOnly, viewMode});
 	const total = Array.isArray(pages) ? pages.length : 0;
 
-	if (displayable) {
-		return (
+	if (!displayable) {
+		return null;
+	}
+
+	return (
+		<div className={view === 'fieldSets' ? 'sheet' : ''}>
 			<div
 				className={classNames(
 					'lfr-ddm-form-container position-relative',
@@ -122,36 +66,31 @@ function FormRenderer({
 					}
 				)}
 			>
-				<PageRendererComponent
-					{...otherProps}
-					activePage={activePage}
-					cancelLabel={cancelLabel}
-					containerId={containerId}
-					currentPage={currentPage}
-					currentPaginationMode={currentPaginationMode}
-					editable={editable}
-					editingLanguageId={editingLanguageId}
-					onBlur={onBlur}
-					onChange={onChange}
-					onClick={onClick}
-					onFocus={onFocus}
-					pages={pages}
-					readOnly={readOnly}
-					showSubmitButton={showSubmitButton}
-					strings={strings}
-					submitLabel={submitLabel}
-					total={total}
-					viewMode={viewMode}
-				/>
+				{pages.map((page, index) => (
+					<PageRenderer
+						{...otherProps}
+						activePage={activePage}
+						cancelLabel={cancelLabel}
+						editable={editable}
+						editingLanguageId={editingLanguageId}
+						key={index}
+						pageIndex={index}
+						pages={pages}
+						paginationMode={currentPaginationMode}
+						readOnly={readOnly}
+						submitLabel={submitLabel}
+						total={total}
+						view={view}
+						viewMode={viewMode}
+					/>
+				))}
 			</div>
-		);
-	}
-
-	return null;
+		</div>
+	);
 }
 
 const FormRendererProxy = ({instance, ...otherProps}) => (
-	<DispatchProvider dispatch={instance.context.dispatch}>
+	<DndProvider backend={HTML5Backend} context={window}>
 		<ClayIconSpriteContext.Provider value={otherProps.spritemap}>
 			<FormRenderer
 				{...otherProps}
@@ -160,7 +99,7 @@ const FormRendererProxy = ({instance, ...otherProps}) => (
 				onFocus={(event) => instance.emit('fieldFocused', event)}
 			/>
 		</ClayIconSpriteContext.Provider>
-	</DispatchProvider>
+	</DndProvider>
 );
 
 const ReactComponentAdapter = getConnectedReactComponentAdapter(

@@ -14,8 +14,6 @@
 
 import core from 'metal';
 import React from 'react';
-import {DndProvider} from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
 import {PageProvider} from '../../hooks/usePage.es';
 import * as DefaultVariant from './DefaultVariant.es';
@@ -220,11 +218,7 @@ const Renderer = ({
 };
 
 export default (props) => (
-	<DndProvider backend={HTML5Backend} context={window}>
-		<PageProvider value={props}>
-			<ClayIconSpriteContext.Provider value={props.spritemap}>
-				<Renderer {...props} />
-			</ClayIconSpriteContext.Provider>
-		</PageProvider>
-	</DndProvider>
+	<PageProvider value={props}>
+		<Renderer {...props} />
+	</PageProvider>
 );

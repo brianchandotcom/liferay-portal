@@ -16,7 +16,11 @@ import PropTypes from 'prop-types';
 
 const ConfigurationFieldPropTypes = {
 	dataType: PropTypes.string,
-	defaultValue: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+	defaultValue: PropTypes.oneOfType([
+		PropTypes.bool,
+		PropTypes.number,
+		PropTypes.string,
+	]),
 	description: PropTypes.string,
 	label: PropTypes.string,
 	name: PropTypes.string.isRequired,

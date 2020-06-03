@@ -57,7 +57,7 @@ AUI.add(
 		 */
 
 		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by OpenToast.es.js
+		 * @deprecated As of Athanasius (7.3.x), replaced by `Liferay.Util.openToast`.
 		 * @module liferay-notice
 		 */
 

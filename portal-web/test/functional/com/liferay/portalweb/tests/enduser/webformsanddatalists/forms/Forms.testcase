@@ -723,6 +723,8 @@ definition {
 
 		FormFields.viewRequiredAsterisk();
 
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
+
 		FormFields.changeFieldType(selectOption = "Select from List");
 
 		FormFields.viewTextLabel(
@@ -748,6 +750,8 @@ definition {
 				rowNumber = "${number}");
 		}
 
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
+
 		FormFields.changeFieldType(selectOption = "Single Selection");
 
 		FormFields.viewTextLabel(
@@ -765,6 +769,8 @@ definition {
 				fieldValue = "Select ${number}",
 				rowNumber = "${number}");
 		}
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
 
 		FormFields.changeFieldType(selectOption = "Date");
 
@@ -778,6 +784,8 @@ definition {
 
 		FormFields.viewRequiredAsterisk();
 
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
+
 		FormFields.changeFieldType(selectOption = "Single Selection");
 
 		FormFields.viewTextLabel(
@@ -803,6 +811,8 @@ definition {
 				rowNumber = "${number}");
 		}
 
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
+
 		FormFields.changeFieldType(selectOption = "Multiple Selection");
 
 		FormFields.viewTextLabel(
@@ -821,6 +831,8 @@ definition {
 				rowNumber = "${number}");
 		}
 
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
+
 		FormFields.changeFieldType(selectOption = "Grid");
 
 		FormFields.viewTextLabel(
@@ -833,6 +845,8 @@ definition {
 
 		FormFields.viewRequiredAsterisk();
 
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
+
 		FormFields.changeFieldType(selectOption = "Numeric");
 
 		FormFields.viewTextLabel(
@@ -842,6 +856,8 @@ definition {
 		FormFields.viewRadioValue(
 			fieldName = "dataType",
 			fieldValue = "Integer");
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
 
 		FormFields.changeFieldType(selectOption = "Multiple Selection");
 
@@ -867,6 +883,8 @@ definition {
 				optionValue = "Select ${number}",
 				rowNumber = "${number}");
 		}
+
+		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
 
 		FormFields.changeFieldType(selectOption = "Select from List");
 

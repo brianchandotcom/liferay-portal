@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -62,6 +63,9 @@ public class AssetCategoriesNavigationDisplayContext {
 
 		_vocabularyIds = (long[])httpServletRequest.getAttribute(
 			"liferay-asset:asset-tags-navigation:vocabularyIds");
+		_hidePortletWhenEmpty = GetterUtil.getBoolean(
+			(String)_httpServletRequest.getAttribute(
+				"liferay-asset:asset-tags-navigation:hidePortletWhenEmpty"));
 	}
 
 	public long getCategoryId() {
@@ -135,6 +139,10 @@ public class AssetCategoriesNavigationDisplayContext {
 		return _vocabularies;
 	}
 
+	public boolean hidePortletWhenEmpty() {
+		return _hidePortletWhenEmpty;
+	}
+
 	private JSONArray _getCategoriesJSONArray() throws PortalException {
 		JSONArray categoriesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -200,6 +208,7 @@ public class AssetCategoriesNavigationDisplayContext {
 	}
 
 	private Long _categoryId;
+	private final boolean _hidePortletWhenEmpty;
 	private final HttpServletRequest _httpServletRequest;
 	private String _namespace;
 	private final RenderResponse _renderResponse;

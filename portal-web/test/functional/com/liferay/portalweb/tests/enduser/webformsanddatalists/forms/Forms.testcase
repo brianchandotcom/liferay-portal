@@ -995,6 +995,7 @@ definition {
 	@priority = "3"
 	test ConfigureAutosave {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Forms#ConfigureAutosave";
 
 		Navigator.openURL();

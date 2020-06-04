@@ -492,6 +492,7 @@ definition {
 		FormFields.viewCheckboxChecked(fieldName = "Blogs Entry");
 	}
 
+	@description = "This is a use case for LPS-95798."
 	test SearchAfterViewingResultDetails {
 		JSONWebcontent.addWebContent(
 			content = "Web Content",

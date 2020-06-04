@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.account.model.AccountEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="accountEntryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

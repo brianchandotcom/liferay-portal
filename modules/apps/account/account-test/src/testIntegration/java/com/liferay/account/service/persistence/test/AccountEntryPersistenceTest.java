@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -44,6 +45,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.junit.After;
@@ -124,6 +126,8 @@ public class AccountEntryPersistenceTest {
 
 		newAccountEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newAccountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newAccountEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		newAccountEntry.setUserId(RandomTestUtil.nextLong());
@@ -158,6 +162,9 @@ public class AccountEntryPersistenceTest {
 		Assert.assertEquals(
 			existingAccountEntry.getMvccVersion(),
 			newAccountEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingAccountEntry.getExternalReferenceCode(),
+			newAccountEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingAccountEntry.getAccountEntryId(),
 			newAccountEntry.getAccountEntryId());
@@ -211,6 +218,15 @@ public class AccountEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AccountEntry newAccountEntry = addAccountEntry();
 
@@ -235,11 +251,12 @@ public class AccountEntryPersistenceTest {
 
 	protected OrderByComparator<AccountEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"AccountEntry", "mvccVersion", true, "accountEntryId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentAccountEntryId", true, "name",
-			true, "description", true, "domains", true, "logoId", true,
-			"taxIdNumber", true, "type", true, "status", true);
+			"AccountEntry", "mvccVersion", true, "externalReferenceCode", true,
+			"accountEntryId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"parentAccountEntryId", true, "name", true, "description", true,
+			"domains", true, "logoId", true, "taxIdNumber", true, "type", true,
+			"status", true);
 	}
 
 	@Test
@@ -455,12 +472,35 @@ public class AccountEntryPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		AccountEntry newAccountEntry = addAccountEntry();
+
+		_persistence.clearCache();
+
+		AccountEntry existingAccountEntry = _persistence.findByPrimaryKey(
+			newAccountEntry.getPrimaryKey());
+
+		Assert.assertEquals(
+			Long.valueOf(existingAccountEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingAccountEntry, "getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertTrue(
+			Objects.equals(
+				existingAccountEntry.getExternalReferenceCode(),
+				ReflectionTestUtil.invoke(
+					existingAccountEntry, "getOriginalExternalReferenceCode",
+					new Class<?>[0])));
+	}
+
 	protected AccountEntry addAccountEntry() throws Exception {
 		long pk = RandomTestUtil.nextLong();
 
 		AccountEntry accountEntry = _persistence.create(pk);
 
 		accountEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		accountEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		accountEntry.setCompanyId(RandomTestUtil.nextLong());
 

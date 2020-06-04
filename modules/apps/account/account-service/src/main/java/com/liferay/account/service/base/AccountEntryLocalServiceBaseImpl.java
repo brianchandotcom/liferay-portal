@@ -225,6 +225,21 @@ public abstract class AccountEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the account entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the account entry's external reference code
+	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
+	 */
+	@Override
+	public AccountEntry fetchAccountEntryByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return accountEntryPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the account entry with the primary key.
 	 *
 	 * @param accountEntryId the primary key of the account entry

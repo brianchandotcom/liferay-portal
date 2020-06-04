@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
@@ -71,10 +72,10 @@ public class AccountEntryModelImpl
 	public static final String TABLE_NAME = "AccountEntry";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"accountEntryId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP},
+		{"mvccVersion", Types.BIGINT}, {"externalReferenceCode", Types.VARCHAR},
+		{"accountEntryId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"parentAccountEntryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"domains", Types.VARCHAR},
 		{"logoId", Types.BIGINT}, {"taxIdNumber", Types.VARCHAR},
@@ -86,6 +87,7 @@ public class AccountEntryModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("externalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("accountEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -103,7 +105,7 @@ public class AccountEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table AccountEntry (mvccVersion LONG default 0 not null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,taxIdNumber VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER)";
+		"create table AccountEntry (mvccVersion LONG default 0 not null,externalReferenceCode VARCHAR(75) null,accountEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentAccountEntryId LONG,name VARCHAR(100) null,description STRING null,domains STRING null,logoId LONG,taxIdNumber VARCHAR(75) null,type_ VARCHAR(75) null,status INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table AccountEntry";
 
@@ -120,9 +122,11 @@ public class AccountEntryModelImpl
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long STATUS_COLUMN_BITMASK = 2L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 4L;
+
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -146,6 +150,7 @@ public class AccountEntryModelImpl
 		AccountEntry model = new AccountEntryImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setExternalReferenceCode(soapModel.getExternalReferenceCode());
 		model.setAccountEntryId(soapModel.getAccountEntryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -318,6 +323,12 @@ public class AccountEntryModelImpl
 			"mvccVersion",
 			(BiConsumer<AccountEntry, Long>)AccountEntry::setMvccVersion);
 		attributeGetterFunctions.put(
+			"externalReferenceCode", AccountEntry::getExternalReferenceCode);
+		attributeSetterBiConsumers.put(
+			"externalReferenceCode",
+			(BiConsumer<AccountEntry, String>)
+				AccountEntry::setExternalReferenceCode);
+		attributeGetterFunctions.put(
 			"accountEntryId", AccountEntry::getAccountEntryId);
 		attributeSetterBiConsumers.put(
 			"accountEntryId",
@@ -391,6 +402,32 @@ public class AccountEntryModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _externalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		_columnBitmask |= EXTERNALREFERENCECODE_COLUMN_BITMASK;
+
+		if (_originalExternalReferenceCode == null) {
+			_originalExternalReferenceCode = _externalReferenceCode;
+		}
+
+		_externalReferenceCode = externalReferenceCode;
+	}
+
+	public String getOriginalExternalReferenceCode() {
+		return GetterUtil.getString(_originalExternalReferenceCode);
 	}
 
 	@JSON
@@ -662,6 +699,7 @@ public class AccountEntryModelImpl
 		AccountEntryImpl accountEntryImpl = new AccountEntryImpl();
 
 		accountEntryImpl.setMvccVersion(getMvccVersion());
+		accountEntryImpl.setExternalReferenceCode(getExternalReferenceCode());
 		accountEntryImpl.setAccountEntryId(getAccountEntryId());
 		accountEntryImpl.setCompanyId(getCompanyId());
 		accountEntryImpl.setUserId(getUserId());
@@ -736,6 +774,9 @@ public class AccountEntryModelImpl
 	public void resetOriginalValues() {
 		AccountEntryModelImpl accountEntryModelImpl = this;
 
+		accountEntryModelImpl._originalExternalReferenceCode =
+			accountEntryModelImpl._externalReferenceCode;
+
 		accountEntryModelImpl._originalCompanyId =
 			accountEntryModelImpl._companyId;
 
@@ -756,6 +797,18 @@ public class AccountEntryModelImpl
 			new AccountEntryCacheModel();
 
 		accountEntryCacheModel.mvccVersion = getMvccVersion();
+
+		accountEntryCacheModel.externalReferenceCode =
+			getExternalReferenceCode();
+
+		String externalReferenceCode =
+			accountEntryCacheModel.externalReferenceCode;
+
+		if ((externalReferenceCode != null) &&
+			(externalReferenceCode.length() == 0)) {
+
+			accountEntryCacheModel.externalReferenceCode = null;
+		}
 
 		accountEntryCacheModel.accountEntryId = getAccountEntryId();
 
@@ -912,6 +965,8 @@ public class AccountEntryModelImpl
 	private static boolean _finderCacheEnabled;
 
 	private long _mvccVersion;
+	private String _externalReferenceCode;
+	private String _originalExternalReferenceCode;
 	private long _accountEntryId;
 	private long _companyId;
 	private long _originalCompanyId;

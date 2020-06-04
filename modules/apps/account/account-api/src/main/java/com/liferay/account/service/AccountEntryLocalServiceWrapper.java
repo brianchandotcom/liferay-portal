@@ -318,6 +318,22 @@ public class AccountEntryLocalServiceWrapper
 	}
 
 	/**
+	 * Returns the account entry with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the account entry's external reference code
+	 * @return the matching account entry, or <code>null</code> if a matching account entry could not be found
+	 */
+	@Override
+	public com.liferay.account.model.AccountEntry
+		fetchAccountEntryByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _accountEntryLocalService.fetchAccountEntryByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns a range of all the account entries.
 	 *
 	 * <p>

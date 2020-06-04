@@ -76,6 +76,21 @@ public interface AccountEntryModel
 	public void setMvccVersion(long mvccVersion);
 
 	/**
+	 * Returns the external reference code of this account entry.
+	 *
+	 * @return the external reference code of this account entry
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this account entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this account entry
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the account entry ID of this account entry.
 	 *
 	 * @return the account entry ID of this account entry

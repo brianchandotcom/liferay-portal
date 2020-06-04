@@ -296,7 +296,7 @@ definition {
 			fieldName = "Text",
 			fieldValue = "Text Spanish");
 
-		AssertNotEditable(
+		AssertEditable(
 			key_fieldName = "TextBox",
 			locator1 = "DDMField#TEXT_BOX");
 	}

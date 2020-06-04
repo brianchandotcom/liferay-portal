@@ -8763,6 +8763,13 @@ public class JournalArticleLocalServiceImpl
 			return false;
 		}
 
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			JournalArticle.class.getName(), journalArticle.getPrimaryKey());
+
+		if (assetEntry == null) {
+			return false;
+		}
+
 		int approvedArticlesCount = journalArticlePersistence.countByG_A_ST(
 			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			JournalArticleConstants.ASSET_ENTRY_CREATION_STATUSES);

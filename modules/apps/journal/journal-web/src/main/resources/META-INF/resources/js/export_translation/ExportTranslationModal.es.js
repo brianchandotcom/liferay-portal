@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayForm, {ClayCheckbox, ClayInput, ClaySelect} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {useIsMounted} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
@@ -23,6 +24,17 @@ import ExportTranslationContext from './ExportTranslationContext.es';
 
 const noop = () => {};
 
+const mockOriginLocales = [
+	{
+		languageId: 1,
+		displayName: 'English - United States',
+	},
+	{
+		languageId: 2,
+		displayName: 'Chinese - China',
+	},
+];
+
 const ExportTranslationModal = ({
 	fileEntries,
 	folderId,
@@ -31,7 +43,12 @@ const ExportTranslationModal = ({
 }) => {
 	const {namespace} = useContext(ExportTranslationContext);
 
-	const isMounted = useIsMounted();
+	const [originLocales, setOriginLocales] = useState(mockOriginLocales);
+	const [originLanguageId, setOriginLanguageId] = useState(
+		originLocales[0].languageId
+	);
+
+	const handleSubmit = noop;
 
 	return (
 		<ClayModal observer={observer} size="md">
@@ -39,9 +56,53 @@ const ExportTranslationModal = ({
 				{Liferay.Language.get('export-for-translation')}
 			</ClayModal.Header>
 
-			<form>
+			<ClayForm className="export-modal-content" onSubmit={handleSubmit}>
 				<ClayModal.Body>
-					<p>Modal Body</p>
+					<h5>{Liferay.Language.get('origin-language')}</h5>
+
+					<ClayForm.Group>
+						<ClaySelect
+							name={`_${namespace}_originLanguageId`}
+							onChange={(e) => {
+								setOriginLanguageId(e.currentTarget.value);
+							}}
+							value={originLanguageId}
+						>
+							{originLocales.map((locale) => (
+								<ClaySelect.Option
+									key={locale.languageId}
+									label={locale.displayName}
+									value={locale.languageId}
+								/>
+							))}
+						</ClaySelect>
+					</ClayForm.Group>
+
+					<h5>{Liferay.Language.get('languages-to-translate-to')}</h5>
+
+					<ClayForm.Group>
+						<ClayCheckbox
+							checked={true}
+							label="German - Austria"
+							onChange={() => {}}
+						/>
+						<ClayCheckbox
+							checked={true}
+							label="Italian - Italy"
+							onChange={() => {}}
+						/>
+						<ClayCheckbox
+							checked={false}
+							label="Spanish - Spain"
+							onChange={() => {}}
+						/>
+					</ClayForm.Group>
+
+					<ClayInput
+						name={`_${namespace}_fileEntriesIds`}
+						value={fileEntries}
+						type="hidden"
+					/>
 				</ClayModal.Body>
 
 				<ClayModal.Footer
@@ -60,7 +121,7 @@ const ExportTranslationModal = ({
 						</ClayButton.Group>
 					}
 				/>
-			</form>
+			</ClayForm>
 		</ClayModal>
 	);
 };

@@ -19,7 +19,7 @@ import ExportTranslationContext from './ExportTranslationContext.es';
 import ExportTranslationModal from './ExportTranslationModal.es';
 
 function ExportTranslation(props) {
-	const [fileEntires, setFileEntries] = useState();
+	const [fileEntries, setFileEntries] = useState();
 	const [folderId, setFolderId] = useState();
 	const [showModal, setShowModal] = useState();
 	const {namespace} = useContext(ExportTranslationContext);
@@ -54,7 +54,7 @@ function ExportTranslation(props) {
 			{showModal && (
 				<ExportTranslationModal
 					{...props}
-					fileEntries={fileEntires}
+					fileEntries={fileEntries}
 					folderId={folderId}
 					observer={observer}
 					onModalClose={onClose}

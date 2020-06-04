@@ -997,7 +997,7 @@ definition {
 			fieldName = "DocumentsAndMedia",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentDocumentsAndMedia = "DM Document Title.txt",
+			webContentDocumentsAndMedia = "DM Document Title",
 			webContentText = "Web Content Text",
 			webContentTitle = "Web Content Title");
 
@@ -1646,7 +1646,7 @@ definition {
 			linkFieldName = "LinktoPage",
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
-			webContentDocumentsAndMedia = "DM Document Title.txt",
+			webContentDocumentsAndMedia = "DM Document Title",
 			webContentImageUnderDocumentsAndMedia = "Document_1.jpg",
 			webContentTitle = "WC WebContent Title");
 

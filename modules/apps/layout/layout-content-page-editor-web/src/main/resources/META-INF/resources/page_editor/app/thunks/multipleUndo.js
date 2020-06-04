@@ -12,13 +12,14 @@
  * details.
  */
 
-import {UPDATE_UNDO_ACTIONS} from '../actions/types';
+import {UPDATE_REDO_ACTIONS, UPDATE_UNDO_ACTIONS} from '../actions/types';
 import {undoAction} from '../components/undo/undoActions';
+import {UNDO_TYPES} from '../config/constants/undoTypes';
 import {canUndoAction} from './../components/undo/undoActions';
 
-export default function multipleUndo({numberOfActions, store}) {
+export default function multipleUndo({numberOfActions, store, type}) {
 	return (dispatch) => {
-		if (!store.undoHistory) {
+		if (!store.undoHistory && !store.redoHistory) {
 			return;
 		}
 
@@ -30,12 +31,38 @@ export default function multipleUndo({numberOfActions, store}) {
 			}
 		};
 
-		const undosToUndo = store.undoHistory.slice(0, numberOfActions);
+		let isUndoAction, remainingUndos, undosToUndo, updateHistoryAction;
 
-		const remainingUndos = store.undoHistory.slice(
-			numberOfActions,
-			store.undoHistory.length
-		);
+		if (type === UNDO_TYPES.undo) {
+			isUndoAction = {isUndo: true};
+
+			undosToUndo = store.undoHistory.slice(0, numberOfActions);
+
+			remainingUndos = store.undoHistory.slice(
+				numberOfActions,
+				store.undoHistory.length
+			);
+
+			updateHistoryAction = {
+				type: UPDATE_UNDO_ACTIONS,
+				undoHistory: remainingUndos,
+			};
+		}
+		else {
+			isUndoAction = {isRedo: true};
+
+			undosToUndo = store.redoHistory.slice(0, numberOfActions);
+
+			remainingUndos = store.redoHistory.slice(
+				numberOfActions,
+				store.redoHistory.length
+			);
+
+			updateHistoryAction = {
+				redoHistory: remainingUndos,
+				type: UPDATE_REDO_ACTIONS,
+			};
+		}
 
 		undosToUndo
 			.reduce((promise, undo) => {
@@ -47,14 +74,11 @@ export default function multipleUndo({numberOfActions, store}) {
 			}, Promise.resolve())
 			.then(() => {
 				actions.forEach((action) => {
-					dispatch({...action, isUndo: true});
+					dispatch({...action, ...isUndoAction});
 				});
 			})
 			.then(() => {
-				dispatch({
-					type: UPDATE_UNDO_ACTIONS,
-					undoHistory: remainingUndos,
-				});
+				dispatch(updateHistoryAction);
 			});
 	};
 }

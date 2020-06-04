@@ -64,6 +64,7 @@ export default function UndoHistory() {
 								multipleUndo({
 									numberOfActions: undoHistory.length,
 									store,
+									type: UNDO_TYPES.undo,
 								})
 							);
 						}}
@@ -99,6 +100,7 @@ const History = ({actions = [], type}) => {
 								? index
 								: actionList.length - index,
 						store,
+						type,
 					})
 				);
 			}}

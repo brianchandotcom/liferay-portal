@@ -22,6 +22,8 @@ import {getDerivedStateForUndo} from '../components/undo/undoActions';
 
 const MAX_UNDO_ACTIONS = 20;
 
+let actionId = 0;
+
 export default function undoReducer(state, action) {
 	switch (action.type) {
 		case ADD_REDO_ACTION: {
@@ -32,7 +34,14 @@ export default function undoReducer(state, action) {
 			return {
 				...state,
 				redoHistory: [
-					getDerivedStateForUndo({action, state, type: actionType}),
+					{
+						...getDerivedStateForUndo({
+							action,
+							state,
+							type: actionType,
+						}),
+						actionId: actionId++,
+					},
 					...nextRedoHistory,
 				],
 			};
@@ -48,7 +57,14 @@ export default function undoReducer(state, action) {
 				...state,
 				redoHistory: nextRedoHistory,
 				undoHistory: [
-					getDerivedStateForUndo({action, state, type: actionType}),
+					{
+						...getDerivedStateForUndo({
+							action,
+							state,
+							type: actionType,
+						}),
+						actionId: actionId++,
+					},
 					...nextUndoHistory.slice(0, MAX_UNDO_ACTIONS - 1),
 				],
 			};

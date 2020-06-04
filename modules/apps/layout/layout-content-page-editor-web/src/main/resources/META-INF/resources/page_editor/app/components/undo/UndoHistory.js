@@ -89,7 +89,7 @@ const History = ({actions = [], type}) => {
 	return actionList.map((action, index) => (
 		<ClayDropDown.Item
 			disabled={isSelectedAction(index)}
-			key={index}
+			key={action.actionId}
 			onClick={(event) => {
 				event.preventDefault();
 

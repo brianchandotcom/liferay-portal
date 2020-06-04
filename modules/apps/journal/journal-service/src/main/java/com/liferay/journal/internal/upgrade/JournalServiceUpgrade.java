@@ -253,13 +253,7 @@ public class JournalServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.journal.internal.upgrade.v3_2_2.
 				UpgradeJournalArticleLocalization());
 
-		registry.register(
-			"3.2.2", "3.2.3",
-			new UpgradeDiscussionSubscriptionClassName(
-				_classNameLocalService, _subscriptionLocalService,
-				JournalArticle.class.getName(),
-				UpgradeDiscussionSubscriptionClassName.DeletionMode.
-					DELETE_OLD));
+		registry.register("3.2.2", "3.2.3", new DummyUpgradeStep());
 
 		registry.register(
 			"3.2.3", "3.2.4",

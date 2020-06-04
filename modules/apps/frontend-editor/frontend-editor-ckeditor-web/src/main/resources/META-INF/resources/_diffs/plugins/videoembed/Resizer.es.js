@@ -188,8 +188,6 @@
 				this.hide();
 
 				this.editor.getSelection().unlock();
-
-				this.editor.fire('saveSnapshot');
 			};
 
 			drag.onComplete = () => {

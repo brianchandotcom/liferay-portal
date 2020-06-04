@@ -961,6 +961,7 @@ definition {
 			fieldValue = "Test");
 	}
 
+	@ignore
 	@description = "This is a use case for LPS-68418."
 	@priority = "3"
 	test ConfigureAutosave {

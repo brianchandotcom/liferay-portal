@@ -14,9 +14,9 @@
 
 package com.liferay.change.tracking.internal;
 
-import com.liferay.change.tracking.exception.CTEventException;
-import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.spi.exception.CTEventException;
+import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -105,7 +105,8 @@ public class CTServiceRegistry {
 		for (CTEventListener ctEventListener : _serviceTrackerList) {
 			try {
 				ctEventListener.onAfterCopy(
-					sourceCTCollection, targetCTCollection);
+					sourceCTCollection.getCtCollectionId(),
+					targetCTCollection.getCtCollectionId());
 			}
 			catch (CTEventException ctEventException) {
 				_log.error(

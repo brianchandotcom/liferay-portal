@@ -18,9 +18,9 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.asset.kernel.model.AssetVocabularyTable;
 import com.liferay.asset.kernel.service.persistence.AssetCategoryPersistence;
-import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
-import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
+import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import org.osgi.service.component.annotations.Component;

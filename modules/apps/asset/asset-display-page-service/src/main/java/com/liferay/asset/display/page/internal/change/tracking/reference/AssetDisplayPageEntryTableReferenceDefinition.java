@@ -16,9 +16,9 @@ package com.liferay.asset.display.page.internal.change.tracking.reference;
 
 import com.liferay.asset.display.page.model.AssetDisplayPageEntryTable;
 import com.liferay.asset.display.page.service.persistence.AssetDisplayPageEntryPersistence;
-import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
-import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
+import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;

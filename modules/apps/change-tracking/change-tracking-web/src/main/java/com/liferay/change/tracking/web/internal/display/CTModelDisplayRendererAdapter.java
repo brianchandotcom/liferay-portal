@@ -14,8 +14,8 @@
 
 package com.liferay.change.tracking.web.internal.display;
 
-import com.liferay.change.tracking.display.CTDisplayRenderer;
-import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;

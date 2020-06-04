@@ -14,9 +14,9 @@
 
 package com.liferay.document.library.internal.change.tracking.reference;
 
-import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
-import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
+import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTable;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeTable;

@@ -14,9 +14,9 @@
 
 package com.liferay.friendly.url.internal.change.tracking.reference;
 
-import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
-import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
+import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalizationTable;
 import com.liferay.friendly.url.model.FriendlyURLEntryTable;
 import com.liferay.friendly.url.service.persistence.FriendlyURLEntryLocalizationPersistence;

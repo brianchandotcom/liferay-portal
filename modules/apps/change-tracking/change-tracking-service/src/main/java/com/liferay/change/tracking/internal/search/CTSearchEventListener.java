@@ -15,13 +15,13 @@
 package com.liferay.change.tracking.internal.search;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.exception.CTEventException;
 import com.liferay.change.tracking.internal.CTServiceRegistry;
-import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.spi.exception.CTEventException;
+import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -60,17 +60,16 @@ public class CTSearchEventListener implements CTEventListener {
 
 	@Override
 	public void onAfterCopy(
-		CTCollection sourceCTCollection, CTCollection targetCTCollection) {
+		long sourceCTCollectionId, long targetCTCollectionId) {
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
 				try (SafeClosable safeClosable =
 						CTCollectionThreadLocal.setCTCollectionId(
-							targetCTCollection.getCtCollectionId())) {
+							targetCTCollectionId)) {
 
 					for (Map.Entry<CTService<?>, List<CTEntry>> ctEntryEntry :
-							_getCTEntryEntries(
-								targetCTCollection.getCtCollectionId())) {
+							_getCTEntryEntries(targetCTCollectionId)) {
 
 						_reindex(
 							ctEntryEntry.getKey(), ctEntryEntry.getValue());

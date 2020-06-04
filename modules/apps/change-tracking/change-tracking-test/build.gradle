@@ -5,6 +5,7 @@ dependencies {
 	testIntegrationCompile group: "log4j", name: "log4j", version: "1.2.17"
 	testIntegrationCompile group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	testIntegrationCompile project(":apps:change-tracking:change-tracking-api")
+	testIntegrationCompile project(":apps:change-tracking:change-tracking-spi")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:journal:journal-test-util")
 	testIntegrationCompile project(":apps:layout:layout-test-util")

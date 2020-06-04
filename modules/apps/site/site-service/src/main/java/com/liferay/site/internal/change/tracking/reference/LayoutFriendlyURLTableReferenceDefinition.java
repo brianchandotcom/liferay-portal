@@ -14,9 +14,9 @@
 
 package com.liferay.site.internal.change.tracking.reference;
 
-import com.liferay.change.tracking.reference.TableReferenceDefinition;
-import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
-import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
+import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;

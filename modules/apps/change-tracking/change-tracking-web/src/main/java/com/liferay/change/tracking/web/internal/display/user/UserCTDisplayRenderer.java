@@ -14,8 +14,8 @@
 
 package com.liferay.change.tracking.web.internal.display.user;
 
-import com.liferay.change.tracking.display.CTDisplayRenderer;
-import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.HtmlUtil;

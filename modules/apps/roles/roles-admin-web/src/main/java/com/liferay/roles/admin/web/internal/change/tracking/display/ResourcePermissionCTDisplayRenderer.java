@@ -14,8 +14,8 @@
 
 package com.liferay.roles.admin.web.internal.change.tracking.display;
 
-import com.liferay.change.tracking.display.CTDisplayRenderer;
-import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;

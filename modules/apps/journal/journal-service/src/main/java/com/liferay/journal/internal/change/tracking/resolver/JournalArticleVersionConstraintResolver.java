@@ -14,8 +14,8 @@
 
 package com.liferay.journal.internal.change.tracking.resolver;
 
-import com.liferay.change.tracking.resolver.ConstraintResolver;
-import com.liferay.change.tracking.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
+import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;

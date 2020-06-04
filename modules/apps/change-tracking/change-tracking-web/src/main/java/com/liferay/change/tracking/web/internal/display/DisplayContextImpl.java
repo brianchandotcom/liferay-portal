@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.web.internal.display;
 
-import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

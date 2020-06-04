@@ -17,8 +17,7 @@ package com.liferay.asset.internal.change.tracking.listener;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
-import com.liferay.change.tracking.listener.CTEventListener;
-import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -38,13 +37,13 @@ public class AssetTagCTEventListener implements CTEventListener {
 
 	@Override
 	public void onAfterCopy(
-		CTCollection sourceCTCollection, CTCollection targetCTCollection) {
+		long sourceCTCollectionId, long targetCTCollectionId) {
 
 		try (SafeClosable safeClosable =
 				CTCollectionThreadLocal.setCTCollectionId(
-					targetCTCollection.getCtCollectionId())) {
+					targetCTCollectionId)) {
 
-			_recalculateAssetCount(targetCTCollection.getCtCollectionId());
+			_recalculateAssetCount(targetCTCollectionId);
 		}
 	}
 

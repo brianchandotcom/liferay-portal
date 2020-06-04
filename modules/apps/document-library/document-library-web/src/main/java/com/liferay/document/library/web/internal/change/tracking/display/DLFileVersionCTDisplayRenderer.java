@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.internal.change.tracking.display;
 
-import com.liferay.change.tracking.display.CTDisplayRenderer;
-import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.store.Store;

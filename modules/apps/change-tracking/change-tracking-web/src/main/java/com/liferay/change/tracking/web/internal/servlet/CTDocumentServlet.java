@@ -15,7 +15,7 @@
 package com.liferay.change.tracking.web.internal.servlet;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionLocalService;

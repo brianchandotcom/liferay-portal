@@ -15,8 +15,8 @@
 package com.liferay.document.library.internal.change.tracking.resolver;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.resolver.ConstraintResolver;
-import com.liferay.change.tracking.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
+import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;

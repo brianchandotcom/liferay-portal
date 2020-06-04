@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.internal.resolver;
 
-import com.liferay.change.tracking.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;

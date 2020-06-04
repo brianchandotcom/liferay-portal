@@ -15,7 +15,7 @@
 package com.liferay.journal.internal.util;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.listener.CTEventListener;
+import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;

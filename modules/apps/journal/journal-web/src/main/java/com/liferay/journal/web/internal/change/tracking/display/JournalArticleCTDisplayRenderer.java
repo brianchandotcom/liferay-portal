@@ -14,8 +14,8 @@
 
 package com.liferay.journal.web.internal.change.tracking.display;
 
-import com.liferay.change.tracking.display.CTDisplayRenderer;
-import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.util.JournalContent;

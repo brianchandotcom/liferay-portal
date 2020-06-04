@@ -15,8 +15,8 @@
 package com.liferay.change.tracking.internal.messaging;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.listener.CTEventListener;
 import com.liferay.change.tracking.service.CTMessageLocalService;
+import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.messaging.Message;

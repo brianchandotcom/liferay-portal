@@ -138,7 +138,6 @@ definition {
 	}
 
 	test AssertResultRankingsMiscUI {
-		property portal.upstream = "quarantine";
 		GlobalMenu.gotoPortlet(
 			category = "Search Tuning",
 			panel = "Control Panel",

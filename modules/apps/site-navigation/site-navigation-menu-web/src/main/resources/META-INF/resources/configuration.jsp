@@ -127,7 +127,7 @@ else {
 								<clay:col
 									md="3"
 								>
-									<div class='mt-4 <%= (rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by")) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />rootMenuItemLevel">
+									<div class='mt-4 pt-1 <%= (rootMenuItemType.equals("parent-at-level") || rootMenuItemType.equals("relative-parent-up-by")) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />rootMenuItemLevel">
 										<aui:select label="" name="preferences--rootMenuItemLevel--">
 
 											<%

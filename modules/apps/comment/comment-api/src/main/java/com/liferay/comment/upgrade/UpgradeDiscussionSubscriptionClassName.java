@@ -120,12 +120,6 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			MBDiscussion.class.getName() + StringPool.UNDERLINE +
 				_oldSubscriptionClassName;
 
-		long newClassNameId = ClassNameLocalServiceUtil.getClassNameId(
-			newSubscriptionClassName);
-
-		long oldClassNameId = ClassNameLocalServiceUtil.getClassNameId(
-			_oldSubscriptionClassName);
-
 		List<Subscription> subscriptions =
 			_subscriptionLocalService.getSubscriptions(
 				_oldSubscriptionClassName);
@@ -149,8 +143,12 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 		if (!subscriptions.isEmpty()) {
 			runSQL(
 				StringBundler.concat(
-					"update Subscription set classNameId = ", newClassNameId,
-					" where classNameId = ", oldClassNameId));
+					"update Subscription set classNameId = ",
+					ClassNameLocalServiceUtil.getClassNameId(
+						newSubscriptionClassName),
+					" where classNameId = ",
+					ClassNameLocalServiceUtil.getClassNameId(
+						_oldSubscriptionClassName)));
 		}
 	}
 

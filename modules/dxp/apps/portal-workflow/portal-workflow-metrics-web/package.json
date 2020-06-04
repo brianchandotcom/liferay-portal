@@ -1,13 +1,13 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.3.2",
+		"@clayui/alert": "3.3.3",
 		"@clayui/autocomplete": "3.1.4",
 		"@clayui/button": "3.3.1",
 		"@clayui/charts": "3.1.1",
 		"@clayui/drop-down": "3.4.3",
 		"@clayui/form": "3.8.0",
 		"@clayui/icon": "3.0.5",
-		"@clayui/list": "3.2.4",
+		"@clayui/list": "3.2.5",
 		"@clayui/management-toolbar": "3.2.0",
 		"@clayui/modal": "3.5.0",
 		"@clayui/navigation-bar": "3.1.2",

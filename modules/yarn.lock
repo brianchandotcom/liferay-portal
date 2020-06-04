@@ -1059,10 +1059,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@clayui/alert@3.3.2":
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.3.2.tgz#b03540fc313a261c4fd60194942dc67ed1f3298e"
-  integrity sha512-x7vFFV/NEKOE9z0Z8LowpdtvatHdzFRfQqfh0ATPFwuC1pOvSn0iKd8Q1amcajI6YCkbWWqwlRafGERDDGshYA==
+"@clayui/alert@3.3.3":
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.3.3.tgz#aab0947af57b2f080db96a2edbe83faade09d5c8"
+  integrity sha512-QJe364reBzE9ntuY3DqwU2KXM7N3rscKo0BHqpXXYGd82hEeAlgWPLsWJtfJVdH+ix2Vd22DTuFwdLt6jxbdAw==
   dependencies:
     "@clayui/icon" "^3.0.5"
     "@clayui/layout" "^3.0.1"
@@ -1140,10 +1140,10 @@
     "@clayui/shared" "^3.1.1"
     tinycolor2 "^1.4.1"
 
-"@clayui/css@3.11.0":
-  version "3.11.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.11.0.tgz#7f2829a1f68a0f9776a641372f9ec28929115c68"
-  integrity sha512-xODVx8TxzwXnS/vVx6oklDw2yA1TSkmqVLlwRxu3tej6Y7TtWxPCb8Ey0d7NmuQJBPCLKUdP/5d5I+5wUcQuVg==
+"@clayui/css@3.12.0":
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.12.0.tgz#5ed840efd84be721e0bfb1032ac887caa9ec69ec"
+  integrity sha512-qqabROaXcFI55Pzxfv1Vn/Tn4Vn2UGJD00qzfGoAwn5QJdmTcwHZFEW7GD0hbZyb2bYs/HWAGE8R3Min7p1bvg==
 
 "@clayui/data-provider@3.1.1":
   version "3.1.1"
@@ -1229,10 +1229,10 @@
   dependencies:
     classnames "^2.2.6"
 
-"@clayui/list@3.2.4":
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/@clayui/list/-/list-3.2.4.tgz#bf7f4e2f9c9f650552c786a9e644267d59a1a71f"
-  integrity sha512-wqtIJh2wQRu/eYlV4PBVXj6PbgwP3NjkDqCXSTsmW2idbcaGYs7cSAUJrXOGAQV1iT4bk9CUdNlZNPCOpdtriA==
+"@clayui/list@3.2.5":
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/@clayui/list/-/list-3.2.5.tgz#253fc5435b09945208ad5697e1004b2d183152c5"
+  integrity sha512-N0T3Cum42bE80cUklRn/WcLpgZ2jxp+Z/+onhyEGJfOAdsSxDa7t9wK2cFlfiWyx+Oj17BRONEE2aAJI/yY0lw==
   dependencies:
     "@clayui/drop-down" "^3.4.3"
     "@clayui/form" "^3.8.0"
@@ -1242,6 +1242,7 @@
     "@clayui/link" "^3.1.1"
     "@clayui/sticker" "^3.1.1"
     classnames "^2.2.6"
+    warning "^4.0.3"
 
 "@clayui/loading-indicator@3.1.0", "@clayui/loading-indicator@^3.1.0":
   version "3.1.0"

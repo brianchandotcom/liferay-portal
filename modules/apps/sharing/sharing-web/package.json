@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.3.2",
+		"@clayui/alert": "3.3.3",
 		"@clayui/autocomplete": "3.1.4",
 		"@clayui/button": "3.3.1",
 		"@clayui/data-provider": "3.1.1",

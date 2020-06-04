@@ -76,7 +76,7 @@ dependencies {
 	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "2.2.27") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "2.1.16"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "2.1.17"
 	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.13") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}

@@ -1925,10 +1925,10 @@ definition {
 			ddlDataDefinitionName = "Data Definition",
 			ddlListName = "List Name");
 
-		PortletEntry.viewLocale(locale = "es-ES");
+		PortletEntry.viewLocale(locale = "en-US");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text Spanish",
+			ddlRecordFieldData = "Text English",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -1940,12 +1940,12 @@ definition {
 
 		DDLRecord.editCP(
 			ddlListName = "List Name",
-			ddlRecordFieldData = "Text Spanish");
+			ddlRecordFieldData = "Text English");
 
-		PortletEntry.changeLocale(locale = "en-US");
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text English",
+			ddlRecordFieldData = "Text Spanish",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -1963,8 +1963,6 @@ definition {
 			ddlListName = "List Name",
 			ddlRecordFieldData = "Text English");
 
-		PortletEntry.changeLocale(locale = "en-US");
-
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "",
 			fieldName = "Text");
@@ -1978,7 +1976,7 @@ definition {
 		PortletEntry.publish();
 
 		DDLRecord.viewFieldCP(
-			ddlRecordFieldData = "",
+			ddlRecordFieldData = "Text Spanish",
 			fieldFieldLabel = "Text");
 
 		Navigator.openURL();
@@ -2004,16 +2002,16 @@ definition {
 
 		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
 
-		PortletEntry.viewLocale(locale = "es-ES");
+		PortletEntry.viewLocale(locale = "en-US");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Text en-US",
+			fieldName = "Text");
+
+		PortletEntry.changeLocale(locale = "es-ES");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "Text Spanish",
-			fieldName = "Text");
-
-		PortletEntry.changeLocale(locale = "en-US");
-
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text English",
 			fieldName = "Text");
 
 		PortletEntry.publish();
@@ -2026,8 +2024,6 @@ definition {
 		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
 
 		DDLRecord.editPG();
-
-		PortletEntry.changeLocale(locale = "en-US");
 
 		DDLRecord.populateFieldText(
 			ddlRecordFieldData = "remove",

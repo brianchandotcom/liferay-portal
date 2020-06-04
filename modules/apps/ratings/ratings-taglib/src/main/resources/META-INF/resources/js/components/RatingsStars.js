@@ -15,6 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
@@ -136,8 +137,12 @@ const RatingsStars = ({
 	};
 
 	return (
-		<div className="autofit-padded-no-gutters autofit-row autofit-row-center ratings ratings-stars">
-			<div className="autofit-col">
+		<ClayLayout.ContentRow
+			className="ratings ratings-stars"
+			noGutters
+			verticalAlign="center"
+		>
+			<ClayLayout.ContentCol>
 				<ClayDropDown
 					active={isDropdownOpen}
 					menuElementAttrs={{
@@ -204,8 +209,9 @@ const RatingsStars = ({
 						</ClayDropDown.Item>
 					</ClayDropDown.ItemList>
 				</ClayDropDown>
-			</div>
-			<div className="autofit-col">
+			</ClayLayout.ContentCol>
+
+			<ClayLayout.ContentCol>
 				<span className="ratings-stars-average">
 					<span className="inline-item inline-item-before">
 						<ClayIcon
@@ -224,8 +230,8 @@ const RatingsStars = ({
 					</span>
 					<span className="sr-only">{getSrAverageMessage()}</span>
 				</span>
-			</div>
-		</div>
+			</ClayLayout.ContentCol>
+		</ClayLayout.ContentRow>
 	);
 };
 

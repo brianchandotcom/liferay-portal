@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.File;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch7.internal.util.SearchLogHelperUtil;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
 
@@ -344,7 +344,7 @@ public class EmbeddedElasticsearchConnection
 		).httpPortRange(
 			new HttpPortRange(elasticsearchConfiguration)
 		).localBindInetAddressSupplier(
-			clusterSettingsContext::getLocalBindInetAddress
+			clusterExecutor::getBindInetAddress
 		).nodeName(
 			getNodeName()
 		).settingsContributors(
@@ -380,7 +380,7 @@ public class EmbeddedElasticsearchConnection
 	protected static final String JNA_TMP_DIR = "elasticSearch-tmpDir";
 
 	@Reference
-	protected ClusterSettingsContext clusterSettingsContext;
+	protected ClusterExecutor clusterExecutor;
 
 	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
 

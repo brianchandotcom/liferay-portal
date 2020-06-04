@@ -18,19 +18,14 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.internal.cluster.ClusterSettingsContext;
-import com.liferay.portal.search.elasticsearch7.internal.sidecar.ClusterableSidecar;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.ProcessExecutorPathsImpl;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.Sidecar;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
@@ -120,38 +115,13 @@ public class SidecarElasticsearchConnectionManager {
 				_log.warn(sb.toString());
 			}
 
-			ElasticsearchInstancePaths elasticsearchInstancePaths =
-				getElasticsearchInstancePaths(elasticsearchConfiguration);
-
-			if (_clusterExecutor.isEnabled() && PortalRunMode.isTestMode()) {
-				ClusterableSidecar clusterableSidecar = new ClusterableSidecar(
-					_clusterExecutor, _clusterMasterExecutor,
-					_clusterSettingsContext, elasticsearchConfiguration,
-					elasticsearchInstancePaths, _jsonFactory, _processExecutor,
-					new ProcessExecutorPathsImpl(_props),
-					_settingsContributors);
-
-				_clusterableSidecarsOSGiServiceserviceRegistration =
-					bundleContext.registerService(
-						new String[] {
-							ClusterableSidecar.class.getName(),
-							IdentifiableOSGiService.class.getName()
-						},
-						clusterableSidecar, null);
-
-				elasticsearchConnection = new SidecarElasticsearchConnection(
-					elasticsearchConfiguration.restClientLoggerLevel(),
-					clusterableSidecar);
-			}
-			else {
-				elasticsearchConnection = new SidecarElasticsearchConnection(
-					elasticsearchConfiguration.restClientLoggerLevel(),
-					new Sidecar(
-						_clusterSettingsContext, elasticsearchConfiguration,
-						elasticsearchInstancePaths, _processExecutor,
-						new ProcessExecutorPathsImpl(_props),
-						_settingsContributors));
-			}
+			elasticsearchConnection = new SidecarElasticsearchConnection(
+				elasticsearchConfiguration.restClientLoggerLevel(),
+				new Sidecar(
+					_clusterExecutor, elasticsearchConfiguration,
+					getElasticsearchInstancePaths(elasticsearchConfiguration),
+					_processExecutor, new ProcessExecutorPathsImpl(_props),
+					_settingsContributors));
 		}
 		else {
 			elasticsearchConnection = ProxyFactory.newDummyInstance(
@@ -179,10 +149,6 @@ public class SidecarElasticsearchConnectionManager {
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistration.unregister();
-
-		if (_clusterableSidecarsOSGiServiceserviceRegistration != null) {
-			_clusterableSidecarsOSGiServiceserviceRegistration.unregister();
-		}
 	}
 
 	protected ElasticsearchInstancePaths getElasticsearchInstancePaths(
@@ -215,17 +181,8 @@ public class SidecarElasticsearchConnectionManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SidecarElasticsearchConnectionManager.class);
 
-	private ServiceRegistration<?>
-		_clusterableSidecarsOSGiServiceserviceRegistration;
-
 	@Reference
 	private ClusterExecutor _clusterExecutor;
-
-	@Reference
-	private ClusterMasterExecutor _clusterMasterExecutor;
-
-	@Reference
-	private ClusterSettingsContext _clusterSettingsContext;
 
 	@Reference
 	private JSONFactory _jsonFactory;

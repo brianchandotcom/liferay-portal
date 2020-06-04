@@ -24,6 +24,7 @@ import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.process.ProcessLog;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchInstancePaths;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchInstanceSettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.connection.HttpPortRange;
@@ -71,14 +71,14 @@ import org.objectweb.asm.Opcodes;
 public class Sidecar {
 
 	public Sidecar(
-		ClusterSettingsContext clusterSettingsContext,
+		ClusterExecutor clusterExecutor,
 		ElasticsearchConfiguration elasticsearchConfiguration,
 		ElasticsearchInstancePaths elasticsearchInstancePaths,
 		ProcessExecutor processExecutor,
 		ProcessExecutorPaths processExecutorPaths,
 		Collection<SettingsContributor> settingsContributors) {
 
-		_clusterSettingsContext = clusterSettingsContext;
+		_clusterExecutor = clusterExecutor;
 		_dataHomePath = elasticsearchInstancePaths.getDataPath();
 		_elasticsearchConfiguration = elasticsearchConfiguration;
 		_elasticsearchInstancePaths = elasticsearchInstancePaths;
@@ -302,7 +302,7 @@ public class Sidecar {
 		).httpPortRange(
 			new HttpPortRange(_elasticsearchConfiguration)
 		).localBindInetAddressSupplier(
-			_clusterSettingsContext::getLocalBindInetAddress
+			_clusterExecutor::getBindInetAddress
 		).nodeName(
 			getNodeName()
 		).settingsContributors(
@@ -515,7 +515,7 @@ public class Sidecar {
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
 
 	private String _address;
-	private final ClusterSettingsContext _clusterSettingsContext;
+	private final ClusterExecutor _clusterExecutor;
 	private final Path _dataHomePath;
 	private final ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final ElasticsearchInstancePaths _elasticsearchInstancePaths;

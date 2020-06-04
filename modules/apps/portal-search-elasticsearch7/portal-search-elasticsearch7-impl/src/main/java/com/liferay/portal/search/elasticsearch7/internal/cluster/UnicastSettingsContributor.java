@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
-	immediate = true, property = "operation.mode=EMBEDDED",
+	enabled = false, immediate = true, property = "operation.mode=EMBEDDED",
 	service = SettingsContributor.class
 )
 public class UnicastSettingsContributor extends BaseSettingsContributor {

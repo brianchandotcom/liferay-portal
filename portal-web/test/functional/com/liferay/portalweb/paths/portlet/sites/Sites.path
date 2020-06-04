@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>SELECT_SITE_MODAL_HEADER</td>
-	<td>//div[@class='modal-title']</td>
+	<td>//h3[@class='modal-title']</td>
 	<td></td>
 </tr>
 <!--SITE_TABLE-->

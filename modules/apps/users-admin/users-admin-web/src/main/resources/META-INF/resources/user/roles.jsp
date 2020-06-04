@@ -746,23 +746,15 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			}
 
 			function <portlet:namespace />searchContainerUpdateDataStore(searchContainer) {
-				var searchContainerDataStore = [];
-
-				var searchContainerContentBox = searchContainer.get('contentBox');
-
-				var modifyLinkList = searchContainerContentBox._node.querySelectorAll(
-					'.modify-link'
+				searchContainer.updateDataStore(
+					searchContainer
+						.get('contentBox')
+						.all('.modify-link')
+						.getData()
+						.map(function (data) {
+							return data.groupid + '-' + data.rowid;
+						})
 				);
-
-				for (var i = 0; i < modifyLinkList.length; i++) {
-					var groupId = modifyLinkList[i].getAttribute('data-groupId');
-					var rowId = modifyLinkList[i].getAttribute('data-rowId');
-					var id = groupId + '-' + rowId;
-
-					searchContainerDataStore.push(id);
-				}
-
-				searchContainer.updateDataStore(searchContainerDataStore.join(','));
 			}
 
 			Liferay.provide(

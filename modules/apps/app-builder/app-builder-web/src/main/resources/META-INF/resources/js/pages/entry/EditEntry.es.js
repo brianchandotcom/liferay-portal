@@ -54,34 +54,35 @@ export const EditEntry = ({
 
 			const languageId = themeDisplay.getLanguageId();
 
-			visitor.mapFields(({fieldName, localizable, repeatable, value, visible}) => {
-
-				if (!visible) {
-					return;
-				}
-
-				if (localizable) {
-					if (!dataRecord.dataRecordValues[fieldName]) {
-						dataRecord.dataRecordValues[fieldName] = {
-							[languageId]: [],
-						};
+			visitor.mapFields(
+				({fieldName, localizable, repeatable, value, visible}) => {
+					if (!visible) {
+						return;
 					}
 
-					if (repeatable) {
-						dataRecord.dataRecordValues[fieldName][languageId].push(
-							value
-						);
+					if (localizable) {
+						if (!dataRecord.dataRecordValues[fieldName]) {
+							dataRecord.dataRecordValues[fieldName] = {
+								[languageId]: [],
+							};
+						}
+
+						if (repeatable) {
+							dataRecord.dataRecordValues[fieldName][
+								languageId
+							].push(value);
+						}
+						else {
+							dataRecord.dataRecordValues[fieldName] = {
+								[languageId]: value,
+							};
+						}
 					}
 					else {
-						dataRecord.dataRecordValues[fieldName] = {
-							[languageId]: value,
-						};
+						dataRecord.dataRecordValues[fieldName] = value;
 					}
 				}
-				else {
-					dataRecord.dataRecordValues[fieldName] = value;
-				}
-			});
+			);
 
 			const openSuccessToast = (isNew) => {
 				const message = isNew

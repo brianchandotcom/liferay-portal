@@ -490,7 +490,7 @@ definition {
 		property portal.acceptance = "true";
 
 		GlobalMenu.gotoPortlet(
-			category = "Asset Libraries",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Asset Libraries");
 

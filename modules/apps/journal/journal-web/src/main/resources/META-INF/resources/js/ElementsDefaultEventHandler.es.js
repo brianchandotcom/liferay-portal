@@ -109,28 +109,27 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		});
 	}
 
-	publishToLive(itemData) {
-		if (itemData.publishArticleURL !== undefined) {
-			if (
-				confirm(
-					Liferay.Language.get(
-						'are-you-sure-you-want-to-publish-the-selected-web-content'
-					)
+	publishArticleToLive(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-publish-the-selected-web-content'
 				)
-			) {
-				this._send(itemData.publishArticleURL);
-			}
+			)
+		) {
+			this._send(itemData.publishArticleURL);
 		}
-		else {
-			if (
-				confirm(
-					Liferay.Language.get(
-						'are-you-sure-you-want-to-publish-the-selected-folder'
-					)
+	}
+
+	publishFolderToLive(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get(
+					'are-you-sure-you-want-to-publish-the-selected-folder'
 				)
-			) {
-				this._send(itemData.publishFolderURL);
-			}
+			)
+		) {
+			this._send(itemData.publishFolderURL);
 		}
 	}
 

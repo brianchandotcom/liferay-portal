@@ -574,7 +574,7 @@ public class JournalArticleActionDropdownItemsProvider {
 		publishArticleURL.setParameter("articleId", _article.getArticleId());
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "publishToLive");
+			dropdownItem.putData("action", "publishArticleToLive");
 			dropdownItem.putData(
 				"publishArticleURL", publishArticleURL.toString());
 			dropdownItem.setLabel(

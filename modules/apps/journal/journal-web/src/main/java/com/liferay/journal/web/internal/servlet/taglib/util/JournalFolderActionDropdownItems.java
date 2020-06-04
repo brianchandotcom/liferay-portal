@@ -336,7 +336,7 @@ public class JournalFolderActionDropdownItems {
 		}
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "publishToLive");
+			dropdownItem.putData("action", "publishFolderToLive");
 			dropdownItem.putData(
 				"publishFolderURL", publishFolderURL.toString());
 			dropdownItem.setLabel(

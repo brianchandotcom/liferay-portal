@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>FILES_CHECKBOX</td>
-	<td>//div[contains(@aria-label,'Checkbox for ${key_documentTitle}')]</td>
+	<td>//div[contains(@aria-label,'${key_documentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

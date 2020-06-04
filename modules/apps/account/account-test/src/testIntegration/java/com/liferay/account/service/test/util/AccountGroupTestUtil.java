@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.account.service.test;
+package com.liferay.account.service.test.util;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;

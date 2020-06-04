@@ -990,12 +990,10 @@ definition {
 			fieldValue = "Test");
 	}
 
-	@ignore
 	@description = "This is a use case for LPS-68418."
 	@priority = "3"
 	test ConfigureAutosave {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Forms#ConfigureAutosave";
 
 		Navigator.openURL();

@@ -8752,22 +8752,26 @@ public class JournalArticleLocalServiceImpl
 			journalArticleLocalization);
 	}
 
-	private boolean _addDraftAssetEntry(JournalArticle article) {
-		boolean addDraftAssetEntry = false;
-
-		if (!article.isApproved() &&
-			(article.getVersion() != JournalArticleConstants.VERSION_DEFAULT)) {
-
-			int approvedArticlesCount = journalArticlePersistence.countByG_A_ST(
-				article.getGroupId(), article.getArticleId(),
-				JournalArticleConstants.ASSET_ENTRY_CREATION_STATUSES);
-
-			if (approvedArticlesCount > 0) {
-				addDraftAssetEntry = true;
-			}
+	private boolean _addDraftAssetEntry(JournalArticle journalArticle) {
+		if (journalArticle.isApproved()) {
+			return false;
 		}
 
-		return addDraftAssetEntry;
+		if (journalArticle.getVersion() ==
+				JournalArticleConstants.VERSION_DEFAULT) {
+
+			return false;
+		}
+
+		int approvedArticlesCount = journalArticlePersistence.countByG_A_ST(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			JournalArticleConstants.ASSET_ENTRY_CREATION_STATUSES);
+
+		if (approvedArticlesCount == 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private Map<Locale, String> _checkFriendlyURLMap(

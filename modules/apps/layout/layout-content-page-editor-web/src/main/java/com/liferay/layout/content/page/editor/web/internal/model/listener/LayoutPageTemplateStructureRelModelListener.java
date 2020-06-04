@@ -60,7 +60,7 @@ public class LayoutPageTemplateStructureRelModelListener
 			String.valueOf(
 				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
 			_portal.getClassNameId(LayoutPageTemplateStructure.class),
-			layoutPageTemplateStructure.getClassPK());
+			layoutPageTemplateStructure.getPlid());
 
 		Set<InfoDisplayObjectProvider<?>> infoDisplayObjectProviders =
 			ContentUtil.getLayoutMappedInfoDisplayObjectProviders(
@@ -79,7 +79,7 @@ public class LayoutPageTemplateStructureRelModelListener
 								getLayoutPageTemplateStructureId()),
 						_portal.getClassNameId(
 							LayoutPageTemplateStructure.class),
-						layoutPageTemplateStructure.getClassPK());
+						layoutPageTemplateStructure.getPlid());
 
 			if (layoutClassedModelUsage != null) {
 				continue;
@@ -99,7 +99,7 @@ public class LayoutPageTemplateStructureRelModelListener
 					layoutPageTemplateStructure.
 						getLayoutPageTemplateStructureId()),
 				_portal.getClassNameId(LayoutPageTemplateStructure.class),
-				layoutPageTemplateStructure.getClassPK(), serviceContext);
+				layoutPageTemplateStructure.getPlid(), serviceContext);
 		}
 	}
 

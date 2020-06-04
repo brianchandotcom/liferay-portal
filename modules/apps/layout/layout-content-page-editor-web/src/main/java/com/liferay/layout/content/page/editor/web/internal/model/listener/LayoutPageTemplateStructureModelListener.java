@@ -40,7 +40,7 @@ public class LayoutPageTemplateStructureModelListener
 			String.valueOf(
 				layoutPageTemplateStructure.getLayoutPageTemplateStructureId()),
 			_portal.getClassNameId(LayoutPageTemplateStructure.class),
-			layoutPageTemplateStructure.getClassPK());
+			layoutPageTemplateStructure.getPlid());
 	}
 
 	@Reference

@@ -14,6 +14,10 @@
 
 package com.liferay.frontend.js.web.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResources;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
@@ -32,11 +36,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(service = {})
-public class JavaScriptPortalWebResourcesCleaner {
+public class JavaScriptAwarePortalWebResourcesCleaner {
 
 	@Activate
 	protected void activate(BundleContext bundleContext)
 		throws InvalidSyntaxException {
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, JavaScriptAwarePortalWebResources.class);
 
 		_serviceListener = serviceEvent -> {
 			ServiceReference<?> serviceReference =
@@ -44,8 +51,12 @@ public class JavaScriptPortalWebResourcesCleaner {
 
 			Bundle bundle = serviceReference.getBundle();
 
-			_javaScriptPortalWebResources.updateLastModifed(
-				bundle.getLastModified());
+			for (JavaScriptAwarePortalWebResources
+					javaScriptAwarePortalWebResources : _serviceTrackerList) {
+
+				javaScriptAwarePortalWebResources.updateLastModifed(
+					bundle.getLastModified());
+			}
 		};
 
 		bundleContext.addServiceListener(
@@ -56,13 +67,14 @@ public class JavaScriptPortalWebResourcesCleaner {
 
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) {
+		_serviceTrackerList.close();
 		bundleContext.removeServiceListener(_serviceListener);
 	}
 
-	@Reference
-	private JavaScriptPortalWebResources _javaScriptPortalWebResources;
-
 	private ServiceListener _serviceListener;
+	private ServiceTrackerList
+		<JavaScriptAwarePortalWebResources, JavaScriptAwarePortalWebResources>
+			_serviceTrackerList;
 
 	@Reference(
 		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"

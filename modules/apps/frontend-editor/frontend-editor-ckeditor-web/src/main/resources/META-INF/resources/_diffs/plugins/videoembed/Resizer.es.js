@@ -253,8 +253,8 @@
 			const box = getBoundingBox(this.window, this.preview);
 
 			this.result = {
-				height: box.height,
-				width: box.width,
+				height: Math.round(box.height),
+				width: Math.round(box.width),
 			};
 
 			this.preview.style.display = 'none';

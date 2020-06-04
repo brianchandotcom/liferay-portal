@@ -16,7 +16,7 @@ package com.liferay.change.tracking.internal.reference.builder;
 
 import com.liferay.change.tracking.internal.reference.TableJoinHolder;
 import com.liferay.change.tracking.internal.reference.TableJoinHolderFactory;
-import com.liferay.change.tracking.reference.TableReferenceDefinition;
+import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.FromStep;

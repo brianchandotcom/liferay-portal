@@ -220,7 +220,6 @@
 		<exception>CTCollectionDescription</exception>
 		<exception>CTCollectionName</exception>
 		<exception>CTEnclosure</exception>
-		<exception>CTEvent</exception>
 		<exception>DuplicateCTEntry</exception>
 	</exceptions>
 </service-builder>

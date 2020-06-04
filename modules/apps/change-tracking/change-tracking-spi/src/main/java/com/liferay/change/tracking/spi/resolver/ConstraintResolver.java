@@ -12,37 +12,32 @@
  * details.
  */
 
-package com.liferay.change.tracking.display;
+package com.liferay.change.tracking.spi.resolver;
 
-import com.liferay.change.tracking.display.context.DisplayContext;
+import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-
-import java.io.InputStream;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.ResourceBundle;
 
 /**
- * @author Samuel Trong Tran
+ * @author Preston Crary
  */
-public interface CTDisplayRenderer<T> {
+public interface ConstraintResolver<T extends CTModel<T>> {
 
-	public default InputStream getDownloadInputStream(T model, String key)
-		throws PortalException {
-
-		return null;
-	}
-
-	public String getEditURL(HttpServletRequest httpServletRequest, T model)
-		throws Exception;
+	public String getConflictDescriptionKey();
 
 	public Class<T> getModelClass();
 
-	public String getTitle(Locale locale, T model) throws PortalException;
+	public String getResolutionDescriptionKey();
 
-	public String getTypeName(Locale locale);
+	public ResourceBundle getResourceBundle(Locale locale);
 
-	public void render(DisplayContext<T> displayContext) throws Exception;
+	public String[] getUniqueIndexColumnNames();
+
+	public void resolveConflict(
+			ConstraintResolverHelper<T> constraintResolverHelper)
+		throws PortalException;
 
 }

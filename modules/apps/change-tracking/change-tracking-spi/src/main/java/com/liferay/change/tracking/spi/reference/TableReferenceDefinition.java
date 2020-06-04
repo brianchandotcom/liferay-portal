@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.change.tracking.reference;
+package com.liferay.change.tracking.spi.reference;
 
-import com.liferay.change.tracking.reference.builder.ChildTableReferenceInfoBuilder;
-import com.liferay.change.tracking.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
+import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.reference.builder;
+package com.liferay.change.tracking.spi.reference.builder;
 
 import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.petra.sql.dsl.Column;
@@ -27,9 +27,12 @@ import com.liferay.portal.kernel.model.SystemEventTable;
 
 import java.util.function.Function;
 
+import org.osgi.annotation.versioning.ProviderType;
+
 /**
  * @author Preston Crary
  */
+@ProviderType
 public interface ChildTableReferenceInfoBuilder<T extends Table<T>> {
 
 	public default ChildTableReferenceInfoBuilder<T> assetEntryReference(

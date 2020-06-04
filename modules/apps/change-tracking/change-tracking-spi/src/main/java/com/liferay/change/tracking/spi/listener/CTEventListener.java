@@ -12,25 +12,30 @@
  * details.
  */
 
-package com.liferay.change.tracking.display.context;
+package com.liferay.change.tracking.spi.listener;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.change.tracking.spi.exception.CTEventException;
 
 /**
  * @author Preston Crary
  */
-@ProviderType
-public interface DisplayContext<T> {
+public interface CTEventListener {
 
-	public String getDownloadURL(String key, long size, String title);
+	public default void onAfterCopy(
+			long sourceCTCollectionId, long targetCTCollectionId)
+		throws CTEventException {
+	}
 
-	public HttpServletRequest getHttpServletRequest();
+	public default void onAfterPublish(long ctCollectionId)
+		throws CTEventException {
+	}
 
-	public HttpServletResponse getHttpServletResponse();
+	public default void onBeforePublish(long ctCollectionId)
+		throws CTEventException {
+	}
 
-	public T getModel();
+	public default void onBeforeRemove(long ctCollectionId)
+		throws CTEventException {
+	}
 
 }

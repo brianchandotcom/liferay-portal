@@ -12,32 +12,25 @@
  * details.
  */
 
-package com.liferay.change.tracking.resolver;
+package com.liferay.change.tracking.spi.resolver.helper;
 
-import com.liferay.change.tracking.resolver.helper.ConstraintResolverHelper;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Preston Crary
  */
-public interface ConstraintResolver<T extends CTModel<T>> {
+@ProviderType
+public interface ConstraintResolverHelper<T extends CTModel<T>> {
 
-	public String getConflictDescriptionKey();
+	public <R, E extends Throwable> R getInTarget(
+			UnsafeSupplier<R, E> unsafeSupplier)
+		throws E;
 
-	public Class<T> getModelClass();
+	public T getSourceCTModel();
 
-	public String getResolutionDescriptionKey();
-
-	public ResourceBundle getResourceBundle(Locale locale);
-
-	public String[] getUniqueIndexColumnNames();
-
-	public void resolveConflict(
-			ConstraintResolverHelper<T> constraintResolverHelper)
-		throws PortalException;
+	public T getTargetCTModel();
 
 }

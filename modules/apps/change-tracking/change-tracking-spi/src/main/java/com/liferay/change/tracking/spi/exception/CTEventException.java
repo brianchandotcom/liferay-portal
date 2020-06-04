@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.exception;
+package com.liferay.change.tracking.spi.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 

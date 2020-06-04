@@ -14,9 +14,8 @@
 
 (function () {
 	class DragEvent {
-		constructor(window, document) {
+		constructor(document) {
 			this.document = document;
-			this.window = window;
 
 			this.events = {
 				keydown: this.keydown.bind(this),

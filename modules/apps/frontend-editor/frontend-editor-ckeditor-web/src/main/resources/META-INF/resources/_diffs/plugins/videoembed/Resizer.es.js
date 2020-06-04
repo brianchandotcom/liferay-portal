@@ -153,10 +153,7 @@
 				return;
 			}
 
-			const drag = new Liferay.DragEventCKEditor(
-				this.window,
-				this.document
-			);
+			const drag = new Liferay.DragEventCKEditor(this.document);
 
 			drag.onStart = () => {
 				this.showPreview();

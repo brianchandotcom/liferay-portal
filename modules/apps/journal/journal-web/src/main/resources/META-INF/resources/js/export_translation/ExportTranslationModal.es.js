@@ -37,7 +37,6 @@ const mockOriginLocales = [
 
 const ExportTranslationModal = ({
 	fileEntries,
-	folderId,
 	observer,
 	onModalClose = noop,
 }) => {
@@ -128,7 +127,6 @@ const ExportTranslationModal = ({
 
 ExportTranslationModal.propTypes = {
 	fileEntries: PropTypes.array,
-	folderId: PropTypes.string,
 };
 
 export default ExportTranslationModal;

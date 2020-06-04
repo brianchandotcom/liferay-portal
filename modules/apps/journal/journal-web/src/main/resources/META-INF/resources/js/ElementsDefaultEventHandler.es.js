@@ -102,8 +102,7 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 			this.ns('ExportForTranslationComponent')
 		).then((exportTranslationComponent) => {
 			exportTranslationComponent.open(
-				fileEntriesSelected,
-				0
+				fileEntriesSelected
 			)
 		});
 	}

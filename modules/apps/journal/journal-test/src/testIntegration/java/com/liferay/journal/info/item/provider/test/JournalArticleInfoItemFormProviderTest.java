@@ -37,7 +37,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Iterator;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -108,11 +108,14 @@ public class JournalArticleInfoItemFormProviderTest {
 			"Un poco de texto",
 			ddmTextInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
-		List<InfoFieldValue> ddmTextInfoFieldValues =
+		Collection<InfoFieldValue> ddmTextInfoFieldValues =
 			infoFormValues.getInfoFieldValues("DDM_Text");
 
-		InfoFieldValue firstDDMTextInfoFieldValue = ddmTextInfoFieldValues.get(
-			0);
+		Iterator<InfoFieldValue> ddmTextInfoFieldValuesIterator =
+			ddmTextInfoFieldValues.iterator();
+
+		InfoFieldValue firstDDMTextInfoFieldValue =
+			ddmTextInfoFieldValuesIterator.next();
 
 		Assert.assertEquals(
 			"Some text",
@@ -122,8 +125,8 @@ public class JournalArticleInfoItemFormProviderTest {
 			"Un poco de texto",
 			firstDDMTextInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
-		InfoFieldValue secondDDMTextInfoFieldValue = ddmTextInfoFieldValues.get(
-			1);
+		InfoFieldValue secondDDMTextInfoFieldValue =
+			ddmTextInfoFieldValuesIterator.next();
 
 		Assert.assertEquals(
 			"Some more text",

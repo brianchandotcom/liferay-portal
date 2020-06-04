@@ -33,6 +33,10 @@ definition {
 		LexiconEntry.gotoAdd();
 	}
 
+	macro gotoAddElementSet {
+		LexiconEntry.gotoAdd();
+	}
+
 	macro gotoAddForm {
 		LexiconEntry.gotoAdd();
 	}

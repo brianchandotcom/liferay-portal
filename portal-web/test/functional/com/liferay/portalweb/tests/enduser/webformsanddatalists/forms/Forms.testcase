@@ -28,6 +28,10 @@ definition {
 
 			FormsAdmin.teardownForms();
 
+			Navigator.gotoNavItem(navItem = "Element Sets");
+
+			FormsAdmin.teardownElementSets();
+
 			Page.tearDownCP();
 		}
 	}
@@ -115,7 +119,7 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
 
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoAddElementSet();
 
 		Form.editName(formName = "Element Set 1");
 
@@ -123,7 +127,7 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
-		Form.editFieldLabel(fieldValue = "Text Field Required");
+		Form.editElementSetFieldLabel(fieldValue = "Text Field Required");
 
 		FormFields.enableSwitcher(fieldName = "required");
 
@@ -133,7 +137,7 @@ definition {
 			fieldPositionNumber = "2",
 			fieldType = "Select from List");
 
-		Form.editFieldLabel(fieldValue = "Select Repeatable");
+		Form.editElementSetFieldLabel(fieldValue = "Select Repeatable");
 
 		for (var number : list "1,2,3") {
 			FormFields.editOptionsRow(
@@ -150,7 +154,14 @@ definition {
 
 		Form.saveElementSet();
 
-		FormsAdminNavigator.gotoBack();
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		Navigator.gotoNavItem(navItem = "Element Sets");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -160,21 +171,23 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
 
-		FormFields.editText(
-			fieldName = "label",
+		Form.editElementSetFieldLabel(
+			fieldName = "TextFieldRequired",
 			fieldValue = "表格文本");
 
 		Form.closeSidebar();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Select Repeatable");
 
-		FormFields.editText(
-			fieldName = "label",
+		Form.editElementSetFieldLabel(
+			fieldName = "SelectRepeatable",
 			fieldValue = "表单选择");
 
 		Form.closeSidebar();
 
 		Form.saveElementSet();
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
@@ -185,10 +198,12 @@ definition {
 
 		Form.editName();
 
-		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "1");
 
 		Form.gotoAddField(
-			fieldPositionNumber = "1",
+			fieldPositionNumber = "3",
 			fieldType = "Date");
 
 		Form.editFieldLabelMetal(fieldValue = "Date Field");
@@ -197,7 +212,7 @@ definition {
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Text Field Required");
 
-		FormFields.editFieldName(fieldValue = "TextFieldRequired1");
+		FormFields.editFieldName(fieldValue = "FirstTextField");
 
 		Form.gotoAdvancedTab();
 
@@ -209,13 +224,13 @@ definition {
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
-			fieldName = "TextFieldRequired");
-
-		FormFields.viewRequiredAsterisk();
+			fieldName = "${fieldName1}");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
 			fieldName = "SelectRepeatable");
+
+		FormFields.viewRequiredAsterisk();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "SelectRepeatable");
 
@@ -229,7 +244,9 @@ definition {
 
 		Form.selectTranslation(localizedLanguage = "English (United States)");
 
-		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "4");
 
 		FormsAdminNavigator.gotoEditField(fieldName = "TextFieldRequired");
 
@@ -247,8 +264,6 @@ definition {
 			fieldLabel = "Text Field Required",
 			fieldName = "${fieldName1}");
 
-		FormFields.viewRequiredAsterisk();
-
 		FormFields.viewSelectLabel(
 			fieldLabel = "Select Repeatable",
 			fieldName = "SelectRepeatable");
@@ -257,13 +272,17 @@ definition {
 			fieldLabel = "Text Field Required",
 			fieldName = "${fieldName2}");
 
+		FormFields.viewSelectLabel(
+			fieldLabel = "Select Repeatable",
+			fieldName = "SelectRepeatable1");
+
+		FormFields.viewRequiredAsterisk();
+
 		FormPortlet.changeLocale(locale = "中文-中国");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
 			fieldName = "${fieldName1}");
-
-		FormFields.viewRequiredAsterisk();
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
@@ -272,6 +291,12 @@ definition {
 		FormFields.viewTextLabel(
 			fieldLabel = "表格文本",
 			fieldName = "${fieldName2}");
+
+		FormFields.viewSelectLabel(
+			fieldLabel = "表单选择",
+			fieldName = "SelectRepeatable1");
+
+		FormFields.viewRequiredAsterisk();
 
 		FormFields.editText(
 			fieldName = "${fieldName1}",
@@ -292,11 +317,13 @@ definition {
 
 		Navigator.gotoNavItem(navItem = "Element Sets");
 
-		FormsAdminNavigator.gotoAddForm();
+		FormsAdminNavigator.gotoAddElementSet();
 
 		Form.editName(formName = "Element Set 2");
 
-		Form.gotoAddElementSet(elementSetTitle = "Element Set 1");
+		Form.gotoAddElementSet(
+			elementSetTitle = "Element Set 1",
+			fieldPositionNumber = "1");
 
 		Form.addTranslation(localizedLanguage = "Chinese (China)");
 
@@ -304,11 +331,11 @@ definition {
 			fieldLabel = "表格文本",
 			fieldName = "TextFieldRequired");
 
-		FormFields.viewRequiredAsterisk();
-
 		FormFields.viewSelectLabel(
 			fieldLabel = "表单选择",
 			fieldName = "SelectRepeatable");
+
+		FormFields.viewRequiredAsterisk();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "SelectRepeatable");
 
@@ -320,9 +347,9 @@ definition {
 
 		Form.selectTranslation(localizedLanguage = "English (United States)");
 
-		Form.gotoAddField(fieldType = "Text");
+		Form.addTextField(fieldPositionNumber = "3");
 
-		Form.editFieldLabelMetal(fieldValue = "Text Field New");
+		Form.editElementSetFieldLabel(fieldValue = "Text Field New");
 
 		Form.closeSidebar();
 

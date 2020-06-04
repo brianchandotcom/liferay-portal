@@ -28,6 +28,10 @@ definition {
 
 			FormsAdmin.teardownForms();
 
+			Navigator.gotoNavItem(navItem = "Data Providers");
+
+			FormsAdmin.teardownDataProviders();
+
 			Page.tearDownCP();
 		}
 	}

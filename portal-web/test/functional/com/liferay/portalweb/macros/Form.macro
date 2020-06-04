@@ -152,6 +152,20 @@ definition {
 			value1 = "${formDescription}");
 	}
 
+	macro editElementSetFieldLabel {
+		while (IsTextNotEqual(key_fieldName = "label", locator1 = "FormFields#TEXT_FIELD", value1 = "") && (maxIterations = "10")) {
+			FormFields.editTextWithBackspace(fieldName = "label");
+		}
+
+		if (!(isSet(fieldName))) {
+			var fieldName = StringUtil.replace("${fieldValue}", " ", "");
+		}
+
+		Form.editFieldLabelMetal(
+			fieldName = "${fieldName}",
+			fieldValue = "${fieldValue}");
+	}
+
 	macro editFieldDataProvider {
 		FormFields.selectSelectOption(
 			fieldName = "dataSourceType",
@@ -298,9 +312,11 @@ definition {
 
 		Form.gotoElementSetsTab();
 
+		var key_fieldLocation = "${fieldPositionNumber}";
+
 		var key_fieldType = "${elementSetTitle}";
 
-		DragAndDrop(
+		DragAndDrop.dragAndDropPortletToObject(
 			locator1 = "Form#ADD_FIELD_TYPE",
 			locator2 = "Form#ADD_FIELD_POSITION",
 			value1 = "${elementSetTitle}");
@@ -457,9 +473,11 @@ definition {
 	}
 
 	macro saveElementSet {
-		Button.clickSave();
+		AssertClick(
+			locator1 = "Form#SAVE_ELEMENT_SET_BUTTON",
+			value1 = "Save");
 
-		Alert.viewSuccessMessage();
+		VerifyElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 	}
 
 	macro saveLocalized {

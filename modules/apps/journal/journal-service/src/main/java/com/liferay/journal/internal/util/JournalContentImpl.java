@@ -14,7 +14,6 @@
 
 package com.liferay.journal.internal.util;
 
-import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.model.JournalArticle;
@@ -249,9 +248,9 @@ public class JournalContentImpl
 
 		JournalArticleDisplay articleDisplay = null;
 
-		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+		boolean productionMode = CTCollectionThreadLocal.isProductionMode();
 
-		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+		if (productionMode) {
 			articleDisplay = _portalCache.get(journalContentKey);
 		}
 
@@ -264,9 +263,7 @@ public class JournalContentImpl
 				lifecycleRender) {
 
 				try {
-					if (ctCollectionId ==
-							CTConstants.CT_COLLECTION_ID_PRODUCTION) {
-
+					if (productionMode) {
 						_portalCache.put(journalContentKey, articleDisplay);
 					}
 				}

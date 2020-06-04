@@ -45,11 +45,11 @@ import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.StorageFieldRequiredException;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -674,8 +674,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
-	private com.liferay.dynamic.data.mapping.model.DDMStructure
-			_fetchDDMStructure(DLFileEntryType dlFileEntryType)
+	private DDMStructure _fetchDDMStructure(DLFileEntryType dlFileEntryType)
 		throws PortalException {
 
 		List<DDMStructureLink> ddmStructureLinks =
@@ -963,21 +962,18 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		String className =
-			com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
-				getName();
+		DDMStructure ddmStructure = _fetchDDMStructure(
+			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId));
 
-		com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure =
-			_fetchDDMStructure(
-				_dlFileEntryTypeLocalService.getDLFileEntryType(
-					fileEntryTypeId));
-
-		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
-			serviceContext.getRequest(), ddmStructure.getDDMForm());
-
-		serviceContext.setAttribute(
-			className + StringPool.POUND + ddmStructure.getStructureId(),
-			DDMBeanTranslatorUtil.translate(ddmFormValues));
+		if (ddmStructure != null) {
+			serviceContext.setAttribute(
+				DDMFormValues.class.getName() + StringPool.POUND +
+					ddmStructure.getStructureId(),
+				DDMBeanTranslatorUtil.translate(
+					_ddmFormValuesFactory.create(
+						serviceContext.getRequest(),
+						ddmStructure.getDDMForm())));
+		}
 	}
 
 	private FileEntry _updateFileEntry(

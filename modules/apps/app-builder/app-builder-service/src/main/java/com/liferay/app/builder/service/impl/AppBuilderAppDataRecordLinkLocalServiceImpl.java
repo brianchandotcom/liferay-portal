@@ -14,10 +14,10 @@
 
 package com.liferay.app.builder.service.impl;
 
-import com.liferay.app.builder.exception.NoSuchAppDataRecordLinkException;
 import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
 import com.liferay.app.builder.service.base.AppBuilderAppDataRecordLinkLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class AppBuilderAppDataRecordLinkLocalServiceImpl
 	@Override
 	public AppBuilderAppDataRecordLink getDDLRecordAppBuilderAppDataRecordLink(
 			long ddlRecordId)
-		throws NoSuchAppDataRecordLinkException {
+		throws PortalException {
 
 		return appBuilderAppDataRecordLinkPersistence.findByDDLRecordId(
 			ddlRecordId);

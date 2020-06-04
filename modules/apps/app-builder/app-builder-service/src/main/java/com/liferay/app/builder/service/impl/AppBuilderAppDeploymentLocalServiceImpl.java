@@ -82,7 +82,7 @@ public class AppBuilderAppDeploymentLocalServiceImpl
 	@Override
 	public AppBuilderAppDeployment getAppBuilderAppDeployment(
 			long appBuilderAppId, String type)
-		throws Exception {
+		throws PortalException {
 
 		return appBuilderAppDeploymentPersistence.findByA_T(
 			appBuilderAppId, type);

@@ -15,23 +15,21 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput, ClaySelect} from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {useIsMounted} from 'frontend-js-react-web';
-import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import ExportTranslationContext from './ExportTranslationContext.es';
 
 const noop = () => {};
 
-const mockOriginLocales = [
+const originLocales = [
 	{
-		languageId: 1,
 		displayName: 'English - United States',
+		languageId: 1,
 	},
 	{
-		languageId: 2,
 		displayName: 'Chinese - China',
+		languageId: 2,
 	},
 ];
 
@@ -42,7 +40,6 @@ const ExportTranslationModal = ({
 }) => {
 	const {namespace} = useContext(ExportTranslationContext);
 
-	const [originLocales, setOriginLocales] = useState(mockOriginLocales);
 	const [originLanguageId, setOriginLanguageId] = useState(
 		originLocales[0].languageId
 	);
@@ -99,8 +96,8 @@ const ExportTranslationModal = ({
 
 					<ClayInput
 						name={`_${namespace}_fileEntriesIds`}
-						value={fileEntries}
 						type="hidden"
+						value={fileEntries}
 					/>
 				</ClayModal.Body>
 

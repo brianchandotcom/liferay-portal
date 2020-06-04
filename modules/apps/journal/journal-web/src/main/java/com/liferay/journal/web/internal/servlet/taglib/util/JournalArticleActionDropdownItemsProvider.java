@@ -436,9 +436,10 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "exportTranslation");
-			dropdownItem.putData("articleEntryId",  _article.getArticleId());
+			dropdownItem.putData("articleEntryId", _article.getArticleId());
 			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "export-for-translation"));
+				LanguageUtil.get(
+					_httpServletRequest, "export-for-translation"));
 		};
 	}
 

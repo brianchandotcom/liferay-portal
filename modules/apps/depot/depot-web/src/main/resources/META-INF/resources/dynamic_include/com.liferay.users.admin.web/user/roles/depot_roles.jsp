@@ -162,7 +162,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 						.one(
 							'.selector-button[data-groupid="' +
 								groupId +
-								'"][data-roleid="' +
+								'"][data-entityid="' +
 								rowId +
 								'"]'
 						);
@@ -246,7 +246,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 					var A = AUI();
 					var LString = A.Lang.String;
 
-					var id = event.groupid + '-' + event.roleid;
+					var id = event.groupid + '-' + event.entityid;
 
 					var rowColumns = [];
 
@@ -263,7 +263,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 						'<a class="modify-link" data-groupId="' +
 							event.groupid +
 							'" data-rowId="' +
-							event.roleid +
+							event.entityid +
 							'" href="javascript:;"><%= UnicodeFormatter.toString(removeDepotRoleIcon) %></a>'
 					);
 
@@ -276,7 +276,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 							<portlet:namespace />deleteDepotGroupRolesGroupIds[i] ==
 								event.groupid &&
 							<portlet:namespace />deleteDepotGroupRolesRoleIds[i] ==
-								event.roleid
+								event.entityid
 						) {
 							<portlet:namespace />deleteDepotGroupRolesGroupIds.splice(
 								i,
@@ -292,7 +292,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 					}
 
 					<portlet:namespace />addDepotGroupRolesGroupIds.push(event.groupid);
-					<portlet:namespace />addDepotGroupRolesRoleIds.push(event.roleid);
+					<portlet:namespace />addDepotGroupRolesRoleIds.push(event.entityid);
 
 					document.<portlet:namespace />fm.<portlet:namespace />addDepotGroupRolesGroupIds.value = <portlet:namespace />addDepotGroupRolesGroupIds.join(
 						','

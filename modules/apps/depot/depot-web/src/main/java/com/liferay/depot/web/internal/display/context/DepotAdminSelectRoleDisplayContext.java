@@ -292,14 +292,14 @@ public class DepotAdminSelectRoleDisplayContext {
 
 		public Map<String, Object> getData(Role role) throws PortalException {
 			return HashMapBuilder.<String, Object>put(
+				"entityid", role.getRoleId()
+			).put(
 				"groupdescriptivename",
 				_group.getDescriptiveName(_themeDisplay.getLocale())
 			).put(
 				"groupid", _group.getGroupId()
 			).put(
 				"iconcssclass", RolesAdminUtil.getIconCssClass(role)
-			).put(
-				"roleid", role.getRoleId()
 			).put(
 				"rolename", role.getTitle(_themeDisplay.getLocale())
 			).build();

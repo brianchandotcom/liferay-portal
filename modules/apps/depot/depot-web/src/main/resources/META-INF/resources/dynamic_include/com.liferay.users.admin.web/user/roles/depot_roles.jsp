@@ -219,15 +219,6 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 		A.one('#<portlet:namespace />selectDepotRoleLink').on('click', function (
 			event
 		) {
-			var searchContainerData = searchContainer.getData();
-
-			if (!searchContainerData.length) {
-				searchContainerData = [];
-			}
-			else {
-				searchContainerData = searchContainerData.split(',');
-			}
-
 			Util.selectEntity(
 				{
 					dialog: {
@@ -237,7 +228,7 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 
 					id:
 						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesEventName() %>',
-					selectedData: searchContainerData,
+					selectedData: searchContainer.getData(true),
 					title: '<liferay-ui:message arguments="role" key="select-x" />',
 					uri:
 						'<%= depotAdminRolesDisplayContext.getSelectDepotRolesURL() %>',

@@ -47,6 +47,12 @@ definition {
 			User.changeProfileImage(imageName = "${accountLogo}");
 		}
 
+		if (isSet(accountType)) {
+			SelectField.select(
+				selectFieldLabel = "Type",
+				selectFieldValue = "${accountType}");
+		}
+
 		if (isSet(accountTaxID)) {
 			PortletEntry.inputText(
 				fieldLabel = "Tax ID",

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.info.item.fields;
+package com.liferay.blogs.web.internal.info.item.provider;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;

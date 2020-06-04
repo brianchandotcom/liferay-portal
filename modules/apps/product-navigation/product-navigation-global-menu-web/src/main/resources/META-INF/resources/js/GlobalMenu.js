@@ -13,6 +13,7 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayLayout from '@clayui/layout';
 
 import 'product-navigation-global-apps/css/GlobalMenu.scss';
 import ClaySticker from '@clayui/sticker';
@@ -52,7 +53,7 @@ const AppsPanel = ({categories = [], portletNamespace, sites}) => {
 
 	return (
 		<>
-			<div className="c-px-md-4 row">
+			<ClayLayout.Row className="c-px-md-4">
 				<ClayTabs modern>
 					{categories.map(({key, label}, index) => (
 						<ClayTabs.Item
@@ -65,7 +66,7 @@ const AppsPanel = ({categories = [], portletNamespace, sites}) => {
 						</ClayTabs.Item>
 					))}
 				</ClayTabs>
-			</div>
+			</ClayLayout.Row>
 
 			<ClayTabs.Content activeIndex={activeTab}>
 				{categories.map(({childCategories}, index) => (
@@ -74,9 +75,9 @@ const AppsPanel = ({categories = [], portletNamespace, sites}) => {
 						className={'global-menu__tab-pane'}
 						key={`tabPane-${index}`}
 					>
-						<div className="c-p-md-3 row">
+						<ClayLayout.Row className="c-p-md-3">
 							{childCategories.map(({key, label, panelApps}) => (
-								<div className="col-md" key={key}>
+								<ClayLayout.Col key={key} md>
 									<ul className="list-unstyled">
 										<li className="dropdown-subheader">
 											{label}
@@ -95,10 +96,10 @@ const AppsPanel = ({categories = [], portletNamespace, sites}) => {
 											)
 										)}
 									</ul>
-								</div>
+								</ClayLayout.Col>
 							))}
 
-							<div className="col-md">
+							<ClayLayout.Col md>
 								<ul className="bg-light list-unstyled rounded">
 									<li className="dropdown-subheader">
 										{Liferay.Language.get('sites')}
@@ -154,8 +155,8 @@ const AppsPanel = ({categories = [], portletNamespace, sites}) => {
 										</li>
 									)}
 								</ul>
-							</div>
-						</div>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
 					</ClayTabs.TabPane>
 				))}
 			</ClayTabs.Content>

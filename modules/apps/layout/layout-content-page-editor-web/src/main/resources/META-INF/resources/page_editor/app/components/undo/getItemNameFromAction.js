@@ -24,8 +24,6 @@ import getLayoutDataItemLabel from '../../utils/getLayoutDataItemLabel';
  * @return {string|null}
  */
 export function getItemNameFromAction({action, state}) {
-	const layoutData = action.layoutData || state.layoutData;
-
 	const fragmentEntryLinks = action.fragmentEntryLinks
 		? Object.fromEntries(
 				action.fragmentEntryLinks.map((fragmentEntryLink) => [
@@ -36,8 +34,13 @@ export function getItemNameFromAction({action, state}) {
 		: state.fragmentEntryLinks;
 
 	const item =
-		layoutData.items[action.itemId] ||
-		Object.values(state.layoutData.items).find(
+		state.layoutData?.items[action.itemId] ||
+		action.layoutData?.items[action.itemId] ||
+		Object.values(state.layoutData?.items ?? {}).find(
+			(item) =>
+				item.config.fragmentEntryLinkId === action.fragmentEntryLinkId
+		) ||
+		Object.values(action.layoutData?.items ?? {}).find(
 			(item) =>
 				item.config.fragmentEntryLinkId === action.fragmentEntryLinkId
 		);

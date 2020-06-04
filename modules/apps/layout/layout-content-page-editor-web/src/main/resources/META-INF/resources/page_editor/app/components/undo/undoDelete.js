@@ -16,7 +16,7 @@ import addItem from '../../actions/addItem';
 import LayoutService from '../../services/LayoutService';
 
 function undoAction({action, store}) {
-	const {layoutData, portletIds} = action;
+	const {itemId, layoutData, portletIds} = action;
 
 	return (dispatch) => {
 		return LayoutService.updateLayoutData({
@@ -24,7 +24,7 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(() => {
-			dispatch(addItem({layoutData, portletIds}));
+			dispatch(addItem({itemId, layoutData, portletIds}));
 		});
 	};
 }

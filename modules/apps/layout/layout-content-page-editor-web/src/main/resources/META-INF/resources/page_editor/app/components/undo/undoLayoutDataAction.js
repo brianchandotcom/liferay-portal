@@ -16,7 +16,7 @@ import {ADD_ITEM, DELETE_ITEM} from '../../actions/types';
 import LayoutService from '../../services/LayoutService';
 
 function undoAction({action, store}) {
-	const {layoutData} = action;
+	const {itemId, layoutData} = action;
 
 	const type = action.type === ADD_ITEM ? DELETE_ITEM : action.type;
 
@@ -26,7 +26,7 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
 		}).then(() => {
-			dispatch({itemId: action.itemId, layoutData, type});
+			dispatch({itemId, layoutData, type});
 		});
 	};
 }

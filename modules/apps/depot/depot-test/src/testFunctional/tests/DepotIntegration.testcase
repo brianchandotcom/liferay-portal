@@ -563,6 +563,7 @@ definition {
 	@priority = "5"
 	test SearchForWebContent {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
@@ -613,6 +614,7 @@ definition {
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		JSONDepot.addDepot(
 			depotDescription = "This is the description of a depot",

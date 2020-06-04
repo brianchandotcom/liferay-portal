@@ -203,7 +203,7 @@ do
 	GITREPO_PATH="${GITREPO##*:}"
 	REPO_PATH="$(echo "${GITREPO}" | sed 's/:[^:]*$//' | sed 's/.*://')"
 
-	if [[ "${GITREPO_PATH}" == modules/* ]] && [[ -z "$(echo "${GITREPOS[@]}" | grep "modules/private.*/$(echo "${GITREPO_PATH}" | sed 's@.*/\([^/]*/\.gitrepo$\)$@\1@')")" ]]
+	if [[ "${GITREPO}" == *-private$ ]] && [[ "${GITREPO_PATH}" == modules/* ]] && [[ -z "$(echo "${GITREPOS[@]}" | grep "modules/private.*/$(echo "${GITREPO_PATH}" | sed 's@.*/\([^/]*/\.gitrepo$\)$@\1@')")" ]]
 	then
 		GITREPOS=("${GITREPOS[@]}" "${GITREPO}-private")
 	fi

@@ -124,23 +124,16 @@ DepotAdminRolesDisplayContext depotAdminRolesDisplayContext = (DepotAdminRolesDi
 			'<portlet:namespace />depotRolesSearchContainer'
 		);
 
-		var searchContainerDataStore = [];
-
 		var searchContainerContentBox = searchContainer.get('contentBox');
 
-		var modifyLinkList = searchContainerContentBox._node.querySelectorAll(
-			'.modify-link'
+		searchContainer.updateDataStore(
+			searchContainerContentBox
+				.all('.modify-link')
+				.getData()
+				.map(function (data) {
+					return data.groupid + '-' + data.rowid;
+				})
 		);
-
-		for (var i = 0; i < modifyLinkList.length; i++) {
-			var groupId = modifyLinkList[i].getAttribute('data-groupId');
-			var rowId = modifyLinkList[i].getAttribute('data-rowId');
-			var id = groupId + '-' + rowId;
-
-			searchContainerDataStore.push(id);
-		}
-
-		searchContainer.updateDataStore(searchContainerDataStore.join(','));
 
 		searchContainerContentBox.delegate(
 			'click',

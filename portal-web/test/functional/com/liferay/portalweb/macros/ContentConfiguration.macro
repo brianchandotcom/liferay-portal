@@ -80,7 +80,7 @@ definition {
 				locator1 = "Select#DATE_RANGE_END_DATE",
 				value1 = "${dateRangeEndDate}");
 
-			Click(locator1 = "Link#REFRESH_COUNTS");
+			
 		}
 
 		if ("${contentDateRange}" == "Last") {
@@ -88,6 +88,8 @@ definition {
 
 			Click(locator1 = "Link#REFRESH_COUNTS");
 		}
+
+		Click(locator1 = "Link#REFRESH_COUNTS");
 	}
 
 	macro contentDeletion {

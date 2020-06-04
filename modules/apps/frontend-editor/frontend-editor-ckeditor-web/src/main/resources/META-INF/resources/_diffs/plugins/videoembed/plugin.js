@@ -422,6 +422,11 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 		},
 
 		afterInit(editor) {
+			editor.on('resize', () => {
+				resizer.hide();
+				selectWidget(editor);
+			});
+
 			ALIGN_VALUES.forEach((alignValue) => {
 				const command = editor.getCommand('justify' + alignValue);
 

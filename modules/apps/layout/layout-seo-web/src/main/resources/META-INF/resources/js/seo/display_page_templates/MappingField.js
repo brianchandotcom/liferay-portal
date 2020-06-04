@@ -41,14 +41,17 @@ function MappingField({fields, label, name, selectedField, selectedSource}) {
 		setField(field);
 	};
 
+	const uiId = `${name}fieldSelector`;
+
 	return (
 		<ClayForm.Group>
-			<label className="dpt-mapping-label" htmlFor="fieldSelector">
+			<label className="dpt-mapping-label" htmlFor={uiId}>
 				<div className="control-label">{label}</div>
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayInput
 							className="dpt-mapping-input"
+							id={uiId}
 							readOnly
 							type="text"
 							value={`${inititalSourceLabel}: ${field.label}`}

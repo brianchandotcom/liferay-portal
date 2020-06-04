@@ -44,17 +44,8 @@ export function escapeHTML(string) {
 }
 
 export function unescapeHTML(string) {
-	return string.replace(HTML_UNESCAPE, (match, entity) => {
-		let value = MAP_HTML_CHARS_UNESCAPED[match];
-
-		if (!value && entity.startsWith('#')) {
-			const charCode = Number(`0${entity.substr(1)}`);
-
-			if (!isNaN(charCode)) {
-				value = String.fromCharCode(charCode);
-			}
-		}
-
-		return value;
+	return string.replace(HTML_UNESCAPE, (match) => {
+		return new DOMParser().parseFromString(match, 'text/html')
+			.documentElement.textContent;
 	});
 }

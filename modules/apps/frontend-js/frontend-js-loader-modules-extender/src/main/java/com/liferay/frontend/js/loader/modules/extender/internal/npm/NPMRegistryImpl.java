@@ -26,8 +26,11 @@ import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
+import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResources;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringBundler;
@@ -290,6 +293,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_applyVersioning = details.applyVersioning();
 
 		_serviceTracker = _openServiceTracker();
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, JavaScriptAwarePortalWebResources.class);
 	}
 
 	@Deactivate
@@ -297,6 +303,8 @@ public class NPMRegistryImpl implements NPMRegistry {
 		_serviceTracker.close();
 
 		_bundleTracker.close();
+
+		_serviceTrackerList.close();
 	}
 
 	@Modified
@@ -513,6 +521,9 @@ public class NPMRegistryImpl implements NPMRegistry {
 	private Map<String, JSPackage> _resolvedJSPackages = new HashMap<>();
 	private ServiceTracker<ServletContext, JSConfigGeneratorPackage>
 		_serviceTracker;
+	private ServiceTrackerList
+		<JavaScriptAwarePortalWebResources, JavaScriptAwarePortalWebResources>
+			_serviceTrackerList;
 
 	private static class JSPackageVersion {
 
@@ -553,6 +564,14 @@ public class NPMRegistryImpl implements NPMRegistry {
 				jsBundles.add(jsBundle);
 
 				_refreshJSModuleCaches(jsBundles);
+
+				for (JavaScriptAwarePortalWebResources
+						javaScriptAwarePortalWebResources :
+							_serviceTrackerList) {
+
+					javaScriptAwarePortalWebResources.updateLastModifed(
+						bundle.getLastModified());
+				}
 			}
 
 			return jsBundle;

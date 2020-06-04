@@ -305,8 +305,7 @@ public class AppBuilderAppDataRecordLinkLocalServiceWrapper
 	@Override
 	public com.liferay.app.builder.model.AppBuilderAppDataRecordLink
 			getDDLRecordAppBuilderAppDataRecordLink(long ddlRecordId)
-		throws com.liferay.app.builder.exception.
-			NoSuchAppDataRecordLinkException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _appBuilderAppDataRecordLinkLocalService.
 			getDDLRecordAppBuilderAppDataRecordLink(ddlRecordId);

@@ -211,7 +211,7 @@ public interface AppBuilderAppDeploymentLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AppBuilderAppDeployment getAppBuilderAppDeployment(
 			long appBuilderAppId, String type)
-		throws Exception;
+		throws PortalException;
 
 	/**
 	 * Returns a range of all the app builder app deployments.

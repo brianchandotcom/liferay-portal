@@ -14,7 +14,6 @@
 
 package com.liferay.app.builder.service;
 
-import com.liferay.app.builder.exception.NoSuchAppDataRecordLinkException;
 import com.liferay.app.builder.model.AppBuilderAppDataRecordLink;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -239,7 +238,7 @@ public interface AppBuilderAppDataRecordLinkLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AppBuilderAppDataRecordLink getDDLRecordAppBuilderAppDataRecordLink(
 			long ddlRecordId)
-		throws NoSuchAppDataRecordLinkException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

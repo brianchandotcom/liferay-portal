@@ -245,7 +245,7 @@ public class AppBuilderAppDeploymentLocalServiceUtil {
 
 	public static com.liferay.app.builder.model.AppBuilderAppDeployment
 			getAppBuilderAppDeployment(long appBuilderAppId, String type)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getAppBuilderAppDeployment(appBuilderAppId, type);
 	}

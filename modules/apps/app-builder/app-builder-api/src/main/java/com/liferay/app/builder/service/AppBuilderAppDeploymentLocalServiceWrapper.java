@@ -261,7 +261,7 @@ public class AppBuilderAppDeploymentLocalServiceWrapper
 	@Override
 	public com.liferay.app.builder.model.AppBuilderAppDeployment
 			getAppBuilderAppDeployment(long appBuilderAppId, String type)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _appBuilderAppDeploymentLocalService.getAppBuilderAppDeployment(
 			appBuilderAppId, type);

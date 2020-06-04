@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.expando.web.internal.info.fields.provider;
+package com.liferay.expando.web.internal.info.item.provider;
 
 import com.liferay.expando.info.item.provider.ExpandoInfoItemFieldSetProvider;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.expando.web.internal.info.field.reader.ExpandoInfoItemFieldReader;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.localized.InfoLocalizedValue;

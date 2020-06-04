@@ -186,15 +186,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 		const wrapperElement = el.parentElement;
 
 		if (wrapperElement && width > 0 && height > 0) {
-			const rect = wrapperElement.getBoundingClientRect();
-
-			const pwidth =
-				width >= rect.width
-					? 100
-					: Math.floor((width / rect.width) * 100);
-			const style = `width:${pwidth}%;`;
-
-			wrapperElement.setAttribute('style', style);
+			wrapperElement.setAttribute('style', `width:${width}px;`);
 
 			const widgetElement = wrapperElement.querySelector(
 				'[data-widget="videoembed"]'

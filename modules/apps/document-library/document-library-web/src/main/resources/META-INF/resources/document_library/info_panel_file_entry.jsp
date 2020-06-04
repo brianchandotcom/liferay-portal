@@ -354,7 +354,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 					<liferay-ui:message key="created" />
 				</dt>
 				<dd class="sidebar-dd">
-					<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileVersion.getCreateDate()), HtmlUtil.escape(fileVersion.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new Object[] {dateFormatDateTime.format(fileEntry.getCreateDate()), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-by-x" translateArguments="<%= false %>" />
 				</dd>
 
 				<%

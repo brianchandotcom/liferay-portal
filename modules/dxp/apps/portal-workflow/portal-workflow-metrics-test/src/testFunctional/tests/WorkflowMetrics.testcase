@@ -1004,6 +1004,7 @@ definition {
 	@priority = "5"
 	test ReassignWorkflowInstance {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		WorkflowMetrics.singleReassignSetup();
 		WorkflowMetrics.goToWorkflowAllItems();

@@ -105,13 +105,15 @@ public class UpdateConfigurationValuesMVCActionCommand
 			while (iterator.hasNext()) {
 				String key = iterator.next();
 
-				if (!editableFragmentEntryProcessorJSONObject.has(key)) {
-					editableFragmentEntryProcessorJSONObject.put(
-						key,
-						defaultEditableFragmentEntryProcessorJSONObject.get(
-							key));
+				if (editableFragmentEntryProcessorJSONObject.has(key)) {
+					defaultEditableFragmentEntryProcessorJSONObject.put(
+						key, editableFragmentEntryProcessorJSONObject.get(key));
 				}
 			}
+
+			editableValuesJSONObject.put(
+				fragmentEntryProcessorKey,
+				defaultEditableFragmentEntryProcessorJSONObject);
 		}
 
 		return editableValuesJSONObject;

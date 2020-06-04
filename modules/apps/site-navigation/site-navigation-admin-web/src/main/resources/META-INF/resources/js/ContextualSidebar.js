@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted, useTimeout} from 'frontend-js-react-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
@@ -180,15 +181,16 @@ function ContextualSidebar({
 			id={`${namespace}sidebar`}
 		>
 			<div className="sidebar-header">
-				<div className="autofit-row sidebar-section">
-					<div className="autofit-col autofit-col-expand">
+				<ClayLayout.ContentRow className="sidebar-section">
+					<ClayLayout.ContentCol expand>
 						<p className="component-title">
 							<span className="text-truncate-inline">
 								<span className="text-truncate">{title}</span>
 							</span>
 						</p>
-					</div>
-					<div className="autofit-col">
+					</ClayLayout.ContentCol>
+
+					<ClayLayout.ContentCol>
 						<ClayButton
 							displayType="unstyled"
 							monospaced
@@ -201,8 +203,8 @@ function ContextualSidebar({
 						>
 							<ClayIcon symbol="times" />
 						</ClayButton>
-					</div>
-				</div>
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
 			</div>
 
 			<div className="sidebar-body">

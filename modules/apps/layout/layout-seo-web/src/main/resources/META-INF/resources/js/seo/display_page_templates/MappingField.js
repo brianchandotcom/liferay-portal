@@ -13,43 +13,57 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import MappingPanel from './MappingPanel';
 
-function MappingField({fields, initialFieldValue, selectedSource}) {
+function MappingField({fields, label, name, selectedField, selectedSource}) {
+	const inititalValue = `${
+		selectedSource && (selectedSource.classType || selectedSource.className)
+	}`;
 	const [source, setSource] = useState(selectedSource);
-	const [field, setField] = useState(initialFieldValue);
+	const [field, setField] = useState(selectedField);
+	const [value, setValue] = useState(inititalValue);
+
+	const inititalSourceLabel = `${
+		selectedSource &&
+		(selectedSource.classTypeLabel || selectedSource.classNameLabel)
+	}`;
+
+	useEffect(() => {
+		if (source) {
+			setValue(`${source.classType || source.className}#${field.key}`);
+		}
+	}, [field.key, source]);
+
+	const handleOnchange = ({field, source}) => {
+		setSource(source);
+		setField(field);
+	};
 
 	return (
 		<ClayForm.Group>
-			<label className="dpt-mapping-label" htmlFor="titleSelector">
-				<div className="control-label">
-					{Liferay.Language.get('html-title')}
-				</div>
+			<label className="dpt-mapping-label" htmlFor="fieldSelector">
+				<div className="control-label">{label}</div>
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayInput
 							className="dpt-mapping-input"
-							id="title"
 							readOnly
 							type="text"
-							value={`${source.classNameLabel}${
-								source.classTypeLabel
-									? ' - ' + source.classTypeLabel
-									: ''
-							}: ${field.label}`}
+							value={`${inititalSourceLabel}: ${field.label}`}
 						/>
+						<ClayInput name={name} type="hidden" value={value} />
 					</ClayInput.GroupItem>
 					<ClayInput.GroupItem shrink>
 						<MappingPanel
 							field={field}
 							fields={fields}
-							onChange={({field, source}) => {
-								setSource(source);
-								setField(field);
+							onChange={handleOnchange}
+							source={{
+								...source,
+								initialValue: inititalSourceLabel,
 							}}
-							source={source}
 						/>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

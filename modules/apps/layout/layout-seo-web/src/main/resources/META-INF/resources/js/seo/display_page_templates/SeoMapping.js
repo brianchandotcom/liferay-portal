@@ -16,12 +16,24 @@ import React from 'react';
 
 import MappingField from './MappingField';
 
-function SeoMapping({fields, selectedSource}) {
+function SeoMapping({fields, portletNamespace, selectedSource}) {
+	const ns = (obj) => Liferay.Util.ns(portletNamespace, obj);
+
 	return (
 		<>
 			<MappingField
 				fields={fields}
-				initialFieldValue={fields[0]}
+				label={Liferay.Language.get('html-title')}
+				name={ns('title')}
+				selectedField={fields[0]}
+				selectedSource={selectedSource}
+			/>
+
+			<MappingField
+				fields={fields}
+				label={Liferay.Language.get('description')}
+				name={ns('description')}
+				selectedField={fields[0]}
 				selectedSource={selectedSource}
 			/>
 		</>

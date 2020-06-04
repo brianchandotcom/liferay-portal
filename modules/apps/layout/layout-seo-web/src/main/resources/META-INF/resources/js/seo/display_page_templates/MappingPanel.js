@@ -44,7 +44,6 @@ function MappingPanel({fields, field, source, onChange = noop}) {
 			<ClayButton
 				className="dpt-mapping-btn"
 				displayType="secondary"
-				id="titleSelector"
 				monospaced
 				onClick={() => {
 					setIsPanelOpen((state) => !state);
@@ -62,14 +61,7 @@ function MappingPanel({fields, field, source, onChange = noop}) {
 							<label htmlFor="mappingSelectorSourceSelect">
 								{Liferay.Language.get('source')}
 							</label>
-							<ClayInput
-								readOnly
-								value={`${source.classNameLabel}${
-									source.classTypeLabel
-										? ' - ' + source.classTypeLabel
-										: ''
-								}`}
-							/>
+							<ClayInput readOnly value={source.initialValue} />
 						</ClayForm.Group>
 						<ClayForm.Group small>
 							<label htmlFor="mappingSelectorFieldSelect">
@@ -90,21 +82,18 @@ function MappingPanel({fields, field, source, onChange = noop}) {
 }
 
 MappingPanel.propTypes = {
+	field: PropTypes.shape({
+		key: PropTypes.string,
+		label: PropTypes.string,
+	}).isRequired,
 	fields: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,
 			label: PropTypes.string,
 		})
 	).isRequired,
-	initialSelectedField: PropTypes.shape({
-		key: PropTypes.string,
-		label: PropTypes.string,
-	}).isRequired,
-	initialSelectedSource: PropTypes.shape({
-		className: PropTypes.string,
-		classNameLabel: PropTypes.string,
-		classTypeId: PropTypes.string,
-		classTypeLabel: PropTypes.string,
+	source: PropTypes.shape({
+		initialValue: PropTypes.string,
 	}).isRequired,
 };
 

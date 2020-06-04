@@ -27,6 +27,11 @@ describe('Liferay.Util.escapeHTML and Liferay.Util.unescapeHTML', () => {
 			expect(escapeHTML('<')).toEqual('&lt;');
 			expect(escapeHTML('>')).toEqual('&gt;');
 			expect(escapeHTML('`')).toEqual('&#096;');
+
+			expect(escapeHTML('[<p>one & two</p>]')).toEqual(
+				'[&lt;p&gt;one &amp; two&lt;&#047;p&gt;]'
+			);
+			expect(escapeHTML('<&>')).toEqual('&lt;&amp;&gt;');
 		});
 	});
 
@@ -47,6 +52,18 @@ describe('Liferay.Util.escapeHTML and Liferay.Util.unescapeHTML', () => {
 			expect(unescapeHTML('&#064;')).toEqual('@');
 			expect(unescapeHTML('&#091;')).toEqual('[');
 			expect(unescapeHTML('&#093;')).toEqual(']');
+
+			expect(unescapeHTML('&num;')).toEqual('#');
+			expect(unescapeHTML('&dollar;')).toEqual('$');
+			expect(unescapeHTML('&dollar;')).toEqual('$');
+
+			expect(
+				unescapeHTML('&dollar;&lpar;&quot;&period;stuff&quot;&rpar;')
+			).toEqual('$(".stuff")');
+
+			expect(unescapeHTML('ma&ntilde;ana means tomorrow')).toEqual(
+				'mañana means tomorrow'
+			);
 		});
 	});
 
@@ -66,7 +83,7 @@ describe('Liferay.Util.escapeHTML and Liferay.Util.unescapeHTML', () => {
 		});
 	});
 
-	describe("when using string that look like entities but aren't", () => {
+	describe("when using strings that look like entities but aren't", () => {
 		it("doesn't throw errors", () => {
 			expect(() =>
 				unescapeHTML('my test !"§$%&/()=?`@€<>|,.-;:_+*#~')

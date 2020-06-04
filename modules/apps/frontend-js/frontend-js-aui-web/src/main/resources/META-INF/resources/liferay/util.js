@@ -1513,7 +1513,7 @@
 					'.lfr-search-container-wrapper .selector-button'
 				);
 
-				A.some(selectorButtons, (item) => {
+				A.each(selectorButtons, (item) => {
 					var assetEntryId =
 						item.attr('data-entityid') ||
 						item.attr('data-entityname');

@@ -42,13 +42,6 @@ definition {
 			value1 = "${site}");
 	}
 
-	@summary = "Navigate to Product Menu > Profile"
-	macro gotoPersonalSite {
-		ProductMenuHelper.expandPanel(panel = "User");
-
-		Click(locator1 = "ProductMenu#USER_PROFILE");
-	}
-
 	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${portlet}"
 	macro gotoPortlet {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {

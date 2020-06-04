@@ -18,6 +18,7 @@ import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -51,22 +52,16 @@ public class AccountGroupLocalServiceTest {
 	}
 
 	@Test
-	public void testDeleteAccountGroupByModel() throws Exception {
-		AccountGroup accountGroup = _addAccountGroup();
+	public void testDeleteAccount() throws Exception {
+		_testDeleteAccountGroup(
+			_addAccountGroup(),
+			accountGroup -> _accountGroupLocalService.deleteAccountGroup(
+				accountGroup));
 
-		_accountGroupLocalService.deleteAccountGroup(accountGroup);
-
-		_assertDeleted(accountGroup.getAccountGroupId());
-	}
-
-	@Test
-	public void testDeleteAccountGroupByPrimaryKey() throws Exception {
-		AccountGroup accountGroup = _addAccountGroup();
-
-		_accountGroupLocalService.deleteAccountGroup(
-			accountGroup.getAccountGroupId());
-
-		_assertDeleted(accountGroup.getAccountGroupId());
+		_testDeleteAccountGroup(
+			_addAccountGroup(),
+			accountGroup -> _accountGroupLocalService.deleteAccountGroup(
+				accountGroup.getAccountGroupId()));
 	}
 
 	private AccountGroup _addAccountGroup() throws Exception {
@@ -75,9 +70,16 @@ public class AccountGroupLocalServiceTest {
 			RandomTestUtil.randomString());
 	}
 
-	private void _assertDeleted(long accountGroupId) {
+	private void _testDeleteAccountGroup(
+			AccountGroup accountGroup,
+			UnsafeConsumer<AccountGroup, Exception> consumer)
+		throws Exception {
+
+		consumer.accept(accountGroup);
+
 		Assert.assertNull(
-			_accountGroupLocalService.fetchAccountGroup(accountGroupId));
+			_accountGroupLocalService.fetchAccountGroup(
+				accountGroup.getAccountGroupId()));
 	}
 
 	@Inject

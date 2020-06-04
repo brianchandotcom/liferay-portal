@@ -15,10 +15,10 @@
 package com.liferay.change.tracking.store.internal;
 
 import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.spi.exception.CTEventException;
-import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.spi.exception.CTEventException;
+import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.change.tracking.store.model.CTSContent;
 import com.liferay.change.tracking.store.service.CTSContentLocalService;
 import com.liferay.document.library.kernel.store.Store;

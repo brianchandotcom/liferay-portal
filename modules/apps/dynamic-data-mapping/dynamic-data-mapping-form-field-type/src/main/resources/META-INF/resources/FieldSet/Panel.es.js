@@ -32,6 +32,7 @@ const Panel = ({
 	onRepeatButton,
 	readOnly,
 	repeatable,
+	showLabel,
 	showRepeatableRemoveButton,
 	spritemap,
 	title,
@@ -76,9 +77,13 @@ const Panel = ({
 					role="tab"
 				>
 					<>
-						<span className="panel-title">
-							<label className="text-uppercase">{title}</label>
-						</span>
+						{showLabel && (
+							<span className="panel-title">
+								<label className="text-uppercase">
+									{title}
+								</label>
+							</span>
+						)}
 
 						{repeatable && (
 							<span className="actions collapse-icon-options">

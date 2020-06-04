@@ -58,6 +58,7 @@ const FieldSet = ({
 				onRepeatButton={onRepeatButton}
 				readOnly={readOnly}
 				repeatable={repeatable}
+				showLabel={showLabel}
 				showRepeatableRemoveButton={showRepeatableRemoveButton}
 				spritemap={spritemap}
 				title={label}

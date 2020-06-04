@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.web.internal.info.display.field;
+package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;

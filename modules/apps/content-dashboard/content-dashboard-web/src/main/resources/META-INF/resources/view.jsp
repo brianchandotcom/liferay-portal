@@ -52,6 +52,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 
 		<clay:management-toolbar
 			displayContext="<%= contentDashboardAdminManagementToolbarDisplayContext %>"
+			elementClasses="content-dashboard-management-toolbar"
 		/>
 
 		<div class="sheet-section">
@@ -74,6 +75,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="text-center"
 						name="author"
 					>
 						<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(contentDashboardItem.getUserName()) %>">
@@ -84,6 +86,7 @@ ContentDashboardAdminManagementToolbarDisplayContext contentDashboardAdminManage
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text
+						cssClass="table-cell-expand-smaller"
 						name="subtype"
 						value="<%= HtmlUtil.escape(contentDashboardItem.getSubtype(locale)) %>"
 					/>

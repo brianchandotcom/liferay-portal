@@ -995,7 +995,9 @@ definition {
 			menuItem = "Edit Conversion Draft",
 			pageName = "Test Page Name");
 
-		PageEditor.addWidget(portletName = "Web Content Display");
+		PageEditor.addWidget(
+			portletName = "Web Content Display",
+			targetFragmentName = "Asset Publisher");
 
 		PageEditor.removeFragment(fragmentName = "Asset Publisher");
 

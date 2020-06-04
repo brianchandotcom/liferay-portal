@@ -243,7 +243,9 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addWidget(portletName = "Asset Publisher");
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Web Content Display");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "WC WebContent Title 3",
@@ -374,7 +376,9 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addWidget(portletName = "Asset Publisher");
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Web Content Display");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "WC WebContent Title 3",
@@ -487,7 +491,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
-			fragmentName = "Rich Text");
+			fragmentName = "Rich Text",
+			targetFragmentName = "Web Content Display");
 
 		PageEditor.clickPublish();
 
@@ -788,7 +793,9 @@ definition {
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
-		PageEditor.addWidget(portletName = "Asset Publisher");
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Web Content Display");
 
 		AssetPublisherPortlet.configureManualAssetSelectionPG(
 			assetTitle = "WC WebContent Title",

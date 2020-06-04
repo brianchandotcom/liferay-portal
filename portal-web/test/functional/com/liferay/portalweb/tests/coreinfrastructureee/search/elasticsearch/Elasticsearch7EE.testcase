@@ -1146,7 +1146,9 @@ definition {
 
 		ContentPages.clickPencil();
 
-		PageEditor.addWidget(portletName = "Similar Results");
+		PageEditor.addWidget(
+			portletName = "Similar Results",
+			targetFragmentName = "Asset Publisher");
 
 		SearchPortlets.configureSimilarResults(
 			displayTemplate = "Compact Layout",

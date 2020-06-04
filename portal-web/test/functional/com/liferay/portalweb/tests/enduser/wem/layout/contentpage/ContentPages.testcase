@@ -1561,16 +1561,16 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Card",
 				targetFragmentName = "HTML");
-					
+
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Slider",
 				targetFragmentName = "Card");
-					
+
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Image",
-				targetFragmentName = "Slider");	
+				targetFragmentName = "Slider");
 		}
 
 		task ("Assert Header of Card is shown over body when doesn't reach the management toolbar") {
@@ -1606,13 +1606,25 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			for (var portletName : list "Asset Publisher,Blogs,Documents and Media") {
-				PageEditor.addWidget(portletName = "${portletName}");
+			PageEditor.addWidget(portletName = "Asset Publisher");
 
-				Refresh();
-			}
+			Refresh();
 
-			PageEditor.addWidget(portletName = "My Sites");
+			PageEditor.addWidget(
+				portletName = "Blogs",
+				targetFragmentName = "Asset Publisher");
+
+			Refresh();
+
+			PageEditor.addWidget(
+				portletName = "Documents and Media",
+				targetFragmentName = "Blogs");
+
+			Refresh();
+
+			PageEditor.addWidget(
+				portletName = "My Sites",
+				targetFragmentName = "Documents and Media");
 		}
 
 		task ("Assert Header of Blogs is shown over body when doesn't reach the management toolbar") {

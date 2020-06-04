@@ -42,7 +42,10 @@ const isWithinIframe = () => {
 };
 
 const isUndoCombination = (event) => {
-	return event.keyCode === Z_KEYCODE && (event.ctrlKey || event.metaKey);
+	const ctrlOrMeta =
+		(event.ctrlKey && !event.metaKey) || (!event.ctrlKey && event.metaKey);
+
+	return event.keyCode === Z_KEYCODE && ctrlOrMeta && !event.altKey;
 };
 
 export default function Undo({onRedo = () => {}, onUndo = () => {}}) {

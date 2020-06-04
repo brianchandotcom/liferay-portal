@@ -163,7 +163,11 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 				</c:when>
 				<c:otherwise>
 					<div class="dpt-mapping">
+						<aui:model-context bean="<%= null %>" model="<%= null %>" />
+
 						<aui:input disabled="<%= true %>" helpMessage="html-title-help" id="title" label="html-title" localized="<%= false %>" name="title" placeholder="title" />
+
+						<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 						<react:component
 							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"

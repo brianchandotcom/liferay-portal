@@ -437,6 +437,8 @@ definition {
 			pageName = "Site Page 1",
 			siteName = "Site Name");
 
+		ProductMenuHelper.closeProductMenu();
+
 		GlobalMenu.gotoPortlet(
 			category = "Configuración",
 			panel = "Control Panel",

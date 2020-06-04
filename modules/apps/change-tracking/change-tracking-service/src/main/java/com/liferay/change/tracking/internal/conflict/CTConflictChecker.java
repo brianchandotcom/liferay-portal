@@ -180,7 +180,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		ConstraintResolverHelperImpl<T> constraintResolverHelperImpl =
 			new ConstraintResolverHelperImpl<>(
-				_ctService, _targetCTCollectionId);
+				_ctService, _sourceCTCollectionId, _targetCTCollectionId);
 
 		Set<Map.Entry<Long, Long>> attemptedPrimaryKeys = new HashSet<>();
 		Set<Map.Entry<Long, Long>> resolvedPrimaryKeys = new HashSet<>(

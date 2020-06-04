@@ -28,9 +28,11 @@ public class ConstraintResolverHelperImpl<T extends CTModel<T>>
 	implements ConstraintResolverHelper<T> {
 
 	public ConstraintResolverHelperImpl(
-		CTService<T> ctService, long targetCTCollectionId) {
+		CTService<T> ctService, long sourceCTCollectionId,
+		long targetCTCollectionId) {
 
 		_ctService = ctService;
+		_sourceCTCollectionId = sourceCTCollectionId;
 		_targetCTCollectionId = targetCTCollectionId;
 	}
 
@@ -66,12 +68,31 @@ public class ConstraintResolverHelperImpl<T extends CTModel<T>>
 		}
 	}
 
+	@Override
+	public boolean isSourceCTModel(CTModel<?> ctModel) {
+		if (ctModel.getCtCollectionId() == _sourceCTCollectionId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isTargetCTModel(CTModel<?> ctModel) {
+		if (ctModel.getCtCollectionId() == _targetCTCollectionId) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public void setPrimaryKeys(long sourcePrimaryKey, long targetPrimaryKey) {
 		_sourcePrimaryKey = sourcePrimaryKey;
 		_targetPrimaryKey = targetPrimaryKey;
 	}
 
 	private final CTService<T> _ctService;
+	private final long _sourceCTCollectionId;
 	private long _sourcePrimaryKey;
 	private final long _targetCTCollectionId;
 	private long _targetPrimaryKey;

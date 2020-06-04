@@ -33,4 +33,8 @@ public interface ConstraintResolverHelper<T extends CTModel<T>> {
 
 	public T getTargetCTModel();
 
+	public boolean isSourceCTModel(CTModel<?> ctModel);
+
+	public boolean isTargetCTModel(CTModel<?> ctModel);
+
 }

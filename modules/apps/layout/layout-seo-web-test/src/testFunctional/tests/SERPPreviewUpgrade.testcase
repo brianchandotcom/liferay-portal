@@ -1,0 +1,29 @@
+@component-name = "portal-upgrades"
+definition {
+
+	property database.types = "mariadb,mysql,postgresql";
+	property testray.component.names = "SEO";
+	property testray.main.component.name = "Upgrades Collaboration";
+
+	setUp {
+		SignIn.signIn();
+
+		Smoke.viewWelcomePage();
+
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+	}
+
+	@priority = "5"
+	test ViewSERPPreview730 {
+		property data.archive.type = "data-archive-search-engine-results-page-preview";
+		property portal.version = "7.3.0";
+
+		Upgrade.viewAndEditSERPPreview();
+	}
+
+}

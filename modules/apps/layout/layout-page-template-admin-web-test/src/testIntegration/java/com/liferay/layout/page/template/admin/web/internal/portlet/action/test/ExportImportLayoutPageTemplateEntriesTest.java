@@ -147,7 +147,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group1.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
 			layoutPageTemplateEntry1.getPlid(),
 			StringUtil.replace(
 				_read("export_import_layout_data.json"), "${", "}", valuesMap),
@@ -227,13 +226,11 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					layoutPageTemplateEntry1.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
 					layoutPageTemplateEntry1.getPlid());
 		LayoutPageTemplateStructure layoutPageTemplateStructure2 =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					layoutPageTemplateEntry2.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
 					layoutPageTemplateEntry2.getPlid());
 
 		LayoutStructure layoutStructure1 = LayoutStructure.of(

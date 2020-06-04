@@ -125,10 +125,9 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 			layoutStructureItem2.getItemId(), Collections.emptyList());
 
 		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				_group.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				draftLayout.getPlid(), 0, layoutStructure.toString());
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), draftLayout.getPlid(), 0,
+				layoutStructure.toString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayoutPageTemplateEntry",
@@ -160,9 +159,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid(), true);
+					_group.getGroupId(), layout.getPlid(), true);
 
 		return LayoutStructure.of(layoutPageTemplateStructure.getData(0));
 	}

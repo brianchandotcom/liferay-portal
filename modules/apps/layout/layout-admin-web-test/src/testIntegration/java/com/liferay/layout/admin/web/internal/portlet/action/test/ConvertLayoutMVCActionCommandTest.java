@@ -132,7 +132,6 @@ public class ConvertLayoutMVCActionCommandTest {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
 			originalLayout.getPlid(), StringPool.BLANK, _serviceContext);
 
 		_mvcActionCommand.processAction(
@@ -197,9 +196,7 @@ public class ConvertLayoutMVCActionCommandTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					originalLayout.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					originalLayout.getPlid());
+					originalLayout.getGroupId(), originalLayout.getPlid());
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 

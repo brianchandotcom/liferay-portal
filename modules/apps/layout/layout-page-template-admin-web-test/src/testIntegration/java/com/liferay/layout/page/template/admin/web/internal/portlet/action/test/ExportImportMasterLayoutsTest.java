@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -106,7 +105,6 @@ public class ExportImportMasterLayoutsTest {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group1.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
 			layoutPageTemplateEntry1.getPlid(),
 			_read("export_import_master_layout_layout_data.json"),
 			_serviceContext1);
@@ -196,13 +194,11 @@ public class ExportImportMasterLayoutsTest {
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					layoutPageTemplateEntry1.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
 					layoutPageTemplateEntry1.getPlid());
 		LayoutPageTemplateStructure layoutPageTemplateStructure2 =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					layoutPageTemplateEntry2.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
 					layoutPageTemplateEntry2.getPlid());
 
 		LayoutStructure layoutStructure1 = LayoutStructure.of(
@@ -308,9 +304,6 @@ public class ExportImportMasterLayoutsTest {
 		filter = "mvc.command.name=/layout_page_template/export_master_layout"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext1;
 	private ServiceContext _serviceContext2;

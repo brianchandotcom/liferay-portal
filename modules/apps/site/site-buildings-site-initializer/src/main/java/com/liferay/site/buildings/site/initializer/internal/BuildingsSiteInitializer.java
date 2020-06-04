@@ -381,8 +381,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					_serviceContext.getUserId(),
-					_serviceContext.getScopeGroupId(),
-					_portal.getClassNameId(Layout.class), draftLayout.getPlid(),
+					_serviceContext.getScopeGroupId(), draftLayout.getPlid(),
 					_parseLayoutContent(
 						draftLayout.getPlid(),
 						_readFile("/layout-content/" + dataPath)),

@@ -102,7 +102,6 @@ public class AddPortletMVCActionCommandTest {
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					TestPropsValues.getUserId(), _group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
 					_layout.getPlid(), _layoutStructure.toString(),
 					ServiceContextTestUtil.getServiceContext(
 						_group, TestPropsValues.getUserId()));

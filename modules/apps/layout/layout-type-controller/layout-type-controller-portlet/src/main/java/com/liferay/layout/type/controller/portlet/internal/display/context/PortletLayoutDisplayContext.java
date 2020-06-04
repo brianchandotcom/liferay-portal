@@ -282,7 +282,6 @@ public class PortletLayoutDisplayContext {
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
 					masterLayoutPageTemplateEntry.getGroupId(),
-					PortalUtil.getClassNameId(Layout.class),
 					masterLayoutPageTemplateEntry.getPlid());
 
 		String data = masterLayoutPageTemplateStructure.getData(

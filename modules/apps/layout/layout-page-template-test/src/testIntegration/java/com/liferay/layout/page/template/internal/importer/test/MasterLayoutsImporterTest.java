@@ -31,7 +31,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -45,7 +44,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
@@ -124,9 +122,7 @@ public class MasterLayoutsImporterTest {
 		_validateLayoutPageTemplateStructureDropZone(
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid()),
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid()),
 			new ArrayList<>(), true);
 	}
 
@@ -145,9 +141,7 @@ public class MasterLayoutsImporterTest {
 		_validateLayoutPageTemplateStructureDropZone(
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid()),
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid()),
 			Arrays.asList(
 				TestMasterPageFragmentCollectionContributor.
 					TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY,
@@ -177,9 +171,7 @@ public class MasterLayoutsImporterTest {
 		_validateLayoutPageTemplateStructureDropZone(
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid()),
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid()),
 			Arrays.asList(
 				TestMasterPageFragmentCollectionContributor.
 					TEST_MASTER_PAGE_FRAGMENT_COLLECTION_KEY,
@@ -456,9 +448,6 @@ public class MasterLayoutsImporterTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceRegistration<FragmentCollectionContributor>
 		_serviceRegistration;

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -89,7 +88,6 @@ public class AddItemMVCActionCommandTest {
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					TestPropsValues.getUserId(), _group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
 					_layout.getPlid(), _layoutStructure.toString(),
 					ServiceContextTestUtil.getServiceContext(
 						_group, TestPropsValues.getUserId()));
@@ -148,10 +146,9 @@ public class AddItemMVCActionCommandTest {
 			_layoutStructure.getMainItemId(), 0);
 
 		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				_group.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				_layout.getPlid(), _layoutStructure.toString());
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), _layout.getPlid(),
+				_layoutStructure.toString());
 
 		mockLiferayPortletActionRequest.addParameter(
 			"itemType", LayoutDataItemTypeConstants.TYPE_CONTAINER);
@@ -261,8 +258,5 @@ public class AddItemMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/content_layout/add_item")
 	private MVCActionCommand _mvcActionCommand;
-
-	@Inject
-	private Portal _portal;
 
 }

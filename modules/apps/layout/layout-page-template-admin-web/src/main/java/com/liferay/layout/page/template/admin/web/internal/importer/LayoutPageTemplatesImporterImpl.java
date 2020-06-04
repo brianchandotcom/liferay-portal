@@ -1178,14 +1178,12 @@ public class LayoutPageTemplatesImporterImpl
 			Layout layout, LayoutStructure layoutStructure)
 		throws Exception {
 
-		long classNameId = _portal.getClassNameId(Layout.class.getName());
-
 		JSONObject jsonObject = layoutStructure.toJSONObject();
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(), classNameId, layout.getPlid());
+					layout.getGroupId(), layout.getPlid());
 
 		if (layoutPageTemplateStructure != null) {
 			_layoutPageTemplateStructureLocalService.
@@ -1193,8 +1191,8 @@ public class LayoutPageTemplatesImporterImpl
 		}
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			layout.getUserId(), layout.getGroupId(), classNameId,
-			layout.getPlid(), jsonObject.toString(),
+			layout.getUserId(), layout.getGroupId(), layout.getPlid(),
+			jsonObject.toString(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

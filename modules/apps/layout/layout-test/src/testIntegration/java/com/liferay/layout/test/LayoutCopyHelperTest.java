@@ -159,8 +159,7 @@ public class LayoutCopyHelperTest {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			sourceLayout.getUserId(), sourceLayout.getGroupId(),
-			_portal.getClassNameId(Layout.class), sourceLayout.getPlid(),
-			jsonObject.toString(), _serviceContext);
+			sourceLayout.getPlid(), jsonObject.toString(), _serviceContext);
 
 		Layout targetLayout = LayoutTestUtil.addLayout(
 			_group.getGroupId(), StringPool.BLANK);
@@ -182,9 +181,7 @@ public class LayoutCopyHelperTest {
 		Assert.assertNotNull(
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					targetLayout.getGroupId(),
-					_portal.getClassNameId(Layout.class),
-					targetLayout.getPlid()));
+					targetLayout.getGroupId(), targetLayout.getPlid()));
 
 		Assert.assertTrue(
 			ListUtil.isNotEmpty(

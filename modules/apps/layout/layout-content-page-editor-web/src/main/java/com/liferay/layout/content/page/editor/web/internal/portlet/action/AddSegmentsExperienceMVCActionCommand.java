@@ -114,8 +114,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		).put(
 			"layoutData",
 			_getLayoutDataJSONObject(
-				_portal.getClassNameId(Layout.class), themeDisplay.getPlid(),
-				themeDisplay.getScopeGroupId(),
+				themeDisplay.getPlid(), themeDisplay.getScopeGroupId(),
 				segmentsExperience.getSegmentsExperienceId())
 		).put(
 			"segmentsExperience",
@@ -235,14 +234,12 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	private JSONObject _getLayoutDataJSONObject(
-			long classNameId, long classPK, long groupId,
-			long segmentsExperienceId)
+			long classPK, long groupId, long segmentsExperienceId)
 		throws PortalException {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					groupId, classNameId, classPK, true);
+				fetchLayoutPageTemplateStructure(groupId, classPK, true);
 
 		return JSONFactoryUtil.createJSONObject(
 			layoutPageTemplateStructure.getData(segmentsExperienceId));

@@ -71,7 +71,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -157,9 +156,7 @@ public class LayoutPageTemplatesImporterTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid());
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 
@@ -191,9 +188,7 @@ public class LayoutPageTemplatesImporterTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid());
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 
@@ -245,9 +240,7 @@ public class LayoutPageTemplatesImporterTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid());
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 
@@ -309,9 +302,7 @@ public class LayoutPageTemplatesImporterTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid());
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 
@@ -692,9 +683,7 @@ public class LayoutPageTemplatesImporterTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid());
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		Assert.assertNotNull(layoutPageTemplateStructure);
 
@@ -1098,9 +1087,6 @@ public class LayoutPageTemplatesImporterTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private PortletPermission _portletPermission;

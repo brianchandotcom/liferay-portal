@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
@@ -166,9 +165,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
 				LayoutPageTemplateStructureLocalServiceUtil.
 					fetchLayoutPageTemplateStructure(
-						getGroupId(),
-						PortalUtil.getClassNameId(Layout.class.getName()),
-						getPlid(), true);
+						getGroupId(), getPlid(), true);
 
 			String data = layoutPageTemplateStructure.getData(
 				_getSegmentsExperienceIds());
@@ -218,7 +215,6 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
 					masterLayoutPageTemplateEntry.getGroupId(),
-					PortalUtil.getClassNameId(Layout.class),
 					masterLayoutPageTemplateEntry.getPlid());
 
 		return masterLayoutPageTemplateStructure.getData(

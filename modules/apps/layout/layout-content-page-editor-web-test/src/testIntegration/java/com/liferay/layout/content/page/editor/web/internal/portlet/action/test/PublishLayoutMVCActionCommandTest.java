@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -119,10 +118,9 @@ public class PublishLayoutMVCActionCommandTest {
 			layoutStructureItem2.getItemId(), Collections.emptyList());
 
 		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				_group.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				draftLayout.getPlid(), 0, layoutStructure.toString());
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), draftLayout.getPlid(), 0,
+				layoutStructure.toString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayout",
@@ -157,9 +155,7 @@ public class PublishLayoutMVCActionCommandTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid(), true);
+					_group.getGroupId(), layout.getPlid(), true);
 
 		return LayoutStructure.of(layoutPageTemplateStructure.getData(0));
 	}
@@ -176,9 +172,6 @@ public class PublishLayoutMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/content_layout/publish_layout")
 	private MVCActionCommand _mvcActionCommand;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

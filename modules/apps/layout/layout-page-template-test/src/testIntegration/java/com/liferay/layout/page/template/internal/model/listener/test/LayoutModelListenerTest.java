@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -79,8 +78,7 @@ public class LayoutModelListenerTest {
 			StringPool.BLANK, serviceContext);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()), layout.getPlid(),
+			TestPropsValues.getUserId(), _group.getGroupId(), layout.getPlid(),
 			StringPool.BLANK, serviceContext);
 
 		_layoutLocalService.deleteLayout(layout.getPlid());
@@ -88,9 +86,7 @@ public class LayoutModelListenerTest {
 		Assert.assertNull(
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid()));
+					_group.getGroupId(), layout.getPlid()));
 	}
 
 	@Test
@@ -110,7 +106,6 @@ public class LayoutModelListenerTest {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
 			layoutPageTemplateEntry.getPlid(), StringPool.BLANK,
 			serviceContext);
 
@@ -120,9 +115,7 @@ public class LayoutModelListenerTest {
 		Assert.assertNull(
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layoutPageTemplateEntry.getPlid()));
+					_group.getGroupId(), layoutPageTemplateEntry.getPlid()));
 	}
 
 	@DeleteAfterTestRun
@@ -141,8 +134,5 @@ public class LayoutModelListenerTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private Portal _portal;
 
 }

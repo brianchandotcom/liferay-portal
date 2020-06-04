@@ -361,9 +361,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		throws PortalException {
 
 		return layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructure(
-				groupId, _portal.getClassNameId(Layout.class), plid,
-				SegmentsExperienceConstants.ID_DEFAULT, data);
+			updateLayoutPageTemplateStructureData(
+				groupId, plid, SegmentsExperienceConstants.ID_DEFAULT, data);
 	}
 
 	private int _getLayoutPageTemplateEntryType(Layout layout) {

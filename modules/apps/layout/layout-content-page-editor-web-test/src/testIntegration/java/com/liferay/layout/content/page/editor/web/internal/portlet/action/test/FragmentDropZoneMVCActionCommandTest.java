@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -116,8 +115,7 @@ public class FragmentDropZoneMVCActionCommandTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()), _layout.getPlid(),
+			TestPropsValues.getUserId(), _group.getGroupId(), _layout.getPlid(),
 			_layoutStructure.toString(), serviceContext);
 	}
 
@@ -599,9 +597,6 @@ public class FragmentDropZoneMVCActionCommandTest {
 		_layoutPageTemplateStructureLocalService;
 
 	private LayoutStructure _layoutStructure;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private ThemeLocalService _themeLocalService;

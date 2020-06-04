@@ -27,7 +27,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -126,7 +125,6 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
 			layoutPageTemplateEntry.getPlid(), _read("layout_data.json"),
 			_serviceContext);
 
@@ -253,12 +251,10 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
 			layoutPageTemplateEntry1.getPlid(), _read("layout_data.json"),
 			_serviceContext);
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()),
 			layoutPageTemplateEntry2.getPlid(), _read("layout_data.json"),
 			_serviceContext);
 

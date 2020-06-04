@@ -112,8 +112,7 @@ public class FragmentEntryProcessorDropZoneTest {
 				fragmentLayoutStructureItem.getItemId(), 0);
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			_portal.getClassNameId(Layout.class.getName()), _layout.getPlid(),
+			TestPropsValues.getUserId(), _group.getGroupId(), _layout.getPlid(),
 			layoutStructure.toString(), _serviceContext);
 
 		String processedHTML = _getProcessedHTML(

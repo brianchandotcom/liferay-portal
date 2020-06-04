@@ -85,8 +85,8 @@ public class SegmentsExperienceUtil {
 			targetSegmentsExperienceId, userId);
 
 		LayoutPageTemplateStructureLocalServiceUtil.
-			updateLayoutPageTemplateStructure(
-				groupId, classNameId, classPK, targetSegmentsExperienceId,
+			updateLayoutPageTemplateStructureData(
+				groupId, classPK, targetSegmentsExperienceId,
 				dataJSONObject.toString());
 	}
 

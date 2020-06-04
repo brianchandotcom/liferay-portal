@@ -93,9 +93,9 @@ const AppsPanel = ({
 						aria-labelledby={`${portletNamespace}tab_${index}`}
 						key={`tabPane-${index}`}
 					>
-						<div className="c-p-md-3 row">
+						<ClayLayout.Row className="c-p-md-3">
 							{childCategories.map(({key, label, panelApps}) => (
-								<div className="col-md" key={key}>
+								<ClayLayout.Col key={key} md>
 									<ul className="list-unstyled">
 										<li className="dropdown-subheader">
 											{label}
@@ -114,10 +114,10 @@ const AppsPanel = ({
 											)
 										)}
 									</ul>
-								</div>
+								</ClayLayout.Col>
 							))}
 
-							<div className="col-md">
+							<ClayLayout.Col md>
 								<ul className="bg-light list-unstyled rounded">
 									<li className="dropdown-subheader">
 										{Liferay.Language.get('sites')}
@@ -173,8 +173,8 @@ const AppsPanel = ({
 										</li>
 									)}
 								</ul>
-							</div>
-						</div>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
 					</ClayTabs.TabPane>
 				))}
 			</ClayTabs.Content>

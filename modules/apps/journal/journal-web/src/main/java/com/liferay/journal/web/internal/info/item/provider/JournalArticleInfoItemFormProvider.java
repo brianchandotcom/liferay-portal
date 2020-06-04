@@ -45,7 +45,6 @@ import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
-import com.liferay.journal.web.internal.info.display.field.DDMFormValuesInfoFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;

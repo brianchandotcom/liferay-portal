@@ -65,6 +65,11 @@ public class BuildFactory {
 
 		for (String batchToken : _TOKENS_BATCH) {
 			if (url.contains(batchToken)) {
+				if (url.contains("qa-websites")) {
+					return new QAWebsitesBatchBuild(
+						url, (TopLevelBuild)parentBuild);
+				}
+
 				return new BatchBuild(url, (TopLevelBuild)parentBuild);
 			}
 		}

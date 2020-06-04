@@ -17,16 +17,29 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class QAWebsitesTopLevelBuild extends DefaultTopLevelBuild {
+public class QAWebsitesBatchBuild extends BatchBuild {
 
-	public QAWebsitesTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	@Override
+	public String getBatchName() {
+		String jobName = getJobName();
 
-		findDownstreamBuilds();
+		if (jobName.contains("firefox")) {
+			return "functional-firefox-jdk8";
+		}
+
+		if (jobName.contains("internet.explorer")) {
+			return "functional-ie-jdk8";
+		}
+
+		return "functional-chrome-jdk8";
 	}
 
-	public BranchInformation getQAWebsitesBranchInformation() {
-		return getBranchInformation("qa.websites");
+	protected QAWebsitesBatchBuild(
+		String url, TopLevelBuild parentTopLevelBuild) {
+
+		super(JenkinsResultsParserUtil.getLocalURL(url), parentTopLevelBuild);
+
+		findDownstreamBuilds();
 	}
 
 }

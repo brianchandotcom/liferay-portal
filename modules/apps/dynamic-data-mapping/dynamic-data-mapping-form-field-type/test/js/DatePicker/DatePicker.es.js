@@ -70,6 +70,7 @@ describe('DatePicker', () => {
 			<DatePickerWithProvider
 				{...defaultDatePickerConfig}
 				tip="Type something"
+				value="06/02/2020"
 			/>
 		);
 
@@ -77,19 +78,7 @@ describe('DatePicker', () => {
 			jest.runAllTimers();
 		});
 
-		expect(container).toMatchSnapshot();
-	});
-
-	it('has an id', () => {
-		const {container} = render(
-			<DatePickerWithProvider {...defaultDatePickerConfig} id="ID" />
-		);
-
-		act(() => {
-			jest.runAllTimers();
-		});
-
-		expect(container).toMatchSnapshot();
+		expect(container.querySelector('.form-text')).toBeTruthy();
 	});
 
 	it('has a label', () => {
@@ -104,7 +93,7 @@ describe('DatePicker', () => {
 			jest.runAllTimers();
 		});
 
-		expect(container).toMatchSnapshot();
+		expect(container.querySelector('.ddm-label')).toBeTruthy();
 	});
 
 	it('has a predefinedValue', () => {

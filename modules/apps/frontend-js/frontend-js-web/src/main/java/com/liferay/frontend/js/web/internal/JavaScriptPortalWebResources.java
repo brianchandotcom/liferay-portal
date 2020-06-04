@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.js.web.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.JavaScriptAwarePortalWebResources;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 
@@ -32,9 +33,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	service = {JavaScriptPortalWebResources.class, PortalWebResources.class}
+	service = {
+		JavaScriptAwarePortalWebResources.class, PortalWebResources.class
+	}
 )
-public class JavaScriptPortalWebResources implements PortalWebResources {
+public class JavaScriptPortalWebResources
+	implements JavaScriptAwarePortalWebResources {
 
 	@Override
 	public String getContextPath() {
@@ -56,6 +60,7 @@ public class JavaScriptPortalWebResources implements PortalWebResources {
 		return _servletContext;
 	}
 
+	@Override
 	public void updateLastModifed(long lastModified) {
 		_lastModified.accumulateAndGet(lastModified, Math::max);
 	}

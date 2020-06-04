@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.expando.web.internal.info.fields.provider;
+package com.liferay.expando.web.internal.info.field.reader;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;

@@ -32,7 +32,8 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 			actions = {
 				"setVisible('ddmStructureId', FALSE)",
 				"setVisible('ddmStructureLayoutId', FALSE)",
-				"setVisible('name', FALSE)", "setVisible('rows', FALSE)"
+				"setVisible('name', FALSE)", "setVisible('rows', FALSE)",
+				"setVisible('showLabel', FALSE)"
 			},
 			condition = "TRUE"
 		)
@@ -50,7 +51,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeS
 							size = 12,
 							value = {
 								"label", "name", "collapsible", "repeatable",
-								"rows", "type", "ddmStructureId",
+								"showLabel", "rows", "type", "ddmStructureId",
 								"ddmStructureLayoutId"
 							}
 						)

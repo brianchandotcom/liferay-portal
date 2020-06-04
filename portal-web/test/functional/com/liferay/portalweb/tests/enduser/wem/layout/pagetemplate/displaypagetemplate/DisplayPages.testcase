@@ -248,7 +248,7 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Button".
+				fragmentName = "Button",
 				targetFragmentName = "Rich Text");
 		}
 

@@ -95,6 +95,19 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 		this._send(itemData.expireURL);
 	}
 
+	exportTranslation(itemData) {
+		let fileEntriesSelected = [itemData.articleEntryId];
+
+		Liferay.componentReady(
+			this.ns('ExportForTranslationComponent')
+		).then((exportTranslationComponent) => {
+			exportTranslationComponent.open(
+				fileEntriesSelected,
+				0
+			)
+		});
+	}
+
 	permissions(itemData) {
 		openModal({
 			title: Liferay.Language.get('permissions'),

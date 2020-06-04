@@ -144,15 +144,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 					var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
-					var searchContainerData = searchContainer.getData();
-
-					if (!searchContainerData.length) {
-						searchContainerData = [];
-					}
-					else {
-						searchContainerData = searchContainerData.split(',');
-					}
-
 					Liferay.Util.selectEntity(
 						{
 							dialog: {
@@ -165,7 +156,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							%>
 
 							id: '<%= regularRoleEventName %>',
-							selectedData: searchContainerData,
+							selectedData: searchContainer.getData(true),
 							title:
 								'<liferay-ui:message arguments="regular-role" key="select-x" />',
 
@@ -405,15 +396,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 					var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
-					var searchContainerData = searchContainer.getData();
-
-					if (!searchContainerData.length) {
-						searchContainerData = [];
-					}
-					else {
-						searchContainerData = searchContainerData.split(',');
-					}
-
 					Liferay.Util.selectEntity(
 						{
 							dialog: {
@@ -426,7 +408,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							%>
 
 							id: '<%= organizationRoleEventName %>',
-							selectedData: searchContainerData,
+							selectedData: searchContainer.getData(true),
 							title:
 								'<liferay-ui:message arguments="organization-role" key="select-x" />',
 
@@ -611,15 +593,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 					var searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
-					var searchContainerData = searchContainer.getData();
-
-					if (!searchContainerData.length) {
-						searchContainerData = [];
-					}
-					else {
-						searchContainerData = searchContainerData.split(',');
-					}
-
 					Util.selectEntity(
 						{
 							dialog: {
@@ -632,7 +605,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							%>
 
 							id: '<%= siteRoleEventName %>',
-							selectedData: searchContainerData,
+							selectedData: searchContainer.getData(true),
 							title:
 								'<liferay-ui:message arguments="site-role" key="select-x" />',
 

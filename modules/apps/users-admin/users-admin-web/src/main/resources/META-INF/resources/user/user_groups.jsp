@@ -157,15 +157,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		);
 
 		A.one('#<portlet:namespace />openUserGroupsLink').on('click', function (event) {
-			var searchContainerData = searchContainer.getData();
-
-			if (!searchContainerData.length) {
-				searchContainerData = [];
-			}
-			else {
-				searchContainerData = searchContainerData.split(',');
-			}
-
 			Util.selectEntity(
 				{
 					dialog: {
@@ -179,7 +170,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 
 					id: '<%= eventName %>',
 
-					selectedData: searchContainerData,
+					selectedData: searchContainer.getData(true),
 					title:
 						'<liferay-ui:message arguments="user-group" key="select-x" />',
 

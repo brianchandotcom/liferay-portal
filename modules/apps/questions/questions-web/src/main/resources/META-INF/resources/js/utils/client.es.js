@@ -29,6 +29,7 @@ export const client = new ApolloClient({
 		},
 	},
 	link: new HttpLink({
+		credentials: 'include',
 		fetch,
 		headers: HEADERS,
 		uri: '/o/graphql',

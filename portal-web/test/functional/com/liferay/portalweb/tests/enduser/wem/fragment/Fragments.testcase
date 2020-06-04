@@ -607,7 +607,8 @@ definition {
 		task ("Add a row") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Row");
+				fragmentName = "Row",
+				targetFragmentName = "Section");
 		}
 
 		task ("Duplicate the fragment") {
@@ -810,7 +811,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Global Collection Name",
-			fragmentName = "Global Fragment Name 2");
+			fragmentName = "Global Fragment Name 2",
+			targetFragmentName = "Global Fragment Name 1");
 
 		PageEditor.clickPublish();
 
@@ -1117,7 +1119,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Global Collection Name",
-			fragmentName = "Global Fragment Name 2");
+			fragmentName = "Global Fragment Name 2",
+			targetFragmentName = "Global Fragment Name 1");
 
 		PageEditor.clickPublish();
 

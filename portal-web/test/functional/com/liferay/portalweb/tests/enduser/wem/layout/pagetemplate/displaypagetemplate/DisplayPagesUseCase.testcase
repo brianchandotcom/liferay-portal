@@ -66,7 +66,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 
 			PageEditorMapping.mapEditableTextToField(
 				contributed = "false",
@@ -287,7 +288,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Image");
+				fragmentName = "Image",
+				targetFragmentName = "Rich Text");
 
 			PageEditorMapping.mapEditableTextToField(
 				contributed = "false",
@@ -523,7 +525,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Image");
+				fragmentName = "Image",
+				targetFragmentName = "Rich Text");
 
 			PageEditorMapping.mapEditableTextToField(
 				contributed = "false",
@@ -893,7 +896,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 
 			PageEditorMapping.mapEditableTextToField(
 				contributed = "false",

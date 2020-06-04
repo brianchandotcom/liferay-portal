@@ -875,7 +875,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
-			fragmentName = "Heading");
+			fragmentName = "Heading",
+			targetFragmentName = "Button");
 
 		PageEditor.viewFragment(fragmentName = "Button");
 

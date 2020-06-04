@@ -132,15 +132,18 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Button");
+				fragmentName = "Button",
+				targetFragmentName = "Rich Text");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Content");
+				fragmentName = "Content",
+				targetFragmentName = "Button");
 		}
 
 		task ("Edit the Rich Text fragment's editable text") {
@@ -240,11 +243,13 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Button");
+				fragmentName = "Button".
+				targetFragmentName = "Rich Text");
 		}
 
 		task ("Publish the display page") {

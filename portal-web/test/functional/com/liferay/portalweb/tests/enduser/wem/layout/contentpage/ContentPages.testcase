@@ -69,13 +69,15 @@ definition {
 		task ("Add a Rich Text fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 		}
 
 		task ("Add a Button fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Button");
+				fragmentName = "Button",
+				targetFragmentName = "Rich Text");
 		}
 
 		task ("Publish the content page") {
@@ -420,7 +422,8 @@ definition {
 		task ("Add a section layout") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Section");
+				fragmentName = "Section",
+				targetFragmentName = "Row");
 		}
 
 		task ("Assert the Section has Fixed Width, padding bottom x1 and padding top x1") {
@@ -588,7 +591,8 @@ definition {
 		task ("Add a Rich Text fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 		}
 
 		task ("Assert the Discard Draft and Publish buttons are now enabled") {
@@ -888,7 +892,8 @@ definition {
 		task ("Add a Rich Text fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 		}
 
 		task ("Navigate to the content page") {
@@ -1173,7 +1178,7 @@ definition {
 	@description = "This is a test for LPS-106778. Add a content page with fragments. Can reorganize them."
 	@priority = "5"
 	test ReorganizeFragmentsInContentPage {
-		task ("Add a Button fragment to the content page") {
+		task ("Add a Heading fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
@@ -1183,10 +1188,11 @@ definition {
 				fragmentName = "Heading");
 		}
 
-		task ("Add a Heading fragment to the content page") {
+		task ("Add a Button fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
-				fragmentName = "Button");
+				fragmentName = "Button",
+				targetFragmentName = "Heading");
 		}
 
 		task ("Publish the content page") {
@@ -1547,11 +1553,24 @@ definition {
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
-			for (var fragmentName : list "HTML,Card,Slider,Image") {
-				PageEditor.addFragment(
-					collectionName = "Basic Components",
-					fragmentName = "${fragmentName}");
-			}
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "HTML");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Card",
+				targetFragmentName = "HTML");
+					
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Slider",
+				targetFragmentName = "Card");
+					
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image",
+				targetFragmentName = "Slider");	
 		}
 
 		task ("Assert Header of Card is shown over body when doesn't reach the management toolbar") {
@@ -1715,7 +1734,8 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Section",
-				position = "2");
+				position = "2",
+				targetFragmentName = "Section");
 		}
 
 		task ("Assert restriction visual feedback shown when drag the second Section over the first one") {
@@ -1868,7 +1888,8 @@ definition {
 		task ("Add a section layout and add a Heading to section") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Section");
+				fragmentName = "Section",
+				targetFragmentName = "Row");
 
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 

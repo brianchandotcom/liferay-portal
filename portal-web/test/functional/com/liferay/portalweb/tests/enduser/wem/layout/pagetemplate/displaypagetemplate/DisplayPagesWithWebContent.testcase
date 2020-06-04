@@ -39,7 +39,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 
 			PageEditorMapping.mapEditableTextToField(
 				contributed = "false",
@@ -895,7 +896,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Title");
+				fragmentName = "Title",
+				targetFragmentName = "Rich Text");
 
 			PageEditorMapping.mapEditableTextToField(
 				contributed = "false",

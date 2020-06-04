@@ -62,7 +62,8 @@ definition {
 		task ("Add a Rich Text fragment to the page template") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Rich Text");
+				fragmentName = "Rich Text",
+				targetFragmentName = "Title");
 		}
 
 		task ("Publish the page template") {

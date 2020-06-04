@@ -77,7 +77,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Content Display",
-				fragmentName = "Display Page Content");
+				fragmentName = "Display Page Content",
+				targetFragmentName = "Collection Display");
 
 			PageEditor.clickPublish();
 		}

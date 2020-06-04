@@ -24,19 +24,15 @@ import {
 } from '../../../utils/dataLayoutVisitor.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
-export default ({
-	childrenContext,
-	defaultLanguageId,
-	fieldSet,
-	otherProps: {DataLayout},
-}) => {
+export default ({childrenContext, fieldSet, otherProps: {DataLayout}}) => {
 	const [{dataDefinition, dataLayout, fieldSets}, dispatch] = useContext(
 		AppContext
 	);
 	const {state: childrenState} = childrenContext;
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 
-	return (fieldName) => {
+	return () => {
+		const {id} = fieldSet;
 		const {
 			dataDefinition: {dataDefinitionFields},
 			dataLayout: {dataLayoutPages},
@@ -46,7 +42,7 @@ export default ({
 		fieldSet.defaultDataLayout.dataLayoutPages = dataLayoutPages;
 
 		const updatedFieldSets = fieldSets.map((field) => {
-			if (fieldName === field.name[defaultLanguageId]) {
+			if (field.id === id) {
 				return fieldSet;
 			}
 
@@ -61,11 +57,11 @@ export default ({
 		});
 
 		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-			({label}) => label[defaultLanguageId] === fieldName
+			({customProperties: {ddmStructureId}}) => ddmStructureId === id
 		);
 
 		if (dataDefinitionField) {
-			fieldName = dataDefinitionField.name;
+			const fieldName = dataDefinitionField.name;
 			if (containsField(dataLayout.dataLayoutPages, fieldName)) {
 				dataLayoutBuilder.dispatch('fieldEdited', {
 					fieldName,
@@ -81,9 +77,7 @@ export default ({
 				dataLayoutBuilder.dispatch('fieldEdited', {
 					fieldName,
 					propertyName: 'rows',
-					propertyValue: normalizeDataLayoutRows(
-						dataLayoutPages[0].dataLayoutRows
-					),
+					propertyValue: normalizeDataLayoutRows(dataLayoutPages),
 				});
 			}
 			else {

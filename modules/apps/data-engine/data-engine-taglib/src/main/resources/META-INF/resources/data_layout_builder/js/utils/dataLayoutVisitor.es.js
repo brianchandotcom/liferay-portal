@@ -126,8 +126,8 @@ export function isDataLayoutEmpty(dataLayoutPages) {
 	});
 }
 
-export function normalizeDataLayoutRows(dataLayoutRows) {
-	return dataLayoutRows.map(({dataLayoutColumns}) => {
+export function normalizeDataLayoutRows(dataLayoutPages) {
+	return dataLayoutPages[0].dataLayoutRows.map(({dataLayoutColumns}) => {
 		return {
 			columns: dataLayoutColumns.map(
 				({columnSize: size, fieldNames: fields}) => ({

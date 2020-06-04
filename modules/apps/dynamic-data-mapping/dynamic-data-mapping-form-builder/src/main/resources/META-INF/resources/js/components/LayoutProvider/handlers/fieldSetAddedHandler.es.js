@@ -19,10 +19,9 @@ import {updateField} from '../util/settingsContext.es';
 import {addField} from './fieldAddedHandler.es';
 
 const handleFieldSetAdded = (props, state, event) => {
-	const {fieldSet, indexes, parentFieldName, useFieldName} = event;
+	const {fieldSet, indexes, parentFieldName, rows, useFieldName} = event;
 	const {pages} = state;
 	const visitor = new PagesVisitor(fieldSet.pages);
-
 	const nestedFields = [];
 
 	visitor.mapFields((nestedField) => {
@@ -42,6 +41,10 @@ const handleFieldSetAdded = (props, state, event) => {
 			'ddmStructureId',
 			fieldSet.id
 		);
+	}
+
+	if (rows && rows.length) {
+		fieldSetField = updateField(props, fieldSetField, 'rows', rows);
 	}
 
 	return addField(props, {

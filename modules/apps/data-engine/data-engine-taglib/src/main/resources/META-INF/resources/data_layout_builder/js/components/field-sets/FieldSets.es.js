@@ -42,12 +42,12 @@ export default function FieldSets() {
 
 		if (fieldSet) {
 			const {context, fieldTypes} = appProps;
+			const {defaultDataLayout, id: dataDefinitionId} = fieldSet;
 			const DataLayout = new DataLayoutBuilder({
 				editingLanguageId: 'en_US',
 				fieldTypes,
 			});
-
-			const ddmForm = DataLayout.getDDMForm(fieldSet);
+			const ddmForm = DataLayout.getDDMForm(fieldSet, defaultDataLayout);
 			const [pages] = ddmForm.pages;
 
 			delete ddmForm.pages;
@@ -65,7 +65,7 @@ export default function FieldSets() {
 						},
 					],
 				},
-				dataDefinitionId: fieldSet.id,
+				dataDefinitionId,
 				dataLayoutId: fieldSet.defaultDataLayout.id,
 			};
 		}

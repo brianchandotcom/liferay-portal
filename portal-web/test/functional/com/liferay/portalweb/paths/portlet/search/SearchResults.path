@@ -14,6 +14,11 @@
 	<td>//div[contains(@id,'SearchResultsPortlet')]//span[contains(@class,'asset-title')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSET_DETAILS_EDIT_BUTTON</td>
+	<td>//span[contains(@class,'d-inline-flex')]</td>
+	<td></td>
+</tr>
 <!--ASSET_TYPE_FACET-->
 <tr>
 	<td>ASSET_TYPE_FACET_ANY_ASSET</td>

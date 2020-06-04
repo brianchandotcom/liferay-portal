@@ -490,6 +490,28 @@ definition {
 			searchTerm = "WC Title");
 	}
 
+	@description = "This is a use case for LPS-112599."
+	test NavigateToAssetEditPageViaSearchResults {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title");
+
+		SearchPortlets.searchEmbedded(searchTerm = "WC");
+
+		SearchPortlets.gotoResultDetails(searchAssetTitle = "WC Title");
+
+		SearchPortlets.viewResultDetails(searchAssetTitle = "WC Title");
+
+		Click(locator1 = "SearchResults#ASSET_DETAILS_EDIT_BUTTON");
+
+		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#HEADER",
+			value1 = "WC Title");
+	}
+
 	@priority = "4"
 	test NavigateToSearchResultsViaURL {
 		property portal.acceptance = "true";

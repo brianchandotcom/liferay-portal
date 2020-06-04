@@ -54,6 +54,11 @@ public class LayoutPageTemplateStructureImpl
 		return getData(segmentsExperienceId);
 	}
 
+	@Override
+	public long getPlid() {
+		return getClassPK();
+	}
+
 	private long _getFirstSegmentsExperienceId(long[] segmentsExperienceIds) {
 		if (segmentsExperienceIds.length == 1) {
 			return segmentsExperienceIds[0];

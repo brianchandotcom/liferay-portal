@@ -215,7 +215,7 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 	};
 
 	const selectWidget = function (editor) {
-		setTimeout(() => {
+		requestAnimationFrame(() => {
 			const selection = editor.getSelection();
 
 			if (selection) {
@@ -238,6 +238,10 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 						if (imageElement && widgetElement) {
 							const range = editor.createRange();
 
+							if (!range) {
+								return;
+							}
+
 							range.setStart(widgetElement, 0);
 							range.setEnd(imageElement, 1);
 
@@ -247,13 +251,12 @@ if (!CKEDITOR.plugins.get('videoembed')) {
 					}
 				}
 			}
-		}, 0);
+		});
 	};
 
 	let currentAlignment = null;
 	let currentElement = null;
 	let resizer = null;
-
 	const EMBED_VIDEO_WIDTH = 560;
 	const EMBED_VIDEO_HEIGHT = 315;
 

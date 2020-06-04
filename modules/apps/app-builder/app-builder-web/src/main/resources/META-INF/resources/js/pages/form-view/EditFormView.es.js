@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {createPortal} from 'react-dom';
@@ -56,6 +56,12 @@ const EditFormView = (props) => {
 	if (newCustomObject) {
 		backURL = basePortletURL;
 	}
+
+	useEffect(() => {
+		return () => {
+			window.__isReactDndBackendSetUp = undefined;
+		};
+	}, []);
 
 	return (
 		<DndProvider backend={HTML5Backend}>

@@ -34,6 +34,11 @@ public class TaxonomyVocabularyResourceTest
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"dateCreated", "dateModified"};
+	}
+
+	@Override
 	protected TaxonomyVocabulary randomTaxonomyVocabulary() {
 		return new TaxonomyVocabulary() {
 			{

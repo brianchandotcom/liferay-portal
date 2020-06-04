@@ -14,36 +14,6 @@
 				<target><![CDATA[]]></target>
 			</segment>
 		</unit>
-		<unit id="authorName">
-			<segment>
-				<source><![CDATA[Test Test]]></source>
-				<target><![CDATA[Test Test]]></target>
-			</segment>
-		</unit>
-		<unit id="lastEditorName">
-			<segment>
-				<source><![CDATA[Test Test]]></source>
-				<target><![CDATA[Test Test]]></target>
-			</segment>
-		</unit>
-		<unit id="publishDate">
-			<segment>
-				<source><![CDATA[01/02/65 00:00]]></source>
-				<target><![CDATA[01/02/65 00:00]]></target>
-			</segment>
-		</unit>
-		<unit id="categories">
-			<segment>
-				<source><![CDATA[]]></source>
-				<target><![CDATA[]]></target>
-			</segment>
-		</unit>
-		<unit id="tagNames">
-			<segment>
-				<source><![CDATA[]]></source>
-				<target><![CDATA[]]></target>
-			</segment>
-		</unit>
 		<unit id="HTML4acl">
 			<segment>
 				<source><![CDATA[<p>Some HTML</p>]]></source>

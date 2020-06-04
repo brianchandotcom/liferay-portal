@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>TOGGLE</td>
-	<td>//button[contains(@class,'dropdown-toggle') and @*='Global Menu']</td>
+	<td>//button[@data-qa-id='globalMenu']</td>
 	<td></td>
 </tr>
 <tr>

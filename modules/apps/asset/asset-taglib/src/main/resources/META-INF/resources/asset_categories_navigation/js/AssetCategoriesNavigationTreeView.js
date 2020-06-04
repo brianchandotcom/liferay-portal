@@ -21,6 +21,7 @@ function buildNodes(vocabularies, categories) {
 		children: categories.filter((category) => {
 			return category.vocabularyId === vocabulary.vocabularyId;
 		}),
+		icon: 'vocabulary',
 		id: vocabulary.vocabularyId,
 	}));
 }

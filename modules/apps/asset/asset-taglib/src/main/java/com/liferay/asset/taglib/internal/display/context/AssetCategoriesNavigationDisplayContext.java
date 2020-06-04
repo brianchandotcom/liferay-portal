@@ -184,6 +184,8 @@ public class AssetCategoriesNavigationDisplayContext {
 		).put(
 			"id", category.getCategoryId()
 		).put(
+			"icon", "categories"
+		).put(
 			"name",
 			HtmlUtil.escape(category.getTitle(_themeDisplay.getLocale()))
 		).put(

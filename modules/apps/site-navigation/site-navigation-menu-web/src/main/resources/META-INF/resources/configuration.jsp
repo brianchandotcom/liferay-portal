@@ -193,7 +193,7 @@ else {
 								<clay:col
 									md="6"
 								>
-									<aui:select label="sublevels-to-display" name="preferences--displayDepth--">
+									<aui:select label="levels-to-display" name="preferences--displayDepth--">
 										<aui:option label="unlimited" value="0" />
 
 										<%

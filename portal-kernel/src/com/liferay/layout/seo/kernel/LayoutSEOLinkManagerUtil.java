@@ -29,6 +29,15 @@ import java.util.Map;
 @Deprecated
 public class LayoutSEOLinkManagerUtil {
 
+	public static LayoutSEOLink getCanonicalLayoutSEOLink(
+			Layout layout, Locale locale, String canonicalURL,
+			Map<Locale, String> alternateURLs)
+		throws PortalException {
+
+		return _layoutSEOLinkManager.getCanonicalLayoutSEOLink(
+			layout, locale, canonicalURL, alternateURLs);
+	}
+
 	public static List<LayoutSEOLink> getLocalizedLayoutSEOLinks(
 			Layout layout, Locale locale, String canonicalURL,
 			Map<Locale, String> alternateURLs)
@@ -42,15 +51,6 @@ public class LayoutSEOLinkManagerUtil {
 		throws PortalException {
 
 		return _layoutSEOLinkManager.isOpenGraphEnabled(layout);
-	}
-
-	public LayoutSEOLink getCanonicalLayoutSEOLink(
-			Layout layout, Locale locale, String canonicalURL,
-			Map<Locale, String> alternateURLs)
-		throws PortalException {
-
-		return _layoutSEOLinkManager.getCanonicalLayoutSEOLink(
-			layout, locale, canonicalURL, alternateURLs);
 	}
 
 	private static volatile LayoutSEOLinkManager _layoutSEOLinkManager =

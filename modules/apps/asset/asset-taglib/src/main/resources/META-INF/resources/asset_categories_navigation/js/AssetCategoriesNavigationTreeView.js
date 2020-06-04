@@ -33,12 +33,14 @@ const AssetCategoriesNavigationTreeView = ({categories, vocabularies}) => {
 		const selectedNodeId = [...selectedNodeIds][0];
 
 		if (selectedNodeId) {
-			const {url} = nodes[0].children.find(
-				(node) => node.id === selectedNodeId
-			);
+			const categoryUrl = categories[0].url;
 
-			if (url) {
-				Liferay.Util.navigate(url);
+			if (categoryUrl) {
+				categories.forEach((category) => {
+					if (category.id === selectedNodeId) {
+						Liferay.Util.navigate(categoryUrl + selectedNodeId);
+					}
+				});
 			}
 		}
 	};

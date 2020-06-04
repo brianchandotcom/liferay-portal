@@ -86,7 +86,7 @@ public class CTEntryDiffDisplay {
 
 				_ctDisplayRendererRegistry.renderCTEntry(
 					_httpServletRequest, _httpServletResponse,
-					_ctCollection.getCtCollectionId(), _ctEntry);
+					_ctEntry.getCtCollectionId(), _ctEntry);
 			}
 		}
 		else {

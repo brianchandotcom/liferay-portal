@@ -54,7 +54,12 @@ export const EditEntry = ({
 
 			const languageId = themeDisplay.getLanguageId();
 
-			visitor.mapFields(({fieldName, localizable, repeatable, value}) => {
+			visitor.mapFields(({fieldName, localizable, repeatable, value, visible}) => {
+
+				if (!visible) {
+					return;
+				}
+
 				if (localizable) {
 					if (!dataRecord.dataRecordValues[fieldName]) {
 						dataRecord.dataRecordValues[fieldName] = {

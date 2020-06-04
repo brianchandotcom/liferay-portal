@@ -36,16 +36,6 @@ public class LabelItemAfterTag extends BaseContainerTag {
 		return super.doStartTag();
 	}
 
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #processCssClasses(String)}
@@ -65,9 +55,5 @@ public class LabelItemAfterTag extends BaseContainerTag {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:label-item-after:";
-
-	private static final String _END_PAGE = "/label_item_after/end.jsp";
-
-	private static final String _START_PAGE = "/label_item_after/start.jsp";
 
 }

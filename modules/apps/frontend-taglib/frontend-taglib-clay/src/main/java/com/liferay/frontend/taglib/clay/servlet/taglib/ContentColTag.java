@@ -56,16 +56,6 @@ public class ContentColTag extends BaseContainerTag {
 		_gutters = false;
 	}
 
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #processCssClasses(String)}
@@ -92,10 +82,6 @@ public class ContentColTag extends BaseContainerTag {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:content-col:";
-
-	private static final String _END_PAGE = "/content_col/end.jsp";
-
-	private static final String _START_PAGE = "/content_col/start.jsp";
 
 	private boolean _expand;
 	private boolean _gutters;

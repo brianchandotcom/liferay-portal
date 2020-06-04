@@ -159,16 +159,6 @@ public class StickerTag extends BaseContainerTag {
 		_spritemap = null;
 	}
 
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #processCssClasses(String)}
@@ -243,10 +233,6 @@ public class StickerTag extends BaseContainerTag {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:sticker:";
-
-	private static final String _END_PAGE = "/sticker/end.jsp";
-
-	private static final String _START_PAGE = "/sticker/start.jsp";
 
 	private String _displayType;
 	private String _icon;

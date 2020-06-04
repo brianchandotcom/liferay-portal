@@ -48,16 +48,6 @@ public class SheetTag extends BaseContainerTag {
 		_size = "lg";
 	}
 
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #processCssClasses(String)}
@@ -80,10 +70,6 @@ public class SheetTag extends BaseContainerTag {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:sheet:";
-
-	private static final String _END_PAGE = "/sheet/end.jsp";
-
-	private static final String _START_PAGE = "/sheet/start.jsp";
 
 	private String _size = "lg";
 

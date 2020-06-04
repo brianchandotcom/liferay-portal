@@ -208,16 +208,6 @@ public class ButtonTag extends BaseContainerTag {
 	}
 
 	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
-	@Override
 	protected String processCssClasses(Set<String> cssClasses) {
 		cssClasses.add("btn");
 
@@ -297,10 +287,6 @@ public class ButtonTag extends BaseContainerTag {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:button:";
-
-	private static final String _END_PAGE = "/button/end.jsp";
-
-	private static final String _START_PAGE = "/button/start.jsp";
 
 	private boolean _alert;
 	private String _ariaLabel;

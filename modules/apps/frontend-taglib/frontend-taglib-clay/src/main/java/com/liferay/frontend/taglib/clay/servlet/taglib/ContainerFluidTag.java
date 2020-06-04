@@ -31,20 +31,6 @@ public class ContainerFluidTag extends ContainerTag {
 		return super.doStartTag();
 	}
 
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:container-fluid:";
-
-	private static final String _END_PAGE = "/container_fluid/end.jsp";
-
-	private static final String _START_PAGE = "/container_fluid/start.jsp";
 
 }

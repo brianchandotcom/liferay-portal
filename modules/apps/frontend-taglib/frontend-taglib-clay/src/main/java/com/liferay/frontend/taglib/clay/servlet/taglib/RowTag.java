@@ -32,16 +32,6 @@ public class RowTag extends BaseContainerTag {
 		return super.doStartTag();
 	}
 
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
-	protected String getStartPage() {
-		return _START_PAGE;
-	}
-
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #processCssClasses(String)}
@@ -60,9 +50,5 @@ public class RowTag extends BaseContainerTag {
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:row:";
-
-	private static final String _END_PAGE = "/row/end.jsp";
-
-	private static final String _START_PAGE = "/row/start.jsp";
 
 }

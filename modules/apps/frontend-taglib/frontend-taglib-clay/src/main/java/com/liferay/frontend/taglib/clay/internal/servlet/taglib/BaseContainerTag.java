@@ -19,20 +19,44 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.taglib.util.IncludeTag;
+import com.liferay.taglib.util.AttributesTagSupport;
 import com.liferay.taglib.util.InlineUtil;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
  * @author Chema Balsas
  */
-public class BaseContainerTag extends IncludeTag {
+public class BaseContainerTag extends AttributesTagSupport {
+
+	@Override
+	public int doEndTag() throws JspException {
+		try {
+			return processEndTag();
+		}
+		catch (Exception exception) {
+			throw new JspException(exception);
+		}
+		finally {
+			doClearTag();
+		}
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		try {
+			return processStartTag();
+		}
+		catch (Exception exception) {
+			throw new JspException(exception);
+		}
+	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
@@ -165,10 +189,7 @@ public class BaseContainerTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	@Override
 	protected void cleanUp() {
-		super.cleanUp();
-
 		_componentId = null;
 		_containerElement = null;
 		_contributorKey = null;
@@ -179,9 +200,12 @@ public class BaseContainerTag extends IncludeTag {
 		_id = null;
 	}
 
-	@Override
-	protected boolean isCleanUpSetAttributes() {
-		return _CLEAN_UP_SET_ATTRIBUTES;
+	protected void doClearTag() {
+		clearDynamicAttributes();
+		clearParams();
+		clearProperties();
+
+		cleanUp();
 	}
 
 	/**
@@ -201,7 +225,6 @@ public class BaseContainerTag extends IncludeTag {
 		return StringUtil.merge(cssClasses, StringPool.SPACE);
 	}
 
-	@Override
 	protected int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
@@ -212,7 +235,6 @@ public class BaseContainerTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	@Override
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
@@ -247,8 +269,6 @@ public class BaseContainerTag extends IncludeTag {
 			jspWriter.write(dynamicAttributesString);
 		}
 	}
-
-	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private String _componentId;
 	private String _containerElement;

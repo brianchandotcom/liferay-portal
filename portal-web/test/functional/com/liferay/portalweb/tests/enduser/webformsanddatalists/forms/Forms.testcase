@@ -1795,6 +1795,8 @@ definition {
 
 		SystemSettings.saveConfiguration();
 
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
@@ -1813,6 +1815,8 @@ definition {
 			configurationScope = "Site Scope");
 
 		SystemSettings.resetConfiguration(configurationName = "Forms");
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

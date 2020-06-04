@@ -167,13 +167,22 @@ public class DropZoneContentPageEditorListener
 		List<String> childrenItemIds =
 			parentLayoutStructureItem.getChildrenItemIds();
 
-		if (childrenItemIds.size() >= elements.size()) {
+		if (childrenItemIds.size() == elements.size()) {
 			return;
 		}
 
-		for (int i = childrenItemIds.size(); i < elements.size(); i++) {
-			layoutStructure.addFragmentDropZoneLayoutStructureItem(
-				parentLayoutStructureItem.getItemId(), 0);
+		if (childrenItemIds.size() > elements.size()) {
+			List<String> childrenItemIdsToRemove = childrenItemIds.subList(
+				elements.size(), childrenItemIds.size());
+
+			childrenItemIdsToRemove.forEach(
+				layoutStructure::deleteLayoutStructureItem);
+		}
+		else {
+			for (int i = childrenItemIds.size(); i < elements.size(); i++) {
+				layoutStructure.addFragmentDropZoneLayoutStructureItem(
+					parentLayoutStructureItem.getItemId(), 0);
+			}
 		}
 
 		_layoutPageTemplateStructureLocalService.

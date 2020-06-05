@@ -165,6 +165,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 		InfoDisplayContributor<?> infoDisplayContributor =
 			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
 
+		if (infoDisplayContributor == null) {
+			return displayObjectOptional.orElse(null);
+		}
+
 		try {
 			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
 				infoDisplayContributor.getInfoDisplayObjectProvider(classPK);

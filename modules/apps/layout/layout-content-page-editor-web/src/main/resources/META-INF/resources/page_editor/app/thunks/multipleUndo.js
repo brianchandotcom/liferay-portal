@@ -12,7 +12,7 @@
  * details.
  */
 
-import {updateNetwork} from '../actions';
+import {updateNetwork} from '../actions/index';
 import {
 	UPDATE_NETWORK,
 	UPDATE_REDO_ACTIONS,

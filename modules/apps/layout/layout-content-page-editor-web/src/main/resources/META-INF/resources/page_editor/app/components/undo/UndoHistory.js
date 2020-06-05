@@ -106,7 +106,10 @@ const History = ({actions = [], type}) => {
 			}}
 			symbolRight={isSelectedAction(index) ? 'check' : ''}
 		>
-			{getActionLabel(action, type)}
+			{getActionLabel(action, type, {
+				availableSegmentsExperiences:
+					store.availableSegmentsExperiences,
+			})}
 
 			{action.type !== SELECT_SEGMENTS_EXPERIENCE &&
 				action.segmentsExperienceId !==

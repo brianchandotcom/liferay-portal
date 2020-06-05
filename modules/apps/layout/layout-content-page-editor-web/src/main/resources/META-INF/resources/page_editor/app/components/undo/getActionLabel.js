@@ -25,8 +25,10 @@ import {
 	UPDATE_ITEM_CONFIG,
 	UPDATE_LANGUAGE_ID,
 } from '../../actions/types';
+import {UNDO_TYPES} from '../../config/constants/undoTypes';
+import getSegmentsExperienceName from '../../utils/getSegmentsExperienceName';
 
-export function getActionLabel(action) {
+export function getActionLabel(action, type, {availableSegmentsExperiences}) {
 	switch (action.originalType || action.type) {
 		case ADD_FRAGMENT_ENTRY_LINKS:
 		case ADD_ITEM:
@@ -50,10 +52,21 @@ export function getActionLabel(action) {
 				action.itemName
 			);
 		case SELECT_SEGMENTS_EXPERIENCE:
-			return Liferay.Util.sub(
-				Liferay.Language.get('select-x-experience'),
-				action.segmentsExperienceName
-			);
+			return type === UNDO_TYPES.undo
+				? Liferay.Util.sub(
+						Liferay.Language.get('select-x-experience'),
+						getSegmentsExperienceName(
+							action.nextSegmentsExperienceId,
+							availableSegmentsExperiences
+						)
+				  )
+				: Liferay.Util.sub(
+						Liferay.Language.get('select-x-experience'),
+						getSegmentsExperienceName(
+							action.segmentsExperienceId,
+							availableSegmentsExperiences
+						)
+				  );
 
 		case UPDATE_COL_SIZE:
 			return Liferay.Language.get('update-column-size');

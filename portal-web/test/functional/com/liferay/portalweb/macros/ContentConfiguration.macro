@@ -80,7 +80,6 @@ definition {
 				locator1 = "Select#DATE_RANGE_END_DATE",
 				value1 = "${dateRangeEndDate}");
 
-			
 		}
 
 		if ("${contentDateRange}" == "Last") {

@@ -64,14 +64,14 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
 	@Override
 	public WorkflowDefinition deploy(
-			String title, String name, Definition definition,
+			String title, String name, String scope, Definition definition,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		checkPermissions();
 
 		KaleoDefinition kaleoDefinition = _addOrUpdateKaleoDefinition(
-			title, name, definition, serviceContext);
+			title, name, scope, definition, serviceContext);
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			_kaleoDefinitionVersionLocalService.
@@ -165,12 +165,12 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 
 	@Override
 	public WorkflowDefinition save(
-			String title, String name, Definition definition,
+			String title, String name, String scope, Definition definition,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		KaleoDefinition kaleoDefinition = _addOrUpdateKaleoDefinition(
-			title, name, definition, serviceContext);
+			title, name, scope, definition, serviceContext);
 
 		return _kaleoWorkflowModelConverter.toWorkflowDefinition(
 			kaleoDefinition);
@@ -211,7 +211,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 	}
 
 	private KaleoDefinition _addOrUpdateKaleoDefinition(
-			String title, String name, Definition definition,
+			String title, String name, String scope, Definition definition,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -222,7 +222,7 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 		if (kaleoDefinition == null) {
 			kaleoDefinition = _kaleoDefinitionLocalService.addKaleoDefinition(
 				name, title, definition.getDescription(),
-				definition.getContent(), 1, serviceContext);
+				definition.getContent(), scope, 1, serviceContext);
 		}
 		else {
 			kaleoDefinition =

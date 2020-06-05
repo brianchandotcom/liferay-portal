@@ -73,6 +73,7 @@ export const getDropHandler = ({dataDefinition, dataLayoutBuilder}) => {
 						fieldSet: data.fieldSet,
 						indexes,
 						parentFieldName: parentField?.fieldName,
+						useFieldName: data.useFieldName,
 					})
 				);
 				break;

@@ -13,6 +13,7 @@
  */
 
 import {useResource} from '@clayui/data-provider';
+import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 const PageContext = React.createContext({});
@@ -37,6 +38,12 @@ export const EVENT_TYPES = {
 
 const endpoint = `${window.location.origin}/o/data-engine/v2.0/data-definitions/data-definition-fields/field-types`;
 
+const HEADERS = {
+	Accept: 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+};
+
 export const PageProvider = ({children, dispatch, emit, value}) => {
 	const [store, setStore] = useState(value);
 
@@ -47,8 +54,10 @@ export const PageProvider = ({children, dispatch, emit, value}) => {
 	// in the application.
 
 	const {resource: fieldTypes} = useResource({
-		fetchPolicy: 'cache-first',
-		link: endpoint,
+		link: (variables) =>
+			fetch(`${endpoint}?${variables}`, {headers: HEADERS}).then((res) =>
+				res.json()
+			),
 		variables: {
 			p_auth: Liferay.authToken,
 		},

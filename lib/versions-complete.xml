@@ -101,6 +101,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.batch.engine.service.jar!SparseBitSet.jar</file-name>
+				<version>1.2</version>
+				<project-name>SparseBitSet</project-name>
+				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.batch.engine.service.jar!commons-collections4.jar</file-name>
 				<version>4.3</version>
 				<project-name>Apache Commons Collections</project-name>
@@ -150,7 +162,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.batch.engine.service.jar!poi-ooxml-schemas.jar</file-name>
-				<version>4.1.1</version>
+				<version>4.1.2</version>
 				<project-name>Apache POI</project-name>
 				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
@@ -162,7 +174,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.batch.engine.service.jar!poi-ooxml.jar</file-name>
-				<version>4.1.1</version>
+				<version>4.1.2</version>
 				<project-name>Apache POI</project-name>
 				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
@@ -174,7 +186,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.batch.engine.service.jar!poi.jar</file-name>
-				<version>4.1.1</version>
+				<version>4.1.2</version>
 				<project-name>Apache POI</project-name>
 				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
@@ -895,10 +907,58 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.dynamic.data.lists.service.jar!commons-collections4.jar</file-name>
+				<version>4.3</version>
+				<project-name>Apache Commons Collections</project-name>
+				<project-url>http://commons.apache.org/proper/commons-collections/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.lists.service.jar!commons-compress.jar</file-name>
+				<version>1.19</version>
+				<project-name>Apache Commons Compress</project-name>
+				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.dynamic.data.lists.service.jar!commons-math3.jar</file-name>
 				<version>3.6.1</version>
 				<project-name>Apache Commons Math</project-name>
 				<project-url>http://commons.apache.org/proper/commons-math/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.lists.service.jar!poi-ooxml-schemas.jar</file-name>
+				<version>4.1.2</version>
+				<project-name>Apache POI</project-name>
+				<project-url>http://poi.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.lists.service.jar!poi-ooxml.jar</file-name>
+				<version>4.1.2</version>
+				<project-name>Apache POI</project-name>
+				<project-url>http://poi.apache.org/</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
@@ -914,6 +974,18 @@
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.lists.service.jar!xmlbeans.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>XmlBeans</project-name>
+				<project-url>https://xmlbeans.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
@@ -1092,6 +1164,90 @@
 					<license>
 						<license-name>BSD 3-Clause "New" or "Revised" License (BSD-3-Clause)</license-name>
 						<license-url>http://treelayout.googlecode.com/files/LICENSE.TXT</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.mapping.service.jar!SparseBitSet.jar</file-name>
+				<version>1.2</version>
+				<project-name>SparseBitSet</project-name>
+				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.mapping.service.jar!commons-collections4.jar</file-name>
+				<version>4.3</version>
+				<project-name>Apache Commons Collections</project-name>
+				<project-url>http://commons.apache.org/proper/commons-collections/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.mapping.service.jar!commons-compress.jar</file-name>
+				<version>1.19</version>
+				<project-name>Apache Commons Compress</project-name>
+				<project-url>https://commons.apache.org/proper/commons-compress/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.mapping.service.jar!poi-ooxml-schemas.jar</file-name>
+				<version>4.1.2</version>
+				<project-name>Apache POI</project-name>
+				<project-url>http://poi.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.mapping.service.jar!poi-ooxml.jar</file-name>
+				<version>4.1.2</version>
+				<project-name>Apache POI</project-name>
+				<project-url>http://poi.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.mapping.service.jar!poi.jar</file-name>
+				<version>4.1.2</version>
+				<project-name>Apache POI</project-name>
+				<project-url>http://poi.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.dynamic.data.mapping.service.jar!xmlbeans.jar</file-name>
+				<version>3.1.0</version>
+				<project-name>XmlBeans</project-name>
+				<project-url>https://xmlbeans.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -2916,7 +3072,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.security.antisamy.jar!antisamy.jar</file-name>
-				<version>1.5.7</version>
+				<version>1.5.9</version>
 				<project-name>OWASP AntiSamy</project-name>
 				<project-url>https://github.com/nahsra/antisamy</project-url>
 				<licenses>
@@ -3408,7 +3564,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-core.jar</file-name>
-				<version>1.11.277</version>
+				<version>1.11.790</version>
 				<project-name>AWS SDK for Java - Core</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
@@ -3420,7 +3576,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-kms.jar</file-name>
-				<version>1.11.277</version>
+				<version>1.11.790</version>
 				<project-name>AWS Java SDK for AWS KMS</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
@@ -3432,7 +3588,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!aws-java-sdk-s3.jar</file-name>
-				<version>1.11.277</version>
+				<version>1.11.790</version>
 				<project-name>AWS Java SDK for Amazon S3</project-name>
 				<project-url>https://aws.amazon.com/sdkforjava</project-url>
 				<licenses>
@@ -6365,9 +6521,9 @@
 			</library>
 			<library>
 				<file-name>lib/portal/isoparser.jar</file-name>
-				<version>1.1.22</version>
+				<version>1.9.41.2</version>
 				<project-name>ISO Parser</project-name>
-				<project-url>http://code.google.com/p/mp4parser</project-url>
+				<project-url>https://github.com/tballison/mp4parser</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
@@ -7669,7 +7825,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-core.jar</file-name>
-				<version>1.24</version>
+				<version>1.24.1</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -7681,7 +7837,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-parsers.jar</file-name>
-				<version>1.24</version>
+				<version>1.24.1</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>

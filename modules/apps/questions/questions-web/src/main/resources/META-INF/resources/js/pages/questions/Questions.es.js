@@ -138,8 +138,8 @@ export default withRouter(
 						</div>
 
 						{!!search && (
-							<div className="c-mt-5 c-mt-md-1 c-px-0 col-xl-12">
-								<ClayResultsBar>
+							<div className="c-mt-5 c-mx-auto c-px-0 col-xl-12">
+								<ClayResultsBar className="c-mt-5">
 									<ClayResultsBar.Item expand>
 										<span className="component-text text-truncate-inline">
 											<span className="text-truncate">
@@ -170,7 +170,7 @@ export default withRouter(
 							</div>
 						)}
 
-						<div className="c-mt-5 c-mx-auto c-px-0 col-xl-10">
+						<div className="c-mx-auto c-px-0 col-xl-10">
 							<PaginatedList
 								activeDelta={pageSize}
 								activePage={page}

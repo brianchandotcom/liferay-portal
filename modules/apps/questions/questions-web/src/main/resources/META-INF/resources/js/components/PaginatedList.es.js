@@ -49,7 +49,7 @@ const PaginatedList = ({
 						<ClayPaginationBarWithBasicItems
 							activeDelta={activeDelta}
 							activePage={activePage}
-							className="w-100"
+							className="c-mt-4 w-100"
 							deltas={deltas}
 							ellipsisBuffer={3}
 							onDeltaChange={changeDelta}

@@ -61,6 +61,21 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 			<c:choose>
+				<c:when test="<%= layoutsSEODisplayContext.isDisplayPageTemplate() %>">
+					<div class="dpt-mapping">
+						<aui:model-context bean="<%= null %>" model="<%= null %>" />
+
+						<aui:input disabled="<%= true %>" helpMessage="html-title-help" id="title" label="html-title" localized="<%= false %>" name="title" placeholder="title" />
+
+						<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+
+						<react:component
+							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"
+							module="js/seo/display_page_templates/SeoMapping"
+							servletContext="<%= application %>"
+						/>
+					</div>
+				</c:when>
 				<c:when test="<%= !selLayout.isTypeAssetDisplay() %>">
 					<aui:input helpMessage="html-title-help" id="title" label="html-title" name="title" placeholder="title" />
 					<aui:input helpMessage="description-help" id="descriptionSEO" name="description" placeholder="description" />
@@ -161,21 +176,6 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						servletContext="<%= application %>"
 					/>
 				</c:when>
-				<c:otherwise>
-					<div class="dpt-mapping">
-						<aui:model-context bean="<%= null %>" model="<%= null %>" />
-
-						<aui:input disabled="<%= true %>" helpMessage="html-title-help" id="title" label="html-title" localized="<%= false %>" name="title" placeholder="title" />
-
-						<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
-
-						<react:component
-							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"
-							module="js/seo/display_page_templates/SeoMapping"
-							servletContext="<%= application %>"
-						/>
-					</div>
-				</c:otherwise>
 			</c:choose>
 
 			<aui:input name="robots" placeholder="robots" />

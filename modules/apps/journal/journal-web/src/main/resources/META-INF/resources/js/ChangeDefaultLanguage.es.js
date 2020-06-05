@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
@@ -56,6 +57,7 @@ function ChangeDefaultLanguage(props) {
 						displayType="secondary"
 					>
 						<strong>{Liferay.Language.get('change')}</strong>
+
 						<ClayIcon
 							className="inline-item inline-item-after"
 							symbol="caret-bottom"
@@ -72,21 +74,22 @@ function ChangeDefaultLanguage(props) {
 							onClick={(event) => onItemClick(event, item.label)}
 							title={item.label}
 						>
-							<span className="autofit-col autofit-col-expand">
-								<span className="autofit-section">
+							<ClayLayout.ContentCol expand>
+								<ClayLayout.ContentSection>
 									<span className="inline-item inline-item-before">
 										<ClayIcon symbol={item.icon}></ClayIcon>
 									</span>
+
 									{item.label}
-								</span>
-							</span>
+								</ClayLayout.ContentSection>
+							</ClayLayout.ContentCol>
 
 							{item.label === selectedDefaultLanguage && (
-								<span className="autofit-col">
+								<ClayLayout.ContentCol>
 									<ClayLabel displayType="info">
 										{Liferay.Language.get('default')}
 									</ClayLabel>
-								</span>
+								</ClayLayout.ContentCol>
 							)}
 						</ClayDropDown.Item>
 					))}

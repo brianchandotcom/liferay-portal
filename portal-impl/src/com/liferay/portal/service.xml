@@ -2427,7 +2427,7 @@
 			<finder-column arrayable-operator="OR" name="classPK" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="SystemEvent" remote-service="false" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal">
+	<entity change-tracking-enabled="true" local-service="true" name="SystemEvent" remote-service="false" uad-dir-path="../modules/apps/portal/portal-uad/src/main/java" uad-package-path="com.liferay.portal">
 
 		<!-- PK fields -->
 

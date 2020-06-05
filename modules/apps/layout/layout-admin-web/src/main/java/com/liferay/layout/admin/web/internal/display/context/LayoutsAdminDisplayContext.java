@@ -845,6 +845,31 @@ public class LayoutsAdminDisplayContext {
 		return portletURL;
 	}
 
+	public String getSelectLayoutCollectionURL(
+		long selPlid, String selectedTab, boolean privateLayout) {
+
+		PortletURL selectLayoutCollectionsURL =
+			_liferayPortletResponse.createRenderURL();
+
+		selectLayoutCollectionsURL.setParameter(
+			"mvcPath", "/select_layout_collections.jsp");
+		selectLayoutCollectionsURL.setParameter("redirect", getRedirect());
+		selectLayoutCollectionsURL.setParameter(
+			"backURL", themeDisplay.getURLCurrent());
+		selectLayoutCollectionsURL.setParameter(
+			"groupId", String.valueOf(getSelGroupId()));
+		selectLayoutCollectionsURL.setParameter(
+			"selPlid", String.valueOf(selPlid));
+		selectLayoutCollectionsURL.setParameter(
+			"privateLayout", String.valueOf(privateLayout));
+
+		if (Validator.isNotNull(selectedTab)) {
+			selectLayoutCollectionsURL.setParameter("selectedTab", selectedTab);
+		}
+
+		return selectLayoutCollectionsURL.toString();
+	}
+
 	public String getSelectLayoutPageTemplateEntryURL(boolean privateLayout)
 		throws PortalException {
 

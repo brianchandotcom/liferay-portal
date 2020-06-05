@@ -118,7 +118,11 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 				));
 		}
 
-		for (PanelApp panelApp : _panelAppRegistry.getPanelApps(key)) {
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			key, themeDisplay.getPermissionChecker(),
+			themeDisplay.getScopeGroup());
+
+		for (PanelApp panelApp : panelApps) {
 			Portlet portlet = _portletLocalService.getPortletById(
 				themeDisplay.getCompanyId(), panelApp.getPortletId());
 
@@ -185,7 +189,9 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 
 		JSONArray panelAppsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(key);
+		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
+			key, themeDisplay.getPermissionChecker(),
+			themeDisplay.getScopeGroup());
 
 		for (PanelApp panelApp : panelApps) {
 			panelAppsJSONArray.put(

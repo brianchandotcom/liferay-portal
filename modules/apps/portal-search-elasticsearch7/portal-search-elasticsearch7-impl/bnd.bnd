@@ -13,6 +13,7 @@ Import-Package:\
 	!com.fasterxml.aalto.*,\
 	!com.fasterxml.jackson.dataformat.*,\
 	\
+	!com.github.luben.zstd.*,\
 	!com.github.mustachejava.*,\
 	\
 	!com.google.common.*,\
@@ -74,6 +75,8 @@ Import-Package:\
 	\
 	!org.bouncycastle.*,\
 	\
+	!org.brotli.dec.*,\
+	\
 	!org.codehaus.groovy.*,\
 	\
 	!org.conscrypt.*,\
@@ -103,6 +106,8 @@ Import-Package:\
 	!org.noggit.*,\
 	\
 	!org.owasp.html.*,\
+	\
+	!org.tukaani.xz.*,\
 	\
 	!org.zeromq.*,\
 	\

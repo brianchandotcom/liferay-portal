@@ -71,14 +71,19 @@ public class SidecarElasticsearchConnectionManager {
 			elasticsearchConfiguration.sidecarHome());
 
 		if (!Files.isDirectory(sidecarHomePath)) {
-			sidecarHomePath = Paths.get(
+			Path sidecarSubhomePath = Paths.get(
 				elasticsearchConfiguration.sidecarHome());
 
-			if (!Files.isDirectory(sidecarHomePath)) {
-				throw new IllegalArgumentException(
-					"Sidecar Elasticsearch home " +
-						elasticsearchConfiguration.sidecarHome() +
-							" does not exist");
+			if (Files.isDirectory(sidecarSubhomePath)) {
+				sidecarHomePath = sidecarSubhomePath;
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Sidecar Elasticsearch home " +
+							elasticsearchConfiguration.sidecarHome() +
+								" does not exist");
+				}
 			}
 		}
 

@@ -98,6 +98,8 @@ public class Sidecar {
 			_log.info("Starting sidecar Elasticsearch");
 		}
 
+		_installElasticsearchIfNeeded();
+
 		ProcessChannel<Serializable> processChannel =
 			executeSidecarMainProcess();
 
@@ -277,10 +279,14 @@ public class Sidecar {
 	}
 
 	protected URL getSecurityPolicyURL(URL bundleURL) {
-		URLClassLoader urlClassLoader = new URLClassLoader(
-			new URL[] {bundleURL});
+		try (URLClassLoader urlClassLoader = new URLClassLoader(
+				new URL[] {bundleURL})) {
 
-		return urlClassLoader.findResource("META-INF/sidecar.policy");
+			return urlClassLoader.findResource("META-INF/sidecar.policy");
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	protected Settings getSettings() {
@@ -497,6 +503,13 @@ public class Sidecar {
 		}
 
 		return arguments.toArray(new String[0]);
+	}
+
+	private void _installElasticsearchIfNeeded() {
+		ElasticsearchInstaller installer = new ElasticsearchInstaller(
+			_sidecarHomePath, new Elasticsearch730Distribution());
+
+		installer.install();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);

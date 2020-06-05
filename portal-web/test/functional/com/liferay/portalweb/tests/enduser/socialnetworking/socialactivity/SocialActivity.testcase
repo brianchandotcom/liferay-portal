@@ -28,7 +28,7 @@ definition {
 
 	@description = "It ensures that the user statistics are counted when social tracking is enabled."
 	@priority = "5"
-	test CountUserStatisticsWhenEnablingSocialTracking {
+	test CountUserStatisticsAfterEnablingSocialTracking {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

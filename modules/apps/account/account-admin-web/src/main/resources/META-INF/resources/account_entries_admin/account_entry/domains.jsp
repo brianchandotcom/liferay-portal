@@ -160,8 +160,21 @@ List<String> domains = accountEntryDisplay.getDomains();
 					var newDomains = event.data.split(',');
 
 					newDomains.forEach(function (domain) {
+						domain = domain.trim();
+
 						if (!domains.includes(domain)) {
-							addRow(domain.trim());
+							var rowColumns = [];
+
+							rowColumns.push(Liferay.Util.escape(domain));
+							rowColumns.push(
+								'<a class="modify-link pull-right" data-rowId="' +
+									domain +
+									'" href="javascript:;"><%= UnicodeFormatter.toString(removeDomainIcon) %></a>'
+							);
+
+							searchContainer.addRow(rowColumns, domain);
+
+							domains.push(domain);
 						}
 					});
 
@@ -172,19 +185,4 @@ List<String> domains = accountEntryDisplay.getDomains();
 			);
 		});
 	}
-
-	window.addRow = function (domain) {
-		var rowColumns = [];
-
-		rowColumns.push(Liferay.Util.escape(domain));
-		rowColumns.push(
-			'<a class="modify-link pull-right" data-rowId="' +
-				domain +
-				'" href="javascript:;"><%= UnicodeFormatter.toString(removeDomainIcon) %></a>'
-		);
-
-		searchContainer.addRow(rowColumns, domain);
-
-		domains.push(domain);
-	};
 </aui:script>

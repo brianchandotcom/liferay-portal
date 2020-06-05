@@ -246,6 +246,23 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				labelItem.setLabel(label);
 			}
+		).add(
+			() -> !Objects.equals(getType(), "all"),
+			labelItem -> {
+				PortletURL removeLabelURL = getPortletURL();
+
+				removeLabelURL.setParameter("type", (String)null);
+
+				labelItem.putData("removeLabelURL", removeLabelURL.toString());
+
+				labelItem.setCloseable(true);
+
+				String label = String.format(
+					"%s: %s", LanguageUtil.get(request, "type"),
+					LanguageUtil.get(request, getType()));
+
+				labelItem.setLabel(label);
+			}
 		).build();
 	}
 

@@ -274,9 +274,9 @@ String navigation = ParamUtil.getString(request, "navigation");
 					trashEnabled: <%= (scopeGroupId == repositoryId) && dlTrashHelper.isTrashEnabled(scopeGroupId, repositoryId) %>,
 					uploadable: <%= uploadable %>,
 					uploadURL: '<%= uploadURL %>',
+					viewFileEntryTypeURL: '<%= viewFileEntryTypeURL %>',
 					viewFileEntryURL:
 						'<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-					viewFileEntryTypeURL: '<%= viewFileEntryTypeURL %>',
 				}),
 				{
 					destroyOnNavigate: true,

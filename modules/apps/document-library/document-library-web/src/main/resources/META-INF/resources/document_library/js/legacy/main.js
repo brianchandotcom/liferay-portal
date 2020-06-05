@@ -63,11 +63,11 @@ AUI.add(
 					validator: Lang.isBoolean,
 				},
 
-				viewFileEntryURL: {
+				viewFileEntryTypeURL: {
 					validator: Lang.isString,
 				},
 
-				viewFileEntryTypeURL: {
+				viewFileEntryURL: {
 					validator: Lang.isString,
 				},
 			},

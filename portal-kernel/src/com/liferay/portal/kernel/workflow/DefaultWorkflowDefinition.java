@@ -71,6 +71,11 @@ public class DefaultWorkflowDefinition
 	}
 
 	@Override
+	public String getScope() {
+		return _scope;
+	}
+
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -136,6 +141,10 @@ public class DefaultWorkflowDefinition
 		_optionalAttributes = optionalAttributes;
 	}
 
+	public void setScope(String scope) {
+		_scope = scope;
+	}
+
 	public void setTitle(String title) {
 		_title = title;
 	}
@@ -160,6 +169,7 @@ public class DefaultWorkflowDefinition
 	private Date _modifiedDate;
 	private String _name;
 	private Map<String, Object> _optionalAttributes;
+	private String _scope;
 	private String _title;
 	private long _userId;
 	private int _version;

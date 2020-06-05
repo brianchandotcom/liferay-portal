@@ -47,6 +47,10 @@ public interface WorkflowDefinition extends WorkflowModel {
 
 	public Map<String, Object> getOptionalAttributes();
 
+	public default String getScope() {
+		return "";
+	}
+
 	public String getTitle();
 
 	public String getTitle(String languageId);

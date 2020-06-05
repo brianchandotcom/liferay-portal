@@ -20,7 +20,7 @@
 	clearResultsURL="<%= kaleoDesignerDisplayContext.getClearResultsURL() %>"
 	creationMenu="<%= kaleoDesignerDisplayContext.getCreationMenu(pageContext) %>"
 	filterDropdownItems="<%= kaleoDesignerDisplayContext.getFilterItemsDropdownItems() %>"
-	itemsTotal="<%= kaleoDesignerDisplayContext.getTotalItems() %>"
+	itemsTotal="<%= kaleoDesignerDisplayContext.getTotalItems(displayedStatus) %>"
 	namespace="<%= renderResponse.getNamespace() %>"
 	searchActionURL="<%= kaleoDesignerDisplayContext.getSearchActionURL() %>"
 	searchContainerId="<%= kaleoDesignerDisplayContext.getSearchContainerId() %>"

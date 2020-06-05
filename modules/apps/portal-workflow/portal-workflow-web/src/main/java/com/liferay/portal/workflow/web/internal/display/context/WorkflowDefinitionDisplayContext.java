@@ -41,13 +41,13 @@ import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.web.internal.display.context.util.WorkflowDefinitionRequestHelper;
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionSearch;
 import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionSearchTerms;
@@ -551,7 +551,7 @@ public class WorkflowDefinitionDisplayContext {
 		List<WorkflowDefinition> workflowDefinitions, String description,
 		String title, int status, boolean andOperator) {
 
-		if ((status == WorkflowDefinitionConstants.STATUS_ALL) &&
+		if ((status == WorkflowConstants.STATUS_ANY) &&
 			Validator.isNull(title) && Validator.isNull(description)) {
 
 			return workflowDefinitions;

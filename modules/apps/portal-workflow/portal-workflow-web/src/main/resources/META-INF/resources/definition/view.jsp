@@ -19,13 +19,13 @@
 <%
 String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
 
-int displayedStatus = WorkflowDefinitionConstants.STATUS_ALL;
+int displayedStatus = WorkflowConstants.STATUS_ANY;
 
 if (StringUtil.equals(definitionsNavigation, "published")) {
-	displayedStatus = WorkflowDefinitionConstants.STATUS_PUBLISHED;
+	displayedStatus = WorkflowConstants.STATUS_APPROVED;
 }
 else if (StringUtil.equals(definitionsNavigation, "not-published")) {
-	displayedStatus = WorkflowDefinitionConstants.STATUS_NOT_PUBLISHED;
+	displayedStatus = WorkflowConstants.STATUS_DRAFT;
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();

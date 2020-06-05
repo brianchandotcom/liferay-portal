@@ -47,6 +47,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.uuid.PortalUUIDUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
@@ -55,7 +56,6 @@ page import="com.liferay.portal.workflow.constants.WorkflowWebKeys" %><%@
 page import="com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException" %><%@
 page import="com.liferay.portal.workflow.kaleo.definition.exception.KaleoDefinitionValidationException" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys" %><%@
-page import="com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDefinitionVersionConstants" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.web.internal.dao.search.KaleoDefinitionVersionResultRowSplitter" %><%@
 page import="com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission" %><%@
@@ -91,6 +91,17 @@ if (DateUtil.isFormatAmPm(locale)) {
 }
 else {
 	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat(LanguageUtil.get(request, "mmm-d-yyyy-hh-mm"), locale, timeZone);
+}
+
+String navigation = ParamUtil.getString(request, "navigation");
+
+int displayedStatus = WorkflowConstants.STATUS_ANY;
+
+if (StringUtil.equals(navigation, "published")) {
+	displayedStatus = WorkflowConstants.STATUS_APPROVED;
+}
+else if (StringUtil.equals(navigation, "not-published")) {
+	displayedStatus = WorkflowConstants.STATUS_DRAFT;
 }
 %>
 

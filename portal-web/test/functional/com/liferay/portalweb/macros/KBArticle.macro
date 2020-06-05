@@ -843,6 +843,8 @@ definition {
 	}
 
 	macro moveArticleViaKBDisplayPG {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		AssertClick(
 			key_kbTool = "Move",
 			locator1 = "KnowledgeBase#KB_TOOLS",

@@ -35,9 +35,13 @@ const PreviewModal = ({observer}) => {
 		useSelector((state) => state.selectedViewportSize)
 	);
 
+	const initialSegmentsExperienceId = useSelector(
+		(state) => state.segmentsExperienceId
+	);
+
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [segmentsExperienceId, setSegmentsExperienceId] = useState(
-		config.defaultSegmentsExperienceId
+		initialSegmentsExperienceId
 	);
 
 	const availableSegmentsExperiences = useSelector(

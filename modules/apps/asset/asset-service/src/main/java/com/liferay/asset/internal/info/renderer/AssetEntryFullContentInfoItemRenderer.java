@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(service = InfoItemRenderer.class)
-public class FullContentAssetEntryInfoItemRenderer
+public class AssetEntryFullContentInfoItemRenderer
 	extends BaseAssetEntryInfoItemRenderer {
 
 	@Override

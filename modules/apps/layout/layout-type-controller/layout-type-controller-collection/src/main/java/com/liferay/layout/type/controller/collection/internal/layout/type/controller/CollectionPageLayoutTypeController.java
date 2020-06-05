@@ -16,6 +16,7 @@ package com.liferay.layout.type.controller.collection.internal.layout.type.contr
 
 import com.liferay.fragment.constants.FragmentActionKeys;
 import com.liferay.fragment.renderer.FragmentRendererController;
+import com.liferay.layout.content.page.editor.constants.ContentPageEditorWebKeys;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
@@ -33,8 +34,11 @@ import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.SessionClicks;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -90,6 +94,10 @@ public class CollectionPageLayoutTypeController
 			Layout curLayout = _layoutLocalService.fetchLayout(
 				layout.getClassPK());
 
+			if (curLayout.isPending()) {
+				curLayout = layout;
+			}
+
 			if (!_hasUpdatePermissions(
 					themeDisplay.getPermissionChecker(), curLayout)) {
 
@@ -134,9 +142,43 @@ public class CollectionPageLayoutTypeController
 			RequestDispatcher.INCLUDE_SERVLET_PATH);
 
 		try {
+			httpServletRequest.setAttribute(
+				ContentPageEditorWebKeys.CLASS_NAME, Layout.class.getName());
+
+			httpServletRequest.setAttribute(
+				ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
+
 			addAttributes(httpServletRequest);
 
-			requestDispatcher.include(httpServletRequest, servletResponse);
+			SessionClicks.put(
+				httpServletRequest,
+				"com.liferay.frontend.js.web_toggleControls", "visible");
+
+			Layout draftLayout = _layoutLocalService.fetchLayout(
+				_portal.getClassNameId(Layout.class), layout.getPlid());
+
+			if (layoutMode.equals(Constants.EDIT) && (draftLayout != null)) {
+				String layoutFullURL = _portal.getLayoutFullURL(
+					draftLayout, themeDisplay);
+
+				HttpServletRequest originalHttpServletRequest =
+					_portal.getOriginalServletRequest(httpServletRequest);
+
+				String backURL = originalHttpServletRequest.getParameter(
+					"p_l_back_url");
+
+				if (Validator.isNotNull(backURL)) {
+					layoutFullURL = _http.addParameter(
+						layoutFullURL, "p_l_back_url", backURL);
+				}
+
+				httpServletResponse.sendRedirect(
+					_http.addParameter(
+						layoutFullURL, "p_l_mode", Constants.EDIT));
+			}
+			else {
+				requestDispatcher.include(httpServletRequest, servletResponse);
+			}
 		}
 		finally {
 			removeAttributes(httpServletRequest);
@@ -162,7 +204,7 @@ public class CollectionPageLayoutTypeController
 
 	@Override
 	public boolean isFullPageDisplayable() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -172,7 +214,7 @@ public class CollectionPageLayoutTypeController
 
 	@Override
 	public boolean isParentable() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -267,6 +309,9 @@ public class CollectionPageLayoutTypeController
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

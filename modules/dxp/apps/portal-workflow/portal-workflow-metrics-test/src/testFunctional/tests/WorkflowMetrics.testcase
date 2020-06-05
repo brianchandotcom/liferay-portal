@@ -602,6 +602,7 @@ definition {
 	@description = "Automate LPS-102664: [Dashboard] Bulk reassign workflow instances"
 	@priority = "5"
 	test BulkReassignWorkflowInstances {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowMetrics#BulkReassignWorkflowInstances";
 
 		WorkflowMetrics.bulkReassignSetup();
@@ -610,9 +611,9 @@ definition {
 
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
-		WorkflowMetrics.assertBulkModalTable();
+		WorkflowMetrics.assertSelectTasksModalTable();
 		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
-		WorkflowMetrics.assertBulkModalTable();
+		WorkflowMetrics.assertNewAssigneeModalTable();
 		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
 		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
 		WorkflowMetrics.selectNewAssigneeBulkTask(nameOfAssignee = "Test Test");
@@ -1007,12 +1008,11 @@ definition {
 	@priority = "5"
 	test ReassignWorkflowInstance {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		WorkflowMetrics.singleReassignSetup(site = "Guest");
 		WorkflowMetrics.goToWorkflowAllItems();
 		WorkflowMetrics.goToReassignSelectTask();
-		WorkflowMetrics.assertBulkModalTable();
+		WorkflowMetrics.assertNewAssigneeModalTable();
 
 		AssertElementPresent(locator1 = "WorkflowReassignModal#REASSIGN_MODAL");
 

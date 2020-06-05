@@ -99,34 +99,6 @@ definition {
 		Click(locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_SELECT_ALL");
 	}
 
-	macro assertBulkModalTable {
-
-		AssertTextEquals(
-			key_columnName = "ID",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "ID");
-
-		AssertTextEquals(
-			key_columnName = "Item Subject",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "Item Subject");
-
-		AssertTextEquals(
-			key_columnName = "Process Step",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "Process Step");
-
-		AssertTextEquals(
-			key_columnName = "Current Assignee",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "Current Assignee");
-
-		AssertTextEquals(
-			key_columnName = "New Assignee",
-			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
-			value1 = "New Assignee");
-	}
-
 	macro assertChartIsPresent {
 		MouseOver(locator1 = "WorkflowMetrics#METRICS_COMPLETION_VELOCITY_CHART");
 
@@ -189,12 +161,63 @@ definition {
 			value1 = "inst / day");
 	}
 
+	macro assertNewAssigneeModalTable {
+
+		AssertTextEquals(
+			key_columnName = "ID",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "ID");
+
+		AssertTextEquals(
+			key_columnName = "Item Subject",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Item Subject");
+
+		AssertTextEquals(
+			key_columnName = "Process Step",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Process Step");
+
+		AssertTextEquals(
+			key_columnName = "Current Assignee",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Current Assignee");
+
+		AssertTextEquals(
+			key_columnName = "New Assignee",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "New Assignee");
+	}
+
 	macro assertNoAssignees {
 		Click(locator1 = "WorkflowReassignModal#SEARCH_NEW_ASSIGNEE");
 
 		AssertElementPresent(
 			key_nameOfAssignee = "No results found.",
 			locator1 = "WorkflowReassignModal#REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN");
+	}
+
+	macro assertSelectTasksModalTable {
+
+		AssertTextEquals(
+			key_columnName = "ID",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "ID");
+
+		AssertTextEquals(
+			key_columnName = "Item Subject",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Item Subject");
+
+		AssertTextEquals(
+			key_columnName = "Process Step",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Process Step");
+
+		AssertTextEquals(
+			key_columnName = "Current Assignee",
+			locator1 = "WorkflowReassignModal#COLUMN_CHECK",
+			value1 = "Current Assignee");
 	}
 
 	macro assertWorkloadByAssigneeCardEmptyMessage {

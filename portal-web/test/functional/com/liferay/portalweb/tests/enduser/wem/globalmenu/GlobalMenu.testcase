@@ -1,0 +1,63 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Control Menu";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-112989. View All link will be shown in Global Menu when the total amount of Recently Visited and My Sites more than 7."
+	@priority = "4"
+	test ShowViewAllWhenTotalAmountOfSitesFromRecentlyVisitedAndMySitesMoreThanSeven {
+		property testray.component.names = "Web Content Administration";
+
+		task ("Add six new sites") {
+			for (var n : list "1,2,3,4,5,6") {
+				JSONGroup.addGroup(groupName = "Test Site Name ${n}");
+			}
+		}
+
+		task ("Assert View All link shown in Global Menu") {
+			GlobalMenuHelper.openGlobalMenu();
+
+			AssertVisible(locator1 = "GlobalMenu#VIEW_ALL_LINK");
+		}
+
+		task ("Go to Site via View All link") {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(locator1 = "GlobalMenu#VIEW_ALL_LINK");
+
+			AssertVisible(locator1 = "Portlet#MODAL_TITLE");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Navigator.gotoNavItem(navItem = "My Sites");
+
+			SiteSelector.selectSite(site = "Test Site Name 3");
+
+			ProductMenuHelper.expandPanel(panel = "Site Administration");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
+				value1 = "Test Site Name 3");
+		}
+	}
+
+}

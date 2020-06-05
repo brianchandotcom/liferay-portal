@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
 import com.liferay.portal.lock.service.LockLocalService;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
@@ -66,13 +67,9 @@ public class WorkflowDefinitionManagerImpl
 			byte[] bytes)
 		throws WorkflowException {
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setCompanyId(companyId);
-		serviceContext.setUserId(userId);
-
-		return _workflowEngine.deployWorkflowDefinition(
-			title, name, new UnsyncByteArrayInputStream(bytes), serviceContext);
+		return deployWorkflowDefinition(
+			companyId, userId, title, name,
+			WorkflowDefinitionConstants.SCOPE_ALL, bytes);
 	}
 
 	/**
@@ -106,6 +103,22 @@ public class WorkflowDefinitionManagerImpl
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
+	}
+
+	@Override
+	public WorkflowDefinition deployWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			String scope, byte[] bytes)
+		throws WorkflowException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setUserId(userId);
+
+		return _workflowEngine.deployWorkflowDefinition(
+			title, name, scope, new UnsyncByteArrayInputStream(bytes),
+			serviceContext);
 	}
 
 	@Override
@@ -398,13 +411,24 @@ public class WorkflowDefinitionManagerImpl
 			byte[] bytes)
 		throws WorkflowException {
 
+		return saveWorkflowDefinition(
+			companyId, userId, title, name,
+			WorkflowDefinitionConstants.SCOPE_ALL, bytes);
+	}
+
+	@Override
+	public WorkflowDefinition saveWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			String scope, byte[] bytes)
+		throws WorkflowException {
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setUserId(userId);
 
 		return _workflowEngine.saveWorkflowDefinition(
-			title, name, bytes, serviceContext);
+			title, name, scope, bytes, serviceContext);
 	}
 
 	@Override

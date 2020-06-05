@@ -38,6 +38,14 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
+	public default WorkflowDefinition deployWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			String scope, byte[] bytes)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getActiveWorkflowDefinitionsCount(long)}
@@ -146,6 +154,29 @@ public interface WorkflowDefinitionManager {
 	public default WorkflowDefinition saveWorkflowDefinition(
 			long companyId, long userId, String title, String name,
 			byte[] bytes)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Saves a workflow definition without activating it or validating its data.
+	 * To save the definition, validate its data, and activate it, use {@link
+	 * #deployWorkflowDefinition(long, long, String, String, byte[])} instead.
+	 *
+	 * @param  companyId the company ID of the workflow definition
+	 * @param  userId the ID of the user saving the workflow definition
+	 * @param  title the workflow definition's title
+	 * @param  name the workflow definition's name
+	 * @param  scope the workflow definition's scope
+	 * @param  bytes the data saved as the workflow definition's content
+	 * @return the workflow definition
+	 * @throws WorkflowException if there was an issue saving the workflow
+	 *         definition
+	 */
+	public default WorkflowDefinition saveWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			String scope, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();

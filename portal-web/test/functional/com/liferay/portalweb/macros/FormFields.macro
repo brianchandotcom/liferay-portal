@@ -3,7 +3,9 @@ definition {
 	var rowNumber = "1";
 
 	macro addRepeatableField {
-		Click(
+		Pause(locator1 = "2000");
+
+		Click.javaScriptClick(
 			key_fieldName = "${fieldName}",
 			key_repeatableFieldNumber = "${repeatableFieldNumber}",
 			locator1 = "FormFields#FIELD_ADD_SPECIFIC");

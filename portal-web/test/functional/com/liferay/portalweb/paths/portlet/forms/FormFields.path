@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>FIELD_ADD_SPECIFIC</td>
-	<td>//div[contains(@class,'lfr-ddm-form-container')][1]//div[contains(@data-field-name,'${key_fieldName}')]//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//*[contains(@class,'btn')]</td>
+	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][${key_repeatableFieldNumber}]//div[contains(@class,'lfr-ddm-form-field-repeatable-toolbar')]//button[contains(@class,'btn') and contains(@title,'Duplicate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -223,12 +223,12 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD_2</td>
-	<td>xpath=(//input[@type='text' and contains(@name,'${key_fieldName}')])[2]</td>
+	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][2]//input[@type='text' and contains(@name,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEXT_LABEL_2</td>
-	<td>xpath=(//div[contains(@class,'form-group')]//p[contains(.,'${key_fieldLabel}')])[2]</td>
+	<td>//div[contains(@class,'lfr-ddm-form-container')]//div[contains(@data-field-name,'${key_fieldName}')][2]//p[contains(.,'${key_fieldLabel}')]</td>
 	<td></td>
 </tr>
 <tr>

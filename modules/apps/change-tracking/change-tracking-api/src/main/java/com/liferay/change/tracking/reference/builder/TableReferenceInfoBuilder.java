@@ -20,10 +20,12 @@ import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
+import com.liferay.portal.kernel.model.SystemEventTable;
 import com.liferay.portal.kernel.model.UserTable;
 
 import java.util.Date;
@@ -160,6 +162,52 @@ public interface TableReferenceInfoBuilder<T extends Table<T>> {
 			).innerJoinON(
 				column1.getTable(), predicate
 			));
+	}
+
+	public default TableReferenceInfoBuilder<T> systemEventReference(
+		Column<T, Long> pkColumn, Class<? extends BaseModel<?>> modelClass) {
+
+		if (!pkColumn.isPrimaryKey()) {
+			throw new IllegalArgumentException(pkColumn + " is not primary");
+		}
+
+		T table = pkColumn.getTable();
+
+		String className = modelClass.getName();
+
+		referenceInnerJoin(
+			fromStep -> fromStep.from(
+				SystemEventTable.INSTANCE
+			).innerJoinON(
+				table, pkColumn.eq(SystemEventTable.INSTANCE.classPK)
+			).innerJoinON(
+				ClassNameTable.INSTANCE,
+				ClassNameTable.INSTANCE.classNameId.eq(
+					SystemEventTable.INSTANCE.classNameId
+				).and(
+					ClassNameTable.INSTANCE.value.eq(className)
+				)
+			));
+
+		Column<T, Long> groupIdColumn = table.getColumn("groupId", Long.class);
+
+		Column<T, String> uuidColumn = table.getColumn("uuid_", String.class);
+
+		if ((groupIdColumn != null) && (uuidColumn != null)) {
+			referenceInnerJoin(
+				fromStep -> fromStep.from(
+					SystemEventTable.INSTANCE
+				).innerJoinON(
+					table,
+					SystemEventTable.INSTANCE.groupId.eq(
+						groupIdColumn
+					).and(
+						SystemEventTable.INSTANCE.classUuid.eq(uuidColumn)
+					)
+				));
+		}
+
+		return this;
 	}
 
 }

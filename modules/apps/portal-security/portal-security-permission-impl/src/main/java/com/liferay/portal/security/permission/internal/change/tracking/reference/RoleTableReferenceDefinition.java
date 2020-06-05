@@ -17,6 +17,7 @@ package com.liferay.portal.security.permission.internal.change.tracking.referenc
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -48,6 +49,8 @@ public class RoleTableReferenceDefinition
 			RoleTable.INSTANCE.classPK, RoleTable.INSTANCE.name,
 			RoleTable.INSTANCE.title, RoleTable.INSTANCE.description,
 			RoleTable.INSTANCE.type, RoleTable.INSTANCE.subtype
+		).systemEventReference(
+			RoleTable.INSTANCE.roleId, Role.class
 		);
 	}
 

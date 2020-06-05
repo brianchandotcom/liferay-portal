@@ -43,8 +43,6 @@ public class DDMFormInstanceRecordTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			DDMFormInstanceRecordTable.INSTANCE
-		).nonreferenceColumn(
-			DDMFormInstanceRecordTable.INSTANCE.uuid
 		).singleColumnReference(
 			DDMFormInstanceRecordTable.INSTANCE.versionUserId,
 			UserTable.INSTANCE.userId
@@ -83,6 +81,9 @@ public class DDMFormInstanceRecordTableReferenceDefinition
 		).nonreferenceColumn(
 			DDMFormInstanceRecordTable.INSTANCE.lastPublishDate
 		).assetEntryReference(
+			DDMFormInstanceRecordTable.INSTANCE.formInstanceRecordId,
+			DDMFormInstanceRecord.class
+		).systemEventReference(
 			DDMFormInstanceRecordTable.INSTANCE.formInstanceRecordId,
 			DDMFormInstanceRecord.class
 		);

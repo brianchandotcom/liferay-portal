@@ -45,8 +45,6 @@ public class LayoutTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			LayoutTable.INSTANCE
-		).nonreferenceColumn(
-			LayoutTable.INSTANCE.uuid
 		).parentColumnReference(
 			LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.parentPlid
 		).nonreferenceColumn(
@@ -146,6 +144,8 @@ public class LayoutTableReferenceDefinition
 		).assetEntryReference(
 			LayoutTable.INSTANCE.plid, Layout.class
 		).resourcePermissionReference(
+			LayoutTable.INSTANCE.plid, Layout.class
+		).systemEventReference(
 			LayoutTable.INSTANCE.plid, Layout.class
 		);
 	}

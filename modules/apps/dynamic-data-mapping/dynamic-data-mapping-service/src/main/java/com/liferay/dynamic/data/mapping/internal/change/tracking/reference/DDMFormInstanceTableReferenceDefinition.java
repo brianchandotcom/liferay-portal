@@ -43,8 +43,6 @@ public class DDMFormInstanceTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			DDMFormInstanceTable.INSTANCE
-		).nonreferenceColumn(
-			DDMFormInstanceTable.INSTANCE.uuid
 		).singleColumnReference(
 			DDMFormInstanceTable.INSTANCE.versionUserId,
 			UserTable.INSTANCE.userId
@@ -71,6 +69,8 @@ public class DDMFormInstanceTableReferenceDefinition
 			DDMFormInstanceTable.INSTANCE.settings,
 			DDMFormInstanceTable.INSTANCE.lastPublishDate
 		).resourcePermissionReference(
+			DDMFormInstanceTable.INSTANCE.formInstanceId, DDMFormInstance.class
+		).systemEventReference(
 			DDMFormInstanceTable.INSTANCE.formInstanceId, DDMFormInstance.class
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(

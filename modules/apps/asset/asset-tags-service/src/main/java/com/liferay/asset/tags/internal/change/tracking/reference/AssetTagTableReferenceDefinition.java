@@ -14,6 +14,7 @@
 
 package com.liferay.asset.tags.internal.change.tracking.reference;
 
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagTable;
 import com.liferay.asset.kernel.service.persistence.AssetTagPersistence;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
@@ -37,9 +38,10 @@ public class AssetTagTableReferenceDefinition
 		tableReferenceInfoBuilder.groupedModel(
 			AssetTagTable.INSTANCE
 		).nonreferenceColumns(
-			AssetTagTable.INSTANCE.uuid, AssetTagTable.INSTANCE.name,
-			AssetTagTable.INSTANCE.assetCount,
+			AssetTagTable.INSTANCE.name, AssetTagTable.INSTANCE.assetCount,
 			AssetTagTable.INSTANCE.lastPublishDate
+		).systemEventReference(
+			AssetTagTable.INSTANCE.tagId, AssetTag.class
 		);
 	}
 

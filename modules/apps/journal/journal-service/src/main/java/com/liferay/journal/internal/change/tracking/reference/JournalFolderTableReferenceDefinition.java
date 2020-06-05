@@ -39,8 +39,6 @@ public class JournalFolderTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			JournalFolderTable.INSTANCE
-		).nonreferenceColumn(
-			JournalFolderTable.INSTANCE.uuid
 		).parentColumnReference(
 			JournalFolderTable.INSTANCE.folderId,
 			JournalFolderTable.INSTANCE.parentFolderId
@@ -60,6 +58,8 @@ public class JournalFolderTableReferenceDefinition
 		).assetEntryReference(
 			JournalFolderTable.INSTANCE.folderId, JournalFolder.class
 		).resourcePermissionReference(
+			JournalFolderTable.INSTANCE.folderId, JournalFolder.class
+		).systemEventReference(
 			JournalFolderTable.INSTANCE.folderId, JournalFolder.class
 		);
 	}

@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayoutTable;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersionTable;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLayoutPersistence;
@@ -39,7 +40,6 @@ public class DDMStructureLayoutTableReferenceDefinition
 		tableReferenceInfoBuilder.groupedModel(
 			DDMStructureLayoutTable.INSTANCE
 		).nonreferenceColumns(
-			DDMStructureLayoutTable.INSTANCE.uuid,
 			DDMStructureLayoutTable.INSTANCE.classNameId,
 			DDMStructureLayoutTable.INSTANCE.structureLayoutKey
 		).singleColumnReference(
@@ -49,6 +49,9 @@ public class DDMStructureLayoutTableReferenceDefinition
 			DDMStructureLayoutTable.INSTANCE.name,
 			DDMStructureLayoutTable.INSTANCE.description,
 			DDMStructureLayoutTable.INSTANCE.definition
+		).systemEventReference(
+			DDMStructureLayoutTable.INSTANCE.structureLayoutId,
+			DDMStructureLayout.class
 		);
 	}
 

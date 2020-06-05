@@ -41,8 +41,6 @@ public class DDMTemplateTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			DDMTemplateTable.INSTANCE
-		).nonreferenceColumn(
-			DDMTemplateTable.INSTANCE.uuid
 		).singleColumnReference(
 			DDMTemplateTable.INSTANCE.versionUserId, UserTable.INSTANCE.userId
 		).nonreferenceColumns(
@@ -107,6 +105,8 @@ public class DDMTemplateTableReferenceDefinition
 						ResourcePermissionTable.INSTANCE.primKeyId)
 				)
 			)
+		).systemEventReference(
+			DDMTemplateTable.INSTANCE.templateId, DDMTemplate.class
 		);
 	}
 

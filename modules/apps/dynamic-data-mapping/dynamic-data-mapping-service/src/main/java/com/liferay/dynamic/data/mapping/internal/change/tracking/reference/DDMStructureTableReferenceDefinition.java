@@ -39,9 +39,7 @@ public class DDMStructureTableReferenceDefinition
 		TableReferenceInfoBuilder<DDMStructureTable>
 			tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.nonreferenceColumns(
-			DDMStructureTable.INSTANCE.uuid
-		).groupedModel(
+		tableReferenceInfoBuilder.groupedModel(
 			DDMStructureTable.INSTANCE
 		).singleColumnReference(
 			DDMStructureTable.INSTANCE.versionUserId, UserTable.INSTANCE.userId
@@ -95,6 +93,8 @@ public class DDMStructureTableReferenceDefinition
 						ResourcePermissionTable.INSTANCE.primKeyId)
 				)
 			)
+		).systemEventReference(
+			DDMStructureTable.INSTANCE.structureId, DDMStructure.class
 		);
 	}
 

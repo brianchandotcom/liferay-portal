@@ -14,6 +14,7 @@
 
 package com.liferay.asset.internal.change.tracking.reference;
 
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyTable;
 import com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
@@ -45,6 +46,8 @@ public class AssetVocabularyTableReferenceDefinition
 			AssetVocabularyTable.INSTANCE.description,
 			AssetVocabularyTable.INSTANCE.settings,
 			AssetVocabularyTable.INSTANCE.lastPublishDate
+		).systemEventReference(
+			AssetVocabularyTable.INSTANCE.vocabularyId, AssetVocabulary.class
 		);
 	}
 

@@ -19,7 +19,6 @@ import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.ClassNameTable;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.GroupTable;
-import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupTable;
 import com.liferay.portal.kernel.model.UserTable;
@@ -76,21 +75,10 @@ public class UserGroupTableReferenceDefinition
 					ClassNameTable.INSTANCE.value.eq(UserGroup.class.getName())
 				)
 			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				ResourcePermissionTable.INSTANCE
-			).innerJoinON(
-				UserGroupTable.INSTANCE,
-				UserGroupTable.INSTANCE.companyId.eq(
-					ResourcePermissionTable.INSTANCE.companyId
-				).and(
-					ResourcePermissionTable.INSTANCE.name.eq(
-						UserGroup.class.getName())
-				).and(
-					ResourcePermissionTable.INSTANCE.primKeyId.eq(
-						UserGroupTable.INSTANCE.userGroupId)
-				)
-			)
+		).resourcePermissionReference(
+			UserGroupTable.INSTANCE.userGroupId, UserGroup.class
+		).systemEventReference(
+			UserGroupTable.INSTANCE.userGroupId, UserGroup.class
 		);
 	}
 

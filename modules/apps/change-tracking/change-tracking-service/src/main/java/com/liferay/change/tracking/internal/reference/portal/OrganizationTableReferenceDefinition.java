@@ -14,7 +14,6 @@
 
 package com.liferay.change.tracking.internal.reference.portal;
 
-import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.ClassNameTable;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.model.ListTypeTable;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.RegionTable;
-import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
@@ -103,37 +101,12 @@ public class OrganizationTableReferenceDefinition
 			OrganizationTable.INSTANCE.comments
 		).singleColumnReference(
 			OrganizationTable.INSTANCE.logoId, ImageTable.INSTANCE.imageId
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				ResourcePermissionTable.INSTANCE
-			).innerJoinON(
-				OrganizationTable.INSTANCE,
-				OrganizationTable.INSTANCE.companyId.eq(
-					ResourcePermissionTable.INSTANCE.companyId
-				).and(
-					ResourcePermissionTable.INSTANCE.name.eq(
-						Organization.class.getName())
-				).and(
-					ResourcePermissionTable.INSTANCE.primKeyId.eq(
-						OrganizationTable.INSTANCE.organizationId)
-				)
-			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				AssetEntryTable.INSTANCE
-			).innerJoinON(
-				OrganizationTable.INSTANCE,
-				OrganizationTable.INSTANCE.organizationId.eq(
-					AssetEntryTable.INSTANCE.classPK)
-			).innerJoinON(
-				ClassNameTable.INSTANCE,
-				ClassNameTable.INSTANCE.classNameId.eq(
-					AssetEntryTable.INSTANCE.classNameId
-				).and(
-					ClassNameTable.INSTANCE.value.eq(
-						Organization.class.getName())
-				)
-			)
+		).assetEntryReference(
+			OrganizationTable.INSTANCE.organizationId, Organization.class
+		).resourcePermissionReference(
+			OrganizationTable.INSTANCE.organizationId, Organization.class
+		).systemEventReference(
+			OrganizationTable.INSTANCE.organizationId, Organization.class
 		);
 	}
 

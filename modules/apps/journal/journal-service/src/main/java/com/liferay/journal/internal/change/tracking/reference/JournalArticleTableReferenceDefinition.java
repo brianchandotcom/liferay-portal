@@ -51,8 +51,6 @@ public class JournalArticleTableReferenceDefinition
 
 		tableReferenceInfoBuilder.groupedModel(
 			JournalArticleTable.INSTANCE
-		).nonreferenceColumn(
-			JournalArticleTable.INSTANCE.uuid
 		).singleColumnReference(
 			JournalArticleTable.INSTANCE.resourcePrimKey,
 			JournalArticleResourceTable.INSTANCE.resourcePrimKey
@@ -234,6 +232,8 @@ public class JournalArticleTableReferenceDefinition
 			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
 		).resourcePermissionReference(
 			JournalArticleTable.INSTANCE.resourcePrimKey, JournalArticle.class
+		).systemEventReference(
+			JournalArticleTable.INSTANCE.id, JournalArticle.class
 		);
 	}
 

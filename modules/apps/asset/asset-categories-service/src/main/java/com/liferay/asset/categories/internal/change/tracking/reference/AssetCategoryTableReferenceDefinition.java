@@ -40,7 +40,6 @@ public class AssetCategoryTableReferenceDefinition
 		tableReferenceInfoBuilder.groupedModel(
 			AssetCategoryTable.INSTANCE
 		).nonreferenceColumns(
-			AssetCategoryTable.INSTANCE.uuid,
 			AssetCategoryTable.INSTANCE.externalReferenceCode
 		).parentColumnReference(
 			AssetCategoryTable.INSTANCE.categoryId,
@@ -55,6 +54,8 @@ public class AssetCategoryTableReferenceDefinition
 		).nonreferenceColumn(
 			AssetCategoryTable.INSTANCE.lastPublishDate
 		).resourcePermissionReference(
+			AssetCategoryTable.INSTANCE.categoryId, AssetCategory.class
+		).systemEventReference(
 			AssetCategoryTable.INSTANCE.categoryId, AssetCategory.class
 		);
 	}

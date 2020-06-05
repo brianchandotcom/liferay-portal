@@ -19,6 +19,7 @@ import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
 import com.liferay.portal.kernel.model.CompanyTable;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.ratings.kernel.model.RatingsEntry;
 import com.liferay.ratings.kernel.model.RatingsEntryTable;
 import com.liferay.ratings.kernel.service.persistence.RatingsEntryPersistence;
 
@@ -50,6 +51,8 @@ public class RatingsEntryTableReferenceDefinition
 			RatingsEntryTable.INSTANCE.modifiedDate,
 			RatingsEntryTable.INSTANCE.classNameId,
 			RatingsEntryTable.INSTANCE.classPK, RatingsEntryTable.INSTANCE.score
+		).systemEventReference(
+			RatingsEntryTable.INSTANCE.entryId, RatingsEntry.class
 		);
 	}
 

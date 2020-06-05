@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -56,13 +56,11 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -72,6 +70,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Drew Brokke
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AccountEntryLocalServiceTest {
 
@@ -79,18 +78,6 @@ public class AccountEntryLocalServiceTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		for (AccountEntry accountEntry : _accountEntries) {
-			accountEntry = _accountEntryLocalService.fetchAccountEntry(
-				accountEntry.getAccountEntryId());
-
-			if (accountEntry != null) {
-				_accountEntryLocalService.deleteAccountEntry(accountEntry);
-			}
-		}
-	}
 
 	@Test
 	public void testAccountEntryAssetTags() throws Exception {
@@ -105,8 +92,6 @@ public class AccountEntryLocalServiceTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		_accountEntries.add(accountEntry);
 
 		List<AssetTag> assetTags = _assetTagLocalService.getTags(
 			AccountEntry.class.getName(), accountEntry.getAccountEntryId());
@@ -217,8 +202,6 @@ public class AccountEntryLocalServiceTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService, domains);
 
-		_accountEntries.add(accountEntry);
-
 		Assert.assertEquals(
 			StringUtil.merge(ArrayUtil.distinct(domains), ","),
 			accountEntry.getDomains());
@@ -327,12 +310,7 @@ public class AccountEntryLocalServiceTest {
 		_addAccountEntries();
 
 		User user1 = UserTestUtil.addUser();
-
-		_users.add(user1);
-
 		User user2 = UserTestUtil.addUser();
-
-		_users.add(user2);
 
 		_assertSearchWithParams(
 			Arrays.asList(
@@ -369,12 +347,9 @@ public class AccountEntryLocalServiceTest {
 			parentOrganization.getOrganizationId(),
 			RandomTestUtil.randomString(), false);
 
-		_organizations.add(organization);
-
-		_organizations.add(parentOrganization);
-
 		AccountEntry accountEntry1 = _addAccountEntryWithOrganization(
 			parentOrganization);
+
 		AccountEntry accountEntry2 = _addAccountEntryWithOrganization(
 			organization);
 
@@ -443,14 +418,10 @@ public class AccountEntryLocalServiceTest {
 
 		User user = UserTestUtil.addUser();
 
-		_users.add(user);
-
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), user.getUserId());
 
 		User user1 = UserTestUtil.addUser();
-
-		_users.add(user1);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), user1.getUserId());
@@ -559,34 +530,22 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	private AccountEntry _addAccountEntry(int status) throws Exception {
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+		return AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService, status);
-
-		_accountEntries.add(accountEntry);
-
-		return accountEntry;
 	}
 
 	private AccountEntry _addAccountEntry(String name, String description)
 		throws Exception {
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+		return AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService, name, description);
-
-		_accountEntries.add(accountEntry);
-
-		return accountEntry;
 	}
 
 	private AccountEntry _addAccountEntryWithEmailDomain(String emailDomain)
 		throws Exception {
 
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+		return AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService, new String[] {emailDomain});
-
-		_accountEntries.add(accountEntry);
-
-		return accountEntry;
 	}
 
 	private AccountEntry _addAccountEntryWithOrganization(
@@ -605,16 +564,12 @@ public class AccountEntryLocalServiceTest {
 			long parentAccountEntryId)
 		throws Exception {
 
-		AccountEntry accountEntry = _accountEntryLocalService.addAccountEntry(
+		return _accountEntryLocalService.addAccountEntry(
 			TestPropsValues.getUserId(), parentAccountEntryId,
 			RandomTestUtil.randomString(50), RandomTestUtil.randomString(50),
 			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());
-
-		_accountEntries.add(accountEntry);
-
-		return accountEntry;
 	}
 
 	private AccountEntry _addAccountEntryWithUser(User user) throws Exception {
@@ -732,8 +687,6 @@ public class AccountEntryLocalServiceTest {
 			return name1.compareToIgnoreCase(name2);
 		};
 
-	private final List<AccountEntry> _accountEntries = new ArrayList<>();
-
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -753,13 +706,7 @@ public class AccountEntryLocalServiceTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
-	@DeleteAfterTestRun
-	private final List<Organization> _organizations = new ArrayList<>();
-
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@DeleteAfterTestRun
-	private final List<User> _users = new ArrayList<>();
 
 }

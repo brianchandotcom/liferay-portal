@@ -15,12 +15,34 @@
 import React, {useContext} from 'react';
 
 import AppContext from '../../AppContext.es';
+import {dropFieldSet} from '../../actions.es';
+import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilderContext.es';
 import {DRAG_FIELDSET} from '../../drag-and-drop/dragTypes.es';
 import {containsFieldSet} from '../../utils/dataDefinition.es';
 import FieldType from '../field-types/FieldType.es';
 
 export default function FieldSets() {
 	const [{dataDefinition, fieldSets}] = useContext(AppContext);
+
+	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
+
+	const onDoubleClick = ({fieldSet: {name: fieldName}, fieldSet}) => {
+		const {activePage, pages} = dataLayoutBuilder.getStore();
+
+		dataLayoutBuilder.dispatch(
+			'fieldSetAdded',
+			dropFieldSet({
+				dataLayoutBuilder,
+				fieldName,
+				fieldSet,
+				indexes: {
+					columnIndex: 0,
+					pageIndex: activePage,
+					rowIndex: pages[activePage].rows.length,
+				},
+			})
+		);
+	};
 
 	return (
 		<>
@@ -35,6 +57,7 @@ export default function FieldSets() {
 					icon="forms"
 					key={fieldSet.dataDefinitionKey}
 					label={fieldSet.name[themeDisplay.getLanguageId()]}
+					onDoubleClick={onDoubleClick}
 				/>
 			))}
 		</>

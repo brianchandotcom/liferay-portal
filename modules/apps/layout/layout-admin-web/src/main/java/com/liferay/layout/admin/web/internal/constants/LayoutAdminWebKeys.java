@@ -19,6 +19,12 @@ package com.liferay.layout.admin.web.internal.constants;
  */
 public class LayoutAdminWebKeys {
 
+	public static final String INFO_ITEM_FORM_PROVIDER_TRACKER =
+		"INFO_ITEM_FORM_PROVIDER_TRACKER";
+
+	public static final String INFO_LIST_PROVIDER_TRACKER =
+		"INFO_LIST_PROVIDER_TRACKER";
+
 	public static final String LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT =
 		"LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT";
 

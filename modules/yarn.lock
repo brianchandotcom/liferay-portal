@@ -11667,10 +11667,10 @@ liferay-npm-bundler-plugin-resolve-linked-dependencies@2.18.4:
     read-json-sync "^2.0.1"
     semver "^6.3.0"
 
-liferay-npm-bundler-preset-liferay-dev@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-4.4.0.tgz#7355b93cee6358a83a2981173417c228c29fda1a"
-  integrity sha512-q/NRYLKUDSwWs+05JS9x4nhqwND9oIXFEVXpZBB47uIt/QE6vYVqoi/zICy3EggUfdyiNw9zjwx5/JICc56+ZA==
+liferay-npm-bundler-preset-liferay-dev@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-bundler-preset-liferay-dev/-/liferay-npm-bundler-preset-liferay-dev-4.5.0.tgz#bae206df9fffb9754e666334ea161b802c093f70"
+  integrity sha512-HYG+DUs/c1Fkxjt4aI9qvDNFvlTG76H39/wtTsMm3IDyVBQYkAWaDY4mnrq9D/Bmy3Q4LL1H/V/h8y9/wp+zfQ==
   dependencies:
     babel-preset-liferay-standard "2.18.4"
     liferay-npm-bundler-loader-css-loader "2.18.4"
@@ -11737,10 +11737,10 @@ liferay-npm-bundler@3.0.0-snapshot.dda6cd1:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-npm-scripts@32.4.0:
-  version "32.4.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-32.4.0.tgz#8cd4dfdacb240976defb1ce921849a563542f64f"
-  integrity sha512-9VHi031r0EfN6yrFy4jg/4oebvTvvOzFxwbCgyl2d+qZgSopnzy9e+G6XcWak7cAZlpJrU7GjnSzgHxls3tovg==
+liferay-npm-scripts@32.5.0:
+  version "32.5.0"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-32.5.0.tgz#8977a1f157b2ac7c30462b954f80a347b2ef7a14"
+  integrity sha512-OTsaL4rEeRJhx8F7vk9wGfVkTdQYG8TnwZIND7SOqTqN3lRD3N8uM/8Epgcz/IAggdK/dLJcwZv+d5JBPhbcfA==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"
@@ -11784,7 +11784,7 @@ liferay-npm-scripts@32.4.0:
     liferay-lang-key-dev-loader "^1.0.3"
     liferay-npm-bridge-generator "2.18.4"
     liferay-npm-bundler "2.18.4"
-    liferay-npm-bundler-preset-liferay-dev "4.4.0"
+    liferay-npm-bundler-preset-liferay-dev "4.5.0"
     liferay-theme-tasks "10.0.2"
     metal-tools-soy "4.3.2"
     mini-css-extract-plugin "0.9.0"

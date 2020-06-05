@@ -373,17 +373,17 @@
 </tr>
 <tr>
 	<td>SECTION_CONTAINER</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')]</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')]</td>
 	<td></td>
 </tr>
 <tr>
   <td>SECTION_CONTAINER_EMPTY</td>
-  <td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container empty')]</td>
+  <td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section empty')]</td>
   <td></td>
 </tr>
 <tr>
 	<td>SECTION_CONTAINER_RESTRICTION_VISUAL_FEEDBACK</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')]/div[@data-not-droppable-message='A Section cannot be dropped inside a Section.']</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')]/div[@data-not-droppable-message='A Section cannot be dropped inside a Section.']</td>
 	<td></td>
 </tr>
 <tr>
@@ -404,32 +404,32 @@
 </tr>
 <tr>
 	<td>SECTION_CONFIGURATION_BACKGROUND_COLOR</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'bg-${key_paletteItem}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')][contains(@class,'bg-${key_paletteItem}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_CONFIGURATION_BACKGROUND_IMAGE</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@style,'${key_imageName}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')][contains(@style,'${key_imageName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_CONFIGURATION_CONTAINER</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')]/div[@class='container-${key_container}']</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')]/div[@class='container-${key_container}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_CONFIGURATION_PADDING_BOTTOM</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'pb-${key_paddingBottom}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')][contains(@class,'pb-${key_paddingBottom}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_CONFIGURATION_PADDING_HORIZONTAL</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'px-${key_paddingHorizontal}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')][contains(@class,'px-${key_paddingHorizontal}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SECTION_CONFIGURATION_PADDING_TOP</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'pt-${key_paddingTop}')]</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')][contains(@class,'pt-${key_paddingTop}')]</td>
 	<td></td>
 </tr>
 <tr>

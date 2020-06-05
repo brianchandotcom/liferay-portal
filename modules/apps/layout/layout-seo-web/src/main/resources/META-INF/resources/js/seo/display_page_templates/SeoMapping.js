@@ -23,14 +23,12 @@ function SeoMapping({
 	selectedSource,
 	title,
 }) {
-	const ns = (obj) => Liferay.Util.ns(portletNamespace, obj);
-
 	return (
 		<>
 			<MappingField
 				fields={fields}
 				label={Liferay.Language.get('html-title')}
-				name={ns('title')}
+				name={`${portletNamespace}title`}
 				selectedField={
 					fields.find(({key}) => key === title) || fields[0]
 				}
@@ -40,7 +38,7 @@ function SeoMapping({
 			<MappingField
 				fields={fields}
 				label={Liferay.Language.get('description')}
-				name={ns('description')}
+				name={`${portletNamespace}description`}
 				selectedField={
 					fields.find(({key}) => key === description) || fields[0]
 				}

@@ -23,7 +23,7 @@ function hasSomeChildrenSelected(node) {
 
 export default function AllowedFragmentTreeNode({node}) {
 	return (
-		<div className="lfr-treeview-label">
+		<div className="lfr-treeview-label mt-2">
 			<ClayCheckbox
 				aria-label={node.name}
 				checked={node.selected}

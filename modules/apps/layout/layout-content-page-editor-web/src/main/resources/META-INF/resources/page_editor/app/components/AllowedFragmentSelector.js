@@ -80,7 +80,7 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 					type="text"
 				/>
 
-				<div className="page-editor__allowed-fragment__tree">
+				<div className="mb-2 page-editor__allowed-fragment__tree">
 					<Treeview
 						filterQuery={filter}
 						inheritSelection

@@ -23,9 +23,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -93,6 +95,12 @@ public class AccountEntryDisplaySearchContainerFactory {
 			liferayPortletRequest, "navigation", "active");
 
 		params.put("status", _getStatus(navigation));
+
+		String type = ParamUtil.getString(liferayPortletRequest, Field.TYPE);
+
+		if (Validator.isNotNull(type) && !type.equals("all")) {
+			params.put(Field.TYPE, type);
+		}
 
 		BaseModelSearchResult<AccountEntry> baseModelSearchResult;
 

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsActionKeys;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
@@ -53,6 +54,7 @@ import com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.util
 import com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoProcessSearch;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.security.permission.resource.KaleoFormsPermission;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.util.KaleoDefinitionVersionActivePredicate;
+import com.liferay.portal.workflow.kaleo.forms.web.internal.util.filter.KaleoDefinitionVersionScopePredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
@@ -338,6 +340,11 @@ public class KaleoFormsAdminDisplayContext {
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,
 			new KaleoDefinitionVersionActivePredicate(status));
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionScopePredicate(
+				WorkflowDefinitionConstants.SCOPE_ALL));
 
 		searchContainer.setTotal(kaleoDefinitionVersions.size());
 

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
@@ -59,6 +60,7 @@ import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.c
 import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearch;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.KaleoDefinitionVersionActivePredicate;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.KaleoDefinitionVersionViewPermissionPredicate;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionScopePredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -810,6 +812,11 @@ public class KaleoDesignerDisplayContext {
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,
 			new KaleoDefinitionVersionActivePredicate(displayedStatus));
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionScopePredicate(
+				WorkflowDefinitionConstants.SCOPE_ALL));
 
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,

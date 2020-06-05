@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
@@ -53,6 +54,7 @@ import com.liferay.portal.workflow.web.internal.search.WorkflowDefinitionSearchT
 import com.liferay.portal.workflow.web.internal.util.WorkflowDefinitionPortletUtil;
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionActivePredicate;
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionDescriptionPredicate;
+import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionScopePredicate;
 import com.liferay.portal.workflow.web.internal.util.filter.WorkflowDefinitionTitlePredicate;
 
 import java.util.Collections;
@@ -528,7 +530,10 @@ public class WorkflowDefinitionDisplayContext {
 		String description, String title, int status, boolean andOperator) {
 
 		Predicate<WorkflowDefinition> predicate =
-			new WorkflowDefinitionTitlePredicate(title);
+			new WorkflowDefinitionScopePredicate(
+				WorkflowDefinitionConstants.SCOPE_ALL);
+
+		predicate = predicate.and(new WorkflowDefinitionTitlePredicate(title));
 
 		if (andOperator) {
 			predicate = predicate.and(

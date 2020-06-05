@@ -190,7 +190,13 @@ export default function LinkPanel({item}) {
 				<ClaySelectWithOption
 					id={floatingToolbarLinkSourceOptionId}
 					onChange={(event) => {
-						updateRowConfig({});
+						if (
+							isMapped(editableConfig) ||
+							editableConfig.href ||
+							editableConfig.alt
+						) {
+							updateRowConfig({});
+						}
 						setHref('');
 						setSourceType(event.target.value);
 					}}

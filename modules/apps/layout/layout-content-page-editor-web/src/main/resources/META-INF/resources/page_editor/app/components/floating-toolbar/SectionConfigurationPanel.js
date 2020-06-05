@@ -30,6 +30,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {useId} from '../../utils/useId';
+import isMapped from '../fragment-content/isMapped';
 
 const SECTION_PADDING_LABELS = {
 	paddingBottom: Liferay.Language.get('padding-bottom'),
@@ -201,9 +202,15 @@ function SectionBackgroundImageConfiguration({backgroundImage, onValueChange}) {
 					onChange={({target: {value}}) => {
 						setImageSource(value);
 
-						onValueChange({
-							backgroundImage: {},
-						});
+						if (
+							isMapped(backgroundImage) ||
+							backgroundImage.url ||
+							backgroundImage.title
+						) {
+							onValueChange({
+								backgroundImage: {},
+							});
+						}
 					}}
 					options={Object.values(imageSourceOptions)}
 					value={imageSource}

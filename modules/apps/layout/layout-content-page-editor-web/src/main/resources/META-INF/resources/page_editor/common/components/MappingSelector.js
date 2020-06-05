@@ -18,6 +18,7 @@ import React, {useEffect, useState} from 'react';
 
 import {addMappedInfoItem} from '../../app/actions/index';
 import {useCollectionFields} from '../../app/components/CollectionItemContext';
+import isMapped from '../../app/components/fragment-content/isMapped';
 import {COMPATIBLE_TYPES} from '../../app/config/constants/compatibleTypes';
 import {PAGE_TYPES} from '../../app/config/constants/pageTypes';
 import {config} from '../../app/config/index';
@@ -164,12 +165,14 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 	const onInfoItemSelect = (selectedInfoItem) => {
 		setSelectedItem(selectedInfoItem);
 
-		onMappingSelect({
-			classNameId: '',
-			classPK: '',
-			fieldId: '',
-			mappedField: '',
-		});
+		if (isMapped(mappedItem)) {
+			onMappingSelect({
+				classNameId: '',
+				classPK: '',
+				fieldId: '',
+				mappedField: '',
+			});
+		}
 	};
 
 	const onFieldSelect = (event) => {
@@ -275,12 +278,14 @@ function MappingSelector({fieldType, mappedItem, onMappingSelect}) {
 
 							setSelectedItem({});
 
-							onMappingSelect({
-								classNameId: '',
-								classPK: '',
-								fieldId: '',
-								mappedField: '',
-							});
+							if (isMapped(mappedItem)) {
+								onMappingSelect({
+									classNameId: '',
+									classPK: '',
+									fieldId: '',
+									mappedField: '',
+								});
+							}
 						}}
 						options={[
 							{

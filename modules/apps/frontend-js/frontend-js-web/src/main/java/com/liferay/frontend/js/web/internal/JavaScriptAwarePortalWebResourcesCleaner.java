@@ -67,8 +67,9 @@ public class JavaScriptAwarePortalWebResourcesCleaner {
 
 	@Deactivate
 	protected void deactivate(BundleContext bundleContext) {
-		_serviceTrackerList.close();
 		bundleContext.removeServiceListener(_serviceListener);
+
+		_serviceTrackerList.close();
 	}
 
 	private ServiceListener _serviceListener;

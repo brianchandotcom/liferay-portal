@@ -16,10 +16,7 @@ package com.liferay.exportimport.internal.change.tracking.reference;
 
 import com.liferay.change.tracking.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.reference.builder.TableReferenceInfoBuilder;
-import com.liferay.portal.kernel.model.CompanyTable;
-import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.SystemEventTable;
-import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.SystemEventPersistence;
 
@@ -37,15 +34,9 @@ public class SystemEventTableReferenceDefinition
 	public void defineTableReferences(
 		TableReferenceInfoBuilder<SystemEventTable> tableReferenceInfoBuilder) {
 
-		tableReferenceInfoBuilder.singleColumnReference(
-			SystemEventTable.INSTANCE.groupId, GroupTable.INSTANCE.groupId
-		).singleColumnReference(
-			SystemEventTable.INSTANCE.companyId, CompanyTable.INSTANCE.companyId
-		).singleColumnReference(
-			SystemEventTable.INSTANCE.userId, UserTable.INSTANCE.userId
+		tableReferenceInfoBuilder.groupedModel(
+			SystemEventTable.INSTANCE
 		).nonreferenceColumns(
-			SystemEventTable.INSTANCE.userName,
-			SystemEventTable.INSTANCE.createDate,
 			SystemEventTable.INSTANCE.classNameId,
 			SystemEventTable.INSTANCE.classPK,
 			SystemEventTable.INSTANCE.classUuid,

@@ -43,6 +43,16 @@ public class AccountEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, ModelSearchSettings modelSearchSettings,
 		SearchContext searchContext) {
 
+		_filterByAccountUserIds(booleanFilter, searchContext);
+		_filterByDomains(booleanFilter, searchContext);
+		_filterByOrganizationIds(booleanFilter, searchContext);
+		_filterByParentAccountEntryId(booleanFilter, searchContext);
+		_filterByStatus(booleanFilter, searchContext);
+	}
+
+	private void _filterByAccountUserIds(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
 		long[] accountUserIds = (long[])searchContext.getAttribute(
 			"accountUserIds");
 
@@ -55,6 +65,10 @@ public class AccountEntryModelPreFilterContributor
 
 			booleanFilter.add(accountEntryTermsFilter, BooleanClauseOccur.MUST);
 		}
+	}
+
+	private void _filterByDomains(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		String[] domains = (String[])searchContext.getAttribute("domains");
 
@@ -65,6 +79,10 @@ public class AccountEntryModelPreFilterContributor
 
 			booleanFilter.add(domainTermsFilter, BooleanClauseOccur.MUST);
 		}
+	}
+
+	private void _filterByOrganizationIds(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		long[] organizationIds = (long[])searchContext.getAttribute(
 			"organizationIds");
@@ -78,6 +96,10 @@ public class AccountEntryModelPreFilterContributor
 
 			booleanFilter.add(accountEntryTermsFilter, BooleanClauseOccur.MUST);
 		}
+	}
+
+	private void _filterByParentAccountEntryId(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		long parentAccountEntryId = GetterUtil.getLong(
 			searchContext.getAttribute("parentAccountEntryId"),
@@ -87,6 +109,10 @@ public class AccountEntryModelPreFilterContributor
 			booleanFilter.addRequiredTerm(
 				"parentAccountEntryId", String.valueOf(parentAccountEntryId));
 		}
+	}
+
+	private void _filterByStatus(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		int status = GetterUtil.getInteger(
 			searchContext.getAttribute("status"),

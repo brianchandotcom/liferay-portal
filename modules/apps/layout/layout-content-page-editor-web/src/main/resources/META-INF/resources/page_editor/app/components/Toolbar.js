@@ -22,7 +22,6 @@ import ReactDOM from 'react-dom';
 import useLazy from '../../core/hooks/useLazy';
 import useLoad from '../../core/hooks/useLoad';
 import usePlugins from '../../core/hooks/usePlugins';
-import selectExperience from '../../plugins/experience/actions/selectExperience';
 import * as Actions from '../actions/index';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
@@ -61,21 +60,10 @@ function ToolbarBody() {
 
 	const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
-	const [
-		currentSegmentsExperienceId,
-		setCurrentSegmentsExperienceId,
-	] = useState('');
-
 	const {observer} = useModal({
 		onClose: () => {
 			if (isMounted()) {
 				setOpenPreviewModal(false);
-
-				dispatch(
-					selectExperience({
-						segmentsExperienceId: currentSegmentsExperienceId,
-					})
-				);
 			}
 		},
 	});
@@ -151,12 +139,6 @@ function ToolbarBody() {
 		) {
 			event.preventDefault();
 		}
-	};
-
-	const handlePreviewPage = () => {
-		setCurrentSegmentsExperienceId(segmentsExperienceId);
-
-		setOpenPreviewModal(true);
 	};
 
 	const handleSubmit = (event) => {
@@ -280,7 +262,7 @@ function ToolbarBody() {
 					<ClayButton
 						className="btn btn-secondary mr-3"
 						displayType="secondary"
-						onClick={handlePreviewPage}
+						onClick={() => setOpenPreviewModal(true)}
 						small
 						type="button"
 					>

@@ -246,9 +246,18 @@ public class ResourceOpenAPIParser {
 			methodName.equals("post" + parentSchemaName + schemaName) ||
 			methodName.equals("put" + schemaName)) {
 
-			String batchPath = StringUtil.removeSubstring(
-				javaMethodSignature.getPath(),
-				"/{" + StringUtil.lowerCaseFirstLetter(schemaName) + "Id}");
+			String batchPath;
+
+			String path = javaMethodSignature.getPath();
+
+			if (path.contains(StringUtil.lowerCaseFirstLetter(schemaName))) {
+				batchPath = StringUtil.removeSubstring(
+					path,
+					"/{" + StringUtil.lowerCaseFirstLetter(schemaName) + "Id}");
+			}
+			else {
+				batchPath = StringUtil.removeSubstring(path, "/{id}");
+			}
 
 			Operation batchOperation = _getBatchOperation(
 				javaMethodSignature, methodName, schemaName);

@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import './Modal.scss';
+import navigate from '../util/navigate.es';
 
 const openModal = (props) => {
 	if (
@@ -143,7 +144,7 @@ const Modal = ({
 		});
 	};
 
-	const onButtonClick = ({formId, type}) => {
+	const onButtonClick = ({formId, onClick, type}) => {
 		if (type === 'cancel') {
 			processClose();
 		}
@@ -174,10 +175,16 @@ const Modal = ({
 				}
 			}
 		}
+
+		if (onClick) {
+			onClick();
+		}
 	};
 
 	const processClose = useCallback(() => {
 		setVisible(false);
+
+		document.body.classList.remove('modal-open');
 
 		const eventHandlers = eventHandlersRef.current;
 
@@ -211,22 +218,38 @@ const Modal = ({
 			}
 		}, [html]);
 
-		return <div ref={bodyRef}></div>;
+		return <div className="liferay-modal-body" ref={bodyRef}></div>;
 	};
 
 	useEffect(() => {
-		let eventHandler;
 		const eventHandlers = eventHandlersRef.current;
 
 		if (onSelect && selectEventName) {
-			eventHandler = Liferay.on(selectEventName, (selectedItem) => {
-				onSelect(selectedItem);
+			const selectEventHandler = Liferay.on(
+				selectEventName,
+				(selectedItem) => {
+					processClose();
 
-				processClose();
-			});
+					onSelect(selectedItem);
+				}
+			);
 
-			eventHandlers.push(eventHandler);
+			eventHandlers.push(selectEventHandler);
 		}
+
+		const closeEventHandler = Liferay.on('closeModal', (event) => {
+			if (event.id && id && event.id !== id) {
+				return;
+			}
+
+			processClose();
+
+			if (event.redirect) {
+				navigate(event.redirect);
+			}
+		});
+
+		eventHandlers.push(closeEventHandler);
 
 		return () => {
 			eventHandlers.forEach((eventHandler) => {
@@ -237,6 +260,7 @@ const Modal = ({
 		};
 	}, [
 		eventHandlersRef,
+		id,
 		onClose,
 		onOpen,
 		onSelect,
@@ -276,7 +300,7 @@ const Modal = ({
 									disableSelectedItems={disableSelectedItems}
 									iframeBodyCssClass={iframeBodyCssClass}
 									iframeProps={{
-										id: `${id}_iframe_`,
+										id: id && `${id}_iframe_`,
 										...iframeProps,
 									}}
 									onOpen={onOpen}
@@ -296,37 +320,23 @@ const Modal = ({
 						<ClayModal.Footer
 							last={
 								<ClayButton.Group spaced>
-									{buttons.map(
-										(
-											{
-												displayType,
-												formId,
-												id,
-												label,
-												type,
-											},
-											index
-										) => (
-											<ClayButton
-												displayType={displayType}
-												id={id}
-												key={index}
-												onClick={() => {
-													onButtonClick({
-														formId,
-														type,
-													});
-												}}
-												type={
-													type === 'cancel'
-														? 'button'
-														: type
-												}
-											>
-												{label}
-											</ClayButton>
-										)
-									)}
+									{buttons.map((button, index) => (
+										<ClayButton
+											displayType={button.displayType}
+											id={button.id}
+											key={index}
+											onClick={() => {
+												onButtonClick(button);
+											}}
+											type={
+												button.type === 'cancel'
+													? 'button'
+													: button.type
+											}
+										>
+											{button.label}
+										</ClayButton>
+									))}
 								</ClayButton.Group>
 							}
 						/>
@@ -447,6 +457,7 @@ Modal.propTypes = {
 			formId: PropTypes.string,
 			id: PropTypes.string,
 			label: PropTypes.string,
+			onClick: PropTypes.func,
 			type: PropTypes.oneOf(['cancel', 'submit']),
 		})
 	),

@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Portal File Install Implementation
+Bundle-SymbolicName: com.liferay.portal.file.install.impl
+Bundle-Version: 1.0.0

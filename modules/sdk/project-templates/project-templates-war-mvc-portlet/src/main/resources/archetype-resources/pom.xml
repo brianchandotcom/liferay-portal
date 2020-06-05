@@ -10,49 +10,62 @@
 	<artifactId>${artifactId}</artifactId>
 	<version>${version}</version>
 	<packaging>war</packaging>
-	<properties>
+	<profiles>
+		<profile>
+
+			<!-- Enable this profile is standalone -->
+
+			<id>standalone</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
 #if (${liferayVersion.startsWith("7.0")})
-		<liferay.bom.version>7.0.6-1</liferay.bom.version>
+				<liferay.bom.version>7.0.6-1</liferay.bom.version>
 #elseif (${liferayVersion.startsWith("7.1")})
-		<liferay.bom.version>7.1.3</liferay.bom.version>
+				<liferay.bom.version>7.1.3</liferay.bom.version>
 #elseif (${liferayVersion.startsWith("7.2")})
-		<liferay.bom.version>7.2.1</liferay.bom.version>
+				<liferay.bom.version>7.2.1</liferay.bom.version>
 #elseif (${liferayVersion.startsWith("7.3")})
-		<liferay.bom.version>7.3.2</liferay.bom.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+				<liferay.bom.version>7.3.2</liferay.bom.version>
 #end
+			</properties>
+			<dependencyManagement>
+				<dependencies>
+					<dependency>
+						<groupId>com.liferay.portal</groupId>
+						<artifactId>release.portal.bom</artifactId>
+						<version>${liferay.bom.version}</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+					<dependency>
+						<groupId>com.liferay.portal</groupId>
+						<artifactId>release.portal.bom.compile.only</artifactId>
+						<version>${liferay.bom.version}</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+					<dependency>
+						<groupId>com.liferay.portal</groupId>
+						<artifactId>release.portal.bom.third.party</artifactId>
+						<version>${liferay.bom.version}</version>
+						<type>pom</type>
+						<scope>import</scope>
+					</dependency>
+				</dependencies>
+			</dependencyManagement>
+			<repositories>
+				<repository>
+					<id>liferay-public</id>
+					<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	<!--<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.liferay.portal</groupId>
-				<artifactId>release.portal.bom</artifactId>
-				<version>${liferay.bom.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.liferay.portal</groupId>
-				<artifactId>release.portal.bom.compile.only</artifactId>
-				<version>${liferay.bom.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-			<dependency>
-				<groupId>com.liferay.portal</groupId>
-				<artifactId>release.portal.bom.third.party</artifactId>
-				<version>${liferay.bom.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
-	<repositories>
-		<repository>
-			<id>liferay-public</id>
-			<url>https://repository-cdn.liferay.com/nexus/content/groups/public/</url>
-		</repository>
-	</repositories>-->
 	<dependencies>
 		<dependency>
 			<groupId>com.liferay.portal</groupId>

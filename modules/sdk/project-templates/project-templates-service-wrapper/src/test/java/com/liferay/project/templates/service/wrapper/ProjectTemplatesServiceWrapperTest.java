@@ -126,17 +126,16 @@ public class ProjectTemplatesServiceWrapperTest
 					gradleProjectDir, "build.gradle");
 				File pomXmlFile = testExists(mavenProjectDir, "pom.xml");
 
-				BaseProjectTemplatesTestCase.addGradleDependency(
+				addGradleDependency(
 					buildGradleFile,
 					"compileOnly group: \"com.liferay\", name: " +
 						"\"com.liferay.petra.function\"");
 
 				editXml(
 					pomXmlFile,
-					document ->
-						BaseProjectTemplatesTestCase.addMavenDependencyElement(
-							document, "com.liferay",
-							"com.liferay.petra.function", "provided"));
+					document -> addMavenDependencyElement(
+						document, "com.liferay", "com.liferay.petra.function",
+						"provided"));
 			}
 
 			buildProjects(

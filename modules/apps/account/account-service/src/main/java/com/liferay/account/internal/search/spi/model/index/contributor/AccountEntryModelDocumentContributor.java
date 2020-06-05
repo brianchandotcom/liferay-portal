@@ -46,6 +46,7 @@ public class AccountEntryModelDocumentContributor
 		document.addText(Field.DESCRIPTION, accountEntry.getDescription());
 		document.addText(Field.NAME, accountEntry.getName());
 		document.addKeyword(Field.STATUS, accountEntry.getStatus());
+		document.addKeyword(Field.TYPE, accountEntry.getType());
 		document.addKeyword("accountUserIds", _getAccountUserIds(accountEntry));
 		document.addKeyword("domains", _getDomains(accountEntry));
 		document.addKeyword(

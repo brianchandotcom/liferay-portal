@@ -25,31 +25,20 @@ import {
 	UPDATE_ITEM_CONFIG,
 	UPDATE_LANGUAGE_ID,
 } from '../../actions/types';
-import {UNDO_TYPES} from '../../config/constants/undoTypes';
 
-export function getActionLabel(action, type) {
-	switch (action.type) {
+export function getActionLabel(action) {
+	switch (action.originalType || action.type) {
 		case ADD_FRAGMENT_ENTRY_LINKS:
 		case ADD_ITEM:
-			return type === UNDO_TYPES.undo
-				? Liferay.Util.sub(
-						Liferay.Language.get('add-x'),
-						action.itemName
-				  )
-				: Liferay.Util.sub(
-						Liferay.Language.get('delete-x'),
-						action.itemName
-				  );
+			return Liferay.Util.sub(
+				Liferay.Language.get('add-x'),
+				action.itemName
+			);
 		case DELETE_ITEM:
-			return type === UNDO_TYPES.undo
-				? Liferay.Util.sub(
-						Liferay.Language.get('delete-x'),
-						action.itemName
-				  )
-				: Liferay.Util.sub(
-						Liferay.Language.get('add-x'),
-						action.itemName
-				  );
+			return Liferay.Util.sub(
+				Liferay.Language.get('delete-x'),
+				action.itemName
+			);
 		case DUPLICATE_ITEM:
 			return Liferay.Util.sub(
 				Liferay.Language.get('duplicate-x'),
@@ -61,15 +50,10 @@ export function getActionLabel(action, type) {
 				action.itemName
 			);
 		case SELECT_SEGMENTS_EXPERIENCE:
-			return type === UNDO_TYPES.undo
-				? Liferay.Util.sub(
-						Liferay.Language.get('select-x-experience'),
-						action.segmentsExperienceName
-				  )
-				: Liferay.Util.sub(
-						Liferay.Language.get('select-x-experience'),
-						action.previousSegmentsExperienceName
-				  );
+			return Liferay.Util.sub(
+				Liferay.Language.get('select-x-experience'),
+				action.segmentsExperienceName
+			);
 
 		case UPDATE_COL_SIZE:
 			return Liferay.Language.get('update-column-size');

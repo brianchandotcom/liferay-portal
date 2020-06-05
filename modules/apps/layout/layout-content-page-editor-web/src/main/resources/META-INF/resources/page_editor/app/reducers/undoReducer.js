@@ -27,7 +27,7 @@ let actionId = 0;
 export default function undoReducer(state, action) {
 	switch (action.type) {
 		case ADD_REDO_ACTION: {
-			const {actionType} = action;
+			const {actionType, originalType} = action;
 
 			const nextRedoHistory = state.redoHistory || [];
 
@@ -41,13 +41,14 @@ export default function undoReducer(state, action) {
 							type: actionType,
 						}),
 						actionId: actionId++,
+						originalType,
 					},
 					...nextRedoHistory,
 				],
 			};
 		}
 		case ADD_UNDO_ACTION: {
-			const {actionType} = action;
+			const {actionType, originalType} = action;
 
 			const nextUndoHistory = state.undoHistory || [];
 
@@ -64,6 +65,7 @@ export default function undoReducer(state, action) {
 							type: actionType,
 						}),
 						actionId: actionId++,
+						originalType,
 					},
 					...nextUndoHistory.slice(0, MAX_UNDO_ACTIONS - 1),
 				],

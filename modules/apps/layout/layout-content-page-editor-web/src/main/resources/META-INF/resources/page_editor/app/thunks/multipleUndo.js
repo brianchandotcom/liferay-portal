@@ -25,9 +25,9 @@ export default function multipleUndo({numberOfActions, store, type}) {
 
 		const actions = [];
 
-		const multipleUndoDispatch = (action) => {
+		const multipleUndoDispatch = (originalType) => (action) => {
 			if (canUndoAction(action)) {
-				actions.push(action);
+				actions.push({action, originalType});
 			}
 		};
 
@@ -68,13 +68,13 @@ export default function multipleUndo({numberOfActions, store, type}) {
 			.reduce((promise, undo) => {
 				return promise.then(() => {
 					return undoAction({action: undo, store})(
-						multipleUndoDispatch
+						multipleUndoDispatch(undo.originalType || undo.type)
 					);
 				});
 			}, Promise.resolve())
 			.then(() => {
-				actions.forEach((action) => {
-					dispatch({...action, ...isUndoAction});
+				actions.forEach(({action, originalType}) => {
+					dispatch({...action, ...isUndoAction, originalType});
 				});
 			})
 			.then(() => {

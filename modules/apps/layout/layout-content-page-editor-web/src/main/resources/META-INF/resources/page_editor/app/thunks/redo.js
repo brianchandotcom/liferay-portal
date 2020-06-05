@@ -28,7 +28,11 @@ export default function redo({store}) {
 		dispatch({redoHistory: redos, type: UPDATE_REDO_ACTIONS});
 
 		const redoDispatch = (action) => {
-			return dispatch({...action, isRedo: true});
+			return dispatch({
+				...action,
+				isRedo: true,
+				originalType: lastRedo.originalType || lastRedo.type,
+			});
 		};
 
 		promise = promise.then(() =>

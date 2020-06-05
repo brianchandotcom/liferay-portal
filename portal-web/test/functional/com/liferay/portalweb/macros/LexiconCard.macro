@@ -11,6 +11,8 @@ definition {
 	}
 
 	macro clickCard {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		Click.waitForMenuToggleJSClick(
 			key_card = "${card}",
 			locator1 = "LexiconCard#CARD");

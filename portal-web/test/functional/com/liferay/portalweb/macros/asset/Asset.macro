@@ -35,12 +35,7 @@ definition {
 	}
 
 	macro share {
-		if (isSet(liferayEvent)) {
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
-		}
-		else {
-			IFrame.selectModalFrame();
-		}
+		IFrame.selectModalFrame();
 
 		if (isSet(noAutocomplete)) {
 			Type.sendKeys(

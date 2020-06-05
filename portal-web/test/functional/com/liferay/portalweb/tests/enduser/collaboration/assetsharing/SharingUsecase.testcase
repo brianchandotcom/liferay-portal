@@ -216,7 +216,6 @@ definition {
 		DMNavigator.gotoShare(dmDocumentTitle = "Document_1.jpeg");
 
 		DMDocument.sharePG(
-			liferayEvent = "true",
 			userEmailAddress = "userea@liferay.com",
 			userName = "userfn userln");
 
@@ -280,7 +279,7 @@ definition {
 			locator1 = "Portlet#MODAL_TITLE",
 			value1 = "Select Asset Type");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
+		SelectFrame(locator1 = "IFrame#MODAL_IFRAME");
 
 		var key_assetType = "Blogs Entry";
 

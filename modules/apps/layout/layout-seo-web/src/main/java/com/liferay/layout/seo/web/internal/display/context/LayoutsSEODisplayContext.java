@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -398,6 +399,10 @@ public class LayoutsSEODisplayContext {
 				fetchLayoutPageTemplateEntryByPlid(_selPlid);
 
 		return HashMapBuilder.<String, Object>put(
+			"description",
+			_selLayout.getDescription(
+				LocaleUtil.fromLanguageId(_selLayout.getDefaultLanguageId()))
+		).put(
 			"fields",
 			_infoItemFormProviderTracker.getInfoItemFormProvider(
 				layoutPageTemplateEntry.getClassName()
@@ -428,6 +433,10 @@ public class LayoutsSEODisplayContext {
 					layoutPageTemplateEntry.getClassName(),
 					layoutPageTemplateEntry.getClassTypeId())
 			)
+		).put(
+			"title",
+			_selLayout.getTitle(
+				LocaleUtil.fromLanguageId(_selLayout.getDefaultLanguageId()))
 		).build();
 	}
 

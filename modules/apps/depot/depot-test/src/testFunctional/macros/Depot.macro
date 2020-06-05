@@ -431,6 +431,10 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro openDepotMembershipsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${depotURLKey}/~/control_panel/manage/-/site_memberships");
+	}
+
 	macro removeMember {
 		var key_cardText = "${userScreenName}";
 

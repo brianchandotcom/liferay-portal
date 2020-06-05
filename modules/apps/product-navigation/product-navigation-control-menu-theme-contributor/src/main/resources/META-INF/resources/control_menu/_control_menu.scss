@@ -21,9 +21,6 @@ a.control-menu-icon,
 }
 
 .control-menu-level-1 {
-	background-color: $control-menu-level-1-bg;
-	color: $control-menu-level-1-color;
-
 	> .container-fluid {
 		padding: 8px;
 
@@ -31,6 +28,30 @@ a.control-menu-icon,
 			padding: 12px;
 		}
 	}
+
+	.personal-menu-dropdown .dropdown-toggle {
+		margin-bottom: -2px;
+		margin-top: -2px;
+		padding: 2px;
+	}
+
+	a:not(.dropdown-item),
+	button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
+		&:focus,
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.control-menu-level-1-heading {
+		font-size: 1rem;
+		font-weight: bold;
+	}
+}
+
+.control-menu-level-1-dark {
+	background-color: $control-menu-level-1-bg;
+	color: $control-menu-level-1-color;
 
 	a:not(.dropdown-item),
 	button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
@@ -40,21 +61,31 @@ a.control-menu-icon,
 		&:hover {
 			background-color: $control-menu-level-1-link-background-color;
 			color: $control-menu-level-1-link-hover-color;
-			text-decoration: none;
 		}
 	}
 
-	.personal-menu-dropdown .dropdown-toggle {
-		margin-bottom: -2px;
-		margin-top: -2px;
-		padding: 2px;
+	.control-menu-level-1-heading {
+		color: $white;
 	}
 }
 
-.control-menu-level-1-heading {
-	color: $white;
-	font-size: 1rem;
-	font-weight: bold;
+.control-menu-level-1-light {
+	background-color: $control-menu-level-1-light-bg;
+	color: $control-menu-level-1-light-color;
+
+	a:not(.dropdown-item),
+	button:not(.btn-link):not(.dropdown-item):not(.nav-link) {
+		color: $control-menu-level-1-light-link-color;
+		&:focus,
+		&:hover {
+			background-color: $control-menu-level-1-light-link-background-color;
+			color: $control-menu-level-1-light-link-hover-color;
+		}
+	}
+
+	.control-menu-level-1-heading {
+		color: $gray-900;
+	}
 }
 
 .control-menu-level-1-nav {

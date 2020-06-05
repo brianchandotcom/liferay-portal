@@ -10,13 +10,14 @@ definition {
 	}
 
 	macro viewProductMenuBlacklistedModule {
-		ProductMenuHelper.expandPanel(panel = "${panel}");
+		GlobalMenuHelper.openGlobalMenu();
 
-		ProductMenuHelper.expandCategory(category = "${category}");
+		Navigator.gotoNavTab(navTab = "${panel}");
 
 		AssertElementNotPresent(
+			key_category = "${category}",
 			key_portlet = "${portlet}",
-			locator1 = "ProductMenu#PORTLET",
+			locator1 = "GlobalMenu#PORTLET",
 			value1 = "${portlet}");
 
 		AssertConsoleTextPresent(value1 = "${consoleText}");

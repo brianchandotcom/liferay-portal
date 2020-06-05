@@ -923,12 +923,7 @@ definition {
 	}
 
 	macro selectParentViaKBDisplayPG {
-		if (isSet(liferayEvent)) {
-			SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseSelectParent#IFRAME");
-		}
-		else {
-			SelectFrame(locator1 = "KnowledgeBaseSelectParent#IFRAME");
-		}
+		SelectFrame(locator1 = "KnowledgeBaseSelectParent#IFRAME");
 
 		Click(
 			key_kbArticleTitle = "${kbArticleTitle}",

@@ -193,7 +193,7 @@ definition {
 
 		KBArticle.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Title Child");
 
-		SelectFrame.selectFrameNoLoading(locator1 = "KnowledgeBaseSelectParent#IFRAME");
+		SelectFrame(locator1 = "KnowledgeBaseSelectParent#IFRAME");
 
 		AssertElementPresent(locator1 = "KnowledgeBaseSelectParent#BREADCRUMB_HOME");
 
@@ -361,9 +361,7 @@ definition {
 
 		KBArticle.moveArticleViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1 Child 1");
 
-		KBArticle.selectParentViaKBDisplayPG(
-			kbArticleTitle = "Knowledge Base Article Parent Title 1",
-			liferayEvent = "true");
+		KBArticle.selectParentViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title 1");
 
 		KBArticle.viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = "Knowledge Base Article Parent Title");
 

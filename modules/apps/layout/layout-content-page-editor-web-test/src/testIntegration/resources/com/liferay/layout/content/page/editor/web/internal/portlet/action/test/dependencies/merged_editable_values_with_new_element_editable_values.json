@@ -15,10 +15,6 @@
 		"editable_text4": {
 			"defaultValue": "test 4",
 			"en_US": "test"
-		},
-		"editable_text5": {
-			"defaultValue": "test 5",
-			"en_US": "test"
 		}
 	}
 }

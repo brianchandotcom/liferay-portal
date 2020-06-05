@@ -19,6 +19,7 @@ import {
 	DELETE_ITEM,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
+	SWITCH_VIEWPORT_SIZE,
 	UPDATE_COL_SIZE,
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
@@ -67,6 +68,11 @@ export function getActionLabel(action, type, {availableSegmentsExperiences}) {
 							availableSegmentsExperiences
 						)
 				  );
+		case SWITCH_VIEWPORT_SIZE:
+			return Liferay.Util.sub(
+				Liferay.Language.get('change-viewport'),
+				action.itemName
+			);
 
 		case UPDATE_COL_SIZE:
 			return Liferay.Language.get('update-column-size');

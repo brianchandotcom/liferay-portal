@@ -42,7 +42,6 @@ describe('useUndo', () => {
 		Actions.INIT,
 		Actions.LOAD_REDUCER,
 		Actions.SWITCH_SIDEBAR_PANEL,
-		Actions.SWITCH_VIEWPORT_SIZE,
 		Actions.TOGGLE_PERMISSION,
 		Actions.TOGGLE_SHOW_RESOLVED_COMMENTS,
 		Actions.UNLOAD_REDUCER,

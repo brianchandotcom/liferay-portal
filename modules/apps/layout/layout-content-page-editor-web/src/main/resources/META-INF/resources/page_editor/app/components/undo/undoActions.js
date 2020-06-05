@@ -19,6 +19,7 @@ import {
 	DELETE_ITEM,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
+	SWITCH_VIEWPORT_SIZE,
 	UPDATE_COL_SIZE,
 	UPDATE_EDITABLE_VALUES,
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
@@ -33,6 +34,7 @@ import * as undoFragmentConfiguration from './undoFragmentConfiguration';
 import * as undoFragmentEntryLinks from './undoFragmentEntryLinks';
 import * as undoLayoutDataAction from './undoLayoutDataAction';
 import * as undoSelectExperience from './undoSelectExperience';
+import * as undoSwitchViewportSize from './undoSwitchViewportSize';
 import * as undoUpdateLanguage from './undoUpdateLanguage';
 
 const UNDO_ACTIONS = {
@@ -42,6 +44,7 @@ const UNDO_ACTIONS = {
 	[DUPLICATE_ITEM]: undoDuplicateItem,
 	[MOVE_ITEM]: undoLayoutDataAction,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
+	[SWITCH_VIEWPORT_SIZE]: undoSwitchViewportSize,
 	[UPDATE_COL_SIZE]: undoLayoutDataAction,
 	[UPDATE_EDITABLE_VALUES]: undoEditableValuesAction,
 	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoFragmentConfiguration,

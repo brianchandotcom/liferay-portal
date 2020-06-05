@@ -143,8 +143,9 @@
 		position: absolute;
 	}
 
-	&.page-editor__collection-item[data-not-droppable-message]:after {
-		left: 4px;
+	&[data-not-droppable-message],
+	& [data-not-droppable-message] {
+		position: relative;
 	}
 
 	&[data-not-droppable-message]:after,
@@ -159,8 +160,13 @@
 		max-width: calc(100% - 32px);
 		padding: 2px 6px;
 		position: absolute;
+		top: 0;
 		transform: translateY(4px);
 		width: auto;
+	}
+
+	&.page-editor__collection-item[data-not-droppable-message]:after {
+		left: 4px;
 	}
 
 	&[data-not-droppable-message]:before {

@@ -15,6 +15,9 @@
 package com.liferay.layout.seo.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -30,6 +33,8 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -76,10 +81,15 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+
+		Layout layout = _layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
+
+		Map<Locale, String> titleMap = _getLocalizationMap(
+			actionRequest, layout, "title");
+		Map<Locale, String> descriptionMap = _getLocalizationMap(
+			actionRequest, layout, "description");
+
 		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "keywords");
 		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
@@ -87,9 +97,6 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
-
-		Layout layout = _layoutLocalService.getLayout(
-			groupId, privateLayout, layoutId);
 
 		if (layout.isTypeAssetDisplay()) {
 			serviceContext.setAttribute(
@@ -193,8 +200,40 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
+	private Map<Locale, String> _getLocalizationMap(
+		ActionRequest actionRequest, Layout layout, String name) {
+
+		if (_isDisplayPageTemplate(layout.getPlid())) {
+			return HashMapBuilder.put(
+				LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()),
+				ParamUtil.getString(actionRequest, name)
+			).build();
+		}
+
+		return LocalizationUtil.getLocalizationMap(actionRequest, name);
+	}
+
+	private boolean _isDisplayPageTemplate(long plid) {
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(plid);
+
+		if ((layoutPageTemplateEntry != null) &&
+			(layoutPageTemplateEntry.getType() ==
+				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutSEOEntryService _layoutSEOEntryService;

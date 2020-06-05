@@ -668,7 +668,10 @@ class LayoutProvider extends Component {
 	_successPageSettingsValueFn() {
 		const {editingLanguageId, initialSuccessPageSettings} = this.props;
 
-		if (Object.keys(initialSuccessPageSettings.body).length > 1) {
+		if (
+			!initialSuccessPageSettings ||
+			Object.keys(initialSuccessPageSettings.body).length > 1
+		) {
 			return initialSuccessPageSettings;
 		}
 

@@ -112,25 +112,21 @@ public class ProjectTemplatesWorkspaceProductKeyTest
 
 			if (_liferayVersion.startsWith("7.0")) {
 				Assert.assertTrue(
-					gradleOutput,
 					gradleOutput.contains(
 						"release.portal.bom:" + _liferayVersion));
 			}
 			else if (_liferayVersion.startsWith("7.1")) {
 				Assert.assertTrue(
-					gradleOutput,
 					gradleOutput.contains(
 						"release.portal.bom:" + _liferayVersion));
 			}
 			else if (_liferayVersion.startsWith("7.2")) {
 				Assert.assertTrue(
-					gradleOutput,
 					gradleOutput.contains(
 						"release.portal.bom:" + _liferayVersion));
 			}
 			else {
 				Assert.assertTrue(
-					gradleOutput,
 					gradleOutput.contains(
 						"release.portal.bom:" + getDefaultLiferayVersion()));
 			}

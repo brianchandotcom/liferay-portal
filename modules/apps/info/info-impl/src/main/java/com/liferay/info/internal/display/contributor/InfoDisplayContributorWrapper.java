@@ -26,6 +26,7 @@ import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
+import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.NoSuchInfoItemException;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
@@ -101,9 +102,17 @@ public class InfoDisplayContributorWrapper
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
 		try {
-			return _convertToInfoFormValues(
+			InfoFormValues infoFormValues = _convertToInfoFormValues(
 				_infoDisplayContributor.getInfoDisplayFieldsValues(
 					itemObject, locale));
+
+			infoFormValues.setInfoItemClassPKReference(
+				new InfoItemClassPKReference(
+					_infoDisplayContributor.getClassName(),
+					_infoDisplayContributor.getInfoDisplayObjectClassPK(
+						itemObject)));
+
+			return infoFormValues;
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);

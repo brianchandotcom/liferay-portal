@@ -22,6 +22,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoForm;
 import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
@@ -64,6 +65,10 @@ public class AssetEntryInfoItemFormProvider
 		infoFormValues.addAll(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry));
 		infoFormValues.addAll(_getAssetEntryInfoFieldValues(assetEntry));
+
+		infoFormValues.setInfoItemClassPKReference(
+			new InfoItemClassPKReference(
+				AssetEntry.class.getName(), assetEntry.getEntryId()));
 
 		return infoFormValues;
 	}

@@ -300,11 +300,11 @@ public class NPMRegistryImpl implements NPMRegistry {
 
 	@Deactivate
 	protected void deactivate() {
+		_serviceTrackerList.close();
+
 		_serviceTracker.close();
 
 		_bundleTracker.close();
-
-		_serviceTrackerList.close();
 	}
 
 	@Modified

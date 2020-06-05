@@ -199,7 +199,7 @@ if (portletTitleBasedNavigation) {
 						<c:choose>
 							<c:when test="<%= editTitle %>">
 								<div class="entry-title">
-									<aui:input label='<%= LanguageUtil.get(request, "title") %>' name="title" required="<%= true %>" type="text" value="<%= HtmlUtil.escape(title) %>" />
+									<aui:input label='<%= LanguageUtil.get(request, "title") %>' name="title" type="text" value="<%= HtmlUtil.escape(title) %>" />
 								</div>
 							</c:when>
 							<c:otherwise>

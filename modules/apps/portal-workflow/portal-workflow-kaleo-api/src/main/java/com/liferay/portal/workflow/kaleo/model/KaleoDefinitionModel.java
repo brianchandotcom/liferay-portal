@@ -223,6 +223,21 @@ public interface KaleoDefinitionModel
 	public void setName(String name);
 
 	/**
+	 * Returns the scope of this kaleo definition.
+	 *
+	 * @return the scope of this kaleo definition
+	 */
+	@AutoEscape
+	public String getScope();
+
+	/**
+	 * Sets the scope of this kaleo definition.
+	 *
+	 * @param scope the scope of this kaleo definition
+	 */
+	public void setScope(String scope);
+
+	/**
 	 * Returns the title of this kaleo definition.
 	 *
 	 * @return the title of this kaleo definition

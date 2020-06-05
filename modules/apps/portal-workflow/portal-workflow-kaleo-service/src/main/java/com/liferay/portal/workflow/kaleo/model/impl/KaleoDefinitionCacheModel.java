@@ -78,7 +78,7 @@ public class KaleoDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,6 +98,8 @@ public class KaleoDefinitionCacheModel
 		sb.append(modifiedDate);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", scope=");
+		sb.append(scope);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", description=");
@@ -151,6 +153,13 @@ public class KaleoDefinitionCacheModel
 			kaleoDefinitionImpl.setName(name);
 		}
 
+		if (scope == null) {
+			kaleoDefinitionImpl.setScope("");
+		}
+		else {
+			kaleoDefinitionImpl.setScope(scope);
+		}
+
 		if (title == null) {
 			kaleoDefinitionImpl.setTitle("");
 		}
@@ -197,6 +206,7 @@ public class KaleoDefinitionCacheModel
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
+		scope = objectInput.readUTF();
 		title = objectInput.readUTF();
 		description = objectInput.readUTF();
 		content = (String)objectInput.readObject();
@@ -235,6 +245,13 @@ public class KaleoDefinitionCacheModel
 			objectOutput.writeUTF(name);
 		}
 
+		if (scope == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(scope);
+		}
+
 		if (title == null) {
 			objectOutput.writeUTF("");
 		}
@@ -270,6 +287,7 @@ public class KaleoDefinitionCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public String name;
+	public String scope;
 	public String title;
 	public String description;
 	public String content;

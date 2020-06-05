@@ -51,6 +51,7 @@ public class KaleoDefinitionWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("scope", getScope());
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
@@ -114,6 +115,12 @@ public class KaleoDefinitionWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		String scope = (String)attributes.get("scope");
+
+		if (scope != null) {
+			setScope(scope);
 		}
 
 		String title = (String)attributes.get("title");
@@ -272,6 +279,16 @@ public class KaleoDefinitionWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the scope of this kaleo definition.
+	 *
+	 * @return the scope of this kaleo definition
+	 */
+	@Override
+	public String getScope() {
+		return model.getScope();
 	}
 
 	/**
@@ -528,6 +545,16 @@ public class KaleoDefinitionWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the scope of this kaleo definition.
+	 *
+	 * @param scope the scope of this kaleo definition
+	 */
+	@Override
+	public void setScope(String scope) {
+		model.setScope(scope);
 	}
 
 	/**

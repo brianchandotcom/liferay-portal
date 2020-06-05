@@ -141,6 +141,8 @@ public class KaleoDefinitionPersistenceTest {
 
 		newKaleoDefinition.setName(RandomTestUtil.randomString());
 
+		newKaleoDefinition.setScope(RandomTestUtil.randomString());
+
 		newKaleoDefinition.setTitle(RandomTestUtil.randomString());
 
 		newKaleoDefinition.setDescription(RandomTestUtil.randomString());
@@ -182,6 +184,8 @@ public class KaleoDefinitionPersistenceTest {
 			Time.getShortTimestamp(newKaleoDefinition.getModifiedDate()));
 		Assert.assertEquals(
 			existingKaleoDefinition.getName(), newKaleoDefinition.getName());
+		Assert.assertEquals(
+			existingKaleoDefinition.getScope(), newKaleoDefinition.getScope());
 		Assert.assertEquals(
 			existingKaleoDefinition.getTitle(), newKaleoDefinition.getTitle());
 		Assert.assertEquals(
@@ -270,8 +274,8 @@ public class KaleoDefinitionPersistenceTest {
 			"KaleoDefinition", "mvccVersion", true, "kaleoDefinitionId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true, "name", true,
-			"title", true, "description", true, "version", true, "active",
-			true);
+			"scope", true, "title", true, "description", true, "version", true,
+			"active", true);
 	}
 
 	@Test
@@ -564,6 +568,8 @@ public class KaleoDefinitionPersistenceTest {
 		kaleoDefinition.setModifiedDate(RandomTestUtil.nextDate());
 
 		kaleoDefinition.setName(RandomTestUtil.randomString());
+
+		kaleoDefinition.setScope(RandomTestUtil.randomString());
 
 		kaleoDefinition.setTitle(RandomTestUtil.randomString());
 

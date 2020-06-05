@@ -53,6 +53,8 @@ public class KaleoDefinitionTable extends BaseTable<KaleoDefinitionTable> {
 		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<KaleoDefinitionTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<KaleoDefinitionTable, String> scope = createColumn(
+		"scope", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KaleoDefinitionTable, String> title = createColumn(
 		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KaleoDefinitionTable, String> description =

@@ -79,9 +79,10 @@ public class KaleoDefinitionModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"content", Types.CLOB},
-		{"version", Types.INTEGER}, {"active_", Types.BOOLEAN}
+		{"name", Types.VARCHAR}, {"scope", Types.VARCHAR},
+		{"title", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"content", Types.CLOB}, {"version", Types.INTEGER},
+		{"active_", Types.BOOLEAN}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,6 +98,7 @@ public class KaleoDefinitionModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("scope", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
@@ -105,7 +107,7 @@ public class KaleoDefinitionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table KaleoDefinition (mvccVersion LONG default 0 not null,kaleoDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,title STRING null,description STRING null,content TEXT null,version INTEGER,active_ BOOLEAN)";
+		"create table KaleoDefinition (mvccVersion LONG default 0 not null,kaleoDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,scope VARCHAR(75) null,title STRING null,description STRING null,content TEXT null,version INTEGER,active_ BOOLEAN)";
 
 	public static final String TABLE_SQL_DROP = "drop table KaleoDefinition";
 
@@ -308,6 +310,10 @@ public class KaleoDefinitionModelImpl
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<KaleoDefinition, String>)KaleoDefinition::setName);
+		attributeGetterFunctions.put("scope", KaleoDefinition::getScope);
+		attributeSetterBiConsumers.put(
+			"scope",
+			(BiConsumer<KaleoDefinition, String>)KaleoDefinition::setScope);
 		attributeGetterFunctions.put("title", KaleoDefinition::getTitle);
 		attributeSetterBiConsumers.put(
 			"title",
@@ -479,6 +485,21 @@ public class KaleoDefinitionModelImpl
 
 	public String getOriginalName() {
 		return GetterUtil.getString(_originalName);
+	}
+
+	@Override
+	public String getScope() {
+		if (_scope == null) {
+			return "";
+		}
+		else {
+			return _scope;
+		}
+	}
+
+	@Override
+	public void setScope(String scope) {
+		_scope = scope;
 	}
 
 	@Override
@@ -775,6 +796,7 @@ public class KaleoDefinitionModelImpl
 		kaleoDefinitionImpl.setCreateDate(getCreateDate());
 		kaleoDefinitionImpl.setModifiedDate(getModifiedDate());
 		kaleoDefinitionImpl.setName(getName());
+		kaleoDefinitionImpl.setScope(getScope());
 		kaleoDefinitionImpl.setTitle(getTitle());
 		kaleoDefinitionImpl.setDescription(getDescription());
 		kaleoDefinitionImpl.setContent(getContent());
@@ -921,6 +943,14 @@ public class KaleoDefinitionModelImpl
 			kaleoDefinitionCacheModel.name = null;
 		}
 
+		kaleoDefinitionCacheModel.scope = getScope();
+
+		String scope = kaleoDefinitionCacheModel.scope;
+
+		if ((scope != null) && (scope.length() == 0)) {
+			kaleoDefinitionCacheModel.scope = null;
+		}
+
 		kaleoDefinitionCacheModel.title = getTitle();
 
 		String title = kaleoDefinitionCacheModel.title;
@@ -1038,6 +1068,7 @@ public class KaleoDefinitionModelImpl
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
+	private String _scope;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _description;

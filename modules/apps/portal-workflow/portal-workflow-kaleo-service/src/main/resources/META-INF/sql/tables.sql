@@ -48,6 +48,7 @@ create table KaleoDefinition (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(200) null,
+	scope VARCHAR(75) null,
 	title STRING null,
 	description STRING null,
 	content TEXT null,

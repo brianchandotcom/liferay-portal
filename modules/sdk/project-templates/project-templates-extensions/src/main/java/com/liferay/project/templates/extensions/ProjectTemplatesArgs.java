@@ -220,7 +220,7 @@ public class ProjectTemplatesArgs {
 		description = "The version of Liferay to target when creating the project.",
 		names = "--liferay-version"
 	)
-	private String _liferayVersion = "7.3.1";
+	private String _liferayVersion = "7.3.2";
 
 	@Parameter(
 		description = "Print the list of available project templates.",

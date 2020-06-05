@@ -142,6 +142,8 @@ definition {
 			key_dmDocumentTitle = "${dmDocumentTitle}",
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		MenuItem.click(menuItem = "Share");
 	}
 

@@ -171,6 +171,8 @@ definition {
 	}
 
 	macro gotoShare {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Share",
 			rowEntry = "${entryTitle}");

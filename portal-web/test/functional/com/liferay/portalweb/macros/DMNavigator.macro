@@ -177,6 +177,8 @@ definition {
 
 		DMDocument.viewDocumentTitleCmdPG(dmDocumentTitle = "${dmDocumentTitle}");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		var key_text = "Share";
 
 		AssertClick(

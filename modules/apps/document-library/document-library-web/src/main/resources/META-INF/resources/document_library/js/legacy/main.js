@@ -66,6 +66,10 @@ AUI.add(
 				viewFileEntryURL: {
 					validator: Lang.isString,
 				},
+
+				viewFileEntryTypeURL: {
+					validator: Lang.isString,
+				},
 			},
 
 			AUGMENTS: [Liferay.PortletBase],

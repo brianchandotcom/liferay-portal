@@ -22,7 +22,8 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.item.provider.InfoItemObjectProviderTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -106,24 +107,30 @@ public class GetFragmentEntryLinkMVCResourceCommand
 			if (Validator.isNotNull(collectionItemClassName) &&
 				(collectionItemClassPK > 0)) {
 
+				InfoItemObjectProvider<Object> infoItemObjectProvider =
+					_infoItemObjectProviderTracker.getInfoItemObjectProvider(
+						collectionItemClassName);
+
+				if (infoItemObjectProvider != null) {
+					Object infoItemObject = infoItemObjectProvider.getInfoItem(
+						collectionItemClassPK);
+
+					defaultFragmentRendererContext.setDisplayObject(
+						infoItemObject);
+
+					httpServletRequest.setAttribute(
+						InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT,
+						infoItemObject);
+				}
+
 				InfoDisplayContributor<?> infoDisplayContributor =
 					_infoDisplayContributorTracker.getInfoDisplayContributor(
 						collectionItemClassName);
 
 				if (infoDisplayContributor != null) {
-					InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-						infoDisplayContributor.getInfoDisplayObjectProvider(
-							collectionItemClassPK);
-
-					defaultFragmentRendererContext.setDisplayObject(
-						infoDisplayObjectProvider.getDisplayObject());
-
 					httpServletRequest.setAttribute(
 						InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR,
 						infoDisplayContributor);
-					httpServletRequest.setAttribute(
-						InfoDisplayWebKeys.INFO_LIST_DISPLAY_OBJECT,
-						infoDisplayObjectProvider.getDisplayObject());
 				}
 			}
 
@@ -170,6 +177,9 @@ public class GetFragmentEntryLinkMVCResourceCommand
 
 	@Reference
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
+
+	@Reference
+	private InfoItemObjectProviderTracker _infoItemObjectProviderTracker;
 
 	@Reference
 	private Portal _portal;

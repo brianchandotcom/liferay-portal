@@ -1,9 +1,3 @@
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-
-import {createFieldSet} from '../util/fieldset.es';
-import {updateField} from '../util/settingsContext.es';
-import {addField} from './fieldAddedHandler.es';
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -17,6 +11,12 @@ import {addField} from './fieldAddedHandler.es';
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
+import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+
+import {createFieldSet} from '../util/fieldset.es';
+import {updateField} from '../util/settingsContext.es';
+import {addField} from './fieldAddedHandler.es';
 
 const handleFieldSetAdded = (props, state, event) => {
 	const {fieldSet, indexes, parentFieldName, useFieldName} = event;

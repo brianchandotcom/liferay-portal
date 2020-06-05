@@ -47,8 +47,8 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 <div class="portlet-forms" id="<portlet:namespace />formContainer">
 	<clay:navigation-bar
-		componentId="formsNavigationBar"
-		elementClasses="forms-management-bar"
+		cssClass="forms-management-bar"
+		id="formsNavigationBar"
 		inverted="<%= true %>"
 		navigationItems="<%= ddmFormAdminDisplayContext.getFormBuilderNavigationItems() %>"
 	/>

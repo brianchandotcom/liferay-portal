@@ -40,7 +40,7 @@ List<NavigationItem> navigationItems = localizedItemSelectorRendering.getNavigat
 	<c:otherwise>
 		<c:if test="<%= navigationItems.size() > 1 %>">
 			<clay:navigation-bar
-				elementClasses="border-bottom"
+				cssClass="border-bottom"
 				inverted="<%= false %>"
 				navigationItems="<%= navigationItems %>"
 			/>

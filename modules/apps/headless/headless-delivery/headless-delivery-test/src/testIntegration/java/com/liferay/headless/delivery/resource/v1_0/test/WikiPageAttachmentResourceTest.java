@@ -20,6 +20,7 @@ import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.wiki.model.WikiNode;
@@ -89,9 +90,7 @@ public class WikiPageAttachmentResourceTest
 			() -> {
 				File file = new File(_tempFileName);
 
-				String randomString = RandomTestUtil.randomString();
-
-				FileUtil.write(file, randomString.getBytes());
+				FileUtil.write(file, TestDataConstants.TEST_BYTE_ARRAY);
 
 				return file;
 			}

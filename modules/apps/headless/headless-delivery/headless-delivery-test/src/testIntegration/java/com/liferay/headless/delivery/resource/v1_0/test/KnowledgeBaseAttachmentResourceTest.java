@@ -23,6 +23,7 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestDataConstants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -85,9 +86,7 @@ public class KnowledgeBaseAttachmentResourceTest
 			() -> {
 				File file = new File(_tempFileName);
 
-				String randomString = RandomTestUtil.randomString();
-
-				FileUtil.write(file, randomString.getBytes());
+				FileUtil.write(file, TestDataConstants.TEST_BYTE_ARRAY);
 
 				return file;
 			}

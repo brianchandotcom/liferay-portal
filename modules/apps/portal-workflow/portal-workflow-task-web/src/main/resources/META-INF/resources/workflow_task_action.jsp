@@ -85,7 +85,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 
 				<liferay-ui:icon
 					message="assign-to-me"
-					onClick="<%= "javascript:" + renderResponse.getNamespace() + "taskAssignToMe('" + assignToMeURL + "');" %>"
+					onClick='<%= "javascript:" + renderResponse.getNamespace() + "taskAssignToMe('" + assignToMeURL + "');" %>'
 					url="javascript:;"
 				/>
 			</c:otherwise>
@@ -99,7 +99,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 
 		<liferay-ui:icon
 			message="assign-to-..."
-			onClick="<%= "javascript:" + renderResponse.getNamespace() + "taskAssign('" + assignURL + "');" %>"
+			onClick='<%= "javascript:" + renderResponse.getNamespace() + "taskAssign('" + assignURL + "');" %>'
 			url="javascript:;"
 		/>
 
@@ -111,7 +111,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 
 		<liferay-ui:icon
 			message="update-due-date"
-			onClick="<%= "javascript:" + renderResponse.getNamespace() + "taskUpdate('" + updateDueDateURL + "');" %>"
+			onClick='<%= "javascript:" + renderResponse.getNamespace() + "taskUpdate('" + updateDueDateURL + "');" %>'
 			url="javascript:;"
 		/>
 	</c:if>

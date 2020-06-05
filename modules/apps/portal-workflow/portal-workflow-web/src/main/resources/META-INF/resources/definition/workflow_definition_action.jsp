@@ -92,7 +92,7 @@ String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workf
 
 			<liferay-ui:icon
 				message="delete"
-				onClick="<%= renderResponse.getNamespace() + "confirmDeleteDefinition('" + deleteWorkflowDefinitionURL + "'); return false;" %>"
+				onClick='<%= renderResponse.getNamespace() + "confirmDeleteDefinition('" + deleteWorkflowDefinitionURL + "'); return false;" %>'
 				url="<%= deleteWorkflowDefinitionURL %>"
 			/>
 		</c:otherwise>

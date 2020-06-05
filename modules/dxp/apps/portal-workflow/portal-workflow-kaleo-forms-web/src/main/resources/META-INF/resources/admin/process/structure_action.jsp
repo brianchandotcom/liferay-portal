@@ -44,13 +44,13 @@ String backURL = (String)row.getParameter("backURL");
 
 	<liferay-ui:icon
 		message="edit"
-		onClick="<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + LanguageUtil.format(request, "edit-x", LanguageUtil.get(request, "field-set"), false) + "','" + editURL + "');" %>"
+		onClick='<%= "javascript:" + renderResponse.getNamespace() + "editStructure('" + LanguageUtil.format(request, "edit-x", LanguageUtil.get(request, "field-set"), false) + "','" + editURL + "');" %>'
 		url="javascript:;"
 	/>
 
 	<liferay-ui:icon
 		message="choose"
-		onClick="<%= "Liferay.fire('" + renderResponse.getNamespace() + "chooseDefinition', {ddmStructureId: " + ddmStructure.getStructureId() + ", name: '" + HtmlUtil.escapeJS(ddmStructure.getName(locale)) + "', node: this});" %>"
+		onClick='<%= "Liferay.fire('" + renderResponse.getNamespace() + "chooseDefinition', {ddmStructureId: " + ddmStructure.getStructureId() + ", name: '" + HtmlUtil.escapeJS(ddmStructure.getName(locale)) + "', node: this});" %>'
 		url="javascript:;"
 	/>
 </liferay-ui:icon-menu>

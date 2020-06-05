@@ -49,7 +49,7 @@ String backURL = (String)row.getParameter("backURL");
 
 	<liferay-ui:icon
 		message="assign-form"
-		onClick="<%= "javascript:" + renderResponse.getNamespace() + "selectFormTemplate(" + ddmStructureId + ",'" + mode + "', '" + paramName + "');" %>"
+		onClick='<%= "javascript:" + renderResponse.getNamespace() + "selectFormTemplate(" + ddmStructureId + ",'" + mode + "', '" + paramName + "');" %>'
 		url="javascript:;"
 	/>
 
@@ -71,7 +71,7 @@ String backURL = (String)row.getParameter("backURL");
 
 		<liferay-ui:icon
 			message="unassign-form"
-			onClick="<%= "javascript:" + renderResponse.getNamespace() + "unassignForm({taskFormPairsParamName: '" + paramName + "', node: this});" %>"
+			onClick='<%= "javascript:" + renderResponse.getNamespace() + "unassignForm({taskFormPairsParamName: '" + paramName + "', node: this});" %>'
 			url="javascript:;"
 		/>
 
@@ -91,7 +91,7 @@ String backURL = (String)row.getParameter("backURL");
 
 		<liferay-ui:icon
 			message="edit-form"
-			onClick="<%= "javascript:" + renderResponse.getNamespace() + "editFormTemplate('" + editFormTemplateURL + "');" %>"
+			onClick='<%= "javascript:" + renderResponse.getNamespace() + "editFormTemplate('" + editFormTemplateURL + "');" %>'
 			url="javascript:;"
 		/>
 	</c:if>

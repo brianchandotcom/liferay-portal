@@ -42,7 +42,7 @@ String backURL = (String)row.getParameter("backURL");
 
 	<liferay-ui:icon
 		message="edit"
-		onClick="<%= "javascript:" + renderResponse.getNamespace() + "editWorkflow('" + editURL + "');" %>"
+		onClick='<%= "javascript:" + renderResponse.getNamespace() + "editWorkflow('" + editURL + "');" %>'
 		url="javascript:;"
 	/>
 

@@ -16,11 +16,13 @@ package com.liferay.account.internal.search.spi.model.query.contributor;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
@@ -48,6 +50,7 @@ public class AccountEntryModelPreFilterContributor
 		_filterByOrganizationIds(booleanFilter, searchContext);
 		_filterByParentAccountEntryId(booleanFilter, searchContext);
 		_filterByStatus(booleanFilter, searchContext);
+		_filterByType(booleanFilter, searchContext);
 	}
 
 	private void _filterByAccountUserIds(
@@ -120,6 +123,17 @@ public class AccountEntryModelPreFilterContributor
 
 		if (status != WorkflowConstants.STATUS_ANY) {
 			booleanFilter.addRequiredTerm("status", String.valueOf(status));
+		}
+	}
+
+	private void _filterByType(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		String type = GetterUtil.getString(
+			searchContext.getAttribute(Field.TYPE));
+
+		if (Validator.isNotNull(type)) {
+			booleanFilter.addRequiredTerm(Field.TYPE, type);
 		}
 	}
 

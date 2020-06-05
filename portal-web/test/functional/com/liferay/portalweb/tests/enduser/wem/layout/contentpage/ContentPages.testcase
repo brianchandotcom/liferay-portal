@@ -949,7 +949,8 @@ definition {
 		task ("Add a Content fragment to the content page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Content");
+				fragmentName = "Content"，
+				targetFragmentName = "Rich Text");
 		}
 
 		task ("Edit the Rich Text fragment's editable text") {

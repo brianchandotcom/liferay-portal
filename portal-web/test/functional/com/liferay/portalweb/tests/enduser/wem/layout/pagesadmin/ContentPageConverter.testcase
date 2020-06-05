@@ -169,7 +169,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Basic Components",
-			fragmentName = "Heading");
+			fragmentName = "Heading"，
+			targetFragmentName = "Asset Publishere");
 
 		PageEditor.clickPublish();
 

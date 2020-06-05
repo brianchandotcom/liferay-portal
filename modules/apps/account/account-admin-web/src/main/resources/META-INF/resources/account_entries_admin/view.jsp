@@ -82,6 +82,14 @@ ViewAccountEntriesManagementToolbarDisplayContext viewAccountEntriesManagementTo
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
+					href="<%= rowURL %>"
+					name="type"
+					property="type"
+					translate="<%= true %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
 					name="status"
 				>
 					<clay:label

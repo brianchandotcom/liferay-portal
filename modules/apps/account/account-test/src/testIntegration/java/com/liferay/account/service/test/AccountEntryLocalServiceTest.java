@@ -57,6 +57,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -413,6 +414,26 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testSearchByType() throws Exception {
+		AccountEntry businessAccountEntry = _addAccountEntry();
+		AccountEntry personalAccountEntry = _addPersonalAccountEntry();
+
+		_assertSearchWithParams(
+			Arrays.asList(businessAccountEntry, personalAccountEntry), null);
+
+		_assertSearchWithParams(
+			Collections.singletonList(businessAccountEntry),
+			_getLinkedHashMap(
+				"type", AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS));
+		_assertSearchWithParams(
+			Collections.singletonList(personalAccountEntry),
+			_getLinkedHashMap(
+				"type", AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL));
+		_assertSearchWithParams(
+			Collections.emptyList(), _getLinkedHashMap("type", "invalidType"));
+	}
+
+	@Test
 	public void testSearchIndexerDocument() throws Exception {
 		AccountEntry accountEntry = _addAccountEntry();
 
@@ -579,6 +600,11 @@ public class AccountEntryLocalServiceTest {
 			accountEntry.getAccountEntryId(), user.getUserId());
 
 		return accountEntry;
+	}
+
+	private AccountEntry _addPersonalAccountEntry() throws Exception {
+		return AccountEntryTestUtil.addPersonalAccountEntry(
+			_accountEntryLocalService);
 	}
 
 	private void _assertDeleted(long accountEntryId) throws Exception {

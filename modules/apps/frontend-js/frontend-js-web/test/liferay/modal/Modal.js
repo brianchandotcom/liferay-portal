@@ -19,6 +19,14 @@ import {act} from 'react-dom/test-utils';
 import {Modal} from '../../../src/main/resources/META-INF/resources/liferay/modal/Modal';
 
 describe('Modal', () => {
+	beforeAll(() => {
+		Liferay.on = jest.fn(() => {
+			return {
+				detach: jest.fn(),
+			};
+		});
+	});
+
 	beforeEach(() => {
 		jest.useFakeTimers();
 	});

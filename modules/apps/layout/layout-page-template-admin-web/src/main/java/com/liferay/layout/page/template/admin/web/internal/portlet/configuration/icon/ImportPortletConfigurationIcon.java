@@ -69,14 +69,12 @@ public class ImportPortletConfigurationIcon
 			portletURL.setParameter("mvcPath", "/view_import.jsp");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(6);
 
-			sb.append("Liferay.Util.openWindow({dialog: {after: {destroy: ");
-			sb.append("function(event) {window.location.reload();}, }, ");
-			sb.append("destroyOnHide: true}, dialogIframe: {bodyCssClass: ");
-			sb.append("'dialog-with-footer'}, title: '");
+			sb.append("Liferay.Util.openModal({onClose: function(event){");
+			sb.append("window.location.reload();}, title: '");
 			sb.append(getMessage(portletRequest));
-			sb.append("', uri: '");
+			sb.append("', url: '");
 			sb.append(portletURL.toString());
 			sb.append("'});");
 

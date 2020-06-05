@@ -175,21 +175,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		'click',
 		'.add-layout-action-option',
 		function (event) {
-			var actionElement = event.delegateTarget;
-
-			Liferay.Util.openWindow({
-				dialog: {
-					destroyOnHide: true,
-					height: 480,
-					resizable: false,
-					width: 640,
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer',
-				},
+			Liferay.Util.openModal({
 				id: '<portlet:namespace />addLayoutDialog',
 				title: '<liferay-ui:message key="add-page" />',
-				uri: actionElement.dataset.addLayoutUrl,
+				url: event.delegateTarget.dataset.addLayoutUrl,
 			});
 		}
 	);

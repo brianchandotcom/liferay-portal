@@ -17,6 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
+import {openModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
@@ -59,20 +60,6 @@ export default function PageContent(props) {
 			setIsHovered(false);
 		}
 	}, [fragmentEntryLinks, hoveredItemId, props.classPK]);
-
-	const openWindow = (uri, title) => {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				modal: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
-			title,
-			uri,
-		});
-	};
 
 	const handleMouseOver = () => {
 		setIsHovered(true);
@@ -150,12 +137,14 @@ export default function PageContent(props) {
 							{permissionsURL && (
 								<ClayDropDown.Item
 									key="permissionsURL"
-									onClick={() =>
-										openWindow(
-											permissionsURL,
-											Liferay.Language.get('permissions')
-										)
-									}
+									onClick={() => {
+										openModal({
+											title: Liferay.Language.get(
+												'permissions'
+											),
+											url: permissionsURL,
+										});
+									}}
 								>
 									{Liferay.Language.get('permissions')}
 								</ClayDropDown.Item>
@@ -164,12 +153,14 @@ export default function PageContent(props) {
 							{viewUsagesURL && (
 								<ClayDropDown.Item
 									key="viewUsagesURL"
-									onClick={() =>
-										openWindow(
-											viewUsagesURL,
-											Liferay.Language.get('view-usages')
-										)
-									}
+									onClick={() => {
+										openModal({
+											title: Liferay.Language.get(
+												'view-usages'
+											),
+											url: viewUsagesURL,
+										});
+									}}
 								>
 									{Liferay.Language.get('view-usages')}
 								</ClayDropDown.Item>

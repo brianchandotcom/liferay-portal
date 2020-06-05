@@ -15,6 +15,7 @@
 import {
 	DefaultEventHandler,
 	ItemSelectorDialog,
+	openModal,
 	openSimpleInputModal,
 } from 'frontend-js-web';
 import {Config} from 'metal-state';
@@ -58,16 +59,9 @@ class DisplayPageDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	permissionsDisplayPage(itemData) {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				modal: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
+		openModal({
 			title: Liferay.Language.get('permissions'),
-			uri: itemData.permissionsDisplayPageURL,
+			url: itemData.permissionsDisplayPageURL,
 		});
 	}
 

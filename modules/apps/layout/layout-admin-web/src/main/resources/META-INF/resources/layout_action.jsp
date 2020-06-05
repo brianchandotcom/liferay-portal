@@ -110,19 +110,10 @@ Layout curLayout = (Layout)row.getObject();
 		'click',
 		'.<portlet:namespace />copy-layout-action-option',
 		function (event) {
-			Liferay.Util.openWindow({
-				dialog: {
-					destroyOnHide: true,
-					height: 480,
-					resizable: false,
-					width: 640,
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer',
-				},
+			Liferay.Util.openModal({
 				id: '<portlet:namespace />copyLayoutDialog',
 				title: '<liferay-ui:message key="copy-page" />',
-				uri:
+				url:
 					'<%= layoutsAdminDisplayContext.getCopyLayoutRenderURL(layout) %>',
 			});
 		}

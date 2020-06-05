@@ -59,28 +59,15 @@ else {
 	A.one('#<portlet:namespace />changeTheme').on('click', function (event) {
 		event.preventDefault();
 
-		Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					destroyOnHide: true,
-					modal: true,
-				},
-				eventName: '<portlet:namespace />selectTheme',
-				title: '<liferay-ui:message key="available-themes" />',
-				uri: Util.addParams(
-					'<portlet:namespace />themeId=' + selThemeId,
-					'<%= selectThemeURL %>'
-				),
-			},
-			function (event) {
-				var selectedItem = event.themeid;
+		Util.openModal({
+			onSelect: function (selectedItem) {
+				var themeId = selectedItem.themeid;
 
-				if (selectedItem && selThemeId != selectedItem) {
+				if (themeId && selThemeId != themeId) {
 					themeContainer.html('<div class="loading-animation"></div>');
 
 					var data = Util.ns('<portlet:namespace />', {
-						themeId: selectedItem,
+						themeId: themeId,
 					});
 
 					Liferay.Util.fetch(
@@ -101,7 +88,13 @@ else {
 							selThemeId = selectedItem;
 						});
 				}
-			}
-		);
+			},
+			selectEventName: '<portlet:namespace />selectTheme',
+			title: '<liferay-ui:message key="available-themes" />',
+			url: Util.addParams(
+				'<portlet:namespace />themeId=' + selThemeId,
+				'<%= selectThemeURL %>'
+			),
+		});
 	});
 </aui:script>

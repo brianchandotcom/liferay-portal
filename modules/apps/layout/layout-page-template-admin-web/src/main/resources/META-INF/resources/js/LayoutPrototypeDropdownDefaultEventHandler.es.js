@@ -12,7 +12,7 @@
  * details.
  */
 
-import {DefaultEventHandler} from 'frontend-js-web';
+import {DefaultEventHandler, openModal} from 'frontend-js-web';
 
 class LayoutPrototypeDropdownDefaultEventHandler extends DefaultEventHandler {
 	deleteLayoutPrototype(itemData) {
@@ -26,28 +26,23 @@ class LayoutPrototypeDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	exportLayoutPrototype(itemData) {
-		this._openWindow('export', itemData.exportLayoutPrototypeURL);
+		openModal({
+			title: Liferay.Language.get('export'),
+			url: itemData.exportLayoutPrototypeURL,
+		});
 	}
 
 	importLayoutPrototype(itemData) {
-		this._openWindow('import', itemData.importLayoutPrototypeURL);
+		openModal({
+			title: Liferay.Language.get('import'),
+			url: itemData.importLayoutPrototypeURL,
+		});
 	}
 
 	permissionsLayoutPrototype(itemData) {
-		this._openWindow('permissions', itemData.permissionsLayoutPrototypeURL);
-	}
-
-	_openWindow(label, url) {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				modal: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
-			title: Liferay.Language.get(label),
-			uri: url,
+		openModal({
+			title: Liferay.Language.get('permissions'),
+			url: itemData.permissionsLayoutPrototypeURL,
 		});
 	}
 

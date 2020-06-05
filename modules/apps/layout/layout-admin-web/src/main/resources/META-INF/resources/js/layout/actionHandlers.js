@@ -12,21 +12,14 @@
  * details.
  */
 
+import {openModal} from 'frontend-js-web';
+
 const actionHandlers = {
 	copyLayout: ({actionURL, namespace}) => {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				height: 480,
-				resizable: false,
-				width: 640,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
+		openModal({
 			id: `${namespace}addLayoutDialog`,
 			title: Liferay.Language.get('copy-page'),
-			uri: actionURL,
+			url: actionURL,
 		});
 	},
 
@@ -51,16 +44,9 @@ const actionHandlers = {
 	},
 
 	permissions: ({actionURL}) => {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				modal: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
+		openModal({
 			title: Liferay.Language.get('permissions'),
-			uri: actionURL,
+			url: actionURL,
 		});
 	},
 };

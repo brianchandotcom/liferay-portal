@@ -159,7 +159,9 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 
 					redirectURL.searchParams.set('p_p_state', 'normal');
 
-					Liferay.fire('closeWindow', {
+					var opener = Liferay.Util.getOpener();
+
+					opener.Liferay.fire('closeModal', {
 						id: '<portlet:namespace />addLayoutDialog',
 						redirect: redirectURL.toString(),
 					});

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {openToast} from 'frontend-js-web';
+import {openModal, openToast} from 'frontend-js-web';
 
 /**
  * @param {HTMLElement} element HTMLElement where the editor
@@ -25,83 +25,68 @@ import {openToast} from 'frontend-js-web';
  *  to be called if the editor is destroyed with destroyEditor function.
  */
 function createEditor(element, changeCallback, destroyCallback) {
-	let dialog;
 	let editor;
 
-	Liferay.Util.openWindow(
-		{
-			dialog: {
-				after: {
-					destroy() {
-						destroyCallback();
-					},
-				},
-				constrain: true,
-				cssClass:
-					'lfr-fulscreen-source-editor-dialog modal-full-screen',
-				destroyOnHide: true,
-				modal: true,
-				'toolbars.footer': [
-					{
-						label: Liferay.Language.get('cancel'),
-						on: {
-							click() {
-								dialog.hide();
-							},
-						},
-					},
-					{
-						cssClass: 'btn-primary',
-						label: Liferay.Language.get('save'),
-						on: {
-							click() {
-								const annotations = editor._editor
-									.getSession()
-									.getAnnotations();
-
-								const errorAnnotations = annotations.filter(
-									(annotation) => annotation.type === 'error'
-								);
-
-								if (errorAnnotations.length) {
-									const errorMessage = errorAnnotations
-										.map((annotation) => annotation.text)
-										.join('\n');
-
-									openToast({
-										message: errorMessage,
-										title: Liferay.Language.get('error'),
-										type: 'danger',
-									});
-								}
-								else {
-									changeCallback(editor.get('value'));
-									dialog.hide();
-								}
-							},
-						},
-					},
-				],
+	openModal({
+		bodyHTML: '<div class="editor-container" />',
+		buttons: [
+			{
+				displayType: 'secondary',
+				label: Liferay.Language.get('cancel'),
+				type: 'cancel',
 			},
-			title: Liferay.Language.get('edit-content'),
-		},
-		(_dialog) => {
-			dialog = _dialog;
+			{
+				label: Liferay.Language.get('save'),
+				onClick: () => {
+					const annotations = editor._editor
+						.getSession()
+						.getAnnotations();
 
+					const errorAnnotations = annotations.filter(
+						(annotation) => annotation.type === 'error'
+					);
+
+					if (errorAnnotations.length) {
+						const errorMessage = errorAnnotations
+							.map((annotation) => annotation.text)
+							.join('\n');
+
+						openToast({
+							message: errorMessage,
+							title: Liferay.Language.get('error'),
+							type: 'danger',
+						});
+					}
+					else {
+						changeCallback(editor.get('value'));
+
+						Liferay.fire('closeModal');
+					}
+				},
+			},
+		],
+		onClose: () => destroyCallback(),
+		onOpen: () => {
 			Liferay.Util.getTop()
 				.AUI()
 				.use('liferay-fullscreen-source-editor', (A) => {
-					editor = new A.LiferayFullScreenSourceEditor({
-						boundingBox: dialog
-							.getStdModNode(A.WidgetStdMod.BODY)
-							.appendChild('<div></div>'),
-						previewCssClass:
-							'alloy-editor alloy-editor-placeholder',
-						value: element.innerHTML,
-					}).render();
+					const editorContainer = document.querySelector(
+						'.liferay-modal .editor-container'
+					);
+
+					if (editorContainer) {
+						editor = new A.LiferayFullScreenSourceEditor({
+							boundingBox: editorContainer,
+							previewCssClass:
+								'alloy-editor alloy-editor-placeholder',
+							value: element.innerHTML,
+						}).render();
+					}
 				});
-		}
-	);
+		},
+		size: 'full-screen',
+		title: Liferay.Language.get('edit-content'),
+	});
 }
 
 /**

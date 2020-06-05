@@ -84,18 +84,10 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 			'click',
 			'.preview-layout-classed-model-usage',
 			function (event) {
-				var delegateTarget = event.delegateTarget;
-
-				Liferay.Util.openWindow({
-					dialog: {
-						destroyOnHide: true,
-						modal: true,
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer article-preview',
-					},
+				Liferay.Util.openModal({
+					iframeBodyCssClass: 'article-preview',
 					title: '<liferay-ui:message key="preview" />',
-					uri: delegateTarget.getAttribute('data-href'),
+					url: event.delegateTarget.getAttribute('data-href'),
 				});
 			}
 		);

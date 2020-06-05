@@ -72,12 +72,11 @@ public class PortletPermissionsPortletConfigurationIcon
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		try {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(5);
 
-			sb.append("Liferay.Util.openWindow({dialogIframe: {bodyCssClass: ");
-			sb.append("'dialog-with-footer'}, title: '");
+			sb.append("Liferay.Util.openModal({title: '");
 			sb.append(getMessage(portletRequest));
-			sb.append("', uri: '");
+			sb.append("', url: '");
 			sb.append(_generatePermissionURL(portletRequest));
 			sb.append("'});");
 

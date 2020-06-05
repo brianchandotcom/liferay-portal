@@ -753,10 +753,12 @@ definition {
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Web Content Display')]",
 				key_position = "1",
 				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+
+			PageEditor.gotoTab(tabName = "Contents");
 		}
 
 		task ("Add a Heading fragment to column 2") {
-			PageEditor.gotoTab(tabName = "Fragments");
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 

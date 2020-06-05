@@ -968,33 +968,23 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		String className =
-			com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
-				getName();
-
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId);
-
-		DDMStructure ddmStructure = _fetchDDMStructure(dlFileEntryType);
+		DDMStructure ddmStructure = _fetchDDMStructure(
+			_dlFileEntryTypeLocalService.getDLFileEntryType(fileEntryTypeId));
 
 		if (ddmStructure == null) {
 			return;
 		}
 
+		String className =
+			com.liferay.dynamic.data.mapping.kernel.DDMFormValues.class.
+				getName();
+
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
 			serviceContext.getRequest(), ddmStructure.getDDMForm());
 
-		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
-			serviceContext.setAttribute(
-				className + StringPool.POUND +
-					dlFileEntryType.getDataDefinitionId(),
-				DDMBeanTranslatorUtil.translate(ddmFormValues));
-		}
-		else {
-			serviceContext.setAttribute(
-				className + StringPool.POUND + ddmStructure.getStructureId(),
-				DDMBeanTranslatorUtil.translate(ddmFormValues));
-		}
+		serviceContext.setAttribute(
+			className + StringPool.POUND + ddmStructure.getStructureId(),
+			DDMBeanTranslatorUtil.translate(ddmFormValues));
 	}
 
 	private FileEntry _updateFileEntry(

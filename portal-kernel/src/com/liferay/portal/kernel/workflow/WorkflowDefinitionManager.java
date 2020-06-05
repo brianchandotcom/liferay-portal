@@ -191,6 +191,10 @@ public interface WorkflowDefinitionManager {
 			boolean active)
 		throws WorkflowException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement}
+	 */
+	@Deprecated
 	public WorkflowDefinition updateTitle(
 			long companyId, long userId, String name, int version, String title)
 		throws WorkflowException;

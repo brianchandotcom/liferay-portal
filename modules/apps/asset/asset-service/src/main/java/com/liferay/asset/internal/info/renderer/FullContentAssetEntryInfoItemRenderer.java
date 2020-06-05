@@ -16,6 +16,9 @@ package com.liferay.asset.internal.info.renderer;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.info.item.renderer.InfoItemRenderer;
+import com.liferay.portal.kernel.language.LanguageUtil;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,6 +28,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = InfoItemRenderer.class)
 public class FullContentAssetEntryInfoItemRenderer
 	extends BaseAssetEntryInfoItemRenderer {
+
+	@Override
+	public String getLabel(Locale locale) {
+		return LanguageUtil.get(locale, "full-content");
+	}
 
 	@Override
 	protected String getTemplate() {

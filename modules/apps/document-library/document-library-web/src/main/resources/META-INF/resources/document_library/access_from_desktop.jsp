@@ -66,7 +66,7 @@ else {
 
 		<br /><br />
 
-		<aui:input cssClass="webdav-url-resource" name="webDavURL" type="resource" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, folder, null) %>" />
+		<aui:input cssClass="webdav-url-resource" id='<%= randomNamespace + "webDavURL" %>' name="webDavURL" type="resource" value="<%= DLURLHelperUtil.getWebDavURL(themeDisplay, folder, null) %>" />
 	</div>
 </div>
 
@@ -97,7 +97,7 @@ else {
 						bodyHTML: html,
 						onOpen: function (event) {
 							var webdavURLInput = document.getElementById(
-								'<portlet:namespace />webDavURL'
+								'<portlet:namespace /><%= randomNamespace %>webDavURL'
 							);
 
 							if (webdavURLInput) {

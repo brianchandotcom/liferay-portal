@@ -84,6 +84,7 @@
 		<field name="content" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="scope" type="String" />
 		<field name="version" type="int" />
 		<field name="active" type="boolean" />
 	</model>

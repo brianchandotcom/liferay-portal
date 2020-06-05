@@ -60,6 +60,8 @@ public class KaleoDefinitionTable extends BaseTable<KaleoDefinitionTable> {
 			"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KaleoDefinitionTable, Clob> content = createColumn(
 		"content", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<KaleoDefinitionTable, String> scope = createColumn(
+		"scope", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<KaleoDefinitionTable, Integer> version = createColumn(
 		"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<KaleoDefinitionTable, Boolean> active = createColumn(

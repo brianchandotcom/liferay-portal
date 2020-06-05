@@ -51,6 +51,7 @@ create table KaleoDefinition (
 	title STRING null,
 	description STRING null,
 	content TEXT null,
+	scope VARCHAR(75) null,
 	version INTEGER,
 	active_ BOOLEAN
 );

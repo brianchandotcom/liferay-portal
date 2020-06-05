@@ -14,9 +14,13 @@
 
 package com.liferay.frontend.taglib.clay.internal.servlet;
 
+import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerializer;
+
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -25,12 +29,35 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = {})
 public class ServletContextUtil {
 
+	public static final ClayDataSetDisplayViewSerializer
+		getClayDataSetDisplayViewSerializer() {
+
+		return _servletContextUtil._getClayDataSetDisplayViewSerializer();
+	}
+
 	public static final String getContextPath() {
 		return _servletContext.getContextPath();
 	}
 
 	public static final ServletContext getServletContext() {
 		return _servletContext;
+	}
+
+	@Activate
+	protected void activate() {
+		_servletContextUtil = this;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_servletContextUtil = null;
+	}
+
+	@Reference(unbind = "-")
+	protected void setClayDataSetDisplayViewSerializer(
+		ClayDataSetDisplayViewSerializer clayDataSetDisplayViewSerializer) {
+
+		_clayDataSetDisplayViewSerializer = clayDataSetDisplayViewSerializer;
 	}
 
 	@Reference(
@@ -41,6 +68,15 @@ public class ServletContextUtil {
 		_servletContext = servletContext;
 	}
 
+	private ClayDataSetDisplayViewSerializer
+		_getClayDataSetDisplayViewSerializer() {
+
+		return _clayDataSetDisplayViewSerializer;
+	}
+
 	private static ServletContext _servletContext;
+	private static ServletContextUtil _servletContextUtil;
+
+	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
 
 }

@@ -51,15 +51,22 @@ public interface WorkflowDefinitionManager {
 	 *             #getActiveWorkflowDefinitionsCount(long)}
 	 */
 	@Deprecated
-	public int getActiveWorkflowDefinitionCount(long companyId)
-		throws WorkflowException;
+	public default int getActiveWorkflowDefinitionCount(long companyId)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	public int getActiveWorkflowDefinitionCount(long companyId, String name)
-		throws WorkflowException;
+	public default int getActiveWorkflowDefinitionCount(
+			long companyId, String name)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public List<WorkflowDefinition> getActiveWorkflowDefinitions(
 			long companyId, int start, int end,
@@ -106,25 +113,34 @@ public interface WorkflowDefinitionManager {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	public int getWorkflowDefinitionCount(long companyId)
-		throws WorkflowException;
+	public default int getWorkflowDefinitionCount(long companyId)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getWorkflowDefinitionsCount(long, String)}
 	 */
 	@Deprecated
-	public int getWorkflowDefinitionCount(long companyId, String name)
-		throws WorkflowException;
+	public default int getWorkflowDefinitionCount(long companyId, String name)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
 	@Deprecated
-	public List<WorkflowDefinition> getWorkflowDefinitions(
+	public default List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
-		throws WorkflowException;
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 			long companyId, String name, int start, int end,
@@ -195,9 +211,12 @@ public interface WorkflowDefinitionManager {
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement}
 	 */
 	@Deprecated
-	public WorkflowDefinition updateTitle(
+	public default WorkflowDefinition updateTitle(
 			long companyId, long userId, String name, int version, String title)
-		throws WorkflowException;
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public void validateWorkflowDefinition(byte[] bytes)
 		throws WorkflowException;

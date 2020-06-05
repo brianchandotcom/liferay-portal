@@ -440,25 +440,6 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #search(Long,
-	 *             String, String, String, String, String, Boolean, int, int,
-	 *             OrderByComparator, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public List<WorkflowInstance> search(
-			Long userId, String assetClassName, String nodeName,
-			String kaleoDefinitionName, Boolean completed, int start, int end,
-			OrderByComparator<WorkflowInstance> orderByComparator,
-			ServiceContext serviceContext)
-		throws WorkflowException {
-
-		return search(
-			userId, assetClassName, null, null, nodeName, kaleoDefinitionName,
-			completed, start, end, orderByComparator, serviceContext);
-	}
-
 	@Override
 	public List<WorkflowInstance> search(
 			Long userId, String assetClassName, String assetTitle,
@@ -483,24 +464,6 @@ public class DefaultWorkflowEngineImpl
 		catch (Exception exception) {
 			throw new WorkflowException(exception);
 		}
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #searchCount(Long,
-	 *             String, String, String, String, String, Boolean,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public int searchCount(
-			Long userId, String assetClassName, String nodeName,
-			String kaleoDefinitionName, Boolean completed,
-			ServiceContext serviceContext)
-		throws WorkflowException {
-
-		return searchCount(
-			userId, assetClassName, null, null, nodeName, kaleoDefinitionName,
-			completed, serviceContext);
 	}
 
 	@Override

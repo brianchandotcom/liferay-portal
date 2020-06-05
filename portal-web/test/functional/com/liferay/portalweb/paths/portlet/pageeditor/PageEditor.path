@@ -315,7 +315,7 @@
 <!--LANGUAGE_MENU-->
 <tr>
 	<td>DROPDOWN</td>
-	<td>//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@class,'management-bar')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

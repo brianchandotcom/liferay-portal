@@ -16,7 +16,13 @@ import React from 'react';
 
 import MappingField from './MappingField';
 
-function SeoMapping({fields, portletNamespace, selectedSource}) {
+function SeoMapping({
+	description,
+	fields,
+	portletNamespace,
+	selectedSource,
+	title,
+}) {
 	const ns = (obj) => Liferay.Util.ns(portletNamespace, obj);
 
 	return (
@@ -25,7 +31,9 @@ function SeoMapping({fields, portletNamespace, selectedSource}) {
 				fields={fields}
 				label={Liferay.Language.get('html-title')}
 				name={ns('title')}
-				selectedField={fields[0]}
+				selectedField={
+					fields.find(({key}) => key === title) || fields[0]
+				}
 				selectedSource={selectedSource}
 			/>
 
@@ -33,7 +41,9 @@ function SeoMapping({fields, portletNamespace, selectedSource}) {
 				fields={fields}
 				label={Liferay.Language.get('description')}
 				name={ns('description')}
-				selectedField={fields[0]}
+				selectedField={
+					fields.find(({key}) => key === description) || fields[0]
+				}
 				selectedSource={selectedSource}
 			/>
 		</>

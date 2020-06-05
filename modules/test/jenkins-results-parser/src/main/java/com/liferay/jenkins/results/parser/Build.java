@@ -203,6 +203,9 @@ public interface Build {
 
 		public RemoteGitRef getCachedRemoteGitRef();
 
+		public LocalGitBranch getLocalGitBranch(
+			GitWorkingDirectory gitWorkingDirectory);
+
 		public String getReceiverUsername();
 
 		public String getRepositoryName();

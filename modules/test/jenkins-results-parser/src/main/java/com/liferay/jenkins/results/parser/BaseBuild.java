@@ -1645,6 +1645,41 @@ public abstract class BaseBuild implements Build {
 		}
 
 		@Override
+		public LocalGitBranch getLocalGitBranch(
+			GitWorkingDirectory gitWorkingDirectory) {
+
+			gitWorkingDirectory.checkoutUpstreamLocalGitBranch();
+
+			LocalGitBranch localGitBranch =
+				gitWorkingDirectory.createLocalGitBranch(
+					JenkinsResultsParserUtil.combine(
+						getUpstreamBranchName(), "-temp-",
+						String.valueOf(System.currentTimeMillis())),
+					true);
+
+			try {
+				localGitBranch = gitWorkingDirectory.fetch(
+					localGitBranch, true, getCachedRemoteGitRef());
+			}
+			catch (Exception exception) {
+				localGitBranch = gitWorkingDirectory.fetch(
+					localGitBranch, true, getSenderRemoteGitRef());
+
+				LocalGitBranch upstreamLocalGitBranch =
+					gitWorkingDirectory.createLocalGitBranch(
+						JenkinsResultsParserUtil.combine(
+							getUpstreamBranchName(), "-temp-upstream-",
+							String.valueOf(System.currentTimeMillis())),
+						true, getUpstreamBranchSHA());
+
+				localGitBranch = gitWorkingDirectory.rebase(
+					true, upstreamLocalGitBranch, localGitBranch);
+			}
+
+			return localGitBranch;
+		}
+
+		@Override
 		public String getReceiverUsername() {
 			String branchInformationString = _getBranchInformationString();
 

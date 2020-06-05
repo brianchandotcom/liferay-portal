@@ -25,8 +25,63 @@ public class QAWebsitesTopLevelBuild extends DefaultTopLevelBuild {
 		findDownstreamBuilds();
 	}
 
+	public BranchInformation getPortalBranchInformation() {
+		return _portalMasterBranchInformation;
+	}
+
 	public BranchInformation getQAWebsitesBranchInformation() {
 		return getBranchInformation("qa.websites");
 	}
+
+	public static class PortalMasterBranchInformation
+		extends DefaultBranchInformation {
+
+		@Override
+		public String getReceiverUsername() {
+			return "liferay";
+		}
+
+		@Override
+		public String getRepositoryName() {
+			return "liferay-portal";
+		}
+
+		@Override
+		public String getSenderBranchName() {
+			return "master";
+		}
+
+		@Override
+		public String getSenderBranchSHA() {
+			return _remoteGitRef.getSHA();
+		}
+
+		@Override
+		public String getSenderUsername() {
+			return "liferay";
+		}
+
+		@Override
+		public String getUpstreamBranchName() {
+			return "master";
+		}
+
+		@Override
+		public String getUpstreamBranchSHA() {
+			return _remoteGitRef.getSHA();
+		}
+
+		protected PortalMasterBranchInformation(Build build) {
+			super(build, "portal");
+
+			_remoteGitRef = getSenderRemoteGitRef();
+		}
+
+		private final RemoteGitRef _remoteGitRef;
+
+	}
+
+	private final PortalMasterBranchInformation _portalMasterBranchInformation =
+		new PortalMasterBranchInformation(this);
 
 }

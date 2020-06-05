@@ -22,7 +22,7 @@ export default function updateEditableValues({
 	fragmentEntryLinkId,
 	segmentsExperienceId,
 }) {
-	return (dispatch) => {
+	return (dispatch) =>
 		FragmentService.updateEditableValues({
 			editableValues,
 			fragmentEntryLinkId,
@@ -48,5 +48,4 @@ export default function updateEditableValues({
 					);
 				});
 			});
-	};
 }

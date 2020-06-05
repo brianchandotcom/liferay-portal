@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
-import java.util.List;
-
 /**
  * @author Roberto Díaz
  */
@@ -120,36 +118,42 @@ public class UpgradeDiscussionSubscriptionClassName extends UpgradeProcess {
 			MBDiscussion.class.getName() + StringPool.UNDERLINE +
 				_oldSubscriptionClassName;
 
-		List<Subscription> subscriptions =
-			_subscriptionLocalService.getSubscriptions(
-				_oldSubscriptionClassName);
+		ActionableDynamicQuery actionableDynamicQuery =
+			_subscriptionLocalService.getActionableDynamicQuery();
 
-		for (Subscription subscription : subscriptions) {
-			AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-				newSubscriptionClassName, subscription.getClassPK());
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"classNameId",
+					_classNameLocalService.getClassNameId(
+						_oldSubscriptionClassName))));
+		actionableDynamicQuery.setPerformActionMethod(
+			(Subscription subscription) -> {
+				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+					newSubscriptionClassName, subscription.getClassPK());
 
-			if (assetEntry == null) {
-				_assetEntryLocalService.updateEntry(
-					subscription.getUserId(), subscription.getGroupId(),
-					subscription.getCreateDate(),
-					subscription.getModifiedDate(), newSubscriptionClassName,
-					subscription.getClassPK(), null, 0, null, null, true, false,
-					null, null, null, null, null,
-					String.valueOf(subscription.getGroupId()), null, null, null,
-					null, 0, 0, null);
-			}
-		}
+				if (assetEntry == null) {
+					_assetEntryLocalService.updateEntry(
+						subscription.getUserId(), subscription.getGroupId(),
+						subscription.getCreateDate(),
+						subscription.getModifiedDate(),
+						newSubscriptionClassName, subscription.getClassPK(),
+						null, 0, null, null, true, false, null, null, null,
+						null, null, String.valueOf(subscription.getGroupId()),
+						null, null, null, null, 0, 0, null);
+				}
+			});
 
-		if (!subscriptions.isEmpty()) {
-			runSQL(
-				StringBundler.concat(
-					"update Subscription set classNameId = ",
-					ClassNameLocalServiceUtil.getClassNameId(
-						newSubscriptionClassName),
-					" where classNameId = ",
-					ClassNameLocalServiceUtil.getClassNameId(
-						_oldSubscriptionClassName)));
-		}
+		actionableDynamicQuery.performActions();
+
+		runSQL(
+			StringBundler.concat(
+				"update Subscription set classNameId = ",
+				ClassNameLocalServiceUtil.getClassNameId(
+					newSubscriptionClassName),
+				" where classNameId = ",
+				ClassNameLocalServiceUtil.getClassNameId(
+					_oldSubscriptionClassName)));
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

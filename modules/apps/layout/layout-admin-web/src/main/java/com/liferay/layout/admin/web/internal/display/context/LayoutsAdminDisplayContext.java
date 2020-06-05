@@ -193,6 +193,21 @@ public class LayoutsAdminDisplayContext {
 				ActionRequest.ACTION_NAME, "/layout/add_simple_layout");
 		}
 
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
+			String collectionType = ParamUtil.getString(
+				httpServletRequest, "collectionType");
+
+			portletURL.setParameter("collectionType", collectionType);
+
+			String collectionPK = ParamUtil.getString(
+				httpServletRequest, "collectionPK");
+
+			portletURL.setParameter("collectionPK", collectionPK);
+
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "/layout/add_collection_layout");
+		}
+
 		return portletURL.toString();
 	}
 
@@ -845,6 +860,49 @@ public class LayoutsAdminDisplayContext {
 		return portletURL;
 	}
 
+	public String getSelectCollectionsURL(
+		long selPlid, String selectedTab, boolean privateLayout) {
+
+		PortletURL selectLayoutCollectionsURL =
+			_liferayPortletResponse.createRenderURL();
+
+		selectLayoutCollectionsURL.setParameter(
+			"mvcPath", "/select_layout_collections.jsp");
+		selectLayoutCollectionsURL.setParameter("redirect", getRedirect());
+		selectLayoutCollectionsURL.setParameter(
+			"backURL", themeDisplay.getURLCurrent());
+		selectLayoutCollectionsURL.setParameter(
+			"groupId", String.valueOf(getSelGroupId()));
+		selectLayoutCollectionsURL.setParameter(
+			"selPlid", String.valueOf(selPlid));
+		selectLayoutCollectionsURL.setParameter(
+			"privateLayout", String.valueOf(privateLayout));
+		selectLayoutCollectionsURL.setParameter("selectedTab", selectedTab);
+
+		return selectLayoutCollectionsURL.toString();
+	}
+
+	public String getSelectLayoutMasterLayoutURL(
+		long selPlid, boolean privateLayout) {
+
+		PortletURL selectLayoutMasterLayoutURL =
+			_liferayPortletResponse.createRenderURL();
+
+		selectLayoutMasterLayoutURL.setParameter(
+			"mvcPath", "/select_layout_collections.jsp");
+		selectLayoutMasterLayoutURL.setParameter("redirect", getRedirect());
+		selectLayoutMasterLayoutURL.setParameter(
+			"backURL", themeDisplay.getURLCurrent());
+		selectLayoutMasterLayoutURL.setParameter(
+			"groupId", String.valueOf(getSelGroupId()));
+		selectLayoutMasterLayoutURL.setParameter(
+			"selPlid", String.valueOf(selPlid));
+		selectLayoutMasterLayoutURL.setParameter(
+			"privateLayout", String.valueOf(privateLayout));
+
+		return selectLayoutMasterLayoutURL.toString();
+	}
+
 	public String getSelectLayoutPageTemplateEntryURL(boolean privateLayout)
 		throws PortalException {
 
@@ -1492,7 +1550,13 @@ public class LayoutsAdminDisplayContext {
 			return _backURL;
 		}
 
-		_backURL = ParamUtil.getString(_liferayPortletRequest, "backURL");
+		String backURL = ParamUtil.getString(_liferayPortletRequest, "backURL");
+
+		if (Validator.isNull(backURL)) {
+			backURL = getRedirect();
+		}
+
+		_backURL = backURL;
 
 		return _backURL;
 	}

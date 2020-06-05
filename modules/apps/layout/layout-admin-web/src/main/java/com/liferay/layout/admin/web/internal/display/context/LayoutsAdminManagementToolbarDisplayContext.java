@@ -20,6 +20,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
+import com.liferay.layout.admin.web.internal.configuration.util.CollectionLayoutsConfigurationUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -156,6 +157,19 @@ public class LayoutsAdminManagementToolbarDisplayContext
 			}
 		).addPrimaryDropdownItem(
 			() ->
+				_layoutsAdminDisplayContext.isShowPublicPages() &&
+				CollectionLayoutsConfigurationUtil.enabled() &&
+				(!_layoutsAdminDisplayContext.isPrivateLayout() ||
+				 _layoutsAdminDisplayContext.isFirstColumn() ||
+				 !_layoutsAdminDisplayContext.hasLayouts()),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_layoutsAdminDisplayContext.getSelectLayoutMasterLayoutURL(
+						selPlid, false));
+				dropdownItem.setLabel(_getCollectionLayoutLabel(false));
+			}
+		).addPrimaryDropdownItem(
+			() ->
 				_layoutsAdminDisplayContext.isPrivateLayout() ||
 				_layoutsAdminDisplayContext.isFirstColumn() ||
 				!_layoutsAdminDisplayContext.hasLayouts(),
@@ -166,6 +180,18 @@ public class LayoutsAdminManagementToolbarDisplayContext
 							firstLayoutPageTemplateCollectionId, selPlid,
 							true));
 				dropdownItem.setLabel(_getLabel(true));
+			}
+		).addPrimaryDropdownItem(
+			() ->
+				CollectionLayoutsConfigurationUtil.enabled() &&
+				(_layoutsAdminDisplayContext.isPrivateLayout() ||
+				 _layoutsAdminDisplayContext.isFirstColumn() ||
+				 !_layoutsAdminDisplayContext.hasLayouts()),
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_layoutsAdminDisplayContext.getSelectLayoutMasterLayoutURL(
+						selPlid, true));
+				dropdownItem.setLabel(_getCollectionLayoutLabel(true));
 			}
 		).build();
 	}
@@ -255,6 +281,27 @@ public class LayoutsAdminManagementToolbarDisplayContext
 		}
 
 		return null;
+	}
+
+	private String _getCollectionLayoutLabel(boolean privateLayout) {
+		Layout layout = _layoutsAdminDisplayContext.getSelLayout();
+
+		if (layout != null) {
+			return LanguageUtil.format(
+				request, "add-child-collection-page-of-x",
+				layout.getName(_themeDisplay.getLocale()));
+		}
+
+		if (_isSiteTemplate()) {
+			return LanguageUtil.get(
+				request, "add-site-template-collection-page");
+		}
+
+		if (privateLayout) {
+			return LanguageUtil.get(request, "private-collection-page");
+		}
+
+		return LanguageUtil.get(request, "public-collection-page");
 	}
 
 	private String _getLabel(boolean privateLayout) {

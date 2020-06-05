@@ -715,6 +715,8 @@ definition {
 	}
 
 	macro navigateToSitePageVariation {
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		Click(locator1 = "Staging#MANAGE_VARIATIONS");

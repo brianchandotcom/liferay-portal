@@ -3855,7 +3855,7 @@ definition {
 	@priority = "5"
 	test SubmitFormWithRequiredRepeatingTextField {
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithRequiredRepeatingTextField";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 
@@ -4637,7 +4637,7 @@ definition {
 	@priority = "4"
 	test ViewRepeatableTextFieldLabel {
 		property test.name.skip.portal.instance = "Forms#ViewRepeatableTextFieldLabel";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

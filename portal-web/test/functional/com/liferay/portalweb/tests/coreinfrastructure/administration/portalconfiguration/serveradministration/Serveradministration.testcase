@@ -38,9 +38,18 @@ definition {
 				var dirName = PropsUtil.get("liferay.app.server.portal.web.dir");
 			}
 
-			AssertTextEquals(
-				locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
-				value1 = "${dirName}/");
+			var dirEnding = StringUtil.endsWith("${dirName}", "/");
+
+			if ("${dirEnding}" == "true") {
+				AssertTextEquals(
+					locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+					value1 = "${dirName}");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
+					value1 = "${dirName}/");
+			}
 		}
 	}
 

@@ -32,7 +32,7 @@ function MappingField({fields, label, name, selectedField, selectedSource}) {
 
 	useEffect(() => {
 		if (source) {
-			setValue(`${source.classType || source.className}#${field.key}`);
+			setValue(`${source.classType}#${source.className}#${field.key}`);
 		}
 	}, [field.key, source]);
 

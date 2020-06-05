@@ -7,6 +7,31 @@
 
 	&.modal-full-screen {
 		position: absolute;
+
+		.liferay-modal-body {
+			height: 100%;
+
+			.lfr-fullscreen-source-editor-content {
+				bottom: 0;
+				height: auto;
+				left: 24px;
+				position: absolute;
+				right: 24px;
+				top: 80px;
+
+				.source-panel {
+					float: left;
+
+					.lfr-source-editor {
+						border-bottom-width: 0;
+					}
+				}
+
+				.preview-panel {
+					float: right;
+				}
+			}
+		}
 	}
 
 	.modal-body-iframe .loading-animation {

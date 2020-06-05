@@ -63,11 +63,12 @@ definition {
 		Smoke.runSmoke();
 	}
 
-	@priority = "5"
+	@priority = "4"
 	test SmokeWithJNDI {
 		property app.server.types = "tomcat,wildfly,weblogic,websphere";
 		property database.types = "mariadb,mysql";
 		property database.jndi.enabled = "true";
+		property portal.smoke = "false";
 
 		Smoke.viewWelcomePage();
 

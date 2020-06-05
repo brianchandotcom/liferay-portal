@@ -84,7 +84,7 @@ public class JournalArticleInfoItemFormProviderTest {
 			JournalArticle.class.getName(),
 			infoItemClassPKReference.getClassName());
 
-		Collection<InfoFieldValue> infoFieldValues =
+		Collection<InfoFieldValue<Object>> infoFieldValues =
 			infoFormValues.getInfoFieldValues();
 
 		Assert.assertEquals(
@@ -108,10 +108,10 @@ public class JournalArticleInfoItemFormProviderTest {
 			"Un poco de texto",
 			ddmTextInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
-		Collection<InfoFieldValue> ddmTextInfoFieldValues =
+		Collection<InfoFieldValue<Object>> ddmTextInfoFieldValues =
 			infoFormValues.getInfoFieldValues("DDM_Text");
 
-		Iterator<InfoFieldValue> ddmTextInfoFieldValuesIterator =
+		Iterator<InfoFieldValue<Object>> ddmTextInfoFieldValuesIterator =
 			ddmTextInfoFieldValues.iterator();
 
 		InfoFieldValue firstDDMTextInfoFieldValue =

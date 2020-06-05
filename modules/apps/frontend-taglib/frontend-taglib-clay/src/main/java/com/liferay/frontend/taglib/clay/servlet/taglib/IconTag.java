@@ -97,16 +97,6 @@ public class IconTag extends BaseContainerTag {
 		_symbol = null;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClasses(String)}
-	 */
-	@Deprecated
-	@Override
-	protected String processClassName(Set<String> className) {
-		return processCssClasses(className);
-	}
-
 	@Override
 	protected String processCssClasses(Set<String> cssClasses) {
 		cssClasses.add("lexicon-icon");

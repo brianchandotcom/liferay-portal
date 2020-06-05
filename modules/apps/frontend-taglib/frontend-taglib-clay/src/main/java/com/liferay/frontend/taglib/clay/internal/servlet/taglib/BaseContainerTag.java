@@ -208,15 +208,6 @@ public class BaseContainerTag extends AttributesTagSupport {
 		cleanUp();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #processCssClasses(String)}
-	 */
-	@Deprecated
-	protected String processClassName(Set<String> className) {
-		return processCssClasses(className);
-	}
-
 	protected String processCssClasses(Set<String> cssClasses) {
 		if (Validator.isNotNull(_cssClass)) {
 			cssClasses.addAll(StringUtil.split(_cssClass, CharPool.SPACE));

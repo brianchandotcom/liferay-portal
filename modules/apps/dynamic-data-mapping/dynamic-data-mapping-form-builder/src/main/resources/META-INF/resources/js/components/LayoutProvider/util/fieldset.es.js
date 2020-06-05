@@ -16,7 +16,7 @@ import * as FormSupport from 'dynamic-data-mapping-form-renderer/js/components/F
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer/js/util/visitors.es';
 
 import {FIELD_TYPE_FIELDSET} from '../../../util/constants.es';
-import {createField} from '../../../util/fieldSupport.es';
+import {createField, generateInstanceId} from '../../../util/fieldSupport.es';
 import {updateField} from '../util/settingsContext.es';
 
 const addNestedFields = ({field, indexes, nestedFields, props}) => {
@@ -39,6 +39,9 @@ const addNestedFields = ({field, indexes, nestedFields, props}) => {
 	});
 
 	[...nestedFields].reverse().forEach((nestedField) => {
+		if (!nestedField.instanceId) {
+			nestedField.instanceId = generateInstanceId(8);
+		}
 		layout = FormSupport.addFieldToColumn(
 			layout,
 			indexes.pageIndex,

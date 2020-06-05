@@ -19,6 +19,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import AppContext from './AppContext.es';
 import AppContextProvider from './AppContextProvider.es';
+import {UPDATE_APP_PROPS} from './actions.es';
 import MultiPanelSidebar from './components/sidebar/MultiPanelSidebar.es';
 import initializeSidebarConfig from './components/sidebar/initializeSidebarConfig.es';
 import DataLayoutBuilder from './data-layout-builder/DataLayoutBuilder.es';
@@ -60,9 +61,9 @@ const AppContent = ({
 	}, [dataLayoutBuilder, dispatch, setChildrenContext, state]);
 
 	useEffect(() => {
-		const payload = JSON.parse(appProps);
 		if (!setChildrenContext) {
-			dispatch({payload, type: 'UPDATE_APP_PROPS'});
+			const payload = JSON.parse(appProps);
+			dispatch({payload, type: UPDATE_APP_PROPS});
 		}
 	}, [appProps, dispatch, setChildrenContext]);
 

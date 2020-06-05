@@ -120,8 +120,6 @@ const ModalContent = ({defaultLanguageId, fieldSet, onClose, otherProps}) => {
 };
 
 const FieldSetModal = ({isVisible, onClose, ...props}) => {
-	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
 	const {observer} = useModal({
 		onClose,
 	});
@@ -137,7 +135,6 @@ const FieldSetModal = ({isVisible, onClose, ...props}) => {
 			size="full-screen"
 		>
 			<ModalContent
-				defaultLanguageId={defaultLanguageId}
 				onClose={onClose}
 				{...props}
 			/>

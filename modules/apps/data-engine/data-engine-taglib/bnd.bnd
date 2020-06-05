@@ -4,7 +4,7 @@ Bundle-Version: 2.5.2
 Export-Package: com.liferay.data.engine.taglib.servlet.taglib.definition
 Provide-Capability:\
 	liferay.resource.bundle;\
-		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.data.engine.lang)";\
+		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.app.builder.lang),(bundle.symbolic.name=com.liferay.data.engine.lang)";\
 		resource.bundle.base.name="content.Language",\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\

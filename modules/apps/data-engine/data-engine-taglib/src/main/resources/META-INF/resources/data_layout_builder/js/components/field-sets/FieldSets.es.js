@@ -26,6 +26,8 @@ import FieldSetModal from './FieldSetModal.es';
 import useDeleteFieldSet from './actions/useDeleteFieldSet.es';
 
 export default function FieldSets() {
+	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
+
 	const [{appProps, dataDefinition, fieldSets}, dispatch] = useContext(
 		AppContext
 	);
@@ -44,7 +46,7 @@ export default function FieldSets() {
 			const {context, fieldTypes} = appProps;
 			const {defaultDataLayout, id: dataDefinitionId} = fieldSet;
 			const DataLayout = new DataLayoutBuilder({
-				editingLanguageId: 'en_US',
+				editingLanguageId: defaultLanguageId,
 				fieldTypes,
 			});
 			const ddmForm = DataLayout.getDDMForm(fieldSet, defaultDataLayout);
@@ -144,10 +146,9 @@ export default function FieldSets() {
 			</div>
 
 			<FieldSetModal
-				fieldSet={state.fieldSet}
-				isVisible={state.isVisible}
+				defaultLanguageId={defaultLanguageId}
 				onClose={() => toggleFieldSet()}
-				otherProps={state.otherProps}
+				{...state}
 			/>
 		</>
 	);

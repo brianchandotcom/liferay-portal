@@ -66,6 +66,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						<aui:model-context bean="<%= null %>" model="<%= null %>" />
 
 						<aui:input disabled="<%= true %>" helpMessage="html-title-help" id="title" label="html-title" localized="<%= false %>" name="title" placeholder="title" />
+						<aui:input disabled="<%= true %>" helpMessage="description-help" id="descriptionSEO" localized="<%= false %>" name="description" placeholder="description" />
 
 						<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 

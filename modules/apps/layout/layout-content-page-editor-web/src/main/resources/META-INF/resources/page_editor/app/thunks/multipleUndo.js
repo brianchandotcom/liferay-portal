@@ -12,8 +12,14 @@
  * details.
  */
 
-import {UPDATE_REDO_ACTIONS, UPDATE_UNDO_ACTIONS} from '../actions/types';
+import {updateNetwork} from '../actions';
+import {
+	UPDATE_NETWORK,
+	UPDATE_REDO_ACTIONS,
+	UPDATE_UNDO_ACTIONS,
+} from '../actions/types';
 import {undoAction} from '../components/undo/undoActions';
+import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 import {UNDO_TYPES} from '../config/constants/undoTypes';
 import {canUndoAction} from './../components/undo/undoActions';
 
@@ -28,6 +34,9 @@ export default function multipleUndo({numberOfActions, store, type}) {
 		const multipleUndoDispatch = (originalType) => (action) => {
 			if (canUndoAction(action)) {
 				actions.push({action, originalType});
+			}
+			else if (action.type !== UPDATE_NETWORK) {
+				dispatch(action);
 			}
 		};
 
@@ -64,6 +73,13 @@ export default function multipleUndo({numberOfActions, store, type}) {
 			};
 		}
 
+		dispatch(
+			updateNetwork({
+				requestGenerateDraft: false,
+				status: SERVICE_NETWORK_STATUS_TYPES.savingDraft,
+			})
+		);
+
 		undosToUndo
 			.reduce((promise, undo) => {
 				return promise.then(() => {
@@ -79,6 +95,12 @@ export default function multipleUndo({numberOfActions, store, type}) {
 			})
 			.then(() => {
 				dispatch(updateHistoryAction);
+				dispatch(
+					updateNetwork({
+						requestGenerateDraft: false,
+						status: SERVICE_NETWORK_STATUS_TYPES.draftSaved,
+					})
+				);
 			});
 	};
 }

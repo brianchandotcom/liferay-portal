@@ -1250,7 +1250,7 @@ definition {
 
 		PageEditor.addFragmentToCollectionDisplay(
 			collectionName = "Content Display",
-			entryName = "Blogs Entry Title 3",
+			entryTitle = "Blogs Entry Title 3",
 			fragmentName = "Content");
 
 		for (var i : list "1,2,3") {
@@ -1351,7 +1351,7 @@ definition {
 
 		PageEditor.addFragmentToCollectionDisplay(
 			collectionName = "Content Display",
-			entryName = "WC WebContent Title 3",
+			entryTitle = "WC WebContent Title 3",
 			fragmentName = "Content");
 
 		for (var i : list "1,2,3") {

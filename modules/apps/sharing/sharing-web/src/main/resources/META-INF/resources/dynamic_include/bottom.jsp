@@ -62,7 +62,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 
 			showDialog(sharingURL.toString(), title);
 		},
-		['liferay-util-window']
+		[]
 	);
 
 	Liferay.provide(
@@ -84,7 +84,7 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 				'<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
 			);
 		},
-		['liferay-util-window']
+		[]
 	);
 
 	Liferay.Sharing = Sharing;

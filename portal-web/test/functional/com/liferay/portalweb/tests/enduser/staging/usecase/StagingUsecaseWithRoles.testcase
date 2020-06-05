@@ -222,8 +222,6 @@ definition {
 
 	@priority = "4"
 	test StagingDemoLocalLive3 {
-		property portal.upstream = "quarantine";
-
 		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

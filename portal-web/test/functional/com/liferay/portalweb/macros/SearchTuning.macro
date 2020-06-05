@@ -43,7 +43,7 @@ definition {
 	macro addSynonymSet {
 		LexiconEntry.gotoAdd();
 
-		Type(
+		Type.sendKeys(
 			locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_FIELD",
 			value1 = "${synonyms}");
 
@@ -110,7 +110,7 @@ definition {
 		}
 
 		if (isSet(addSynonyms)) {
-			Type(
+			Type.sendKeys(
 				locator1 = "SearchTuning#SYNONYMS_MULTI_SELECT_FIELD",
 				value1 = "${addSynonyms}");
 

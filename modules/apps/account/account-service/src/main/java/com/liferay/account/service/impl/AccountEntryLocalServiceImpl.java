@@ -528,6 +528,12 @@ public class AccountEntryLocalServiceImpl
 			params.get("status"), WorkflowConstants.STATUS_APPROVED);
 
 		searchContext.setAttribute("status", status);
+
+		String type = (String)params.get("type");
+
+		if (Validator.isNotNull(type)) {
+			searchContext.setAttribute(Field.TYPE, type);
+		}
 	}
 
 	private void _updateAsset(

@@ -342,7 +342,7 @@ definition {
 			locator1 = "build-test.xml",
 			value1 = "upgrade-legacy-database");
 
-		Pause(locator1 = "180000");
+		Pause(locator1 = "120000");
 
 		Portlet.startServer(
 			deleteLiferayHome = "true",

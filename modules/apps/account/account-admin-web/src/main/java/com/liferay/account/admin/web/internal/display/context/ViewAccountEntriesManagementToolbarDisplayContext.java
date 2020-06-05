@@ -18,9 +18,11 @@ import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountPermission;
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -217,6 +220,14 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 	}
 
 	@Override
+	public List<DropdownItem> getFilterDropdownItems() {
+		List<DropdownItem> filterDropdownItems = super.getFilterDropdownItems();
+
+		addFilterTypeDropdownItems(filterDropdownItems);
+
+		return filterDropdownItems;
+	}
+
 	public List<LabelItem> getFilterLabelItems() {
 		return LabelItemListBuilder.add(
 			() -> !Objects.equals(getNavigation(), "active"),
@@ -274,6 +285,24 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 			AccountActionKeys.ADD_ACCOUNT_ENTRY);
 	}
 
+	protected void addFilterTypeDropdownItems(
+		List<DropdownItem> filterDropdownItems) {
+
+		DropdownGroupItem filterDropdownItemsGroup = new DropdownGroupItem();
+
+		filterDropdownItemsGroup.setDropdownItems(
+			getDropdownItems(
+				getDefaultEntriesMap(
+					ArrayUtil.append(
+						new String[] {"all"},
+						AccountConstants.ACCOUNT_ENTRY_TYPES)),
+				getPortletURL(), "type", getType()));
+		filterDropdownItemsGroup.setLabel(
+			LanguageUtil.get(request, "filter-by-type"));
+
+		filterDropdownItems.add(1, filterDropdownItemsGroup);
+	}
+
 	@Override
 	protected String getNavigation() {
 		return ParamUtil.getString(
@@ -288,6 +317,10 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"name", "parent-account"};
+	}
+
+	protected String getType() {
+		return ParamUtil.getString(liferayPortletRequest, "type", "all");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

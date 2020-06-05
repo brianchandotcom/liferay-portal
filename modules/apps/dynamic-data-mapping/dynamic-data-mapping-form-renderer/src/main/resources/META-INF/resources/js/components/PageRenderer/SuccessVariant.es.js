@@ -14,7 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
 import {setValue} from '../../util/i18n.es';
@@ -78,16 +78,19 @@ export const Page = ({page}) => {
 	const {successPageSettings} = page;
 	const {editingLanguageId} = store;
 
-	const {body, title} = {
-		body:
+	const {initialBody, initialTitle} = {
+		initialBody:
 			(successPageSettings.body &&
 				successPageSettings.body[editingLanguageId]) ||
 			'',
-		title:
+		initialTitle:
 			(successPageSettings.title &&
 				successPageSettings.title[editingLanguageId]) ||
 			'',
 	};
+
+	const [body, setBody] = useState(initialBody);
+	const [title, setTitle] = useState(initialTitle);
 
 	const onChange = (event, setting) => {
 		dispatch({
@@ -105,14 +108,22 @@ export const Page = ({page}) => {
 		<div className="active ddm-form-page form-builder-success-page lfr-ddm-form-page">
 			<input
 				className="form-builder-page-header-title form-control p-0"
-				onChange={(event) => onChange(event, 'title')}
+				maxLength="120"
+				onChange={(event) => {
+					setTitle(event.target.value);
+					onChange(event, 'title');
+				}}
 				type="text"
 				value={title}
 			/>
 
 			<input
 				className="form-builder-page-header-description form-control p-0"
-				onChange={(event) => onChange(event, 'body')}
+				maxLength="120"
+				onChange={(event) => {
+					setBody(event.target.value);
+					onChange(event, 'body');
+				}}
 				type="text"
 				value={body}
 			/>

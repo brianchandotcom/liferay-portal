@@ -265,9 +265,9 @@ definition {
 			key_fragmentName = "${portletName}",
 			locator1 = "Fragment#FRAGMENT_HEADER");
 
-		Type(
-			locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
-			value1 = "");
+		PageEditor.gotoTab(tabName = "Contents");
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 		PageEditor.closeSidebar(tabName = "Fragments and Widgets");
 	}

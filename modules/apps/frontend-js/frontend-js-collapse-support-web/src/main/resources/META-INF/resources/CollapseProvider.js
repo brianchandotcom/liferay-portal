@@ -98,8 +98,7 @@ class CollapseProvider {
 
 		if (this._prefersReducedMotion()) {
 			onHidden();
-		}
-		else {
+		} else {
 			dom.once(panel, this._transitionEndEvent, onHidden);
 
 			panel.classList.add(CssClass.COLLAPSING);
@@ -167,8 +166,7 @@ class CollapseProvider {
 
 		if (this._prefersReducedMotion()) {
 			onShown();
-		}
-		else {
+		} else {
 			dom.once(panel, this._transitionEndEvent, onShown);
 
 			const capitalizedDimension =
@@ -186,7 +184,9 @@ class CollapseProvider {
 	}
 
 	_getPanel(trigger) {
-		return document.querySelector(trigger.getAttribute('href'));
+		return document.querySelector(
+			trigger.getAttribute('href') || trigger.dataset.target
+		);
 	}
 
 	_getTrigger(panel) {
@@ -205,8 +205,7 @@ class CollapseProvider {
 		if (panel) {
 			if (panel.classList.contains(CssClass.SHOW)) {
 				this.hide({panel, trigger});
-			}
-			else {
+			} else {
 				this.show({panel, trigger});
 			}
 		}

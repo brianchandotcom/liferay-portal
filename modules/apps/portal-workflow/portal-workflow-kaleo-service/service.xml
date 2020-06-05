@@ -137,6 +137,7 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
+		<column name="scope" type="String" />
 		<column localized="true" name="title" type="String" />
 		<column name="description" type="String" />
 		<column name="content" type="String" />

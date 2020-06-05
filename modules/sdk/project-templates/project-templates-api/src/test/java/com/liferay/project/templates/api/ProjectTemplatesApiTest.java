@@ -122,7 +122,7 @@ public class ProjectTemplatesApiTest implements BaseProjectTemplatesTestCase {
 	@Test
 	public void testBuildTemplateApiContainsCorrectAuthor() throws Exception {
 		String author = "Test Author";
-		String liferayVersion = "7.3.2";
+		String liferayVersion = getDefaultLiferayVersion();
 		String template = "api";
 		String name = "author-test";
 

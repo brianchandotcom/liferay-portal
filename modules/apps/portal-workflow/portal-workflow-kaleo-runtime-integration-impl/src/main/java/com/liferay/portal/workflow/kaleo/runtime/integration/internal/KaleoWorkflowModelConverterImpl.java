@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
 import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.util.KaleoLogUtil;
@@ -109,6 +110,7 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowDefinition.setModifiedDate(
 			kaleoDefinition.getModifiedDate());
 		defaultWorkflowDefinition.setName(kaleoDefinition.getName());
+		defaultWorkflowDefinition.setScope(kaleoDefinition.getScope());
 		defaultWorkflowDefinition.setTitle(kaleoDefinition.getTitle());
 		defaultWorkflowDefinition.setUserId(kaleoDefinition.getUserId());
 		defaultWorkflowDefinition.setVersion(kaleoDefinition.getVersion());
@@ -131,9 +133,16 @@ public class KaleoWorkflowModelConverterImpl
 				kaleoDefinitionVersion.getKaleoDefinition();
 
 			defaultWorkflowDefinition.setActive(kaleoDefinition.isActive());
+			defaultWorkflowDefinition.setScope(kaleoDefinition.getScope());
 		}
-		catch (Exception exception) {
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException, portalException);
+			}
+
 			defaultWorkflowDefinition.setActive(false);
+			defaultWorkflowDefinition.setScope(
+				WorkflowDefinitionConstants.SCOPE_ALL);
 		}
 
 		String content = kaleoDefinitionVersion.getContent();
@@ -148,10 +157,11 @@ public class KaleoWorkflowModelConverterImpl
 				_kaleoDefinitionVersionLocalService.
 					updateKaleoDefinitionVersion(kaleoDefinitionVersion);
 			}
-			catch (Exception exception) {
+			catch (PortalException portalException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to export definition to string", exception);
+						"Unable to export definition to string",
+						portalException);
 				}
 			}
 		}

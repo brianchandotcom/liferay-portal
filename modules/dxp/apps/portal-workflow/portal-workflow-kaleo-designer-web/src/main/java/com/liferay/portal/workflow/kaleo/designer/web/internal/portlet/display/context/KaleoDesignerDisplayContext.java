@@ -47,20 +47,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.exception.IncompleteWorkflowInstancesException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDefinitionVersionConstants;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDefinitionVersionPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearch;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.util.KaleoDefinitionVersionActivePredicate;
-import com.liferay.portal.workflow.kaleo.designer.web.internal.util.KaleoDefinitionVersionViewPermissionPredicate;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionScopePredicate;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionViewPermissionPredicate;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
@@ -286,7 +283,9 @@ public class KaleoDesignerDisplayContext {
 			new KaleoDefinitionVersionModifiedDateComparator(false));
 	}
 
-	public KaleoDefinitionVersionSearch getKaleoDefinitionVersionSearch() {
+	public KaleoDefinitionVersionSearch getKaleoDefinitionVersionSearch(
+		int status) {
+
 		KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch =
 			new KaleoDefinitionVersionSearch(
 				_kaleoDesignerRequestHelper.getLiferayPortletRequest(),
@@ -302,7 +301,8 @@ public class KaleoDesignerDisplayContext {
 		kaleoDefinitionVersionSearch.setOrderByComparator(orderByComparator);
 		kaleoDefinitionVersionSearch.setOrderByType(orderByType);
 
-		_setKaleoDefinitionVersionSearchResults(kaleoDefinitionVersionSearch);
+		_setKaleoDefinitionVersionSearchResults(
+			kaleoDefinitionVersionSearch, status);
 
 		return kaleoDefinitionVersionSearch;
 	}
@@ -526,8 +526,9 @@ public class KaleoDesignerDisplayContext {
 			kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId()));
 	}
 
-	public int getTotalItems() {
-		SearchContainer<?> searchContainer = getKaleoDefinitionVersionSearch();
+	public int getTotalItems(int status) {
+		SearchContainer<?> searchContainer = getKaleoDefinitionVersionSearch(
+			status);
 
 		return searchContainer.getTotal();
 	}
@@ -762,14 +763,6 @@ public class KaleoDesignerDisplayContext {
 		return portletURL;
 	}
 
-	protected boolean hasResults() {
-		if (getTotalItems() > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	protected boolean isSearch() {
 		if (Validator.isNotNull(getKeywords())) {
 			return true;
@@ -788,30 +781,14 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	private void _setKaleoDefinitionVersionSearchResults(
-		SearchContainer<KaleoDefinitionVersion> searchContainer) {
-
-		String definitionsNavigation = getDefinitionsNavigation();
-
-		int displayedStatus = KaleoDefinitionVersionConstants.STATUS_ALL;
-
-		if (StringUtil.equals(definitionsNavigation, "published")) {
-			displayedStatus = KaleoDefinitionVersionConstants.STATUS_PUBLISHED;
-		}
-		else if (StringUtil.equals(definitionsNavigation, "not-published")) {
-			displayedStatus =
-				KaleoDefinitionVersionConstants.STATUS_NOT_PUBLISHED;
-		}
+		SearchContainer<KaleoDefinitionVersion> searchContainer, int status) {
 
 		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
 			_kaleoDefinitionVersionLocalService.
 				getLatestKaleoDefinitionVersions(
 					_kaleoDesignerRequestHelper.getCompanyId(), getKeywords(),
-					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, searchContainer.getOrderByComparator());
-
-		kaleoDefinitionVersions = ListUtil.filter(
-			kaleoDefinitionVersions,
-			new KaleoDefinitionVersionActivePredicate(displayedStatus));
+					status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					searchContainer.getOrderByComparator());
 
 		kaleoDefinitionVersions = ListUtil.filter(
 			kaleoDefinitionVersions,

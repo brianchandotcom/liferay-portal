@@ -21,17 +21,6 @@
 </liferay-portlet:renderURL>
 
 <%
-String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
-
-int displayedStatus = KaleoDefinitionVersionConstants.STATUS_ALL;
-
-if (StringUtil.equals(definitionsNavigation, "published")) {
-	displayedStatus = KaleoDefinitionVersionConstants.STATUS_PUBLISHED;
-}
-else if (StringUtil.equals(definitionsNavigation, "not-published")) {
-	displayedStatus = KaleoDefinitionVersionConstants.STATUS_NOT_PUBLISHED;
-}
-
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 

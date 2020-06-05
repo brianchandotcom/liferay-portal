@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.web.internal.util.filter;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.workflow.web.internal.constants.WorkflowDefinitionConstants;
 
 import java.util.function.Predicate;
 
@@ -31,10 +31,10 @@ public class WorkflowDefinitionActivePredicate
 
 	@Override
 	public boolean test(WorkflowDefinition workflowDefinition) {
-		if (_status == WorkflowDefinitionConstants.STATUS_ALL) {
+		if (_status == WorkflowConstants.STATUS_ANY) {
 			return true;
 		}
-		else if (_status == WorkflowDefinitionConstants.STATUS_PUBLISHED) {
+		else if (_status == WorkflowConstants.STATUS_APPROVED) {
 			return workflowDefinition.isActive();
 		}
 

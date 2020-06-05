@@ -85,3 +85,35 @@
 	background-color: transparent;
 	border: 0;
 }
+
+.component-slider .carousel-navigation {
+	bottom: 10px;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	list-style: none;
+	padding-left: 0;
+	position: absolute;
+	right: 0;
+	z-index: 15;
+}
+
+.component-slider .carousel-navigation button {
+	background-color: rgba(255, 255, 255, 0.5);
+	border: 0;
+	flex: 0 1 auto;
+	height: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+	position: relative;
+	width: 30px;
+}
+
+.component-slider .carousel-navigation button:focus {
+	outline: 0;
+	text-decoration: none;
+}
+
+.component-slider .carousel-navigation button.active {
+	background-color: rgba(255, 255, 255, 1);
+}

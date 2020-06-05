@@ -5,7 +5,7 @@ const INTERVAL = 5000;
 
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 const indicators = [].slice.call(
-	document.querySelectorAll('.carousel-indicators li')
+	document.querySelectorAll('.carousel-navigation button')
 );
 const items = [].slice.call(document.querySelectorAll('.carousel-item'));
 
@@ -14,7 +14,7 @@ const prev = document.querySelector('.carousel-control-prev');
 
 const getActiveElements = function () {
 	const activeIndicator = document.querySelector(
-		'.carousel-indicators .active'
+		'.carousel-navigation .active'
 	);
 	const activeItem = document.querySelector('.carousel-item.active');
 	const indexActiveItem = items.indexOf(activeItem);

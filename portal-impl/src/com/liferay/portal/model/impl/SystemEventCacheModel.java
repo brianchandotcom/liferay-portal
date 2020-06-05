@@ -77,10 +77,12 @@ public class SystemEventCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", systemEventId=");
 		sb.append(systemEventId);
 		sb.append(", groupId=");
@@ -119,6 +121,7 @@ public class SystemEventCacheModel
 		SystemEventImpl systemEventImpl = new SystemEventImpl();
 
 		systemEventImpl.setMvccVersion(mvccVersion);
+		systemEventImpl.setCtCollectionId(ctCollectionId);
 		systemEventImpl.setSystemEventId(systemEventId);
 		systemEventImpl.setGroupId(groupId);
 		systemEventImpl.setCompanyId(companyId);
@@ -171,6 +174,8 @@ public class SystemEventCacheModel
 
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		systemEventId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -199,6 +204,8 @@ public class SystemEventCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(systemEventId);
 
@@ -245,6 +252,7 @@ public class SystemEventCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long systemEventId;
 	public long groupId;
 	public long companyId;

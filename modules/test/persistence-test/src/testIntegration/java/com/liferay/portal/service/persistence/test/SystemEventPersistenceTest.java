@@ -123,6 +123,8 @@ public class SystemEventPersistenceTest {
 
 		newSystemEvent.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSystemEvent.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newSystemEvent.setGroupId(RandomTestUtil.nextLong());
 
 		newSystemEvent.setCompanyId(RandomTestUtil.nextLong());
@@ -157,6 +159,9 @@ public class SystemEventPersistenceTest {
 		Assert.assertEquals(
 			existingSystemEvent.getMvccVersion(),
 			newSystemEvent.getMvccVersion());
+		Assert.assertEquals(
+			existingSystemEvent.getCtCollectionId(),
+			newSystemEvent.getCtCollectionId());
 		Assert.assertEquals(
 			existingSystemEvent.getSystemEventId(),
 			newSystemEvent.getSystemEventId());
@@ -251,10 +256,10 @@ public class SystemEventPersistenceTest {
 
 	protected OrderByComparator<SystemEvent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SystemEvent", "mvccVersion", true, "systemEventId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "classNameId", true, "classPK", true,
-			"classUuid", true, "referrerClassNameId", true,
+			"SystemEvent", "mvccVersion", true, "ctCollectionId", true,
+			"systemEventId", true, "groupId", true, "companyId", true, "userId",
+			true, "userName", true, "createDate", true, "classNameId", true,
+			"classPK", true, "classUuid", true, "referrerClassNameId", true,
 			"parentSystemEventId", true, "systemEventSetKey", true, "type",
 			true);
 	}
@@ -474,6 +479,8 @@ public class SystemEventPersistenceTest {
 		SystemEvent systemEvent = _persistence.create(pk);
 
 		systemEvent.setMvccVersion(RandomTestUtil.nextLong());
+
+		systemEvent.setCtCollectionId(RandomTestUtil.nextLong());
 
 		systemEvent.setGroupId(RandomTestUtil.nextLong());
 

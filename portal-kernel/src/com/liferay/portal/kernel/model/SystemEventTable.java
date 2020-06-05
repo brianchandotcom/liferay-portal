@@ -35,6 +35,8 @@ public class SystemEventTable extends BaseTable<SystemEventTable> {
 
 	public final Column<SystemEventTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<SystemEventTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SystemEventTable, Long> systemEventId = createColumn(
 		"systemEventId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SystemEventTable, Long> groupId = createColumn(

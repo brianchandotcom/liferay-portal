@@ -486,8 +486,10 @@ create index IX_58C2E7DA on SocialRequest (uuid_[$COLUMN_LENGTH:75$], companyId,
 create index IX_684858A on SocialRequest (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_350595C on SocialRequest (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
-create index IX_FFCBB747 on SystemEvent (groupId, classNameId, classPK, type_);
-create index IX_A19C89FF on SystemEvent (groupId, systemEventSetKey);
+create index IX_46E892C on SystemEvent (groupId, classNameId, classPK, ctCollectionId);
+create index IX_6C051FA5 on SystemEvent (groupId, classNameId, classPK, type_, ctCollectionId);
+create index IX_E9FA8197 on SystemEvent (groupId, ctCollectionId);
+create index IX_C009825D on SystemEvent (groupId, systemEventSetKey, ctCollectionId);
 
 create index IX_622C8165 on Team (groupId, ctCollectionId);
 create unique index IX_D424D1E4 on Team (groupId, name[$COLUMN_LENGTH:75$], ctCollectionId);

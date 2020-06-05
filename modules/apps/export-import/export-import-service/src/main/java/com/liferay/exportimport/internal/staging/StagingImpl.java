@@ -14,7 +14,6 @@
 
 package com.liferay.exportimport.internal.staging;
 
-import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.changeset.model.ChangesetCollection;
 import com.liferay.changeset.model.ChangesetEntry;
 import com.liferay.changeset.service.ChangesetCollectionLocalService;
@@ -3992,9 +3991,6 @@ public class StagingImpl implements Staging {
 	private CompanyLocalService _companyLocalService;
 
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
 	private DLValidator _dlValidator;

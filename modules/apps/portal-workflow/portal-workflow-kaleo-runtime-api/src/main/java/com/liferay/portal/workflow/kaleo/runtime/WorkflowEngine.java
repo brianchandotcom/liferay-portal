@@ -136,12 +136,15 @@ public interface WorkflowEngine {
 	 *             OrderByComparator, ServiceContext)}
 	 */
 	@Deprecated
-	public List<WorkflowInstance> search(
+	public default List<WorkflowInstance> search(
 			Long userId, String assetClassName, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,
 			OrderByComparator<WorkflowInstance> orderByComparator,
 			ServiceContext serviceContext)
-		throws WorkflowException;
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public default List<WorkflowInstance> search(
 			Long userId, String assetClassName, String assetTitle,
@@ -160,11 +163,14 @@ public interface WorkflowEngine {
 	 *             ServiceContext)}
 	 */
 	@Deprecated
-	public int searchCount(
+	public default int searchCount(
 			Long userId, String assetClassName, String nodeName,
 			String kaleoDefinitionName, Boolean completed,
 			ServiceContext serviceContext)
-		throws WorkflowException;
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public default int searchCount(
 			Long userId, String assetClassName, String assetTitle,

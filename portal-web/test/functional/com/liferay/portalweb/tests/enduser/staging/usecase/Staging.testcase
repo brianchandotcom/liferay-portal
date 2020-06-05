@@ -1057,8 +1057,6 @@ definition {
 	@description = "This is a use case for LPS-96155."
 	@priority = "4"
 	test PublishReviewedPageRevision {
-		property portal.upstream = "quarantine";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Staging Test Page 1");
@@ -3534,8 +3532,6 @@ definition {
 	@description = "This is a use case for LPS-97827."
 	@priority = "2"
 	test ViewParentPageNameAfterPublishChangesInChildPage {
-		property portal.upstream = "quarantine";
-
 		JSONLayout.addPublicLayout(
 			groupName = "Site Name",
 			layoutName = "Child Page A",
@@ -3835,7 +3831,6 @@ definition {
 	@description = "This is a use case for LPS-96721."
 	@priority = "4"
 	test ViewPublishedContentWithSpecialCharsInDocumentTitle {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Staging#ViewPublishedContentWithSpecialCharsInDocumentTitle";
 
 		Staging.openStagingAdmin(siteURLKey = "site-name");

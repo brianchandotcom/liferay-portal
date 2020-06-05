@@ -193,6 +193,21 @@ public class LayoutsAdminDisplayContext {
 				ActionRequest.ACTION_NAME, "/layout/add_simple_layout");
 		}
 
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
+			String collectionType = ParamUtil.getString(
+				httpServletRequest, "collectionType");
+
+			portletURL.setParameter("collectionType", collectionType);
+
+			String collectionPK = ParamUtil.getString(
+				httpServletRequest, "collectionPK");
+
+			portletURL.setParameter("collectionPK", collectionPK);
+
+			portletURL.setParameter(
+				ActionRequest.ACTION_NAME, "/layout/add_collection_layout");
+		}
+
 		return portletURL.toString();
 	}
 
@@ -1517,7 +1532,13 @@ public class LayoutsAdminDisplayContext {
 			return _backURL;
 		}
 
-		_backURL = ParamUtil.getString(_liferayPortletRequest, "backURL");
+		String backURL = ParamUtil.getString(_liferayPortletRequest, "backURL");
+
+		if (Validator.isNull(backURL)) {
+			backURL = getRedirect();
+		}
+
+		_backURL = backURL;
 
 		return _backURL;
 	}

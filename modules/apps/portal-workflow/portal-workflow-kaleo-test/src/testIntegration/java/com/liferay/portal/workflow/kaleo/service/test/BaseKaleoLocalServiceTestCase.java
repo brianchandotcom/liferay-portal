@@ -89,7 +89,8 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			_kaleoDefinitionLocalService.addKaleoDefinition(
 				StringUtil.randomString(), StringUtil.randomString(),
 				StringUtil.randomString(),
-				_read("legal-marketing-definition.xml"), 1, serviceContext);
+				_read("legal-marketing-definition.xml"), StringPool.BLANK, 1,
+				serviceContext);
 
 		_kaleoDefinitionLocalService.activateKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId(), serviceContext);

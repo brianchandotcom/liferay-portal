@@ -173,7 +173,7 @@ List<String> domains = accountEntryDisplay.getDomains();
 		});
 	}
 
-	Liferay.provide(window, 'addRow', function (domain) {
+	window.addRow = function (domain) {
 		var rowColumns = [];
 
 		rowColumns.push(Liferay.Util.escape(domain));
@@ -186,5 +186,5 @@ List<String> domains = accountEntryDisplay.getDomains();
 		searchContainer.addRow(rowColumns, domain);
 
 		domains.push(domain);
-	});
+	};
 </aui:script>

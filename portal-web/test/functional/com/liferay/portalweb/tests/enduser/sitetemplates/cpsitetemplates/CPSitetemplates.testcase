@@ -48,7 +48,10 @@ definition {
 	@priority = "4"
 	test AddSiteTemplateApplySiteTemplateChangesToSite {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 		property portal.release = "false";
+
+		// Quanratine for LPS-114960
 
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 

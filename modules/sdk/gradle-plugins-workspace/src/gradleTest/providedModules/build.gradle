@@ -2,17 +2,17 @@ task runGradleTest
 
 dependencies {
 	providedModules group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.10.3"
-	providedModules group: "com.google.guava", name: "guava", version: "23.0"
+	providedModules group: "com.thoughtworks.qdox", name: "qdox"
 }
 
 runGradleTest {
 	dependsOn initBundle
 
 	doLast {
-		configurations.providedModules.dependencies.each {
-			File expectedFile = new File(initBundle.destinationDir, "osgi/modules/${it.name}-${it.version}.jar")
+		File jacksonAnnotationsFile = new File(initBundle.destinationDir, "osgi/modules/jackson-annotations-2.10.3.jar")
+		File qdoxFile = new File(initBundle.destinationDir, "osgi/modules/qdox-1.12.1.jar")
 
-			assert expectedFile.exists()
-		}
+		assert jacksonAnnotationsFile.exists()
+		assert qdoxFile.exists()
 	}
 }

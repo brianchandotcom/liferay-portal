@@ -2511,7 +2511,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _configureDependenciesGroupPortal(
 		final Project project, final File appBndFile, String configurationName,
-		boolean publishing) {
+		final boolean publishing) {
 
 		final Logger logger = project.getLogger();
 
@@ -2547,7 +2547,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					String compatVersion = GradleUtil.getProperty(
 						project, "build.compat.version." + name, (String)null);
 
-					if (Validator.isNotNull(compatVersion)) {
+					if (Validator.isNotNull(compatVersion) && publishing) {
 						boolean fixDeliveryMethodCore = false;
 
 						if (appBndFile != null) {

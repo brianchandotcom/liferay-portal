@@ -53,6 +53,8 @@ public class UpstreamFailureUtil {
 
 			String jobVariant = failedBatchJSONObject.getString("jobVariant");
 
+			jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
+
 			if (type.equals("build")) {
 				upstreamFailures.add(
 					_formatUpstreamBuildFailure(

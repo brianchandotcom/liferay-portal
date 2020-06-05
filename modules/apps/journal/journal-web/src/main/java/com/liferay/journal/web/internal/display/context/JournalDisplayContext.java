@@ -357,6 +357,13 @@ public class JournalDisplayContext {
 			availableActions.add("moveEntries");
 		}
 
+		if (JournalArticlePermission.contains(
+			_themeDisplay.getPermissionChecker(), article,
+			ActionKeys.VIEW)) {
+
+			availableActions.add("exportTranslation");
+		}
+
 		return com.liferay.petra.string.StringUtil.merge(
 			availableActions, StringPool.COMMA);
 	}

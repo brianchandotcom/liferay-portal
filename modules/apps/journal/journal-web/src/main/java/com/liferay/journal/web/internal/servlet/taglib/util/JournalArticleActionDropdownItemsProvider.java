@@ -142,7 +142,7 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission && hasUpdatePermission,
 			_getViewHistoryArticleActionUnsafeConsumer()
 		).add(
-			() -> hasViewPermission && hasUpdatePermission,
+			() -> hasViewPermission,
 			_getExportForTranslationActionUnsafeConsumer()
 		).add(
 			() -> hasViewPermission && (availableLanguageIds.length > 1),

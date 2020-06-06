@@ -141,7 +141,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 			fragmentEntry.getFragmentEntryId(),
 			persistedFragmentEntryLink.getFragmentEntryId());
 		Assert.assertEquals(
-			_layout.getPlid(), persistedFragmentEntryLink.getClassPK());
+			_layout.getPlid(), persistedFragmentEntryLink.getPlid());
 		Assert.assertEquals(
 			fragmentEntry.getCss(), persistedFragmentEntryLink.getCss());
 		Assert.assertEquals(

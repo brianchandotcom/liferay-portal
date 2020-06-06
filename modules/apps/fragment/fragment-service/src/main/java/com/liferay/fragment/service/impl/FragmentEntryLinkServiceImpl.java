@@ -95,8 +95,7 @@ public class FragmentEntryLinkServiceImpl
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
 		_checkPermission(
-			fragmentEntryLink.getGroupId(), fragmentEntryLink.getClassPK(),
-			false);
+			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), false);
 
 		return fragmentEntryLinkLocalService.deleteFragmentEntryLink(
 			fragmentEntryLinkId);
@@ -121,8 +120,7 @@ public class FragmentEntryLinkServiceImpl
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
 		_checkPermission(
-			fragmentEntryLink.getGroupId(), fragmentEntryLink.getClassPK(),
-			true);
+			fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(), true);
 
 		return fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			fragmentEntryLinkId, editableValues, updateClassedModel);
@@ -170,7 +168,7 @@ public class FragmentEntryLinkServiceImpl
 				fragmentEntryLinkPersistence.findByPrimaryKey(entry.getKey());
 
 			_checkPermission(
-				fragmentEntryLink.getGroupId(), fragmentEntryLink.getClassPK(),
+				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
 				true);
 		}
 

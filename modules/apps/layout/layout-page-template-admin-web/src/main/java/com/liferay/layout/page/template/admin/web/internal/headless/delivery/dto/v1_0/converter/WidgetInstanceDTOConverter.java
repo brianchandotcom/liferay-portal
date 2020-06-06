@@ -66,12 +66,12 @@ public class WidgetInstanceDTOConverter {
 		return new WidgetInstance() {
 			{
 				widgetConfig = _getWidgetConfig(
-					fragmentEntryLink.getClassPK(), portletId);
+					fragmentEntryLink.getPlid(), portletId);
 				widgetInstanceId = _getWidgetInstanceId(
 					fragmentEntryLink, portletId);
 				widgetName = PortletIdCodec.decodePortletName(portletId);
 				widgetPermissions = _getWidgetPermissions(
-					fragmentEntryLink.getClassPK(), portletId);
+					fragmentEntryLink.getPlid(), portletId);
 			}
 		};
 	}

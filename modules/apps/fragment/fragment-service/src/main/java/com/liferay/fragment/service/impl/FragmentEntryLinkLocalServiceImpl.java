@@ -605,7 +605,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setEditableValues(editableValues);
 
 		if (updateClassedModel) {
-			updateClassedModel(fragmentEntryLink.getClassPK());
+			updateClassedModel(fragmentEntryLink.getPlid());
 		}
 
 		return fragmentEntryLinkPersistence.update(fragmentEntryLink);
@@ -678,7 +678,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		}
 
 		if (fragmentEntryLink != null) {
-			updateClassedModel(fragmentEntryLink.getClassPK());
+			updateClassedModel(fragmentEntryLink.getPlid());
 		}
 	}
 
@@ -697,7 +697,7 @@ public class FragmentEntryLinkLocalServiceImpl
 				oldFragmentEntryLink.getGroupId(),
 				oldFragmentEntryLink.getFragmentEntryId(),
 				_portal.getClassNameId(Layout.class),
-				oldFragmentEntryLink.getClassPK());
+				oldFragmentEntryLink.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLink.setCss(fragmentEntry.getCss());

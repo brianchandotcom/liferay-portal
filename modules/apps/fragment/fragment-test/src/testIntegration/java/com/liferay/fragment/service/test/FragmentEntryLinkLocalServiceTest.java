@@ -123,7 +123,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 
-		Assert.assertEquals(_layout.getPlid(), fragmentEntryLink.getClassPK());
+		Assert.assertEquals(_layout.getPlid(), fragmentEntryLink.getPlid());
 
 		Assert.assertEquals(
 			_fragmentEntry.getCss(), fragmentEntryLink.getCss());

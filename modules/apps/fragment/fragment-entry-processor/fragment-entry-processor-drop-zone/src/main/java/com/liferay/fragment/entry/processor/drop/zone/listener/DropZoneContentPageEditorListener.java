@@ -104,7 +104,7 @@ public class DropZoneContentPageEditorListener
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					fragmentEntryLink.getGroupId(),
-					fragmentEntryLink.getClassPK());
+					fragmentEntryLink.getPlid());
 
 		if (layoutPageTemplateStructure == null) {
 			return null;
@@ -186,7 +186,7 @@ public class DropZoneContentPageEditorListener
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				fragmentEntryLink.getGroupId(), fragmentEntryLink.getClassPK(),
+				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
 				fragmentEntryLink.getSegmentsExperienceId(),
 				layoutStructure.toString());
 	}

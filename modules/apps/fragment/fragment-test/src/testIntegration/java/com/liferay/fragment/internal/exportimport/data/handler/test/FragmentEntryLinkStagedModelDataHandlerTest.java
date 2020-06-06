@@ -90,9 +90,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			fragmentEntryLink.getFragmentEntryId(),
-			fragmentEntryLink.getClassPK(), "css", "html", "js",
-			fragmentEntryLink.getConfiguration(),
+			fragmentEntryLink.getFragmentEntryId(), fragmentEntryLink.getPlid(),
+			"css", "html", "js", fragmentEntryLink.getConfiguration(),
 			fragmentEntryLink.getEditableValues(),
 			fragmentEntryLink.getNamespace(),
 			fragmentEntryLink.getPosition() + 1, serviceContext);

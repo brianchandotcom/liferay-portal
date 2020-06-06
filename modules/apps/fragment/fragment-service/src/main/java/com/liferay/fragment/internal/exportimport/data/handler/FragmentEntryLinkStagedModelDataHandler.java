@@ -78,7 +78,7 @@ public class FragmentEntryLinkStagedModelDataHandler
 
 		StagedModel referenceStagedModel =
 			referenceStagedModelRepository.getStagedModel(
-				fragmentEntryLink.getClassPK());
+				fragmentEntryLink.getPlid());
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, fragmentEntryLink, referenceStagedModel,

@@ -60,7 +60,7 @@ public class FragmentEntryLinkModelListener
 		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 			_portal.getClassNameId(FragmentEntryLink.class),
-			fragmentEntryLink.getClassPK());
+			fragmentEntryLink.getPlid());
 
 		try {
 			_deleteDDMTemplateLinks(fragmentEntryLink);
@@ -218,7 +218,7 @@ public class FragmentEntryLinkModelListener
 		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 			String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 			_portal.getClassNameId(FragmentEntryLink.class),
-			fragmentEntryLink.getClassPK());
+			fragmentEntryLink.getPlid());
 
 		Set<InfoDisplayObjectProvider<?>> infoDisplayObjectProviders =
 			ContentUtil.getFragmentEntryLinkMappedInfoDisplayObjectProviders(
@@ -235,7 +235,7 @@ public class FragmentEntryLinkModelListener
 						String.valueOf(
 							fragmentEntryLink.getFragmentEntryLinkId()),
 						_portal.getClassNameId(FragmentEntryLink.class),
-						fragmentEntryLink.getClassPK());
+						fragmentEntryLink.getPlid());
 
 			if (layoutClassedModelUsage != null) {
 				continue;
@@ -253,7 +253,7 @@ public class FragmentEntryLinkModelListener
 				infoDisplayObjectProvider.getClassPK(),
 				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				_portal.getClassNameId(FragmentEntryLink.class),
-				fragmentEntryLink.getClassPK(), serviceContext);
+				fragmentEntryLink.getPlid(), serviceContext);
 		}
 	}
 

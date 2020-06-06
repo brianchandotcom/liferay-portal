@@ -1321,7 +1321,7 @@ public class ContentPageEditorDisplayContext {
 					).put(
 						"masterLayout",
 						layout.getMasterLayoutPlid() ==
-							fragmentEntryLink.getClassPK()
+							fragmentEntryLink.getPlid()
 					).putAll(
 						_getFragmentEntry(
 							fragmentEntryLink, fragmentEntry, content)

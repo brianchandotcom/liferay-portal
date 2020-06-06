@@ -77,7 +77,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
 					fragmentEntryLink.getGroupId(),
-					fragmentEntryLink.getClassPK());
+					fragmentEntryLink.getPlid());
 
 		if (layoutPageTemplateStructure == null) {
 			return html;
@@ -124,7 +124,7 @@ public class DropZoneFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryProcessorContext.getHttpServletRequest(),
 				fragmentEntryProcessorContext.getHttpServletResponse(),
 				fieldValuesOptional.orElse(null),
-				fragmentEntryLink.getGroupId(), fragmentEntryLink.getClassPK(),
+				fragmentEntryLink.getGroupId(), fragmentEntryLink.getPlid(),
 				dropZoneItemIds.get(i), fragmentEntryProcessorContext.getMode(),
 				true);
 

@@ -277,7 +277,7 @@ public class DuplicateItemMVCActionCommand
 				fragmentEntryLink.getOriginalFragmentEntryLinkId(),
 				fragmentEntryLink.getFragmentEntryId(),
 				fragmentEntryLink.getSegmentsExperienceId(),
-				fragmentEntryLink.getClassPK(), fragmentEntryLink.getCss(),
+				fragmentEntryLink.getPlid(), fragmentEntryLink.getCss(),
 				fragmentEntryLink.getHtml(), fragmentEntryLink.getJs(),
 				fragmentEntryLink.getConfiguration(),
 				editableValuesJSONObject.toString(), namespace, 0,

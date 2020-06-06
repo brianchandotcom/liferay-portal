@@ -97,7 +97,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				_portletPreferencesLocalService.deletePortletPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					fragmentEntryLink.getClassPK(),
+					fragmentEntryLink.getPlid(),
 					_getPortletId(
 						portletName, fragmentEntryLink.getNamespace(),
 						element.attr("id")));
@@ -251,7 +251,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				currentFragmentEntryLink.getGroupId(),
-				currentFragmentEntryLink.getClassPK());
+				currentFragmentEntryLink.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			if ((currentFragmentEntryLink.getFragmentEntryLinkId() ==
@@ -336,7 +336,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				fragmentEntryLink.getCompanyId(),
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				fragmentEntryLink.getClassPK(), defaultPortletId,
+				fragmentEntryLink.getPlid(), defaultPortletId,
 				defaultPreferences);
 
 		String portletId = _getPortletId(
@@ -355,7 +355,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 					fragmentEntryLink.getCompanyId(),
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					fragmentEntryLink.getClassPK(), portletId,
+					fragmentEntryLink.getPlid(), portletId,
 					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 
 			_updateLayoutPortletSetup(

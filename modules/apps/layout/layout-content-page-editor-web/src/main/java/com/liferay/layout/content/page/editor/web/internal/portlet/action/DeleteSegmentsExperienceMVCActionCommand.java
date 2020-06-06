@@ -85,13 +85,13 @@ public class DeleteSegmentsExperienceMVCActionCommand
 						fragmentEntryLink.getCompanyId(),
 						PortletKeys.PREFS_OWNER_ID_DEFAULT,
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						fragmentEntryLink.getClassPK(), portletId);
+						fragmentEntryLink.getPlid(), portletId);
 
 				if (jxPortletPreferences != null) {
 					_portletPreferencesLocalService.deletePortletPreferences(
 						PortletKeys.PREFS_OWNER_ID_DEFAULT,
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						fragmentEntryLink.getClassPK(), portletId);
+						fragmentEntryLink.getPlid(), portletId);
 				}
 			}
 

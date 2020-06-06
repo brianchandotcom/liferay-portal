@@ -28,7 +28,9 @@ export * as FormSupport from './js/components/FormRenderer/FormSupport.es';
 
 export {PageProvider, usePage} from './js/hooks/usePage.es';
 
-export {EVENT_TYPES, FormProvider, useForm} from './js/hooks/useForm.es';
+export {FormProvider, useForm} from './js/hooks/useForm.es';
+
+export {EVENT_TYPES} from './js/actions/types.es';
 
 export * as DefaultVariant from './js/components/PageRenderer/DefaultVariant.es';
 

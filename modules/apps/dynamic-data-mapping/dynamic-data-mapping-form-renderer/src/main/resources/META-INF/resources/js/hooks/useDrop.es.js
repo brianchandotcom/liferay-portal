@@ -14,7 +14,8 @@
 
 import {useDrop as useDndDrop} from 'react-dnd';
 
-import {EVENT_TYPES, useForm} from '../hooks/useForm.es';
+import {EVENT_TYPES} from '../actions/types.es';
+import {useForm} from '../hooks/useForm.es';
 import {usePage} from './usePage.es';
 
 const defaultSpec = {

@@ -12,25 +12,26 @@
  * details.
  */
 
-import React, {useContext, useReducer} from 'react';
+import {useIsMounted} from 'frontend-js-react-web';
+import {useRef} from 'react';
 
-import {createReducer} from '../reducers/index.es';
-import {useThunk} from './useThunk.es';
+export const useThunk = ([state, dispatch]) => {
+	const isMounted = useIsMounted();
 
-const FormContext = React.createContext({});
+	const thunkDispatch = useRef((action) => {
+		if (isMounted()) {
+			if (typeof action === 'function') {
+				return action((payload) => {
+					if (isMounted()) {
+						dispatch(payload);
+					}
+				});
+			}
+			else {
+				dispatch(action);
+			}
+		}
+	});
 
-export const FormProvider = ({children, onEvent, value}) => {
-	const [state, dispatch] = useThunk(
-		useReducer(createReducer(onEvent), value)
-	);
-
-	return (
-		<FormContext.Provider value={dispatch}>
-			{children(state)}
-		</FormContext.Provider>
-	);
-};
-
-export const useForm = () => {
-	return useContext(FormContext);
+	return [state, thunkDispatch.current];
 };

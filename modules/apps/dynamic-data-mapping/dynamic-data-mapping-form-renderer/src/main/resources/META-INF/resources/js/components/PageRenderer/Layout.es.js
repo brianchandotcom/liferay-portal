@@ -14,9 +14,10 @@
 
 import React from 'react';
 
-import {EVENT_TYPES, useForm} from '../../hooks/useForm.es';
+import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
 import {Field} from '../Field/Field.es';
+import {EVENT_TYPES} from '../actions/types.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
 export const Layout = ({components: Components = DefaultVariant, rows}) => {

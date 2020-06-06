@@ -16,7 +16,8 @@ import ClayPagination from '@clayui/pagination';
 import classnames from 'classnames';
 import React from 'react';
 
-import {EVENT_TYPES, useForm} from '../hooks/useForm.es';
+import {EVENT_TYPES} from '../actions/types.es';
+import {useForm} from '../hooks/useForm.es';
 
 export const Pagination = ({activePage, pages}) => {
 	const dispatch = useForm();

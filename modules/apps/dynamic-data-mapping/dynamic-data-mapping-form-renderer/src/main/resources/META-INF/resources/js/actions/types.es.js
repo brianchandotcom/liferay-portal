@@ -12,25 +12,24 @@
  * details.
  */
 
-import React, {useContext, useReducer} from 'react';
+export const EVENT_TYPES = {
+	CHANGE_ACTIVE_PAGE: 'activePageUpdated',
+	FIELD_BLUR: 'fieldBlurred',
+	FIELD_CHANGE: 'fieldEdited',
+	FIELD_DROP: 'fieldDrop',
+	FIELD_EVALUATED: 'evaluated',
+	FIELD_EVALUATION_ERROR: 'evaluationError',
+	FIELD_FOCUS: 'fieldFocused',
+	FIELD_REMOVED: 'fieldRemoved',
+	FIELD_REPEATED: 'fieldRepeated',
+	PAGE_ADDED: 'pageAdded',
+	PAGE_DELETED: 'pageDeleted',
+	PAGE_RESET: 'pageReset',
+	PAGE_SWAPPED: 'pagesSwapped',
+	PAGE_VALIDATION_FAILED: 'pageValidationFailed',
+	SUCCESS_CHANGED: 'successPageChanged',
 
-import {createReducer} from '../reducers/index.es';
-import {useThunk} from './useThunk.es';
+	// Internal events
 
-const FormContext = React.createContext({});
-
-export const FormProvider = ({children, onEvent, value}) => {
-	const [state, dispatch] = useThunk(
-		useReducer(createReducer(onEvent), value)
-	);
-
-	return (
-		<FormContext.Provider value={dispatch}>
-			{children(state)}
-		</FormContext.Provider>
-	);
-};
-
-export const useForm = () => {
-	return useContext(FormContext);
+	UPDATE_PAGES: 'update_pages',
 };

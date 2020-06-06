@@ -14,8 +14,9 @@
 
 import React, {useEffect, useRef} from 'react';
 
-import {EVENT_TYPES, useForm} from '../../hooks/useForm.es';
+import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
+import {EVENT_TYPES} from '../actions/types.es';
 import MetalFieldAdapter from './MetalFieldAdapter.es';
 
 class NoRender extends React.Component {

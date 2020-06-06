@@ -36,6 +36,10 @@ import java.util.List;
 public class LayoutPageTemplateEntryImpl
 	extends LayoutPageTemplateEntryBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getContent() throws PortalException {
 		List<FragmentEntryLink> fragmentEntryLinks =

@@ -51,6 +51,14 @@ public interface FragmentEntryLinkService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link FragmentEntryLinkServiceUtil} to access the fragment entry link remote service. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentEntryLinkServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, String,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public FragmentEntryLink addFragmentEntryLink(
 			long groupId, long originalFragmentEntryLinkId,
 			long fragmentEntryId, long segmentsExperienceId, long classNameId,
@@ -59,19 +67,12 @@ public interface FragmentEntryLinkService extends BaseService {
 			int position, String rendererKey, ServiceContext serviceContext)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFragmentEntryLink(long, long, long, long, long, long,
-	 String, String, String, String, String, String, int, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
 	public FragmentEntryLink addFragmentEntryLink(
 			long groupId, long originalFragmentEntryLinkId,
-			long fragmentEntryId, long classNameId, long classPK, String css,
-			String html, String js, String configuration, String editableValues,
-			String namespace, int position, String rendererKey,
-			ServiceContext serviceContext)
+			long fragmentEntryId, long segmentsExperienceId, long plid,
+			String css, String html, String js, String configuration,
+			String editableValues, String namespace, int position,
+			String rendererKey, ServiceContext serviceContext)
 		throws PortalException;
 
 	public FragmentEntryLink deleteFragmentEntryLink(long fragmentEntryLinkId)
@@ -93,10 +94,21 @@ public interface FragmentEntryLinkService extends BaseService {
 			boolean updateClassedModel)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateFragmentEntryLinks(long, long, long[], String,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public void updateFragmentEntryLinks(
 			long groupId, long classNameId, long classPK,
 			long[] fragmentEntryIds, String editableValues,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void updateFragmentEntryLinks(
+			long groupId, long plid, long[] fragmentEntryIds,
+			String editableValues, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void updateFragmentEntryLinks(

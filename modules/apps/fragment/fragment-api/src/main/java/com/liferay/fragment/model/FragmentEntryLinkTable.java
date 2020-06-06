@@ -72,6 +72,8 @@ public class FragmentEntryLinkTable extends BaseTable<FragmentEntryLinkTable> {
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryLinkTable, Long> classPK = createColumn(
 		"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FragmentEntryLinkTable, Long> plid = createColumn(
+		"plid", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryLinkTable, Clob> css = createColumn(
 		"css", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryLinkTable, Clob> html = createColumn(

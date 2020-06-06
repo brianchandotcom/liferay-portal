@@ -37,6 +37,14 @@ public class FragmentEntryLinkServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.fragment.service.impl.FragmentEntryLinkServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addFragmentEntryLink(long, long, long, long, long, String,
+	 String, String, String, String, String, int, String,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.fragment.model.FragmentEntryLink
 			addFragmentEntryLink(
 				long groupId, long originalFragmentEntryLinkId,
@@ -54,17 +62,10 @@ public class FragmentEntryLinkServiceUtil {
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #addFragmentEntryLink(long, long, long, long, long, long,
-	 String, String, String, String, String, String, int, String,
-	 ServiceContext)}
-	 */
-	@Deprecated
 	public static com.liferay.fragment.model.FragmentEntryLink
 			addFragmentEntryLink(
 				long groupId, long originalFragmentEntryLinkId,
-				long fragmentEntryId, long classNameId, long classPK,
+				long fragmentEntryId, long segmentsExperienceId, long plid,
 				String css, String html, String js, String configuration,
 				String editableValues, String namespace, int position,
 				String rendererKey,
@@ -72,9 +73,9 @@ public class FragmentEntryLinkServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addFragmentEntryLink(
-			groupId, originalFragmentEntryLinkId, fragmentEntryId, classNameId,
-			classPK, css, html, js, configuration, editableValues, namespace,
-			position, rendererKey, serviceContext);
+			groupId, originalFragmentEntryLinkId, fragmentEntryId,
+			segmentsExperienceId, plid, css, html, js, configuration,
+			editableValues, namespace, position, rendererKey, serviceContext);
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryLink
@@ -112,6 +113,12 @@ public class FragmentEntryLinkServiceUtil {
 			fragmentEntryLinkId, editableValues, updateClassedModel);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateFragmentEntryLinks(long, long, long[], String,
+	 ServiceContext)}
+	 */
+	@Deprecated
 	public static void updateFragmentEntryLinks(
 			long groupId, long classNameId, long classPK,
 			long[] fragmentEntryIds, String editableValues,
@@ -121,6 +128,16 @@ public class FragmentEntryLinkServiceUtil {
 		getService().updateFragmentEntryLinks(
 			groupId, classNameId, classPK, fragmentEntryIds, editableValues,
 			serviceContext);
+	}
+
+	public static void updateFragmentEntryLinks(
+			long groupId, long plid, long[] fragmentEntryIds,
+			String editableValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		getService().updateFragmentEntryLinks(
+			groupId, plid, fragmentEntryIds, editableValues, serviceContext);
 	}
 
 	public static void updateFragmentEntryLinks(

@@ -307,6 +307,20 @@ public interface FragmentEntryLinkModel
 	public void setClassPK(long classPK);
 
 	/**
+	 * Returns the plid of this fragment entry link.
+	 *
+	 * @return the plid of this fragment entry link
+	 */
+	public long getPlid();
+
+	/**
+	 * Sets the plid of this fragment entry link.
+	 *
+	 * @param plid the plid of this fragment entry link
+	 */
+	public void setPlid(long plid);
+
+	/**
 	 * Returns the css of this fragment entry link.
 	 *
 	 * @return the css of this fragment entry link

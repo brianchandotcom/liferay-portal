@@ -80,6 +80,7 @@ create table FragmentEntryLink (
 	segmentsExperienceId LONG,
 	classNameId LONG,
 	classPK LONG,
+	plid LONG,
 	css TEXT null,
 	html TEXT null,
 	js TEXT null,

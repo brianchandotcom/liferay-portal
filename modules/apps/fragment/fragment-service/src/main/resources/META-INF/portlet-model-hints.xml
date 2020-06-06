@@ -96,6 +96,7 @@
 		<field name="segmentsExperienceId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
+		<field name="plid" type="long" />
 		<field name="css" type="String">
 			<hint-collection name="CLOB" />
 		</field>

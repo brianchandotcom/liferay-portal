@@ -105,7 +105,7 @@ public class FragmentEntryLinkServiceHttp {
 			addFragmentEntryLink(
 				HttpPrincipal httpPrincipal, long groupId,
 				long originalFragmentEntryLinkId, long fragmentEntryId,
-				long classNameId, long classPK, String css, String html,
+				long segmentsExperienceId, long plid, String css, String html,
 				String js, String configuration, String editableValues,
 				String namespace, int position, String rendererKey,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -118,7 +118,7 @@ public class FragmentEntryLinkServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, originalFragmentEntryLinkId,
-				fragmentEntryId, classNameId, classPK, css, html, js,
+				fragmentEntryId, segmentsExperienceId, plid, css, html, js,
 				configuration, editableValues, namespace, position, rendererKey,
 				serviceContext);
 
@@ -316,6 +316,45 @@ public class FragmentEntryLinkServiceHttp {
 	}
 
 	public static void updateFragmentEntryLinks(
+			HttpPrincipal httpPrincipal, long groupId, long plid,
+			long[] fragmentEntryIds, String editableValues,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLinks",
+				_updateFragmentEntryLinksParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, plid, fragmentEntryIds, editableValues,
+				serviceContext);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static void updateFragmentEntryLinks(
 			HttpPrincipal httpPrincipal,
 			java.util.Map<Long, String> fragmentEntryLinksEditableValuesMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -323,7 +362,7 @@ public class FragmentEntryLinkServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				FragmentEntryLinkServiceUtil.class, "updateFragmentEntryLinks",
-				_updateFragmentEntryLinksParameterTypes6);
+				_updateFragmentEntryLinksParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fragmentEntryLinksEditableValuesMap);
@@ -381,6 +420,11 @@ public class FragmentEntryLinkServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFragmentEntryLinksParameterTypes6 =
+		new Class[] {
+			long.class, long.class, long[].class, String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _updateFragmentEntryLinksParameterTypes7 =
 		new Class[] {java.util.Map.class};
 
 }

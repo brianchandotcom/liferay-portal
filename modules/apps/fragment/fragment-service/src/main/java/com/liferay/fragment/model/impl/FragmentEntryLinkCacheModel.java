@@ -78,7 +78,7 @@ public class FragmentEntryLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -108,6 +108,8 @@ public class FragmentEntryLinkCacheModel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", plid=");
+		sb.append(plid);
 		sb.append(", css=");
 		sb.append(css);
 		sb.append(", html=");
@@ -179,6 +181,7 @@ public class FragmentEntryLinkCacheModel
 		fragmentEntryLinkImpl.setSegmentsExperienceId(segmentsExperienceId);
 		fragmentEntryLinkImpl.setClassNameId(classNameId);
 		fragmentEntryLinkImpl.setClassPK(classPK);
+		fragmentEntryLinkImpl.setPlid(plid);
 
 		if (css == null) {
 			fragmentEntryLinkImpl.setCss("");
@@ -278,6 +281,8 @@ public class FragmentEntryLinkCacheModel
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
+
+		plid = objectInput.readLong();
 		css = (String)objectInput.readObject();
 		html = (String)objectInput.readObject();
 		js = (String)objectInput.readObject();
@@ -329,6 +334,8 @@ public class FragmentEntryLinkCacheModel
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
+
+		objectOutput.writeLong(plid);
 
 		if (css == null) {
 			objectOutput.writeObject("");
@@ -399,6 +406,7 @@ public class FragmentEntryLinkCacheModel
 	public long segmentsExperienceId;
 	public long classNameId;
 	public long classPK;
+	public long plid;
 	public String css;
 	public String html;
 	public String js;

@@ -83,8 +83,8 @@ public class FragmentEntryLinkModelImpl
 		{"originalFragmentEntryLinkId", Types.BIGINT},
 		{"fragmentEntryId", Types.BIGINT},
 		{"segmentsExperienceId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}, {"css", Types.CLOB}, {"html", Types.CLOB},
-		{"js", Types.CLOB}, {"configuration", Types.CLOB},
+		{"classPK", Types.BIGINT}, {"plid", Types.BIGINT}, {"css", Types.CLOB},
+		{"html", Types.CLOB}, {"js", Types.CLOB}, {"configuration", Types.CLOB},
 		{"editableValues", Types.CLOB}, {"namespace", Types.VARCHAR},
 		{"position", Types.INTEGER}, {"rendererKey", Types.VARCHAR},
 		{"lastPropagationDate", Types.TIMESTAMP},
@@ -109,6 +109,7 @@ public class FragmentEntryLinkModelImpl
 		TABLE_COLUMNS_MAP.put("segmentsExperienceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("html", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("js", Types.CLOB);
@@ -122,7 +123,7 @@ public class FragmentEntryLinkModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null)";
+		"create table FragmentEntryLink (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,fragmentEntryLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,originalFragmentEntryLinkId LONG,fragmentEntryId LONG,segmentsExperienceId LONG,classNameId LONG,classPK LONG,plid LONG,css TEXT null,html TEXT null,js TEXT null,configuration TEXT null,editableValues TEXT null,namespace VARCHAR(75) null,position INTEGER,rendererKey VARCHAR(200) null,lastPropagationDate DATE null,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntryLink";
 
@@ -148,13 +149,15 @@ public class FragmentEntryLinkModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 16L;
 
-	public static final long RENDERERKEY_COLUMN_BITMASK = 32L;
+	public static final long PLID_COLUMN_BITMASK = 32L;
 
-	public static final long SEGMENTSEXPERIENCEID_COLUMN_BITMASK = 64L;
+	public static final long RENDERERKEY_COLUMN_BITMASK = 64L;
 
-	public static final long UUID_COLUMN_BITMASK = 128L;
+	public static final long SEGMENTSEXPERIENCEID_COLUMN_BITMASK = 128L;
 
-	public static final long POSITION_COLUMN_BITMASK = 256L;
+	public static final long UUID_COLUMN_BITMASK = 256L;
+
+	public static final long POSITION_COLUMN_BITMASK = 512L;
 
 	public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
 		_entityCacheEnabled = entityCacheEnabled;
@@ -192,6 +195,7 @@ public class FragmentEntryLinkModelImpl
 		model.setSegmentsExperienceId(soapModel.getSegmentsExperienceId());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
+		model.setPlid(soapModel.getPlid());
 		model.setCss(soapModel.getCss());
 		model.setHtml(soapModel.getHtml());
 		model.setJs(soapModel.getJs());
@@ -436,6 +440,10 @@ public class FragmentEntryLinkModelImpl
 		attributeSetterBiConsumers.put(
 			"classPK",
 			(BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setClassPK);
+		attributeGetterFunctions.put("plid", FragmentEntryLink::getPlid);
+		attributeSetterBiConsumers.put(
+			"plid",
+			(BiConsumer<FragmentEntryLink, Long>)FragmentEntryLink::setPlid);
 		attributeGetterFunctions.put("css", FragmentEntryLink::getCss);
 		attributeSetterBiConsumers.put(
 			"css",
@@ -789,6 +797,29 @@ public class FragmentEntryLinkModelImpl
 
 	@JSON
 	@Override
+	public long getPlid() {
+		return _plid;
+	}
+
+	@Override
+	public void setPlid(long plid) {
+		_columnBitmask |= PLID_COLUMN_BITMASK;
+
+		if (!_setOriginalPlid) {
+			_setOriginalPlid = true;
+
+			_originalPlid = _plid;
+		}
+
+		_plid = plid;
+	}
+
+	public long getOriginalPlid() {
+		return _originalPlid;
+	}
+
+	@JSON
+	@Override
 	public String getCss() {
 		if (_css == null) {
 			return "";
@@ -1004,6 +1035,7 @@ public class FragmentEntryLinkModelImpl
 			getSegmentsExperienceId());
 		fragmentEntryLinkImpl.setClassNameId(getClassNameId());
 		fragmentEntryLinkImpl.setClassPK(getClassPK());
+		fragmentEntryLinkImpl.setPlid(getPlid());
 		fragmentEntryLinkImpl.setCss(getCss());
 		fragmentEntryLinkImpl.setHtml(getHtml());
 		fragmentEntryLinkImpl.setJs(getJs());
@@ -1145,6 +1177,11 @@ public class FragmentEntryLinkModelImpl
 
 		fragmentEntryLinkModelImpl._setOriginalClassPK = false;
 
+		fragmentEntryLinkModelImpl._originalPlid =
+			fragmentEntryLinkModelImpl._plid;
+
+		fragmentEntryLinkModelImpl._setOriginalPlid = false;
+
 		fragmentEntryLinkModelImpl._originalRendererKey =
 			fragmentEntryLinkModelImpl._rendererKey;
 
@@ -1212,6 +1249,8 @@ public class FragmentEntryLinkModelImpl
 		fragmentEntryLinkCacheModel.classNameId = getClassNameId();
 
 		fragmentEntryLinkCacheModel.classPK = getClassPK();
+
+		fragmentEntryLinkCacheModel.plid = getPlid();
 
 		fragmentEntryLinkCacheModel.css = getCss();
 
@@ -1395,6 +1434,9 @@ public class FragmentEntryLinkModelImpl
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private long _plid;
+	private long _originalPlid;
+	private boolean _setOriginalPlid;
 	private String _css;
 	private String _html;
 	private String _js;

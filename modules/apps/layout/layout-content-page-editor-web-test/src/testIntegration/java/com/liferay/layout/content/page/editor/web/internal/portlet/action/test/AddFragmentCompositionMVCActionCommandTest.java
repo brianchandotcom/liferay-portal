@@ -298,8 +298,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
-				_portal.getClassNameId(Layout.class), _layout.getPlid(),
+				fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				StringPool.BLANK, html, StringPool.BLANK,
 				_read("fragment_configuration.json"), editableValues,
 				StringPool.BLANK, 0, null, _serviceContext);

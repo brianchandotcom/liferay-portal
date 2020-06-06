@@ -130,7 +130,7 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 
 		_fragmentEntryLinkLocalService.
 			deleteLayoutPageTemplateEntryFragmentEntryLinks(
-				siteId, _portal.getClassNameId(Layout.class), layout.getPlid());
+				siteId, layout.getPlid());
 
 		ContextResolver<ObjectMapper> contextResolver =
 			_providers.getContextResolver(

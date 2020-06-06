@@ -110,10 +110,8 @@ public class AddPortletMVCActionCommandTest {
 	@Test
 	public void testCanAddFragmentEntryLinkFromWidget() throws Exception {
 		List<FragmentEntryLink> originalFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				_group.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				_layout.getPlid());
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
@@ -128,10 +126,8 @@ public class AddPortletMVCActionCommandTest {
 			new MockLiferayPortletActionResponse());
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				_group.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				_layout.getPlid());
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), _layout.getPlid());
 
 		Assert.assertEquals(
 			actualFragmentEntryLinks.toString(),

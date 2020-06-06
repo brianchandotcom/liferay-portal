@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1063,10 +1062,8 @@ public class LayoutConverterTest {
 			String.format(format, layoutTemplateId));
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				_group.getGroupId(),
-				_portal.getClassNameId(Layout.class.getName()),
-				layout.getPlid());
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), layout.getPlid());
 
 		List<FragmentEntryLink> sortedFragmentEntryLinks = ListUtil.sort(
 			fragmentEntryLinks,
@@ -1376,9 +1373,6 @@ public class LayoutConverterTest {
 
 	@Inject
 	private LayoutConverterRegistry _layoutConverterRegistry;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

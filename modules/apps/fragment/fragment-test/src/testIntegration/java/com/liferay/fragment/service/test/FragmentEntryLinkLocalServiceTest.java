@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -111,14 +110,10 @@ public class FragmentEntryLinkLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		long classNameId = PortalUtil.getClassNameId(Layout.class);
-
-		long classPK = _layout.getPlid();
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(), 0, classNameId, classPK,
+				_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 				_read("editable-values-light-modified.json"), StringPool.BLANK,
@@ -128,9 +123,7 @@ public class FragmentEntryLinkLocalServiceTest {
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLink.getFragmentEntryLinkId()));
 
-		Assert.assertEquals(classNameId, fragmentEntryLink.getClassNameId());
-
-		Assert.assertEquals(classPK, fragmentEntryLink.getClassPK());
+		Assert.assertEquals(_layout.getPlid(), fragmentEntryLink.getClassPK());
 
 		Assert.assertEquals(
 			_fragmentEntry.getCss(), fragmentEntryLink.getCss());
@@ -159,9 +152,9 @@ public class FragmentEntryLinkLocalServiceTest {
 
 		_fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			_fragmentEntry.getFragmentEntryId(), 0, RandomTestUtil.randomLong(),
-			0, _fragmentEntry.getCss(), _fragmentEntry.getHtml(),
-			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+			_fragmentEntry.getFragmentEntryId(), 0, 0, _fragmentEntry.getCss(),
+			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
+			_fragmentEntry.getConfiguration(),
 			_read("editable-values-light-modified.json"), StringPool.BLANK, 0,
 			null, serviceContext);
 	}
@@ -172,24 +165,20 @@ public class FragmentEntryLinkLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		long classPK = _layout.getPlid();
-
 		List<FragmentEntryLink> originalFragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		_fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			_fragmentEntry.getFragmentEntryId(), 0,
-			PortalUtil.getClassNameId(Layout.class), classPK,
+			_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 			StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
 
 		_fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			_fragmentEntry.getFragmentEntryId(), 0,
-			PortalUtil.getClassNameId(Layout.class), classPK,
+			_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 			StringPool.BLANK, StringPool.BLANK, 1, null, serviceContext);
@@ -210,13 +199,10 @@ public class FragmentEntryLinkLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		long classPK = _layout.getPlid();
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(), 0,
-				PortalUtil.getClassNameId(Layout.class), classPK,
+				_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
@@ -235,13 +221,10 @@ public class FragmentEntryLinkLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		long classPK = _layout.getPlid();
-
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(), 0,
-				PortalUtil.getClassNameId(Layout.class), classPK,
+				_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
@@ -249,8 +232,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(), 0,
-				PortalUtil.getClassNameId(Layout.class), classPK,
+				_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
@@ -276,8 +258,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(), 0,
-				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
+				_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
 				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
 				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
@@ -319,8 +300,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), 0,
-				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
+				fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 				_read("editable-values-light-modified.json"), StringPool.BLANK,
@@ -378,8 +358,7 @@ public class FragmentEntryLinkLocalServiceTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), 0,
-				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
+				fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 				_read("editable-values-light-modified.json"), StringPool.BLANK,

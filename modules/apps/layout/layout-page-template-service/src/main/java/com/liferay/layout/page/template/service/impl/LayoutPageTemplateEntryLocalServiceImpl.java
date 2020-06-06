@@ -771,7 +771,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLinks(
 			serviceContext.getUserId(), layoutPageTemplateEntry.getGroupId(),
-			classNameLocalService.getClassNameId(Layout.class.getName()),
 			layoutPageTemplateEntry.getPlid(), fragmentEntryIds, editableValues,
 			serviceContext);
 

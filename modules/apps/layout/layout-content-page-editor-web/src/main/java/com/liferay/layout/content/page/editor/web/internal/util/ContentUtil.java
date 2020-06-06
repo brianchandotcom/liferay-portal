@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -323,9 +322,8 @@ public class ContentUtil {
 			new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				groupId, PortalUtil.getClassNameId(Layout.class.getName()),
-				plid);
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
+				groupId, plid);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			infoDisplayObjectProviders.addAll(

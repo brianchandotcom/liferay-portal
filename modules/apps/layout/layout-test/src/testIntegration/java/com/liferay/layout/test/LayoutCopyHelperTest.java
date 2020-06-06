@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -136,20 +135,18 @@ public class LayoutCopyHelperTest {
 		FragmentEntryLink fragmentEntryLink1 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0, 0,
-				_portal.getClassNameId(Layout.class), sourceLayout.getPlid(),
+				sourceLayout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				StringPool.BLANK, 0, null, _serviceContext);
 
 		fragmentEntryLinks.add(fragmentEntryLink1);
 
 		FragmentEntryLink fragmentEntryLink2 =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				sourceLayout.getUserId(), sourceLayout.getGroupId(), 0, 0, 0,
-				_portal.getClassNameId(Layout.class), sourceLayout.getPlid(),
+				sourceLayout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
-				_serviceContext);
+				StringPool.BLANK, 0, null, _serviceContext);
 
 		fragmentEntryLinks.add(fragmentEntryLink2);
 
@@ -166,15 +163,13 @@ public class LayoutCopyHelperTest {
 
 		Assert.assertTrue(
 			ListUtil.isNotEmpty(
-				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-					_group.getGroupId(), _portal.getClassNameId(Layout.class),
-					sourceLayout.getPlid())));
+				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+					_group.getGroupId(), sourceLayout.getPlid())));
 
 		Assert.assertFalse(
 			ListUtil.isNotEmpty(
-				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-					_group.getGroupId(), _portal.getClassNameId(Layout.class),
-					targetLayout.getPlid())));
+				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+					_group.getGroupId(), targetLayout.getPlid())));
 
 		_layoutCopyHelper.copyLayout(sourceLayout, targetLayout);
 
@@ -185,9 +180,8 @@ public class LayoutCopyHelperTest {
 
 		Assert.assertTrue(
 			ListUtil.isNotEmpty(
-				_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-					_group.getGroupId(), _portal.getClassNameId(Layout.class),
-					targetLayout.getPlid())));
+				_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+					_group.getGroupId(), targetLayout.getPlid())));
 	}
 
 	@Test
@@ -359,9 +353,6 @@ public class LayoutCopyHelperTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	@Inject(
 		filter = "javax.portlet.name=" + LayoutPortletKeys.LAYOUT_TEST_PORTLET

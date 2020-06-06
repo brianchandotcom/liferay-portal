@@ -159,8 +159,7 @@ public class FragmentEntryProcessorEditableTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), 0,
-				_portal.getClassNameId(Layout.class), _layout.getPlid(),
+				fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				fragmentEntry.getCss(), fragmentEntry.getHtml(),
 				fragmentEntry.getJs(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, 0, null, serviceContext);
@@ -222,10 +221,9 @@ public class FragmentEntryProcessorEditableTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), 0,
-				_portal.getClassNameId(Layout.class), TestPropsValues.getPlid(),
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, 0, null,
+				TestPropsValues.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
 				ServiceContextTestUtil.getServiceContext());
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(

@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -148,8 +147,7 @@ public class FragmentEntryProcessorDropZoneTest {
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			fragmentEntry.getFragmentEntryId(), 0,
-			_portal.getClassNameId(Layout.class), _layout.getPlid(),
+			fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			StringPool.BLANK, StringPool.BLANK, 0, null, _serviceContext);
@@ -202,9 +200,6 @@ public class FragmentEntryProcessorDropZoneTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

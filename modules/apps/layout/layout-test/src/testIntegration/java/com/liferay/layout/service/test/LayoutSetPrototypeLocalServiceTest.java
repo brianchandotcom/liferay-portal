@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -87,9 +86,8 @@ public class LayoutSetPrototypeLocalServiceTest {
 		Assert.assertEquals(LayoutConstants.TYPE_CONTENT, layout.getType());
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				layout.getGroupId(), _portal.getClassNameId(Layout.class),
-				layout.getPlid());
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				layout.getGroupId(), layout.getPlid());
 
 		Assert.assertEquals(
 			fragmentEntryLinks.toString(), 2, fragmentEntryLinks.size());
@@ -109,9 +107,6 @@ public class LayoutSetPrototypeLocalServiceTest {
 
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	private User _user;
 

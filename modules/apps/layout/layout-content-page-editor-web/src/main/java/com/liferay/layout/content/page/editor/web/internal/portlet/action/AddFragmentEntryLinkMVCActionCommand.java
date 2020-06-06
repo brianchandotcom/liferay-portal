@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -106,18 +105,17 @@ public class AddFragmentEntryLinkMVCActionCommand
 			return _fragmentEntryLinkService.addFragmentEntryLink(
 				serviceContext.getScopeGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
-				_portal.getClassNameId(Layout.class), serviceContext.getPlid(),
-				fragmentEntry.getCss(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
-				StringPool.BLANK, 0, contributedRendererKey, serviceContext);
+				serviceContext.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
+				contributedRendererKey, serviceContext);
 		}
 
 		return _fragmentEntryLinkService.addFragmentEntryLink(
 			serviceContext.getScopeGroupId(), 0, 0, segmentsExperienceId,
-			_portal.getClassNameId(Layout.class), serviceContext.getPlid(),
+			serviceContext.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
-			fragmentEntryKey, serviceContext);
+			StringPool.BLANK, 0, fragmentEntryKey, serviceContext);
 	}
 
 	@Override

@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -136,8 +135,7 @@ public class WidgetLayoutStructureItemImporter
 			warningMessages, widgetPermissionsMaps);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			layout.getUserId(), layout.getGroupId(), 0, 0, 0,
-			_portal.getClassNameId(Layout.class), layout.getPlid(),
+			layout.getUserId(), layout.getGroupId(), 0, 0, 0, layout.getPlid(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, editableValueJSONObject.toString(),
 			widgetInstanceId, 0, null,
@@ -178,9 +176,6 @@ public class WidgetLayoutStructureItemImporter
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private PortletConfigurationImporterHelper

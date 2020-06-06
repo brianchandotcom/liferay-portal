@@ -94,9 +94,8 @@ public class FragmentEntryLinkServiceTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(), 0,
-				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(), css,
-				html, js, configuration, StringPool.BLANK, StringPool.BLANK, 0,
-				null, serviceContext);
+				_layout.getPlid(), css, html, js, configuration,
+				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
 
 		FragmentEntryLink persistedFragmentEntryLink =
 			_fragmentEntryLinkPersistence.findByPrimaryKey(
@@ -114,8 +113,7 @@ public class FragmentEntryLinkServiceTest {
 	public void testDeleteFragmentEntryLink() throws Exception {
 		FragmentEntryLink fragmentEntryLink =
 			FragmentTestUtil.addFragmentEntryLink(
-				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-				_layout.getPlid());
+				_fragmentEntry, _layout.getPlid());
 
 		_fragmentEntryLinkService.deleteFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId());
@@ -131,8 +129,7 @@ public class FragmentEntryLinkServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentTestUtil.addFragmentEntryLink(
-				_fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-				_layout.getPlid());
+				_fragmentEntry, _layout.getPlid());
 
 		_fragmentEntryLinkService.updateFragmentEntryLink(
 			fragmentEntryLink.getFragmentEntryLinkId(), editableValues);
@@ -151,9 +148,7 @@ public class FragmentEntryLinkServiceTest {
 		FragmentEntry fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId());
 
-		FragmentTestUtil.addFragmentEntryLink(
-			fragmentEntry, PortalUtil.getClassNameId(Layout.class),
-			_layout.getPlid());
+		FragmentTestUtil.addFragmentEntryLink(fragmentEntry, _layout.getPlid());
 
 		long[] fragmentEntryIds = {
 			_fragmentEntry.getFragmentEntryId(),
@@ -170,9 +165,8 @@ public class FragmentEntryLinkServiceTest {
 				_layout.getPlid());
 
 		_fragmentEntryLinkService.updateFragmentEntryLinks(
-			_group.getGroupId(), PortalUtil.getClassNameId(Layout.class),
-			_layout.getPlid(), fragmentEntryIds, _createEditableValues(),
-			serviceContext);
+			_group.getGroupId(), _layout.getPlid(), fragmentEntryIds,
+			_createEditableValues(), serviceContext);
 
 		List<FragmentEntryLink> actualFragmentEntryLinks =
 			_fragmentEntryLinkPersistence.findByG_C_C(

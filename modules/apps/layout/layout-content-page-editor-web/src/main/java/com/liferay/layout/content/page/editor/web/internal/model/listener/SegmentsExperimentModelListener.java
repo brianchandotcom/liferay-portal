@@ -54,7 +54,6 @@ public class SegmentsExperimentModelListener
 				ServiceContextThreadLocal.getServiceContext();
 
 			SegmentsExperienceUtil.copySegmentsExperienceData(
-				segmentsExperiment.getClassNameId(),
 				segmentsExperiment.getClassPK(), _commentManager,
 				segmentsExperiment.getGroupId(), _portletRegistry,
 				segmentsExperiment.getWinnerSegmentsExperienceId(),
@@ -67,9 +66,8 @@ public class SegmentsExperimentModelListener
 
 			if (draftLayout != null) {
 				SegmentsExperienceUtil.copySegmentsExperienceData(
-					draftLayout.getClassNameId(), draftLayout.getPlid(),
-					_commentManager, segmentsExperiment.getGroupId(),
-					_portletRegistry,
+					draftLayout.getPlid(), _commentManager,
+					segmentsExperiment.getGroupId(), _portletRegistry,
 					segmentsExperiment.getWinnerSegmentsExperienceId(),
 					SegmentsExperienceConstants.ID_DEFAULT,
 					className -> serviceContext,

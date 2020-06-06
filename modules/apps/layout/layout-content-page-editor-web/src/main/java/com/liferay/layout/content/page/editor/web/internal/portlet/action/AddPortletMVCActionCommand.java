@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -162,11 +161,10 @@ public class AddPortletMVCActionCommand
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				0, segmentsExperienceId, _portal.getClassNameId(Layout.class),
-				themeDisplay.getPlid(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				editableValueJSONObject.toString(), namespace, 0, null,
-				serviceContext);
+				0, segmentsExperienceId, themeDisplay.getPlid(),
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, editableValueJSONObject.toString(), namespace,
+				0, null, serviceContext);
 
 		JSONObject jsonObject = addFragmentEntryLinkToLayoutData(
 			actionRequest, fragmentEntryLink.getFragmentEntryLinkId());
@@ -228,9 +226,6 @@ public class AddPortletMVCActionCommand
 
 	@Reference
 	private ItemSelector _itemSelector;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

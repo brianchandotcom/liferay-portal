@@ -42,7 +42,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -59,7 +58,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -133,7 +131,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group1.getGroupId(), 0,
 				fragmentEntry.getFragmentEntryId(), 0,
-				_portal.getClassNameId(Layout.class),
 				layoutPageTemplateEntry1.getPlid(), StringPool.BLANK, html,
 				StringPool.BLANK,
 				_read("export_import_fragment_field_text_config.json"),
@@ -527,9 +524,6 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		filter = "mvc.command.name=/layout_page_template/export_layout_page_template_entry"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext1;
 	private ServiceContext _serviceContext2;

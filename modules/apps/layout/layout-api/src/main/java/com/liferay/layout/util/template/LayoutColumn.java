@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -105,8 +104,7 @@ public class LayoutColumn {
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				0, 0, PortalUtil.getClassNameId(Layout.class),
-				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				0, 0, _layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK,
 				JSONUtil.put(
 					"instanceId", PortletIdCodec.decodeInstanceId(portletId)

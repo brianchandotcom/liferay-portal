@@ -96,8 +96,7 @@ public class JournalFragmentEntryProcessorEditableTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomLong(), 0,
-				_portal.getClassNameId(Layout.class), _layout.getPlid(),
+				RandomTestUtil.randomLong(), 0, _layout.getPlid(),
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0,
 				StringPool.BLANK, ServiceContextTestUtil.getServiceContext());

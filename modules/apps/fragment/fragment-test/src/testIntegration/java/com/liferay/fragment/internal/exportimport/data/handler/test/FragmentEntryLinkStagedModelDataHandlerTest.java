@@ -28,7 +28,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -36,7 +35,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -93,7 +91,6 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			fragmentEntryLink.getFragmentEntryId(),
-			PortalUtil.getClassNameId(Layout.class),
 			fragmentEntryLink.getClassPK(), "css", "html", "js",
 			fragmentEntryLink.getConfiguration(),
 			fragmentEntryLink.getEditableValues(),
@@ -126,7 +123,6 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0, 0, 0,
-				PortalUtil.getClassNameId(Layout.class),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
@@ -205,12 +201,11 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(), 0,
-			fragmentEntry.getFragmentEntryId(), 0,
-			PortalUtil.getClassNameId(Layout.class),
-			group.getDefaultPublicPlid(), fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs(),
-			fragmentEntry.getConfiguration(), StringPool.BLANK,
-			StringPool.BLANK, 1, StringPool.BLANK, serviceContext);
+			fragmentEntry.getFragmentEntryId(), 0, group.getDefaultPublicPlid(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			StringPool.BLANK, StringPool.BLANK, 1, StringPool.BLANK,
+			serviceContext);
 	}
 
 	@Override

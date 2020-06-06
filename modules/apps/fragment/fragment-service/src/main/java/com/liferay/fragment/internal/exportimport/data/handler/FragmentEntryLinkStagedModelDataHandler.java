@@ -26,6 +26,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -73,7 +74,7 @@ public class FragmentEntryLinkStagedModelDataHandler
 
 		StagedModelRepository referenceStagedModelRepository =
 			StagedModelRepositoryRegistryUtil.getStagedModelRepository(
-				_portal.getClassName(fragmentEntryLink.getClassNameId()));
+				Layout.class.getName());
 
 		StagedModel referenceStagedModel =
 			referenceStagedModelRepository.getStagedModel(

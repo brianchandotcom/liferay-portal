@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -648,8 +647,7 @@ public class PageDefinitionDTOConverterTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), 0,
-				_portal.getClassNameId(Layout.class), layout.getPlid(),
+				fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
 				StringPool.BLANK, html, StringPool.BLANK, configuration,
 				_read(editableValuesFileName), StringPool.BLANK, 0, null,
 				_serviceContext);
@@ -852,9 +850,6 @@ public class PageDefinitionDTOConverterTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private Portal _portal;
 
 	private ServiceContext _serviceContext;
 

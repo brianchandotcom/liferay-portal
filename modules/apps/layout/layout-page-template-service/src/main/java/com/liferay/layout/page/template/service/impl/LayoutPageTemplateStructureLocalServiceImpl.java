@@ -106,13 +106,11 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 				layoutPageTemplateStructure);
 
 		int count =
-			_fragmentEntryLinkLocalService.
-				getClassedModelFragmentEntryLinksCount(
-					groupId, _portal.getClassNameId(Layout.class), plid);
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksCountByPlid(
+				groupId, plid);
 
 		if (count > 0) {
-			_fragmentEntryLinkLocalService.updateClassedModel(
-				_portal.getClassNameId(Layout.class), plid);
+			_fragmentEntryLinkLocalService.updateClassedModel(plid);
 		}
 
 		// Layout page template structure rel
@@ -241,8 +239,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 		throws PortalException {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
-				groupId, _portal.getClassNameId(Layout.class), plid);
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
+				groupId, plid);
 
 		JSONObject jsonObject =
 			LayoutPageTemplateStructureHelperUtil.

@@ -33,7 +33,6 @@ import com.liferay.layout.page.template.service.test.util.LayoutPageTemplateTest
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -307,11 +305,8 @@ public class LayoutPageTemplateEntryServiceTest {
 			RandomTestUtil.randomString(), null, serviceContext);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				_group.getGroupId(),
-				PortalUtil.getClassNameId(
-					LayoutPageTemplateEntry.class.getName()),
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		Assert.assertEquals(
 			fragmentEntryLinks.toString(), 0, fragmentEntryLinks.size());
@@ -385,10 +380,8 @@ public class LayoutPageTemplateEntryServiceTest {
 			serviceContext);
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinks(
-				_group.getGroupId(),
-				PortalUtil.getClassNameId(Layout.class.getName()),
-				layoutPageTemplateEntry.getPlid());
+			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
+				_group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		Assert.assertEquals(
 			fragmentEntryLinks.toString(), 2, fragmentEntryLinks.size());

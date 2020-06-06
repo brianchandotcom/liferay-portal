@@ -85,7 +85,7 @@ public class FragmentTestUtil {
 	}
 
 	public static FragmentEntryLink addFragmentEntryLink(
-			FragmentEntry fragmentEntry, long classNameId, long classPK)
+			FragmentEntry fragmentEntry, long plid)
 		throws PortalException {
 
 		ServiceContext serviceContext =
@@ -94,15 +94,14 @@ public class FragmentTestUtil {
 
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(), 0,
-			fragmentEntry.getFragmentEntryId(), 0, classNameId, classPK,
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-			StringPool.BLANK, StringPool.BLANK, 1, StringPool.BLANK,
-			serviceContext);
+			fragmentEntry.getFragmentEntryId(), 0, plid, fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs(),
+			fragmentEntry.getConfiguration(), StringPool.BLANK,
+			StringPool.BLANK, 1, StringPool.BLANK, serviceContext);
 	}
 
 	public static FragmentEntryLink addFragmentEntryLink(
-			long groupId, long fragmentEntryId, long classNameId, long classPK)
+			long groupId, long fragmentEntryId, long plid)
 		throws PortalException {
 
 		FragmentEntry fragmentEntry =
@@ -113,11 +112,10 @@ public class FragmentTestUtil {
 
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			TestPropsValues.getUserId(), groupId, 0,
-			fragmentEntry.getFragmentEntryId(), 0, classNameId, classPK,
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-			StringPool.BLANK, StringPool.BLANK, 1, StringPool.BLANK,
-			serviceContext);
+			fragmentEntry.getFragmentEntryId(), 0, plid, fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs(),
+			fragmentEntry.getConfiguration(), StringPool.BLANK,
+			StringPool.BLANK, 1, StringPool.BLANK, serviceContext);
 	}
 
 	public static FragmentEntryLink fetchFragmentEntryLink(

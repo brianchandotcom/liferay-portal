@@ -21,7 +21,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -41,7 +39,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -100,7 +97,7 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				_portletPreferencesLocalService.deletePortletPreferences(
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					_getPlid(fragmentEntryLink),
+					fragmentEntryLink.getClassPK(),
 					_getPortletId(
 						portletName, fragmentEntryLink.getNamespace(),
 						element.attr("id")));
@@ -252,9 +249,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		FragmentEntryLink currentFragmentEntryLink, String currentPortletName) {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				currentFragmentEntryLink.getGroupId(),
-				currentFragmentEntryLink.getClassNameId(),
 				currentFragmentEntryLink.getClassPK());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
@@ -307,29 +303,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 		return namespace + id;
 	}
 
-	private long _getPlid(FragmentEntryLink fragmentEntryLink) {
-		if (fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
-				Layout.class)) {
-
-			return fragmentEntryLink.getClassPK();
-		}
-
-		if (fragmentEntryLink.getClassNameId() == _portal.getClassNameId(
-				LayoutPageTemplateEntry.class)) {
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntry(
-						fragmentEntryLink.getClassPK());
-
-			if (layoutPageTemplateEntry != null) {
-				return layoutPageTemplateEntry.getPlid();
-			}
-		}
-
-		return PortletKeys.PREFS_PLID_SHARED;
-	}
-
 	private String _getPortletId(
 		String portletName, String namespace, String id) {
 
@@ -355,7 +328,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			String defaultPreferences)
 		throws PortalException {
 
-		long plid = _getPlid(fragmentEntryLink);
 		String defaultPortletId = _getPortletId(
 			portletName, fragmentEntryLink.getNamespace(), id);
 
@@ -363,7 +335,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				fragmentEntryLink.getCompanyId(),
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, defaultPortletId,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+				fragmentEntryLink.getClassPK(), defaultPortletId,
 				defaultPreferences);
 
 		String portletId = _getPortletId(
@@ -381,7 +354,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 					fragmentEntryLink.getCompanyId(),
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					fragmentEntryLink.getClassPK(), portletId,
 					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 
 			_updateLayoutPortletSetup(
@@ -543,9 +517,6 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

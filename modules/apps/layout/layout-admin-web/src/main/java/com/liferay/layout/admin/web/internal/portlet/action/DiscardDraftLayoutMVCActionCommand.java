@@ -102,10 +102,8 @@ public class DiscardDraftLayoutMVCActionCommand
 		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
 
 		int fragmentEntryLinksCount =
-			_fragmentEntryLinkLocalService.
-				getClassedModelFragmentEntryLinksCount(
-					layout.getGroupId(), _portal.getClassNameId(Layout.class),
-					layout.getPlid());
+			_fragmentEntryLinkLocalService.getFragmentEntryLinksCountByPlid(
+				layout.getGroupId(), layout.getPlid());
 
 		if ((fragmentEntryLinksCount == 0) &&
 			(layout.getClassNameId() == _portal.getClassNameId(

@@ -210,7 +210,6 @@ public class FragmentLayoutStructureItemImporter
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				layout.getUserId(), layout.getGroupId(), 0, fragmentEntryId, 0,
-				_portal.getClassNameId(Layout.class.getName()),
 				layout.getPlid(), css, html, js, configuration,
 				jsonObject.toString(), StringUtil.randomId(), position,
 				fragmentKey, ServiceContextThreadLocal.getServiceContext());

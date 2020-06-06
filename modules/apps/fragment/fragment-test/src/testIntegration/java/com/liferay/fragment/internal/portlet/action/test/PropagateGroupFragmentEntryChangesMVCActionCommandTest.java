@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -104,8 +103,7 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(), 0,
-				PortalUtil.getClassNameId(Layout.class), _layout.getPlid(),
+				_fragmentEntry.getFragmentEntryId(), 0, _layout.getPlid(),
 				"css value", "<div>HTML value</div>", "js value",
 				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
 				serviceContext);

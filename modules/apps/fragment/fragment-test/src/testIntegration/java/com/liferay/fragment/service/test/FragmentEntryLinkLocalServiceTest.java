@@ -142,23 +142,6 @@ public class FragmentEntryLinkLocalServiceTest {
 			fragmentEntryLink.getEditableValues());
 	}
 
-	@Test(expected = PortalException.class)
-	public void testAddFragmentEntryLinkWithWrongClassNameId()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_fragmentEntryLinkLocalService.addFragmentEntryLink(
-			TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			_fragmentEntry.getFragmentEntryId(), 0, 0, _fragmentEntry.getCss(),
-			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
-			_fragmentEntry.getConfiguration(),
-			_read("editable-values-light-modified.json"), StringPool.BLANK, 0,
-			null, serviceContext);
-	}
-
 	@Test
 	public void testAddMultipleFragmentEntryLinks() throws PortalException {
 		ServiceContext serviceContext =

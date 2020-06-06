@@ -14,7 +14,6 @@
 
 package com.liferay.layout.content.page.editor.web.internal.asset.model;
 
-import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRenderer;
@@ -30,8 +29,9 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -175,35 +175,25 @@ public class FragmentEntryLinkAssetRendererFactory
 	private String _getFragmentEntryLinkContextTitle(
 		FragmentEntryLink fragmentEntryLink, Locale locale) {
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(
-					fragmentEntryLink.getClassNameId());
+		Layout layout = _layoutLocalService.fetchLayout(
+			fragmentEntryLink.getPlid());
 
-		if (assetRendererFactory != null) {
-			try {
-				AssetRenderer<?> assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						fragmentEntryLink.getClassPK());
-
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					locale, getClass());
-
-				return _language.format(
-					resourceBundle, "the-x-x",
-					new String[] {
-						assetRenderer.getTitle(locale),
-						StringUtil.toLowerCase(
-							assetRendererFactory.getTypeName(locale))
-					},
-					false);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException, portalException);
-			}
+		if (layout == null) {
+			return StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			locale, getClass());
+
+		return _language.format(
+			resourceBundle, "the-x-x",
+			new String[] {
+				layout.getHTMLTitle(locale),
+				StringUtil.toLowerCase(
+					ResourceActionsUtil.getModelResource(
+						locale, Layout.class.getName()))
+			},
+			false);
 	}
 
 	private String _getFragmentEntryLinkTitle(
@@ -244,9 +234,6 @@ public class FragmentEntryLinkAssetRendererFactory
 		return StringPool.BLANK;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		FragmentEntryLinkAssetRendererFactory.class);
-
 	@Reference
 	private FragmentCollectionContributorTracker
 		_fragmentCollectionContributorTracker;
@@ -262,5 +249,8 @@ public class FragmentEntryLinkAssetRendererFactory
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 }

@@ -56,12 +56,14 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 										fieldProps.field.name
 									}
 									onBlur={(event, focusDuration) =>
-										fieldBlur({
-											activePage,
-											focusDuration,
-											formId: '',
-											properties: event,
-										})
+										dispatch(
+											fieldBlur({
+												activePage,
+												focusDuration,
+												formId: '',
+												properties: event,
+											})
+										)
 									}
 									onChange={(event) =>
 										dispatch({
@@ -70,11 +72,13 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 										})
 									}
 									onFocus={(event) =>
-										fieldFocus({
-											activePage,
-											formId: '',
-											properties: event,
-										})
+										dispatch(
+											fieldFocus({
+												activePage,
+												formId: '',
+												properties: event,
+											})
+										)
 									}
 									pageIndex={pageIndex}
 									spritemap={spritemap}

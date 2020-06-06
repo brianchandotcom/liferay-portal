@@ -18,8 +18,12 @@ import React from 'react';
 
 import {EVENT_TYPES} from '../actions/types.es';
 import {useForm} from '../hooks/useForm.es';
+import {usePage} from '../hooks/usePage.es';
+import nextPage from '../thunks/nextPage.es';
+import previousPage from '../thunks/previousPage.es';
 
 export const Pagination = ({activePage, pages}) => {
+	const {defaultLanguageId, editingLanguageId, portletNamespace} = usePage();
 	const dispatch = useForm();
 
 	return (
@@ -32,7 +36,16 @@ export const Pagination = ({activePage, pages}) => {
 				<button
 					className="page-link"
 					onClick={() =>
-						dispatch({type: EVENT_TYPES.PAGINATION_PREVIOUS})
+						dispatch(
+							previousPage({
+								activePage,
+								defaultLanguageId,
+								editingLanguageId,
+								formId: '',
+								pages,
+								portletNamespace,
+							})
+						)
 					}
 					type="button"
 				>
@@ -51,7 +64,7 @@ export const Pagination = ({activePage, pages}) => {
 					onClick={() =>
 						dispatch({
 							payload: {pageIndex: index},
-							type: EVENT_TYPES.PAGINATION,
+							type: EVENT_TYPES.CHANGE_ACTIVE_PAGE,
 						})
 					}
 				>
@@ -70,7 +83,16 @@ export const Pagination = ({activePage, pages}) => {
 				<button
 					className="page-link"
 					onClick={() =>
-						dispatch({type: EVENT_TYPES.PAGINATION_NEXT})
+						dispatch(
+							nextPage({
+								activePage,
+								defaultLanguageId,
+								editingLanguageId,
+								formId: '',
+								pages,
+								portletNamespace,
+							})
+						)
 					}
 					type="button"
 				>

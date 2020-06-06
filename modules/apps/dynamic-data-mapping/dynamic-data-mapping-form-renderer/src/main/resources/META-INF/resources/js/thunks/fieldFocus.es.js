@@ -12,15 +12,18 @@
  * details.
  */
 
-import {PagesVisitor} from '../../util/visitors.es';
+import {EVENT_TYPES} from '../actions/types.es';
 
-export default (pages, name) => {
-	const visitor = new PagesVisitor(pages);
+export default function fieldFocus({activePage, formId, properties}) {
+	return (dispatch) => {
+		const {fieldInstance} = properties;
 
-	return visitor.mapColumns((column) => {
-		return {
-			...column,
-			fields: column.fields.filter((field) => field.name !== name),
-		};
-	});
-};
+		dispatch({payload: properties, type: EVENT_TYPES.FIELD_FOCUS});
+
+		Liferay.fire('ddmFieldFocus', {
+			fieldName: fieldInstance.fieldName,
+			formId,
+			page: activePage,
+		});
+	};
+}

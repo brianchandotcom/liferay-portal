@@ -16,6 +16,8 @@ import React from 'react';
 
 import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
+import fieldBlur from '../../thunks/fieldBlur.es';
+import fieldFocus from '../../thunks/fieldFocus.es';
 import {Field} from '../Field/Field.es';
 import {EVENT_TYPES} from '../actions/types.es';
 import * as DefaultVariant from './DefaultVariant.es';
@@ -53,10 +55,12 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 										fieldProps.field?.instanceId ??
 										fieldProps.field.name
 									}
-									onBlur={(event) =>
-										dispatch({
-											payload: event,
-											type: EVENT_TYPES.FIELD_BLUR,
+									onBlur={(event, focusDuration) =>
+										fieldBlur({
+											activePage,
+											focusDuration,
+											formId: '',
+											properties: event,
 										})
 									}
 									onChange={(event) =>
@@ -66,9 +70,10 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 										})
 									}
 									onFocus={(event) =>
-										dispatch({
-											payload: event,
-											type: EVENT_TYPES.FIELD_FOCUS,
+										fieldFocus({
+											activePage,
+											formId: '',
+											properties: event,
 										})
 									}
 									pageIndex={pageIndex}

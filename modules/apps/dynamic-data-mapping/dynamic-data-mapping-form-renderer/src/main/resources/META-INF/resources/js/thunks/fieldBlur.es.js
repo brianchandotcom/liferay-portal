@@ -12,24 +12,25 @@
  * details.
  */
 
-import {PagesVisitor} from '../../util/visitors.es';
+import {EVENT_TYPES} from '../actions/types.es';
 
-export default (pages, properties) => {
-	const {fieldInstance} = properties;
-	const pageVisitor = new PagesVisitor(pages);
+export default function fieldBlur({
+	activePage,
+	focusDuration,
+	formId,
+	properties,
+}) {
+	return (dispatch) => {
+		const {fieldInstance} = properties;
 
-	return Promise.resolve(
-		pageVisitor.mapFields((field) => {
-			const matches =
-				field.name === fieldInstance.name &&
-				field.required &&
-				fieldInstance.value == '';
+		dispatch({payload: properties, type: EVENT_TYPES.FIELD_BLUR});
 
-			return {
-				...field,
-				displayErrors: !!field.displayErrors || matches,
-				focused: matches ? false : field.focused,
-			};
-		})
-	);
-};
+		Liferay.fire('ddmFieldBlur', {
+			fieldName: fieldInstance.fieldName,
+			focusDuration:
+				focusDuration.end - (focusDuration.start ?? focusDuration.end),
+			formId,
+			page: activePage,
+		});
+	};
+}

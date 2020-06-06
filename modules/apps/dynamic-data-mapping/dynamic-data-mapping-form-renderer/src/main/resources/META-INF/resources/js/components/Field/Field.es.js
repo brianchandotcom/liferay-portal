@@ -117,6 +117,8 @@ export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
 	const [hasError, setHasError] = useState(false);
 	const loadField = useLazy();
 
+	const focusDurationRef = useRef({end: null, start: null});
+
 	if (!fieldTypes) {
 		return <ClayLoadingIndicator />;
 	}
@@ -153,15 +155,20 @@ export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
 							visible
 							{...field}
 							{...otherProps}
-							onBlur={(event) =>
-								onBlur(mountStruct(event, field))
-							}
+							onBlur={(event) => {
+								focusDurationRef.current.end = new Date();
+								onBlur(
+									mountStruct(event, field),
+									focusDurationRef.current
+								);
+							}}
 							onChange={(event, value) =>
 								onChange(mountStruct(event, field, value))
 							}
-							onFocus={(event) =>
-								onFocus(mountStruct(event, field))
-							}
+							onFocus={(event) => {
+								focusDurationRef.current.start = new Date();
+								onFocus(mountStruct(event, field));
+							}}
 						/>
 					</div>
 				</ParentFieldContext.Provider>

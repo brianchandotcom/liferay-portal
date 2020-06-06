@@ -48,6 +48,13 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryLinkServiceImpl
 	extends FragmentEntryLinkServiceBaseImpl {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #addFragmentEntryLink(long, long, long, long, long, String,
+	 *             String, String, String, String, String, int, String,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(
 			long groupId, long originalFragmentEntryLinkId,
@@ -63,13 +70,6 @@ public class FragmentEntryLinkServiceImpl
 			editableValues, namespace, position, rendererKey, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #addFragmentEntryLink(long, long, long, long, long, long,
-	 *             String, String, String, String, String, String, int, String,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
 	@Override
 	public FragmentEntryLink addFragmentEntryLink(
 			long groupId, long originalFragmentEntryLinkId,
@@ -128,6 +128,12 @@ public class FragmentEntryLinkServiceImpl
 			fragmentEntryLinkId, editableValues, updateClassedModel);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #updateFragmentEntryLinks(long, long, long[], String,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public void updateFragmentEntryLinks(
 			long groupId, long classNameId, long classPK,

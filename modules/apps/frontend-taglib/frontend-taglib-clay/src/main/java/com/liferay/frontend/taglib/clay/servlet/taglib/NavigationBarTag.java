@@ -103,8 +103,8 @@ public class NavigationBarTag extends BaseContainerTag {
 			jspWriter.write("<div class=\"container-fluid ");
 			jspWriter.write("container-fluid-max-xl\"><div ");
 			jspWriter.write("class=\"collapse navbar-collapse\"><div ");
-			jspWriter.write("class=\"container-fluid >");
-			jspWriter.write("container-fluid-max-xl\"<ul ");
+			jspWriter.write("class=\"container-fluid ");
+			jspWriter.write("container-fluid-max-xl\"><ul ");
 			jspWriter.write("class=\"navbar-nav\">");
 
 			for (int i = 0; i < _navigationItems.size(); i++) {

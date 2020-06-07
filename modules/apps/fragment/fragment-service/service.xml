@@ -285,10 +285,24 @@
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
 		</finder>
+		<finder name="G_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="plid" />
+		</finder>
 		<finder name="G_F_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentEntryId" />
 			<finder-column name="classNameId" />
+		</finder>
+		<finder name="G_F_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+			<finder-column name="plid" />
+		</finder>
+		<finder name="G_S_P" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="segmentsExperienceId" />
+			<finder-column name="plid" />
 		</finder>
 		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />

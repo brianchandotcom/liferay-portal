@@ -72,6 +72,9 @@ public class MessageBoardMessageEntityModel implements EntityModel {
 				"ratingValue",
 				locale -> Field.getSortableFieldName("totalScore")),
 			new StringEntityField(
+				"friendlyUrlPath",
+				locale -> Field.getSortableFieldName("urlSubject_String")),
+			new StringEntityField(
 				"headline",
 				locale -> Field.getSortableFieldName(
 					"localized_title_".concat(

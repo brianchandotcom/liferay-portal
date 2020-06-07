@@ -51,6 +51,9 @@ public class BlogPostingEntityModel implements EntityModel {
 				locale -> Field.MODIFIED_DATE),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
+				"friendlyUrlPath",
+				locale -> Field.getSortableFieldName("urlTitle_String")),
+			new StringEntityField(
 				"headline", locale -> Field.getSortableFieldName(Field.TITLE)));
 	}
 

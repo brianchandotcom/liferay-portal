@@ -63,6 +63,14 @@ public class StructuredContentEntityModel implements EntityModel {
 				"contentStructureId", locale -> Field.CLASS_TYPE_ID),
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID),
 			new StringEntityField(
+				"friendlyUrlPath",
+				locale -> Field.getSortableFieldName(
+					"urlTitle_".concat(
+						LocaleUtil.toLanguageId(locale)
+					).concat(
+						"_String"
+					))),
+			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(
 					"localized_title_".concat(

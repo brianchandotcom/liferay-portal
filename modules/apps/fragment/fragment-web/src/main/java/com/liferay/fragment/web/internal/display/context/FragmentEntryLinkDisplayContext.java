@@ -24,15 +24,17 @@ import com.liferay.fragment.web.internal.security.permission.resource.FragmentPe
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -104,50 +106,83 @@ public class FragmentEntryLinkDisplayContext {
 		return _fragmentEntryId;
 	}
 
-	public String getFragmentEntryLinkName(FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
+	public String getFragmentEntryLinkName(
+		FragmentEntryLink fragmentEntryLink) {
 
-		long classNameId = fragmentEntryLink.getClassNameId();
+		long layoutPageTemplateEntryPlid = fragmentEntryLink.getPlid();
 
-		if (classNameId == PortalUtil.getClassNameId(Layout.class)) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_renderRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			fragmentEntryLink.getPlid());
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				fragmentEntryLink.getClassPK());
+		if (Validator.isNotNull(layout.getClassNameId()) &&
+			(layout.getClassPK() > 0)) {
 
-			return layout.getName(themeDisplay.getLocale());
+			layoutPageTemplateEntryPlid = layout.getClassPK();
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(
-				fragmentEntryLink.getClassPK());
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(layoutPageTemplateEntryPlid);
 
-		return layoutPageTemplateEntry.getName();
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String name = layout.getName(themeDisplay.getLocale());
+
+		if (layoutPageTemplateEntry != null) {
+			name = layoutPageTemplateEntry.getName();
+		}
+
+		if (Validator.isNull(layout.getClassName()) &&
+			(layout.getClassPK() <= 0)) {
+
+			return name;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(name);
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "draft"));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		return sb.toString();
 	}
 
 	public String getFragmentEntryLinkTypeLabel(
-			FragmentEntryLink fragmentEntryLink)
-		throws PortalException {
+		FragmentEntryLink fragmentEntryLink) {
 
-		if (fragmentEntryLink.getClassNameId() == PortalUtil.getClassNameId(
-				Layout.class)) {
+		long layoutPageTemplateEntryPlid = fragmentEntryLink.getPlid();
 
-			return "page";
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			fragmentEntryLink.getPlid());
+
+		if (Validator.isNotNull(layout.getClassNameId()) &&
+			(layout.getClassPK() > 0)) {
+
+			layoutPageTemplateEntryPlid = layout.getClassPK();
 		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(
-				fragmentEntryLink.getClassPK());
+			LayoutPageTemplateEntryLocalServiceUtil.
+				fetchLayoutPageTemplateEntryByPlid(layoutPageTemplateEntryPlid);
 
-		if (layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
+		if (layoutPageTemplateEntry != null) {
+			if (layoutPageTemplateEntry.getType() ==
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC) {
 
-			return "display-page-template";
+				return "page-template";
+			}
+			else if (layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_DISPLAY_PAGE) {
+
+				return "display-page-template";
+			}
 		}
 
-		return "page-template";
+		return "page";
 	}
 
 	public String getNavigation() {

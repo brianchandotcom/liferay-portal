@@ -250,6 +250,7 @@
 		<column name="segmentsExperienceId" type="long" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="plid" type="long" />
 		<column name="css" type="String" />
 		<column name="html" type="String" />
 		<column name="js" type="String" />

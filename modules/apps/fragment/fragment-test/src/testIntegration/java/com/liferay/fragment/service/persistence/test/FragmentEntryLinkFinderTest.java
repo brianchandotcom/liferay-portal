@@ -85,6 +85,7 @@ public class FragmentEntryLinkFinderTest {
 		fragmentEntryLink.setFragmentEntryId(_FRAGMENT_ENTRY_ID);
 		fragmentEntryLink.setClassNameId(classNameId);
 		fragmentEntryLink.setClassPK(classPK);
+		fragmentEntryLink.setPlid(classPK);
 
 		_fragmentEntryLinks.add(
 			_fragmentEntryLinkPersistence.update(fragmentEntryLink));

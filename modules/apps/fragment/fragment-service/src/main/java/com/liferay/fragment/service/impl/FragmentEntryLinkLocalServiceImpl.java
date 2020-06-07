@@ -104,6 +104,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setSegmentsExperienceId(segmentsExperienceId);
 		fragmentEntryLink.setClassNameId(classNameId);
 		fragmentEntryLink.setClassPK(classPK);
+		fragmentEntryLink.setPlid(classPK);
 		fragmentEntryLink.setCss(css);
 
 		html = _replaceResources(fragmentEntryId, html);
@@ -407,6 +408,7 @@ public class FragmentEntryLinkLocalServiceImpl
 		fragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryLink.setClassNameId(classNameId);
 		fragmentEntryLink.setClassPK(classPK);
+		fragmentEntryLink.setPlid(classPK);
 		fragmentEntryLink.setCss(css);
 		fragmentEntryLink.setHtml(html);
 		fragmentEntryLink.setJs(js);

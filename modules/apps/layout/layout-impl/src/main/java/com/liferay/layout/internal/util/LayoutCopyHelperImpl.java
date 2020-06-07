@@ -527,6 +527,7 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				targetSegmentsExperienceId);
 			newFragmentEntryLink.setClassNameId(classNameId);
 			newFragmentEntryLink.setClassPK(targetLayout.getPlid());
+			newFragmentEntryLink.setPlid(targetLayout.getPlid());
 			newFragmentEntryLink.setLastPropagationDate(
 				serviceContext.getCreateDate(new Date()));
 

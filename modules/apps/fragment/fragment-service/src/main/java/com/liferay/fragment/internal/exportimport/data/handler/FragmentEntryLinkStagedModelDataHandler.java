@@ -189,6 +189,7 @@ public class FragmentEntryLinkStagedModelDataHandler
 			originalFragmentEntryLinkId);
 		importedFragmentEntryLink.setFragmentEntryId(fragmentEntryId);
 		importedFragmentEntryLink.setClassPK(referenceClassPK);
+		importedFragmentEntryLink.setPlid(referenceClassPK);
 
 		String html =
 			_dlReferencesExportImportContentProcessor.

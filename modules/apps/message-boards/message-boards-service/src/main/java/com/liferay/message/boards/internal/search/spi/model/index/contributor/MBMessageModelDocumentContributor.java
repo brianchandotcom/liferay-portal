@@ -105,6 +105,7 @@ public class MBMessageModelDocumentContributor
 		}
 
 		document.addKeyword("threadId", mbMessage.getThreadId());
+		document.addKeywordSortable("urlSubject", mbMessage.getUrlSubject());
 
 		if (!mbMessage.isDiscussion()) {
 			return;

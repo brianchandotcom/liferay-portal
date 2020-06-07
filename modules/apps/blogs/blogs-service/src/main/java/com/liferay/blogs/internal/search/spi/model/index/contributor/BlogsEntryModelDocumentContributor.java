@@ -51,6 +51,7 @@ public class BlogsEntryModelDocumentContributor
 		document.addDate(Field.MODIFIED_DATE, blogsEntry.getModifiedDate());
 		document.addText(Field.SUBTITLE, blogsEntry.getSubtitle());
 		document.addText(Field.TITLE, blogsEntry.getTitle());
+		document.addKeywordSortable("urlTitle", blogsEntry.getUrlTitle());
 
 		for (Locale locale :
 				LanguageUtil.getAvailableLocales(blogsEntry.getGroupId())) {

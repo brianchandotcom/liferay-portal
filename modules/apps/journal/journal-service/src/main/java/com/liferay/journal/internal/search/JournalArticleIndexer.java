@@ -445,6 +445,10 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 				description);
 			document.addText(
 				localization.getLocalizedName(Field.TITLE, languageId), title);
+			document.addKeywordSortable(
+				localization.getLocalizedName("urlTitle", languageId),
+				journalArticle.getUrlTitle(
+					LocaleUtil.fromLanguageId(languageId)));
 		}
 
 		document.addKeyword(Field.FOLDER_ID, journalArticle.getFolderId());

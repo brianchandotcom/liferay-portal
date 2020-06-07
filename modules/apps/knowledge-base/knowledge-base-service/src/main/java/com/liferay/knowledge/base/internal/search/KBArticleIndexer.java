@@ -138,6 +138,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		document.addKeyword(
 			"parentMessageId", kbArticle.getParentResourcePrimKey());
 		document.addKeyword("titleKeyword", kbArticle.getTitle(), true);
+		document.addKeywordSortable("urlTitle", kbArticle.getUrlTitle());
 
 		return document;
 	}

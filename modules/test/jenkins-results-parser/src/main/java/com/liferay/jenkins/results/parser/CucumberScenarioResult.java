@@ -133,6 +133,19 @@ public class CucumberScenarioResult {
 
 	public static class Step {
 
+		public long getDuration() {
+			Element element = (Element)Dom4JUtil.getNodeByXPath(
+				_document,
+				"//div[@class='step']/div/span[contains(@class,'duration')]");
+
+			if (element == null) {
+				return 0;
+			}
+
+			return CucumberScenarioResult._getDurationFromString(
+				element.getTextTrim());
+		}
+
 		public String getErrorDetails() {
 			String status = getStatus();
 
@@ -177,6 +190,17 @@ public class CucumberScenarioResult {
 			return element.getText();
 		}
 
+		public String getName() {
+			Element element = (Element)Dom4JUtil.getNodeByXPath(
+				_document, "//div[@class='step']/div/span[@class='name']");
+
+			if (element == null) {
+				return "";
+			}
+
+			return element.getStringValue();
+		}
+
 		public String getStatus() {
 			Element element = (Element)Dom4JUtil.getNodeByXPath(
 				_document,
@@ -216,16 +240,8 @@ public class CucumberScenarioResult {
 		}
 	}
 
-	private long _getDuration(Document document) {
-		Element element = (Element)Dom4JUtil.getNodeByXPath(
-			document,
-			"//div[@class='element']/span[contains(@class,'duration')]");
-
-		if (element == null) {
-			return 0;
-		}
-
-		Matcher matcher = _pattern.matcher(element.getTextTrim());
+	private static long _getDurationFromString(String durationString) {
+		Matcher matcher = _durationPattern.matcher(durationString);
 
 		if (!matcher.find()) {
 			return 0;
@@ -246,6 +262,18 @@ public class CucumberScenarioResult {
 		}
 
 		return duration;
+	}
+
+	private long _getDuration(Document document) {
+		Element element = (Element)Dom4JUtil.getNodeByXPath(
+			document,
+			"//div[@class='element']/span[contains(@class,'duration')]");
+
+		if (element == null) {
+			return 0;
+		}
+
+		return _getDurationFromString(element.getTextTrim());
 	}
 
 	private String _getName(Document document) {
@@ -315,10 +343,11 @@ public class CucumberScenarioResult {
 		return steps;
 	}
 
+	private static final Pattern _durationPattern = Pattern.compile(
+		"((?<mins>\\d+)\\:)?(?<secs>\\d+)\\.(?<ms>\\d{3})");
+
 	private final Document _backgroundDocument;
 	private final CucumberFeatureResult _cucumberFeatureResult;
-	private Pattern _pattern = Pattern.compile(
-		"((?<mins>\\d+)\\:)?(?<secs>\\d+)\\.(?<ms>\\d{3})");
 	private final Document _scenarioDocument;
 
 }

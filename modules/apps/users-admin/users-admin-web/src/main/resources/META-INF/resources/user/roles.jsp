@@ -171,7 +171,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							uri: '<%= selectRegularRoleURL.toString() %>',
 						},
 						function (event) {
-							<portlet:namespace />selectRole(
+							Liferay.Users['<portlet:namespace />selectRole'](
 								event.entityid,
 								event.entityname,
 								event.searchcontainername,
@@ -426,7 +426,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							uri: '<%= selectOrganizationRoleURL.toString() %>',
 						},
 						function (event) {
-							<portlet:namespace />selectRole(
+							Liferay.Users['<portlet:namespace />selectRole'](
 								event.entityid,
 								event.entityname,
 								event.searchcontainername,
@@ -622,7 +622,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							uri: '<%= selectSiteRoleURL.toString() %>',
 						},
 						function (event) {
-							<portlet:namespace />selectRole(
+							Liferay.Users['<portlet:namespace />selectRole'](
 								event.entityid,
 								event.entityname,
 								event.searchcontainername,
@@ -758,7 +758,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			}
 
 			Liferay.provide(
-				window,
+				Users,
 				'<portlet:namespace />selectRole',
 				function (roleId, name, searchContainer, groupName, groupId, iconCssClass) {
 					var A = AUI();
@@ -849,8 +849,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 					searchContainer.updateDataStore();
 				},
-				['liferay-search-container']
+				[]
 			);
+
+			Liferay.Users = Users;
 		</aui:script>
 
 		<aui:script use="liferay-search-container">

@@ -17,7 +17,9 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
@@ -54,7 +56,13 @@ public class CucumberFeatureFile {
 	}
 
 	private Set<String> _getFeaturePaths(String name) {
-		Set<String> featurePaths = new HashSet<>();
+		Set<String> featurePaths = _featurePathsMap.get(name);
+
+		if (featurePaths != null) {
+			return featurePaths;
+		}
+
+		featurePaths = new HashSet<>();
 
 		try {
 			Process process = JenkinsResultsParserUtil.executeBashCommands(
@@ -86,7 +94,9 @@ public class CucumberFeatureFile {
 			throw new RuntimeException(exception);
 		}
 
-		return featurePaths;
+		_featurePathsMap.put(name, featurePaths);
+
+		return _featurePathsMap.get(name);
 	}
 
 	private Set<String> _getFeaturePathsFromFeatureName() {
@@ -103,5 +113,6 @@ public class CucumberFeatureFile {
 	private final CucumberFeatureResult _cucumberFeatureResult;
 	private final CucumberScenarioResult _cucumberScenarioResult;
 	private final File _faroDir;
+	private final Map<String, Set<String>> _featurePathsMap = new HashMap<>();
 
 }

@@ -59,11 +59,12 @@ AssetRenderer<?> assetRenderer = MySubscriptionsUtil.getAssetRenderer(subscripti
 		String displayPopupURL = assetRenderer.getURLView(liferayPortletResponse, LiferayWindowState.POP_UP);
 
 		if (Validator.isNotNull(displayPopupURL)) {
-			StringBundler sb = new StringBundler(7);
+			StringBundler sb = new StringBundler(8);
 
 			sb.append("javascript:");
+			sb.append("Liferay.Subscriptions['");
 			sb.append(liferayPortletResponse.getNamespace());
-			sb.append("displayPopup('");
+			sb.append("displayPopup']('");
 			sb.append(displayPopupURL);
 			sb.append("', '");
 			sb.append(UnicodeLanguageUtil.get(request, "my-subscription"));

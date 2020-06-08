@@ -68,7 +68,7 @@ public class CucumberFeatureFile {
 			Process process = JenkinsResultsParserUtil.executeBashCommands(
 				false, _faroDir, 10000,
 				JenkinsResultsParserUtil.combine(
-					"git grep \"", name.replaceAll("\"", "\\\\\""), "\""));
+					"git grep \"", name.replaceAll("\"", "\\\\\""), "$\""));
 
 			try {
 				String gitGrepResults =
@@ -100,11 +100,15 @@ public class CucumberFeatureFile {
 	}
 
 	private Set<String> _getFeaturePathsFromFeatureName() {
-		return _getFeaturePaths(_cucumberFeatureResult.getName());
+		String featureName = _cucumberFeatureResult.getName();
+
+		return _getFeaturePaths(featureName.trim());
 	}
 
 	private Set<String> _getFeaturePathsFromScenarioName() {
-		return _getFeaturePaths(_cucumberScenarioResult.getScenarioName());
+		String scenarioName = _cucumberScenarioResult.getScenarioName();
+
+		return _getFeaturePaths(scenarioName.trim());
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

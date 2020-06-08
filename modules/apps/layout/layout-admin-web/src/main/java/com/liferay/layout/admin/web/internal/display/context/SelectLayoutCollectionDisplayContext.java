@@ -18,6 +18,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.list.util.AssetListPortletUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProvider;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -136,6 +138,16 @@ public class SelectLayoutCollectionDisplayContext {
 		return searchContainer;
 	}
 
+	public List<NavigationItem> getNavigationItems() {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		navigationItems.add(_getNavigationItem("collections", "collections"));
+		navigationItems.add(
+			_getNavigationItem("collection-providers", "collection-providers"));
+
+		return navigationItems;
+	}
+
 	public String getRedirect() {
 		if (_redirect != null) {
 			return _redirect;
@@ -194,6 +206,27 @@ public class SelectLayoutCollectionDisplayContext {
 		}
 
 		return infoItemClassNames;
+	}
+
+	private NavigationItem _getNavigationItem(String label, String tabName) {
+		NavigationItem navigationItem = new NavigationItem();
+
+		String selectedTabName = ParamUtil.getString(
+			_httpServletRequest, "selectedTab", "collections");
+
+		if (Objects.equals(tabName, selectedTabName)) {
+			navigationItem.setActive(true);
+		}
+
+		PortletURL collectionsPortletURL = _getPortletURL();
+
+		collectionsPortletURL.setParameter("selectedTab", tabName);
+
+		navigationItem.setHref(collectionsPortletURL.toString());
+
+		navigationItem.setLabel(LanguageUtil.get(_httpServletRequest, label));
+
+		return navigationItem;
 	}
 
 	private PortletURL _getPortletURL() {

@@ -33,68 +33,22 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 %>
 
+<clay:navigation-bar
+	cssClass="border-bottom"
+	inverted="<%= false %>"
+	navigationItems="<%= selectLayoutCollectionDisplayContext.getNavigationItems() %>"
+/>
+
 <clay:container-fluid
 	cssClass="container-view"
 	id='<%= renderResponse.getNamespace() + "collections" %>'
 >
-	<clay:row>
-		<clay:col
-			lg="3"
-		>
-			<nav class="menubar menubar-transparent menubar-vertical-expand-lg">
-				<ul class="nav nav-nested">
-					<li class="nav-item">
-						<ul class="nav nav-stacked">
-							<li class="nav-item">
-								<a class='nav-link text-truncate <%= selectLayoutCollectionDisplayContext.isCollections() ? "active" : StringPool.BLANK %>' href='<%= layoutsAdminDisplayContext.getSelectLayoutCollectionURL(layoutsAdminDisplayContext.getSelPlid(), "collections", layoutsAdminDisplayContext.isPrivateLayout()) %>'>
-									<liferay-ui:message key="collections" />
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class='nav-link text-truncate <%= selectLayoutCollectionDisplayContext.isCollectionProviders() ? "active" : StringPool.BLANK %>' href='<%= layoutsAdminDisplayContext.getSelectLayoutCollectionURL(layoutsAdminDisplayContext.getSelPlid(), "collection-providers", layoutsAdminDisplayContext.isPrivateLayout()) %>'>
-									<liferay-ui:message key="collection-providers" />
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</nav>
-		</clay:col>
-
-		<clay:col
-			lg="9"
-		>
-			<clay:sheet>
-				<h2 class="sheet-title">
-					<clay:content-row
-						verticalAlign="center"
-					>
-						<clay:content-col
-							expand="true"
-						>
-							<span class="text-uppercase">
-								<c:choose>
-									<c:when test="<%= selectLayoutCollectionDisplayContext.isCollections() %>">
-										<liferay-ui:message key="collections" />
-									</c:when>
-									<c:when test="<%= selectLayoutCollectionDisplayContext.isCollectionProviders() %>">
-										<liferay-ui:message key="collection-providers" />
-									</c:when>
-								</c:choose>
-							</span>
-						</clay:content-col>
-					</clay:content-row>
-				</h2>
-
-				<c:choose>
-					<c:when test="<%= selectLayoutCollectionDisplayContext.isCollections() %>">
-						<liferay-util:include page="/select_collections.jsp" servletContext="<%= application %>" />
-					</c:when>
-					<c:otherwise>
-						<liferay-util:include page="/select_collection_providers.jsp" servletContext="<%= application %>" />
-					</c:otherwise>
-				</c:choose>
-			</clay:sheet>
-		</clay:col>
-	</clay:row>
+	<c:choose>
+		<c:when test="<%= selectLayoutCollectionDisplayContext.isCollections() %>">
+			<liferay-util:include page="/select_collections.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:otherwise>
+			<liferay-util:include page="/select_collection_providers.jsp" servletContext="<%= application %>" />
+		</c:otherwise>
+	</c:choose>
 </clay:container-fluid>

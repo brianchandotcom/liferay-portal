@@ -123,4 +123,43 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 
+	@description = "Validate if the pagination will appear and works when we have more than 4 questions."
+	@priority = "3"
+	test ViewQuestionsPagination {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		for (var num : list "1,2,3,4,5,6,7,8,9,10") {
+			Questions.addQuestionByAPI(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Test Category",
+				tagField = "test tag",
+				titleField = "Question ${num}");
+		}
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Pause(locator = "3000");
+
+		Questions.viewPaginationResults(results = "Showing 1 to 10 of 10");
+
+		Questions.changePagination(itemsPerPage = "4 items");
+
+		Questions.viewPaginationResults(results = "Showing 1 to 4 of 10");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		Questions.viewPaginationResults(results = "Showing 5 to 8 of 10");
+
+		Click(locator1 = "Pagination#NEXT_LINK");
+
+		Questions.viewPaginationResults(results = "Showing 9 to 10 of 10");
+	}
+
 }

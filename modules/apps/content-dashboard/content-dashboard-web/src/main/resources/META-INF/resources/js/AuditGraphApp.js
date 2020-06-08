@@ -14,6 +14,8 @@
 
 import React from 'react';
 
+import EmptyBarChart from './components/EmptyBarChart';
+
 export default function () {
-	return <></>;
+	return <EmptyBarChart />;
 }

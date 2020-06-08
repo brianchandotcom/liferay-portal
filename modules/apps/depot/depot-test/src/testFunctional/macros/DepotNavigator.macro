@@ -161,4 +161,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_depot_web_portlet_DepotAdminPortlet");
 	}
 
+	macro openDepotMembershipsAdmin {
+		Navigator.openWithAppendToBaseURL(urlAppend = "group/${depotURLKey}/~/control_panel/manage/-/site_memberships");
+	}
+
 }

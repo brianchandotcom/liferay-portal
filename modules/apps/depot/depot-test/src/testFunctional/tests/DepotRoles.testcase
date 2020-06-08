@@ -590,7 +590,7 @@ definition {
 			password = "test",
 			userEmailAddress = "userea@liferay.com");
 
-		Depot.openDepotMembershipsAdmin(depotURLKey = "test-depot-name");
+		DepotNavigator.openDepotMembershipsAdmin(depotURLKey = "test-depot-name");
 
 		LexiconCard.clickEllipsisItem(
 			card = "userfn userln",

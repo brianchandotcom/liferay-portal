@@ -23,8 +23,4 @@ public interface InfoItemObjectProvider<T> {
 
 	public T getInfoItem(long classPK) throws NoSuchInfoItemException;
 
-	public default String getItemClassName() {
-		return null;
-	}
-
 }

@@ -22,6 +22,7 @@ import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.headless.delivery.resource.v1_0.ContentStructureResource;
+import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
@@ -107,6 +108,8 @@ public class ServletDataImpl implements ServletData {
 			_contentSetElementResourceComponentServiceObjects);
 		Query.setContentStructureResourceComponentServiceObjects(
 			_contentStructureResourceComponentServiceObjects);
+		Query.setContentTemplateResourceComponentServiceObjects(
+			_contentTemplateResourceComponentServiceObjects);
 		Query.setDocumentResourceComponentServiceObjects(
 			_documentResourceComponentServiceObjects);
 		Query.setDocumentFolderResourceComponentServiceObjects(
@@ -237,5 +240,9 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ContentStructureResource>
 		_contentStructureResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ContentTemplateResource>
+		_contentTemplateResourceComponentServiceObjects;
 
 }

@@ -146,7 +146,7 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public String getStructuredContentRenderedContentTemplate(
-			Long structuredContentId, Long templateId)
+			Long structuredContentId, String templateId)
 		throws Exception;
 
 	public void putStructuredContentSubscribe(Long structuredContentId)

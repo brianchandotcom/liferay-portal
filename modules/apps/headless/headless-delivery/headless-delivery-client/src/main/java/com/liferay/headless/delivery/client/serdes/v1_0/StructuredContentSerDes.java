@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.client.dto.v1_0.ContentTemplate;
 import com.liferay.headless.delivery.client.dto.v1_0.CustomField;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.RenderedContent;
@@ -147,6 +148,29 @@ public class StructuredContentSerDes {
 			sb.append("\"contentStructureId\": ");
 
 			sb.append(structuredContent.getContentStructureId());
+		}
+
+		if (structuredContent.getContentTemplates() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentTemplates\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < structuredContent.getContentTemplates().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(structuredContent.getContentTemplates()[i]));
+
+				if ((i + 1) < structuredContent.getContentTemplates().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (structuredContent.getCreator() != null) {
@@ -572,6 +596,15 @@ public class StructuredContentSerDes {
 				String.valueOf(structuredContent.getContentStructureId()));
 		}
 
+		if (structuredContent.getContentTemplates() == null) {
+			map.put("contentTemplates", null);
+		}
+		else {
+			map.put(
+				"contentTemplates",
+				String.valueOf(structuredContent.getContentTemplates()));
+		}
+
 		if (structuredContent.getCreator() == null) {
 			map.put("creator", null);
 		}
@@ -830,6 +863,19 @@ public class StructuredContentSerDes {
 				if (jsonParserFieldValue != null) {
 					structuredContent.setContentStructureId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentTemplates")) {
+				if (jsonParserFieldValue != null) {
+					structuredContent.setContentTemplates(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> ContentTemplateSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new ContentTemplate[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "creator")) {

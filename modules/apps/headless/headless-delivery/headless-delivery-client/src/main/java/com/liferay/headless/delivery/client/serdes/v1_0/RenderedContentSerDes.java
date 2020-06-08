@@ -69,6 +69,20 @@ public class RenderedContentSerDes {
 			sb.append("\"");
 		}
 
+		if (renderedContent.getTemplateId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"templateId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(renderedContent.getTemplateId()));
+
+			sb.append("\"");
+		}
+
 		if (renderedContent.getTemplateName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -121,6 +135,14 @@ public class RenderedContentSerDes {
 				String.valueOf(renderedContent.getRenderedContentURL()));
 		}
 
+		if (renderedContent.getTemplateId() == null) {
+			map.put("templateId", null);
+		}
+		else {
+			map.put(
+				"templateId", String.valueOf(renderedContent.getTemplateId()));
+		}
+
 		if (renderedContent.getTemplateName() == null) {
 			map.put("templateName", null);
 		}
@@ -164,6 +186,11 @@ public class RenderedContentSerDes {
 				if (jsonParserFieldValue != null) {
 					renderedContent.setRenderedContentURL(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "templateId")) {
+				if (jsonParserFieldValue != null) {
+					renderedContent.setTemplateId((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "templateName")) {

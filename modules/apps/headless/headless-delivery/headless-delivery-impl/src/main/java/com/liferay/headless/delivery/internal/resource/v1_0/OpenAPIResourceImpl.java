@@ -81,6 +81,8 @@ public class OpenAPIResourceImpl {
 
 			add(ContentStructureResourceImpl.class);
 
+			add(ContentTemplateResourceImpl.class);
+
 			add(DocumentResourceImpl.class);
 
 			add(DocumentFolderResourceImpl.class);

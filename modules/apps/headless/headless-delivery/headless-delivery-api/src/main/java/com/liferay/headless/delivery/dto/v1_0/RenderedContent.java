@@ -79,6 +79,34 @@ public class RenderedContent {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String renderedContentURL;
 
+	@Schema
+	public String getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+
+	@JsonIgnore
+	public void setTemplateId(
+		UnsafeSupplier<String, Exception> templateIdUnsafeSupplier) {
+
+		try {
+			templateId = templateIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String templateId;
+
 	@Schema(
 		description = "The name of the template used to render the content."
 	)
@@ -178,6 +206,20 @@ public class RenderedContent {
 			sb.append("\"");
 
 			sb.append(_escape(renderedContentURL));
+
+			sb.append("\"");
+		}
+
+		if (templateId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"templateId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(templateId));
 
 			sb.append("\"");
 		}

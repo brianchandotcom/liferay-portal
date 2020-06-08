@@ -239,12 +239,12 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public String getStructuredContentRenderedContentTemplate(
-			Long structuredContentId, Long templateId)
+			Long structuredContentId, String templateId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getStructuredContentRenderedContentTemplateHttpResponse(
-				Long structuredContentId, Long templateId)
+				Long structuredContentId, String templateId)
 		throws Exception;
 
 	public void putStructuredContentSubscribe(Long structuredContentId)
@@ -1924,7 +1924,7 @@ public interface StructuredContentResource {
 		}
 
 		public String getStructuredContentRenderedContentTemplate(
-				Long structuredContentId, Long templateId)
+				Long structuredContentId, String templateId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -1953,7 +1953,7 @@ public interface StructuredContentResource {
 
 		public HttpInvoker.HttpResponse
 				getStructuredContentRenderedContentTemplateHttpResponse(
-					Long structuredContentId, Long templateId)
+					Long structuredContentId, String templateId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();

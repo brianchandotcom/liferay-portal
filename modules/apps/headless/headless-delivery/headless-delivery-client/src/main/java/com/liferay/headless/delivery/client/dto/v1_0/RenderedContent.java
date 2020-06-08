@@ -54,6 +54,27 @@ public class RenderedContent implements Cloneable {
 
 	protected String renderedContentURL;
 
+	public String getTemplateId() {
+		return templateId;
+	}
+
+	public void setTemplateId(String templateId) {
+		this.templateId = templateId;
+	}
+
+	public void setTemplateId(
+		UnsafeSupplier<String, Exception> templateIdUnsafeSupplier) {
+
+		try {
+			templateId = templateIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String templateId;
+
 	public String getTemplateName() {
 		return templateName;
 	}

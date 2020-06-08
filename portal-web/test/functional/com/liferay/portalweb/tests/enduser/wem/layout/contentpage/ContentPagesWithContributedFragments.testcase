@@ -1291,6 +1291,109 @@ definition {
 			value1 = "Full Content");
 	}
 
+	@description = "This is a test for LPS-112093. The documents of collection are displayed using Abstract when add a Content Display to Collection Display."
+	@priority = "4"
+	test ViewDocumentViaContentInCollectionDisplay {
+		for (var i : list "1,2,3") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document ${i} JPG",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${i}.jpg");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Dynamic Asset List Test");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Document");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "DM Document 3 JPG",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "DM Document ${i} JPG",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "DM Document 1 JPG",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "DM Document 3 JPG",
+			fragmentName = "Content");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryImage = "DM+Document+3+JPG.jpg",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryImage = "DM+Document+${i}+JPG.jpg",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryImage = "DM+Document+1+JPG.jpg",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_IMAGE");
+			}
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.gotoConfiguration(fragmentName = "Content");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Abstract");
+	}
+
 	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed using Default Template when add a Content Display to Collection Display."
 	@priority = "5"
 	test ViewWebContentViaContentInCollectionDisplay {

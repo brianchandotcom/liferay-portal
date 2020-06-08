@@ -47,12 +47,13 @@ function MappingPanel({fields, field, source, onChange = noop}) {
 	return (
 		<div className="dpt-mapping-panel-wrapper" ref={wrapperRef}>
 			<ClayButton
-				className="dpt-mapping-btn"
+				className="dpt-mapping-btn lfr-portal-tooltip"
 				displayType="secondary"
 				monospaced
 				onClick={() => {
 					setIsPanelOpen((state) => !state);
 				}}
+				title={Liferay.Language.get('map')}
 			>
 				<ClayIcon symbol="bolt" />
 			</ClayButton>

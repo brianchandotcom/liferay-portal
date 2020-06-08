@@ -395,6 +395,8 @@ definition {
 		
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 		if ("${deleteMissingPages}" == "true") {
 			ContentConfiguration.deleteMissingPages();
 		}

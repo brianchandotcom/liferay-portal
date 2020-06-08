@@ -63,6 +63,8 @@ definition {
 			ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 		}
 
+		var browserType = PropsUtil.get("browser.type");
+
 		if ("${contentDateRange}" == "All") {
 			Click(locator1 = "StagingPublishToLive#CONTENT_ALL");
 		}
@@ -81,11 +83,19 @@ definition {
 				value1 = "${dateRangeEndDate}");
 		}
 
-		if ("${contentDateRange}" == "Last") {
+		if (("${contentDateRange}" == "Last") && ("${browserType}" == "safari")) {
+			Click.javaScriptClick(locator1 = "StagingPublishToLive#CONTENT_LAST");
+		}
+		else if ("${contentDateRange}" == "Last") {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "StagingPublishToLive#CONTENT_LAST");
 		}
 
-		Click(locator1 = "Link#REFRESH_COUNTS");
+		if ("${browserType}" == "safari") {
+			Click.javaScriptClick(locator1 = "Link#REFRESH_COUNTS");
+		}
+		else {
+			Click(locator1 = "Link#REFRESH_COUNTS");
+		}
 	}
 
 	macro contentDeletion {

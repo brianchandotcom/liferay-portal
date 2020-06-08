@@ -223,6 +223,16 @@ a.control-menu-icon,
 	}
 }
 
+.control-menu-nav-item-separator:not(:first-child):before {
+	background-color: $gray-600;
+	content: "";
+	height: 16px;
+	margin-right: 16px;
+	position: relative;
+	top: 9px;
+	width: 1px;
+}
+
 .control-menu-nav-item-field {
 	flex: 0 1 auto;
 }

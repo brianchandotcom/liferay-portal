@@ -20,7 +20,7 @@
 GlobalMenuDisplayContext globalMenuDisplayContext = new GlobalMenuDisplayContext(request);
 %>
 
-<li class="control-menu-nav-item">
+<li class="control-menu-nav-item control-menu-nav-item-separator">
 	<clay:button
 		elementClasses="lfr-portal-tooltip"
 		icon="grid"

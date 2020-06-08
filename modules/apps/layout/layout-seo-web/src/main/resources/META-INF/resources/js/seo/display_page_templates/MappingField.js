@@ -13,24 +13,17 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import MappingPanel from './MappingPanel';
 
 function MappingField({fields, label, name, selectedField, selectedSource}) {
 	const [source, setSource] = useState(selectedSource);
 	const [field, setField] = useState(selectedField);
-	const [value, setValue] = useState('');
 
 	const inititalSourceLabel = selectedSource
 		? selectedSource.classTypeLabel || selectedSource.classNameLabel
 		: '';
-
-	useEffect(() => {
-		if (source) {
-			setValue(`${source.classType || source.className}#${field.key}`);
-		}
-	}, [field.key, source]);
 
 	const handleOnchange = ({field, source}) => {
 		setSource(source);
@@ -48,7 +41,7 @@ function MappingField({fields, label, name, selectedField, selectedSource}) {
 						type="text"
 						value={`${inititalSourceLabel}: ${field.label}`}
 					/>
-					<ClayInput name={name} type="hidden" value={value} />
+					<ClayInput name={name} type="hidden" value={field.key} />
 				</ClayInput.GroupItem>
 				<ClayInput.GroupItem shrink>
 					<MappingPanel

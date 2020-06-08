@@ -52,7 +52,7 @@ Map<String, Object> data = HashMapBuilder.<String, Object>put(
 	<link href='<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/preview/css/main.css") %>' rel="stylesheet" type="text/css" />
 </liferay-util:html-top>
 
-<div id='<%= renderResponse.getNamespace() + randomNamespace + "previewDocument" %>'>
+<div id='<portlet:namespace /><%= randomNamespace + "previewDocument" %>'>
 	<react:component
 		data="<%= data %>"
 		module="preview/js/DocumentPreviewer.es"

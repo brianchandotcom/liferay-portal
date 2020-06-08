@@ -44,9 +44,10 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 		super(null, renderRequest, null);
 
 		_groupId = groupId;
-		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_infoListProvider = infoListProvider;
 		_renderResponse = renderResponse;
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 	}
 
 	@Override

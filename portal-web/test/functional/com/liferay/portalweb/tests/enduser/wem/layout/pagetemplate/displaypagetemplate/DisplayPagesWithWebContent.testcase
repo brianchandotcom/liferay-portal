@@ -304,7 +304,8 @@ definition {
 		task ("Edit the display page by adding a Static Text fragment to the display page") {
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Static Text");
+				fragmentName = "Static Text",
+				targetFragmentName = "Rich Text");
 
 			Button.clickPublish();
 		}

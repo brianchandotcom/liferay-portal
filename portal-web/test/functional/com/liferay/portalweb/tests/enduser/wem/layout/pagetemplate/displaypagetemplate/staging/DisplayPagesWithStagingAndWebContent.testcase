@@ -314,7 +314,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Content");
+				fragmentName = "Content",
+				targetFragmentName = "Rich Text");
 
 			PageEditorMapping.mapEditableTextToField(
 				contributed = "false",

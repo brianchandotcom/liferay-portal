@@ -334,7 +334,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
-			fragmentName = "Title");
+			fragmentName = "Title",
+			targetFragmentName = "Rich Text");
 
 		PageEditor.clickDiscardDraft();
 
@@ -456,7 +457,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Collection Name",
-			fragmentName = "Content");
+			fragmentName = "Content",
+			targetFragmentName = "Title");
 
 		PageEditor.addComment(
 			content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tempus eleifend lacus nec porttitor. Vestibulum pharetra ullamcorper felis volutpat commodo. Nam id ipsum placerat, hendrerit orci eu, congue nisi. Proin.",

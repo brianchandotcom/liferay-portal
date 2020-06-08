@@ -1128,7 +1128,9 @@ definition {
 				collectionName = "Basic Components",
 				fragmentName = "Heading");
 
-			PageEditor.addWidget(portletName = "Asset Publisher");
+			PageEditor.addWidget(
+				portletName = "Asset Publisher",
+				targetFragmentName = "Heading");
 		}
 
 		task ("Assert only header of Heading shown when Heading selected") {

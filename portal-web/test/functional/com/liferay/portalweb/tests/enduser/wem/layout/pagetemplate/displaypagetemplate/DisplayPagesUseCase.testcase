@@ -892,7 +892,8 @@ definition {
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
-				fragmentName = "Title");
+				fragmentName = "Title",
+				targetFragmentName = "Language Selector");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",

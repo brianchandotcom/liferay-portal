@@ -1139,7 +1139,8 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Global Collection Name",
-			fragmentName = "Global Fragment Name 2");
+			fragmentName = "Global Fragment Name 2",
+			targetFragmentName = "Global Fragment Name 1");
 
 		PageEditor.clickPublish();
 

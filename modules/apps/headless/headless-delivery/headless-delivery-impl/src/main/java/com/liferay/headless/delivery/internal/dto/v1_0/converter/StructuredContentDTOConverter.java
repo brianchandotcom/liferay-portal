@@ -26,11 +26,13 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
 import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.AggregateRatingUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentFieldUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentTemplateUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.RelatedContentUtil;
@@ -48,12 +50,14 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
@@ -106,6 +110,17 @@ public class StructuredContentDTOConverter
 					_journalArticleService, _journalConverter,
 					_layoutLocalService);
 				contentStructureId = ddmStructure.getStructureId();
+				contentTemplates = TransformUtil.transformToArray(
+					ddmStructure.getTemplates(),
+					ddmTemplate -> ContentTemplateUtil.toContentTemplate(
+						ddmTemplate,
+						new DefaultDTOConverterContext(
+							dtoConverterContext.isAcceptAllLanguages(),
+							new HashMap<>(),
+							dtoConverterContext.getDTOConverterRegistry(), null,
+							dtoConverterContext.getLocale(), null, null),
+						_portal, _userLocalService),
+					ContentTemplate.class);
 				creator = CreatorUtil.toCreator(
 					_portal,
 					_userLocalService.fetchUser(journalArticle.getUserId()));
@@ -225,6 +240,10 @@ public class StructuredContentDTOConverter
 			ddmStructure.getTemplates(),
 			ddmTemplate -> new RenderedContent() {
 				{
+					contentTemplateId = ddmTemplate.getTemplateKey();
+					contentTemplateName = ddmTemplate.getName(locale);
+					contentTemplateName_i18n = LocalizedMapUtil.getI18nMap(
+						acceptAllLanguages, ddmTemplate.getNameMap());
 					renderedContentURL = JaxRsLinkUtil.getJaxRsLink(
 						"headless-delivery",
 						BaseStructuredContentResourceImpl.class,
@@ -232,9 +251,6 @@ public class StructuredContentDTOConverter
 						uriInfoOptional.get(),
 						journalArticle.getResourcePrimKey(),
 						ddmTemplate.getTemplateId());
-					templateName = ddmTemplate.getName(locale);
-					templateName_i18n = LocalizedMapUtil.getI18nMap(
-						acceptAllLanguages, ddmTemplate.getNameMap());
 				}
 			},
 			RenderedContent.class);

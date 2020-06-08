@@ -683,6 +683,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-timer', 'cookie', 'plugin'],
+		requires: ['aui-base', 'aui-timer', 'cookie', 'plugin'],
 	}
 );

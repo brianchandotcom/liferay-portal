@@ -35,16 +35,20 @@ public abstract class BaseAssetEntryInfoItemRenderer
 		AssetEntry assetEntry, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntry.getClassName());
-
-		httpServletRequest.setAttribute(
-			WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
-
 		try {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						assetEntry.getClassName());
+
+			httpServletRequest.setAttribute(
+				WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
+
 			AssetRenderer<?> assetRenderer =
 				assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+
+			httpServletRequest.setAttribute(
+				WebKeys.ASSET_RENDERER, assetRenderer);
 
 			assetRenderer.include(
 				httpServletRequest, httpServletResponse, getTemplate());

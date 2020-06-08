@@ -4416,48 +4416,29 @@ definition {
 
 		Form.addTextField(fieldPositionNumber = "1");
 
-		FormFields.editText(
-			fieldName = "label",
+		Form.editFieldLabelMetal(
+			fieldName = "Text",
 			fieldValue = ",-+!@#$%^*()=.?/;:{}[]\|");
-
-		FormFields.viewFieldName(fieldName = "Text");
 
 		FormFields.editFieldName(fieldValue = "_,-+!@#$%^*()=.?/;:{}[]\|");
 
 		Form.closeSidebar();
 
-		Form.addTextField(fieldPositionNumber = "1");
+		Form.addTextField(fieldPositionNumber = "2");
 
-		FormFields.editText(
-			fieldName = "label",
+		Form.editFieldLabelMetal(
+			fieldName = "JumpSheExclaimed",
 			fieldValue = "Jump, She exclaimed!");
 
 		FormFields.editFieldName(fieldValue = "Jump, She exclaimed!");
 
 		Form.closeSidebar();
 
-		Form.save();
+		Form.publishForm();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
+		FormsAdminNavigator.gotoPublishedForm();
 
-		SitePages.addPublicPage(pageName = "Form Page");
-
-		Navigator.gotoPage(pageName = "Form Page");
-
-		Portlet.addPG(
-			pageName = "Form Page",
-			portletName = "Form");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		Pause(locator1 = "2000");
 
 		FormFields.viewTextField(
 			fieldLabel = ",-+!@#$%^*()=.?/;:{}[]\|",

@@ -48,8 +48,8 @@ function ExportTranslation(props) {
 
 					fetch(getExportTranslationAvailableLocalesURL.toString())
 						.then((res) => res.json())
-						.then((res) => {
-							setAvailableSourceLocales(res.sourceLocales);
+						.then((availableLocales) => {
+							setAvailableSourceLocales(availableLocales);
 							setArticleIds(articleIds);
 							setShowModal(true);
 						});

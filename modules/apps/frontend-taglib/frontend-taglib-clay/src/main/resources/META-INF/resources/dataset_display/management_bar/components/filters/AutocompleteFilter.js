@@ -21,7 +21,7 @@ import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {fetchParams, getValueFromItem} from '../../../utilities/index';
+import {getValueFromItem} from '../../../utilities/index';
 import {logError} from '../../../utilities/log';
 import {showErrorNotification} from '../../../utilities/notifications';
 import getAppContext from '../Context';
@@ -34,7 +34,6 @@ function fetchData(apiUrl, searchParam, currentPage = 1) {
 			searchParam ? `&search=${encodeURIComponent(searchParam)}` : ''
 		}`,
 		{
-			...fetchParams,
 			method: 'GET',
 		}
 	).then((response) => response.json());

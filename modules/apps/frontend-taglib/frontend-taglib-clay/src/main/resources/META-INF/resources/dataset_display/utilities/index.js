@@ -42,7 +42,6 @@ export function getValueFromItem(item, fieldName) {
 
 export function executeAsyncAction(url, method = 'GET') {
 	return fetch(url, {
-		...fetchParams,
 		method,
 	});
 }
@@ -61,15 +60,6 @@ export function formatActionUrl(url, item) {
 export function getRandomId() {
 	return Math.random().toString(36).substr(2, 9);
 }
-
-export const fetchHeaders = new Headers({
-	'x-csrf-token': Liferay.authToken,
-});
-
-export const fetchParams = {
-	credentials: 'include',
-	headers: Liferay.staticEnvHeaders || fetchHeaders,
-};
 
 export function createSortingString(values) {
 	if (!values.length) {

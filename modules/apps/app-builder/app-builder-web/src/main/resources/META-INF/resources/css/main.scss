@@ -32,9 +32,7 @@
 }
 
 .apps-popover {
-	padding-left: 1rem;
-	padding-right: 1rem;
-	padding-top: 1rem;
+	z-index: 999;
 }
 
 body.open .app-builder-upper-toolbar {
@@ -74,12 +72,8 @@ body.open .app-builder-upper-toolbar {
 	box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.3);
 }
 
-.drop-down-filter-text {
-	padding: 0.5rem 1.25rem;
-}
-
 .empty-state-dropdown-menu {
-	padding: 1.3rem 0.5rem;
+	padding: 0.5rem 1rem;
 	text-align: left;
 }
 
@@ -95,7 +89,7 @@ body.open .app-builder-upper-toolbar {
 	}
 }
 
-.icon {
+.dropdown-button-asset {
 	margin-top: 0.325rem;
 }
 
@@ -161,10 +155,6 @@ body.open .app-builder-upper-toolbar {
 	.lexicon-icon-check {
 		color: #0b5fff;
 	}
-}
-
-.popover {
-	z-index: 999;
 }
 
 .remove-object-field-message {

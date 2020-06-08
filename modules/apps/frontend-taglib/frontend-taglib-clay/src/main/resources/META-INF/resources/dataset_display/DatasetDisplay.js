@@ -216,36 +216,36 @@ function DatasetDisplay({
 		refreshData,
 	]);
 
-	function selectItems(val) {
-		if (Array.isArray(val)) {
-			return setSelectedItemsValue(val);
+	function selectItems(value) {
+		if (Array.isArray(value)) {
+			return setSelectedItemsValue(value);
 		}
 
 		if (selectionType === 'single') {
-			return setSelectedItemsValue([val]);
+			return setSelectedItemsValue([value]);
 		}
 
-		const itemAdded = selectedItemsValue.find((item) => item === val);
+		const itemAdded = selectedItemsValue.find((item) => item === value);
 
 		if (itemAdded) {
 			setSelectedItemsValue(
-				selectedItemsValue.filter((el) => el !== val)
+				selectedItemsValue.filter((element) => element !== value)
 			);
 		}
 		else {
-			setSelectedItemsValue(selectedItemsValue.concat(val));
+			setSelectedItemsValue(selectedItemsValue.concat(value));
 		}
 	}
 
-	function highlightItems(val = []) {
-		if (Array.isArray(val)) {
-			return setHighlightedItemsValue(val);
+	function highlightItems(value = []) {
+		if (Array.isArray(value)) {
+			return setHighlightedItemsValue(value);
 		}
 
-		const itemAdded = highlightedItemsValue.find((item) => item === val);
+		const itemAdded = highlightedItemsValue.find((item) => item === value);
 
 		if (!itemAdded) {
-			setHighlightedItemsValue(highlightedItemsValue.concat(val));
+			setHighlightedItemsValue(highlightedItemsValue.concat(value));
 		}
 	}
 

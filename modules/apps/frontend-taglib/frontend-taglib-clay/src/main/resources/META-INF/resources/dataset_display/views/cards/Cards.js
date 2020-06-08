@@ -57,7 +57,8 @@ function Cards(props) {
 								selected={
 									selectable &&
 									!!selectedItemsValue.find(
-										(el) => el === item[selectedItemsKey]
+										(element) =>
+											element === item[selectedItemsKey]
 									)
 								}
 								stickerProps={

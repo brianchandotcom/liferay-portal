@@ -24,19 +24,19 @@ function reducer(state = initialState, action) {
 		case actionsDefinition.UPDATE_FILTER_VALUE:
 			return {
 				...state,
-				filters: state.filters.map((el) => ({
-					...el,
+				filters: state.filters.map((element) => ({
+					...element,
 					value:
-						action.payload.id === el.id
+						action.payload.id === element.id
 							? action.payload.value
-							: el.value,
+							: element.value,
 				})),
 			};
 		case actionsDefinition.RESET_FILTERS_VALUE:
 			return {
 				...state,
-				filters: state.filters.map((el) => ({
-					...el,
+				filters: state.filters.map((element) => ({
+					...element,
 					value: null,
 				})),
 			};

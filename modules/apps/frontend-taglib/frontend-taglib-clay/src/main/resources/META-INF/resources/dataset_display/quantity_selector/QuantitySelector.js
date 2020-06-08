@@ -116,9 +116,9 @@ function QuantitySelector(props) {
 						onChange={handleSelectChange}
 						value={currentQuantity}
 					>
-						{props.allowedQuantities.map((val) => (
-							<option key={val} value={val}>
-								{val}
+						{props.allowedQuantities.map((value) => (
+							<option key={value} value={value}>
+								{value}
 							</option>
 						))}
 					</select>

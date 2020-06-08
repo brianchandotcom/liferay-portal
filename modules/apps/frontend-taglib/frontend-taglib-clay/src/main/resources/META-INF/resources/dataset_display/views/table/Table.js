@@ -127,7 +127,7 @@ function Table(props) {
 
 	const showActionItems = Boolean(
 		(props.itemActions && props.itemActions.length) ||
-			props.items.find((el) => el.actionItems)
+			props.items.find((element) => element.actionItems)
 	);
 
 	const SelectionComponent =
@@ -177,8 +177,8 @@ function Table(props) {
 											<SelectionComponent
 												checked={
 													!!selectedItemsValue.find(
-														(el) =>
-															String(el) ===
+														(element) =>
+															String(element) ===
 															String(itemId)
 													)
 												}

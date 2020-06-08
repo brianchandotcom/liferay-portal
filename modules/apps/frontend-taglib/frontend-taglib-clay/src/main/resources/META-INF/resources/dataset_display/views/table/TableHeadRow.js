@@ -22,20 +22,21 @@ import Checkbox from '../../data_renderer/CheckboxRenderer';
 
 function TableHeadCell(props) {
 	const sortingMatch = props.sorting.find(
-		(el) => el.fieldName === props.fieldName
+		(element) => element.fieldName === props.fieldName
 	);
 
 	function handleSortingCellClick(e) {
 		e.preventDefault();
 
 		if (sortingMatch) {
-			const updatedSortedElements = props.sorting.map((el) =>
-				el.fieldName === props.fieldName
+			const updatedSortedElements = props.sorting.map((element) =>
+				element.fieldName === props.fieldName
 					? {
-							...el,
-							direction: el.direction === 'asc' ? 'desc' : 'asc',
+							...element,
+							direction:
+								element.direction === 'asc' ? 'desc' : 'asc',
 					  }
-					: el
+					: element
 			);
 			props.updateSorting(updatedSortedElements);
 		}

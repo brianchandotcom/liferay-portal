@@ -154,8 +154,8 @@ function AutocompleteFilter(props) {
 			return true;
 		}
 
-		const prevValues = prevValue.map((el) => el.value).sort();
-		const newValues = newValue.map((el) => el.value).sort();
+		const prevValues = prevValue.map((element) => element.value).sort();
+		const newValues = newValue.map((element) => element.value).sort();
 
 		return prevValues.some((element, i) => element !== newValues[i]);
 	}
@@ -239,12 +239,13 @@ function AutocompleteFilter(props) {
 										onChange={() => {
 											setSelectedItems(
 												selectedItems.find(
-													(el) =>
-														el.value === itemValue
+													(element) =>
+														element.value ===
+														itemValue
 												)
 													? selectedItems.filter(
-															(el) =>
-																el.value !==
+															(element) =>
+																element.value !==
 																itemValue
 													  )
 													: props.selectionType ===
@@ -258,7 +259,8 @@ function AutocompleteFilter(props) {
 										}}
 										selected={Boolean(
 											selectedItems.find(
-												(el) => el.value === itemValue
+												(element) =>
+													element.value === itemValue
 											)
 										)}
 										selectionType={props.selectionType}

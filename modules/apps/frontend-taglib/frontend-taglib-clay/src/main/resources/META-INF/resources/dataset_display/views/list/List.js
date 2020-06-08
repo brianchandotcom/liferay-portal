@@ -44,7 +44,7 @@ function List(props) {
 						{selectionType === 'single' ? (
 							<ClayRadio
 								checked={selectedItemsValue
-									.map((el) => String(el))
+									.map((element) => String(element))
 									.includes(String(item[selectedItemsKey]))}
 								onChange={() =>
 									selectItems(item[selectedItemsKey])
@@ -53,7 +53,7 @@ function List(props) {
 						) : (
 							<ClayCheckbox
 								checked={selectedItemsValue
-									.map((el) => String(el))
+									.map((element) => String(element))
 									.includes(String(item[selectedItemsKey]))}
 								onChange={() =>
 									selectItems(item[selectedItemsKey])

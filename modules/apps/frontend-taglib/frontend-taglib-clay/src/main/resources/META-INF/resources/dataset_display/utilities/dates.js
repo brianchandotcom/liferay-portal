@@ -89,7 +89,7 @@ export function prettifyFilterValue(props) {
 		case 'checkbox':
 			return prettifyCheckboxValue(props.value, props.items);
 		case 'autocomplete':
-			return props.value.map((el) => el.label).join(', ');
+			return props.value.map((element) => element.label).join(', ');
 		case 'radio':
 		case 'select':
 			return prettifySelectValue(props.value, props.items);

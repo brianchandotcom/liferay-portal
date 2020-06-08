@@ -74,6 +74,17 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 		},
 	];
 
+	const replaceExpressionLabels = (expression) => {
+		dataDefinition.dataDefinitionFields.forEach(({name}) => {
+			expression = expression.replace(
+				new RegExp(`\\[${name}\\]`, 'g'),
+				getFieldLabel(dataDefinition, name)
+			);
+		});
+
+		return expression;
+	};
+
 	return (
 		<CollapsablePanel actions={dropDownActions} title={name}>
 			<ClayButton
@@ -123,7 +134,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 						{expression && (
 							<>
 								<ClayLabel displayType="secondary">
-									{expression}
+									{replaceExpressionLabels(expression)}
 								</ClayLabel>
 
 								<Text lowercase>

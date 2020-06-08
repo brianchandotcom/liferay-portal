@@ -12,7 +12,8 @@
  * details.
  */
 
-import DatasetDisplay from './DatasetDisplay';
-import launcher from './utilities/launcher';
+import {render} from 'frontend-js-react-web';
 
-export default (...data) => launcher(DatasetDisplay, ...data);
+import DatasetDisplay from './DatasetDisplay';
+
+export default (...data) => render(DatasetDisplay, ...data);

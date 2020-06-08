@@ -40,7 +40,14 @@ function ExportTranslation(props) {
 			bridgeComponentId,
 			{
 				open: (articleIds) => {
-					fetch(props.getExportTranslationAvailableLocalesURL)
+					const getExportTranslationAvailableLocalesURL = Liferay.Util.PortletURL.createPortletURL(
+						props.getExportTranslationAvailableLocalesURL,
+						{
+							articleId: articleIds[0],
+						}
+					);
+
+					fetch(getExportTranslationAvailableLocalesURL.toString())
 						.then((res) => res.json())
 						.then((res) => {
 							setAvailableSourceLocales(res.sourceLocales);

@@ -1,6 +1,115 @@
+@keyframes moveLeftActive {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(100%);
+	}
+}
+
+@keyframes moveLeft {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+@keyframes moveRightActive {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-100%);
+	}
+}
+
+@keyframes moveRight {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+.section-slider .carousel {
+	position: relative;
+}
+
 .section-slider .carousel-caption {
 	bottom: 50%;
 	left: 0;
 	right: 0;
 	transform: translateY(50%);
+}
+
+.section-slider .carousel-item {
+	opacity: 0;
+}
+
+.section-slider .carousel-item.move-right,
+.section-slider .carousel-item.move-left {
+	animation-duration: 0.6s;
+	animation-iteration-count: 1;
+	display: block;
+}
+
+.section-slider .carousel-item.active,
+.section-slider .carousel-item.move-left,
+.section-slider .carousel-item.move-right {
+	opacity: 1;
+}
+
+.section-slider .carousel-item.active {
+	transform: translateX(0);
+}
+
+.section-slider .carousel-item.active.move-left {
+	animation-name: moveLeftActive;
+}
+
+.section-slider .carousel-item.move-left {
+	animation-name: moveLeft;
+}
+
+.section-slider .carousel-item.active.move-right {
+	animation-name: moveRightActive;
+}
+
+.section-slider .carousel-item.move-right {
+	animation-name: moveRight;
+}
+
+.section-slider .carousel-navigation {
+	bottom: 10px;
+	display: flex;
+	justify-content: center;
+	left: 0;
+	list-style: none;
+	padding-left: 0;
+	position: absolute;
+	right: 0;
+	z-index: 15;
+}
+
+.section-slider .carousel-navigation button {
+	background-color: rgba(255, 255, 255, 0.5);
+	border: 0;
+	flex: 0 1 auto;
+	height: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+	position: relative;
+	width: 30px;
+}
+
+.section-slider .carousel-navigation button:focus {
+	outline: 0;
+	text-decoration: none;
+}
+
+.section-slider .carousel-navigation button.active {
+	background-color: rgba(255, 255, 255, 1);
 }

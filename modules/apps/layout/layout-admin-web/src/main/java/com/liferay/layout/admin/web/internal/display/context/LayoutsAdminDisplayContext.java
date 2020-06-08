@@ -194,15 +194,15 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
-			String collectionType = ParamUtil.getString(
-				httpServletRequest, "collectionType");
-
-			portletURL.setParameter("collectionType", collectionType);
-
 			String collectionPK = ParamUtil.getString(
 				httpServletRequest, "collectionPK");
 
 			portletURL.setParameter("collectionPK", collectionPK);
+
+			String collectionType = ParamUtil.getString(
+				httpServletRequest, "collectionType");
+
+			portletURL.setParameter("collectionType", collectionType);
 
 			portletURL.setParameter(
 				ActionRequest.ACTION_NAME, "/layout/add_collection_layout");

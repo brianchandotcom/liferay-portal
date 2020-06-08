@@ -116,13 +116,13 @@ public class AddCollectionLayoutMVCActionCommand
 		String collectionPK = ParamUtil.getString(
 			actionRequest, "collectionPK");
 
-		typeSettingsUnicodeProperties.setProperty(
-			"collectionType", collectionType);
+		typeSettingsUnicodeProperties.setProperty("collectionPK", collectionPK);
 
 		String collectionType = ParamUtil.getString(
 			actionRequest, "collectionType");
 
-		typeSettingsUnicodeProperties.setProperty("collectionPK", collectionPK);
+		typeSettingsUnicodeProperties.setProperty(
+			"collectionType", collectionType);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);

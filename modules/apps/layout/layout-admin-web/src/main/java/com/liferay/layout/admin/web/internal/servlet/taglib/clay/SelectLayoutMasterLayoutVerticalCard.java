@@ -53,14 +53,16 @@ public class SelectLayoutMasterLayoutVerticalCard implements VerticalCard {
 	public Map<String, String> getData() {
 		Map<String, String> data = new HashMap<>();
 
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
-
 		try {
 			PortletURL addLayoutURL = _renderResponse.createRenderURL();
 
 			addLayoutURL.setParameter(
 				"mvcRenderCommandName", "/layout/add_layout");
-			addLayoutURL.setParameter("backURL", redirect);
+
+			String redirect = ParamUtil.getString(
+				_httpServletRequest, "redirect");
+
+			addLayoutURL.setParameter("redirect", redirect);
 
 			long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
 
@@ -79,15 +81,15 @@ public class SelectLayoutMasterLayoutVerticalCard implements VerticalCard {
 			addLayoutURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
 
-			String collectionType = ParamUtil.getString(
-				_httpServletRequest, "collectionType");
-
-			addLayoutURL.setParameter("collectionType", collectionType);
-
 			String collectionPK = ParamUtil.getString(
 				_httpServletRequest, "collectionPK");
 
 			addLayoutURL.setParameter("collectionPK", collectionPK);
+
+			String collectionType = ParamUtil.getString(
+				_httpServletRequest, "collectionType");
+
+			addLayoutURL.setParameter("collectionType", collectionType);
 
 			addLayoutURL.setParameter(
 				"masterLayoutPlid",

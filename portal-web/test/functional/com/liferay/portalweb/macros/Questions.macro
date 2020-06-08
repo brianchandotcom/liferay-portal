@@ -57,6 +57,18 @@ definition {
 		MenuItem.click(menuItem = StringUtil.upperCaseFirstLetter("${displayStyle}"));
 	}
 
+	macro changePagination {
+		Click(locator1 = "Questions#ITEMS_PER_PAGE_SELECT");
+
+		var key_itemsPerPage = "${itemsPerPage}";
+
+		MenuItem.click(menuItem = "${itemsPerPage}");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Questions#ITEMS_PER_PAGE_SELECT",
+			value1 = "${itemsPerPage}");
+	}
+
 	macro createSomethingInMessageBoards {
 		LexiconEntry.gotoAdd();
 
@@ -83,6 +95,12 @@ definition {
 		}
 
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_LIST");
+	}
+
+	macro viewPaginationResults {
+		AssertTextEquals(
+			locator1 = "Questions#PAGINATION_RESULTS",
+			value1 = "${results}");
 	}
 
 }

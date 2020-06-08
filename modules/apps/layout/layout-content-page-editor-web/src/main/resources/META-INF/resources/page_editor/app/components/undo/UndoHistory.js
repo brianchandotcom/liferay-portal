@@ -28,8 +28,8 @@ import {getActionLabel} from './getActionLabel';
 export default function UndoHistory() {
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
-	const redoHistory = useSelector((state) => state.redoHistory);
-	const undoHistory = useSelector((state) => state.undoHistory);
+	const redoHistory = useSelector((state) => state.redoHistory || []);
+	const undoHistory = useSelector((state) => state.undoHistory || []);
 
 	const [active, setActive] = useState(false);
 
@@ -44,7 +44,7 @@ export default function UndoHistory() {
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('undo-history')}
 						className="btn-monospaced"
-						disabled={!undoHistory}
+						disabled={!undoHistory.length && !redoHistory.length}
 						displayType="secondary"
 						small
 						symbol="time"

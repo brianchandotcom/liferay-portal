@@ -3,7 +3,7 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.main.component.name = "Segmentation";
+	property testray.main.component.name = "Content Dashboard";
 
 	setUp {
         TestCase.setUpPortalInstance();
@@ -12,7 +12,7 @@ definition {
 
 		Navigator.openURL();
 
-        for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
+        for (var count : list "1,2,3,4,5") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content ${count}",
 				groupName = "Guest",
@@ -40,8 +40,7 @@ definition {
 			panel = "Applications",
 			portlet = "Content Dashboard");
     
-        
-
+        ContentDashboard.filterByTitle();
 	}
 
 }

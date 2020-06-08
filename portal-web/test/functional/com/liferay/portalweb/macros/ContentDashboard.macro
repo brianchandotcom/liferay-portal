@@ -1,7 +1,9 @@
 definition {
 
 	macro filterByTitle {
-		
+		Click(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN");
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_TITLE_OPTION");
 	}
 
 }

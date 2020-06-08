@@ -268,7 +268,7 @@ public class StructuredContentResourceTest
 			"<div>" + contentFieldValue.getData() + "</div>",
 			structuredContentResource.
 				getStructuredContentRenderedContentTemplate(
-					structuredContent.getId(), _ddmTemplate.getTemplateId()));
+					structuredContent.getId(), _ddmTemplate.getTemplateKey()));
 	}
 
 	@Test

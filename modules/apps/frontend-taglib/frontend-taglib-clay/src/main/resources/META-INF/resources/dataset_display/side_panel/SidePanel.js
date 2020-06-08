@@ -29,6 +29,7 @@ import {
 	SIDE_PANEL_CLOSED,
 } from '../utilities/eventsDefinitions';
 import {getIframeHandlerModalId, isPageInIframe} from '../utilities/iframes';
+import {logError} from '../utilities/log';
 import {exposeSidePanel} from '../utilities/sidePanels';
 import SideMenu from './SideMenu';
 
@@ -86,8 +87,10 @@ export default class SidePanel extends React.Component {
 				container.classList.add('with-side-panel');
 			}
 			else {
-				throw new Error(
-					`Container: "${this.props.containerSelector}" not found!`
+				logError(
+					new Error(
+						`Container: "${this.props.containerSelector}" not found!`
+					)
 				);
 			}
 		}
@@ -333,8 +336,10 @@ export default class SidePanel extends React.Component {
 			}
 		}
 		catch (error) {
-			throw new Error(
-				`Cannot access to iframe body. Url: "${this.state.currentUrl}"`
+			logError(
+				new Error(
+					`Cannot access to iframe body. Url: "${this.state.currentUrl}"`
+				)
 			);
 		}
 	}

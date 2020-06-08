@@ -32,6 +32,7 @@ import {
 	UPDATE_DATASET_DISPLAY,
 } from './utilities/eventsDefinitions';
 import {executeAsyncAction, getRandomId, loadData} from './utilities/index';
+import {logError} from './utilities/log';
 import getJsModule from './utilities/modules';
 import {showNotification} from './utilities/notifications';
 import {getViewById} from './views/index';
@@ -160,8 +161,8 @@ function DatasetDisplay(props) {
 				setLoading(false);
 				Liferay.fire(DATASET_DISPLAY_UPDATED, {id: props.id});
 			})
-			.catch((e) => {
-				console.error(e);
+			.catch((error) => {
+				logError(error);
 				setLoading(false);
 
 				showNotification(
@@ -363,8 +364,9 @@ function DatasetDisplay(props) {
 					id: props.id,
 				});
 			})
-			.catch((e) => {
-				console.error(e);
+			.catch((error) => {
+				logError(error);
+
 				showNotification(
 					Liferay.Language.get('unexpected-error'),
 					'danger'

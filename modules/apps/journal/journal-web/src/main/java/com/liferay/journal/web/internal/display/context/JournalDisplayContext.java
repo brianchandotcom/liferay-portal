@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -104,12 +105,14 @@ import com.liferay.trash.TrashHelper;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 
 import javax.portlet.PortletURL;
 import javax.portlet.ResourceURL;
@@ -552,6 +555,13 @@ public class JournalDisplayContext {
 		).put(
 			"props",
 			HashMapBuilder.<String, Object>put(
+				"availableTargetLocales",
+				_getJSONJArray(
+					LanguageUtil.getAvailableLocales(
+						_themeDisplay.getSiteGroupId()),
+					locale -> _getLocaleJSONObject(
+						_themeDisplay.getLocale(), locale))
+			).put(
 				"getExportTranslationAvailableLocalesURL",
 				getExportTranslationAvailableLocalesURL.toString()
 			).put(
@@ -1473,6 +1483,26 @@ public class JournalDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private <T> JSONArray _getJSONJArray(
+		Collection<T> collection, Function<T, JSONSerializable> serialize) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		collection.forEach(t -> jsonArray.put(serialize.apply(t)));
+
+		return jsonArray;
+	}
+
+	private JSONObject _getLocaleJSONObject(
+		Locale currentLocale, Locale locale) {
+
+		return JSONUtil.put(
+			"displayName", locale.getDisplayName(currentLocale)
+		).put(
+			"languageId", LocaleUtil.toLanguageId(locale)
+		);
 	}
 
 	private Sort _getSort() {

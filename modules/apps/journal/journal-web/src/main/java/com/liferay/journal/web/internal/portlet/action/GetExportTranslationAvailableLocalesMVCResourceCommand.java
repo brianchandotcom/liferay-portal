@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -78,14 +77,7 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 						_journalArticleLocalService.getArticle(
 							themeDisplay.getScopeGroupId(),
 							ParamUtil.getString(resourceRequest, "articleId"))),
-					locale -> _getLocaleJSONObject(currentLocale, locale))
-			).put(
-				"targetLocales",
-				_getJSONJArray(
-					LanguageUtil.getAvailableLocales(
-						themeDisplay.getSiteGroupId()),
-					locale -> _getLocaleJSONObject(currentLocale, locale))
-			));
+					locale -> _getLocaleJSONObject(currentLocale, locale))));
 	}
 
 	private List<Locale> _getAvailableLocales(JournalArticle journalArticle) {

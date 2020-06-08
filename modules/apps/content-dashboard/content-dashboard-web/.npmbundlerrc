@@ -1,0 +1,9 @@
+{
+	"config": {
+		"imports": {
+			"frontend-js-recharts": {
+				"recharts": ">=1.8.5"
+			}
+		}
+	}
+}

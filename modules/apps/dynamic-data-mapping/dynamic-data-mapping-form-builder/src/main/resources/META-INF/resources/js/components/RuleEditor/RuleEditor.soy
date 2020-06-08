@@ -729,7 +729,7 @@
 											{param spritemap: $spritemap /}
 											{param value: [$secondOperandValue] /}
 										{/call}
-									{else}
+									{elseif $secondOperandType != ''}
 										{call ReactFieldAdapter.render}
 											{param dataType: $secondOperandDataType /}
 											{param events: [

@@ -444,7 +444,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 
 		String lastPath = paths.get(paths.size() - 1);
 
-		List<String> numbers = StringUtil.split(friendlyURL, CharPool.PERIOD);
+		List<String> numbers = StringUtil.split(lastPath, CharPool.PERIOD);
 
 		if ((numbers.size() == 2) && Validator.isDigit(numbers.get(0)) &&
 			Validator.isDigit(numbers.get(1))) {

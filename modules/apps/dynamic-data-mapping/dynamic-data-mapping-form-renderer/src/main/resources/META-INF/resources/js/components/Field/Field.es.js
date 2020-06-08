@@ -89,7 +89,7 @@ class FieldEventStruct {
 		};
 
 		this.originalEvent = event;
-		this.value = value !== null ? value : event.target.value;
+		this.value = value !== null ? value : event?.target?.value;
 	}
 }
 

@@ -217,10 +217,10 @@ const Main = ({
 
 	const handleVisibleChange = (event) => {
 		if (event.selectedItem) {
-			onFocus(event);
+			onFocus({}, event);
 		}
 		else {
-			onBlur(event);
+			onBlur({}, event);
 		}
 	};
 

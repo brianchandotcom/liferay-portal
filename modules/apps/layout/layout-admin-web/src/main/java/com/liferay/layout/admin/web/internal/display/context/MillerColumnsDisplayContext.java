@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
+import com.liferay.layout.admin.web.internal.configuration.util.CollectionLayoutsConfigurationUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -303,20 +304,57 @@ public class MillerColumnsDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		if (_layoutsAdminDisplayContext.isShowAddRootLayoutButton()) {
-			jsonArray.put(
-				JSONUtil.put(
-					"icon", "plus"
+			if (!CollectionLayoutsConfigurationUtil.enabled()) {
+				jsonArray.put(
+					JSONUtil.put(
+						"icon", "plus"
+					).put(
+						"id", "add"
+					).put(
+						"label", LanguageUtil.get(_httpServletRequest, "add")
+					).put(
+						"quickAction", true
+					).put(
+						"url",
+						_layoutsAdminDisplayContext.
+							getSelectLayoutPageTemplateEntryURL(privatePages)
+					));
+			}
+			else {
+				jsonArray.put(
+					JSONUtil.put(
+						"id", "add-page"
+					).put(
+						"label",
+						LanguageUtil.get(_httpServletRequest, "add-page")
+					).put(
+						"layoutAction", true
+					).put(
+						"url",
+						_layoutsAdminDisplayContext.
+							getSelectLayoutPageTemplateEntryURL(
+								_layoutsAdminDisplayContext.
+									getFirstLayoutPageTemplateCollectionId(),
+								LayoutConstants.DEFAULT_PLID, privatePages)
+					)
 				).put(
-					"id", "add"
-				).put(
-					"label", LanguageUtil.get(_httpServletRequest, "add")
-				).put(
-					"quickAction", true
-				).put(
-					"url",
-					_layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(privatePages)
-				));
+					JSONUtil.put(
+						"id", "add-collection-page"
+					).put(
+						"label",
+						LanguageUtil.get(
+							_httpServletRequest, "add-collection-page")
+					).put(
+						"layoutAction", true
+					).put(
+						"url",
+						_layoutsAdminDisplayContext.
+							getSelectLayoutCollectionURL(
+								LayoutConstants.DEFAULT_PLID, null,
+								privatePages)
+					)
+				);
+			}
 		}
 
 		if (_layoutsAdminDisplayContext.isShowFirstColumnConfigureAction()) {
@@ -386,23 +424,60 @@ public class MillerColumnsDisplayContext {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		if (_layoutsAdminDisplayContext.isShowAddChildPageAction(layout)) {
-			jsonArray.put(
-				JSONUtil.put(
-					"icon", "plus"
+			if (!CollectionLayoutsConfigurationUtil.enabled()) {
+				jsonArray.put(
+					JSONUtil.put(
+						"icon", "plus"
+					).put(
+						"id", "add"
+					).put(
+						"label", LanguageUtil.get(_httpServletRequest, "add")
+					).put(
+						"quickAction", true
+					).put(
+						"url",
+						_layoutsAdminDisplayContext.
+							getSelectLayoutPageTemplateEntryURL(
+								_layoutsAdminDisplayContext.
+									getFirstLayoutPageTemplateCollectionId(),
+								layout.getPlid(), layout.isPrivateLayout())
+					));
+			}
+			else {
+				jsonArray.put(
+					JSONUtil.put(
+						"id", "add-page"
+					).put(
+						"label",
+						LanguageUtil.get(_httpServletRequest, "add-page")
+					).put(
+						"layoutAction", true
+					).put(
+						"url",
+						_layoutsAdminDisplayContext.
+							getSelectLayoutPageTemplateEntryURL(
+								_layoutsAdminDisplayContext.
+									getFirstLayoutPageTemplateCollectionId(),
+								layout.getPlid(), layout.isPrivateLayout())
+					)
 				).put(
-					"id", "add"
-				).put(
-					"label", LanguageUtil.get(_httpServletRequest, "add")
-				).put(
-					"quickAction", true
-				).put(
-					"url",
-					_layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(
-							_layoutsAdminDisplayContext.
-								getFirstLayoutPageTemplateCollectionId(),
-							layout.getPlid(), layout.isPrivateLayout())
-				));
+					JSONUtil.put(
+						"id", "add-collection-page"
+					).put(
+						"label",
+						LanguageUtil.get(
+							_httpServletRequest, "add-collection-page")
+					).put(
+						"layoutAction", true
+					).put(
+						"url",
+						_layoutsAdminDisplayContext.
+							getSelectLayoutCollectionURL(
+								layout.getPlid(), null,
+								layout.isPrivateLayout())
+					)
+				);
+			}
 		}
 
 		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(

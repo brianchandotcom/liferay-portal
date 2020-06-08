@@ -77,7 +77,7 @@ public class AssetEntryListLayoutListRetriever
 				AssetEntry.class.getName(),
 				assetListEntry.getAssetEntryType())) {
 
-			return new ArrayList<>(assetEntries);
+			return Collections.unmodifiableList(assetEntries);
 		}
 
 		return _toAssetObjects(assetEntries);

@@ -39,7 +39,7 @@ public class DLAdminDisplayContextProvider {
 			httpServletRequest);
 
 		return new DLAdminDisplayContext(
-			dlRequestHelper.getLiferayPortletRequest(),
+			httpServletRequest, dlRequestHelper.getLiferayPortletRequest(),
 			dlRequestHelper.getLiferayPortletResponse(), _versioningStrategy);
 	}
 

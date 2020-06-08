@@ -88,15 +88,15 @@ import javax.servlet.http.HttpServletRequest;
 public class DLAdminDisplayContext {
 
 	public DLAdminDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		VersioningStrategy versioningStrategy) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 		_versioningStrategy = versioningStrategy;
-
-		_httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 
 		_dlRequestHelper = new DLRequestHelper(_httpServletRequest);
 

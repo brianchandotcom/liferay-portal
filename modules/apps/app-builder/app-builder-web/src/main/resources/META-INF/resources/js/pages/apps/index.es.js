@@ -49,18 +49,20 @@ export default (props) => {
 	});
 
 	return (
-		<AppContextProvider {...appProps}>
-			<ClayModalProvider>
-				<Router>
-					<Switch>
-						{editRoutes.map((route, index) => (
-							<Route key={index} {...route} />
-						))}
+		<div className="app-builder-root">
+			<AppContextProvider {...appProps}>
+				<ClayModalProvider>
+					<Router>
+						<Switch>
+							{editRoutes.map((route, index) => (
+								<Route key={index} {...route} />
+							))}
 
-						<Route component={ListAppsTabs} path="/:tab?" />
-					</Switch>
-				</Router>
-			</ClayModalProvider>
-		</AppContextProvider>
+							<Route component={ListAppsTabs} path="/:tab?" />
+						</Switch>
+					</Router>
+				</ClayModalProvider>
+			</AppContextProvider>
+		</div>
 	);
 };

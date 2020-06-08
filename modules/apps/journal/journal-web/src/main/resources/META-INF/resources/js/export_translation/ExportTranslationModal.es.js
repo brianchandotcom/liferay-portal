@@ -35,7 +35,39 @@ const ExportTranslationModal = ({
 		availableSourceLocales[0].languageId
 	);
 
+	const [selectedTargetLocales, setSelectedTargetLocales] = useState([]);
+
 	const handleSubmit = noop;
+
+	const onChangeTarget = (checked, selectedLocaleId) => {
+		if (checked) {
+			setSelectedTargetLocales(
+				selectedTargetLocales.concat(selectedLocaleId)
+			);
+		}
+		else {
+			setSelectedTargetLocales(
+				selectedTargetLocales.filter(
+					(localeId) => localeId != selectedLocaleId
+				)
+			);
+		}
+	};
+
+	const TargetLocale = ({locale}) => {
+		const languageId = locale.languageId;
+		const checked = selectedTargetLocales.indexOf(languageId) != -1;
+
+		return (
+			<ClayCheckbox
+				checked={checked}
+				label={locale.displayName}
+				onChange={() => {
+					onChangeTarget(!checked, languageId);
+				}}
+			/>
+		);
+	}
 
 	return (
 		<ClayModal observer={observer} size="md">
@@ -69,12 +101,7 @@ const ExportTranslationModal = ({
 
 					<ClayForm.Group>
 						{availableTargetLocales.map((locale) => (
-							<ClayCheckbox
-								checked={true}
-								key={locale.languageId}
-								label={locale.displayName}
-								onChange={() => {}}
-							/>
+							<TargetLocale key={locale.languageId} locale={locale} />
 						))}
 					</ClayForm.Group>
 

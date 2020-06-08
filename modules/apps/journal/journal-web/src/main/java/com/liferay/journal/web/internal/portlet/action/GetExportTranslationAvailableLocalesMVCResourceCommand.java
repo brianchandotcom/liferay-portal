@@ -17,10 +17,7 @@ package com.liferay.journal.web.internal.portlet.action;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONSerializable;
+import com.liferay.journal.web.internal.util.ExportTranslationUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -31,10 +28,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -66,18 +61,17 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Locale currentLocale = themeDisplay.getLocale();
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"sourceLocales",
-				_getJSONJArray(
+				ExportTranslationUtil.getLocalesJSONJArray(
+					themeDisplay.getLocale(),
 					_getAvailableLocales(
 						_journalArticleLocalService.getArticle(
 							themeDisplay.getScopeGroupId(),
-							ParamUtil.getString(resourceRequest, "articleId"))),
-					locale -> _getLocaleJSONObject(currentLocale, locale))));
+							ParamUtil.getString(
+								resourceRequest, "articleId"))))));
 	}
 
 	private List<Locale> _getAvailableLocales(JournalArticle journalArticle) {
@@ -88,26 +82,6 @@ public class GetExportTranslationAvailableLocalesMVCResourceCommand
 			LocaleUtil::fromLanguageId
 		).collect(
 			Collectors.toList()
-		);
-	}
-
-	private <T> JSONArray _getJSONJArray(
-		Collection<T> collection, Function<T, JSONSerializable> serialize) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		collection.forEach(t -> jsonArray.put(serialize.apply(t)));
-
-		return jsonArray;
-	}
-
-	private JSONObject _getLocaleJSONObject(
-		Locale currentLocale, Locale locale) {
-
-		return JSONUtil.put(
-			"displayName", locale.getDisplayName(currentLocale)
-		).put(
-			"languageId", LocaleUtil.toLanguageId(locale)
 		);
 	}
 

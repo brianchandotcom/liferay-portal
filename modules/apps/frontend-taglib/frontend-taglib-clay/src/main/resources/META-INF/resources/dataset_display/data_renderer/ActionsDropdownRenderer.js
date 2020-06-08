@@ -154,7 +154,7 @@ function ActionsDropdownRenderer(props) {
 				onClick={(e) => {
 					e.preventDefault();
 
-					return handleAction({
+					handleAction({
 						method: action.method,
 						onClick: action.onClick,
 						size: action.size,

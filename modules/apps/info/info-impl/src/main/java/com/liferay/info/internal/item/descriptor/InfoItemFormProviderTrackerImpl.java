@@ -14,18 +14,15 @@
 
 package com.liferay.info.internal.item.descriptor;
 
-import com.liferay.info.internal.util.ItemClassNameServiceReferenceMapper;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormProviderTracker;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import java.util.List;
 
 /**
  * @author Jürgen Kappler
@@ -37,27 +34,23 @@ public class InfoItemFormProviderTrackerImpl
 
 	@Override
 	public List<String> getInfoItemClassNames() {
-		return new ArrayList<>(_infoItemFormProviderServiceTrackerMap.keySet());
+		return _infoItemServiceTracker.getInfoItemClassNames(
+			InfoItemFormProvider.class);
 	}
 
 	@Override
 	public InfoItemFormProvider<?> getInfoItemFormProvider(
 		String itemClassName) {
 
-		return _infoItemFormProviderServiceTrackerMap.getService(itemClassName);
+		return _infoItemServiceTracker.getInfoItemService(
+			InfoItemFormProvider.class, itemClassName);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_infoItemFormProviderServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext,
-				(Class<InfoItemFormProvider<?>>)
-					(Class<?>)InfoItemFormProvider.class,
-				null, new ItemClassNameServiceReferenceMapper(bundleContext));
 	}
 
-	private ServiceTrackerMap<String, InfoItemFormProvider<?>>
-		_infoItemFormProviderServiceTrackerMap;
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

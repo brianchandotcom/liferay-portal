@@ -41,6 +41,10 @@ public class CucumberScenarioResult {
 		return _getStatus(_backgroundDocument);
 	}
 
+	public List<Step> getBackgroundSteps() {
+		return _getSteps(_backgroundDocument);
+	}
+
 	public CucumberFeatureResult getCucumberFeatureResult() {
 		return _cucumberFeatureResult;
 	}
@@ -94,6 +98,10 @@ public class CucumberScenarioResult {
 		return _getStatus(_scenarioDocument);
 	}
 
+	public List<Step> getScenarioSteps() {
+		return _getSteps(_scenarioDocument);
+	}
+
 	public String getStatus() {
 		String backgroundStatus = getBackgroundStatus();
 		String scenarioStatus = getScenarioStatus();
@@ -110,30 +118,8 @@ public class CucumberScenarioResult {
 	public List<Step> getSteps() {
 		List<Step> steps = new ArrayList<>();
 
-		List<Node> nodes = new ArrayList<>();
-
-		if (_backgroundDocument != null) {
-			nodes.addAll(
-				Dom4JUtil.getNodesByXPath(
-					_backgroundDocument, "//div[@class='step']"));
-		}
-
-		nodes.addAll(
-			Dom4JUtil.getNodesByXPath(
-				_scenarioDocument, "//div[@class='step']"));
-
-		for (Node node : nodes) {
-			Document document;
-
-			try {
-				document = Dom4JUtil.parse(node.asXML());
-			}
-			catch (DocumentException documentException) {
-				continue;
-			}
-
-			steps.add(new Step(document));
-		}
+		steps.addAll(getBackgroundSteps());
+		steps.addAll(getScenarioSteps());
 
 		return steps;
 	}
@@ -298,6 +284,28 @@ public class CucumberScenarioResult {
 		}
 
 		return "FAILED";
+	}
+
+	private List<Step> _getSteps(Document document) {
+		List<Step> steps = new ArrayList<>();
+
+		List<Node> nodes = Dom4JUtil.getNodesByXPath(
+			document, "//div[@class='step']");
+
+		for (Node node : nodes) {
+			Document stepDocument;
+
+			try {
+				stepDocument = Dom4JUtil.parse(node.asXML());
+			}
+			catch (DocumentException documentException) {
+				continue;
+			}
+
+			steps.add(new Step(stepDocument));
+		}
+
+		return steps;
 	}
 
 	private final Document _backgroundDocument;

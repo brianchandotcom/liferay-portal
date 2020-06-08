@@ -22,19 +22,14 @@ import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderIt
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
+import com.liferay.layout.page.template.importer.LayoutPageTemplatesImporter;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
-import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
-import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.reflect.GenericUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -53,10 +48,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -187,116 +184,93 @@ public class AddCollectionLayoutMVCActionCommand
 		}
 	}
 
-	private void _addLayoutStructureItems(
-		LayoutStructure layoutStructure, String collectionType,
-		String collectionPK) {
+	private String _getCollectionLayoutDefinitionJSON(
+		String className, String classPK) {
 
-		LayoutStructureItem mainLayoutStructureItem =
-			layoutStructure.getMainLayoutStructureItem();
-
-		ContainerLayoutStructureItem containerLayoutStructureItem =
-			(ContainerLayoutStructureItem)
-				layoutStructure.addLayoutStructureItem(
-					LayoutDataItemTypeConstants.TYPE_CONTAINER,
-					mainLayoutStructureItem.getItemId(), 0);
-
-		CollectionLayoutStructureItem collectionLayoutStructureItem =
-			(CollectionLayoutStructureItem)
-				layoutStructure.addLayoutStructureItem(
-					LayoutDataItemTypeConstants.TYPE_COLLECTION,
-					containerLayoutStructureItem.getItemId(), 0);
-
-		if (Objects.equals(
-				collectionType,
-				"com.liferay.item.selector.criteria." +
-					"InfoListItemSelectorReturnType")) {
-
-			collectionLayoutStructureItem.setCollectionJSONObject(
-				_getCollectionJSONObject(collectionPK));
-		}
-		else if (Objects.equals(
-					collectionType,
-					"com.liferay.info.list.provider.item.selector.criterion." +
-						"InfoListProviderItemSelectorReturnType")) {
-
-			collectionLayoutStructureItem.setCollectionJSONObject(
-				_getCollectionProviderJSONObject(collectionPK));
-		}
-
-		layoutStructure.addLayoutStructureItem(
-			LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM,
-			collectionLayoutStructureItem.getItemId(), 0);
-	}
-
-	private JSONObject _getCollectionJSONObject(String collectionPK) {
-		if (Validator.isNull(collectionPK)) {
+		if (Validator.isNull(classPK)) {
 			return null;
 		}
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.fetchAssetListEntry(
-				Long.valueOf(collectionPK));
+				Long.valueOf(classPK));
 
 		if (assetListEntry == null) {
 			return null;
 		}
 
-		return JSONUtil.put(
-			"classNameId",
-			_portal.getClassNameId(AssetListEntry.class.getName())
+		Map<String, String> values = HashMapBuilder.put(
+			"CLASS_NAME", className
 		).put(
-			"classPK", collectionPK
+			"CLASS_PK", classPK
 		).put(
-			"itemSubtype", assetListEntry.getAssetEntrySubtype()
-		).put(
-			"itemType", assetListEntry.getAssetEntryType()
-		).put(
-			"title", assetListEntry.getTitle()
-		).put(
-			"type", InfoListItemSelectorReturnType.class.getName()
-		);
+			"COLLECTION_NAME", assetListEntry.getTitle()
+		).build();
+
+		String collectionDefinition = StringUtil.read(
+			AddCollectionLayoutMVCActionCommand.class,
+			"collection_definition.json");
+
+		return StringUtil.replace(collectionDefinition, "${", "}", values);
 	}
 
-	private JSONObject _getCollectionProviderJSONObject(String collectionPK) {
+	private String _getCollectionProviderLayoutDefinition(String className) {
 		InfoListProvider<?> infoListProvider =
-			_infoListProviderTracker.getInfoListProvider(collectionPK);
+			_infoListProviderTracker.getInfoListProvider(className);
 
 		if (infoListProvider == null) {
 			return null;
 		}
 
-		return JSONUtil.put(
-			"itemType", GenericUtil.getGenericClassName(infoListProvider)
+		Map<String, String> values = HashMapBuilder.put(
+			"CLASS_NAME", className
 		).put(
-			"key", collectionPK
-		).put(
-			"title", infoListProvider.getLabel(LocaleUtil.getDefault())
-		).put(
-			"type", InfoListProviderItemSelectorReturnType.class.getName()
-		);
+			"COLLECTION_PROVIDER_NAME",
+			infoListProvider.getLabel(LocaleUtil.getDefault())
+		).build();
+
+		String collectionDefinition = StringUtil.read(
+			AddCollectionLayoutMVCActionCommand.class,
+			"collection_provider_definition.json");
+
+		return StringUtil.replace(collectionDefinition, "${", "}", values);
 	}
 
 	private void _updateLayoutPageTemplateData(
 			Layout layout, String collectionType, String collectionPK)
-		throws PortalException {
+		throws Exception {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					layout.getGroupId(),
-					_portal.getClassNameId(Layout.class.getName()),
-					layout.getPlid(), true);
+					layout.getGroupId(), layout.getPlid(), true);
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(0));
+			layoutPageTemplateStructure.getData(
+				SegmentsExperienceConstants.ID_DEFAULT));
 
-		_addLayoutStructureItems(layoutStructure, collectionType, collectionPK);
+		String layoutDefinitionJSON = StringPool.BLANK;
 
-		JSONObject dataJSONObject = layoutStructure.toJSONObject();
+		if (Objects.equals(
+				collectionType,
+				InfoListItemSelectorReturnType.class.getName())) {
 
-		_layoutPageTemplateStructureService.updateLayoutPageTemplateStructure(
-			layout.getGroupId(), _portal.getClassNameId(Layout.class.getName()),
-			layout.getPlid(), 0, dataJSONObject.toString());
+			layoutDefinitionJSON = _getCollectionLayoutDefinitionJSON(
+				collectionType, collectionPK);
+		}
+		else if (Objects.equals(
+					collectionType,
+					InfoListProviderItemSelectorReturnType.class.getName())) {
+
+			layoutDefinitionJSON = _getCollectionProviderLayoutDefinition(
+				collectionPK);
+		}
+
+		if (Validator.isNotNull(layoutDefinitionJSON)) {
+			_layoutPageTemplatesImporter.importPageElement(
+				layout, layoutStructure, layoutStructure.getMainItemId(),
+				layoutDefinitionJSON, 0);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -315,12 +289,11 @@ public class AddCollectionLayoutMVCActionCommand
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
+	private LayoutPageTemplatesImporter _layoutPageTemplatesImporter;
 
 	@Reference
-	private LayoutPageTemplateStructureService
-		_layoutPageTemplateStructureService;
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private LayoutService _layoutService;

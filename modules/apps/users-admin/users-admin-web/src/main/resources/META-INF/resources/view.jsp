@@ -285,7 +285,9 @@ else {
 		);
 	}
 
-	Liferay.provide(window, '<portlet:namespace />openSelectUsersDialog', function (
+	var Users = {};
+
+	Liferay.provide(Users, '<portlet:namespace />openSelectUsersDialog', function (
 		organizationId
 	) {
 		<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -348,4 +350,6 @@ else {
 			}
 		);
 	});
+
+	Liferay.Users = Users;
 </aui:script>

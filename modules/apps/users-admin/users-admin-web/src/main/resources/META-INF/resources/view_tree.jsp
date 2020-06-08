@@ -234,7 +234,7 @@ if (organization != null) {
 	}
 
 	var selectUsers = function (organizationId) {
-		<portlet:namespace />openSelectUsersDialog(organizationId);
+		Liferay.Users['<portlet:namespace />openSelectUsersDialog'](organizationId);
 	};
 
 	var ACTIONS = {

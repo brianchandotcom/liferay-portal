@@ -12,8 +12,11 @@
  * details.
  */
 
-import {PagesVisitor, compose} from 'dynamic-data-mapping-form-renderer';
-import FormRenderer from 'dynamic-data-mapping-form-renderer/js/components/FormRenderer/FormRenderer.es';
+import {
+	FormRenderer,
+	PagesVisitor,
+	compose,
+} from 'dynamic-data-mapping-form-renderer';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 

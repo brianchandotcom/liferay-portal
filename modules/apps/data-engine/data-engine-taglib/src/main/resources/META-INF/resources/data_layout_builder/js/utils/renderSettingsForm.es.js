@@ -12,8 +12,7 @@
  * details.
  */
 
-import {PagesVisitor, generateName} from 'dynamic-data-mapping-form-renderer';
-import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
+import {Form, PagesVisitor, generateName} from 'dynamic-data-mapping-form-renderer';
 
 export const getEvents = (dispatchEvent, settingsContext) => {
 	const handleFieldBlurred = ({fieldInstance, value}) => {

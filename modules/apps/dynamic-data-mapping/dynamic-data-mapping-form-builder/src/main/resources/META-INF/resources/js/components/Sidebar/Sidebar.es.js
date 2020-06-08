@@ -18,12 +18,12 @@ import {ClayActionsDropdown, ClayDropdownBase} from 'clay-dropdown';
 import {ClayIcon} from 'clay-icon';
 import ClayModal from 'clay-modal';
 import {
+	Form,
 	FormSupport,
 	PagesVisitor,
 	generateInstanceId,
 	generateName,
 } from 'dynamic-data-mapping-form-renderer';
-import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import dom from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';

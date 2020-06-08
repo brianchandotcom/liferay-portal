@@ -30,10 +30,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.model.listener.StagingModelListener;
 
 import java.util.HashSet;
@@ -54,6 +57,10 @@ public class JournalArticleStagingModelListener
 	public void onAfterCreate(JournalArticle journalArticle)
 		throws ModelListenerException {
 
+		if (!_isJournalArticleStaged(journalArticle)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterCreate(journalArticle);
 
 		_addJournalArticleResourceToChangesetCollection(journalArticle);
@@ -63,6 +70,10 @@ public class JournalArticleStagingModelListener
 	public void onAfterRemove(JournalArticle journalArticle)
 		throws ModelListenerException {
 
+		if (!_isJournalArticleStaged(journalArticle)) {
+			return;
+		}
+
 		_stagingModelListener.onAfterRemove(journalArticle);
 
 		_cleanUpJournalArticleResourceFromChangesetCollection(journalArticle);
@@ -71,6 +82,10 @@ public class JournalArticleStagingModelListener
 	@Override
 	public void onAfterUpdate(JournalArticle journalArticle)
 		throws ModelListenerException {
+
+		if (!_isJournalArticleStaged(journalArticle)) {
+			return;
+		}
 
 		_stagingModelListener.onAfterUpdate(journalArticle);
 
@@ -193,6 +208,21 @@ public class JournalArticleStagingModelListener
 		}
 	}
 
+	private boolean _isJournalArticleStaged(JournalArticle journalArticle) {
+		Group group = _groupLocalService.fetchGroup(
+			journalArticle.getGroupId());
+
+		if (group == null) {
+			return false;
+		}
+
+		if (_stagingGroupHelper.isStagingGroup(group)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalArticleStagingModelListener.class);
 
@@ -206,10 +236,16 @@ public class JournalArticleStagingModelListener
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private Staging _staging;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 	@Reference
 	private StagingModelListener<JournalArticle> _stagingModelListener;

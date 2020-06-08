@@ -84,7 +84,15 @@ definition {
 
 		SelectFieldText(locator1 = "//body");
 
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + c");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Copy(locator1 = "//body");
+		}
+
+		else {
+			RobotType.robotTypeShortcut(locator1 = "Ctrl + c");
+		}
 
 		Navigator.openURL();
 
@@ -101,7 +109,16 @@ definition {
 			key_editor = "content",
 			locator1 = "AlloyEditor#EDITOR");
 
-		RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Paste(key_editor = "content",
+			locator1 = "AlloyEditor#EDITOR");
+		}
+
+		else {
+			RobotType.robotTypeShortcut(locator1 = "Ctrl + v");
+		}
 
 		Pause(locator1 = "5000");
 

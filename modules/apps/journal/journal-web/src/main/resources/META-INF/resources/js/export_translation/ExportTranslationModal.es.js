@@ -31,7 +31,7 @@ const ExportTranslationModal = ({
 }) => {
 	const {namespace} = useContext(ExportTranslationContext);
 
-	const [originLanguageId, setOriginLanguageId] = useState(
+	const [sourceLanguageId, setSourceLanguageId] = useState(
 		availableSourceLocales[0].languageId
 	);
 
@@ -49,11 +49,11 @@ const ExportTranslationModal = ({
 
 					<ClayForm.Group>
 						<ClaySelect
-							name={`_${namespace}_originLanguageId`}
+							name={`_${namespace}_sourceLanguageId`}
 							onChange={(e) => {
-								setOriginLanguageId(e.currentTarget.value);
+								setSourceLanguageId(e.currentTarget.value);
 							}}
-							value={originLanguageId}
+							value={sourceLanguageId}
 						>
 							{availableSourceLocales.map((locale) => (
 								<ClaySelect.Option

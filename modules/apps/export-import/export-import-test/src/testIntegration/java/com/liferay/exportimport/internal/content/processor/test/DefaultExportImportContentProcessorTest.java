@@ -146,11 +146,11 @@ public class DefaultExportImportContentProcessorTest {
 		_defaultLocale = LocaleUtil.getDefault();
 		_nondefaultLocale = getNondefaultLocale();
 
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
 		_externalGroup = GroupTestUtil.addGroup();
 
 		_liveGroup = GroupTestUtil.addGroup();
-
-		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		GroupTestUtil.enableLocalStaging(
 			_liveGroup, TestPropsValues.getUserId());

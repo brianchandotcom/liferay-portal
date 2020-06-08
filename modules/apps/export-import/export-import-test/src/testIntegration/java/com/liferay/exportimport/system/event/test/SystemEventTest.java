@@ -185,9 +185,9 @@ public class SystemEventTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_liveGroup = GroupTestUtil.addGroup();
-
 		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		_liveGroup = GroupTestUtil.addGroup();
 
 		if (_serverPort <= 0) {
 			_serverPort = _portal.getPortalServerPort(false);

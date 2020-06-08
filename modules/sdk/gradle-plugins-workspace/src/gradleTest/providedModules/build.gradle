@@ -9,10 +9,12 @@ runGradleTest {
 	dependsOn initBundle
 
 	doLast {
-		File jacksonAnnotationsFile = new File(initBundle.destinationDir, "osgi/modules/jackson-annotations-2.10.3.jar")
-		File qdoxFile = new File(initBundle.destinationDir, "osgi/modules/qdox-1.12.1.jar")
+		File expectedFile = new File(initBundle.destinationDir, "osgi/modules/jackson-annotations-2.10.3.jar")
 
-		assert jacksonAnnotationsFile.exists()
-		assert qdoxFile.exists()
+		assert expectedFile.exists()
+
+		expectedFile = new File(initBundle.destinationDir, "osgi/modules/qdox-1.12.1.jar")
+
+		assert expectedFile.exists()
 	}
 }

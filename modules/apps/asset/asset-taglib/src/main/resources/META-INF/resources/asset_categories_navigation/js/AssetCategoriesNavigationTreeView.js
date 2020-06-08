@@ -48,6 +48,9 @@ const AssetCategoriesNavigationTreeView = ({
 
 	return (
 		<Treeview
+			initialSelectedNodeIds={
+				selectedCategoryId ? [selectedCategoryId] : []
+			}
 			multiSelection={false}
 			NodeComponent={Treeview.Card}
 			nodes={nodes}

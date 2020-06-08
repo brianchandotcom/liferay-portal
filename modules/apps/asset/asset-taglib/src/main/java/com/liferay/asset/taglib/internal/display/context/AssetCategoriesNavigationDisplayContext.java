@@ -84,6 +84,8 @@ public class AssetCategoriesNavigationDisplayContext {
 		).put(
 			"namespace", getNamespace()
 		).put(
+			"selectedCategoryId", getCategoryId()
+		).put(
 			"vocabularies", getVocabularies()
 		).build();
 	}

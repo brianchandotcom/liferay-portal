@@ -1,6 +1,8 @@
 {
 	"dependencies": {
-		"react": "16.12.0"
+		"frontend-js-web": "*",
+		"react": "16.12.0",
+		"recharts": "1.8.5"
 	},
 	"name": "content-dashboard-web",
 	"private": true,

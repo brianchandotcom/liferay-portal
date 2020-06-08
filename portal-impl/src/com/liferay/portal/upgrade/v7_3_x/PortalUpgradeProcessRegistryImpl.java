@@ -121,6 +121,9 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(
 			new Version(8, 15, 0), new UpgradeCTModel("SystemEvent"));
+
+		upgradeProcesses.put(
+			new Version(8, 16, 0), new UpgradeDLFileEntryType());
 	}
 
 }

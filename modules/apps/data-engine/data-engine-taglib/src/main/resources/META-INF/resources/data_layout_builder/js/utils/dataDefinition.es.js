@@ -83,7 +83,14 @@ export const getDataDefinitionField = (
 export const getFieldLabel = (dataDefinition, fieldName) => {
 	const field = getDataDefinitionField(dataDefinition, fieldName);
 
-	return field ? field.label[themeDisplay.getLanguageId()] : fieldName;
+	if (field) {
+		return (
+			field.label[Liferay.ThemeDisplay.getLanguageId()] ||
+			field.label[dataDefinition.defaultLanguageId]
+		);
+	}
+
+	return fieldName;
 };
 
 export const getOptionLabel = (options = {}, value) => {

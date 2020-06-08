@@ -22,6 +22,8 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {fetchParams, getValueFromItem} from '../../../utilities/index';
+import {logError} from '../../../utilities/log';
+import {showErrorNotification} from '../../../utilities/notifications';
 import getAppContext from '../Context';
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -89,15 +91,20 @@ function AutocompleteFilter(props) {
 	}, [query, search]);
 
 	useEffect(() => {
-		fetchData(props.apiUrl, search, currentPage).then((data) => {
-			if (currentPage === 1) {
-				updateItems(data.items);
-			}
-			else {
-				updateItems((items) => [...items, ...data.items]);
-			}
-			updateTotalItems(data.totalCount);
-		});
+		fetchData(props.apiUrl, search, currentPage)
+			.then((data) => {
+				if (currentPage === 1) {
+					updateItems(data.items);
+				}
+				else {
+					updateItems((items) => [...items, ...data.items]);
+				}
+				updateTotalItems(data.totalCount);
+			})
+			.catch((error) => {
+				showErrorNotification();
+				logError(error);
+			});
 	}, [currentPage, props.apiUrl, search]);
 
 	const setScrollingArea = useCallback((node) => {

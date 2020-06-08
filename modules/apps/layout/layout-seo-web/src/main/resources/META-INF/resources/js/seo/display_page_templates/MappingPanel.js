@@ -16,7 +16,9 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {PropTypes} from 'prop-types';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
+
+import useOnClickOutside from './hooks/useOnClickOutside';
 
 const noop = () => {};
 
@@ -27,6 +29,9 @@ const normalizeField = ({key, label}) => ({
 
 function MappingPanel({fields, field, source, onChange = noop}) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
+	const wrapperRef = useRef(null);
+
+	useOnClickOutside([wrapperRef.current], () => setIsPanelOpen(false));
 
 	const handleChangeField = (event) => {
 		const {value} = event.target;
@@ -40,7 +45,7 @@ function MappingPanel({fields, field, source, onChange = noop}) {
 	};
 
 	return (
-		<div className="dpt-mapping-panel-wrapper">
+		<div className="dpt-mapping-panel-wrapper" ref={wrapperRef}>
 			<ClayButton
 				className="dpt-mapping-btn"
 				displayType="secondary"

@@ -182,6 +182,13 @@ public class GroupPagesPortlet extends MVCPortlet {
 				}
 			}
 
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.INFO_ITEM_FORM_PROVIDER_TRACKER,
+				_infoItemFormProviderTracker);
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.INFO_LIST_PROVIDER_TRACKER,
+				_infoListProviderTracker);
+
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_layoutConverterConfiguration, _layoutConverterRegistry,
@@ -189,14 +196,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse),
 					_stagingGroupHelper);
-
-			renderRequest.setAttribute(
-				LayoutAdminWebKeys.INFO_ITEM_FORM_PROVIDER_TRACKER,
-				_infoItemFormProviderTracker);
-
-			renderRequest.setAttribute(
-				LayoutAdminWebKeys.INFO_LIST_PROVIDER_TRACKER,
-				_infoListProviderTracker);
 
 			renderRequest.setAttribute(
 				LayoutAdminWebKeys.LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT,

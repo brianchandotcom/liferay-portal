@@ -1,0 +1,561 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.file.install.internal;
+
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.file.install.internal.collections.DictionaryAsMap;
+import com.liferay.portal.file.install.internal.properties.InterpolationHelper;
+import com.liferay.portal.file.install.internal.properties.TypedProperties;
+import com.liferay.portal.file.install.listener.ArtifactInstaller;
+import com.liferay.portal.file.install.listener.ArtifactListener;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+
+import java.net.URI;
+
+import java.security.AccessController;
+import java.security.PrivilegedAction;
+
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Properties;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.cm.ConfigurationEvent;
+import org.osgi.service.cm.ConfigurationListener;
+
+/**
+ * @author Matthew Tambara
+ */
+public class ConfigInstaller
+	implements ArtifactInstaller, ConfigurationListener {
+
+	public ConfigInstaller(
+		BundleContext bundleContext, ConfigurationAdmin configurationAdmin,
+		FileInstall fileInstall) {
+
+		_bundleContext = bundleContext;
+		_configurationAdmin = configurationAdmin;
+		_fileInstall = fileInstall;
+	}
+
+	@Override
+	public boolean canHandle(File artifact) {
+		String name = artifact.getName();
+
+		if (name.endsWith(".cfg") || name.endsWith(".config")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public void configurationEvent(ConfigurationEvent configurationEvent) {
+		if (System.getSecurityManager() != null) {
+			AccessController.doPrivileged(
+				new PrivilegedAction<Void>() {
+
+					@Override
+					public Void run() {
+						doConfigurationEvent(configurationEvent);
+
+						return null;
+					}
+
+				});
+		}
+		else {
+			doConfigurationEvent(configurationEvent);
+		}
+	}
+
+	public void destroy() {
+		_serviceRegistration.unregister();
+	}
+
+	public void doConfigurationEvent(ConfigurationEvent configurationEvent) {
+		if (!_shouldSaveConfig()) {
+			return;
+		}
+
+		int type = configurationEvent.getType();
+
+		if (type == ConfigurationEvent.CM_UPDATED) {
+			try {
+				Configuration configuration =
+					_configurationAdmin.getConfiguration(
+						configurationEvent.getPid(), StringPool.QUESTION);
+
+				Dictionary<String, Object> dictionary =
+					configuration.getProperties();
+
+				String fileName = null;
+
+				if (dictionary != null) {
+					fileName = (String)dictionary.get(
+						DirectoryWatcher.FILENAME);
+				}
+
+				File file = null;
+
+				if (fileName != null) {
+					file = _fromConfigKey(fileName);
+				}
+
+				if ((file != null) && file.isFile()) {
+					_pidToFile.put(configuration.getPid(), fileName);
+					TypedProperties typedProperties = new TypedProperties(
+						_bundleSubstitution());
+
+					try (InputStream inputStream = new FileInputStream(file);
+						Reader reader = new InputStreamReader(
+							inputStream, _encoding())) {
+
+						typedProperties.load(reader);
+					}
+
+					List<String> propertiesToRemove = new ArrayList<>();
+
+					for (String key : typedProperties.keySet()) {
+						if ((dictionary.get(key) == null) &&
+							!Objects.equals(Constants.SERVICE_PID, key) &&
+							!Objects.equals(
+								ConfigurationAdmin.SERVICE_FACTORYPID, key) &&
+							!Objects.equals(DirectoryWatcher.FILENAME, key)) {
+
+							propertiesToRemove.add(key);
+						}
+					}
+
+					Enumeration<String> enumeration = dictionary.keys();
+
+					while (enumeration.hasMoreElements()) {
+						String key = enumeration.nextElement();
+
+						if (!Objects.equals(Constants.SERVICE_PID, key) &&
+							!Objects.equals(
+								ConfigurationAdmin.SERVICE_FACTORYPID, key) &&
+							!Objects.equals(DirectoryWatcher.FILENAME, key)) {
+
+							Object value = dictionary.get(key);
+
+							typedProperties.put(key, value);
+						}
+					}
+
+					for (String key : propertiesToRemove) {
+						typedProperties.remove(key);
+					}
+
+					try (OutputStream outputStream = new FileOutputStream(file);
+						Writer writer = new OutputStreamWriter(
+							outputStream, _encoding())) {
+
+						typedProperties.save(writer);
+					}
+
+					_fileInstall.updateChecksum(file);
+				}
+			}
+			catch (Exception exception) {
+				Util.log(
+					_bundleContext, Util.Logger.LOG_INFO,
+					"Unable to save configuration", exception);
+			}
+		}
+		else if (type == ConfigurationEvent.CM_DELETED) {
+			try {
+				String fileName = _pidToFile.remove(
+					configurationEvent.getPid());
+
+				File file = null;
+
+				if (fileName != null) {
+					file = _fromConfigKey(fileName);
+				}
+
+				if ((file != null) && file.isFile() && !file.delete()) {
+					throw new IOException("Unable to delete file: " + file);
+				}
+			}
+			catch (Exception exception) {
+				Util.log(
+					_bundleContext, Util.Logger.LOG_INFO,
+					"Unable to delete configuration file", exception);
+			}
+		}
+	}
+
+	public ConfigurationAdmin getConfigurationAdmin() {
+		return _configurationAdmin;
+	}
+
+	public void init() {
+		_serviceRegistration = _bundleContext.registerService(
+			new String[] {
+				ConfigurationListener.class.getName(),
+				ArtifactListener.class.getName(),
+				ArtifactInstaller.class.getName()
+			},
+			this, null);
+
+		try {
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(null);
+
+			if (configurations != null) {
+				for (Configuration configuration : configurations) {
+					Dictionary<String, Object> dictionary =
+						configuration.getProperties();
+
+					String fileName = null;
+
+					if (dictionary != null) {
+						fileName = (String)dictionary.get(
+							DirectoryWatcher.FILENAME);
+					}
+
+					if (fileName != null) {
+						_pidToFile.put(configuration.getPid(), fileName);
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			Util.log(
+				_bundleContext, Util.Logger.LOG_INFO,
+				"Unable to initialize configurations list", exception);
+		}
+	}
+
+	@Override
+	public void install(File artifact) throws Exception {
+		_setConfig(artifact);
+	}
+
+	@Override
+	public void uninstall(File artifact) throws Exception {
+		_deleteConfig(artifact);
+	}
+
+	@Override
+	public void update(File artifact) throws Exception {
+		_setConfig(artifact);
+	}
+
+	private static boolean _equals(
+		Dictionary<String, Object> newTable,
+		Dictionary<String, Object> oldTable) {
+
+		if (oldTable == null) {
+			return false;
+		}
+
+		Enumeration<String> enumeration = newTable.keys();
+
+		while (enumeration.hasMoreElements()) {
+			String key = enumeration.nextElement();
+
+			Object newValue = newTable.get(key);
+			Object oldValue = oldTable.remove(key);
+
+			if (!Objects.equals(newValue, oldValue) &&
+				!Objects.deepEquals(newValue, oldValue)) {
+
+				return false;
+			}
+		}
+
+		if (oldTable.isEmpty()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private TypedProperties.SubstitutionCallback _bundleSubstitution() {
+		InterpolationHelper.SubstitutionCallback substitutionCallback =
+			new InterpolationHelper.BundleContextSubstitutionCallback(
+				_bundleContext);
+
+		return new TypedProperties.SubstitutionCallback() {
+
+			@Override
+			public String getValue(String name, String key, String value) {
+				return substitutionCallback.getValue(value);
+			}
+
+		};
+	}
+
+	private boolean _deleteConfig(File file) throws Exception {
+		String[] pid = _parsePid(file.getName());
+
+		String logString = StringPool.BLANK;
+
+		if (pid[1] != null) {
+			logString = "-" + pid[1];
+		}
+
+		Util.log(
+			_bundleContext, Util.Logger.LOG_INFO,
+			StringBundler.concat(
+				"Deleting configuration from ", pid[0], logString, ".cfg"),
+			null);
+
+		Configuration configuration = _getConfiguration(
+			_toConfigKey(file), pid[0], pid[1]);
+
+		configuration.delete();
+
+		return true;
+	}
+
+	private String _encoding() {
+		String string = _bundleContext.getProperty(
+			DirectoryWatcher.CONFIG_ENCODING);
+
+		if (string != null) {
+			return string;
+		}
+
+		return "ISO-8859-1";
+	}
+
+	private String _escapeFilterValue(String string) {
+		string = StringUtil.replace(string, "[(]", "\\\\(");
+		string = StringUtil.replace(string, "[)]", "\\\\)");
+		string = StringUtil.replace(string, "[=]", "\\\\=");
+
+		return StringUtil.replace(string, "[\\*]", "\\\\*");
+	}
+
+	private Configuration _findExistingConfiguration(String fileName)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(DirectoryWatcher.FILENAME);
+		sb.append(StringPool.EQUAL);
+		sb.append(_escapeFilterValue(fileName));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			sb.toString());
+
+		if ((configurations != null) && (configurations.length > 0)) {
+			return configurations[0];
+		}
+
+		return null;
+	}
+
+	private File _fromConfigKey(String key) {
+		return new File(URI.create(key));
+	}
+
+	private Configuration _getConfiguration(
+			String fileName, String pid, String factoryPid)
+		throws Exception {
+
+		Configuration configuration = _findExistingConfiguration(fileName);
+
+		if (configuration != null) {
+			return configuration;
+		}
+
+		if (factoryPid != null) {
+			return _configurationAdmin.createFactoryConfiguration(pid, "?");
+		}
+
+		return _configurationAdmin.getConfiguration(pid, "?");
+	}
+
+	private String[] _parsePid(String path) {
+		String pid = path.substring(0, path.lastIndexOf(CharPool.PERIOD));
+
+		int index = pid.indexOf('-');
+
+		if (index > 0) {
+			String factoryPid = pid.substring(index + 1);
+
+			pid = pid.substring(0, index);
+
+			return new String[] {pid, factoryPid};
+		}
+
+		return new String[] {pid, null};
+	}
+
+	private boolean _setConfig(File file) throws Exception {
+		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
+
+		try (FileInputStream fileInputStream = new FileInputStream(file);
+			InputStream inputStream = new BufferedInputStream(
+				fileInputStream)) {
+
+			inputStream.mark(1);
+
+			boolean xml = false;
+
+			if (inputStream.read() == '<') {
+				xml = true;
+			}
+
+			inputStream.reset();
+
+			if (xml) {
+				Properties properties = new Properties();
+
+				properties.loadFromXML(inputStream);
+
+				Map<String, String> map = new HashMap<>();
+
+				for (Object key : properties.keySet()) {
+					map.put(
+						key.toString(), properties.getProperty(key.toString()));
+				}
+
+				InterpolationHelper.performSubstitution(map, _bundleContext);
+
+				for (Map.Entry<String, String> entry : map.entrySet()) {
+					dictionary.put(entry.getKey(), entry.getValue());
+				}
+			}
+			else {
+				TypedProperties typedProperties = new TypedProperties(
+					_bundleSubstitution());
+
+				try (Reader reader = new InputStreamReader(
+						inputStream, _encoding())) {
+
+					typedProperties.load(reader);
+				}
+
+				for (String key : typedProperties.keySet()) {
+					dictionary.put(key, typedProperties.get(key));
+				}
+			}
+		}
+
+		String[] pid = _parsePid(file.getName());
+
+		Configuration configuration = _getConfiguration(
+			_toConfigKey(file), pid[0], pid[1]);
+
+		Dictionary<String, Object> properties = configuration.getProperties();
+
+		Dictionary<String, Object> old = null;
+
+		if (properties != null) {
+			old = new HashMapDictionary<>(new DictionaryAsMap<>(properties));
+		}
+
+		if (old != null) {
+			old.remove(DirectoryWatcher.FILENAME);
+			old.remove(Constants.SERVICE_PID);
+			old.remove(ConfigurationAdmin.SERVICE_FACTORYPID);
+		}
+
+		if (!_equals(dictionary, old)) {
+			dictionary.put(DirectoryWatcher.FILENAME, _toConfigKey(file));
+
+			String logString = StringPool.BLANK;
+
+			if (pid[1] != null) {
+				logString = StringPool.DASH + pid[1];
+			}
+
+			if (old == null) {
+				Util.log(
+					_bundleContext, Util.Logger.LOG_INFO,
+					StringBundler.concat(
+						"Creating configuration from ", pid[0], logString,
+						".cfg"),
+					null);
+			}
+			else {
+				Util.log(
+					_bundleContext, Util.Logger.LOG_INFO,
+					StringBundler.concat(
+						"Updating configuration from ", pid[0], logString,
+						".cfg"),
+					null);
+			}
+
+			configuration.update(dictionary);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _shouldSaveConfig() {
+		String string = _bundleContext.getProperty(
+			DirectoryWatcher.ENABLE_CONFIG_SAVE);
+
+		if (string == null) {
+			string = _bundleContext.getProperty(
+				DirectoryWatcher.DISABLE_CONFIG_SAVE);
+		}
+
+		if (string != null) {
+			return Boolean.valueOf(string);
+		}
+
+		return true;
+	}
+
+	private String _toConfigKey(File file) {
+		file = file.getAbsoluteFile();
+
+		URI uri = file.toURI();
+
+		return uri.toString();
+	}
+
+	private final BundleContext _bundleContext;
+	private final ConfigurationAdmin _configurationAdmin;
+	private final FileInstall _fileInstall;
+	private final Map<String, String> _pidToFile = new HashMap<>();
+	private ServiceRegistration<?> _serviceRegistration;
+
+}

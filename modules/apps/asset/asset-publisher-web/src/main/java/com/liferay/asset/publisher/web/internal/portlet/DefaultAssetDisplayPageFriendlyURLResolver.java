@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InheritableMap;
@@ -328,6 +329,16 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		return friendlyURL.substring(urlSeparator.length());
 	}
 
+	private long _getId(String friendlyURL) {
+		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
+
+		if (paths.size() <= 2) {
+			return 0;
+		}
+
+		return GetterUtil.getLong(paths.get(paths.size() - 1));
+	}
+
 	private InfoDisplayObjectProvider<?> _getInfoDisplayObjectProvider(
 			JournalArticle journalArticle)
 		throws PortalException {
@@ -387,6 +398,18 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 					_journalArticleLocalService.fetchLatestArticleByUrlTitle(
 						groupId, normalizedUrlTitle,
 						WorkflowConstants.STATUS_APPROVED);
+			}
+		}
+
+		if (journalArticle == null) {
+			normalizedUrlTitle =
+				FriendlyURLNormalizerUtil.normalizeWithEncoding(
+					_getURLTitle(friendlyURL));
+
+			long id = _getId(friendlyURL);
+
+			if (id > 0) {
+				journalArticle = _journalArticleLocalService.fetchArticle(id);
 			}
 		}
 

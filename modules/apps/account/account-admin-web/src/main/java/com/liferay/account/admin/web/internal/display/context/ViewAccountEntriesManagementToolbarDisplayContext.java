@@ -190,8 +190,9 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 	public String getClearResultsURL() {
 		PortletURL clearResultsURL = getPortletURL();
 
-		clearResultsURL.setParameter("navigation", (String)null);
 		clearResultsURL.setParameter("keywords", StringPool.BLANK);
+		clearResultsURL.setParameter("navigation", (String)null);
+		clearResultsURL.setParameter("type", (String)null);
 
 		return clearResultsURL.toString();
 	}

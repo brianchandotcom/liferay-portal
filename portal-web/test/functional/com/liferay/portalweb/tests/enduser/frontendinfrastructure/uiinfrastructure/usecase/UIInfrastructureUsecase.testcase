@@ -174,10 +174,6 @@ definition {
 
 		Portlet.addPG(portletName = "Hello World");
 
-		task ("Close the Add Panel") {
-			Click(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL");
-		}
-
 		task ("Assert the 'Configuration' iframe of the Hello World portlet") {
 			Portlet.gotoPortletOptions(
 				portletName = "Hello World",

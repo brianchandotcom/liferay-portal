@@ -16,7 +16,13 @@ import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
-import {BarChart, CartesianGrid, XAxis, YAxis} from 'recharts';
+import {
+	BarChart,
+	CartesianGrid,
+	ResponsiveContainer,
+	XAxis,
+	YAxis,
+} from 'recharts';
 
 const EMPTY_DATA = [];
 
@@ -47,36 +53,36 @@ export default function EmptyBarChart() {
 				</ClayButton>
 			</ClayEmptyState>
 
-			<BarChart
-				data={EMPTY_DATA}
-				height={BAR_CHART.height}
-				width={BAR_CHART.width}
-			>
-				<CartesianGrid
-					horizontal={true}
-					horizontalPoints={[
-						BAR_CHART.dotRadiusMin,
-						BAR_CHART.height - BAR_CHART.dotRadiusMax,
-					]}
-					stroke={BAR_CHART.stroke}
-					strokeDasharray="0 0"
-					vertical={true}
-					verticalPoints={[BAR_CHART.width - BAR_CHART.dotRadiusMin]}
-				/>
-				<XAxis
-					axisLine={{
-						stroke: BAR_CHART.stroke,
-					}}
-					tickLine={false}
-				/>
-				<YAxis
-					axisLine={{
-						stroke: BAR_CHART.stroke,
-					}}
-					domain={[0, 40]}
-					tickLine={false}
-				/>
-			</BarChart>
+			<ResponsiveContainer height={BAR_CHART.height}>
+				<BarChart
+					data={EMPTY_DATA}
+					height={BAR_CHART.height}
+					width={BAR_CHART.width}
+				>
+					<CartesianGrid
+						horizontal={true}
+						horizontalPoints={[
+							BAR_CHART.dotRadiusMin,
+							BAR_CHART.height - BAR_CHART.dotRadiusMax,
+						]}
+						stroke={BAR_CHART.stroke}
+						strokeDasharray="0 0"
+					/>
+					<XAxis
+						axisLine={{
+							stroke: BAR_CHART.stroke,
+						}}
+						tickLine={false}
+					/>
+					<YAxis
+						axisLine={{
+							stroke: BAR_CHART.stroke,
+						}}
+						domain={[0, 40]}
+						tickLine={false}
+					/>
+				</BarChart>
+			</ResponsiveContainer>
 		</>
 	);
 }

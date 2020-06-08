@@ -12,7 +12,8 @@
  * details.
  */
 
-import launcher from '../utilities/launcher';
+import {render} from 'frontend-js-react-web';
+
 import SidePanel from './SidePanel';
 
-export default (...data) => launcher(SidePanel, ...data);
+export default (...data) => render(SidePanel, ...data);

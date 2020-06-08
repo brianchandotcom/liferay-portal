@@ -46,6 +46,14 @@ public class ButtonTag extends BaseContainerTag {
 			setDynamicAttribute(StringPool.BLANK, "disabled", _disabled);
 		}
 
+		if (Validator.isNotNull(_title)) {
+			setDynamicAttribute(
+				StringPool.BLANK, "title",
+				LanguageUtil.get(
+					TagResourceBundleUtil.getResourceBundle(pageContext),
+					_title));
+		}
+
 		setDynamicAttribute(StringPool.BLANK, "type", _type);
 
 		return super.doStartTag();
@@ -99,6 +107,19 @@ public class ButtonTag extends BaseContainerTag {
 		return _outline;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getLarge()}
+	 */
+	@Deprecated
+	public String getSize() {
+		if (_small) {
+			return "sm";
+		}
+
+		return null;
+	}
+
 	public boolean getSmall() {
 		return _small;
 	}
@@ -110,6 +131,14 @@ public class ButtonTag extends BaseContainerTag {
 	@Deprecated
 	public String getStyle() {
 		return getDisplayType();
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public String getTitle() {
+		return _title;
 	}
 
 	/**
@@ -168,6 +197,15 @@ public class ButtonTag extends BaseContainerTag {
 		_outline = outline;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #setLarge(boolean)}
+	 */
+	@Deprecated
+	public void setSize(String size) {
+		setSmall(size.equals("sm"));
+	}
+
 	public void setSmall(boolean small) {
 		_small = small;
 	}
@@ -179,6 +217,14 @@ public class ButtonTag extends BaseContainerTag {
 	@Deprecated
 	public void setStyle(String style) {
 		setDisplayType(style);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public void setTitle(String title) {
+		_title = title;
 	}
 
 	/**
@@ -204,6 +250,7 @@ public class ButtonTag extends BaseContainerTag {
 		_monospaced = false;
 		_outline = false;
 		_small = false;
+		_title = null;
 		_type = "button";
 	}
 
@@ -251,7 +298,7 @@ public class ButtonTag extends BaseContainerTag {
 			JspWriter jspWriter = pageContext.getOut();
 
 			if (Validator.isNotNull(_icon)) {
-				jspWriter.write("<svg class=\"lexicon-icon lexicon-icon");
+				jspWriter.write("<svg class=\"lexicon-icon lexicon-icon-");
 				jspWriter.write(_icon);
 				jspWriter.write("\" role=\"presentation\" viewBox=\"0 0 512 ");
 				jspWriter.write("512\"><use xlink:href=\"");
@@ -296,6 +343,7 @@ public class ButtonTag extends BaseContainerTag {
 	private boolean _monospaced;
 	private boolean _outline;
 	private boolean _small;
+	private String _title;
 	private String _type = "button";
 
 }

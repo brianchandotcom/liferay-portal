@@ -527,7 +527,7 @@ public class AccountEntryLocalServiceImpl
 		int status = GetterUtil.getInteger(
 			params.get("status"), WorkflowConstants.STATUS_APPROVED);
 
-		searchContext.setAttribute("status", status);
+		searchContext.setAttribute(Field.STATUS, status);
 
 		String type = (String)params.get("type");
 

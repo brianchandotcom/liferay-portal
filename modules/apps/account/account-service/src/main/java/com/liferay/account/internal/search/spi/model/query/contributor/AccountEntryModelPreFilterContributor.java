@@ -118,11 +118,11 @@ public class AccountEntryModelPreFilterContributor
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		int status = GetterUtil.getInteger(
-			searchContext.getAttribute("status"),
+			searchContext.getAttribute(Field.STATUS),
 			WorkflowConstants.STATUS_APPROVED);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
-			booleanFilter.addRequiredTerm("status", String.valueOf(status));
+			booleanFilter.addRequiredTerm(Field.STATUS, String.valueOf(status));
 		}
 	}
 

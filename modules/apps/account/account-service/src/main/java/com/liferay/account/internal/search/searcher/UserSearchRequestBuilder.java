@@ -16,6 +16,7 @@ package com.liferay.account.internal.search.searcher;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -138,6 +139,8 @@ public class UserSearchRequestBuilder {
 
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
+				Field.STATUS, _status
+			).put(
 				"city", _keywords
 			).put(
 				"country", _keywords
@@ -157,8 +160,6 @@ public class UserSearchRequestBuilder {
 				"region", _keywords
 			).put(
 				"screenName", _keywords
-			).put(
-				"status", _status
 			).put(
 				"street", _keywords
 			).put(

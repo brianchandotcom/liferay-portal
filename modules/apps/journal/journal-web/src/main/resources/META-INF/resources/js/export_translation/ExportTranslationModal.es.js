@@ -97,7 +97,9 @@ const ExportTranslationModal = ({
 						</ClaySelect>
 					</ClayForm.Group>
 
-					<h5>{Liferay.Language.get('languages-to-translate-to')}</h5>
+					<h5>
+						<p>{Liferay.Language.get('languages-to-translate-to')}</p>
+					</h5>
 
 					<ClayForm.Group>
 						{availableTargetLocales.map((locale) => (

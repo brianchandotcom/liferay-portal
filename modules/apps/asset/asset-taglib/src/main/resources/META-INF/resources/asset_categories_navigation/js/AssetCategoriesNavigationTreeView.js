@@ -27,6 +27,23 @@ function buildNodes(vocabularies, categories) {
 	}));
 }
 
+function findCategory(categoryId, categories = []) {
+	// eslint-disable-next-line no-for-of-loops/no-for-of-loops
+	for (const category of categories) {
+		if (category.id === categoryId) {
+			return category;
+		}
+
+		const childrenCategory = findCategory(categoryId, category.children);
+
+		if (childrenCategory) {
+			return childrenCategory;
+		}
+	}
+
+	return null;
+}
+
 const AssetCategoriesNavigationTreeView = ({
 	categories,
 	selectedCategoryId,
@@ -34,15 +51,13 @@ const AssetCategoriesNavigationTreeView = ({
 }) => {
 	const nodes = buildNodes(vocabularies, categories);
 
-	const handleSelectionChange = (selectedNodeIds) => {
-		const selectedNodeId = [...selectedNodeIds][0];
+	const handleSelectionChange = ([selectedNodeId]) => {
+		if (selectedNodeId && selectedCategoryId !== selectedNodeId) {
+			const category = findCategory(selectedNodeId, categories);
 
-		if (selectedNodeId) {
-			categories.forEach((category) => {
-				if (category.id === selectedNodeId) {
-					Liferay.Util.navigate(category.url);
-				}
-			});
+			if (category) {
+				Liferay.Util.navigate(category.url);
+			}
 		}
 	};
 

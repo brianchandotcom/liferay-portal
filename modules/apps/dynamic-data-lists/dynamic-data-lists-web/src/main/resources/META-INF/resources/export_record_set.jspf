@@ -48,78 +48,118 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 </div>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />exportRecordSet',
-		function (url) {
-			var A = AUI();
+	window['<portlet:namespace />exportRecordSet'] = function (url) {
+		var form = document.createElement('form');
+		form.setAttribute('id', '<portlet:namespace />exportForm');
 
-			var form = A.Node.create('<form />');
+		var content = document.getElementById('<portlet:namespace />exportList');
 
-			form.attr('method', 'POST');
+		if (content) {
+			form.appendChild(content);
 
-			var content = A.one('#<portlet:namespace />exportList');
+			content.classList.remove('hide');
+			content.removeAttribute('hidden');
+			content.style.display = '';
+		}
 
-			var fileExtensionSelect = A.one('#<portlet:namespace />fileExtension');
+		function showCSVWarning() {
+			var csvWarning = document.getElementById(
+				'<portlet:namespace />csvWarning'
+			);
 
-			var showCSVWarning = function () {
-				var csvWarning = A.one('#<portlet:namespace />csvWarning');
+			if (fileExtensionSelect.value === 'csv' && <%= showCSVWarning %>) {
+				csvWarning.classList.remove('hide');
+				csvWarning.removeAttribute('hidden');
+				csvWarning.style.display = '';
+			}
+			else {
+				csvWarning.classList.add('hide');
+				csvWarning.setAttribute('hidden', 'hidden');
+				csvWarning.style.display = 'none';
+			}
+		}
 
-				if (fileExtensionSelect.val() === 'csv' && <%= showCSVWarning %>) {
-					csvWarning.show();
-				}
-				else {
-					csvWarning.hide();
-				}
-			};
+		function handleClose() {
+			content.classList.add('hide');
+			content.setAttribute('hidden', 'hidden');
+			content.style.display = 'none';
 
-			if (content) {
+			document.body.appendChild(content);
+		}
+
+		Liferay.Util.openModal({
+			bodyHTML: form.outerHTML,
+			buttons: [
+				{
+					displayType: 'secondary',
+					label: '<liferay-ui:message key="cancel" />',
+					type: 'cancel',
+				},
+				{
+					label: '<liferay-ui:message key="ok" />',
+					onClick: function () {
+						var filename;
+						var formData = new FormData();
+						formData.append(
+							fileExtensionSelect.getAttribute('id'),
+							fileExtensionSelect.value
+						);
+
+						Liferay.Util.fetch(url, {body: formData, method: 'POST'})
+							.then(function (response) {
+								var filenamePattern = /filename=\"(.*)\"/;
+								var match = filenamePattern.exec(
+									response.headers.get('content-disposition')
+								);
+								if (match) {
+									filename = match[1];
+								}
+								return response.blob();
+							})
+							.then(function (blob) {
+								var link = document.createElement('a');
+								link.setAttribute(
+									'href',
+									URL.createObjectURL(blob)
+								);
+								if (filename) {
+									link.setAttribute('download', filename);
+								}
+								link.click();
+
+								Liferay.fire('closeModal');
+							})
+							.catch(function (error) {
+								Liferay.Util.openToast({
+									message: Liferay.Language.get(
+										'an-unexpected-system-error-occurred'
+									),
+									title: Liferay.Language.get('error'),
+									type: 'danger',
+								});
+							});
+					},
+					type: 'submit',
+				},
+			],
+			iframeBodyCssClass: 'ddl-record-set-export-modal',
+			onClose: handleClose,
+			onOpen: function () {
+				content = document.getElementById(
+					'<portlet:namespace />exportList'
+				);
+
+				fileExtensionSelect = document.getElementById(
+					'<portlet:namespace />fileExtension'
+				);
+
 				if (fileExtensionSelect) {
 					showCSVWarning();
 
-					fileExtensionSelect.on('change', showCSVWarning);
+					fileExtensionSelect.addEventListener('change', showCSVWarning);
 				}
-
-				form.append(content);
-
-				content.show();
-			}
-
-			var dialog = Liferay.Util.Window.getWindow({
-				dialog: {
-					bodyContent: form,
-					cssClass: 'ddl-record-set-export-modal',
-					resizable: false,
-					toolbars: {
-						footer: [
-							{
-								cssClass: 'btn-secondary',
-								label: '<liferay-ui:message key="cancel" />',
-								on: {
-									click: function () {
-										dialog.hide();
-									},
-								},
-							},
-							{
-								cssClass: 'btn-primary',
-								label: '<liferay-ui:message key="ok" />',
-								on: {
-									click: function () {
-										submitForm(form, url, false);
-
-										dialog.hide();
-									},
-								},
-								primary: true,
-							},
-						],
-					},
-					width: 600,
-				},
-				title: '<%= UnicodeLanguageUtil.get(request, "export") %>',
-			});
-		},
-		['aui-alert', 'liferay-util-window']
-	);
+			},
+			title: '<%= UnicodeLanguageUtil.get(request, "export") %>',
+		});
+	};
 </aui:script>

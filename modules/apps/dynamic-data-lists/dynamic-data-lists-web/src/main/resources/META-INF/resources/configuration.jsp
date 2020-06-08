@@ -259,27 +259,33 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 </aui:script>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectRecordSet',
-		function (recordSetId, recordSetName) {
-			var A = AUI();
+	window['<portlet:namespace />selectRecordSet'] = function (
+		recordSetId,
+		recordSetName
+	) {
+		document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value = recordSetId;
 
-			document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value = recordSetId;
+		var displayingRecordSetIdHolder = document.querySelector(
+			'.displaying-record-set-id-holder'
+		);
+		displayingRecordSetIdHolder.classList.remove('hide');
+		displayingRecordSetIdHolder.removeAttribute('hidden');
+		displayingRecordSetIdHolder.style.display = '';
 
-			A.one('.displaying-record-set-id-holder').show();
-			A.one('.displaying-help-message-holder').hide();
+		var displayingHelpMessageHolder = document.querySelector(
+			'.displaying-help-message-holder'
+		);
+		displayingHelpMessageHolder.classList.add('hide');
+		displayingHelpMessageHolder.setAttribute('hidden', 'hidden');
+		displayingHelpMessageHolder.style.display = 'none';
 
-			var displayRecordSetId = A.one('.displaying-record-set-id');
-
-			displayRecordSetId.set(
-				'innerHTML',
-				recordSetName + ' (<liferay-ui:message key="modified" />)'
-			);
-			displayRecordSetId.addClass('modified');
-		},
-		['aui-base']
-	);
+		var displayRecordSetId = document.querySelector(
+			'.displaying-record-set-id'
+		);
+		displayRecordSetId.innerHTML =
+			recordSetName + ' (<liferay-ui:message key="modified" />)';
+		displayRecordSetId.classList.add('modified');
+	};
 </aui:script>
 
 <%!

@@ -155,8 +155,6 @@ AUI.add(
 							event.details[0].dialog = modal;
 
 							if (event.doc) {
-								Util.afterIframeLoaded(event);
-
 								var modalUtil = event.win.Liferay.Util;
 
 								modalUtil.Window._opener = modal._opener;
@@ -165,6 +163,12 @@ AUI.add(
 							}
 
 							var iframeNode = modal.iframe.node;
+
+							var iframeElement = iframeNode.getDOM();
+
+							iframeElement.onload = function () {
+								Util.afterIframeLoaded(event);
+							};
 
 							iframeNode.focus();
 

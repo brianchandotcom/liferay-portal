@@ -35,6 +35,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -141,15 +142,17 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 					String dirName = dirNamePath.toString();
 
-					if (dirName.equals("build") ||
-						dirName.equals("build_gradle") ||
-						dirName.equals("node_modules") ||
-						dirName.equals("node_modules_cache")) {
-
+					if (isNonprojectDirName(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (Files.exists(dirPath.resolve("package.json"))) {
+					Path gulpJsPath = dirPath.resolve("gulpfile.js");
+					Path packageJsonPath = dirPath.resolve("package.json");
+
+					if (Files.exists(gulpJsPath) &&
+						Files.exists(packageJsonPath) &&
+						_hasThemeBuildScript(packageJsonPath)) {
+
 						projectDirs.add(dirPath.toFile());
 
 						return FileVisitResult.SKIP_SUBTREE;
@@ -233,12 +236,38 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		warPluginConvention.setWebAppDirName("src");
 	}
 
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> _getPackageJsonMap(File packageJsonFile) {
+		if (!packageJsonFile.exists()) {
+			return Collections.emptyMap();
+		}
+
+		JsonSlurper jsonSlurper = new JsonSlurper();
+
+		return (Map<String, Object>)jsonSlurper.parse(packageJsonFile);
+	}
+
 	private File _getWarFile(Project project) {
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
 
 		return project.file(
 			"dist/" + basePluginConvention.getArchivesBaseName() + ".war");
+	}
+
+	@SuppressWarnings("unchecked")
+	private boolean _hasThemeBuildScript(Path packageJsonPath) {
+		Map<String, Object> packageJsonMap = _getPackageJsonMap(
+			packageJsonPath.toFile());
+
+		Map<String, Object> liferayTheme =
+			(Map<String, Object>)packageJsonMap.get("liferayTheme");
+
+		if (liferayTheme != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final boolean _JAVA_BUILD = false;

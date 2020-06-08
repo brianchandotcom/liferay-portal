@@ -15,11 +15,11 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-import getAppContext from './Context';
+import {useAppState} from './Context';
 import FilterResume from './filters/ResumeFilter';
 
 function ActiveFiltersBar(props) {
-	const {actions, state} = getAppContext();
+	const {actions, state} = useAppState();
 
 	const filtersActive = state.filters.reduce(
 		(acc, filter) =>

@@ -53,5 +53,3 @@ export const StoreConsumer = StoreContext.Consumer;
 export function useAppState() {
 	return useContext(StoreContext);
 }
-
-export default useAppState;

@@ -16,13 +16,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import ActiveViewSelector from './ActiveViewSelector';
-import getAppContext from './Context';
+import {useAppState} from './Context';
 import CreationMenu from './CreationMenu';
 import FiltersDropdown from './FiltersDropdown';
 import MainSearch from './MainSearch';
 
 function NavBar(props) {
-	const {state} = getAppContext();
+	const {state} = useAppState();
 
 	return (
 		<nav className="management-bar management-bar-light navbar navbar-expand-md">

@@ -21,12 +21,17 @@ function buildNodes(vocabularies, categories) {
 		children: categories.filter((category) => {
 			return category.vocabularyId === vocabulary.vocabularyId;
 		}),
+		disabled: true,
 		icon: 'vocabulary',
 		id: vocabulary.vocabularyId,
 	}));
 }
 
-const AssetCategoriesNavigationTreeView = ({categories, vocabularies}) => {
+const AssetCategoriesNavigationTreeView = ({
+	categories,
+	selectedCategoryId,
+	vocabularies,
+}) => {
 	const nodes = buildNodes(vocabularies, categories);
 
 	const handleSelectionChange = (selectedNodeIds) => {

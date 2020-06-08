@@ -1,0 +1,23 @@
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.7"
+	}
+
+	repositories {
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "com.liferay.portal.tools.theme.builder"
+
+dependencies {
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.2"
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.styled"
+	parentThemes group: "com.liferay", name: "com.liferay.frontend.theme.unstyled"
+
+	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"
+
+	themeBuilder group: "com.liferay", name: "com.liferay.portal.tools.theme.builder", version: "1.1.8"
+}

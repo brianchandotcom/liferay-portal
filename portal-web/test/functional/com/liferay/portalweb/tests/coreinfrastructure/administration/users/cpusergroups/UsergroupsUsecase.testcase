@@ -154,15 +154,6 @@ definition {
 			panel = "Site Administration",
 			portlet = "Memberships");
 
-		Site.addAllMembersCP(siteName = "Site Name");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			panel = "Site Administration",
-			portlet = "Memberships");
-
 		Site.assignUserGroupAsMemberCP(
 			siteName = "Site Name",
 			userGroupName = "UG UserGroup Name");

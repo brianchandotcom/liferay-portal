@@ -67,12 +67,12 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		PageContext pageContext = PageContextFactoryUtil.create(
-			httpServletRequest, httpServletResponse);
-
 		if (_isGlobalMenuApp(httpServletRequest)) {
 			return;
 		}
+
+		PageContext pageContext = PageContextFactoryUtil.create(
+			httpServletRequest, httpServletResponse);
 
 		try {
 			JspWriter jspWriter = pageContext.getOut();

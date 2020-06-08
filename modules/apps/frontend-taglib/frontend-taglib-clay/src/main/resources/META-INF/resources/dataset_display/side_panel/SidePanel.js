@@ -95,10 +95,8 @@ export default class SidePanel extends React.Component {
 			}
 		}
 
-		if (Liferay) {
-			Liferay.on(OPEN_SIDE_PANEL, this.handlePanelOpenEvent);
-			Liferay.on(CLOSE_SIDE_PANEL, this.handlePanelCloseEvent);
-		}
+		Liferay.on(OPEN_SIDE_PANEL, this.handlePanelOpenEvent);
+		Liferay.on(CLOSE_SIDE_PANEL, this.handlePanelCloseEvent);
 
 		exposeSidePanel(this.props.id, () => ({
 			activeMenuItem: this.state.active,
@@ -157,9 +155,7 @@ export default class SidePanel extends React.Component {
 			window.removeEventListener('resize', this.debouncedUpdateTop);
 		}
 
-		if (Liferay) {
-			Liferay.detach(OPEN_SIDE_PANEL, this.handlePanelOpenEvent);
-		}
+		Liferay.detach(OPEN_SIDE_PANEL, this.handlePanelOpenEvent);
 	}
 
 	updateTop() {

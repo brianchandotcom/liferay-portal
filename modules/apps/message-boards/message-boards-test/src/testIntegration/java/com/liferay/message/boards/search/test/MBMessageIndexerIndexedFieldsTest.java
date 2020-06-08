@@ -194,6 +194,10 @@ public class MBMessageIndexerIndexedFieldsTest {
 		).put(
 			"threadId", String.valueOf(mbMessage.getThreadId())
 		).put(
+			"urlSubject", mbMessage.getUrlSubject()
+		).put(
+			"urlSubject_String_sortable", mbMessage.getUrlSubject()
+		).put(
 			"visible", "true"
 		).build();
 

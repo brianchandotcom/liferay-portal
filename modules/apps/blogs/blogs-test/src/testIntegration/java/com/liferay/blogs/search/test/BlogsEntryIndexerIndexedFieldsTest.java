@@ -184,6 +184,10 @@ public class BlogsEntryIndexerIndexedFieldsTest {
 		).put(
 			"title_sortable", StringUtil.lowerCase(blogsEntry.getTitle())
 		).put(
+			"urlTitle", blogsEntry.getUrlTitle()
+		).put(
+			"urlTitle_String_sortable", blogsEntry.getUrlTitle()
+		).put(
 			"visible", "true"
 		).build();
 

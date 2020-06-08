@@ -17,13 +17,17 @@ import classnames from 'classnames';
 import React from 'react';
 
 import {EVENT_TYPES} from '../actions/types.es';
+import {useEvaluate} from '../hooks/useEvaluate.es';
 import {useForm} from '../hooks/useForm.es';
 import {usePage} from '../hooks/usePage.es';
 import nextPage from '../thunks/nextPage.es';
 import previousPage from '../thunks/previousPage.es';
+import {getFormId, getFormNode} from '../util/formId.es';
 
 export const Pagination = ({activePage, pages}) => {
-	const {defaultLanguageId, editingLanguageId, portletNamespace} = usePage();
+	const createPreviousPage = useEvaluate(previousPage);
+	const createNextPage = useEvaluate(nextPage);
+	const {containerElement} = usePage();
 	const dispatch = useForm();
 
 	return (
@@ -37,13 +41,11 @@ export const Pagination = ({activePage, pages}) => {
 					className="page-link"
 					onClick={() =>
 						dispatch(
-							previousPage({
+							createPreviousPage({
 								activePage,
-								defaultLanguageId,
-								editingLanguageId,
-								formId: '',
-								pages,
-								portletNamespace,
+								formId: getFormId(
+									getFormNode(containerElement.current)
+								),
 							})
 						)
 					}
@@ -84,13 +86,11 @@ export const Pagination = ({activePage, pages}) => {
 					className="page-link"
 					onClick={() =>
 						dispatch(
-							nextPage({
+							createNextPage({
 								activePage,
-								defaultLanguageId,
-								editingLanguageId,
-								formId: '',
-								pages,
-								portletNamespace,
+								formId: getFormId(
+									getFormNode(containerElement.current)
+								),
 							})
 						)
 					}

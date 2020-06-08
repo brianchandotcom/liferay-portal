@@ -92,6 +92,7 @@ const FormRenderer = React.forwardRef(
 							{...otherProps}
 							activePage={activePage}
 							cancelLabel={cancelLabel}
+							containerElement={ref}
 							editable={editable}
 							editingLanguageId={editingLanguageId}
 							fieldTypes={fieldTypes}

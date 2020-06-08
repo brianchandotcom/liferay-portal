@@ -20,10 +20,18 @@ import fieldBlur from '../../thunks/fieldBlur.es';
 import fieldFocus from '../../thunks/fieldFocus.es';
 import {Field} from '../Field/Field.es';
 import {EVENT_TYPES} from '../actions/types.es';
+import {getFormId, getFormNode} from '../util/formId.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
 export const Layout = ({components: Components = DefaultVariant, rows}) => {
-	const {activePage, allowNestedFields, editable, pageIndex, spritemap} = usePage();
+	const {
+		activePage,
+		allowNestedFields,
+		containerElement,
+		editable,
+		pageIndex,
+		spritemap,
+	} = usePage();
 	const dispatch = useForm();
 
 	return (
@@ -60,7 +68,11 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 											fieldBlur({
 												activePage,
 												focusDuration,
-												formId: '',
+												formId: getFormId(
+													getFormNode(
+														containerElement.current
+													)
+												),
 												properties: event,
 											})
 										)
@@ -75,7 +87,11 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 										dispatch(
 											fieldFocus({
 												activePage,
-												formId: '',
+												formId: getFormId(
+													getFormNode(
+														containerElement.current
+													)
+												),
 												properties: event,
 											})
 										)

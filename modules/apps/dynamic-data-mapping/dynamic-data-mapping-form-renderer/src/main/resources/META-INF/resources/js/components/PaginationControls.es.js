@@ -16,10 +16,12 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
+import {useEvaluate} from '../hooks/useEvaluate.es';
 import {useForm} from '../hooks/useForm.es';
 import {usePage} from '../hooks/usePage.es';
 import nextPage from '../thunks/nextPage.es';
 import previousPage from '../thunks/previousPage.es';
+import {getFormId, getFormNode} from '../util/formId.es';
 
 export const PaginationControls = ({
 	activePage,
@@ -31,13 +33,12 @@ export const PaginationControls = ({
 }) => {
 	const {
 		cancelLabel,
-		defaultLanguageId,
-		editingLanguageId,
-		pages,
-		portletNamespace,
+		containerElement,
 		redirectURL,
 		showCancelButton,
 	} = usePage();
+	const createPreviousPage = useEvaluate(previousPage);
+	const createNextPage = useEvaluate(nextPage);
 	const dispatch = useForm();
 
 	return (
@@ -47,13 +48,11 @@ export const PaginationControls = ({
 					className="lfr-ddm-form-pagination-prev"
 					onClick={() =>
 						dispatch(
-							previousPage({
+							createPreviousPage({
 								activePage,
-								defaultLanguageId,
-								editingLanguageId,
-								formId: '',
-								pages,
-								portletNamespace,
+								formId: getFormId(
+									getFormNode(containerElement.current)
+								),
 							})
 						)
 					}
@@ -71,13 +70,11 @@ export const PaginationControls = ({
 					className="float-right lfr-ddm-form-pagination-next"
 					onClick={() =>
 						dispatch(
-							nextPage({
+							createNextPage({
 								activePage,
-								defaultLanguageId,
-								editingLanguageId,
-								formId: '',
-								pages,
-								portletNamespace,
+								formId: getFormId(
+									getFormNode(containerElement.current)
+								),
 							})
 						)
 					}

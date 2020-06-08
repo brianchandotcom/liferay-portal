@@ -260,9 +260,17 @@ definition {
 			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
 			value1 = "${userLastName}");
 
-		AssertClick(
-			locator1 = "Button#SUBMIT",
-			value1 = "Save");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Button.clickSave();
+		}
+
+		else {
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+		}
 
 		if ("${userEmailAddressVariation}" == "Invalid") {
 			AssertTextEquals(

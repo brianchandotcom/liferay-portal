@@ -185,6 +185,13 @@ definition {
 				key_rowEntry = "${rowEntry}",
 				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_IE");
 		}
+
+		else if ("${browserType}" == "safari") {
+			Click.waitForMenuToggleJSClick(
+				key_rowEntry = "${rowEntry}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_SAFARI");
+		}
+
 		else {
 			Click.waitForMenuToggleJSClick(
 				key_rowEntry = "${rowEntry}",

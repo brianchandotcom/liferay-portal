@@ -126,19 +126,19 @@
 		overflow-y: hidden;
 	}
 
-	&-fluid {
+	&.dataset-display-fluid {
 		.dataset-display-pagination-wrapper {
 			margin: map-get($spacers, 3) 0 0;
 		}
 	}
 
-	&-inline {
+	&.dataset-display-inline {
 		.table {
 			border-bottom: 1px solid $border-color;
 		}
 	}
 
-	&-management-bar-wrapper > .management-bar {
+	&.dataset-display-management-bar-wrapper > .management-bar {
 		margin-bottom: 0;
 
 		& + .management-bar {
@@ -146,11 +146,11 @@
 		}
 	}
 
-	&-pagination-wrapper {
+	&.dataset-display-pagination-wrapper {
 		margin: map-get($spacers, 3) map-get($spacers, 3) 0;
 	}
 
-	&-stacked {
+	&.dataset-display-stacked {
 		.dataset-display-management-bar-wrapper {
 			border: 1px solid $border-color;
 			margin-bottom: map-get($spacers, 3);
@@ -248,7 +248,7 @@
 		opacity: 0.5;
 	}
 
-	&-content {
+	&.filter-resume-content {
 		display: flex;
 	}
 }

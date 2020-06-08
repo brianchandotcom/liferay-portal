@@ -38,9 +38,9 @@ const MODULES_PER_ROW_OPTIONS = [
 	[1],
 	[1, 2],
 	[1, 3],
-	[2, 4],
-	[2, 5],
-	[2, 3, 6],
+	[1, 2, 4],
+	[1, 2, 5],
+	[1, 2, 3, 6],
 ];
 const MODULES_PER_ROW_OPTIONS_WITH_CUSTOM = MODULES_PER_ROW_OPTIONS.map(
 	(option) => [CUSTOM_ROW, ...option]

@@ -1,11 +1,11 @@
 definition {
 
 	macro closeGlobalMenu {
-		if (IsElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_SHOWN")) {
+		if (IsElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU")) {
 			Click(locator1 = "GlobalMenu#TOGGLE");
 		}
 
-		AssertElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_HIDDEN");
+		WaitForElementNotPresent(locator1 = "GlobalMenu#GLOBAL_MENU");
 	}
 
 	macro gotoPortlet {
@@ -17,11 +17,11 @@ definition {
 	}
 
 	macro openGlobalMenu {
-		if (IsElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_HIDDEN")) {
+		if (IsElementNotPresent(locator1 = "GlobalMenu#GLOBAL_MENU")) {
 			Click(locator1 = "GlobalMenu#TOGGLE");
 		}
 
-		AssertElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_SHOWN");
+		WaitForElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU");
 	}
 
 	macro openWorkspace {

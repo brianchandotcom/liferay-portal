@@ -2313,7 +2313,7 @@ definition {
 	@priority = "4"
 	test SearchFormRecordMultipleEntries {
 		property test.name.skip.portal.instance = "Forms#SearchFormRecordMultipleEntries";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		var fieldValueList = "testEntry1,exampleText,sampleAnswer";
 
 		Navigator.openURL();

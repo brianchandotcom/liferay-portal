@@ -109,7 +109,7 @@ export default () => {
 
 				<SelectObjects
 					defaultValue={app.dataDefinitionId}
-					label={Liferay.Language.get('select-data-object')}
+					label={Liferay.Language.get('select-object')}
 					onSelect={updateDataObject}
 					selectedValue={dataObject}
 				/>

@@ -116,7 +116,7 @@ const SelectFormView = ({objectId, ...otherProps}) => {
 			'no-form-views-found-with-this-name-try-searching-again-with-a-different-name'
 		),
 		endpoint: `/o/data-engine/v2.0/data-definitions/${objectId}/data-layouts`,
-		label: Liferay.Language.get('select-form-view'),
+		label: Liferay.Language.get('select-a-form-view'),
 		stateProps: {
 			emptyProps: {
 				label: Liferay.Language.get('there-are-no-form-views-yet'),
@@ -140,7 +140,7 @@ const SelectTableView = ({objectId, ...otherProps}) => {
 			'no-table-views-found-with-this-name-try-searching-again-with-a-different-name'
 		),
 		endpoint: `/o/data-engine/v2.0/data-definitions/${objectId}/data-list-views`,
-		label: Liferay.Language.get('select-table-view'),
+		label: Liferay.Language.get('select-a-table-view'),
 		stateProps: {
 			emptyProps: {
 				label: Liferay.Language.get('there-are-no-table-views-yet'),

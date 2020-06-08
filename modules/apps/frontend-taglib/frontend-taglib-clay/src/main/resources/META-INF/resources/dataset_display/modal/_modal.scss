@@ -20,11 +20,11 @@
 }
 
 .modal-iframe {
-	&-content {
+	&.modal-iframe-content {
 		padding: map-get($spacers, 4);
 	}
 
-	&-footer {
+	.modal-iframe-footer {
 		align-items: center;
 		background-color: white;
 		border-top: 1px solid #e7e7ed;
@@ -39,7 +39,7 @@
 		right: 0;
 	}
 
-	&-header {
+	&.modal-iframe-header {
 		background-color: white;
 		padding: map-get($spacers, 3) map-get($spacers, 4);
 		position: sticky;
@@ -47,7 +47,7 @@
 		z-index: 100;
 	}
 
-	&-wrapper {
+	&.modal-iframe-wrapper {
 		background: white;
 		bottom: 0;
 		left: 0;

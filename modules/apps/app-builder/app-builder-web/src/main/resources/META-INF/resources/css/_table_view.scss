@@ -47,6 +47,10 @@ $appBuilderTableViewTransitionTime: 0.5s;
 	}
 
 	.data-layout-builder-sidebar {
+		@media (max-width: 576px) {
+			top: 112px;
+		}
+
 		.sidebar-header {
 			padding-bottom: 1rem;
 

@@ -148,6 +148,27 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	/**
 	 * Adds a company.
 	 *
+	 * @param  companyId primary key (pass <code>null</code> or
+	 *         <code>0</code> to generate it automatically)
+	 * @param  webId the the company's web domain
+	 * @param  virtualHostname the company's virtual host name
+	 * @param  mx the company's mail domain
+	 * @param  active whether the company is active
+	 * @return the company
+	 */
+	@Override
+	public Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			boolean active)
+		throws PortalException {
+
+		return _addCompany(
+			companyId, webId, virtualHostname, mx, false, 0, active);
+	}
+
+	/**
+	 * Adds a company.
+	 *
 	 * @param  webId the the company's web domain
 	 * @param  virtualHostname the company's virtual host name
 	 * @param  mx the company's mail domain
@@ -164,84 +185,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			int maxUsers, boolean active)
 		throws PortalException {
 
-		// Company
-
-		virtualHostname = StringUtil.toLowerCase(
-			StringUtil.trim(virtualHostname));
-
-		if (Validator.isNull(webId) ||
-			(companyPersistence.fetchByWebId(webId) != null)) {
-
-			throw new CompanyWebIdException();
-		}
-
-		validateVirtualHost(webId, virtualHostname);
-		validateMx(-1, mx);
-
-		Company company = companyPersistence.create(
-			counterLocalService.increment());
-
-		if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-			DBPartitionUtil.setDefaultCompanyId(company.getCompanyId());
-		}
-
-		company.setWebId(webId);
-		company.setMx(mx);
-		company.setSystem(system);
-		company.setMaxUsers(maxUsers);
-		company.setActive(active);
-
-		company = companyPersistence.update(company);
-
-		// Virtual host
-
-		updateVirtualHostname(company.getCompanyId(), virtualHostname);
-
-		try (SafeClosable safeClosable =
-				CompanyThreadLocal.setInitializingCompanyId(
-					company.getCompanyId())) {
-
-			if (DBPartitionUtil.addDBPartition(company.getCompanyId())) {
-				dlFileEntryTypeLocalService.
-					createBasicDocumentDLFileEntryType();
-			}
-
-			// Account
-
-			String name = webId;
-
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				name = PropsValues.COMPANY_DEFAULT_NAME;
-			}
-
-			updateAccount(
-				company, name, null, null, null, null, null, null, null, null);
-
-			// Company info
-
-			try {
-				company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
-			}
-			catch (EncryptorException encryptorException) {
-				throw new SystemException(encryptorException);
-			}
-
-			companyInfoPersistence.update(company.getCompanyInfo());
-
-			// Demo settings
-
-			if (webId.equals("liferay.net")) {
-				_addDemoSettings(company);
-			}
-
-			_addDefaultUser(company);
-
-			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
-				return company;
-			}
-
-			return _checkCompany(company, mx);
-		}
+		return _addCompany(
+			null, webId, virtualHostname, mx, system, maxUsers, active);
 	}
 
 	/**
@@ -1685,6 +1630,94 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		private ActionableDynamicQuery _actionableDynamicQuery;
 
+	}
+
+	private Company _addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			boolean system, int maxUsers, boolean active)
+		throws PortalException {
+
+		// Company
+
+		virtualHostname = StringUtil.toLowerCase(
+			StringUtil.trim(virtualHostname));
+
+		if (Validator.isNull(webId) ||
+			(companyPersistence.fetchByWebId(webId) != null)) {
+
+			throw new CompanyWebIdException();
+		}
+
+		validateVirtualHost(webId, virtualHostname);
+		validateMx(-1, mx);
+
+		if ((companyId == null) || (companyId == 0)) {
+			companyId = counterLocalService.increment();
+		}
+
+		Company company = companyPersistence.create(companyId);
+
+		if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+			DBPartitionUtil.setDefaultCompanyId(company.getCompanyId());
+		}
+
+		company.setWebId(webId);
+		company.setMx(mx);
+		company.setSystem(system);
+		company.setMaxUsers(maxUsers);
+		company.setActive(active);
+
+		company = companyPersistence.update(company);
+
+		// Virtual host
+
+		updateVirtualHostname(company.getCompanyId(), virtualHostname);
+
+		try (SafeClosable safeClosable =
+				CompanyThreadLocal.setInitializingCompanyId(
+					company.getCompanyId())) {
+
+			if (DBPartitionUtil.addDBPartition(company.getCompanyId())) {
+				dlFileEntryTypeLocalService.
+					createBasicDocumentDLFileEntryType();
+			}
+
+			// Account
+
+			String name = webId;
+
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				name = PropsValues.COMPANY_DEFAULT_NAME;
+			}
+
+			updateAccount(
+				company, name, null, null, null, null, null, null, null, null);
+
+			// Company info
+
+			try {
+				company.setKey(Encryptor.serializeKey(Encryptor.generateKey()));
+			}
+			catch (EncryptorException encryptorException) {
+				throw new SystemException(encryptorException);
+			}
+
+			companyInfoPersistence.update(company.getCompanyInfo());
+
+			// Demo settings
+
+			if (webId.equals("liferay.net")) {
+				_addDemoSettings(company);
+			}
+
+			_addDefaultUser(company);
+
+			if (webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
+				return company;
+			}
+
+			return _checkCompany(company, mx);
+		}
 	}
 
 	private User _addDefaultUser(Company company) {

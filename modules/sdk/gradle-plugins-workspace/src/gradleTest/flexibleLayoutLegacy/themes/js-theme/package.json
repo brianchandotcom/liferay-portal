@@ -1,0 +1,33 @@
+{
+	"name": "js-theme",
+	"version": "1.0.0",
+	"main": "package.json",
+	"keywords": ["liferay-theme"],
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"fontAwesome": true,
+		"screenshot": "",
+		"templateLanguage": "ftl",
+		"version": "7.3"
+	},
+	"devDependencies": {
+		"compass-mixins": "0.12.10",
+		"gulp": "4.0.2",
+		"liferay-frontend-common-css": "1.0.4",
+		"liferay-frontend-theme-styled": "5.0.0",
+		"liferay-frontend-theme-unstyled": "5.0.0",
+		"liferay-theme-tasks": "^10.0.2",
+		"liferay-font-awesome": "3.4.0"
+	},
+	"scripts": {
+		"init": "gulp init",
+		"build": "gulp build",
+		"deploy": "gulp deploy",
+		"extend": "gulp extend",
+		"init": "gulp init",
+		"kickstart": "gulp kickstart",
+		"status": "gulp status",
+		"upgrade": "gulp upgrade",
+		"watch": "gulp watch"
+	}
+}

@@ -1,0 +1,16 @@
+task runGradleTest
+
+List<String> projectNames = ["apps", "java-theme", "js-theme", "js-widget", "mvc-portlet", "service-builder", "service-builder-api", "service-builder-service", "war-mvc-portlet"]
+
+runGradleTest {
+	doLast {
+		assert subprojects.collect{it.name}.sort{it}.equals(projectNames)
+		assert project(":apps:java-theme").plugins.findPlugin("war") != null
+		assert project(":apps:js-theme").plugins.findPlugin("com.liferay.theme.plugin") != null
+		assert project(":apps:js-widget").plugins.findPlugin("com.liferay.frontend.plugin") != null
+		assert project(":apps:mvc-portlet").plugins.findPlugin("com.liferay.osgi.plugin") != null
+		assert project(":apps:service-builder:service-builder-api").plugins.findPlugin("com.liferay.osgi.plugin") != null
+		assert project(":apps:service-builder:service-builder-service").plugins.findPlugin("com.liferay.osgi.plugin") != null
+		assert project(":apps:war-mvc-portlet").plugins.findPlugin("war") != null
+	}
+}

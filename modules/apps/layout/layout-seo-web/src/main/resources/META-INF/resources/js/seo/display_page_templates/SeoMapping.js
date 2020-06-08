@@ -14,7 +14,7 @@
 
 import React from 'react';
 
-import MappingField from './MappingField';
+import MappingField from './components/MappingField';
 
 function SeoMapping({
 	description,

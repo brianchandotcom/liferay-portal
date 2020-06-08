@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import {PropTypes} from 'prop-types';
 import React, {useRef, useState} from 'react';
 
-import useOnClickOutside from './hooks/useOnClickOutside';
+import useOnClickOutside from '../hooks/useOnClickOutside';
 
 const noop = () => {};
 

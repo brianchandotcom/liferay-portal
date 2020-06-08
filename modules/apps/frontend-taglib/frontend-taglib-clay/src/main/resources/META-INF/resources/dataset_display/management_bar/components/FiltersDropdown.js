@@ -30,20 +30,13 @@ function FiltersDropdown() {
 	);
 
 	useEffect(() => {
-		const results = state.filters.filter((filter) => {
-			switch (true) {
-				case !!filter.invisible:
-					return false;
-				case query &&
-					!(
-						filter.id.toLowerCase().includes(query) ||
-						filter.label.toLowerCase().includes(query)
-					):
-					return false;
-				default:
-					return true;
-			}
-		});
+		const results = state.filters.filter(
+			(filter) =>
+				!filter.invisible &&
+				(!query ||
+					filter.id.toLowerCase().includes(query) ||
+					filter.label.toLowerCase().includes(query))
+		);
 
 		setVisibleFilter(results);
 	}, [state.filters, query]);

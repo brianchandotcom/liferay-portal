@@ -218,15 +218,14 @@ export default class SidePanel extends React.Component {
 
 	open(url = this.state.currentUrl, active = null) {
 		this.setState({active, closeButtonStyle: null});
-		switch (true) {
-			case !this.state.visible:
-				return this.toggle(true).then(() => {
-					this.load(url);
-				});
-			case url !== this.state.currentUrl:
-				return this.load(url);
-			default:
-				break;
+
+		if (!this.state.visible) {
+			this.toggle(true).then(() => {
+				this.load(url);
+			});
+		}
+		else if (url !== this.state.currentUrl) {
+			this.load(url);
 		}
 	}
 

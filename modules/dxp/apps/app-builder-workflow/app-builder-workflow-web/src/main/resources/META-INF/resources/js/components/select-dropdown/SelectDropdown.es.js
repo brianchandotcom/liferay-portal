@@ -26,7 +26,10 @@ const SelectDropdown = ({
 	selectedValue,
 	stateProps,
 }) => {
-	const [fetchState, setFetchState] = useState({isLoading: true});
+	const [fetchState, setFetchState] = useState({
+		error: null,
+		isLoading: true,
+	});
 	const [items, setItems] = useState([]);
 
 	const selectRef = useRef();
@@ -35,7 +38,7 @@ const SelectDropdown = ({
 		const params = {keywords: '', page: -1, pageSize: -1, sort: ''};
 
 		setFetchState({
-			hasError: null,
+			error: null,
 			isLoading: true,
 		});
 
@@ -43,7 +46,7 @@ const SelectDropdown = ({
 			.then((data) => {
 				setItems(data.items);
 				setFetchState({
-					hasError: null,
+					error: null,
 					isLoading: false,
 				});
 
@@ -60,9 +63,9 @@ const SelectDropdown = ({
 					}
 				}
 			})
-			.catch((hasError) => {
+			.catch((error) => {
 				setFetchState({
-					hasError,
+					error,
 					isLoading: false,
 				});
 			});

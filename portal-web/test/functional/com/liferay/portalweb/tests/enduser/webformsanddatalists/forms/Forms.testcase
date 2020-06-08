@@ -1790,7 +1790,6 @@ definition {
 	@priority = "3"
 	test EditFormsConfigurationViaSystemSettings {
 		property test.name.skip.portal.instance = "Forms#EditFormsConfigurationViaSystemSettings";
-		property portal.acceptance = "quarantine";
 
 		Navigator.openURL();
 

@@ -340,13 +340,14 @@ public class StructuredContentResourceImpl
 
 	@Override
 	public String getStructuredContentRenderedContentTemplate(
-			Long structuredContentId, Long templateId)
+			Long structuredContentId, String templateId)
 		throws Exception {
 
 		JournalArticle journalArticle = _journalArticleService.getLatestArticle(
 			structuredContentId);
 
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
+			journalArticle.getGroupId(), journalArticle.getClassNameId(),
 			templateId);
 
 		JournalArticleDisplay journalArticleDisplay =

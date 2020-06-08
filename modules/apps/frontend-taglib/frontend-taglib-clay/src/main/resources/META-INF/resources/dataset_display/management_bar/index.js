@@ -41,7 +41,7 @@ function ManagementBar({
 		onFiltersChange(state.filters);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [JSON.stringify(state.filters)]);
+	}, [state.filters]);
 
 	return (
 		<>

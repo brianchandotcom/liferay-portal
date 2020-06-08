@@ -69,10 +69,6 @@ public class CollectionsVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getHref() {
-		long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
-		boolean privateLayout = ParamUtil.getBoolean(
-			_httpServletRequest, "privateLayout");
-
 		PortletURL selectLayoutMasterLayoutURL =
 			_renderResponse.createRenderURL();
 
@@ -87,15 +83,23 @@ public class CollectionsVerticalCard extends BaseVerticalCard {
 			"backURL", themeDisplay.getURLCurrent());
 		selectLayoutMasterLayoutURL.setParameter(
 			"groupId", String.valueOf(_groupId));
+
+		long selPlid = ParamUtil.getLong(_httpServletRequest, "selPlid");
+
 		selectLayoutMasterLayoutURL.setParameter(
 			"selPlid", String.valueOf(selPlid));
+
+		boolean privateLayout = ParamUtil.getBoolean(
+			_httpServletRequest, "privateLayout");
+
 		selectLayoutMasterLayoutURL.setParameter(
 			"privateLayout", String.valueOf(privateLayout));
-		selectLayoutMasterLayoutURL.setParameter(
-			"collectionType", InfoListItemSelectorReturnType.class.getName());
+
 		selectLayoutMasterLayoutURL.setParameter(
 			"collectionPK",
 			String.valueOf(_assetListEntry.getAssetListEntryId()));
+		selectLayoutMasterLayoutURL.setParameter(
+			"collectionType", InfoListItemSelectorReturnType.class.getName());
 
 		return selectLayoutMasterLayoutURL.toString();
 	}

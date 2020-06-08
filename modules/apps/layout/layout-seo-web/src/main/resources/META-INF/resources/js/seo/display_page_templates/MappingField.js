@@ -22,10 +22,9 @@ function MappingField({fields, label, name, selectedField, selectedSource}) {
 	const [field, setField] = useState(selectedField);
 	const [value, setValue] = useState('');
 
-	const inititalSourceLabel = `${
-		selectedSource &&
-		(selectedSource.classTypeLabel || selectedSource.classNameLabel)
-	}`;
+	const inititalSourceLabel = selectedSource
+		? selectedSource.classTypeLabel || selectedSource.classNameLabel
+		: '';
 
 	useEffect(() => {
 		if (source) {

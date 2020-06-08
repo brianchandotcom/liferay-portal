@@ -154,21 +154,21 @@ AUI.add(
 							event.dialog = modal;
 							event.details[0].dialog = modal;
 
+							var iframeNode = modal.iframe.node;
+
+							var iframeElement = iframeNode.getDOM();
+
 							if (event.doc) {
 								var modalUtil = event.win.Liferay.Util;
 
 								modalUtil.Window._opener = modal._opener;
 
 								modalUtil.Window._name = id;
+
+								iframeElement.onload = function () {
+									Util.afterIframeLoaded(event);
+								};
 							}
-
-							var iframeNode = modal.iframe.node;
-
-							var iframeElement = iframeNode.getDOM();
-
-							iframeElement.onload = function () {
-								Util.afterIframeLoaded(event);
-							};
 
 							iframeNode.focus();
 

@@ -33,128 +33,105 @@
 
 <c:if test="<%= iFramePortletInstanceConfiguration.dynamicUrlEnabled() %>">
 	<aui:script>
-		Liferay.provide(
-			window,
-			'<portlet:namespace />init',
-			function () {
-				var A = AUI();
+		var A = AUI();
 
-				var hash = document.location.hash.replace('#', '');
+		function init() {
+			var hash = document.location.hash.replace('#', '');
 
-				var hashObj = A.QueryString.parse(hash);
+			var hashObj = A.QueryString.parse(hash);
 
-				hash = String(hashObj['<portlet:namespace />']);
+			hash = String(hashObj['<portlet:namespace />']);
 
-				var iframe = A.one('#<portlet:namespace />iframe');
+			var iframe = A.one('#<portlet:namespace />iframe');
 
-				if (iframe) {
-					if (hash) {
-						var src = '';
+			if (iframe) {
+				if (hash) {
+					var src = '';
 
-						var baseSrc =
-							'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
+					var baseSrc =
+						'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 
-						if (
-							!/^https?\:\/\//.test(hash) ||
-							!A.Lang.String.startsWith(hash, baseSrc)
-						) {
-							src = A.QueryString.unescape(hash);
-						}
-
-						iframe.attr('src', baseSrc + src);
+					if (
+						!/^https?\:\/\//.test(hash) ||
+						!A.Lang.String.startsWith(hash, baseSrc)
+					) {
+						src = A.QueryString.unescape(hash);
 					}
 
-					iframe.on('load', <portlet:namespace />monitorIframe);
-				}
-			},
-			['aui-base', 'querystring']
-		);
-
-		Liferay.provide(
-			window,
-			'<portlet:namespace />monitorIframe',
-			function () {
-				var A = AUI();
-
-				var url = null;
-
-				try {
-					var iframe = document.getElementById('<portlet:namespace />iframe');
-
-					url = iframe.contentWindow.document.location.href;
-
-					iframe.contentWindow.Liferay.on(
-						'endNavigate',
-						<portlet:namespace />monitorIframe
-					);
-				}
-				catch (e) {
-					return true;
+					iframe.attr('src', baseSrc + src);
 				}
 
-				var baseSrc =
-					'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
-				var iframeSrc =
-					'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
-				var hasBaseSrc = A.Lang.String.startsWith(url, baseSrc);
+				iframe.on('load', monitorIframe);
+			}
+		}
 
-				if (hasBaseSrc) {
-					url = url.substring(baseSrc.length);
+		function monitorIframe() {
+			var url = null;
 
-					<portlet:namespace />updateHash(url);
-				}
-				else if (
-					!(url == iframeSrc || url == iframeSrc + '/') &&
-					!hasBaseSrc
-				) {
-					<portlet:namespace />updateHash(url);
-				}
-			},
-			['aui-base']
-		);
+			try {
+				var iframe = document.getElementById('<portlet:namespace />iframe');
 
-		Liferay.provide(
-			window,
-			'<portlet:namespace />updateHash',
-			function (url) {
-				var A = AUI();
+				url = iframe.contentWindow.document.location.href;
 
-				var hash = document.location.hash.replace('#', '');
+				iframe.contentWindow.Liferay.on('endNavigate', monitorIframe);
+			}
+			catch (e) {
+				return true;
+			}
 
-				var hashObj = A.QueryString.parse(hash);
+			var baseSrc =
+				'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
+			var iframeSrc =
+				'<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
+			var hasBaseSrc = A.Lang.String.startsWith(url, baseSrc);
 
-				hashObj['<portlet:namespace />'] = url;
+			if (hasBaseSrc) {
+				url = url.substring(baseSrc.length);
 
-				hash = A.QueryString.stringify(hashObj);
+				updateHash(url);
+			}
+			else if (!(url == iframeSrc || url == iframeSrc + '/') && !hasBaseSrc) {
+				updateHash(url);
+			}
+		}
 
-				var maximize = A.one(
-					'#p_p_id<portlet:namespace /> .portlet-maximize-icon a'
-				);
+		function updateHash(url) {
+			var A = AUI();
 
-				if (maximize) {
-					var maximizeUrl = maximize.attr('href');
+			var hash = document.location.hash.replace('#', '');
 
-					maximizeUrl = maximizeUrl.split('#')[0];
+			var hashObj = A.QueryString.parse(hash);
 
-					maximize.attr('href', maximizeUrl + '#' + hash);
-				}
+			hashObj['<portlet:namespace />'] = url;
 
-				var restore = A.one('#p_p_id<portlet:namespace /> a.portlet-icon-back');
+			hash = A.QueryString.stringify(hashObj);
 
-				if (restore) {
-					var restoreHREF = restore.attr('href');
+			var maximize = A.one(
+				'#p_p_id<portlet:namespace /> .portlet-maximize-icon a'
+			);
 
-					restoreHREF = restoreHREF.split('#')[0];
+			if (maximize) {
+				var maximizeUrl = maximize.attr('href');
 
-					restore.attr('href', restoreHREF + '#' + hash);
-				}
+				maximizeUrl = maximizeUrl.split('#')[0];
 
-				location.hash = hash;
-			},
-			['aui-base', 'querystring']
-		);
+				maximize.attr('href', maximizeUrl + '#' + hash);
+			}
 
-		<portlet:namespace />init();
+			var restore = A.one('#p_p_id<portlet:namespace /> a.portlet-icon-back');
+
+			if (restore) {
+				var restoreHREF = restore.attr('href');
+
+				restoreHREF = restoreHREF.split('#')[0];
+
+				restore.attr('href', restoreHREF + '#' + hash);
+			}
+
+			location.hash = hash;
+		}
+
+		init();
 	</aui:script>
 </c:if>
 

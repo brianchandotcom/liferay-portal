@@ -29,6 +29,10 @@ import org.dom4j.Node;
  */
 public class CucumberScenarioResult {
 
+	public long getBackgroundDuration() {
+		return _getDuration(_backgroundDocument);
+	}
+
 	public String getBackgroundName() {
 		if (_backgroundDocument == null) {
 			return null;
@@ -50,8 +54,7 @@ public class CucumberScenarioResult {
 	}
 
 	public long getDuration() {
-		return _getDuration(_backgroundDocument) +
-			_getDuration(_scenarioDocument);
+		return getBackgroundDuration() + getScenarioDuration();
 	}
 
 	public String getErrorDetails() {
@@ -88,6 +91,10 @@ public class CucumberScenarioResult {
 		}
 
 		return null;
+	}
+
+	public long getScenarioDuration() {
+		return _getDuration(_scenarioDocument);
 	}
 
 	public String getScenarioName() {

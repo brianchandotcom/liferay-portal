@@ -18,7 +18,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -72,7 +72,8 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 		}
 
 		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemFormProviderTracker.getInfoItemFormProvider(itemType);
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemFormProvider.class, itemType);
 
 		if (infoItemFormProvider == null) {
 			if (_log.isWarnEnabled()) {
@@ -133,6 +134,6 @@ public class GetCollectionMappingFieldsMVCResourceCommand
 		GetCollectionMappingFieldsMVCResourceCommand.class);
 
 	@Reference
-	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

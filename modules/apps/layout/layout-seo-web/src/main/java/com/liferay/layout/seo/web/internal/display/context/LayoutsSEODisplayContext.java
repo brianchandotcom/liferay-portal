@@ -27,7 +27,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -86,7 +87,7 @@ public class LayoutsSEODisplayContext {
 	public LayoutsSEODisplayContext(
 		DLAppService dlAppService, DLURLHelper dlurlHelper,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
-		InfoItemFormProviderTracker infoItemFormProviderTracker,
+		InfoItemServiceTracker infoItemServiceTracker,
 		ItemSelector itemSelector,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutSEOCanonicalURLProvider layoutSEOCanonicalURLProvider,
@@ -99,7 +100,7 @@ public class LayoutsSEODisplayContext {
 		_dlAppService = dlAppService;
 		_dlurlHelper = dlurlHelper;
 		_infoDisplayContributorTracker = infoDisplayContributorTracker;
-		_infoItemFormProviderTracker = infoItemFormProviderTracker;
+		_infoItemServiceTracker = infoItemServiceTracker;
 		_itemSelector = itemSelector;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
@@ -404,7 +405,8 @@ public class LayoutsSEODisplayContext {
 				LocaleUtil.fromLanguageId(_selLayout.getDefaultLanguageId()))
 		).put(
 			"fields",
-			_infoItemFormProviderTracker.getInfoItemFormProvider(
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemFormProvider.class,
 				layoutPageTemplateEntry.getClassName()
 			).getInfoForm(
 			).getAllInfoFields(
@@ -541,7 +543,7 @@ public class LayoutsSEODisplayContext {
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
-	private final InfoItemFormProviderTracker _infoItemFormProviderTracker;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private final ItemSelector _itemSelector;
 	private Long _layoutId;
 	private final LayoutPageTemplateEntryLocalService

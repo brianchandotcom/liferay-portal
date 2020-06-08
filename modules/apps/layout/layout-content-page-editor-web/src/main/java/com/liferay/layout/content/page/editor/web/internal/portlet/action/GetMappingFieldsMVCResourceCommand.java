@@ -17,7 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -63,7 +63,8 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 		String className = _portal.getClassName(classNameId);
 
 		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemFormProviderTracker.getInfoItemFormProvider(className);
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemFormProvider.class, className);
 
 		if (infoItemFormProvider == null) {
 			if (_log.isWarnEnabled()) {
@@ -109,7 +110,7 @@ public class GetMappingFieldsMVCResourceCommand extends BaseMVCResourceCommand {
 		GetMappingFieldsMVCResourceCommand.class);
 
 	@Reference
-	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Portal _portal;

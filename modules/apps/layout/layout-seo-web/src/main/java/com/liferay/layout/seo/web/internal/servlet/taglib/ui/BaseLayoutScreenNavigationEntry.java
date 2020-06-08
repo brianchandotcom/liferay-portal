@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutScreenNavigationEntryConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -114,7 +114,7 @@ public abstract class BaseLayoutScreenNavigationEntry
 			LayoutSEOWebKeys.LAYOUT_PAGE_LAYOUT_SEO_DISPLAY_CONTEXT,
 			new LayoutsSEODisplayContext(
 				dlAppService, dlurlHelper, infoDisplayContributorTracker,
-				infoItemFormProviderTracker, itemSelector,
+				infoItemServiceTracker, itemSelector,
 				layoutPageTemplateEntryLocalService,
 				layoutSEOCanonicalURLProvider, layoutSEOLinkManager,
 				layoutSEOSiteLocalService,
@@ -142,6 +142,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 	protected abstract String getJspPath();
 
 	@Reference
+	protected InfoItemServiceTracker infoItemServiceTracker;
+
+	@Reference
 	protected DLAppService dlAppService;
 
 	@Reference
@@ -149,9 +152,6 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected InfoDisplayContributorTracker infoDisplayContributorTracker;
-
-	@Reference
-	protected InfoItemFormProviderTracker infoItemFormProviderTracker;
 
 	@Reference
 	protected ItemSelector itemSelector;

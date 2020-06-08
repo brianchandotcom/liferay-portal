@@ -28,7 +28,7 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -117,7 +117,8 @@ public class FragmentEntryProcessorHelperImpl
 
 		InfoItemFormProvider<Object> infoItemFormProvider =
 			(InfoItemFormProvider<Object>)
-				_infoItemFormProviderTracker.getInfoItemFormProvider(className);
+				_infoItemServiceTracker.getInfoItemService(
+					InfoItemFormProvider.class, className);
 
 		if (infoItemFormProvider == null) {
 			if (_log.isWarnEnabled()) {
@@ -207,7 +208,8 @@ public class FragmentEntryProcessorHelperImpl
 
 		InfoItemFormProvider<Object> infoItemFormProvider =
 			(InfoItemFormProvider<Object>)
-				_infoItemFormProviderTracker.getInfoItemFormProvider(className);
+				_infoItemServiceTracker.getInfoItemService(
+					InfoItemFormProvider.class, className);
 
 		if (infoItemFormProvider == null) {
 			if (_log.isWarnEnabled()) {
@@ -385,7 +387,7 @@ public class FragmentEntryProcessorHelperImpl
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
-	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Portal _portal;

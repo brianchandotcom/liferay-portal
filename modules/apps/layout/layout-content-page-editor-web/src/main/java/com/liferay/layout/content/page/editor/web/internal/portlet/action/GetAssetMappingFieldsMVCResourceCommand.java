@@ -17,9 +17,8 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.item.provider.InfoItemObjectProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -67,8 +66,8 @@ public class GetAssetMappingFieldsMVCResourceCommand
 
 		InfoItemFormProvider<Object> infoItemFormProvider =
 			(InfoItemFormProvider<Object>)
-				_infoItemFormProviderTracker.getInfoItemFormProvider(
-					itemClassName);
+				_infoItemServiceTracker.getInfoItemService(
+					InfoItemFormProvider.class, itemClassName);
 
 		if (infoItemFormProvider == null) {
 			if (_log.isWarnEnabled()) {
@@ -85,8 +84,8 @@ public class GetAssetMappingFieldsMVCResourceCommand
 		}
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			_infoItemObjectProviderTracker.getInfoItemObjectProvider(
-				itemClassName);
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemObjectProvider.class, itemClassName);
 
 		if (infoItemObjectProvider == null) {
 			JSONPortletResponseUtil.writeJSON(
@@ -137,10 +136,7 @@ public class GetAssetMappingFieldsMVCResourceCommand
 		GetAssetMappingFieldsMVCResourceCommand.class);
 
 	@Reference
-	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
-
-	@Reference
-	private InfoItemObjectProviderTracker _infoItemObjectProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Portal _portal;

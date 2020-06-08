@@ -21,7 +21,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
@@ -169,8 +169,8 @@ public class GetCollectionFieldMVCResourceCommand
 
 				InfoItemFormProvider<Object> infoItemFormProvider =
 					(InfoItemFormProvider<Object>)
-						_infoItemFormProviderTracker.getInfoItemFormProvider(
-							itemType);
+						_infoItemServiceTracker.getInfoItemService(
+							InfoItemFormProvider.class, itemType);
 
 				if (infoItemFormProvider == null) {
 					if (_log.isWarnEnabled()) {
@@ -275,7 +275,7 @@ public class GetCollectionFieldMVCResourceCommand
 		GetCollectionFieldMVCResourceCommand.class);
 
 	@Reference
-	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private InfoListRendererTracker _infoListRendererTracker;

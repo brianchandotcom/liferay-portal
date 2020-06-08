@@ -48,6 +48,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _includeFormsSite;
 	}
 
+	public boolean isIncludeRecentSites() {
+		return _includeRecentSites;
+	}
+
 	public boolean isIncludeUserPersonalSite() {
 		return _includeUserPersonalSite;
 	}
@@ -66,6 +70,10 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public void setIncludeFormsSite(boolean includeFormsSite) {
 		_includeFormsSite = includeFormsSite;
+	}
+
+	public void setIncludeRecentSites(boolean includeRecentSites) {
+		_includeRecentSites = includeRecentSites;
 	}
 
 	public void setIncludeUserPersonalSite(boolean includeUserPersonalSite) {
@@ -87,6 +95,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private boolean _allowNavigation = true;
 	private boolean _includeAllVisibleGroups;
 	private boolean _includeFormsSite;
+	private boolean _includeRecentSites;
 	private boolean _includeUserPersonalSite;
 	private String _portletId;
 	private boolean _privateLayout;

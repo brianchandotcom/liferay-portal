@@ -20,38 +20,51 @@ import BulkActions from './components/BulkActions';
 import useAppState, {StoreProvider} from './components/Context';
 import NavBar from './components/NavBar';
 
-function ManagementBar(props) {
+function ManagementBar({
+	activeView,
+	bulkActions,
+	creationMenuItems,
+	fluid,
+	onFiltersChange,
+	selectAllItems,
+	selectedItemsKey,
+	selectedItemsValue,
+	selectionType,
+	setActiveView,
+	showSearch,
+	totalItemsCount,
+	views,
+}) {
 	const {state} = useAppState();
 
 	useEffect(() => {
-		props.onFiltersChange(state.filters);
+		onFiltersChange(state.filters);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [JSON.stringify(state.filters)]);
 
 	return (
 		<>
-			{props.selectionType === 'multiple' && (
+			{selectionType === 'multiple' && (
 				<BulkActions
-					bulkActions={props.bulkActions}
-					fluid={props.fluid}
-					selectAllItems={props.selectAllItems}
-					selectedItemsKey={props.selectedItemsKey}
-					selectedItemsValue={props.selectedItemsValue}
-					totalItemsCount={props.totalItemsCount}
+					bulkActions={bulkActions}
+					fluid={fluid}
+					selectAllItems={selectAllItems}
+					selectedItemsKey={selectedItemsKey}
+					selectedItemsValue={selectedItemsValue}
+					totalItemsCount={totalItemsCount}
 				/>
 			)}
-			{(!props.selectedItemsValue.length ||
-				props.selectionType === 'single') && (
+			{(!selectedItemsValue.length || selectionType === 'single') && (
 				<NavBar
-					activeView={props.activeView}
-					creationMenuItems={props.creationMenuItems}
-					setActiveView={props.setActiveView}
-					showSearch={props.showSearch}
-					views={props.views}
+					activeView={activeView}
+					creationMenuItems={creationMenuItems}
+					setActiveView={setActiveView}
+					showSearch={showSearch}
+					views={views}
 				/>
 			)}
-			<ActiveFiltersBar disabled={!!props.selectedItemsValue.length} />
+			<ActiveFiltersBar disabled={!!selectedItemsValue.length} />
 		</>
 	);
 }
@@ -68,14 +81,25 @@ function Wrapper(props) {
 
 Wrapper.propTypes = {
 	activeView: PropTypes.number.isRequired,
+	bulkActions: PropTypes.arrayOf(
+		PropTypes.shape({
+			href: PropTypes.string.isRequired,
+			icon: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+			method: PropTypes.string,
+			target: PropTypes.oneOf(['sidePanel', 'modal']),
+		})
+	),
 	creationMenuItems: PropTypes.array,
 	filters: PropTypes.array,
 	fluid: PropTypes.bool,
 	onFiltersChange: PropTypes.func.isRequired,
-	selectedItemsKey: PropTypes.string.isRequired,
+	selectedItemsKey: PropTypes.string,
+	selectedItemsValue: PropTypes.array,
 	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
 	setActiveView: PropTypes.func.isRequired,
 	showSearch: PropTypes.bool,
+	totalItemsCount: PropTypes.number,
 	views: PropTypes.array.isRequired,
 };
 

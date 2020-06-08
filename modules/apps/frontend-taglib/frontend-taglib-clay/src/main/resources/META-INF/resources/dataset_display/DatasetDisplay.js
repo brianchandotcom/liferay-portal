@@ -37,12 +37,37 @@ import getJsModule from './utilities/modules';
 import {showNotification} from './utilities/notifications';
 import {getViewById} from './views/index';
 
-function DatasetDisplay(props) {
+function DatasetDisplay({
+	apiUrl,
+	bulkActions,
+	creationMenuItems,
+	currentUrl,
+	filters: filtersProp,
+	formId,
+	id,
+	itemActions,
+	items: itemsProp,
+	namespace,
+	nestedItemsKey,
+	nestedItemsReferenceKey,
+	pagination,
+	selectedItems,
+	selectedItemsKey,
+	selectionType,
+	showManagementBar,
+	showPagination,
+	showSearch,
+	sidePanelId,
+	sorting: sortingProp,
+	spritemap,
+	style,
+	views: viewsProp,
+}) {
 	const wrapperRef = useRef(null);
-	const [views, updateViews] = useState(props.views);
+	const [views, updateViews] = useState(viewsProp);
 	const [loading, setLoading] = useState(false);
 	const [datasetDisplaySupportSidePanelId] = useState(
-		props.sidePanelId || 'support-side-panel-' + getRandomId()
+		sidePanelId || 'support-side-panel-' + getRandomId()
 	);
 
 	const [datasetDisplaySupportModalId] = useState(
@@ -50,19 +75,19 @@ function DatasetDisplay(props) {
 	);
 
 	const [selectedItemsValue, setSelectedItemsValue] = useState(
-		props.selectedItems || []
+		selectedItems || []
 	);
 	const [highlightedItemsValue, setHighlightedItemsValue] = useState([]);
-	const [filters, updateFilters] = useState(props.filters);
+	const [filters, updateFilters] = useState(filtersProp);
 	const [searchParam, updateSearchParam] = useState('');
-	const [sorting, updateSorting] = useState(props.sorting);
-	const [items, updateItems] = useState(props.items);
+	const [sorting, updateSorting] = useState(sortingProp);
+	const [items, updateItems] = useState(itemsProp);
 	const [pageNumber, setPageNumber] = useState(1);
 	const [delta, setDelta] = useState(
-		props.pagination.initialDelta || props.pagination.deltas[0].label
+		pagination.initialDelta || pagination.deltas[0].label
 	);
 	const [totalItems, setTotalItems] = useState(0);
-	const [activeView, setActiveView] = useState(props.activeView || 0);
+	const [activeView, setActiveView] = useState(activeView || 0);
 	const {
 		component: CurrentViewComponent,
 		contentRenderer,
@@ -70,10 +95,7 @@ function DatasetDisplay(props) {
 		...currentViewProps
 	} = views[activeView];
 
-	const selectable =
-		props.bulkActions &&
-		!!props.bulkActions.length &&
-		props.selectedItemsKey;
+	const selectable = bulkActions && !!bulkActions.length && selectedItemsKey;
 
 	useEffect(() => {
 		if (
@@ -159,7 +181,7 @@ function DatasetDisplay(props) {
 				}
 
 				setLoading(false);
-				Liferay.fire(DATASET_DISPLAY_UPDATED, {id: props.id});
+				Liferay.fire(DATASET_DISPLAY_UPDATED, {id});
 			})
 			.catch((error) => {
 				logError(error);
@@ -174,8 +196,8 @@ function DatasetDisplay(props) {
 
 	useEffect(() => {
 		getData(
-			props.apiUrl,
-			props.currentUrl,
+			apiUrl,
+			currentUrl,
 			filters.filter((e) => !!e.value),
 			searchParam,
 			delta,
@@ -185,8 +207,8 @@ function DatasetDisplay(props) {
 		);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
-		props.apiUrl,
-		props.currentUrl,
+		apiUrl,
+		currentUrl,
 		filters,
 		searchParam,
 		delta,
@@ -200,7 +222,7 @@ function DatasetDisplay(props) {
 			return setSelectedItemsValue(val);
 		}
 
-		if (props.selectionType === 'single') {
+		if (selectionType === 'single') {
 			return setSelectedItemsValue([val]);
 		}
 
@@ -231,8 +253,8 @@ function DatasetDisplay(props) {
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const refreshData = (successNotification) =>
 		getData(
-			props.apiUrl,
-			props.currentUrl,
+			apiUrl,
+			currentUrl,
 			filters.filter((e) => !!e.value),
 			searchParam,
 			delta,
@@ -252,7 +274,7 @@ function DatasetDisplay(props) {
 
 	useEffect(() => {
 		function handleRefreshFromTheOutside(e) {
-			if (e.id === props.id) {
+			if (e.id === id) {
 				refreshData();
 			}
 		}
@@ -262,8 +284,8 @@ function DatasetDisplay(props) {
 		}
 
 		if (
-			(props.nestedItemsReferenceKey && !props.nestedItemsKey) ||
-			(!props.nestedItemsReferenceKey && props.nestedItemsKey)
+			(nestedItemsReferenceKey && !nestedItemsKey) ||
+			(!nestedItemsReferenceKey && nestedItemsKey)
 		) {
 			throw new Error(
 				'"nestedItemsKey" and "nestedItemsReferenceKey" params are both mandatory to manage nested items'
@@ -279,31 +301,29 @@ function DatasetDisplay(props) {
 		};
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [props.id]);
+	}, [id]);
 
-	const managementBar = props.showManagementBar ? (
+	const managementBar = showManagementBar ? (
 		<div className="dataset-display-management-bar-wrapper">
 			<ManagementBar
 				activeView={activeView}
-				bulkActions={props.bulkActions}
-				creationMenuItems={props.creationMenuItems}
+				bulkActions={bulkActions}
+				creationMenuItems={creationMenuItems}
 				filters={filters}
-				fluid={props.style === 'fluid'}
+				fluid={style === 'fluid'}
 				onFiltersChange={updateFilters}
 				selectable={selectable}
 				selectAllItems={() =>
-					selectItems(
-						items.map((item) => item[props.selectedItemsKey])
-					)
+					selectItems(items.map((item) => item[selectedItemsKey]))
 				}
-				selectedItemsKey={props.selectedItemsKey}
+				selectedItemsKey={selectedItemsKey}
 				selectedItemsValue={selectedItemsValue}
-				selectionType={props.selectionType}
+				selectionType={selectionType}
 				setActiveView={setActiveView}
-				showSearch={props.showSearch}
+				showSearch={showSearch}
 				sidePanelId={datasetDisplaySupportSidePanelId}
 				totalItemsCount={items ? items.length : 0}
-				views={props.views}
+				views={views}
 			/>
 		</div>
 	) : null;
@@ -313,18 +333,16 @@ function DatasetDisplay(props) {
 			<div className="dataset-display-content-wrapper">
 				<input
 					hidden
-					name={`${props.namespace || props.id + '_'}${
-						props.selectedItemsKey
-					}`}
+					name={`${namespace || id + '_'}${selectedItemsKey}`}
 					readOnly
 					value={selectedItemsValue.join(',')}
 				/>
 				{items && items.length ? (
 					<CurrentViewComponent
 						datasetDisplayContext={DatasetDisplayContext}
-						itemActions={props.itemActions}
+						itemActions={itemActions}
 						items={items}
-						style={props.style}
+						style={style}
 						{...currentViewProps}
 					/>
 				) : null}
@@ -334,23 +352,23 @@ function DatasetDisplay(props) {
 			<span aria-hidden="true" className="loading-animation my-7" />
 		);
 
-	const wrappedView = props.formId ? view : <form ref={formRef}>{view}</form>;
+	const wrappedView = formId ? view : <form ref={formRef}>{view}</form>;
 
-	const pagination =
-		props.showPagination && props.pagination && items && items.length ? (
+	const paginationComponent =
+		showPagination && pagination && items && items.length ? (
 			<div className="dataset-display-pagination-wrapper">
 				<ClayPaginationBarWithBasicItems
 					activeDelta={delta}
 					activePage={pageNumber}
 					className="mb-2"
-					deltas={props.pagination.deltas}
+					deltas={pagination.deltas}
 					ellipsisBuffer={3}
 					onDeltaChange={(deltaVal) => {
 						setPageNumber(1);
 						setDelta(deltaVal);
 					}}
 					onPageChange={setPageNumber}
-					spritemap={props.spritemap}
+					spritemap={spritemap}
 					totalItems={totalItems}
 				/>
 			</div>
@@ -361,7 +379,7 @@ function DatasetDisplay(props) {
 			.then((_) => {
 				refreshData();
 				Liferay.fire(DATASET_ACTION_PERFORMED, {
-					id: props.id,
+					id,
 				});
 			})
 			.catch((error) => {
@@ -394,63 +412,63 @@ function DatasetDisplay(props) {
 		<DatasetDisplayContext.Provider
 			value={{
 				executeAsyncItemAction,
-				formId: props.formId,
+				formId,
 				formRef,
 				highlightItems,
 				highlightedItemsValue,
-				itemActions: props.itemActions,
+				itemActions,
 				loadData: refreshData,
 				modalId: datasetDisplaySupportModalId,
-				namespace: props.namespace,
-				nestedItemsKey: props.nestedItemsKey,
-				nestedItemsReferenceKey: props.nestedItemsReferenceKey,
+				namespace,
+				nestedItemsKey,
+				nestedItemsReferenceKey,
 				openModal,
 				openSidePanel,
 				searchParam,
 				selectItems,
 				selectable,
-				selectedItemsKey: props.selectedItemsKey,
+				selectedItemsKey,
 				selectedItemsValue,
-				selectionType: props.selectionType,
+				selectionType,
 				sidePanelId: datasetDisplaySupportSidePanelId,
 				sorting,
-				style: props.style,
+				style,
 				updateSearchParam,
 				updateSorting,
 			}}
 		>
-			<ClayIconSpriteContext.Provider value={props.spritemap}>
+			<ClayIconSpriteContext.Provider value={spritemap}>
 				<Modal
 					id={datasetDisplaySupportModalId}
 					onClose={refreshData}
 				/>
-				{!props.sidePanelId && (
+				{!sidePanelId && (
 					<SidePanel
 						id={datasetDisplaySupportSidePanelId}
 						onAfterSubmit={refreshData}
 					/>
 				)}
 				<div className="dataset-display-wrapper" ref={wrapperRef}>
-					{props.style === 'default' && (
+					{style === 'default' && (
 						<div className="dataset-display dataset-display-inline">
 							{managementBar}
 							{wrappedView}
-							{pagination}
+							{paginationComponent}
 						</div>
 					)}
-					{props.style === 'stacked' && (
+					{style === 'stacked' && (
 						<div className="dataset-display dataset-display-stacked">
 							{managementBar}
 							{wrappedView}
-							{pagination}
+							{paginationComponent}
 						</div>
 					)}
-					{props.style === 'fluid' && (
+					{style === 'fluid' && (
 						<div className="dataset-display dataset-display-fluid">
 							{managementBar}
 							<div className="container mt-3">
 								{wrappedView}
-								{pagination}
+								{paginationComponent}
 							</div>
 						</div>
 					)}

@@ -57,6 +57,7 @@ export default function UndoHistory() {
 					<History actions={undoHistory} type={UNDO_TYPES.undo} />
 					<ClayDropDownDivider />
 					<ClayDropDown.Item
+						disabled={!undoHistory.length}
 						onClick={(event) => {
 							event.preventDefault();
 

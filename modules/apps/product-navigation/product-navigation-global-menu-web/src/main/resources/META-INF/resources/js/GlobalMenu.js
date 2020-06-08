@@ -13,12 +13,12 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayLayout from '@clayui/layout';
+import ClayModal, {useModal} from '@clayui/modal';
 
 import 'product-navigation-global-apps/css/GlobalMenu.scss';
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
-import classNames from 'classnames';
-import {useEventListener} from 'frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useRef, useState} from 'react';
@@ -47,31 +47,50 @@ const Sites = ({label, sites}) => {
 	);
 };
 
-const AppsPanel = ({categories = [], portletNamespace, sites}) => {
+const AppsPanel = ({
+	categories = [],
+	handleCloseButtonClick = () => {},
+	portletNamespace,
+	sites,
+}) => {
 	const [activeTab, setActiveTab] = useState(0);
 
 	return (
 		<>
-			<div className="c-px-md-4 row">
-				<ClayTabs modern>
-					{categories.map(({key, label}, index) => (
-						<ClayTabs.Item
-							active={activeTab === index}
-							id={`${portletNamespace}tab_${index}`}
-							key={key}
-							onClick={() => setActiveTab(index)}
-						>
-							{label}
-						</ClayTabs.Item>
-					))}
-				</ClayTabs>
-			</div>
+			<ClayLayout.ContainerFluid>
+				<ClayLayout.ContentRow>
+					<ClayLayout.ContentCol expand>
+						<ClayTabs modern>
+							{categories.map(({key, label}, index) => (
+								<ClayTabs.Item
+									active={activeTab === index}
+									id={`${portletNamespace}tab_${index}`}
+									key={key}
+									onClick={() => setActiveTab(index)}
+								>
+									{label}
+								</ClayTabs.Item>
+							))}
+						</ClayTabs>
+					</ClayLayout.ContentCol>
+
+					<ClayLayout.ContentCol>
+						<ClayButtonWithIcon
+							className="text-secondary"
+							displayType="unstyled"
+							onClick={handleCloseButtonClick}
+							small
+							symbol="times"
+							title={Liferay.Language.get('close')}
+						/>
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
+			</ClayLayout.ContainerFluid>
 
 			<ClayTabs.Content activeIndex={activeTab}>
 				{categories.map(({childCategories}, index) => (
 					<ClayTabs.TabPane
 						aria-labelledby={`${portletNamespace}tab_${index}`}
-						className={'global-menu__tab-pane'}
 						key={`tabPane-${index}`}
 					>
 						<div className="c-p-md-3 row">
@@ -165,26 +184,13 @@ const AppsPanel = ({categories = [], portletNamespace, sites}) => {
 
 const GlobalMenu = ({panelAppsURL}) => {
 	const [appsPanelData, setAppsPanelData] = useState({});
-	const [panelVisible, setPanelVisible] = useState(false);
+	const [visible, setVisible] = useState(false);
 
-	const elementRef = useRef();
+	const {observer, onClose} = useModal({
+		onClose: () => setVisible(false),
+	});
+
 	const fetchCategoriesPromiseRef = useRef();
-
-	const handleButtonOnClick = () => {
-		fetchCategories();
-		setPanelVisible(!panelVisible);
-	};
-
-	useEventListener(
-		'click',
-		(event) => {
-			if (!elementRef.current?.contains(event.target)) {
-				setPanelVisible(false);
-			}
-		},
-		true,
-		window
-	);
 
 	const fetchCategories = () => {
 		if (!fetchCategoriesPromiseRef.current) {
@@ -203,31 +209,41 @@ const GlobalMenu = ({panelAppsURL}) => {
 		}
 	};
 
+	const handleTriggerButtonClick = () => {
+		fetchCategories();
+		setVisible(true);
+	};
+
 	return (
-		<div
-			className="dropdown dropdown-full dropdown-global-app nav-item"
-			ref={elementRef}
-		>
+		<>
+			{visible && (
+				<ClayModal
+					className="global-apps-menu-modal"
+					observer={observer}
+					size="full"
+					status="info"
+				>
+					<ClayModal.Body>
+						<AppsPanel
+							handleCloseButtonClick={onClose}
+							{...appsPanelData}
+						/>
+					</ClayModal.Body>
+				</ClayModal>
+			)}
+
 			<ClayButtonWithIcon
 				className="dropdown-toggle lfr-portal-tooltip"
 				data-qa-id="globalMenu"
 				displayType="unstyled"
-				onClick={handleButtonOnClick}
+				onClick={handleTriggerButtonClick}
 				onFocus={fetchCategories}
 				onMouseOver={fetchCategories}
 				small
 				symbol="grid"
 				title={Liferay.Language.get('global-menu')}
 			/>
-
-			<ul
-				className={classNames('c-mt-0 dropdown-menu', {
-					show: panelVisible,
-				})}
-			>
-				<AppsPanel {...appsPanelData} />
-			</ul>
-		</div>
+		</>
 	);
 };
 

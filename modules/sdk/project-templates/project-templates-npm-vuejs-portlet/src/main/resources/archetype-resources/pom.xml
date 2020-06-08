@@ -12,7 +12,7 @@
 	<profiles>
 		<profile>
 
-			<!-- Enable this profile is standalone -->
+			<!-- Enable this profile in standalone -->
 
 			<id>standalone</id>
 			<activation>

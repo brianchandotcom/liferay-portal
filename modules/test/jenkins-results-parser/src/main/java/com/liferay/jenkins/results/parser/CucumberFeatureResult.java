@@ -93,7 +93,7 @@ public class CucumberFeatureResult {
 			return "";
 		}
 
-		return "Description: " + node.getText();
+		return node.getText();
 	}
 
 	public String getName() {

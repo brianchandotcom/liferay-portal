@@ -96,11 +96,9 @@ class ElementsDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	exportTranslation(itemData) {
-		const fileEntriesSelected = [itemData.articleEntryId];
-
 		Liferay.componentReady(this.ns('ExportForTranslationComponent')).then(
 			(exportTranslationComponent) => {
-				exportTranslationComponent.open(fileEntriesSelected);
+				exportTranslationComponent.open([itemData.articleEntryId]);
 			}
 		);
 	}

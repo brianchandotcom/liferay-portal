@@ -19,7 +19,7 @@ import ExportTranslationContext from './ExportTranslationContext.es';
 import ExportTranslationModal from './ExportTranslationModal.es';
 
 function ExportTranslation(props) {
-	const [fileEntries, setFileEntries] = useState();
+	const [articleIds, setArticleIds] = useState();
 	const [showModal, setShowModal] = useState();
 	const {namespace} = useContext(ExportTranslationContext);
 	const bridgeComponentId = `${namespace}ExportForTranslationComponent`;
@@ -36,8 +36,8 @@ function ExportTranslation(props) {
 		Liferay.component(
 			bridgeComponentId,
 			{
-				open: (fileEntries) => {
-					setFileEntries(fileEntries);
+				open: (articleIds) => {
+					setArticleIds(articleIds);
 					setShowModal(true);
 				},
 			},
@@ -52,7 +52,7 @@ function ExportTranslation(props) {
 			{showModal && (
 				<ExportTranslationModal
 					{...props}
-					fileEntries={fileEntries}
+					articleIds={articleIds}
 					observer={observer}
 					onModalClose={onClose}
 				/>

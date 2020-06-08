@@ -34,7 +34,7 @@ const originLocales = [
 ];
 
 const ExportTranslationModal = ({
-	fileEntries,
+	articleIds,
 	observer,
 	onModalClose = noop,
 }) => {
@@ -95,9 +95,9 @@ const ExportTranslationModal = ({
 					</ClayForm.Group>
 
 					<ClayInput
-						name={`_${namespace}_fileEntriesIds`}
+						name={`_${namespace}_articleIdsIds`}
 						type="hidden"
-						value={fileEntries}
+						value={articleIds}
 					/>
 				</ClayModal.Body>
 
@@ -123,7 +123,7 @@ const ExportTranslationModal = ({
 };
 
 ExportTranslationModal.propTypes = {
-	fileEntries: PropTypes.array,
+	articleIds: PropTypes.array,
 };
 
 export default ExportTranslationModal;

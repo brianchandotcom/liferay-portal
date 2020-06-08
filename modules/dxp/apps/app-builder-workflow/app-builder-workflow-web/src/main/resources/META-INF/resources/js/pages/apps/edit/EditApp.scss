@@ -1,0 +1,67 @@
+.dropdown-button-asset {
+	margin-top: 0.25rem;
+}
+
+.tooltip-icon:hover {
+	fill: #6b6c7e;
+}
+
+.app-builder-workflow-app {
+	margin-top: 64px;
+
+	&__sidebar {
+		border-left: 1px solid #e7e7ed;
+		flex-flow: column;
+		height: 100%;
+		position: fixed;
+		right: 0;
+		transform: translateX(0%);
+		width: 366px;
+	}
+
+	.data-layout-builder-sidebar {
+		@media (max-width: 576px) {
+			top: 112px;
+		}
+
+		.sidebar-body {
+			height: calc(100vh - 192px);
+			padding-top: 0;
+
+			.tab-button {
+				padding: 1rem;
+				width: 100%;
+			}
+
+			.main-section {
+				border-bottom: 1px solid #e7e7ed;
+				padding: 1rem 0;
+			}
+		}
+
+		.sidebar-header {
+			padding: 0;
+
+			h3.title {
+				margin: 0;
+				padding: 1rem;
+			}
+
+			.tab-title {
+				align-items: center;
+				border-bottom: 1px solid #e7e7ed;
+				display: flex;
+				padding: 1rem;
+
+				button {
+					margin-right: 1rem;
+					padding: 0.25rem;
+				}
+
+				h3 {
+					margin: 0;
+				}
+			}
+		}
+	}
+}

@@ -152,7 +152,7 @@
 </tr>
 <tr>
     <td>SUCCESS_PAGE_DESCRIPTION_FIELD</td>
-    <td>//div[@class='form-builder-layout']//input[contains(@class,'form-builder-page-header-description')][@value='Your information was successfully received. Thank you for filling out the form.'] </td>
+    <td>//div[contains(@class,'form-builder-success-page')]//input[contains(@class,'form-builder-page-header-description')]</td>
     <td></td>
 </tr>
 <tr>

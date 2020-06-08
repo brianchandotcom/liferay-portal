@@ -2069,7 +2069,6 @@ definition {
 	@priority = "5"
 	test ViewWorkloadByAssigneePage {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "WorkflowMetrics#ViewWorkloadByAssigneePage";
 
 		WorkflowMetrics.createUsersAndAssignInstances(

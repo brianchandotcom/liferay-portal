@@ -1475,7 +1475,6 @@ definition {
 
 	@priority = "5"
 	test EditProcessNewWorkflowViaSourceTab {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditProcessNewWorkflowViaSourceTab";
 
 		Navigator.openURL();
@@ -1702,7 +1701,6 @@ definition {
 
 	@priority = "3"
 	test EditSingleApproverWorkflowViaViewTabViaAddProcess {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditSingleApproverWorkflowViaViewTabViaAddProcess";
 
 		Navigator.openURL();

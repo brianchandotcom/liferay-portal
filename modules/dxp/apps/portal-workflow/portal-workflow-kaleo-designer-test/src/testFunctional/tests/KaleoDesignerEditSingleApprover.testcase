@@ -33,7 +33,6 @@ definition {
 
 	@priority = "5"
 	test DeleteTaskNode {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "KaleoDesignerEditSingleApprover#DeleteTaskNode";
 
 		PortletEntry.inputTitle(title = "Edited Workflow Definition");

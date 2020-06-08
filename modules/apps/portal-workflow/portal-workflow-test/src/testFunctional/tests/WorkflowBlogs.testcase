@@ -42,7 +42,6 @@ definition {
 
 	@priority = "5"
 	test ApproveBlogsEntryCP {
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

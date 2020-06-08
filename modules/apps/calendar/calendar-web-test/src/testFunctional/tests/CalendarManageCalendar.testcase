@@ -332,7 +332,6 @@ definition {
 
 	@priority = "3"
 	test EditUserCalendarOtherCalendars {
-		property portal.upstream = "quarantine";
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
@@ -367,7 +366,6 @@ definition {
 
 	@priority = "5"
 	test SearchForOtherCalendars {
-		property portal.upstream = "quarantine";
 
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Calendar#SearchForOtherCalendars";

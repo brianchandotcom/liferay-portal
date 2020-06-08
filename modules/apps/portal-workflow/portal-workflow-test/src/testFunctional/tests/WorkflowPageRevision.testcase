@@ -70,7 +70,6 @@ definition {
 
 	@priority = "4"
 	test RejectPageRevisionPG {
-		property portal.upstream = "quarantine";
 
 		var pageName = "Page Revision Page";
 
@@ -160,7 +159,6 @@ definition {
 	@priority = "5"
 	test ViewApprovedPageAfterStagingDeactivated {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		var pageName = "New Site Page Name";
 

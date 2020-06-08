@@ -61,7 +61,6 @@ definition {
 	@priority = "5"
 	test ApproveFrontPageUserEdit {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",

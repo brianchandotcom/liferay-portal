@@ -513,7 +513,6 @@ definition {
 
 	@priority = "4"
 	test AssignRolePermissionsAddProcessCP {
-		property portal.upstream = "quarantine";
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
@@ -835,7 +834,6 @@ definition {
 
 	@priority = "4"
 	test AssignRolePermissionsCompleteFormPG {
-		property portal.upstream = "quarantine";
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
@@ -1372,7 +1370,6 @@ definition {
 
 	@priority = "3"
 	test AssignRolePermissionsViewPG {
-		property portal.upstream = "quarantine";
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
@@ -2155,7 +2152,6 @@ definition {
 
 	@priority = "5"
 	test CompleteProcessWithUploadedDefinition {
-		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "KaleoformsUsecase#CompleteProcessWithUploadedDefinition";
 		property testray.component.names = "Training";

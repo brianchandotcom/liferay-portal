@@ -65,7 +65,6 @@ definition {
 
 	@priority = "5"
 	test EditWebContentInReviewProcess {
-		property portal.upstream = "quarantine";
 		property portal.acceptance = "true";
 
 		property testray.component.names = "Training";

@@ -322,7 +322,6 @@ definition {
 
 	@priority = "3"
 	test ReviewerApproveResubmitTaskByActionsUser {
-		property portal.upstream = "quarantine";
 
 		Permissions.setUpRegRoleLoginUserCP(
 			roleTitle = "Regrole Name",

@@ -12,7 +12,8 @@
  * details.
  */
 
-import launcher from '../utilities/launcher';
+import {render} from 'frontend-js-react-web';
+
 import QuantitySelector from './QuantitySelector';
 
-export default (...data) => launcher(QuantitySelector, ...data);
+export default (...data) => render(QuantitySelector, ...data);

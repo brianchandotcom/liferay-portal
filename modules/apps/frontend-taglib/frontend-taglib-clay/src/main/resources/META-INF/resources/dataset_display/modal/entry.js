@@ -12,7 +12,8 @@
  * details.
  */
 
-import launcher from '../utilities/launcher';
+import {render} from 'frontend-js-react-web';
+
 import Modal from './Modal';
 
-export default (...data) => launcher(Modal, ...data);
+export default (...data) => render(Modal, ...data);

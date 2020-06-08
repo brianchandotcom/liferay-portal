@@ -23,53 +23,59 @@
 </div>
 
 <aui:script require='<%= module + " as datasetDisplay" %>'>
-	datasetDisplay.default('<%= containerId %>', '<%= containerId %>', {
-		views: <%= jsonSerializer.serializeDeep(clayDataSetDisplayViewsContext) %>,
-		apiUrl: '<%= dataSetAPI %>',
-		bulkActions: <%= jsonSerializer.serializeDeep(bulkActions) %>,
-		creationMenuItems: <%= jsonSerializer.serializeDeep(clayCreationMenu.getClayCreationMenuActionItems()) %>,
-		currentUrl: '<%= PortalUtil.getCurrentURL(request) %>',
-		formId: '<%= formId %>',
-		dataProviderKey: '<%= dataProviderKey %>',
-		id: '<%= id %>',
+	var container = document.querySelector('#<%= containerId %>');
 
-		<%
-		if (Validator.isNotNull(nestedItemsKey)) {
-		%>
+	datasetDisplay.default(
+		{
+			views: <%= jsonSerializer.serializeDeep(clayDataSetDisplayViewsContext) %>,
+			apiUrl: '<%= dataSetAPI %>',
+			bulkActions: <%= jsonSerializer.serializeDeep(bulkActions) %>,
+			componentId: '<%= containerId %>',
+			creationMenuItems: <%= jsonSerializer.serializeDeep(clayCreationMenu.getClayCreationMenuActionItems()) %>,
+			currentUrl: '<%= PortalUtil.getCurrentURL(request) %>',
+			formId: '<%= formId %>',
+			dataProviderKey: '<%= dataProviderKey %>',
+			id: '<%= id %>',
 
-			nestedItemsKey: '<%= nestedItemsKey %>',
+			<%
+			if (Validator.isNotNull(nestedItemsKey)) {
+			%>
+
+				nestedItemsKey: '<%= nestedItemsKey %>',
+
+				<%
+				}
+
+				if (Validator.isNotNull(nestedItemsReferenceKey)) {
+				%>
+
+				nestedItemsReferenceKey: '<%= nestedItemsReferenceKey %>',
 
 			<%
 			}
-
-			if (Validator.isNotNull(nestedItemsReferenceKey)) {
 			%>
 
-			nestedItemsReferenceKey: '<%= nestedItemsReferenceKey %>',
-
-		<%
-		}
-		%>
-
-		showPagination: <%= showPagination %>,
-		showManagementBar: <%= showManagementBar %>,
-		showSearch: <%= showSearch %>,
-		pagination: {
-			deltas: <%= jsonSerializer.serializeDeep(paginationEntries) %>,
-			initialDelta: <%= itemsPerPage %>,
-			initialPageNumber: <%= pageNumber %>,
+			showPagination: <%= showPagination %>,
+			showManagementBar: <%= showManagementBar %>,
+			showSearch: <%= showSearch %>,
+			pagination: {
+				deltas: <%= jsonSerializer.serializeDeep(paginationEntries) %>,
+				initialDelta: <%= itemsPerPage %>,
+				initialPageNumber: <%= pageNumber %>,
+			},
+			portletId: '<%= portletDisplay.getRootPortletId() %>',
+			namespace: '<%= namespace %>',
+			portletURL: '<%= portletURL %>',
+			selectedItems: <%= jsonSerializer.serializeDeep(selectedItems) %>,
+			selectedItemsKey: '<%= selectedItemsKey %>',
+			selectionType: '<%= selectionType %>',
+			spritemap: '<%= spritemap %>',
+			style: '<%= style %>',
 		},
-		portletId: '<%= portletDisplay.getRootPortletId() %>',
-		namespace: '<%= namespace %>',
-		portletURL: '<%= portletURL %>',
-		selectedItems: <%= jsonSerializer.serializeDeep(selectedItems) %>,
-		selectedItemsKey: '<%= selectedItemsKey %>',
-		selectionType: '<%= selectionType %>',
-		spritemap: '<%= spritemap %>',
-		style: '<%= style %>',
-	});
+		container
+	);
 
-	document.querySelectorAll('form').forEach(function (form) {
+	container.querySelectorAll('form').forEach(function (form) {
 		form.setAttribute('data-senna-off', true);
 	});
 </aui:script>

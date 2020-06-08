@@ -71,6 +71,7 @@
 		"clay-sticker": "2.21.3",
 		"clay-table": "2.21.3",
 		"clay-tooltip": "2.21.3",
+		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"metal-component": "2.16.8",
 		"metal-dom": "2.16.8",

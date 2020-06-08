@@ -57,7 +57,7 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	};
 
 	return (
-		<ClayLayout.Container className="select-folder" fluidSize="xl">
+		<ClayLayout.ContainerFluid className="select-folder">
 			<nav className="collapse-basic-search navbar navbar-default navbar-no-collapse">
 				<ClayInput.Group className="basic-search">
 					<ClayInput.GroupItem prepend>
@@ -84,7 +84,7 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 				nodes={nodes}
 				onSelectedNodesChange={handleSelectionChange}
 			/>
-		</ClayLayout.Container>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

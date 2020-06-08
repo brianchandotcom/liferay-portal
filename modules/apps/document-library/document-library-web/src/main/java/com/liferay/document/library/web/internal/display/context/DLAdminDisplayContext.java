@@ -107,7 +107,7 @@ public class DLAdminDisplayContext {
 			_dlRequestHelper);
 
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
-			liferayPortletRequest);
+			httpServletRequest);
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

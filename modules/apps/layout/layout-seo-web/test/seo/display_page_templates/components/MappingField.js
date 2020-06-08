@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import MappingField from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingField';
@@ -41,12 +41,18 @@ describe('MappingField', () => {
 	afterEach(cleanup);
 
 	describe('when rendered with the default props', () => {
-		let result;
 		let inputValue;
+		let mappingButton;
+		let result;
+		let mappingPanel;
 
 		beforeEach(() => {
 			result = renderComponent();
 			inputValue = result.getByDisplayValue('field-2');
+			mappingButton = result.getByTitle('map');
+			mappingPanel = result.baseElement.querySelector(
+				'.dpt-mapping-panel'
+			);
 		});
 
 		it('has an input hidden with the selected field key', () => {
@@ -55,6 +61,27 @@ describe('MappingField', () => {
 
 		it('the input has the passed name', () => {
 			expect(inputValue.name).toBe('testMappingField');
+		});
+
+		it('has a mapping button', () => {
+			expect(mappingButton).toBeInTheDocument();
+		});
+
+		it('has not render a panel', () => {
+			expect(mappingPanel).not.toBeInTheDocument();
+		});
+
+		describe('then the user expand the panel', () => {
+			beforeEach(() => {
+				fireEvent.click(mappingButton);
+				mappingPanel = result.baseElement.querySelector(
+					'.dpt-mapping-panel'
+				);
+			});
+
+			it('has render a panel', () => {
+				expect(mappingPanel).toBeInTheDocument();
+			});
 		});
 	});
 });

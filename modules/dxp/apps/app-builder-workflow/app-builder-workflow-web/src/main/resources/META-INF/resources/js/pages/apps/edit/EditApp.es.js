@@ -20,7 +20,7 @@ import EditAppContext, {
 import {getItem} from 'app-builder-web/js/utils/client.es';
 import React, {useEffect, useReducer, useState} from 'react';
 
-import './EditApp.scss';
+import '../../../../css/EditApp.scss';
 import DeployAppModal from './DeployAppModal.es';
 import configReducer from './configReducer.es';
 import EditAppSidebar from './sidebar/EditAppSidebar.es';

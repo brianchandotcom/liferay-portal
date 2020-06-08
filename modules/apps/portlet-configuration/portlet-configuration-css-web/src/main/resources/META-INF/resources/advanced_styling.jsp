@@ -22,7 +22,7 @@
 	</p>
 
 	<p>
-		<liferay-ui:message key="portlet-id" />: <strong>#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %></strong>
+		<liferay-ui:message key="portlet-id" />: <strong>#portlet_<%= HtmlUtil.escapeJS(portletConfigurationCSSPortletDisplayContext.getPortletResource()) %></strong>
 	</p>
 
 	<p>
@@ -66,7 +66,7 @@
 	if (<portlet:namespace />addId) {
 		<portlet:namespace />addId.addEventListener('click', function () {
 			<portlet:namespace />insertCustomCSSValue(
-				'#portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>'
+				'#portlet_<%= HtmlUtil.escapeJS(portletConfigurationCSSPortletDisplayContext.getPortletResource()) %>'
 			);
 		});
 	}
@@ -82,7 +82,7 @@
 	}
 
 	var portlet = Liferay.Util.getOpener()[
-		'portlet_<%= portletConfigurationCSSPortletDisplayContext.getPortletResource() %>'
+		'portlet_<%= HtmlUtil.escapeJS(portletConfigurationCSSPortletDisplayContext.getPortletResource()) %>'
 	];
 
 	if (portlet) {

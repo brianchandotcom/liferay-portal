@@ -13,7 +13,13 @@
  */
 
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {createContext, useContext, useState} from 'react';
+import React, {
+	cloneElement,
+	createContext,
+	useContext,
+	useEffect,
+	useState,
+} from 'react';
 
 export const DropDownContext = createContext();
 
@@ -28,7 +34,34 @@ const DropDownWithSearch = ({
 	...restProps
 }) => {
 	const [active, setActive] = useState(false);
+	const [dropDownWidth, setDropDownWidth] = useState();
 	const [query, setQuery] = useState('');
+	const [triggerElement, setTriggerElement] = useState(trigger);
+
+	const onActiveChange = (newActive) => {
+		setActive(newActive);
+		setQuery('');
+	};
+
+	useEffect(() => {
+		setTriggerElement(
+			cloneElement(trigger, {
+				ref: (element) => {
+					if (element) {
+						setDropDownWidth(`${element.offsetWidth}px`);
+
+						if (typeof trigger.ref === 'function') {
+							trigger.ref(element);
+						}
+					}
+
+					return trigger.ref;
+				},
+			})
+		);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [trigger]);
 
 	return (
 		<DropDownContext.Provider value={{query, setActive, setQuery}}>
@@ -41,9 +74,10 @@ const DropDownWithSearch = ({
 					onClick: (event) => {
 						event.stopPropagation();
 					},
+					style: {maxWidth: dropDownWidth, width: '100%'},
 				}}
-				onActiveChange={setActive}
-				trigger={trigger}
+				onActiveChange={onActiveChange}
+				trigger={triggerElement}
 			>
 				{<Search disabled={isEmpty} />}
 
@@ -72,42 +106,51 @@ const DropDownWithSearch = ({
 const EmptyState = ({children, className, label}) => {
 	return (
 		<div className={className}>
-			<label className="font-weight-light text-secondary">{label}</label>
+			<label className="font-weight-light text-muted">{label}</label>
 
 			{children}
 		</div>
 	);
 };
 
+const getTranslatedName = (item, namePropertyKey = 'name') => {
+	const {
+		defaultLanguageId = themeDisplay.getLanguageId(),
+		[namePropertyKey]: name,
+	} = item;
+
+	return typeof name === 'object'
+		? name[themeDisplay.getLanguageId()] || name[defaultLanguageId]
+		: name;
+};
+
 const Items = ({
+	children,
 	emptyResultMessage,
 	items = [],
-	namePropertyKey = 'name',
+	namePropertyKey,
 	onSelect,
 }) => {
-	const {query, setActive} = useContext(DropDownContext);
+	const {query, setActive, setQuery} = useContext(DropDownContext);
 	const treatedQuery = query
 		.toLowerCase()
 		.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
 
-	const getTranslatedName = ({
-		defaultLanguageId = themeDisplay.getLanguageId(),
-		[namePropertyKey]: name,
-	}) => {
-		return typeof name === 'object'
-			? name[themeDisplay.getLanguageId()] || name[defaultLanguageId]
-			: name;
-	};
-
 	const itemList = items
 		.filter((item) =>
-			getTranslatedName(item).toLowerCase().match(treatedQuery)
+			getTranslatedName(item, namePropertyKey)
+				.toLowerCase()
+				.match(treatedQuery)
 		)
-		.map((item) => ({...item, name: getTranslatedName(item)}));
+		.map((item) => ({
+			...item,
+			name: getTranslatedName(item, namePropertyKey),
+		}));
 
 	const onClick = (event, selectedValue) => {
 		event.stopPropagation();
 
+		setQuery('');
 		setActive(false);
 		onSelect(selectedValue);
 	};
@@ -120,15 +163,13 @@ const Items = ({
 							key={index}
 							onClick={(event) => onClick(event, item)}
 						>
-							{item.name}
+							{children ? children(item) : item.name}
 						</ClayDropDown.Item>
 				  ))
 				: items.length > 0 && (
-						<ClayDropDown.Item>
-							<span className="font-weight-light text-secondary">
-								{emptyResultMessage}
-							</span>
-						</ClayDropDown.Item>
+						<p className="font-weight-light m-0 px-3 py-2 text-muted">
+							{emptyResultMessage}
+						</p>
 				  )}
 		</ClayDropDown.ItemList>
 	);
@@ -158,4 +199,5 @@ const Search = ({disabled}) => {
 
 DropDownWithSearch.Items = Items;
 
+export {getTranslatedName};
 export default DropDownWithSearch;

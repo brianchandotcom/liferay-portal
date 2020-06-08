@@ -40,19 +40,23 @@ const NewAppPopover = (
 				alignElement={alignElement}
 				className="apps-popover mw-100"
 				content={() => (
-					<>
+					<div className="px-2">
 						<label>{Liferay.Language.get('object')}</label>
 
 						<SelectObjects
 							alignElement={alignElement}
+							label={Liferay.Language.get('select-object')}
 							onSelect={setSelectedObject}
-							selectedValue={selectedObject.name}
+							selectedValue={selectedObject}
 							visible={visible}
 						/>
-					</>
+					</div>
 				)}
 				footer={() => (
-					<div className="border-top mt-3 p-3" style={{width: 450}}>
+					<div
+						className="border-top mt-3 px-4 py-3"
+						style={{width: 450}}
+					>
 						<div className="d-flex justify-content-end">
 							<ClayButton
 								className="mr-3"
@@ -79,7 +83,7 @@ const NewAppPopover = (
 				ref={forwardRef}
 				showArrow={false}
 				title={() => (
-					<>
+					<div className="pt-2 px-2">
 						<h4 className="mb-3">
 							{Liferay.Language.get('new-app')}
 						</h4>
@@ -89,7 +93,7 @@ const NewAppPopover = (
 								'create-an-app-to-collect-and-manage-an-objects-data'
 							)}
 						</span>
-					</>
+					</div>
 				)}
 				visible={visible}
 			/>

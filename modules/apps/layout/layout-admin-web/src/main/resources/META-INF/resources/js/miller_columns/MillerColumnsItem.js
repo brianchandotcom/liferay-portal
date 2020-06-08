@@ -113,12 +113,13 @@ const MillerColumnsItem = ({
 
 	const [dropdownActionsActive, setDropdownActionsActive] = useState();
 	const [dropZone, setDropZone] = useState();
+	const [layoutActionsActive, setLayoutActionsActive] = useState();
 
 	const dropdownActions = useMemo(() => {
 		const dropdownActions = [];
 
 		actions.forEach((action) => {
-			if (!action.quickAction) {
+			if (!action.quickAction && !action.layoutAction) {
 				const onClick = action.handler || actionHandlers[action.id];
 
 				dropdownActions.push({
@@ -132,6 +133,10 @@ const MillerColumnsItem = ({
 
 		return dropdownActions;
 	}, [actions, actionHandlers, namespace]);
+
+	const layoutActions = useMemo(() => {
+		return actions.filter((action) => action.layoutAction && action.url);
+	}, [actions]);
 
 	const quickActions = useMemo(() => {
 		const quickActions = [];
@@ -285,6 +290,37 @@ const MillerColumnsItem = ({
 					</h5>
 				)}
 			</div>
+
+			{layoutActions.length > 0 && (
+				<div className="autofit-col miller-columns-item-actions">
+					<ClayDropDown
+						active={layoutActionsActive}
+						onActiveChange={setLayoutActionsActive}
+						trigger={
+							<ClayButtonWithIcon
+								borderless
+								displayType="secondary"
+								small
+								symbol="plus"
+							/>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{layoutActions.map((action) => (
+								<ClayDropDown.Item
+									disabled={!action.url}
+									href={action.url}
+									id={action.id}
+									key={action.id}
+									onClick={action.handler}
+								>
+									{action.label}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
+				</div>
+			)}
 
 			{quickActions.map((action) => (
 				<div

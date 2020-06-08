@@ -99,31 +99,34 @@ public class AddCollectionLayoutMVCActionCommand
 			actionRequest, "privateLayout");
 		long parentLayoutId = ParamUtil.getLong(
 			actionRequest, "parentLayoutId");
+
 		String name = ParamUtil.getString(actionRequest, "name");
-		String type = ParamUtil.getString(actionRequest, "type");
-
-		String collectionPK = ParamUtil.getString(
-			actionRequest, "collectionPK");
-		String collectionType = ParamUtil.getString(
-			actionRequest, "collectionType");
-
-		long masterLayoutPlid = ParamUtil.getLong(
-			actionRequest, "masterLayoutPlid");
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getSiteDefault(), name
 		).build();
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Layout.class.getName(), actionRequest);
+		String type = ParamUtil.getString(actionRequest, "type");
+		long masterLayoutPlid = ParamUtil.getLong(
+			actionRequest, "masterLayoutPlid");
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
+		String collectionPK = ParamUtil.getString(
+			actionRequest, "collectionPK");
+
 		typeSettingsUnicodeProperties.setProperty(
 			"collectionType", collectionType);
+
+		String collectionType = ParamUtil.getString(
+			actionRequest, "collectionType");
+
 		typeSettingsUnicodeProperties.setProperty("collectionPK", collectionPK);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Layout.class.getName(), actionRequest);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

@@ -32,7 +32,7 @@ export const Tabs = ({activePage, pages}) => {
 							key={index}
 							onClick={() =>
 								dispatch({
-									payload: {pageIndex: index},
+									payload: index,
 									type: EVENT_TYPES.CHANGE_ACTIVE_PAGE,
 								})
 							}

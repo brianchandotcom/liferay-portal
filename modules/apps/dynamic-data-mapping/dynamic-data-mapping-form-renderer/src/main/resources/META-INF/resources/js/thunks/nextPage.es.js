@@ -61,7 +61,7 @@ export default function nextPage({
 				);
 
 				dispatch({
-					payload: {pageIndex: activePageUpdated},
+					payload: activePageUpdated,
 					type: EVENT_TYPES.CHANGE_ACTIVE_PAGE,
 				});
 

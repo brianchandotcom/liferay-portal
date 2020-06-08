@@ -23,7 +23,7 @@ export default (state, action) => {
 			};
 		case EVENT_TYPES.CHANGE_ACTIVE_PAGE:
 			return {
-				activePage: action.payload?.pageIndex,
+				activePage: action.payload,
 			};
 		case EVENT_TYPES.PAGE_VALIDATION_FAILED: {
 			const {newPages, pageIndex} = action.payload;

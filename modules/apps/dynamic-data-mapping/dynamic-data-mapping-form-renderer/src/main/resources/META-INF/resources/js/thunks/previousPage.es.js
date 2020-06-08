@@ -43,7 +43,7 @@ export default function previousPage({
 			const activePageUpdated = Math.max(previousActivePageIndex, 0);
 
 			dispatch({
-				payload: {pageIndex: activePageUpdated},
+				payload: activePageUpdated,
 				type: EVENT_TYPES.CHANGE_ACTIVE_PAGE,
 			});
 

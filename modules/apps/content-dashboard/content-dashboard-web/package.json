@@ -1,5 +1,8 @@
 {
 	"dependencies": {
+		"@clayui/button": "3.3.1",
+		"@clayui/empty-state": "3.2.0",
+		"@clayui/icon": "3.0.5",
 		"frontend-js-web": "*",
 		"react": "16.12.0",
 		"recharts": "1.8.5"

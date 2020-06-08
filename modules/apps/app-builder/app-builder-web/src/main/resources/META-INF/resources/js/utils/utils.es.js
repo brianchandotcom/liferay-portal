@@ -22,3 +22,14 @@ export const isEqualObjects = (firstObj = {}, secondObj = {}) => {
 
 	return JSON.stringify(firstObj) === JSON.stringify(secondObj);
 };
+
+export const getTranslatedValue = (item, propertyKey) => {
+	const {
+		defaultLanguageId = themeDisplay.getLanguageId(),
+		[propertyKey]: value,
+	} = item;
+
+	return typeof value === 'object'
+		? value[themeDisplay.getLanguageId()] || value[defaultLanguageId]
+		: value;
+};

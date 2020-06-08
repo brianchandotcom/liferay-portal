@@ -18,7 +18,8 @@ import ClayLabel from '@clayui/label';
 import React, {useEffect, useState} from 'react';
 
 import {getItem} from '../../utils/client.es';
-import DropDownWithSearch, {getTranslatedName} from './DropDownWithSearch.es';
+import {getTranslatedValue} from '../../utils/utils.es';
+import DropDownWithSearch from './DropDownWithSearch.es';
 
 export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 	const [state, setState] = useState({
@@ -70,7 +71,7 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 					if (defaultItem) {
 						onSelect({
 							...defaultItem,
-							name: getTranslatedName(defaultItem),
+							name: getTranslatedValue(defaultItem, 'name'),
 						});
 					}
 				}

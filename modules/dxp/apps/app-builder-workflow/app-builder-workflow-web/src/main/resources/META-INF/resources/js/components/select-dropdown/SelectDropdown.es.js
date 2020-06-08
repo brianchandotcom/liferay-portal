@@ -11,10 +11,9 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import DropDownWithSearch, {
-	getTranslatedName,
-} from 'app-builder-web/js/pages/apps/DropDownWithSearch.es';
+import DropDownWithSearch from 'app-builder-web/js/pages/apps/DropDownWithSearch.es';
 import {getItem} from 'app-builder-web/js/utils/client.es';
+import {getTranslatedValue} from 'app-builder-web/js/utils/utils.es';
 import React, {useEffect, useRef, useState} from 'react';
 
 const SelectDropdown = ({
@@ -56,7 +55,7 @@ const SelectDropdown = ({
 					if (defaultItem) {
 						onSelect({
 							...defaultItem,
-							name: getTranslatedName(defaultItem),
+							name: getTranslatedValue(defaultItem, 'name'),
 						});
 					}
 				}

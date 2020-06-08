@@ -21,6 +21,8 @@ import React, {
 	useState,
 } from 'react';
 
+import {getTranslatedValue} from '../../utils/utils.es';
+
 export const DropDownContext = createContext();
 
 const DropDownWithSearch = ({
@@ -113,22 +115,11 @@ const EmptyState = ({children, className, label}) => {
 	);
 };
 
-const getTranslatedName = (item, namePropertyKey = 'name') => {
-	const {
-		defaultLanguageId = themeDisplay.getLanguageId(),
-		[namePropertyKey]: name,
-	} = item;
-
-	return typeof name === 'object'
-		? name[themeDisplay.getLanguageId()] || name[defaultLanguageId]
-		: name;
-};
-
 const Items = ({
 	children,
 	emptyResultMessage,
 	items = [],
-	namePropertyKey,
+	propertyKey = 'name',
 	onSelect,
 }) => {
 	const {query, setActive, setQuery} = useContext(DropDownContext);
@@ -138,13 +129,13 @@ const Items = ({
 
 	const itemList = items
 		.filter((item) =>
-			getTranslatedName(item, namePropertyKey)
+			getTranslatedValue(item, propertyKey)
 				.toLowerCase()
 				.match(treatedQuery)
 		)
 		.map((item) => ({
 			...item,
-			name: getTranslatedName(item, namePropertyKey),
+			name: getTranslatedValue(item, propertyKey),
 		}));
 
 	const onClick = (event, selectedValue) => {
@@ -199,5 +190,4 @@ const Search = ({disabled}) => {
 
 DropDownWithSearch.Items = Items;
 
-export {getTranslatedName};
 export default DropDownWithSearch;

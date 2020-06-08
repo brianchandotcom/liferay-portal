@@ -433,7 +433,7 @@ AUI.add(
 											uri = Liferay.Util.addParams(
 												instance.ns(
 													'fileEntryTypeId='
-												) + selectedItem,
+												) + selectedItem.value,
 												uri
 											);
 

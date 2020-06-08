@@ -2325,6 +2325,8 @@ definition {
 
 		FormsAdminNavigator.gotoAddForm();
 
+		Refresh();
+
 		Form.editName(formName = "Test Form");
 
 		Form.editDescription(formDescription = "Test Form Description");

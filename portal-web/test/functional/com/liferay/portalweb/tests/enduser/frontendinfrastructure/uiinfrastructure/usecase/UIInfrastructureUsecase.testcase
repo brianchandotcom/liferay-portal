@@ -158,7 +158,6 @@ definition {
 	}
 
 	@description = "Ensure that a user can access portlet options and drag and drop portlets."
-	@ignore = "true"
 	@priority = "5"
 	test Smoke {
 		property portal.acceptance = "true";

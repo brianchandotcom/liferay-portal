@@ -76,8 +76,11 @@ function ActionLinkRenderer(props) {
 			executeAsyncItemAction(formattedHref, currentAction.method);
 		}
 
-		if (currentAction.onClick) {
-			eval(currentAction.onClick);
+		if (
+			currentAction.onClick &&
+			typeof window[currentAction.onClick] === 'function'
+		) {
+			window[currentAction.onClick]();
 		}
 	}
 

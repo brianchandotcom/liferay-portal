@@ -118,8 +118,8 @@ function ActionsDropdownRenderer(props) {
 			executeAsyncItemAction(url, method).then(() => setLoading(false));
 		}
 
-		if (onClick) {
-			eval(onClick);
+		if (onClick && typeof window[onClick] === 'function') {
+			window[onClick]();
 		}
 	}
 

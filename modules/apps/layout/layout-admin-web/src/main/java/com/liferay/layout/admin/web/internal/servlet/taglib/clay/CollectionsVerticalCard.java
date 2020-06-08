@@ -78,7 +78,6 @@ public class CollectionsVerticalCard extends BaseVerticalCard {
 
 		selectLayoutMasterLayoutURL.setParameter(
 			"mvcPath", "/select_layout_master_layout.jsp");
-		selectLayoutMasterLayoutURL.setParameter("redirect", StringPool.BLANK);
 
 		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
 

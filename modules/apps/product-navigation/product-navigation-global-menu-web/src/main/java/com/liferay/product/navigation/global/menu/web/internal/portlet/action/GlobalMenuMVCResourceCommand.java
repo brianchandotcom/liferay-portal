@@ -339,6 +339,7 @@ public class GlobalMenuMVCResourceCommand extends BaseMVCResourceCommand {
 		groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new URLItemSelectorReturnType());
 		groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
+		groupItemSelectorCriterion.setIncludeRecentSites(false);
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			RequestBackedPortletURLFactoryUtil.create(resourceRequest),

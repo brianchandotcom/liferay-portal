@@ -4399,7 +4399,7 @@ definition {
 	@priority = "4"
 	test ViewDefaultFieldNamesWithPunctuationCharacters {
 		property test.name.skip.portal.instance = "Forms#ViewDefaultFieldNamesWithPunctuationCharacters";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

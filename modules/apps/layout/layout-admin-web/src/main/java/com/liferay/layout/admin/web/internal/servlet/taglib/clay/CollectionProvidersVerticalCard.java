@@ -38,7 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 
 	public CollectionProvidersVerticalCard(
-		long groupId, InfoListProvider infoListProvider,
+		long groupId, InfoListProvider<?> infoListProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(null, renderRequest, null);
@@ -120,7 +120,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 		return _infoListProvider.getLabel(themeDisplay.getLocale());
 	}
 
-	private String _getClassName(InfoListProvider infoListProvider) {
+	private String _getClassName(InfoListProvider<?> infoListProvider) {
 		Class<?> clazz = infoListProvider.getClass();
 
 		Type[] genericInterfaceTypes = clazz.getGenericInterfaces();
@@ -140,7 +140,7 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
-	private final InfoListProvider _infoListProvider;
+	private final InfoListProvider<?> _infoListProvider;
 	private final RenderResponse _renderResponse;
 
 }

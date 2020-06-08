@@ -28,6 +28,38 @@ const Divider = () => {
 	);
 };
 
+export const DeploySettings = () => (
+	<>
+		<Settings
+			deploymentType="widget"
+			settings={WidgetSettings}
+			subtitle={Liferay.Language.get('deploy-a-widget')}
+			title={Liferay.Language.get('widget')}
+		/>
+
+		<Divider />
+
+		<Settings
+			deploymentType="standalone"
+			subtitle={Liferay.Language.get(
+				'deploy-a-standalone-app-with-a-direct-link'
+			)}
+			title={Liferay.Language.get('standalone')}
+		/>
+
+		<Divider />
+
+		<Settings
+			deploymentType="productMenu"
+			settings={ProductMenuSettings}
+			subtitle={Liferay.Language.get(
+				'deploy-to-the-control-panel-or-a-site-menu'
+			)}
+			title={Liferay.Language.get('product-menu')}
+		/>
+	</>
+);
+
 export default () => {
 	return (
 		<>
@@ -37,33 +69,7 @@ export default () => {
 				</div>
 			</div>
 
-			<Settings
-				deploymentType="widget"
-				settings={WidgetSettings}
-				subtitle={Liferay.Language.get('deploy-a-widget')}
-				title={Liferay.Language.get('widget')}
-			/>
-
-			<Divider />
-
-			<Settings
-				deploymentType="standalone"
-				subtitle={Liferay.Language.get(
-					'deploy-a-standalone-app-with-a-direct-link'
-				)}
-				title={Liferay.Language.get('standalone')}
-			/>
-
-			<Divider />
-
-			<Settings
-				deploymentType="productMenu"
-				settings={ProductMenuSettings}
-				subtitle={Liferay.Language.get(
-					'deploy-to-the-control-panel-or-a-site-menu'
-				)}
-				title={Liferay.Language.get('product-menu')}
-			/>
+			<DeploySettings />
 
 			<Divider />
 		</>

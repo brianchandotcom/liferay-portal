@@ -40,7 +40,10 @@ export default function EmptyBarChart() {
 			>
 				<ClayButton displayType="secondary">
 					{Liferay.Language.get('add-marketing-categories')}
-					<ClayIcon className="ml-1" symbol="shortcut" />
+					<ClayIcon
+						className="inline-item inline-item-after"
+						symbol="shortcut"
+					/>
 				</ClayButton>
 			</ClayEmptyState>
 

@@ -17,7 +17,7 @@ import React, {useEffect} from 'react';
 
 import ActiveFiltersBar from './components/ActiveFiltersBar';
 import BulkActions from './components/BulkActions';
-import useAppState, {StoreProvider} from './components/Context';
+import {StoreProvider, useAppState} from './components/Context';
 import NavBar from './components/NavBar';
 
 function ManagementBar({

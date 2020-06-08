@@ -19,7 +19,7 @@
 <%
 SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = new SelectLayoutCollectionDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
-SearchContainer <InfoListProvider<?>> searchContainer = selectLayoutCollectionDisplayContext.getCollectionProvidersSearchContainer();
+SearchContainer<InfoListProvider<?>> searchContainer = selectLayoutCollectionDisplayContext.getCollectionProvidersSearchContainer();
 %>
 
 <div class="lfr-search-container-wrapper" id="<portlet:namespace/>collectionProviders">

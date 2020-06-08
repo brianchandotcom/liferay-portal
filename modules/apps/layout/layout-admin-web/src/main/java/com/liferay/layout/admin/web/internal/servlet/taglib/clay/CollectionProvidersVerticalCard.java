@@ -85,8 +85,6 @@ public class CollectionProvidersVerticalCard extends BaseVerticalCard {
 		selectLayoutMasterLayoutURL.setParameter(
 			"privateLayout", String.valueOf(privateLayout));
 		selectLayoutMasterLayoutURL.setParameter(
-			"privateLayout", String.valueOf(privateLayout));
-		selectLayoutMasterLayoutURL.setParameter(
 			"collectionType",
 			InfoListProviderItemSelectorReturnType.class.getName());
 		selectLayoutMasterLayoutURL.setParameter(

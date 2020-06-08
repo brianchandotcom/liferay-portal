@@ -175,21 +175,6 @@
 		margin-bottom: 0;
 	}
 
-	.list-group-heading.goto-link {
-		color: $product-menu-nav-link-color;
-		display: inline-flex;
-		font-size: 0.8rem;
-		max-width: 100%;
-
-		&:hover {
-			text-decoration: underline;
-		}
-
-		&:before {
-			right: 4px;
-		}
-	}
-
 	.list-group-heading,
 	.panel-title {
 		> .panel-toggler {
@@ -207,35 +192,13 @@
 	}
 
 	.list-group-heading {
-		background-color: $product-menu-list-group-heading-bg;
-		border-color: transparent;
+		background-color: $product-menu-list-group-item-bg;
 		font-weight: 600;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 
 		@include overflow-wrap(normal);
-
-		&.active {
-			&,
-			&:hover,
-			&:focus {
-				background-color: $product-menu-list-group-heading-active-bg;
-			}
-
-			+ div {
-				background-color: $product-menu-list-group-heading-active-bg;
-			}
-		}
-
-		&:focus,
-		&:hover {
-			background-color: $product-menu-list-group-heading-bg;
-		}
-
-		&.collapsed {
-			font-weight: 400;
-		}
 
 		&:before {
 			bottom: 4px;
@@ -248,21 +211,43 @@
 			background-color: $product-menu-list-group-heading-border;
 			height: $product-menu-list-group-heading-border-width;
 		}
-	}
 
-	.list-group-heading.collapsed {
-		&:after {
-			background-color: $product-menu-list-group-heading-collapsed-border;
-			height: $product-menu-list-group-heading-collapsed-border-width;
+		&.goto-link {
+			display: inline-flex;
+			font-size: 0.8rem;
+			max-width: 100%;
+
+			&:hover {
+				color: white;
+				text-decoration: underline;
+			}
+
+			&:before {
+				right: 4px;
+			}
 		}
-	}
 
-	.list-group-heading {
-		padding-left: 24px;
-	}
+		&.collapsed {
+			font-weight: 400;
 
-	.list-group-item-field {
-		width: auto;
+			&:after {
+				background-color: $product-menu-list-group-heading-collapsed-border;
+				height: $product-menu-list-group-heading-collapsed-border-width;
+			}
+		}
+
+		&.panel-header:not(.collapsed) {
+			background-color: $product-menu-list-group-heading-active-bg;
+			color: white;
+		}
+
+		.list-group-heading {
+			padding-left: 24px;
+		}
+
+		.list-group-item-field {
+			width: auto;
+		}
 	}
 
 	.list-group-item,
@@ -276,6 +261,17 @@
 	.collapsing {
 		> .list-group-item {
 			background-color: $product-menu-list-group-item-bg;
+		}
+	}
+
+	.collapsing,
+	.show {
+		.list-group-item {
+			background-color: $dark-l1;
+
+			a:hover {
+				color: white;
+			}
 		}
 	}
 
@@ -308,7 +304,6 @@
 	}
 
 	.panel-body {
-		background-color: $product-menu-panel-body-bg;
 		padding: 0;
 	}
 
@@ -340,13 +335,8 @@
 
 		.panel-title > .panel-toggler {
 			&:not(.collapsed) {
-				background-color: $product-menu-panel-title-active-bg;
-				border-left: $product-menu-panel-title-active-border-left-width
-					$product-menu-panel-title-active-border-style
-					$product-menu-panel-title-active-border;
 				font-weight: 700;
-				padding-left: 24px -
-					$product-menu-panel-title-active-border-left-width;
+				padding-left: 24px;
 			}
 
 			&:hover {

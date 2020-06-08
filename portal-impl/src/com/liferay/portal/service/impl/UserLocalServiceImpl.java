@@ -101,7 +101,6 @@ import com.liferay.portal.kernel.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.kernel.security.auth.FullNameValidator;
 import com.liferay.portal.kernel.security.auth.PasswordModificationThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
 import com.liferay.portal.kernel.security.auth.ScreenNameValidator;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
@@ -4802,7 +4801,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setPasswordModified(false);
 		}
 
-		if (!silentUpdate && (PrincipalThreadLocal.getUserId() != userId)) {
+		if (!silentUpdate) {
 			sendPasswordNotification(
 				user, user.getCompanyId(), password1, null, null, null, null,
 				null, ServiceContextThreadLocal.getServiceContext());

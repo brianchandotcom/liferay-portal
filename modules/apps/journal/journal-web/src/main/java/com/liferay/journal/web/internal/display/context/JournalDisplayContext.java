@@ -358,8 +358,8 @@ public class JournalDisplayContext {
 		}
 
 		if (JournalArticlePermission.contains(
-			_themeDisplay.getPermissionChecker(), article,
-			ActionKeys.VIEW)) {
+				_themeDisplay.getPermissionChecker(), article,
+				ActionKeys.VIEW)) {
 
 			availableActions.add("exportTranslation");
 		}

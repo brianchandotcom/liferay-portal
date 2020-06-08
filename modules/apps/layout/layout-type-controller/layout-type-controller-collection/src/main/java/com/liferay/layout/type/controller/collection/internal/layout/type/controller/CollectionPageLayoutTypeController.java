@@ -144,7 +144,6 @@ public class CollectionPageLayoutTypeController
 		try {
 			httpServletRequest.setAttribute(
 				ContentPageEditorWebKeys.CLASS_NAME, Layout.class.getName());
-
 			httpServletRequest.setAttribute(
 				ContentPageEditorWebKeys.CLASS_PK, layout.getPlid());
 

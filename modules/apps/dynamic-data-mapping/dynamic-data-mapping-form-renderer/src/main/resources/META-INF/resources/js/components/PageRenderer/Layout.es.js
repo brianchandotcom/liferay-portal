@@ -14,12 +14,13 @@
 
 import React from 'react';
 
+import {useEvaluate} from '../../hooks/useEvaluate.es';
 import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
 import fieldBlur from '../../thunks/fieldBlur.es';
+import fieldChange from '../../thunks/fieldChange.es';
 import fieldFocus from '../../thunks/fieldFocus.es';
 import {Field} from '../Field/Field.es';
-import {EVENT_TYPES} from '../actions/types.es';
 import {getFormId, getFormNode} from '../util/formId.es';
 import * as DefaultVariant from './DefaultVariant.es';
 
@@ -32,6 +33,7 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 		pageIndex,
 		spritemap,
 	} = usePage();
+	const createFieldChange = useEvaluate(fieldChange);
 	const dispatch = useForm();
 
 	return (
@@ -78,10 +80,11 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 										)
 									}
 									onChange={(event) =>
-										dispatch({
-											payload: event,
-											type: EVENT_TYPES.FIELD_CHANGE,
-										})
+										dispatch(
+											createFieldChange({
+												properties: event,
+											})
+										)
 									}
 									onFocus={(event) =>
 										dispatch(

@@ -59,7 +59,15 @@ export default function fieldChange({
 			value,
 		});
 
-		dispatch({payload: editedPages, type: EVENT_TYPES.FIELD_BLUR});
+		// We want a synchronous update without waiting for an evaluation of
+		// the field.
+
+		dispatch({payload: editedPages, type: EVENT_TYPES.UPDATE_PAGES});
+
+		// We triggered a dispatch of FIELD_CHANGE just to propagate the event to
+		// the upper layers.
+
+		dispatch({payload: properties, type: EVENT_TYPES.FIELD_CHANGE});
 
 		if (evaluable) {
 			evaluate(fieldName, {

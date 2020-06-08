@@ -1,3 +1,5 @@
+@import 'atlas';
+
 .content-dashboard-management-toolbar {
 	.navbar-expand-md .container-fluid {
 		padding: 0;
@@ -10,4 +12,12 @@
 			padding-right: 0;
 		}
 	}
+}
+
+.empty-state {
+	left: 39%;
+	max-width: 350px;
+	position: absolute;
+	top: 10%;
+	z-index: 1;
 }

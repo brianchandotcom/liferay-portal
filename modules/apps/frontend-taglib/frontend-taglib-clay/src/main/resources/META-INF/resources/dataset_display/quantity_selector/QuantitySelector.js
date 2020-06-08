@@ -78,10 +78,10 @@ function QuantitySelector(props) {
 
 	function handleInputKeyUp(e) {
 		if (e.keyCode == 38) {
-			return increaseQuantity();
+			increaseQuantity();
 		}
-		if (e.keyCode == 40) {
-			return decreaseQuantity();
+		else if (e.keyCode == 40) {
+			decreaseQuantity();
 		}
 	}
 

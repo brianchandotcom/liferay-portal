@@ -141,6 +141,28 @@ public class StructuredContent implements Cloneable {
 
 	protected Long contentStructureId;
 
+	public ContentTemplate[] getContentTemplates() {
+		return contentTemplates;
+	}
+
+	public void setContentTemplates(ContentTemplate[] contentTemplates) {
+		this.contentTemplates = contentTemplates;
+	}
+
+	public void setContentTemplates(
+		UnsafeSupplier<ContentTemplate[], Exception>
+			contentTemplatesUnsafeSupplier) {
+
+		try {
+			contentTemplates = contentTemplatesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ContentTemplate[] contentTemplates;
+
 	public Creator getCreator() {
 		return creator;
 	}

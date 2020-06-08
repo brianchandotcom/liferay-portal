@@ -33,6 +33,73 @@ public class RenderedContent implements Cloneable {
 		return RenderedContentSerDes.toDTO(json);
 	}
 
+	public String getContentTemplateId() {
+		return contentTemplateId;
+	}
+
+	public void setContentTemplateId(String contentTemplateId) {
+		this.contentTemplateId = contentTemplateId;
+	}
+
+	public void setContentTemplateId(
+		UnsafeSupplier<String, Exception> contentTemplateIdUnsafeSupplier) {
+
+		try {
+			contentTemplateId = contentTemplateIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String contentTemplateId;
+
+	public String getContentTemplateName() {
+		return contentTemplateName;
+	}
+
+	public void setContentTemplateName(String contentTemplateName) {
+		this.contentTemplateName = contentTemplateName;
+	}
+
+	public void setContentTemplateName(
+		UnsafeSupplier<String, Exception> contentTemplateNameUnsafeSupplier) {
+
+		try {
+			contentTemplateName = contentTemplateNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String contentTemplateName;
+
+	public Map<String, String> getContentTemplateName_i18n() {
+		return contentTemplateName_i18n;
+	}
+
+	public void setContentTemplateName_i18n(
+		Map<String, String> contentTemplateName_i18n) {
+
+		this.contentTemplateName_i18n = contentTemplateName_i18n;
+	}
+
+	public void setContentTemplateName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			contentTemplateName_i18nUnsafeSupplier) {
+
+		try {
+			contentTemplateName_i18n =
+				contentTemplateName_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> contentTemplateName_i18n;
+
 	public String getRenderedContentURL() {
 		return renderedContentURL;
 	}
@@ -53,49 +120,6 @@ public class RenderedContent implements Cloneable {
 	}
 
 	protected String renderedContentURL;
-
-	public String getTemplateName() {
-		return templateName;
-	}
-
-	public void setTemplateName(String templateName) {
-		this.templateName = templateName;
-	}
-
-	public void setTemplateName(
-		UnsafeSupplier<String, Exception> templateNameUnsafeSupplier) {
-
-		try {
-			templateName = templateNameUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String templateName;
-
-	public Map<String, String> getTemplateName_i18n() {
-		return templateName_i18n;
-	}
-
-	public void setTemplateName_i18n(Map<String, String> templateName_i18n) {
-		this.templateName_i18n = templateName_i18n;
-	}
-
-	public void setTemplateName_i18n(
-		UnsafeSupplier<Map<String, String>, Exception>
-			templateName_i18nUnsafeSupplier) {
-
-		try {
-			templateName_i18n = templateName_i18nUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, String> templateName_i18n;
 
 	@Override
 	public RenderedContent clone() throws CloneNotSupportedException {

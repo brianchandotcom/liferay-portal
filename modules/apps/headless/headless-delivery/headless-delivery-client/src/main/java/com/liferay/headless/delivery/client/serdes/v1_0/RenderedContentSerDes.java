@@ -55,6 +55,44 @@ public class RenderedContentSerDes {
 
 		sb.append("{");
 
+		if (renderedContent.getContentTemplateId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentTemplateId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(renderedContent.getContentTemplateId()));
+
+			sb.append("\"");
+		}
+
+		if (renderedContent.getContentTemplateName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentTemplateName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(renderedContent.getContentTemplateName()));
+
+			sb.append("\"");
+		}
+
+		if (renderedContent.getContentTemplateName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentTemplateName_i18n\": ");
+
+			sb.append(_toJSON(renderedContent.getContentTemplateName_i18n()));
+		}
+
 		if (renderedContent.getRenderedContentURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -67,30 +105,6 @@ public class RenderedContentSerDes {
 			sb.append(_escape(renderedContent.getRenderedContentURL()));
 
 			sb.append("\"");
-		}
-
-		if (renderedContent.getTemplateName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"templateName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(renderedContent.getTemplateName()));
-
-			sb.append("\"");
-		}
-
-		if (renderedContent.getTemplateName_i18n() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"templateName_i18n\": ");
-
-			sb.append(_toJSON(renderedContent.getTemplateName_i18n()));
 		}
 
 		sb.append("}");
@@ -112,6 +126,33 @@ public class RenderedContentSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (renderedContent.getContentTemplateId() == null) {
+			map.put("contentTemplateId", null);
+		}
+		else {
+			map.put(
+				"contentTemplateId",
+				String.valueOf(renderedContent.getContentTemplateId()));
+		}
+
+		if (renderedContent.getContentTemplateName() == null) {
+			map.put("contentTemplateName", null);
+		}
+		else {
+			map.put(
+				"contentTemplateName",
+				String.valueOf(renderedContent.getContentTemplateName()));
+		}
+
+		if (renderedContent.getContentTemplateName_i18n() == null) {
+			map.put("contentTemplateName_i18n", null);
+		}
+		else {
+			map.put(
+				"contentTemplateName_i18n",
+				String.valueOf(renderedContent.getContentTemplateName_i18n()));
+		}
+
 		if (renderedContent.getRenderedContentURL() == null) {
 			map.put("renderedContentURL", null);
 		}
@@ -119,24 +160,6 @@ public class RenderedContentSerDes {
 			map.put(
 				"renderedContentURL",
 				String.valueOf(renderedContent.getRenderedContentURL()));
-		}
-
-		if (renderedContent.getTemplateName() == null) {
-			map.put("templateName", null);
-		}
-		else {
-			map.put(
-				"templateName",
-				String.valueOf(renderedContent.getTemplateName()));
-		}
-
-		if (renderedContent.getTemplateName_i18n() == null) {
-			map.put("templateName_i18n", null);
-		}
-		else {
-			map.put(
-				"templateName_i18n",
-				String.valueOf(renderedContent.getTemplateName_i18n()));
 		}
 
 		return map;
@@ -160,23 +183,35 @@ public class RenderedContentSerDes {
 			RenderedContent renderedContent, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "renderedContentURL")) {
+			if (Objects.equals(jsonParserFieldName, "contentTemplateId")) {
+				if (jsonParserFieldValue != null) {
+					renderedContent.setContentTemplateId(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "contentTemplateName")) {
+
+				if (jsonParserFieldValue != null) {
+					renderedContent.setContentTemplateName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "contentTemplateName_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					renderedContent.setContentTemplateName_i18n(
+						(Map)RenderedContentSerDes.toMap(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "renderedContentURL")) {
+
 				if (jsonParserFieldValue != null) {
 					renderedContent.setRenderedContentURL(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "templateName")) {
-				if (jsonParserFieldValue != null) {
-					renderedContent.setTemplateName(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "templateName_i18n")) {
-				if (jsonParserFieldValue != null) {
-					renderedContent.setTemplateName_i18n(
-						(Map)RenderedContentSerDes.toMap(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else {

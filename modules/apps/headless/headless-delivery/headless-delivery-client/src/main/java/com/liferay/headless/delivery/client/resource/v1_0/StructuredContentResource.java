@@ -239,12 +239,12 @@ public interface StructuredContentResource {
 		throws Exception;
 
 	public String getStructuredContentRenderedContentTemplate(
-			Long structuredContentId, Long templateId)
+			Long structuredContentId, String contentTemplateId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getStructuredContentRenderedContentTemplateHttpResponse(
-				Long structuredContentId, Long templateId)
+				Long structuredContentId, String contentTemplateId)
 		throws Exception;
 
 	public void putStructuredContentSubscribe(Long structuredContentId)
@@ -1924,12 +1924,12 @@ public interface StructuredContentResource {
 		}
 
 		public String getStructuredContentRenderedContentTemplate(
-				Long structuredContentId, Long templateId)
+				Long structuredContentId, String contentTemplateId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getStructuredContentRenderedContentTemplateHttpResponse(
-					structuredContentId, templateId);
+					structuredContentId, contentTemplateId);
 
 			String content = httpResponse.getContent();
 
@@ -1953,7 +1953,7 @@ public interface StructuredContentResource {
 
 		public HttpInvoker.HttpResponse
 				getStructuredContentRenderedContentTemplateHttpResponse(
-					Long structuredContentId, Long templateId)
+					Long structuredContentId, String contentTemplateId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1980,8 +1980,8 @@ public interface StructuredContentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/rendered-content/{templateId}",
-				structuredContentId, templateId);
+						"/o/headless-delivery/v1.0/structured-contents/{structuredContentId}/rendered-content/{contentTemplateId}",
+				structuredContentId, contentTemplateId);
 
 			httpInvoker.userNameAndPassword(
 				_builder._login + ":" + _builder._password);

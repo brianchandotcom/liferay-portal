@@ -112,6 +112,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -535,6 +536,28 @@ public class JournalDisplayContext {
 
 	public String[] getDisplayViews() {
 		return _journalWebConfiguration.displayViews();
+	}
+
+	public Map<String, Object> getExportTranslationData() {
+		ResourceURL getExportTranslationAvailableLocalesURL =
+			_liferayPortletResponse.createResourceURL();
+
+		getExportTranslationAvailableLocalesURL.setResourceID(
+			"/journal/get_export_translation_available_locales");
+
+		return HashMapBuilder.<String, Object>put(
+			"context",
+			Collections.singletonMap(
+				"namespace", _liferayPortletResponse.getNamespace())
+		).put(
+			"props",
+			HashMapBuilder.<String, Object>put(
+				"getExportTranslationAvailableLocalesURL",
+				getExportTranslationAvailableLocalesURL.toString()
+			).put(
+				"pathModule", PortalUtil.getPathModule()
+			).build()
+		).build();
 	}
 
 	public JournalFolder getFolder() {

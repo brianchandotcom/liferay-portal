@@ -147,23 +147,9 @@ if (Validator.isNotNull(title)) {
 		</aui:form>
 	</div>
 
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/journal/get_export_translation_available_locales" var="getExportTranslationAvailableLocalesURL" />
-
-	<%
-	Map<String, Object> exportProps = HashMapBuilder.<String, Object>put(
-		"getExportTranslationAvailableLocalesURL", getExportTranslationAvailableLocalesURL
-	).put("pathModule", PortalUtil.getPathModule()).build();
-
-	Map<String, Object> exportData = HashMapBuilder.<String, Object>put(
-		"context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace())
-	).put(
-		"props", exportProps
-	).build();
-	%>
-
 	<div>
 		<react:component
-			data="<%= exportData %>"
+			data="<%= journalDisplayContext.getExportTranslationData() %>"
 			module="js/export_translation/ExportTranslation.es"
 		/>
 	</div>

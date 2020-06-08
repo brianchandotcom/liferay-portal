@@ -660,6 +660,63 @@ components:
                     readOnly: true
                     type: boolean
             type: object
+        ContentTemplate:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                availableLanguages:
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                contentStructureId:
+                    format: int64
+                    type: integer
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    description:
+                        The content template's creator.
+                    readOnly: true
+                dateCreated:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date-time
+                    readOnly: true
+                    type: string
+                description:
+                    type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                id:
+                    readOnly: true
+                    type: string
+                name:
+                    type: string
+                name_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                programmingLanguage:
+                    type: string
+                siteId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                templateScript:
+                    type: string
+            required:
+                - contentStructureId
+                - name
         ContextReference:
             properties:
                 contextSource:
@@ -2240,6 +2297,10 @@ components:
                         The ID of the `ContentStructure`.
                     format: int64
                     type: integer
+                contentTemplates:
+                    items:
+                        $ref: "#/components/schemas/ContentTemplate"
+                    type: array
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
@@ -2317,19 +2378,22 @@ components:
                         content and return HTML.
                     items:
                         properties:
+                            contentTemplateId:
+                                readOnly: true
+                                type: string
+                            contentTemplateName:
+                                description:
+                                    The name of the template used to render the content.
+                                type: string
+                            contentTemplateName_i18n:
+                                additionalProperties:
+                                    type: string
+                                type: object
                             renderedContentURL:
                                 description:
                                     An absolute URL to the rendered content.
                                 format: uri
                                 type: string
-                            templateName:
-                                description:
-                                    The name of the template used to render the content.
-                                type: string
-                            templateName_i18n:
-                                additionalProperties:
-                                    type: string
-                                type: object
                         type: object
                     readOnly: true
                     type: array
@@ -6278,6 +6342,79 @@ paths:
                     description:
                         ""
             tags: ["ContentStructure"]
+    "/sites/{siteId}/content-templates":
+        get:
+            operationId: getSiteContentTemplatesPage
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentTemplate"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ContentTemplate"
+                                type: array
+                    description:
+                        ""
+            tags: ["ContentTemplate"]
+    "/sites/{siteId}/content-templates/{contentTemplateId}":
+        get:
+            operationId: getContentTemplate
+            parameters:
+                - in: path
+                  name: siteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: contentTemplateId
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ContentTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ContentTemplate"
+                    description:
+                        ""
+            tags: ["ContentTemplate"]
     "/sites/{siteId}/document-folders":
         get:
             description:
@@ -8002,7 +8139,7 @@ paths:
                     description:
                         ""
             tags: ["StructuredContent"]
-    "/structured-contents/{structuredContentId}/rendered-content/{templateId}":
+    "/structured-contents/{structuredContentId}/rendered-content/{contentTemplateId}":
         get:
             description:
                 Retrieves the structured content's rendered template (the result of applying the structure's values to a
@@ -8016,11 +8153,10 @@ paths:
                       format: int64
                       type: integer
                 - in: path
-                  name: templateId
+                  name: contentTemplateId
                   required: true
                   schema:
-                      format: int64
-                      type: integer
+                      type: string
             responses:
                 200:
                     content:

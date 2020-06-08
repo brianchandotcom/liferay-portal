@@ -13,6 +13,7 @@
  */
 
 import {useModal} from '@clayui/modal';
+import {fetch} from 'frontend-js-web';
 import React, {useContext, useState} from 'react';
 
 import ExportTranslationContext from './ExportTranslationContext.es';
@@ -23,6 +24,8 @@ function ExportTranslation(props) {
 	const [showModal, setShowModal] = useState();
 	const {namespace} = useContext(ExportTranslationContext);
 	const bridgeComponentId = `${namespace}ExportForTranslationComponent`;
+	const [availableSourceLocales, setAvailableSourceLocales] = useState([]);
+	const [availableTargetLocales, setAvailableTargetLocales] = useState([]);
 
 	const handleOnClose = () => {
 		setShowModal(false);
@@ -37,8 +40,14 @@ function ExportTranslation(props) {
 			bridgeComponentId,
 			{
 				open: (articleIds) => {
-					setArticleIds(articleIds);
-					setShowModal(true);
+					fetch(props.getExportTranslationAvailableLocalesURL)
+						.then((res) => res.json())
+						.then((res) => {
+							setAvailableSourceLocales(res.sourceLocales);
+							setAvailableTargetLocales(res.targetLocales);
+							setArticleIds(articleIds);
+							setShowModal(true);
+						});
 				},
 			},
 			{
@@ -53,6 +62,8 @@ function ExportTranslation(props) {
 				<ExportTranslationModal
 					{...props}
 					articleIds={articleIds}
+					availableSourceLocales={availableSourceLocales}
+					availableTargetLocales={availableTargetLocales}
 					observer={observer}
 					onModalClose={onClose}
 				/>

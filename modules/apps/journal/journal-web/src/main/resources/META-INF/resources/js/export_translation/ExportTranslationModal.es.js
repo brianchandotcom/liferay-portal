@@ -22,26 +22,17 @@ import ExportTranslationContext from './ExportTranslationContext.es';
 
 const noop = () => {};
 
-const originLocales = [
-	{
-		displayName: 'English - United States',
-		languageId: 1,
-	},
-	{
-		displayName: 'Chinese - China',
-		languageId: 2,
-	},
-];
-
 const ExportTranslationModal = ({
 	articleIds,
+	availableSourceLocales,
+	availableTargetLocales,
 	observer,
 	onModalClose = noop,
 }) => {
 	const {namespace} = useContext(ExportTranslationContext);
 
 	const [originLanguageId, setOriginLanguageId] = useState(
-		originLocales[0].languageId
+		availableSourceLocales[0].languageId
 	);
 
 	const handleSubmit = noop;
@@ -64,7 +55,7 @@ const ExportTranslationModal = ({
 							}}
 							value={originLanguageId}
 						>
-							{originLocales.map((locale) => (
+							{availableSourceLocales.map((locale) => (
 								<ClaySelect.Option
 									key={locale.languageId}
 									label={locale.displayName}
@@ -77,21 +68,14 @@ const ExportTranslationModal = ({
 					<h5>{Liferay.Language.get('languages-to-translate-to')}</h5>
 
 					<ClayForm.Group>
-						<ClayCheckbox
-							checked={true}
-							label="German - Austria"
-							onChange={() => {}}
-						/>
-						<ClayCheckbox
-							checked={true}
-							label="Italian - Italy"
-							onChange={() => {}}
-						/>
-						<ClayCheckbox
-							checked={false}
-							label="Spanish - Spain"
-							onChange={() => {}}
-						/>
+						{availableTargetLocales.map((locale) => (
+							<ClayCheckbox
+								checked={true}
+								key={locale.languageId}
+								label={locale.displayName}
+								onChange={() => {}}
+							/>
+						))}
 					</ClayForm.Group>
 
 					<ClayInput
@@ -124,6 +108,18 @@ const ExportTranslationModal = ({
 
 ExportTranslationModal.propTypes = {
 	articleIds: PropTypes.array,
+	availableSourceLocales: PropTypes.arrayOf(
+		PropTypes.shape({
+			displayName: PropTypes.string,
+			languageId: PropTypes.string,
+		})
+	).isRequired,
+	availableTargetLocales: PropTypes.arrayOf(
+		PropTypes.shape({
+			displayName: PropTypes.string,
+			languageId: PropTypes.string,
+		})
+	).isRequired,
 };
 
 export default ExportTranslationModal;

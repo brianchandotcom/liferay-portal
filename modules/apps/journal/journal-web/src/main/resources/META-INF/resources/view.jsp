@@ -147,10 +147,12 @@ if (Validator.isNotNull(title)) {
 		</aui:form>
 	</div>
 
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/journal/get_export_translation_available_locales" var="getExportTranslationAvailableLocalesURL" />
+
 	<%
 	Map<String, Object> exportProps = HashMapBuilder.<String, Object>put(
-		"pathModule", PortalUtil.getPathModule()
-	).build();
+		"getExportTranslationAvailableLocalesURL", getExportTranslationAvailableLocalesURL
+	).put("pathModule", PortalUtil.getPathModule()).build();
 
 	Map<String, Object> exportData = HashMapBuilder.<String, Object>put(
 		"context", Collections.singletonMap("namespace", liferayPortletResponse.getNamespace())

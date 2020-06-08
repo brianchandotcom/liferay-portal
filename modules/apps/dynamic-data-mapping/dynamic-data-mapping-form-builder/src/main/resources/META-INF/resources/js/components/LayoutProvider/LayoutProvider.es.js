@@ -19,7 +19,6 @@ import {
 	generateName,
 	getRepeatedIndex,
 } from 'dynamic-data-mapping-form-renderer';
-import handlePaginationItemClicked from 'dynamic-data-mapping-form-renderer/js/store/actions/handlePaginationItemClicked.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
@@ -106,7 +105,6 @@ class LayoutProvider extends Component {
 			pageReset: this._handlePageReset.bind(this),
 			pagesSwapped: this._handlePagesSwapped.bind(this),
 			pagesUpdated: this._handlePagesUpdated.bind(this),
-			paginationItemClicked: this._handlePaginationItemClicked.bind(this),
 			paginationModeUpdated: this._handlePaginationModeUpdated.bind(this),
 			paginationNextClicked: this._handlePaginationNextClicked.bind(this),
 			paginationPreviousClicked: this._handlePaginationPreviousClicked.bind(
@@ -513,10 +511,6 @@ class LayoutProvider extends Component {
 		});
 	}
 
-	_handlePaginationItemClicked({pageIndex}) {
-		handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
-	}
-
 	_handlePaginationModeUpdated() {
 		const {paginationMode} = this.state;
 		let newMode = 'paginated';
@@ -533,13 +527,13 @@ class LayoutProvider extends Component {
 	_handlePaginationNextClicked() {
 		const {activePage, pages} = this.state;
 		const pageIndex = Math.min(activePage + 1, pages.length - 1);
-		handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
+		this.dispatch('activePageUpdated', pageIndex);
 	}
 
 	_handlePaginationPreviousClicked() {
 		const {activePage} = this.state;
 		const pageIndex = Math.max(activePage - 1, 0);
-		handlePaginationItemClicked({pageIndex}, this.dispatch.bind(this));
+		this.dispatch('activePageUpdated', pageIndex);
 	}
 
 	_handleRuleAdded(rule) {

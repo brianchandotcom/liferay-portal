@@ -21,6 +21,9 @@ import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.configuration.CrossClusterReplicationConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+import com.liferay.portal.search.engine.adapter.ccr.FollowInfoCCRRequest;
+import com.liferay.portal.search.engine.adapter.ccr.FollowInfoCCRResponse;
+import com.liferay.portal.search.engine.adapter.ccr.FollowInfoStatus;
 import com.liferay.portal.search.engine.adapter.ccr.PauseFollowCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.PutFollowCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.UnfollowCCRRequest;
@@ -43,11 +46,34 @@ public class CrossClusterReplicationHelperImpl
 		if (!elasticsearchConnectionManager.
 				isCrossClusterReplicationEnabled()) {
 
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skip following of the " + indexName +
+						" index. Cross-Cluster Replication is not enabled");
+			}
+
 			return;
 		}
 
 		for (String localClusterConnectionId :
 				elasticsearchConnectionManager.getLocalClusterConnectionIds()) {
+
+			if (_isFollowingActive(localClusterConnectionId, indexName)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"The ", indexName,
+							" index is already being followed for connection ",
+							localClusterConnectionId));
+				}
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Executing follow request for the ", indexName,
+						" index with connection ", localClusterConnectionId));
+			}
 
 			try {
 				_putFollow(indexName, localClusterConnectionId);
@@ -56,11 +82,12 @@ public class CrossClusterReplicationHelperImpl
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Unable to follow the index ", indexName,
-							" in the ",
+							"Unable to follow the ", indexName,
+							" index in the ",
 							crossClusterReplicationConfigurationWrapper.
 								getRemoteClusterAlias(),
-							" cluster"),
+							" cluster for connection ",
+							localClusterConnectionId),
 						runtimeException);
 				}
 			}
@@ -72,11 +99,24 @@ public class CrossClusterReplicationHelperImpl
 		if (!elasticsearchConnectionManager.
 				isCrossClusterReplicationEnabled()) {
 
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Skip unfollowing of the " + indexName +
+						" index. Cross-Cluster Replication is not enabled");
+			}
+
 			return;
 		}
 
 		for (String localClusterConnectionId :
 				elasticsearchConnectionManager.getLocalClusterConnectionIds()) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					StringBundler.concat(
+						"Executing unfollow requests for the ", indexName,
+						" index with connection ", localClusterConnectionId));
+			}
 
 			try {
 				_pauseFollow(indexName, localClusterConnectionId);
@@ -90,7 +130,9 @@ public class CrossClusterReplicationHelperImpl
 			catch (RuntimeException runtimeException) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to unfollow the index " + indexName,
+						StringBundler.concat(
+							"Unable to unfollow the ", indexName,
+							" index for connection ", localClusterConnectionId),
 						runtimeException);
 				}
 			}
@@ -122,6 +164,29 @@ public class CrossClusterReplicationHelperImpl
 		deleteIndexRequest.setConnectionId(connectionId);
 
 		searchEngineAdapter.execute(deleteIndexRequest);
+	}
+
+	private boolean _isFollowingActive(String connectionId, String indexName) {
+		try {
+			FollowInfoCCRRequest followInfoCCRRequest =
+				new FollowInfoCCRRequest(indexName);
+
+			followInfoCCRRequest.setConnectionId(connectionId);
+
+			FollowInfoCCRResponse followInfoCCRResponse =
+				searchEngineAdapter.execute(followInfoCCRRequest);
+
+			FollowInfoStatus followInfoStatus =
+				followInfoCCRResponse.getFollowInfoStatus();
+
+			if (followInfoStatus == FollowInfoStatus.ACTIVE) {
+				return true;
+			}
+		}
+		catch (RuntimeException runtimeException) {
+		}
+
+		return false;
 	}
 
 	private void _pauseFollow(String indexName, String connectionId) {

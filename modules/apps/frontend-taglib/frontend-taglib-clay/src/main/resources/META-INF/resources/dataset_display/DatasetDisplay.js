@@ -22,7 +22,6 @@ import EmptyResultMessage from './EmptyResultMessage';
 import ManagementBar from './management_bar/index';
 import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
-import {closest} from './utilities/closest';
 import {
 	DATASET_ACTION_PERFORMED,
 	DATASET_DISPLAY_UPDATED,
@@ -265,7 +264,8 @@ function DatasetDisplay({
 
 	useEffect(() => {
 		if (wrapperRef.current) {
-			const form = closest(wrapperRef.current, 'form');
+			const form = wrapperRef.current.closest('form');
+
 			if (form && form.getAttribute('data-senna-off') === null) {
 				form.setAttribute('data-senna-off', true);
 			}

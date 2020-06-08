@@ -307,7 +307,7 @@ const Main = ({
 	visible,
 	...otherProps
 }) => (
-	<DndProvider backend={HTML5Backend}>
+	<DndProvider backend={HTML5Backend} context={window}>
 		<FieldBase {...otherProps} readOnly={readOnly} visible={visible}>
 			<Options
 				defaultLanguageId={defaultLanguageId}

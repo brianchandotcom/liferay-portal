@@ -203,6 +203,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-86141. The collections with multiple asset type are unavailable to the Collection Display."
+	@ignore = "true"
 	@priority = "4"
 	test CollectionsWithMultipleAssetTypeAreUnavailableToCollectionDisplay {
 		task ("Add a Web Content Article based on Basic Web Content and a Blogs Entry") {

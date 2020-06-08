@@ -104,9 +104,17 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (Files.isDirectory(dirPath.resolve("src"))) {
+					Path dirNamePath = dirPath.getFileName();
+
+					String dirName = dirNamePath.toString();
+
+					if (Files.isDirectory(dirPath.resolve("src/main/webapp"))) {
 						projectDirs.add(dirPath.toFile());
 
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					if (isNonprojectDirName(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

@@ -40,10 +40,13 @@ import org.gradle.api.tasks.Copy;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Gregory Amerson
  */
 public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 
 	public BaseProjectConfigurator(Settings settings) {
+		File rootDir = settings.getRootDir();
+
 		String defaultRootDirNames = GradleUtil.getProperty(
 			settings, getDefaultRootDirPropertyName(), (String)null);
 
@@ -51,15 +54,13 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 			_defaultRootDirs = new HashSet<>();
 
 			for (String dirName : defaultRootDirNames.split("\\s*,\\s*")) {
-				File dir = new File(settings.getRootDir(), dirName);
+				File dir = new File(rootDir, dirName);
 
 				_defaultRootDirs.add(dir);
 			}
 		}
 		else {
-			File dir = new File(settings.getRootDir(), getDefaultRootDirName());
-
-			_defaultRootDirs = Collections.singleton(dir);
+			_defaultRootDirs = Collections.singleton(rootDir);
 		}
 	}
 
@@ -171,6 +172,22 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 
 	protected String getDefaultRootDirPropertyName() {
 		return WorkspacePlugin.PROPERTY_PREFIX + getName() + ".dir";
+	}
+
+	protected boolean isNonprojectDirName(String dirName) {
+		if (dirName == null) {
+			return false;
+		}
+
+		if (dirName.equals(".gradle") || dirName.equals("build") ||
+			dirName.equals("build_gradle") || dirName.equals("dist") ||
+			dirName.equals("gradle") || dirName.equals("node_modules") ||
+			dirName.equals("node_modules_cache") || dirName.equals("src")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private final Set<File> _defaultRootDirs;

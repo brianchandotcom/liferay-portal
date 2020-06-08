@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.tasks.UpdatePropertiesTask;
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import groovy.lang.Closure;
@@ -30,7 +31,9 @@ import java.io.File;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -65,6 +68,24 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 	public PluginsProjectConfigurator(Settings settings) {
 		super(settings);
+
+		String defaultRootDirNames = GradleUtil.getProperty(
+			settings, getDefaultRootDirPropertyName(), (String)null);
+
+		if (Validator.isNotNull(defaultRootDirNames)) {
+			_pluginsSDKDefaultRootDirs = new HashSet<>();
+
+			for (String dirName : defaultRootDirNames.split("\\s*,\\s*")) {
+				File dir = new File(settings.getRootDir(), dirName);
+
+				_pluginsSDKDefaultRootDirs.add(dir);
+			}
+		}
+		else {
+			File dir = new File(settings.getRootDir(), getDefaultRootDirName());
+
+			_pluginsSDKDefaultRootDirs = Collections.singleton(dir);
+		}
 	}
 
 	@Override
@@ -99,6 +120,11 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 		_addRootTaskUpgradePluginsSDK(
 			project, pluginsSDKConfiguration, workspaceExtension);
+	}
+
+	@Override
+	public Iterable<File> getDefaultRootDirs() {
+		return _pluginsSDKDefaultRootDirs;
 	}
 
 	@Override
@@ -339,5 +365,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 	private static final String _DEFAULT_ROOT_DIR_PROPERTY_NAME =
 		WorkspacePlugin.PROPERTY_PREFIX + "plugins.sdk.dir";
+
+	private final Set<File> _pluginsSDKDefaultRootDirs;
 
 }

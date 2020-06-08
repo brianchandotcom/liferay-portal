@@ -122,7 +122,11 @@ const ExportTranslationModal = ({
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
-							<ClayButton displayType="primary" type="submit">
+							<ClayButton
+								disabled={selectedTargetLocales.length === 0}
+								displayType="primary"
+								type="submit"
+							>
 								{Liferay.Language.get('export')}
 							</ClayButton>
 						</ClayButton.Group>

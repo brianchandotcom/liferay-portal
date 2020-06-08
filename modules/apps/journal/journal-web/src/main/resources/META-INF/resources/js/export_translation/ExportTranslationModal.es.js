@@ -67,7 +67,7 @@ const ExportTranslationModal = ({
 				}}
 			/>
 		);
-	}
+	};
 
 	return (
 		<ClayModal observer={observer} size="md">
@@ -98,12 +98,17 @@ const ExportTranslationModal = ({
 					</ClayForm.Group>
 
 					<h5>
-						<p>{Liferay.Language.get('languages-to-translate-to')}</p>
+						<p>
+							{Liferay.Language.get('languages-to-translate-to')}
+						</p>
 					</h5>
 
 					<ClayForm.Group>
 						{availableTargetLocales.map((locale) => (
-							<TargetLocale key={locale.languageId} locale={locale} />
+							<TargetLocale
+								key={locale.languageId}
+								locale={locale}
+							/>
 						))}
 					</ClayForm.Group>
 

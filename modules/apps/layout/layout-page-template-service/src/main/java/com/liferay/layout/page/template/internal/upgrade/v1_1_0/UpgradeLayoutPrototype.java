@@ -107,6 +107,13 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 
 						name = newName;
 
+						nameMap.put(defaultLocale, name);
+
+						layoutPrototype.setNameMap(nameMap);
+
+						_layoutPrototypeLocalService.updateLayoutPrototype(
+							layoutPrototype);
+
 						break;
 					}
 				}

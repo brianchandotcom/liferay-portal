@@ -16,7 +16,7 @@ import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import useLazy from '../../core/hooks/useLazy';
@@ -56,8 +56,6 @@ function ToolbarBody() {
 		selectedViewportSize,
 	} = store;
 
-	const [enableDiscard, setEnableDiscard] = useState(false);
-
 	const [openPreviewModal, setOpenPreviewModal] = useState(false);
 
 	const {observer} = useModal({
@@ -67,12 +65,6 @@ function ToolbarBody() {
 			}
 		},
 	});
-
-	useEffect(() => {
-		const isConversionPage = config.pageType === PAGE_TYPES.conversion;
-
-		setEnableDiscard(network.lastFetch || config.draft || isConversionPage);
-	}, [network.lastFetch]);
 
 	const loading = useRef(() => {
 		Promise.all(
@@ -129,7 +121,7 @@ function ToolbarBody() {
 		}, [])
 	);
 
-	const handleDiscardDraft = (event) => {
+	const handleDiscardVariant = (event) => {
 		if (
 			!confirm(
 				Liferay.Language.get(
@@ -167,15 +159,6 @@ function ToolbarBody() {
 			selectItem(null);
 		}
 	};
-
-	let draftButtonLabel = Liferay.Language.get('discard-draft');
-
-	if (config.pageType === PAGE_TYPES.conversion) {
-		draftButtonLabel = Liferay.Language.get('discard-conversion-draft');
-	}
-	else if (config.singleSegmentsExperienceMode) {
-		draftButtonLabel = Liferay.Language.get('discard-variant');
-	}
 
 	let publishButtonLabel = Liferay.Language.get('publish');
 
@@ -269,26 +252,27 @@ function ToolbarBody() {
 						{Liferay.Language.get('preview')}
 					</ClayButton>
 				</li>
-				<li className="nav-item">
-					<form action={config.discardDraftURL} method="POST">
-						<input
-							name={`${config.portletNamespace}redirect`}
-							type="hidden"
-							value={config.discardDraftRedirectURL}
-						/>
+				{config.singleSegmentsExperienceMode && (
+					<li className="nav-item">
+						<form action={config.discardDraftURL} method="POST">
+							<input
+								name={`${config.portletNamespace}redirect`}
+								type="hidden"
+								value={config.discardDraftRedirectURL}
+							/>
 
-						<ClayButton
-							className="btn btn-secondary mr-3"
-							disabled={!enableDiscard}
-							displayType="secondary"
-							onClick={handleDiscardDraft}
-							small
-							type="submit"
-						>
-							{draftButtonLabel}
-						</ClayButton>
-					</form>
-				</li>
+							<ClayButton
+								className="btn btn-secondary mr-3"
+								displayType="secondary"
+								onClick={handleDiscardVariant}
+								small
+								type="submit"
+							>
+								{Liferay.Language.get('discard-variant')}
+							</ClayButton>
+						</form>
+					</li>
+				)}
 
 				<li className="nav-item">
 					<form action={config.publishURL} method="POST">

@@ -365,16 +365,16 @@ public class SitemapImpl implements Sitemap {
 	}
 
 	private void _initEntriesAndSize(Element rootElement) {
-		rootElement.addAttribute(_ENTRIES, "0");
+		rootElement.addAttribute("entries", "0");
 
 		int size = _getSize(rootElement);
 
-		rootElement.addAttribute(_SIZE, String.valueOf(size));
+		rootElement.addAttribute("size", String.valueOf(size));
 	}
 
 	private void _removeEntriesAndSize(Element rootElement) {
-		Attribute entriesAttribute = rootElement.attribute(_ENTRIES);
-		Attribute sizeAttribute = rootElement.attribute(_SIZE);
+		Attribute entriesAttribute = rootElement.attribute("entries");
+		Attribute sizeAttribute = rootElement.attribute("size");
 
 		if (_log.isDebugEnabled()) {
 			StringBundler sb = new StringBundler(5);
@@ -412,8 +412,8 @@ public class SitemapImpl implements Sitemap {
 		Element rootElement, Element newElement) {
 
 		int entries = GetterUtil.getInteger(
-			rootElement.attributeValue(_ENTRIES));
-		int size = GetterUtil.getInteger(rootElement.attributeValue(_SIZE));
+			rootElement.attributeValue("entries"));
+		int size = GetterUtil.getInteger(rootElement.attributeValue("size"));
 
 		entries++;
 		size += _getSize(newElement);
@@ -430,15 +430,11 @@ public class SitemapImpl implements Sitemap {
 			rootElement.remove(oldestUrlElement);
 		}
 
-		rootElement.addAttribute(_ENTRIES, String.valueOf(entries));
-		rootElement.addAttribute(_SIZE, String.valueOf(size));
+		rootElement.addAttribute("entries", String.valueOf(entries));
+		rootElement.addAttribute("size", String.valueOf(size));
 	}
 
-	private static final String _ENTRIES = "entries";
-
 	private static final int _MAXIMUM_SIZE_IN_BYTES = 50 * 1024 * 1024;
-
-	private static final String _SIZE = "size";
 
 	private static final byte[] _XHTML_ATTRIBUTE =
 		" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"".getBytes();

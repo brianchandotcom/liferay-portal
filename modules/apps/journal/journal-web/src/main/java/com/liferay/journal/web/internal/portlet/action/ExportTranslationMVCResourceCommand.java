@@ -74,10 +74,10 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				_infoItemFormProviderTracker.getInfoItemFormProvider(
 					JournalArticle.class.getName());
 
-			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
-
 			String sourceLanguageId = ParamUtil.getString(
 				resourceRequest, "sourceLanguageId");
+
+			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
 			for (String targetLanguageId :
 					ParamUtil.getStringValues(

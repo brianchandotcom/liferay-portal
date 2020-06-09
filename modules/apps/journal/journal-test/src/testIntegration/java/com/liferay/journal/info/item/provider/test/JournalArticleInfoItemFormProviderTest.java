@@ -27,11 +27,14 @@ import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -89,12 +92,27 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertEquals(
 			infoFieldValues.toString(), 9, infoFieldValues.size());
 
+		InfoFieldValue<Object> descriptionInfoFieldValue =
+			infoFormValues.getInfoFieldValue("description");
+
+		Assert.assertEquals(
+			"Description",
+			descriptionInfoFieldValue.getValue(LocaleUtil.getDefault()));
+
+		Assert.assertEquals(
+			"Descripción",
+			descriptionInfoFieldValue.getValue(LocaleUtil.SPAIN));
+
 		InfoFieldValue<Object> titleInfoFieldValue =
 			infoFormValues.getInfoFieldValue("title");
 
 		Assert.assertEquals(
 			"Test Article",
 			titleInfoFieldValue.getValue(LocaleUtil.getDefault()));
+
+		Assert.assertEquals(
+			"Artículo de prueba",
+			titleInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
 		InfoFieldValue<Object> ddmTextInfoFieldValue =
 			infoFormValues.getInfoFieldValue("DDM_Text");
@@ -147,10 +165,33 @@ public class JournalArticleInfoItemFormProviderTest {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
 
-		return JournalTestUtil.addArticleWithXMLContent(
-			_group.getGroupId(),
-			_readFileToString("dependencies/test-journal-content.xml"),
-			ddmStructure.getStructureKey(), null);
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				_group.getGroupId(),
+				_readFileToString("dependencies/test-journal-content.xml"),
+				ddmStructure.getStructureKey(), null);
+
+		journalArticle.setDescriptionMap(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), "Description"
+			).put(
+				LocaleUtil.SPAIN, "Descripción"
+			).build());
+
+		journalArticle = _journalArticleLocalService.updateArticleTranslation(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), LocaleUtil.getDefault(),
+			journalArticle.getTitle(), "Description",
+			journalArticle.getContent(), null,
+			ServiceContextTestUtil.getServiceContext(
+				journalArticle.getGroupId()));
+
+		return _journalArticleLocalService.updateArticleTranslation(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), LocaleUtil.SPAIN, "Artículo de prueba",
+			"Descripción", journalArticle.getContent(), null,
+			ServiceContextTestUtil.getServiceContext(
+				journalArticle.getGroupId()));
 	}
 
 	private String _readFileToString(String s) throws Exception {
@@ -165,5 +206,8 @@ public class JournalArticleInfoItemFormProviderTest {
 
 	@Inject
 	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

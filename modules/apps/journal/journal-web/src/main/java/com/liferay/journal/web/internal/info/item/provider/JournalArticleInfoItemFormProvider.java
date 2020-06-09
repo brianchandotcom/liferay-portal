@@ -314,11 +314,24 @@ public class JournalArticleInfoItemFormProvider
 
 			journalArticleFieldValues.add(
 				new InfoFieldValue<>(
-					_titleInfoField, journalArticle.getTitle()));
-
+					_titleInfoField,
+					InfoLocalizedValue.builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							journalArticle.getDefaultLanguageId())
+					).addValues(
+						journalArticle.getTitleMap()
+					).build()));
 			journalArticleFieldValues.add(
 				new InfoFieldValue<>(
-					_descriptionInfoField, journalArticle.getDescription()));
+					_descriptionInfoField,
+					InfoLocalizedValue.builder(
+					).defaultLocale(
+						LocaleUtil.fromLanguageId(
+							journalArticle.getDefaultLanguageId())
+					).addValues(
+						journalArticle.getDescriptionMap()
+					).build()));
 
 			if (themeDisplay != null) {
 				journalArticleFieldValues.add(

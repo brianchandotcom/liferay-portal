@@ -18,27 +18,6 @@ const getActiveElements = function () {
 	return [activeItem, indexActiveItem, activeIndicator];
 };
 
-const startMove = function ({
-	activeIndicator,
-	activeItem,
-	movement,
-	nextItem,
-	nextItemIndex,
-}) {
-	activeItem.classList.add(movement);
-	nextItem.classList.add(movement);
-	activeIndicator.classList.remove('active');
-	indicators[nextItemIndex].classList.add('active');
-};
-
-const finishMove = function ({activeItem, nextItem, movement}) {
-	setTimeout(function () {
-		activeItem.classList.remove('active', movement);
-		nextItem.classList.add('active');
-		nextItem.classList.remove(movement);
-	}, 600);
-};
-
 const move = function (movement, index = null) {
 	const [activeItem, indexActiveItem, activeIndicator] = getActiveElements();
 	let nextItemIndex = index;
@@ -49,14 +28,16 @@ const move = function (movement, index = null) {
 
 	const nextItem = items[nextItemIndex];
 
-	startMove({
-		activeIndicator,
-		activeItem,
-		movement,
-		nextItem,
-		nextItemIndex,
-	});
-	finishMove({activeItem, movement, nextItem});
+	activeItem.classList.add(movement);
+	nextItem.classList.add(movement);
+	activeIndicator.classList.remove('active');
+	indicators[nextItemIndex].classList.add('active');
+
+	setTimeout(function () {
+		activeItem.classList.remove('active', movement);
+		nextItem.classList.add('active');
+		nextItem.classList.remove(movement);
+	}, 600);
 };
 
 const resetInterval = function (interval, clear = true) {

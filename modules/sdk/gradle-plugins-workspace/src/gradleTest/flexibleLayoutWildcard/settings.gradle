@@ -1,0 +1,7 @@
+buildscript {
+	dependencies {
+		classpath fileTree(dir: pluginClasspathDir, excludes: ["biz.aQute.bnd-3.5.0.jar", "com.liferay.gradle.util-1.0.33.jar"], include: "*.jar")
+	}
+}
+
+apply plugin: "com.liferay.workspace"

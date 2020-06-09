@@ -229,6 +229,9 @@ public class DDMFormInstanceRecordIndexer
 		document.addKeyword(
 			"formInstanceId", ddmFormInstance.getFormInstanceId());
 
+		document.addDate(
+			Field.MODIFIED_DATE, ddmFormInstance.getModifiedDate());
+
 		DDMStructure ddmStructure = ddmFormInstance.getStructure();
 
 		DDMFormValues ddmFormValues =

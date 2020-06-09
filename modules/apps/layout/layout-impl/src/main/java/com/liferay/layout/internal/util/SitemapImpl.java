@@ -282,9 +282,9 @@ public class SitemapImpl implements Sitemap {
 
 			int availableLocalesSize = availableLocales.size();
 
-			offset = (availableLocalesSize + 1) * _XHTML_ATTRIBUTE.length;
+			offset = (availableLocalesSize + 1) * _ATTRIBUTE_XHTML.length;
 
-			offset += _XMLNS_ATTRIBUTE.length;
+			offset += _ATTRIBUTE_XMLNS.length;
 		}
 
 		return bytes.length - offset;
@@ -436,10 +436,10 @@ public class SitemapImpl implements Sitemap {
 
 	private static final int _MAXIMUM_SIZE = 50 * 1024 * 1024;
 
-	private static final byte[] _XHTML_ATTRIBUTE =
+	private static final byte[] _ATTRIBUTE_XHTML =
 		" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"".getBytes();
 
-	private static final byte[] _XMLNS_ATTRIBUTE =
+	private static final byte[] _ATTRIBUTE_XMLNS =
 		" xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"".getBytes();
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -50,6 +50,10 @@ public class LayoutOpenGraphScreenNavigationEntry
 				return false;
 			}
 
+			if (layout.isTypeAssetDisplay()) {
+				return true;
+			}
+
 			return super.isVisible(user, layout);
 		}
 		catch (PortalException portalException) {

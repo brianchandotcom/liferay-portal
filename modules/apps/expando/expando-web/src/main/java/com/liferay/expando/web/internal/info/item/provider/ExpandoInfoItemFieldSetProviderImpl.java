@@ -39,17 +39,17 @@ public class ExpandoInfoItemFieldSetProviderImpl
 
 	@Override
 	public InfoFieldSet getInfoFieldSet(String itemClassName) {
-		InfoFieldSet infoFieldSet = new InfoFieldSet(
-			InfoLocalizedValue.localize(getClass(), "custom-fields"),
-			"expando");
+		return new InfoFieldSet.Builder(
+			InfoLocalizedValue.localize(getClass(), "custom-fields"), "expando"
+		).add(
+			consumer -> {
+				for (ExpandoInfoItemFieldReader expandoInfoItemFieldReader :
+						_getExpandoFieldReaders(itemClassName)) {
 
-		for (ExpandoInfoItemFieldReader expandoInfoItemFieldReader :
-				_getExpandoFieldReaders(itemClassName)) {
-
-			infoFieldSet.add(expandoInfoItemFieldReader.getField());
-		}
-
-		return infoFieldSet;
+					consumer.accept(expandoInfoItemFieldReader.getField());
+				}
+			}
+		).build();
 	}
 
 	@Override

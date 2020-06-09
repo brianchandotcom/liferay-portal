@@ -47,17 +47,19 @@ public class InfoItemFieldReaderFieldSetProviderImpl
 
 	@Override
 	public InfoFieldSet getInfoFieldSet(String className) {
-		InfoFieldSet infoFieldSet = new InfoFieldSet(
-			InfoLocalizedValue.localize(getClass(), "fields"), "fields");
+		return new InfoFieldSet.Builder(
+			InfoLocalizedValue.localize(getClass(), "fields"), "fields"
+		).add(
+			consumer -> {
+				List<InfoItemFieldReader<?>> infoItemFieldReaders =
+					_infoItemFieldReaderTracker.getInfoItemFieldReaders(
+						className);
 
-		List<InfoItemFieldReader> infoItemFieldReaders =
-			_infoItemFieldReaderTracker.getInfoItemFieldReaders(className);
-
-		for (InfoItemFieldReader infoItemFieldReader : infoItemFieldReaders) {
-			infoFieldSet.add(infoItemFieldReader.getField());
-		}
-
-		return infoFieldSet;
+				for (InfoItemFieldReader<?> infoItemFieldReader : infoItemFieldReaders) {
+					consumer.accept(infoItemFieldReader.getField());
+				}
+			}
+		).build();
 	}
 
 	@Override
@@ -66,7 +68,7 @@ public class InfoItemFieldReaderFieldSetProviderImpl
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
-		List<InfoItemFieldReader> infoItemFieldReaders =
+		List<InfoItemFieldReader<?>> infoItemFieldReaders =
 			_infoItemFieldReaderTracker.getInfoItemFieldReaders(className);
 
 		ServiceContext serviceContext =

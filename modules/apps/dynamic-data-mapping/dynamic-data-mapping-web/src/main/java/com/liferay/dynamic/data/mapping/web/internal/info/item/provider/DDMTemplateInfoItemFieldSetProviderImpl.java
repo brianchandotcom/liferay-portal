@@ -30,7 +30,6 @@ import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,30 +51,31 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
-			InfoFieldSet infoFieldSet = new InfoFieldSet(
+			return new InfoFieldSet.Builder(
 				InfoLocalizedValue.localize(getClass(), "templates"),
-				"templates");
+				"templates"
+			).add(
+				consumer -> {
+					List<DDMTemplate> ddmTemplates =
+						ddmStructure.getTemplates();
 
-			List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
+					Stream<DDMTemplate> stream = ddmTemplates.stream();
 
-			Stream<DDMTemplate> stream = ddmTemplates.stream();
+					Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-			Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
-
-			infoFieldSet.addAll(
-				stream.map(
-					ddmTemplate -> new InfoField(
-						TextInfoFieldType.INSTANCE,
-						InfoLocalizedValue.localize(
-							getClass(),
-							ddmTemplate.getName(locale) + StringPool.SPACE +
-								StringPool.STAR),
-						_getTemplateFieldName(ddmTemplate))
-				).collect(
-					Collectors.toList()
-				));
-
-			return infoFieldSet;
+					stream.map(
+						ddmTemplate -> new InfoField(
+							TextInfoFieldType.INSTANCE,
+							InfoLocalizedValue.localize(
+								getClass(),
+								ddmTemplate.getName(locale) + StringPool.SPACE +
+									StringPool.STAR),
+							_getTemplateFieldName(ddmTemplate))
+					).forEach(
+						consumer
+					);
+				}
+			).build();
 		}
 		catch (NoSuchStructureException noSuchStructureException) {
 			throw noSuchStructureException;

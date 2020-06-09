@@ -562,7 +562,7 @@ definition {
 	@description = "This ensures that a depot web content can be searched from the connected site."
 	@priority = "5"
 	test SearchForWebContent {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 
 		JSONLayout.addWidgetToPublicLayout(
@@ -613,7 +613,7 @@ definition {
 	@description = "This ensures that a depot can be connected to the site."
 	@priority = "5"
 	test Smoke {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 
 		JSONDepot.addDepot(

@@ -70,7 +70,7 @@ definition {
 	@description = "This ensures that a user can be added and removed in the membership of an asset library."
 	@priority = "5"
 	test AddAndRemoveUser {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property portal.upstream = "quarantine";
 
 		JSONUser.addUser(

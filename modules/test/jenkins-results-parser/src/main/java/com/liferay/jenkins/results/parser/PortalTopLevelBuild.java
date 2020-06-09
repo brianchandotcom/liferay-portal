@@ -19,8 +19,8 @@ package com.liferay.jenkins.results.parser;
  */
 public class PortalTopLevelBuild
 	extends DefaultTopLevelBuild
-	implements AnalyticsCloudBranchInformationBuild, PluginsBranchInformationBuild,
-		PortalBranchInformationBuild {
+	implements AnalyticsCloudBranchInformationBuild,
+			   PluginsBranchInformationBuild, PortalBranchInformationBuild {
 
 	public PortalTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);

@@ -102,7 +102,7 @@ long organizationGroupId = organization.getGroupId();
 	<c:if test="<%= OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.ASSIGN_MEMBERS) %>">
 
 		<%
-		String taglibOnClick = renderResponse.getNamespace() + "openSelectUsersDialog('" + organizationId + "');";
+		String taglibOnClick = "Liferay.Users.openSelectUsersDialog('" + organizationId + "');";
 		%>
 
 		<liferay-ui:icon

@@ -185,7 +185,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							uri: '<%= selectRegularRoleURL.toString() %>',
 						},
 						function (event) {
-							<portlet:namespace />selectRole(
+							Liferay.Users.selectRole(
 								event.entityid,
 								event.entityname,
 								event.searchcontainername,
@@ -469,7 +469,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							uri: '<%= selectOrganizationRoleURL.toString() %>',
 						},
 						function (event) {
-							<portlet:namespace />selectRole(
+							Liferay.Users.selectRole(
 								event.entityid,
 								event.entityname,
 								event.searchcontainername,
@@ -696,7 +696,7 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 							uri: '<%= selectSiteRoleURL.toString() %>',
 						},
 						function (event) {
-							<portlet:namespace />selectRole(
+							Liferay.Users.selectRole(
 								event.entityid,
 								event.entityname,
 								event.searchcontainername,
@@ -819,10 +819,15 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 				);
 			}
 
-			Liferay.provide(
-				window,
-				'<portlet:namespace />selectRole',
-				function (roleId, name, searchContainer, groupName, groupId, iconCssClass) {
+			var Users = {
+				selectRole: function (
+					roleId,
+					name,
+					searchContainer,
+					groupName,
+					groupId,
+					iconCssClass
+				) {
 					var A = AUI();
 					var LString = A.Lang.String;
 
@@ -909,8 +914,9 @@ String organizationRoleSyncEntitiesEventName = liferayPortletResponse.getNamespa
 
 					searchContainer.updateDataStore();
 				},
-				['liferay-search-container']
-			);
+			};
+
+			Liferay.Users = Users;
 		</aui:script>
 
 		<aui:script use="liferay-search-container">

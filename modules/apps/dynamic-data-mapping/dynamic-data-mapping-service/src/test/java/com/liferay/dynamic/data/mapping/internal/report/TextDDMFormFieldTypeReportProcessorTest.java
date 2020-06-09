@@ -16,18 +16,19 @@ package com.liferay.dynamic.data.mapping.internal.report;
 
 import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordModifiedDateComparator;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -99,17 +100,13 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			0L
 		);
 
-		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(3)
-		).thenReturn(
-			formInstanceRecord
-		);
+		long formInstanceRecordId = 3;
 
 		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
-				0, WorkflowConstants.STATUS_APPROVED)
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+				formInstanceRecordId)
 		).thenReturn(
-			5
+			formInstanceRecord
 		);
 
 		JSONObject processedFieldJSONObject =
@@ -146,7 +143,8 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 							"value", "text 1"
 						))
 				),
-				3, DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
+				formInstanceRecordId,
+				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
 			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
@@ -175,47 +173,64 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			"field1"
 		);
 
+		Value value = new LocalizedValue();
+
+		value.addString(value.getDefaultLocale(), "text 6");
+		value.setDefaultLocale(LocaleUtil.US);
+
+		when(
+			ddmFormFieldValue.getValue()
+		).thenReturn(
+			value
+		);
+
 		DDMFormInstanceRecord formInstanceRecord = mock(
 			DDMFormInstanceRecord.class);
 
+		DDMFormInstance formInstance = mock(DDMFormInstance.class);
+
 		when(
-			formInstanceRecord.getFormInstanceId()
+			formInstance.getFormInstanceId()
 		).thenReturn(
 			0L
 		);
 
 		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(3)
+			formInstanceRecord.getFormInstance()
+		).thenReturn(
+			formInstance
+		);
+
+		long formInstanceRecordId = 3;
+
+		when(
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+				formInstanceRecordId)
 		).thenReturn(
 			formInstanceRecord
 		);
 
-		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
-				0, WorkflowConstants.STATUS_APPROVED)
-		).thenReturn(
-			5
-		);
-
 		List<DDMFormInstanceRecord> formInstanceRecords = new ArrayList<>();
 
-		for (int i = 5; i > 0; i--) {
+		for (int i = _VALUES_MAX_LENGTH; i > 0; i--) {
 			formInstanceRecords.add(_createFormInstanceRecord("text " + i));
 		}
 
 		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-				Mockito.eq(0L), Mockito.eq(WorkflowConstants.STATUS_APPROVED),
-				Mockito.eq(0), Mockito.eq(5),
-				Mockito.any(DDMFormInstanceRecordModifiedDateComparator.class))
+			_ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
+				Mockito.eq(0L), Mockito.eq(new String[] {"field1"}),
+				Mockito.eq(WorkflowConstants.STATUS_APPROVED), Mockito.eq(0),
+				Mockito.eq(_VALUES_MAX_LENGTH + 1), Mockito.any())
 		).thenReturn(
-			formInstanceRecords
+			new BaseModelSearchResult<DDMFormInstanceRecord>(
+				formInstanceRecords, formInstanceRecords.size())
 		);
 
 		JSONObject processedFieldJSONObject =
 			_textDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue, JSONUtil.put("type", DDMFormFieldType.TEXT),
-				3, DDMFormInstanceReportConstants.EVENT_DELETE_RECORD_VERSION);
+				formInstanceRecordId,
+				DDMFormInstanceReportConstants.EVENT_DELETE_RECORD_VERSION);
 
 		Assert.assertEquals(
 			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
@@ -266,17 +281,13 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			0L
 		);
 
-		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(0)
-		).thenReturn(
-			formInstanceRecord
-		);
+		long formInstanceRecordId = 1;
 
 		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
-				0, WorkflowConstants.STATUS_APPROVED)
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+				formInstanceRecordId)
 		).thenReturn(
-			1
+			formInstanceRecord
 		);
 
 		JSONObject processedFieldJSONObject =
@@ -287,7 +298,8 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 				).put(
 					"values", JSONFactoryUtil.createJSONObject()
 				),
-				0, DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
+				formInstanceRecordId,
+				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
 			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
@@ -338,17 +350,13 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			0L
 		);
 
-		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(0)
-		).thenReturn(
-			formInstanceRecord
-		);
+		long formInstanceRecordId = 0;
 
 		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
-				0, WorkflowConstants.STATUS_APPROVED)
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+				formInstanceRecordId)
 		).thenReturn(
-			2
+			formInstanceRecord
 		);
 
 		JSONObject processedFieldJSONObject =
@@ -365,7 +373,8 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 							"value", "text 1"
 						))
 				),
-				0, DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
+				formInstanceRecordId,
+				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
 			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
@@ -420,17 +429,13 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			0L
 		);
 
-		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(6)
-		).thenReturn(
-			formInstanceRecord
-		);
+		long formInstanceRecordId = 6;
 
 		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecordsCount(
-				0, WorkflowConstants.STATUS_APPROVED)
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+				formInstanceRecordId)
 		).thenReturn(
-			6
+			formInstanceRecord
 		);
 
 		JSONObject processedFieldJSONObject =
@@ -467,7 +472,8 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 							"value", "text 1"
 						))
 				),
-				6, DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
+				formInstanceRecordId,
+				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
 			DDMFormFieldType.TEXT, processedFieldJSONObject.getString("type"));
@@ -527,6 +533,8 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
+
+	private static final int _VALUES_MAX_LENGTH = 5;
 
 	@Mock
 	private DDMFormInstanceRecordLocalService

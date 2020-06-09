@@ -46,7 +46,7 @@ public interface EditableElementParser {
 	public String getValue(Element element);
 
 	public default String parseFieldValue(Object fieldValue) {
-		return GetterUtil.get(fieldValue, StringPool.BLANK);
+		return GetterUtil.get(fieldValue.toString(), StringPool.BLANK);
 	}
 
 	/**

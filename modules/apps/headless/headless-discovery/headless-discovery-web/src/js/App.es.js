@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,28 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import React from 'react';
 
-<div id="root">
-	<react:component
-		module="js/index.es"
-	/>
-</div>
+import '@clayui/css/lib/css/atlas.css';
+
+import 'swagger-ui-react/swagger-ui.css';
+
+import APIGUI from './APIGUI';
+
+import 'graphiql/graphiql.css';
+
+import {AppStateProvider} from './hooks/appState';
+import appReducer, {initialState} from './reducers/appReducer';
+
+const App = (props) => {
+	return (
+		<>
+			<AppStateProvider initialState={initialState} reducer={appReducer}>
+				<APIGUI props={props} />
+			</AppStateProvider>
+		</>
+	);
+};
+
+export default App;

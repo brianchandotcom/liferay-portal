@@ -40,26 +40,25 @@ const move = function (movement, index = null) {
 	}, 600);
 };
 
-const resetInterval = function (interval, clear = true) {
-	if (clear) {
-		clearInterval(interval);
+const createInterval = function () {
+	let intervalId = null;
+
+	if (!editMode) {
+		intervalId = setInterval(function () {
+			if (document.contains(items[0])) {
+				move(MOVE_RIGHT);
+			}
+			else {
+				clearInterval(intervalId);
+			}
+		}, INTERVAL);
 	}
-	return setInterval(function () {
-		if (document.contains(items[0])) {
-			move(MOVE_RIGHT);
-		}
-		else {
-			clearInterval(interval);
-		}
-	}, INTERVAL);
+
+	return intervalId;
 };
 
 function main() {
-	let interval = null;
-
-	if (!editMode) {
-		interval = resetInterval(interval, false);
-	}
+	let intervalId = createInterval();
 
 	indicators.forEach(function (indicator, index) {
 		indicator.addEventListener('click', function () {
@@ -75,9 +74,8 @@ function main() {
 				}
 			}
 
-			if (!editMode) {
-				interval = resetInterval(interval);
-			}
+			clearInterval(intervalId);
+			intervalId = createInterval();
 		});
 	});
 }

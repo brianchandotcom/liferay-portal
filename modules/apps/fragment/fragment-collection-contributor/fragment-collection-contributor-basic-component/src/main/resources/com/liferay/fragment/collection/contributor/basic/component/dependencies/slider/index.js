@@ -47,38 +47,35 @@ const move = function (movement, index = null) {
 	}, 600);
 };
 
-const resetInterval = function (interval, clear = true) {
-	if (clear) {
-		clearInterval(interval);
+function createInterval() {
+	let intervalId = null;
+
+	if (!editMode) {
+		intervalId = setInterval(function () {
+			if (document.contains(items[0])) {
+				move(MOVE_RIGHT);
+			}
+			else {
+				clearInterval(intervalId);
+			}
+		}, INTERVAL);
 	}
-	return setInterval(function () {
-		if (document.contains(next)) {
-			move(MOVE_RIGHT);
-		}
-		else {
-			clearInterval(interval);
-		}
-	}, INTERVAL);
+
+	return intervalId;
 };
 
 function main() {
-	let interval = null;
-
-	if (!editMode) {
-		interval = resetInterval(interval, false);
-	}
+	let intervalId = createInterval();
 
 	prev.addEventListener('click', function () {
-		if (!editMode) {
-			interval = resetInterval(interval);
-		}
+		clearInterval(intervalId);
+		intervalId = createInterval();
 		move(MOVE_LEFT);
 	});
 
 	next.addEventListener('click', function () {
-		if (!editMode) {
-			interval = resetInterval(interval);
-		}
+		clearInterval(intervalId);
+		intervalId = createInterval();
 		move(MOVE_RIGHT);
 	});
 
@@ -96,9 +93,8 @@ function main() {
 				}
 			}
 
-			if (!editMode) {
-				interval = resetInterval(interval);
-			}
+			clearInterval(intervalId);
+			intervalId = createInterval();
 		});
 	});
 }

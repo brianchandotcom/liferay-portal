@@ -284,6 +284,7 @@ public abstract class BaseFragmentCollectionContributor
 		String html = _read(
 			path, jsonObject.getString("htmlPath"), "index.html");
 		String js = _read(path, jsonObject.getString("jsPath"), "index.js");
+
 		boolean cacheable = jsonObject.getBoolean("cacheable");
 		String configuration = _read(
 			path, jsonObject.getString("configurationPath"), "index.json");

@@ -74,12 +74,16 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 			ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
+			String sourceLanguageId = ParamUtil.getString(
+				resourceRequest, "sourceLanguageId");
+
 			for (String targetLanguageId :
 					ParamUtil.getStringValues(
 						resourceRequest, "targetLanguageIds")) {
 
 				zipWriter.addEntry(
-					"/" + targetLanguageId + ".xliff",
+					"/" + article.getTitle(themeDisplay.getLocale()) + "-" +
+						sourceLanguageId + "-" + targetLanguageId + ".xliff",
 					_translationInfoFormValuesExporter.export(
 						infoItemFormProvider.getInfoFormValues(article),
 						LocaleUtil.fromLanguageId(

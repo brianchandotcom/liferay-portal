@@ -16,9 +16,19 @@ package com.liferay.account.service.impl;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.base.AccountGroupLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -55,6 +65,21 @@ public class AccountGroupLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<AccountGroup> searchAccountGroups(
+		long companyId, String keywords, int start, int end,
+		OrderByComparator<AccountGroup> obc) {
+
+		DynamicQuery accountGroupDynamicQuery = _getAccountGroupDynamicQuery(
+			companyId, keywords, obc);
+
+		return new BaseModelSearchResult<>(
+			accountGroupLocalService.dynamicQuery(
+				accountGroupDynamicQuery, start, end, obc),
+			(int)accountGroupLocalService.dynamicQueryCount(
+				accountGroupDynamicQuery));
+	}
+
+	@Override
 	public AccountGroup updateAccountGroup(
 			long accountGroupId, String name, String description)
 		throws PortalException {
@@ -66,6 +91,45 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setDescription(description);
 
 		return accountGroupPersistence.update(accountGroup);
+	}
+
+	private DynamicQuery _getAccountGroupDynamicQuery(
+		long companyId, String keywords, OrderByComparator<AccountGroup> obc) {
+
+		DynamicQuery accountGroupDynamicQuery =
+			accountGroupLocalService.dynamicQuery();
+
+		accountGroupDynamicQuery.add(
+			RestrictionsFactoryUtil.eq("companyId", companyId));
+
+		if (Validator.isNotNull(keywords)) {
+			Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+			disjunction.add(
+				RestrictionsFactoryUtil.ilike(
+					"name", StringUtil.quote(keywords, StringPool.PERCENT)));
+			disjunction.add(
+				RestrictionsFactoryUtil.ilike(
+					"description",
+					StringUtil.quote(keywords, StringPool.PERCENT)));
+
+			accountGroupDynamicQuery.add(disjunction);
+		}
+
+		if (obc != null) {
+			Order order;
+
+			if (obc.isAscending()) {
+				order = OrderFactoryUtil.asc(obc.getOrderByFields()[0]);
+			}
+			else {
+				order = OrderFactoryUtil.desc(obc.getOrderByFields()[0]);
+			}
+
+			accountGroupDynamicQuery.addOrder(order);
+		}
+
+		return accountGroupDynamicQuery;
 	}
 
 }

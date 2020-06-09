@@ -973,7 +973,9 @@ public class GitWorkingDirectory {
 		String currentBranchName = getCurrentBranchName();
 
 		if (currentBranchName == null) {
-			return null;
+			checkoutUpstreamLocalGitBranch();
+
+			return getUpstreamLocalGitBranch();
 		}
 
 		return getLocalGitBranch(currentBranchName);

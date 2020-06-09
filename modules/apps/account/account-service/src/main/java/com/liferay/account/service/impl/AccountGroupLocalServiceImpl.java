@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -62,6 +64,15 @@ public class AccountGroupLocalServiceImpl
 		accountGroup.setDescription(description);
 
 		return accountGroupPersistence.update(accountGroup);
+	}
+
+	@Override
+	public List<AccountGroup> getAccountGroups(
+		long companyId, int start, int end,
+		OrderByComparator<AccountGroup> obc) {
+
+		return accountGroupPersistence.findByCompanyId(
+			companyId, start, end, obc);
 	}
 
 	@Override

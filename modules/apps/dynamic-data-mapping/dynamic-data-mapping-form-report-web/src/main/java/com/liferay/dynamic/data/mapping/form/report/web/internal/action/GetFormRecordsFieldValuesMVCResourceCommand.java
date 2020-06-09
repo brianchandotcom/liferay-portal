@@ -17,16 +17,18 @@ package com.liferay.dynamic.data.mapping.form.report.web.internal.action;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordModifiedDateComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -104,18 +106,23 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 		int start = ParamUtil.getInteger(
 			httpServletRequest, "start", QueryUtil.ALL_POS);
 
-		int end = start + _DEFAULT_DELTA;
+		int end = (start == QueryUtil.ALL_POS) ? QueryUtil.ALL_POS :
+			start + _DEFAULT_DELTA;
+
+		BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
+			_ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
+				formInstanceId, new String[] {fieldName},
+				WorkflowConstants.STATUS_APPROVED, start, end,
+				new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true));
 
 		List<DDMFormInstanceRecord> formInstanceRecords =
-			_ddmFormInstanceRecordService.getFormInstanceRecords(
-				formInstanceId, WorkflowConstants.STATUS_APPROVED, start, end,
-				new DDMFormInstanceRecordModifiedDateComparator(false));
+			baseModelSearchResult.getBaseModels();
 
 		for (DDMFormInstanceRecord formInstanceRecord : formInstanceRecords) {
 			DDMFormValues ddmFormValues = formInstanceRecord.getDDMFormValues();
 
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-				ddmFormValues.getDDMFormFieldValuesMap();
+				ddmFormValues.getDDMFormFieldValuesMap(false);
 
 			List<DDMFormFieldValue> ddmFormFieldValues =
 				ddmFormFieldValuesMap.get(fieldName);
@@ -134,7 +141,8 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 	private static final int _DEFAULT_DELTA = 20;
 
 	@Reference
-	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;
+	private DDMFormInstanceRecordLocalService
+		_ddmFormInstanceRecordLocalService;
 
 	@Reference
 	private Portal _portal;

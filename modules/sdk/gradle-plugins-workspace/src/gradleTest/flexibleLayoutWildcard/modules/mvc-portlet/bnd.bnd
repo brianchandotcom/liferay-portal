@@ -1,0 +1,4 @@
+Bundle-Name: mvc-portlet
+Bundle-SymbolicName: mvc.portlet
+Bundle-Version: 1.0.0
+Export-Package: mvc.portlet.constants

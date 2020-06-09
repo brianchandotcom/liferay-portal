@@ -15,6 +15,23 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Directly calls the JSON WS API to assign a user group a role"
+	macro _assignGroupRoleToUserGroup {
+		Variables.assertDefined(parameterList = "${groupId},${roleId},${userGroupId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/usergroupgrouprole/add-user-group-group-roles \
+				-u test@liferay.com:test \
+				-d roleId=${roleId} \
+				-d groupId=${groupId} \
+				-d userGroupIds=${userGroupId}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 	@summary = "Get the userGroupId from any existing site by using userGroupName"
 	macro _getUserGroupIdByName {
 		Variables.assertDefined(parameterList = "${userGroupName}");

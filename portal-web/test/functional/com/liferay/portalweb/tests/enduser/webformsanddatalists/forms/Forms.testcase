@@ -745,6 +745,13 @@ definition {
 
 		Form.save();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
 
 		Pause(locator1 = "2000");
@@ -930,6 +937,13 @@ definition {
 
 		Form.save();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
 
 		FormFields.viewTextLabel(
@@ -957,6 +971,13 @@ definition {
 		Form.closeSidebar();
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
 
 		Form.publishForm();
 
@@ -1315,6 +1336,13 @@ definition {
 		Form.closeSidebar();
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Delete Select Option Test");
 
 		Form.publishForm();
 
@@ -1995,6 +2023,13 @@ definition {
 
 		Form.save();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
 
 		FormFields.deleteGridOptionsRow(
@@ -2002,6 +2037,13 @@ definition {
 			rowNumber = "2");
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Grid Field Translated");
 
@@ -2026,6 +2068,13 @@ definition {
 		Form.closeSidebar();
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
 
 		for (var localeMap : list "Japanese (Japan):日本語,Portuguese (Brazil):Português") {
 			var locale = StringUtil.extractFirst("${localeMap}", ":");
@@ -2084,6 +2133,13 @@ definition {
 
 		Form.save();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Text");
+
 		Form.viewFormName(formName = "Text");
 
 		FormsAdminNavigator.gotoBack();
@@ -2108,6 +2164,13 @@ definition {
 		Form.closeSidebar();
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName(formName = "Checkbox");
 
 		Form.viewFormName(formName = "Checkbox");
 
@@ -2977,6 +3040,13 @@ definition {
 		Form.configureRequireCaptcha();
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
 
 		Form.publishForm();
 
@@ -4145,6 +4215,13 @@ definition {
 
 		Form.save();
 
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
@@ -4212,6 +4289,13 @@ definition {
 		Form.closeSidebar();
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
 
 		Form.publishForm();
 

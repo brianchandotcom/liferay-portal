@@ -1,14 +1,20 @@
 definition {
 
 	macro addAction {
+		WaitForElementPresent(locator1 = "FormRules#RULE_BUILDER_ADD_ACTION");
+
 		Click(locator1 = "FormRules#RULE_BUILDER_ADD_ACTION");
 	}
 
 	macro addCondition {
+		WaitForElementPresent(locator1 = "FormRules#RULE_BUILDER_ADD_CONDITION");
+
 		Click(locator1 = "FormRules#RULE_BUILDER_ADD_CONDITION");
 	}
 
 	macro addRule {
+		WaitForElementPresent(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
+
 		Click(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
 
 		FormRules.viewInactiveSaveButton();

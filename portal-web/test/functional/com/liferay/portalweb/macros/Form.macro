@@ -13,7 +13,6 @@ definition {
 	}
 
 	macro addPage {
-
 		var key_formAddNewPageNumber = "${formAddNewPageNumber}";
 
 		AssertClick(
@@ -30,7 +29,6 @@ definition {
 	}
 
 	macro addTextField {
-
 		Form.gotoAddField(
 			fieldType = "Text",
 			key_fieldPositionNumber = "${fieldPositionNumber}");
@@ -272,6 +270,11 @@ definition {
 	macro editPageTitle {
 		var key_titleNumber = "${formTitleNumber}";
 
+		WaitForElementPresent(
+			locator1 = "Form#PAGE_TITLE_FIELD",
+			value1 = "${formPageName}"
+		);
+
 		Type(
 			locator1 = "Form#PAGE_TITLE_FIELD",
 			value1 = "${formPageName}");
@@ -467,11 +470,19 @@ definition {
 		if (isSet(localeSaveForm)) {
 			var key_localeSaveForm = "${localeSaveForm}";
 
+			WaitForElementPresent(				
+				locator1 = "Form#SAVE_FORM_BUTTON_LOCALE",
+				value1 = "${key_localeSaveForm}");
+
 			AssertClick(
 				locator1 = "Form#SAVE_FORM_BUTTON_LOCALE",
 				value1 = "${key_localeSaveForm}");
 		}
 		else {
+			WaitForElementPresent(				
+				locator1 = "Form#SAVE_FORM_BUTTON",
+				value1 = "Save Form");
+
 			AssertClick(
 				locator1 = "Form#SAVE_FORM_BUTTON",
 				value1 = "Save Form");
@@ -483,6 +494,10 @@ definition {
 	}
 
 	macro saveElementSet {
+		WaitForElementPresent(				
+			locator1 = "Form#SAVE_ELEMENT_SET_BUTTON",
+			value1 = "Save");
+
 		AssertClick(
 			locator1 = "Form#SAVE_ELEMENT_SET_BUTTON",
 			value1 = "Save");
@@ -493,11 +508,17 @@ definition {
 	macro saveLocalized {
 		var key_saveButton = "${saveButton}";
 
+		WaitForElementPresent(				
+			locator1 = "Form#SAVE_FORM_BUTTON_LOCALIZED",
+			value1 = "${saveButton}");
+
 		AssertClick(
 			locator1 = "Form#SAVE_FORM_BUTTON_LOCALIZED",
 			value1 = "${saveButton}");
 
 		Alert.viewSuccessMessage();
+
+		Pause(locator1 = "2000");
 	}
 
 	macro selectTranslation {

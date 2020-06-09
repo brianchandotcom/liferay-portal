@@ -246,6 +246,8 @@ definition {
 	}
 
 	macro addForm {
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",

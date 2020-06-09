@@ -11,8 +11,6 @@ definition {
 
 		User.firstLoginPG();
 
-		var portalURL = PropsUtil.get("portal.url");
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -36,7 +34,8 @@ definition {
 
 		FormFields.editOptionsRow(
 			optionName = "Destiny1",
-			optionValue = "Destiny 1");
+			optionValue = "Destiny 1",
+			rowNumber = "1");
 
 		FormFields.editOptionsRow(
 			optionName = "Destiny2",
@@ -143,6 +142,16 @@ definition {
 	test ViewFormRulesSummary {
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewFormRulesSummary";
 		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		FormsAdminNavigator.gotoRules();
 
 		FormRules.viewSummary(
@@ -167,6 +176,16 @@ definition {
 	test ViewPagesAfterJump {
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewPagesAfterJump";
 		property portal.acceptance = "true";
+		
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		Form.publishForm();
 
 		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
@@ -216,6 +235,16 @@ definition {
 	@priority = "4"
 	test ViewRuleAfterLabelEdit {
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterLabelEdit";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		FormsAdminNavigator.gotoEditField(fieldName = "ChooseYourDestiny");
 
 		Form.editFieldLabelMetal(fieldValue = "Edit Label");
@@ -223,6 +252,13 @@ definition {
 		Form.closeSidebar();
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
 
 		FormsAdminNavigator.gotoRules();
 
@@ -240,6 +276,16 @@ definition {
 	test ViewRuleAfterOptionValueEdit {
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterOptionValueEdit";
 		property portal.acceptance = "true";
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		FormsAdminNavigator.gotoEditField(fieldName = "ChooseYourDestiny");
 
 		FormFields.editOptionsRow(
@@ -250,6 +296,13 @@ definition {
 		Form.closeSidebar();
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
 
 		FormsAdminNavigator.gotoRules();
 
@@ -268,11 +321,27 @@ definition {
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterPageNameChange";
 		property portal.acceptance = "quarantine";
 
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
+
 		Form.editPageTitle(
 			formPageName = "Renamed Page",
 			formTitleNumber = "3");
 
 		Form.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Forms");
+
+		FormsAdminNavigator.gotoEditFormByName();
 
 		FormsAdminNavigator.gotoRules();
 

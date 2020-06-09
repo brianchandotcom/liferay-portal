@@ -80,7 +80,6 @@ definition {
 	}
 
 	macro editFieldName {
-
 		Form.gotoAdvancedTab();
 
 		var key_fieldValue = "${fieldValue}";
@@ -113,6 +112,11 @@ definition {
 	macro editOptionsRow {
 		var key_rowNumber = "${rowNumber}";
 
+		WaitForElementPresent(
+			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
+			value1 = "${optionValue}"
+		);
+
 		Type(
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
 			value1 = "${optionValue}");
@@ -122,6 +126,11 @@ definition {
 
 	macro editOptionsRowNameField {
 		var key_rowNumber = "${rowNumber}";
+
+		WaitForElementPresent(
+			locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT",
+			value1 = "${optionValue}"
+		);
 
 		Type.clickAtType(
 			locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT",

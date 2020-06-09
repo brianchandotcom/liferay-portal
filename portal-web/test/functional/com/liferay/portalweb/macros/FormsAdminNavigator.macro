@@ -64,6 +64,8 @@ definition {
 	macro gotoEditField {
 		var key_fieldName = "${fieldName}";
 
+		WaitForElementPresent(locator1 = "Form#FIELD_BODY");
+
 		Click(locator1 = "Form#FIELD_BODY");
 
 		AssertElementPresent(locator1 = "Form#SIDEBAR_BASIC_TAB");
@@ -78,6 +80,10 @@ definition {
 
 	macro gotoFormBuilder {
 		var key_assetTitle = "Form";
+
+		WaitForElementPresent(
+			locator1 = "NavBar#ASSET_TITLE_LINK",
+			value1 = "Form");
 
 		AssertClick(
 			locator1 = "NavBar#ASSET_TITLE_LINK",
@@ -120,6 +126,10 @@ definition {
 
 	macro gotoRules {
 		var key_assetTitle = "Rules";
+
+		WaitForElementPresent(
+			locator1 = "NavBar#ASSET_TITLE_LINK",
+			value1 = "Rules");
 
 		AssertClick(
 			locator1 = "NavBar#ASSET_TITLE_LINK",

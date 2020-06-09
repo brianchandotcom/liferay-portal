@@ -65,8 +65,6 @@ definition {
 
 		if ("${contentDateRange}" == "All") {
 			Click(locator1 = "StagingPublishToLive#CONTENT_ALL");
-
-			Click(locator1 = "Link#REFRESH_COUNTS");
 		}
 
 		if ("${contentDateRange}" == "Date Range") {
@@ -81,13 +79,10 @@ definition {
 			Type(
 				locator1 = "Select#DATE_RANGE_END_DATE",
 				value1 = "${dateRangeEndDate}");
-
 		}
 
 		if ("${contentDateRange}" == "Last") {
 			Click.clickNoMouseOverNoWaitForVisible(locator1 = "StagingPublishToLive#CONTENT_LAST");
-
-			Click(locator1 = "Link#REFRESH_COUNTS");
 		}
 
 		Click(locator1 = "Link#REFRESH_COUNTS");

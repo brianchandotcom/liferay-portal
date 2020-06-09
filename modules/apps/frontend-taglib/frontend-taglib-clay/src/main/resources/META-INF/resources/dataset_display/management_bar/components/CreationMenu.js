@@ -20,23 +20,23 @@ import React, {useContext, useState} from 'react';
 import DatasetDisplayContext from '../../DatasetDisplayContext';
 import {triggerAction} from '../../utilities/actionItems/index';
 
-function CreationMenu(props) {
+function CreationMenu({items}) {
 	const [active, setActive] = useState(false);
 	const datasetContext = useContext(DatasetDisplayContext);
 
 	return (
-		props.items &&
-		props.items.length && (
+		items &&
+		items.length && (
 			<ul className="navbar-nav">
 				<li className="nav-item">
-					{props.items.length > 1 ? (
+					{items.length > 1 ? (
 						<ClayDropDown
 							active={active}
 							onActiveChange={setActive}
 							trigger={<ClayButtonWithIcon symbol="plus" />}
 						>
 							<ClayDropDown.ItemList>
-								{props.items.map((item, i) => (
+								{items.map((item, i) => (
 									<ClayDropDown.Item
 										key={i}
 										onClick={(e) => {
@@ -53,7 +53,7 @@ function CreationMenu(props) {
 					) : (
 						<ClayButtonWithIcon
 							onClick={() =>
-								triggerAction(props.items[0], datasetContext)
+								triggerAction(items[0], datasetContext)
 							}
 							symbol="plus"
 						/>

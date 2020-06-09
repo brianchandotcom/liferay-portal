@@ -34,43 +34,50 @@ function isNotALink(target, onClick) {
 	return Boolean((target && target !== 'link') || onClick);
 }
 
-function ActionItem(props) {
+function ActionItem({
+	closeMenu,
+	handleAction,
+	href,
+	icon,
+	label,
+	method,
+	onClick,
+	size,
+	target,
+	title,
+}) {
 	function handleClickOnLink(e) {
 		e.preventDefault();
 
-		props.handleAction({
-			method: props.method,
-			onClick: props.onClick,
-			size: props.size || 'lg',
-			target: props.target,
-			title: props.title,
-			url: props.href,
+		handleAction({
+			method,
+			onClick,
+			size: size || 'lg',
+			target,
+			title,
+			url: href,
 		});
 
-		props.closeMenu();
+		closeMenu();
 	}
 
 	return (
 		<ClayDropDown.Item
 			data-senna-off
-			href={props.href || '#'}
-			onClick={
-				isNotALink(props.target, props.onClick)
-					? handleClickOnLink
-					: null
-			}
+			href={href || '#'}
+			onClick={isNotALink(target, onClick) ? handleClickOnLink : null}
 		>
-			{props.icon && (
+			{icon && (
 				<span className="pr-2">
-					<ClayIcon symbol={props.icon} />
+					<ClayIcon symbol={icon} />
 				</span>
 			)}
-			{props.label}
+			{label}
 		</ClayDropDown.Item>
 	);
 }
 
-function ActionsDropdownRenderer(props) {
+function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	const {
 		executeAsyncItemAction,
 		highlightItems,
@@ -105,7 +112,7 @@ function ActionsDropdownRenderer(props) {
 		}
 
 		if (target === 'sidePanel') {
-			highlightItems([props.itemId]);
+			highlightItems([itemId]);
 			openSidePanel({
 				size: size || 'lg',
 				title,
@@ -123,13 +130,13 @@ function ActionsDropdownRenderer(props) {
 		}
 	}
 
-	if (!props.actions || !props.actions.length) {
+	if (!actions || !actions.length) {
 		return null;
 	}
 
-	if (props.actions.length === 1) {
-		const action = props.actions[0];
-		const formattedHref = formatActionUrl(action.href, props.itemData);
+	if (actions.length === 1) {
+		const action = actions[0];
+		const formattedHref = formatActionUrl(action.href, itemData);
 
 		if (loading) {
 			return (
@@ -205,7 +212,7 @@ function ActionsDropdownRenderer(props) {
 		>
 			<ClayDropDown.ItemList>
 				<ClayDropDown.Group>
-					{props.actions.map((action, i) => {
+					{actions.map((action, i) => {
 						return (
 							<ActionItem
 								key={i}
@@ -214,7 +221,7 @@ function ActionsDropdownRenderer(props) {
 								handleAction={handleAction}
 								href={
 									action.href &&
-									formatActionUrl(action.href, props.itemData)
+									formatActionUrl(action.href, itemData)
 								}
 							/>
 						);

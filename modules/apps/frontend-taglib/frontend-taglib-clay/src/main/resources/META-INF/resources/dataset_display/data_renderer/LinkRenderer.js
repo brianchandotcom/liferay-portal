@@ -18,11 +18,11 @@ import React from 'react';
 
 import DefaultContent from './DefaultRenderer';
 
-function LinkRenderer(props) {
+function LinkRenderer({value}) {
 	return (
 		<div className="table-list-title">
-			<ClayLink href={props.value.href}>
-				<DefaultContent value={props.value.label} />
+			<ClayLink href={value.href}>
+				<DefaultContent value={value.label} />
 			</ClayLink>
 		</div>
 	);

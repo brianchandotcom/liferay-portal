@@ -69,9 +69,7 @@ function ManagementBar({
 	);
 }
 
-function Wrapper(props) {
-	const {filters, ...otherProps} = props;
-
+function Wrapper({filters, ...otherProps}) {
 	return (
 		<StoreProvider filters={filters}>
 			<ManagementBar {...otherProps} />

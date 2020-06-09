@@ -18,7 +18,7 @@ import React from 'react';
 import {useAppState} from './Context';
 import FilterResume from './filters/ResumeFilter';
 
-function ActiveFiltersBar(props) {
+function ActiveFiltersBar({disabled}) {
 	const {actions, state} = useAppState();
 
 	const filtersActive = state.filters.reduce(
@@ -50,7 +50,7 @@ function ActiveFiltersBar(props) {
 
 									return (
 										<FilterResume
-											disabled={props.disabled}
+											disabled={disabled}
 											key={filter.id}
 											{...filter}
 										/>
@@ -61,7 +61,7 @@ function ActiveFiltersBar(props) {
 						<li className="tbar-item">
 							<div className="tbar-section">
 								<ClayButton
-									disabled={props.disabled}
+									disabled={disabled}
 									displayType="unstyled"
 									onClick={actions.resetFiltersValue}
 								>

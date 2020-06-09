@@ -19,7 +19,7 @@ import React, {useContext} from 'react';
 import DatasetDisplayContext from '../DatasetDisplayContext';
 import DefaultContent from './DefaultRenderer';
 
-function ModalLinkRenderer(props) {
+function ModalLinkRenderer({value}) {
 	const {openModal} = useContext(DatasetDisplayContext);
 
 	return (
@@ -30,13 +30,13 @@ function ModalLinkRenderer(props) {
 				onClick={(e) => {
 					e.preventDefault();
 					openModal({
-						size: props.value.size,
-						title: props.value.title,
-						url: props.value.href,
+						size: value.size,
+						title: value.title,
+						url: value.href,
 					});
 				}}
 			>
-				<DefaultContent value={props.value} />
+				<DefaultContent value={value} />
 			</ClayLink>
 		</div>
 	);

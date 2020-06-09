@@ -20,17 +20,17 @@ import React, {useContext} from 'react';
 
 import ImageRenderer from '../../data_renderer/ImageRenderer';
 
-function List(props) {
+function List({datasetDisplayContext, items, schema}) {
 	const {
 		selectItems,
 		selectedItemsKey,
 		selectedItemsValue,
 		selectionType,
-	} = useContext(props.datasetDisplayContext);
+	} = useContext(datasetDisplayContext);
 
 	return (
 		<ClayList>
-			{props.items.map((item, i) => (
+			{items.map((item, i) => (
 				<ClayList.Item
 					className={classNames(
 						i
@@ -61,25 +61,23 @@ function List(props) {
 							/>
 						)}
 					</ClayList.ItemField>
-					{props.schema.thumbnail && item[props.schema.thumbnail] && (
+					{schema.thumbnail && item[schema.thumbnail] && (
 						<ClayList.ItemField>
-							<ImageRenderer
-								value={item[props.schema.thumbnail]}
-							/>
+							<ImageRenderer value={item[schema.thumbnail]} />
 						</ClayList.ItemField>
 					)}
 					<ClayList.ItemField
 						className="justify-content-center"
 						expand
 					>
-						{props.schema.title && (
+						{schema.title && (
 							<ClayList.ItemTitle>
-								{item[props.schema.title]}
+								{item[schema.title]}
 							</ClayList.ItemTitle>
 						)}
-						{props.schema.description && (
+						{schema.description && (
 							<ClayList.ItemText>
-								{item[props.schema.description]}
+								{item[schema.description]}
 							</ClayList.ItemText>
 						)}
 					</ClayList.ItemField>

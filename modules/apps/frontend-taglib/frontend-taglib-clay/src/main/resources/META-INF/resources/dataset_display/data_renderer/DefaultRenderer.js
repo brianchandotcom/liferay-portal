@@ -18,27 +18,25 @@ import React from 'react';
 
 import TooltipTextRenderer from './TooltipTextRenderer';
 
-function DefaultRenderer(props) {
-	if (typeof props.value === 'number') {
-		return <>{props.value}</>;
+function DefaultRenderer({value}) {
+	if (typeof value === 'number') {
+		return <>{value}</>;
 	}
-	else if (typeof props.value === 'string' || props.value === undefined) {
-		return <>{props.value || ''}</>;
+	else if (typeof value === 'string' || value === undefined) {
+		return <>{value || ''}</>;
 	}
-	else if (props.value.icon) {
-		return <ClayIcon symbol={props.value.icon} />;
+	else if (value.icon) {
+		return <ClayIcon symbol={value.icon} />;
 	}
-	else if (!!props.value.iconSymbol && !!props.value.text) {
-		return <TooltipTextRenderer value={props.value} />;
+	else if (!!value.iconSymbol && !!value.text) {
+		return <TooltipTextRenderer value={value} />;
 	}
-	else if (props.value.label) {
-		return <>{props.value.label}</>;
+	else if (value.label) {
+		return <>{value.label}</>;
 	}
 
 	throw new Error(
-		`The object ${JSON.stringify(
-			props.value
-		)} doesn't match the template schema`
+		`The object ${JSON.stringify(value)} doesn't match the template schema`
 	);
 }
 

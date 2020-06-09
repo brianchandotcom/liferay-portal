@@ -15,7 +15,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {
 	CLOSE_MODAL,
@@ -27,26 +27,35 @@ import {liferayNavigate} from '../utilities/index';
 import {INITIAL_MODAL_SIZE} from '../utilities/modals/constants';
 import {resolveModalHeight} from '../utilities/modals/index';
 
-function Modal(props) {
+function Modal({
+	id,
+	onClose: onCloseProp,
+	spritemap,
+	status,
+	title: titleProp,
+	url: urlProp,
+}) {
 	const [visible, setVisible] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [onClose, setOnClose] = useState(null);
-	const [title, setTitle] = useState(props.title);
-	const [url, setUrl] = useState(props.url);
+	const [title, setTitle] = useState(titleProp);
+	const [url, setUrl] = useState(urlProp);
 	const [size, setSize] = useState(INITIAL_MODAL_SIZE);
 
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	function doClose(successNotification) {
-		if (onClose) {
-			onClose(successNotification);
-		}
-		else if (props.onClose) {
-			props.onClose(successNotification);
-		}
+	const doClose = useCallback(
+		(successNotification) => {
+			if (onClose) {
+				onClose(successNotification);
+			}
+			else if (onCloseProp) {
+				onCloseProp(successNotification);
+			}
 
-		setLoading(false);
-		setVisible(false);
-	}
+			setLoading(false);
+			setVisible(false);
+		},
+		[onClose, onCloseProp]
+	);
 
 	const {observer, onClose: closeOnIframeRefresh} = useModal({
 		onClose: doClose,
@@ -54,7 +63,7 @@ function Modal(props) {
 
 	useEffect(() => {
 		function handleOpenEvent(data) {
-			if (props.id !== data.id || visible || isPageInIframe()) {
+			if (id !== data.id || visible || isPageInIframe()) {
 				return;
 			}
 
@@ -124,11 +133,11 @@ function Modal(props) {
 		}
 
 		return () => cleanUpListeners();
-	}, [props.id, closeOnIframeRefresh, visible, doClose]);
+	}, [id, closeOnIframeRefresh, visible, doClose]);
 
 	useEffect(() => {
-		setOnClose(() => props.onClose);
-	}, [props.onClose]);
+		setOnClose(() => onClose);
+	}, [onClose]);
 
 	return (
 		<>
@@ -137,8 +146,8 @@ function Modal(props) {
 					className="clay-modal"
 					observer={observer}
 					size={size}
-					spritemap={props.spritemap}
-					status={props.status}
+					spritemap={spritemap}
+					status={status}
 				>
 					{title && <ClayModal.Header>{title}</ClayModal.Header>}
 					<div
@@ -165,8 +174,6 @@ Modal.propTypes = {
 	closeOnSubmit: PropTypes.bool,
 	id: PropTypes.string.isRequired,
 	onClose: PropTypes.func,
-	portletId: PropTypes.string,
-	size: PropTypes.string,
 	spritemap: PropTypes.string,
 	status: PropTypes.string,
 	title: PropTypes.string,

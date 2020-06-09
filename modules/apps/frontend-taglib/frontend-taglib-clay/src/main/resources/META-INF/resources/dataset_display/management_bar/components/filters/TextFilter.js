@@ -19,41 +19,39 @@ import React, {useState} from 'react';
 
 import getAppContext from '../Context';
 
-function TextFilter(props) {
+function TextFilter({id, inputText, label, panelType, value: valueProp}) {
 	const {actions} = getAppContext();
-	const [value, setValue] = useState(props.value);
+	const [value, setValue] = useState(valueProp);
 
 	return (
 		<div className="form-group">
 			<div className="input-group">
 				<div
 					className={classNames('input-group-item', {
-						'input-group-prepend': props.inputText,
+						'input-group-prepend': inputText,
 					})}
 				>
 					<input
-						aria-label={props.label}
+						aria-label={label}
 						className="form-control"
 						onChange={(e) => setValue(e.target.value)}
 						type="text"
 						value={value || ''}
 					/>
 				</div>
-				{props.inputText && (
+				{inputText && (
 					<div className="input-group-append input-group-item input-group-item-shrink">
-						<span className="input-group-text">
-							{props.inputText}
-						</span>
+						<span className="input-group-text">{inputText}</span>
 					</div>
 				)}
 			</div>
 			<div className="mt-3">
 				<ClayButton
 					className="btn-sm"
-					disabled={value === props.value}
-					onClick={() => actions.updateFilterValue(props.id, value)}
+					disabled={value === valueProp}
+					onClick={() => actions.updateFilterValue(id, value)}
 				>
-					{props.panelType === 'edit'
+					{panelType === 'edit'
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>

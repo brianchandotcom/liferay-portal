@@ -19,9 +19,9 @@ import React, {useState} from 'react';
 
 import getAppContext from '../Context';
 
-function SelectFilter(props) {
+function SelectFilter({id, items, panelType, value: valueProp}) {
 	const {actions} = getAppContext();
-	const [value, setValue] = useState(props.value);
+	const [value, setValue] = useState(valueProp);
 
 	return (
 		<>
@@ -32,7 +32,7 @@ function SelectFilter(props) {
 				value={value || ''}
 			>
 				<ClaySelect.Option label={''} value={''} />
-				{props.items.map((item) => (
+				{items.map((item) => (
 					<ClaySelect.Option
 						key={item.value}
 						label={item.label}
@@ -43,10 +43,10 @@ function SelectFilter(props) {
 			<div className="mt-3">
 				<ClayButton
 					className="btn-sm"
-					disabled={value === props.value}
-					onClick={() => actions.updateFilterValue(props.id, value)}
+					disabled={value === valueProp}
+					onClick={() => actions.updateFilterValue(id, value)}
 				>
-					{props.panelType === 'edit'
+					{panelType === 'edit'
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>

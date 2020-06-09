@@ -23,31 +23,39 @@ import {
 } from '../../../utilities/dates';
 import getAppContext from '../Context';
 
-function DateFilter(props) {
+function DateFilter({
+	id,
+	inputText,
+	max,
+	min,
+	panelType,
+	placeholder,
+	value: valueProp,
+}) {
 	const {actions} = getAppContext();
 	const [value, setValue] = useState(
-		props.value ? formatDateObject(props.value) : ''
+		valueProp ? formatDateObject(valueProp) : ''
 	);
 
 	useEffect(() => {
-		setValue(() => (props.value ? formatDateObject(props.value) : ''));
-	}, [props.value]);
+		setValue(() => (value ? formatDateObject(value) : ''));
+	}, [value]);
 
 	return (
 		<div className="form-group">
 			<div className="input-group">
 				<div
 					className={classNames('input-group-item', {
-						'input-group-prepend': props.inputText,
+						'input-group-prepend': inputText,
 					})}
 				>
 					<input
 						className="form-control"
-						max={props.max && formatDateObject(props.max)}
-						min={props.min && formatDateObject(props.min)}
+						max={max && formatDateObject(max)}
+						min={min && formatDateObject(min)}
 						onChange={(e) => setValue(e.target.value)}
 						pattern="\d{4}-\d{2}-\d{2}"
-						placeholder={props.placeholder || 'yyyy-mm-dd'}
+						placeholder={placeholder || 'yyyy-mm-dd'}
 						type="date"
 						value={value}
 					/>
@@ -56,18 +64,15 @@ function DateFilter(props) {
 			<div className="mt-3">
 				<ClayButton
 					className="btn-sm"
-					disabled={
-						value ==
-						(props.value ? formatDateObject(props.value) : '')
-					}
+					disabled={value == (value ? formatDateObject(value) : '')}
 					onClick={() => {
 						actions.updateFilterValue(
-							props.id,
+							id,
 							value ? getDateFromDateString(value) : null
 						);
 					}}
 				>
-					{props.panelType === 'edit'
+					{panelType === 'edit'
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>

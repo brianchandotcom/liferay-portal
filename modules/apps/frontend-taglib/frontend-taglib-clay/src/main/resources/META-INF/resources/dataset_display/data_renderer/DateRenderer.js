@@ -15,19 +15,17 @@
 import moment from 'moment';
 import PropType from 'prop-types';
 
-function DateRenderer(props) {
-	switch (props.options.type) {
+function DateRenderer({options, value}) {
+	switch (options.type) {
 		case 'calendar':
-			return moment(props.value).calendar();
+			return moment(value).calendar();
 		case 'relative': {
-			const date = moment(props.value).fromNow();
+			const date = moment(value).fromNow();
 
 			return date.replace(/^./, date[0].toUpperCase());
 		}
 		default:
-			return moment(props.value).format(
-				props.options.format || 'MMMM Do YYYY'
-			);
+			return moment(value).format(options.format || 'MMMM Do YYYY');
 	}
 }
 

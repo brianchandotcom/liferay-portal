@@ -84,20 +84,20 @@ export function prettifyDateRangeObject(dateRangeObject) {
 	}
 }
 
-export function prettifyFilterValue(props) {
-	switch (props.type) {
+export function prettifyFilterValue({items, type, value}) {
+	switch (type) {
 		case 'checkbox':
-			return prettifyCheckboxValue(props.value, props.items);
+			return prettifyCheckboxValue(value, items);
 		case 'autocomplete':
-			return props.value.map((element) => element.label).join(', ');
+			return value.map((element) => element.label).join(', ');
 		case 'radio':
 		case 'select':
-			return prettifySelectValue(props.value, props.items);
+			return prettifySelectValue(value, items);
 		case 'date':
-			return prettifyDateObject(props.value);
+			return prettifyDateObject(value);
 		case 'dateRange':
-			return prettifyDateRangeObject(props.value);
+			return prettifyDateRangeObject(value);
 		default:
-			return props.value;
+			return value;
 	}
 }

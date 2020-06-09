@@ -16,10 +16,10 @@ import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function LabelRenderer(props) {
-	return props.value ? (
-		<ClayLabel displayType={props.value.displayStyle || 'info'}>
-			{typeof props.value === 'string' ? props.value : props.value.label}
+function LabelRenderer({value}) {
+	return value ? (
+		<ClayLabel displayType={value.displayStyle || 'info'}>
+			{typeof value === 'string' ? value : value.label}
 		</ClayLabel>
 	) : null;
 }

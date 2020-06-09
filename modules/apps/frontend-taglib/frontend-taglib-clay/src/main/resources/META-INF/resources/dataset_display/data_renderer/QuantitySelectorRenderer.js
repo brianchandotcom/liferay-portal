@@ -17,15 +17,15 @@ import React from 'react';
 
 import DefaultSelector from '../quantity_selector/QuantitySelector';
 
-function QuantitySelectorRenderer(props) {
+function QuantitySelectorRenderer({options, value}) {
 	return (
 		<div className="row">
 			<div className="col-auto">
 				<DefaultSelector
 					size="small"
 					style="simple"
-					{...props.options}
-					{...props.value}
+					{...options}
+					{...value}
 				/>
 			</div>
 		</div>

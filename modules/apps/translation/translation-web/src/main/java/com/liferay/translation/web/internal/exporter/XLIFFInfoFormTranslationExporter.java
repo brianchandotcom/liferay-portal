@@ -30,11 +30,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -82,7 +79,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 			InfoField infoField = infoFieldValue.getInfoField();
 
-			if (_blacklistedFieldNames.contains(infoField.getName())) {
+			if (!infoField.isLocalizable()) {
 				continue;
 			}
 
@@ -120,10 +117,5 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 		return value.toString();
 	}
-
-	private static final Set<String> _blacklistedFieldNames = new HashSet<>(
-		Arrays.asList(
-			"authorName", "lastEditorName", "publishDate", "categories",
-			"tagNames"));
 
 }

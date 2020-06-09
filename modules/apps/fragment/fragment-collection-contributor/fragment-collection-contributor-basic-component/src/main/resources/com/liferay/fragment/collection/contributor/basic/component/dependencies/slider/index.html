@@ -2,21 +2,21 @@
 	<div class="carousel">
 		<ol class="carousel-navigation">
 			<li>
-				<button aria-controls="carouselInner" class="active" type="button">
+				<button aria-controls="${fragmentEntryLinkNamespace}-carouselInner" class="active" type="button">
 					<span class="sr-only">
 						Focus first slide
 					</span>
 				</button>
 			</li>
 			<li>
-				<button aria-controls="carouselInner" type="button">
+				<button aria-controls="${fragmentEntryLinkNamespace}-carouselInner" type="button">
 					<span class="sr-only">
 						Focus second slide
 					</span>
 				</button>
 			</li>
 			<li>
-				<button aria-controls="carouselInner" type="button">
+				<button aria-controls="${fragmentEntryLinkNamespace}-carouselInner" type="button">
 					<span class="sr-only">
 						Focus third slide
 					</span>
@@ -24,7 +24,7 @@
 			</li>
 		</ol>
 
-		<div class="carousel-inner text-break" id="carouselInner" role="group">
+		<div class="carousel-inner text-break" id="${fragmentEntryLinkNamespace}-carouselInner" role="group">
 			<div class="carousel-item active">
 				<img
 					alt="First Responsive Image"
@@ -105,7 +105,7 @@
 		</div>
 
 		<button
-			aria-controls="carouselInner"
+			aria-controls="${fragmentEntryLinkNamespace}-carouselInner"
 			aria-label="Previous Slide"
 			class="carousel-control-prev"
 			type="button"
@@ -115,7 +115,7 @@
 		</button>
 
 		<button
-			aria-controls="carouselInner"
+			aria-controls="${fragmentEntryLinkNamespace}-carouselInner"
 			aria-label="Next Slide"
 			class="carousel-control-next"
 			type="button"

@@ -27,7 +27,7 @@ long ddmStructureId = BeanParamUtil.getLong(formInstance, request, "structureId"
 
 boolean disableCopyButton = false;
 
-if (!ddmFormAdminDisplayContext.isFormPublished() && (formInstance != null)) {
+if (!ddmFormAdminDisplayContext.isFormPublished()) {
 	disableCopyButton = true;
 }
 

@@ -234,7 +234,7 @@ public class FragmentEntryLinkDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		SearchContainer<FragmentEntryLink> fragmentEntryLinksSearchContainer =
-			new SearchContainer(
+			new SearchContainer<>(
 				_renderRequest, getPortletURL(), null,
 				"there-are-no-fragment-usages");
 

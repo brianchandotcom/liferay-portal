@@ -702,8 +702,6 @@ definition {
 
 	test HotDeployLearningToRankApp {
 		property hot.deploy.osgi.app.includes = "portal-search-learning-to-rank";
-		property portal.upstream = "quarantine";
-		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Elasticsearch6EE#HotDeployLearningToRankApp";
 
 		var appName = "Liferay Learning to Rank ";

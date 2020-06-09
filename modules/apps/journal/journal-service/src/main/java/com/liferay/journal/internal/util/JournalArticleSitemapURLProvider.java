@@ -96,12 +96,12 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		int end = QueryUtil.ALL_POS;
 		int start = QueryUtil.ALL_POS;
 
-		int journalArticleCount = _journalArticleService.getLayoutArticlesCount(
+		int count = _journalArticleService.getLayoutArticlesCount(
 			layoutSet.getGroupId());
 
-		if (journalArticleCount > Sitemap.MAXIMUM_NUMBER_OF_ENTRIES) {
-			end = journalArticleCount;
-			start = journalArticleCount - Sitemap.MAXIMUM_NUMBER_OF_ENTRIES;
+		if (count > Sitemap.MAXIMUM_NUMBER_OF_ENTRIES) {
+			end = count;
+			start = count - Sitemap.MAXIMUM_NUMBER_OF_ENTRIES;
 		}
 
 		List<JournalArticle> journalArticles =
@@ -267,13 +267,13 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		int end = QueryUtil.ALL_POS;
 		int start = QueryUtil.ALL_POS;
 
-		int journalArticleCount =
+		int count =
 			_journalArticleService.getArticlesByLayoutUuidCount(
 				groupId, layoutUuid);
 
-		if (journalArticleCount > Sitemap.MAXIMUM_NUMBER_OF_ENTRIES) {
-			end = journalArticleCount;
-			start = journalArticleCount - Sitemap.MAXIMUM_NUMBER_OF_ENTRIES;
+		if (count > Sitemap.MAXIMUM_NUMBER_OF_ENTRIES) {
+			end = count;
+			start = count - Sitemap.MAXIMUM_NUMBER_OF_ENTRIES;
 		}
 
 		return _journalArticleService.getArticlesByLayoutUuid(

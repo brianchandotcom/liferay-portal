@@ -180,9 +180,24 @@ public class FragmentEntryLinkDisplayContext {
 
 				return "display-page-template";
 			}
+			else if (layoutPageTemplateEntry.getType() ==
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_MASTER_LAYOUT) {
+
+				return "master-page";
+			}
 		}
 
 		return "page";
+	}
+
+	public int getMasterPagesUsageCount() throws PortalException {
+		FragmentEntry fragmentEntry = getFragmentEntry();
+
+		return FragmentEntryLinkLocalServiceUtil.
+			getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId(
+				fragmentEntry.getGroupId(), getFragmentEntryId(),
+				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT);
 	}
 
 	public String getNavigation() {
@@ -351,6 +366,23 @@ public class FragmentEntryLinkDisplayContext {
 					getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId(
 						fragmentEntry.getGroupId(), getFragmentEntryId(),
 						LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE);
+		}
+		else if (Objects.equals(getNavigation(), "master-pages")) {
+			fragmentEntryLinks =
+				FragmentEntryLinkLocalServiceUtil.
+					getLayoutPageTemplateFragmentEntryLinksByFragmentEntryId(
+						fragmentEntry.getGroupId(), getFragmentEntryId(),
+						LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT,
+						fragmentEntryLinksSearchContainer.getStart(),
+						fragmentEntryLinksSearchContainer.getEnd(),
+						orderByComparator);
+
+			fragmentEntryLinksCount =
+				FragmentEntryLinkLocalServiceUtil.
+					getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId(
+						fragmentEntry.getGroupId(), getFragmentEntryId(),
+						LayoutPageTemplateEntryTypeConstants.
+							TYPE_MASTER_LAYOUT);
 		}
 		else {
 			fragmentEntryLinks =

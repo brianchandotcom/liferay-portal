@@ -71,6 +71,18 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 							<li class="nav-item">
 
 								<%
+								PortletURL masterPagessNavigationURL = fragmentEntryLinkDisplayContext.getPortletURL();
+
+								masterPagessNavigationURL.setParameter("navigation", "master-pages");
+								%>
+
+								<a class='nav-link <%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "master-pages") ? "active" : StringPool.BLANK %>' href="<%= masterPagessNavigationURL.toString() %>">
+									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getMasterPagesUsageCount() %>" key="master-pages-x" />
+								</a>
+							</li>
+							<li class="nav-item">
+
+								<%
 								PortletURL pageTemplatesNavigationURL = fragmentEntryLinkDisplayContext.getPortletURL();
 
 								pageTemplatesNavigationURL.setParameter("navigation", "page-templates");
@@ -110,6 +122,9 @@ FragmentEntryUsageManagementToolbarDisplayContext fragmentEntryUsageManagementTo
 							<c:choose>
 								<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "pages") %>'>
 									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPagesUsageCount() %>" key="pages-x" />
+								</c:when>
+								<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "master-pages") %>'>
+									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getMasterPagesUsageCount() %>" key="master-pages-x" />
 								</c:when>
 								<c:when test='<%= Objects.equals(fragmentEntryLinkDisplayContext.getNavigation(), "page-templates") %>'>
 									<liferay-ui:message arguments="<%= fragmentEntryLinkDisplayContext.getPageTemplatesUsageCount() %>" key="page-templates-x" />

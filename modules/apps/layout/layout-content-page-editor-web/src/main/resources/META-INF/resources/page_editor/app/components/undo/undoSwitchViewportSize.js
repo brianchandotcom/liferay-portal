@@ -18,8 +18,9 @@ function undoAction({action}) {
 	return (dispatch) => dispatch(switchViewportSize({size: action.size}));
 }
 
-function getDerivedStateForUndo({state}) {
+function getDerivedStateForUndo({action, state}) {
 	return {
+		nextSize: action.size,
 		size: state.selectedViewportSize,
 	};
 }

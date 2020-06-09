@@ -27,6 +27,7 @@ import {
 	UPDATE_LANGUAGE_ID,
 } from '../../actions/types';
 import {UNDO_TYPES} from '../../config/constants/undoTypes';
+import {config} from '../../config/index';
 import getSegmentsExperienceName from '../../utils/getSegmentsExperienceName';
 
 export function getActionLabel(action, type, {availableSegmentsExperiences}) {
@@ -69,10 +70,15 @@ export function getActionLabel(action, type, {availableSegmentsExperiences}) {
 						)
 				  );
 		case SWITCH_VIEWPORT_SIZE:
-			return Liferay.Util.sub(
-				Liferay.Language.get('change-viewport'),
-				action.itemName
-			);
+			return type === UNDO_TYPES.undo
+				? Liferay.Util.sub(
+						Liferay.Language.get('select-x-viewport'),
+						config.availableViewportSizes[action.nextSize].label
+				  )
+				: Liferay.Util.sub(
+						Liferay.Language.get('select-x-viewport'),
+						config.availableViewportSizes[action.size].label
+				  );
 
 		case UPDATE_COL_SIZE:
 			return Liferay.Language.get('update-column-size');
@@ -88,7 +94,15 @@ export function getActionLabel(action, type, {availableSegmentsExperiences}) {
 				action.itemName
 			);
 		case UPDATE_LANGUAGE_ID:
-			return Liferay.Language.get('change-language');
+			return type === UNDO_TYPES.undo
+				? Liferay.Util.sub(
+						Liferay.Language.get('select-x-language'),
+						action.nextLanguageId
+				  )
+				: Liferay.Util.sub(
+						Liferay.Language.get('select-x-language'),
+						action.languageId
+				  );
 		default:
 			return;
 	}

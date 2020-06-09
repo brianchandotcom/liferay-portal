@@ -114,12 +114,8 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 </clay:container-fluid>
 
 <aui:script>
-	var Subscriptions = {};
-
-	Liferay.provide(
-		Subscriptions,
-		'<portlet:namespace />displayPopup',
-		function (url, title) {
+	var Subscriptions = {
+		displayPopup: function (url, title) {
 			Liferay.Util.Window.getWindow({
 				dialog: {
 					align: {
@@ -136,8 +132,7 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 				uri: url,
 			});
 		},
-		[]
-	);
+	};
 
 	Liferay.Subscriptions = Subscriptions;
 </aui:script>

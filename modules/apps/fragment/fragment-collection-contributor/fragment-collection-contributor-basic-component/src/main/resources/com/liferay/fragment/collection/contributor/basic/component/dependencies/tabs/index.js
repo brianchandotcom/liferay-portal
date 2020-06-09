@@ -1,4 +1,3 @@
-/*eslint-disable*/
 const dropdown = fragmentElement.querySelector('.navbar-collapse');
 const dropdownButton = fragmentElement.querySelector('.navbar-toggler-link');
 const editMode = document.body.classList.contains('has-edit-mode-menu');

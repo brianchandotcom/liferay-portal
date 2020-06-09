@@ -1,4 +1,3 @@
-/*eslint-disable*/
 const MOVE_LEFT = 'move-left';
 const MOVE_RIGHT = 'move-right';
 const INTERVAL = 5000;

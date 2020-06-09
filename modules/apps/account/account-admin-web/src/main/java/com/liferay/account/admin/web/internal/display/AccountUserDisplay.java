@@ -17,23 +17,28 @@ package com.liferay.account.admin.web.internal.display;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
+import com.liferay.account.model.AccountEntryUserRelModel;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -97,6 +102,43 @@ public class AccountUserDisplay {
 
 		return StringUtil.merge(
 			ListUtil.sort(accountRoleNames), StringPool.COMMA_AND_SPACE);
+	}
+
+	public String getAccountValidDomains() {
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_getAccountEntryUserRels(getUserId());
+
+		List<Set<String>> accountEntryDomains = Stream.of(
+			accountEntryUserRels
+		).flatMap(
+			List::stream
+		).map(
+			AccountEntryUserRelModel::getAccountEntryId
+		).map(
+			AccountEntryLocalServiceUtil::fetchAccountEntry
+		).filter(
+			Objects::nonNull
+		).map(
+			AccountEntry::getDomains
+		).map(
+			StringUtil::split
+		).map(
+			SetUtil::fromArray
+		).collect(
+			Collectors.toList()
+		);
+
+		Set<String> commonDomains = accountEntryDomains.remove(0);
+
+		for (Set<String> domains : accountEntryDomains) {
+			commonDomains = SetUtil.intersect(commonDomains, domains);
+
+			if (SetUtil.isEmpty(commonDomains)) {
+				return StringPool.BLANK;
+			}
+		}
+
+		return StringUtil.merge(commonDomains, StringPool.COMMA);
 	}
 
 	public String getEmailAddress() {

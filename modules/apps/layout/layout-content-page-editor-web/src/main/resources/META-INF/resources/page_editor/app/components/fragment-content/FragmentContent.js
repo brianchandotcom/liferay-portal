@@ -17,16 +17,11 @@ import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {updateFragmentEntryLinkContent} from '../../actions/index';
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
 import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
-import {useDispatch, useSelector} from '../../store/index';
-import {
-	useGetContent,
-	useGetFieldValue,
-	useRenderFragmentContent,
-} from '../CollectionItemContext';
+import {useSelector} from '../../store/index';
+import {useGetContent, useGetFieldValue} from '../CollectionItemContext';
 import {useFrameContext} from '../Frame';
 import Layout from '../Layout';
 import UnsafeHTML from '../UnsafeHTML';
@@ -43,7 +38,6 @@ import resolveEditableValue from './resolveEditableValue';
 
 const FragmentContent = React.forwardRef(
 	({fragmentEntryLinkId, itemId}, ref) => {
-		const dispatch = useDispatch();
 		const isMounted = useIsMounted();
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
 		const frameContext = useFrameContext();
@@ -53,8 +47,6 @@ const FragmentContent = React.forwardRef(
 		);
 
 		const getFieldValue = useGetFieldValue();
-		const getContent = useGetContent();
-		const renderFragmentContent = useRenderFragmentContent();
 
 		const [editables, setEditables] = useState([]);
 
@@ -92,31 +84,14 @@ const FragmentContent = React.forwardRef(
 		const languageId = useSelector((state) => state.languageId);
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-		const defaultContent = getContent(fragmentEntryLink);
+		const defaultContent = useGetContent(
+			fragmentEntryLink,
+			segmentsExperienceId
+		);
 		const [content, setContent] = useState(defaultContent);
 		const editableValues = fragmentEntryLink
 			? fragmentEntryLink.editableValues
 			: {};
-
-		useEffect(() => {
-			renderFragmentContent({
-				fragmentEntryLinkId,
-				onNetworkStatus: dispatch,
-				segmentsExperienceId,
-			}).then((action) => {
-				dispatch(
-					updateFragmentEntryLinkContent({
-						...action,
-						fragmentEntryLinkId,
-					})
-				);
-			});
-		}, [
-			dispatch,
-			fragmentEntryLinkId,
-			renderFragmentContent,
-			segmentsExperienceId,
-		]);
 
 		/**
 		 * fragmentElement keeps a copy of the fragment real HTML,

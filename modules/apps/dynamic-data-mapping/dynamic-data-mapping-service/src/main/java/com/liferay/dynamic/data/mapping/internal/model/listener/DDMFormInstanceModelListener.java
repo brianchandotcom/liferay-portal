@@ -58,7 +58,7 @@ public class DDMFormInstanceModelListener
 	}
 
 	@Override
-	public void onAfterRemove(DDMFormInstance ddmFormInstance)
+	public void onBeforeRemove(DDMFormInstance ddmFormInstance)
 		throws ModelListenerException {
 
 		try {

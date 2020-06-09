@@ -173,6 +173,8 @@ for (String childrenItemId : childrenItemIds) {
 			<%
 			FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
+			LayoutStructureItem parentLayoutStructureItem = layoutStructure.getLayoutStructureItem(fragmentLayoutStructureItem.getParentItemId());
+
 			if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
 				continue;
 			}
@@ -198,6 +200,10 @@ for (String childrenItemId : childrenItemIds) {
 			defaultFragmentRendererContext.setPreviewClassPK(previewClassPK);
 			defaultFragmentRendererContext.setPreviewType(previewType);
 			defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
+
+			if (parentLayoutStructureItem instanceof CollectionItemLayoutStructureItem) {
+				defaultFragmentRendererContext.setUseCachedContent(false);
+			}
 			%>
 
 			<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>

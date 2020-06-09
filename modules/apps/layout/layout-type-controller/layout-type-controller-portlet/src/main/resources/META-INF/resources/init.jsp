@@ -33,6 +33,7 @@ page import="com.liferay.info.list.renderer.InfoListRenderer" %><%@
 page import="com.liferay.layout.responsive.ResponsiveLayoutStructureUtil" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys" %><%@
 page import="com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext" %><%@
+page import="com.liferay.layout.util.structure.CollectionItemLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.CollectionLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.ColumnLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.ContainerLayoutStructureItem" %><%@

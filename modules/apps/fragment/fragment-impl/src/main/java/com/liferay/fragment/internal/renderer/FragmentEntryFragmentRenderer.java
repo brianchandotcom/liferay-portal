@@ -253,7 +253,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 		String content = StringPool.BLANK;
 
-		if (Objects.equals(
+		if (fragmentRendererContext.isUseCachedContent() &&
+			Objects.equals(
 				fragmentRendererContext.getMode(),
 				FragmentEntryLinkConstants.VIEW) &&
 			_isCacheable(fragmentEntryLink)) {

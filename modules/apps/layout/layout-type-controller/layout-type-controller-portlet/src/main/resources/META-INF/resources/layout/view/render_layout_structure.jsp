@@ -81,6 +81,14 @@ for (String childrenItemId : childrenItemIds) {
 				</c:otherwise>
 			</c:choose>
 		</c:when>
+		<c:when test="<%= layoutStructureItem instanceof CollectionItemLayoutStructureItem %>">
+
+			<%
+			request.setAttribute("render_layout_structure.jsp-childrenItemIds", layoutStructureItem.getChildrenItemIds());
+			%>
+
+			<liferay-util:include page="/render_fragment_layout/render_layout_structure.jsp" servletContext="<%= application %>" />
+		</c:when>
 		<c:when test="<%= layoutStructureItem instanceof ColumnLayoutStructureItem %>">
 
 			<%
@@ -182,6 +190,8 @@ for (String childrenItemId : childrenItemIds) {
 				<%
 				FragmentLayoutStructureItem fragmentLayoutStructureItem = (FragmentLayoutStructureItem)layoutStructureItem;
 
+				LayoutStructureItem parentLayoutStructureItem = layoutStructure.getLayoutStructureItem(fragmentLayoutStructureItem.getParentItemId());
+
 				if (fragmentLayoutStructureItem.getFragmentEntryLinkId() <= 0) {
 					continue;
 				}
@@ -199,8 +209,11 @@ for (String childrenItemId : childrenItemIds) {
 				Object displayObject = request.getAttribute("render_layout_structure.jsp-collectionObject");
 
 				defaultFragmentRendererContext.setDisplayObject(displayObject);
-
 				defaultFragmentRendererContext.setLocale(locale);
+
+				if (parentLayoutStructureItem instanceof CollectionItemLayoutStructureItem) {
+					defaultFragmentRendererContext.setUseCachedContent(false);
+				}
 				%>
 
 				<%= fragmentRendererController.render(defaultFragmentRendererContext, request, response) %>

@@ -188,7 +188,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_URL_ICON</td>
-	<td>//button[contains(@class,'share-form-icon') and contains(@title,'Share')]</td>
+	<td>//button[contains(@class,'share-form-icon')]</td>
 	<td></td>
 </tr>
 

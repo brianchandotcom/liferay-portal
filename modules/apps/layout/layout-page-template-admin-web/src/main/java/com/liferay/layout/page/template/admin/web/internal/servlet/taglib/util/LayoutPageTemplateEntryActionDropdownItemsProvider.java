@@ -93,47 +93,54 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
 				ActionKeys.UPDATE);
 
-		return DropdownItemListBuilder.add(
-			() -> hasUpdatePermission,
-			_getEditLayoutPageTemplateEntryActionUnsafeConsumer()
-		).add(
-			() -> hasUpdatePermission,
-			_getUpdateLayoutPageTemplateEntryPreviewActionUnsafeConsumer()
-		).add(
-			() ->
-				hasUpdatePermission &&
-				(_layoutPageTemplateEntry.getPreviewFileEntryId() > 0),
-			_getDeleteLayoutPageTemplateEntryPreviewActionUnsafeConsumer()
-		).add(
-			() -> hasUpdatePermission,
-			_getRenameLayoutPageTemplateEntryActionUnsafeConsumer()
-		).add(
-			() ->
-				hasUpdatePermission &&
-				(_layoutPageTemplateEntry.getLayoutPrototypeId() > 0),
-			_getConfigureLayoutPrototypeActionUnsafeConsumer()
-		).add(
-			() ->
-				hasUpdatePermission &&
-				(_layoutPageTemplateEntry.getLayoutPrototypeId() <= 0),
-			_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer()
-		).add(
-			() -> _layoutPageTemplateEntry.getLayoutPrototypeId() == 0,
-			_getExportLayoutPageTemplateEntryActionUnsafeConsumer()
-		).add(
-			() -> LayoutPageTemplateEntryPermission.contains(
-				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
-				ActionKeys.PERMISSIONS),
-			_getPermissionsLayoutPageTemplateEntryActionUnsafeConsumer()
-		).add(
-			() -> hasUpdatePermission && _isShowDiscardDraftAction(),
-			_getDiscardDraftActionUnsafeConsumer()
-		).add(
+		DropdownItemListBuilder.DropdownItemListWrapper
+			dropdownItemListWrapper = DropdownItemListBuilder.add(
+				() -> hasUpdatePermission,
+				_getEditLayoutPageTemplateEntryActionUnsafeConsumer()
+			).add(
+				() -> hasUpdatePermission,
+				_getUpdateLayoutPageTemplateEntryPreviewActionUnsafeConsumer()
+			).add(
+				() ->
+					hasUpdatePermission &&
+					(_layoutPageTemplateEntry.getPreviewFileEntryId() > 0),
+				_getDeleteLayoutPageTemplateEntryPreviewActionUnsafeConsumer()
+			).add(
+				() -> hasUpdatePermission,
+				_getRenameLayoutPageTemplateEntryActionUnsafeConsumer()
+			).add(
+				() ->
+					hasUpdatePermission &&
+					(_layoutPageTemplateEntry.getLayoutPrototypeId() > 0),
+				_getConfigureLayoutPrototypeActionUnsafeConsumer()
+			).add(
+				() ->
+					hasUpdatePermission &&
+					(_layoutPageTemplateEntry.getLayoutPrototypeId() <= 0),
+				_getConfigureLayoutPageTemplateEntryActionUnsafeConsumer()
+			).add(
+				() -> _layoutPageTemplateEntry.getLayoutPrototypeId() == 0,
+				_getExportLayoutPageTemplateEntryActionUnsafeConsumer()
+			).add(
+				() -> LayoutPageTemplateEntryPermission.contains(
+					_themeDisplay.getPermissionChecker(),
+					_layoutPageTemplateEntry, ActionKeys.PERMISSIONS),
+				_getPermissionsLayoutPageTemplateEntryActionUnsafeConsumer()
+			);
+
+		if (_draftLayout != null) {
+			dropdownItemListWrapper = dropdownItemListWrapper.add(
+				() -> hasUpdatePermission && _isShowDiscardDraftAction(),
+				_getDiscardDraftActionUnsafeConsumer());
+		}
+
+		dropdownItemListWrapper = dropdownItemListWrapper.add(
 			() -> LayoutPageTemplateEntryPermission.contains(
 				_themeDisplay.getPermissionChecker(), _layoutPageTemplateEntry,
 				ActionKeys.DELETE),
-			_getDeleteLayoutPageTemplateEntryActionUnsafeConsumer()
-		).build();
+			_getDeleteLayoutPageTemplateEntryActionUnsafeConsumer());
+
+		return dropdownItemListWrapper.build();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

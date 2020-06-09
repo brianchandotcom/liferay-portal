@@ -21,8 +21,10 @@ import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRespons
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormProviderTracker;
@@ -40,7 +42,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -63,6 +67,83 @@ public class JournalArticleInfoItemFormProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetInfoForm() throws Exception {
+		InfoItemFormProvider infoItemFormProvider =
+			_infoItemFormProviderTracker.getInfoItemFormProvider(
+				JournalArticle.class.getName());
+
+		JournalArticle journalArticle = _getJournalArticle();
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(journalArticle);
+
+		List<InfoField> infoFields = infoForm.getAllInfoFields();
+
+		infoFields.sort(Comparator.comparing(InfoField::getName));
+
+		Assert.assertEquals(infoFields.toString(), 12, infoFields.size());
+
+		InfoField infoField = infoFields.get(0);
+
+		Assert.assertEquals("DDM_Text", infoField.getName());
+		Assert.assertTrue(infoField.isLocalizable());
+
+		infoField = infoFields.get(1);
+
+		Assert.assertEquals("authorName", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(2);
+
+		Assert.assertEquals("authorProfileImage", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(3);
+
+		Assert.assertEquals("categories", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(4);
+
+		Assert.assertEquals("description", infoField.getName());
+		Assert.assertTrue(infoField.isLocalizable());
+
+		infoField = infoFields.get(5);
+
+		Assert.assertEquals("displayPageURL", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(6);
+
+		Assert.assertEquals("lastEditorName", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(7);
+
+		Assert.assertEquals("lastEditorProfileImage", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(8);
+
+		Assert.assertEquals("publishDate", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(9);
+
+		Assert.assertEquals("smallImage", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(10);
+
+		Assert.assertEquals("tagNames", infoField.getName());
+		Assert.assertFalse(infoField.isLocalizable());
+
+		infoField = infoFields.get(11);
+
+		Assert.assertEquals("title", infoField.getName());
+		Assert.assertTrue(infoField.isLocalizable());
 	}
 
 	@Test

@@ -267,9 +267,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 		int start = QueryUtil.ALL_POS;
 		int end = QueryUtil.ALL_POS;
 
-		int count =
-			_journalArticleService.getArticlesByLayoutUuidCount(
-				groupId, layoutUuid);
+		int count = _journalArticleService.getArticlesByLayoutUuidCount(
+			groupId, layoutUuid);
 
 		if (count > Sitemap.MAXIMUM_NUMBER_OF_ENTRIES) {
 			start = count - Sitemap.MAXIMUM_NUMBER_OF_ENTRIES;

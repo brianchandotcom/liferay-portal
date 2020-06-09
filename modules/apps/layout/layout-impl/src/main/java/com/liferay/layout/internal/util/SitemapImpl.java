@@ -382,11 +382,11 @@ public class SitemapImpl implements Sitemap {
 
 			if (entriesAttribute != null) {
 				sb.append(entriesAttribute.getValue());
-				sb.append(" entries and ");
+				sb.append(" entries");
 			}
 
 			if (sizeAttribute != null) {
-				sb.append(" size ");
+				sb.append(" and size ");
 
 				int size = GetterUtil.getInteger(sizeAttribute.getValue());
 

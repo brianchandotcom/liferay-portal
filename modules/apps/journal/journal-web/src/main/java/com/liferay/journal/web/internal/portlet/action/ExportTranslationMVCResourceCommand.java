@@ -86,9 +86,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						sourceLanguageId + "-" + targetLanguageId + ".xliff",
 					_translationInfoFormValuesExporter.export(
 						infoItemFormProvider.getInfoFormValues(article),
-						LocaleUtil.fromLanguageId(
-							ParamUtil.getString(
-								resourceRequest, "sourceLanguageId")),
+						LocaleUtil.fromLanguageId(sourceLanguageId),
 						LocaleUtil.fromLanguageId(targetLanguageId)));
 			}
 

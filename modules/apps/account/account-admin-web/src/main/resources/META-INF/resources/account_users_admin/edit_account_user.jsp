@@ -35,3 +35,25 @@ portletURL.setParameter("mvcPath", "/account_users_admin/edit_account_user.jsp")
 	navCssClass="col-lg-3"
 	portletURL="<%= portletURL %>"
 />
+
+<%
+String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigationCategoryKey", AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL);
+String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigationEntryKey", AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION);
+%>
+
+<c:if test="<%= Objects.equals(AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL, screenNavigationCategoryKey) && Objects.equals(AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION, screenNavigationEntryKey) %>">
+
+	<%
+	AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
+
+	Map<String, Object> componentContext = HashMapBuilder.<String, Object>put(
+			"validDomains", accountUserDisplay.getAccountValidDomains()
+	).build();
+	%>
+
+	<liferay-frontend:component
+		componentId="AccountUserEmailDomainValidator"
+		context="<%= componentContext %>"
+		module="account_users_admin/js/AccountUserEmailDomainValidator.es"
+	/>
+</c:if>

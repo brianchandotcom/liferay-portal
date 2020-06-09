@@ -63,12 +63,12 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 			<ul class="navbar-nav toolbar-group-field">
 				<li class="nav-item">
-					<button class='btn btn-secondary <%= disableCopyButton ? "ddm-btn-disabled" : "" %> <%= (!ddmFormAdminDisplayContext.isFormPublished() && (formInstance == null)) ? "hide" : "" %> lfr-ddm-share-url-button share-form-icon' data-original-title='<liferay-ui:message key="share" />' id="<portlet:namespace />publishIcon" title='<%= disableCopyButton ? LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") : LanguageUtil.get(request, "share") %>' type="button">
+					<button class='btn btn-secondary btn-sm <%= disableCopyButton ? "ddm-btn-disabled" : "" %> lfr-ddm-share-url-button share-form-icon' data-original-title='<liferay-ui:message key="share" />' id="<portlet:namespace />publishIcon" title='<%= disableCopyButton ? LanguageUtil.get(request, "publish-the-form-to-get-its-shareable-link") : "" %>' type="button">
 						<%= LanguageUtil.get(request, "share") %>
 					</button>
 				</li>
 				<li class="nav-item">
-					<button class="btn btn-primary lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced" id="addFieldButton">
+					<button class="btn btn-primary btn-sm lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced" id="addFieldButton">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
 						</svg>

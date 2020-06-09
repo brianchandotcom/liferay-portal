@@ -1273,7 +1273,9 @@ definition {
 			successPageDescription = "Thank you for filling out the Form.",
 			successPageTitle = "Success Page Title");
 
-		Form.deleteCurrentPage(formPageNumber = "2");
+		Form.deleteCurrentPage(
+			formDropDownNumber = "1",
+			formPageNumber = "2");
 
 		Form.deleteSuccessPage(formPageNumber = "2");
 

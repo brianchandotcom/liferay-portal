@@ -103,6 +103,7 @@ definition {
 	}
 
 	macro deleteCurrentPage {
+		var key_formDropDownNumber = "${formDropDownNumber}";
 		var key_formPageNumber = "${formPageNumber}";
 
 		//AssertElementPresent(locator1 = "FormPortlet#FORM_PAGE_ACTIVE");

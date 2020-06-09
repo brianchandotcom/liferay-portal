@@ -92,7 +92,7 @@
 </tr>
 <tr>
     <td>PAGE_CONTROLS_DELETE_CURRENT_PAGE</td>
-    <td>xpath=(//li[contains(@class,'dropdown-item')]//a[text()='Remove Page'] | //button[contains(@class,'dropdown-item') and contains(text(),'Remove Page')])[${key_formPageNumber}]</td>
+    <td>//button[contains(@class,'dropdown-item') and contains(text(),'Remove Page')][${key_formDropDownNumber}]</td>
     <td></td>
 </tr>
 <tr>

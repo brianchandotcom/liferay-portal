@@ -69,6 +69,7 @@ const ExportTranslationModal = ({
 		return (
 			<ClayCheckbox
 				checked={checked}
+				disabled={languageId === sourceLanguageId}
 				label={locale.displayName}
 				onChange={() => {
 					onChangeTarget(!checked, languageId);

@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_NESTED_FRAGMENT_DROP_TARGET</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_targetFragmentName}')]//div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'empty')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_DROP_TARGET</td>
 	<td>//div[contains(@class,'page-editor__root page-editor__topper')]</td>
 	<td></td>

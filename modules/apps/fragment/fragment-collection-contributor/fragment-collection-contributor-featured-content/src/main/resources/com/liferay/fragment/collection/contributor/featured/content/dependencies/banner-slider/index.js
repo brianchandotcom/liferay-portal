@@ -8,6 +8,8 @@ const indicators = [].slice.call(
 );
 const items = [].slice.call(document.querySelectorAll('.carousel-item'));
 
+let moving = false;
+
 function getActiveIndicator() {
 	return document.querySelector(
 		'.carousel-navigation .active'
@@ -15,6 +17,12 @@ function getActiveIndicator() {
 }
 
 function move(movement, index = null) {
+	if (moving) {
+		return;
+	}
+
+	moving = true;
+
 	const activeItem = document.querySelector('.carousel-item.active');
 	const indexActiveItem = items.indexOf(activeItem);
 	const activeIndicator = getActiveIndicator();
@@ -36,6 +44,8 @@ function move(movement, index = null) {
 		activeItem.classList.remove('active', movement);
 		nextItem.classList.add('active');
 		nextItem.classList.remove(movement);
+
+		moving = false;
 	}, 600);
 }
 

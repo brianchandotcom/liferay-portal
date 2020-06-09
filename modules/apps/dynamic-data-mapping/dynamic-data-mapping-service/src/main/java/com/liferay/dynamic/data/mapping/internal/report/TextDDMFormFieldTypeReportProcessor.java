@@ -15,22 +15,30 @@
 package com.liferay.dynamic.data.mapping.internal.report;
 
 import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.report.DDMFormFieldTypeReportProcessor;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordModifiedDateComparator;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,14 +80,10 @@ public class TextDDMFormFieldTypeReportProcessor
 			if (jsonArray != null) {
 				Iterator<JSONObject> iterator = jsonArray.iterator();
 
-				while (iterator.hasNext() && (valuesJSONArray.length() < 5)) {
+				while (iterator.hasNext() &&
+					   (valuesJSONArray.length() < _VALUES_MAX_LENGTH)) {
+
 					JSONObject jsonObject = iterator.next();
-
-					if (jsonObject.getLong("formInstanceRecordId") ==
-							formInstanceRecordId) {
-
-						continue;
-					}
 
 					valuesJSONArray.put(jsonObject);
 				}
@@ -89,32 +93,61 @@ public class TextDDMFormFieldTypeReportProcessor
 					DDMFormInstanceReportConstants.
 						EVENT_DELETE_RECORD_VERSION)) {
 
-			List<DDMFormInstanceRecord> formInstanceRecords =
-				ddmFormInstanceRecordLocalService.getFormInstanceRecords(
-					formInstanceRecord.getFormInstanceId(),
-					WorkflowConstants.STATUS_APPROVED, 0, 5,
-					new DDMFormInstanceRecordModifiedDateComparator(false));
+			DDMFormInstanceRecord formInstanceRecord =
+				ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+					formInstanceRecordId);
 
-			for (DDMFormInstanceRecord ddmFormInstanceRecord :
-					formInstanceRecords) {
+			DDMFormInstance formInstance = formInstanceRecord.getFormInstance();
 
-				DDMFormValues ddmFormValues =
-					ddmFormInstanceRecord.getDDMFormValues();
+			BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
+				ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
+					formInstance.getFormInstanceId(),
+					new String[] {ddmFormFieldValue.getName()},
+					WorkflowConstants.STATUS_APPROVED, 0,
+					_VALUES_MAX_LENGTH + 1,
+					new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true));
 
-				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
-					ddmFormValues.getDDMFormFieldValuesMap();
+			List<DDMFormInstanceRecord> ddmFormInstanceRecords =
+				baseModelSearchResult.getBaseModels();
 
-				List<DDMFormFieldValue> formFieldValues =
-					ddmFormFieldValuesMap.get(ddmFormFieldValue.getName());
+			Stream<DDMFormInstanceRecord> stream =
+				ddmFormInstanceRecords.stream();
 
-				for (DDMFormFieldValue formFieldValue : formFieldValues) {
-					valuesJSONArray.put(
-						JSONUtil.put(
-							"formInstanceRecordId",
-							ddmFormInstanceRecord.getFormInstanceRecordId()
-						).put(
-							"value", _getValue(formFieldValue)
-						));
+			stream.filter(
+				ddmFormInstanceRecord ->
+					ddmFormInstanceRecord.getFormInstanceRecordId() !=
+						formInstanceRecordId
+			).limit(
+				_VALUES_MAX_LENGTH
+			).forEach(
+				ddmFormInstanceRecord -> {
+					try {
+						DDMFormValues ddmFormValues =
+							ddmFormInstanceRecord.getDDMFormValues();
+
+						Map<String, List<DDMFormFieldValue>>
+							ddmFormFieldValuesMap =
+								ddmFormValues.getDDMFormFieldValuesMap();
+
+						List<DDMFormFieldValue> formFieldValues =
+							ddmFormFieldValuesMap.get(
+								ddmFormFieldValue.getName());
+
+						formFieldValues.forEach(
+							formFieldValue -> valuesJSONArray.put(
+								JSONUtil.put(
+									"formInstanceRecordId",
+									ddmFormInstanceRecord.
+										getFormInstanceRecordId()
+								).put(
+									"value", _getValue(formFieldValue)
+								)));
+					}
+					catch (PortalException portalException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(portalException, portalException);
+						}
+					}
 				}
 			}
 		}
@@ -140,5 +173,10 @@ public class TextDDMFormFieldTypeReportProcessor
 
 		return value.getString(value.getDefaultLocale());
 	}
+
+	private static final int _VALUES_MAX_LENGTH = 5;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		TextDDMFormFieldTypeReportProcessor.class);
 
 }

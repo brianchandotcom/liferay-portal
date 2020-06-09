@@ -13,6 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
@@ -84,32 +85,27 @@ export default (props) => {
 	const fieldIcon = ICONS[icon] ? ICONS[icon] : icon;
 
 	return (
-		<div
-			className={classnames(
-				className,
-				'autofit-row',
-				'autofit-row-center',
-				'field-type',
-				{
-					active,
-					disabled,
-					dragging,
-					loading,
-				}
-			)}
+		<ClayLayout.ContentRow
+			className={classnames(className, 'field-type', {
+				active,
+				disabled,
+				dragging,
+				loading,
+			})}
 			data-field-type-name={name}
 			onClick={onClick && handleOnClick}
 			onDoubleClick={onDoubleClick && handleOnDoubleClick}
 			ref={drag}
+			verticalAlign="center"
 		>
 			{dragAlignment === 'left' && (
-				<div className="autofit-col pl-2 pr-2">
+				<ClayLayout.ContentCol className="pl-2 pr-2">
 					<ClayIcon symbol="drag" />
-				</div>
+				</ClayLayout.ContentCol>
 			)}
 
-			<div
-				className={classnames('autofit-col', 'pr-2', {
+			<ClayLayout.ContentCol
+				className={classnames('pr-2', {
 					'pl-2': dragAlignment === 'right',
 				})}
 			>
@@ -120,9 +116,9 @@ export default (props) => {
 				>
 					<ClayIcon symbol={fieldIcon} />
 				</ClaySticker>
-			</div>
+			</ClayLayout.ContentCol>
 
-			<div className="autofit-col autofit-col-expand pr-2">
+			<ClayLayout.ContentCol className="pr-2" expand>
 				<h4 className="list-group-title text-truncate">
 					<span>{label}</span>
 				</h4>
@@ -132,12 +128,12 @@ export default (props) => {
 						<small>{description}</small>
 					</p>
 				)}
-			</div>
+			</ClayLayout.ContentCol>
 
 			{dragAlignment === 'right' && (
-				<div className="autofit-col pr-2">
+				<ClayLayout.ContentCol className="pr-2">
 					<ClayIcon symbol="drag" />
-				</div>
+				</ClayLayout.ContentCol>
 			)}
 
 			{onDelete && (
@@ -171,6 +167,6 @@ export default (props) => {
 					)}
 				</div>
 			)}
-		</div>
+		</ClayLayout.ContentRow>
 	);
 };

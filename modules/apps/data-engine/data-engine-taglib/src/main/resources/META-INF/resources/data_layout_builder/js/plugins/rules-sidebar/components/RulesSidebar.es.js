@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
 
 import RuleEditorModal from '../../../components/rules/RuleEditorModal.es';
@@ -44,23 +45,23 @@ export default function ({title}) {
 			<Sidebar.Header>
 				<Sidebar.Title title={title} />
 
-				<div className="autofit-row sidebar-section">
-					<div className="autofit-col autofit-col-expand">
+				<ClayLayout.ContentRow className="sidebar-section">
+					<ClayLayout.ContentCol expand>
 						<ClayForm onSubmit={(event) => event.preventDefault()}>
 							<Sidebar.SearchInput
 								onSearch={(keywords) => setKeywords(keywords)}
 							/>
 						</ClayForm>
-					</div>
+					</ClayLayout.ContentCol>
 
-					<div className="autofit-col ml-2">
+					<ClayLayout.ContentCol className="ml-2">
 						<ClayButtonWithIcon
 							displayType="primary"
 							onClick={() => toggleRulesEditorVisibility()}
 							symbol="plus"
 						/>
-					</div>
-				</div>
+					</ClayLayout.ContentCol>
+				</ClayLayout.ContentRow>
 			</Sidebar.Header>
 			<Sidebar.Body>
 				<RuleList

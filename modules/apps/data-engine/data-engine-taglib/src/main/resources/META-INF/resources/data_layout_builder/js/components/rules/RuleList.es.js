@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLayout from '@clayui/layout';
 import React, {useContext} from 'react';
 
 import AppContext from '../../AppContext.es';
@@ -56,7 +57,7 @@ export default ({keywords, toggleRulesEditorVisibility}) => {
 					small
 				/>
 			) : (
-				<div className="autofit-col rule-list">
+				<ClayLayout.ContentCol className="rule-list">
 					<hr />
 					{filteredDataRules.map((rule, index) => (
 						<RuleItem
@@ -67,7 +68,7 @@ export default ({keywords, toggleRulesEditorVisibility}) => {
 							}
 						/>
 					))}
-				</div>
+				</ClayLayout.ContentCol>
 			)}
 		</>
 	);

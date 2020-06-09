@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import FormBuilderWithLayoutProvider from 'dynamic-data-mapping-form-builder';
 import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
@@ -460,7 +461,7 @@ class DataLayoutBuilder extends React.Component {
 					}
 				)}
 			>
-				<div className="sheet" ref={this.containerRef} />
+				<ClayLayout.Sheet ref={this.containerRef} />
 			</div>
 		);
 	}

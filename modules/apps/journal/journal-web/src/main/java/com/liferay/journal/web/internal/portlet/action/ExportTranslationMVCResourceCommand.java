@@ -19,6 +19,8 @@ import com.liferay.info.item.provider.InfoItemFormProviderTracker;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -82,8 +84,11 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						resourceRequest, "targetLanguageIds")) {
 
 				zipWriter.addEntry(
-					"/" + article.getTitle(themeDisplay.getLocale()) + "-" +
-						sourceLanguageId + "-" + targetLanguageId + ".xliff",
+					StringBundler.concat(
+						StringPool.FORWARD_SLASH,
+						article.getTitle(themeDisplay.getLocale()),
+						StringPool.DASH, sourceLanguageId, StringPool.DASH,
+						targetLanguageId, ".xliff"),
 					_translationInfoFormValuesExporter.export(
 						infoItemFormProvider.getInfoFormValues(article),
 						LocaleUtil.fromLanguageId(sourceLanguageId),

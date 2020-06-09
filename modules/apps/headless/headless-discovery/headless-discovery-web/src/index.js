@@ -12,15 +12,9 @@
  * details.
  */
 
-package com.liferay.headless.discovery.web.internal.constants;
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-/**
- * @author Javier Gamarra
- */
-public class HeadlessDiscoveryPortletKeys {
+import App from './js/App.es';
 
-	public static final String HEADLESS_DISCOVERY =
-		"com_liferay_headless_discovery_web_internal_portlet_" +
-			"HeadlessDiscoveryPortlet";
-
-}
+ReactDOM.render(<App />, document.getElementById('container'));

@@ -65,11 +65,7 @@ const APIFormBase = (props) => {
 	return (
 		<form onSubmit={handleSubmit}>
 			<div className="sheet-section">
-				{parameters && (
-					<h3 className="sheet-subtitle">
-						{Liferay.Language.get('parameters')}
-					</h3>
-				)}
+				{parameters && <h3 className="sheet-subtitle">Parameters</h3>}
 
 				{parameters &&
 					parameters.map(({name, required, schema}) => (
@@ -114,7 +110,7 @@ const APIFormBase = (props) => {
 						displayType="primary"
 						type="submit"
 					>
-						{Liferay.Language.get('execute')}
+						Execute
 					</ClayButton>
 				</ClayForm.Group>
 			</div>

@@ -93,7 +93,7 @@ const APIDisplay = () => {
 							key={0}
 							onClick={() => setTabIndex(0)}
 						>
-							{Liferay.Language.get('response')}
+							Response
 						</ClayTabs.Item>
 						<ClayTabs.Item
 							active={tabIndex === 1}
@@ -103,7 +103,7 @@ const APIDisplay = () => {
 							key={1}
 							onClick={() => setTabIndex(1)}
 						>
-							{Liferay.Language.get('javascript-example')}
+							Javascript Example
 						</ClayTabs.Item>
 					</ClayTabs>
 

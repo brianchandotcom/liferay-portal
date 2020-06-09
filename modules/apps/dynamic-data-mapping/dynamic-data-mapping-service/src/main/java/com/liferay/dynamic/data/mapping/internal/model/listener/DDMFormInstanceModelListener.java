@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.model.listener;
 
+import com.liferay.dynamic.data.mapping.internal.petra.executor.DDMFormInstanceReportPortalExecutor;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalService;
@@ -66,12 +67,11 @@ public class DDMFormInstanceModelListener
 					getFormInstanceReportByFormInstanceId(
 						ddmFormInstance.getFormInstanceId());
 
-			if (ddmFormInstanceReport == null) {
-				return;
-			}
-
-			_ddmFormInstanceReportLocalService.deleteDDMFormInstanceReport(
-				ddmFormInstanceReport.getFormInstanceReportId());
+			_ddmFormInstanceReportPortalExecutor.execute(
+				() ->
+					_ddmFormInstanceReportLocalService.
+						deleteDDMFormInstanceReport(
+							ddmFormInstanceReport.getFormInstanceReportId()));
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -93,5 +93,9 @@ public class DDMFormInstanceModelListener
 	@Reference
 	private DDMFormInstanceReportLocalService
 		_ddmFormInstanceReportLocalService;
+
+	@Reference
+	private DDMFormInstanceReportPortalExecutor
+		_ddmFormInstanceReportPortalExecutor;
 
 }

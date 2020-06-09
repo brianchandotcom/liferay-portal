@@ -60,10 +60,9 @@ definition {
 
 			Navigator.gotoNavItem(navItem = "Index Actions");
 
-			AssertClick.assertTextClickAt(
-				key_actionsDescription = "${actionsDescription}",
-				locator1 = "Button#EXECUTE_ACTION",
-				value1 = "Execute");
+			Click(
+				key_actionsDescription = "Reindex all search indexes.",
+				locator1 = "Button#EXECUTE_ACTION");
 
 			var reindexElapsedTime = "0";
 			var reindexStartTime = "0";

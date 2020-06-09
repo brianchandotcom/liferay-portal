@@ -25,6 +25,11 @@ const DEFAULT_RENDER_DATA = {
 
 const TOAST_AUTO_CLOSE_INTERVAL = 5000;
 
+const TYPES = {
+	HTML: 'html',
+	TEXT: 'text',
+};
+
 const Text = ({allowHTML, string = null}) => {
 	if (allowHTML) {
 		return <div dangerouslySetInnerHTML={{__html: string}} />;
@@ -45,15 +50,21 @@ const getDefaultAlertContainer = () => {
 	return container;
 };
 
-const TYPES = {
-	HTML: 'html',
-	TEXT: 'text',
-};
+function AlertContainer({children, hasWrapper = true}) {
+	if (hasWrapper) {
+		return <ClayAlert.ToastContainer>{children}</ClayAlert.ToastContainer>;
+	}
+
+	return children;
+}
 
 /**
  * Function that implements the Toast pattern, which allows to present feedback
  * to user actions as a toast message in the lower left corner of the page
  *
+ * @param {number} autoClose Flag to indicate alert should automatically call `onClose`.
+ * @param {HTMLElement} container A container to be used to the Alert being positioned relatively.
+ * @param {string} containerId A containerId of the element to be opened relatively.
  * @param {string|HTML} message The message to show in the toast notification
  * @param {string|HTML} title The title associated with the message
  * @param {string} displayType The displayType of notification to show. It can be one of the
@@ -63,6 +74,8 @@ const TYPES = {
  */
 
 function openToast({
+	autoClose = TOAST_AUTO_CLOSE_INTERVAL,
+	container,
 	containerId,
 	message = '',
 	messageType = TYPES.TEXT,
@@ -74,17 +87,19 @@ function openToast({
 	type = 'success',
 	variant,
 }) {
-	const container =
-		document.getElementById(containerId) || getDefaultAlertContainer();
+	const componentContainer =
+		container ||
+		document.getElementById(containerId) ||
+		getDefaultAlertContainer();
 
-	unmountComponentAtNode(container);
+	unmountComponentAtNode(componentContainer);
 
-	const onClose = () => unmountComponentAtNode(container);
+	const onClose = () => unmountComponentAtNode(componentContainer);
 
 	render(
-		<ClayAlert.ToastContainer>
+		<AlertContainer hasWrapper={!containerId}>
 			<ClayAlert
-				autoClose={TOAST_AUTO_CLOSE_INTERVAL}
+				autoClose={autoClose}
 				displayType={type}
 				onClick={(event) => onClick({event, onClose})}
 				onClose={onClose}
@@ -96,9 +111,9 @@ function openToast({
 			>
 				<Text allowHTML={messageType === TYPES.HTML} string={message} />
 			</ClayAlert>
-		</ClayAlert.ToastContainer>,
+		</AlertContainer>,
 		renderData,
-		container
+		componentContainer
 	);
 }
 

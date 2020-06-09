@@ -20,6 +20,7 @@ import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -85,6 +86,12 @@ public class XLIFFInfoFormTranslationExporter<T>
 				continue;
 			}
 
+			Object sourceValue = infoFieldValue.getValue(sourceLocale);
+
+			if (Validator.isNull(sourceValue)) {
+				continue;
+			}
+
 			Element unitElement = fileElement.addElement("unit");
 
 			unitElement.addAttribute("id", infoField.getName());
@@ -93,18 +100,25 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 			Element sourceElement = segmentElement.addElement("source");
 
-			sourceElement.addCDATA(
-				(String)infoFieldValue.getValue(sourceLocale));
+			sourceElement.addCDATA(_getStringValue(sourceValue));
 
 			Element targetElement = segmentElement.addElement("target");
 
 			targetElement.addCDATA(
-				(String)infoFieldValue.getValue(targetLocale));
+				_getStringValue(infoFieldValue.getValue(targetLocale)));
 		}
 
 		String formattedString = document.formattedString();
 
 		return new ByteArrayInputStream(formattedString.getBytes());
+	}
+
+	private String _getStringValue(Object value) {
+		if (value == null) {
+			return null;
+		}
+
+		return value.toString();
 	}
 
 	private static final Set<String> _blacklistedFieldNames = new HashSet<>(

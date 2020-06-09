@@ -419,7 +419,7 @@ public class SitemapImpl implements Sitemap {
 		size += _getSize(newElement);
 
 		while ((entries > MAXIMUM_NUMBER_OF_ENTRIES) ||
-			   (size >= _MAXIMUM_SIZE_IN_BYTES)) {
+			   (size >= _MAXIMUM_SIZE)) {
 
 			Element oldestUrlElement = rootElement.element(
 				newElement.getName());
@@ -434,7 +434,7 @@ public class SitemapImpl implements Sitemap {
 		rootElement.addAttribute("size", String.valueOf(size));
 	}
 
-	private static final int _MAXIMUM_SIZE_IN_BYTES = 50 * 1024 * 1024;
+	private static final int _MAXIMUM_SIZE = 50 * 1024 * 1024;
 
 	private static final byte[] _XHTML_ATTRIBUTE =
 		" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"".getBytes();

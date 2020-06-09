@@ -109,9 +109,7 @@ if (kbArticle != null) {
 </aui:script>
 
 <aui:script>
-	Liferay.provide(window, '<portlet:namespace />deleteFileEntry', function (
-		fileEntryId
-	) {
+	window['<portlet:namespace />deleteFileEntry'] = function (fileEntryId) {
 		var removeFileEntryIdsInput = document.getElementById(
 			'<portlet:namespace />removeFileEntryIds'
 		);
@@ -131,7 +129,7 @@ if (kbArticle != null) {
 		);
 
 		if (fileEntryIdWrapper) {
-			fileEntryIdWrapper.hide();
+			fileEntryIdWrapper.style.display = 'none';
 		}
-	});
+	};
 </aui:script>

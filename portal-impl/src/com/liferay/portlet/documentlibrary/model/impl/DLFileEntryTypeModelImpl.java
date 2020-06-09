@@ -86,8 +86,9 @@ public class DLFileEntryTypeModelImpl
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"fileEntryTypeKey", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"description", Types.VARCHAR}, {"lastPublishDate", Types.TIMESTAMP}
+		{"dataDefinitionId", Types.BIGINT}, {"fileEntryTypeKey", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -104,6 +105,7 @@ public class DLFileEntryTypeModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("dataDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fileEntryTypeKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
@@ -111,7 +113,7 @@ public class DLFileEntryTypeModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table DLFileEntryType (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null,primary key (fileEntryTypeId, ctCollectionId))";
+		"create table DLFileEntryType (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,fileEntryTypeId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,dataDefinitionId LONG,fileEntryTypeKey VARCHAR(75) null,name STRING null,description STRING null,lastPublishDate DATE null,primary key (fileEntryTypeId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntryType";
 
@@ -175,6 +177,7 @@ public class DLFileEntryTypeModelImpl
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setDataDefinitionId(soapModel.getDataDefinitionId());
 		model.setFileEntryTypeKey(soapModel.getFileEntryTypeKey());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
@@ -407,6 +410,12 @@ public class DLFileEntryTypeModelImpl
 			(BiConsumer<DLFileEntryType, Date>)
 				DLFileEntryType::setModifiedDate);
 		attributeGetterFunctions.put(
+			"dataDefinitionId", DLFileEntryType::getDataDefinitionId);
+		attributeSetterBiConsumers.put(
+			"dataDefinitionId",
+			(BiConsumer<DLFileEntryType, Long>)
+				DLFileEntryType::setDataDefinitionId);
+		attributeGetterFunctions.put(
 			"fileEntryTypeKey", DLFileEntryType::getFileEntryTypeKey);
 		attributeSetterBiConsumers.put(
 			"fileEntryTypeKey",
@@ -609,6 +618,17 @@ public class DLFileEntryTypeModelImpl
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public long getDataDefinitionId() {
+		return _dataDefinitionId;
+	}
+
+	@Override
+	public void setDataDefinitionId(long dataDefinitionId) {
+		_dataDefinitionId = dataDefinitionId;
 	}
 
 	@JSON
@@ -999,6 +1019,7 @@ public class DLFileEntryTypeModelImpl
 		dlFileEntryTypeImpl.setUserName(getUserName());
 		dlFileEntryTypeImpl.setCreateDate(getCreateDate());
 		dlFileEntryTypeImpl.setModifiedDate(getModifiedDate());
+		dlFileEntryTypeImpl.setDataDefinitionId(getDataDefinitionId());
 		dlFileEntryTypeImpl.setFileEntryTypeKey(getFileEntryTypeKey());
 		dlFileEntryTypeImpl.setName(getName());
 		dlFileEntryTypeImpl.setDescription(getDescription());
@@ -1136,6 +1157,8 @@ public class DLFileEntryTypeModelImpl
 			dlFileEntryTypeCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		dlFileEntryTypeCacheModel.dataDefinitionId = getDataDefinitionId();
+
 		dlFileEntryTypeCacheModel.fileEntryTypeKey = getFileEntryTypeKey();
 
 		String fileEntryTypeKey = dlFileEntryTypeCacheModel.fileEntryTypeKey;
@@ -1259,6 +1282,7 @@ public class DLFileEntryTypeModelImpl
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _dataDefinitionId;
 	private String _fileEntryTypeKey;
 	private String _originalFileEntryTypeKey;
 	private String _name;

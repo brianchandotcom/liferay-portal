@@ -82,16 +82,16 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 				continue;
 			}
 
-			int end = QueryUtil.ALL_POS;
 			int start = QueryUtil.ALL_POS;
+			int end = QueryUtil.ALL_POS;
 
 			int layoutsCount = _layoutService.getLayoutsCount(
 				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 				entry.getKey());
 
 			if (layoutsCount > Sitemap.MAXIMUM_NUMBER_OF_ENTRIES) {
-				end = layoutsCount;
 				start = layoutsCount - Sitemap.MAXIMUM_NUMBER_OF_ENTRIES;
+				end = layoutsCount;
 			}
 
 			List<Layout> layouts = _layoutService.getLayouts(

@@ -26,6 +26,7 @@ const ExportTranslationModal = ({
 	articleIds,
 	availableSourceLocales,
 	availableTargetLocales,
+	exportTranslationURL,
 	observer,
 	onModalClose = noop,
 }) => {
@@ -37,7 +38,14 @@ const ExportTranslationModal = ({
 
 	const [selectedTargetLocales, setSelectedTargetLocales] = useState([]);
 
-	const handleSubmit = noop;
+	const exportTranslationPortletURL = Liferay.Util.PortletURL.createPortletURL(
+		exportTranslationURL,
+		{
+			articleId: articleIds[0],
+			sourceLanguageId,
+			targetLanguageIds: selectedTargetLocales.join(','),
+		}
+	);
 
 	const onChangeTarget = (checked, selectedLocaleId) => {
 		if (checked) {
@@ -75,7 +83,14 @@ const ExportTranslationModal = ({
 				{Liferay.Language.get('export-for-translation')}
 			</ClayModal.Header>
 
-			<ClayForm className="export-modal-content" onSubmit={handleSubmit}>
+			<ClayForm
+				className="export-modal-content"
+				onSubmit={(e) => {
+					e.preventDefault();
+					onModalClose();
+					window.location.href = exportTranslationPortletURL.toString();
+				}}
+			>
 				<ClayModal.Body>
 					<h5>{Liferay.Language.get('origin-language')}</h5>
 

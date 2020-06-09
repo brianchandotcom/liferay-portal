@@ -17,7 +17,7 @@ function getActiveIndicator() {
 	);
 }
 
-const move = function (movement, index = null) {
+function move(movement, index = null) {
 	const activeItem = document.querySelector('.carousel-item.active');
 	const indexActiveItem = items.indexOf(activeItem);
 	const activeIndicator = getActiveIndicator();
@@ -44,7 +44,7 @@ const move = function (movement, index = null) {
 		nextItem.classList.add('active');
 		nextItem.classList.remove(movement);
 	}, 600);
-};
+}
 
 function createInterval() {
 	let intervalId = null;
@@ -61,9 +61,9 @@ function createInterval() {
 	}
 
 	return intervalId;
-};
+}
 
-function main() {
+(function main() {
 	let intervalId = createInterval();
 
 	prev.addEventListener('click', function () {
@@ -97,6 +97,4 @@ function main() {
 			intervalId = createInterval();
 		});
 	});
-}
-
-main();
+}());

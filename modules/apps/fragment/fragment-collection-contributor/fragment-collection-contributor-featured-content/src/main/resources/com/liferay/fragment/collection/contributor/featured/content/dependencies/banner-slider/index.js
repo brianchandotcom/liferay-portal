@@ -14,7 +14,7 @@ function getActiveIndicator() {
 	);
 }
 
-const move = function (movement, index = null) {
+function move(movement, index = null) {
 	const activeItem = document.querySelector('.carousel-item.active');
 	const indexActiveItem = items.indexOf(activeItem);
 	const activeIndicator = getActiveIndicator();
@@ -37,9 +37,9 @@ const move = function (movement, index = null) {
 		nextItem.classList.add('active');
 		nextItem.classList.remove(movement);
 	}, 600);
-};
+}
 
-const createInterval = function () {
+function createInterval() {
 	let intervalId = null;
 
 	if (!editMode) {
@@ -54,9 +54,9 @@ const createInterval = function () {
 	}
 
 	return intervalId;
-};
+}
 
-function main() {
+(function main() {
 	let intervalId = createInterval();
 
 	indicators.forEach(function (indicator, index) {
@@ -78,6 +78,4 @@ function main() {
 			intervalId = createInterval();
 		});
 	});
-}
-
-main();
+})();

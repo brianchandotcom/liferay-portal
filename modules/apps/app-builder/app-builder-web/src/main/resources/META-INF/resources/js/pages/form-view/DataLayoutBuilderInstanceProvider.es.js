@@ -24,7 +24,12 @@ import useSaveAsFieldset from './useSaveAsFieldset.es';
 
 export default ({children, dataLayoutBuilder}) => {
 	const [
-		{dataDefinition, editingLanguageId, focusedField},
+		{
+			config: {allowNestedFields},
+			dataDefinition,
+			editingLanguageId,
+			focusedField,
+		},
 		dispatch,
 	] = useContext(FormViewContext);
 	const deleteDefinitionField = useDeleteDefinitionField({dataLayoutBuilder});
@@ -98,6 +103,7 @@ export default ({children, dataLayoutBuilder}) => {
 		];
 
 		if (
+			allowNestedFields &&
 			Object.keys(fieldHovered).length &&
 			fieldHovered.type === 'fieldset' &&
 			!fieldHovered.ddmStructureId
@@ -121,7 +127,13 @@ export default ({children, dataLayoutBuilder}) => {
 		};
 
 		provider.getEvents().fieldHovered(fieldHovered);
-	}, [dataLayoutBuilder, dispatch, onDeleteDefinitionField, saveAsFieldset]);
+	}, [
+		allowNestedFields,
+		dataLayoutBuilder,
+		dispatch,
+		onDeleteDefinitionField,
+		saveAsFieldset,
+	]);
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();

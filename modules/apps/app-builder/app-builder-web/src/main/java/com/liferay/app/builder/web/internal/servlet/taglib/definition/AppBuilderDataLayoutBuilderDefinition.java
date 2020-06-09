@@ -39,6 +39,11 @@ public class AppBuilderDataLayoutBuilderDefinition
 	}
 
 	@Override
+	public boolean allowNestedFields() {
+		return false;
+	}
+
+	@Override
 	public boolean allowRules() {
 		return true;
 	}

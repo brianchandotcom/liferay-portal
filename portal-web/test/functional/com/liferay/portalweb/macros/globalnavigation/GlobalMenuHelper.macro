@@ -17,6 +17,10 @@ definition {
 	}
 
 	macro openGlobalMenu {
+		if (IsElementPresent(locator1 = "ManagementBar#MANAGEMENT_BAR")) {
+			MetalComponent.waitForManagementBar();
+		}
+
 		if (IsElementPresent(locator1 = "GlobalMenu#GLOBAL_MENU_HIDDEN")) {
 			Click(locator1 = "GlobalMenu#TOGGLE");
 		}

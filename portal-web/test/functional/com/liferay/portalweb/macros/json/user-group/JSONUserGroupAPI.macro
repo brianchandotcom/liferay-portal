@@ -15,4 +15,27 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@summary = "Get the userGroupId from any existing site by using userGroupName"
+	macro _getUserGroupIdByName {
+		Variables.assertDefined(parameterList = "${userGroupName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/usergroup/get-user-group \
+				-u test@liferay.com:test \
+				-d name=${userGroupName}
+		''';
+
+		var userGroupId = JSONCurlUtil.post("${curl}", "$.userGroupId");
+		var userGroupId = StringUtil.replace("${userGroupId}", "[&quot;", "");
+		var userGroupId = StringUtil.replace("${userGroupId}", "&quot;]", "");
+
+		if ("${groupId}" == "[]") {
+			fail("FAIL. Cannot find user group.");
+		}
+
+		return "${userGroupId}";
+	}
+
 }

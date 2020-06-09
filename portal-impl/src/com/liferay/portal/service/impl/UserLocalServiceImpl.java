@@ -3887,8 +3887,21 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			long groupId, long[] userIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		userGroupRoleLocalService.deleteUserGroupRoles(
-			userIds, groupId, RoleConstants.TYPE_SITE);
+		for (long userId : userIds) {
+			List<UserGroupRole> userGroupRoles =
+				userGroupRolePersistence.findByU_G(userId, groupId);
+
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				Role role = rolePersistence.findByPrimaryKey(
+					userGroupRole.getRoleId());
+
+				if ((role.getType() == RoleConstants.TYPE_DEPOT) ||
+					(role.getType() == RoleConstants.TYPE_SITE)) {
+
+					userGroupRolePersistence.remove(userGroupRole);
+				}
+			}
+		}
 
 		unsetGroupTeamsUsers(groupId, userIds);
 

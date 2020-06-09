@@ -88,7 +88,10 @@ const ExportTranslationModal = ({
 				onSubmit={(e) => {
 					e.preventDefault();
 					onModalClose();
-					window.location.href = exportTranslationPortletURL.toString();
+					location.href = Liferay.Util.addParams(
+						'download=true',
+						exportTranslationPortletURL.toString()
+					);
 				}}
 			>
 				<ClayModal.Body>

@@ -16,8 +16,9 @@ package com.liferay.layout.admin.web.internal.portlet;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
-import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidationException;
+import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
@@ -181,6 +182,13 @@ public class GroupPagesPortlet extends MVCPortlet {
 				}
 			}
 
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.INFO_ITEM_FORM_PROVIDER_TRACKER,
+				_infoItemFormProviderTracker);
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.INFO_LIST_PROVIDER_TRACKER,
+				_infoListProviderTracker);
+
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_layoutConverterConfiguration, _layoutConverterRegistry,
@@ -242,10 +250,13 @@ public class GroupPagesPortlet extends MVCPortlet {
 		GroupPagesPortlet.class);
 
 	@Reference
-	private DLAppService _dlAppService;
+	private GroupProvider _groupProvider;
 
 	@Reference
-	private GroupProvider _groupProvider;
+	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
+
+	@Reference
+	private InfoListProviderTracker _infoListProviderTracker;
 
 	private volatile LayoutConverterConfiguration _layoutConverterConfiguration;
 

@@ -12,23 +12,22 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.constants;
+package com.liferay.layout.admin.web.internal.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Julio Camarero
+ * @author Jürgen Kappler
  */
-public class LayoutAdminWebKeys {
+@ExtendedObjectClassDefinition(generateUI = false)
+@Meta.OCD(
+	id = "com.liferay.layout.admin.web.internal.configuration.CollectionLayoutsConfiguration"
+)
+public interface CollectionLayoutsConfiguration {
 
-	public static final String INFO_ITEM_FORM_PROVIDER_TRACKER =
-		"INFO_ITEM_FORM_PROVIDER_TRACKER";
-
-	public static final String INFO_LIST_PROVIDER_TRACKER =
-		"INFO_LIST_PROVIDER_TRACKER";
-
-	public static final String LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT =
-		"LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT";
-
-	public static final String MILLER_COLUMNS_DISPLAY_CONTEXT =
-		"MILLER_COLUMNS_DISPLAY_CONTEXT";
+	@Meta.AD(deflt = "false", required = false)
+	public boolean enabled();
 
 }

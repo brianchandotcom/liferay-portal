@@ -13,9 +13,12 @@
  */
 
 const apiFetch = (url, method = 'get', data, contentType, headers) => {
-
 	const request = {
-		headers: {...getHeaders(headers), 'x-csrf-token': document.querySelector('meta[name="csrf-token"]').content},
+		headers: {
+			...getHeaders(headers),
+			'x-csrf-token': document.querySelector('meta[name="csrf-token"]')
+				.content,
+		},
 		method: method.toUpperCase(),
 	};
 
@@ -40,6 +43,7 @@ const apiFetch = (url, method = 'get', data, contentType, headers) => {
 		if (method === 'delete' && res.status === 204) {
 			return 'Deleted Successfully';
 		}
+
 		return res.json();
 	});
 

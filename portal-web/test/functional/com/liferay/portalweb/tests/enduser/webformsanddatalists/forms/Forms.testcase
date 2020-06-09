@@ -2143,11 +2143,11 @@ definition {
 	@description = "This is a use case for LPS-61740"
 	@priority = "5"
 	test PreviewAndPublishForm {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "quarantine";
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 
@@ -2158,15 +2158,9 @@ definition {
 
 		FormsAdminNavigator.gotoAddForm();
 
-		Form.editName();
+		Form.editName(formName = "Test Preview and Publish Form");
 
-		Form.editDescription();
-
-		var browserType = PropsUtil.get("browser.type");
-
-		if (("${browserType}" == "internetexplorer") && (IsElementPresent(locator1 = "Form#SIDEBAR_CLOSE"))) {
-			Click(locator1 = "Form#SIDEBAR_CLOSE");
-		}
+		Form.editDescription(formDescription = "Test Preview and Publish Form Description");
 
 		Form.addTextField(fieldPositionNumber = "1");
 
@@ -2176,12 +2170,14 @@ definition {
 
 		Form.save();
 
+		Navigator.openURL();
+
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Forms");
 
-		FormsAdminNavigator.gotoEditFormByName();
+		FormsAdminNavigator.gotoEditFormByName(formName = "Test Preview and Publish Form");
 
 		Form.publishForm();
 
@@ -2190,7 +2186,8 @@ definition {
 		Form.previewForm(
 			fieldLabel = "Text Field",
 			fieldName = "TextField",
-			fieldValue = "Preview Paragraph entry");
+			fieldValue = "Preview Paragraph entry",
+			formName = "Test Preview and Publish Form");
 
 		Navigator.closeWindow();
 
@@ -2201,12 +2198,21 @@ definition {
 			panel = "Site Administration",
 			portlet = "Forms");
 
-		FormsAdminNavigator.gotoEditFormByName();
+		FormsAdminNavigator.gotoEditFormByName(formName = "Test Preview and Publish Form");
 
-		Form.submitFormPublish(
+		FormsAdminNavigator.gotoPublishedForm();
+
+		Pause(locator1 = "5000");
+
+		FormFields.viewTextField(
 			fieldLabel = "Text Field",
+			fieldName = "TextField");
+
+		FormFields.editText(
 			fieldName = "TextField",
 			fieldValue = "Published Paragraph entry");
+
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -2228,7 +2234,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Forms");
 
-		FormsAdminNavigator.gotoEditFormByName();
+		FormsAdminNavigator.gotoEditFormByName(formName = "Test Preview and Publish Form");
 
 		Form.viewFormNotPublished();
 	}

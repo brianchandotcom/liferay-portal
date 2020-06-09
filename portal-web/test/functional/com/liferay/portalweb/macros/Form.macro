@@ -145,6 +145,8 @@ definition {
 	}
 
 	macro editDescription {
+		WaitForElementPresent(locator1 = "Form#DESCRIPTION_FIELD");
+
 		Click(locator1 = "Form#DESCRIPTION_FIELD");
 
 		Type(
@@ -236,6 +238,8 @@ definition {
 	macro editName {
 		Pause(locator1 = "2000");
 
+		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
+
 		AssertVisible(locator1 = "Form#ADD_FIELD");
 
 		AssertVisible(locator1 = "Form#NAME_FIELD");
@@ -250,6 +254,8 @@ definition {
 	}
 
 	macro editNameLocalized {
+		WaitForElementPresent(locator1 = "Form#NAME_FIELD");
+
 		AssertVisible(locator1 = "Form#ADD_FIELD");
 
 		AssertVisible(locator1 = "Form#NAME_FIELD");
@@ -424,6 +430,8 @@ definition {
 	macro previewForm {
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
 
+		Pause(locator1 = "5000");
+
 		var key_formName = "${formName}";
 
 		AssertTextEquals(
@@ -446,6 +454,8 @@ definition {
 	}
 
 	macro publishForm {
+		WaitForElementPresent(locator1 = "Button#PUBLISH");
+
 		AssertElementPresent(locator1 = "Form#NAME_FIELD");
 
 		Click(locator1 = "Button#PUBLISH");
@@ -538,6 +548,8 @@ definition {
 	}
 
 	macro unpublishForm {
+		WaitForElementPresent(locator1 = "Button#UNPUBLISH");
+
 		AssertElementPresent(locator1 = "Form#NAME_FIELD");
 
 		Click(locator1 = "Button#UNPUBLISH");
@@ -564,6 +576,8 @@ definition {
 	}
 
 	macro viewFormNotPublished {
+		WaitForElementPresent(locator1 = "Form#PUBLISH_ICON");
+
 		Click(locator1 = "Form#PUBLISH_ICON");
 
 		var publishFormURL = selenium.getElementValue("Form#PUBLISH_FORM_PUBLIC_URL");

@@ -93,12 +93,18 @@ definition {
 	}
 
 	macro gotoPreviewForm {
+		WaitForElementPresent(
+			locator1 = "Button#PREVIEW",
+			value1 = "Preview Form");
+
 		AssertClick(
 			locator1 = "Button#PREVIEW",
 			value1 = "Preview Form");
 	}
 
 	macro gotoPublishCopyURLLink {
+		WaitForElementPresent(locator1 = "Form#PUBLISH_ICON");
+
 		Click(locator1 = "Form#PUBLISH_ICON");
 	}
 

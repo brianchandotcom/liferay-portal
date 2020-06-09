@@ -387,13 +387,13 @@ public class SitemapImpl implements Sitemap {
 			}
 
 			if (sizeAttribute != null) {
+				sb.append("of size ");
+
 				int size = GetterUtil.getInteger(sizeAttribute.getValue());
 
 				sb.append(
 					TextFormatter.formatStorageSize(
 						size, LocaleUtil.fromLanguageId("en_US")));
-
-				sb.append("of size");
 			}
 
 			_log.debug(sb.toString());

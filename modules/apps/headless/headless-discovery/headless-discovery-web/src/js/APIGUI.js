@@ -18,6 +18,7 @@ import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
 import GraphiQL from 'graphiql';
 import React, {useCallback, useEffect, useState} from 'react';
+import SwaggerUI from 'swagger-ui-react';
 
 import APIDisplay from './APIDisplay';
 import Icon, {spritemap} from './Icon';
@@ -52,6 +53,7 @@ const APIGUI = () => {
 
 	const [showGraphQL, setShowGraphQL] = useState(false);
 	const [showHeaders, setShowHeaders] = useState(false);
+	const [showSwagger, setShowSwagger] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setShowHeaders(false),
 	});
@@ -151,9 +153,7 @@ const APIGUI = () => {
 						<ClayModal.Header>{'Headers'}</ClayModal.Header>
 						<ClayModal.Body>
 							<h1>
-								{Liferay.Language.get(
-									'add-edit-and-remove-headers-in-your-request'
-								)}
+								Add, edit, and remove headers in your request.
 							</h1>
 
 							{headers.map((header, i) => (
@@ -208,7 +208,7 @@ const APIGUI = () => {
 											]);
 										}}
 									>
-										{Liferay.Language.get('add-header')}
+										Add Header
 									</ClayButton>
 								</ClayButton.Group>
 							}
@@ -222,7 +222,7 @@ const APIGUI = () => {
 										onClose();
 									}}
 								>
-									{Liferay.Language.get('save')}
+									Save
 								</ClayButton>
 							}
 						/>
@@ -239,7 +239,15 @@ const APIGUI = () => {
 								setShowHeaders(true);
 							}}
 						>
-							{Liferay.Language.get('headers')}
+							Headers
+						</button>
+
+						<button
+							onClick={() => {
+								setShowSwagger(!showSwagger);
+							}}
+						>
+							{showGraphQL ? 'Hide Swagger' : 'Show Swagger'}
 						</button>
 
 						<button
@@ -247,19 +255,20 @@ const APIGUI = () => {
 								setShowGraphQL(!showGraphQL);
 							}}
 						>
-							{showGraphQL
-								? Liferay.Language.get('hide-graphql')
-								: Liferay.Language.get('show-graphql')}
+							{showGraphQL ? 'Hide GraphQL' : 'Show GraphQL'}
 						</button>
 					</div>
 				</div>
 
-				{showGraphQL && (
+				{showSwagger && !showGraphQL && (
+					<SwaggerUI url="https://petstore.swagger.io/v2/swagger.json" />
+				)}
+				{showGraphQL && !showSwagger && (
 					<div className="row vh-100">
 						<GraphiQL fetcher={graphQLFetcher} />
 					</div>
 				)}
-				{!showGraphQL && (
+				{!showGraphQL && !showSwagger && (
 					<div className="row">
 						<div className="border col col-md-5 overflow-auto p-0 vh-100">
 							<ClayForm.Group className="pt-3 px-3">
@@ -267,11 +276,7 @@ const APIGUI = () => {
 									className="d-flex justify-content-between"
 									htmlFor="categorySelect"
 								>
-									<span>
-										{Liferay.Language.get(
-											'select-api-category'
-										)}
-									</span>
+									<span>Select API Category</span>
 
 									{schemas && (
 										<button
@@ -282,12 +287,8 @@ const APIGUI = () => {
 											}}
 										>
 											{showSchemas
-												? Liferay.Language.get(
-														'hide-schemas'
-												  )
-												: Liferay.Language.get(
-														'show-schemas'
-												  )}
+												? 'Hide Schemas'
+												: 'Show Schemas'}
 										</button>
 									)}
 								</label>
@@ -317,7 +318,7 @@ const APIGUI = () => {
 									className="d-flex justify-content-between"
 									htmlFor="categorySelect"
 								>
-									{Liferay.Language.get('description')}
+									Description
 								</label>
 								<p>{info && info.description}</p>
 							</ClayForm.Group>
@@ -370,9 +371,8 @@ const APIGUI = () => {
 									spritemap={spritemap}
 									title="Info"
 								>
-									{Liferay.Language.get(
-										'please-select-an-api-from-the-list-on-the-left'
-									)}
+									Please select an API from the list on the
+									left.
 								</ClayAlert>
 							)}
 

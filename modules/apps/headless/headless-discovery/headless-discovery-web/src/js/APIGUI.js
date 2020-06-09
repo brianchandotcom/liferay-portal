@@ -145,6 +145,14 @@ const APIGUI = () => {
 		[headers]
 	);
 
+	const requestInterceptor = (req) => {
+		req.headers['x-csrf-token'] = document.querySelector(
+			'meta[name="csrf-token"]'
+		).content;
+
+		return req;
+	};
+
 	return (
 		<div className="api-gui-root">
 			<div className="container container-fluid">
@@ -261,7 +269,19 @@ const APIGUI = () => {
 				</div>
 
 				{showSwagger && !showGraphQL && (
-					<SwaggerUI url="https://petstore.swagger.io/v2/swagger.json" />
+					<SwaggerUI
+						requestInterceptor={requestInterceptor}
+						supportedSubmitMethods={[
+							'get',
+							'put',
+							'post',
+							'delete',
+							'patch',
+						]}
+						url={`/o${new URLSearchParams(
+							window.location.search
+						).get('category')}/v1.0/openapi.json`}
+					/>
 				)}
 				{showGraphQL && !showSwagger && (
 					<div className="row vh-100">

@@ -16,6 +16,7 @@ import React, {useContext} from 'react';
 import {Redirect} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import ControlMenu from '../../components/control-menu/ControlMenu.es';
 import NavigationBar from '../../components/navigation-bar/NavigationBar.es';
 import useLazy from '../../hooks/useLazy.es';
 
@@ -39,6 +40,8 @@ export default (props) => {
 
 	return (
 		<>
+			<ControlMenu title={Liferay.Language.get('apps')} />
+
 			<NavigationBar tabs={navTabs} />
 
 			<TabContent

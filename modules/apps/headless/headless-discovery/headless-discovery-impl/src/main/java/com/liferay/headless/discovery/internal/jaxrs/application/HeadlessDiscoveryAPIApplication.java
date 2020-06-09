@@ -21,8 +21,10 @@ import com.liferay.headless.discovery.internal.dto.Hint;
 import com.liferay.headless.discovery.internal.dto.Resource;
 import com.liferay.headless.discovery.internal.dto.Resources;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import java.net.URI;
@@ -32,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Stream;
@@ -95,9 +98,19 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 				).build();
 			}
 
+			InputStream inputStream = url.openStream();
+
+			Scanner scanner = new Scanner(inputStream, "UTF-8");
+
+			scanner.useDelimiter("\\A");
+
+			String page = StringUtil.replace(
+				scanner.next(), "%CSRF-TOKEN%",
+				AuthTokenUtil.getToken(httpServletRequest));
+
 			return Response.ok(
 				(StreamingOutput)streamingOutput -> {
-					InputStream is = url.openStream();
+					InputStream is = new ByteArrayInputStream(page.getBytes());
 
 					byte[] buffer = new byte[1024];
 					int read;

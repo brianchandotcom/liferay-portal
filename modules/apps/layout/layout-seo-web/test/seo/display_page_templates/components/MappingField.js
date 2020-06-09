@@ -57,27 +57,26 @@ describe('MappingField', () => {
 			);
 		});
 
-		it('has an input hidden with the selected field key', () => {
+		it('has a hidden input with the selected field key', () => {
 			expect(inputValue.type).toBe('hidden');
+			expect(inputValue.name).toBe('testMappingField');
 		});
 
-		it('the input has the passed name', () => {
-			expect(inputValue.name).toBe('testMappingField');
+		it('has a read only input for user feedback with the selected field name', () => {
+			expect(inputFeedback).toBeInTheDocument();
+			expect(inputFeedback.readOnly).toBeTruthy();
+			expect(inputFeedback.value).toBe('Label source type: Field 2');
 		});
 
 		it('has a mapping button', () => {
 			expect(mappingButton).toBeInTheDocument();
 		});
 
-		it('has the field for user feedback', () => {
-			expect(inputFeedback).toBeInTheDocument();
-		});
-
-		it('has not render a panel', () => {
+		it('does not have the mapping panel', () => {
 			expect(mappingPanel).not.toBeInTheDocument();
 		});
 
-		describe('then the user show the panel', () => {
+		describe('when the user clicks the mapping button', () => {
 			let fieldSelect;
 
 			beforeEach(() => {
@@ -89,46 +88,48 @@ describe('MappingField', () => {
 				fieldSelect = result.getByLabelText('field');
 			});
 
-			it('has render a panel', () => {
+			it('opens the mapping panel', () => {
 				expect(mappingPanel).toBeInTheDocument();
 			});
 
-			it('the field select has selectedField value', () => {
+			it('shows the selected field', () => {
 				expect(fieldSelect.value).toBe(baseProps.selectedField.key);
 			});
 
-			it('the field for user feedback has selected value', () => {
-				expect(inputFeedback.value).toBe('Label source type: Field 2');
-			});
-
-			describe('then the user change the fields select', () => {
+			describe('and the user selects another field', () => {
 				beforeEach(() => {
 					fireEvent.change(fieldSelect, {
 						target: {value: baseProps.fields[0].key},
 					});
 				});
 
-				it('the fieldMapping update the value', () => {
+				it('sets the new field key in the hidden input', () => {
 					expect(inputValue.value).toBe(baseProps.fields[0].key);
 				});
 
-				it('the field for user feedback update the value', () => {
+				it('sets the new field name in the user feedback input', () => {
 					expect(inputFeedback.value).toBe(
 						'Label source type: Field 1'
 					);
 				});
 			});
 
-			describe('the panel is hidden when', () => {
-				it('the user click again in the mapping button', () => {
+			describe('and the user clicks again in the mapping button', () => {
+				beforeEach(() => {
 					fireEvent.click(mappingButton);
-
-					expect(mappingPanel).not.toBeInTheDocument();
 				});
 
-				it('the user click outside the panel', () => {
-					fireEvent.mouseDown(document);
+				it('closes the mapping panel', () => {
+					expect(mappingPanel).not.toBeInTheDocument();
+				});
+			});
 
+			describe('and the user clicks outside the panel', () => {
+				beforeEach(() => {
+					fireEvent.mouseDown(document);
+				});
+
+				it('closes the mapping panel', () => {
 					expect(mappingPanel).not.toBeInTheDocument();
 				});
 			});

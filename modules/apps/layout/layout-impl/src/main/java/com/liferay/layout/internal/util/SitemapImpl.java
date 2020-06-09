@@ -268,28 +268,6 @@ public class SitemapImpl implements Sitemap {
 		}
 	}
 
-	private int _getSize(Element element) {
-		String string = element.asXML();
-
-		byte[] bytes = string.getBytes();
-
-		int offset = 0;
-
-		String name = element.getName();
-
-		if (name.equals("url")) {
-			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
-
-			int availableLocalesSize = availableLocales.size();
-
-			offset = (availableLocalesSize + 1) * _ATTRIBUTE_XHTML.length;
-
-			offset += _ATTRIBUTE_XMLNS.length;
-		}
-
-		return bytes.length - offset;
-	}
-
 	private String _getSitemap(
 			String layoutUuid, long groupId, boolean privateLayout,
 			ThemeDisplay themeDisplay)
@@ -364,6 +342,28 @@ public class SitemapImpl implements Sitemap {
 		return document.asXML();
 	}
 
+	private int _getSize(Element element) {
+		String string = element.asXML();
+
+		byte[] bytes = string.getBytes();
+
+		int offset = 0;
+
+		String name = element.getName();
+
+		if (name.equals("url")) {
+			Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+			int availableLocalesSize = availableLocales.size();
+
+			offset = (availableLocalesSize + 1) * _ATTRIBUTE_XHTML.length;
+
+			offset += _ATTRIBUTE_XMLNS.length;
+		}
+
+		return bytes.length - offset;
+	}
+
 	private void _initEntriesAndSize(Element rootElement) {
 		rootElement.addAttribute("entries", "0");
 
@@ -408,9 +408,7 @@ public class SitemapImpl implements Sitemap {
 		}
 	}
 
-	private void _removeOldestElement(
-		Element rootElement, Element newElement) {
-
+	private void _removeOldestElement(Element rootElement, Element newElement) {
 		int entries = GetterUtil.getInteger(
 			rootElement.attributeValue("entries"));
 		int size = GetterUtil.getInteger(rootElement.attributeValue("size"));
@@ -434,13 +432,13 @@ public class SitemapImpl implements Sitemap {
 		rootElement.addAttribute("size", String.valueOf(size));
 	}
 
-	private static final int _MAXIMUM_SIZE = 50 * 1024 * 1024;
-
 	private static final byte[] _ATTRIBUTE_XHTML =
 		" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"".getBytes();
 
 	private static final byte[] _ATTRIBUTE_XMLNS =
 		" xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\"".getBytes();
+
+	private static final int _MAXIMUM_SIZE = 50 * 1024 * 1024;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitemapImpl.class.getName());

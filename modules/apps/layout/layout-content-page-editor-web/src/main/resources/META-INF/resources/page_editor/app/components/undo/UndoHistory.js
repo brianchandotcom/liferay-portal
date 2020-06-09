@@ -23,7 +23,7 @@ import {config} from '../../config/index';
 import {useDispatch, useSelector} from '../../store/index';
 import multipleUndo from '../../thunks/multipleUndo';
 import getSegmentsExperienceName from '../../utils/getSegmentsExperienceName';
-import {getActionLabel} from './getActionLabel';
+import getActionLabel from './getActionLabel';
 
 export default function UndoHistory() {
 	const dispatch = useDispatch();

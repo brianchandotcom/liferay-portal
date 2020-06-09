@@ -24,6 +24,7 @@
 	</div>
 {/template}
 
+
 {deltemplate DDM.Form.Pagination.item variant="'wizard'"}
 	{@param activePage: number}
 	{@param page: ?}
@@ -43,6 +44,10 @@
 
 		{if $pageIndex == $activePage}
 			{sp}active
+		{/if}
+
+		{if $pageIndex < $activePage}
+			{sp}complete
 		{/if}
 	{/let}
 

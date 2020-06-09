@@ -616,10 +616,15 @@ definition {
 		WorkflowMetrics.goToBulkReassignSelectTasks();
 		AssertElementPresent(locator1 = "WorkflowReassignModal#BULK_REASSIGN_MODAL");
 		WorkflowMetrics.assertSelectTasksModalTable();
-		WorkflowMetrics.goToBulkReassignSelectNewAssignee();
+
+		WorkflowMetrics.selectReassignTasks(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2");
 		WorkflowMetrics.assertNewAssigneeModalTable();
 		AssertElementPresent(locator1 = "WorkflowReassignModal#PERMISSION_TOOLTIP");
 		AssertElementPresent(locator1 = "WorkflowReassignModal#NEXT_BUTTON_DISABLED");
+		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title 1,Blogs Entry: Blogs Entry Title 2");
+
+		WorkflowMetrics.goToBulkReassignSelectTasks();
+		WorkflowMetrics.selectReassignTasks(taskList = "Blogs Entry: Blogs Entry Title 3,Blogs Entry: Blogs Entry Title 4,Blogs Entry: Blogs Entry Title 5");
 		WorkflowMetrics.selectNewAssigneeBulkTask(nameOfAssignee = "Test Test");
 		WorkflowMetrics.goToWorkflowAllItems();
 
@@ -635,6 +640,14 @@ definition {
 			key_workflowInstanceAssignee = "Test Test",
 			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 3",
 			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		AssertElementPresent(
+			key_workflowInstanceAssignee = "Test Test",
+			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 4",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
+		AssertElementPresent(
+			key_workflowInstanceAssignee = "Test Test",
+			key_workflowInstanceName = "Blogs Entry: Blogs Entry Title 5",
+			locator1 = "WorkflowAllItems#WORKFLOW_ALL_ITEMS_TABLE_CURRENT_ASSIGNEE_VALUE");
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
@@ -646,6 +659,12 @@ definition {
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 		AssertElementPresent(
 			key_workflowAssetTitle = "Blogs Entry Title 3",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 4",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 5",
 			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
 	}
 
@@ -1027,7 +1046,7 @@ definition {
 
 		WorkflowMetrics.assertAssignees();
 
-		WorkflowMetrics.selectNewAssignee();
+		WorkflowMetrics.selectNewAssignee(taskList = "Blogs Entry: Blogs Entry Title 1");
 		MouseOver(
 			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
 			task = "1");

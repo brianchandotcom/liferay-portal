@@ -29,11 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REASSIGN_BUTTON</td>
-	<td>//button[@data-testid="reassignButton"]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NEXT_BUTTON_DISABLED</td>
 	<td>//button[@data-testid="nextButton" and @disabled]</td>
 	<td></td>
@@ -41,6 +36,11 @@
 <tr>
 	<td>ITEM_SUBJECT_CHECK</td>
 	<td>//div[@class='modal-body']//td[contains(text(),"${key_itemName}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEM_CHECKBOX</td>
+	<td>//div[@class='modal-body']//td[contains(text(),"${key_itemName}")]//parent::tr//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_NEW_ASSIGNEE_SPECIFIC</td>
+	<td>//td[contains(text(),"${key_itemName}")]/parent::tr//input[contains(@data-testid,'autocompleteInput')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REASSIGN_TASK_NEW_ASSIGNEE_DROPDOWN</td>
 	<td>//div[contains(@class,'show')]/ul/li/span[contains(text(),'${key_nameOfAssignee}')]</td>
 	<td></td>
@@ -76,6 +81,11 @@
 <tr>
 	<td>PERMISSION_TOOLTIP</td>
 	<td>//td[contains(text(),'New Assignee')]//*[local-name()='svg']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT_PAGINATION_BUTTON</td>
+	<td>//div[@class='modal-body']//button[contains(@aria-label,'Next')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -17,24 +17,31 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class PortalTopLevelBuild extends DefaultTopLevelBuild {
+public class PortalTopLevelBuild
+	extends DefaultTopLevelBuild
+	implements AnalyticsCloudBranchInformationBuild, PluginsBranchInformationBuild,
+		PortalBranchInformationBuild {
 
 	public PortalTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
 	}
 
+	@Override
 	public BranchInformation getOSBAsahBranchInformation() {
 		return getBranchInformation("osb.asah");
 	}
 
+	@Override
 	public BranchInformation getOSBFaroBranchInformation() {
 		return getBranchInformation("osb.faro");
 	}
 
+	@Override
 	public BranchInformation getPluginsBranchInformation() {
 		return getBranchInformation("plugins");
 	}
 
+	@Override
 	public BranchInformation getPortalBaseBranchInformation() {
 		BranchInformation portalBranchInformation =
 			getPortalBranchInformation();
@@ -49,6 +56,7 @@ public class PortalTopLevelBuild extends DefaultTopLevelBuild {
 		return null;
 	}
 
+	@Override
 	public BranchInformation getPortalBranchInformation() {
 		return getBranchInformation("portal");
 	}

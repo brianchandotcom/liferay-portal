@@ -17,7 +17,9 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Michael Hashimoto
  */
-public class QAWebsitesTopLevelBuild extends DefaultTopLevelBuild {
+public class QAWebsitesTopLevelBuild
+	extends DefaultTopLevelBuild
+	implements PortalBranchInformationBuild, QAWebsitesBranchInformationBuild {
 
 	public QAWebsitesTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
@@ -25,10 +27,17 @@ public class QAWebsitesTopLevelBuild extends DefaultTopLevelBuild {
 		findDownstreamBuilds();
 	}
 
+	@Override
+	public BranchInformation getPortalBaseBranchInformation() {
+		return null;
+	}
+
+	@Override
 	public BranchInformation getPortalBranchInformation() {
 		return _portalMasterBranchInformation;
 	}
 
+	@Override
 	public BranchInformation getQAWebsitesBranchInformation() {
 		return getBranchInformation("qa.websites");
 	}

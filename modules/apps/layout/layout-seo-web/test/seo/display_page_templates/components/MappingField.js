@@ -40,7 +40,7 @@ const renderComponent = (props) =>
 describe('MappingField', () => {
 	afterEach(cleanup);
 
-	describe('when rendered with the default props', () => {
+	describe('when rendered', () => {
 		let inputValue;
 		let mappingButton;
 		let result;
@@ -82,6 +82,7 @@ describe('MappingField', () => {
 
 			beforeEach(() => {
 				fireEvent.click(mappingButton);
+
 				mappingPanel = result.baseElement.querySelector(
 					'.dpt-mapping-panel'
 				);
@@ -116,21 +117,19 @@ describe('MappingField', () => {
 						'Label source type: Field 1'
 					);
 				});
+			});
 
-				describe('click in the mapping button', () => {
-					it('hide the panel', () => {
-						fireEvent.click(mappingButton);
+			describe('the panel is hidden when', () => {
+				it('the user click again in the mapping button', () => {
+					fireEvent.click(mappingButton);
 
-						expect(mappingPanel).not.toBeInTheDocument();
-					});
+					expect(mappingPanel).not.toBeInTheDocument();
 				});
 
-				describe('click outside', () => {
-					it('hide the panel', () => {
-						fireEvent.mouseDown(document);
+				it('the user click outside the panel', () => {
+					fireEvent.mouseDown(document);
 
-						expect(mappingPanel).not.toBeInTheDocument();
-					});
+					expect(mappingPanel).not.toBeInTheDocument();
 				});
 			});
 		});

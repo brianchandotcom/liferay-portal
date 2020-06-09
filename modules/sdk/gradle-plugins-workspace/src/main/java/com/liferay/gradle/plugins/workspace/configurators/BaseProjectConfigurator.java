@@ -51,12 +51,17 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 			settings, getDefaultRootDirPropertyName(), (String)null);
 
 		if (Validator.isNotNull(defaultRootDirNames)) {
-			_defaultRootDirs = new HashSet<>();
+			if (defaultRootDirNames.equals("*")) {
+				_defaultRootDirs = Collections.singleton(rootDir);
+			}
+			else {
+				_defaultRootDirs = new HashSet<>();
 
-			for (String dirName : defaultRootDirNames.split("\\s*,\\s*")) {
-				File dir = new File(rootDir, dirName);
+				for (String dirName : defaultRootDirNames.split("\\s*,\\s*")) {
+					File dir = new File(rootDir, dirName);
 
-				_defaultRootDirs.add(dir);
+					_defaultRootDirs.add(dir);
+				}
 			}
 		}
 		else {

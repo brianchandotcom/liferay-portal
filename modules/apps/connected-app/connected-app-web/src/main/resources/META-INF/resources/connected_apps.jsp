@@ -46,16 +46,22 @@
 			for (ConnectedApp connectedApp : connectedApps) {
 			%>
 
-				<div class="autofit-padded-no-gutters-x autofit-row autofit-row-center mb-3">
-					<div class="autofit-col">
+				<clay:content-row
+					cssClass="mb-3"
+					noGutters="x"
+					verticalAlign="center"
+				>
+					<clay:content-col>
 						<img class="icon-monospaced" src="<%= HtmlUtil.escapeAttribute(connectedApp.getImageURL()) %>" />
-					</div>
+					</clay:content-col>
 
-					<div class="autofit-col autofit-col-expand">
+					<clay:content-col
+						expand="true"
+					>
 						<%= HtmlUtil.escape(connectedApp.getName(locale)) %>
-					</div>
+					</clay:content-col>
 
-					<div class="autofit-col">
+					<clay:content-col>
 
 						<%
 						Map<String, String> data = HashMapBuilder.put(
@@ -70,8 +76,8 @@
 							size="sm"
 							type="submit"
 						/>
-					</div>
-				</div>
+					</clay:content-col>
+				</clay:content-row>
 
 			<%
 			}

@@ -12,6 +12,10 @@
  * details.
  */
 
+/*
+ * @deprecated As of Athanasius (7.3.x), replaced by Liferay.Util.getCropRegion
+ * @module liferay-alert
+ */
 AUI.add(
 	'liferay-alert',
 	(A) => {

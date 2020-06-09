@@ -260,7 +260,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	@Override
 	public Company deleteCompany(long companyId) throws PortalException {
 		if (companyId == PortalInstances.getDefaultCompanyId()) {
-			throw new RequiredCompanyException();
+			throw new RequiredCompanyException(
+				"Select other default company before deleting it");
 		}
 
 		Long currentCompanyId = CompanyThreadLocal.getCompanyId();
@@ -612,7 +613,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			StringUtil.trim(virtualHostname));
 
 		if (!active && (companyId == PortalInstances.getDefaultCompanyId())) {
-			active = true;
+			throw new RequiredCompanyException(
+				"Select other default company before deactivating it");
 		}
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
@@ -1374,7 +1376,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(mx) || !Validator.isDomain(mx)) {
-			throw new CompanyMxException();
+			throw new CompanyMxException("Invalid domain");
 		}
 
 		String emailAddress =
@@ -1384,7 +1386,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			EmailAddressValidatorFactory.getInstance();
 
 		if (!emailAddressValidator.validate(companyId, emailAddress)) {
-			throw new CompanyMxException();
+			throw new CompanyMxException("Invalid domain for email address");
 		}
 	}
 
@@ -1402,15 +1404,17 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(virtualHostname)) {
-			throw new CompanyVirtualHostException();
+			throw new CompanyVirtualHostException("Empty virtual host name");
 		}
 		else if (virtualHostname.equals(_DEFAULT_VIRTUAL_HOST) &&
 				 !webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID)) {
 
-			throw new CompanyVirtualHostException();
+			throw new CompanyVirtualHostException(
+				"Default virtual host name can not be reused");
 		}
 		else if (!Validator.isDomain(virtualHostname)) {
-			throw new CompanyVirtualHostException();
+			throw new CompanyVirtualHostException(
+				"Virtual host name should have a domain format");
 		}
 		else {
 			try {
@@ -1422,7 +1426,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 						virtualHost.getCompanyId());
 
 				if (!webId.equals(virtualHostnameCompany.getWebId())) {
-					throw new CompanyVirtualHostException();
+					throw new CompanyVirtualHostException(
+						"Duplicated virtual host name");
 				}
 			}
 			catch (NoSuchVirtualHostException noSuchVirtualHostException) {
@@ -1645,7 +1650,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		if (Validator.isNull(webId) ||
 			(companyPersistence.fetchByWebId(webId) != null)) {
 
-			throw new CompanyWebIdException();
+			throw new CompanyWebIdException("Invalid or duplicated web id");
 		}
 
 		validateVirtualHost(webId, virtualHostname);

@@ -540,6 +540,11 @@ public class JournalDisplayContext {
 	}
 
 	public Map<String, Object> getExportTranslationData() {
+		ResourceURL exportTranslationURL =
+			_liferayPortletResponse.createResourceURL();
+
+		exportTranslationURL.setResourceID("/journal/export_translation");
+
 		ResourceURL getExportTranslationAvailableLocalesURL =
 			_liferayPortletResponse.createResourceURL();
 
@@ -558,6 +563,8 @@ public class JournalDisplayContext {
 					_themeDisplay.getLocale(),
 					LanguageUtil.getAvailableLocales(
 						_themeDisplay.getSiteGroupId()))
+			).put(
+				"exportTranslationURL", exportTranslationURL.toString()
 			).put(
 				"getExportTranslationAvailableLocalesURL",
 				getExportTranslationAvailableLocalesURL.toString()

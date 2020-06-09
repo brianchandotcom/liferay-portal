@@ -136,8 +136,8 @@ definition {
 		else {
 			var browserType = PropsUtil.get("browser.type");
 
-			if (("${browserType}" == "internetexplorer") || ("${browserType}" == "safari")) {
-				DragAndDrop.javaScriptDragAndDropFragmentIE(fragmentOrder = "${fragmentOrder}");
+			if (("${browserType}" == "firefox") || ("${browserType}" == "internetexplorer") || ("${browserType}" == "safari")) {
+				DragAndDrop.javaScriptDragAndDropToObjectPrimitive(fragmentOrder = "${fragmentOrder}");
 			}
 			else {
 				DragAndDrop.javaScriptDragAndDropToObject(

@@ -45,10 +45,12 @@ describe('MappingField', () => {
 		let mappingButton;
 		let result;
 		let mappingPanel;
+		let inputFeedback;
 
 		beforeEach(() => {
 			result = renderComponent();
-			inputValue = result.getByDisplayValue('field-2');
+			inputFeedback = result.getAllByRole('textbox')[0];
+			inputValue = result.getByDisplayValue(baseProps.selectedField.key);
 			mappingButton = result.getByTitle('map');
 			mappingPanel = result.baseElement.querySelector(
 				'.dpt-mapping-panel'
@@ -65,6 +67,10 @@ describe('MappingField', () => {
 
 		it('has a mapping button', () => {
 			expect(mappingButton).toBeInTheDocument();
+		});
+
+		it('has the field for user feedback', () => {
+			expect(inputFeedback).toBeInTheDocument();
 		});
 
 		it('has not render a panel', () => {
@@ -90,6 +96,10 @@ describe('MappingField', () => {
 				expect(fieldSelect.value).toBe(baseProps.selectedField.key);
 			});
 
+			it('the field for user feedback has selected value', () => {
+				expect(inputFeedback.value).toBe('Label source type: Field 2');
+			});
+
 			describe('then the user change the fields select', () => {
 				beforeEach(() => {
 					fireEvent.change(fieldSelect, {
@@ -99,7 +109,13 @@ describe('MappingField', () => {
 
 				it('the fieldMapping update the value', () => {
 					expect(inputValue.value).toBe(baseProps.fields[0].key);
-				})
+				});
+
+				it('the field for user feedback update the value', () => {
+					expect(inputFeedback.value).toBe(
+						'Label source type: Field 1'
+					);
+				});
 
 				describe('click in the mapping button', () => {
 					it('hide the panel', () => {

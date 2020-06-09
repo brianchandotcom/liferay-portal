@@ -62,6 +62,36 @@ const ExportTranslationModal = ({
 		}
 	};
 
+	const SourceLocales = () => {
+		if (availableSourceLocales.length == 1) {
+			return (
+				<ClayInput
+					readOnly
+					value={availableSourceLocales[0].displayName}
+				/>
+			);
+		}
+		else {
+			return (
+				<ClaySelect
+					name={`_${namespace}_sourceLanguageId`}
+					onChange={(e) => {
+						setSourceLanguageId(e.currentTarget.value);
+					}}
+					value={sourceLanguageId}
+				>
+					{availableSourceLocales.map((locale) => (
+						<ClaySelect.Option
+							key={locale.languageId}
+							label={locale.displayName}
+							value={locale.languageId}
+						/>
+					))}
+				</ClaySelect>
+			);
+		}
+	};
+
 	const TargetLocale = ({locale}) => {
 		const languageId = locale.languageId;
 		const checked = selectedTargetLocales.indexOf(languageId) != -1;
@@ -99,21 +129,7 @@ const ExportTranslationModal = ({
 					<h5>{Liferay.Language.get('origin-language')}</h5>
 
 					<ClayForm.Group>
-						<ClaySelect
-							name={`_${namespace}_sourceLanguageId`}
-							onChange={(e) => {
-								setSourceLanguageId(e.currentTarget.value);
-							}}
-							value={sourceLanguageId}
-						>
-							{availableSourceLocales.map((locale) => (
-								<ClaySelect.Option
-									key={locale.languageId}
-									label={locale.displayName}
-									value={locale.languageId}
-								/>
-							))}
-						</ClaySelect>
+						<SourceLocales />
 					</ClayForm.Group>
 
 					<h5>

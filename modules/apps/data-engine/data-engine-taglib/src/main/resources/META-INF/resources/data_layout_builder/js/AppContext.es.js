@@ -44,6 +44,7 @@ const AppContext = createContext();
 const initialState = {
 	config: {
 		allowFieldSets: false,
+		allowNestedFields: true,
 		allowRules: false,
 		disabledProperties: [],
 		disabledTabs: [],

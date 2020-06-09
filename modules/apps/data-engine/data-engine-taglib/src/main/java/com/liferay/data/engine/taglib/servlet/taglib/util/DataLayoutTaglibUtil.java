@@ -137,6 +137,8 @@ public class DataLayoutTaglibUtil {
 			"allowMultiplePages",
 			dataLayoutBuilderDefinition.allowMultiplePages()
 		).put(
+			"allowNestedFields", dataLayoutBuilderDefinition.allowNestedFields()
+		).put(
 			"allowRules", dataLayoutBuilderDefinition.allowRules()
 		).put(
 			"allowSuccessPage", dataLayoutBuilderDefinition.allowSuccessPage()

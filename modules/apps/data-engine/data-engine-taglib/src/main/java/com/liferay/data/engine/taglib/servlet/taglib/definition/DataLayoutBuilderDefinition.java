@@ -32,6 +32,10 @@ public interface DataLayoutBuilderDefinition {
 		return false;
 	}
 
+	public default boolean allowNestedFields() {
+		return true;
+	}
+
 	public default boolean allowRules() {
 		return false;
 	}

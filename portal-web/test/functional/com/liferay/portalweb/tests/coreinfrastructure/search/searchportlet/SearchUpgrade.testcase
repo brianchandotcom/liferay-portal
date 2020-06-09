@@ -178,10 +178,8 @@ definition {
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade70106 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
-		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10.6";
 		property skip.upgrade-legacy-database = "true";
-		property test.assert.warning.exceptions = "true";
 
 		GlobalMenu.gotoPortlet(
 			category = "Configuration",

@@ -248,6 +248,16 @@ body,
 	}
 }
 
+.loading-wrapper {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	display: none;
+	z-index: 1000;
+	height: 31px;
+	width: 31px;
+}
+
 .recharts-responsive-container {
 	height: 400px !important;
 	min-height: 400px;

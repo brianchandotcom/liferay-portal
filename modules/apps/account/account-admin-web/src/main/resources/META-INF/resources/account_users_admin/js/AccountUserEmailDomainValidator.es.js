@@ -27,9 +27,15 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				);
 
 				if (field) {
-					this.addFormFieldRules_(form, [
-						this.getEmailDomainFieldRule_(),
-					]);
+					const emailDomainFieldRule = this.getEmailDomainFieldRule_();
+
+					this.addFormFieldRules_(form, [emailDomainFieldRule]);
+
+					this.setWarningValidationStyle_(
+						form,
+						field,
+						emailDomainFieldRule.validatorName
+					);
 				}
 			},
 			this
@@ -59,6 +65,41 @@ class AccountUserEmailDomainValidator extends PortletBase {
 			errorMessage: Liferay.Language.get('this-email-has-invalid-domain'),
 			fieldName: this.ns('emailAddress'),
 			validatorName: 'emailDomain',
+		};
+	}
+
+	setWarningValidationStyle_(form, formField, validatorName) {
+		const formValidator = form.formValidator;
+
+		formValidator.after('errorField', (event) => {
+			if (
+				event.validator.field == formField &&
+				event.validator.errors[0] == validatorName
+			) {
+				const fieldContainer = formValidator.findFieldContainer(
+					formField
+				);
+
+				if (fieldContainer) {
+					fieldContainer.replaceClass('has-error', 'has-warning');
+				}
+			}
+		});
+
+		const resetFieldCss = formValidator.resetFieldCss;
+
+		formValidator.resetFieldCss = function (field) {
+			resetFieldCss.apply(formValidator, [field]);
+
+			if (field != formField) {
+				return;
+			}
+
+			var fieldContainer = formValidator.findFieldContainer(field);
+
+			if (fieldContainer) {
+				fieldContainer.removeClass('has-warning');
+			}
 		};
 	}
 }

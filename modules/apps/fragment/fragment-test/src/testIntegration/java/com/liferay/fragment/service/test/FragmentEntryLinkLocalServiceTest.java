@@ -24,13 +24,20 @@ import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentTestUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -233,6 +240,104 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
+	public void testGetAllFragmentEntryLinksByFragmentEntryId()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink1 = _addFragmentEntryLinkToLayout();
+		FragmentEntryLink fragmentEntryLink2 =
+			_addFragmentEntryLinkToLayoutPageTemplateEntry();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getAllFragmentEntryLinksByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink1));
+		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink2));
+	}
+
+	@Test
+	public void testGetAllFragmentEntryLinksCountByFragmentEntryId()
+		throws Exception {
+
+		_addFragmentEntryLinkToLayout();
+		_addFragmentEntryLinkToLayoutPageTemplateEntry();
+
+		Assert.assertEquals(
+			2,
+			_fragmentEntryLinkLocalService.
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId()));
+	}
+
+	@Test
+	public void testGetLayoutFragmentEntryLinksByFragmentEntryId()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink1 = _addFragmentEntryLinkToLayout();
+		FragmentEntryLink fragmentEntryLink2 =
+			_addFragmentEntryLinkToLayoutPageTemplateEntry();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getLayoutFragmentEntryLinksByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink1));
+		Assert.assertFalse(fragmentEntryLinks.contains(fragmentEntryLink2));
+	}
+
+	@Test
+	public void testGetLayoutFragmentEntryLinksCountByFragmentEntryId()
+		throws Exception {
+
+		_addFragmentEntryLinkToLayout();
+		_addFragmentEntryLinkToLayoutPageTemplateEntry();
+
+		Assert.assertEquals(
+			1,
+			_fragmentEntryLinkLocalService.
+				getLayoutFragmentEntryLinksCountByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId()));
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateFragmentEntryLinksByFragmentEntryId()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink1 = _addFragmentEntryLinkToLayout();
+		FragmentEntryLink fragmentEntryLink2 =
+			_addFragmentEntryLinkToLayoutPageTemplateEntry();
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getLayoutPageTemplateFragmentEntryLinksByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Assert.assertFalse(fragmentEntryLinks.contains(fragmentEntryLink1));
+		Assert.assertTrue(fragmentEntryLinks.contains(fragmentEntryLink2));
+	}
+
+	@Test
+	public void testGetLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId()
+		throws Exception {
+
+		_addFragmentEntryLinkToLayout();
+		_addFragmentEntryLinkToLayoutPageTemplateEntry();
+
+		Assert.assertEquals(
+			1,
+			_fragmentEntryLinkLocalService.
+				getLayoutPageTemplateFragmentEntryLinksCountByFragmentEntryId(
+					_group.getGroupId(), _fragmentEntry.getFragmentEntryId(),
+					LayoutPageTemplateEntryTypeConstants.TYPE_BASIC));
+	}
+
+	@Test
 	public void testUpdateFragmentEntryLinkPosition() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -373,6 +478,57 @@ public class FragmentEntryLinkLocalServiceTest {
 			fragmentEntryLink.getEditableValues());
 	}
 
+	private FragmentEntryLink _addFragmentEntryLinkToLayout() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
+			LayoutConstants.TYPE_CONTENT, false, null, serviceContext);
+
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			_fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
+			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+			StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
+	}
+
+	private FragmentEntryLink _addFragmentEntryLinkToLayoutPageTemplateEntry()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					"Page Template Collection", StringPool.BLANK,
+					serviceContext);
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				"Page Template One",
+				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+			TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			_fragmentEntry.getFragmentEntryId(), 0,
+			layoutPageTemplateEntry.getPlid(), _fragmentEntry.getCss(),
+			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
+			_fragmentEntry.getConfiguration(), StringPool.BLANK,
+			StringPool.BLANK, 0, null, serviceContext);
+	}
+
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -402,5 +558,16 @@ public class FragmentEntryLinkLocalServiceTest {
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 }

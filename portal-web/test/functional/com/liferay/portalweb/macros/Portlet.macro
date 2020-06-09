@@ -159,7 +159,7 @@ definition {
 
 			AssertVisible(locator1 = "Portlet#ICON_PLUS_SIGN");
 		}
-		
+
 		else if ("${browserType}" == "safari") {
 			Click.javaScriptClick(locator1 = "Portlet#ICON_PLUS_SIGN");
 

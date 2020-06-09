@@ -286,7 +286,6 @@ public class SitemapImpl implements Sitemap {
 			"xsi:schemaLocation",
 			"http://www.w3.org/1999/xhtml " +
 				"http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd");
-
 		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 
 		_initEntriesAndSize(rootElement);

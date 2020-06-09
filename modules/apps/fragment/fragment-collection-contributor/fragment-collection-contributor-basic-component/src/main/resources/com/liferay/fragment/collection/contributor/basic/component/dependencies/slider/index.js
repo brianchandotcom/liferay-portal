@@ -11,18 +11,17 @@ const items = [].slice.call(document.querySelectorAll('.carousel-item'));
 const next = document.querySelector('.carousel-control-next');
 const prev = document.querySelector('.carousel-control-prev');
 
-const getActiveElements = function () {
-	const activeIndicator = document.querySelector(
+function getActiveIndicator() {
+	return document.querySelector(
 		'.carousel-navigation .active'
 	);
-	const activeItem = document.querySelector('.carousel-item.active');
-	const indexActiveItem = items.indexOf(activeItem);
-
-	return [activeItem, indexActiveItem, activeIndicator];
-};
+}
 
 const move = function (movement, index = null) {
-	const [activeItem, indexActiveItem, activeIndicator] = getActiveElements();
+	const activeItem = document.querySelector('.carousel-item.active');
+	const indexActiveItem = items.indexOf(activeItem);
+	const activeIndicator = getActiveIndicator();
+
 	let nextItemIndex =
 		indexActiveItem < 1 ? items.length - 1 : indexActiveItem - 1;
 
@@ -81,8 +80,9 @@ function main() {
 
 	indicators.forEach(function (indicator, index) {
 		indicator.addEventListener('click', function () {
-			const [, , activeIndicator] = getActiveElements();
-			const indexActiveIndicator = indicators.indexOf(activeIndicator);
+			const indexActiveIndicator = indicators.indexOf(
+				getActiveIndicator()
+			);
 
 			if (index !== indexActiveIndicator) {
 				if (index < indexActiveIndicator) {

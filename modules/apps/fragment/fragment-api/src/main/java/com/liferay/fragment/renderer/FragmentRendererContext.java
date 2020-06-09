@@ -46,4 +46,6 @@ public interface FragmentRendererContext {
 
 	public long[] getSegmentsExperienceIds();
 
+	public boolean isUseCachedContent();
+
 }

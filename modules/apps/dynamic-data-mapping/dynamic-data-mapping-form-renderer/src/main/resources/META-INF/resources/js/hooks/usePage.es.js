@@ -36,7 +36,7 @@ export const EVENT_TYPES = {
 	SUCCESS_CHANGED: 'successPageChanged',
 };
 
-const endpoint = `${window.location.origin}/o/data-engine/v2.0/data-definitions/data-definition-fields/field-types`;
+const endpoint = `${window.location.origin}/o/dynamic-data-mapping-form-field-types`;
 
 const HEADERS = {
 	Accept: 'application/json',

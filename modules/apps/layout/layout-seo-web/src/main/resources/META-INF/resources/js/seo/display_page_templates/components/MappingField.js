@@ -47,6 +47,7 @@ function MappingField({fields, label, name, selectedField, selectedSource}) {
 					<MappingPanel
 						field={field}
 						fields={fields}
+						name={name}
 						onChange={handleOnchange}
 						source={{
 							...source,

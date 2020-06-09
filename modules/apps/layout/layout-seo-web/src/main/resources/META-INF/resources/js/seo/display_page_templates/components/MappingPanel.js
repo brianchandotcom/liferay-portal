@@ -27,7 +27,7 @@ const normalizeField = ({key, label}) => ({
 	value: key,
 });
 
-function MappingPanel({fields, field, source, onChange = noop}) {
+function MappingPanel({name, fields, field, source, onChange = noop}) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
 	const wrapperRef = useRef(null);
 
@@ -64,17 +64,25 @@ function MappingPanel({fields, field, source, onChange = noop}) {
 				>
 					<div className="popover-body">
 						<ClayForm.Group small>
-							<label htmlFor="mappingSelectorSourceSelect">
+							<label
+								htmlFor={`${name}_mappingSelectorSource`}
+							>
 								{Liferay.Language.get('source')}
 							</label>
-							<ClayInput readOnly value={source.initialValue} />
+							<ClayInput
+								id={`${name}_mappingSelectorSource`}
+								readOnly
+								value={source.initialValue}
+							/>
 						</ClayForm.Group>
 						<ClayForm.Group small>
-							<label htmlFor="mappingSelectorFieldSelect">
+							<label
+								htmlFor={`${name}_mappingSelectorFieldSelect`}
+							>
 								{Liferay.Language.get('field')}
 							</label>
 							<ClaySelectWithOption
-								id="mappingSelectorFieldSelect"
+								id={`${name}_mappingSelectorFieldSelect`}
 								onChange={handleChangeField}
 								options={fields.map(normalizeField)}
 								value={field.key}

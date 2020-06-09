@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-function CommentRenderer(props) {
+function CommentRenderer({children}) {
 	return (
 		<ClayTooltipProvider>
 			<ClayButton
@@ -25,7 +25,7 @@ function CommentRenderer(props) {
 				data-tooltip-align="top"
 				data-tooltip-delay={0}
 				displayType="link"
-				title={props.children}
+				title={children}
 			>
 				<ClayIcon symbol="info-circle" />
 			</ClayButton>

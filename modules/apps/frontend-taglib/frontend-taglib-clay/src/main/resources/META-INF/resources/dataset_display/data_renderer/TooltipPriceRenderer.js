@@ -17,12 +17,12 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import Proptypes from 'prop-types';
 import React from 'react';
 
-function TooltipTable(props) {
+function TooltipTable({value}) {
 	return (
 		<div className="bg-dark">
 			<table className="tooltip-table">
 				<tbody>
-					{props.value.details.map((detail, i) => (
+					{value.details.map((detail, i) => (
 						<tr key={i}>
 							<td className="table-column-text-start">
 								{detail.label}
@@ -36,11 +36,11 @@ function TooltipTable(props) {
 					))}
 					<tr>
 						<td className="table-column-text-start">
-							{props.value.final.label ||
+							{value.final.label ||
 								Liferay.Language.get('final-price')}
 						</td>
 						<td className="table-column-text-end">
-							{props.value.final.value}
+							{value.final.value}
 						</td>
 					</tr>
 				</tbody>
@@ -49,17 +49,17 @@ function TooltipTable(props) {
 	);
 }
 
-function TooltipPriceRenderer(props) {
-	if (!props.value) {
+function TooltipPriceRenderer({value}) {
+	if (!value) {
 		return null;
 	}
 
 	return (
 		<>
-			{props.value.final.value}
-			{props.value.details && (
+			{value.final.value}
+			{value.details && (
 				<ClayTooltipProvider
-					contentRenderer={() => <TooltipTable {...props} />}
+					contentRenderer={() => <TooltipTable value={value} />}
 					delay={0}
 				>
 					<span

@@ -19,15 +19,15 @@ import React, {useContext, useEffect, useState} from 'react';
 
 import DatasetDisplayContext from '../../DatasetDisplayContext';
 
-function SelectableTable(props) {
+function SelectableTable({items: itemsProp, schema, style}) {
 	const {namespace} = useContext(DatasetDisplayContext);
 	const {selectedItemsKey} = useContext(DatasetDisplayContext);
 
-	const [items, updateItems] = useState(props.items);
+	const [items, updateItems] = useState(itemsProp);
 
 	useEffect(() => {
-		updateItems(props.items);
-	}, [props.items]);
+		updateItems(items);
+	}, [items]);
 
 	function handleCheckboxChange(itemField, itemId, value) {
 		const updatedItems = items.map((item) => {
@@ -58,7 +58,7 @@ function SelectableTable(props) {
 	}
 
 	return (
-		<div className={`table-style-${props.style}`}>
+		<div className={`table-style-${style}`}>
 			<ClayTable borderless hover={false} responsive={false}>
 				<ClayTable.Head>
 					<ClayTable.Row>
@@ -67,7 +67,7 @@ function SelectableTable(props) {
 							headingCell
 							headingTitle
 						>
-							{props.schema.firstColumnLabel}
+							{schema.firstColumnLabel}
 						</ClayTable.Cell>
 						{items[0].fields.map((columnField) => {
 							const checkedItems = items.reduce(
@@ -120,7 +120,7 @@ function SelectableTable(props) {
 						return (
 							<ClayTable.Row key={i}>
 								<ClayTable.Cell>
-									{item[props.schema.firstColumnName]}
+									{item[schema.firstColumnName]}
 								</ClayTable.Cell>
 								{item.fields.map((field) => {
 									return (

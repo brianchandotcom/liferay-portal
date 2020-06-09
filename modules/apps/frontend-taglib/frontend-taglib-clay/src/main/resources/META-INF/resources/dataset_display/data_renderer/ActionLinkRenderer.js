@@ -21,7 +21,7 @@ import DatasetDisplayContext from '../DatasetDisplayContext';
 import {formatActionUrl} from '../utilities/index';
 import DefaultContent from './DefaultRenderer';
 
-function ActionLinkRenderer(props) {
+function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 	const {
 		executeAsyncItemAction,
 		highlightItems,
@@ -29,28 +29,25 @@ function ActionLinkRenderer(props) {
 		openSidePanel,
 	} = useContext(DatasetDisplayContext);
 
-	if (!props.actions || !props.actions.length) {
-		if (props.value) {
-			return <DefaultContent value={props.value} />;
+	if (!actions || !actions.length) {
+		if (value) {
+			return <DefaultContent value={value} />;
 		}
 
 		return null;
 	}
 
 	const currentAction =
-		props.options && props.options.actionId
-			? props.actions.find(
-					(action) => action.id === props.options.actionId
-			  )
-			: props.actions[0];
+		options && options.actionId
+			? actions.find((action) => action.id === options.actionId)
+			: actions[0];
 
 	if (!currentAction) {
 		return null;
 	}
 
 	const formattedHref =
-		currentAction.href &&
-		formatActionUrl(currentAction.href, props.itemData);
+		currentAction.href && formatActionUrl(currentAction.href, itemData);
 
 	function handleClickOnLink(e) {
 		e.preventDefault();
@@ -64,7 +61,7 @@ function ActionLinkRenderer(props) {
 		}
 
 		if (currentAction.target === 'sidePanel') {
-			highlightItems([props.itemId]);
+			highlightItems([itemId]);
 			openSidePanel({
 				size: currentAction.size || 'lg',
 				title: currentAction.title,
@@ -98,7 +95,7 @@ function ActionLinkRenderer(props) {
 				href={formattedHref || '#'}
 				onClick={isNotALink() ? handleClickOnLink : null}
 			>
-				{props.value || <ClayIcon symbol={currentAction.icon} />}
+				{value || <ClayIcon symbol={currentAction.icon} />}
 			</ClayLink>
 		</div>
 	);

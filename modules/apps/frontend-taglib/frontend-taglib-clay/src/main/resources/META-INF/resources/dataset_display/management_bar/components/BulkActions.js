@@ -53,7 +53,14 @@ function getRichPayload(payload, key, values = []) {
 	return richPayload;
 }
 
-function BulkActions(props) {
+function BulkActions({
+	bulkActions,
+	fluid,
+	selectAllItems,
+	selectedItemsKey,
+	selectedItemsValue,
+	totalItemsCount,
+}) {
 	const [
 		currentSidePanelActionPayload,
 		setCurrentSidePanelActionPayload,
@@ -78,8 +85,8 @@ function BulkActions(props) {
 				OPEN_SIDE_PANEL,
 				getRichPayload(
 					sidePanelActionPayload,
-					props.selectedItemsKey,
-					props.selectedItemsValue
+					selectedItemsKey,
+					selectedItemsValue
 				)
 			);
 
@@ -115,31 +122,31 @@ function BulkActions(props) {
 					OPEN_SIDE_PANEL,
 					getRichPayload(
 						currentSidePanelActionPayload,
-						props.selectedItemsValue
+						selectedItemsValue
 					)
 				);
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[props.selectedItemsValue]
+		[selectedItemsValue]
 	);
 
-	return props.selectedItemsValue.length ? (
+	return selectedItemsValue.length ? (
 		<DatasetDisplayContext.Consumer>
 			{({formId, formRef, loadData, sidePanelId}) => (
 				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
 					<div
 						className={classNames(
 							'container-fluid container-fluid-max-xl py-1',
-							!props.fluid && 'px-0'
+							!fluid && 'px-0'
 						)}
 					>
 						<ul className="navbar-nav">
 							<li className="nav-item">
 								<span className="text-truncate">
-									{props.selectedItemsValue.length}{' '}
+									{selectedItemsValue.length}{' '}
 									{Liferay.Language.get('of')}{' '}
-									{props.totalItemsCount}{' '}
+									{totalItemsCount}{' '}
 									{Liferay.Language.get('items-selected')}
 								</span>
 								<ClayLink
@@ -147,7 +154,7 @@ function BulkActions(props) {
 									href="#"
 									onClick={(e) => {
 										e.preventDefault();
-										props.selectAllItems();
+										selectAllItems();
 									}}
 								>
 									{Liferay.Language.get('select-all')}
@@ -155,7 +162,7 @@ function BulkActions(props) {
 							</li>
 						</ul>
 						<div className="bulk-actions">
-							{props.bulkActions.map((actionDefinition, i) => (
+							{bulkActions.map((actionDefinition, i) => (
 								<button
 									className={classNames(
 										'btn btn-monospaced btn-link',

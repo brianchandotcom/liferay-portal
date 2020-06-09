@@ -20,17 +20,26 @@ import React from 'react';
 
 import Checkbox from '../../data_renderer/CheckboxRenderer';
 
-function TableHeadCell(props) {
-	const sortingMatch = props.sorting.find(
-		(element) => element.fieldName === props.fieldName
+function TableHeadCell({
+	contentRenderer,
+	expand,
+	expandableColumns,
+	fieldName,
+	label,
+	sortable,
+	sorting,
+	updateSorting,
+}) {
+	const sortingMatch = sorting.find(
+		(element) => element.fieldName === fieldName
 	);
 
 	function handleSortingCellClick(e) {
 		e.preventDefault();
 
 		if (sortingMatch) {
-			const updatedSortedElements = props.sorting.map((element) =>
-				element.fieldName === props.fieldName
+			const updatedSortedElements = sorting.map((element) =>
+				element.fieldName === fieldName
 					? {
 							...element,
 							direction:
@@ -38,13 +47,13 @@ function TableHeadCell(props) {
 					  }
 					: element
 			);
-			props.updateSorting(updatedSortedElements);
+			updateSorting(updatedSortedElements);
 		}
 		else {
-			props.updateSorting([
+			updateSorting([
 				{
 					direction: 'asc',
-					fieldName: props.fieldName,
+					fieldName,
 				},
 			]);
 		}
@@ -53,22 +62,21 @@ function TableHeadCell(props) {
 	return (
 		<ClayTable.Cell
 			className={classNames(
-				props.contentRenderer &&
-					`content-renderer-${props.contentRenderer}`,
-				props.expandableColumns
-					? props.expand && 'table-cell-expand-small'
+				contentRenderer && `content-renderer-${contentRenderer}`,
+				expandableColumns
+					? expand && 'table-cell-expand-small'
 					: 'table-cell-expand-smaller'
 			)}
 			headingCell
 			headingTitle
 		>
-			{props.sortable ? (
+			{sortable ? (
 				<a
 					className="inline-item text-nowrap text-truncate-inline"
 					href="#"
 					onClick={handleSortingCellClick}
 				>
-					{props.label || ''}
+					{label || ''}
 					<span className="inline-item inline-item-after sorting-icons-wrapper">
 						<ClayIcon
 							className={classNames(
@@ -93,13 +101,24 @@ function TableHeadCell(props) {
 					</span>
 				</a>
 			) : (
-				props.label || ''
+				label || ''
 			)}
 		</ClayTable.Cell>
 	);
 }
 
-function TableHeadRow(props) {
+function TableHeadRow({
+	items,
+	schema,
+	selectItems,
+	selectable,
+	selectedItemsKey,
+	selectedItemsValue,
+	selectionType,
+	showActionItems,
+	sorting,
+	updateSorting,
+}) {
 	const getColumns = (fields) => {
 		const expandableColumns = fields.reduce(
 			(expandable, field) => expandable || Boolean(field.expand),
@@ -112,36 +131,32 @@ function TableHeadRow(props) {
 					{...field}
 					expandableColumns={expandableColumns}
 					key={field.fieldName || i}
-					sorting={props.sorting}
-					updateSorting={props.updateSorting}
+					sorting={sorting}
+					updateSorting={updateSorting}
 				/>
 			);
 		});
 	};
 
 	function handleCheckboxClick() {
-		if (props.selectedItemsValue.length === props.items.length) {
-			return props.selectItems([]);
+		if (selectedItemsValue.length === items.length) {
+			return selectItems([]);
 		}
 
-		return props.selectItems(
-			props.items.map((item) => item[props.selectedItemsKey])
-		);
+		return selectItems(items.map((item) => item[selectedItemsKey]));
 	}
 
 	return (
 		<ClayTable.Head>
 			<ClayTable.Row>
-				{props.selectable && (
+				{selectable && (
 					<ClayTable.Cell headingCell>
-						{props.items.length &&
-						props.selectionType === 'multiple' ? (
+						{items.length && selectionType === 'multiple' ? (
 							<Checkbox
-								checked={!!props.selectedItemsValue.length}
+								checked={!!selectedItemsValue.length}
 								indeterminate={
-									!!props.selectedItemsValue.length &&
-									props.items.length !==
-										props.selectedItemsValue.length
+									!!selectedItemsValue.length &&
+									items.length !== selectedItemsValue.length
 								}
 								name="table-head-selector"
 								onChange={handleCheckboxClick}
@@ -149,8 +164,8 @@ function TableHeadRow(props) {
 						) : null}
 					</ClayTable.Cell>
 				)}
-				{getColumns(props.schema.fields)}
-				{props.showActionItems && <ClayTable.Cell headingCell />}
+				{getColumns(schema.fields)}
+				{showActionItems && <ClayTable.Cell headingCell />}
 			</ClayTable.Row>
 		</ClayTable.Head>
 	);

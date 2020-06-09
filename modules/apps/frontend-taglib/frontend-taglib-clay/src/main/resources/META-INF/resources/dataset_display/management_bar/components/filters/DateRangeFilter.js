@@ -23,28 +23,22 @@ import {
 } from '../../../utilities/dates';
 import getAppContext from '../Context';
 
-function DateRangeFilter(props) {
+function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 	const {actions} = getAppContext();
 
 	const [fromValue, setFromValue] = useState(
-		props.value && props.value.from && formatDateObject(props.value.from)
+		value && value.from && formatDateObject(value.from)
 	);
 	const [toValue, setToValue] = useState(
-		props.value && props.value.to && formatDateObject(props.value.to)
+		value && value.to && formatDateObject(value.to)
 	);
 
 	useEffect(() => {
 		setFromValue(() =>
-			props.value && props.value.from
-				? formatDateObject(props.value.from)
-				: ''
+			value && value.from ? formatDateObject(value.from) : ''
 		);
-		setToValue(() =>
-			props.value && props.value.to
-				? formatDateObject(props.value.to)
-				: ''
-		);
-	}, [props.value]);
+		setToValue(() => (value && value.to ? formatDateObject(value.to) : ''));
+	}, [value]);
 
 	return (
 		<div className="form-group">
@@ -54,11 +48,11 @@ function DateRangeFilter(props) {
 				</label>
 				<input
 					className="form-control"
-					max={toValue || (props.max && formatDateObject(props.max))}
-					min={props.min && formatDateObject(props.min)}
+					max={toValue || (max && formatDateObject(max))}
+					min={min && formatDateObject(min)}
 					onChange={(e) => setFromValue(e.target.value)}
 					pattern="\d{4}-\d{2}-\d{2}"
-					placeholder={props.placeholder || 'yyyy-mm-dd'}
+					placeholder={placeholder || 'yyyy-mm-dd'}
 					type="date"
 					value={fromValue}
 				/>
@@ -67,13 +61,11 @@ function DateRangeFilter(props) {
 				<label htmlFor="basicInput">{Liferay.Language.get('to')}</label>
 				<input
 					className="form-control"
-					max={props.max && formatDateObject(props.max)}
-					min={
-						fromValue || (props.min && formatDateObject(props.min))
-					}
+					max={max && formatDateObject(max)}
+					min={fromValue || (min && formatDateObject(min))}
 					onChange={(e) => setToValue(e.target.value)}
 					pattern="\d{4}-\d{2}-\d{2}"
-					placeholder={props.placeholder || 'yyyy-mm-dd'}
+					placeholder={placeholder || 'yyyy-mm-dd'}
 					type="date"
 					value={toValue}
 				/>
@@ -84,20 +76,20 @@ function DateRangeFilter(props) {
 					className="btn-sm"
 					disabled={
 						fromValue ===
-							(props.value && props.value.from
-								? formatDateObject(props.value.from)
+							(value && value.from
+								? formatDateObject(value.from)
 								: '') &&
 						toValue ===
-							(props.value && props.value.to
-								? formatDateObject(props.value.to)
+							(value && value.to
+								? formatDateObject(value.to)
 								: '')
 					}
 					onClick={() => {
 						if (!fromValue && !toValue) {
-							actions.updateFilterValue(props.id, null);
+							actions.updateFilterValue(id, null);
 						}
 						else {
-							actions.updateFilterValue(props.id, {
+							actions.updateFilterValue(id, {
 								from: fromValue
 									? getDateFromDateString(fromValue)
 									: null,
@@ -108,7 +100,7 @@ function DateRangeFilter(props) {
 						}
 					}}
 				>
-					{props.panelType === 'edit'
+					{panelType === 'edit'
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>

@@ -17,14 +17,14 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-function Cards(props) {
+function Cards({datasetDisplayContext, items, schema}) {
 	const {
 		selectItems,
 		selectable,
 		selectedItemsKey,
 		selectedItemsValue,
 		style,
-	} = useContext(props.datasetDisplayContext);
+	} = useContext(datasetDisplayContext);
 
 	return (
 		<div
@@ -34,21 +34,18 @@ function Cards(props) {
 			)}
 		>
 			<div className="row">
-				{props.items.map((item) => {
+				{items.map((item) => {
 					return (
 						<div className="col-md-3" key={item[selectedItemsKey]}>
 							<ClayCardWithInfo
 								actions={item.actionItems}
 								description={
-									props.schema.description &&
-									item[props.schema.description]
+									schema.description &&
+									item[schema.description]
 								}
-								href={
-									props.schema.href && item[props.schema.href]
-								}
+								href={schema.href && item[schema.href]}
 								imgProps={
-									props.schema.imgProps &&
-									item[props.schema.imgProps]
+									schema.imgProps && item[schema.imgProps]
 								}
 								onSelectChange={
 									selectable &&
@@ -62,17 +59,11 @@ function Cards(props) {
 									)
 								}
 								stickerProps={
-									props.schema.stickerProps &&
-									item[props.schema.stickerProps]
+									schema.stickerProps &&
+									item[schema.stickerProps]
 								}
-								symbol={
-									props.schema.symbol &&
-									item[props.schema.symbol]
-								}
-								title={
-									props.schema.title &&
-									item[props.schema.title]
-								}
+								symbol={schema.symbol && item[schema.symbol]}
+								title={schema.title && item[schema.title]}
 							/>
 						</div>
 					);

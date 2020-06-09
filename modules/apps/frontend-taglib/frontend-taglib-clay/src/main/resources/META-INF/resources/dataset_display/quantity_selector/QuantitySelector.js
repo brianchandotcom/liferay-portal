@@ -17,44 +17,51 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-function QuantitySelector(props) {
-	const [currentQuantity, setCurrentQuantity] = useState(props.quantity);
+function QuantitySelector({
+	allowedQuantities,
+	appendedIcon,
+	appendedText,
+	disabled,
+	inputName,
+	maxQuantity,
+	minQuantity,
+	multipleQuantity,
+	prependedIcon,
+	prependedText,
+	quantity,
+	size,
+	spritemap,
+	style,
+	updateQuantity,
+}) {
+	const [currentQuantity, setCurrentQuantity] = useState(quantity);
 	const [nextAvailable, setNextAvailable] = useState(
-		currentQuantity + props.multipleQuantity <= props.maxQuantity
+		currentQuantity + multipleQuantity <= maxQuantity
 	);
 	const [prevAvailable, setPrevAvailable] = useState(
-		currentQuantity - props.multipleQuantity >= props.minQuantity
+		currentQuantity - multipleQuantity >= minQuantity
 	);
 
 	useEffect(() => {
-		setCurrentQuantity(props.quantity);
-	}, [props.quantity, setCurrentQuantity]);
+		setCurrentQuantity(quantity);
+	}, [quantity, setCurrentQuantity]);
 
 	useEffect(() => {
-		if (props.updateQuantity) {
-			props.updateQuantity(currentQuantity);
+		if (updateQuantity) {
+			updateQuantity(currentQuantity);
 		}
-	}, [currentQuantity, props, props.updateQuantity]);
+	}, [currentQuantity, updateQuantity]);
 
 	useEffect(() => {
-		setNextAvailable(
-			currentQuantity + props.multipleQuantity <= props.maxQuantity
-		);
-		setPrevAvailable(
-			currentQuantity - props.multipleQuantity >= props.minQuantity
-		);
-	}, [
-		currentQuantity,
-		props.maxQuantity,
-		props.minQuantity,
-		props.multipleQuantity,
-	]);
+		setNextAvailable(currentQuantity + multipleQuantity <= maxQuantity);
+		setPrevAvailable(currentQuantity - multipleQuantity >= minQuantity);
+	}, [currentQuantity, maxQuantity, minQuantity, multipleQuantity]);
 
 	function updateCurrentQuantity(newQuantity) {
 		if (
-			newQuantity >= props.minQuantity &&
-			newQuantity <= props.maxQuantity &&
-			newQuantity % props.multipleQuantity === 0
+			newQuantity >= minQuantity &&
+			newQuantity <= maxQuantity &&
+			newQuantity % multipleQuantity === 0
 		) {
 			setCurrentQuantity(newQuantity);
 		}
@@ -62,13 +69,13 @@ function QuantitySelector(props) {
 
 	function increaseQuantity() {
 		if (nextAvailable) {
-			setCurrentQuantity(currentQuantity + props.multipleQuantity);
+			setCurrentQuantity(currentQuantity + multipleQuantity);
 		}
 	}
 
 	function decreaseQuantity() {
 		if (prevAvailable) {
-			setCurrentQuantity(currentQuantity - props.multipleQuantity);
+			setCurrentQuantity(currentQuantity - multipleQuantity);
 		}
 	}
 
@@ -93,45 +100,45 @@ function QuantitySelector(props) {
 	let btnSizeClass;
 	let formControlSizeClass;
 
-	if (props.size === 'large') {
+	if (size === 'large') {
 		btnSizeClass = 'btn-lg';
 		formControlSizeClass = 'form-control-lg';
 	}
 
-	if (props.size === 'small') {
+	if (size === 'small') {
 		btnSizeClass = 'btn-sm';
 		formControlSizeClass = 'form-control-sm';
 	}
 
 	const content = (
 		<div className="quantity-selector">
-			{props.allowedQuantities ? (
+			{allowedQuantities ? (
 				<>
 					<select
 						className={classnames(
 							'form-control',
 							formControlSizeClass
 						)}
-						name={props.inputName}
+						name={inputName}
 						onChange={handleSelectChange}
 						value={currentQuantity}
 					>
-						{props.allowedQuantities.map((value) => (
+						{allowedQuantities.map((value) => (
 							<option key={value} value={value}>
 								{value}
 							</option>
 						))}
 					</select>
 				</>
-			) : props.style === 'simple' ? (
+			) : style === 'simple' ? (
 				<div className="input-group input-group-sm simple">
-					{(props.prependedIcon || props.prependedText) && (
+					{(prependedIcon || prependedText) && (
 						<div className="input-group-item input-group-item-shrink input-group-prepend">
 							<span className="input-group-text">
-								{props.prependedIcon ? (
-									<ClayIcon symbol={props.prependedIcon} />
+								{prependedIcon ? (
+									<ClayIcon symbol={prependedIcon} />
 								) : (
-									props.prependedText
+									prependedText
 								)}
 							</span>
 						</div>
@@ -139,7 +146,7 @@ function QuantitySelector(props) {
 					<div
 						className={classnames(
 							'input-group-item input-group-item-shrink',
-							(props.appendedIcon || props.appendedText) &&
+							(appendedIcon || appendedText) &&
 								'input-group-prepend'
 						)}
 					>
@@ -148,23 +155,23 @@ function QuantitySelector(props) {
 								'form-control text-center',
 								formControlSizeClass
 							)}
-							disabled={props.disabled}
-							max={props.maxQuantity}
-							min={props.minQuantity}
-							name={props.inputName}
+							disabled={disabled}
+							max={maxQuantity}
+							min={minQuantity}
+							name={inputName}
 							onChange={handleInputChange}
-							step={props.multipleQuantity}
+							step={multipleQuantity}
 							type="number"
 							value={currentQuantity}
 						/>
 					</div>
-					{(props.appendedIcon || props.appendedText) && (
+					{(appendedIcon || appendedText) && (
 						<div className="input-group-append input-group-item input-group-item-shrink">
 							<span className="input-group-text">
-								{props.appendedIcon ? (
-									<ClayIcon symbol={props.appendedIcon} />
+								{appendedIcon ? (
+									<ClayIcon symbol={appendedIcon} />
 								) : (
-									props.appendedText
+									appendedText
 								)}
 							</span>
 						</div>
@@ -178,7 +185,7 @@ function QuantitySelector(props) {
 								'btn btn-monospaced btn-secondary',
 								btnSizeClass
 							)}
-							disabled={props.disabled || !prevAvailable}
+							disabled={disabled || !prevAvailable}
 							onClick={decreaseQuantity}
 						>
 							<ClayIcon symbol="hr" />
@@ -191,8 +198,8 @@ function QuantitySelector(props) {
 								'form-control text-center',
 								formControlSizeClass
 							)}
-							disabled={props.disabled}
-							name={props.inputName}
+							disabled={disabled}
+							name={inputName}
 							onChange={handleInputChange}
 							onKeyUp={handleInputKeyUp}
 							type="text"
@@ -206,7 +213,7 @@ function QuantitySelector(props) {
 								'btn btn-monospaced btn-secondary',
 								btnSizeClass
 							)}
-							disabled={props.disabled || !nextAvailable}
+							disabled={disabled || !nextAvailable}
 							onClick={increaseQuantity}
 						>
 							<ClayIcon symbol="plus" />
@@ -217,8 +224,8 @@ function QuantitySelector(props) {
 		</div>
 	);
 
-	return props.spritemap ? (
-		<ClayIconSpriteContext.Provider value={props.spritemap}>
+	return spritemap ? (
+		<ClayIconSpriteContext.Provider value={spritemap}>
 			{content}
 		</ClayIconSpriteContext.Provider>
 	) : (

@@ -16,10 +16,10 @@ import ClayList from '@clayui/list';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function Example(props) {
+function Example({items}) {
 	return (
 		<ClayList className="bg-white mb-0 p-3">
-			<pre className="mb-0 text-wrap">{JSON.stringify(props.items)}</pre>
+			<pre className="mb-0 text-wrap">{JSON.stringify(items)}</pre>
 		</ClayList>
 	);
 }

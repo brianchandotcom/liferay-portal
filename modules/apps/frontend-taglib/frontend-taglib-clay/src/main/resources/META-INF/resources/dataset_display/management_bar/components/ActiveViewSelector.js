@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-function ActiveViewSelector(props) {
+function ActiveViewSelector({activeView, setActiveView, views}) {
 	const [active, setActive] = useState(false);
 
 	return (
@@ -28,18 +28,18 @@ function ActiveViewSelector(props) {
 			trigger={
 				<ClayButtonWithIcon
 					displayType="secondary"
-					symbol={props.views[props.activeView || 0].icon}
+					symbol={views[activeView || 0].icon}
 				/>
 			}
 		>
 			<ClayDropDown.ItemList>
-				{props.views.map((view, i) => (
+				{views.map((view, i) => (
 					<ClayDropDown.Item
 						href="#"
 						key={i}
 						onClick={(e) => {
 							e.preventDefault();
-							props.setActiveView(i);
+							setActiveView(i);
 						}}
 					>
 						<ClayIcon className="mr-3" symbol={view.icon} />

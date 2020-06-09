@@ -29,8 +29,15 @@ import {
 import {getValueFromItem} from '../../utilities/index';
 import TableHeadRow from './TableHeadRow';
 
-function CustomTableCell(props) {
-	const {view} = props;
+function CustomTableCell({
+	actions,
+	comment,
+	itemData,
+	itemId,
+	options,
+	value,
+	view,
+}) {
 	const [currentView, updateCurrentView] = useState({
 		...view,
 		Component: view.contentRendererModuleUrl
@@ -62,11 +69,11 @@ function CustomTableCell(props) {
 		<ClayTable.Cell>
 			{currentView.Component && !loading ? (
 				<currentView.Component
-					actions={props.actions}
-					itemData={props.itemData}
-					itemId={props.itemId}
-					options={props.options}
-					value={props.value}
+					actions={actions}
+					itemData={itemData}
+					itemId={itemId}
+					options={options}
+					value={value}
 				/>
 			) : (
 				<span
@@ -74,9 +81,7 @@ function CustomTableCell(props) {
 					className="loading-animation loading-animation-sm"
 				/>
 			)}
-			{props.comment && (
-				<CommentRenderer>{props.comment}</CommentRenderer>
-			)}
+			{comment && <CommentRenderer>{comment}</CommentRenderer>}
 		</ClayTable.Cell>
 	);
 }
@@ -111,7 +116,7 @@ function getItemFields(item, fields, itemId, itemActions) {
 	});
 }
 
-function Table(props) {
+function Table({itemActions, items, schema, style}) {
 	const {
 		highlightedItemsValue,
 		nestedItemsKey,
@@ -126,19 +131,19 @@ function Table(props) {
 	} = useContext(DatasetDisplayContext);
 
 	const showActionItems = Boolean(
-		(props.itemActions && props.itemActions.length) ||
-			props.items.find((element) => element.actionItems)
+		(itemActions && itemActions.length) ||
+			items.find((element) => element.actionItems)
 	);
 
 	const SelectionComponent =
 		selectionType === 'multiple' ? CheckboxRenderer : RadioRenderer;
 
 	return (
-		<div className={`table-style-${props.style}`}>
+		<div className={`table-style-${style}`}>
 			<ClayTable borderless hover={false} responsive>
 				<TableHeadRow
-					items={props.items}
-					schema={props.schema}
+					items={items}
+					schema={schema}
 					selectable={selectable}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
@@ -149,7 +154,7 @@ function Table(props) {
 					updateSorting={updateSorting}
 				/>
 				<ClayTable.Body>
-					{props.items.map((item, i) => {
+					{items.map((item, i) => {
 						const itemId = item[selectedItemsKey] || i;
 						const nestedItems =
 							nestedItemsReferenceKey &&
@@ -191,17 +196,17 @@ function Table(props) {
 									)}
 									{getItemFields(
 										item,
-										props.schema.fields,
+										schema.fields,
 										itemId,
-										props.itemActions
+										itemActions
 									)}
 									{showActionItems && (
 										<ClayTable.Cell className="dataset-item-actions-wrapper">
-											{(props.itemActions ||
+											{(itemActions ||
 												item.actionItems) && (
 												<ActionsDropdownRenderer
 													actions={
-														props.itemActions ||
+														itemActions ||
 														item.actionItems
 													}
 													itemData={item}
@@ -229,9 +234,9 @@ function Table(props) {
 											>
 												{getItemFields(
 													nestedItem,
-													props.schema.fields,
+													schema.fields,
 													nestedItem[nestedItemsKey],
-													props.itemActions
+													itemActions
 												)}
 												{showActionItems ? (
 													<ClayTable.Cell />

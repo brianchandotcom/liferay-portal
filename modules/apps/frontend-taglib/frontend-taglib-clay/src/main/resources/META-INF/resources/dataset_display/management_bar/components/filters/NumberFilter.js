@@ -19,44 +19,40 @@ import React, {useState} from 'react';
 
 import getAppContext from '../Context';
 
-function NumberFilter(props) {
+function NumberFilter({id, inputText, max, min, panelType, value: valueProp}) {
 	const {actions} = getAppContext();
-	const [value, setValue] = useState(props.value);
+	const [value, setValue] = useState(valueProp);
 
 	return (
 		<div className="form-group">
 			<div className="input-group">
 				<div
 					className={classNames('input-group-item', {
-						'input-group-prepend': props.inputText,
+						'input-group-prepend': inputText,
 					})}
 				>
 					<input
 						className="form-control"
-						max={props.max}
-						min={props.min}
+						max={max}
+						min={min}
 						onChange={(e) => setValue(e.target.value)}
 						type="number"
 						value={value || ''}
 					/>
 				</div>
-				{props.inputText && (
+				{inputText && (
 					<div className="input-group-append input-group-item input-group-item-shrink">
-						<span className="input-group-text">
-							{props.inputText}
-						</span>
+						<span className="input-group-text">{inputText}</span>
 					</div>
 				)}
 			</div>
 			<div className="mt-3">
 				<ClayButton
 					className="btn-sm"
-					disabled={Number(value) === props.value}
-					onClick={() =>
-						actions.updateFilterValue(props.id, Number(value))
-					}
+					disabled={Number(value) === valueProp}
+					onClick={() => actions.updateFilterValue(id, Number(value))}
 				>
-					{props.panelType === 'edit'
+					{panelType === 'edit'
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>

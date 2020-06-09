@@ -21,15 +21,25 @@ import React, {useContext} from 'react';
 
 import ActionsDropdownRenderer from '../../data_renderer/ActionsDropdownRenderer';
 
-function Email(props) {
-	const {openSidePanel} = useContext(props.datasetDisplayContext);
+function Email({
+	actionItems,
+	author,
+	borderBottom,
+	datasetDisplayContext,
+	date,
+	href,
+	status,
+	subject,
+	summary,
+}) {
+	const {openSidePanel} = useContext(datasetDisplayContext);
 
 	function handleClickOnSubject(e) {
 		e.preventDefault();
 
 		openSidePanel({
 			slug: 'email',
-			url: props.href,
+			url: href,
 		});
 	}
 
@@ -37,7 +47,7 @@ function Email(props) {
 		<li
 			className={classNames(
 				'bg-white d-flex p-4',
-				props.borderBottom
+				borderBottom
 					? 'border-top-0 border-left-0 border-right-0 border-bottom'
 					: 'border-0'
 			)}
@@ -47,7 +57,7 @@ function Email(props) {
 					<div className="row">
 						<div className="col">
 							<div className="row">
-								{props.author.avatarSrc && (
+								{author.avatarSrc && (
 									<div className="col-auto">
 										<ClaySticker
 											className="sticker-user-icon"
@@ -56,7 +66,7 @@ function Email(props) {
 											<div className="sticker-overlay">
 												<img
 													className="sticker-img"
-													src={props.author.avatarSrc}
+													src={author.avatarSrc}
 												/>
 											</div>
 										</ClaySticker>
@@ -64,39 +74,37 @@ function Email(props) {
 								)}
 								<div className="col d-flex flex-column justify-content-center">
 									<small className="d-block text-body">
-										<strong>{props.author.name}</strong>
+										<strong>{author.name}</strong>
 									</small>
 									<small className="d-block">
-										{props.author.email}
+										{author.email}
 									</small>
 								</div>
 							</div>
 						</div>
 						<div className="col-auto d-flex flex-column justify-content-center">
 							<ClayLabel
-								displayType={
-									props.status.displayStyle || 'success'
-								}
+								displayType={status.displayStyle || 'success'}
 							>
-								{props.status.label}
+								{status.label}
 							</ClayLabel>
 						</div>
 						<div className="col-auto d-flex flex-column justify-content-center">
-							<small>{props.date}</small>
+							<small>{date}</small>
 						</div>
 						<div className="col-12">
 							<h5 className="mt-3">
 								<a href="#" onClick={handleClickOnSubject}>
-									{props.subject}
+									{subject}
 								</a>
 							</h5>
-							<div>{props.summary}</div>
+							<div>{summary}</div>
 						</div>
 					</div>
 				</div>
-				{props.actionItems.length ? (
+				{actionItems.length ? (
 					<div className="col-auto d-flex flex-column justify-content-center">
-						<ActionsDropdownRenderer actions={props.actionItems} />
+						<ActionsDropdownRenderer actions={actionItems} />
 					</div>
 				) : null}
 			</div>
@@ -126,8 +134,8 @@ Email.defaultProps = {
 	actionItems: [],
 };
 
-function EmailsList(props) {
-	const {style} = useContext(props.datasetDisplayContext);
+function EmailsList({datasetDisplayContext, items}) {
+	const {style} = useContext(datasetDisplayContext);
 
 	return (
 		<ClayList
@@ -136,12 +144,12 @@ function EmailsList(props) {
 				style === 'default' ? 'border-bottom' : 'border'
 			)}
 		>
-			{props.items.map((item, i) => (
+			{items.map((item, i) => (
 				<Email
 					key={i}
 					{...item}
-					borderBottom={i !== props.items.length - 1}
-					datasetDisplayContext={props.datasetDisplayContext}
+					borderBottom={i !== items.length - 1}
+					datasetDisplayContext={datasetDisplayContext}
 				/>
 			))}
 		</ClayList>

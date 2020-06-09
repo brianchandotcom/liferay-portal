@@ -17,7 +17,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function TimelineEntry(props) {
+function TimelineEntry({date, description, title}) {
 	return (
 		<li className="timeline-item">
 			<div className="panel panel-secondary">
@@ -27,11 +27,11 @@ function TimelineEntry(props) {
 				<div className="panel-body">
 					<div className="mb-2 row">
 						<div className="col">
-							<h4 className="mb-0">{props.title}</h4>
+							<h4 className="mb-0">{title}</h4>
 						</div>
-						<div className="col-auto">{props.description}</div>
+						<div className="col-auto">{description}</div>
 					</div>
-					<small>{props.date}</small>
+					<small>{date}</small>
 				</div>
 			</div>
 		</li>
@@ -46,15 +46,15 @@ TimelineEntry.propTypes = {
 
 TimelineEntry.defaultProps = {};
 
-function Timeline(props) {
+function Timeline({datasetDisplayContext, items}) {
 	return (
 		<ClayList className={classNames('mb-0', 'timeline')}>
-			{props.items.map((item, i) => (
+			{items.map((item, i) => (
 				<TimelineEntry
 					key={i}
 					{...item}
-					borderBottom={i !== props.items.length - 1}
-					datasetDisplayContext={props.datasetDisplayContext}
+					borderBottom={i !== items.length - 1}
+					datasetDisplayContext={datasetDisplayContext}
 				/>
 			))}
 		</ClayList>

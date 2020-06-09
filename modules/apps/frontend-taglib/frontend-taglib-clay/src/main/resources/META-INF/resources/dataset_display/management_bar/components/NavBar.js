@@ -21,7 +21,13 @@ import CreationMenu from './CreationMenu';
 import FiltersDropdown from './FiltersDropdown';
 import MainSearch from './MainSearch';
 
-function NavBar(props) {
+function NavBar({
+	activeView,
+	creationMenuItems,
+	setActiveView,
+	showSearch,
+	views,
+}) {
 	const {state} = useAppState();
 
 	return (
@@ -32,22 +38,22 @@ function NavBar(props) {
 						<FiltersDropdown />
 					</div>
 				) : null}
-				{props.showSearch ? (
+				{showSearch ? (
 					<div className="navbar-form navbar-overlay-sm-down pl-0">
 						<MainSearch />
 					</div>
 				) : null}
 				<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down pl-0">
-					{props.views && props.views.length > 1 ? (
+					{views && views.length > 1 ? (
 						<ActiveViewSelector
-							activeView={props.activeView}
-							setActiveView={props.setActiveView}
-							views={props.views}
+							activeView={activeView}
+							setActiveView={setActiveView}
+							views={views}
 						/>
 					) : null}
 				</div>
-				{props.creationMenuItems && props.creationMenuItems.length ? (
-					<CreationMenu items={props.creationMenuItems} />
+				{creationMenuItems && creationMenuItems.length ? (
+					<CreationMenu items={creationMenuItems} />
 				) : null}
 			</div>
 		</nav>

@@ -19,9 +19,9 @@ import React, {useState} from 'react';
 
 import getAppContext from '../Context';
 
-function RadioFilter(props) {
+function RadioFilter({id, items, panelType, value: valueProp}) {
 	const {actions} = getAppContext();
-	const [value, setValue] = useState(props.value);
+	const [value, setValue] = useState(valueProp);
 
 	return (
 		<>
@@ -29,7 +29,7 @@ function RadioFilter(props) {
 				onSelectedValueChange={setValue}
 				selectedValue={value || ''}
 			>
-				{props.items.map((item) => (
+				{items.map((item) => (
 					<ClayRadio
 						key={item.value}
 						label={item.label}
@@ -40,10 +40,10 @@ function RadioFilter(props) {
 			<div className="mt-3">
 				<ClayButton
 					className="btn-sm"
-					disabled={value === props.value}
-					onClick={() => actions.updateFilterValue(props.id, value)}
+					disabled={value === valueProp}
+					onClick={() => actions.updateFilterValue(id, value)}
 				>
-					{props.panelType === 'edit'
+					{panelType === 'edit'
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>

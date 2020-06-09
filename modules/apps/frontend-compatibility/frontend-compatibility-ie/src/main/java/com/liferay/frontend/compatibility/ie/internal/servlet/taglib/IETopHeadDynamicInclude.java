@@ -82,8 +82,7 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		dynamicIncludeRegistry.register(
-			"/html/common/themes/top_head.jsp#pre");
+		dynamicIncludeRegistry.register("/html/common/themes/top_head.jsp#pre");
 	}
 
 	@Activate

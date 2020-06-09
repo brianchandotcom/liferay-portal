@@ -1,9 +1,31 @@
 .html-editor.portlet {
 	background-color: $light;
+
+	height: 100%;
+	position: absolute;
+	width: 100%;
+
+	&:after {
+		border: 1px solid $secondary-l3;
+		bottom: 0;
+		content: '';
+		left: 0;
+		position: fixed;
+		right: 0;
+		top: 0;
+	}
+
+	&:focus {
+		background-color: $primary-l3;
+
+		&:after {
+			border-color: $primary-l1;
+		}
+	}
 }
 
-.cke {
-	border: 1px solid $secondary-l3;
+div.cke {
+	border: none;
 	border-radius: 4px;
 
 	.cke_inner {
@@ -11,7 +33,9 @@
 
 		.cke_top {
 			background-color: $white;
-			border-bottom: 1px solid $secondary-l3;
+			border: 1px solid $secondary-l3;
+			border-bottom: none;
+			border-radius: 4px 4px 0 0;
 
 			.cke_toolbar {
 				&:not(:first-child) {
@@ -65,7 +89,9 @@
 
 		.cke_bottom {
 			background-color: $white;
-			border-top: 1px solid $secondary-l3;
+			border: 1px solid $secondary-l3;
+			border-radius: 0 0 4px 4px;
+			border-top: none;
 			color: $secondary;
 
 			.cke_resizer {

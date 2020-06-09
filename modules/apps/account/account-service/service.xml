@@ -136,6 +136,12 @@
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+
 		<!-- References -->
 
 		<reference entity="User" package-path="com.liferay.portal" />

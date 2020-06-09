@@ -61,11 +61,14 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -364,6 +367,19 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		updateFormInstanceRecord(
 			userId, ddmFormInstanceRecordId, true, ddmFormValues,
 			serviceContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<DDMFormInstanceRecord>
+			searchFormInstanceRecords(
+				long formInstanceId, String[] notEmptyFields, int status,
+				int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = _buildSearchContext(
+			formInstanceId, notEmptyFields, status, start, end, sort);
+
+		return searchFormInstanceRecords(searchContext);
 	}
 
 	@Override
@@ -938,14 +954,57 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		}
 	}
 
+	private SearchContext _buildSearchContext(
+			long formInstanceId, String[] notEmptyFields, int status, int start,
+			int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAndSearch(true);
+
+		DDMFormInstance formInstance =
+			ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
+
+		Map<String, Serializable> attributes =
+			HashMapBuilder.<String, Serializable>put(
+				Field.CLASS_NAME_ID,
+				_classNameLocalService.getClassNameId(DDMFormInstance.class)
+			).put(
+				Field.STATUS, status
+			).put(
+				"formInstanceId", formInstance.getFormInstanceId()
+			).put(
+				"languageIds", formInstance.getAvailableLanguageIds()
+			).put(
+				"notEmptyFields", notEmptyFields
+			).put(
+				"structureId", formInstance.getStructureId()
+			).build();
+
+		searchContext.setAttributes(attributes);
+
+		searchContext.setCompanyId(formInstance.getCompanyId());
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[] {formInstance.getGroupId()});
+		searchContext.setStart(start);
+
+		searchContext.setSorts(sort);
+
+		return searchContext;
+	}
+
 	private static final String[] _SELECTED_FIELD_NAMES = {
-		Field.COMPANY_ID, Field.ENTRY_CLASS_PK, Field.UID
+		Field.COMPANY_ID, Field.ENTRY_CLASS_PK, Field.MODIFIED_DATE, Field.UID
 	};
 
 	private static final String _VERSION_DEFAULT = "1.0";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordLocalServiceImpl.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;

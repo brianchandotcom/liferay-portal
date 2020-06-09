@@ -34,7 +34,7 @@ function TextFilter({id, inputText, label, panelType, value: valueProp}) {
 					<input
 						aria-label={label}
 						className="form-control"
-						onChange={(e) => setValue(e.target.value)}
+						onChange={(event) => setValue(event.target.value)}
 						type="text"
 						value={value || ''}
 					/>

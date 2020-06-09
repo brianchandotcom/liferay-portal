@@ -34,8 +34,8 @@ function Email({
 }) {
 	const {openSidePanel} = useContext(datasetDisplayContext);
 
-	function handleClickOnSubject(e) {
-		e.preventDefault();
+	function handleClickOnSubject(event) {
+		event.preventDefault();
 
 		openSidePanel({
 			slug: 'email',

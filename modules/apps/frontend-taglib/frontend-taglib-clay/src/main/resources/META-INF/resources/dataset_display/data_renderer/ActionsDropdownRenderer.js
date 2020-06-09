@@ -46,8 +46,8 @@ function ActionItem({
 	target,
 	title,
 }) {
-	function handleClickOnLink(e) {
-		e.preventDefault();
+	function handleClickOnLink(event) {
+		event.preventDefault();
 
 		handleAction({
 			method,
@@ -158,8 +158,8 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 				data-senna-off
 				href="#"
 				monospaced={Boolean(action.icon)}
-				onClick={(e) => {
-					e.preventDefault();
+				onClick={(event) => {
+					event.preventDefault();
 
 					handleAction({
 						method: action.method,

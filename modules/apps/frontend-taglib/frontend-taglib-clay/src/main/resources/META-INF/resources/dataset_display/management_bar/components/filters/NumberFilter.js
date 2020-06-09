@@ -35,7 +35,7 @@ function NumberFilter({id, inputText, max, min, panelType, value: valueProp}) {
 						className="form-control"
 						max={max}
 						min={min}
-						onChange={(e) => setValue(e.target.value)}
+						onChange={(event) => setValue(event.target.value)}
 						type="number"
 						value={value || ''}
 					/>

@@ -27,8 +27,8 @@ function ModalLinkRenderer({value}) {
 			<ClayLink
 				data-senna-off
 				href="#"
-				onClick={(e) => {
-					e.preventDefault();
+				onClick={(event) => {
+					event.preventDefault();
 					openModal({
 						size: value.size,
 						title: value.title,

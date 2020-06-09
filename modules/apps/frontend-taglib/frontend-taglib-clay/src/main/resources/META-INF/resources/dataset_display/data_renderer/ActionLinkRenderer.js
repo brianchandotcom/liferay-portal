@@ -49,8 +49,8 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 	const formattedHref =
 		currentAction.href && formatActionUrl(currentAction.href, itemData);
 
-	function handleClickOnLink(e) {
-		e.preventDefault();
+	function handleClickOnLink(event) {
+		event.preventDefault();
 
 		if (currentAction.target === 'modal') {
 			openModal({

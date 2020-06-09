@@ -37,8 +37,8 @@ function ActiveViewSelector({activeView, setActiveView, views}) {
 					<ClayDropDown.Item
 						href="#"
 						key={i}
-						onClick={(e) => {
-							e.preventDefault();
+						onClick={(event) => {
+							event.preventDefault();
 							setActiveView(i);
 						}}
 					>

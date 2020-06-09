@@ -53,7 +53,7 @@ function DateFilter({
 						className="form-control"
 						max={max && formatDateObject(max)}
 						min={min && formatDateObject(min)}
-						onChange={(e) => setValue(e.target.value)}
+						onChange={(event) => setValue(event.target.value)}
 						pattern="\d{4}-\d{2}-\d{2}"
 						placeholder={placeholder || 'yyyy-mm-dd'}
 						type="date"

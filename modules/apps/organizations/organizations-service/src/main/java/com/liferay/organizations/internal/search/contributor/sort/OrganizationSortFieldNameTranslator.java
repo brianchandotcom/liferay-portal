@@ -14,6 +14,9 @@
 
 package com.liferay.organizations.internal.search.contributor.sort;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.contributor.ContributorConstants;
 import com.liferay.portal.search.contributor.sort.SortFieldNameTranslator;
 
@@ -36,7 +39,8 @@ public class OrganizationSortFieldNameTranslator
 			return "name";
 		}
 		else if (orderByCol.equals("type")) {
-			return "type";
+			return Field.getSortableFieldName(
+				StringBundler.concat("type", StringPool.UNDERLINE, "String"));
 		}
 
 		return orderByCol;

@@ -27,7 +27,7 @@ const baseProps = {
 	name: 'testMappingField',
 	selectedField: {
 		key: 'field-2',
-		label: 'Field label',
+		label: 'Field 2',
 	},
 	selectedSource: {
 		classTypeLabel: 'Label source type',
@@ -71,16 +71,51 @@ describe('MappingField', () => {
 			expect(mappingPanel).not.toBeInTheDocument();
 		});
 
-		describe('then the user expand the panel', () => {
+		describe('then the user show the panel', () => {
+			let fieldSelect;
+
 			beforeEach(() => {
 				fireEvent.click(mappingButton);
 				mappingPanel = result.baseElement.querySelector(
 					'.dpt-mapping-panel'
 				);
+				fieldSelect = result.getByLabelText('field');
 			});
 
 			it('has render a panel', () => {
 				expect(mappingPanel).toBeInTheDocument();
+			});
+
+			it('the field select has selectedField value', () => {
+				expect(fieldSelect.value).toBe(baseProps.selectedField.key);
+			});
+
+			describe('then the user change the fields select', () => {
+				beforeEach(() => {
+					fireEvent.change(fieldSelect, {
+						target: {value: baseProps.fields[0].key},
+					});
+				});
+
+				it('the fieldMapping update the value', () => {
+					expect(inputValue.value).toBe(baseProps.fields[0].key);
+				})
+
+				describe('click in the mapping button', () => {
+					it('hide the panel', () => {
+						fireEvent.click(mappingButton);
+
+						expect(mappingPanel).not.toBeInTheDocument();
+					});
+				});
+
+				describe('click outside', () => {
+					it('hide the panel', () => {
+						fireEvent.mouseDown(document);
+
+						expect(mappingPanel).not.toBeInTheDocument();
+					});
+				});
 			});
 		});
 	});

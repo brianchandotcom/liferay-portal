@@ -268,7 +268,7 @@ public class SitemapImpl implements Sitemap {
 		}
 	}
 
-	private int _getElementSize(Element element) {
+	private int _getSize(Element element) {
 		String string = element.asXML();
 
 		byte[] bytes = string.getBytes();
@@ -367,7 +367,7 @@ public class SitemapImpl implements Sitemap {
 	private void _initEntriesAndSize(Element rootElement) {
 		rootElement.addAttribute(_ENTRIES, "0");
 
-		int size = _getElementSize(rootElement);
+		int size = _getSize(rootElement);
 
 		rootElement.addAttribute(_SIZE, String.valueOf(size));
 	}
@@ -416,7 +416,7 @@ public class SitemapImpl implements Sitemap {
 		int size = GetterUtil.getInteger(rootElement.attributeValue(_SIZE));
 
 		entries++;
-		size += _getElementSize(newElement);
+		size += _getSize(newElement);
 
 		while ((entries > MAXIMUM_NUMBER_OF_ENTRIES) ||
 			   (size >= _MAXIMUM_SIZE_IN_BYTES)) {
@@ -425,7 +425,7 @@ public class SitemapImpl implements Sitemap {
 				newElement.getName());
 
 			entries--;
-			size -= _getElementSize(oldestUrlElement);
+			size -= _getSize(oldestUrlElement);
 
 			rootElement.remove(oldestUrlElement);
 		}

@@ -365,11 +365,11 @@ public class SitemapImpl implements Sitemap {
 	}
 
 	private void _initEntriesAndSize(Element rootElement) {
+		rootElement.addAttribute(_ENTRIES, "0");
+
 		int size = _getElementSize(rootElement);
 
 		rootElement.addAttribute(_SIZE, String.valueOf(size));
-
-		rootElement.addAttribute(_ENTRIES, "0");
 	}
 
 	private void _removeEntriesAndSize(Element rootElement) {

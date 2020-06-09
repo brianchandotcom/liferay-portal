@@ -59,7 +59,9 @@ definition {
 	}
 
 	macro contentDateRange {
-		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
+		if (IsElementPresent(locator1 = "Button#PUBLISH")) {
+			ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
+		}
 
 		if ("${contentDateRange}" == "All") {
 			Click(locator1 = "StagingPublishToLive#CONTENT_ALL");

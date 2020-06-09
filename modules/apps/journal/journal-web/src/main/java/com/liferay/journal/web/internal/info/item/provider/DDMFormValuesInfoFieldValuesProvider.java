@@ -16,6 +16,7 @@ package com.liferay.journal.web.internal.info.item.provider;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
@@ -119,13 +120,15 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 			return Optional.empty();
 		}
 
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
 		return Optional.of(
 			new InfoFieldValue<>(
 				new InfoField(
 					TextInfoFieldType.INSTANCE,
 					InfoLocalizedValue.localize(
 						getClass(), ddmFormFieldValue.getName()),
-					ddmFormFieldValue.getName()),
+					ddmFormField.isLocalizable(), ddmFormFieldValue.getName()),
 				InfoLocalizedValue.builder(
 				).defaultLocale(
 					value.getDefaultLocale()

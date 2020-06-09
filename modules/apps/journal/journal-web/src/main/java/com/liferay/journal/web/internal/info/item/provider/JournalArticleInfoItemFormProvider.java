@@ -456,7 +456,8 @@ public class JournalArticleInfoItemFormProvider
 
 	private final InfoField _descriptionInfoField = new InfoField(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "description"), "description");
+		InfoLocalizedValue.localize(getClass(), "description"), true,
+		"description");
 	private final InfoField _displayPageUrlInfoField = new InfoField(
 		URLInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(
@@ -500,7 +501,7 @@ public class JournalArticleInfoItemFormProvider
 		"smallImage");
 	private final InfoField _titleInfoField = new InfoField(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "title"), "title");
+		InfoLocalizedValue.localize(getClass(), "title"), true, "title");
 
 	@Reference
 	private UserLocalService _userLocalService;

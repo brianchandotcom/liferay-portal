@@ -84,7 +84,8 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 				infoFieldSet.add(
 					new InfoField(
 						_getInfoFieldType(ddmFormField),
-						labelInfoLocalizedValue, ddmFormField.getName()));
+						labelInfoLocalizedValue, ddmFormField.isLocalizable(),
+						ddmFormField.getName()));
 			}
 
 			return infoFieldSet;

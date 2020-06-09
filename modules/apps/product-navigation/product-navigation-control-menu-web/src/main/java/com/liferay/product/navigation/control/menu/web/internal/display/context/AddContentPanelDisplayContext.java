@@ -29,6 +29,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -40,6 +43,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -104,6 +108,106 @@ public class AddContentPanelDisplayContext {
 		).put(
 			"widgets", _getWidgets()
 		).build();
+	}
+
+	public boolean hasAddApplicationsPermission() throws Exception {
+		if (_hasAddApplicationsPermission != null) {
+			return _hasAddApplicationsPermission;
+		}
+
+		_hasAddApplicationsPermission = false;
+
+		boolean stateMaximized = ParamUtil.getBoolean(
+			_httpServletRequest, "stateMaximized");
+
+		LayoutTypePortlet layoutTypePortlet =
+			_themeDisplay.getLayoutTypePortlet();
+
+		LayoutTypeController layoutTypeController =
+			layoutTypePortlet.getLayoutTypeController();
+
+		Layout layout = _themeDisplay.getLayout();
+
+		if (!stateMaximized && layout.isTypePortlet() &&
+			!layout.isLayoutPrototypeLinkActive() &&
+			!layoutTypeController.isFullPageDisplayable() &&
+			(hasLayoutUpdatePermission() ||
+			 (layoutTypePortlet.isCustomizable() &&
+			  layoutTypePortlet.isCustomizedView() &&
+			  hasLayoutCustomizePermission()))) {
+
+			_hasAddApplicationsPermission = true;
+		}
+
+		return _hasAddApplicationsPermission;
+	}
+
+	public boolean hasAddContentPermission() throws Exception {
+		if (_hasAddContentPermission != null) {
+			return _hasAddContentPermission;
+		}
+
+		_hasAddContentPermission = false;
+
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (hasAddApplicationsPermission() && !group.isLayoutPrototype()) {
+			_hasAddContentPermission = true;
+		}
+
+		return _hasAddContentPermission;
+	}
+
+	public boolean hasLayoutCustomizePermission() throws Exception {
+		if (_hasLayoutCustomizePermission != null) {
+			return _hasLayoutCustomizePermission;
+		}
+
+		_hasLayoutCustomizePermission = false;
+
+		if (LayoutPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
+				ActionKeys.CUSTOMIZE)) {
+
+			_hasLayoutCustomizePermission = true;
+		}
+
+		return _hasLayoutCustomizePermission;
+	}
+
+	public boolean hasLayoutUpdatePermission() throws Exception {
+		if (_hasLayoutUpdatePermission != null) {
+			return _hasLayoutUpdatePermission;
+		}
+
+		_hasLayoutUpdatePermission = false;
+
+		if (LayoutPermissionUtil.contains(
+				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
+				ActionKeys.UPDATE)) {
+
+			_hasLayoutUpdatePermission = true;
+		}
+
+		return _hasLayoutUpdatePermission;
+	}
+
+	public boolean showAddPanel() throws Exception {
+		Group group = _themeDisplay.getScopeGroup();
+
+		LayoutTypePortlet layoutTypePortlet =
+			_themeDisplay.getLayoutTypePortlet();
+
+		if (!group.isControlPanel() &&
+			(hasLayoutUpdatePermission() ||
+			 (layoutTypePortlet.isCustomizable() &&
+			  layoutTypePortlet.isCustomizedView() &&
+			  hasLayoutCustomizePermission()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private List<Map<String, Object>> _getAddContentsURLs() throws Exception {
@@ -476,6 +580,10 @@ public class AddContentPanelDisplayContext {
 
 	private final AssetHelper _assetHelper;
 	private Integer _delta;
+	private Boolean _hasAddApplicationsPermission;
+	private Boolean _hasAddContentPermission;
+	private Boolean _hasLayoutCustomizePermission;
+	private Boolean _hasLayoutUpdatePermission;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private final ThemeDisplay _themeDisplay;

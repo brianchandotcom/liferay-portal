@@ -21,29 +21,18 @@
 		<c:if test="<%= layout != null %>">
 
 			<%
-			Group group = layout.getGroup();
-
-			boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
-			boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
+			AddContentPanelDisplayContext addContentPanelDisplayContext = new AddContentPanelDisplayContext(request);
 			%>
 
-			<c:if test="<%= !group.isControlPanel() && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
+			<c:if test="<%= addContentPanelDisplayContext.showAddPanel() %>">
 				<div class="add-content-menu" data-qa-id="addPanelBody" id="<portlet:namespace />addPanelContainer">
-
-					<%
-					boolean stateMaximized = ParamUtil.getBoolean(request, "stateMaximized");
-
-					LayoutTypeController layoutTypeController = layoutTypePortlet.getLayoutTypeController();
-
-					boolean hasAddApplicationsPermission = !stateMaximized && layout.isTypePortlet() && !layout.isLayoutPrototypeLinkActive() && !layoutTypeController.isFullPageDisplayable() && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission));
-
-					boolean hasAddContentPermission = hasAddApplicationsPermission && !group.isLayoutPrototype();
-
-					String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelTab", hasAddContentPermission ? "content" : "applications"));
-					%>
-
 					<div aria-multiselectable="true" class="panel-group" id="<portlet:namespace />Accordion" role="tablist">
-						<c:if test="<%= hasAddApplicationsPermission %>">
+
+						<%
+						String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelTab", addContentPanelDisplayContext.hasAddContentPermission() ? "content" : "applications"));
+						%>
+
+						<c:if test="<%= addContentPanelDisplayContext.hasAddApplicationsPermission() %>">
 							<div class="add-application-panel panel">
 								<div class="panel-header panel-heading" id="<portlet:namespace />addApplicationHeading" role="tab">
 									<div class="panel-title">
@@ -65,7 +54,7 @@
 							</div>
 						</c:if>
 
-						<c:if test="<%= hasAddContentPermission %>">
+						<c:if test="<%= addContentPanelDisplayContext.hasAddContentPermission() %>">
 							<div class="add-content-panel panel">
 								<div class="panel-header panel-heading" id="<portlet:namespace />addContentHeading" role="tab">
 									<div class="panel-title">
@@ -87,7 +76,7 @@
 							</div>
 						</c:if>
 
-						<c:if test="<%= hasAddApplicationsPermission && hasAddContentPermission %>">
+						<c:if test="<%= addContentPanelDisplayContext.hasAddApplicationsPermission() && addContentPanelDisplayContext.hasAddContentPermission() %>">
 							<aui:script>
 								Liferay.on('liferay.collapse.show', function (event) {
 									var panelId = event.panel.getAttribute('id');

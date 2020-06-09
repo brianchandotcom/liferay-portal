@@ -4,17 +4,17 @@ const INTERVAL = 5000;
 
 const editMode = document.body.classList.contains('has-edit-mode-menu');
 const indicators = [].slice.call(
-	document.querySelectorAll('.carousel-navigation button')
+	fragmentElement.querySelectorAll('.carousel-navigation button')
 );
-const items = [].slice.call(document.querySelectorAll('.carousel-item'));
+const items = [].slice.call(fragmentElement.querySelectorAll('.carousel-item'));
 
-const next = document.querySelector('.carousel-control-next');
-const prev = document.querySelector('.carousel-control-prev');
+const next = fragmentElement.querySelector('.carousel-control-next');
+const prev = fragmentElement.querySelector('.carousel-control-prev');
 
 let moving = false;
 
 function getActiveIndicator() {
-	return document.querySelector(
+	return fragmentElement.querySelector(
 		'.carousel-navigation .active'
 	);
 }
@@ -26,7 +26,7 @@ function move(movement, index = null) {
 
 	moving = true;
 
-	const activeItem = document.querySelector('.carousel-item.active');
+	const activeItem = fragmentElement.querySelector('.carousel-item.active');
 	const indexActiveItem = items.indexOf(activeItem);
 	const activeIndicator = getActiveIndicator();
 

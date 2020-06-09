@@ -23,7 +23,7 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.info.item.provider.InfoItemObjectProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -108,8 +108,8 @@ public class GetFragmentEntryLinkMVCResourceCommand
 				(collectionItemClassPK > 0)) {
 
 				InfoItemObjectProvider<Object> infoItemObjectProvider =
-					_infoItemObjectProviderTracker.getInfoItemObjectProvider(
-						collectionItemClassName);
+					_infoItemServiceTracker.getInfoItemService(
+						InfoItemObjectProvider.class, collectionItemClassName);
 
 				if (infoItemObjectProvider != null) {
 					Object infoItemObject = infoItemObjectProvider.getInfoItem(
@@ -179,7 +179,7 @@ public class GetFragmentEntryLinkMVCResourceCommand
 	private InfoDisplayContributorTracker _infoDisplayContributorTracker;
 
 	@Reference
-	private InfoItemObjectProviderTracker _infoItemObjectProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private Portal _portal;

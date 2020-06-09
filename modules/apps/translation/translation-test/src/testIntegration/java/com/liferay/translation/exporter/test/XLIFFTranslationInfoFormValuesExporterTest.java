@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.io.StreamUtil;
@@ -64,8 +64,8 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 		throws Exception {
 
 		InfoItemFormProvider infoItemFormProvider =
-			_infoItemFormProviderTracker.getInfoItemFormProvider(
-				JournalArticle.class.getName());
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemFormProvider.class, JournalArticle.class.getName());
 
 		JournalArticle journalArticle = _getJournalArticle();
 
@@ -112,7 +112,7 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Inject(filter = "content.type=application/xliff+xml")
 	private TranslationInfoFormValuesExporter

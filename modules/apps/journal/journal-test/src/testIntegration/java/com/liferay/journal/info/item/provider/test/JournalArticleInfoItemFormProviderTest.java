@@ -25,7 +25,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormProviderTracker;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -65,8 +65,8 @@ public class JournalArticleInfoItemFormProviderTest {
 	@Test
 	public void testGetInfoFormValues() throws Exception {
 		InfoItemFormProvider infoItemFormProvider =
-			_infoItemFormProviderTracker.getInfoItemFormProvider(
-				JournalArticle.class.getName());
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemFormProvider.class, JournalArticle.class.getName());
 
 		JournalArticle journalArticle = _getJournalArticle();
 
@@ -164,6 +164,6 @@ public class JournalArticleInfoItemFormProviderTest {
 	private Group _group;
 
 	@Inject
-	private InfoItemFormProviderTracker _infoItemFormProviderTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

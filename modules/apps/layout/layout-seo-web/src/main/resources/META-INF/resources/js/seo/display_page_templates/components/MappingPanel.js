@@ -64,9 +64,7 @@ function MappingPanel({name, fields, field, source, onChange = noop}) {
 				>
 					<div className="popover-body">
 						<ClayForm.Group small>
-							<label
-								htmlFor={`${name}_mappingSelectorSource`}
-							>
+							<label htmlFor={`${name}_mappingSelectorSource`}>
 								{Liferay.Language.get('source')}
 							</label>
 							<ClayInput
@@ -106,6 +104,7 @@ MappingPanel.propTypes = {
 			label: PropTypes.string,
 		})
 	).isRequired,
+	name: PropTypes.string.isRequired,
 	source: PropTypes.shape({
 		initialValue: PropTypes.string,
 	}).isRequired,

@@ -13,6 +13,7 @@
  */
 
 import ClayForm, {ClayInput} from '@clayui/form';
+import {PropTypes} from 'prop-types';
 import React, {useState} from 'react';
 
 import MappingPanel from './MappingPanel';
@@ -59,5 +60,17 @@ function MappingField({fields, label, name, selectedField, selectedSource}) {
 		</ClayForm.Group>
 	);
 }
+
+MappingField.propTypes = {
+	name: PropTypes.string.isRequired,
+	selectedField: PropTypes.shape({
+		key: PropTypes.string,
+		label: PropTypes.string,
+	}).isRequired,
+	selectedSource: PropTypes.shape({
+		classNameLabel: PropTypes.string,
+		classTypeLabel: PropTypes.string,
+	}).isRequired,
+};
 
 export default MappingField;

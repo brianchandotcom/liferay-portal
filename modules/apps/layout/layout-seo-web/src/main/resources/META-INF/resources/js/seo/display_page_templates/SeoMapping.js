@@ -12,6 +12,7 @@
  * details.
  */
 
+import {PropTypes} from 'prop-types';
 import React from 'react';
 
 import MappingField from './components/MappingField';
@@ -47,6 +48,17 @@ function SeoMapping({
 		</>
 	);
 }
+
+SeoMapping.propTypes = {
+	description: PropTypes.string.isRequired,
+	fields: PropTypes.arrayOf(
+		PropTypes.shape({
+			key: PropTypes.string,
+			label: PropTypes.string,
+		})
+	).isRequired,
+	title: PropTypes.string.isRequired,
+};
 
 export default function (props) {
 	return (

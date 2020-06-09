@@ -17,7 +17,7 @@ export function getLiferayJsModule(moduleUrl) {
 		Liferay.Loader.require(
 			moduleUrl,
 			(jsModule) => {
-				return resolve(jsModule.defult || jsModule);
+				return resolve(jsModule.default || jsModule);
 			},
 			(err) => {
 				return reject(err);

@@ -259,6 +259,15 @@ public class AccountGroupLocalServiceUtil {
 		return getService().getAccountGroups(start, end);
 	}
 
+	public static java.util.List<com.liferay.account.model.AccountGroup>
+		getAccountGroups(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.account.model.AccountGroup> obc) {
+
+		return getService().getAccountGroups(companyId, start, end, obc);
+	}
+
 	/**
 	 * Returns the number of account groups.
 	 *

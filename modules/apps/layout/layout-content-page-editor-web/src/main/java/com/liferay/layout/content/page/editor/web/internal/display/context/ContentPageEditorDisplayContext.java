@@ -1365,11 +1365,8 @@ public class ContentPageEditorDisplayContext {
 			infoItemServiceTracker.getInfoItemClassNames(
 				InfoItemFormProvider.class);
 
-		if (infoItemClassNames.contains(
-				FileEntry.class.getName())) {
-
-			infoItemClassNames.add(
-				DLFileEntryConstants.getClassName());
+		if (infoItemClassNames.contains(FileEntry.class.getName())) {
+			infoItemClassNames.add(DLFileEntryConstants.getClassName());
 			infoItemClassNames.remove(FileEntry.class.getName());
 		}
 

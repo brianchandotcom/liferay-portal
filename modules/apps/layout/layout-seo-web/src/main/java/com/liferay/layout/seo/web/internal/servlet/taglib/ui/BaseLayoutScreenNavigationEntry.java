@@ -142,9 +142,6 @@ public abstract class BaseLayoutScreenNavigationEntry
 	protected abstract String getJspPath();
 
 	@Reference
-	protected InfoItemServiceTracker infoItemServiceTracker;
-
-	@Reference
 	protected DLAppService dlAppService;
 
 	@Reference
@@ -152,6 +149,9 @@ public abstract class BaseLayoutScreenNavigationEntry
 
 	@Reference
 	protected InfoDisplayContributorTracker infoDisplayContributorTracker;
+
+	@Reference
+	protected InfoItemServiceTracker infoItemServiceTracker;
 
 	@Reference
 	protected ItemSelector itemSelector;

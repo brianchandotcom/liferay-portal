@@ -148,9 +148,9 @@ public class GetAvailableTemplatesMVCResourceCommand
 	}
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemRendererTracker _infoItemRendererTracker;
 
 	@Reference
-	private InfoItemRendererTracker _infoItemRendererTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLayout from '@clayui/layout';
 import {FieldArray, withFormik} from 'formik';
 import {debounce, fetch, openModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -396,7 +397,7 @@ class SegmentEdit extends Component {
 				/>
 
 				<div className="form-header">
-					<div className="container-fluid container-fluid-max-xl form-header-container">
+					<ClayLayout.ContainerFluid className="form-header-container">
 						<div className="form-header-section-left">
 							<FieldArray
 								name="values.name"
@@ -476,7 +477,7 @@ class SegmentEdit extends Component {
 								</div>
 							</div>
 						)}
-					</div>
+					</ClayLayout.ContainerFluid>
 				</div>
 
 				<div className="form-body">

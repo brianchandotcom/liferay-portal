@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
 import PropTypes from 'prop-types';
@@ -123,9 +124,9 @@ class ContributorBuilder extends React.Component {
 
 					<div className="criteria-builder-section-main">
 						<div className="contributor-container">
-							<div className="container-fluid container-fluid-max-xl">
+							<ClayLayout.ContainerFluid>
 								<div className="content-wrapper">
-									<div className="sheet">
+									<ClayLayout.Sheet>
 										<div className="d-flex flex-wrap justify-content-between mb-4">
 											<h2 className="mb-2 sheet-title">
 												{Liferay.Language.get(
@@ -259,9 +260,9 @@ class ContributorBuilder extends React.Component {
 													</React.Fragment>
 												);
 											})}
-									</div>
+									</ClayLayout.Sheet>
 								</div>
-							</div>
+							</ClayLayout.ContainerFluid>
 						</div>
 					</div>
 				</div>

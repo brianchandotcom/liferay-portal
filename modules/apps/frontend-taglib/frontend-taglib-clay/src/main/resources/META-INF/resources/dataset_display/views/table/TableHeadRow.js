@@ -34,8 +34,8 @@ function TableHeadCell({
 		(element) => element.fieldName === fieldName
 	);
 
-	function handleSortingCellClick(e) {
-		e.preventDefault();
+	function handleSortingCellClick(event) {
+		event.preventDefault();
 
 		if (sortingMatch) {
 			const updatedSortedElements = sorting.map((element) =>

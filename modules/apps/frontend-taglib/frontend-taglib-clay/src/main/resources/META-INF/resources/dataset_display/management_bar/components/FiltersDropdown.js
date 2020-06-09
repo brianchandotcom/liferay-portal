@@ -63,7 +63,7 @@ function FiltersDropdown() {
 			}
 		>
 			<ClayDropDown.Search
-				onChange={(e) => setQuery(e.target.value)}
+				onChange={(event) => setQuery(event.target.value)}
 				value={query}
 			/>
 			{visibleFilters.length ? (

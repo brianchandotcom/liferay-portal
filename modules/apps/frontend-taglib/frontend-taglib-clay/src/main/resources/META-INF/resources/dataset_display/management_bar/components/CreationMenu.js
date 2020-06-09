@@ -39,8 +39,8 @@ function CreationMenu({items}) {
 								{items.map((item, i) => (
 									<ClayDropDown.Item
 										key={i}
-										onClick={(e) => {
-											e.preventDefault();
+										onClick={(event) => {
+											event.preventDefault();
 											setActive(false);
 											triggerAction(item, datasetContext);
 										}}

@@ -152,8 +152,8 @@ function BulkActions({
 								<ClayLink
 									className="ml-3"
 									href="#"
-									onClick={(e) => {
-										e.preventDefault();
+									onClick={(event) => {
+										event.preventDefault();
 										selectAllItems();
 									}}
 								>

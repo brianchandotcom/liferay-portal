@@ -27,9 +27,9 @@ function MainSearch() {
 		updateInputValue(searchParam || '');
 	}, [searchParam]);
 
-	function handleKeyDown(e) {
-		if (e.keyCode === 13) {
-			e.preventDefault();
+	function handleKeyDown(event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
 
 			return updateSearchParam(inputValue);
 		}
@@ -42,7 +42,9 @@ function MainSearch() {
 					<div className="main-input-wrapper">
 						<input
 							className="form-control input-group-inset input-group-inset-after main-input-search"
-							onChange={(e) => updateInputValue(e.target.value)}
+							onChange={(event) =>
+								updateInputValue(event.target.value)
+							}
 							onKeyDown={handleKeyDown}
 							placeholder={Liferay.Language.get('search')}
 							type="text"
@@ -55,8 +57,8 @@ function MainSearch() {
 								!inputValue.length && 'd-none'
 							)}
 							disabled={!inputValue.length}
-							onClick={(e) => {
-								e.preventDefault();
+							onClick={(event) => {
+								event.preventDefault();
 								updateInputValue('');
 
 								return updateSearchParam('');
@@ -70,8 +72,8 @@ function MainSearch() {
 					<span className="input-group-inset-item input-group-inset-item-after">
 						<button
 							className="btn btn-unstyled"
-							onClick={(e) => {
-								e.preventDefault();
+							onClick={(event) => {
+								event.preventDefault();
 
 								return updateSearchParam(inputValue);
 							}}

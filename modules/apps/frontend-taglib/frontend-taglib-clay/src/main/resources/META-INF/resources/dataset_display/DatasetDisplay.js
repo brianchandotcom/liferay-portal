@@ -197,7 +197,7 @@ function DatasetDisplay({
 		getData(
 			apiUrl,
 			currentUrl,
-			filters.filter((e) => !!e.value),
+			filters.filter((filter) => !!filter.value),
 			searchParam,
 			delta,
 			pageNumber,
@@ -254,7 +254,7 @@ function DatasetDisplay({
 		getData(
 			apiUrl,
 			currentUrl,
-			filters.filter((e) => !!e.value),
+			filters.filter((filter) => !!filter.value),
 			searchParam,
 			delta,
 			pageNumber,
@@ -273,13 +273,13 @@ function DatasetDisplay({
 	}, [wrapperRef]);
 
 	useEffect(() => {
-		function handleRefreshFromTheOutside(e) {
-			if (e.id === id) {
+		function handleRefreshFromTheOutside(event) {
+			if (event.id === id) {
 				refreshData();
 			}
 		}
 
-		function handleCloseSidePanel(_e) {
+		function handleCloseSidePanel() {
 			setHighlightedItemsValue([]);
 		}
 

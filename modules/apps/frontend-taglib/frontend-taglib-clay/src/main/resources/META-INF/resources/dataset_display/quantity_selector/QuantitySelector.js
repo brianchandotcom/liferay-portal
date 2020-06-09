@@ -79,22 +79,22 @@ function QuantitySelector({
 		}
 	}
 
-	function handleInputChange(e) {
-		return updateCurrentQuantity(parseInt(e.target.value, 10));
+	function handleInputChange(event) {
+		return updateCurrentQuantity(parseInt(event.target.value, 10));
 	}
 
-	function handleInputKeyUp(e) {
-		if (e.keyCode == 38) {
+	function handleInputKeyUp(event) {
+		if (event.keyCode == 38) {
 			increaseQuantity();
 		}
-		else if (e.keyCode == 40) {
+		else if (event.keyCode == 40) {
 			decreaseQuantity();
 		}
 	}
 
-	function handleSelectChange(e) {
-		e.preventDefault();
-		setCurrentQuantity(e.target.value);
+	function handleSelectChange(event) {
+		event.preventDefault();
+		setCurrentQuantity(event.target.value);
 	}
 
 	let btnSizeClass;

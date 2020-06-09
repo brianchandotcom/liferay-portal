@@ -29,8 +29,8 @@ export default function SideMenu({active, items, open}) {
 						)}
 						displayType="unstyled"
 						monospaced
-						onClick={(e) => {
-							e.preventDefault();
+						onClick={(event) => {
+							event.preventDefault();
 							open(item.href, item.slug);
 						}}
 					>

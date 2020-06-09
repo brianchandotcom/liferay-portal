@@ -50,7 +50,7 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 					className="form-control"
 					max={toValue || (max && formatDateObject(max))}
 					min={min && formatDateObject(min)}
-					onChange={(e) => setFromValue(e.target.value)}
+					onChange={(event) => setFromValue(event.target.value)}
 					pattern="\d{4}-\d{2}-\d{2}"
 					placeholder={placeholder || 'yyyy-mm-dd'}
 					type="date"
@@ -63,7 +63,7 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 					className="form-control"
 					max={max && formatDateObject(max)}
 					min={fromValue || (min && formatDateObject(min))}
-					onChange={(e) => setToValue(e.target.value)}
+					onChange={(event) => setToValue(event.target.value)}
 					pattern="\d{4}-\d{2}-\d{2}"
 					placeholder={placeholder || 'yyyy-mm-dd'}
 					type="date"

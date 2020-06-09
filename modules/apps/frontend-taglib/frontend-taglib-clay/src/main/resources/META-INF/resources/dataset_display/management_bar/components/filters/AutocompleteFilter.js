@@ -177,9 +177,9 @@ function AutocompleteFilter({
 							inputValue={query || ''}
 							items={selectedItems}
 							onChange={setQuery}
-							onItemsChange={(e) => {
-								if (e.length < selectedItems.length) {
-									return setSelectedItems(e);
+							onItemsChange={(event) => {
+								if (event.length < selectedItems.length) {
+									return setSelectedItems(event);
 								}
 								else {
 									if (!items.length) {
@@ -218,7 +218,7 @@ function AutocompleteFilter({
 					) : (
 						<input
 							className="form-control"
-							onChange={(e) => setQuery(e.target.value)}
+							onChange={(event) => setQuery(event.target.value)}
 							placeholder={inputPlaceholder}
 							type="text"
 							value={query}

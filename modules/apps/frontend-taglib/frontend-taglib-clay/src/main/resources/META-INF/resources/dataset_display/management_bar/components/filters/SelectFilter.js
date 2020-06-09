@@ -28,7 +28,7 @@ function SelectFilter({id, items, panelType, value: valueProp}) {
 			<ClaySelect
 				aria-label="Select Label"
 				id="mySelectId"
-				onChange={(e) => setValue(e.target.value)}
+				onChange={(event) => setValue(event.target.value)}
 				value={value || ''}
 			>
 				<ClaySelect.Option label={''} value={''} />

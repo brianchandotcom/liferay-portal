@@ -106,28 +106,28 @@ export default class SidePanel extends React.Component {
 		}));
 	}
 
-	handlePanelOpenEvent(e) {
-		if (e.id !== this.props.id) {
+	handlePanelOpenEvent(event) {
+		if (event.id !== this.props.id) {
 			return this.close();
 		}
 
-		this.open(e.url, e.slug);
+		this.open(event.url, event.slug);
 
 		this.setState({
-			onAfterSubmit: e.onSubmit || null,
-			size: e.size || this.defaultSize,
+			onAfterSubmit: event.onSubmit || null,
+			size: event.size || this.defaultSize,
 		});
 	}
 
-	handlePanelCloseEvent(e) {
-		e.preventDefault();
+	handlePanelCloseEvent(event) {
+		event.preventDefault();
 
 		return this.close();
 	}
 
-	handleKeyupEvent(e) {
+	handleKeyupEvent(even) {
 		if (
-			e.keyCode !== 27 ||
+			even.keyCode !== 27 ||
 			window.top.document.querySelector('.modal-content')
 		) {
 			return;
@@ -273,8 +273,8 @@ export default class SidePanel extends React.Component {
 		});
 	}
 
-	handleIframeSubmit(e) {
-		if (e.id !== this.props.id) {
+	handleIframeSubmit(even) {
+		if (even.id !== this.props.id) {
 			return;
 		}
 
@@ -306,15 +306,15 @@ export default class SidePanel extends React.Component {
 			const iframeDocument = this.iframeRef.current.contentDocument;
 			const iframeWindow = this.iframeRef.current.contentWindow;
 
-			iframeWindow.addEventListener('keyup', (e) =>
-				this.handleKeyupEvent(e)
+			iframeWindow.addEventListener('keyup', (event) =>
+				this.handleKeyupEvent(event)
 			);
 
 			if (iframeWindow.Liferay) {
 				iframeWindow.Liferay.on('endNavigate', () => {
 					this.handleIframeSubmit({id: this.props.id});
-					iframeWindow.addEventListener('keyup', (e) =>
-						this.handleKeyupEvent(e)
+					iframeWindow.addEventListener('keyup', (event) =>
+						this.handleKeyupEvent(event)
 					);
 				});
 			}

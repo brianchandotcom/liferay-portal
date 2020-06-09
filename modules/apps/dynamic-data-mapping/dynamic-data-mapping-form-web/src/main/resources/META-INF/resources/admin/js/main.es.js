@@ -187,9 +187,14 @@ class Form extends Component {
 			)
 		);
 
+		const shareURLButton = document.querySelector(
+			'.lfr-ddm-share-url-button'
+		);
+
 		if (showPublishAlert) {
 			if (published) {
 				this._showPublishedAlert(this._createFormURL());
+				shareURLButton.removeAttribute('title');
 			}
 			else {
 				this._showUnpublishedAlert();
@@ -996,7 +1001,6 @@ class Form extends Component {
 			}
 
 			shareURLButton.classList.add('hide');
-
 			this.hideAddButton();
 		}
 	}

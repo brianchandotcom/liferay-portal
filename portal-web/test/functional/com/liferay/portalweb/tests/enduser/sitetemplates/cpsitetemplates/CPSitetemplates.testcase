@@ -390,9 +390,11 @@ definition {
 
 		Navigator.openURL();
 
+		ProductMenuHelper.closeProductMenu();
+
 		GlobalMenu.gotoPortlet(
 			category = "Sitios web",
-			panel = "Control Panel",
+			panel = "Panel de control",
 			portlet = "Plantillas de sitio web");
 
 		SiteTemplates.viewDefaultDataLocalizedCP(
@@ -409,6 +411,8 @@ definition {
 			successMessage = "Your request completed successfully.");
 
 		Navigator.openURL();
+
+		ProductMenuHelper.closeProductMenu();
 
 		GlobalMenu.gotoPortlet(
 			category = "Sites",

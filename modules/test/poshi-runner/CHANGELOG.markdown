@@ -1,5 +1,18 @@
 # Poshi Runner Change Log
 
+## 1.0.269
+
+### Runner
+
+* [POSHI-79](https://issues.liferay.com/browse/POSHI-79) - Delete lingering artifacts in the output directory when a Poshi test starts running
+* [POSHI-80](https://issues.liferay.com/browse/POSHI-80) - String literal newline character doesn't get translated in JSON WS API Calls
+* [POSHI-81](https://issues.liferay.com/browse/POSHI-81) - As a Test Engineer, I'd like validation in JSONCurlUtil.java to be changed so that I can pass in multiple URLs as arguments when creating JSON macros
+
+### Utils
+
+* [POSHI-46](https://issues.liferay.com/browse/POSHI-46) - UploadCommonFile can not copy the target file to destination on win10 OS
+* [POSHI-86](https://issues.liferay.com/browse/POSHI-86) - As a test engineer, I should be able to delete a file
+
 ## 1.0.266
 
 ### Other

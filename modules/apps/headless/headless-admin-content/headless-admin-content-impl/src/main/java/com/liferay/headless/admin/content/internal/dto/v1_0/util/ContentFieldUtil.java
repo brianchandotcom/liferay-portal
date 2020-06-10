@@ -41,8 +41,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import javax.ws.rs.BadRequestException;
 import java.text.ParseException;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
@@ -50,6 +50,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.TimeZone;
+
+import javax.ws.rs.BadRequestException;
 
 /**
  * @author Javier Gamarra

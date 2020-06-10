@@ -58,6 +58,16 @@ renderResponse.setTitle(title);
 
 		<aui:model-context bean="<%= ddmStructure %>" model="<%= com.liferay.dynamic.data.mapping.model.DDMStructure.class %>" />
 
+		<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
+			<clay:container-fluid>
+				<ul class="tbar-nav">
+					<li class="tbar-item tbar-item-expand">
+						<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+					</li>
+				</ul>
+			</clay:container-fluid>
+		</nav>
+
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<aui:field-wrapper>
@@ -73,8 +83,6 @@ renderResponse.setTitle(title);
 						</div>
 					</c:if>
 				</aui:field-wrapper>
-
-				<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
 				<liferay-ui:panel-container
 					cssClass="lfr-structure-entry-details-container"

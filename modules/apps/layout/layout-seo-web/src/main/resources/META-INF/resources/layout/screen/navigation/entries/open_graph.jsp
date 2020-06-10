@@ -58,15 +58,21 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 				<liferay-ui:message key="open-graph-description" />
 			</p>
 
-			<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
-
 			<c:choose>
 				<c:when test="<%= layoutsSEODisplayContext.isDisplayPageTemplate() %>">
 					<div class="dpt-mapping">
-						Mapping fields
+						<aui:input disabled="<%= true %>" label="title" localized="<%= false %>" name="openGraphTitle" />
+						<aui:input disabled="<%= true %>" label="description" localized="<%= false %>" name="openGraphDescription" />
+
+						<react:component
+							module="js/seo/display_page_templates/OpenGraphMapping"
+							servletContext="<%= application %>"
+						/>
 					</div>
 				</c:when>
 				<c:when test="<%= !selLayout.isTypeAssetDisplay() %>">
+					<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+
 					<div class="form-group">
 						<label class="control-label"><liferay-ui:message key="image" /> <liferay-ui:icon-help message="open-graph-image-help" /></label>
 

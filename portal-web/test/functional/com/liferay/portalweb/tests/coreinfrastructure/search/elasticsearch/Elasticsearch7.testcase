@@ -61,9 +61,16 @@ definition {
 
 		Portlet.shutdownServer();
 
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "delete-portal-elasticsearch-dir");
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		var elasticsearchDeleted = FileUtil.delete("${liferayHome}/data/elasticsearch7");
+
+		if ("${elasticsearchDeleted}" == "true") {
+			echo("Deleted ${liferayHome}/data/elasticsearch7");
+		}
+		else {
+			fail("Failed to delete elasticsearch7 directory");
+		}
 
 		var newProperty = "index.on.startup=true";
 

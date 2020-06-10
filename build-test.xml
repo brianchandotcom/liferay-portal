@@ -6490,16 +6490,6 @@ go</echo>
 		<delete dir="/tmp/sprite" />
 	</target>
 
-	<target name="delete-portal-elasticsearch-dir">
-		<delete includeemptydirs="true">
-			<fileset
-				dir="${liferay.home}/data/"
-			>
-				<include name="elasticsearch*/" />
-			</fileset>
-		</delete>
-	</target>
-
 	<target name="deploy-dependency-jars">
 		<get-testcase-property property.name="liferay.training.dependency.jars" />
 

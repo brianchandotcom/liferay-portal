@@ -15,8 +15,10 @@ definition {
 
 	@summary = "Navigate to Product Menu > Sites > Sites Modal > ${site}"
 	macro gotoLocalizedSite {
+		var companyName = TestCase.getCompanyName();
+
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "Guest");
+			GlobalMenu.gotoSite(site = "${companyName}");
 		}
 
 		ProductMenuHelper.expandPanel(panel = "Site Administration");
@@ -131,8 +133,10 @@ definition {
 
 	@summary = "View ${site} is not available in the product menu."
 	macro viewNoSite {
+		var companyName = TestCase.getCompanyName();
+
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
-			GlobalMenu.gotoSite(site = "Guest");
+			GlobalMenu.gotoSite(site = "${companyName}");
 		}
 
 		ProductMenuHelper.expandPanel(panel = "Site Administration");

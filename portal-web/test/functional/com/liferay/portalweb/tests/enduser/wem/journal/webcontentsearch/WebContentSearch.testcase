@@ -36,7 +36,7 @@ definition {
 
 			Vocabulary.tearDownCP();
 
-			Tag.tearDownCP(site = "Guest");
+			Tag.tearDownCP();
 
 			Page.tearDownCP();
 		}

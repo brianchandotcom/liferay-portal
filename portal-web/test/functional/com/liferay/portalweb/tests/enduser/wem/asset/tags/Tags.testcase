@@ -24,7 +24,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Tag.tearDownCP(site = "Guest");
+			Tag.tearDownCP();
 		}
 	}
 

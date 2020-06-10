@@ -105,19 +105,19 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			InfoDisplayWebKeys.VERSION_CLASS_PK,
 			_getVersionClassPK(friendlyURL));
 
+		Layout layout = _getInfoDisplayObjectProviderLayout(
+			infoDisplayObjectProvider);
+
 		Locale locale = portal.getLocale(httpServletRequest);
 
 		portal.setPageDescription(
 			HtmlUtil.unescape(
 				HtmlUtil.stripHtml(
-					infoDisplayObjectProvider.getDescription(locale))),
+					_getPageDescription(
+						infoDisplayObjectProvider, layout, locale))),
 			httpServletRequest);
 		portal.setPageKeywords(
 			infoDisplayObjectProvider.getKeywords(locale), httpServletRequest);
-
-		Layout layout = _getInfoDisplayObjectProviderLayout(
-			infoDisplayObjectProvider);
-
 		portal.setPageTitle(
 			_getPageTitle(infoDisplayObjectProvider, layout, locale),
 			httpServletRequest);
@@ -288,6 +288,28 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		List<String> paths = StringUtil.split(friendlyURL, CharPool.SLASH);
 
 		return CharPool.SLASH + paths.get(0) + CharPool.SLASH;
+	}
+
+	private String _getPageDescription(
+		InfoDisplayObjectProvider<?> infoDisplayObjectProvider, Layout layout,
+		Locale locale) {
+
+		if (infoDisplayObjectProvider != null) {
+			InfoItemFormProvider infoItemFormProvider =
+				infoItemServiceTracker.getInfoItemService(
+					InfoItemFormProvider.class,
+					portal.getClassName(
+						infoDisplayObjectProvider.getClassNameId()));
+
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFormProvider.getInfoFieldValue(
+					infoDisplayObjectProvider.getDisplayObject(),
+					layout.getDescription(locale));
+
+			return String.valueOf(infoFieldValue.getValue(locale));
+		}
+
+		return infoDisplayObjectProvider.getDescription(locale);
 	}
 
 	private String _getPageTitle(

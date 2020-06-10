@@ -52,57 +52,60 @@ export default () => {
 	const {icon, name: fieldName} = field;
 
 	return (
-		<div className="open sidebar-container">
-			<div className="sidebar sidebar-light">
-				<nav className="component-tbar tbar">
-					<div className="container-fluid">
-						<ul className="tbar-nav">
-							<li className="tbar-item">
-								<div className="icon">
-									<ClayIcon symbol={icon} />
-								</div>
-							</li>
-
-							<li className="tbar-item tbar-item-expand">
-								<div className="tbar-section">
-									<div className="field-info">
-										<p className="title">{fieldName}</p>
-
-										<p className="description">
-											{totalEntries}{' '}
-											{Liferay.Language.get(
-												'entries'
-											).toLowerCase()}
-										</p>
+		<>
+			<div className="sidebar-backdrop"></div>
+			<div className="open sidebar-container">
+				<div className="sidebar sidebar-light">
+					<nav className="component-tbar tbar">
+						<div className="container-fluid">
+							<ul className="tbar-nav">
+								<li className="tbar-item">
+									<div className="icon">
+										<ClayIcon symbol={icon} />
 									</div>
-								</div>
-							</li>
+								</li>
 
-							<li className="tbar-item">
-								<ClayButton
-									displayType="unstyled"
-									onClick={() => toggleSidebar()}
-								>
-									<ClayIcon
-										className="close-button"
-										symbol={'times-small'}
-									/>
-								</ClayButton>
-							</li>
-						</ul>
-					</div>
-				</nav>
+								<li className="tbar-item tbar-item-expand">
+									<div className="tbar-section">
+										<div className="field-info">
+											<p className="title">{fieldName}</p>
 
-				<div className="sidebar-body">
-					{isLoading && (
-						<div className="align-items-center d-flex loading-wrapper">
-							<ClayLoadingIndicator />
+											<p className="description">
+												{totalEntries}{' '}
+												{Liferay.Language.get(
+													'entries'
+												).toLowerCase()}
+											</p>
+										</div>
+									</div>
+								</li>
+
+								<li className="tbar-item">
+									<ClayButton
+										displayType="unstyled"
+										onClick={() => toggleSidebar()}
+									>
+										<ClayIcon
+											className="close-button"
+											symbol={'times-small'}
+										/>
+									</ClayButton>
+								</li>
+							</ul>
 						</div>
-					)}
+					</nav>
 
-					<List data={data}></List>
+					<div className="sidebar-body">
+						{isLoading && (
+							<div className="align-items-center d-flex loading-wrapper">
+								<ClayLoadingIndicator />
+							</div>
+						)}
+
+						<List data={data}></List>
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };

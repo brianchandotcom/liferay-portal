@@ -116,61 +116,59 @@ class SynonymSetsForm extends Component {
 
 		return (
 			<div className="synonym-sets-form">
-				<ClayLayout.ContainerFluid>
-					<div className="sheet-title">
-						{Liferay.Language.get('create-synonym-set')}
-					</div>
+				<div className="sheet-title">
+					{Liferay.Language.get('create-synonym-set')}
+				</div>
 
-					<div className="sheet-text">
-						{Liferay.Language.get(
-							'broaden-the-scope-of-search-by-treating-terms-equally-using-synonyms'
-						)}
-					</div>
+				<div className="sheet-text">
+					{Liferay.Language.get(
+						'broaden-the-scope-of-search-by-treating-terms-equally-using-synonyms'
+					)}
+				</div>
 
-					<ClayForm.Group>
-						<label htmlFor="synonym-sets-input">
-							{Liferay.Language.get('synonyms')}
-						</label>
+				<ClayForm.Group>
+					<label htmlFor="synonym-sets-input">
+						{Liferay.Language.get('synonyms')}
+					</label>
 
-						<ClayInput.Group>
-							<ClayInput.GroupItem>
-								<ClayMultiSelect
-									id="synonym-sets-input"
-									inputValue={inputValue}
-									items={synonyms}
-									onChange={this._handleInputChange}
-									onItemsChange={this._handleItemsChange}
-								/>
+					<ClayInput.Group>
+						<ClayInput.GroupItem>
+							<ClayMultiSelect
+								id="synonym-sets-input"
+								inputValue={inputValue}
+								items={synonyms}
+								onChange={this._handleInputChange}
+								onItemsChange={this._handleItemsChange}
+							/>
 
-								<ClayForm.FeedbackGroup>
-									<ClayForm.Text>
-										{Liferay.Language.get(
-											'type-a-comma-or-press-enter-to-input-a-synonym'
-										)}
-									</ClayForm.Text>
-								</ClayForm.FeedbackGroup>
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</ClayForm.Group>
+							<ClayForm.FeedbackGroup>
+								<ClayForm.Text>
+									{Liferay.Language.get(
+										'type-a-comma-or-press-enter-to-input-a-synonym'
+									)}
+								</ClayForm.Text>
+							</ClayForm.FeedbackGroup>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+				</ClayForm.Group>
 
-					<ClayLayout.SheetFooter>
-						<ClayButton
-							disabled={synonyms.length === 0}
-							displayType="primary"
-							onClick={this._handleSubmit}
-							type="submit"
-						>
-							{Liferay.Language.get('publish')}
-						</ClayButton>
+				<ClayLayout.SheetFooter>
+					<ClayButton
+						disabled={synonyms.length === 0}
+						displayType="primary"
+						onClick={this._handleSubmit}
+						type="submit"
+					>
+						{Liferay.Language.get('publish')}
+					</ClayButton>
 
-						<ClayButton
-							displayType="secondary"
-							onClick={this._handleCancel}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayLayout.SheetFooter>
-				</ClayLayout.ContainerFluid>
+					<ClayButton
+						displayType="secondary"
+						onClick={this._handleCancel}
+					>
+						{Liferay.Language.get('cancel')}
+					</ClayButton>
+				</ClayLayout.SheetFooter>
 			</div>
 		);
 	}

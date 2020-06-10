@@ -1,3 +1,502 @@
+components:
+    schemas:
+        AggregateRating:
+            description:
+                Represents the average rating. See [AggregateRating](https://www.schema.org/AggregateRating) for more
+                information.
+            properties:
+                bestRating:
+                    description:
+                        The highest possible rating (by default normalized to 1.0).
+                    format: double
+                    readOnly: true
+                    type: number
+                ratingAverage:
+                    description:
+                        The average rating.
+                    format: double
+                    readOnly: true
+                    type: number
+                ratingCount:
+                    description:
+                        The number of ratings.
+                    readOnly: true
+                    type: integer
+                ratingValue:
+                    # @review
+                    description:
+                        The rating value.
+                    format: double
+                    readOnly: true
+                    type: number
+                worstRating:
+                    description:
+                        The lowest possible rating (by default normalized to 0.0).
+                    format: double
+                    readOnly: true
+                    type: number
+            type: object
+        ContentDocument:
+            description:
+                Represents a document (binary data and metadata) associated with structured content. Properties follow
+                the [Media Object](https://schema.org/MediaObject) specification.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                contentType:
+                    readOnly: true
+                    type: string
+                contentUrl:
+                    description:
+                        The document's relative URL.
+                    format: uri
+                    readOnly: true
+                    type: string
+                description:
+                    description:
+                        The document's description.
+                    type: string
+                encodingFormat:
+                    description:
+                        The document's content type (e.g., `application/pdf`, etc.).
+                    readOnly: true
+                    type: string
+                fileExtension:
+                    description:
+                        The document's file extension.
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        The document's ID.
+                    format: int64
+                    type: integer
+                sizeInBytes:
+                    description:
+                        The document's file size in bytes.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    description:
+                        The document's title.
+                    type: string
+            type: object
+        ContentField:
+            description:
+                Represents the value of each field in structured content. Fields can contain different information types
+                (e.g., documents, geolocation, etc.).
+            properties:
+                contentFieldValue:
+                    $ref: "#/components/schemas/ContentFieldValue"
+                contentFieldValue_i18n:
+                    additionalProperties:
+                        $ref: "#/components/schemas/ContentFieldValue"
+                    type: object
+                dataType:
+                    description:
+                        The field type (e.g., image, text, etc.).
+                    readOnly: true
+                    type: string
+                inputControl:
+                    description:
+                        The field's control type (e.g., text, text area, etc.).
+                    readOnly: true
+                    type: string
+                label:
+                    description:
+                        The field's label.
+                    readOnly: true
+                    type: string
+                label_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
+                name:
+                    description:
+                        The field's internal name. This is valid for comparisons and unique in the structured content.
+                    type: string
+                nestedContentFields:
+                    description:
+                        A list of child content fields that depend on this resource.
+                    items:
+                        $ref: "#/components/schemas/ContentField"
+                    type: array
+                repeatable:
+                    description:
+                        A flag that indicates whether this field can be rendered multiple times.
+                    readOnly: true
+                    type: boolean
+        ContentFieldValue:
+            # @review
+            description:
+                Represents the value of a content field. Can contain different information types
+                (e.g., geolocation, documents, etc.).
+            properties:
+                data:
+                    description:
+                        The field's content for simple types.
+                    type: string
+                document:
+                    allOf:
+                        - $ref: "#/components/schemas/ContentDocument"
+                    description:
+                        A content document element.
+                geo:
+                    description:
+                        A point determined by latitude and longitude.
+                    properties:
+                        latitude:
+                            description:
+                                The latitude of a point in space.
+                            format: double
+                            type: number
+                        longitude:
+                            description:
+                                The longitude of a point in space.
+                            format: double
+                            type: number
+                    type: object
+                image:
+                    allOf:
+                        - $ref: "#/components/schemas/ContentDocument"
+                    description:
+                        A content document element that stores an image file.
+                link:
+                    description:
+                        A link to a page on the server.
+                    format: uri
+                    type: string
+                structuredContentLink:
+                    description:
+                        A link to structured content on the server.
+                    properties:
+                        contentType:
+                            readOnly: true
+                            type: string
+                        id:
+                            description:
+                                The resource's ID.
+                            format: int64
+                            type: integer
+                        title:
+                            description:
+                                The resource's title.
+                            type: string
+                    type: object
+        Creator:
+            description:
+                Represents the user account of the content's creator/author. Properties follow the
+                [creator](https://schema.org/creator) specification.
+            properties:
+                additionalName:
+                    description:
+                        The author's additional name (e.g., middle name).
+                    readOnly: true
+                    type: string
+                contentType:
+                    # @review
+                    description:
+                        The type of the content.
+                    readOnly: true
+                    type: string
+                familyName:
+                    description:
+                        The author's surname.
+                    readOnly: true
+                    type: string
+                givenName:
+                    description:
+                        The author's first name.
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        The author's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                image:
+                    description:
+                        A relative URL to the author's profile image.
+                    format: uri
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        The author's full name.
+                    readOnly: true
+                    type: string
+                profileURL:
+                    description:
+                        A relative URL to the author's user profile.
+                    format: uri
+                    readOnly: true
+                    type: string
+            type: object
+        CustomField:
+            # @review
+            description:
+                Represents the value of each custom field. Fields can contain different information types (e.g.,
+                geolocation, strings, etc.).
+            properties:
+                customValue:
+                    properties:
+                        data:
+                            description:
+                                The field's content for simple types.
+                            type: object
+                        data_i18n:
+                            additionalProperties:
+                                type: string
+                            type: object
+                        geo:
+                            description:
+                                A point determined by latitude and longitude.
+                            properties:
+                                latitude:
+                                    description:
+                                        The latitude of a point in space.
+                                    format: double
+                                    type: number
+                                longitude:
+                                    description:
+                                        The longitude of a point in space.
+                                    format: double
+                                    type: number
+                            type: object
+                    type: object
+                dataType:
+                    description:
+                        The field type (e.g., image, text, etc.).
+                    readOnly: true
+                    type: string
+                name:
+                    description:
+                        The field's internal name. This is valid for comparisons and unique in the structured content.
+                    type: string
+        RelatedContent:
+            # @review
+            description:
+                Represents a relationship between two resources, internally modeled as AssetLink.
+            properties:
+                contentType:
+                    description:
+                        The type of the content.
+                    readOnly: true
+                    type: string
+                id:
+                    description:
+                        The identifier of the resource.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                title:
+                    description:
+                        The title of the content.
+                    readOnly: true
+                    type: string
+        StructuredContent:
+            description:
+                Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is
+                modeled internally as a `JournalArticle`.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                aggregateRating:
+                    allOf:
+                        - $ref: "#/components/schemas/AggregateRating"
+                    description:
+                        The structured content's average rating.
+                    readOnly: true
+                availableLanguages:
+                    description:
+                        The list of languages the structured content has a translation for.
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
+                contentFields:
+                    description:
+                        The list of fields that store the structured content's information.
+                    items:
+                        $ref: "#/components/schemas/ContentField"
+                    type: array
+                contentStructureId:
+                    description:
+                        The ID of the `ContentStructure`.
+                    format: int64
+                    type: integer
+                creator:
+                    allOf:
+                        - $ref: "#/components/schemas/Creator"
+                    description:
+                        The structured content's creator.
+                    readOnly: true
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
+                dateCreated:
+                    description:
+                        The structured content's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time any field of the structured content was changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                datePublished:
+                    description:
+                        The structured content's most recent publication date.
+                    format: date-time
+                    type: string
+                description:
+                    description:
+                        The structured content's description.
+                    type: string
+                description_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                friendlyUrlPath:
+                    description:
+                        A relative URL to the structured content's rendered content.
+                    type: string
+                friendlyUrlPath_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                id:
+                    description:
+                        The structured content's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                key:
+                    description:
+                        An identifier, independent of the database, that can be used to reference the structured
+                        content.
+                    readOnly: true
+                    type: string
+                keywords:
+                    description:
+                        A list of keywords describing the structured content.
+                    items:
+                        type: string
+                    type: array
+                numberOfComments:
+                    description:
+                        The number of comments the structured content has received.
+                    readOnly: true
+                    type: integer
+                relatedContents:
+                    items:
+                        $ref: "#/components/schemas/RelatedContent"
+                    readOnly: true
+                    type: array
+                renderedContents:
+                    description:
+                        A list of rendered structured content, which results from using a template to process the
+                        content and return HTML.
+                    items:
+                        properties:
+                            renderedContentURL:
+                                description:
+                                    An absolute URL to the rendered content.
+                                format: uri
+                                type: string
+                            templateName:
+                                description:
+                                    The name of the template used to render the content.
+                                type: string
+                            templateName_i18n:
+                                additionalProperties:
+                                    type: string
+                                type: object
+                        type: object
+                    readOnly: true
+                    type: array
+                siteId:
+                    description:
+                        The ID of the site to which this structured content is scoped.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                subscribed:
+                    readOnly: true
+                    type: boolean
+                taxonomyCategoryBriefs:
+                    description:
+                        The categories associated with this structured content.
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
+                    readOnly: true
+                    type: array
+                taxonomyCategoryIds:
+                    description:
+                        A write-only field to add a category to this structured content.
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                    writeOnly: true
+                title:
+                    description:
+                        The structured content's main title.
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+                uuid:
+                    description:
+                        A valid external identifier to reference this structured content.
+                    readOnly: true
+                    type: string
+                viewableBy:
+                    description:
+                        A write-only property that specifies the structured content's default permissions.
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            required:
+                - contentStructureId
+                - title
+        TaxonomyCategoryBrief:
+            properties:
+                taxonomyCategoryId:
+                    description:
+                        The category's ID. This can be used to retrieve more information in the
+                        `TaxonomyCategory` API.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                taxonomyCategoryName:
+                    description:
+                        The category's name.
+                    readOnly: true
+                    type: string
+                taxonomyCategoryName_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID

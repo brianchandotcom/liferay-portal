@@ -4,8 +4,8 @@ definition {
 		Portlet.expandTree();
 
 		AssertClick(
-			key_categoryName = "${categoryName}",
-			locator1 = "CategoriesNavigation#CATEGORY_NAME",
+			key_nodeName = "${categoryName}",
+			locator1 = "Treeview#NODE_UNSELECTED",
 			value1 = "${categoryName}");
 	}
 

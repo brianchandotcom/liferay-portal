@@ -361,14 +361,17 @@ definition {
 
 	macro viewFilterViaCategoriesNavigationPG {
 		var key_categoryName = "${categoryName}";
-		var key_vocabularyName = "${vocabularyName}";
+		var key_nodeName = "${categoryName}";
+		var key_nodeListName = "${vocabularyName}";
 
 		AssertTextEquals(
-			locator1 = "CategoriesNavigation#VOCABULARY_NAME",
+			locator1 = "Treeview#NODE_LIST",
 			value1 = "${vocabularyName}");
 
+		Portlet.expandTree();
+
 		AssertClick(
-			locator1 = "CategoriesNavigation#CATEGORY_NAME",
+			locator1 = "Treeview#NODE_UNSELECTED",
 			value1 = "${categoryName}");
 
 		AssertTextEquals.assertPartialText(
@@ -406,10 +409,10 @@ definition {
 
 	macro viewRemoveFilterViaAP {
 		var key_categoryName = "${categoryName}";
-		var key_vocabularyName = "${vocabularyName}";
+		var key_nodeListName = "${vocabularyName}";
 
 		AssertTextEquals(
-			locator1 = "CategoriesNavigation#VOCABULARY_NAME",
+			locator1 = "Treeview#NODE_LIST",
 			value1 = "${vocabularyName}");
 
 		Click(locator1 = "AP#CATEGORIES_FILTER_CATEGORY_REMOVE");

@@ -23,6 +23,7 @@ export {
 } from './js/util/repeatable.es';
 export {PagesVisitor, RulesVisitor} from './js/util/visitors.es';
 export * as FormSupport from './js/components/FormRenderer/FormSupport.es';
+export {getConnectedReactComponentAdapter} from './js/util/ReactComponentAdapter.es';
 
 // Composing Form Renderer
 

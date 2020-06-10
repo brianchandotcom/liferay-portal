@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -113,13 +114,17 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		portal.setPageDescription(
 			HtmlUtil.unescape(
 				HtmlUtil.stripHtml(
-					_getPageDescription(
-						infoDisplayObjectProvider, layout, locale))),
+					_getMappedField(
+						infoDisplayObjectProvider, locale,
+						layout::getDescription,
+						infoDisplayObjectProvider::getDescription))),
 			httpServletRequest);
 		portal.setPageKeywords(
 			infoDisplayObjectProvider.getKeywords(locale), httpServletRequest);
 		portal.setPageTitle(
-			_getPageTitle(infoDisplayObjectProvider, layout, locale),
+			_getMappedField(
+				infoDisplayObjectProvider, locale, layout::getTitle,
+				infoDisplayObjectProvider::getTitle),
 			httpServletRequest);
 
 		AssetEntry assetEntry = _getAssetEntry(infoDisplayObjectProvider);
@@ -290,9 +295,10 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		return CharPool.SLASH + paths.get(0) + CharPool.SLASH;
 	}
 
-	private String _getPageDescription(
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider, Layout layout,
-		Locale locale) {
+	private String _getMappedField(
+		InfoDisplayObjectProvider<?> infoDisplayObjectProvider, Locale locale,
+		Function<Locale, String> mappedFieldNameFunction,
+		Function<Locale, String> defaultValueFunction) {
 
 		if (infoDisplayObjectProvider != null) {
 			InfoItemFormProvider infoItemFormProvider =
@@ -304,34 +310,12 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			InfoFieldValue<Object> infoFieldValue =
 				infoItemFormProvider.getInfoFieldValue(
 					infoDisplayObjectProvider.getDisplayObject(),
-					layout.getDescription(locale));
+					mappedFieldNameFunction.apply(locale));
 
 			return String.valueOf(infoFieldValue.getValue(locale));
 		}
 
-		return infoDisplayObjectProvider.getDescription(locale);
-	}
-
-	private String _getPageTitle(
-		InfoDisplayObjectProvider<?> infoDisplayObjectProvider, Layout layout,
-		Locale locale) {
-
-		if (infoDisplayObjectProvider != null) {
-			InfoItemFormProvider infoItemFormProvider =
-				infoItemServiceTracker.getInfoItemService(
-					InfoItemFormProvider.class,
-					portal.getClassName(
-						infoDisplayObjectProvider.getClassNameId()));
-
-			InfoFieldValue<Object> infoFieldValue =
-				infoItemFormProvider.getInfoFieldValue(
-					infoDisplayObjectProvider.getDisplayObject(),
-					layout.getTitle(locale));
-
-			return String.valueOf(infoFieldValue.getValue(locale));
-		}
-
-		return infoDisplayObjectProvider.getTitle(locale);
+		return defaultValueFunction.apply(locale);
 	}
 
 	private String _getUrlTitle(String friendlyURL) {

@@ -18,7 +18,7 @@ definition {
 
 	@priority = "5"
 	test AddAMIWithHighDensityResolution {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		GlobalMenu.gotoPortlet(
 			category = "Configuration",
@@ -286,7 +286,7 @@ definition {
 
 	@priority = "5"
 	test AssertAdaptedImageInWebContent {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Adaptive Media Image Description",
@@ -321,7 +321,7 @@ definition {
 	@description = "This ensures that the SVG image can be added and optimized in a blog entry."
 	@priority = "5"
 	test AssertAdaptedSVGImageInBlogsEntry {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "Adaptive Media Image Description",

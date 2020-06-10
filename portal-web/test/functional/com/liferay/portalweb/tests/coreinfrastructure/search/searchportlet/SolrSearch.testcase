@@ -370,11 +370,16 @@ definition {
 	test ModifyPaginationPortalProperties {
 		property custom.properties = "search.container.page.default.delta=2";
 
-		ContentPages.clickPencil();
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			panel = "Site Administration",
+			portlet = "Pages");
 
-		PageEditor.addWidget(
-			portletName = "Search Results",
-			targetFragmentName = "Section");
+		SitePages.addPublicPage(pageName = "Search Page");
+
+		Navigator.gotoPage(pageName = "Search Page");
+
+		Portlet.addPG(portletName = "Search Results");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
@@ -388,8 +393,6 @@ definition {
 
 		IFrame.closeFrame();
 
-		PageEditor.clickPublish();
-
 		for (var count : list "1,2,3") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content ${count}",
@@ -398,6 +401,10 @@ definition {
 		}
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
+
+		while (IsElementNotPresent(locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE", key_searchAssetTitle = "WC Title 1")) {
+			Pause(locator1 = "5000");
+		}
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",

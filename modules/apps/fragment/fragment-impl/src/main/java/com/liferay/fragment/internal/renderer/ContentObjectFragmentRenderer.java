@@ -27,11 +27,13 @@ import com.liferay.info.item.renderer.InfoItemTemplatedRenderer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Tuple;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,7 +63,7 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 					"fields",
 					JSONUtil.putAll(
 						JSONUtil.put(
-							"label", "content"
+							"label", "content-display"
 						).put(
 							"name", "itemSelector"
 						).put(
@@ -80,7 +82,10 @@ public class ContentObjectFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "content");
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		return LanguageUtil.get(resourceBundle, "content-display");
 	}
 
 	@Override

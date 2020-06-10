@@ -53,15 +53,14 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 		Document document = SAXReaderUtil.createDocument();
 
-		Element xliffElement = document.addElement("xliff");
+		Element xliffElement = document.addElement(
+			"xliff", "urn:oasis:names:tc:xliff:document:2.0");
 
 		xliffElement.addAttribute(
 			"srcLang", LocaleUtil.toLanguageId(sourceLocale));
 		xliffElement.addAttribute(
 			"trgLang", LocaleUtil.toLanguageId(targetLocale));
 		xliffElement.addAttribute("version", "2.0");
-		xliffElement.addAttribute(
-			"xmlns", "urn:oasis:names:tc:xliff:document:2.0");
 
 		Element fileElement = xliffElement.addElement("file");
 

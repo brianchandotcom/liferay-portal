@@ -114,27 +114,23 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 </clay:container-fluid>
 
 <aui:script>
-	var Subscriptions = {
-		displayPopup: function (url, title) {
-			Liferay.Util.Window.getWindow({
-				dialog: {
-					align: {
-						node: null,
-						points: ['tc', 'tc'],
-					},
-					constrain2view: true,
-					cssClass: 'portlet-my-subscription',
-					modal: true,
-					resizable: true,
-					width: 950,
+	window['<portlet:namespace />displayPopup'] = function (url, title) {
+		Liferay.Util.Window.getWindow({
+			dialog: {
+				align: {
+					node: null,
+					points: ['tc', 'tc'],
 				},
-				title: title,
-				uri: url,
-			});
-		},
+				constrain2view: true,
+				cssClass: 'portlet-my-subscription',
+				modal: true,
+				resizable: true,
+				width: 950,
+			},
+			title: title,
+			uri: url,
+		});
 	};
-
-	Liferay.Subscriptions = Subscriptions;
 </aui:script>
 
 <aui:script sandbox="<%= true %>">

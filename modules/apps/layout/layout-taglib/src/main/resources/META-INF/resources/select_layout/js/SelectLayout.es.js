@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
+import ClayLayout from '@clayui/layout';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
@@ -123,8 +124,8 @@ const SelectLayout = ({
 				</ClayManagementToolbar.Search>
 			</ClayManagementToolbar>
 
-			<div
-				className="container-fluid-1280 layouts-selector"
+			<ClayLayout.ContainerFluid
+				className="layouts-selector"
 				id={`${namespace}selectLayoutFm`}
 			>
 				<fieldset className="panel-body">
@@ -141,7 +142,7 @@ const SelectLayout = ({
 						/>
 					</div>
 				</fieldset>
-			</div>
+			</ClayLayout.ContainerFluid>
 		</div>
 	);
 };

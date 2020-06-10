@@ -302,6 +302,29 @@ components:
                         The title of the content.
                     readOnly: true
                     type: string
+        Status:
+            # @review
+            description:
+                Represents the status of a resource
+            properties:
+                code:
+                    # @review
+                    description:
+                        A number which identifies a specific status
+                    format: int32
+                    readOnly: true
+                    type: integer
+                label:
+                    # @review
+                    description:
+                        Label associated to the status
+                    readOnly: true
+                    type: string
+                label_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
         StructuredContent:
             description:
                 Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is
@@ -468,6 +491,13 @@ components:
                         A valid external identifier to reference this structured content.
                     readOnly: true
                     type: string
+                versionInformation:
+                    allOf:
+                        - $ref: "#/components/schemas/VersionInformation"
+                    # @review
+                    description:
+                        Information on each version of this structured content
+                    readOnly: true
                 viewableBy:
                     description:
                         A write-only property that specifies the structured content's default permissions.
@@ -496,6 +526,23 @@ components:
                         type: string
                     readOnly: true
                     type: object
+            type: object
+        VersionInformation:
+            properties:
+                status:
+                    allOf:
+                        - $ref: "#/components/schemas/Status"
+                    # @review
+                    description:
+                        Represents the status of a resource
+                    readOnly: true
+                versionNumber:
+                    # @review
+                    description:
+                        The version of a resource
+                    format: double
+                    readOnly: true
+                    type: number
             type: object
 info:
     description:
@@ -537,3 +584,58 @@ paths:
                     description:
                         ""
             tags: ["PageDefinition"]
+    "/structured-contents/{structuredContentId}/versions":
+        get:
+            # @review
+            description:
+                Retrieves all the information of a structured content as versioning, drafts and status
+                of the structured content. Results can be paginated, filtered, searched, flattened, and
+                sorted.
+            operationId: getStructuredContentsVersionsPage
+            parameters:
+                - in: path
+                  name: structuredContentId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: flatten
+                  schema:
+                      type: boolean
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContent"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/StructuredContent"
+                                type: array
+                    description:
+                        ""
+            tags: ["StructuredContent"]

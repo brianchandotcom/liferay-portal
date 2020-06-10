@@ -61,7 +61,7 @@ definition {
 			Navigator.gotoNavItem(navItem = "Index Actions");
 
 			Click(
-				key_actionsDescription = "Reindex all search indexes.",
+				key_actionsDescription = "${actionsDescription}",
 				locator1 = "Button#EXECUTE_ACTION");
 
 			var reindexElapsedTime = "0";

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
@@ -21,9 +23,11 @@ import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.export.builder.DefinitionBuilder;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTransitionLocalService;
 
@@ -68,9 +72,15 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 			kaleoDefinition.getName(), kaleoDefinition.getDescription(),
 			kaleoDefinition.getContent(), kaleoDefinition.getVersion());
 
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+				kaleoDefinition.getCompanyId(), kaleoDefinition.getName(),
+				StringBundler.concat(
+					kaleoDefinition.getVersion(), CharPool.PERIOD, 0));
+
 		List<KaleoNode> kaleoNodes =
 			_kaleoNodeLocalService.getKaleoDefinitionVersionKaleoNodes(
-				kaleoDefinition.getKaleoDefinitionId());
+				kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 		for (KaleoNode kaleoNode : kaleoNodes) {
 			NodeBuilder nodeBuilder = _nodeBuilderRegistry.getNodeBuilder(
@@ -84,7 +94,7 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 		List<KaleoTransition> kaleoTransitions =
 			_kaleoTransitionLocalService.
 				getKaleoDefinitionVersionKaleoTransitions(
-					kaleoDefinition.getKaleoDefinitionId());
+					kaleoDefinitionVersion.getKaleoDefinitionVersionId());
 
 		for (KaleoTransition kaleoTransition : kaleoTransitions) {
 			String sourceNodeName = kaleoTransition.getSourceKaleoNodeName();
@@ -109,6 +119,10 @@ public class DefaultDefinitionBuilder implements DefinitionBuilder {
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 	@Reference
 	private KaleoNodeLocalService _kaleoNodeLocalService;

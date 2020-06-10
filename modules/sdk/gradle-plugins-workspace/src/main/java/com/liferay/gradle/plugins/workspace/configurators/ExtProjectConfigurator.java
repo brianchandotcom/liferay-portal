@@ -65,18 +65,16 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 			settings, getDefaultRootDirPropertyName(), (String)null);
 
 		if (Validator.isNotNull(defaultRootDirNames)) {
-			_extDefaultRootDirs = new HashSet<>();
+			_defaultRootDirs = new HashSet<>();
 
 			for (String dirName : defaultRootDirNames.split("\\s*,\\s*")) {
-				File dir = new File(settings.getRootDir(), dirName);
-
-				_extDefaultRootDirs.add(dir);
+				_defaultRootDirs.add(new File(settings.getRootDir(), dirName));
 			}
 		}
 		else {
 			File dir = new File(settings.getRootDir(), getDefaultRootDirName());
 
-			_extDefaultRootDirs = Collections.singleton(dir);
+			_defaultRootDirs = Collections.singleton(dir);
 		}
 	}
 
@@ -100,7 +98,7 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public Iterable<File> getDefaultRootDirs() {
-		return _extDefaultRootDirs;
+		return _defaultRootDirs;
 	}
 
 	@Override
@@ -209,6 +207,6 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 	};
 
 	private final boolean _defaultRepositoryEnabled;
-	private final Set<File> _extDefaultRootDirs;
+	private final Set<File> _defaultRootDirs;
 
 }

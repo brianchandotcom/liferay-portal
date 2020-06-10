@@ -73,18 +73,16 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 			settings, getDefaultRootDirPropertyName(), (String)null);
 
 		if (Validator.isNotNull(defaultRootDirNames)) {
-			_pluginsSDKDefaultRootDirs = new HashSet<>();
+			_defaultRootDirs = new HashSet<>();
 
 			for (String dirName : defaultRootDirNames.split("\\s*,\\s*")) {
-				File dir = new File(settings.getRootDir(), dirName);
-
-				_pluginsSDKDefaultRootDirs.add(dir);
+				_defaultRootDirs.add(new File(settings.getRootDir(), dirName));
 			}
 		}
 		else {
 			File dir = new File(settings.getRootDir(), getDefaultRootDirName());
 
-			_pluginsSDKDefaultRootDirs = Collections.singleton(dir);
+			_defaultRootDirs = Collections.singleton(dir);
 		}
 	}
 
@@ -124,7 +122,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 	@Override
 	public Iterable<File> getDefaultRootDirs() {
-		return _pluginsSDKDefaultRootDirs;
+		return _defaultRootDirs;
 	}
 
 	@Override
@@ -366,6 +364,6 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 	private static final String _DEFAULT_ROOT_DIR_PROPERTY_NAME =
 		WorkspacePlugin.PROPERTY_PREFIX + "plugins.sdk.dir";
 
-	private final Set<File> _pluginsSDKDefaultRootDirs;
+	private final Set<File> _defaultRootDirs;
 
 }

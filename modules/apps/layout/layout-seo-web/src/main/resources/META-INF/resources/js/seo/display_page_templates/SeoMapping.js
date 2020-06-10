@@ -15,7 +15,7 @@
 import {PropTypes} from 'prop-types';
 import React from 'react';
 
-import MappingField from './components/MappingField';
+import MappingInput from './components/MappingInput';
 
 function SeoMapping({
 	description,
@@ -26,7 +26,7 @@ function SeoMapping({
 }) {
 	return (
 		<>
-			<MappingField
+			<MappingInput
 				fields={fields}
 				label={Liferay.Language.get('html-title')}
 				name={`${portletNamespace}title`}
@@ -36,7 +36,7 @@ function SeoMapping({
 				selectedSource={selectedSource}
 			/>
 
-			<MappingField
+			<MappingInput
 				fields={fields}
 				label={Liferay.Language.get('description')}
 				name={`${portletNamespace}description`}

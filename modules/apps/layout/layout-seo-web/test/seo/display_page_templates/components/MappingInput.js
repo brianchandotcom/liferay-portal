@@ -16,7 +16,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
-import MappingField from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingField';
+import MappingInput from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingInput';
 
 const baseProps = {
 	fields: [
@@ -24,7 +24,7 @@ const baseProps = {
 		{key: 'field-2', label: 'Field 2'},
 	],
 	label: 'Label test mapping field',
-	name: 'testMappingField',
+	name: 'testMappingInput',
 	selectedField: {
 		key: 'field-2',
 		label: 'Field 2',
@@ -35,9 +35,9 @@ const baseProps = {
 };
 
 const renderComponent = (props) =>
-	render(<MappingField {...baseProps} {...props} />);
+	render(<MappingInput {...baseProps} {...props} />);
 
-describe('MappingField', () => {
+describe('MappingInput', () => {
 	afterEach(cleanup);
 
 	describe('when rendered', () => {
@@ -59,7 +59,7 @@ describe('MappingField', () => {
 
 		it('has a hidden input with the selected field key', () => {
 			expect(inputValue.type).toBe('hidden');
-			expect(inputValue.name).toBe('testMappingField');
+			expect(inputValue.name).toBe('testMappingInput');
 		});
 
 		it('has a read only input for user feedback with the selected field name', () => {

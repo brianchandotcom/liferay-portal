@@ -18,7 +18,7 @@ import React, {useState} from 'react';
 
 import MappingPanel from './MappingPanel';
 
-function MappingField({fields, label, name, selectedField, selectedSource}) {
+function MappingInput({fields, label, name, selectedField, selectedSource}) {
 	const [source, setSource] = useState(selectedSource);
 	const [field, setField] = useState(selectedField);
 
@@ -61,7 +61,7 @@ function MappingField({fields, label, name, selectedField, selectedSource}) {
 	);
 }
 
-MappingField.propTypes = {
+MappingInput.propTypes = {
 	name: PropTypes.string.isRequired,
 	selectedField: PropTypes.shape({
 		key: PropTypes.string,
@@ -73,4 +73,4 @@ MappingField.propTypes = {
 	}).isRequired,
 };
 
-export default MappingField;
+export default MappingInput;

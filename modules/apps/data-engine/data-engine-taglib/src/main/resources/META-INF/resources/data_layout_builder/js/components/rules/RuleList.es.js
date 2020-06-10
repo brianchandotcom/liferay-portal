@@ -26,7 +26,7 @@ export default ({keywords, toggleRulesEditorVisibility}) => {
 		},
 	] = useContext(AppContext);
 
-	const filtereDataRules = dataRules
+	const filteredDataRules = dataRules
 		.map((rule, index) => ({...rule, ruleEditedIndex: index}))
 		.filter(({name}) =>
 			new RegExp(keywords, 'ig').test(
@@ -36,7 +36,7 @@ export default ({keywords, toggleRulesEditorVisibility}) => {
 
 	return (
 		<>
-			{filtereDataRules.length === 0 ? (
+			{!filteredDataRules.length ? (
 				<EmptyState
 					emptyState={{
 						button: () => (
@@ -58,7 +58,7 @@ export default ({keywords, toggleRulesEditorVisibility}) => {
 			) : (
 				<div className="autofit-col rule-list">
 					<hr />
-					{filtereDataRules.map((rule, index) => (
+					{filteredDataRules.map((rule, index) => (
 						<RuleItem
 							key={index}
 							rule={rule}

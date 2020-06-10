@@ -48,7 +48,7 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 		actions,
 		conditions,
 		logicalOperator,
-		name: {en_US: name},
+		name: {[Liferay.ThemeDisplay.getDefaultLanguageId()]: name},
 	} = rule;
 	const [{dataDefinition}, dispatch] = useContext(AppContext);
 

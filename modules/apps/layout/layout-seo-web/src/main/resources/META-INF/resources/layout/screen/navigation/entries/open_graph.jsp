@@ -64,6 +64,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						<aui:input disabled="<%= true %>" label="title" localized="<%= false %>" name="openGraphTitle" />
 						<aui:input disabled="<%= true %>" label="description" localized="<%= false %>" name="openGraphDescription" />
 						<aui:input disabled="<%= true %>" label="image" localized="<%= false %>" name="openGraphImageTitle" />
+						<aui:input disabled="<%= true %>" label="open-graph-image-alt-description" name="openGraphImageAlt" />
 
 						<react:component
 							module="js/seo/display_page_templates/OpenGraphMapping"

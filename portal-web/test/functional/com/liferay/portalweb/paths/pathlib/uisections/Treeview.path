@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NODE_LIST</td>
+	<td>//div[contains(@class,'treeview-node-list') and contains(.,'${key_nodeListName}')]/div[contains(@class,'card')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_STRUCTURE_TREE_NODE</td>
 	<td>//div[contains(@class,'page-structure') and contains(.,'${key_nodeName}')]/button[contains(@class,'tree-node')]</td>
 	<td></td>

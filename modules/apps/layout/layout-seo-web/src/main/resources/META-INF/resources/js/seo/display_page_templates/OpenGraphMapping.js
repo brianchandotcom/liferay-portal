@@ -53,6 +53,10 @@ OpenGraphMapping.propTypes = {
 	).isRequired,
 	openGraphDescription: PropTypes.string.isRequired,
 	openGraphTitle: PropTypes.string.isRequired,
+	selectedSource: PropTypes.shape({
+		classNameLabel: PropTypes.string,
+		classTypeLabel: PropTypes.string,
+	}).isRequired,
 };
 
 export default function (props) {

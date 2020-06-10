@@ -52,6 +52,10 @@ SeoMapping.propTypes = {
 			label: PropTypes.string,
 		})
 	).isRequired,
+	selectedSource: PropTypes.shape({
+		classNameLabel: PropTypes.string,
+		classTypeLabel: PropTypes.string,
+	}).isRequired,
 	title: PropTypes.string.isRequired,
 };
 

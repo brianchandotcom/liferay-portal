@@ -112,7 +112,7 @@ public class AssetCategoriesSelectorDisplayContext {
 		_selectedCategoryIds = Arrays.asList(
 			StringUtil.split(
 				ParamUtil.getString(
-					_httpServletRequest, "selectedCategoryIds")));
+					_httpServletRequest, "selectedCategories")));
 
 		return _selectedCategoryIds;
 	}

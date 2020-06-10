@@ -279,7 +279,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 			portletURL.setParameter("eventName", getEventName());
 			portletURL.setParameter(
-				"selectedCategoryIds", "{selectedCategoryIds}");
+				"selectedCategories", "{selectedCategories}");
 			portletURL.setParameter("singleSelect", "{singleSelect}");
 			portletURL.setParameter("vocabularyIds", "{vocabularyIds}");
 
@@ -336,7 +336,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 						PortalUtil.getClassNameId(_className), _classTypePK) &&
 					_showRequiredLabel
 				).put(
-					"selectedCategoryIds", selectedCategoryIds
+					"selectedCategories", selectedCategoryIds
 				).put(
 					"title", vocabulary.getTitle(themeDisplay.getLocale())
 				).build();

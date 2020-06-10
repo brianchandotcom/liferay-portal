@@ -48,7 +48,7 @@ renderResponse.setTitle(title);
 <portlet:actionURL name="/document_library/ddm/update_data_definition" var="updateDataDefinitionURL" />
 
 <clay:container-fluid>
-	<aui:form action="<%= (ddmStructure == null) ? addDataDefinitionURL : updateDataDefinitionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
+	<aui:form action="<%= (ddmStructure == null) ? addDataDefinitionURL : updateDataDefinitionURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="dataDefinitionId" type="hidden" value="<%= ddmStructureId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -62,7 +62,8 @@ renderResponse.setTitle(title);
 			<clay:container-fluid>
 				<ul class="tbar-nav">
 					<li class="tbar-item tbar-item-expand">
-						<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+						<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="form-control-inline"
+						label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "metadata-set") %>' wrapperCssClass="mb-0" />
 					</li>
 				</ul>
 			</clay:container-fluid>

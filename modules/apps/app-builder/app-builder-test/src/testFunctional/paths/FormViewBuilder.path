@@ -245,7 +245,7 @@
 <!--RADIO_BUTTON-->
 <tr>
 	<td>RADIO_OPTION_LABEL</td>
-	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@value,'${key_radioOption}')]</td>
+	<td>//p[contains(text(),'${key_fieldName}')]/..//input[contains(@type,'radio')]//following-sibling::span[contains(.,'${key_radioOption}')]</td>
 	<td></td>
 </tr>
 

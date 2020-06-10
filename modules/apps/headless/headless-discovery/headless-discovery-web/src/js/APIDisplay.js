@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
 import React, {useState} from 'react';
 
@@ -46,7 +47,7 @@ const APIDisplay = () => {
 
 	return (
 		<div>
-			<div className="mb-2 sheet-header">
+			<ClayLayout.SheetHeader className="mb-2">
 				<h2 className="mb-2 sheet-title">{path}</h2>
 
 				<div className="align-items-center d-flex sheet-text">
@@ -76,12 +77,12 @@ const APIDisplay = () => {
 				{methodData.description && (
 					<div className="sheet-text">{methodData.description}</div>
 				)}
-			</div>
+			</ClayLayout.SheetHeader>
 
 			<APIForm />
 
 			{apiResponse && (
-				<div className="sheet-section">
+				<ClayLayout.SheetSection>
 					<h3 className="sheet-subtitle">{'Response'}</h3>
 
 					<ClayTabs>
@@ -120,7 +121,7 @@ const APIDisplay = () => {
 							/>
 						</ClayTabs.TabPane>
 					</ClayTabs.Content>
-				</div>
+				</ClayLayout.SheetSection>
 			)}
 		</div>
 	);

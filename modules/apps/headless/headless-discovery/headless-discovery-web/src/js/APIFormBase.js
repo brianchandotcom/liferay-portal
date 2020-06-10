@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayLayout from '@clayui/layout';
 import {withFormik} from 'formik';
 import React, {useEffect} from 'react';
 
@@ -64,7 +65,7 @@ const APIFormBase = (props) => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<div className="sheet-section">
+			<ClayLayout.SheetSection>
 				{parameters && <h3 className="sheet-subtitle">Parameters</h3>}
 
 				{parameters &&
@@ -113,7 +114,7 @@ const APIFormBase = (props) => {
 						Execute
 					</ClayButton>
 				</ClayForm.Group>
-			</div>
+			</ClayLayout.SheetSection>
 		</form>
 	);
 };

@@ -6,6 +6,7 @@
 		"@clayui/form": "3.8.0",
 		"@clayui/icon": "3.0.5",
 		"@clayui/label": "3.3.1",
+		"@clayui/layout": "3.1.0",
 		"@clayui/panel": "3.2.1",
 		"@clayui/tabs": "3.2.1",
 		"graphiql": "1.0.0-alpha.8",

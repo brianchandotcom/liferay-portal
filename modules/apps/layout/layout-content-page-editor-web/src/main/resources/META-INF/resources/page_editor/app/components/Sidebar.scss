@@ -2,7 +2,11 @@
 
 @import './variables';
 
+$controlMenuHeight: 48px;
+$desktopControlMenuHeight: 56px;
+$desktopToolbarHeight: 112px;
 $sidebarButtonHeight: $sidebarButtonWidth;
+$toolbarHeight: 64px;
 
 // z-indexes for childern of page-editor-sidebar (which is a stacking context).
 
@@ -99,7 +103,7 @@ $zIndexContent: 0;
 	&__content {
 		background-color: $white;
 		border-left: 1px solid $secondary-l3;
-		height: calc(100vh - #{$controlMenuHeight + $toolbarHeight});
+		height: calc(100vh - #{$controlMenuHeight + $desktopToolbarHeight});
 		overflow-x: hidden;
 		position: fixed;
 		right: $sidebarButtonWidth;
@@ -115,13 +119,17 @@ $zIndexContent: 0;
 		&--open.page-editor__sidebar__content {
 			transform: translateX(0);
 		}
+
+		@include media-breakpoint-up(xl) {
+			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
+		}
 	}
 
 	body.has-control-menu & {
-		height: calc(100vh - #{$controlMenuHeight + $managementBarHeight});
-		top: $controlMenuHeight + $managementBarHeight;
+		height: calc(100vh - #{$controlMenuHeight + $desktopToolbarHeight});
+		top: $controlMenuHeight + $desktopToolbarHeight;
 
-		@include media-breakpoint-up(lg) {
+		@include media-breakpoint-up(xl) {
 			height: calc(100vh - #{$desktopControlMenuHeight + $toolbarHeight});
 			top: $desktopControlMenuHeight + $toolbarHeight;
 		}

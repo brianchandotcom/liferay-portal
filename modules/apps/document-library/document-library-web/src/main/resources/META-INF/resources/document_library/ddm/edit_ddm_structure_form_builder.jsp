@@ -23,7 +23,7 @@ String refererWebDAVToken = WebDAVUtil.getStorageToken(portlet);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-DLEditDDMStructureDisplayContext dlEditDDMStructureDisplayContext = new DLEditDDMStructureDisplayContext(request);
+DLEditDDMStructureDisplayContext dlEditDDMStructureDisplayContext = new DLEditDDMStructureDisplayContext(request, liferayPortletResponse);
 
 com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = dlEditDDMStructureDisplayContext.getDDMStructure();
 

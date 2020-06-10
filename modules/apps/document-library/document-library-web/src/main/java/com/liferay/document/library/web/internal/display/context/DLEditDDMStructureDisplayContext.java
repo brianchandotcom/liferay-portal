@@ -22,9 +22,19 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,9 +44,44 @@ import javax.servlet.http.HttpServletRequest;
 public class DLEditDDMStructureDisplayContext {
 
 	public DLEditDDMStructureDisplayContext(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
 
 		_httpServletRequest = httpServletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
+	}
+
+	public List<Map<String, Object>> getAdditionalPanels(
+		String npmResolvedPackageName) {
+
+		return ListUtil.fromArray(
+			HashMapBuilder.<String, Object>put(
+				"icon", "cog"
+			).put(
+				"label", LanguageUtil.get(_httpServletRequest, "properties")
+			).put(
+				"pluginEntryPoint",
+				npmResolvedPackageName +
+					"/document_library/js/ddm/panels/index.es"
+			).put(
+				"sidebarPanelId", "properties"
+			).put(
+				"url",
+				() -> {
+					PortletURL editBasicInfoURL =
+						_liferayPortletResponse.createRenderURL();
+
+					editBasicInfoURL.setParameter(
+						"mvcPath",
+						"/document_library/ddm/basic_info_data_engine_editor.jsp");
+					editBasicInfoURL.setParameter(
+						"ddmStructureId", String.valueOf(getDDMStructureId()));
+					editBasicInfoURL.setWindowState(
+						LiferayWindowState.EXCLUSIVE);
+
+					return editBasicInfoURL.toString();
+				}
+			).build());
 	}
 
 	public DDMStructure getDDMStructure() {
@@ -142,6 +187,7 @@ public class DLEditDDMStructureDisplayContext {
 	private DDMStructure _ddmStructure;
 	private Long _ddmStructureId;
 	private final HttpServletRequest _httpServletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 	private Long _parentDDMStructureId;
 	private String _parentDDMStructureName;
 	private String _script;

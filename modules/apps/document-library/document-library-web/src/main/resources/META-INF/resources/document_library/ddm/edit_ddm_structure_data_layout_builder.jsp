@@ -23,7 +23,7 @@ String refererWebDAVToken = WebDAVUtil.getStorageToken(portlet);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-DLEditDDMStructureDisplayContext dlEditDDMStructureDisplayContext = new DLEditDDMStructureDisplayContext(request);
+DLEditDDMStructureDisplayContext dlEditDDMStructureDisplayContext = new DLEditDDMStructureDisplayContext(request, liferayPortletResponse);
 
 com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = dlEditDDMStructureDisplayContext.getDDMStructure();
 
@@ -131,6 +131,7 @@ renderResponse.setTitle(title);
 				</liferay-ui:panel-container>
 
 				<liferay-data-engine:data-layout-builder
+					additionalPanels="<%= dlEditDDMStructureDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
 					componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
 					contentType="document-library"
 					dataDefinitionId="<%= ddmStructureId %>"

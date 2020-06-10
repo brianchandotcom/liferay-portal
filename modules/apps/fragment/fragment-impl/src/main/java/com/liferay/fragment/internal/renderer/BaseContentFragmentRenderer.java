@@ -15,17 +15,21 @@
 package com.liferay.fragment.internal.renderer;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.Serializable;
+
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -60,17 +64,30 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 		Optional<Object> displayObjectOptional =
 			fragmentRendererContext.getDisplayObjectOptional();
 
-		InfoDisplayContributor<Object> infoDisplayContributor =
-			(InfoDisplayContributor<Object>)httpServletRequest.getAttribute(
-				InfoDisplayWebKeys.INFO_DISPLAY_CONTRIBUTOR);
+		if (displayObjectOptional.isPresent()) {
+			Object displayObject = displayObjectOptional.get();
 
-		if (displayObjectOptional.isPresent() &&
-			(infoDisplayContributor != null)) {
+			if (displayObject instanceof ClassedModel) {
+				ClassedModel classedModel = (ClassedModel)displayObject;
 
-			return new Tuple(
-				infoDisplayContributor.getClassName(),
-				infoDisplayContributor.getInfoDisplayObjectClassPK(
-					displayObjectOptional.get()));
+				String modelClassName = classedModel.getModelClassName();
+				Serializable primaryKeyObj = classedModel.getPrimaryKeyObj();
+
+				if (!Objects.equals(
+						modelClassName, AssetEntry.class.getName())) {
+
+					return new Tuple(modelClassName, primaryKeyObj);
+				}
+
+				AssetEntry assetEntry = assetEntryLocalService.fetchAssetEntry(
+					(Long)primaryKeyObj);
+
+				if (assetEntry != null) {
+					return new Tuple(
+						portal.getClassName(assetEntry.getClassNameId()),
+						assetEntry.getClassPK());
+				}
+			}
 		}
 
 		AssetEntry assetEntry = (AssetEntry)httpServletRequest.getAttribute(
@@ -86,7 +103,13 @@ public abstract class BaseContentFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Reference
+	protected AssetEntryLocalService assetEntryLocalService;
+
+	@Reference
 	protected FragmentEntryConfigurationParser fragmentEntryConfigurationParser;
+
+	@Reference
+	protected Portal portal;
 
 	@Reference(target = "(bundle.symbolic.name=com.liferay.fragment.impl)")
 	protected ResourceBundleLoader resourceBundleLoader;

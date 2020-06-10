@@ -338,7 +338,9 @@ class RuleEditor extends Component {
 			};
 		});
 
-		let {actionTypes} = this;
+		let actionTypes = this.actionTypes.map((actionType) => ({
+			...actionType,
+		}));
 
 		if (pages.length < 3) {
 			actionTypes = this.actionTypes.filter((obj) => {
@@ -356,7 +358,7 @@ class RuleEditor extends Component {
 
 	syncPages(pages) {
 		const {actions} = this;
-		let {conditions} = this;
+		let conditions = this._getConditions();
 
 		const visitor = new PagesVisitor(pages);
 
@@ -457,7 +459,7 @@ class RuleEditor extends Component {
 
 	_clearAllConditionFieldValues(index) {
 		const {secondOperandSelectedList} = this;
-		let {conditions} = this;
+		let conditions = this._getConditions();
 
 		conditions = this._clearFirstOperandValue(conditions, index);
 		conditions = this._clearOperatorValue(conditions, index);
@@ -536,6 +538,13 @@ class RuleEditor extends Component {
 
 	_conditionsFieldOptionsValueFn(omittedFieldsList) {
 		return this._getFieldOptions(omittedFieldsList);
+	}
+
+	_getConditions() {
+		return this.conditions.map((condition) => ({
+			...condition,
+			operands: condition.operands.map((operand) => ({...operand})),
+		}));
 	}
 
 	_getDeletedFields(visitor) {
@@ -941,7 +950,7 @@ class RuleEditor extends Component {
 
 	_handleOperatorEdited(event) {
 		const {fieldInstance, value} = event;
-		let {conditions} = this;
+		let conditions = this._getConditions();
 		let operatorValue = '';
 
 		if (value && value.length > 0 && value[0]) {
@@ -1034,8 +1043,8 @@ class RuleEditor extends Component {
 	}
 
 	_handleSecondOperandTypeEdited(event) {
-		let {conditions} = this;
 		const {fieldInstance, value} = event;
+		let conditions = this._getConditions();
 		const index = this._getIndex(fieldInstance, '.condition-type');
 		const {operands} = conditions[index];
 		const secondOperand = operands[1];

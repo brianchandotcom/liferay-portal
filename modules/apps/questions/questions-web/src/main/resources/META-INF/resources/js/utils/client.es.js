@@ -456,12 +456,12 @@ export const getThreadsQuery = gql`
 				hasValidAnswer
 				headline
 				id
+				keywords
 				messageBoardSection {
 					numberOfMessageBoardSections
 					title
 				}
 				numberOfMessageBoardMessages
-				keywords
 				viewCount
 			}
 			page
@@ -647,8 +647,8 @@ export const getUserActivityQuery = gql`
 				articleBody
 				creator {
 					id
-					name
 					image
+					name
 				}
 				creatorStatistics {
 					postsNumber
@@ -669,6 +669,7 @@ export const getUserActivityQuery = gql`
 					taxonomyCategoryId
 					taxonomyCategoryName
 				}
+				viewCount
 			}
 			page
 			pageSize

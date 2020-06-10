@@ -117,28 +117,9 @@ definition {
 
 		FormsAdminNavigator.gotoFormBuilder();
 
-		Form.save();
+		Form.publishForm();
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			panel = "Site Administration",
-			portlet = "Pages");
-
-		SitePages.addPublicPage(pageName = "Form Page");
-
-		Navigator.gotoPage(pageName = "Form Page");
-
-		Portlet.addPG(
-			pageName = "Form Page",
-			portletName = "Form");
-
-		FormPortletNavigator.gotoSelectForm();
-
-		FormPortletConfiguration.selectForm();
-
-		PortletEntry.save();
-
-		Navigator.gotoPage(pageName = "Form Page");
+		FormsAdminNavigator.gotoPublishedForm();
 
 		Pause(locator1 = "5000");
 
@@ -146,21 +127,21 @@ definition {
 			fieldLabel = "Text Field",
 			fieldName = "TextField");
 
-		Pause(locator1 = "5000");
-
 		FormFields.editText(
 			fieldName = "TextField",
 			fieldValue = "test");
+
+		Pause(locator1 = "2000");
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",
 			selectOption = "Option");
 
-		Refresh();
-
 		FormFields.editText(
 			fieldName = "TextField",
 			fieldValue = "country");
+
+		Pause(locator1 = "2000");
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",

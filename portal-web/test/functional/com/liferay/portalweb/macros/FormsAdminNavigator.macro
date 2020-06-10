@@ -4,6 +4,7 @@ definition {
 	var rowIndexNumber = "1";
 
 	macro enableLocalNetworkDataProvider {
+		Navigator.openURL();
 
 		GlobalMenu.gotoPortlet(
 			category = "Configuration",
@@ -14,6 +15,10 @@ definition {
 			configurationCategory = "Data Providers",
 			configurationName = "Data Providers",
 			configurationScope = "Site Scope");
+
+		WaitForElementPresent(
+			key_checkboxOption = "Access Local Network",
+			locator1 = "Checkbox#ENABLE_CHECKBOX_VIA_SPAN");
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			Button.clickUpdate();

@@ -33,8 +33,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,74 +40,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AppWorkflowTask")
+@GraphQLName("AppWorkflowTransition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AppWorkflowTask")
-public class AppWorkflowTask {
+@XmlRootElement(name = "AppWorkflowTransition")
+public class AppWorkflowTransition {
 
-	public static AppWorkflowTask toDTO(String json) {
-		return ObjectMapperUtil.readValue(AppWorkflowTask.class, json);
+	public static AppWorkflowTransition toDTO(String json) {
+		return ObjectMapperUtil.readValue(AppWorkflowTransition.class, json);
 	}
-
-	@Schema
-	@Valid
-	public AppWorkflowTransition[] getAppWorkflowTransitions() {
-		return appWorkflowTransitions;
-	}
-
-	public void setAppWorkflowTransitions(
-		AppWorkflowTransition[] appWorkflowTransitions) {
-
-		this.appWorkflowTransitions = appWorkflowTransitions;
-	}
-
-	@JsonIgnore
-	public void setAppWorkflowTransitions(
-		UnsafeSupplier<AppWorkflowTransition[], Exception>
-			appWorkflowTransitionsUnsafeSupplier) {
-
-		try {
-			appWorkflowTransitions = appWorkflowTransitionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected AppWorkflowTransition[] appWorkflowTransitions;
-
-	@Schema
-	public Long[] getDataLayoutIds() {
-		return dataLayoutIds;
-	}
-
-	public void setDataLayoutIds(Long[] dataLayoutIds) {
-		this.dataLayoutIds = dataLayoutIds;
-	}
-
-	@JsonIgnore
-	public void setDataLayoutIds(
-		UnsafeSupplier<Long[], Exception> dataLayoutIdsUnsafeSupplier) {
-
-		try {
-			dataLayoutIds = dataLayoutIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long[] dataLayoutIds;
 
 	@Schema
 	public String getName() {
@@ -137,19 +75,76 @@ public class AppWorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
+	public Boolean getPrimary() {
+		return primary;
+	}
+
+	public void setPrimary(Boolean primary) {
+		this.primary = primary;
+	}
+
+	@JsonIgnore
+	public void setPrimary(
+		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
+
+		try {
+			primary = primaryUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean primary;
+
+	@Schema
+	public String getTransitionTo() {
+		return transitionTo;
+	}
+
+	public void setTransitionTo(String transitionTo) {
+		this.transitionTo = transitionTo;
+	}
+
+	@JsonIgnore
+	public void setTransitionTo(
+		UnsafeSupplier<String, Exception> transitionToUnsafeSupplier) {
+
+		try {
+			transitionTo = transitionToUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String transitionTo;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof AppWorkflowTask)) {
+		if (!(object instanceof AppWorkflowTransition)) {
 			return false;
 		}
 
-		AppWorkflowTask appWorkflowTask = (AppWorkflowTask)object;
+		AppWorkflowTransition appWorkflowTransition =
+			(AppWorkflowTransition)object;
 
-		return Objects.equals(toString(), appWorkflowTask.toString());
+		return Objects.equals(toString(), appWorkflowTransition.toString());
 	}
 
 	@Override
@@ -163,46 +158,6 @@ public class AppWorkflowTask {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		if (appWorkflowTransitions != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"appWorkflowTransitions\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < appWorkflowTransitions.length; i++) {
-				sb.append(String.valueOf(appWorkflowTransitions[i]));
-
-				if ((i + 1) < appWorkflowTransitions.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (dataLayoutIds != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dataLayoutIds\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < dataLayoutIds.length; i++) {
-				sb.append(dataLayoutIds[i]);
-
-				if ((i + 1) < dataLayoutIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -218,13 +173,37 @@ public class AppWorkflowTask {
 			sb.append("\"");
 		}
 
+		if (primary != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"primary\": ");
+
+			sb.append(primary);
+		}
+
+		if (transitionTo != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"transitionTo\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(transitionTo));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask",
+		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTransition",
 		name = "x-class-name"
 	)
 	public String xClassName;

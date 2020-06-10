@@ -14,9 +14,8 @@
 
 package com.liferay.app.builder.workflow.rest.resource.v1_0;
 
-import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask;
+import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Locale;
 
@@ -39,17 +38,18 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface AppWorkflowTaskResource {
+public interface AppWorkflowResource {
 
 	public static Builder builder() {
 		return FactoryHolder.factory.create();
 	}
 
-	public Page<AppWorkflowTask> getAppWorkflowTasksPage(Long appId)
+	public AppWorkflow getAppWorkflow(Long appId) throws Exception;
+
+	public AppWorkflow postAppWorkflow(Long appId, AppWorkflow appWorkflow)
 		throws Exception;
 
-	public Page<AppWorkflowTask> postAppWorkflowTasks(
-			Long appId, AppWorkflowTask[] appWorkflowTasks)
+	public AppWorkflow putAppWorkflow(Long appId, AppWorkflow appWorkflow)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(
@@ -82,7 +82,7 @@ public interface AppWorkflowTaskResource {
 	@ProviderType
 	public interface Builder {
 
-		public AppWorkflowTaskResource build();
+		public AppWorkflowResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

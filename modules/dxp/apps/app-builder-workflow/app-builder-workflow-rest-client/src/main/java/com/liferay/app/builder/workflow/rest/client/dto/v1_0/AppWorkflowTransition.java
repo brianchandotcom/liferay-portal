@@ -15,7 +15,7 @@
 package com.liferay.app.builder.workflow.rest.client.dto.v1_0;
 
 import com.liferay.app.builder.workflow.rest.client.function.UnsafeSupplier;
-import com.liferay.app.builder.workflow.rest.client.serdes.v1_0.AppWorkflowActionSerDes;
+import com.liferay.app.builder.workflow.rest.client.serdes.v1_0.AppWorkflowTransitionSerDes;
 
 import java.util.Objects;
 
@@ -26,10 +26,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AppWorkflowAction implements Cloneable {
+public class AppWorkflowTransition implements Cloneable {
 
-	public static AppWorkflowAction toDTO(String json) {
-		return AppWorkflowActionSerDes.toDTO(json);
+	public static AppWorkflowTransition toDTO(String json) {
+		return AppWorkflowTransitionSerDes.toDTO(json);
 	}
 
 	public String getName() {
@@ -94,8 +94,8 @@ public class AppWorkflowAction implements Cloneable {
 	protected String transitionTo;
 
 	@Override
-	public AppWorkflowAction clone() throws CloneNotSupportedException {
-		return (AppWorkflowAction)super.clone();
+	public AppWorkflowTransition clone() throws CloneNotSupportedException {
+		return (AppWorkflowTransition)super.clone();
 	}
 
 	@Override
@@ -104,13 +104,14 @@ public class AppWorkflowAction implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof AppWorkflowAction)) {
+		if (!(object instanceof AppWorkflowTransition)) {
 			return false;
 		}
 
-		AppWorkflowAction appWorkflowAction = (AppWorkflowAction)object;
+		AppWorkflowTransition appWorkflowTransition =
+			(AppWorkflowTransition)object;
 
-		return Objects.equals(toString(), appWorkflowAction.toString());
+		return Objects.equals(toString(), appWorkflowTransition.toString());
 	}
 
 	@Override
@@ -121,7 +122,7 @@ public class AppWorkflowAction implements Cloneable {
 	}
 
 	public String toString() {
-		return AppWorkflowActionSerDes.toJSON(this);
+		return AppWorkflowTransitionSerDes.toJSON(this);
 	}
 
 }

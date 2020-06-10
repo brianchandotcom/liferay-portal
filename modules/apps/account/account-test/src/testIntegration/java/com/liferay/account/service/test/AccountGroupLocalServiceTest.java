@@ -19,10 +19,18 @@ import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.test.util.AccountGroupTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -63,10 +71,133 @@ public class AccountGroupLocalServiceTest {
 				accountGroup.getAccountGroupId()));
 	}
 
+	@Test
+	public void testSearchByCompanyId() throws Exception {
+		_addAccountGroups();
+
+		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
+			_accountGroupLocalService.searchAccountGroups(
+				TestPropsValues.getCompanyId(), null, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		Assert.assertEquals(5, baseModelSearchResult.getLength());
+	}
+
+	@Test
+	public void testSearchKeywords() throws Exception {
+		_addAccountGroups();
+
+		String keywords = RandomTestUtil.randomString();
+
+		List<AccountGroup> expectedAccountGroups = Arrays.asList(
+			_addAccountGroup(keywords, RandomTestUtil.randomString()),
+			_addAccountGroup(RandomTestUtil.randomString(), keywords));
+
+		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
+			_keywordSearch(keywords);
+
+		Assert.assertEquals(
+			expectedAccountGroups.size(), baseModelSearchResult.getLength());
+	}
+
+	@Test
+	public void testSearchNoKeywords() throws Exception {
+		_addAccountGroups();
+
+		List<AccountGroup> expectedAccountGroups =
+			_accountGroupLocalService.getAccountGroups(
+				TestPropsValues.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+
+		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
+			_keywordSearch(null);
+
+		Assert.assertEquals(
+			expectedAccountGroups.size(), baseModelSearchResult.getLength());
+	}
+
+	@Test
+	public void testSearchPagination() throws Exception {
+		String keywords = RandomTestUtil.randomString();
+
+		List<AccountGroup> expectedAccountGroups = Arrays.asList(
+			_addAccountGroup(RandomTestUtil.randomString(), keywords),
+			_addAccountGroup(RandomTestUtil.randomString(), keywords),
+			_addAccountGroup(RandomTestUtil.randomString(), keywords),
+			_addAccountGroup(RandomTestUtil.randomString(), keywords),
+			_addAccountGroup(RandomTestUtil.randomString(), keywords));
+
+		_assertPaginationSort(expectedAccountGroups, keywords, false);
+		_assertPaginationSort(expectedAccountGroups, keywords, true);
+	}
+
 	private AccountGroup _addAccountGroup() throws Exception {
 		return AccountGroupTestUtil.addAccountGroup(
 			_accountGroupLocalService, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString());
+	}
+
+	private AccountGroup _addAccountGroup(String name, String description)
+		throws Exception {
+
+		return AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, name, description);
+	}
+
+	private long[] _addAccountGroups() throws Exception {
+		int size = 5;
+
+		long[] accountGroupIds = new long[size];
+
+		for (int i = 0; i < size; i++) {
+			AccountGroup accountGroup = _addAccountGroup();
+
+			accountGroupIds[i] = accountGroup.getAccountGroupId();
+		}
+
+		return accountGroupIds;
+	}
+
+	private void _assertPaginationSort(
+			List<AccountGroup> expectedAccountGroups, String keywords,
+			boolean reversed)
+		throws Exception {
+
+		int delta = 3;
+		int start = 1;
+
+		if (reversed) {
+			expectedAccountGroups.sort(_accountGroupNameComparator.reversed());
+		}
+		else {
+			expectedAccountGroups.sort(_accountGroupNameComparator);
+		}
+
+		BaseModelSearchResult<AccountGroup> baseModelSearchResult =
+			_accountGroupLocalService.searchAccountGroups(
+				TestPropsValues.getCompanyId(), keywords, start, start + delta,
+				OrderByComparatorFactoryUtil.create(
+					"AccountGroup", "name", !reversed));
+
+		List<AccountGroup> actualAccountGroups =
+			baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(
+			actualAccountGroups.toString(), delta, actualAccountGroups.size());
+
+		for (int i = 0; i < delta; i++) {
+			Assert.assertEquals(
+				expectedAccountGroups.get(start + i),
+				actualAccountGroups.get(i));
+		}
+	}
+
+	private BaseModelSearchResult<AccountGroup> _keywordSearch(String keywords)
+		throws Exception {
+
+		return _accountGroupLocalService.searchAccountGroups(
+			TestPropsValues.getCompanyId(), keywords, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	private void _testDeleteAccountGroup(
@@ -80,6 +211,14 @@ public class AccountGroupLocalServiceTest {
 			_accountGroupLocalService.fetchAccountGroup(
 				accountGroup.getAccountGroupId()));
 	}
+
+	private static final Comparator<AccountGroup> _accountGroupNameComparator =
+		(accountGroup1, accountGroup2) -> {
+			String name1 = accountGroup1.getName();
+			String name2 = accountGroup2.getName();
+
+			return name1.compareToIgnoreCase(name2);
+		};
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;

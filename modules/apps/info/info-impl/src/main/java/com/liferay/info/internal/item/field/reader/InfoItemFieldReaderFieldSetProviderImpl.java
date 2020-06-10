@@ -55,7 +55,9 @@ public class InfoItemFieldReaderFieldSetProviderImpl
 					_infoItemFieldReaderTracker.getInfoItemFieldReaders(
 						className);
 
-				for (InfoItemFieldReader<?> infoItemFieldReader : infoItemFieldReaders) {
+				for (InfoItemFieldReader<?> infoItemFieldReader :
+						infoItemFieldReaders) {
+
 					consumer.accept(infoItemFieldReader.getField());
 				}
 			}

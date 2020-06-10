@@ -60,16 +60,14 @@ public class AssetEntryInfoItemFormProvider
 
 	@Override
 	public InfoFormValues getInfoFormValues(AssetEntry assetEntry) {
-		InfoFormValues infoFormValues = new InfoFormValues();
-
-		infoFormValues.addAll(
-			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry));
-		infoFormValues.addAll(_getAssetEntryInfoFieldValues(assetEntry));
-		infoFormValues.setInfoItemClassPKReference(
+		return new InfoFormValues.Builder().addAll(
+			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry)
+		).addAll(
+			_getAssetEntryInfoFieldValues(assetEntry)
+		).setInfoItemClassPKReference(
 			new InfoItemClassPKReference(
-				AssetEntry.class.getName(), assetEntry.getEntryId()));
-
-		return infoFormValues;
+				AssetEntry.class.getName(), assetEntry.getEntryId())
+		).build();
 	}
 
 	private List<InfoFieldSetEntry> _getAssetEntryFieldSetEntries() {

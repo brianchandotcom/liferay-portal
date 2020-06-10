@@ -100,20 +100,38 @@ public class InfoDisplayContributorWrapper
 
 	@Override
 	public InfoFormValues getInfoFormValues(Object itemObject) {
-		Locale locale = _getLocale();
-
 		try {
-			InfoFormValues infoFormValues = _convertToInfoFormValues(
-				_infoDisplayContributor.getInfoDisplayFieldsValues(
-					itemObject, locale));
+			return new InfoFormValues.Builder().<PortalException>add(
+				consumer -> {
+					Map<String, Object> infoDisplayFieldsValues =
+						_infoDisplayContributor.getInfoDisplayFieldsValues(
+							itemObject, _getLocale());
 
-			infoFormValues.setInfoItemClassPKReference(
+					for (Map.Entry<String, Object> entry :
+							infoDisplayFieldsValues.entrySet()) {
+
+						String fieldName = entry.getKey();
+
+						InfoLocalizedValue<String> fieldLabelLocalizedValue =
+							InfoLocalizedValue.builder(
+							).addValue(
+								_getLocale(), fieldName
+							).build();
+
+						InfoField infoField = new InfoField(
+							TextInfoFieldType.INSTANCE,
+							fieldLabelLocalizedValue, fieldName);
+
+						consumer.accept(
+							new InfoFieldValue(infoField, entry.getValue()));
+					}
+				}
+			).setInfoItemClassPKReference(
 				new InfoItemClassPKReference(
 					_infoDisplayContributor.getClassName(),
 					_infoDisplayContributor.getInfoDisplayObjectClassPK(
-						itemObject)));
-
-			return infoFormValues;
+						itemObject))
+			).build();
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -137,8 +155,6 @@ public class InfoDisplayContributorWrapper
 	private InfoForm _convertToInfoForm(
 		Set<InfoDisplayField> infoDisplayFields) {
 
-		Locale locale = _getLocale();
-
 		return new InfoForm.Builder(
 			"fields"
 		).add(
@@ -150,7 +166,7 @@ public class InfoDisplayContributorWrapper
 					InfoLocalizedValue<String> labelInfoLocalizedValue =
 						InfoLocalizedValue.builder(
 						).addValue(
-							locale, infoDisplayField.getLabel()
+							_getLocale(), infoDisplayField.getLabel()
 						).build();
 
 					consumer.accept(
@@ -160,37 +176,6 @@ public class InfoDisplayContributorWrapper
 				}
 			}
 		).build();
-	}
-
-	private InfoFormValues _convertToInfoFormValues(
-		Map<String, Object> infoDisplayFieldsValues) {
-
-		Locale locale = _getLocale();
-
-		InfoFormValues infoFormValues = new InfoFormValues();
-
-		for (Map.Entry<String, Object> entry :
-				infoDisplayFieldsValues.entrySet()) {
-
-			String fieldName = entry.getKey();
-
-			InfoLocalizedValue<String> fieldLabelLocalizedValue =
-				InfoLocalizedValue.builder(
-				).addValue(
-					locale, fieldName
-				).build();
-
-			InfoField infoField = new InfoField(
-				TextInfoFieldType.INSTANCE, fieldLabelLocalizedValue,
-				fieldName);
-
-			InfoFieldValue<Object> infoFormValue = new InfoFieldValue(
-				infoField, entry.getValue());
-
-			infoFormValues.add(infoFormValue);
-		}
-
-		return infoFormValues;
 	}
 
 	private InfoFieldType _getInfoFieldTypeType(String infoDisplayFieldType) {

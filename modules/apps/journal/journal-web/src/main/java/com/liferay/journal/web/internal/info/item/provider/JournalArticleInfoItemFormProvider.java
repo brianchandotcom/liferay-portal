@@ -160,39 +160,33 @@ public class JournalArticleInfoItemFormProvider
 
 	@Override
 	public InfoFormValues getInfoFormValues(JournalArticle journalArticle) {
-		InfoFormValues infoFormValues = new InfoFormValues();
-
-		infoFormValues.addAll(_getJournalArticleFormValues(journalArticle));
-
-		infoFormValues.setInfoItemClassPKReference(
-			new InfoItemClassPKReference(
-				JournalArticle.class.getName(),
-				journalArticle.getResourcePrimKey()));
-
 		try {
-			infoFormValues.addAll(
+			return new InfoFormValues.Builder().addAll(
+				_getJournalArticleFormValues(journalArticle)
+			).addAll(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(),
-					journalArticle.getResourcePrimKey()));
+					journalArticle.getResourcePrimKey())
+			).addAll(
+				_expandoInfoItemFieldSetProvider.getInfoFieldValues(
+					JournalArticle.class.getName(), journalArticle)
+			).addAll(
+				_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
+					JournalArticle.class.getName(), journalArticle)
+			).addAll(
+				_getDDMStructureInfoFieldValues(journalArticle)
+			).addAll(
+				_getDDMTemplateInfoFieldValues(journalArticle)
+			).setInfoItemClassPKReference(
+				new InfoItemClassPKReference(
+					JournalArticle.class.getName(),
+					journalArticle.getResourcePrimKey())
+			).build();
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
 			throw new RuntimeException(
 				"Caught unexpected exception", noSuchInfoItemException);
 		}
-
-		infoFormValues.addAll(
-			_expandoInfoItemFieldSetProvider.getInfoFieldValues(
-				JournalArticle.class.getName(), journalArticle));
-
-		infoFormValues.addAll(
-			_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
-				JournalArticle.class.getName(), journalArticle));
-
-		infoFormValues.addAll(_getDDMStructureInfoFieldValues(journalArticle));
-
-		infoFormValues.addAll(_getDDMTemplateInfoFieldValues(journalArticle));
-
-		return infoFormValues;
 	}
 
 	private String _getDateValue(Date date) {

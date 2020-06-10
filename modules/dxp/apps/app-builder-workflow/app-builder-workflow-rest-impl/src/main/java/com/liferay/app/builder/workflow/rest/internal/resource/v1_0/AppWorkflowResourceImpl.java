@@ -54,9 +54,9 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 	@Override
 	public AppWorkflow getAppWorkflow(Long appId) throws Exception {
 		return _toAppWorkflow(
-			appId,
 			_appBuilderWorkflowTaskLinkLocalService.
 				getAppBuilderWorkflowTaskLinks(appId),
+			appId,
 			_appWorkflowResourceHelper.getDefinition(
 				appId, contextCompany.getCompanyId()));
 	}
@@ -94,7 +94,7 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 			AppBuilderApp.class.getName(), appId, 0,
 			workflowDefinition.getName(), workflowDefinition.getVersion());
 
-		return _toAppWorkflow(appId, appBuilderWorkflowTaskLinks, definition);
+		return _toAppWorkflow(appBuilderWorkflowTaskLinks, appId, definition);
 	}
 
 	@Override
@@ -112,9 +112,8 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 	}
 
 	private AppWorkflow _toAppWorkflow(
-		Long appId,
 		List<AppBuilderWorkflowTaskLink> appBuilderWorkflowTaskLinks,
-		Definition definition) {
+		Long appId, Definition definition) {
 
 		AppWorkflow appWorkflow = new AppWorkflow();
 
@@ -143,8 +142,8 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 				List<AppWorkflowTask> appWorkflowTasks = transform(
 					map.entrySet(),
 					entry -> _toAppWorkflowTask(
-						entry.getValue(), entry.getKey(),
-						definition.getNode(entry.getKey())));
+						entry.getValue(), definition.getNode(entry.getKey()),
+						entry.getKey()));
 
 				return appWorkflowTasks.toArray(new AppWorkflowTask[0]);
 			});
@@ -172,21 +171,20 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 	}
 
 	private AppWorkflowTask _toAppWorkflowTask(
-		List<AppBuilderWorkflowTaskLink> appBuilderWorkflowTaskLinks,
-		String name, Node node) {
+		List<AppBuilderWorkflowTaskLink> appBuilderWorkflowTaskLinks, Node node,
+		String taskName) {
 
-		AppWorkflowTask appWorkflowTask = new AppWorkflowTask();
-
-		appWorkflowTask.setAppWorkflowTransitions(
-			_toAppWorkflowTransitions(node.getOutgoingTransitionsList()));
-		appWorkflowTask.setDataLayoutIds(
-			transformToArray(
-				appBuilderWorkflowTaskLinks,
-				AppBuilderWorkflowTaskLink::getDdmStructureLayoutId,
-				Long.class));
-		appWorkflowTask.setName(name);
-
-		return appWorkflowTask;
+		return new AppWorkflowTask() {
+			{
+				appWorkflowTransitions = _toAppWorkflowTransitions(
+					node.getOutgoingTransitionsList());
+				dataLayoutIds = transformToArray(
+					appBuilderWorkflowTaskLinks,
+					AppBuilderWorkflowTaskLink::getDdmStructureLayoutId,
+					Long.class);
+				name = taskName;
+			}
+		};
 	}
 
 	private AppWorkflowTransition[] _toAppWorkflowTransitions(

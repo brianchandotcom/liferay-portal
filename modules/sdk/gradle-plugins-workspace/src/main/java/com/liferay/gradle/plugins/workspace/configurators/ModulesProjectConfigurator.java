@@ -256,7 +256,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 					String dirName = dirNamePath.toString();
 
-					if (isNonprojectDirName(dirName)) {
+					if (isExcludedDirName(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

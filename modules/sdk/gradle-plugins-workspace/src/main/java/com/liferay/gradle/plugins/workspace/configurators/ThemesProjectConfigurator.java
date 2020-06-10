@@ -146,10 +146,10 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					Path gulpJsPath = dirPath.resolve("gulpfile.js");
+					Path gulpfileJsPath = dirPath.resolve("gulpfile.js");
 					Path packageJsonPath = dirPath.resolve("package.json");
 
-					if (Files.exists(gulpJsPath) &&
+					if (Files.exists(gulpfileJsPath) &&
 						Files.exists(packageJsonPath) &&
 						_hasThemeBuildScript(packageJsonPath)) {
 

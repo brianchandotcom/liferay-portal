@@ -297,6 +297,8 @@ definition {
 
 	@priority = "5"
 	test SearchTwiceScopeEverything {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -323,7 +325,7 @@ definition {
 			category = "People",
 			panel = "Site Administration",
 			portlet = "Memberships",
-			site = "Guest");
+			site = "${siteName}");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn1",
@@ -357,6 +359,8 @@ definition {
 
 	@priority = "5"
 	test SearchTwiceScopeLetUserChoose {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -383,7 +387,7 @@ definition {
 			category = "People",
 			panel = "Site Administration",
 			portlet = "Memberships",
-			site = "Guest");
+			site = "${siteName}");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn1",
@@ -439,6 +443,8 @@ definition {
 
 	@priority = "5"
 	test SearchTwiceScopeThisSite {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		GlobalMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -465,7 +471,7 @@ definition {
 			category = "People",
 			panel = "Site Administration",
 			portlet = "Memberships",
-			site = "Guest");
+			site = "${siteName}");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn1",

@@ -53,6 +53,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.comment.CommentUtil;
 import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
+import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.layout.content.page.editor.web.internal.util.ContentUtil;
@@ -178,8 +179,9 @@ public class ContentPageEditorDisplayContext {
 		HttpServletRequest httpServletRequest,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
-		ItemSelector itemSelector, PortletRequest portletRequest,
-		RenderResponse renderResponse) {
+		ItemSelector itemSelector,
+		PageEditorConfiguration pageEditorConfiguration,
+		PortletRequest portletRequest, RenderResponse renderResponse) {
 
 		_commentManager = commentManager;
 		_contentPageEditorSidebarPanels = contentPageEditorSidebarPanels;
@@ -191,6 +193,7 @@ public class ContentPageEditorDisplayContext {
 		_fragmentRendererController = fragmentRendererController;
 		_fragmentRendererTracker = fragmentRendererTracker;
 		_itemSelector = itemSelector;
+		_pageEditorConfiguration = pageEditorConfiguration;
 		_portletRequest = portletRequest;
 		_renderResponse = renderResponse;
 
@@ -229,6 +232,9 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"addPortletURL",
 				getFragmentEntryActionURL("/content_layout/add_portlet")
+			).put(
+				"autoExtendSessionEnabled",
+				_pageEditorConfiguration.autoExtendSessionEnabled()
 			).put(
 				"availableLanguages", _getAvailableLanguages()
 			).put(
@@ -1916,6 +1922,7 @@ public class ContentPageEditorDisplayContext {
 	private final ItemSelector _itemSelector;
 	private LayoutStructure _layoutStructure;
 	private LayoutStructure _masterLayoutStructure;
+	private final PageEditorConfiguration _pageEditorConfiguration;
 	private Integer _pageType;
 	private final PortletRequest _portletRequest;
 	private Layout _publishedLayout;

@@ -28,6 +28,7 @@ import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
+import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -65,8 +66,10 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		HttpServletRequest httpServletRequest,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
-		ItemSelector itemSelector, boolean pageIsDisplayPage,
-		PortletRequest portletRequest, RenderResponse renderResponse) {
+		ItemSelector itemSelector,
+		PageEditorConfiguration pageEditorConfiguration,
+		boolean pageIsDisplayPage, PortletRequest portletRequest,
+		RenderResponse renderResponse) {
 
 		super(
 			commentManager, contentPageEditorSidebarPanels,
@@ -75,7 +78,7 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			fragmentEntryConfigurationParser, fragmentRendererController,
 			fragmentRendererTracker, httpServletRequest,
 			infoDisplayContributorTracker, infoItemServiceTracker, itemSelector,
-			portletRequest, renderResponse);
+			pageEditorConfiguration, portletRequest, renderResponse);
 
 		_pageIsDisplayPage = pageIsDisplayPage;
 	}

@@ -23,6 +23,7 @@ import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.content.page.editor.sidebar.panel.ContentPageEditorSidebarPanel;
 import com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration;
+import com.liferay.layout.content.page.editor.web.internal.configuration.PageEditorConfiguration;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -90,8 +91,10 @@ public class ContentPageLayoutEditorDisplayContext
 		HttpServletRequest httpServletRequest,
 		InfoDisplayContributorTracker infoDisplayContributorTracker,
 		InfoItemServiceTracker infoItemServiceTracker,
-		ItemSelector itemSelector, PortletRequest portletRequest,
-		RenderResponse renderResponse, StagingGroupHelper stagingGroupHelper) {
+		ItemSelector itemSelector,
+		PageEditorConfiguration pageEditorConfiguration,
+		PortletRequest portletRequest, RenderResponse renderResponse,
+		StagingGroupHelper stagingGroupHelper) {
 
 		super(
 			commentManager, contentPageEditorSidebarPanels,
@@ -100,7 +103,7 @@ public class ContentPageLayoutEditorDisplayContext
 			fragmentEntryConfigurationParser, fragmentRendererController,
 			fragmentRendererTracker, httpServletRequest,
 			infoDisplayContributorTracker, infoItemServiceTracker, itemSelector,
-			portletRequest, renderResponse);
+			pageEditorConfiguration, portletRequest, renderResponse);
 
 		_stagingGroupHelper = stagingGroupHelper;
 	}

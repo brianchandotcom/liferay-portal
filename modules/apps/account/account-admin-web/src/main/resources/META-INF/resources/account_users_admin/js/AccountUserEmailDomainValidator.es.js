@@ -27,6 +27,8 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				);
 
 				if (field) {
+					this.addFieldMessage_(field);
+
 					const emailDomainFieldRule = this.getEmailDomainFieldRule_();
 
 					this.addFormFieldRules_(form, [emailDomainFieldRule]);
@@ -40,6 +42,25 @@ class AccountUserEmailDomainValidator extends PortletBase {
 			},
 			this
 		);
+	}
+
+	addFieldMessage_(field) {
+		const container = document.createElement('div');
+
+		container.className = 'form-text';
+
+		const button = document.createElement('button');
+
+		button.className = 'btn btn-link btn-unstyled link-secondary';
+		button.innerText = Liferay.Language.get('view-valid-domains');
+		button.onclick = () => {
+			this.openDialog_(this.viewValidDomainsURL);
+		};
+		button.type = 'button';
+
+		container.appendChild(button);
+
+		field.placeAfter(container);
 	}
 
 	addFormFieldRules_(form, fieldRules) {
@@ -80,6 +101,18 @@ class AccountUserEmailDomainValidator extends PortletBase {
 
 			event.halt();
 		}
+	}
+
+	openDialog_(url) {
+		Liferay.Util.openWindow({
+			dialog: {
+				height: 400,
+				modal: true,
+				width: 600,
+			},
+			title: Liferay.Language.get('valid-domains'),
+			uri: url,
+		});
 	}
 
 	setWarningValidationStyle_(form, formField, validatorName) {
@@ -128,6 +161,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 
 AccountUserEmailDomainValidator.STATE = {
 	validDomains: Config.string,
+	viewValidDomainsURL: Config.string,
 };
 
 export default AccountUserEmailDomainValidator;

@@ -108,7 +108,6 @@ definition {
 		property test.name.skip.portal.instance = "Forms#AddElementSetsWithTranslation";
 		property testray.component.names = "Training";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

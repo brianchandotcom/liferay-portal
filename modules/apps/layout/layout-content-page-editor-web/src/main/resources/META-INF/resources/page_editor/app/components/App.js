@@ -15,6 +15,7 @@
 import React, {useEffect} from 'react';
 import {createPortal} from 'react-dom';
 
+import useAutoExtendSession from '../../core/hooks/useAutoExtendSession';
 import {config} from '../config/index';
 import {useSelector} from '../store/index';
 import {DragAndDropContextProvider} from '../utils/useDragAndDrop';
@@ -27,6 +28,7 @@ import Toolbar from './Toolbar';
 
 export default function App() {
 	useParseURL();
+	useAutoExtendSession();
 
 	const mainItemId = useSelector((state) => state.layoutData.rootItems.main);
 	const masterLayoutData = useSelector((state) => state.masterLayoutData);

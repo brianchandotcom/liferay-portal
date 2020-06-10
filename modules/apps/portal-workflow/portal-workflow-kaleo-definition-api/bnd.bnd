@@ -6,5 +6,6 @@ Export-Package:\
 	com.liferay.portal.workflow.kaleo.definition.deployment,\
 	com.liferay.portal.workflow.kaleo.definition.exception,\
 	com.liferay.portal.workflow.kaleo.definition.export,\
+	com.liferay.portal.workflow.kaleo.definition.export.builder,\
 	com.liferay.portal.workflow.kaleo.definition.parser,\
 	com.liferay.portal.workflow.kaleo.definition.util

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.definition.internal.export.builder;
+package com.liferay.portal.workflow.kaleo.definition.export.builder;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;

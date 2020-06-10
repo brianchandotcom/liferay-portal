@@ -69,13 +69,6 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 	}
 
 	@Override
-	public void doubleClick(String locator) {
-		click(locator);
-
-		javaScriptDoubleClick(locator);
-	}
-
-	@Override
 	public String getText(String locator, String timeout) throws Exception {
 		return javaScriptGetText(locator, timeout);
 	}

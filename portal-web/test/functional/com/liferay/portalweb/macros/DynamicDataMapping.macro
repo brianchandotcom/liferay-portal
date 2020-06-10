@@ -3,7 +3,16 @@ definition {
 	macro _editFieldLabel {
 		DynamicDataMapping.editFieldSettings(fieldFieldLabel = "${field}");
 
-		DoubleClick(locator1 = "DDMEditStructure#SETTINGS_FIELD_LABEL");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#SETTINGS_FIELD_LABEL");
+
+			DoubleClick.javaScriptDoubleClick(locator1 = "DDMEditStructure#SETTINGS_FIELD_LABEL");
+		}
+		else {
+			DoubleClick(locator1 = "DDMEditStructure#SETTINGS_FIELD_LABEL");
+		}
 
 		Type(
 			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD",
@@ -314,7 +323,16 @@ definition {
 			var fieldName = StringUtil.replace("${fieldFieldLabel}", " ", "");
 		}
 
-		DoubleClick(locator1 = "DDMEditStructure#SETTINGS_NAME");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#SETTINGS_NAME");
+
+			DoubleClick.javaScriptDoubleClick(locator1 = "DDMEditStructure#SETTINGS_NAME");
+		}
+		else {
+			DoubleClick(locator1 = "DDMEditStructure#SETTINGS_NAME");
+		}
 
 		Type(
 			locator1 = "DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD",
@@ -521,7 +539,16 @@ definition {
 	macro editFieldSettings {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 
-		DoubleClick(locator1 = "DDMEditStructure#FORM_FIELD");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "DDMEditStructure#FORM_FIELD");
+
+			DoubleClick.javaScriptDoubleClick(locator1 = "DDMEditStructure#FORM_FIELD");
+		}
+		else {
+			DoubleClick(locator1 = "DDMEditStructure#FORM_FIELD");
+		}
 
 		AssertClick(
 			locator1 = "DDMEditStructure#SETTINGS_LINK",

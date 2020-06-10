@@ -88,7 +88,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						StringPool.FORWARD_SLASH,
 						article.getTitle(themeDisplay.getLocale()),
 						StringPool.DASH, sourceLanguageId, StringPool.DASH,
-						targetLanguageId, ".xliff"),
+						targetLanguageId, ".xlf"),
 					_translationInfoFormValuesExporter.export(
 						infoItemFormProvider.getInfoFormValues(article),
 						LocaleUtil.fromLanguageId(sourceLanguageId),

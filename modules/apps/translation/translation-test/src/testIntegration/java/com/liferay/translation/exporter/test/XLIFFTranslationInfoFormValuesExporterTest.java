@@ -71,7 +71,7 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 
 		Assert.assertEquals(
 			StringUtil.replace(
-				_readFileToString("dependencies/test-journal-article.xliff"),
+				_readFileToString("dependencies/test-journal-article.xlf"),
 				"$ARTICLE_ID",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			StreamUtil.toString(

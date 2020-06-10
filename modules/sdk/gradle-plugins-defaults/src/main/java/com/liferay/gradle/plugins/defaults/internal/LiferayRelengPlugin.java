@@ -819,12 +819,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		WriteArtifactPublishCommandsTask writeArtifactPublishCommandsTask,
 		final WritePropertiesTask recordArtifactTask) {
 
-		String force = GradleUtil.getTaskPrefixedProperty(
+		final String force = GradleUtil.getTaskPrefixedProperty(
 			writeArtifactPublishCommandsTask, "force");
-
-		if (Boolean.parseBoolean(force)) {
-			return;
-		}
 
 		final boolean liferayThemeProject = GradleUtil.hasPlugin(
 			project, LiferayThemeDefaultsPlugin.class);
@@ -877,6 +873,10 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				if (relengIgnoreDir != null) {
 					return false;
+				}
+
+				if (Boolean.parseBoolean(force)) {
+					return true;
 				}
 
 				String result = GitUtil.getGitResult(

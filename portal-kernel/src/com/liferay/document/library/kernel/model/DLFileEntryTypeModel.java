@@ -244,6 +244,20 @@ public interface DLFileEntryTypeModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the data definition ID of this document library file entry type.
+	 *
+	 * @return the data definition ID of this document library file entry type
+	 */
+	public long getDataDefinitionId();
+
+	/**
+	 * Sets the data definition ID of this document library file entry type.
+	 *
+	 * @param dataDefinitionId the data definition ID of this document library file entry type
+	 */
+	public void setDataDefinitionId(long dataDefinitionId);
+
+	/**
 	 * Returns the file entry type key of this document library file entry type.
 	 *
 	 * @return the file entry type key of this document library file entry type

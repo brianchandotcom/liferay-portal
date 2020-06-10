@@ -284,6 +284,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="dataDefinitionId" type="long" />
 		<field name="fileEntryTypeKey" type="String" />
 		<field localized="true" name="name" type="String">
 			<hint name="max-length">4000</hint>

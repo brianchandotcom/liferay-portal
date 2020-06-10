@@ -4482,6 +4482,7 @@ public class DLFileEntryTypePersistenceImpl
 		ctStrictColumnNames.add("userName");
 		ctStrictColumnNames.add("createDate");
 		ctIgnoreColumnNames.add("modifiedDate");
+		ctStrictColumnNames.add("dataDefinitionId");
 		ctStrictColumnNames.add("fileEntryTypeKey");
 		ctStrictColumnNames.add("name");
 		ctStrictColumnNames.add("description");

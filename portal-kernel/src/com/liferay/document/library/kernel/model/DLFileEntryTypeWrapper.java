@@ -55,6 +55,7 @@ public class DLFileEntryTypeWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("dataDefinitionId", getDataDefinitionId());
 		attributes.put("fileEntryTypeKey", getFileEntryTypeKey());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
@@ -125,6 +126,12 @@ public class DLFileEntryTypeWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		Long dataDefinitionId = (Long)attributes.get("dataDefinitionId");
+
+		if (dataDefinitionId != null) {
+			setDataDefinitionId(dataDefinitionId);
+		}
+
 		String fileEntryTypeKey = (String)attributes.get("fileEntryTypeKey");
 
 		if (fileEntryTypeKey != null) {
@@ -183,6 +190,16 @@ public class DLFileEntryTypeWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the data definition ID of this document library file entry type.
+	 *
+	 * @return the data definition ID of this document library file entry type
+	 */
+	@Override
+	public long getDataDefinitionId() {
+		return model.getDataDefinitionId();
 	}
 
 	@Override
@@ -521,6 +538,16 @@ public class DLFileEntryTypeWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the data definition ID of this document library file entry type.
+	 *
+	 * @param dataDefinitionId the data definition ID of this document library file entry type
+	 */
+	@Override
+	public void setDataDefinitionId(long dataDefinitionId) {
+		model.setDataDefinitionId(dataDefinitionId);
 	}
 
 	/**

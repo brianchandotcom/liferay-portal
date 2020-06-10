@@ -125,7 +125,7 @@ const ExportTranslationModal = ({
 					);
 				}}
 			>
-				<ClayModal.Body>
+				<ClayModal.Body scrollable>
 					<h5>{Liferay.Language.get('origin-language')}</h5>
 
 					<ClayForm.Group>

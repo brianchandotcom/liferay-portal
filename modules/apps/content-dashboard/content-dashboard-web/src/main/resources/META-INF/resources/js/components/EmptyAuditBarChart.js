@@ -66,7 +66,6 @@ export default function EmptyAuditBarChart() {
 							BAR_CHART.height - BAR_CHART.dotRadiusMax,
 						]}
 						stroke={BAR_CHART.stroke}
-						strokeDasharray="0 0"
 					/>
 					<XAxis
 						axisLine={{

@@ -6,6 +6,7 @@ buildscript {
 			exclude group: "biz.aQute.bnd", module: "biz.aQute.gradle"
 			exclude group: "biz.aQute.bnd", module: "biz.aQute.repository"
 			exclude group: "biz.aQute.bnd", module: "biz.aQute.resolve"
+			exclude group: "com.liferay", name: "com.liferay.gradle.util"
 		}
 	}
 

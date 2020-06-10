@@ -141,6 +141,18 @@ definition {
 			CKEditor.addContent(content = "${kbArticleContent}");
 		}
 
+		if (isSet(embedVideo)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click.pauseClickAt(locator1 = "CKEditor#CONTENT_VIDEO_IMAGE");
+
+			Type(
+				locator1 = "CKEditor#VIDEO_URL",
+				value1 = "${embedVideo}");
+
+			Click(locator1 = "CKEditor#VIDEO_OK");
+		}
+
 		if (isSet(kbArticleAttachment)) {
 			KBArticle.selectAttachmentCP(kbArticleAttachment = "${kbArticleAttachment}");
 		}
@@ -1145,6 +1157,20 @@ definition {
 		AssertTextEquals(
 			locator1 = "KnowledgeBaseArticle#CONTENT",
 			value1 = "${kbArticleContent}");
+
+		if (isSet(embedVideo)) {
+			Pause(locator1 = "5000");
+
+			AssertElementPresent(
+				key_service = "youtube",
+				locator1 = "BlogsEntry#CONTENT_VIDEO");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
+
+			AssertElementPresent(
+				key_service = "youtube",
+				locator1 = "CKEditor#VIDEO_BUTTON_PLAY");
+		}
 
 		if (isSet(kbChildArticleTitle)) {
 			AssertTextEquals(

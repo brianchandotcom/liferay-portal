@@ -14,7 +14,7 @@
 
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useImperativeHandle, useRef} from 'react';
 
 import {EVENT_TYPES} from '../actions/types.es';
 import FormRenderer from '../components/FormRenderer/FormRenderer.es';
@@ -25,7 +25,7 @@ import {getFormId, getFormNode} from '../util/formId.es';
 import {PagesVisitor} from '../util/visitors.es';
 import templates from './Form.soy';
 
-const Form = (props) => {
+const Form = React.forwardRef((props, ref) => {
 	const dispatch = useForm();
 	const containerRef = useRef(null);
 
@@ -89,6 +89,27 @@ const Form = (props) => {
 		}
 	};
 
+	useImperativeHandle(ref, () => ({
+		evaluate: () => {
+			const {
+				defaultLanguageId,
+				editingLanguageId,
+				pages,
+				portletNamespace,
+				rules,
+			} = props;
+
+			return evaluate(null, {
+				defaultLanguageId,
+				editingLanguageId,
+				pages,
+				portletNamespace,
+				rules,
+			});
+		},
+		validate,
+	}));
+
 	useEffect(() => {
 		if (containerRef.current) {
 			const form = getFormNode(containerRef.current);
@@ -113,16 +134,16 @@ const Form = (props) => {
 	}, []);
 
 	return <FormRenderer {...props} ref={containerRef} />;
-};
+});
 
-const FormProxy = ({instance, ...otherProps}) => (
+const FormProxy = React.forwardRef(({instance, ...otherProps}, ref) => (
 	<FormProvider
 		onEvent={(type, payload) => instance.emit(type, payload)}
 		value={otherProps}
 	>
-		{(props) => <Form {...props} />}
+		{(props) => <Form {...props} ref={ref} />}
 	</FormProvider>
-);
+));
 
 const ReactFormAdapter = getConnectedReactComponentAdapter(FormProxy);
 

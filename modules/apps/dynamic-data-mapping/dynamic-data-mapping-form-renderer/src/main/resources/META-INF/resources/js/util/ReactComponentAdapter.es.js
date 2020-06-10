@@ -100,6 +100,7 @@ function getConnectedReactComponentAdapter(ReactComponent) {
 
 		created() {
 			this.observer = new Observer();
+			this.reactComponentRef = React.createRef();
 		}
 
 		disposed() {
@@ -169,6 +170,7 @@ function getConnectedReactComponentAdapter(ReactComponent) {
 						{...events}
 						{...store}
 						instance={this}
+						ref={this.reactComponentRef}
 					/>
 				</ObserverSubscribe>,
 				element

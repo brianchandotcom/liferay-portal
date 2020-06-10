@@ -106,9 +106,9 @@ describe('The time range filter component should', () => {
 		});
 
 		test('Show the date the href has as a suggestion', () => {
-			const filterInputs = getAllByTestId('filterItemInput');
+			const filterItems = getAllByTestId('filterItem');
 
-			fireEvent.click(filterInputs[0]);
+			fireEvent.click(filterItems[0]);
 
 			dateEndInput = getByTestId('dateEndInput');
 			dateStartInput = getByTestId('dateStartInput');

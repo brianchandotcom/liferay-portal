@@ -134,9 +134,7 @@ describe('The filter component should', () => {
 		expect(filterItems.length).toEqual(12);
 		expect(filterItemsNames[0]).toHaveTextContent('0test0');
 
-		const filterInputs = getAllByTestId('filterItemInput');
-
-		fireEvent.click(filterInputs[10]);
+		fireEvent.click(filterItems[10]);
 
 		expect(filterItems[0].className.includes('active')).toBe(false);
 	});
@@ -162,14 +160,13 @@ describe('The filter component should', () => {
 
 		fireEvent.click(filterBtn);
 
-		const filterInputs = getAllByTestId('filterItemInput');
 		const filterItems = getAllByTestId('filterItem');
 
 		expect(filterItems[0].className.includes('active')).toBe(true);
 		expect(filterItems[1].className.includes('active')).toBe(true);
 		expect(filterItems[2].className.includes('active')).toBe(true);
 
-		await fireEvent.click(filterInputs[2]);
+		await fireEvent.click(filterItems[2]);
 
 		expect(filterItems[0].className.includes('active')).toBe(true);
 		expect(filterItems[1].className.includes('active')).toBe(true);

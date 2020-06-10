@@ -96,7 +96,9 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		WaitForElementPresent(locator1 = "//script[contains(@src,'ManagementToolbar.es.js')]");
+		while (IsElementNotPresent(locator1 = "//script[contains(@src,'ManagementToolbar.es.js")) {
+			Pause(locator1 = "3000");
+		}
 
 		Type(
 			locator1 = "TextInput#WEB_ID",
@@ -112,7 +114,9 @@ definition {
 
 		Button.clickSave();
 
-		WaitForElementPresent(locator1 = "//script[contains(@src,'ClayToast.js')]");
+		while (IsElementNotPresent(locator1 = "//script[contains(@src,'ClayToast.js")) {
+			Pause(locator1 = "3000");
+		}
 
 		Alert.viewSuccessMessage();
 

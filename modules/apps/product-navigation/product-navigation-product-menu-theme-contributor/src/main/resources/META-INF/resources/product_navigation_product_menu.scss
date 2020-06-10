@@ -147,6 +147,14 @@
 }
 
 .product-menu {
+	&.light {
+		.sidebar-header {
+			font-size: 14px;
+			font-weight: bold;
+			height: $product-menu-header-height;
+		}
+	}
+
 	.sidebar-header {
 		background-color: $product-menu-header-bg;
 		color: $product-menu-header-color;

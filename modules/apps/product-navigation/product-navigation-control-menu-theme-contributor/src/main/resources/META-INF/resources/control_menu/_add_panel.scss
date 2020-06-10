@@ -22,6 +22,10 @@
 
 		.product-menu {
 			width: $admin-panel-width;
+
+			&.light {
+				background-color: white;
+			}
 		}
 	}
 

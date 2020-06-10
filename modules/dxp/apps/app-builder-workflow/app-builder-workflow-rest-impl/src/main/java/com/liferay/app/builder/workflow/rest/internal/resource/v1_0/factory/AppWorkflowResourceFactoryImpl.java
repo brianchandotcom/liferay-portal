@@ -14,7 +14,7 @@
 
 package com.liferay.app.builder.workflow.rest.internal.resource.v1_0.factory;
 
-import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowTaskResource;
+import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -50,31 +50,31 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @author Rafael Praxedes
  * @generated
  */
-@Component(immediate = true, service = AppWorkflowTaskResource.Factory.class)
+@Component(immediate = true, service = AppWorkflowResource.Factory.class)
 @Generated("")
-public class AppWorkflowTaskResourceFactoryImpl
-	implements AppWorkflowTaskResource.Factory {
+public class AppWorkflowResourceFactoryImpl
+	implements AppWorkflowResource.Factory {
 
 	@Override
-	public AppWorkflowTaskResource.Builder create() {
-		return new AppWorkflowTaskResource.Builder() {
+	public AppWorkflowResource.Builder create() {
+		return new AppWorkflowResource.Builder() {
 
 			@Override
-			public AppWorkflowTaskResource build() {
+			public AppWorkflowResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (AppWorkflowTaskResource)ProxyUtil.newProxyInstance(
-					AppWorkflowTaskResource.class.getClassLoader(),
-					new Class<?>[] {AppWorkflowTaskResource.class},
+				return (AppWorkflowResource)ProxyUtil.newProxyInstance(
+					AppWorkflowResource.class.getClassLoader(),
+					new Class<?>[] {AppWorkflowResource.class},
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _preferredLocale, _user));
 			}
 
 			@Override
-			public AppWorkflowTaskResource.Builder checkPermissions(
+			public AppWorkflowResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -83,7 +83,7 @@ public class AppWorkflowTaskResourceFactoryImpl
 			}
 
 			@Override
-			public AppWorkflowTaskResource.Builder httpServletRequest(
+			public AppWorkflowResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -92,7 +92,7 @@ public class AppWorkflowTaskResourceFactoryImpl
 			}
 
 			@Override
-			public AppWorkflowTaskResource.Builder preferredLocale(
+			public AppWorkflowResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -101,7 +101,7 @@ public class AppWorkflowTaskResourceFactoryImpl
 			}
 
 			@Override
-			public AppWorkflowTaskResource.Builder user(User user) {
+			public AppWorkflowResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -117,12 +117,12 @@ public class AppWorkflowTaskResourceFactoryImpl
 
 	@Activate
 	protected void activate() {
-		AppWorkflowTaskResource.FactoryHolder.factory = this;
+		AppWorkflowResource.FactoryHolder.factory = this;
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		AppWorkflowTaskResource.FactoryHolder.factory = null;
+		AppWorkflowResource.FactoryHolder.factory = null;
 	}
 
 	private Object _invoke(
@@ -147,28 +147,27 @@ public class AppWorkflowTaskResourceFactoryImpl
 				_liberalPermissionCheckerFactory.create(user));
 		}
 
-		AppWorkflowTaskResource appWorkflowTaskResource =
+		AppWorkflowResource appWorkflowResource =
 			_componentServiceObjects.getService();
 
-		appWorkflowTaskResource.setContextAcceptLanguage(
+		appWorkflowResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		appWorkflowTaskResource.setContextCompany(company);
+		appWorkflowResource.setContextCompany(company);
 
-		appWorkflowTaskResource.setContextHttpServletRequest(
-			httpServletRequest);
-		appWorkflowTaskResource.setContextUser(user);
+		appWorkflowResource.setContextHttpServletRequest(httpServletRequest);
+		appWorkflowResource.setContextUser(user);
 
 		try {
-			return method.invoke(appWorkflowTaskResource, arguments);
+			return method.invoke(appWorkflowResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(appWorkflowTaskResource);
+			_componentServiceObjects.ungetService(appWorkflowResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -180,7 +179,7 @@ public class AppWorkflowTaskResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<AppWorkflowTaskResource>
+	private ComponentServiceObjects<AppWorkflowResource>
 		_componentServiceObjects;
 
 	@Reference

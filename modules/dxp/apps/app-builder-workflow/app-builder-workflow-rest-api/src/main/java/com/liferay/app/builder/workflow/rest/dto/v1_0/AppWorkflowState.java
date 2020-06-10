@@ -42,13 +42,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AppWorkflowTask")
+@GraphQLName("AppWorkflowState")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AppWorkflowTask")
-public class AppWorkflowTask {
+@XmlRootElement(name = "AppWorkflowState")
+public class AppWorkflowState {
 
-	public static AppWorkflowTask toDTO(String json) {
-		return ObjectMapperUtil.readValue(AppWorkflowTask.class, json);
+	public static AppWorkflowState toDTO(String json) {
+		return ObjectMapperUtil.readValue(AppWorkflowState.class, json);
 	}
 
 	@Schema
@@ -84,20 +84,20 @@ public class AppWorkflowTask {
 	protected AppWorkflowTransition[] appWorkflowTransitions;
 
 	@Schema
-	public Long[] getDataLayoutIds() {
-		return dataLayoutIds;
+	public Boolean getInitial() {
+		return initial;
 	}
 
-	public void setDataLayoutIds(Long[] dataLayoutIds) {
-		this.dataLayoutIds = dataLayoutIds;
+	public void setInitial(Boolean initial) {
+		this.initial = initial;
 	}
 
 	@JsonIgnore
-	public void setDataLayoutIds(
-		UnsafeSupplier<Long[], Exception> dataLayoutIdsUnsafeSupplier) {
+	public void setInitial(
+		UnsafeSupplier<Boolean, Exception> initialUnsafeSupplier) {
 
 		try {
-			dataLayoutIds = dataLayoutIdsUnsafeSupplier.get();
+			initial = initialUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -109,7 +109,7 @@ public class AppWorkflowTask {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long[] dataLayoutIds;
+	protected Boolean initial;
 
 	@Schema
 	public String getName() {
@@ -143,13 +143,13 @@ public class AppWorkflowTask {
 			return true;
 		}
 
-		if (!(object instanceof AppWorkflowTask)) {
+		if (!(object instanceof AppWorkflowState)) {
 			return false;
 		}
 
-		AppWorkflowTask appWorkflowTask = (AppWorkflowTask)object;
+		AppWorkflowState appWorkflowState = (AppWorkflowState)object;
 
-		return Objects.equals(toString(), appWorkflowTask.toString());
+		return Objects.equals(toString(), appWorkflowState.toString());
 	}
 
 	@Override
@@ -184,24 +184,14 @@ public class AppWorkflowTask {
 			sb.append("]");
 		}
 
-		if (dataLayoutIds != null) {
+		if (initial != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dataLayoutIds\": ");
+			sb.append("\"initial\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < dataLayoutIds.length; i++) {
-				sb.append(dataLayoutIds[i]);
-
-				if ((i + 1) < dataLayoutIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(initial);
 		}
 
 		if (name != null) {
@@ -224,7 +214,7 @@ public class AppWorkflowTask {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask",
+		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowState",
 		name = "x-class-name"
 	)
 	public String xClassName;

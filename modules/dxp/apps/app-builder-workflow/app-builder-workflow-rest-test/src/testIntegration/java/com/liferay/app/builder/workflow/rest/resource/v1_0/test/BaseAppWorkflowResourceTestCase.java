@@ -22,11 +22,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTask;
+import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflow;
 import com.liferay.app.builder.workflow.rest.client.http.HttpInvoker;
 import com.liferay.app.builder.workflow.rest.client.pagination.Page;
-import com.liferay.app.builder.workflow.rest.client.resource.v1_0.AppWorkflowTaskResource;
-import com.liferay.app.builder.workflow.rest.client.serdes.v1_0.AppWorkflowTaskSerDes;
+import com.liferay.app.builder.workflow.rest.client.resource.v1_0.AppWorkflowResource;
+import com.liferay.app.builder.workflow.rest.client.serdes.v1_0.AppWorkflowSerDes;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
@@ -82,7 +81,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseAppWorkflowTaskResourceTestCase {
+public abstract class BaseAppWorkflowResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -103,12 +102,11 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_appWorkflowTaskResource.setContextCompany(testCompany);
+		_appWorkflowResource.setContextCompany(testCompany);
 
-		AppWorkflowTaskResource.Builder builder =
-			AppWorkflowTaskResource.builder();
+		AppWorkflowResource.Builder builder = AppWorkflowResource.builder();
 
-		appWorkflowTaskResource = builder.locale(
+		appWorkflowResource = builder.locale(
 			LocaleUtil.getDefault()
 		).build();
 	}
@@ -137,13 +135,13 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 			}
 		};
 
-		AppWorkflowTask appWorkflowTask1 = randomAppWorkflowTask();
+		AppWorkflow appWorkflow1 = randomAppWorkflow();
 
-		String json = objectMapper.writeValueAsString(appWorkflowTask1);
+		String json = objectMapper.writeValueAsString(appWorkflow1);
 
-		AppWorkflowTask appWorkflowTask2 = AppWorkflowTaskSerDes.toDTO(json);
+		AppWorkflow appWorkflow2 = AppWorkflowSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(appWorkflowTask1, appWorkflowTask2));
+		Assert.assertTrue(equals(appWorkflow1, appWorkflow2));
 	}
 
 	@Test
@@ -163,10 +161,10 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 			}
 		};
 
-		AppWorkflowTask appWorkflowTask = randomAppWorkflowTask();
+		AppWorkflow appWorkflow = randomAppWorkflow();
 
-		String json1 = objectMapper.writeValueAsString(appWorkflowTask);
-		String json2 = AppWorkflowTaskSerDes.toJSON(appWorkflowTask);
+		String json1 = objectMapper.writeValueAsString(appWorkflow);
+		String json2 = AppWorkflowSerDes.toJSON(appWorkflow);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -176,90 +174,51 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		AppWorkflowTask appWorkflowTask = randomAppWorkflowTask();
+		AppWorkflow appWorkflow = randomAppWorkflow();
 
-		appWorkflowTask.setName(regex);
-
-		String json = AppWorkflowTaskSerDes.toJSON(appWorkflowTask);
+		String json = AppWorkflowSerDes.toJSON(appWorkflow);
 
 		Assert.assertFalse(json.contains(regex));
 
-		appWorkflowTask = AppWorkflowTaskSerDes.toDTO(json);
-
-		Assert.assertEquals(regex, appWorkflowTask.getName());
+		appWorkflow = AppWorkflowSerDes.toDTO(json);
 	}
 
 	@Test
-	public void testGetAppWorkflowTasksPage() throws Exception {
-		Page<AppWorkflowTask> page =
-			appWorkflowTaskResource.getAppWorkflowTasksPage(
-				testGetAppWorkflowTasksPage_getAppId());
-
-		Assert.assertEquals(0, page.getTotalCount());
-
-		Long appId = testGetAppWorkflowTasksPage_getAppId();
-		Long irrelevantAppId = testGetAppWorkflowTasksPage_getIrrelevantAppId();
-
-		if ((irrelevantAppId != null)) {
-			AppWorkflowTask irrelevantAppWorkflowTask =
-				testGetAppWorkflowTasksPage_addAppWorkflowTask(
-					irrelevantAppId, randomIrrelevantAppWorkflowTask());
-
-			page = appWorkflowTaskResource.getAppWorkflowTasksPage(
-				irrelevantAppId);
-
-			Assert.assertEquals(1, page.getTotalCount());
-
-			assertEquals(
-				Arrays.asList(irrelevantAppWorkflowTask),
-				(List<AppWorkflowTask>)page.getItems());
-			assertValid(page);
-		}
-
-		AppWorkflowTask appWorkflowTask1 =
-			testGetAppWorkflowTasksPage_addAppWorkflowTask(
-				appId, randomAppWorkflowTask());
-
-		AppWorkflowTask appWorkflowTask2 =
-			testGetAppWorkflowTasksPage_addAppWorkflowTask(
-				appId, randomAppWorkflowTask());
-
-		page = appWorkflowTaskResource.getAppWorkflowTasksPage(appId);
-
-		Assert.assertEquals(2, page.getTotalCount());
-
-		assertEqualsIgnoringOrder(
-			Arrays.asList(appWorkflowTask1, appWorkflowTask2),
-			(List<AppWorkflowTask>)page.getItems());
-		assertValid(page);
-	}
-
-	protected AppWorkflowTask testGetAppWorkflowTasksPage_addAppWorkflowTask(
-			Long appId, AppWorkflowTask appWorkflowTask)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAppWorkflowTasksPage_getAppId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetAppWorkflowTasksPage_getIrrelevantAppId()
-		throws Exception {
-
-		return null;
-	}
-
-	@Test
-	public void testGraphQLGetAppWorkflowTasksPage() throws Exception {
+	public void testGetAppWorkflow() throws Exception {
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testPostAppWorkflowTasks() throws Exception {
+	public void testGraphQLGetAppWorkflow() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testGraphQLGetAppWorkflowNotFound() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
+	public void testPostAppWorkflow() throws Exception {
+		AppWorkflow randomAppWorkflow = randomAppWorkflow();
+
+		AppWorkflow postAppWorkflow = testPostAppWorkflow_addAppWorkflow(
+			randomAppWorkflow);
+
+		assertEquals(randomAppWorkflow, postAppWorkflow);
+		assertValid(postAppWorkflow);
+	}
+
+	protected AppWorkflow testPostAppWorkflow_addAppWorkflow(
+			AppWorkflow appWorkflow)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAppWorkflow() throws Exception {
 		Assert.assertTrue(false);
 	}
 
@@ -272,38 +231,36 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 	}
 
 	protected void assertEquals(
-		AppWorkflowTask appWorkflowTask1, AppWorkflowTask appWorkflowTask2) {
+		AppWorkflow appWorkflow1, AppWorkflow appWorkflow2) {
 
 		Assert.assertTrue(
-			appWorkflowTask1 + " does not equal " + appWorkflowTask2,
-			equals(appWorkflowTask1, appWorkflowTask2));
+			appWorkflow1 + " does not equal " + appWorkflow2,
+			equals(appWorkflow1, appWorkflow2));
 	}
 
 	protected void assertEquals(
-		List<AppWorkflowTask> appWorkflowTasks1,
-		List<AppWorkflowTask> appWorkflowTasks2) {
+		List<AppWorkflow> appWorkflows1, List<AppWorkflow> appWorkflows2) {
 
-		Assert.assertEquals(appWorkflowTasks1.size(), appWorkflowTasks2.size());
+		Assert.assertEquals(appWorkflows1.size(), appWorkflows2.size());
 
-		for (int i = 0; i < appWorkflowTasks1.size(); i++) {
-			AppWorkflowTask appWorkflowTask1 = appWorkflowTasks1.get(i);
-			AppWorkflowTask appWorkflowTask2 = appWorkflowTasks2.get(i);
+		for (int i = 0; i < appWorkflows1.size(); i++) {
+			AppWorkflow appWorkflow1 = appWorkflows1.get(i);
+			AppWorkflow appWorkflow2 = appWorkflows2.get(i);
 
-			assertEquals(appWorkflowTask1, appWorkflowTask2);
+			assertEquals(appWorkflow1, appWorkflow2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<AppWorkflowTask> appWorkflowTasks1,
-		List<AppWorkflowTask> appWorkflowTasks2) {
+		List<AppWorkflow> appWorkflows1, List<AppWorkflow> appWorkflows2) {
 
-		Assert.assertEquals(appWorkflowTasks1.size(), appWorkflowTasks2.size());
+		Assert.assertEquals(appWorkflows1.size(), appWorkflows2.size());
 
-		for (AppWorkflowTask appWorkflowTask1 : appWorkflowTasks1) {
+		for (AppWorkflow appWorkflow1 : appWorkflows1) {
 			boolean contains = false;
 
-			for (AppWorkflowTask appWorkflowTask2 : appWorkflowTasks2) {
-				if (equals(appWorkflowTask1, appWorkflowTask2)) {
+			for (AppWorkflow appWorkflow2 : appWorkflows2) {
+				if (equals(appWorkflow1, appWorkflow2)) {
 					contains = true;
 
 					break;
@@ -311,19 +268,18 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				appWorkflowTasks2 + " does not contain " + appWorkflowTask1,
-				contains);
+				appWorkflows2 + " does not contain " + appWorkflow1, contains);
 		}
 	}
 
-	protected void assertValid(AppWorkflowTask appWorkflowTask) {
+	protected void assertValid(AppWorkflow appWorkflow) {
 		boolean valid = true;
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("appId", additionalAssertFieldName)) {
-				if (appWorkflowTask.getAppId() == null) {
+				if (appWorkflow.getAppId() == null) {
 					valid = false;
 				}
 
@@ -331,25 +287,17 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"appWorkflowActions", additionalAssertFieldName)) {
+					"appWorkflowStates", additionalAssertFieldName)) {
 
-				if (appWorkflowTask.getAppWorkflowActions() == null) {
+				if (appWorkflow.getAppWorkflowStates() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("dataLayoutIds", additionalAssertFieldName)) {
-				if (appWorkflowTask.getDataLayoutIds() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (appWorkflowTask.getName() == null) {
+			if (Objects.equals("appWorkflowTasks", additionalAssertFieldName)) {
+				if (appWorkflow.getAppWorkflowTasks() == null) {
 					valid = false;
 				}
 
@@ -364,13 +312,12 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<AppWorkflowTask> page) {
+	protected void assertValid(Page<AppWorkflow> page) {
 		boolean valid = false;
 
-		java.util.Collection<AppWorkflowTask> appWorkflowTasks =
-			page.getItems();
+		java.util.Collection<AppWorkflow> appWorkflows = page.getItems();
 
-		int size = appWorkflowTasks.size();
+		int size = appWorkflows.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -391,8 +338,8 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 
 		for (Field field :
 				ReflectionUtil.getDeclaredFields(
-					com.liferay.app.builder.workflow.rest.dto.v1_0.
-						AppWorkflowTask.class)) {
+					com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow.
+						class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -440,9 +387,9 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 	}
 
 	protected boolean equals(
-		AppWorkflowTask appWorkflowTask1, AppWorkflowTask appWorkflowTask2) {
+		AppWorkflow appWorkflow1, AppWorkflow appWorkflow2) {
 
-		if (appWorkflowTask1 == appWorkflowTask2) {
+		if (appWorkflow1 == appWorkflow2) {
 			return true;
 		}
 
@@ -451,8 +398,7 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 
 			if (Objects.equals("appId", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						appWorkflowTask1.getAppId(),
-						appWorkflowTask2.getAppId())) {
+						appWorkflow1.getAppId(), appWorkflow2.getAppId())) {
 
 					return false;
 				}
@@ -461,11 +407,11 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 			}
 
 			if (Objects.equals(
-					"appWorkflowActions", additionalAssertFieldName)) {
+					"appWorkflowStates", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						appWorkflowTask1.getAppWorkflowActions(),
-						appWorkflowTask2.getAppWorkflowActions())) {
+						appWorkflow1.getAppWorkflowStates(),
+						appWorkflow2.getAppWorkflowStates())) {
 
 					return false;
 				}
@@ -473,21 +419,10 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("dataLayoutIds", additionalAssertFieldName)) {
+			if (Objects.equals("appWorkflowTasks", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						appWorkflowTask1.getDataLayoutIds(),
-						appWorkflowTask2.getDataLayoutIds())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						appWorkflowTask1.getName(),
-						appWorkflowTask2.getName())) {
+						appWorkflow1.getAppWorkflowTasks(),
+						appWorkflow2.getAppWorkflowTasks())) {
 
 					return false;
 				}
@@ -530,13 +465,13 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_appWorkflowTaskResource instanceof EntityModelResource)) {
+		if (!(_appWorkflowResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_appWorkflowTaskResource;
+			(EntityModelResource)_appWorkflowResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -565,8 +500,7 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator,
-		AppWorkflowTask appWorkflowTask) {
+		EntityField entityField, String operator, AppWorkflow appWorkflow) {
 
 		StringBundler sb = new StringBundler();
 
@@ -583,22 +517,14 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("appWorkflowActions")) {
+		if (entityFieldName.equals("appWorkflowStates")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("dataLayoutIds")) {
+		if (entityFieldName.equals("appWorkflowTasks")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("name")) {
-			sb.append("'");
-			sb.append(String.valueOf(appWorkflowTask.getName()));
-			sb.append("'");
-
-			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -642,29 +568,25 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected AppWorkflowTask randomAppWorkflowTask() throws Exception {
-		return new AppWorkflowTask() {
+	protected AppWorkflow randomAppWorkflow() throws Exception {
+		return new AppWorkflow() {
 			{
 				appId = RandomTestUtil.randomLong();
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected AppWorkflowTask randomIrrelevantAppWorkflowTask()
-		throws Exception {
+	protected AppWorkflow randomIrrelevantAppWorkflow() throws Exception {
+		AppWorkflow randomIrrelevantAppWorkflow = randomAppWorkflow();
 
-		AppWorkflowTask randomIrrelevantAppWorkflowTask =
-			randomAppWorkflowTask();
-
-		return randomIrrelevantAppWorkflowTask;
+		return randomIrrelevantAppWorkflow;
 	}
 
-	protected AppWorkflowTask randomPatchAppWorkflowTask() throws Exception {
-		return randomAppWorkflowTask();
+	protected AppWorkflow randomPatchAppWorkflow() throws Exception {
+		return randomAppWorkflow();
 	}
 
-	protected AppWorkflowTaskResource appWorkflowTaskResource;
+	protected AppWorkflowResource appWorkflowResource;
 	protected Group irrelevantGroup;
 	protected Company testCompany;
 	protected Group testGroup;
@@ -741,7 +663,7 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseAppWorkflowTaskResourceTestCase.class);
+		BaseAppWorkflowResourceTestCase.class);
 
 	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
 
@@ -759,7 +681,7 @@ public abstract class BaseAppWorkflowTaskResourceTestCase {
 
 	@Inject
 	private
-		com.liferay.app.builder.workflow.rest.resource.v1_0.
-			AppWorkflowTaskResource _appWorkflowTaskResource;
+		com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource
+			_appWorkflowResource;
 
 }

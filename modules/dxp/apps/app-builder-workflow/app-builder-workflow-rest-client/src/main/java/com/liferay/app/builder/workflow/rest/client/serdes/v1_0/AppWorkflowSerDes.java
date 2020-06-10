@@ -14,8 +14,9 @@
 
 package com.liferay.app.builder.workflow.rest.client.serdes.v1_0;
 
+import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflow;
+import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowState;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTask;
-import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTransition;
 import com.liferay.app.builder.workflow.rest.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -32,24 +33,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AppWorkflowTaskSerDes {
+public class AppWorkflowSerDes {
 
-	public static AppWorkflowTask toDTO(String json) {
-		AppWorkflowTaskJSONParser appWorkflowTaskJSONParser =
-			new AppWorkflowTaskJSONParser();
+	public static AppWorkflow toDTO(String json) {
+		AppWorkflowJSONParser appWorkflowJSONParser =
+			new AppWorkflowJSONParser();
 
-		return appWorkflowTaskJSONParser.parseToDTO(json);
+		return appWorkflowJSONParser.parseToDTO(json);
 	}
 
-	public static AppWorkflowTask[] toDTOs(String json) {
-		AppWorkflowTaskJSONParser appWorkflowTaskJSONParser =
-			new AppWorkflowTaskJSONParser();
+	public static AppWorkflow[] toDTOs(String json) {
+		AppWorkflowJSONParser appWorkflowJSONParser =
+			new AppWorkflowJSONParser();
 
-		return appWorkflowTaskJSONParser.parseToDTOs(json);
+		return appWorkflowJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(AppWorkflowTask appWorkflowTask) {
-		if (appWorkflowTask == null) {
+	public static String toJSON(AppWorkflow appWorkflow) {
+		if (appWorkflow == null) {
 			return "null";
 		}
 
@@ -57,47 +58,32 @@ public class AppWorkflowTaskSerDes {
 
 		sb.append("{");
 
-		if (appWorkflowTask.getAppWorkflowTransitions() != null) {
+		if (appWorkflow.getAppId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"appWorkflowTransitions\": ");
+			sb.append("\"appId\": ");
 
-			sb.append("[");
-
-			for (int i = 0;
-				 i < appWorkflowTask.getAppWorkflowTransitions().length; i++) {
-
-				sb.append(
-					String.valueOf(
-						appWorkflowTask.getAppWorkflowTransitions()[i]));
-
-				if ((i + 1) <
-						appWorkflowTask.getAppWorkflowTransitions().length) {
-
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(appWorkflow.getAppId());
 		}
 
-		if (appWorkflowTask.getDataLayoutIds() != null) {
+		if (appWorkflow.getAppWorkflowStates() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"dataLayoutIds\": ");
+			sb.append("\"appWorkflowStates\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < appWorkflowTask.getDataLayoutIds().length;
+			for (int i = 0; i < appWorkflow.getAppWorkflowStates().length;
 				 i++) {
 
-				sb.append(appWorkflowTask.getDataLayoutIds()[i]);
+				sb.append(
+					String.valueOf(appWorkflow.getAppWorkflowStates()[i]));
 
-				if ((i + 1) < appWorkflowTask.getDataLayoutIds().length) {
+				if ((i + 1) < appWorkflow.getAppWorkflowStates().length) {
 					sb.append(", ");
 				}
 			}
@@ -105,18 +91,24 @@ public class AppWorkflowTaskSerDes {
 			sb.append("]");
 		}
 
-		if (appWorkflowTask.getName() != null) {
+		if (appWorkflow.getAppWorkflowTasks() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"appWorkflowTasks\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(appWorkflowTask.getName()));
+			for (int i = 0; i < appWorkflow.getAppWorkflowTasks().length; i++) {
+				sb.append(String.valueOf(appWorkflow.getAppWorkflowTasks()[i]));
 
-			sb.append("\"");
+				if ((i + 1) < appWorkflow.getAppWorkflowTasks().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -125,87 +117,95 @@ public class AppWorkflowTaskSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		AppWorkflowTaskJSONParser appWorkflowTaskJSONParser =
-			new AppWorkflowTaskJSONParser();
+		AppWorkflowJSONParser appWorkflowJSONParser =
+			new AppWorkflowJSONParser();
 
-		return appWorkflowTaskJSONParser.parseToMap(json);
+		return appWorkflowJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(AppWorkflowTask appWorkflowTask) {
-		if (appWorkflowTask == null) {
+	public static Map<String, String> toMap(AppWorkflow appWorkflow) {
+		if (appWorkflow == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (appWorkflowTask.getAppWorkflowTransitions() == null) {
-			map.put("appWorkflowTransitions", null);
+		if (appWorkflow.getAppId() == null) {
+			map.put("appId", null);
+		}
+		else {
+			map.put("appId", String.valueOf(appWorkflow.getAppId()));
+		}
+
+		if (appWorkflow.getAppWorkflowStates() == null) {
+			map.put("appWorkflowStates", null);
 		}
 		else {
 			map.put(
-				"appWorkflowTransitions",
-				String.valueOf(appWorkflowTask.getAppWorkflowTransitions()));
+				"appWorkflowStates",
+				String.valueOf(appWorkflow.getAppWorkflowStates()));
 		}
 
-		if (appWorkflowTask.getDataLayoutIds() == null) {
-			map.put("dataLayoutIds", null);
+		if (appWorkflow.getAppWorkflowTasks() == null) {
+			map.put("appWorkflowTasks", null);
 		}
 		else {
 			map.put(
-				"dataLayoutIds",
-				String.valueOf(appWorkflowTask.getDataLayoutIds()));
-		}
-
-		if (appWorkflowTask.getName() == null) {
-			map.put("name", null);
-		}
-		else {
-			map.put("name", String.valueOf(appWorkflowTask.getName()));
+				"appWorkflowTasks",
+				String.valueOf(appWorkflow.getAppWorkflowTasks()));
 		}
 
 		return map;
 	}
 
-	public static class AppWorkflowTaskJSONParser
-		extends BaseJSONParser<AppWorkflowTask> {
+	public static class AppWorkflowJSONParser
+		extends BaseJSONParser<AppWorkflow> {
 
 		@Override
-		protected AppWorkflowTask createDTO() {
-			return new AppWorkflowTask();
+		protected AppWorkflow createDTO() {
+			return new AppWorkflow();
 		}
 
 		@Override
-		protected AppWorkflowTask[] createDTOArray(int size) {
-			return new AppWorkflowTask[size];
+		protected AppWorkflow[] createDTOArray(int size) {
+			return new AppWorkflow[size];
 		}
 
 		@Override
 		protected void setField(
-			AppWorkflowTask appWorkflowTask, String jsonParserFieldName,
+			AppWorkflow appWorkflow, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "appWorkflowTransitions")) {
+			if (Objects.equals(jsonParserFieldName, "appId")) {
 				if (jsonParserFieldValue != null) {
-					appWorkflowTask.setAppWorkflowTransitions(
+					appWorkflow.setAppId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "appWorkflowStates")) {
+				if (jsonParserFieldValue != null) {
+					appWorkflow.setAppWorkflowStates(
 						Stream.of(
 							toStrings((Object[])jsonParserFieldValue)
 						).map(
-							object -> AppWorkflowTransitionSerDes.toDTO(
+							object -> AppWorkflowStateSerDes.toDTO(
 								(String)object)
 						).toArray(
-							size -> new AppWorkflowTransition[size]
+							size -> new AppWorkflowState[size]
 						));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "dataLayoutIds")) {
+			else if (Objects.equals(jsonParserFieldName, "appWorkflowTasks")) {
 				if (jsonParserFieldValue != null) {
-					appWorkflowTask.setDataLayoutIds(
-						toLongs((Object[])jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					appWorkflowTask.setName((String)jsonParserFieldValue);
+					appWorkflow.setAppWorkflowTasks(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> AppWorkflowTaskSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new AppWorkflowTask[size]
+						));
 				}
 			}
 			else {

@@ -14,19 +14,15 @@
 
 package com.liferay.app.builder.workflow.rest.client.resource.v1_0;
 
-import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTask;
+import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflow;
 import com.liferay.app.builder.workflow.rest.client.http.HttpInvoker;
-import com.liferay.app.builder.workflow.rest.client.pagination.Page;
 import com.liferay.app.builder.workflow.rest.client.problem.Problem;
-import com.liferay.app.builder.workflow.rest.client.serdes.v1_0.AppWorkflowTaskSerDes;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.annotation.Generated;
 
@@ -35,25 +31,29 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public interface AppWorkflowTaskResource {
+public interface AppWorkflowResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Page<AppWorkflowTask> getAppWorkflowTasksPage(Long appId)
+	public AppWorkflow getAppWorkflow(Long appId) throws Exception;
+
+	public HttpInvoker.HttpResponse getAppWorkflowHttpResponse(Long appId)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getAppWorkflowTasksPageHttpResponse(
-			Long appId)
+	public AppWorkflow postAppWorkflow(Long appId, AppWorkflow appWorkflow)
 		throws Exception;
 
-	public Page<AppWorkflowTask> postAppWorkflowTasks(
-			Long appId, AppWorkflowTask[] appWorkflowTasks)
+	public HttpInvoker.HttpResponse postAppWorkflowHttpResponse(
+			Long appId, AppWorkflow appWorkflow)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postAppWorkflowTasksHttpResponse(
-			Long appId, AppWorkflowTask[] appWorkflowTasks)
+	public AppWorkflow putAppWorkflow(Long appId, AppWorkflow appWorkflow)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse putAppWorkflowHttpResponse(
+			Long appId, AppWorkflow appWorkflow)
 		throws Exception;
 
 	public static class Builder {
@@ -65,8 +65,8 @@ public interface AppWorkflowTaskResource {
 			return this;
 		}
 
-		public AppWorkflowTaskResource build() {
-			return new AppWorkflowTaskResourceImpl(this);
+		public AppWorkflowResource build() {
+			return new AppWorkflowResourceImpl(this);
 		}
 
 		public Builder endpoint(String host, int port, String scheme) {
@@ -109,14 +109,11 @@ public interface AppWorkflowTaskResource {
 
 	}
 
-	public static class AppWorkflowTaskResourceImpl
-		implements AppWorkflowTaskResource {
+	public static class AppWorkflowResourceImpl implements AppWorkflowResource {
 
-		public Page<AppWorkflowTask> getAppWorkflowTasksPage(Long appId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getAppWorkflowTasksPageHttpResponse(appId);
+		public AppWorkflow getAppWorkflow(Long appId) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getAppWorkflowHttpResponse(
+				appId);
 
 			String content = httpResponse.getContent();
 
@@ -127,7 +124,8 @@ public interface AppWorkflowTaskResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return Page.of(content, AppWorkflowTaskSerDes::toDTO);
+				return com.liferay.app.builder.workflow.rest.client.serdes.v1_0.
+					AppWorkflowSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -138,8 +136,7 @@ public interface AppWorkflowTaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getAppWorkflowTasksPageHttpResponse(
-				Long appId)
+		public HttpInvoker.HttpResponse getAppWorkflowHttpResponse(Long appId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -166,7 +163,7 @@ public interface AppWorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/app-builder-workflow/v1.0/apps/{appId}/app-workflow-tasks",
+						"/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows",
 				appId);
 
 			httpInvoker.userNameAndPassword(
@@ -175,12 +172,11 @@ public interface AppWorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<AppWorkflowTask> postAppWorkflowTasks(
-				Long appId, AppWorkflowTask[] appWorkflowTasks)
+		public AppWorkflow postAppWorkflow(Long appId, AppWorkflow appWorkflow)
 			throws Exception {
 
-			HttpInvoker.HttpResponse httpResponse =
-				postAppWorkflowTasksHttpResponse(appId, appWorkflowTasks);
+			HttpInvoker.HttpResponse httpResponse = postAppWorkflowHttpResponse(
+				appId, appWorkflow);
 
 			String content = httpResponse.getContent();
 
@@ -191,7 +187,8 @@ public interface AppWorkflowTaskResource {
 				"HTTP response status code: " + httpResponse.getStatusCode());
 
 			try {
-				return Page.of(content, AppWorkflowTaskSerDes::toDTO);
+				return com.liferay.app.builder.workflow.rest.client.serdes.v1_0.
+					AppWorkflowSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -202,21 +199,13 @@ public interface AppWorkflowTaskResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postAppWorkflowTasksHttpResponse(
-				Long appId, AppWorkflowTask[] appWorkflowTasks)
+		public HttpInvoker.HttpResponse postAppWorkflowHttpResponse(
+				Long appId, AppWorkflow appWorkflow)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-			httpInvoker.body(
-				Stream.of(
-					appWorkflowTasks
-				).map(
-					value -> String.valueOf(value)
-				).collect(
-					Collectors.toList()
-				).toString(),
-				"application/json");
+			httpInvoker.body(appWorkflow.toString(), "application/json");
 
 			if (_builder._locale != null) {
 				httpInvoker.header(
@@ -240,7 +229,7 @@ public interface AppWorkflowTaskResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/app-builder-workflow/v1.0/apps/{appId}/app-workflow-tasks",
+						"/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows",
 				appId);
 
 			httpInvoker.userNameAndPassword(
@@ -249,12 +238,78 @@ public interface AppWorkflowTaskResource {
 			return httpInvoker.invoke();
 		}
 
-		private AppWorkflowTaskResourceImpl(Builder builder) {
+		public AppWorkflow putAppWorkflow(Long appId, AppWorkflow appWorkflow)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = putAppWorkflowHttpResponse(
+				appId, appWorkflow);
+
+			String content = httpResponse.getContent();
+
+			_logger.fine("HTTP response content: " + content);
+
+			_logger.fine("HTTP response message: " + httpResponse.getMessage());
+			_logger.fine(
+				"HTTP response status code: " + httpResponse.getStatusCode());
+
+			try {
+				return com.liferay.app.builder.workflow.rest.client.serdes.v1_0.
+					AppWorkflowSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse putAppWorkflowHttpResponse(
+				Long appId, AppWorkflow appWorkflow)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(appWorkflow.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows",
+				appId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		private AppWorkflowResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			AppWorkflowTaskResource.class.getName());
+			AppWorkflowResource.class.getName());
 
 		private Builder _builder;
 

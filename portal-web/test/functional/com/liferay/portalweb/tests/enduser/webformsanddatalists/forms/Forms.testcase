@@ -2927,7 +2927,7 @@ definition {
 	@priority = "4"
 	test SubmitFormAndViewEmailNotification {
 		property test.name.skip.portal.instance = "Forms#SubmitFormAndViewEmailNotification";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.smtp.server.enabled = "true";
 
 		Navigator.openURL();

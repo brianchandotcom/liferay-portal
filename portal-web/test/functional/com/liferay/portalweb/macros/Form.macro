@@ -272,8 +272,7 @@ definition {
 
 		WaitForElementPresent(
 			locator1 = "Form#PAGE_TITLE_FIELD",
-			value1 = "${formPageName}"
-		);
+			value1 = "${formPageName}");
 
 		Type(
 			locator1 = "Form#PAGE_TITLE_FIELD",
@@ -470,7 +469,7 @@ definition {
 		if (isSet(localeSaveForm)) {
 			var key_localeSaveForm = "${localeSaveForm}";
 
-			WaitForElementPresent(				
+			WaitForElementPresent(
 				locator1 = "Form#SAVE_FORM_BUTTON_LOCALE",
 				value1 = "${key_localeSaveForm}");
 
@@ -479,7 +478,7 @@ definition {
 				value1 = "${key_localeSaveForm}");
 		}
 		else {
-			WaitForElementPresent(				
+			WaitForElementPresent(
 				locator1 = "Form#SAVE_FORM_BUTTON",
 				value1 = "Save Form");
 
@@ -494,7 +493,7 @@ definition {
 	}
 
 	macro saveElementSet {
-		WaitForElementPresent(				
+		WaitForElementPresent(
 			locator1 = "Form#SAVE_ELEMENT_SET_BUTTON",
 			value1 = "Save");
 
@@ -508,7 +507,7 @@ definition {
 	macro saveLocalized {
 		var key_saveButton = "${saveButton}";
 
-		WaitForElementPresent(				
+		WaitForElementPresent(
 			locator1 = "Form#SAVE_FORM_BUTTON_LOCALIZED",
 			value1 = "${saveButton}");
 

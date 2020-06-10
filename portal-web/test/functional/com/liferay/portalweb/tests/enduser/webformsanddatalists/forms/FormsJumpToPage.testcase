@@ -176,7 +176,7 @@ definition {
 	test ViewPagesAfterJump {
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewPagesAfterJump";
 		property portal.acceptance = "true";
-		
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -319,7 +319,7 @@ definition {
 	@priority = "4"
 	test ViewRuleAfterPageNameChange {
 		property test.name.skip.portal.instance = "FormsJumpToPage#ViewRuleAfterPageNameChange";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 
 		Navigator.openURL();
 

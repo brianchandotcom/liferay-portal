@@ -114,8 +114,7 @@ definition {
 
 		WaitForElementPresent(
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
-			value1 = "${optionValue}"
-		);
+			value1 = "${optionValue}");
 
 		Type(
 			locator1 = "FormFields#OPTIONS_OPTION_VALUE_FIELD",
@@ -129,8 +128,7 @@ definition {
 
 		WaitForElementPresent(
 			locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT",
-			value1 = "${optionValue}"
-		);
+			value1 = "${optionValue}");
 
 		Type.clickAtType(
 			locator1 = "FormFields#OPTIONS_OPTION_NAME_FIELD_EDIT",

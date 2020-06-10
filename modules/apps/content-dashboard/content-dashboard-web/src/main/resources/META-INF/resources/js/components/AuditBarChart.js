@@ -35,13 +35,7 @@ const BAR_CHART = {
 	width: 1150,
 };
 
-const BAR_CHART_BARS = {
-	education: {fill: '#4B9BFF', name: Liferay.Language.get('education')},
-	selection: {fill: '#50D2A0', name: Liferay.Language.get('selection')},
-	solution: {fill: '#FFB46E', name: Liferay.Language.get('solution')},
-};
-
-export default function AuditBarChart({data}) {
+export default function AuditBarChart({bars, data}) {
 	return (
 		<>
 			<ResponsiveContainer height={BAR_CHART.height}>
@@ -77,27 +71,19 @@ export default function AuditBarChart({data}) {
 						}}
 						tickLine={false}
 					/>
-					<Bar
-						barSize={BAR_CHART.barHeight}
-						dataKey="education"
-						fill={BAR_CHART_BARS.education.fill}
-						legendType="square"
-						name={BAR_CHART_BARS.education.name}
-					/>
-					<Bar
-						barSize={BAR_CHART.barHeight}
-						dataKey="selection"
-						fill={BAR_CHART_BARS.selection.fill}
-						legendType="square"
-						name={BAR_CHART_BARS.selection.name}
-					/>
-					<Bar
-						barSize={BAR_CHART.barHeight}
-						dataKey="solution"
-						fill={BAR_CHART_BARS.solution.fill}
-						legendType="square"
-						name={BAR_CHART_BARS.solution.name}
-					/>
+
+					{bars.map((bar, index) => {
+						return (
+							<Bar
+								barSize={BAR_CHART.barHeight}
+								dataKey={bar.dataKey}
+								fill={bar.fill}
+								key={index}
+								legendType="square"
+								name={bar.name}
+							/>
+						);
+					})}
 				</BarChart>
 			</ResponsiveContainer>
 		</>
@@ -122,5 +108,6 @@ function CustomTick(props) {
 }
 
 AuditBarChart.propTypes = {
+	bars: PropTypes.array.isRequired,
 	data: PropTypes.array.isRequired,
 };

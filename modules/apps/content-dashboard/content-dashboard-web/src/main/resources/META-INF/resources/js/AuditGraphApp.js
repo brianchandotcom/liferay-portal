@@ -17,6 +17,24 @@ import React from 'react';
 import AuditBarChart from './components/AuditBarChart';
 import EmptyAuditBarChart from './components/EmptyAuditBarChart';
 
+const bars = [
+	{
+		dataKey: 'education',
+		fill: '#4B9BFF',
+		name: Liferay.Language.get('education'),
+	},
+	{
+		dataKey: 'selection',
+		fill: '#50D2A0',
+		name: Liferay.Language.get('selection'),
+	},
+	{
+		dataKey: 'solution',
+		fill: '#FFB46E',
+		name: Liferay.Language.get('solution'),
+	},
+];
+
 const data = [
 	{
 		education: 4000,
@@ -46,7 +64,7 @@ const data = [
 
 export default function () {
 	return data.length > 0 ? (
-		<AuditBarChart data={data} />
+		<AuditBarChart bars={bars} data={data} />
 	) : (
 		<EmptyAuditBarChart />
 	);

@@ -125,11 +125,12 @@ public class SelectLayoutCollectionDisplayContext {
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
 
+		searchContainer.setResults(assetListEntries);
+
 		int assetListEntriesCount =
 			AssetListEntryServiceUtil.getAssetListEntriesCount(
 				groupIds, types.toArray(new String[0]));
 
-		searchContainer.setResults(assetListEntries);
 		searchContainer.setTotal(assetListEntriesCount);
 
 		return searchContainer;

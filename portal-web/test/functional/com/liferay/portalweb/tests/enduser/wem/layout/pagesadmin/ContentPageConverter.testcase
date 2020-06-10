@@ -185,6 +185,7 @@ definition {
 	@priority = "5"
 	test ConvertWidgetPageDecoratorsToContentPage {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -799,6 +800,7 @@ definition {
 	@priority = "5"
 	test EditConvertedContentPageWithDecorator {
 		property portal.acceptance = "true";
+		property portal.upstream = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",

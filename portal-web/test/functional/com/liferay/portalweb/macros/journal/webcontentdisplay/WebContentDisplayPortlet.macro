@@ -333,6 +333,8 @@ definition {
 
 		Pause(locator1 = "3000");
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		AssertClick(
 			locator1 = "WCDConfiguration#SELECT_WEB_CONTENT_BUTTON",
 			value1 = "Select");

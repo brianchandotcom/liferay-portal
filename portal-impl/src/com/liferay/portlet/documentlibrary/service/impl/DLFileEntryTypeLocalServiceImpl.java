@@ -123,7 +123,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		long fileEntryTypeId = counterLocalService.increment();
 
-		_validate(fileEntryTypeId, groupId, fileEntryTypeKey, dataDefinitionId);
+		_validate(groupId, fileEntryTypeId, dataDefinitionId, fileEntryTypeKey);
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
@@ -639,7 +639,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
 
 		_validateFileEntryType(
-			fileEntryTypeId, dlFileEntryType.getGroupId(),
+			dlFileEntryType.getGroupId(), fileEntryTypeId,
 			dlFileEntryType.getFileEntryTypeKey());
 
 		_validateDDMStructure(dlFileEntryType.getDataDefinitionId());
@@ -883,7 +883,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			long[] ddmStructureIds)
 		throws PortalException {
 
-		_validateFileEntryType(fileEntryTypeId, groupId, fileEntryTypeKey);
+		_validateFileEntryType(groupId, fileEntryTypeId, fileEntryTypeKey);
 
 		if (ddmStructureIds.length == 0) {
 			throw new NoSuchMetadataSetException(
@@ -1026,11 +1026,11 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	private void _validate(
-			long fileEntryTypeId, long groupId, String fileEntryTypeKey,
-			long dataDefinitionId)
+			long groupId, long fileEntryTypeId, long dataDefinitionId,
+			String fileEntryTypeKey)
 		throws DuplicateFileEntryTypeException, NoSuchMetadataSetException {
 
-		_validateFileEntryType(fileEntryTypeId, groupId, fileEntryTypeKey);
+		_validateFileEntryType(groupId, fileEntryTypeId, fileEntryTypeKey);
 
 		_validateDDMStructure(dataDefinitionId);
 	}
@@ -1048,7 +1048,7 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	private void _validateFileEntryType(
-			long fileEntryTypeId, long groupId, String fileEntryTypeKey)
+			long groupId, long fileEntryTypeId, String fileEntryTypeKey)
 		throws DuplicateFileEntryTypeException {
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.fetchByG_F(

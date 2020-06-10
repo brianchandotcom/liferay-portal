@@ -433,6 +433,24 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that able to embed a video in KBArticle."
+	@priority = "4"
+	test EmbedVideo {
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.addCP(
+			embedVideo = "https://www.youtube.com/watch?v=2EPZxIC5ogU",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+
+		KBAdmin.openKBAdmin(siteURLKey = "guest");
+
+		KBArticle.viewCP(
+			embedVideo = "true",
+			kbArticleContent = "Knowledge Base Video Content",
+			kbArticleTitle = "Knowledge Base Article Title");
+	}
+
 	@priority = "3"
 	test SaveEditedChildArticleAsDraft {
 		JSONLayout.addPublicLayout(

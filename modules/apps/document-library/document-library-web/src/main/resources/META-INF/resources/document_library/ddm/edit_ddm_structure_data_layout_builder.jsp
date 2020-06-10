@@ -47,35 +47,37 @@ renderResponse.setTitle(title);
 
 <portlet:actionURL name="/document_library/ddm/update_data_definition" var="updateDataDefinitionURL" />
 
-<clay:container-fluid>
-	<aui:form action="<%= (ddmStructure == null) ? addDataDefinitionURL : updateDataDefinitionURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
-		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-		<aui:input name="dataDefinitionId" type="hidden" value="<%= ddmStructureId %>" />
-		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-		<aui:input name="dataDefinition" type="hidden" />
-		<aui:input name="dataLayout" type="hidden" />
-		<aui:input name="status" type="hidden" />
+<aui:form action="<%= (ddmStructure == null) ? addDataDefinitionURL : updateDataDefinitionURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveDDMStructure();" %>'>
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="dataDefinitionId" type="hidden" value="<%= ddmStructureId %>" />
+	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input name="dataDefinition" type="hidden" />
+	<aui:input name="dataLayout" type="hidden" />
+	<aui:input name="status" type="hidden" />
 
-		<aui:model-context bean="<%= ddmStructure %>" model="<%= com.liferay.dynamic.data.mapping.model.DDMStructure.class %>" />
+	<aui:model-context bean="<%= ddmStructure %>" model="<%= com.liferay.dynamic.data.mapping.model.DDMStructure.class %>" />
 
-		<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
-			<clay:container-fluid>
-				<ul class="tbar-nav">
-					<li class="tbar-item tbar-item-expand">
-						<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="form-control-inline"
-						label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "metadata-set") %>' wrapperCssClass="mb-0" />
-					</li>
-					<li class="tbar-item">
-						<div class="metadata-type-button-row tbar-section text-right">
-							<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
+		<clay:container-fluid>
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="form-control-inline"
+					label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "metadata-set") %>' wrapperCssClass="mb-0" />
+				</li>
+				<li class="tbar-item">
+					<div class="metadata-type-button-row tbar-section text-right">
+						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-							<aui:button cssClass="btn-sm mr-3" onClick='<%= renderResponse.getNamespace() + "saveDDMStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
-						</div>
-					</li>
-				</ul>
-			</clay:container-fluid>
-		</nav>
+						<aui:button cssClass="btn-sm mr-3" onClick='<%= renderResponse.getNamespace() + "saveDDMStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
+					</div>
+				</li>
+			</ul>
+		</clay:container-fluid>
+	</nav>
 
+	<clay:container-fluid
+		cssClass="container-view"
+	>
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<aui:field-wrapper>
@@ -140,8 +142,8 @@ renderResponse.setTitle(title);
 				/>
 			</aui:fieldset>
 		</aui:fieldset-group>
-	</aui:form>
-</clay:container-fluid>
+	</clay:container-fluid>
+</aui:form>
 
 <aui:script>
 	function <portlet:namespace />getInputLocalizedValues(field) {

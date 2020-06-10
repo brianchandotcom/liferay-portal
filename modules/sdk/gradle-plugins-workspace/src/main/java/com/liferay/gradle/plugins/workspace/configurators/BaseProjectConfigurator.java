@@ -45,10 +45,9 @@ import org.gradle.api.tasks.Copy;
 public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 
 	public BaseProjectConfigurator(Settings settings) {
-		File rootDir = settings.getRootDir();
-
 		String defaultRootDirNames = GradleUtil.getProperty(
 			settings, getDefaultRootDirPropertyName(), (String)null);
+		File rootDir = settings.getRootDir();
 
 		if (Validator.isNotNull(defaultRootDirNames)) {
 			if (defaultRootDirNames.equals("*")) {

@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMBEDDED_VIDEO_IFRAME</td>
+	<td>//iframe[contains(@src,'embed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_DOC</td>
 	<td>//iframe[contains(@class,'google-docs')]</td>
 	<td></td>

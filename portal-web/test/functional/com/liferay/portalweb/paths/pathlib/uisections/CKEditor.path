@@ -114,8 +114,28 @@
 </tr>
 <!--CONTENT_VIDEO_LINK-->
 <tr>
+	<td>CONTENT_VIDEO_IMAGE</td>
+	<td>//span[contains(@class,'videoembed_icon')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_VIDEO_LINK_IMAGE</td>
 	<td>//img[contains(@class,'video')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_BUTTON_PLAY</td>
+	<td>//div[contains(@class,'thumbnail-overlay')]//button[contains(@aria-label,'Play')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_OK</td>
+	<td>//span[contains(@class,'button')][normalize-space(text())='OK']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_URL</td>
+	<td>//div[label[contains(.,'Video')]]//input</td>
 	<td></td>
 </tr>
 </tbody>

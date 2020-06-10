@@ -33,6 +33,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,28 +42,28 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AppWorkflowAction")
+@GraphQLName("AppWorkflow")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AppWorkflowAction")
-public class AppWorkflowAction {
+@XmlRootElement(name = "AppWorkflow")
+public class AppWorkflow {
 
-	public static AppWorkflowAction toDTO(String json) {
-		return ObjectMapperUtil.readValue(AppWorkflowAction.class, json);
+	public static AppWorkflow toDTO(String json) {
+		return ObjectMapperUtil.readValue(AppWorkflow.class, json);
 	}
 
 	@Schema
-	public String getName() {
-		return name;
+	public Long getAppId() {
+		return appId;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAppId(Long appId) {
+		this.appId = appId;
 	}
 
 	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+	public void setAppId(UnsafeSupplier<Long, Exception> appIdUnsafeSupplier) {
 		try {
-			name = nameUnsafeSupplier.get();
+			appId = appIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -73,23 +75,25 @@ public class AppWorkflowAction {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
+	protected Long appId;
 
 	@Schema
-	public Boolean getPrimary() {
-		return primary;
+	@Valid
+	public AppWorkflowState[] getAppWorkflowStates() {
+		return appWorkflowStates;
 	}
 
-	public void setPrimary(Boolean primary) {
-		this.primary = primary;
+	public void setAppWorkflowStates(AppWorkflowState[] appWorkflowStates) {
+		this.appWorkflowStates = appWorkflowStates;
 	}
 
 	@JsonIgnore
-	public void setPrimary(
-		UnsafeSupplier<Boolean, Exception> primaryUnsafeSupplier) {
+	public void setAppWorkflowStates(
+		UnsafeSupplier<AppWorkflowState[], Exception>
+			appWorkflowStatesUnsafeSupplier) {
 
 		try {
-			primary = primaryUnsafeSupplier.get();
+			appWorkflowStates = appWorkflowStatesUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -101,23 +105,25 @@ public class AppWorkflowAction {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean primary;
+	protected AppWorkflowState[] appWorkflowStates;
 
 	@Schema
-	public String getTransitionTo() {
-		return transitionTo;
+	@Valid
+	public AppWorkflowTask[] getAppWorkflowTasks() {
+		return appWorkflowTasks;
 	}
 
-	public void setTransitionTo(String transitionTo) {
-		this.transitionTo = transitionTo;
+	public void setAppWorkflowTasks(AppWorkflowTask[] appWorkflowTasks) {
+		this.appWorkflowTasks = appWorkflowTasks;
 	}
 
 	@JsonIgnore
-	public void setTransitionTo(
-		UnsafeSupplier<String, Exception> transitionToUnsafeSupplier) {
+	public void setAppWorkflowTasks(
+		UnsafeSupplier<AppWorkflowTask[], Exception>
+			appWorkflowTasksUnsafeSupplier) {
 
 		try {
-			transitionTo = transitionToUnsafeSupplier.get();
+			appWorkflowTasks = appWorkflowTasksUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -129,7 +135,7 @@ public class AppWorkflowAction {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String transitionTo;
+	protected AppWorkflowTask[] appWorkflowTasks;
 
 	@Override
 	public boolean equals(Object object) {
@@ -137,13 +143,13 @@ public class AppWorkflowAction {
 			return true;
 		}
 
-		if (!(object instanceof AppWorkflowAction)) {
+		if (!(object instanceof AppWorkflow)) {
 			return false;
 		}
 
-		AppWorkflowAction appWorkflowAction = (AppWorkflowAction)object;
+		AppWorkflow appWorkflow = (AppWorkflow)object;
 
-		return Objects.equals(toString(), appWorkflowAction.toString());
+		return Objects.equals(toString(), appWorkflow.toString());
 	}
 
 	@Override
@@ -158,42 +164,54 @@ public class AppWorkflowAction {
 
 		sb.append("{");
 
-		if (name != null) {
+		if (appId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"name\": ");
+			sb.append("\"appId\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
+			sb.append(appId);
 		}
 
-		if (primary != null) {
+		if (appWorkflowStates != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"primary\": ");
+			sb.append("\"appWorkflowStates\": ");
 
-			sb.append(primary);
+			sb.append("[");
+
+			for (int i = 0; i < appWorkflowStates.length; i++) {
+				sb.append(String.valueOf(appWorkflowStates[i]));
+
+				if ((i + 1) < appWorkflowStates.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
-		if (transitionTo != null) {
+		if (appWorkflowTasks != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"transitionTo\": ");
+			sb.append("\"appWorkflowTasks\": ");
 
-			sb.append("\"");
+			sb.append("[");
 
-			sb.append(_escape(transitionTo));
+			for (int i = 0; i < appWorkflowTasks.length; i++) {
+				sb.append(String.valueOf(appWorkflowTasks[i]));
 
-			sb.append("\"");
+				if ((i + 1) < appWorkflowTasks.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");
@@ -202,7 +220,7 @@ public class AppWorkflowAction {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowAction",
+		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow",
 		name = "x-class-name"
 	)
 	public String xClassName;

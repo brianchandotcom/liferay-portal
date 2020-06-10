@@ -15,7 +15,7 @@
 package com.liferay.app.builder.workflow.rest.client.dto.v1_0;
 
 import com.liferay.app.builder.workflow.rest.client.function.UnsafeSupplier;
-import com.liferay.app.builder.workflow.rest.client.serdes.v1_0.AppWorkflowTaskSerDes;
+import com.liferay.app.builder.workflow.rest.client.serdes.v1_0.AppWorkflowStateSerDes;
 
 import java.util.Objects;
 
@@ -26,10 +26,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class AppWorkflowTask implements Cloneable {
+public class AppWorkflowState implements Cloneable {
 
-	public static AppWorkflowTask toDTO(String json) {
-		return AppWorkflowTaskSerDes.toDTO(json);
+	public static AppWorkflowState toDTO(String json) {
+		return AppWorkflowStateSerDes.toDTO(json);
 	}
 
 	public AppWorkflowTransition[] getAppWorkflowTransitions() {
@@ -56,26 +56,26 @@ public class AppWorkflowTask implements Cloneable {
 
 	protected AppWorkflowTransition[] appWorkflowTransitions;
 
-	public Long[] getDataLayoutIds() {
-		return dataLayoutIds;
+	public Boolean getInitial() {
+		return initial;
 	}
 
-	public void setDataLayoutIds(Long[] dataLayoutIds) {
-		this.dataLayoutIds = dataLayoutIds;
+	public void setInitial(Boolean initial) {
+		this.initial = initial;
 	}
 
-	public void setDataLayoutIds(
-		UnsafeSupplier<Long[], Exception> dataLayoutIdsUnsafeSupplier) {
+	public void setInitial(
+		UnsafeSupplier<Boolean, Exception> initialUnsafeSupplier) {
 
 		try {
-			dataLayoutIds = dataLayoutIdsUnsafeSupplier.get();
+			initial = initialUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Long[] dataLayoutIds;
+	protected Boolean initial;
 
 	public String getName() {
 		return name;
@@ -97,8 +97,8 @@ public class AppWorkflowTask implements Cloneable {
 	protected String name;
 
 	@Override
-	public AppWorkflowTask clone() throws CloneNotSupportedException {
-		return (AppWorkflowTask)super.clone();
+	public AppWorkflowState clone() throws CloneNotSupportedException {
+		return (AppWorkflowState)super.clone();
 	}
 
 	@Override
@@ -107,13 +107,13 @@ public class AppWorkflowTask implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof AppWorkflowTask)) {
+		if (!(object instanceof AppWorkflowState)) {
 			return false;
 		}
 
-		AppWorkflowTask appWorkflowTask = (AppWorkflowTask)object;
+		AppWorkflowState appWorkflowState = (AppWorkflowState)object;
 
-		return Objects.equals(toString(), appWorkflowTask.toString());
+		return Objects.equals(toString(), appWorkflowState.toString());
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class AppWorkflowTask implements Cloneable {
 	}
 
 	public String toString() {
-		return AppWorkflowTaskSerDes.toJSON(this);
+		return AppWorkflowStateSerDes.toJSON(this);
 	}
 
 }

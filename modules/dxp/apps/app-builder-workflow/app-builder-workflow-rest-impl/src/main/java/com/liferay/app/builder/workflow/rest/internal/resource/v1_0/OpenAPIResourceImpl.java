@@ -69,7 +69,7 @@ public class OpenAPIResourceImpl {
 
 	private final Set<Class<?>> _resourceClasses = new HashSet<Class<?>>() {
 		{
-			add(AppWorkflowTaskResourceImpl.class);
+			add(AppWorkflowResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

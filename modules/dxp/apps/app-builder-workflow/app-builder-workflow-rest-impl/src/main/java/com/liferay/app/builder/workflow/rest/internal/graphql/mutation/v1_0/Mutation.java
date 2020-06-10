@@ -14,15 +14,14 @@
 
 package com.liferay.app.builder.workflow.rest.internal.graphql.mutation.v1_0;
 
-import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask;
-import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowTaskResource;
+import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow;
+import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
-import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.function.BiFunction;
 
@@ -42,30 +41,38 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
-	public static void setAppWorkflowTaskResourceComponentServiceObjects(
-		ComponentServiceObjects<AppWorkflowTaskResource>
-			appWorkflowTaskResourceComponentServiceObjects) {
+	public static void setAppWorkflowResourceComponentServiceObjects(
+		ComponentServiceObjects<AppWorkflowResource>
+			appWorkflowResourceComponentServiceObjects) {
 
-		_appWorkflowTaskResourceComponentServiceObjects =
-			appWorkflowTaskResourceComponentServiceObjects;
+		_appWorkflowResourceComponentServiceObjects =
+			appWorkflowResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
-	public java.util.Collection<AppWorkflowTask> createAppWorkflowTasks(
+	public AppWorkflow createAppWorkflow(
 			@GraphQLName("appId") Long appId,
-			@GraphQLName("appWorkflowTasks") AppWorkflowTask[] appWorkflowTasks)
+			@GraphQLName("appWorkflow") AppWorkflow appWorkflow)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_appWorkflowTaskResourceComponentServiceObjects,
+			_appWorkflowResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			appWorkflowTaskResource -> {
-				Page paginationPage =
-					appWorkflowTaskResource.postAppWorkflowTasks(
-						appId, appWorkflowTasks);
+			appWorkflowResource -> appWorkflowResource.postAppWorkflow(
+				appId, appWorkflow));
+	}
 
-				return paginationPage.getItems();
-			});
+	@GraphQLField
+	public AppWorkflow updateAppWorkflow(
+			@GraphQLName("appId") Long appId,
+			@GraphQLName("appWorkflow") AppWorkflow appWorkflow)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_appWorkflowResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			appWorkflowResource -> appWorkflowResource.putAppWorkflow(
+				appId, appWorkflow));
 	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
@@ -107,21 +114,19 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			AppWorkflowTaskResource appWorkflowTaskResource)
+			AppWorkflowResource appWorkflowResource)
 		throws Exception {
 
-		appWorkflowTaskResource.setContextAcceptLanguage(_acceptLanguage);
-		appWorkflowTaskResource.setContextCompany(_company);
-		appWorkflowTaskResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		appWorkflowTaskResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		appWorkflowTaskResource.setContextUriInfo(_uriInfo);
-		appWorkflowTaskResource.setContextUser(_user);
+		appWorkflowResource.setContextAcceptLanguage(_acceptLanguage);
+		appWorkflowResource.setContextCompany(_company);
+		appWorkflowResource.setContextHttpServletRequest(_httpServletRequest);
+		appWorkflowResource.setContextHttpServletResponse(_httpServletResponse);
+		appWorkflowResource.setContextUriInfo(_uriInfo);
+		appWorkflowResource.setContextUser(_user);
 	}
 
-	private static ComponentServiceObjects<AppWorkflowTaskResource>
-		_appWorkflowTaskResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AppWorkflowResource>
+		_appWorkflowResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

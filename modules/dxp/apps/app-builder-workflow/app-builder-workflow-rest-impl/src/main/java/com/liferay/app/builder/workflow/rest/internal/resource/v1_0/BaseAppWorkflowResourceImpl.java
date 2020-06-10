@@ -14,24 +14,15 @@
 
 package com.liferay.app.builder.workflow.rest.internal.resource.v1_0;
 
-import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask;
-import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowTaskResource;
+import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow;
+import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -41,11 +32,7 @@ import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 
-import java.io.Serializable;
-
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Generated;
@@ -58,11 +45,10 @@ import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -71,114 +57,65 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @Path("/v1.0")
-public abstract class BaseAppWorkflowTaskResourceImpl
-	implements AppWorkflowTaskResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<AppWorkflowTask> {
+public abstract class BaseAppWorkflowResourceImpl
+	implements AppWorkflowResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflow-tasks'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows'  -u 'test@liferay.com:test'
 	 */
 	@Override
 	@GET
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
-	@Path("/apps/{appId}/app-workflow-tasks")
+	@Path("/apps/{appId}/app-workflows")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "AppWorkflowTask")})
-	public Page<AppWorkflowTask> getAppWorkflowTasksPage(
+	@Tags(value = {@Tag(name = "AppWorkflow")})
+	public AppWorkflow getAppWorkflow(
 			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		return new AppWorkflow();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflow-tasks'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows' -d $'{"appId": ___, "appWorkflowStates": ___, "appWorkflowTasks": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Override
 	@Consumes({"application/json", "application/xml"})
 	@POST
 	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
-	@Path("/apps/{appId}/app-workflow-tasks")
+	@Path("/apps/{appId}/app-workflows")
 	@Produces({"application/json", "application/xml"})
-	@Tags(value = {@Tag(name = "AppWorkflowTask")})
-	public Page<AppWorkflowTask> postAppWorkflowTasks(
+	@Tags(value = {@Tag(name = "AppWorkflow")})
+	public AppWorkflow postAppWorkflow(
 			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId,
-			AppWorkflowTask[] appWorkflowTasks)
+			AppWorkflow appWorkflow)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		return new AppWorkflow();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/app-builder-workflow/v1.0/apps/{appId}/app-workflows' -d $'{"appId": ___, "appWorkflowStates": ___, "appWorkflowTasks": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
 	@Override
-	@SuppressWarnings("PMD.UnusedLocalVariable")
-	public void create(
-			java.util.Collection<AppWorkflowTask> appWorkflowTasks,
-			Map<String, Serializable> parameters)
-		throws Exception {
-	}
-
-	@Override
-	public void delete(
-			java.util.Collection<AppWorkflowTask> appWorkflowTasks,
-			Map<String, Serializable> parameters)
-		throws Exception {
-	}
-
-	@Override
-	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
+	@Consumes({"application/json", "application/xml"})
+	@PUT
+	@Parameters(value = {@Parameter(in = ParameterIn.PATH, name = "appId")})
+	@Path("/apps/{appId}/app-workflows")
+	@Produces({"application/json", "application/xml"})
+	@Tags(value = {@Tag(name = "AppWorkflow")})
+	public AppWorkflow putAppWorkflow(
+			@NotNull @Parameter(hidden = true) @PathParam("appId") Long appId,
+			AppWorkflow appWorkflow)
 		throws Exception {
 
-		return getEntityModel(
-			new MultivaluedHashMap<String, Object>(multivaluedMap));
-	}
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return null;
-	}
-
-	@Override
-	public Page<AppWorkflowTask> read(
-			Filter filter, Pagination pagination, Sort[] sorts,
-			Map<String, Serializable> parameters, String search)
-		throws Exception {
-
-		return getAppWorkflowTasksPage((Long)parameters.get("appId"));
-	}
-
-	@Override
-	public void setLanguageId(String languageId) {
-		this.contextAcceptLanguage = new AcceptLanguage() {
-
-			@Override
-			public List<Locale> getLocales() {
-				return null;
-			}
-
-			@Override
-			public String getPreferredLanguageId() {
-				return languageId;
-			}
-
-			@Override
-			public Locale getPreferredLocale() {
-				return LocaleUtil.fromLanguageId(languageId);
-			}
-
-		};
-	}
-
-	@Override
-	public void update(
-			java.util.Collection<AppWorkflowTask> appWorkflowTasks,
-			Map<String, Serializable> parameters)
-		throws Exception {
+		return new AppWorkflow();
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -277,7 +214,5 @@ public abstract class BaseAppWorkflowTaskResourceImpl
 	protected ResourceActionLocalService resourceActionLocalService;
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
-	protected VulcanBatchEngineImportTaskResource
-		vulcanBatchEngineImportTaskResource;
 
 }

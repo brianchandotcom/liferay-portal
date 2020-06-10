@@ -14,8 +14,8 @@
 
 package com.liferay.app.builder.workflow.rest.internal.graphql.query.v1_0;
 
-import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask;
-import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowTaskResource;
+import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow;
+import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
@@ -44,48 +44,46 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Query {
 
-	public static void setAppWorkflowTaskResourceComponentServiceObjects(
-		ComponentServiceObjects<AppWorkflowTaskResource>
-			appWorkflowTaskResourceComponentServiceObjects) {
+	public static void setAppWorkflowResourceComponentServiceObjects(
+		ComponentServiceObjects<AppWorkflowResource>
+			appWorkflowResourceComponentServiceObjects) {
 
-		_appWorkflowTaskResourceComponentServiceObjects =
-			appWorkflowTaskResourceComponentServiceObjects;
+		_appWorkflowResourceComponentServiceObjects =
+			appWorkflowResourceComponentServiceObjects;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {appWorkflowTasks(appId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {appWorkflow(appId: ___){appId, appWorkflowStates, appWorkflowTasks}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
-	public AppWorkflowTaskPage appWorkflowTasks(
-			@GraphQLName("appId") Long appId)
+	public AppWorkflow appWorkflow(@GraphQLName("appId") Long appId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
-			_appWorkflowTaskResourceComponentServiceObjects,
+			_appWorkflowResourceComponentServiceObjects,
 			this::_populateResourceContext,
-			appWorkflowTaskResource -> new AppWorkflowTaskPage(
-				appWorkflowTaskResource.getAppWorkflowTasksPage(appId)));
+			appWorkflowResource -> appWorkflowResource.getAppWorkflow(appId));
 	}
 
-	@GraphQLName("AppWorkflowTaskPage")
-	public class AppWorkflowTaskPage {
+	@GraphQLName("AppWorkflowPage")
+	public class AppWorkflowPage {
 
-		public AppWorkflowTaskPage(Page appWorkflowTaskPage) {
-			actions = appWorkflowTaskPage.getActions();
-			items = appWorkflowTaskPage.getItems();
-			lastPage = appWorkflowTaskPage.getLastPage();
-			page = appWorkflowTaskPage.getPage();
-			pageSize = appWorkflowTaskPage.getPageSize();
-			totalCount = appWorkflowTaskPage.getTotalCount();
+		public AppWorkflowPage(Page appWorkflowPage) {
+			actions = appWorkflowPage.getActions();
+			items = appWorkflowPage.getItems();
+			lastPage = appWorkflowPage.getLastPage();
+			page = appWorkflowPage.getPage();
+			pageSize = appWorkflowPage.getPageSize();
+			totalCount = appWorkflowPage.getTotalCount();
 		}
 
 		@GraphQLField
 		protected Map<String, Map> actions;
 
 		@GraphQLField
-		protected java.util.Collection<AppWorkflowTask> items;
+		protected java.util.Collection<AppWorkflow> items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -121,21 +119,19 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
-			AppWorkflowTaskResource appWorkflowTaskResource)
+			AppWorkflowResource appWorkflowResource)
 		throws Exception {
 
-		appWorkflowTaskResource.setContextAcceptLanguage(_acceptLanguage);
-		appWorkflowTaskResource.setContextCompany(_company);
-		appWorkflowTaskResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		appWorkflowTaskResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		appWorkflowTaskResource.setContextUriInfo(_uriInfo);
-		appWorkflowTaskResource.setContextUser(_user);
+		appWorkflowResource.setContextAcceptLanguage(_acceptLanguage);
+		appWorkflowResource.setContextCompany(_company);
+		appWorkflowResource.setContextHttpServletRequest(_httpServletRequest);
+		appWorkflowResource.setContextHttpServletResponse(_httpServletResponse);
+		appWorkflowResource.setContextUriInfo(_uriInfo);
+		appWorkflowResource.setContextUser(_user);
 	}
 
-	private static ComponentServiceObjects<AppWorkflowTaskResource>
-		_appWorkflowTaskResourceComponentServiceObjects;
+	private static ComponentServiceObjects<AppWorkflowResource>
+		_appWorkflowResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private BiFunction<Object, String, Filter> _filterBiFunction;

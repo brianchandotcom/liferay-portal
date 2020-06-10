@@ -20,6 +20,7 @@ import MappingInputs from './components/MappingInputs';
 function OpenGraphMapping({
 	fields,
 	openGraphDescription,
+	openGraphImage,
 	openGraphTitle,
 	portletNamespace,
 	selectedSource,
@@ -38,6 +39,11 @@ function OpenGraphMapping({
 					name: `${portletNamespace}openGraphDescription`,
 					selectedFieldKey: openGraphDescription,
 				},
+				{
+					label: Liferay.Language.get('image'),
+					name: `${portletNamespace}openGraphImageTitle`,
+					selectedFieldKey: openGraphImage,
+				},
 			]}
 			selectedSource={selectedSource}
 		/>
@@ -52,6 +58,7 @@ OpenGraphMapping.propTypes = {
 		})
 	).isRequired,
 	openGraphDescription: PropTypes.string.isRequired,
+	openGraphImage: PropTypes.string.isRequired,
 	openGraphTitle: PropTypes.string.isRequired,
 	selectedSource: PropTypes.shape({
 		classNameLabel: PropTypes.string,

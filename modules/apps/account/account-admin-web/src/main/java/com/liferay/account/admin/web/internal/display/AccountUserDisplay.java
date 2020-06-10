@@ -169,6 +169,25 @@ public class AccountUserDisplay {
 		return _userId;
 	}
 
+	public boolean isValidateEmail() throws PortalException {
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_getAccountEntryUserRels(getUserId());
+
+		if (accountEntryUserRels.size() != 1) {
+			return false;
+		}
+
+		AccountEntryUserRel accountEntryUserRel = accountEntryUserRels.get(0);
+
+		AccountEntry accountEntry =
+			AccountEntryLocalServiceUtil.getAccountEntry(
+				accountEntryUserRel.getAccountEntryId());
+
+		return Objects.equals(
+			accountEntry.getType(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL);
+	}
+
 	private AccountUserDisplay(User user) {
 		_accountNamesStyle = _getAccountNamesStyle(user.getUserId());
 		_emailAddress = user.getEmailAddress();

@@ -312,7 +312,9 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 					infoDisplayObjectProvider.getDisplayObject(),
 					mappedFieldNameFunction.apply(locale));
 
-			return String.valueOf(infoFieldValue.getValue(locale));
+			if (infoFieldValue != null) {
+				return String.valueOf(infoFieldValue.getValue(locale));
+			}
 		}
 
 		return defaultValueFunction.apply(locale);

@@ -12,6 +12,13 @@ definition {
 			User.firstLoginPG();
 		}
 
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Search");
+
+		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
+
 		task ("Add a site via JSON") {
 			JSONGroup.addGroup(groupName = "Test Site Name");
 		}
@@ -59,6 +66,7 @@ definition {
 	@priority = "5"
 	test FilterByPageFacet {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#FilterByPageFacet";
 
 		task ("Add a Static Text fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -113,6 +121,8 @@ definition {
 	@description = "This is a test for LPS-91405. Content page associated with category will not display after category deleted."
 	@priority = "3"
 	test SearchContentPagesWithDeletedCategory {
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchContentPagesWithDeletedCategory";
+
 		task ("Add a a vocabulary with a category") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -173,6 +183,7 @@ definition {
 	@priority = "5"
 	test SearchEditableText {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchEditableText";
 
 		task ("Add a Rich Text fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(
@@ -247,6 +258,7 @@ definition {
 	@priority = "5"
 	test SearchStaticText {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentPagesWithSearch#SearchStaticText";
 
 		task ("Add a Static Text fragment to the content page") {
 			ContentPagesNavigator.openEditContentPage(

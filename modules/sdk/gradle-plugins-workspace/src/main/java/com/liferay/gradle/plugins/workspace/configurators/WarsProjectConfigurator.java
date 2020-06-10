@@ -114,7 +114,7 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 
-					if (isNonprojectDirName(dirName)) {
+					if (isExcludedDirName(dirName)) {
 						return FileVisitResult.SKIP_SUBTREE;
 					}
 

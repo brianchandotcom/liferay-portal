@@ -178,7 +178,7 @@ public abstract class BaseProjectConfigurator implements ProjectConfigurator {
 		return WorkspacePlugin.PROPERTY_PREFIX + getName() + ".dir";
 	}
 
-	protected boolean isNonprojectDirName(String dirName) {
+	protected boolean isExcludedDirName(String dirName) {
 		if (dirName == null) {
 			return false;
 		}

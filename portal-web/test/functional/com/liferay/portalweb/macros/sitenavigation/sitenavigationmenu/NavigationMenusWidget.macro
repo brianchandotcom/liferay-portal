@@ -38,6 +38,12 @@ definition {
 		IFrame.selectModalFrame();
 	}
 
+	macro selectDisplayTemplate {
+		Select(
+			locator1 = "Select#DISPLAY_TEMPLATE",
+			value1 = "${templateName}");
+	}
+
 	macro selectNavigation {
 		Select(
 			locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",

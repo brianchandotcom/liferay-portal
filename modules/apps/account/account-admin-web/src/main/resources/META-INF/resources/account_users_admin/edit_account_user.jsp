@@ -43,13 +43,13 @@ String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigation
 if (Validator.isNull(screenNavigationEntryKey)) {
 	screenNavigationEntryKey = AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION;
 }
+
+AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
 %>
 
-<c:if test="<%= Objects.equals(AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL, screenNavigationCategoryKey) && Objects.equals(AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION, screenNavigationEntryKey) %>">
+<c:if test="<%= !accountUserDisplay.isValidateEmail() && Objects.equals(AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL, screenNavigationCategoryKey) && Objects.equals(AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION, screenNavigationEntryKey) %>">
 
 	<%
-	AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
-
 	PortletURL viewValidDomainsURL = renderResponse.createRenderURL();
 
 	viewValidDomainsURL.setParameter("mvcPath", "/account_users_admin/account_user/view_valid_domains.jsp");

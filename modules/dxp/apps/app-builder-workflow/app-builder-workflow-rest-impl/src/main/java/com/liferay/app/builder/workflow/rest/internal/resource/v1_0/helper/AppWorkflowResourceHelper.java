@@ -54,9 +54,8 @@ public class AppWorkflowResourceHelper {
 		String content = _definitionExporter.export(definition);
 
 		return _workflowDefinitionManager.deployWorkflowDefinition(
-			companyId, userId, _getWorkflowDefinitionTitle(appBuilderApp),
-			_getWorkflowDefinitionName(appBuilderApp),
-			_APP_WORKFLOW_DEFINITION_SCOPE, content.getBytes());
+			companyId, userId, appBuilderApp.getName(), appBuilderApp.getUuid(),
+			AppBuilderApp.class.getSimpleName(), content.getBytes());
 	}
 
 	public Definition getDefinition(Long appWorkflowId, long companyId)
@@ -75,8 +74,7 @@ public class AppWorkflowResourceHelper {
 		AppBuilderApp appBuilderApp, AppWorkflow appWorkflow) {
 
 		Definition definition = new Definition(
-			_getWorkflowDefinitionName(appBuilderApp), StringPool.BLANK,
-			StringPool.BLANK, 0);
+			appBuilderApp.getUuid(), StringPool.BLANK, StringPool.BLANK, 0);
 
 		for (AppWorkflowState appWorkflowState :
 				appWorkflow.getAppWorkflowStates()) {
@@ -146,17 +144,6 @@ public class AppWorkflowResourceHelper {
 				definition.getNode(appWorkflowTransition.getTransitionTo()));
 		}
 	}
-
-	private String _getWorkflowDefinitionName(AppBuilderApp appBuilderApp) {
-		return appBuilderApp.getUuid();
-	}
-
-	private String _getWorkflowDefinitionTitle(AppBuilderApp appBuilderApp) {
-		return "Workflow definition for App with the id " +
-			appBuilderApp.getAppBuilderAppId();
-	}
-
-	private static final String _APP_WORKFLOW_DEFINITION_SCOPE = "appWorkflow";
 
 	@Reference
 	private DefinitionBuilder _definitionBuilder;

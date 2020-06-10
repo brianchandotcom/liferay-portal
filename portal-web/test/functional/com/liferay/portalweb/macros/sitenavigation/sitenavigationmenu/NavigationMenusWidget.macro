@@ -38,6 +38,21 @@ definition {
 		IFrame.selectModalFrame();
 	}
 
+	macro gotoSublevel {
+		if ("${type}" == "Drop Down") {
+			MouseOver(
+				key_pageName = "${pageName}",
+				locator1 = "Home#PAGE");
+
+			Click(
+				key_itemName = "${itemName}",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+		}
+		else if ("${type}" == "List") {
+			NavItem.click(navItem = "${itemName}");
+		}
+	}
+
 	macro selectDisplayTemplate {
 		Select(
 			locator1 = "Select#DISPLAY_TEMPLATE",

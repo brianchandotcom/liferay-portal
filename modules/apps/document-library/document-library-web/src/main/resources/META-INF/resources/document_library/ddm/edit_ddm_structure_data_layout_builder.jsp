@@ -65,6 +65,13 @@ renderResponse.setTitle(title);
 						<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="form-control-inline"
 						label="" name="name" placeholder='<%= LanguageUtil.format(request, "untitled", "metadata-set") %>' wrapperCssClass="mb-0" />
 					</li>
+					<li class="tbar-item">
+						<div class="metadata-type-button-row tbar-section text-right">
+							<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+
+							<aui:button cssClass="btn-sm mr-3" onClick='<%= renderResponse.getNamespace() + "saveDDMStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
+						</div>
+					</li>
 				</ul>
 			</clay:container-fluid>
 		</nav>
@@ -134,12 +141,6 @@ renderResponse.setTitle(title);
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</aui:form>
-
-	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveDDMStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
-
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</aui:button-row>
 </clay:container-fluid>
 
 <aui:script>

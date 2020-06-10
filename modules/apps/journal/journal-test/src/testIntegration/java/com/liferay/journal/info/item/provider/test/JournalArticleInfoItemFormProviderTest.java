@@ -72,8 +72,8 @@ public class JournalArticleInfoItemFormProviderTest {
 	@Test
 	public void testGetInfoForm() throws Exception {
 		InfoItemFormProvider infoItemFormProvider =
-			_infoItemFormProviderTracker.getInfoItemFormProvider(
-				JournalArticle.class.getName());
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemFormProvider.class, JournalArticle.class.getName());
 
 		JournalArticle journalArticle = _getJournalArticle();
 

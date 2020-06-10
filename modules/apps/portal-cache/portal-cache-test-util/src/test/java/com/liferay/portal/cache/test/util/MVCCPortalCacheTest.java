@@ -133,13 +133,13 @@ public class MVCCPortalCacheTest {
 		_assertVersion(_VERSION_1, _mvccPortalCache.get(_KEY_1));
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
-		_testPortalCacheListener.assertActionsCount(1);
+		_testPortalCacheListener.assertActionsCount(2);
 		_testPortalCacheListener.assertPut(
 			_KEY_1, new MockMVCCModel(_VERSION_1));
 
 		_testPortalCacheListener.reset();
 
-		_testPortalCacheReplicator.assertActionsCount(1);
+		_testPortalCacheReplicator.assertActionsCount(2);
 		_testPortalCacheReplicator.assertPut(
 			_KEY_1, new MockMVCCModel(_VERSION_1));
 
@@ -185,7 +185,7 @@ public class MVCCPortalCacheTest {
 		_assertVersion(_VERSION_2, _mvccPortalCache.get(_KEY_1));
 		Assert.assertNull(_mvccPortalCache.get(_KEY_2));
 
-		_testPortalCacheListener.assertActionsCount(1);
+		_testPortalCacheListener.assertActionsCount(2);
 		_testPortalCacheListener.assertUpdated(
 			_KEY_1, new MockMVCCModel(_VERSION_2));
 
@@ -202,6 +202,25 @@ public class MVCCPortalCacheTest {
 	@Test
 	public void testMVCCCacheWithTTL() {
 		doTestMVCCCache(true);
+	}
+
+	@Test
+	public void testPutWithSameVersion() {
+		MVCCPortalCache<Serializable, MockMVCCModel> mvccPortalCache =
+			new MVCCPortalCache<>(new TestPortalCache<>(_PORTAL_CACHE_NAME));
+
+		Serializable key = _KEY_1;
+		MockMVCCModel value1 = new MockMVCCModel(_VERSION_0);
+
+		mvccPortalCache.put(key, value1);
+
+		Assert.assertSame(value1, mvccPortalCache.get(key));
+
+		MockMVCCModel value2 = new MockMVCCModel(_VERSION_0);
+
+		mvccPortalCache.put(key, value2);
+
+		Assert.assertSame(value2, mvccPortalCache.get(key));
 	}
 
 	@Aspect

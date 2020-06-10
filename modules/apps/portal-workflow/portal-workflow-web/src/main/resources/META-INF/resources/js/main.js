@@ -16,8 +16,6 @@ AUI.add(
 	'liferay-workflow-web',
 	(A) => {
 		var WorkflowWeb = {
-			_alert: null,
-
 			_doToggleDefinitionLinkEditionMode(namespace) {
 				var instance = this;
 
@@ -391,29 +389,17 @@ AUI.add(
 			},
 
 			showActionUndoneSuccessMessage() {
-				var instance = this;
-
 				var successMessage = Liferay.Language.get('action-undone');
 
-				var alert = instance._alert;
-
-				if (alert) {
-					alert.hide();
-				}
-
-				alert = new Liferay.Alert({
-					closeable: true,
+				Liferay.Util.openToast({
+					container: document.querySelector('.portlet-column'),
 					message: successMessage,
-					render: true,
+					title: Liferay.Language.get('success'),
 					type: 'success',
 				});
-
-				instance._alert = alert;
 			},
 
 			showDefinitionImportSuccessMessage(namespace) {
-				var instance = this;
-
 				var undo = Liferay.Language.get('undo');
 
 				var undoEvent = "'" + namespace + "undoDefinition'";
@@ -431,20 +417,12 @@ AUI.add(
 
 				successMessage += undoLink;
 
-				var alert = instance._alert;
-
-				if (alert) {
-					alert.hide();
-				}
-
-				alert = new Liferay.Alert({
-					closeable: true,
+				Liferay.Util.openToast({
+					container: document.querySelector('.portlet-column'),
 					message: successMessage,
-					render: true,
+					title: Liferay.Language.get('success'),
 					type: 'success',
 				});
-
-				instance._alert = alert;
 			},
 
 			toggleDefinitionLinkEditionMode(event, namespace) {
@@ -508,6 +486,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-alert', 'liferay-util-window'],
+		requires: ['liferay-util-window'],
 	}
 );

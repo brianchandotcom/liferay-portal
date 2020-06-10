@@ -168,29 +168,17 @@ AUI.add(
 		};
 
 		var showActionUndoneSuccessMessage = function () {
-			var instance = this;
-
 			var successMessage = Liferay.Language.get('action-undone');
 
-			var alert = instance._alert;
-
-			if (alert) {
-				alert.hide();
-			}
-
-			alert = new Liferay.Alert({
-				closeable: true,
+			Liferay.Util.openToast({
+				container: document.querySelector('.portlet-column'),
 				message: successMessage,
-				render: true,
+				title: Liferay.Language.get('success'),
 				type: 'success',
 			});
-
-			instance._alert = alert;
 		};
 
 		var showDefinitionImportSuccessMessage = function (namespace) {
-			var instance = this;
-
 			var undo = Liferay.Language.get('undo');
 
 			var undoEvent = "'" + namespace + "undoDefinition'";
@@ -208,20 +196,12 @@ AUI.add(
 
 			successMessage += undoLink;
 
-			var alert = instance._alert;
-
-			if (alert) {
-				alert.hide();
-			}
-
-			alert = new Liferay.Alert({
-				closeable: true,
+			Liferay.Util.openToast({
+				container: document.querySelector('.portlet-column'),
 				message: successMessage,
-				render: true,
+				title: Liferay.Language.get('success'),
 				type: 'success',
 			});
-
-			instance._alert = alert;
 		};
 
 		KaleoDesignerDialogs.openConfirmDeleteDialog = openConfirmDeleteDialog;
@@ -234,6 +214,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-alert', 'liferay-util-window'],
+		requires: ['liferay-util-window'],
 	}
 );

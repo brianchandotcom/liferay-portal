@@ -65,7 +65,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="liferay-alert">
+<aui:script>
 	var addButton = document.getElementById('<portlet:namespace />addButton');
 
 	if (addButton) {
@@ -113,16 +113,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 						});
 					}
 					else {
-						new Liferay.Alert({
-							delay: {
-								hide: 500,
-								show: 0,
-							},
-							duration: 500,
-							icon: 'exclamation-circle',
+						Liferay.Util.openToast({
 							message: response.errorMessage,
 							type: 'danger',
-						}).render();
+						});
 					}
 				});
 		});

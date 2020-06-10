@@ -178,7 +178,7 @@ AUI.add(
 								if (success) {
 									success.call(instance, data);
 									MessageUtil.showSuccessMessage(
-										instance.get('rootNode')
+										instance.get('rootNode')._node
 									);
 								}
 							},
@@ -207,7 +207,7 @@ AUI.add(
 								if (success) {
 									success.call(instance, data);
 									MessageUtil.showSuccessMessage(
-										instance.get('rootNode')
+										instance.get('rootNode')._node
 									);
 								}
 							},
@@ -472,7 +472,7 @@ AUI.add(
 								if (data.exception) {
 									CalendarUtil.destroyEvent(schedulerEvent);
 									MessageUtil.showErrorMessage(
-										instance.get('rootNode'),
+										instance.get('rootNode')._node,
 										data.exception
 									);
 								}
@@ -485,7 +485,7 @@ AUI.add(
 									if (success) {
 										success.call(instance, data);
 										MessageUtil.showSuccessMessage(
-											instance.get('rootNode')
+											instance.get('rootNode')._node
 										);
 									}
 								}

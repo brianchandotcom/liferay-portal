@@ -209,86 +209,40 @@ AUI.add(
 				queue.run();
 			},
 
-			showAlert(container, message) {
-				new A.Alert({
-					animated: true,
-					bodyContent: message,
-					closeable: true,
-					cssClass: 'alert-success',
-					destroyOnHide: true,
-					duration: 1,
-				}).render(container);
+			showAlert(containerId, message) {
+				Liferay.Util.openToast({
+					containerId,
+					message,
+					type: 'success',
+				});
 			},
 
 			showErrorMessage(container, errorMessage) {
-				var instance = this;
-
-				var alert = instance._alert;
-
-				if (alert) {
-					alert.destroy();
-				}
-
-				alert = new Liferay.Alert({
-					closeable: true,
-					delay: {
-						hide: 3000,
-						show: 0,
-					},
-					icon: 'exclamation-full',
+				Liferay.Util.openToast({
+					container,
 					message: errorMessage,
 					type: 'danger',
 				});
-
-				if (!alert.get('rendered')) {
-					alert.render(container);
-				}
-
-				alert.show();
-
-				instance._alert = alert;
 			},
 
 			showSuccessMessage(container, message) {
-				var instance = this;
-
 				if (!message) {
 					message = Liferay.Language.get(
 						'your-request-completed-successfully'
 					);
 				}
 
-				var alert = instance._alert;
-
-				if (alert) {
-					alert._alertsContainer._node.innerHTML = '';
-
-					alert.destroy();
-				}
-
-				alert = new Liferay.Alert({
-					closeable: true,
-					delay: {
-						hide: 3000,
-						show: 0,
-					},
-					icon: 'check',
+				Liferay.Util.openToast({
+					container,
 					message,
+					title: Liferay.Language.get('success'),
 					type: 'success',
 				});
-
-				if (!alert.get('rendered')) {
-					alert.render(container);
-				}
-
-				alert.show();
-
-				instance._alert = alert;
 			},
 		};
 	},
 	'',
 	{
-		requires: ['aui-alert', 'liferay-alert', 'liferay-util-window'],
+		requires: ['liferay-util-window'],
 	}
 );

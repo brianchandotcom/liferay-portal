@@ -115,7 +115,7 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 	</liferay-frontend:edit-form>
 </clay:container-fluid>
 
-<aui:script use="liferay-alert">
+<aui:script>
 	var form = document.<portlet:namespace />fm;
 
 	form.addEventListener('submit', function (event) {
@@ -167,16 +167,10 @@ List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.ge
 					});
 				}
 				else {
-					new Liferay.Alert({
-						delay: {
-							hide: 3000,
-							show: 0,
-						},
-						duration: 500,
-						icon: 'exclamation-circle',
+					Liferay.Util.openToast({
 						message: response.errorMessage,
 						type: 'danger',
-					}).render();
+					});
 				}
 			});
 	});

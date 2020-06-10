@@ -499,36 +499,16 @@ AUI.add(
 				},
 
 				showSuccessMessage() {
-					var instance = this;
-
 					var successMessage = Liferay.Language.get(
 						'definition-imported-sucessfully'
 					);
 
-					var alert = instance._alert;
-
-					if (alert) {
-						alert.destroy();
-					}
-
-					alert = new Liferay.Alert({
-						closeable: true,
-						delay: {
-							hide: 3000,
-							show: 0,
-						},
-						icon: 'check',
+					Liferay.Util.openToast({
+						container: document.querySelector('.portlet-column'),
 						message: successMessage,
+						title: Liferay.Language.get('success'),
 						type: 'success',
 					});
-
-					if (!alert.get('rendered')) {
-						alert.render('.portlet-column');
-					}
-
-					alert.show();
-
-					instance._alert = alert;
 				},
 			},
 		});

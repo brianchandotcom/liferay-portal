@@ -370,17 +370,10 @@ class ImageEditor extends PortletBase {
 	showError_(message) {
 		this.components.loading.show = false;
 
-		AUI().use('liferay-alert', () => {
-			new Liferay.Alert({
-				delay: {
-					hide: 2000,
-					show: 0,
-				},
-				duration: 3000,
-				icon: 'exclamation-circle',
-				message: message.message,
-				type: 'danger',
-			}).render(this.element);
+		Liferay.Util.openToast({
+			container: this.element,
+			message: message.message,
+			type: 'danger',
 		});
 	}
 

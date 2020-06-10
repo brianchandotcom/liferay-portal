@@ -202,7 +202,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Configuración",
-			panel = "Control Panel",
+			panel = "Panel de control",
 			portlet = "Configuración de instancia");
 
 		PortalSettings.viewCurrentDefaultPortalLanguageCP(

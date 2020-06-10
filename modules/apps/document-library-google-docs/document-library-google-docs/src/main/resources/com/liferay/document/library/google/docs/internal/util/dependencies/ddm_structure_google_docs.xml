@@ -1,46 +1,178 @@
 <?xml version="1.0"?>
 
-<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="DESCRIPTION" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="[$LOCALE_DEFAULT$]">
-			<entry name="label">DESCRIPTION</entry>
-			<entry name="predefinedValue" />
-			<entry name="tip" />
-		</meta-data>
-	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="EMBEDDABLE_URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="[$LOCALE_DEFAULT$]">
-			<entry name="label">EMBEDDABLE_URL</entry>
-			<entry name="predefinedValue" />
-			<entry name="tip" />
-		</meta-data>
-	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="ICON_URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="[$LOCALE_DEFAULT$]">
-			<entry name="label">ICON_URL</entry>
-			<entry name="predefinedValue" />
-			<entry name="tip" />
-		</meta-data>
-	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="ID" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="[$LOCALE_DEFAULT$]">
-			<entry name="label">ID</entry>
-			<entry name="predefinedValue" />
-			<entry name="tip" />
-		</meta-data>
-	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="NAME" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="[$LOCALE_DEFAULT$]">
-			<entry name="label">NAME</entry>
-			<entry name="predefinedValue" />
-			<entry name="tip" />
-		</meta-data>
-	</dynamic-element>
-	<dynamic-element dataType="string" fieldNamespace="" indexType="keyword" localizable="true" multiple="false" name="URL" readOnly="false" repeatable="false" required="false" showLabel="true" type="text">
-		<meta-data locale="[$LOCALE_DEFAULT$]">
-			<entry name="label">URL</entry>
-			<entry name="predefinedValue" />
-			<entry name="tip" />
-		</meta-data>
-	</dynamic-element>
+<root>
+	<structure>
+		<name>GOOGLE_DOCS</name>
+		<description>google-docs-metadata</description>
+		<definition>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"availableLanguageIds": ["[$LOCALE_DEFAULT$]"],
+					"fields": [
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "DESCRIPTION"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "DESCRIPTION",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "EMBEDDABLE_URL"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "EMBEDDABLE_URL",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "ICON_URL"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "ICON_URL",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "ID"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "ID",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "NAME"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "NAME",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+						},
+						{
+							"dataType": "string",
+							"fieldNamespace": "",
+							"indexType": "keyword",
+							"label": {
+								"[$LOCALE_DEFAULT$]": "URL"
+							},
+							"localizable": true,
+							"multiple": false,
+							"name": "URL",
+							"readOnly": false,
+							"repeatable": false,
+							"required": false,
+							"showLabel": true,
+							"type": "text",
+						},
+					]
+				}
+			]]>
+		</definition>
+		<layout>
+			<![CDATA[
+				{
+					"defaultLanguageId": "[$LOCALE_DEFAULT$]",
+					"pages": [
+						{
+							"rows": [
+								{
+									"columns": [
+										{
+											"fieldNames": ["DESCRIPTION"],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": ["EMBEDDABLE_URL"],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": ["ICON_URL"],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": ["ID"],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": ["NAME"],
+											"size": 12
+										}
+									]
+								},
+								{
+									"columns": [
+										{
+											"fieldNames": ["URL"],
+											"size": 12
+										}
+									]
+								}
+							],
+							"title": {
+								"[$LOCALE_DEFAULT$]": "Google Docs Metadata"
+							}
+						}
+					]
+				}
+			]]>
+		</layout>
+	</structure>
 </root>

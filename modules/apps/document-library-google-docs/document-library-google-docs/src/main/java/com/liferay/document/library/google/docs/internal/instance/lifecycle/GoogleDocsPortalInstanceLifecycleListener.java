@@ -17,13 +17,12 @@ package com.liferay.document.library.google.docs.internal.instance.lifecycle;
 import com.liferay.document.library.google.docs.internal.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManager;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
-import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;
+import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -50,11 +49,11 @@ public class GoogleDocsPortalInstanceLifecycleListener
 		try {
 			GoogleDocsDLFileEntryTypeHelper googleDocsDLFileEntryTypeHelper =
 				new GoogleDocsDLFileEntryTypeHelper(
-					company,
+					company, _defaultDDMStructureHelper,
 					_classNameLocalService.getClassNameId(
 						DLFileEntryMetadata.class),
-					_ddm, _xsdDDMFormDeserializer, _ddmStructureLocalService,
-					_dlFileEntryTypeLocalService, _userLocalService);
+					_ddmStructureLocalService, _dlFileEntryTypeLocalService,
+					_userLocalService);
 
 			googleDocsDLFileEntryTypeHelper.addGoogleDocsDLFileEntryType();
 		}
@@ -91,18 +90,15 @@ public class GoogleDocsPortalInstanceLifecycleListener
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
-	private DDM _ddm;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference(target = "(ddm.form.deserializer.type=xsd)")
-	private DDMFormDeserializer _xsdDDMFormDeserializer;
 
 }

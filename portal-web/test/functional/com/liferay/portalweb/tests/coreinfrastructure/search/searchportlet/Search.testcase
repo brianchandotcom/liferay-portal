@@ -1055,11 +1055,13 @@ definition {
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
-		for (var portletName : list "Search Bar,Search Results") {
-			PageEditor.addWidget(portletName = "${portletName}");
+		PageEditor.addWidget(portletName = "Search Bar");
 
-			Refresh();
-		}
+		Refresh();
+
+		PageEditor.addWidget(
+			portletName = "Search Results",
+			targetFragmentName = "Search Bar");
 
 		PageEditor.clickPublish();
 

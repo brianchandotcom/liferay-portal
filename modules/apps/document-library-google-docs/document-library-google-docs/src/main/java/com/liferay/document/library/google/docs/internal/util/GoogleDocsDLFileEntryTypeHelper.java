@@ -87,7 +87,7 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			defaultUserId, _company.getGroupId(),
 			_dlFileEntryMetadataClassNameId, clazz.getClassLoader(),
 			"com/liferay/document/library/google/docs/internal/util" +
-				"/dependencies/ddm_structure_google_docs.xml",
+				"/dependencies/google-docs-metadata-structure.xml",
 			serviceContext);
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(

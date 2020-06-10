@@ -1548,7 +1548,8 @@ definition {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			panel = "Site Administration",
-			portlet = "Pages");
+			portlet = "Pages",
+			site = "${siteName}");
 
 		SitePages.addPublicPage(pageName = "Bookmarks Page");
 

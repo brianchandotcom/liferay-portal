@@ -12,27 +12,26 @@
  * details.
  */
 
-import moment from 'moment';
+import {default as distanceInWordsToNow} from 'date-fns/distance_in_words_to_now';
+import {default as formatDate} from 'date-fns/format';
 import PropType from 'prop-types';
 
 function DateRenderer({options, value}) {
 	switch (options.type) {
-		case 'calendar':
-			return moment(value).calendar();
 		case 'relative': {
-			const date = moment(value).fromNow();
+			const date = distanceInWordsToNow(value);
 
 			return date.replace(/^./, date[0].toUpperCase());
 		}
 		default:
-			return moment(value).format(options.format || 'MMMM Do YYYY');
+			return formatDate(value, options.format || 'MMMM Do YYYY');
 	}
 }
 
 DateRenderer.propTypes = {
 	options: PropType.shape({
 		format: PropType.string,
-		type: PropType.oneOf(['calendar', 'relative', 'default']),
+		type: PropType.oneOf(['relative', 'default']),
 	}),
 	value: PropType.string.isRequired,
 };

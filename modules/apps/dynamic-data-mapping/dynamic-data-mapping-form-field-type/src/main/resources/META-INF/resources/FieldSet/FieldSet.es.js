@@ -84,10 +84,10 @@ const FieldSet = ({
 					<Panel
 						readOnly={readOnly}
 						repeatable={repeatable}
+						showLabel={showLabel}
 						showRepeatableRemoveButton={
 							repeatable && repeatedIndex > 0
 						}
-						showLabel={showLabel}
 						title={label}
 					>
 						<Layout rows={getRows(rows, nestedFields)} />

@@ -363,6 +363,13 @@ public class DocumentResourceImpl
 				_getServiceContext(
 					documentOptional, existingFileEntry.getGroupId()));
 
+			DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(
+				false);
+
+			dlFileEntry = _dlFileEntryService.updateStatus(
+				contextUser.getUserId(), dlFileVersion.getFileVersionId(),
+				WorkflowConstants.STATUS_APPROVED, null, new HashMap<>());
+
 			return _toDocument(
 				_dlAppService.getFileEntry(dlFileEntry.getFileEntryId()));
 		}

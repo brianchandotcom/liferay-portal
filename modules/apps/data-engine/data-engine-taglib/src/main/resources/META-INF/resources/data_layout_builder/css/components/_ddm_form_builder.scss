@@ -9,6 +9,10 @@ $baseline: 24px;
 }
 
 .data-engine-form-builder {
+	> .sheet {
+		padding: 0;
+	}
+
 	.container.ddm-form-builder {
 		padding: 0;
 	}

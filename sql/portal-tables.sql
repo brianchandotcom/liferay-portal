@@ -349,6 +349,7 @@ create table DLFileEntryType (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	dataDefinitionId LONG,
 	fileEntryTypeKey VARCHAR(75) null,
 	name STRING null,
 	description STRING null,

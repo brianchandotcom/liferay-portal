@@ -86,6 +86,25 @@ public class DLFileEntryTypeLocalServiceUtil {
 
 	public static com.liferay.document.library.kernel.model.DLFileEntryType
 			addFileEntryType(
+				long userId, long groupId, long dataDefinitionId,
+				String fileEntryTypeKey,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addFileEntryType(
+			userId, groupId, dataDefinitionId, fileEntryTypeKey, nameMap,
+			descriptionMap, serviceContext);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addFileEntryType(long, long, String, Map, Map, long, ServiceContext)}
+	 */
+	@Deprecated
+	public static com.liferay.document.library.kernel.model.DLFileEntryType
+			addFileEntryType(
 				long userId, long groupId, String fileEntryTypeKey,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
@@ -98,6 +117,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 			ddmStructureIds, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #addFileEntryType(long, long, String, Map, Map, long, ServiceContext)}
+	 */
+	@Deprecated
 	public static com.liferay.document.library.kernel.model.DLFileEntryType
 			addFileEntryType(
 				long userId, long groupId, String name, String description,
@@ -660,6 +684,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 			dlFileEntry, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateFileEntryType(long, Map, Map)}
+	 */
+	@Deprecated
 	public static void updateFileEntryType(
 			long userId, long fileEntryTypeId,
 			java.util.Map<java.util.Locale, String> nameMap,
@@ -673,6 +702,11 @@ public class DLFileEntryTypeLocalServiceUtil {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #updateFileEntryType(long, Map, Map)}
+	 */
+	@Deprecated
 	public static void updateFileEntryType(
 			long userId, long fileEntryTypeId, String name, String description,
 			long[] ddmStructureIds,
@@ -682,6 +716,17 @@ public class DLFileEntryTypeLocalServiceUtil {
 		getService().updateFileEntryType(
 			userId, fileEntryTypeId, name, description, ddmStructureIds,
 			serviceContext);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntryType
+			updateFileEntryType(
+				long fileEntryTypeId,
+				java.util.Map<java.util.Locale, String> nameMap,
+				java.util.Map<java.util.Locale, String> descriptionMap)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateFileEntryType(
+			fileEntryTypeId, nameMap, descriptionMap);
 	}
 
 	public static void updateFolderFileEntryTypes(

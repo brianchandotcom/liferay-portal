@@ -44,9 +44,12 @@ const FilterItem = (properties) => {
 		[active, description, hideControl, multiple]
 	);
 
-	const handleChange = (event) => {
-		setChecked(event.target.checked);
+	const handleClick = (event) => {
+		event.target.checked = !checked;
+
 		onChange(event);
+		onClick(event);
+		setChecked(!checked);
 	};
 
 	useEffect(() => {
@@ -55,15 +58,16 @@ const FilterItem = (properties) => {
 
 	return (
 		<>
-			<li className={classes.dropdown} data-testid="filterItem">
+			<li
+				className={classes.dropdown}
+				data-key={itemKey}
+				data-testid="filterItem"
+				onClick={handleClick}
+			>
 				<label className={classes.control}>
 					<input
 						checked={checked}
 						className="custom-control-input"
-						data-key={itemKey}
-						data-testid="filterItemInput"
-						onChange={handleChange}
-						onClick={onClick}
 						type={multiple ? 'checkbox' : 'radio'}
 					/>
 

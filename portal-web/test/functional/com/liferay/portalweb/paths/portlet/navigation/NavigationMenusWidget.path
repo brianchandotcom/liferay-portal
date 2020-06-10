@@ -18,6 +18,11 @@
 	<td>//span[contains(@id,'_navigationMenuName')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DROPDOWN_MENU_ITEM</td>
+	<td>//a[contains(@aria-labelledby,'SiteNavigationMenuPortlet')][normalize-space(text())='${key_itemName}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

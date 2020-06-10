@@ -82,13 +82,14 @@ public class DLEditFileEntryTypeDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"icon", "cog"
 			).put(
-				"label", LanguageUtil.get(themeDisplay.getLocale(), "details")
+				"label",
+				LanguageUtil.get(themeDisplay.getLocale(), "properties")
 			).put(
 				"pluginEntryPoint",
 				npmResolvedPackageName +
 					"/document_library/js/ddm/panels/index.es"
 			).put(
-				"sidebarPanelId", "details"
+				"sidebarPanelId", "properties"
 			).put(
 				"url",
 				() -> {

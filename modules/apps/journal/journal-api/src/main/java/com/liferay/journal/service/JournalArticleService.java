@@ -656,6 +656,45 @@ public interface JournalArticleService extends BaseService {
 		long groupId, String layoutUuid);
 
 	/**
+	 * Returns all the web content articles that the user has permission to view
+	 * matching the group and layout UUID.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param layoutUuid the unique string identifying the web content
+	 article's display page
+	 * @param start the lower bound of the range of web content articles to
+	 return
+	 * @param end the upper bound of the range of web content articles to
+	 return (not inclusive)
+	 * @return the range of matching web content articles
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getArticlesByLayoutUuid(
+		long groupId, String layoutUuid, int start, int end);
+
+	/**
+	 * Returns the number of web content articles that the user has permission
+	 * to view matching the group and layout UUID.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param layoutUuid the unique string identifying the web content
+	 article's display page
+	 * @return the matching web content articles
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesByLayoutUuidCount(long groupId, String layoutUuid);
+
+	/**
 	 * Returns an ordered range of all the web content articles matching the
 	 * group, class name ID, DDM structure key, and workflow status.
 	 *
@@ -1187,8 +1226,50 @@ public interface JournalArticleService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLatestArticlesCount(long groupId, int status);
 
+	/**
+	 * Returns all the web content articles that the user has permission to view
+	 * matching the group.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @return The matching web content articles
+	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getLayoutArticles(long groupId);
+
+	/**
+	 * Returns all the web content articles that the user has permission to view
+	 * matching the group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @param start the lower bound of the range of web content articles to
+	 return
+	 * @param end the upper bound of the range of web content articles to
+	 return (not inclusive)
+	 * @return the range of matching web content articles
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<JournalArticle> getLayoutArticles(
+		long groupId, int start, int end);
+
+	/**
+	 * Returns the number of web content articles that the user has permission
+	 * to view matching the group.
+	 *
+	 * @param groupId the primary key of the web content article's group
+	 * @return the number of matching web content articles
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutArticlesCount(long groupId);
 
 	/**
 	 * Returns the OSGi service identifier.

@@ -14,11 +14,13 @@
 
 import {useEffect} from 'react';
 
+import {config} from '../../app/config/index';
+
 const DEFAULT_SESSION_LENGTH = 60 * 1000;
 
 export default function useAutoExtendSession() {
 	useEffect(() => {
-		if (Liferay.Session) {
+		if (Liferay.Session && config.autoExtendSessionEnabled) {
 			const sessionLength =
 				Liferay.Session.get('sessionLength') || DEFAULT_SESSION_LENGTH;
 

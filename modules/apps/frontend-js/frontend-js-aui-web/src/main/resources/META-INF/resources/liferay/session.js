@@ -233,7 +233,6 @@ AUI.add(
 					var instance = this;
 
 					var sessionLength = instance.get('sessionLength');
-					var sessionState = instance.get('sessionState');
 					var warningTime = instance.get('warningTime');
 
 					var registered = instance._registered;
@@ -241,6 +240,8 @@ AUI.add(
 					var interval = 1000;
 
 					instance._intervalId = A.setInterval(() => {
+						var sessionState = instance.get('sessionState');
+
 						var timeOffset;
 
 						var timestamp = instance.get('timestamp');

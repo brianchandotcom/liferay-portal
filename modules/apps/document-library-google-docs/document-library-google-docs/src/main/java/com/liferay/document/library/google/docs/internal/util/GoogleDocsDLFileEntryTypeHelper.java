@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -89,9 +90,15 @@ public class GoogleDocsDLFileEntryTypeHelper {
 				"/dependencies/ddm_structure_google_docs.xml",
 			serviceContext);
 
-		return _ddmStructureLocalService.getStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
 			_company.getGroupId(), _dlFileEntryMetadataClassNameId,
 			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY);
+
+		ddmStructure.setNameMap(_updateNameMap(ddmStructure.getNameMap()));
+
+		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
+
+		return ddmStructure;
 	}
 
 	private void _addGoogleDocsDLFileEntryType(long ddmStructureId)
@@ -117,6 +124,18 @@ public class GoogleDocsDLFileEntryTypeHelper {
 			defaultUserId, _company.getGroupId(),
 			GoogleDocsConstants.DL_FILE_ENTRY_TYPE_KEY, nameMap, descriptionMap,
 			new long[] {ddmStructureId}, serviceContext);
+	}
+
+	private Map<Locale, String> _updateNameMap(Map<Locale, String> nameMap) {
+		Map<Locale, String> updatedNameMap = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			updatedNameMap.put(
+				entry.getKey(),
+				LanguageUtil.get(entry.getKey(), "google-docs-metadata"));
+		}
+
+		return updatedNameMap;
 	}
 
 	private final Company _company;

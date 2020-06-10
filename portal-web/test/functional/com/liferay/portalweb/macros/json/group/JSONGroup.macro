@@ -53,6 +53,18 @@ definition {
 			userId = "${userId}");
 	}
 
+	macro assignUserGroupToGroup {
+		Variables.assertDefined(parameterList = "${groupName},${userGroupName}");
+
+		var groupId = JSONGroupSetter.setGroupId(groupName = "${groupName}");
+
+		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = "${userGroupName}");
+
+		JSONGroupAPI._assignUserGroupToGroup(
+			groupId = "${groupId}",
+			userGroupId = "${userGroupId}");
+	}
+
 	macro assignUserToGroup {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 

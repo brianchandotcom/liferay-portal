@@ -60,6 +60,20 @@ definition {
 	}
 
 	@summary = "Directly calls the JSON WS API to add a user to a group"
+	macro _assignUserGroupToGroup {
+		Variables.assertDefined(parameterList = "${groupId},${userGroupId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/usergroup/add-group-user-groups/group-id/${groupId}/user-group-ids/${userGroupId} \
+				-u test@liferay.com:test
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Directly calls the JSON WS API to add a user to a group"
 	macro _assignUserToGroup {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 

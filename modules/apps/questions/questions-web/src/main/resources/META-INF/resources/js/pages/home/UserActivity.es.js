@@ -65,7 +65,7 @@ export default withRouter(
 			rank: context.defaultRank,
 		};
 
-		if (data && data.messageBoardThreads) {
+		if (data && data.messageBoardThreads.items && data.messageBoardThreads.items.length) {
 			const {
 				creator,
 				creatorStatistics,

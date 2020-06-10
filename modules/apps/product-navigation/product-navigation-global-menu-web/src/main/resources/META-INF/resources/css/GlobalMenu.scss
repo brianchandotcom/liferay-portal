@@ -1,21 +1,23 @@
 $control-menu-height: 56px;
 $tab-header-height: 38px;
 
-.global-apps-menu .tab-pane {
-	max-height: calc(100vh - #{$control-menu-height + $tab-header-height});
-	overflow-y: auto;
-}
+.global-apps-menu-modal {
+	.modal-full {
+		margin-top: 0;
+		width: 100%;
 
-.global-apps-menu-modal .modal-full {
-	margin-top: 0;
-	width: 100%;
+		.modal-body {
+			padding-top: 12px;
+		}
 
-	.modal-body {
-		padding-top: 12px;
+		.modal-content {
+			border-radius: 0;
+			box-shadow: none;
+		}
 	}
 
-	.modal-content {
-		border-radius: 0;
-		box-shadow: none;
+	.tab-pane {
+		max-height: calc(100vh - #{$control-menu-height + $tab-header-height});
+		overflow-y: auto;
 	}
 }

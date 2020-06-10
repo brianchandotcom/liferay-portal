@@ -249,13 +249,13 @@ body,
 }
 
 .loading-wrapper {
-	position: absolute;
-	left: 50%;
-	top: 50%;
 	display: none;
-	z-index: 1000;
 	height: 31px;
+	left: 50%;
+	position: absolute;
+	top: 50%;
 	width: 31px;
+	z-index: 1000;
 }
 
 .recharts-responsive-container {

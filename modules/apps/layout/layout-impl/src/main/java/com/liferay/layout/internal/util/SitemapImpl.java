@@ -376,23 +376,28 @@ public class SitemapImpl implements Sitemap {
 		Attribute sizeAttribute = rootElement.attribute("size");
 
 		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append("Created site map with ");
 
 			if (entriesAttribute != null) {
 				sb.append(entriesAttribute.getValue());
-				sb.append(" entries");
+			}
+			else {
+				sb.append("null");
 			}
 
-			if (sizeAttribute != null) {
-				sb.append(" and size ");
+			sb.append(" entries and size ");
 
+			if (sizeAttribute != null) {
 				int size = GetterUtil.getInteger(sizeAttribute.getValue());
 
 				sb.append(
 					TextFormatter.formatStorageSize(
 						size, LocaleUtil.fromLanguageId("en_US")));
+			}
+			else {
+				sb.append("null");
 			}
 
 			_log.debug(sb.toString());

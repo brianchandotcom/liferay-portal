@@ -134,10 +134,7 @@ const FieldSetModal = ({isVisible, onClose, ...props}) => {
 			observer={observer}
 			size="full-screen"
 		>
-			<ModalContent
-				onClose={onClose}
-				{...props}
-			/>
+			<ModalContent onClose={onClose} {...props} />
 		</ClayModal>
 	);
 };

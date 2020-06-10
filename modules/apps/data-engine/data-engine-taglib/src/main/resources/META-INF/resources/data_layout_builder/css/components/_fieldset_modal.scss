@@ -2,6 +2,10 @@ body.has-control-menu .fieldset-modal {
 	.multi-panel-sidebar {
 		position: absolute;
 		top: 0;
+
+		.field-type .dropdown-action {
+			display: none;
+		}
 	}
 
 	.multi-panel-sidebar-content {

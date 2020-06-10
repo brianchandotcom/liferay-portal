@@ -40,6 +40,8 @@ export default function FieldSets() {
 	const toggleFieldSet = (fieldSet) => {
 		let otherProps = {
 			context: {},
+			dataDefinitionId: null,
+			dataLayoutId: null,
 		};
 
 		if (fieldSet) {
@@ -99,6 +101,9 @@ export default function FieldSets() {
 			})
 		);
 	};
+	fieldSets.sort(({name: a}, {name: b}) =>
+		a[defaultLanguageId].localeCompare(b[defaultLanguageId])
+	);
 
 	return (
 		<>
@@ -124,6 +129,10 @@ export default function FieldSets() {
 						},
 					];
 
+					const isDisabled =
+						dataDefinition.name[defaultLanguageId] ===
+						fieldSet.name[defaultLanguageId];
+
 					return (
 						<FieldType
 							actions={dropDownActions}
@@ -131,14 +140,14 @@ export default function FieldSets() {
 								fieldSet.dataDefinitionFields.length
 							} ${Liferay.Language.get('fields')}`}
 							disabled={
-								fieldSet.disabled ||
+								isDisabled ||
 								containsFieldSet(dataDefinition, fieldSet.id)
 							}
 							dragType={DRAG_FIELDSET}
 							fieldSet={fieldSet}
 							icon="forms"
 							key={fieldSet.dataDefinitionKey}
-							label={fieldSet.name[themeDisplay.getLanguageId()]}
+							label={fieldSet.name[defaultLanguageId]}
 							onDoubleClick={onDoubleClick}
 						/>
 					);

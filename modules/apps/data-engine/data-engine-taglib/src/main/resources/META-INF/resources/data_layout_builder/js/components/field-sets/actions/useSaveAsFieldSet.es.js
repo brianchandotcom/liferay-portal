@@ -57,7 +57,7 @@ export default ({childrenContext, fieldSet, otherProps: {DataLayout}}) => {
 		});
 
 		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
-			({customProperties: {ddmStructureId}}) => ddmStructureId === id
+			({customProperties: {ddmStructureId}}) => ddmStructureId == id
 		);
 
 		if (dataDefinitionField) {

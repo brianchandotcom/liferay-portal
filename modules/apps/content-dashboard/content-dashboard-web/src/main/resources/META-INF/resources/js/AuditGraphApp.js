@@ -14,8 +14,40 @@
 
 import React from 'react';
 
-import EmptyBarChart from './components/EmptyBarChart';
+import AuditBarChart from './components/AuditBarChart';
+import EmptyAuditBarChart from './components/EmptyAuditBarChart';
+
+const data = [
+	{
+		education: 4000,
+		name: 'Business Decision Maker',
+		selection: 2400,
+		solution: 3100,
+	},
+	{
+		education: 3000,
+		name: 'Business End User',
+		selection: 1398,
+		solution: 2111,
+	},
+	{
+		education: 2000,
+		name: 'Technical Decision Maker',
+		selection: 4800,
+		solution: 1070,
+	},
+	{
+		education: 2780,
+		name: 'Technical End User',
+		selection: 3908,
+		solution: 1234,
+	},
+];
 
 export default function () {
-	return <EmptyAuditBarChart />;
+	return data.length > 0 ? (
+		<AuditBarChart data={data} />
+	) : (
+		<EmptyAuditBarChart />
+	);
 }

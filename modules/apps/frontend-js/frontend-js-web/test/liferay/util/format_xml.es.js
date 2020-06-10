@@ -68,7 +68,7 @@ describe('Liferay.Util.formatXML', () => {
 		expect(formatXML(input, options)).toEqual(expectedOutput);
 	});
 
-	it('throws an error if CDATA blocks in content parameter do not retain their original formatting', () => {
+	it('preserves original formatting inside CDATA blocks', () => {
 		const options = {newLine: '\n', tagIndent: '  '};
 
 		const input =

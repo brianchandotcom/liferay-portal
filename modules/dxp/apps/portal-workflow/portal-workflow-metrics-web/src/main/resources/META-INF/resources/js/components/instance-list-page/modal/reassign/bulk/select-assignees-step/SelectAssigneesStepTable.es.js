@@ -45,7 +45,7 @@ const Item = ({
 		if (newAssignee) {
 			filteredTasks.push({
 				assigneeId: newAssignee.id,
-				id,
+				workflowTaskId: id,
 			});
 		}
 

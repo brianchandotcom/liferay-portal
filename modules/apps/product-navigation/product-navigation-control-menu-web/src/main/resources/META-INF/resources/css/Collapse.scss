@@ -1,0 +1,21 @@
+@import 'atlas-variables';
+
+.page-editor__collapse {
+	cursor: pointer;
+
+	.collapse-icon {
+		background: none;
+		border: 0;
+		color: $gray-600;
+		font-size: 11px;
+		height: 32px;
+		margin-bottom: 4px;
+		padding-left: 0;
+		text-align: left;
+		width: 100%;
+
+		.sheet-subtitle {
+			line-height: unset;
+		}
+	}
+}

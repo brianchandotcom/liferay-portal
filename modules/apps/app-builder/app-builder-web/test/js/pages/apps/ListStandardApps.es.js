@@ -132,8 +132,14 @@ describe('ListStandardApps', () => {
 		expect(continueButton.textContent).toBe('continue');
 		expect(continueButton).toBeDisabled();
 
+		const dropdownItemsLabel = document.querySelectorAll(
+			'.select-dropdown-menu li > button .float-right'
+		);
+
+		expect(dropdownItemsLabel[0].textContent).toBe('custom');
+
 		const dropdownItems = document.querySelectorAll(
-			'.select-dropdown-menu li > button'
+			'.select-dropdown-menu li > button .float-left'
 		);
 
 		expect(dropdownItems[0].textContent).toBe('Object test');

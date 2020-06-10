@@ -448,6 +448,7 @@ definition {
 	@description = "This is a use case for LPS-49853."
 	@priority = "5"
 	test ViewWebContentViaAPAsGuestWithViewPermission {
+		var companyName = TestCase.getCompanyName();
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		GlobalMenu.gotoPortlet(
@@ -476,7 +477,7 @@ definition {
 			category = "Content &amp; Data",
 			panel = "Site Administration",
 			portlet = "Web Content",
-			site = "Guest");
+			site = "${companyName}");
 
 		WebContentNavigator.gotoAddCP();
 

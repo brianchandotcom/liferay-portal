@@ -118,12 +118,11 @@ public class DDMFormFieldTypesServlet extends HttpServlet {
 	protected JSONObject getFieldTypeMetadataJSONObject(
 		String ddmFormFieldName) {
 
-		DDMFormFieldType ddmFormFieldType =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
-				ddmFormFieldName);
-
 		return JSONUtil.put(
-			"javaScriptModule", resolveModuleName(ddmFormFieldType)
+			"javaScriptModule",
+			resolveModuleName(
+				_ddmFormFieldTypeServicesTracker.getDDMFormFieldType(
+					ddmFormFieldName))
 		).put(
 			"name", ddmFormFieldName
 		);

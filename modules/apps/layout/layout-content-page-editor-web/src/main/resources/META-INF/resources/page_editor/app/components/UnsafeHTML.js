@@ -48,7 +48,7 @@ export default class UnsafeHTML extends React.PureComponent {
 
 		const scriptElements = Array.from(
 			this.state.ref.querySelectorAll('script')
-		);
+		).filter((script) => !script.type || script.type === 'text/javascript');
 
 		const runNextScript = () => {
 			if (scriptElements.length) {

@@ -96,6 +96,7 @@ definition {
 	@priority = "5"
 	test AddMembersSiteUser {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SiteMemberships#AddMembersSiteUser";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		JSONUser.addUser(
@@ -114,8 +115,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#ADD_USERS_TO_SITE");
 
-		if (IsNotVisible(locator1 = "ManagementBar#FILTER_AND_ORDER")) {
-
+		if (IsElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER")) {
 			GlobalMenu.gotoPortlet(
 				category = "Configuration",
 				panel = "Control Panel",

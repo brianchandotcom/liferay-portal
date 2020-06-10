@@ -28,7 +28,7 @@ import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
-import com.liferay.portal.workflow.kaleo.definition.internal.export.builder.DefinitionBuilder;
+import com.liferay.portal.workflow.kaleo.definition.export.builder.DefinitionBuilder;
 
 import java.io.IOException;
 
@@ -44,6 +44,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = DefinitionExporter.class)
 public class XMLDefinitionExporter implements DefinitionExporter {
+
+	@Override
+	public String export(Definition definition) throws PortalException {
+		return doExport(definition);
+	}
 
 	@Override
 	public String export(long kaleoDefinitionId) throws PortalException {

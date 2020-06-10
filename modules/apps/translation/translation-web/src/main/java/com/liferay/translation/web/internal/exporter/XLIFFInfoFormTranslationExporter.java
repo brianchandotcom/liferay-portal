@@ -57,9 +57,9 @@ public class XLIFFInfoFormTranslationExporter<T>
 			"xliff", "urn:oasis:names:tc:xliff:document:2.0");
 
 		xliffElement.addAttribute(
-			"srcLang", LocaleUtil.toLanguageId(sourceLocale));
+			"srcLang", LocaleUtil.toBCP47LanguageId(sourceLocale));
 		xliffElement.addAttribute(
-			"trgLang", LocaleUtil.toLanguageId(targetLocale));
+			"trgLang", LocaleUtil.toBCP47LanguageId(targetLocale));
 		xliffElement.addAttribute("version", "2.0");
 
 		Element fileElement = xliffElement.addElement("file");

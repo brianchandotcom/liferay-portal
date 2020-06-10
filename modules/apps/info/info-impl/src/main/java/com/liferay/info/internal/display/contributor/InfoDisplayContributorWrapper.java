@@ -139,26 +139,27 @@ public class InfoDisplayContributorWrapper
 
 		Locale locale = _getLocale();
 
-		InfoForm infoForm = new InfoForm("fields");
+		return new InfoForm.Builder(
+			"fields"
+		).add(
+			consumer -> {
+				for (InfoDisplayField infoDisplayField : infoDisplayFields) {
+					InfoFieldType infoFieldType = _getInfoFieldTypeType(
+						infoDisplayField.getType());
 
-		for (InfoDisplayField infoDisplayField : infoDisplayFields) {
-			InfoFieldType infoFieldType = _getInfoFieldTypeType(
-				infoDisplayField.getType());
+					InfoLocalizedValue<String> labelInfoLocalizedValue =
+						InfoLocalizedValue.builder(
+						).addValue(
+							locale, infoDisplayField.getLabel()
+						).build();
 
-			InfoLocalizedValue<String> labelInfoLocalizedValue =
-				InfoLocalizedValue.builder(
-				).addValue(
-					locale, infoDisplayField.getLabel()
-				).build();
-
-			InfoField infoField = new InfoField(
-				infoFieldType, labelInfoLocalizedValue,
-				infoDisplayField.getKey());
-
-			infoForm.add(infoField);
-		}
-
-		return infoForm;
+					consumer.accept(
+						new InfoField(
+							infoFieldType, labelInfoLocalizedValue,
+							infoDisplayField.getKey()));
+				}
+			}
+		).build();
 	}
 
 	private InfoFormValues _convertToInfoFormValues(

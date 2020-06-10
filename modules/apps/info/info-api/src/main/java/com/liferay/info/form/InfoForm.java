@@ -18,10 +18,12 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.lang.HashUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -32,41 +34,6 @@ import java.util.Objects;
  * @author Jorge Ferrer
  */
 public class InfoForm {
-
-	public InfoForm(String name) {
-		_name = name;
-	}
-
-	public InfoForm add(InfoFieldSet fieldSet) {
-		InfoFieldSetEntry infoFieldSetEntry = _entries.get(fieldSet.getName());
-
-		if ((infoFieldSetEntry != null) &&
-			(infoFieldSetEntry instanceof InfoFieldSet)) {
-
-			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
-
-			infoFieldSet.addAll(fieldSet.getInfoFieldSetEntries());
-		}
-		else {
-			_entries.put(fieldSet.getName(), fieldSet);
-		}
-
-		return this;
-	}
-
-	public InfoForm add(InfoFieldSetEntry fieldSetEntry) {
-		_entries.put(fieldSetEntry.getName(), fieldSetEntry);
-
-		return this;
-	}
-
-	public InfoForm addAll(Collection<InfoFieldSetEntry> fieldSetEntries) {
-		for (InfoFieldSetEntry fieldSetEntry : fieldSetEntries) {
-			add(fieldSetEntry);
-		}
-
-		return this;
-	}
 
 	@Override
 	public boolean equals(Object object) {
@@ -143,22 +110,106 @@ public class InfoForm {
 		return HashUtil.hash(hash, _name);
 	}
 
-	public void setDescriptionInfoLocalizedValue(
-		InfoLocalizedValue<String> description) {
+	public static class Builder {
 
-		_descriptionInfoLocalizedValue = description;
+		public Builder(String name) {
+			_name = name;
+		}
+
+		public Builder add(InfoFieldSet fieldSet) {
+			InfoFieldSetEntry infoFieldSetEntry = _entries.get(
+				fieldSet.getName());
+
+			if (infoFieldSetEntry instanceof InfoFieldSet) {
+				InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
+
+				_entries.put(
+					infoFieldSet.getName(),
+					new InfoFieldSet.Builder(
+						infoFieldSet.getLabelInfoLocalizedValue(),
+						infoFieldSet.getName()
+					).addAll(
+						infoFieldSet.getInfoFieldSetEntries()
+					).addAll(
+						fieldSet.getInfoFieldSetEntries()
+					).build());
+			}
+			else {
+				_entries.put(fieldSet.getName(), fieldSet);
+			}
+
+			return this;
+		}
+
+		public Builder add(InfoFieldSetEntry fieldSetEntry) {
+			_entries.put(fieldSetEntry.getName(), fieldSetEntry);
+
+			return this;
+		}
+
+		public <T extends Throwable> Builder add(
+				UnsafeConsumer<UnsafeConsumer<InfoFieldSetEntry, T>, T>
+					consumer)
+			throws T {
+
+			consumer.accept(this::add);
+
+			return this;
+		}
+
+		public Builder addAll(Collection<InfoFieldSetEntry> fieldSetEntries) {
+			for (InfoFieldSetEntry fieldSetEntry : fieldSetEntries) {
+				add(fieldSetEntry);
+			}
+
+			return this;
+		}
+
+		public InfoForm build() {
+			return new InfoForm(
+				_descriptionInfoLocalizedValue,
+				Collections.unmodifiableMap(_entries), _labelInfoLocalizedValue,
+				_name);
+		}
+
+		public Builder setDescriptionInfoLocalizedValue(
+			InfoLocalizedValue<String> description) {
+
+			_descriptionInfoLocalizedValue = description;
+
+			return this;
+		}
+
+		public Builder setLabelInfoLocalizedValue(
+			InfoLocalizedValue<String> labelInfoLocalizedValue) {
+
+			_labelInfoLocalizedValue = labelInfoLocalizedValue;
+
+			return this;
+		}
+
+		private InfoLocalizedValue<String> _descriptionInfoLocalizedValue;
+		private final Map<String, InfoFieldSetEntry> _entries =
+			new LinkedHashMap<>();
+		private InfoLocalizedValue<String> _labelInfoLocalizedValue;
+		private final String _name;
+
 	}
 
-	public void setLabelInfoLocalizedValue(
-		InfoLocalizedValue<String> labelInfoLocalizedValue) {
+	private InfoForm(
+		InfoLocalizedValue<String> descriptionInfoLocalizedValue,
+		Map<String, InfoFieldSetEntry> entries,
+		InfoLocalizedValue<String> labelInfoLocalizedValue, String name) {
 
+		_descriptionInfoLocalizedValue = descriptionInfoLocalizedValue;
+		_entries = entries;
 		_labelInfoLocalizedValue = labelInfoLocalizedValue;
+		_name = name;
 	}
 
-	private InfoLocalizedValue<String> _descriptionInfoLocalizedValue;
-	private final Map<String, InfoFieldSetEntry> _entries =
-		new LinkedHashMap<>();
-	private InfoLocalizedValue<String> _labelInfoLocalizedValue;
+	private final InfoLocalizedValue<String> _descriptionInfoLocalizedValue;
+	private final Map<String, InfoFieldSetEntry> _entries;
+	private final InfoLocalizedValue<String> _labelInfoLocalizedValue;
 	private final String _name;
 
 }

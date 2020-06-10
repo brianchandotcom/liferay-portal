@@ -85,23 +85,20 @@ public class JournalArticleInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
-		InfoForm infoForm = new InfoForm(JournalArticle.class.getName());
-
-		infoForm.addAll(_getJournalArticleFields());
-
-		infoForm.add(
+		return new InfoForm.Builder(
+			JournalArticle.class.getName()
+		).addAll(
+			_getJournalArticleFields()
+		).add(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName()));
-
-		infoForm.add(
+				JournalArticle.class.getName())
+		).add(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				AssetEntry.class.getName()));
-
-		infoForm.add(
+				AssetEntry.class.getName())
+		).add(
 			_expandoInfoItemFieldSetProvider.getInfoFieldSet(
-				JournalArticle.class.getName()));
-
-		return infoForm;
+				JournalArticle.class.getName())
+		).build();
 	}
 
 	@Override
@@ -125,27 +122,40 @@ public class JournalArticleInfoItemFormProvider
 	public InfoForm getInfoForm(long ddmStructureId)
 		throws NoSuchClassTypeException {
 
-		InfoForm infoForm = getInfoForm();
-
-		if (ddmStructureId == 0) {
-			return infoForm;
-		}
-
 		try {
-			infoForm.add(
-				_ddmStructureInfoItemFieldSetProvider.getInfoItemFieldSet(
-					ddmStructureId));
+			return new InfoForm.Builder(
+				JournalArticle.class.getName()
+			).addAll(
+				_getJournalArticleFields()
+			).add(
+				_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
+					JournalArticle.class.getName())
+			).add(
+				_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
+					AssetEntry.class.getName())
+			).add(
+				_expandoInfoItemFieldSetProvider.getInfoFieldSet(
+					JournalArticle.class.getName())
+			).<NoSuchStructureException>add(
+				consumer -> {
+					if (ddmStructureId == 0) {
+						return;
+					}
 
-			infoForm.add(
-				_ddmTemplateInfoItemFieldSetProvider.getInfoItemFieldSet(
-					ddmStructureId));
+					consumer.accept(
+						_ddmStructureInfoItemFieldSetProvider.
+							getInfoItemFieldSet(ddmStructureId));
+
+					consumer.accept(
+						_ddmTemplateInfoItemFieldSetProvider.
+							getInfoItemFieldSet(ddmStructureId));
+				}
+			).build();
 		}
 		catch (NoSuchStructureException noSuchStructureException) {
 			throw new NoSuchClassTypeException(
 				ddmStructureId, noSuchStructureException);
 		}
-
-		return infoForm;
 	}
 
 	@Override

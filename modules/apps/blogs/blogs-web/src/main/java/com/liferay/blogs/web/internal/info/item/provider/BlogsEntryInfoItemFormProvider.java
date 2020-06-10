@@ -69,23 +69,20 @@ public class BlogsEntryInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm() {
-		InfoForm infoForm = new InfoForm(BlogsEntry.class.getName());
-
-		infoForm.addAll(_getBlogsEntryInfoFieldSetEntries());
-
-		infoForm.add(
+		return new InfoForm.Builder(
+			BlogsEntry.class.getName()
+		).addAll(
+			_getBlogsEntryInfoFieldSetEntries()
+		).add(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName()));
-
-		infoForm.add(
+				BlogsEntry.class.getName())
+		).add(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
-				AssetEntry.class.getName()));
-
-		infoForm.add(
+				AssetEntry.class.getName())
+		).add(
 			_expandoInfoItemFieldSetProvider.getInfoFieldSet(
-				BlogsEntry.class.getName()));
-
-		return infoForm;
+				BlogsEntry.class.getName())
+		).build();
 	}
 
 	@Override

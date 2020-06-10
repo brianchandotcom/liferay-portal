@@ -128,7 +128,8 @@ public class TaxonomyCategoryDTOConverter
 									_assetVocabularyService.getVocabulary(
 										assetCategory.getVocabularyId());
 
-								return assetVocabulary.getName();
+								return assetVocabulary.getTitle(
+									dtoConverterContext.getLocale());
 							});
 					}
 				};

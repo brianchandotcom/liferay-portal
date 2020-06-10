@@ -350,6 +350,7 @@ public class AccountEntryLocalServiceTest {
 
 		AccountEntry accountEntry1 = _addAccountEntryWithOrganization(
 			parentOrganization);
+
 		AccountEntry accountEntry2 = _addAccountEntryWithOrganization(
 			organization);
 
@@ -419,6 +420,7 @@ public class AccountEntryLocalServiceTest {
 
 		_assertSearchWithParams(
 			Arrays.asList(businessAccountEntry, personalAccountEntry), null);
+
 		_assertSearchWithParams(
 			Collections.singletonList(businessAccountEntry),
 			_getLinkedHashMap(

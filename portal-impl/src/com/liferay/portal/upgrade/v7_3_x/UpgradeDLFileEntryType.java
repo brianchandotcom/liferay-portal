@@ -38,12 +38,12 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 	private void _populateFields() throws Exception {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select uuid_, fileEntryTypeId, groupId, fileEntryTypeKey " +
-					"from DLFileEntryType where ( dataDefinitionId IS NULL " +
-						"OR dataDefinitionId = '')");
+					"from DLFileEntryType where (dataDefinitionId IS NULL OR " +
+						"dataDefinitionId = '')");
 			PreparedStatement ps2 = connection.prepareStatement(
 				"select structureId FROM DDMStructure where groupId = ? AND " +
-					"classNameId = ? AND ( structureKey = ? OR structureKey " +
-						"= ? OR structureKey = ? ) ");
+					"classNameId = ? AND (structureKey = ? OR structureKey = " +
+						"? OR structureKey = ? ) ");
 			PreparedStatement ps3 = AutoBatchPreparedStatementUtil.autoBatch(
 				connection.prepareStatement(
 					"update DLFileEntryType set dataDefinitionId = ? where " +

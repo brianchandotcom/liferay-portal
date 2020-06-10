@@ -78,6 +78,7 @@ public class DLViewFileEntryTypesDisplayContext {
 
 					creationURL.setParameter(
 						"mvcRenderCommandName", mvcRenderCommandName);
+
 					creationURL.setParameter(
 						"redirect",
 						PortalUtil.getCurrentURL(_httpServletRequest));

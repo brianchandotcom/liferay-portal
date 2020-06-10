@@ -1473,7 +1473,6 @@ definition {
 	test EditAllFormFieldNames {
 		property test.name.skip.portal.instance = "Forms#EditAllFormFieldNames";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

@@ -14,20 +14,11 @@ components:
                         $ref: "#/components/schemas/AppWorkflowTask"
                     type: array
             type: object
-        AppWorkflowAction:
-            properties:
-                name:
-                    type: string
-                primary:
-                    type: boolean
-                transitionTo:
-                    type: string
-            type: object
         AppWorkflowState:
             properties:
-                appWorkflowActions:
+                appWorkflowTransitions:
                     items:
-                        $ref: "#/components/schemas/AppWorkflowAction"
+                        $ref: "#/components/schemas/AppWorkflowTransition"
                     type: array
                 initial:
                     type: boolean
@@ -36,9 +27,9 @@ components:
             type: object
         AppWorkflowTask:
             properties:
-                appWorkflowActions:
+                appWorkflowTransitions:
                     items:
-                        $ref: "#/components/schemas/AppWorkflowAction"
+                        $ref: "#/components/schemas/AppWorkflowTransition"
                     type: array
                 dataLayoutIds:
                     items:
@@ -46,6 +37,15 @@ components:
                         type: integer
                     type: array
                 name:
+                    type: string
+            type: object
+        AppWorkflowTransition:
+            properties:
+                name:
+                    type: string
+                primary:
+                    type: boolean
+                transitionTo:
                     type: string
             type: object
 info:

@@ -438,6 +438,26 @@ definition {
 			sourceURL = "${portalURL}/web/test-site-name/test-destination-page1");
 	}
 
+	@description = "This ensures that a user cannot create a redirect if the sourceURL has invalid characters."
+	@priority = "5"
+	test AddSourceURLWithInvalidCharacters {
+		var portalURL = PropsUtil.get("portal.url");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		Redirect.addEntry(
+			destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			siteName = "test-site-name",
+			sourceURL = "test-source-page!@#$",
+			sourceURLVariation = "Invalid");
+
+		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
+
+		AssertElementNotPresent(
+			key_destinationURL = "${portalURL}/web/test-site-name/test-destination-page",
+			locator1 = "ContentRow#ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN");
+	}
+
 	@description = "This ensures that a temporary redirect can be added from an active 404 URL."
 	@priority = "5"
 	test AddTempEntryFromActive404 {

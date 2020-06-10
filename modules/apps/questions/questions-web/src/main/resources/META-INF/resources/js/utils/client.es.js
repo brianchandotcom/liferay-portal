@@ -400,10 +400,10 @@ export const getThreads = (
 	filter += ')';
 
 	if (keywords) {
-		filter = `keywords/any(x:x eq '${keywords}')`;
+		filter += ` and keywords/any(x:x eq '${keywords}')`;
 	}
 	else if (creatorId) {
-		filter = `creator/id eq ${creatorId}`;
+		filter += ` and creator/id eq ${creatorId}`;
 	}
 
 	return client

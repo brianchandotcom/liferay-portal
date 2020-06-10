@@ -124,3 +124,26 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 		<aui:button href="<%= backURL %>" type="cancel" />
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
+
+<c:if test="<%= !Objects.equals(accountEntryDisplay.getType(), AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL) %>">
+
+	<%
+	PortletURL viewValidDomainsURL = renderResponse.createRenderURL();
+
+	viewValidDomainsURL.setParameter("mvcPath", "/account_users_admin/account_user/view_valid_domains.jsp");
+	viewValidDomainsURL.setParameter("validDomains", StringUtil.merge(accountEntryDisplay.getDomains(), StringPool.COMMA));
+	viewValidDomainsURL.setWindowState(LiferayWindowState.POP_UP);
+
+	Map<String, Object> componentContext = HashMapBuilder.<String, Object>put(
+			"validDomains", StringUtil.merge(accountEntryDisplay.getDomains(), StringPool.COMMA)
+	).put(
+			"viewValidDomainsURL", viewValidDomainsURL.toString()
+	).build();
+	%>
+
+	<liferay-frontend:component
+		componentId="AccountUserEmailDomainValidator"
+		context="<%= componentContext %>"
+		module="account_users_admin/js/AccountUserEmailDomainValidator.es"
+	/>
+</c:if>

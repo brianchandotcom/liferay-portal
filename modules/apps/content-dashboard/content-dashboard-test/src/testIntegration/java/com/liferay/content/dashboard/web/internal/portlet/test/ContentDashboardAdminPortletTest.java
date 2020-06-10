@@ -231,7 +231,7 @@ public class ContentDashboardAdminPortletTest {
 		mockLiferayPortletRenderRequest.setParameter(
 			"status", String.valueOf(WorkflowConstants.STATUS_ANY));
 
-		SearchContainer searchContainer = _getSearchContainer(
+		SearchContainer<Object> searchContainer = _getSearchContainer(
 			mockLiferayPortletRenderRequest);
 
 		Assert.assertEquals(2, searchContainer.getTotal());
@@ -280,7 +280,7 @@ public class ContentDashboardAdminPortletTest {
 		mockLiferayPortletRenderRequest.setParameter(
 			"status", String.valueOf(WorkflowConstants.STATUS_APPROVED));
 
-		SearchContainer searchContainer = _getSearchContainer(
+		SearchContainer<Object> searchContainer = _getSearchContainer(
 			mockLiferayPortletRenderRequest);
 
 		Assert.assertEquals(1, searchContainer.getTotal());
@@ -315,7 +315,7 @@ public class ContentDashboardAdminPortletTest {
 		mockLiferayPortletRenderRequest.setParameter(
 			"status", String.valueOf(WorkflowConstants.STATUS_DRAFT));
 
-		SearchContainer searchContainer = _getSearchContainer(
+		SearchContainer<Object> searchContainer = _getSearchContainer(
 			mockLiferayPortletRenderRequest);
 
 		Assert.assertEquals(1, searchContainer.getTotal());
@@ -364,7 +364,7 @@ public class ContentDashboardAdminPortletTest {
 		mockLiferayPortletRenderRequest.setParameter(
 			"status", String.valueOf(WorkflowConstants.STATUS_SCHEDULED));
 
-		SearchContainer searchContainer = _getSearchContainer(
+		SearchContainer<Object> searchContainer = _getSearchContainer(
 			mockLiferayPortletRenderRequest);
 
 		Assert.assertEquals(1, searchContainer.getTotal());

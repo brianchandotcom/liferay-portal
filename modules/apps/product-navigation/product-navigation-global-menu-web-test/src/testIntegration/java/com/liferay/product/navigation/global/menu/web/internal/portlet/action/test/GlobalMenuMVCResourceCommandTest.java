@@ -53,10 +53,12 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
+import com.liferay.product.navigation.global.menu.web.internal.portlet.action.test.constants.GlobalMenuTestPortletKeys;
 import com.liferay.site.util.RecentGroupManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -245,6 +247,19 @@ public class GlobalMenuMVCResourceCommandTest {
 	}
 
 	@Test
+	public void testPanelCategories() {
+		JSONArray panelCategoriesJSONArray = ReflectionTestUtil.invoke(
+			_mvcResourceCommand, "_getPanelCategoriesJSONArray",
+			new Class<?>[] {HttpServletRequest.class, ThemeDisplay.class},
+			_mockHttpServletRequest, _themeDisplay);
+
+		Assert.assertTrue(
+			_containsPortletId(
+				panelCategoriesJSONArray,
+				GlobalMenuTestPortletKeys.GLOBAL_MENU_TEST_PORTLET));
+	}
+
+	@Test
 	public void testRecentSitesAndMySitesLessThan7() throws Exception {
 		_addMySiteGroups(3);
 		_addRecentGroups(3);
@@ -353,6 +368,39 @@ public class GlobalMenuMVCResourceCommandTest {
 			LocaleUtil.getDefault(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new long[0],
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private boolean _containsPortletId(
+		JSONArray panelCategoriesJSONArray, String portletId) {
+
+		for (int i = 0; i < panelCategoriesJSONArray.length(); i++) {
+			JSONObject childCategoryJSONObject =
+				panelCategoriesJSONArray.getJSONObject(i);
+
+			JSONArray childCategoriesJSONArray =
+				childCategoryJSONObject.getJSONArray("childCategories");
+
+			for (int j = 0; j < childCategoriesJSONArray.length(); j++) {
+				JSONObject panelAppsJSONObject =
+					childCategoriesJSONArray.getJSONObject(j);
+
+				JSONArray panelAppsJSONArray = panelAppsJSONObject.getJSONArray(
+					"panelApps");
+
+				for (int k = 0; k < panelAppsJSONArray.length(); k++) {
+					JSONObject panelAppJSONObject =
+						panelAppsJSONArray.getJSONObject(k);
+
+					if (Objects.equals(
+							panelAppJSONObject.get("portletId"), portletId)) {
+
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

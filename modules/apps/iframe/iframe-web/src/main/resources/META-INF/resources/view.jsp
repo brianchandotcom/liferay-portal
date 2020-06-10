@@ -32,7 +32,7 @@
 </c:choose>
 
 <c:if test="<%= iFramePortletInstanceConfiguration.dynamicUrlEnabled() %>">
-	<aui:script>
+	<aui:script use="aui-base,querystring">
 		var A = AUI();
 
 		function init() {

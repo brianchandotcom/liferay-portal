@@ -12,13 +12,13 @@
  * details.
  */
 
+import {EVENT_TYPES} from '../actions/types.es';
 import {
 	generateInstanceId,
 	generateName,
 	generateNestedFieldName,
 	parseNestedFieldName,
-} from '../../util/repeatable.es';
-import {EVENT_TYPES} from '../actions/types.es';
+} from '../util/repeatable.es';
 import {PagesVisitor} from '../util/visitors.es';
 
 export const createRepeatedField = (sourceField, repeatedIndex) => {

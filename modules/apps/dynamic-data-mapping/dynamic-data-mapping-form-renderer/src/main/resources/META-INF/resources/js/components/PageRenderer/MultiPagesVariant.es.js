@@ -17,9 +17,9 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
+import {EVENT_TYPES} from '../../actions/types.es';
 import {useForm} from '../../hooks/useForm.es';
 import {usePage} from '../../hooks/usePage.es';
-import {EVENT_TYPES} from '../actions/types.es';
 import {Placeholder} from './DefaultVariant.es';
 
 export const Container = ({children, empty, page, pageIndex, pages}) => {

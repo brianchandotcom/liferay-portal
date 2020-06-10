@@ -48,8 +48,8 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 				_ddmStructureLocalService.getDDMStructure(ddmStructureId);
 
 			return new InfoFieldSet.Builder(
-				InfoLocalizedValue.builder(
-				).addValues(
+				InfoLocalizedValue.<String>builder(
+				).putAll(
 					ddmStructure.getNameMap()
 				).build(),
 				ddmStructure.getStructureKey()

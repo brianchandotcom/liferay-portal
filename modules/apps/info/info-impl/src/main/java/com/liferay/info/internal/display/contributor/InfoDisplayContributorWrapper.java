@@ -113,8 +113,8 @@ public class InfoDisplayContributorWrapper
 						String fieldName = entry.getKey();
 
 						InfoLocalizedValue<String> fieldLabelLocalizedValue =
-							InfoLocalizedValue.builder(
-							).addValue(
+							InfoLocalizedValue.<String>builder(
+							).put(
 								_getLocale(), fieldName
 							).build();
 
@@ -164,8 +164,8 @@ public class InfoDisplayContributorWrapper
 						infoDisplayField.getType());
 
 					InfoLocalizedValue<String> labelInfoLocalizedValue =
-						InfoLocalizedValue.builder(
-						).addValue(
+						InfoLocalizedValue.<String>builder(
+						).put(
 							_getLocale(), infoDisplayField.getLabel()
 						).build();
 

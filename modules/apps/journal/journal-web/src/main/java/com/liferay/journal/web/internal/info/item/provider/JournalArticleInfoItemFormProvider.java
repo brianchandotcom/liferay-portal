@@ -309,21 +309,21 @@ public class JournalArticleInfoItemFormProvider
 			journalArticleFieldValues.add(
 				new InfoFieldValue<>(
 					_titleInfoField,
-					InfoLocalizedValue.builder(
+					InfoLocalizedValue.<String>builder(
 					).defaultLocale(
 						LocaleUtil.fromLanguageId(
 							journalArticle.getDefaultLanguageId())
-					).addValues(
+					).putAll(
 						journalArticle.getTitleMap()
 					).build()));
 			journalArticleFieldValues.add(
 				new InfoFieldValue<>(
 					_descriptionInfoField,
-					InfoLocalizedValue.builder(
+					InfoLocalizedValue.<String>builder(
 					).defaultLocale(
 						LocaleUtil.fromLanguageId(
 							journalArticle.getDefaultLanguageId())
-					).addValues(
+					).putAll(
 						journalArticle.getDescriptionMap()
 					).build()));
 

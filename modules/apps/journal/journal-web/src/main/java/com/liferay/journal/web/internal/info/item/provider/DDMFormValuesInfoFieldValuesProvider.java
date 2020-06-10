@@ -120,23 +120,22 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 		}
 
 		return Optional.of(
-			new InfoFieldValue<>(
+			InfoLocalizedValue.builder(
 				_ddmFormFieldInfoFieldConverter.convert(
 					_ddmBeanTranslator.translate(
 						ddmFormFieldValue.getDDMFormField())),
-				InfoLocalizedValue.builder(
+				InfoLocalizedValue.<String>builder(
+				).put(
+					consumer -> {
+						for (Locale locale : value.getAvailableLocales()) {
+							consumer.accept(
+								locale,
+								(String)_sanitizeDDMFormFieldValue(
+									t, ddmFormFieldValue, locale));
+						}
+					}
 				).defaultLocale(
 					value.getDefaultLocale()
-				).addValues(
-					value.getValues(
-					).entrySet(
-					).stream(
-					).collect(
-						Collectors.toMap(
-							Map.Entry::getKey,
-							entry -> _sanitizeDDMFormFieldValue(
-								t, ddmFormFieldValue, entry.getKey()))
-					)
 				).build()));
 	}
 

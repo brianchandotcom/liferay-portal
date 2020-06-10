@@ -15,11 +15,17 @@
 package com.liferay.portal.workflow.kaleo.definition.export;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.workflow.kaleo.definition.Definition;
+
+import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public interface DefinitionExporter {
+
+	public String export(Definition definition) throws PortalException;
 
 	public String export(long kaleoDefinitionId) throws PortalException;
 

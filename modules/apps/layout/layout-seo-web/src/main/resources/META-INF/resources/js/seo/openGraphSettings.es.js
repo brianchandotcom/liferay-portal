@@ -44,7 +44,7 @@ export default function ({namespace, uploadOpenGraphImageURL}) {
 		`${namespace}openGraphImageAlt_${Liferay.ThemeDisplay.getLanguageId()}`
 	);
 	const openGraphImageAltLabel = document.querySelector(
-		`[for="${namespace}openGraphImageAlt"`
+		`[for="${namespace}openGraphImageAlt"]`
 	);
 
 	itemSelectorDialog.on('selectedItemChange', (event) => {

@@ -62,20 +62,17 @@ public class SelectLayoutCollectionDisplayContext {
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
-
-		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+		_infoItemServiceTracker =
+			(InfoItemServiceTracker)_liferayPortletRequest.getAttribute(
+				LayoutAdminWebKeys.INFO_ITEM_SERVICE_TRACKER);
+		_infoListProviderTracker =
+			(InfoListProviderTracker)_liferayPortletRequest.getAttribute(
+				LayoutAdminWebKeys.INFO_LIST_PROVIDER_TRACKER);
+		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		_groupDisplayContextHelper = new GroupDisplayContextHelper(
 			_httpServletRequest);
-
-		_infoItemServiceTracker =
-			(InfoItemServiceTracker)_liferayPortletRequest.getAttribute(
-				LayoutAdminWebKeys.INFO_ITEM_SERVICE_TRACKER);
-
-		_infoListProviderTracker =
-			(InfoListProviderTracker)_liferayPortletRequest.getAttribute(
-				LayoutAdminWebKeys.INFO_LIST_PROVIDER_TRACKER);
 	}
 
 	public SearchContainer<InfoListProvider<?>>

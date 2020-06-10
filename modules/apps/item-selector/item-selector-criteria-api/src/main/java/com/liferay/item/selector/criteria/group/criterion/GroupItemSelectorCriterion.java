@@ -95,7 +95,7 @@ public class GroupItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private boolean _allowNavigation = true;
 	private boolean _includeAllVisibleGroups;
 	private boolean _includeFormsSite;
-	private boolean _includeRecentSites;
+	private boolean _includeRecentSites = true;
 	private boolean _includeUserPersonalSite;
 	private String _portletId;
 	private boolean _privateLayout;

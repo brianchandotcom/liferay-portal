@@ -26,7 +26,7 @@ import SectionLabel from './SectionLabel.es';
 import TagList from './TagList.es';
 import UserIcon from './UserIcon.es';
 
-export default ({question, showSectionLabel}) => (
+export default ({currentSection, question, showSectionLabel}) => (
 	<div className="c-mt-4 c-p-3 position-relative question-row text-secondary">
 		<div className="align-items-center d-flex flex-wrap justify-content-between">
 			<span>
@@ -89,7 +89,9 @@ export default ({question, showSectionLabel}) => (
 		<div className="align-items-sm-center align-items-start d-flex flex-column-reverse flex-sm-row justify-content-between">
 			<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
 				<Link
-					to={`/questions/${question.messageBoardSection.title}/creator/${question.creator.id}`}
+					to={`/questions/${
+						currentSection || question.messageBoardSection.title
+					}/creator/${question.creator.id}`}
 				>
 					<UserIcon
 						fullName={question.creator.name}

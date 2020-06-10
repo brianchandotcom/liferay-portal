@@ -181,6 +181,7 @@ export default withRouter(
 							>
 								{(question) => (
 									<QuestionRow
+										currentSection={sectionTitle}
 										key={question.id}
 										question={question}
 										showSectionLabel={

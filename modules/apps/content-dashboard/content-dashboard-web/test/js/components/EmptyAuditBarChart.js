@@ -15,15 +15,15 @@
 import {cleanup, render} from '@testing-library/react';
 import React from 'react';
 
-import EmptyBarChart from '../../../src/main/resources/META-INF/resources/js/components/EmptyBarChart';
+import EmptyAuditBarChart from '../../../src/main/resources/META-INF/resources/js/components/EmptyAuditBarChart';
 
 import '@testing-library/jest-dom/extend-expect';
 
-describe('EmptyBarChart', () => {
+describe('EmptyAuditBarChart', () => {
 	afterEach(cleanup);
 
 	it('renders empty bar chart if there is no content labeled with marketing categories', () => {
-		const {getByText} = render(<EmptyBarChart />);
+		const {getByText} = render(<EmptyAuditBarChart />);
 
 		expect(getByText('there-is-no-data')).toBeInTheDocument();
 		expect(

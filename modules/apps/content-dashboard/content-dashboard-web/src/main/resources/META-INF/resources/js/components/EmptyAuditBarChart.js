@@ -34,7 +34,7 @@ const BAR_CHART = {
 	width: 1150,
 };
 
-export default function EmptyBarChart() {
+export default function EmptyAuditBarChart() {
 	return (
 		<>
 			<ClayEmptyState

@@ -68,6 +68,20 @@ class AccountUserEmailDomainValidator extends PortletBase {
 		};
 	}
 
+	onSubmitError_(event, form, field, validatorName) {
+		event.preventDefault();
+
+		const errors = event.validator.errors;
+
+		const fieldErrors = errors[field.get('name')];
+
+		if (fieldErrors.length == 1 && fieldErrors[0] == validatorName) {
+			submitForm(form);
+
+			event.halt();
+		}
+	}
+
 	setWarningValidationStyle_(form, formField, validatorName) {
 		const formValidator = form.formValidator;
 
@@ -101,6 +115,14 @@ class AccountUserEmailDomainValidator extends PortletBase {
 				fieldContainer.removeClass('has-warning');
 			}
 		};
+
+		formValidator.on(
+			'submitError',
+			(event) => {
+				this.onSubmitError_(event, form, formField, validatorName);
+			},
+			this
+		);
 	}
 }
 

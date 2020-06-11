@@ -15,7 +15,7 @@
 import {ClayIconSpriteContext} from '@clayui/icon';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import DatasetDisplayContext from './DatasetDisplayContext';
 import EmptyResultMessage from './EmptyResultMessage';
@@ -58,7 +58,6 @@ function DatasetDisplay({
 	showSearch,
 	sidePanelId,
 	sorting: sortingProp,
-	spritemap,
 	style,
 	views: viewsProp,
 }) {
@@ -368,7 +367,6 @@ function DatasetDisplay({
 						setDelta(deltaVal);
 					}}
 					onPageChange={setPageNumber}
-					spritemap={spritemap}
 					totalItems={totalItems}
 				/>
 			</div>
@@ -408,6 +406,8 @@ function DatasetDisplay({
 		});
 	}
 
+	const spritemap = useContext(ClayIconSpriteContext);
+
 	return (
 		<DatasetDisplayContext.Provider
 			value={{
@@ -437,43 +437,41 @@ function DatasetDisplay({
 				updateSorting,
 			}}
 		>
-			<ClayIconSpriteContext.Provider value={spritemap}>
-				<Modal
-					id={datasetDisplaySupportModalId}
-					onClose={refreshData}
+			<Modal id={datasetDisplaySupportModalId} onClose={refreshData} />
+
+			{!sidePanelId && (
+				<SidePanel
+					id={datasetDisplaySupportSidePanelId}
+					onAfterSubmit={refreshData}
+					spritemap={spritemap}
 				/>
-				{!sidePanelId && (
-					<SidePanel
-						id={datasetDisplaySupportSidePanelId}
-						onAfterSubmit={refreshData}
-					/>
+			)}
+
+			<div className="dataset-display-wrapper" ref={wrapperRef}>
+				{style === 'default' && (
+					<div className="dataset-display dataset-display-inline">
+						{managementBar}
+						{wrappedView}
+						{paginationComponent}
+					</div>
 				)}
-				<div className="dataset-display-wrapper" ref={wrapperRef}>
-					{style === 'default' && (
-						<div className="dataset-display dataset-display-inline">
-							{managementBar}
+				{style === 'stacked' && (
+					<div className="dataset-display dataset-display-stacked">
+						{managementBar}
+						{wrappedView}
+						{paginationComponent}
+					</div>
+				)}
+				{style === 'fluid' && (
+					<div className="dataset-display dataset-display-fluid">
+						{managementBar}
+						<div className="container mt-3">
 							{wrappedView}
 							{paginationComponent}
 						</div>
-					)}
-					{style === 'stacked' && (
-						<div className="dataset-display dataset-display-stacked">
-							{managementBar}
-							{wrappedView}
-							{paginationComponent}
-						</div>
-					)}
-					{style === 'fluid' && (
-						<div className="dataset-display dataset-display-fluid">
-							{managementBar}
-							<div className="container mt-3">
-								{wrappedView}
-								{paginationComponent}
-							</div>
-						</div>
-					)}
-				</div>
-			</ClayIconSpriteContext.Provider>
+					</div>
+				)}
+			</div>
 		</DatasetDisplayContext.Provider>
 	);
 }
@@ -509,7 +507,6 @@ DatasetDisplay.propTypes = {
 	showSearch: PropTypes.bool,
 	sidePanelId: PropTypes.string,
 	sorting: PropTypes.array,
-	spritemap: PropTypes.string.isRequired,
 	style: PropTypes.oneOf(['default', 'fluid', 'stacked']),
 	views: PropTypes.arrayOf(
 		PropTypes.shape({

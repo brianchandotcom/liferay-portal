@@ -30,7 +30,6 @@ import {resolveModalHeight} from '../utilities/modals/index';
 function Modal({
 	id,
 	onClose: onCloseProp,
-	spritemap,
 	status,
 	title: titleProp,
 	url: urlProp,
@@ -146,7 +145,6 @@ function Modal({
 					className="clay-modal"
 					observer={observer}
 					size={size}
-					spritemap={spritemap}
 					status={status}
 				>
 					{title && <ClayModal.Header>{title}</ClayModal.Header>}
@@ -174,7 +172,6 @@ Modal.propTypes = {
 	closeOnSubmit: PropTypes.bool,
 	id: PropTypes.string.isRequired,
 	onClose: PropTypes.func,
-	spritemap: PropTypes.string,
 	status: PropTypes.string,
 	title: PropTypes.string,
 	url: PropTypes.string,

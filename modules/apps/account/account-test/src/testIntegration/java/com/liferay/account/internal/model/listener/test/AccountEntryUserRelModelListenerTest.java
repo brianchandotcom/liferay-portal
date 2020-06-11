@@ -21,6 +21,7 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -52,6 +53,37 @@ public class AccountEntryUserRelModelListenerTest {
 	@Before
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
+	}
+
+	@Test
+	public void testAccountEntryMembershipPolicyTypeBusiness()
+		throws Exception {
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), _user.getUserId());
+
+		User user1 = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), user1.getUserId());
+	}
+
+	@Test(expected = ModelListenerException.class)
+	public void testAccountEntryMembershipPolicyTypePerson() throws Exception {
+		AccountEntry accountEntry =
+			AccountEntryTestUtil.addPersonalAccountEntry(
+				_accountEntryLocalService);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), _user.getUserId());
+
+		User user1 = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), user1.getUserId());
 	}
 
 	@Test

@@ -23,7 +23,7 @@
 </div>
 
 <aui:script require='<%= module + " as datasetDisplay" %>'>
-	var container = document.querySelector('#<%= containerId %>');
+	var container = document.getElementById('<%= containerId %>');
 
 	datasetDisplay.default(
 		{

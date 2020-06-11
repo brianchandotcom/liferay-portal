@@ -29,9 +29,9 @@ import org.gradle.api.tasks.Exec;
  * @author Peter Shin
  */
 @CacheableTask
-public class DockerDeployTask extends Exec {
+public class DockerCopyTask extends Exec {
 
-	public DockerDeployTask() {
+	public DockerCopyTask() {
 		setExecutable("docker");
 		setLifearyHome("/opt/liferay");
 	}

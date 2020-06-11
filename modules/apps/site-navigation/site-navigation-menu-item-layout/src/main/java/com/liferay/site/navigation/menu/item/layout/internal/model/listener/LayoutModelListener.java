@@ -211,8 +211,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return false;
 		}
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		if (draftLayout == null) {
 			return false;

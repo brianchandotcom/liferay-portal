@@ -113,11 +113,8 @@ public class MasterLayoutVerticalCard
 			Layout layout = LayoutLocalServiceUtil.getLayout(
 				_layoutPageTemplateEntry.getPlid());
 
-			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				draftLayout, _themeDisplay);
+				layout.getDraftLayout(), _themeDisplay);
 
 			layoutFullURL = HttpUtil.setParameter(
 				layoutFullURL, "p_l_mode", Constants.EDIT);
@@ -157,8 +154,7 @@ public class MasterLayoutVerticalCard
 			return Collections.emptyList();
 		}
 
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		if (draftLayout == null) {
 			return Collections.emptyList();

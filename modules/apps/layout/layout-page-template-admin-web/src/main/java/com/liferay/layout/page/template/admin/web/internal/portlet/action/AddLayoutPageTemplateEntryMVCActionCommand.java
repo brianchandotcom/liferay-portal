@@ -117,11 +117,8 @@ public class AddLayoutPageTemplateEntryMVCActionCommand
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
 
-		Layout layout = _layoutLocalService.getLayout(
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
 			layoutPageTemplateEntry.getPlid());
-
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

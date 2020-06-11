@@ -71,10 +71,7 @@ public class LayoutMobileDeviceRulesFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
-
-		if (draftLayout != null) {
+		if (layout.getDraftLayout() != null) {
 			return false;
 		}
 

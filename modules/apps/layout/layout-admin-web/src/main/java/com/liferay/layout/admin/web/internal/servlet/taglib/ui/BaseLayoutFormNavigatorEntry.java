@@ -50,10 +50,7 @@ public abstract class BaseLayoutFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		Layout draftLayout = layoutLocalService.fetchLayout(
-			portal.getClassNameId(Layout.class), layout.getPlid());
-
-		if (draftLayout != null) {
+		if (layout.getDraftLayout() != null) {
 			return false;
 		}
 

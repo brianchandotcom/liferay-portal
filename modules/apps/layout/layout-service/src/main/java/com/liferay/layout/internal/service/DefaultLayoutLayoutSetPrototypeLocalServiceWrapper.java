@@ -73,9 +73,7 @@ public class DefaultLayoutLayoutSetPrototypeLocalServiceWrapper
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Home", null, null,
 				LayoutConstants.TYPE_CONTENT, false, "/home", serviceContext);
 
-			Layout draftLayout = _layoutLocalService.fetchLayout(
-				_portal.getClassNameId(Layout.class.getName()),
-				defaultLayout.getPlid());
+			Layout draftLayout = defaultLayout.getDraftLayout();
 
 			String currentName = PrincipalThreadLocal.getName();
 

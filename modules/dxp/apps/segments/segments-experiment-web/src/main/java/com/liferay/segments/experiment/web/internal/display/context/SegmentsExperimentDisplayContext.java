@@ -225,10 +225,8 @@ public class SegmentsExperimentDisplayContext {
 	}
 
 	private String _getEditSegmentsVariantLayoutURL() throws PortalException {
-		Layout layout = _themeDisplay.getLayout();
-
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
+			_themeDisplay.getPlid());
 
 		if (draftLayout == null) {
 			return StringPool.BLANK;

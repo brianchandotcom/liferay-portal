@@ -92,11 +92,8 @@ public abstract class BaseLayoutScreenNavigationEntry
 			return false;
 		}
 
-		Layout draftLayout = layoutLocalService.fetchLayout(
-			portal.getClassNameId(Layout.class), layout.getPlid());
-
 		if ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
-			(draftLayout == null)) {
+			(layout.getDraftLayout() == null)) {
 
 			return false;
 		}

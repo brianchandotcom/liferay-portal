@@ -70,6 +70,9 @@ public class DisplayPageVerticalCard
 		_layoutPageTemplateEntry = (LayoutPageTemplateEntry)baseModel;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			_layoutPageTemplateEntry.getPlid());
 	}
 
 	@Override
@@ -99,14 +102,8 @@ public class DisplayPageVerticalCard
 	@Override
 	public String getHref() {
 		try {
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				_layoutPageTemplateEntry.getPlid());
-
-			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				draftLayout, _themeDisplay);
+				_draftLayout, _themeDisplay);
 
 			layoutFullURL = HttpUtil.setParameter(
 				layoutFullURL, "p_l_mode", Constants.EDIT);
@@ -132,22 +129,12 @@ public class DisplayPageVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
-		if (layout == null) {
-			return Collections.emptyList();
-		}
-
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
-		if (draftLayout == null) {
+		if (_draftLayout == null) {
 			return Collections.emptyList();
 		}
 
 		return LabelItemListBuilder.add(
-			labelItem -> labelItem.setStatus(draftLayout.getStatus())
+			labelItem -> labelItem.setStatus(_draftLayout.getStatus())
 		).build();
 	}
 
@@ -226,6 +213,7 @@ public class DisplayPageVerticalCard
 		return infoDisplayContributor.getLabel(_themeDisplay.getLocale());
 	}
 
+	private final Layout _draftLayout;
 	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
 	private final LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final RenderRequest _renderRequest;

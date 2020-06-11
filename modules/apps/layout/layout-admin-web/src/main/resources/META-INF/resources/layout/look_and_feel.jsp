@@ -225,11 +225,9 @@ else {
 		if (selLayout.getMasterLayoutPlid() > 0) {
 			Layout masterLayout = LayoutLocalServiceUtil.getLayout(selLayout.getMasterLayoutPlid());
 
-			Layout masterDraftLayout = LayoutLocalServiceUtil.fetchLayout(PortalUtil.getClassNameId(Layout.class), masterLayout.getPlid());
-
 			String editLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(selLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", ParamUtil.getString(request, "redirect"));
 
-			editMasterLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterDraftLayout, themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editLayoutURL);
+			editMasterLayoutURL = HttpUtil.addParameter(HttpUtil.addParameter(PortalUtil.getLayoutFullURL(masterLayout.getDraftLayout(), themeDisplay), "p_l_mode", Constants.EDIT), "p_l_back_url", editLayoutURL);
 		}
 		%>
 

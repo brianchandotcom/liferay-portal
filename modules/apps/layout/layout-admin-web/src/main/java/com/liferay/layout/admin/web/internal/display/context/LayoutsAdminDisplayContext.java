@@ -328,8 +328,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getDiscardDraftURL(Layout layout) {
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		PortletURL discardDraftURL = _liferayPortletResponse.createActionURL();
 
@@ -362,10 +361,7 @@ public class LayoutsAdminDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
-		if (draftLayout == null) {
+		if (layout.getDraftLayout() == null) {
 			return StringPool.BLANK;
 		}
 
@@ -1049,11 +1045,8 @@ public class LayoutsAdminDisplayContext {
 		String layoutFullURL = null;
 
 		if (layout.isDenied() || layout.isPending()) {
-			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
 			layoutFullURL = PortalUtil.getLayoutFullURL(
-				draftLayout, themeDisplay);
+				layout.getDraftLayout(), themeDisplay);
 		}
 		else {
 			layoutFullURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
@@ -1130,11 +1123,8 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isConversionDraft(Layout layout) {
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
-			(draftLayout != null)) {
+			(layout.getDraftLayout() != null)) {
 
 			return true;
 		}
@@ -1327,8 +1317,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		if (layout.isTypeContent()) {
-			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+			Layout draftLayout = layout.getDraftLayout();
 
 			boolean published = false;
 
@@ -1374,8 +1363,7 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		if (draftLayout == null) {
 			return false;
@@ -1561,8 +1549,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getDraftLayoutURL(Layout layout) throws Exception {
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		if (draftLayout == null) {
 			UnicodeProperties unicodeProperties =

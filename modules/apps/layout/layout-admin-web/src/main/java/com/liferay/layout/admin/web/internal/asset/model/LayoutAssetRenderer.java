@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -119,12 +118,8 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 				return PortalUtil.getLayoutFriendlyURL(_layout, themeDisplay);
 			}
 
-			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-				PortalUtil.getClassNameId(Layout.class.getName()),
-				_layout.getPlid());
-
 			String previewURL = PortalUtil.getLayoutFriendlyURL(
-				draftLayout, themeDisplay);
+				_layout.getDraftLayout(), themeDisplay);
 
 			return HttpUtil.addParameter(
 				previewURL, "p_l_back_url", themeDisplay.getURLCurrent());

@@ -302,8 +302,7 @@ public class AddSegmentsExperienceMVCActionCommand
 			long baseSegmentsExperienceId, ServiceContext serviceContext)
 		throws PortalException {
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class.getName()), classPK);
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(classPK);
 
 		if (draftLayout != null) {
 			SegmentsExperienceUtil.copySegmentsExperienceData(

@@ -100,9 +100,7 @@ public class PublishLayoutPageTemplateEntryMVCActionCommandTest {
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class.getName()),
-			layoutPageTemplateEntry.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		LayoutStructure layoutStructure = _getLayoutStructure(draftLayout);
 

@@ -457,8 +457,7 @@ public class MillerColumnsDisplayContext {
 			}
 		}
 
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		if (layout.isDenied() || layout.isPending()) {
 			jsonArray.put(
@@ -698,13 +697,10 @@ public class MillerColumnsDisplayContext {
 		return jsonArray;
 	}
 
-	private JSONArray _getLayoutStatesJSONArray(Layout layout)
-		throws Exception {
-
+	private JSONArray _getLayoutStatesJSONArray(Layout layout) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		if (layout.isTypeContent()) {
 			boolean published = GetterUtil.getBoolean(

@@ -373,8 +373,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			new HashMap<>(), _serviceContext);
 
 		if (Validator.isNotNull(dataPath)) {
-			Layout draftLayout = _layoutLocalService.fetchLayout(
-				_portal.getClassNameId(Layout.class), layout.getPlid());
+			Layout draftLayout = layout.getDraftLayout();
 
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
@@ -507,8 +506,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	}
 
 	private void _copyLayout(Layout layout) throws Exception {
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		if (draftLayout != null) {
 			_layoutCopyHelper.copyLayout(draftLayout, layout);

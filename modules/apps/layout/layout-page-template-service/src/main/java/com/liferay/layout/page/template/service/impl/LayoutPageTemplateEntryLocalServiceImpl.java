@@ -716,8 +716,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		Map<Locale, String> titleMap = Collections.singletonMap(
 			LocaleUtil.getSiteDefault(), name);
 
-		Layout draftLayout = layoutLocalService.fetchLayout(
-			classNameLocalService.getClassNameId(Layout.class),
+		Layout draftLayout = layoutLocalService.fetchDraftLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		ServiceContext serviceContext =

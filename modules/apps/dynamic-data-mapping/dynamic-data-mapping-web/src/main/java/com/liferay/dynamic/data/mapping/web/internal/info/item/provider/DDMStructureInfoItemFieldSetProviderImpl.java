@@ -17,13 +17,16 @@ package com.liferay.dynamic.data.mapping.web.internal.info.item.provider;
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.IntegerInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -106,6 +109,12 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 			Objects.equals(ddmFormFieldType, "image")) {
 
 			return ImageInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.CHECKBOX)) {
+			return BooleanInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER)) {
+			return IntegerInfoFieldType.INSTANCE;
 		}
 
 		return TextInfoFieldType.INSTANCE;

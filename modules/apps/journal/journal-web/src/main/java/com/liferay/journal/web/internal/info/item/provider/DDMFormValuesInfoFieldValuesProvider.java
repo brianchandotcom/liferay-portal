@@ -20,8 +20,13 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.Value;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.BooleanInfoFieldType;
+import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.info.field.type.IntegerInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
@@ -111,6 +116,22 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 		}
 	}
 
+	private InfoFieldType _getInfoFieldType(String ddmFormFieldType) {
+		if (Objects.equals(ddmFormFieldType, "ddm-image") ||
+			Objects.equals(ddmFormFieldType, "image")) {
+
+			return ImageInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.CHECKBOX)) {
+			return BooleanInfoFieldType.INSTANCE;
+		}
+		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER)) {
+			return IntegerInfoFieldType.INSTANCE;
+		}
+
+		return TextInfoFieldType.INSTANCE;
+	}
+
 	private Optional<InfoFieldValue<InfoLocalizedValue<String>>>
 		_getInfoFieldValue(T t, DDMFormFieldValue ddmFormFieldValue) {
 
@@ -125,7 +146,7 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 		return Optional.of(
 			new InfoFieldValue<>(
 				new InfoField(
-					TextInfoFieldType.INSTANCE,
+					_getInfoFieldType(ddmFormField.getType()),
 					InfoLocalizedValue.localize(
 						getClass(), ddmFormFieldValue.getName()),
 					ddmFormField.isLocalizable(), ddmFormFieldValue.getName()),

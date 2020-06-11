@@ -16,6 +16,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {logError} from '../utilities/logError';
 import TooltipTextRenderer from './TooltipTextRenderer';
 
 function DefaultRenderer({value}) {

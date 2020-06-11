@@ -29,7 +29,7 @@ import {
 	SIDE_PANEL_CLOSED,
 } from '../utilities/eventsDefinitions';
 import {getIframeHandlerModalId, isPageInIframe} from '../utilities/iframes';
-import {logError} from '../utilities/log';
+import {logError} from '../utilities/logError';
 import {exposeSidePanel} from '../utilities/sidePanels';
 import SideMenu from './SideMenu';
 

@@ -17,8 +17,8 @@ package com.liferay.portal.log;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogWrapper;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,67 +26,78 @@ import org.apache.log4j.Logger;
 public class Log4jLogImpl implements Log {
 
 	public Log4jLogImpl(Logger logger) {
-		_logger = logger;
+		_logger = (org.apache.logging.log4j.core.Logger)logger;
 	}
 
 	@Override
 	public void debug(Object msg) {
-		_logger.log(_logWrapperClassName, Level.DEBUG, msg, null);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.DEBUG, null, msg, null);
 	}
 
 	@Override
 	public void debug(Object msg, Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.DEBUG, msg, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.DEBUG, null, msg, throwable);
 	}
 
 	@Override
 	public void debug(Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.DEBUG, null, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.DEBUG, null, (Object)null, throwable);
 	}
 
 	@Override
 	public void error(Object msg) {
-		_logger.log(_logWrapperClassName, Level.ERROR, msg, null);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.ERROR, null, msg, null);
 	}
 
 	@Override
 	public void error(Object msg, Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.ERROR, msg, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.ERROR, null, msg, throwable);
 	}
 
 	@Override
 	public void error(Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.ERROR, null, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.ERROR, null, (Object)null, throwable);
 	}
 
 	@Override
 	public void fatal(Object msg) {
-		_logger.log(_logWrapperClassName, Level.FATAL, msg, null);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.FATAL, null, msg, null);
 	}
 
 	@Override
 	public void fatal(Object msg, Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.FATAL, msg, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.FATAL, null, msg, throwable);
 	}
 
 	@Override
 	public void fatal(Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.FATAL, null, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.FATAL, null, (Object)null, throwable);
 	}
 
 	@Override
 	public void info(Object msg) {
-		_logger.log(_logWrapperClassName, Level.INFO, msg, null);
+		_logger.logIfEnabled(_logWrapperClassName, Level.INFO, null, msg, null);
 	}
 
 	@Override
 	public void info(Object msg, Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.INFO, msg, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.INFO, null, msg, throwable);
 	}
 
 	@Override
 	public void info(Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.INFO, null, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.INFO, null, (Object)null, throwable);
 	}
 
 	@Override
@@ -96,12 +107,12 @@ public class Log4jLogImpl implements Log {
 
 	@Override
 	public boolean isErrorEnabled() {
-		return _logger.isEnabledFor(Level.ERROR);
+		return _logger.isErrorEnabled();
 	}
 
 	@Override
 	public boolean isFatalEnabled() {
-		return _logger.isEnabledFor(Level.FATAL);
+		return _logger.isFatalEnabled();
 	}
 
 	@Override
@@ -116,7 +127,7 @@ public class Log4jLogImpl implements Log {
 
 	@Override
 	public boolean isWarnEnabled() {
-		return _logger.isEnabledFor(Level.WARN);
+		return _logger.isWarnEnabled();
 	}
 
 	@Override
@@ -126,35 +137,40 @@ public class Log4jLogImpl implements Log {
 
 	@Override
 	public void trace(Object msg) {
-		_logger.log(_logWrapperClassName, Level.TRACE, msg, null);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.TRACE, null, msg, null);
 	}
 
 	@Override
 	public void trace(Object msg, Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.TRACE, msg, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.TRACE, null, msg, throwable);
 	}
 
 	@Override
 	public void trace(Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.TRACE, null, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.TRACE, null, (Object)null, throwable);
 	}
 
 	@Override
 	public void warn(Object msg) {
-		_logger.log(_logWrapperClassName, Level.WARN, msg, null);
+		_logger.logIfEnabled(_logWrapperClassName, Level.WARN, null, msg, null);
 	}
 
 	@Override
 	public void warn(Object msg, Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.WARN, msg, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.WARN, null, msg, throwable);
 	}
 
 	@Override
 	public void warn(Throwable throwable) {
-		_logger.log(_logWrapperClassName, Level.WARN, null, throwable);
+		_logger.logIfEnabled(
+			_logWrapperClassName, Level.WARN, null, (Object)null, throwable);
 	}
 
-	private final Logger _logger;
+	private final org.apache.logging.log4j.core.Logger _logger;
 	private String _logWrapperClassName = LogWrapper.class.getName();
 
 }

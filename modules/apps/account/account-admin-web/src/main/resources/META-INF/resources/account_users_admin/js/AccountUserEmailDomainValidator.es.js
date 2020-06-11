@@ -70,22 +70,39 @@ class AccountUserEmailDomainValidator extends PortletBase {
 	}
 
 	getEmailDomainFieldRule_() {
+		const accountNames = this.accountNames;
 		const validDomains = this.validDomains.split(',');
+		const validatorName = 'emailDomain';
 
 		return {
-			body(val) {
+			body(val, field) {
 				const emailDomain = val.substr(val.indexOf('@') + 1);
 
 				if (!validDomains.includes(emailDomain)) {
+					const fieldName = field.get('name');
+
+					const errorMessages = this.get('fieldStrings');
+
+					if (!errorMessages[fieldName]) {
+						errorMessages[fieldName] = {};
+					}
+
+					errorMessages[fieldName][validatorName] = Liferay.Util.sub(
+						Liferay.Language.get(
+							'x-is-not-a-valid-domain-for-the-following-accounts-x'
+						),
+						emailDomain,
+						accountNames
+					);
+
 					return false;
 				}
 
 				return true;
 			},
 			custom: true,
-			errorMessage: Liferay.Language.get('this-email-has-invalid-domain'),
 			fieldName: this.ns('emailAddress'),
-			validatorName: 'emailDomain',
+			validatorName,
 		};
 	}
 
@@ -160,6 +177,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 }
 
 AccountUserEmailDomainValidator.STATE = {
+	accountNames: Config.string,
 	validDomains: Config.string,
 	viewValidDomainsURL: Config.string,
 };

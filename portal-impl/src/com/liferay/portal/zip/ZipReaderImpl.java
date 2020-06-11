@@ -55,8 +55,8 @@ public class ZipReaderImpl implements ZipReader {
 		try {
 			_zipFile = new ZipFile(file);
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 	}
 
@@ -100,8 +100,8 @@ public class ZipReaderImpl implements ZipReader {
 				bytes = FileUtil.getBytes(is);
 			}
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 
 		return bytes;
@@ -128,8 +128,8 @@ public class ZipReaderImpl implements ZipReader {
 				return _zipFile.getInputStream(zipEntry);
 			}
 		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 
 		return null;
@@ -199,10 +199,11 @@ public class ZipReaderImpl implements ZipReader {
 
 		_entriesByFolder = new HashMap<>();
 
-		Enumeration<? extends ZipEntry> zipEntries = _zipFile.entries();
+		Enumeration<? extends ZipEntry> zipEntriesEnumeration =
+			_zipFile.entries();
 
-		while (zipEntries.hasMoreElements()) {
-			ZipEntry zipEntry = zipEntries.nextElement();
+		while (zipEntriesEnumeration.hasMoreElements()) {
+			ZipEntry zipEntry = zipEntriesEnumeration.nextElement();
 
 			if (zipEntry.isDirectory()) {
 				continue;

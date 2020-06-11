@@ -3292,6 +3292,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
+	
+		Pause(locator1 = "5000");
 
 		FormFields.viewParagraphField(
 			fieldTitle = "Paragraph",
@@ -3335,13 +3337,21 @@ definition {
 			formPageCurrent = "Page 2",
 			formPageNext = "Page 3");
 
+		FormFields.viewUploadField(
+			fieldLabel = "Upload Field",
+			fieldName = "UploadField");
+
+		AssertNotEditable(
+			key_fieldName = "UploadField",
+			locator1 = "FormFields#UPLOAD_FIELD");
+
 		ItemSelector.gotoItemSelectorViaSelectButton();
 
 		ItemSelector.uploadFile(
 			navTab = "Documents and Media",
 			uploadFileName = "Document_1.jpg");
 
-		FormPortlet.submit();
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 

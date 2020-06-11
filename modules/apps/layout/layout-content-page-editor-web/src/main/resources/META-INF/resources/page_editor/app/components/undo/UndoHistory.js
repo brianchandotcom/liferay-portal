@@ -39,6 +39,7 @@ export default function UndoHistory() {
 				active={active}
 				alignmentPosition={Align.BottomRight}
 				className="mr-3"
+				menuElementAttrs={{className: 'page-editor__undo-history'}}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButtonWithIcon

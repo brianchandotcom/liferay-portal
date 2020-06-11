@@ -1,7 +1,13 @@
 @import 'atlas-variables';
 
-.dropdown {
-	&-item {
+.page-editor__undo-history {
+	&.dropdown-menu {
+		max-height: 320px;
+		max-width: 280px;
+		width: 280px;
+	}
+
+	.dropdown-item {
 		text-overflow: ellipsis;
 		white-space: nowrap;
 
@@ -10,11 +16,5 @@
 			font-size: 0.75rem;
 			margin-left: 1em;
 		}
-	}
-
-	&-menu {
-		max-height: 320px;
-		max-width: 280px;
-		width: 280px;
 	}
 }

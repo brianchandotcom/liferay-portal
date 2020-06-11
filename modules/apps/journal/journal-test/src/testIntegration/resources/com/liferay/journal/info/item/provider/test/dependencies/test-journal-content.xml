@@ -9,4 +9,13 @@
 		<dynamic-content language-id="en_US"><![CDATA[Some more text]]></dynamic-content>
 		<dynamic-content language-id="es_ES"><![CDATA[Un poco más de texto]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="itet" name="boolean" type="boolean">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="dqqn" name="image" type="image">
+		<dynamic-content language-id="en_US"></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="bajz" name="integer" type="ddm-integer">
+		<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
+	</dynamic-element>
 </root>

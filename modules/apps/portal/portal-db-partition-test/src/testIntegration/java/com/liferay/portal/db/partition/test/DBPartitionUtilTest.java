@@ -174,7 +174,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", false);
 		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
+			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
 			StringPool.BLANK);
 
 		_lazyConnectionDataSourceProxy.setTargetDataSource(_currentDataSource);
@@ -193,8 +193,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			DBPartitionUtil.class, "_DATABASE_PARTITION_ENABLED", true);
 
 		ReflectionTestUtil.setFieldValue(
-			DBPartitionUtil.class, "_DATABASE_PARTITION_INSTANCE_ID",
-			_DB_PARTITION_INSTANCE_ID);
+			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
+			_DB_PARTITION_SCHEMA_NAME_PREFIX);
 
 		DBPartitionUtil.setDefaultCompanyId(PortalUtil.getDefaultCompanyId());
 
@@ -214,16 +214,17 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 	private static String _getSchemaName(long companyId) {
 		if (_dbPartitionEnabled) {
-			return PropsUtil.get("database.partition.instance.id") +
-				StringPool.UNDERLINE + companyId;
+			return PropsUtil.get("database.partition.schema.name.prefix") +
+				companyId;
 		}
 
-		return _DB_PARTITION_INSTANCE_ID + StringPool.UNDERLINE + companyId;
+		return _DB_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
 	private static final long _COMPANY_ID = 1L;
 
-	private static final String _DB_PARTITION_INSTANCE_ID = "dbPartitionTest";
+	private static final String _DB_PARTITION_SCHEMA_NAME_PREFIX =
+		"lpartitiontest_";
 
 	private static Connection _connection;
 	private static final DataSource _currentDataSource =

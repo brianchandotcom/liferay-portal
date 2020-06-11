@@ -76,10 +76,10 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
-			fragmentName = "Content",
+			fragmentName = "Content Display",
 			webcontent = "true",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WebContent Title");

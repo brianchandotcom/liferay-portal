@@ -196,11 +196,11 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
 			depotName = "Test Depot Name",
-			fragmentName = "Content",
+			fragmentName = "Content Display",
 			webcontent = "true",
 			webContentContent = "WC WebContent Depot",
 			webContentTitle = "WC WebContent Title");
@@ -237,11 +237,11 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
 			depotName = "Test Depot Name",
-			fragmentName = "Content",
+			fragmentName = "Content Display",
 			webcontent = "true",
 			webContentContent = "WC WebContent Depot",
 			webContentTitle = "WC WebContent Title");

@@ -326,10 +326,10 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
-			fragmentName = "Content",
+			fragmentName = "Content Display",
 			webcontent = "true",
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WebContent Title");
@@ -354,7 +354,7 @@ definition {
 
 		task ("Assert there is a message in page editor informing the page author that the content is no longer available") {
 			AssertVisible(
-				key_fragmentName = "Content",
+				key_fragmentName = "Content Display",
 				key_messageIfo = "The selected content is no longer available. Please select another.",
 				locator1 = "Fragment#MESSAGE_INFO");
 		}
@@ -376,13 +376,13 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
 			blogs = "true",
 			entryContent = "This content maps from blog content",
 			entryTitle = "Blogs Entry Title",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.clickPublish();
 
@@ -530,11 +530,11 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
 			documentandmedia = "true",
-			fragmentName = "Content",
+			fragmentName = "Content Display",
 			imageFileName = "Document_1.jpg");
 
 		PageEditor.clickPublish();
@@ -562,10 +562,10 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
-			fragmentName = "Content",
+			fragmentName = "Content Display",
 			webcontent = "true",
 			webContentContent = "This content maps from web content",
 			webContentTitle = "Webcontent Title");
@@ -982,11 +982,11 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.editContentDisplay(
 			customWebcontenttemplate = "WC Template Name",
-			fragmentName = "Content",
+			fragmentName = "Content Display",
 			webcontent = "true",
 			webContentContent = "${siteID}",
 			webContentTitle = "Webcontent Title");
@@ -1132,7 +1132,7 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Content Display",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		PageEditor.clickPublish();
 
@@ -1252,7 +1252,7 @@ definition {
 		PageEditor.addFragmentToCollectionDisplay(
 			collectionName = "Content Display",
 			entryTitle = "Blogs Entry Title 3",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		for (var i : list "1,2,3") {
 			if ("${i}" == "1") {
@@ -1283,7 +1283,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoConfiguration(fragmentName = "Content");
+		PageEditor.gotoConfiguration(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -1355,7 +1355,7 @@ definition {
 		PageEditor.addFragmentToCollectionDisplay(
 			collectionName = "Content Display",
 			entryTitle = "DM Document 3 JPG",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		for (var i : list "1,2,3") {
 			if ("${i}" == "1") {
@@ -1386,7 +1386,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoConfiguration(fragmentName = "Content");
+		PageEditor.gotoConfiguration(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",
@@ -1456,7 +1456,7 @@ definition {
 		PageEditor.addFragmentToCollectionDisplay(
 			collectionName = "Content Display",
 			entryTitle = "WC WebContent Title 3",
-			fragmentName = "Content");
+			fragmentName = "Content Display");
 
 		for (var i : list "1,2,3") {
 			if ("${i}" == "1") {
@@ -1487,7 +1487,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoConfiguration(fragmentName = "Content");
+		PageEditor.gotoConfiguration(fragmentName = "Content Display");
 
 		AssertSelectedLabel(
 			key_fieldLabel = "Template",

@@ -59,7 +59,7 @@ public class DDMFormInstanceReportLocalServiceImpl
 				counterLocalService.increment());
 
 		DDMFormInstance formInstance =
-			_formInstancePersistence.findByPrimaryKey(formInstanceId);
+			_ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
 
 		formInstanceReport.setGroupId(formInstance.getGroupId());
 		formInstanceReport.setCompanyId(formInstance.getCompanyId());
@@ -127,7 +127,7 @@ public class DDMFormInstanceReportLocalServiceImpl
 
 		try {
 			DDMFormInstanceRecordVersion formInstanceRecordVersion =
-				_formInstanceRecordVersionLocalService.
+				_ddmFormInstanceRecordVersionLocalService.
 					getDDMFormInstanceRecordVersion(
 						formInstanceRecordVersionId);
 
@@ -213,14 +213,14 @@ public class DDMFormInstanceReportLocalServiceImpl
 		_ddmFormFieldTypeReportProcessorTracker;
 
 	@Reference
-	private DDMFormInstanceReportPortalExecutor
-		_ddmFormInstanceReportPortalExecutor;
-
-	@Reference
-	private DDMFormInstancePersistence _formInstancePersistence;
+	private DDMFormInstancePersistence _ddmFormInstancePersistence;
 
 	@Reference
 	private DDMFormInstanceRecordVersionLocalService
-		_formInstanceRecordVersionLocalService;
+		_ddmFormInstanceRecordVersionLocalService;
+
+	@Reference
+	private DDMFormInstanceReportPortalExecutor
+		_ddmFormInstanceReportPortalExecutor;
 
 }

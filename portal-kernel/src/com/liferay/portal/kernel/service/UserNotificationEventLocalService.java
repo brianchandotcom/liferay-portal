@@ -36,6 +36,7 @@ import java.io.Serializable;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -491,12 +492,16 @@ public interface UserNotificationEventLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserNotificationEventsCount(
-		long userId, String type, int deliveryType, boolean archived);
+		long userId, String type, int deliveryType, boolean delivered);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserNotificationEventsCount(
 		long userId, String type, int deliveryType, boolean delivered,
 		boolean archived);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserNotificationEventsCount(
+		long userId, String type, Map<String, String> payloadParameters);
 
 	public UserNotificationEvent sendUserNotificationEvents(
 			long userId, String portletId, int deliveryType, boolean delivered,

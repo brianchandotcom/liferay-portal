@@ -757,10 +757,10 @@ public class UserNotificationEventLocalServiceUtil {
 	}
 
 	public static int getUserNotificationEventsCount(
-		long userId, String type, int deliveryType, boolean archived) {
+		long userId, String type, int deliveryType, boolean delivered) {
 
 		return getService().getUserNotificationEventsCount(
-			userId, type, deliveryType, archived);
+			userId, type, deliveryType, delivered);
 	}
 
 	public static int getUserNotificationEventsCount(
@@ -769,6 +769,14 @@ public class UserNotificationEventLocalServiceUtil {
 
 		return getService().getUserNotificationEventsCount(
 			userId, type, deliveryType, delivered, archived);
+	}
+
+	public static int getUserNotificationEventsCount(
+		long userId, String type,
+		java.util.Map<String, String> payloadParameters) {
+
+		return getService().getUserNotificationEventsCount(
+			userId, type, payloadParameters);
 	}
 
 	public static com.liferay.portal.kernel.model.UserNotificationEvent

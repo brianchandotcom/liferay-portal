@@ -12,31 +12,13 @@
  * details.
  */
 
-import React, {useContext, useEffect, useReducer} from 'react';
-
 import {EVENT_TYPES} from '../actions/types.es';
-import {createReducer} from '../reducers/index.es';
-import {useThunk} from './useThunk.es';
 
-const FormContext = React.createContext({});
-
-export const FormProvider = ({children, onEvent, value}) => {
-	const [state, dispatch] = useThunk(
-		useReducer(createReducer(onEvent), value)
-	);
-
-	useEffect(() => dispatch({payload: value, type: EVENT_TYPES.ALL}), [
-		dispatch,
-		value,
-	]);
-
-	return (
-		<FormContext.Provider value={dispatch}>
-			{children(state)}
-		</FormContext.Provider>
-	);
-};
-
-export const useForm = () => {
-	return useContext(FormContext);
+export default (state, action) => {
+	switch (action.type) {
+		case EVENT_TYPES.ALL:
+			return action.payload;
+		default:
+			return state;
+	}
 };

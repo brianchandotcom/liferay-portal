@@ -30,6 +30,10 @@ export const EVENT_TYPES = {
 	SUCCESS_CHANGED: 'successPageChanged',
 
 	// Internal events
+	/* eslint-disable sort-keys */
 
+	ALL: 'all',
 	UPDATE_PAGES: 'update_pages',
+
+	/* eslint-enable sort-keys */
 };

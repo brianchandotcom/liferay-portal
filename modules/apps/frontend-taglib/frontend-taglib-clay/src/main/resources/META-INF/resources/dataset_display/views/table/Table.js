@@ -131,8 +131,7 @@ function Table({itemActions, items, schema, style}) {
 	} = useContext(DatasetDisplayContext);
 
 	const showActionItems = Boolean(
-		(itemActions && itemActions.length) ||
-			items.find((element) => element.actionItems)
+		itemActions?.length || items.find((element) => element.actionItems)
 	);
 
 	const SelectionComponent =
@@ -173,10 +172,7 @@ function Table({itemActions, items, schema, style}) {
 										<ClayTable.Cell
 											className="dataset-item-selector-wrapper"
 											rowSpan={
-												1 +
-												((nestedItems &&
-													nestedItems.length) ||
-													0)
+												1 + (nestedItems?.length || 0)
 											}
 										>
 											<SelectionComponent
@@ -216,7 +212,7 @@ function Table({itemActions, items, schema, style}) {
 										</ClayTable.Cell>
 									)}
 								</ClayTable.Row>
-								{nestedItems && nestedItems.length
+								{nestedItems?.length
 									? nestedItems.map((nestedItem, i) => (
 											<ClayTable.Row
 												className={classNames(

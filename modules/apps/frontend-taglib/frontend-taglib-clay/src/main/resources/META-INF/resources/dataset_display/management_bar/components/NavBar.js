@@ -44,7 +44,7 @@ function NavBar({
 					</div>
 				) : null}
 				<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down pl-0">
-					{views && views.length > 1 ? (
+					{views?.length > 1 ? (
 						<ActiveViewSelector
 							activeView={activeView}
 							setActiveView={setActiveView}
@@ -52,7 +52,7 @@ function NavBar({
 						/>
 					) : null}
 				</div>
-				{creationMenuItems && creationMenuItems.length ? (
+				{creationMenuItems?.length ? (
 					<CreationMenu items={creationMenuItems} />
 				) : null}
 			</div>

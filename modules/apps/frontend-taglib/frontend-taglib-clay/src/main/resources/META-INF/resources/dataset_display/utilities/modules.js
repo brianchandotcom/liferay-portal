@@ -36,9 +36,8 @@ export function getFakeJsModule() {
 	});
 }
 
-const getJsModule =
-	Liferay.Loader && Liferay.Loader.require
-		? getLiferayJsModule
-		: getFakeJsModule;
+const getJsModule = Liferay.Loader?.require
+	? getLiferayJsModule
+	: getFakeJsModule;
 
 export default getJsModule;

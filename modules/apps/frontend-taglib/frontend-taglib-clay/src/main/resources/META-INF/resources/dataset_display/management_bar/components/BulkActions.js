@@ -111,8 +111,7 @@ function BulkActions({
 			const currentOpenedSidePanel = getOpenedSidePanel();
 
 			if (
-				currentOpenedSidePanel &&
-				currentOpenedSidePanel.id ===
+				currentOpenedSidePanel?.id ===
 					currentSidePanelActionPayload.id &&
 				currentOpenedSidePanel.url.indexOf(
 					currentSidePanelActionPayload.baseUrl

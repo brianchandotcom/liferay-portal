@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {getValueFromItem} from '../../../utilities/index';
-import {logError} from '../../../utilities/log';
+import {logError} from '../../../utilities/logError';
 import {showErrorNotification} from '../../../utilities/notifications';
 import getAppContext from '../Context';
 

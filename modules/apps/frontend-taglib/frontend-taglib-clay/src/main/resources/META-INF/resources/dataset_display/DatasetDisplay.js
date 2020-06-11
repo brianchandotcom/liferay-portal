@@ -31,7 +31,7 @@ import {
 	UPDATE_DATASET_DISPLAY,
 } from './utilities/eventsDefinitions';
 import {executeAsyncAction, getRandomId, loadData} from './utilities/index';
-import {logError} from './utilities/log';
+import {logError} from './utilities/logError';
 import getJsModule from './utilities/modules';
 import {showNotification} from './utilities/notifications';
 import {getViewById} from './views/index';

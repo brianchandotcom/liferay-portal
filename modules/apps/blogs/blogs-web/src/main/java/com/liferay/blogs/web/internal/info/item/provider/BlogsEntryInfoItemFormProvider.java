@@ -261,8 +261,7 @@ public class BlogsEntryInfoItemFormProvider
 		InfoLocalizedValue.localize(getClass(), "author-name"), "authorName");
 	private final InfoField _authorProfileImageInfoField = new InfoField(
 		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			"com.liferay.journal.lang", "author-profile-image"),
+		InfoLocalizedValue.localize(getClass(), "author-profile-image"),
 		"authorProfileImage");
 	private final InfoField _contentInfoField = new InfoField(
 		TextInfoFieldType.INSTANCE,
@@ -273,8 +272,7 @@ public class BlogsEntryInfoItemFormProvider
 		"coverImageCaption");
 	private final InfoField _coverImageInfoField = new InfoField(
 		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize("com.liferay.journal.lang", "cover-image"),
-		"coverImage");
+		InfoLocalizedValue.localize(getClass(), "cover-image"), "coverImage");
 	private final InfoField _descriptionInfoField = new InfoField(
 		TextInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(getClass(), "description"), "description");
@@ -296,8 +294,7 @@ public class BlogsEntryInfoItemFormProvider
 		InfoLocalizedValue.localize(getClass(), "publish-date"), "publishDate");
 	private final InfoField _smallImageInfoField = new InfoField(
 		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize("com.liferay.journal.lang", "small-image"),
-		"smallImage");
+		InfoLocalizedValue.localize(getClass(), "small-image"), "smallImage");
 	private final InfoField _subtitleInfoField = new InfoField(
 		TextInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(getClass(), "subtitle"), "subtitle");

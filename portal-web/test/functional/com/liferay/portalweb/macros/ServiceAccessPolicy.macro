@@ -27,6 +27,10 @@ definition {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
 
+		if ("${defaultSwitch}" == "true") {
+			FormFields.enableCheckbox(fieldName = "default");
+		}
+
 		PortletEntry.save();
 	}
 

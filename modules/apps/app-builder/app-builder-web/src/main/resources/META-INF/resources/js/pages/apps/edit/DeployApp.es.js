@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import ProductMenuSettings from './settings/ProductMenuSettings.es';
@@ -20,22 +21,22 @@ import WidgetSettings from './settings/WidgetSettings.es';
 
 const Divider = () => {
 	return (
-		<div className="autofit-row mb-4 pl-2 pr-2">
-			<div className="col-md-12">
+		<ClayLayout.ContentRow className="mb-4 pl-2 pr-2">
+			<ClayLayout.ContentCol>
 				<h4 className="card-divider"></h4>
-			</div>
-		</div>
+			</ClayLayout.ContentCol>
+		</ClayLayout.ContentRow>
 	);
 };
 
 export default () => {
 	return (
 		<>
-			<div className="autofit-row mb-4 pl-4 pr-4">
-				<div className="autofit-col-expand">
+			<ClayLayout.ContentRow className="mb-4 pl-4 pr-4">
+				<ClayLayout.ContentCol>
 					<h2>{`${Liferay.Language.get('deploy-as')}...`}</h2>
-				</div>
-			</div>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
 
 			<Settings
 				deploymentType="widget"

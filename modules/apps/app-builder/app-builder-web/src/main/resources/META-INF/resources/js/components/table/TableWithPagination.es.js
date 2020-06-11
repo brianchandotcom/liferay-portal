@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import React, {useContext} from 'react';
 
@@ -28,7 +29,7 @@ const TableWithPagination = ({actions, columns, items, totalCount}) => {
 	const deltas = deltaValues.map((label) => ({label}));
 
 	return (
-		<div className="container-fluid container-fluid-max-xl">
+		<ClayLayout.ContainerFluid>
 			<Table actions={actions} columns={columns} items={items} />
 
 			{totalCount > deltaValues[0] && (
@@ -48,7 +49,7 @@ const TableWithPagination = ({actions, columns, items, totalCount}) => {
 					/>
 				</div>
 			)}
-		</div>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

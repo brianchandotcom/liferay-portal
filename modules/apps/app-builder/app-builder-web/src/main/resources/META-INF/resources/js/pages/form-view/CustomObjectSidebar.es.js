@@ -16,6 +16,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {
 	DataLayoutBuilderActions,
@@ -127,10 +128,10 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 					'ml-4 mr-4 mt-4 pt-2 pb-2'
 				)}
 			>
-				<div className="autofit-row autofit-row-center">
+				<ClayLayout.ContentRow verticalAlign="center">
 					{searchMode ? (
 						<>
-							<div className="autofit-col autofit-col-expand">
+							<ClayLayout.ContentCol expand>
 								<SearchInput
 									clearButton={false}
 									onChange={(searchText) =>
@@ -139,35 +140,39 @@ const Header = ({onCloseSearch, onSearch, searchText}) => {
 									ref={searchInputRef}
 									searchText={searchText}
 								/>
-							</div>
-							<div className="autofit-col ml-2" key="closeButton">
+							</ClayLayout.ContentCol>
+
+							<ClayLayout.ContentCol
+								className="ml-2"
+								key="closeButton"
+							>
 								<ClayButtonWithIcon
 									displayType="unstyled"
 									onClick={onClickClose}
 									symbol="times"
 								/>
-							</div>
+							</ClayLayout.ContentCol>
 						</>
 					) : (
 						<>
-							<div className="autofit-col autofit-col-expand">
+							<ClayLayout.ContentCol expand>
 								<h3>{dataDefinitionName}</h3>
-							</div>
+							</ClayLayout.ContentCol>
 
-							<div className="autofit-col" key="searchButton">
+							<ClayLayout.ContentCol key="searchButton">
 								<ClayButtonWithIcon
 									displayType="unstyled"
 									onClick={onClickSearch}
 									symbol="search"
 								/>
-							</div>
+							</ClayLayout.ContentCol>
 
-							<div className="autofit-col" key="dropdown">
+							<ClayLayout.ContentCol key="dropdown">
 								<DropDown />
-							</div>
+							</ClayLayout.ContentCol>
 						</>
 					)}
-				</div>
+				</ClayLayout.ContentRow>
 			</div>
 		</ClayForm>
 	);

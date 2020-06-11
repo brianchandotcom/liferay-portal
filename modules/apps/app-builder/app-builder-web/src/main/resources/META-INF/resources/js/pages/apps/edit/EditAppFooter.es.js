@@ -13,6 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import React, {useContext, useState} from 'react';
 import {withRouter} from 'react-router-dom';
@@ -110,13 +111,13 @@ export default withRouter(
 
 		return (
 			<div className="bg-transparent card-footer">
-				<div className="autofit-row">
-					<div className="col-md-4">
+				<ClayLayout.ContentRow>
+					<ClayLayout.Col md="4">
 						<Button displayType="secondary" onClick={onCancel}>
 							{Liferay.Language.get('cancel')}
 						</Button>
-					</div>
-					<div className="col-md-4 offset-md-4 text-right">
+					</ClayLayout.Col>
+					<ClayLayout.Col className="offset-md-4 text-right" md="4">
 						{currentStep > 0 && (
 							<Button
 								className="mr-3"
@@ -157,8 +158,8 @@ export default withRouter(
 									: Liferay.Language.get('deploy')}
 							</Button>
 						)}
-					</div>
-				</div>
+					</ClayLayout.Col>
+				</ClayLayout.ContentRow>
 			</div>
 		);
 	}

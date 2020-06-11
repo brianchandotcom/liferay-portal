@@ -14,6 +14,7 @@
 
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {SearchInput} from 'data-engine-taglib';
 import React, {useContext, useEffect, useState} from 'react';
@@ -111,8 +112,8 @@ export default () => {
 		.join(', ');
 
 	return (
-		<div className="autofit-row pl-4 pr-4">
-			<div className="autofit-col-expand">
+		<ClayLayout.ContentRow className="pl-4 pr-4">
+			<ClayLayout.ContentCol expand>
 				<div className="form-group">
 					<label htmlFor="scope">
 						{Liferay.Language.get('place-it-in-the')}
@@ -130,10 +131,10 @@ export default () => {
 						))}
 					</select>
 				</div>
-			</div>
+			</ClayLayout.ContentCol>
 
 			{scope.includes('site_administration.content') && (
-				<div className="col-md-6">
+				<ClayLayout.Col md="6">
 					<div className="form-group">
 						<label htmlFor="site">
 							{Liferay.Language.get('site')}
@@ -208,8 +209,8 @@ export default () => {
 							</ItemList>
 						</ClayDropDown>
 					</div>
-				</div>
+				</ClayLayout.Col>
 			)}
-		</div>
+		</ClayLayout.ContentRow>
 	);
 };

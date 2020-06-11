@@ -13,6 +13,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
 
 export default () => {
@@ -20,8 +21,8 @@ export default () => {
 
 	return (
 		show && (
-			<div className="autofit-row pl-4 pr-4">
-				<div className="autofit-col-expand">
+			<ClayLayout.ContentRow className="pl-4 pr-4">
+				<ClayLayout.ContentCol expand>
 					<ClayAlert
 						displayType="info"
 						onClose={() => setShow(!show)}
@@ -31,8 +32,8 @@ export default () => {
 							'the-widget-will-be-available-under-add-widgets-app-builder'
 						)}
 					</ClayAlert>
-				</div>
-			</div>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
 		)
 	);
 };

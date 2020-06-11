@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useContext} from 'react';
 
 import ToggleSwitch from '../../../../components/toggle-switch/ToggleSwitch.es';
@@ -34,17 +35,17 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 
 	return (
 		<>
-			<div className="autofit-row mb-3 pl-4 pr-4">
-				<div className="autofit-col-expand">
-					<section className="autofit-section">
+			<ClayLayout.ContentRow className="mb-3 pl-4 pr-4">
+				<ClayLayout.ContentCol>
+					<ClayLayout.ContentSection containerElement="section">
 						<h3>{title}</h3>
 						<p className="list-group-subtext">
 							<small>{subtitle}</small>
 						</p>
-					</section>
-				</div>
+					</ClayLayout.ContentSection>
+				</ClayLayout.ContentCol>
 
-				<div className="autofit-col right">
+				<ClayLayout.ContentCol className="right">
 					<ToggleSwitch
 						checked={checked}
 						onChange={(checked) => {
@@ -62,8 +63,8 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 							}
 						}}
 					/>
-				</div>
-			</div>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
 
 			{checked && settings()}
 		</>

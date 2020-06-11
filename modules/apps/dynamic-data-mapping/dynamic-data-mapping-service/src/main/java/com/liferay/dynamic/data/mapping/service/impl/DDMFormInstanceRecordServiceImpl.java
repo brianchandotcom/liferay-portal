@@ -21,6 +21,8 @@ import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordServic
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -135,6 +137,20 @@ public class DDMFormInstanceRecordServiceImpl
 		ddmFormInstanceRecordLocalService.revertFormInstanceRecord(
 			getGuestOrUserId(), ddmFormInstanceRecordId, version,
 			serviceContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<DDMFormInstanceRecord>
+			searchFormInstanceRecords(
+				long ddmFormInstanceId, String[] notEmptyFields, int status,
+				int start, int end, Sort sort)
+		throws PortalException {
+
+		_ddmFormInstanceModelResourcePermission.check(
+			getPermissionChecker(), ddmFormInstanceId, ActionKeys.VIEW);
+
+		return ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
+			ddmFormInstanceId, notEmptyFields, status, start, end, sort);
 	}
 
 	@Override

@@ -256,6 +256,9 @@ exports[`EditTableView renders 1`] = `
                       </small>
                     </p>
                   </div>
+                  <div
+                    class="autofit-col pr-2"
+                  />
                 </div>
               </div>
             </div>

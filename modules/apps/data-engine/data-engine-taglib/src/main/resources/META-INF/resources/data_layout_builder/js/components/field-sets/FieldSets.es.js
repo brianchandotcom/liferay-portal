@@ -70,7 +70,7 @@ export default function FieldSets() {
 					],
 				},
 				dataDefinitionId,
-				dataLayoutId: fieldSet.defaultDataLayout.id,
+				dataLayoutId: defaultDataLayout.id,
 			};
 		}
 
@@ -129,7 +129,7 @@ export default function FieldSets() {
 						},
 					];
 
-					const isDisabled =
+					const disabled =
 						dataDefinition.name[defaultLanguageId] ===
 						fieldSet.name[defaultLanguageId];
 
@@ -140,7 +140,7 @@ export default function FieldSets() {
 								fieldSet.dataDefinitionFields.length
 							} ${Liferay.Language.get('fields')}`}
 							disabled={
-								isDisabled ||
+								disabled ||
 								containsFieldSet(dataDefinition, fieldSet.id)
 							}
 							dragType={DRAG_FIELDSET}

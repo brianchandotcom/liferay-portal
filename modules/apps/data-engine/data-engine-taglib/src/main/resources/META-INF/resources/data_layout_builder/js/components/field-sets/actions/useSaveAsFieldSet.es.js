@@ -106,10 +106,7 @@ export default ({childrenContext, fieldSet, otherProps: {DataLayout}}) => {
 			}
 		}
 
-		updateItem(
-			`/o/data-engine/v2.0/data-definitions/${fieldSet.id}`,
-			fieldSet
-		)
+		updateItem(`/o/data-engine/v2.0/data-definitions/${id}`, fieldSet)
 			.then(() => {
 				successToast(Liferay.Language.get('fieldset-saved'));
 			})

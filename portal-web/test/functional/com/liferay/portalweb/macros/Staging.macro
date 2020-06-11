@@ -1406,6 +1406,22 @@ definition {
 		}
 	}
 
+	macro viewRepeatingEventDetails {
+		Staging.openStagingAdmin(siteURLKey = "${siteName}");
+
+		Navigator.gotoNavItem(navItem = "Scheduled");
+
+		var key_scheduleTitleName = "${scheduleTitleName}";
+
+		AssertTextPresent(
+			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_TITLE",
+			value1 = "${scheduleTitleName}");
+
+		AssertTextEquals(
+			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_END_DATE",
+			value1 = "${endDate}");
+	}
+
 	macro viewSitePagesVariationActiveCP {
 		var key_sitePagesVariationName = "${sitePagesVariationName}";
 

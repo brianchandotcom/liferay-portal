@@ -504,22 +504,20 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 	}
 </script>
 
-<aui:script use="aui-io,aui-io-plugin-deprecated,liferay-util-window">
+<aui:script>
 	window['<portlet:namespace />testSettings'] = function (type) {
-		var A = AUI();
-
-		var url = null;
+		var baseUrl;
 
 		var data = {
 			p_auth: '<%= AuthTokenUtil.getToken(request) %>',
 		};
 
 		if (type === 'ldapConnection') {
-			url =
+			baseUrl =
 				'<portlet:renderURL copyCurrentRenderParameters="<%= false %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_connection" /></portlet:renderURL>';
 		}
 		else if (type === 'ldapGroups') {
-			url =
+			baseUrl =
 				'<portlet:renderURL copyCurrentRenderParameters="<%= false %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_groups" /></portlet:renderURL>';
 
 			data.<portlet:namespace />importGroupSearchFilter =
@@ -540,7 +538,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 				].value;
 		}
 		else if (type === 'ldapUsers') {
-			url =
+			baseUrl =
 				'<portlet:renderURL copyCurrentRenderParameters="<%= false %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_ldap_users" /></portlet:renderURL>';
 
 			data.<portlet:namespace />importUserSearchFilter =
@@ -597,7 +595,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 				].value;
 		}
 
-		if (url != null) {
+		if (baseUrl != null) {
 			data.<portlet:namespace />ldapServerId =
 				document.<portlet:namespace />fm[
 					'<portlet:namespace />ldapServerId'
@@ -619,17 +617,37 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 					'<portlet:namespace />ldap--<%= LDAPConstants.SECURITY_CREDENTIAL %>--'
 				].value;
 
-			var dialog = Liferay.Util.Window.getWindow({
-				dialog: {
-					destroyOnHide: true,
-				},
-				title: '<%= UnicodeLanguageUtil.get(request, "ldap") %>',
+			var url = new URL(baseUrl);
+			var searchParams = Liferay.Util.objectToURLSearchParams(data);
+
+			searchParams.forEach(function (value, key) {
+				url.searchParams.append(key, value);
 			});
 
-			dialog.plug(A.Plugin.IO, {
-				data: data,
-				uri: url,
-			});
+			Liferay.Util.fetch(url)
+				.then(function (response) {
+					return response.text();
+				})
+				.then(function (text) {
+					var parser = new DOMParser();
+
+					var doc = parser.parseFromString(text, 'text/html');
+
+					Liferay.Util.openModal({
+						bodyHTML: doc.body.innerHTML,
+						size: 'full-screen',
+						title: '<%= UnicodeLanguageUtil.get(request, "ldap") %>',
+					});
+				})
+				.catch(function (error) {
+					Liferay.Util.openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-system-error-occurred'
+						),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
+				});
 		}
 	};
 </aui:script>

@@ -243,31 +243,39 @@ public class BlogsEntryInfoItemFormProvider
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
 
-	private final InfoField _authorNameInfoField = new InfoField(
+	private final InfoField _authorNameInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "author-name"), "authorName");
-	private final InfoField _authorProfileImageInfoField = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "author-profile-image"),
-		"authorProfileImage");
-	private final InfoField _contentInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "author-name"), "authorName"
+	).build();
+	private final InfoField _authorProfileImageInfoField =
+		new InfoField.Builder(
+			ImageInfoFieldType.INSTANCE,
+			InfoLocalizedValue.localize(getClass(), "author-profile-image"),
+			"authorProfileImage"
+		).build();
+	private final InfoField _contentInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "content"), "content");
-	private final InfoField _coverImageCaptionInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "content"), "content"
+	).build();
+	private final InfoField _coverImageCaptionInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(getClass(), "cover-image-caption"),
-		"coverImageCaption");
-	private final InfoField _coverImageInfoField = new InfoField(
+		"coverImageCaption"
+	).build();
+	private final InfoField _coverImageInfoField = new InfoField.Builder(
 		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "cover-image"), "coverImage");
-	private final InfoField _descriptionInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "cover-image"), "coverImage"
+	).build();
+	private final InfoField _descriptionInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "description"), "description");
-	private final InfoField _displayPageUrlInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "description"), "description"
+	).build();
+	private final InfoField _displayPageUrlInfoField = new InfoField.Builder(
 		URLInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(
 			"com.liferay.asset.info.display.impl", "display-page-url"),
-		"displayPageURL");
+		"displayPageURL"
+	).build();
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;
@@ -276,18 +284,22 @@ public class BlogsEntryInfoItemFormProvider
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
 
-	private final InfoField _publishDateInfoField = new InfoField(
+	private final InfoField _publishDateInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "publish-date"), "publishDate");
-	private final InfoField _smallImageInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "publish-date"), "publishDate"
+	).build();
+	private final InfoField _smallImageInfoField = new InfoField.Builder(
 		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "small-image"), "smallImage");
-	private final InfoField _subtitleInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "small-image"), "smallImage"
+	).build();
+	private final InfoField _subtitleInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "subtitle"), "subtitle");
-	private final InfoField _titleInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "subtitle"), "subtitle"
+	).build();
+	private final InfoField _titleInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "title"), "title");
+		InfoLocalizedValue.localize(getClass(), "title"), "title"
+	).build();
 
 	@Reference
 	private UserLocalService _userLocalService;

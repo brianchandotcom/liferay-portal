@@ -70,7 +70,9 @@ public class ExpandoInfoItemFieldReader
 				LocaleUtil.getDefault()
 			).build();
 
-		return new InfoField(fieldType, labelInfoLocalizedValue, getName());
+		return new InfoField.Builder(
+			fieldType, labelInfoLocalizedValue, getName()
+		).build();
 	}
 
 	public String getName() {

@@ -118,9 +118,10 @@ public class InfoDisplayContributorWrapper
 								_getLocale(), fieldName
 							).build();
 
-						InfoField infoField = new InfoField(
+						InfoField infoField = new InfoField.Builder(
 							TextInfoFieldType.INSTANCE,
-							fieldLabelLocalizedValue, fieldName);
+							fieldLabelLocalizedValue, fieldName
+						).build();
 
 						consumer.accept(
 							new InfoFieldValue(infoField, entry.getValue()));
@@ -170,9 +171,10 @@ public class InfoDisplayContributorWrapper
 						).build();
 
 					consumer.accept(
-						new InfoField(
+						new InfoField.Builder(
 							infoFieldType, labelInfoLocalizedValue,
-							infoDisplayField.getKey()));
+							infoDisplayField.getKey()
+						).build());
 				}
 			}
 		).build();

@@ -120,34 +120,42 @@ public class AssetEntryInfoItemFormProvider
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
 
-	private final InfoField _createDateInfoField = new InfoField(
+	private final InfoField _createDateInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "create-date"), "createDate");
-	private final InfoField _descriptionInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "create-date"), "createDate"
+	).build();
+	private final InfoField _descriptionInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "description"), "description");
-	private final InfoField _expirationDateInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "description"), "description"
+	).build();
+	private final InfoField _expirationDateInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(getClass(), "expiration-date"),
-		"expirationDate");
-	private final InfoField _modifiedDateInfoField = new InfoField(
+		"expirationDate"
+	).build();
+	private final InfoField _modifiedDateInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "modified-date"),
-		"modifiedDate");
-	private final InfoField _summaryInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "modified-date"), "modifiedDate"
+	).build();
+	private final InfoField _summaryInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "summary"), "summary");
-	private final InfoField _titleInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "summary"), "summary"
+	).build();
+	private final InfoField _titleInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "title"), "title");
-	private final InfoField _urlInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "title"), "title"
+	).build();
+	private final InfoField _urlInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "url"), "url");
-	private final InfoField _userNameInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "url"), "url"
+	).build();
+	private final InfoField _userNameInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "user-name"), "userName");
-	private final InfoField _viewCountInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "user-name"), "userName"
+	).build();
+	private final InfoField _viewCountInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "view-count"), "viewName");
+		InfoLocalizedValue.localize(getClass(), "view-count"), "viewName"
+	).build();
 
 }

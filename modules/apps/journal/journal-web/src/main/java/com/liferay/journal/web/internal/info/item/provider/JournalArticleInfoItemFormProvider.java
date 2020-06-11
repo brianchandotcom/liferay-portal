@@ -239,10 +239,11 @@ public class JournalArticleInfoItemFormProvider
 			ddmTemplate -> {
 				String fieldName = _getTemplateKey(ddmTemplate);
 
-				InfoField infoField = new InfoField(
+				InfoField infoField = new InfoField.Builder(
 					TextInfoFieldType.INSTANCE,
 					InfoLocalizedValue.localize(getClass(), fieldName),
-					fieldName);
+					fieldName
+				).build();
 
 				InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
 					infoField,
@@ -434,14 +435,17 @@ public class JournalArticleInfoItemFormProvider
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
 
-	private final InfoField _authorNameInfoField = new InfoField(
+	private final InfoField _authorNameInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "author-name"), "authorName");
-	private final InfoField _authorProfileImageInfoField = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(
-			"com.liferay.journal.lang", "author-profile-image"),
-		"authorProfileImage");
+		InfoLocalizedValue.localize(getClass(), "author-name"), "authorName"
+	).build();
+	private final InfoField _authorProfileImageInfoField =
+		new InfoField.Builder(
+			ImageInfoFieldType.INSTANCE,
+			InfoLocalizedValue.localize(
+				"com.liferay.journal.lang", "author-profile-image"),
+			"authorProfileImage"
+		).build();
 
 	@Reference
 	private DDMFormValuesInfoFieldValuesProvider
@@ -455,15 +459,18 @@ public class JournalArticleInfoItemFormProvider
 	private DDMTemplateInfoItemFieldSetProvider
 		_ddmTemplateInfoItemFieldSetProvider;
 
-	private final InfoField _descriptionInfoField = new InfoField(
+	private final InfoField _descriptionInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "description"), true,
-		"description");
-	private final InfoField _displayPageUrlInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "description"), "description"
+	).setLocalizable(
+		true
+	).build();
+	private final InfoField _displayPageUrlInfoField = new InfoField.Builder(
 		URLInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(
 			"com.liferay.asset.info.display.impl", "display-page-url"),
-		"displayPageURL");
+		"displayPageURL"
+	).build();
 
 	@Reference
 	private ExpandoInfoItemFieldSetProvider _expandoInfoItemFieldSetProvider;
@@ -484,25 +491,34 @@ public class JournalArticleInfoItemFormProvider
 	@Reference
 	private JournalConverter _journalConverter;
 
-	private final InfoField _lastEditorNameInfoField = new InfoField(
+	private final InfoField _lastEditorNameInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(
 			"com.liferay.journal.lang", "last-editor-name"),
-		"lastEditorName");
-	private final InfoField _lastEditorProfileImageInfoField = new InfoField(
-		ImageInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "last-editor-profile-image"),
-		"lastEditorProfileImage");
-	private final InfoField _publishDateInfoField = new InfoField(
+		"lastEditorName"
+	).build();
+	private final InfoField _lastEditorProfileImageInfoField =
+		new InfoField.Builder(
+			ImageInfoFieldType.INSTANCE,
+			InfoLocalizedValue.localize(
+				getClass(), "last-editor-profile-image"),
+			"lastEditorProfileImage"
+		).build();
+	private final InfoField _publishDateInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "publish-date"), "publishDate");
-	private final InfoField _smallImageInfoField = new InfoField(
+		InfoLocalizedValue.localize(getClass(), "publish-date"), "publishDate"
+	).build();
+	private final InfoField _smallImageInfoField = new InfoField.Builder(
 		ImageInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize("com.liferay.journal.lang", "small-image"),
-		"smallImage");
-	private final InfoField _titleInfoField = new InfoField(
+		"smallImage"
+	).build();
+	private final InfoField _titleInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "title"), true, "title");
+		InfoLocalizedValue.localize(getClass(), "title"), "title"
+	).setLocalizable(
+		true
+	).build();
 
 	@Reference
 	private UserLocalService _userLocalService;

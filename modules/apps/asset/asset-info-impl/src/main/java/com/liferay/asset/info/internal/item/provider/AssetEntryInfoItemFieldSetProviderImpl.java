@@ -144,16 +144,18 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			});
 	}
 
-	private final InfoField _categoriesInfoField = new InfoField(
+	private final InfoField _categoriesInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "categories"), "categories");
+		InfoLocalizedValue.localize(getClass(), "categories"), "categories"
+	).build();
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
 
-	private final InfoField _tagsInfoField = new InfoField(
+	private final InfoField _tagsInfoField = new InfoField.Builder(
 		TextInfoFieldType.INSTANCE,
-		InfoLocalizedValue.localize(getClass(), "tags"), "tagNames");
+		InfoLocalizedValue.localize(getClass(), "tags"), "tagNames"
+	).build();
 
 }

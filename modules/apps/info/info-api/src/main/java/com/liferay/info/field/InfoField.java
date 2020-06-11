@@ -28,25 +28,6 @@ import java.util.Objects;
  */
 public class InfoField implements InfoFieldSetEntry {
 
-	public InfoField(
-		InfoFieldType infoFieldType,
-		InfoLocalizedValue<String> labelInfoLocalizedValue, boolean localizable,
-		String name) {
-
-		this(infoFieldType, labelInfoLocalizedValue, name);
-
-		_localizable = localizable;
-	}
-
-	public InfoField(
-		InfoFieldType infoFieldType,
-		InfoLocalizedValue<String> labelInfoLocalizedValue, String name) {
-
-		_infoFieldType = infoFieldType;
-		_labelInfoLocalizedValue = labelInfoLocalizedValue;
-		_name = name;
-	}
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -114,6 +95,46 @@ public class InfoField implements InfoFieldSetEntry {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	public static class Builder {
+
+		public Builder(
+			InfoFieldType infoFieldType,
+			InfoLocalizedValue<String> labelInfoLocalizaedValue, String name) {
+
+			_infoFieldType = infoFieldType;
+			_labelInfoLocalizedValue = labelInfoLocalizaedValue;
+			_name = name;
+		}
+
+		public InfoField build() {
+			return new InfoField(
+				_infoFieldType, _labelInfoLocalizedValue, _localizable, _name);
+		}
+
+		public Builder setLocalizable(boolean localizable) {
+			_localizable = localizable;
+
+			return this;
+		}
+
+		private final InfoFieldType _infoFieldType;
+		private final InfoLocalizedValue<String> _labelInfoLocalizedValue;
+		private boolean _localizable;
+		private final String _name;
+
+	}
+
+	private InfoField(
+		InfoFieldType infoFieldType,
+		InfoLocalizedValue<String> labelInfoLocalizedValue, boolean localizable,
+		String name) {
+
+		_infoFieldType = infoFieldType;
+		_labelInfoLocalizedValue = labelInfoLocalizedValue;
+		_localizable = localizable;
+		_name = name;
 	}
 
 	private final InfoFieldType _infoFieldType;

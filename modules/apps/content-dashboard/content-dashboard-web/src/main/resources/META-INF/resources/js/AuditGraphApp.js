@@ -63,7 +63,7 @@ const data = [
 ];
 
 export default function () {
-	return data.length > 0 ? (
+	return data.length ? (
 		<AuditBarChart bars={bars} data={data} />
 	) : (
 		<EmptyAuditBarChart />

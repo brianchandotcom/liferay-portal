@@ -1495,4 +1495,184 @@ definition {
 			value1 = "Default Template");
 	}
 
+	@description = "This is a test for LPS-112093. Can display Web Content Articles of collection using custom template when add a Content Display to Collection Display."
+	@priority = "5"
+	test ViewWebContentWithCustomTemplateViaContentDisplayInCollectionDisplay {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoTemplates();
+
+		var templateScript = '''${Text.getData()}<hr>${Text.getName()}''';
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name",
+			templateScript = "${templateScript}");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+			WebContent.addWithStructureCP(
+				structureName = "WC Structure Name",
+				webContentText = "WC WebContent Text ${i}",
+				webContentTitle = "WC WebContent Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		JSONAssetlist.addDynamicAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Dynamic Asset List Test");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title 3",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title ${i}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title 1",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "WC WebContent Title 3",
+			fragmentName = "Content Display");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Text",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+		}
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Text 3",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Text ${i}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Text 1",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Default Template");
+
+		Select(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Title");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Title 3",
+					key_fragmentName = "Content Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Title ${i}",
+					key_fragmentName = "Content Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "WC WebContent Title 1",
+					key_fragmentName = "Content Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+		}
+	}
+
 }

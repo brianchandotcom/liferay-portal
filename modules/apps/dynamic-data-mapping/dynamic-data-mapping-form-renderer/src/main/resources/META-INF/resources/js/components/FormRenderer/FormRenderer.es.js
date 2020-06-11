@@ -17,11 +17,11 @@ import './PageRenderer.soy';
 import {useResource} from '@clayui/data-provider';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import classNames from 'classnames';
-import {fetch} from 'frontend-js-web';
 import React from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
+import {useStorage} from '../../hooks/useStorage.es';
 import PageRenderer from '../PageRenderer/index';
 
 function getDisplayableValue({containerId, readOnly, viewMode}) {
@@ -57,11 +57,14 @@ const FormRenderer = React.forwardRef(
 		},
 		ref
 	) => {
+		const storage = useStorage();
 		const {resource: fieldTypes} = useResource({
-			link: (variables) =>
-				fetch(`${endpoint}?${variables}`, {
-					headers: HEADERS,
-				}).then((res) => res.json()),
+			fetchOptions: {
+				headers: HEADERS,
+			},
+			fetchPolicy: 'cache-first',
+			link: endpoint,
+			storage,
 			variables: {
 				p_auth: Liferay.authToken,
 			},

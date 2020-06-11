@@ -20,6 +20,7 @@ import MetalComponent from 'metal-component';
 import React, {Suspense, lazy, useCallback, useRef, useState} from 'react';
 
 import {usePage} from '../../hooks/usePage.es';
+import {useStorage} from '../../hooks/useStorage.es';
 import {ErrorBoundary} from '../ErrorBoundary.es';
 import {MetalComponentAdapter} from './MetalComponentAdapter.es';
 import {ParentFieldContext} from './ParentFieldContext.es';
@@ -41,40 +42,37 @@ const load = (fieldModule) => {
 };
 
 const useLazy = () => {
+	const {components} = useStorage();
 
-	// To have a better effect, we need to move this to a higher
-	// component above PageRenderer or FormRenderer because we
-	// can have two instances of it on the same page and they
-	// are destroyed all the time.
+	return useCallback(
+		(fieldModule) => {
+			if (!components.has(fieldModule)) {
+				const Component = lazy(() => {
+					return load(fieldModule).then((instance) => {
+						if (!(instance && instance.default)) {
+							return null;
+						}
 
-	const components = useRef(new Map());
+						// To maintain compatibility with fields in Metal+Soy,
+						// we call the bridge component to handle this component.
 
-	return useCallback((fieldModule) => {
-		if (!components.current.has(fieldModule)) {
-			const Component = lazy(() => {
-				return load(fieldModule).then((instance) => {
-					if (!(instance && instance.default)) {
-						return null;
-					}
+						if (MetalComponent.isComponentCtor(instance.default)) {
+							return {
+								default: MetalComponentAdapter,
+							};
+						}
 
-					// To maintain compatibility with fields in Metal+Soy,
-					// we call the bridge component to handle this component.
-
-					if (MetalComponent.isComponentCtor(instance.default)) {
-						return {
-							default: MetalComponentAdapter,
-						};
-					}
-
-					return instance;
+						return instance;
+					});
 				});
-			});
 
-			components.current.set(fieldModule, Component);
-		}
+				components.set(fieldModule, Component);
+			}
 
-		return components.current.get(fieldModule);
-	}, []);
+			return components.get(fieldModule);
+		},
+		[components]
+	);
 };
 
 class FieldEventStruct {

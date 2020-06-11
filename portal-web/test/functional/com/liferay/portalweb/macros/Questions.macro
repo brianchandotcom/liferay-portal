@@ -81,6 +81,18 @@ definition {
 			value1 = "${itemsPerPage}");
 	}
 
+	macro configureFilter {
+		Click(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
+
+		Pause(locator1 = "1000");
+
+		Click(
+			key_filter = "${filterBy}",
+			locator1 = "Questions#QUESTIONS_SELECT_FILTER_VALUE");
+
+		Pause(locator1 = "1000");
+	}
+
 	macro createSomethingInMessageBoards {
 		LexiconEntry.gotoAdd();
 
@@ -107,6 +119,18 @@ definition {
 		}
 
 		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_LIST");
+	}
+
+	macro viewFilterResults {
+		AssertTextEquals(
+			key_questionTitle = "${questionTitle}",
+			locator1 = "Questions#QUESTIONS_TITLE",
+			value1 = "${questionTitle}");
+
+		AssertTextEquals(
+			key_lastQuestionTitle = "${lastQuestionTitle}",
+			locator1 = "Questions#QUESTIONS_TITLE_LAST",
+			value1 = "${lastQuestionTitle}");
 	}
 
 	macro viewPaginationResults {

@@ -91,7 +91,7 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 		if ((accept != null) && accept.contains(MediaType.TEXT_HTML) &&
 			_headlessDiscoveryConfiguration.enableAPIExplorer()) {
 
-			URL url = _getEntry();
+			URL url = _getURL();
 
 			if (url == null) {
 				return Response.serverError(
@@ -169,19 +169,6 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 			HeadlessDiscoveryConfiguration.class, properties);
 	}
 
-	private URL _getEntry() {
-		for (Bundle bundle : _bundleContext.getBundles()) {
-			if (StringUtil.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.headless.discovery.web")) {
-
-				return bundle.getEntry("META-INF/resources/dist/index.html");
-			}
-		}
-
-		return null;
-	}
-
 	private Resource _getResource(
 		List<ResourceMethodInfoDTO> resourceMethodInfoDTOS) {
 
@@ -251,6 +238,19 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 		}
 
 		return resourcesMap;
+	}
+
+	private URL _getURL() {
+		for (Bundle bundle : _bundleContext.getBundles()) {
+			if (StringUtil.equals(
+					bundle.getSymbolicName(),
+					"com.liferay.headless.discovery.web")) {
+
+				return bundle.getEntry("META-INF/resources/dist/index.html");
+			}
+		}
+
+		return null;
 	}
 
 	private BundleContext _bundleContext;

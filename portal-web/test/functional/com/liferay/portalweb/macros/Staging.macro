@@ -152,53 +152,6 @@ definition {
 		}
 	}
 
-	macro addEventRepeatDaily {
-		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Click(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION");
-
-		Type(
-			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD",
-			value1 = "${scheduleTitleName}");
-
-		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
-
-		Check(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO");
-
-		Select(
-			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
-			value1 = "Daily");
-
-		AssertClick(
-			locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
-			value1 = "Add Event");
-
-		Alert.viewSuccessMessage();
-
-		IFrame.closeFrame();
-
-		var key_siteName = "${siteName}";
-
-		ProductMenu.gotoPortlet(
-			category = "Publishing",
-			panel = "Site Administration",
-			portlet = "Staging");
-
-		Navigator.gotoNavItem(navItem = "Scheduled");
-
-		var key_scheduleTitleName = "${scheduleTitleName}";
-
-		AssertTextPresent(
-			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_TITLE",
-			value1 = "${scheduleTitleName}");
-
-		AssertTextEquals(
-			locator1 = "StagingPublishToLive#SCHEDULED_TABLE_END_DATE",
-			value1 = "No End Date");
-	}
-
 	macro addPageVariationPG {
 		Pause(locator1 = "3000");
 
@@ -239,6 +192,50 @@ definition {
 			value1 = "${publishTemplateName}");
 
 		PortletEntry.inputDescription(description = "${publishTemplateDescription}");
+	}
+
+	macro addRepeatEvent {
+		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION");
+
+		Type(
+			locator1 = "StagingPublishToLive#DATE_SCHEDULE_TITLE_FIELD",
+			value1 = "${scheduleTitleName}");
+
+		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
+
+		if (isSet(endOnDate)) {
+			Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_END_BY_RADIO");
+		}
+		else {
+			Check(locator1 = "StagingPublishToLive#DATE_SCHEDULE_END_DATE_NO_END_DATE_RADIO");
+		}
+
+		Select(
+			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
+			value1 = "${frequency}");
+
+		AssertSelectedLabel(
+			locator1 = "StagingPublishToLive#DATE_SCHEDULE_REPEAT_DROPDOWN",
+			value1 = "${frequency}");
+
+		AssertClick(
+			locator1 = "StagingPublishToLive#ADD_EVENT_BUTTON",
+			value1 = "Add Event");
+
+		if (isSet(failureExpected)) {
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR",
+				value1 = "A wrong end date was specified, the scheduled process will never run.");
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro addSitePagesVariationPG {

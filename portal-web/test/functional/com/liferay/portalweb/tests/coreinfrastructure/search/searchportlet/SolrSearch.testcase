@@ -1665,8 +1665,6 @@ definition {
 	}
 
 	test SearchWithModifiedFacet {
-		property portal.upstream = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "WC Content",
 			groupName = "Guest",
@@ -1752,7 +1750,11 @@ definition {
 			key_day = "1",
 			locator1 = "YUICalendarWidget#DATEPICKER_SPECIFIC_DAY");
 
-		AssertElementPresent(locator1 = "Message#ERROR_SELECT_VALID_DATE_RANGE");
+		// Workaround for LPS-114556
+
+		//AssertElementPresent(locator1 = "Message#ERROR_SELECT_VALID_DATE_RANGE");
+
+		AssertElementPresent(locator1 = "//div[@role='alert' and contains(.,'search-custom-range-invalid-date-range')]");
 
 		AssertVisible(locator1 = "Button#SEARCH_DISABLED");
 

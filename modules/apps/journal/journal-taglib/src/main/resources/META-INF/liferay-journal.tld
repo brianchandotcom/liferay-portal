@@ -15,6 +15,11 @@
 		<tag-class>com.liferay.journal.taglib.servlet.taglib.JournalArticleTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>article</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>articleId</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -767,6 +767,11 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
+	public Layout fetchDraftLayout(long plid) {
+		return _layoutLocalService.fetchDraftLayout(plid);
+	}
+
+	@Override
 	public Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 

@@ -683,6 +683,9 @@ public interface LayoutLocalService
 	public Layout fetchDefaultLayout(long groupId, boolean privateLayout);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout fetchDraftLayout(long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId);
 

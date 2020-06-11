@@ -631,6 +631,11 @@ public class LayoutWrapper
 	}
 
 	@Override
+	public Layout getDraftLayout() {
+		return model.getDraftLayout();
+	}
+
+	@Override
 	public java.util.List<Portlet> getEmbeddedPortlets() {
 		return model.getEmbeddedPortlets();
 	}

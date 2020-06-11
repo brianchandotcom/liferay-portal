@@ -756,6 +756,12 @@ public class LayoutLocalServiceUtil {
 		return getService().fetchDefaultLayout(groupId, privateLayout);
 	}
 
+	public static com.liferay.portal.kernel.model.Layout fetchDraftLayout(
+		long plid) {
+
+		return getService().fetchDraftLayout(plid);
+	}
+
 	public static com.liferay.portal.kernel.model.Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 

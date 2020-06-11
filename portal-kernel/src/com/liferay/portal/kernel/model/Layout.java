@@ -162,6 +162,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public String getDefaultThemeSetting(
 		String key, String device, boolean inheritLookAndFeel);
 
+	public Layout getDraftLayout();
+
 	public java.util.List<Portlet> getEmbeddedPortlets();
 
 	public java.util.List<Portlet> getEmbeddedPortlets(long groupId);

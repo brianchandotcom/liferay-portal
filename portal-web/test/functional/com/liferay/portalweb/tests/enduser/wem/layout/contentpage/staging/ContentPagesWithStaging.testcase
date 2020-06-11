@@ -301,4 +301,178 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-112093. The Web Content Articles of collection are displayed normally when enable local staging."
+	@priority = "4"
+	test ViewWCViaContentDisplayInCollectionDisplayWithLocalLiveStaging {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name-staging",
+			layoutName = "Test Content Page Name 2",
+			site = "false",
+			type = "content");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		for (var i : list "1,2,3") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content ${i}",
+				webContentTitle = "Web Content Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name Staging");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title 3",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title ${i}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "Web Content Title 1",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+		}
+
+		PageEditor.addFragmentToCollectionDisplay(
+			collectionName = "Content Display",
+			entryTitle = "Web Content Title 3",
+			fragmentName = "Content Display");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "Web Content Content 3",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "Web Content Content ${i}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "Web Content Content 1",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+			}
+		}
+
+		PageEditor.waitForAutoSave();
+
+		PageEditor.gotoConfiguration(fragmentName = "Content Display");
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Template",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Default Template");
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name Staging");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "Web Content Content 3",
+					key_rowPosition = "${i}",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "${i}",
+					key_entryContent = "Web Content Content ${i}",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "${i}",
+					key_entryContent = "Web Content Content 1",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+			}
+		}
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryContent = "Web Content Content 3",
+					key_rowPosition = "${i}",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "${i}",
+					key_entryContent = "Web Content Content ${i}",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "${i}",
+					key_entryContent = "Web Content Content 1",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+			}
+		}
+	}
+
 }

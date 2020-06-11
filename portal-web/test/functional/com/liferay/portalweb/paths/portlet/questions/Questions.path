@@ -74,6 +74,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_TITLE</td>
+	<td>//a[contains(@class,'questions-title')]/h2[contains(.,'${key_questionTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_TITLE_LAST</td>
+	<td>xpath=(//a[contains(@class,'questions-title')]/h2[contains(.,'${key_lastQuestionTitle}')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_SELECT_FILTER</td>
+	<td>//select[contains(@id,'questionsFilter')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_SELECT_FILTER_VALUE</td>
+	<td>//option[contains(text(),'${key_filter}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH_QUESTION_FIELD</td>
 	<td>//div[contains(@class,'questions')]//input[contains(@placeholder,'Search')]</td>
 	<td></td>

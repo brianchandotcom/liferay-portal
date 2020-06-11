@@ -37,10 +37,9 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		return null;
 	}
 
-	const currentAction =
-		options && options.actionId
-			? actions.find((action) => action.id === options.actionId)
-			: actions[0];
+	const currentAction = options?.actionId
+		? actions.find((action) => action.id === options.actionId)
+		: actions[0];
 
 	if (!currentAction) {
 		return null;

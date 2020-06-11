@@ -27,17 +27,15 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 	const {actions} = getAppContext();
 
 	const [fromValue, setFromValue] = useState(
-		value && value.from && formatDateObject(value.from)
+		value?.from && formatDateObject(value.from)
 	);
 	const [toValue, setToValue] = useState(
-		value && value.to && formatDateObject(value.to)
+		value?.to && formatDateObject(value.to)
 	);
 
 	useEffect(() => {
-		setFromValue(() =>
-			value && value.from ? formatDateObject(value.from) : ''
-		);
-		setToValue(() => (value && value.to ? formatDateObject(value.to) : ''));
+		setFromValue(() => (value?.from ? formatDateObject(value.from) : ''));
+		setToValue(() => (value?.to ? formatDateObject(value.to) : ''));
 	}, [value]);
 
 	return (
@@ -76,13 +74,9 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 					className="btn-sm"
 					disabled={
 						fromValue ===
-							(value && value.from
-								? formatDateObject(value.from)
-								: '') &&
+							(value?.from ? formatDateObject(value.from) : '') &&
 						toValue ===
-							(value && value.to
-								? formatDateObject(value.to)
-								: '')
+							(value?.to ? formatDateObject(value.to) : '')
 					}
 					onClick={() => {
 						if (!fromValue && !toValue) {

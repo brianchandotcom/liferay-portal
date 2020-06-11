@@ -84,7 +84,7 @@ function AutocompleteFilter({
 	const infiniteLoader = useRef(null);
 	const [infiniteLoaderRendered, setInfiniteLoaderRendered] = useState(false);
 
-	const loaderVisible = items && items.length < totalItems;
+	const loaderVisible = items?.length < totalItems;
 
 	useEffect(() => {
 		setSelectedItems(value || []);
@@ -224,7 +224,7 @@ function AutocompleteFilter({
 							value={query}
 						/>
 					)}
-					{items && items.length ? (
+					{items?.length ? (
 						<ul
 							className="inline-scroller mt-2 mx-n3 px-3"
 							ref={setScrollingArea}

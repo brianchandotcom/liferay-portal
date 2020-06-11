@@ -81,9 +81,7 @@ function TableHeadCell({
 						<ClayIcon
 							className={classNames(
 								'sorting-icon',
-								sortingMatch &&
-									sortingMatch.direction === 'asc' &&
-									'active'
+								sortingMatch?.direction === 'asc' && 'active'
 							)}
 							draggable
 							symbol={'order-arrow-up'}
@@ -91,9 +89,7 @@ function TableHeadCell({
 						<ClayIcon
 							className={classNames(
 								'sorting-icon',
-								sortingMatch &&
-									sortingMatch.direction === 'desc' &&
-									'active'
+								sortingMatch?.direction === 'desc' && 'active'
 							)}
 							draggable
 							symbol={'order-arrow-down'}

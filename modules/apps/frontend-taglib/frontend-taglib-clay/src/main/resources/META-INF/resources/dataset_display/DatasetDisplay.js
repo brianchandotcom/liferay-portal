@@ -94,7 +94,7 @@ function DatasetDisplay({
 		...currentViewProps
 	} = views[activeView];
 
-	const selectable = bulkActions && !!bulkActions.length && selectedItemsKey;
+	const selectable = bulkActions?.length && selectedItemsKey;
 
 	useEffect(() => {
 		if (
@@ -266,7 +266,7 @@ function DatasetDisplay({
 		if (wrapperRef.current) {
 			const form = wrapperRef.current.closest('form');
 
-			if (form && form.getAttribute('data-senna-off') === null) {
+			if (form?.getAttribute('data-senna-off') === null) {
 				form.setAttribute('data-senna-off', true);
 			}
 		}
@@ -287,7 +287,7 @@ function DatasetDisplay({
 			(nestedItemsReferenceKey && !nestedItemsKey) ||
 			(!nestedItemsReferenceKey && nestedItemsKey)
 		) {
-			throw new Error(
+			logError(
 				'"nestedItemsKey" and "nestedItemsReferenceKey" params are both mandatory to manage nested items'
 			);
 		}
@@ -337,7 +337,7 @@ function DatasetDisplay({
 					readOnly
 					value={selectedItemsValue.join(',')}
 				/>
-				{items && items.length ? (
+				{items?.length ? (
 					<CurrentViewComponent
 						datasetDisplayContext={DatasetDisplayContext}
 						itemActions={itemActions}
@@ -346,7 +346,7 @@ function DatasetDisplay({
 						{...currentViewProps}
 					/>
 				) : null}
-				{items && items.length === 0 && <EmptyResultMessage />}
+				{items?.length === 0 && <EmptyResultMessage />}
 			</div>
 		) : (
 			<span aria-hidden="true" className="loading-animation my-7" />
@@ -355,7 +355,7 @@ function DatasetDisplay({
 	const wrappedView = formId ? view : <form ref={formRef}>{view}</form>;
 
 	const paginationComponent =
-		showPagination && pagination && items && items.length ? (
+		showPagination && pagination && items?.length ? (
 			<div className="dataset-display-pagination-wrapper">
 				<ClayPaginationBarWithBasicItems
 					activeDelta={delta}

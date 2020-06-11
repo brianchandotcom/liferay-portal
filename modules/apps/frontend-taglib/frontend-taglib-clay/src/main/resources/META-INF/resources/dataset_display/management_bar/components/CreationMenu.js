@@ -25,8 +25,7 @@ function CreationMenu({items}) {
 	const datasetContext = useContext(DatasetDisplayContext);
 
 	return (
-		items &&
-		items.length && (
+		items?.length && (
 			<ul className="navbar-nav">
 				<li className="nav-item">
 					{items.length > 1 ? (

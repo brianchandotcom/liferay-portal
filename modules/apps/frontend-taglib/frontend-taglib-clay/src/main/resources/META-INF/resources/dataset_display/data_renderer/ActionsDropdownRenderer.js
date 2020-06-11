@@ -96,7 +96,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		title = '',
 		url = '',
 	}) {
-		if (!!target && target.includes('modal')) {
+		if (target?.includes('modal')) {
 			switch (target) {
 				case MODAL_PERMISSIONS:
 					openPermissionsModal(url);

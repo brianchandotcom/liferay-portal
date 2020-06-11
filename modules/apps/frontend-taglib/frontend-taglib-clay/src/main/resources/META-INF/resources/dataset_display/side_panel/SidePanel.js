@@ -133,7 +133,7 @@ export default class SidePanel extends React.Component {
 			return;
 		}
 
-		if (this.iframeRef.current && this.iframeRef.current.contentWindow) {
+		if (this.iframeRef.current?.contentWindow) {
 			const nestedIframe = this.iframeRef.current.contentDocument.querySelector(
 				'.side-panel iframe'
 			);
@@ -202,10 +202,7 @@ export default class SidePanel extends React.Component {
 					: null,
 			},
 			() => {
-				if (
-					this.iframeRef.current &&
-					this.iframeRef.current.contentWindow
-				) {
+				if (this.iframeRef.current?.contentWindow) {
 					this.iframeRef.current.contentWindow.location = this.state.currentUrl;
 				}
 			}
@@ -381,7 +378,7 @@ export default class SidePanel extends React.Component {
 					ref={this.panel}
 					style={{top: this.state.topDistance}}
 				>
-					{this.props.items && this.props.items.length && (
+					{this.props.items?.length && (
 						<SideMenu
 							active={this.state.active}
 							items={this.props.items}

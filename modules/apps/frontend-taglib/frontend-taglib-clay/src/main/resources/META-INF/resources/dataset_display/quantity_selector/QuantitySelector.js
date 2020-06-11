@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayIcon, {ClayIconSpriteContext} from '@clayui/icon';
+import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
@@ -30,7 +30,6 @@ function QuantitySelector({
 	prependedText,
 	quantity,
 	size,
-	spritemap,
 	style,
 	updateQuantity,
 }) {
@@ -224,13 +223,7 @@ function QuantitySelector({
 		</div>
 	);
 
-	return spritemap ? (
-		<ClayIconSpriteContext.Provider value={spritemap}>
-			{content}
-		</ClayIconSpriteContext.Provider>
-	) : (
-		content
-	);
+	return content;
 }
 
 QuantitySelector.propTypes = {
@@ -246,7 +239,6 @@ QuantitySelector.propTypes = {
 	prependedText: PropTypes.string,
 	quantity: PropTypes.number.isRequired,
 	size: PropTypes.oneOf(['large', 'medium', 'small']),
-	spritemap: PropTypes.string,
 	style: PropTypes.oneOf(['default', 'simple']),
 	updateQuantity: PropTypes.func,
 };

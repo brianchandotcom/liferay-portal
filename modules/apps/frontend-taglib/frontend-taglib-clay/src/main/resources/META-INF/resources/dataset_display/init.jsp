@@ -54,7 +54,6 @@ String selectionType = (String)request.getAttribute("clay:dataset-display:select
 boolean showManagementBar = (boolean)request.getAttribute("clay:dataset-display:showManagementBar");
 boolean showPagination = (boolean)request.getAttribute("clay:dataset-display:showPagination");
 boolean showSearch = (boolean)request.getAttribute("clay:dataset-display:showSearch");
-String spritemap = (String)request.getAttribute("clay:dataset-display:spritemap");
 String style = (String)request.getAttribute("clay:dataset-display:style");
 
 JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();

@@ -88,9 +88,7 @@ export default class SidePanel extends React.Component {
 			}
 			else {
 				logError(
-					new Error(
-						`Container: "${this.props.containerSelector}" not found!`
-					)
+					`Container: "${this.props.containerSelector}" not found!`
 				);
 			}
 		}
@@ -329,9 +327,7 @@ export default class SidePanel extends React.Component {
 		}
 		catch (error) {
 			logError(
-				new Error(
-					`Cannot access to iframe body. Url: "${this.state.currentUrl}"`
-				)
+				`Cannot access to iframe body. Url: "${this.state.currentUrl}"`
 			);
 		}
 	}

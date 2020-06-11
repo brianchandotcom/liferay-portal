@@ -26,6 +26,8 @@ DLEditDDMStructureDisplayContext dlEditDDMStructureDisplayContext = new DLEditDD
 com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = dlEditDDMStructureDisplayContext.getDDMStructure();
 %>
 
+<aui:model-context bean="<%= ddmStructure %>" model="<%= com.liferay.dynamic.data.mapping.model.DDMStructure.class %>" />
+
 <clay:row
 	cssClass="lfr-ddm-types-form-column"
 >

@@ -36,9 +36,11 @@ function DefaultRenderer({value}) {
 		return <>{value.label}</>;
 	}
 
-	throw new Error(
+	logError(
 		`The object ${JSON.stringify(value)} doesn't match the template schema`
 	);
+
+	return null;
 }
 
 DefaultRenderer.propTypes = {

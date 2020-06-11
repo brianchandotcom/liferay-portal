@@ -128,9 +128,14 @@ public class AnalyticsTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		Group group = layout.getGroup();
 
 		if (Objects.equals(group.getGroupKey(), "Forms")) {
-			group = _groupLocalService.fetchGroup(
+			Group refererGroup = _groupLocalService.fetchGroup(
 				GetterUtil.getLong(
 					httpServletRequest.getAttribute("refererGroupId")));
+
+			if (refererGroup != null) {
+				return refererGroup.getTypeSettingsProperty(
+					"analyticsChannelId");
+			}
 		}
 
 		return group.getTypeSettingsProperty("analyticsChannelId");

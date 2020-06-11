@@ -1105,6 +1105,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Layout fetchDraftLayout(long plid) {
+		return fetchLayout(
+			classNameLocalService.getClassNameId(Layout.class), plid);
+	}
+
+	@Override
 	public Layout fetchFirstLayout(
 		long groupId, boolean privateLayout, long parentLayoutId) {
 

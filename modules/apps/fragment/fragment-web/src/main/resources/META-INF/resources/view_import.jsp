@@ -41,7 +41,7 @@ ImportDisplayContext importDisplayContext = new ImportDisplayContext(request, re
 
 		<c:if test="<%= ListUtil.isNotEmpty(draftFragmentsImporterResultEntries) %>">
 			<clay:alert
-				dismissible="true"
+				dismissible="<%= true %>"
 				message='<%= LanguageUtil.format(request, "the-following-fragments-have-validation-issues.-they-have-been-left-in-draft-status-x", "<strong>" + StringUtil.merge(draftFragmentsImporterResultEntries, StringPool.COMMA_AND_SPACE) + "</strong>", false) %>'
 			/>
 		</c:if>

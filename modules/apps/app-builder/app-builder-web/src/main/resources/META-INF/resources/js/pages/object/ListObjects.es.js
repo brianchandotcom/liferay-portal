@@ -24,7 +24,7 @@ import {getItem, updateItem} from '../../utils/client.es';
 import {getLocalizedValue} from '../../utils/lang.es';
 import {fromNow} from '../../utils/time.es';
 
-const COLUMNS = [
+const columns = [
 	{
 		key: 'name',
 		sortable: true,
@@ -52,9 +52,9 @@ export default ({history, listViewProps = {}, objectType}) => {
 		endpoint: null,
 	});
 
-	const {actions = []} = listViewProps;
+	const {actions: listViewActions = []} = listViewProps;
 
-	listViewProps.actions = [
+	const actions = [
 		{
 			action: ({id}) =>
 				Promise.resolve(
@@ -87,7 +87,7 @@ export default ({history, listViewProps = {}, objectType}) => {
 				),
 			name: Liferay.Language.get('app-permissions'),
 		},
-		...actions,
+		...listViewActions,
 	];
 
 	const rolesFilter = ({name, roleType}) =>
@@ -124,7 +124,7 @@ export default ({history, listViewProps = {}, objectType}) => {
 
 			<AppNavigationBar />
 
-			<ListView columns={COLUMNS} {...listViewProps}>
+			<ListView {...listViewProps} actions={actions} columns={columns}>
 				{(item) => {
 					const {
 						dateCreated,

@@ -24,6 +24,7 @@ import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfig
 import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.display.context.LayoutsAdminDisplayContext;
 import com.liferay.layout.admin.web.internal.display.context.MillerColumnsDisplayContext;
+import com.liferay.layout.admin.web.internal.display.context.SelectLayoutCollectionDisplayContext;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -182,13 +183,6 @@ public class GroupPagesPortlet extends MVCPortlet {
 				}
 			}
 
-			renderRequest.setAttribute(
-				LayoutAdminWebKeys.INFO_ITEM_SERVICE_TRACKER,
-				_infoItemServiceTracker);
-			renderRequest.setAttribute(
-				LayoutAdminWebKeys.INFO_LIST_PROVIDER_TRACKER,
-				_infoListProviderTracker);
-
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_layoutConverterConfiguration, _layoutConverterRegistry,
@@ -205,6 +199,13 @@ public class GroupPagesPortlet extends MVCPortlet {
 				LayoutAdminWebKeys.MILLER_COLUMNS_DISPLAY_CONTEXT,
 				new MillerColumnsDisplayContext(
 					layoutsAdminDisplayContext,
+					_portal.getLiferayPortletRequest(renderRequest),
+					_portal.getLiferayPortletResponse(renderResponse)));
+
+			renderRequest.setAttribute(
+				LayoutAdminWebKeys.SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT,
+				new SelectLayoutCollectionDisplayContext(
+					_infoItemServiceTracker, _infoListProviderTracker,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse)));
 

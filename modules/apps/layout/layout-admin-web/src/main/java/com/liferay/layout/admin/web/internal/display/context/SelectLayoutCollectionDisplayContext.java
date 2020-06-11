@@ -23,7 +23,6 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;
-import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -54,20 +53,18 @@ import javax.servlet.http.HttpServletRequest;
 public class SelectLayoutCollectionDisplayContext {
 
 	public SelectLayoutCollectionDisplayContext(
+		InfoItemServiceTracker infoItemServiceTracker,
+		InfoListProviderTracker infoListProviderTracker,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		_infoItemServiceTracker = infoItemServiceTracker;
+		_infoListProviderTracker = infoListProviderTracker;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(
 			_liferayPortletRequest);
-		_infoItemServiceTracker =
-			(InfoItemServiceTracker)_liferayPortletRequest.getAttribute(
-				LayoutAdminWebKeys.INFO_ITEM_SERVICE_TRACKER);
-		_infoListProviderTracker =
-			(InfoListProviderTracker)_liferayPortletRequest.getAttribute(
-				LayoutAdminWebKeys.INFO_LIST_PROVIDER_TRACKER);
 		_themeDisplay = (ThemeDisplay)_liferayPortletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

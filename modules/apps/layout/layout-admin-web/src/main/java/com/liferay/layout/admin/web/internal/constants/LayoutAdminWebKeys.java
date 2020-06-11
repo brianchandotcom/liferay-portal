@@ -19,16 +19,13 @@ package com.liferay.layout.admin.web.internal.constants;
  */
 public class LayoutAdminWebKeys {
 
-	public static final String INFO_ITEM_SERVICE_TRACKER =
-		"INFO_ITEM_SERVICE_TRACKER";
-
-	public static final String INFO_LIST_PROVIDER_TRACKER =
-		"INFO_LIST_PROVIDER_TRACKER";
-
 	public static final String LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT =
 		"LAYOUT_PAGE_LAYOUT_ADMIN_DISPLAY_CONTEXT";
 
 	public static final String MILLER_COLUMNS_DISPLAY_CONTEXT =
 		"MILLER_COLUMNS_DISPLAY_CONTEXT";
+
+	public static final String SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT =
+		"SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT";
 
 }

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = new SelectLayoutCollectionDisplayContext(liferayPortletRequest, liferayPortletResponse);
+SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = (SelectLayoutCollectionDisplayContext)request.getAttribute(LayoutAdminWebKeys.SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT);
 %>
 
 <div class="lfr-search-container-wrapper" id="<portlet:namespace/>collectionProviders">

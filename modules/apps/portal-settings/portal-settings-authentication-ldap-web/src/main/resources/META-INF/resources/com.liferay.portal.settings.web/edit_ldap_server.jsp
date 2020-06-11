@@ -284,7 +284,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 	</aui:button-row>
 </aui:form>
 
-<script>
+<aui:script>
 	function <portlet:namespace />mapValues(fields, fieldValues) {
 		var form = document.<portlet:namespace />fm;
 
@@ -502,9 +502,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 			'ldap--<%= LDAPConstants.GROUP_DEFAULT_OBJECT_CLASSES %>--': exportMappingGroupDefaultObjectClass,
 		});
 	}
-</script>
 
-<aui:script>
 	window['<portlet:namespace />testSettings'] = function (type) {
 		var baseUrl;
 

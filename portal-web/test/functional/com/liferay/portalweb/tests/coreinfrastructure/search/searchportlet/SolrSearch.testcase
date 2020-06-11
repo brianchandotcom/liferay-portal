@@ -1756,14 +1756,6 @@ definition {
 
 		AssertVisible(locator1 = "Button#SEARCH_DISABLED");
 
-		// Workaround for LPS-82584
-
-		SearchFacetPortlet.clearFacet();
-
-		Click(
-			locator1 = "Search#MODIFIED_FACET_SELECTION",
-			range = "Custom Range");
-
 		Click(locator1 = "Search#CUSTOM_RANGE_FROM");
 
 		Click(locator1 = "YUICalendarWidget#PREVIOUS_MONTH_ARROW");

@@ -12,20 +12,11 @@
  * details.
  */
 
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/editableFragmentEntryProcessor';
-import selectEditableValues from './selectEditableValues';
-
-export default function selectEditableValue(
-	state,
-	fragmentEntryLinkId,
-	editableId,
-	processorType = EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-) {
-	const editableValues = selectEditableValues(state, fragmentEntryLinkId);
-
-	return (
-		(editableValues[processorType] &&
-			editableValues[processorType][editableId]) ||
-		{}
-	);
+/**
+ * Returns current languageId
+ * @param {object} state
+ * @return {string}
+ */
+export default function selectLanguageId(state) {
+	return state.languageId;
 }

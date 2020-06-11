@@ -44,6 +44,18 @@ definition {
 	macro askQuestionFillingTheMandatoryFields {
 		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
 
+		if (isSet(anonymousUser)) {
+			Type.typePause(
+				locator1 = "TextInput#EMAIL_ADDRESS",
+				value1 = "${userEmailAddress}");
+
+			Type.typePause(
+				locator1 = "TextInput#PASSWORD",
+				value1 = "${password}");
+
+			Click(locator1 = "Button#SIGN_IN");
+		}
+
 		Type(
 			locator1 = "Questions#ASK_QUESTION_TITLE_FIELD",
 			value1 = "${titleField}");

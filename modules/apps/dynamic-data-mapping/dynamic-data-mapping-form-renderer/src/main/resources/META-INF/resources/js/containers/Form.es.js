@@ -25,6 +25,12 @@ import {getFormId, getFormNode} from '../util/formId.es';
 import {PagesVisitor} from '../util/visitors.es';
 import templates from './Form.soy';
 
+function handleLiferayFormSubmitted(event) {
+	if (event.form && event.form.getDOM() === this.form) {
+		event.preventDefault();
+	}
+}
+
 const Form = React.forwardRef((props, ref) => {
 	const dispatch = useForm();
 	const containerRef = useRef(null);
@@ -81,12 +87,6 @@ const Form = React.forwardRef((props, ref) => {
 				});
 			}
 		});
-	};
-
-	const handleLiferayFormSubmitted = (event) => {
-		if (event.form && event.form.getDOM() === this.form) {
-			event.preventDefault();
-		}
 	};
 
 	useImperativeHandle(ref, () => ({

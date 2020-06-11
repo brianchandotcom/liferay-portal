@@ -75,8 +75,8 @@ public class AssetEntryInfoItemFormProvider
 	private List<InfoFieldSetEntry> _getAssetEntryFieldSetEntries() {
 		return Arrays.asList(
 			_titleInfoField, _descriptionInfoField, _summaryInfoField,
-			_userNameInfoField, _createDateInfoField, _expirationDateInfoField,
-			_viewCountInfoField, _urlInfoField);
+			_userNameInfoField, _createDateInfoField, _modifiedDateInfoField,
+			_expirationDateInfoField, _viewCountInfoField, _urlInfoField);
 	}
 
 	private List<InfoFieldValue<Object>> _getAssetEntryInfoFieldValues(
@@ -94,6 +94,9 @@ public class AssetEntryInfoItemFormProvider
 			new InfoFieldValue<>(
 				_createDateInfoField,
 				_getDateValue(assetEntry.getCreateDate())),
+			new InfoFieldValue<>(
+				_modifiedDateInfoField,
+				_getDateValue(assetEntry.getModifiedDate())),
 			new InfoFieldValue<>(
 				_expirationDateInfoField,
 				_getDateValue(assetEntry.getExpirationDate())),
@@ -129,6 +132,10 @@ public class AssetEntryInfoItemFormProvider
 		TextInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(getClass(), "expiration-date"),
 		"expirationDate");
+	private final InfoField _modifiedDateInfoField = new InfoField(
+		TextInfoFieldType.INSTANCE,
+		InfoLocalizedValue.localize(getClass(), "modified-date"),
+		"modifiedDate");
 	private final InfoField _summaryInfoField = new InfoField(
 		TextInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(getClass(), "summary"), "summary");

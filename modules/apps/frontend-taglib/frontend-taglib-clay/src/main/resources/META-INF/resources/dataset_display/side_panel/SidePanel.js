@@ -397,10 +397,7 @@ export default class SidePanel extends React.Component {
 						displayType="monospaced"
 						onClick={() => this.close()}
 					>
-						<ClayIcon
-							spritemap={this.props.spritemap}
-							symbol="times"
-						/>
+						<ClayIcon symbol="times" />
 					</ClayButton>
 
 					<div className="tab-content">
@@ -426,13 +423,9 @@ export default class SidePanel extends React.Component {
 		);
 
 		return ReactDOM.createPortal(
-			this.props.spritemap ? (
-				<ClayIconSpriteContext.Provider value={this.props.spritemap}>
-					{content}
-				</ClayIconSpriteContext.Provider>
-			) : (
-				content
-			),
+			<ClayIconSpriteContext.Provider value={this.props.spritemap}>
+				{content}
+			</ClayIconSpriteContext.Provider>,
 			this.state.wrapper
 		);
 	}
@@ -442,7 +435,7 @@ SidePanel.propTypes = {
 	id: PropTypes.string,
 	items: PropTypes.any,
 	size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', 'full']),
-	spritemap: PropTypes.string,
+	spritemap: PropTypes.string.isRequired,
 	topAnchorSelector: PropTypes.any,
 	wrapperSelector: PropTypes.string,
 };

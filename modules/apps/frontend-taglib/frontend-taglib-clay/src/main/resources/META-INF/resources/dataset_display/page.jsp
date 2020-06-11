@@ -69,7 +69,6 @@
 			selectedItems: <%= jsonSerializer.serializeDeep(selectedItems) %>,
 			selectedItemsKey: '<%= selectedItemsKey %>',
 			selectionType: '<%= selectionType %>',
-			spritemap: '<%= spritemap %>',
 			style: '<%= style %>',
 		},
 		container

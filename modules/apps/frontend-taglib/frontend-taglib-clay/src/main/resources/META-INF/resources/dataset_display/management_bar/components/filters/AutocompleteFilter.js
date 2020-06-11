@@ -14,7 +14,6 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
-import {ClayIconSpriteContext} from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayMultiSelect from '@clayui/multi-select';
 import {fetch} from 'frontend-js-web';
@@ -169,146 +168,121 @@ function AutocompleteFilter({
 	}
 
 	return (
-		<ClayIconSpriteContext.Consumer>
-			{(spritemap) => (
-				<div className="form-group">
-					{selectionType === 'multiple' ? (
-						<ClayMultiSelect
-							inputValue={query || ''}
-							items={selectedItems}
-							onChange={setQuery}
-							onItemsChange={(event) => {
-								if (event.length < selectedItems.length) {
-									return setSelectedItems(event);
-								}
-								else {
-									if (!items.length) {
-										return;
-									}
+		<div className="form-group">
+			{selectionType === 'multiple' ? (
+				<ClayMultiSelect
+					inputValue={query || ''}
+					items={selectedItems}
+					onChange={setQuery}
+					onItemsChange={(event) => {
+						if (event.length < selectedItems.length) {
+							return setSelectedItems(event);
+						}
+						else {
+							if (!items.length) {
+								return;
+							}
 
-									const firstEl = {
-										label: getValueFromItem(
-											items[0],
-											itemLabel
-										),
-										value: getValueFromItem(
-											items[0],
-											itemKey
-										),
-									};
-									const added = selectedItems.find(
-										(selectedItem) =>
-											selectedItem.value === firstEl.value
-									);
+							const firstEl = {
+								label: getValueFromItem(items[0], itemLabel),
+								value: getValueFromItem(items[0], itemKey),
+							};
+							const added = selectedItems.find(
+								(selectedItem) =>
+									selectedItem.value === firstEl.value
+							);
 
-									return setSelectedItems(
-										added
+							return setSelectedItems(
+								added
+									? selectedItems.filter(
+											(selectedItem) =>
+												selectedItem.value !==
+												firstEl.value
+									  )
+									: [...selectedItems, firstEl]
+							);
+						}
+					}}
+					placeholder={inputPlaceholder}
+				/>
+			) : (
+				<input
+					className="form-control"
+					onChange={(event) => setQuery(event.target.value)}
+					placeholder={inputPlaceholder}
+					type="text"
+					value={query}
+				/>
+			)}
+			{items?.length ? (
+				<ul
+					className="inline-scroller mt-2 mx-n3 px-3"
+					ref={setScrollingArea}
+				>
+					{items.map((item) => {
+						const itemValue = item[itemKey];
+						const itemLabel = getValueFromItem(item, itemLabel);
+						const newValue = {
+							label: itemLabel,
+							value: itemValue,
+						};
+
+						return (
+							<Item
+								key={itemValue}
+								label={itemLabel}
+								onChange={() => {
+									setSelectedItems(
+										selectedItems.find(
+											(element) =>
+												element.value === itemValue
+										)
 											? selectedItems.filter(
-													(selectedItem) =>
-														selectedItem.value !==
-														firstEl.value
-											  )
-											: [...selectedItems, firstEl]
-									);
-								}
-							}}
-							placeholder={inputPlaceholder}
-							spritemap={spritemap}
-						/>
-					) : (
-						<input
-							className="form-control"
-							onChange={(event) => setQuery(event.target.value)}
-							placeholder={inputPlaceholder}
-							type="text"
-							value={query}
-						/>
-					)}
-					{items?.length ? (
-						<ul
-							className="inline-scroller mt-2 mx-n3 px-3"
-							ref={setScrollingArea}
-						>
-							{items.map((item) => {
-								const itemValue = item[itemKey];
-								const itemLabel = getValueFromItem(
-									item,
-									itemLabel
-								);
-								const newValue = {
-									label: itemLabel,
-									value: itemValue,
-								};
-
-								return (
-									<Item
-										key={itemValue}
-										label={itemLabel}
-										onChange={() => {
-											setSelectedItems(
-												selectedItems.find(
 													(element) =>
-														element.value ===
+														element.value !==
 														itemValue
-												)
-													? selectedItems.filter(
-															(element) =>
-																element.value !==
-																itemValue
-													  )
-													: selectionType ===
-													  'multiple'
-													? [
-															...selectedItems,
-															newValue,
-													  ]
-													: [newValue]
-											);
-										}}
-										selected={Boolean(
-											selectedItems.find(
-												(element) =>
-													element.value === itemValue
-											)
-										)}
-										selectionType={selectionType}
-										value={itemValue}
-									/>
-								);
-							})}
-							{loaderVisible && (
-								<ClayLoadingIndicator
-									ref={setInfiniteLoader}
-									small
-								/>
-							)}
-						</ul>
-					) : (
-						<div className="mt-2 p-2 text-muted">
-							{Liferay.Language.get('no-items-were-found')}
-						</div>
+											  )
+											: selectionType === 'multiple'
+											? [...selectedItems, newValue]
+											: [newValue]
+									);
+								}}
+								selected={Boolean(
+									selectedItems.find(
+										(element) => element.value === itemValue
+									)
+								)}
+								selectionType={selectionType}
+								value={itemValue}
+							/>
+						);
+					})}
+					{loaderVisible && (
+						<ClayLoadingIndicator ref={setInfiniteLoader} small />
 					)}
-					<div className="mt-3">
-						<ClayButton
-							className="btn-sm"
-							disabled={
-								!isValueChanged(value || [], selectedItems)
-							}
-							onClick={() =>
-								actions.updateFilterValue(
-									id,
-									selectedItems.length ? selectedItems : null
-								)
-							}
-						>
-							{panelType === 'edit'
-								? Liferay.Language.get('edit-filter')
-								: Liferay.Language.get('add-filter')}
-						</ClayButton>
-					</div>
+				</ul>
+			) : (
+				<div className="mt-2 p-2 text-muted">
+					{Liferay.Language.get('no-items-were-found')}
 				</div>
 			)}
-		</ClayIconSpriteContext.Consumer>
+			<div className="mt-3">
+				<ClayButton
+					className="btn-sm"
+					disabled={!isValueChanged(value || [], selectedItems)}
+					onClick={() =>
+						actions.updateFilterValue(
+							id,
+							selectedItems.length ? selectedItems : null
+						)
+					}
+				>
+					{panelType === 'edit'
+						? Liferay.Language.get('edit-filter')
+						: Liferay.Language.get('add-filter')}
+				</ClayButton>
+			</div>
+		</div>
 	);
 }
 

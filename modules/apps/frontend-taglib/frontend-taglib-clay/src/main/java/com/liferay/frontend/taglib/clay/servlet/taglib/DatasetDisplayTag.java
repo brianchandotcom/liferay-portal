@@ -92,9 +92,6 @@ public class DatasetDisplayTag extends IncludeTag {
 			}
 
 			_dataSetAPI = sb.toString();
-
-			_spritemap =
-				themeDisplay.getPathThemeImages() + "/lexicon/icons.svg";
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);
@@ -312,7 +309,6 @@ public class DatasetDisplayTag extends IncludeTag {
 		_showManagementBar = true;
 		_showPagination = true;
 		_showSearch = true;
-		_spritemap = null;
 		_style = "default";
 	}
 
@@ -376,7 +372,6 @@ public class DatasetDisplayTag extends IncludeTag {
 		request.setAttribute(
 			"clay:dataset-display:showPagination", _showPagination);
 		request.setAttribute("clay:dataset-display:showSearch", _showSearch);
-		request.setAttribute("clay:dataset-display:spritemap", _spritemap);
 		request.setAttribute("clay:dataset-display:style", _style);
 	}
 
@@ -431,7 +426,6 @@ public class DatasetDisplayTag extends IncludeTag {
 	private boolean _showManagementBar = true;
 	private boolean _showPagination = true;
 	private boolean _showSearch = true;
-	private String _spritemap;
 	private String _style = "default";
 
 }

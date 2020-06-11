@@ -268,10 +268,12 @@ definition {
 
 	macro bulkReassignSetup {
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		WorkflowMetrics.createUsersAndInstancesWithGroovy(
 			numberOfBlogInstances = "3",
 			numberOfUsers = "3",
-			site = "Guest");
+			site = "${siteName}");
 	}
 
 	macro checkPendingWorkflowValues {

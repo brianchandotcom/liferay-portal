@@ -27,6 +27,8 @@ definition {
 	test ViewWebContentInSampleDrools {
 		property portal.acceptance = "true";
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		property osgi.modules.includes = "portal-rules-engine-sample-web";
 
 		Navigator.openURL();
@@ -47,7 +49,7 @@ definition {
 			category = "Categorization",
 			panel = "Site Administration",
 			portlet = "Tags",
-			site = "Guest");
+			site = "${siteName}");
 
 		Tag.addCP(tagName = "americas");
 

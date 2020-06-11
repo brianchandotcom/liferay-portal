@@ -36,6 +36,8 @@ definition {
 	macro _gotoMenulistOption {
 		var key_menuListOption = "${menuListOption}";
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		AssertClick(
 			locator1 = "Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_OPTION",
 			value1 = "${menuListOption}");

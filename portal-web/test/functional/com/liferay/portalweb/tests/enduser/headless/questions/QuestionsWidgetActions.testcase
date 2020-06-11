@@ -104,6 +104,61 @@ definition {
 			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
 	}
 
+	@description = "Validate if the anonymous user can ask questions and redirected to login."
+	@priority = "4"
+	test AskQuestionsThroughAnonymousUser {
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Service Access Policy");
+
+		ServiceAccessPolicy.addServiceAccessPolicy(
+			defaultSwitch = "true",
+			enabled = "true",
+			policyName = "QUESTIONS",
+			title = "QUESTIONS");
+
+		var allowedServiceSignature = '''
+			com.liferay.expando.kernel.service.ExpandoValueService#getData
+			com.liferay.message.boards.service.MBCategoryService#getCategoriesCount
+			com.liferay.message.boards.service.MBCategoryService#getCategory
+			com.liferay.message.boards.service.MBMessageService#fetchMBMessageByUrlSubject
+			com.liferay.message.boards.service.MBMessageService#getMessage
+		''';
+
+		ServiceAccessPolicy.editServiceAccessPolicy(
+			allowedServiceSignature = "${allowedServiceSignature}",
+			policyName = "QUESTIONS");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.addCP(categoryName = "Questions Test Category");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			anonymousUser = "true",
+			kbArticleContent = "Body Anonymous User Ask questions",
+			password = "test",
+			titleField = "Title Anonymous User Ask questions",
+			userEmailAddress = "test@liferay.com");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		AssertTextEquals(
+			key_questionTitle = "Title Anonymous User Ask questions",
+			locator1 = "Questions#QUESTIONS_TITLE",
+			value1 = "Title Anonymous User Ask questions");
+	}
+
 	@description = "Validate if the My Activity tab appears"
 	@priority = "4"
 	test ValidateIfTheMyActivityAppears {

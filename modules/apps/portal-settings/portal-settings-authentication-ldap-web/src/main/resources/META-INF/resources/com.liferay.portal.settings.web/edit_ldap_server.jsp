@@ -629,12 +629,8 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 					return response.text();
 				})
 				.then(function (text) {
-					var parser = new DOMParser();
-
-					var doc = parser.parseFromString(text, 'text/html');
-
 					Liferay.Util.openModal({
-						bodyHTML: doc.body.innerHTML,
+						bodyHTML: text,
 						size: 'full-screen',
 						title: '<%= UnicodeLanguageUtil.get(request, "ldap") %>',
 					});

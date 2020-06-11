@@ -114,7 +114,7 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 						page.getBytes());
 
 					byte[] buffer = new byte[1024];
-					int read;
+					int read = 0;
 
 					while ((read = pageInputStream.read(buffer)) != -1) {
 						streamingOutput.write(buffer, 0, read);

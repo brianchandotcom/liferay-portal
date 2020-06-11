@@ -81,6 +81,10 @@ public class JournalArticleTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public JournalArticle getArticle() {
+		return _article;
+	}
+
 	public String getArticleId() {
 		return _articleId;
 	}
@@ -95,6 +99,10 @@ public class JournalArticleTag extends IncludeTag {
 
 	public boolean isShowTitle() {
 		return _showTitle;
+	}
+
+	public void setArticle(JournalArticle article) {
+		_article = article;
 	}
 
 	public void setArticleId(String articleId) {

@@ -14,7 +14,7 @@ definition {
 			widgetName = "${widgetName}");
 
 		if (contains("${typeSettings}","column-${column}=")) {
-			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(column-${column}=[^\\]*)","$1,${widget}");
+			var typeSettings = StringUtil.regexReplaceFirst("${typeSettings}","(column-${column}=[^%]*)","$1,${widget}");
 		}
 		else {
 			var typeSettings = '''${typeSettings}column-${column}''';

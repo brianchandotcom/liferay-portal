@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.hibernate.DialectDetector;
 
 import java.sql.Connection;
@@ -130,12 +129,6 @@ public class DBPartitionUtil {
 			throw new Error("Database partition requires MySQL");
 		}
 
-		if (Validator.isNull(_DATABASE_PARTITION_INSTANCE_ID)) {
-			throw new Error(
-				"Database partition requires setting the property " +
-					"\"database.partition.instance.id\"");
-		}
-
 		try (Connection connection = dataSource.getConnection()) {
 			_defaultSchemaName = connection.getCatalog();
 		}
@@ -166,8 +159,7 @@ public class DBPartitionUtil {
 	}
 
 	private static String _getSchemaName(long companyId) {
-		return _DATABASE_PARTITION_INSTANCE_ID + StringPool.UNDERLINE +
-			companyId;
+		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
 	private static boolean _isControlTable(
@@ -206,8 +198,10 @@ public class DBPartitionUtil {
 	private static final boolean _DATABASE_PARTITION_ENABLED =
 		GetterUtil.getBoolean(PropsUtil.get("database.partition.enabled"));
 
-	private static final String _DATABASE_PARTITION_INSTANCE_ID = PropsUtil.get(
-		"database.partition.instance.id");
+	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
+		GetterUtil.get(
+			PropsUtil.get("database.partition.schema.name.prefix"),
+			"lpartition_");
 
 	private static final Set<String> _controlTableNames = new HashSet<>(
 		Arrays.asList("Company", "Portlet", "VirtualHost"));

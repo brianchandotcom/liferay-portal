@@ -15,4 +15,13 @@
 	<dynamic-element index-type="keyword" instance-id="kfce2" name="Text2" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[Some Text]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="itet" name="Booleanr39a" type="boolean">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="dqqn" name="Imageqvnd" type="image">
+		<dynamic-content language-id="en_US"></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="bajz" name="Integer2cc6" type="ddm-integer">
+		<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
+	</dynamic-element>
 </root>

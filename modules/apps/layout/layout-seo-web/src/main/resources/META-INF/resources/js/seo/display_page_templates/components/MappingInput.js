@@ -65,6 +65,7 @@ function MappingInput({
 					<MappingPanel
 						field={field}
 						fields={fields}
+						isActive={field.key !== UNMAPPED_OPTION.key}
 						name={name}
 						onChange={handleOnchange}
 						source={{

@@ -28,10 +28,16 @@ const normalizeField = ({key, label}) => ({
 	value: key,
 });
 
-function MappingPanel({name, fields, field, source, onChange = noop}) {
+function MappingPanel({
+	isActive = false,
+	name,
+	fields,
+	field,
+	source,
+	onChange = noop,
+}) {
 	const [isPanelOpen, setIsPanelOpen] = useState(false);
 	const wrapperRef = useRef(null);
-	const active = field.key !== 'unmapped';
 
 	useOnClickOutside([wrapperRef.current], () => setIsPanelOpen(false));
 
@@ -50,7 +56,7 @@ function MappingPanel({name, fields, field, source, onChange = noop}) {
 		<div className="dpt-mapping-panel-wrapper" ref={wrapperRef}>
 			<ClayButton
 				className={classNames('dpt-mapping-btn lfr-portal-tooltip', {
-					active,
+					active: isActive,
 				})}
 				displayType="secondary"
 				monospaced
@@ -108,6 +114,7 @@ MappingPanel.propTypes = {
 			label: PropTypes.string,
 		})
 	).isRequired,
+	isActive: PropTypes.bool,
 	name: PropTypes.string.isRequired,
 	source: PropTypes.shape({
 		initialValue: PropTypes.string,

@@ -25,6 +25,7 @@ import java.util.List;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Exec;
+import org.gradle.util.CollectionUtils;
 
 /**
  * @author Peter Shin
@@ -40,11 +41,17 @@ public class DockerCopyTask extends Exec {
 	@Override
 	@SuppressWarnings("unchecked")
 	public void exec() {
+		Logger logger = getLogger();
+
+		if (logger.isLifecycleEnabled()) {
+			logger.lifecycle(
+				"Running: {} {}", getExecutable(),
+				CollectionUtils.join(" ", _getCompleteArgs()));
+		}
+
 		setArgs(_getCompleteArgs());
 
 		super.exec();
-
-		Logger logger = getLogger();
 
 		if (logger.isLifecycleEnabled()) {
 			logger.lifecycle(

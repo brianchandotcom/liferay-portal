@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.process.local.LocalProcessExecutor;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch7.internal.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.PathUtil;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.Sidecar;
@@ -219,8 +219,8 @@ public class ElasticsearchConnectionFixture
 		settingsContributors.forEach(
 			embeddedElasticsearchConnection::addSettingsContributor);
 
-		embeddedElasticsearchConnection.clusterSettingsContext = Mockito.mock(
-			ClusterSettingsContext.class);
+		embeddedElasticsearchConnection.clusterExecutor = Mockito.mock(
+			ClusterExecutor.class);
 
 		embeddedElasticsearchConnection.props = createProps();
 
@@ -267,9 +267,8 @@ public class ElasticsearchConnectionFixture
 		return new SidecarElasticsearchConnection(
 			elasticsearchConfiguration.restClientLoggerLevel(),
 			new Sidecar(
-				Mockito.mock(ClusterSettingsContext.class),
-				elasticsearchConfiguration, createElasticsearchInstancePaths(),
-				new LocalProcessExecutor(),
+				Mockito.mock(ClusterExecutor.class), elasticsearchConfiguration,
+				createElasticsearchInstancePaths(), new LocalProcessExecutor(),
 				() -> _TMP_PATH.resolve("lib-process-executor"),
 				getSettingsContributors()));
 	}

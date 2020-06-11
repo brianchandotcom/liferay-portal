@@ -1402,8 +1402,9 @@ public class JenkinsResultsParserUtil {
 
 		if (remoteURLAuthorityMatcher1.find()) {
 			String localURLAuthority = combine(
-				"http://test-", remoteURLAuthorityMatcher1.group(1), "/",
-				remoteURLAuthorityMatcher1.group(1), "/");
+				"http://", remoteURLAuthorityMatcher1.group(1), "-",
+				remoteURLAuthorityMatcher1.group(2), "/",
+				remoteURLAuthorityMatcher1.group(2), "/");
 			String remoteURLAuthority = remoteURLAuthorityMatcher1.group(0);
 
 			localURL = localURL.replaceAll(
@@ -1738,8 +1739,8 @@ public class JenkinsResultsParserUtil {
 		if (localURLAuthorityMatcher1.find()) {
 			String localURLAuthority = localURLAuthorityMatcher1.group(0);
 			String remoteURLAuthority = combine(
-				"https://test.liferay.com/", localURLAuthorityMatcher1.group(2),
-				"/");
+				"https://", localURLAuthorityMatcher1.group(2), ".liferay.com/",
+				localURLAuthorityMatcher1.group(3), "/");
 
 			remoteURL = remoteURL.replaceAll(
 				localURLAuthority, remoteURLAuthority);
@@ -3523,7 +3524,7 @@ public class JenkinsResultsParserUtil {
 		"(?<cohortName>test-\\d+)-\\d+");
 	private static Hashtable<?, ?> _jenkinsProperties;
 	private static final Pattern _localURLAuthorityPattern1 = Pattern.compile(
-		"http://(test-[0-9]+)/([0-9]+)/");
+		"http://((release|test)-[0-9]+)/([0-9]+)/");
 	private static final Pattern _localURLAuthorityPattern2 = Pattern.compile(
 		"http://(test-[0-9]+-[0-9]+)/");
 	private static final Pattern _nestedPropertyPattern = Pattern.compile(
@@ -3532,7 +3533,7 @@ public class JenkinsResultsParserUtil {
 		"\\[(?<opt>[^\\]]+)\\]");
 	private static final Set<String> _redactTokens = new HashSet<>();
 	private static final Pattern _remoteURLAuthorityPattern1 = Pattern.compile(
-		"https://test.liferay.com/([0-9]+)/");
+		"https://(release|test).liferay.com/([0-9]+)/");
 	private static final Pattern _remoteURLAuthorityPattern2 = Pattern.compile(
 		"https://(test-[0-9]+-[0-9]+).liferay.com/");
 	private static final File _sshDir = new File(getUserHomeDir(), ".ssh") {

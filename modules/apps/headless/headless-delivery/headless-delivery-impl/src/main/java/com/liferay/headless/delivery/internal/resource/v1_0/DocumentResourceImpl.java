@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
@@ -46,6 +45,7 @@ import com.liferay.headless.delivery.internal.odata.entity.v1_0.DocumentEntityMo
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -78,10 +77,10 @@ import com.liferay.ratings.kernel.service.RatingsEntryLocalService;
 
 import java.io.Serializable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.MultivaluedMap;
@@ -126,7 +125,7 @@ public class DocumentResourceImpl
 		Folder folder = _dlAppService.getFolder(documentFolderId);
 
 		return _getDocumentsPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_DOCUMENT", folder.getFolderId(),
@@ -232,21 +231,6 @@ public class DocumentResourceImpl
 			multipartBody.getValueAsInstanceOptional(
 				"document", Document.class);
 
-		Long[] categoryIds = documentOptional.map(
-			Document::getTaxonomyCategoryIds
-		).orElseGet(
-			() -> ArrayUtil.toArray(
-				_assetCategoryLocalService.getCategoryIds(
-					DLFileEntry.class.getName(), documentId))
-		);
-
-		String[] keywords = documentOptional.map(
-			Document::getKeywords
-		).orElseGet(
-			() -> _assetTagLocalService.getTagNames(
-				DLFileEntry.class.getName(), documentId)
-		);
-
 		return _toDocument(
 			_dlAppService.updateFileEntry(
 				documentId, binaryFile.getFileName(),
@@ -263,17 +247,14 @@ public class DocumentResourceImpl
 				),
 				null, DLVersionNumberIncrease.AUTOMATIC,
 				binaryFile.getInputStream(), binaryFile.getSize(),
-				ServiceContextUtil.createServiceContext(
-					categoryIds, keywords,
-					_getExpandoBridgeAttributes1(documentOptional),
-					existingFileEntry.getGroupId(),
-					documentOptional.map(
-						Document::getViewableBy
-					).map(
-						Document.ViewableBy::getValue
-					).orElse(
-						null
-					))));
+				_getServiceContext(
+					() -> ArrayUtil.toArray(
+						_assetCategoryLocalService.getCategoryIds(
+							DLFileEntry.class.getName(), documentId)),
+					() -> _assetTagLocalService.getTagNames(
+						DLFileEntry.class.getName(), documentId),
+					existingFileEntry.getFolderId(), documentOptional,
+					existingFileEntry.getGroupId())));
 	}
 
 	@Override
@@ -331,73 +312,26 @@ public class DocumentResourceImpl
 				existingFileEntry.getSize())
 		);
 
-		String title = documentOptional.map(
-			Document::getTitle
-		).orElse(
-			existingFileEntry.getTitle()
-		);
-
-		String description = documentOptional.map(
-			Document::getDescription
-		).orElse(
-			null
-		);
-
-		Optional<DLFileEntryType> dlFileEntryTypeOptional =
-			_getDLFileEntryTypeOptional(
-				existingFileEntry.getFolderId(), documentOptional,
-				existingFileEntry.getGroupId());
-
-		if (dlFileEntryTypeOptional.isPresent()) {
-			DLFileEntryType dlFileEntryType = dlFileEntryTypeOptional.get();
-
-			DLFileEntry dlFileEntry = _dlFileEntryService.updateFileEntry(
-				documentId, binaryFile.getFileName(),
-				binaryFile.getContentType(), title, description, null,
-				DLVersionNumberIncrease.AUTOMATIC,
-				dlFileEntryType.getFileEntryTypeId(),
-				_getDDMFormValuesMap(
-					dlFileEntryType, documentOptional.get(),
-					existingFileEntry.getGroupId()),
-				null, binaryFile.getInputStream(), binaryFile.getSize(),
-				_getServiceContext(
-					documentOptional, existingFileEntry.getGroupId()));
-
-			DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(
-				false);
-
-			dlFileEntry = _dlFileEntryService.updateStatus(
-				contextUser.getUserId(), dlFileVersion.getFileVersionId(),
-				WorkflowConstants.STATUS_APPROVED, null, new HashMap<>());
-
-			return _toDocument(
-				_dlAppService.getFileEntry(dlFileEntry.getFileEntryId()));
-		}
-
 		return _toDocument(
 			_dlAppService.updateFileEntry(
 				documentId, binaryFile.getFileName(),
-				binaryFile.getContentType(), title, description, null,
-				DLVersionNumberIncrease.AUTOMATIC, binaryFile.getInputStream(),
-				binaryFile.getSize(),
-				ServiceContextUtil.createServiceContext(
-					documentOptional.map(
-						Document::getTaxonomyCategoryIds
-					).orElse(
-						new Long[0]
-					),
-					documentOptional.map(
-						Document::getKeywords
-					).orElse(
-						new String[0]
-					),
-					_getExpandoBridgeAttributes1(documentOptional),
-					existingFileEntry.getGroupId(),
-					documentOptional.map(
-						Document::getViewableByAsString
-					).orElse(
-						Document.ViewableBy.OWNER.getValue()
-					))));
+				binaryFile.getContentType(),
+				documentOptional.map(
+					Document::getTitle
+				).orElse(
+					existingFileEntry.getTitle()
+				),
+				documentOptional.map(
+					Document::getDescription
+				).orElse(
+					null
+				),
+				null, DLVersionNumberIncrease.AUTOMATIC,
+				binaryFile.getInputStream(), binaryFile.getSize(),
+				_getServiceContext(
+					() -> new Long[0], () -> new String[0],
+					existingFileEntry.getFolderId(), documentOptional,
+					existingFileEntry.getGroupId())));
 	}
 
 	@Override
@@ -425,83 +359,24 @@ public class DocumentResourceImpl
 			multipartBody.getValueAsInstanceOptional(
 				"document", Document.class);
 
-		String title = documentOptional.map(
-			Document::getTitle
-		).orElse(
-			binaryFile.getFileName()
-		);
-
-		String description = documentOptional.map(
-			Document::getDescription
-		).orElse(
-			null
-		);
-
-		Optional<DLFileEntryType> dlFileEntryTypeOptional =
-			_getDLFileEntryTypeOptional(
-				documentFolderId, documentOptional, groupId);
-
-		if (dlFileEntryTypeOptional.isPresent()) {
-			DLFileEntryType dlFileEntryType = dlFileEntryTypeOptional.get();
-
-			DLFileEntry dlFileEntry = _dlFileEntryService.addFileEntry(
-				groupId, repositoryId, documentFolderId,
-				binaryFile.getFileName(), binaryFile.getContentType(), title,
-				description, null, dlFileEntryType.getFileEntryTypeId(),
-				_getDDMFormValuesMap(
-					dlFileEntryType, documentOptional.get(), groupId),
-				null, binaryFile.getInputStream(), binaryFile.getSize(),
-				_getServiceContext(documentOptional, groupId));
-
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-			_dlFileEntryService.updateStatus(
-				contextUser.getUserId(), dlFileVersion.getFileVersionId(),
-				WorkflowConstants.STATUS_APPROVED, null, new HashMap<>());
-
-			return _toDocument(
-				_dlAppService.getFileEntry(dlFileEntry.getFileEntryId()));
-		}
-
 		return _toDocument(
 			_dlAppService.addFileEntry(
 				repositoryId, documentFolderId, binaryFile.getFileName(),
-				binaryFile.getContentType(), title, description, null,
-				binaryFile.getInputStream(), binaryFile.getSize(),
-				_getServiceContext(documentOptional, groupId)));
-	}
-
-	private Map<String, DDMFormValues> _getDDMFormValuesMap(
-			DLFileEntryType dlFileEntryType, Document document, long groupId)
-		throws Exception {
-
-		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
-
-		DocumentType documentType = document.getDocumentType();
-
-		ContentField[] contentFields = documentType.getContentFields();
-
-		Map<String, DDMFormValues> ddmFormValuesMap = new HashMap<>();
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			com.liferay.dynamic.data.mapping.model.DDMStructure
-				modelDDMStructure = _ddmStructureService.getStructure(
-					ddmStructure.getStructureId());
-
-			com.liferay.dynamic.data.mapping.storage.DDMFormValues
-				ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
-					contentFields, modelDDMStructure.getDDMForm(),
-					_dlAppService, groupId, _journalArticleService,
-					_layoutLocalService,
-					contextAcceptLanguage.getPreferredLocale(),
-					modelDDMStructure.getDDMFormFields(false));
-
-			ddmFormValuesMap.put(
-				ddmStructure.getStructureKey(),
-				_ddmBeanTranslator.translate(ddmFormValues));
-		}
-
-		return ddmFormValuesMap;
+				binaryFile.getContentType(),
+				documentOptional.map(
+					Document::getTitle
+				).orElse(
+					binaryFile.getFileName()
+				),
+				documentOptional.map(
+					Document::getDescription
+				).orElse(
+					null
+				),
+				null, binaryFile.getInputStream(), binaryFile.getSize(),
+				_getServiceContext(
+					() -> new Long[0], () -> new String[0], documentFolderId,
+					documentOptional, groupId)));
 	}
 
 	private Optional<DLFileEntryType> _getDLFileEntryTypeOptional(
@@ -580,18 +455,21 @@ public class DocumentResourceImpl
 	}
 
 	private ServiceContext _getServiceContext(
-		Optional<Document> documentOptional, Long groupId) {
+			Supplier<Long[]> defaultCategoriesSupplier,
+			Supplier<String[]> defaultKeywordsSupplier, Long documentFolderId,
+			Optional<Document> documentOptional, Long groupId)
+		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			documentOptional.map(
 				Document::getTaxonomyCategoryIds
-			).orElse(
-				null
+			).orElseGet(
+				defaultCategoriesSupplier
 			),
 			documentOptional.map(
 				Document::getKeywords
-			).orElse(
-				null
+			).orElseGet(
+				defaultKeywordsSupplier
 			),
 			_getExpandoBridgeAttributes1(documentOptional), groupId,
 			documentOptional.map(
@@ -601,6 +479,45 @@ public class DocumentResourceImpl
 			));
 
 		serviceContext.setUserId(contextUser.getUserId());
+
+		Optional<DLFileEntryType> dlFileEntryTypeOptional =
+			_getDLFileEntryTypeOptional(
+				documentFolderId, documentOptional, groupId);
+
+		if (dlFileEntryTypeOptional.isPresent()) {
+			DLFileEntryType dlFileEntryType = dlFileEntryTypeOptional.get();
+
+			serviceContext.setAttribute(
+				"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
+
+			Document document = documentOptional.get();
+
+			List<DDMStructure> ddmStructures =
+				dlFileEntryType.getDDMStructures();
+
+			DocumentType documentType = document.getDocumentType();
+
+			ContentField[] contentFields = documentType.getContentFields();
+
+			for (DDMStructure ddmStructure : ddmStructures) {
+				com.liferay.dynamic.data.mapping.model.DDMStructure
+					modelDDMStructure = _ddmStructureService.getStructure(
+						ddmStructure.getStructureId());
+
+				com.liferay.dynamic.data.mapping.storage.DDMFormValues
+					ddmFormValues = DDMFormValuesUtil.toDDMFormValues(
+						contentFields, modelDDMStructure.getDDMForm(),
+						_dlAppService, groupId, _journalArticleService,
+						_layoutLocalService,
+						contextAcceptLanguage.getPreferredLocale(),
+						modelDDMStructure.getDDMFormFields(false));
+
+				serviceContext.setAttribute(
+					DDMFormValues.class.getName() + StringPool.POUND +
+						ddmStructure.getStructureId(),
+					_ddmBeanTranslator.translate(ddmFormValues));
+			}
+		}
 
 		return serviceContext;
 	}
@@ -647,7 +564,7 @@ public class DocumentResourceImpl
 		return _documentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.<String, Map<String, String>>put(
+				HashMapBuilder.put(
 					"delete",
 					addAction(
 						"DELETE", fileEntry.getPrimaryKey(), "deleteDocument",

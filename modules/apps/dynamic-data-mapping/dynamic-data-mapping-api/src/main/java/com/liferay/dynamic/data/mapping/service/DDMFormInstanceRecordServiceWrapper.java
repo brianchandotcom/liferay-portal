@@ -112,6 +112,17 @@ public class DDMFormInstanceRecordServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<DDMFormInstanceRecord> searchFormInstanceRecords(
+				long ddmFormInstanceId, String[] notEmptyFields, int status,
+				int start, int end, com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ddmFormInstanceRecordService.searchFormInstanceRecords(
+			ddmFormInstanceId, notEmptyFields, status, start, end, sort);
+	}
+
+	@Override
 	public DDMFormInstanceRecord updateFormInstanceRecord(
 			long ddmFormInstanceRecordId, boolean majorVersion,
 			com.liferay.dynamic.data.mapping.storage.DDMFormValues

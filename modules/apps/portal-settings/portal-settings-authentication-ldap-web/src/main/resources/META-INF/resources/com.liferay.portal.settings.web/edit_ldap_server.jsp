@@ -616,6 +616,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 				].value;
 
 			var url = new URL(baseUrl);
+
 			var searchParams = Liferay.Util.objectToURLSearchParams(data);
 
 			searchParams.forEach(function (value, key) {

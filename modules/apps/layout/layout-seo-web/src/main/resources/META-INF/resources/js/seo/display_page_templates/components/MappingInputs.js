@@ -20,16 +20,14 @@ import MappingInput from './MappingInput';
 function MappingInputs({fields, inputs, selectedSource}) {
 	return (
 		<>
-			{inputs.map(({label, name, selectedFieldKey}) => (
+			{inputs.map(({isUnmappeable, label, name, selectedFieldKey}) => (
 				<MappingInput
-					fields={fields}
+					initialFields={fields}
+					isUnmappeable={isUnmappeable}
 					key={name}
 					label={label}
 					name={name}
-					selectedField={
-						fields.find(({key}) => key === selectedFieldKey) ||
-						fields[0]
-					}
+					selectedFieldKey={selectedFieldKey}
 					selectedSource={selectedSource}
 				/>
 			))}

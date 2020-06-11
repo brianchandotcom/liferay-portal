@@ -18,9 +18,26 @@ import React, {useState} from 'react';
 
 import MappingPanel from './MappingPanel';
 
-function MappingInput({fields, label, name, selectedField, selectedSource}) {
+const UNMAPPED_OPTION = {
+	key: 'unmapped',
+	label: `-- ${Liferay.Language.get('unmapped')} --`,
+};
+
+function MappingInput({
+	initialFields,
+	isUnmappeable,
+	label,
+	name,
+	selectedFieldKey,
+	selectedSource,
+}) {
+	const fields = (isUnmappeable ? [UNMAPPED_OPTION] : []).concat(
+		initialFields
+	);
 	const [source, setSource] = useState(selectedSource);
-	const [field, setField] = useState(selectedField);
+	const [field, setField] = useState(
+		fields.find(({key}) => key === selectedFieldKey) || fields[0]
+	);
 
 	const inititalSourceLabel = selectedSource
 		? selectedSource.classTypeLabel || selectedSource.classNameLabel
@@ -63,10 +80,7 @@ function MappingInput({fields, label, name, selectedField, selectedSource}) {
 
 MappingInput.propTypes = {
 	name: PropTypes.string.isRequired,
-	selectedField: PropTypes.shape({
-		key: PropTypes.string,
-		label: PropTypes.string,
-	}).isRequired,
+	selectedFieldKey: PropTypes.string,
 	selectedSource: PropTypes.shape({
 		classNameLabel: PropTypes.string,
 		classTypeLabel: PropTypes.string,

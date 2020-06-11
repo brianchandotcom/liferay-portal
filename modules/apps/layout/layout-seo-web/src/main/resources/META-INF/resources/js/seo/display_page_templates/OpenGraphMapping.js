@@ -46,6 +46,7 @@ function OpenGraphMapping({
 					selectedFieldKey: openGraphImage,
 				},
 				{
+					isUnmappeable: true,
 					label: Liferay.Language.get(
 						'open-graph-image-alt-description'
 					),

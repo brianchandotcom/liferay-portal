@@ -18,7 +18,8 @@
 		position: relative;
 	}
 
-	.dpt-mapping-btn {
+	.dpt-mapping-btn:not([disabled]):not(.disabled).active {
+		background-color: transparent;
 		color: $purple;
 
 		&:focus,

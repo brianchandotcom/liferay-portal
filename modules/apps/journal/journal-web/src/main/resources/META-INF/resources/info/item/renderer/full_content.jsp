@@ -21,8 +21,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 %>
 
 <liferay-journal:journal-article
-	articleId="<%= article.getArticleId() %>"
+	article="<%= article %>"
 	ddmTemplateKey="<%= article.getDDMTemplateKey() %>"
-	groupId="<%= article.getGroupId() %>"
 	languageId="<%= themeDisplay.getLanguageId() %>"
 />

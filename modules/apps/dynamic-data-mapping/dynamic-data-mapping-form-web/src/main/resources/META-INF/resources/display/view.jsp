@@ -32,9 +32,8 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 		<div class="ddm-form-basic-info">
 			<clay:container-fluid>
 				<clay:alert
-					message='<%= LanguageUtil.get(resourceBundle, "you-do-not-have-the-permission-to-view-this-form") %>'
-					style="warning"
-					title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+					displayType="warning"
+					message="you-do-not-have-the-permission-to-view-this-form"
 				/>
 			</clay:container-fluid>
 		</div>
@@ -43,9 +42,8 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 		<div class="ddm-form-basic-info">
 			<clay:container-fluid>
 				<clay:alert
-					message='<%= LanguageUtil.get(resourceBundle, "you-need-to-be-signed-in-to-view-this-form") %>'
-					style="warning"
-					title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+					displayType="warning"
+					message="you-need-to-be-signed-in-to-view-this-form"
 				/>
 			</clay:container-fluid>
 		</div>
@@ -148,9 +146,8 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							<div class="ddm-form-basic-info">
 								<clay:container-fluid>
 									<clay:alert
-										message='<%= LanguageUtil.get(resourceBundle, "you-do-not-have-the-permission-to-submit-this-form") %>'
-										style="warning"
-										title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+										displayType="warning"
+										message="you-do-not-have-the-permission-to-submit-this-form"
 									/>
 								</clay:container-fluid>
 							</div>

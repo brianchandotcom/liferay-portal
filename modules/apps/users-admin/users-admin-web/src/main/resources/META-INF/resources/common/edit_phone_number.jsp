@@ -60,9 +60,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 
 			<clay:sheet-section>
 				<clay:alert
-					message='<%= LanguageUtil.get(request, "extension-must-be-numeric") %>'
-					style="info"
-					title='<%= LanguageUtil.get(request, "info") + ":" %>'
+					message="extension-must-be-numeric"
 				/>
 
 				<aui:model-context bean="<%= phone %>" model="<%= Phone.class %>" />

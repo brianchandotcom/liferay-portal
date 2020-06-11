@@ -28,22 +28,17 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 <div class="hide" id="<portlet:namespace />exportFormInstance">
 	<div class="hide" id="<portlet:namespace />csvWarning">
 		<clay:alert
-			message='<%= LanguageUtil.get(resourceBundle, "csv-warning-message") %>'
-			style="warning"
-			title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+			displayType="warning"
+			message="csv-warning-message"
 		/>
 	</div>
 
 	<clay:alert
-		message='<%= LanguageUtil.get(resourceBundle, "timezone-warning-message") %>'
-		style="info"
-		title='<%= LanguageUtil.get(resourceBundle, "info") %>'
+		message="timezone-warning-message"
 	/>
 
 	<clay:alert
-		message='<%= LanguageUtil.get(resourceBundle, "the-export-includes-data-from-all-fields-and-form-versions") %>'
-		style="info"
-		title='<%= LanguageUtil.get(resourceBundle, "info") %>'
+		message="the-export-includes-data-from-all-fields-and-form-versions"
 	/>
 
 	<aui:select label="file-extension" name="fileExtension">

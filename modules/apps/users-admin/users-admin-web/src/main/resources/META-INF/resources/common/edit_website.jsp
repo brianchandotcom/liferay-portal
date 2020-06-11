@@ -61,8 +61,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, editContactInformationDisplayConte
 			<clay:sheet-section>
 				<clay:alert
 					message='<%= LanguageUtil.format(request, "url-must-start-with-x-or-x", new String[] {"http://", "https://"}, false) %>'
-					style="info"
-					title='<%= LanguageUtil.get(request, "info") + ":" %>'
 				/>
 
 				<aui:model-context bean="<%= website %>" model="<%= Website.class %>" />

@@ -25,9 +25,7 @@ if (ddmFormInstance != null) {
 <c:choose>
 	<c:when test="<%= ddmFormInstanceId == 0 %>">
 		<clay:alert
-			message='<%= LanguageUtil.get(resourceBundle, "select-an-existing-form-or-add-a-form-to-be-displayed-in-this-application") %>'
-			style="info"
-			title='<%= LanguageUtil.get(resourceBundle, "info") %>'
+			message="select-an-existing-form-or-add-a-form-to-be-displayed-in-this-application"
 		/>
 	</c:when>
 	<c:otherwise>
@@ -77,9 +75,8 @@ if (ddmFormInstance != null) {
 
 					<c:if test="<%= !hasAddFormInstanceRecordPermission %>">
 						<clay:alert
-							message='<%= LanguageUtil.get(resourceBundle, "you-do-not-have-the-permission-to-submit-this-form") %>'
-							style="warning"
-							title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+							displayType="warning"
+							message="you-do-not-have-the-permission-to-submit-this-form"
 						/>
 					</c:if>
 
@@ -110,16 +107,14 @@ if (ddmFormInstance != null) {
 			</c:when>
 			<c:when test="<%= !hasViewFormInstancePermission %>">
 				<clay:alert
-					message='<%= LanguageUtil.get(resourceBundle, "you-do-not-have-the-permission-to-view-this-form") %>'
-					style="warning"
-					title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+					displayType="warning"
+					message="you-do-not-have-the-permission-to-view-this-form"
 				/>
 			</c:when>
 			<c:otherwise>
 				<clay:alert
-					message='<%= LanguageUtil.get(resourceBundle, "this-form-not-available-or-it-was-not-published") %>'
-					style="warning"
-					title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+					displayType="warning"
+					message="this-form-not-available-or-it-was-not-published"
 				/>
 			</c:otherwise>
 		</c:choose>

@@ -22,11 +22,10 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 <div class="modal-body">
 	<clay:alert
-		elementClasses="hide"
+		cssClass="hide"
+		displayType="danger"
 		id='<%= renderResponse.getNamespace() + "domainAlert" %>'
-		message='<%= LanguageUtil.get(request, "please-enter-valid-mail-domains-separated-by-commas") %>'
-		style="danger"
-		title='<%= LanguageUtil.get(request, "error") %>'
+		message="please-enter-valid-mail-domains-separated-by-commas"
 	/>
 
 	<aui:field-wrapper cssClass="form-group">

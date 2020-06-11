@@ -40,8 +40,7 @@ FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIB
 	</c:when>
 	<c:when test="<%= exception instanceof DLPreviewGenerationInProcessException %>">
 		<clay:alert
-			message='<%= LanguageUtil.get(resourceBundle, "generating-preview-will-take-a-few-minutes") %>'
-			title='<%= LanguageUtil.get(request, "info") + ":" %>'
+			message="generating-preview-will-take-a-few-minutes"
 		/>
 	</c:when>
 	<c:otherwise>

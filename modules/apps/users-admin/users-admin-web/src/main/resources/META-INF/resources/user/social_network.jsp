@@ -38,9 +38,7 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 	</c:when>
 	<c:otherwise>
 		<clay:alert
-			message='<%= LanguageUtil.get(request, "this-section-will-be-editable-after-creating-the-user") %>'
-			style="info"
-			title='<%= LanguageUtil.get(request, "info") + ":" %>'
+			message="this-section-will-be-editable-after-creating-the-user"
 		/>
 	</c:otherwise>
 </c:choose>

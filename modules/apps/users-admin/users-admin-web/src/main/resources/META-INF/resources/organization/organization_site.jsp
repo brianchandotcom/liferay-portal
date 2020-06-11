@@ -122,9 +122,8 @@ if (organization != null) {
 				<c:choose>
 					<c:when test="<%= ((organization == null) || ((publicLayoutSetPrototype == null) && (organization.getPublicLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 						<clay:alert
-							message='<%= LanguageUtil.get(request, "this-action-cannot-be-undone") %>'
-							style="warning"
-							title='<%= LanguageUtil.get(request, "warning") + ":" %>'
+							displayType="warning"
+							message="this-action-cannot-be-undone"
 						/>
 
 						<aui:select label="" name="publicLayoutSetPrototypeId">
@@ -198,9 +197,8 @@ if (organization != null) {
 				<c:choose>
 					<c:when test="<%= ((organization == null) || ((privateLayoutSetPrototype == null) && (organization.getPrivateLayoutsPageCount() == 0))) && !layoutSetPrototypes.isEmpty() %>">
 						<clay:alert
-							message='<%= LanguageUtil.get(request, "this-action-cannot-be-undone") %>'
-							style="warning"
-							title='<%= LanguageUtil.get(request, "warning") + ":" %>'
+							displayType="warning"
+							message="this-action-cannot-be-undone"
 						/>
 
 						<aui:select label="" name="privateLayoutSetPrototypeId">

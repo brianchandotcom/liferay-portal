@@ -90,8 +90,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 						var="infoCanonicalURL"
 					>
 						<clay:alert
-							message='<%= LanguageUtil.get(resourceBundle, "use-custom-canonical-url-alert-info") %>'
-							title='<%= LanguageUtil.get(request, "info") + ":" %>'
+							message="use-custom-canonical-url-alert-info"
 						/>
 					</liferay-util:buffer>
 

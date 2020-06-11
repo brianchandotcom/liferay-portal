@@ -31,8 +31,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 <clay:container-fluid>
 	<c:if test='<%= !Objects.equals(selectAccountUsersManagementToolbarDisplayContext.getNavigation(), "all-users") %>'>
 		<clay:alert
-			message='<%= LanguageUtil.get(request, "showing-users-with-valid-domains-only") %>'
-			title='<%= LanguageUtil.get(request, "info") %>'
+			message="showing-users-with-valid-domains-only"
 		/>
 	</c:if>
 

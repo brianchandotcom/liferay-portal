@@ -28,16 +28,14 @@ boolean showCSVWarning = StringUtil.equals("enabled-with-warning", csvExport);
 <div class="hide" id="<portlet:namespace />exportList">
 	<div id="<portlet:namespace />csvWarning">
 		<clay:alert
-			message='<%= LanguageUtil.get(resourceBundle, "csv-warning-message") %>'
-			style="warning"
-			title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+			displayType="warning"
+			message="csv-warning-message"
 		/>
 	</div>
 
 	<clay:alert
-		message='<%= LanguageUtil.get(resourceBundle, "timezone-warning-message") %>'
-		style="warning"
-		title='<%= LanguageUtil.get(resourceBundle, "warning") %>'
+		displayType="warning"
+		message="timezone-warning-message"
 	/>
 
 	<aui:select label="file-extension" name="fileExtension">

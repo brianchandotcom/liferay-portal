@@ -23,14 +23,14 @@
 </blockquote>
 
 <clay:alert
+	displayType="danger"
 	message="This is an error message."
-	style="danger"
 	title="Error"
 />
 
 <clay:alert
+	displayType="success"
 	message="This is a success message."
-	style="success"
 	title="Success"
 />
 
@@ -40,8 +40,8 @@
 />
 
 <clay:alert
+	displayType="warning"
 	message="This is a warning message."
-	style="warning"
 	title="Warning"
 />
 
@@ -52,14 +52,14 @@
 </blockquote>
 
 <clay:stripe
+	displayType="danger"
 	message="This is an error message."
-	style="danger"
 	title="Error"
 />
 
 <clay:stripe
+	displayType="success"
 	message="This is a success message."
-	style="success"
 	title="Success"
 />
 
@@ -69,7 +69,7 @@
 />
 
 <clay:stripe
+	displayType="warning"
 	message="This is a warning message."
-	style="warning"
 	title="Warning"
 />

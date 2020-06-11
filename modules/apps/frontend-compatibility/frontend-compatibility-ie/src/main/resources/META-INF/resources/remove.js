@@ -12,12 +12,14 @@
  * details.
  */
 
-if (!Element.prototype.remove) {
-	Element.prototype.remove = function () {
-		if (this.parentNode === null) {
-			return;
-		}
+[Element, CharacterData, DocumentType].forEach(function (item) {
+	if (!item.prototype.remove) {
+		item.prototype.remove = function () {
+			if (this.parentNode === null) {
+				return;
+			}
 
-		this.parentNode.removeChild(this);
-	};
-}
+			this.parentNode.removeChild(this);
+		};
+	}
+});

@@ -121,12 +121,12 @@ public class DLFileEntryTypeLocalServiceImpl
 			}
 		}
 
-		long fileEntryTypeId = counterLocalService.increment();
+		_validateFileEntryTypeKey(groupId, fileEntryTypeKey);
 
-		_validate(groupId, fileEntryTypeId, dataDefinitionId, fileEntryTypeKey);
+		_validateDDMStructures(fileEntryTypeKey, new long[] {dataDefinitionId});
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
-			fileEntryTypeId);
+			counterLocalService.increment());
 
 		dlFileEntryType.setUuid(fileEntryTypeUuid);
 		dlFileEntryType.setGroupId(groupId);
@@ -193,7 +193,9 @@ public class DLFileEntryTypeLocalServiceImpl
 			userId, fileEntryTypeUuid, fileEntryTypeId, groupId, nameMap,
 			descriptionMap, ddmStructureIds, serviceContext);
 
-		validate(fileEntryTypeId, groupId, fileEntryTypeKey, ddmStructureIds);
+		_validateFileEntryTypeKey(groupId, fileEntryTypeKey);
+
+		_validateDDMStructures(fileEntryTypeKey, ddmStructureIds);
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.create(
 			fileEntryTypeId);
@@ -592,8 +594,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryType.getGroupId(), nameMap, descriptionMap,
 			ddmStructureIds, serviceContext);
 
-		validate(
-			fileEntryTypeId, dlFileEntryType.getGroupId(),
+		_validateDDMStructures(
 			dlFileEntryType.getFileEntryTypeKey(), ddmStructureIds);
 
 		dlFileEntryType.setNameMap(nameMap);
@@ -637,12 +638,6 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypePersistence.findByPrimaryKey(fileEntryTypeId);
-
-		_validateFileEntryType(
-			dlFileEntryType.getGroupId(), fileEntryTypeId,
-			dlFileEntryType.getFileEntryTypeKey());
-
-		_validateDDMStructure(dlFileEntryType.getDataDefinitionId());
 
 		dlFileEntryType.setNameMap(nameMap);
 		dlFileEntryType.setDescriptionMap(descriptionMap);
@@ -878,24 +873,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		return staleDDMStructureLinkStructureIds;
 	}
 
-	protected void validate(
-			long fileEntryTypeId, long groupId, String fileEntryTypeKey,
-			long[] ddmStructureIds)
-		throws PortalException {
-
-		_validateFileEntryType(groupId, fileEntryTypeId, fileEntryTypeKey);
-
-		if (ddmStructureIds.length == 0) {
-			throw new NoSuchMetadataSetException(
-				"DDM structure IDs is empty for file entry type " +
-					fileEntryTypeKey);
-		}
-
-		for (long ddmStructureId : ddmStructureIds) {
-			_validateDDMStructure(ddmStructureId);
-		}
-	}
-
 	private void _deleteDDMStructure(long fileEntryTypeId, long ddmStructureId)
 		throws PortalException {
 
@@ -1025,38 +1002,35 @@ public class DLFileEntryTypeLocalServiceImpl
 		}
 	}
 
-	private void _validate(
-			long groupId, long fileEntryTypeId, long dataDefinitionId,
-			String fileEntryTypeKey)
-		throws DuplicateFileEntryTypeException, NoSuchMetadataSetException {
-
-		_validateFileEntryType(groupId, fileEntryTypeId, fileEntryTypeKey);
-
-		_validateDDMStructure(dataDefinitionId);
-	}
-
-	private void _validateDDMStructure(long ddmStructureId)
+	private void _validateDDMStructures(
+			String fileEntryTypeKey, long[] ddmStructureIds)
 		throws NoSuchMetadataSetException {
 
-		DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
-			ddmStructureId);
-
-		if (ddmStructure == null) {
+		if (ddmStructureIds.length == 0) {
 			throw new NoSuchMetadataSetException(
-				"{ddmStructureId=" + ddmStructureId);
+				"DDM structure IDs is empty for file entry type " +
+					fileEntryTypeKey);
+		}
+
+		for (long ddmStructureId : ddmStructureIds) {
+			DDMStructure ddmStructure = DDMStructureManagerUtil.fetchStructure(
+				ddmStructureId);
+
+			if (ddmStructure == null) {
+				throw new NoSuchMetadataSetException(
+					"{ddmStructureId=" + ddmStructureId);
+			}
 		}
 	}
 
-	private void _validateFileEntryType(
-			long groupId, long fileEntryTypeId, String fileEntryTypeKey)
+	private void _validateFileEntryTypeKey(
+			long groupId, String fileEntryTypeKey)
 		throws DuplicateFileEntryTypeException {
 
 		DLFileEntryType dlFileEntryType = dlFileEntryTypePersistence.fetchByG_F(
 			groupId, fileEntryTypeKey);
 
-		if ((dlFileEntryType != null) &&
-			(dlFileEntryType.getFileEntryTypeId() != fileEntryTypeId)) {
-
+		if (dlFileEntryType != null) {
 			throw new DuplicateFileEntryTypeException(
 				"A file entry type already exists for key " + fileEntryTypeKey);
 		}

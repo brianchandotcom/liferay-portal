@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
@@ -168,10 +167,6 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			}
 
 			addAttributes(httpServletRequest);
-
-			SessionClicks.put(
-				httpServletRequest,
-				"com.liferay.frontend.js.web_toggleControls", "visible");
 
 			Layout draftLayout = _layoutLocalService.fetchLayout(
 				_portal.getClassNameId(Layout.class), layout.getPlid());

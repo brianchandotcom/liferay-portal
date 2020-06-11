@@ -114,7 +114,8 @@ const History = ({actions = [], type}) => {
 
 			{action.type !== SELECT_SEGMENTS_EXPERIENCE &&
 				action.segmentsExperienceId !==
-					config.defaultSegmentsExperienceId && (
+					config.defaultSegmentsExperienceId &&
+				!config.singleSegmentsExperienceMode && (
 					<span>
 						{getSegmentsExperienceName(
 							action.segmentsExperienceId,

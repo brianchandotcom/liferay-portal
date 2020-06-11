@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.workflow.task.web.internal.configuration.WorkflowTaskWebConfiguration;
@@ -132,8 +134,14 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 			workflowTask.getOptionalAttributes(), "groupId",
 			themeDisplay.getSiteGroupId());
 
+		WorkflowInstance workflowInstance =
+			WorkflowInstanceManagerUtil.getWorkflowInstance(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				workflowTask.getWorkflowInstanceId());
+
 		if ((workflowTask.isCompleted() &&
-			 (workflowTask.getAssigneeUserId() != themeDisplay.getUserId())) ||
+			 (workflowTask.getAssigneeUserId() != themeDisplay.getUserId()) &&
+			 (workflowInstance == null)) ||
 			!_workflowTaskPermissionChecker.hasPermission(
 				groupId, workflowTask, themeDisplay.getPermissionChecker())) {
 

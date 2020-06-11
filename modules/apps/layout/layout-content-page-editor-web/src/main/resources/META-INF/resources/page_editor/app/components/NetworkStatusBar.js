@@ -75,9 +75,7 @@ const NetworkStatusBar = ({error, lastFetch, status}) => {
 
 	return (
 		<li className="d-inline nav-item text-truncate">
-			<span className="my-0 navbar-text" data-title={statusText}>
-				{statusText}
-			</span>
+			<span className="my-0 navbar-text">{statusText}</span>
 		</li>
 	);
 };

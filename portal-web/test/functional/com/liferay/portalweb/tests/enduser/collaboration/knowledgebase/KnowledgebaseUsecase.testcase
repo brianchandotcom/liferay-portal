@@ -433,7 +433,7 @@ definition {
 		}
 	}
 
-	@description = "This test ensures that able to embed a video in KBArticle."
+	@description = "This test ensures that a user is able to embed a video in a KB article."
 	@priority = "4"
 	test EmbedVideo {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");

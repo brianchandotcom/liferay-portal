@@ -57,7 +57,9 @@ public class ToggleControlsTemplateContextContributor
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isTypeControlPanel()) {
+		if (layout.isTypeAssetDisplay() || layout.isTypeContent() ||
+			layout.isTypeControlPanel()) {
+
 			liferayToggleControls = "visible";
 		}
 

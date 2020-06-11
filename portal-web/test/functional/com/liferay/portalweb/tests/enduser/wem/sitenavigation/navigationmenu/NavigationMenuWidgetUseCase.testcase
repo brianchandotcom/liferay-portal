@@ -223,6 +223,78 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-113994. The Naviation Menu is able to display the page hierarchy with more than two sublevels when use the List Menu."
+	@priority = "4"
+	test ShowMoreThanTwoSublevelsWhenSelectPublicPagesHierarchyAndListMenu {
+		task ("Add 3 sublevels pages under Home") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Child Page",
+				parentLayoutName = "Home");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Child Child Page",
+				parentLayoutName = "Child Page");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Child Child Child Page",
+				parentLayoutName = "Child Child Page");
+		}
+
+		task ("Navigate to Home") {
+			Navigator.gotoPage(pageName = "Home");
+		}
+
+		task ("Assert Select Public Pages Hierarchy and Bar minimally styled") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
+
+			Pause(locator1 = "3000");
+
+			NavigationMenusWidget.selectDisplayTemplate(templateName = "List Menu");
+
+			Pause(locator1 = "3000");
+
+			Portlet.saveAndCloseConfig();
+		}
+
+		task ("Navigate to Child Page via Navigation Menu widget") {
+			NavigationMenusWidget.gotoSublevel(
+				itemName = "Child Page",
+				pageName = "Home",
+				type = "List");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Child Page");
+		}
+
+		task ("Navigate to Child Child Page via Navigation Menu widget") {
+			NavigationMenusWidget.gotoSublevel(
+				itemName = "Child Child Page",
+				pageName = "Home",
+				type = "List");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Child Child Page");
+		}
+
+		task ("Navigate to Child Child Page via Navigation Menu widget") {
+			NavigationMenusWidget.gotoSublevel(
+				itemName = "Child Child Child Page",
+				pageName = "Home",
+				type = "List");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Child Child Child Page");
+		}
+	}
+
 	@description = "Navigation Menu widget should continue to work when reselecting the default display template"
 	@priority = "3"
 	test ValidateReturnToDefaultStyle {

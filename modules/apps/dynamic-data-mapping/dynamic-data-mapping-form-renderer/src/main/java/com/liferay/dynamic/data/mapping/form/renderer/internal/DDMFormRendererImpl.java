@@ -165,7 +165,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	private static final String _MODULE_NAME =
-		"dynamic-data-mapping-form-renderer/js/containers/Form/Form.es";
+		"dynamic-data-mapping-form-renderer/js/containers/Form.es";
 
 	private static final String _TEMPLATE_NAMESPACE = "FormRenderer.render";
 

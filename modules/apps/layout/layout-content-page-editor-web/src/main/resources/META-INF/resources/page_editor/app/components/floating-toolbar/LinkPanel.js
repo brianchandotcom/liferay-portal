@@ -12,262 +12,70 @@
  * details.
  */
 
-import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useState} from 'react';
+import React from 'react';
 
-import MappingSelector from '../../../common/components/MappingSelector';
 import {getEditableItemPropTypes} from '../../../prop-types/index';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../config/constants/editableTypes';
+import selectEditableValue from '../../selectors/selectEditableValue';
+import selectEditableValues from '../../selectors/selectEditableValues';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateEditableValues from '../../thunks/updateEditableValues';
-import {useId} from '../../utils/useId';
-import {useGetFieldValue} from '../CollectionItemContext';
-import isMapped from '../fragment-content/isMapped';
-
-const SOURCE_TYPES = {
-	fromContentField: 'fromContentField',
-	manual: 'manual',
-};
-
-const SOURCE_TYPES_OPTIONS = [
-	{
-		label: `${Liferay.Language.get('manual')}`,
-		value: SOURCE_TYPES.manual,
-	},
-	{
-		label: `${Liferay.Language.get('from-content-field')}`,
-		value: SOURCE_TYPES.fromContentField,
-	},
-];
-
-const TARGET_OPTIONS = [
-	{
-		label: `${Liferay.Language.get('self')}`,
-		value: '_self',
-	},
-	{
-		label: `${Liferay.Language.get('blank')}`,
-		value: '_blank',
-	},
-	{
-		label: `${Liferay.Language.get('parent')}`,
-		value: '_parent',
-	},
-	{
-		label: `${Liferay.Language.get('top')}`,
-		value: '_top',
-	},
-];
+import LinkField, {
+	TARGET_OPTIONS,
+} from '../fragment-configuration-fields/LinkField';
 
 export default function LinkPanel({item}) {
 	const dispatch = useDispatch();
-	const {editableId, editableType, fragmentEntryLinkId} = item;
-	const floatingToolbarLinkHrefOptionId = useId();
-	const floatingToolbarLinkSourceOptionId = useId();
-	const floatingToolbarLinkTargetOptionId = useId();
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const languageId = useSelector((state) => state.languageId);
+	const state = useSelector((state) => state);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
-	const editableValue =
-		fragmentEntryLinks[fragmentEntryLinkId].editableValues[
-			EDITABLE_FRAGMENT_ENTRY_PROCESSOR
-		][editableId];
-
-	const editableConfig = editableValue ? editableValue.config : {};
-
-	const [sourceType, setSourceType] = useState(
-		isMapped(editableConfig)
-			? SOURCE_TYPES.fromContentField
-			: SOURCE_TYPES.manual
+	const editableValues = selectEditableValues(
+		state,
+		item.fragmentEntryLinkId
 	);
 
-	const [href, setHref] = useState(editableConfig.href || '');
+	const editableValue = selectEditableValue(
+		state,
+		item.fragmentEntryLinkId,
+		item.editableId,
+		EDITABLE_FRAGMENT_ENTRY_PROCESSOR
+	);
 
-	const getFieldValue = useGetFieldValue();
+	const handleValueSelect = (_, nextConfig) => {
+		const config = {...nextConfig};
 
-	useEffect(() => {
-		const editableConfig = editableValue ? editableValue.config : {};
+		if (
+			Object.keys(nextConfig).length > 0 &&
+			item.editableType !== EDITABLE_TYPES.link
+		) {
+			config.mapperType = 'link';
+		}
 
-		setHref((href) => {
-			if (href !== editableConfig.href) {
-				return editableConfig.href || '';
-			}
-
-			return href;
-		});
-	}, [editableValue]);
-
-	useEffect(() => {
-		updateMappedHrefValue({
-			classNameId: editableConfig.classNameId,
-			classPK: editableConfig.classPK,
-			fieldId: editableConfig.fieldId,
-			languageId,
-		});
-	}, [
-		editableConfig.classNameId,
-		editableConfig.classPK,
-		editableConfig.fieldId,
-		languageId,
-		updateMappedHrefValue,
-	]);
-
-	const updateRowConfig = useCallback(
-		(newConfig) => {
-			const editableValues =
-				fragmentEntryLinks[fragmentEntryLinkId].editableValues;
-			const editableProcessorValues =
-				editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR];
-
-			const config = {...newConfig};
-
-			if (
-				Object.keys(config).length > 0 &&
-				editableType !== EDITABLE_TYPES.link
-			) {
-				config.mapperType = 'link';
-			}
-
-			const nextEditableValues = {
-				...editableValues,
-
-				[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
-					...editableProcessorValues,
-					[editableId]: {
-						...editableProcessorValues[editableId],
-						config,
+		dispatch(
+			updateEditableValues({
+				editableValues: {
+					...editableValues,
+					[EDITABLE_FRAGMENT_ENTRY_PROCESSOR]: {
+						...editableValues[EDITABLE_FRAGMENT_ENTRY_PROCESSOR],
+						[item.editableId]: {...editableValue, config},
 					},
 				},
-			};
 
-			dispatch(
-				updateEditableValues({
-					editableValues: nextEditableValues,
-					fragmentEntryLinkId,
-					segmentsExperienceId,
-				})
-			);
-		},
-		[
-			dispatch,
-			editableId,
-			editableType,
-			fragmentEntryLinkId,
-			fragmentEntryLinks,
-			segmentsExperienceId,
-		]
-	);
-
-	const updateMappedHrefValue = useCallback(
-		({classNameId, classPK, fieldId, languageId}) => {
-			if (!classNameId || !classPK || !fieldId) {
-				return;
-			}
-
-			getFieldValue({
-				classNameId,
-				classPK,
-				fieldId,
-				languageId,
-				onNetworkStatus: () => {},
-			}).then((fieldValue) => {
-				setHref(fieldValue);
-			});
-		},
-		[getFieldValue]
-	);
+				fragmentEntryLinkId: item.fragmentEntryLinkId,
+				segmentsExperienceId,
+			})
+		);
+	};
 
 	return (
-		<>
-			<ClayForm.Group small>
-				<label htmlFor={floatingToolbarLinkSourceOptionId}>
-					{Liferay.Language.get('link')}
-				</label>
-				<ClaySelectWithOption
-					id={floatingToolbarLinkSourceOptionId}
-					onChange={(event) => {
-						if (
-							isMapped(editableConfig) ||
-							editableConfig.href ||
-							editableConfig.alt
-						) {
-							updateRowConfig({});
-						}
-						setHref('');
-						setSourceType(event.target.value);
-					}}
-					options={SOURCE_TYPES_OPTIONS}
-					type="text"
-					value={sourceType}
-				/>
-			</ClayForm.Group>
-
-			{sourceType === SOURCE_TYPES.fromContentField && (
-				<MappingSelector
-					fieldType={EDITABLE_TYPES.text}
-					mappedItem={editableConfig}
-					onMappingSelect={(mappedItem) => {
-						updateRowConfig({
-							...mappedItem,
-							target: editableConfig.target,
-						});
-
-						updateMappedHrefValue({
-							classNameId: mappedItem.classNameId,
-							classPK: mappedItem.classPK,
-							fieldId: mappedItem.fieldId,
-							languageId,
-						});
-					}}
-				/>
-			)}
-			{(sourceType === SOURCE_TYPES.manual || href) && (
-				<ClayForm.Group>
-					<label htmlFor={floatingToolbarLinkHrefOptionId}>
-						{Liferay.Language.get('url')}
-					</label>
-					<ClayInput
-						id={floatingToolbarLinkHrefOptionId}
-						onBlur={() => {
-							const previousValue = editableConfig.href || '';
-
-							if (previousValue !== href) {
-								updateRowConfig({href});
-							}
-						}}
-						onChange={(event) => {
-							setHref(event.target.value);
-						}}
-						readOnly={sourceType !== SOURCE_TYPES.manual}
-						sizing="sm"
-						type="text"
-						value={href}
-					/>
-				</ClayForm.Group>
-			)}
-
-			<ClayForm.Group small>
-				<label htmlFor={floatingToolbarLinkTargetOptionId}>
-					{Liferay.Language.get('target')}
-				</label>
-				<ClaySelectWithOption
-					id={floatingToolbarLinkTargetOptionId}
-					onChange={(event) => {
-						updateRowConfig({
-							...editableConfig,
-							target: event.target.value,
-						});
-					}}
-					options={TARGET_OPTIONS}
-					type="text"
-					value={editableConfig.target}
-				/>
-			</ClayForm.Group>
-		</>
+		<LinkField
+			field={{name: 'link'}}
+			onValueSelect={handleValueSelect}
+			value={editableValue.config}
+		/>
 	);
 }
 

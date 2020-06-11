@@ -22,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
 import org.gradle.api.tasks.Exec;
 
@@ -42,6 +43,13 @@ public class DockerCopyTask extends Exec {
 		setArgs(_getCompleteArgs());
 
 		super.exec();
+
+		Logger logger = getLogger();
+
+		if (logger.isLifecycleEnabled()) {
+			logger.lifecycle(
+				"Files of {} deployed to {}", getProject(), getDeployDir());
+		}
 	}
 
 	public String getContainerId() {

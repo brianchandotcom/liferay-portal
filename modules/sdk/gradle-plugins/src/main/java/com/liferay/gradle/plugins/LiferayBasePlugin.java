@@ -267,25 +267,6 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 			});
 
-		dockerCopyTask.doLast(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					Logger logger = task.getLogger();
-
-					if (logger.isLifecycleEnabled()) {
-						DockerCopyTask dockerCopyTask = (DockerCopyTask)task;
-
-						logger.lifecycle(
-							"Files of {} deployed to {}",
-							dockerCopyTask.getProject(),
-							dockerCopyTask.getDeployDir());
-					}
-				}
-
-			});
-
 		return dockerCopyTask;
 	}
 

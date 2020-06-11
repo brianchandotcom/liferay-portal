@@ -16,4 +16,32 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
+<%
+Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+
+String refererWebDAVToken = WebDAVUtil.getStorageToken(portlet);
+
+DLEditDDMStructureDisplayContext dlEditDDMStructureDisplayContext = new DLEditDDMStructureDisplayContext(request, liferayPortletResponse);
+
+com.liferay.dynamic.data.mapping.model.DDMStructure ddmStructure = dlEditDDMStructureDisplayContext.getDDMStructure();
+%>
+
+<clay:row
+	cssClass="lfr-ddm-types-form-column"
+>
+	<aui:input name="storageType" type="hidden" value="<%= StorageType.JSON.getValue() %>" />
+</clay:row>
+
 <aui:input name="description" />
+
+<c:if test="<%= ddmStructure != null %>">
+	<portlet:resourceURL id="getStructure" var="getStructureURL">
+		<portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+	</portlet:resourceURL>
+
+	<aui:input name="url" type="resource" value="<%= getStructureURL.toString() %>" />
+
+	<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
+		<aui:input name="webDavURL" type="resource" value="<%= ddmStructure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+	</c:if>
+</c:if>

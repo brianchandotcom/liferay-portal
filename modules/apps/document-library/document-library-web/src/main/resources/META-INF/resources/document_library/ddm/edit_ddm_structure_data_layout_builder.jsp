@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-
-String refererWebDAVToken = WebDAVUtil.getStorageToken(portlet);
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 DLEditDDMStructureDisplayContext dlEditDDMStructureDisplayContext = new DLEditDDMStructureDisplayContext(request, liferayPortletResponse);
@@ -108,25 +104,6 @@ renderResponse.setTitle(title);
 						persistState="<%= true %>"
 						title='<%= LanguageUtil.get(request, "details") %>'
 					>
-						<clay:row
-							cssClass="lfr-ddm-types-form-column"
-						>
-							<aui:input name="storageType" type="hidden" value="<%= StorageType.JSON.getValue() %>" />
-						</clay:row>
-
-						<aui:input name="description" />
-
-						<c:if test="<%= ddmStructure != null %>">
-							<portlet:resourceURL id="getStructure" var="getStructureURL">
-								<portlet:param name="structureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-							</portlet:resourceURL>
-
-							<aui:input name="url" type="resource" value="<%= getStructureURL.toString() %>" />
-
-							<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-								<aui:input name="webDavURL" type="resource" value="<%= ddmStructure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
-							</c:if>
-						</c:if>
 					</liferay-ui:panel>
 				</liferay-ui:panel-container>
 

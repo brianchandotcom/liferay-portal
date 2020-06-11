@@ -60,8 +60,7 @@ public class SegmentsExperimentModelListener
 				SegmentsExperienceConstants.ID_DEFAULT,
 				className -> serviceContext, segmentsExperiment.getUserId());
 
-			Layout draftLayout = _layoutLocalService.fetchLayout(
-				_portal.getClassNameId(Layout.class.getName()),
+			Layout draftLayout = _layoutLocalService.fetchDraftLayout(
 				segmentsExperiment.getClassPK());
 
 			if (draftLayout != null) {

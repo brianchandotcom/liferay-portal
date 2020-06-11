@@ -828,10 +828,8 @@ public class ContentPageEditorDisplayContext {
 
 		deleteLayoutURL.setParameter("redirect", redirectURL.toString());
 
-		Layout draftLayout = themeDisplay.getLayout();
-
 		deleteLayoutURL.setParameter(
-			"selPlid", String.valueOf(draftLayout.getPlid()));
+			"selPlid", String.valueOf(themeDisplay.getPlid()));
 
 		return deleteLayoutURL.toString();
 	}

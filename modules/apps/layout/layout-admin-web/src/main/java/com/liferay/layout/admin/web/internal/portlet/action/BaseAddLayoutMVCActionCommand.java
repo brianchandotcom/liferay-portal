@@ -49,8 +49,7 @@ public abstract class BaseAddLayoutMVCActionCommand
 
 		String layoutFullURL = portal.getLayoutFullURL(layout, themeDisplay);
 
-		Layout draftLayout = layoutLocalService.fetchLayout(
-			portal.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		if (draftLayout != null) {
 			layoutFullURL = portal.getLayoutFullURL(draftLayout, themeDisplay);

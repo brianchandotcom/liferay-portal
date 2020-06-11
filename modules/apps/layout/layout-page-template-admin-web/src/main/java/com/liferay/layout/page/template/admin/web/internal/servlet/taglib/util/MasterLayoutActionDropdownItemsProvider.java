@@ -74,7 +74,8 @@ public class MasterLayoutActionDropdownItemsProvider {
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_draftLayout = _getDraftLayout(_layoutPageTemplateEntry);
+		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			layoutPageTemplateEntry.getPlid());
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -255,21 +256,6 @@ public class MasterLayoutActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "discard-draft"));
 		};
-	}
-
-	private Layout _getDraftLayout(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		if (layout == null) {
-			return null;
-		}
-
-		return LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class),
-			_layoutPageTemplateEntry.getPlid());
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

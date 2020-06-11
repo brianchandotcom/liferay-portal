@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -93,9 +92,7 @@ public class PublishLayoutMVCActionCommandTest {
 			new HashMap<>(), LayoutConstants.TYPE_CONTENT, StringPool.BLANK,
 			false, false, 0, new HashMap<>(), _serviceContext);
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class.getName()),
-			layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		LayoutStructure layoutStructure = _getLayoutStructure(draftLayout);
 

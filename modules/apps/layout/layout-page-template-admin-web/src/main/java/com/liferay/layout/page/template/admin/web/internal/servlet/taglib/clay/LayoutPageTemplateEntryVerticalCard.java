@@ -117,11 +117,8 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 					themeDisplay.getURLCurrent());
 			}
 
-			Layout layout = LayoutLocalServiceUtil.getLayout(
+			Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 				_layoutPageTemplateEntry.getPlid());
-
-			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
 				draftLayout, themeDisplay);
@@ -164,15 +161,8 @@ public class LayoutPageTemplateEntryVerticalCard extends BaseVerticalCard {
 			return super.getLabels();
 		}
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 			_layoutPageTemplateEntry.getPlid());
-
-		if (layout == null) {
-			return super.getLabels();
-		}
-
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
 
 		if (draftLayout == null) {
 			return super.getLabels();

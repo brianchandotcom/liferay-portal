@@ -77,8 +77,7 @@ public class EditDisplayPageMenuDisplayContext {
 				_themeDisplay.getPermissionChecker(), _themeDisplay.getLayout(),
 				ActionKeys.UPDATE),
 			dropdownItem -> {
-				Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-					PortalUtil.getClassNameId(Layout.class),
+				Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
 					_themeDisplay.getPlid());
 
 				String editLayoutURL = PortalUtil.getLayoutFullURL(

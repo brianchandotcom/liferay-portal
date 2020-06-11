@@ -47,11 +47,8 @@ public class LayoutDetailsFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		Layout draftLayout = layoutLocalService.fetchLayout(
-			portal.getClassNameId(Layout.class), layout.getPlid());
-
 		if (layout.isTypeAssetDisplay() ||
-			(layout.isTypeContent() && (draftLayout == null))) {
+			(layout.isTypeContent() && (layout.getDraftLayout() == null))) {
 
 			return false;
 		}

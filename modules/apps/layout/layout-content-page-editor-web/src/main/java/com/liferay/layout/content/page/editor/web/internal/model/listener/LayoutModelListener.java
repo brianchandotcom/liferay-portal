@@ -105,8 +105,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			LayoutPageTemplateEntry layoutPageTemplateEntry, Layout layout)
 		throws Exception {
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_portal.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = layout.getDraftLayout();
 
 		Layout pageTemplateLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());

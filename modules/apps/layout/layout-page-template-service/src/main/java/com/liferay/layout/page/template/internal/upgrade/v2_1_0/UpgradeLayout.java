@@ -108,8 +108,7 @@ public class UpgradeLayout extends UpgradeProcess {
 							LayoutPageTemplateEntry.class),
 						layoutPageTemplateEntryId);
 
-				Layout draftLayout = _layoutLocalService.fetchLayout(
-					PortalUtil.getClassNameId(Layout.class), plid);
+				Layout draftLayout = _layoutLocalService.fetchDraftLayout(plid);
 
 				for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 					fragmentEntryLink.setClassNameId(

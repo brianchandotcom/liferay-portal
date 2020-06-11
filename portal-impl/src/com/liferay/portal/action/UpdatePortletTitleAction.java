@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portlet.InvokerPortletUtil;
@@ -76,8 +74,7 @@ public class UpdatePortletTitleAction extends JSONAction {
 		portletSetup.store();
 
 		if (layout.isTypeContent()) {
-			Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-				PortalUtil.getClassNameId(Layout.class), layout.getPlid());
+			Layout draftLayout = layout.getDraftLayout();
 
 			if (draftLayout != null) {
 				PortletPreferences draftLayoutPortletSetup =

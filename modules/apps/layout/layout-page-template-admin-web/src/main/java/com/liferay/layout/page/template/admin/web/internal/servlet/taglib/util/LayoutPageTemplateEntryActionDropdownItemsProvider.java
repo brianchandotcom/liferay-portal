@@ -84,7 +84,8 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_draftLayout = _getDraftLayout(_layoutPageTemplateEntry);
+		_draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			layoutPageTemplateEntry.getPlid());
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
@@ -260,21 +261,6 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		};
 	}
 
-	private Layout _getDraftLayout(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		if (layout == null) {
-			return null;
-		}
-
-		return LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class),
-			_layoutPageTemplateEntry.getPlid());
-	}
-
 	private UnsafeConsumer<DropdownItem, Exception>
 			_getEditLayoutPageTemplateEntryActionUnsafeConsumer()
 		throws Exception {
@@ -308,15 +294,9 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			};
 		}
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			_layoutPageTemplateEntry.getPlid());
-
-		Layout draftLayout = LayoutLocalServiceUtil.fetchLayout(
-			PortalUtil.getClassNameId(Layout.class), layout.getPlid());
-
 		return dropdownItem -> {
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				draftLayout, _themeDisplay);
+				_draftLayout, _themeDisplay);
 
 			layoutFullURL = HttpUtil.setParameter(
 				layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());

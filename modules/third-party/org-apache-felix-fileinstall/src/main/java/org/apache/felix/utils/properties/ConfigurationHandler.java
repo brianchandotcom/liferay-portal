@@ -248,7 +248,10 @@ public class ConfigurationHandler {
 		for (int i = 0; i < length; i++) {
 			c = simple.charAt(i);
 
-			if ((c == '\\') || (c == _TOKEN_VAL_CLOS)) {
+			if ((c == '\\') || (c == _TOKEN_VAL_CLOS) || (c == ' ') ||
+				(c == _TOKEN_EQ) || (c == _TOKEN_BRACE_OPEN) ||
+				(c == _TOKEN_BRACE_CLOS)) {
+
 				writer.write('\\');
 				writer.write(c);
 			}
@@ -865,6 +868,10 @@ public class ConfigurationHandler {
 	private static final int _TOKEN_ARR_CLOS = ']';
 
 	private static final int _TOKEN_ARR_OPEN = '[';
+
+	private static final int _TOKEN_BRACE_CLOS = '}';
+
+	private static final int _TOKEN_BRACE_OPEN = '{';
 
 	// set of valid characters for "symblic-name"
 

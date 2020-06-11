@@ -125,7 +125,7 @@ const SelectFormView = ({objectId, ...otherProps}) => {
 				label: Liferay.Language.get('there-are-no-form-views-yet'),
 			},
 			errorProps: {
-				label: Liferay.Language.get('failed-to-retrieve-form-views'),
+				label: Liferay.Language.get('unable-to-retrieve-form-views'),
 			},
 			loadingProps: {
 				label: Liferay.Language.get('retrieving-all-form-views'),
@@ -149,7 +149,7 @@ const SelectTableView = ({objectId, ...otherProps}) => {
 				label: Liferay.Language.get('there-are-no-table-views-yet'),
 			},
 			errorProps: {
-				label: Liferay.Language.get('failed-to-retrieve-table-views'),
+				label: Liferay.Language.get('unable-to-retrieve-table-views'),
 			},
 			loadingProps: {
 				label: Liferay.Language.get('retrieving-all-table-views'),

@@ -150,7 +150,7 @@ definition {
 
 		FormFields.selectAutoCompleteOption(autocompleteOption = "Brazil");
 
-		FormPortlet.submit();
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 

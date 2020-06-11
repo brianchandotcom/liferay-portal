@@ -54,9 +54,9 @@ definition {
 			Click(locator1 = "Form#PUBLISH_URL_FORM_PAGE");
 		}
 
-		FormPortlet.clickSubmit();
-
 		Pause(locator1 = "5000");
+
+		FormPortlet.clickSubmit();
 	}
 
 	macro submitLocalizedSuccessfully {
@@ -64,11 +64,15 @@ definition {
 			locator1 = "Button#MAIN_CONTENT_SUBMIT",
 			value1 = "${buttonName}");
 
+		WaitForElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
 		Alert.viewSuccessMessage();
 	}
 
 	macro submitSuccessfully {
 		FormPortlet.submit();
+
+		WaitForElementPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
 		Alert.viewSuccessMessage();
 	}
@@ -76,11 +80,19 @@ definition {
 	macro submitWithError {
 		FormPortlet.submit();
 
+		WaitForElementPresent(
+			locator1 = "Message#ERROR",
+			value1 = "${errorMessage}");
+
 		Alert.viewErrorMessage(errorMessage = "${errorMessage}");
 	}
 
 	macro submitWithValidationError {
 		FormPortlet.submit();
+
+		WaitForElementPresent(
+			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+			value1 = "${validationErrorMessage}");
 
 		AssertTextEquals(
 			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
@@ -101,4 +113,9 @@ definition {
 			value1 = "${successPageDescription}");
 	}
 
+	macro waitForValidationErrorNotPresent {
+		WaitForElementNotPresent(
+			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
+			value1 = "${validationErrorMessage}");
+	}
 }

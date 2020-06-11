@@ -1214,7 +1214,7 @@ definition {
 			fieldName = "DateField",
 			fieldValue = "01/01/2016");
 
-		FormPortlet.submit();
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -2669,6 +2669,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
+	
+		Pause(locator1 = "2000");
 
 		FormFields.viewParagraphField(
 			fieldTitle = "Paragraph",
@@ -2717,9 +2719,7 @@ definition {
 			panel = "Site Administration",
 			portlet = "Forms");
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Created Form Name");
+		FormsAdminNavigator.gotoEditFormByName();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Paragraph");
 
@@ -2773,7 +2773,9 @@ definition {
 
 		Form.save();
 
-		Navigator.gotoPage(pageName = "Form Page");
+		FormsAdminNavigator.gotoPublishedForm();
+	
+		Pause(locator1 = "2000");
 
 		FormFields.viewParagraphField(
 			fieldName = "Paragraph",
@@ -2859,6 +2861,8 @@ definition {
 
 		Pause(locator1 = "5000");
 
+		Navigator.openURL();
+
 		GlobalMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -2921,6 +2925,10 @@ definition {
 		FormsAdmin.viewCheckboxEntry(
 			fieldName = "NewCheckbox",
 			fieldValue = "Checkbox 1");
+
+		Navigator.openURL();
+
+		Site.tearDownCP();
 	}
 
 	@priority = "4"
@@ -3495,7 +3503,9 @@ definition {
 			fieldName = "Text",
 			fieldValue = "test");
 
-		FormPortlet.submit();
+		FormPortlet.waitForValidationErrorNotPresent(validationErrorMessage = "Text must contain &apos;&apos;Test&apos;&apos;");
+
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -3639,7 +3649,7 @@ definition {
 			fieldName = "SelectField",
 			selectOption = "Select 2");
 
-		FormPortlet.submit();
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -3759,7 +3769,9 @@ definition {
 			checkboxOption = "Checkbox 1",
 			fieldName = "CheckboxField");
 
-		FormPortlet.submit();
+		FormPortlet.waitForValidationErrorNotPresent();
+
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -3839,7 +3851,9 @@ definition {
 			fieldName = "TextField",
 			fieldValue = "Text Field Value");
 
-		FormPortlet.submit();
+		FormPortlet.waitForValidationErrorNotPresent();
+
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -3925,7 +3939,9 @@ definition {
 			fieldName = "RadioField",
 			radioOption = "Option 1");
 
-		FormPortlet.submit();
+		FormPortlet.waitForValidationErrorNotPresent();
+
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -4085,7 +4101,9 @@ definition {
 			fieldName = "TextField",
 			fieldValue = "Text Field Value");
 
-		FormPortlet.submit();
+		FormPortlet.waitForValidationErrorNotPresent();
+
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -4248,7 +4266,7 @@ definition {
 			navTab = "Documents and Media",
 			uploadFileName = "Document_1.jpg");
 
-		FormPortlet.submit();
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -4333,7 +4351,9 @@ definition {
 			fieldName = "DateField",
 			fieldValue = "01/01/2016");
 
-		FormPortlet.submit();
+		FormPortlet.waitForValidationErrorNotPresent();
+
+		FormPortlet.submitSuccessfully();
 
 		Navigator.openURL();
 
@@ -4803,7 +4823,7 @@ definition {
 			fieldName = "TextField",
 			fieldValue = "Text Field Value");
 
-		FormPortlet.submit();
+		FormPortlet.submitSuccessfully();
 
 		FormPortlet.viewSuccessPage(
 			successPageDescription = "Edited: Your information was successfully received. Thank you for filling out the form.",

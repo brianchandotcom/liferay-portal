@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Arrays;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -103,8 +104,13 @@ public class JournalFeedExportImportContentProcessor
 		Layout targetLayout = null;
 
 		if (friendlyURLParts.length > 3) {
-			String targetLayoutFriendlyURL =
-				StringPool.SLASH + friendlyURLParts[3];
+			String targetLayoutFriendlyURL = StringUtil.merge(
+				Arrays.copyOfRange(
+					friendlyURLParts, 3, friendlyURLParts.length),
+				StringPool.SLASH);
+
+			targetLayoutFriendlyURL =
+				StringPool.SLASH + targetLayoutFriendlyURL;
 
 			targetLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 				targetLayoutGroup.getGroupId(), privateLayout,

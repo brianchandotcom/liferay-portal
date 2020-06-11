@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.ContentTemplateUtil;
+import com.liferay.headless.delivery.internal.odata.entity.v1_0.ContentTemplateEntityModel;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.Group;
@@ -30,12 +31,15 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +67,11 @@ public class ContentTemplateResourceImpl
 		return ContentTemplateUtil.toContentTemplate(
 			ddmTemplate, _getDtoConverterContext(ddmTemplate), _portal,
 			_userLocalService);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -119,6 +128,9 @@ public class ContentTemplateResourceImpl
 			null, null, contextAcceptLanguage.getPreferredLocale(),
 			contextUriInfo, contextUser);
 	}
+
+	private static final EntityModel _entityModel =
+		new ContentTemplateEntityModel();
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

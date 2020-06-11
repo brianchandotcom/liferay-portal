@@ -41,10 +41,9 @@ function MappingInput({
 
 	const isActive = field.key !== UNMAPPED_OPTION.key;
 
-	const inititalSourceLabel =
-		isActive && selectedSource
-			? selectedSource.classTypeLabel || selectedSource.classNameLabel
-			: '';
+	const inititalSourceLabel = selectedSource
+		? selectedSource.classTypeLabel || selectedSource.classNameLabel
+		: '';
 
 	const handleOnchange = ({field, source}) => {
 		setSource(source);
@@ -61,7 +60,10 @@ function MappingInput({
 						readOnly
 						type="text"
 						value={`${
-							inititalSourceLabel && `${inititalSourceLabel}: `
+							(isActive &&
+								inititalSourceLabel &&
+								`${inititalSourceLabel}: `) ||
+							''
 						}${field.label}`}
 					/>
 					<ClayInput name={name} type="hidden" value={field.key} />

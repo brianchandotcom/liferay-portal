@@ -12,21 +12,13 @@
  * details.
  */
 
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 
 const PageContext = React.createContext({});
 
-export const PageProvider = ({children, value}) => {
-	const [store, setStore] = useState(value);
-
-	useEffect(() => {
-		setStore(value);
-	}, [value]);
-
-	return (
-		<PageContext.Provider value={store}>{children}</PageContext.Provider>
-	);
-};
+export const PageProvider = ({children, value}) => (
+	<PageContext.Provider value={value}>{children}</PageContext.Provider>
+);
 
 export const usePage = () => {
 	return useContext(PageContext);

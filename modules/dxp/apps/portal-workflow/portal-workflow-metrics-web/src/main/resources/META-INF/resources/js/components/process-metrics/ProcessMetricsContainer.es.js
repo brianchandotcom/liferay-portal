@@ -31,33 +31,47 @@ import PendingItemsCard from './process-items/PendingItemsCard.es';
 import WorkloadByAssigneeCard from './workload-by-assignee-card/WorkloadByAssigneeCard.es';
 import WorkloadByStepCard from './workload-by-step-card/WorkloadByStepCard.es';
 
-const DashboardTab = (props) => {
+let SEARCH = '';
+
+const DashboardTab = ({history, ...otherProps}) => {
+	useMemo(() => {
+		const pathname = history.location.pathname;
+
+		history.replace({pathname, search: SEARCH});
+	}, [history]);
+
 	return (
 		<div className="container-fluid-1280">
 			<div className="row">
 				<div className="col-md-9 p-0">
-					<PendingItemsCard {...props} />
+					<PendingItemsCard {...otherProps} />
 
-					<WorkloadByStepCard {...props} />
+					<WorkloadByStepCard {...otherProps} />
 				</div>
 
 				<div className="col-md-3 p-0">
-					<WorkloadByAssigneeCard {...props} />
+					<WorkloadByAssigneeCard {...otherProps} />
 				</div>
 			</div>
 		</div>
 	);
 };
 
-const PerformanceTab = (props) => {
+const PerformanceTab = ({history, ...otherProps}) => {
 	useTimeRangeFetch();
+
+	useMemo(() => {
+		const pathname = history.location.pathname;
+
+		history.replace({pathname, search: SEARCH});
+	}, [history]);
 
 	return (
 		<>
-			<CompletedItemsCard {...props} />
-			<CompletionVelocityCard {...props} />
-			<PerformanceByStepCard {...props} />
-			<PerformanceByAssigneeCard {...props} />
+			<CompletedItemsCard {...otherProps} />
+			<CompletionVelocityCard {...otherProps} />
+			<PerformanceByStepCard {...otherProps} />
+			<PerformanceByAssigneeCard {...otherProps} />
 		</>
 	);
 };
@@ -96,12 +110,12 @@ const ProcessMetricsContainer = ({history, processId, query}) => {
 	if (history.location.pathname === `/metrics/${processId}`) {
 		const pathname = getPathname(dashboardTab.params, dashboardTab.path);
 
-		const search = stringify({
+		SEARCH = stringify({
 			...parse(query),
 			filters: {taskNames: ['allSteps']},
 		});
 
-		history.replace({pathname, search});
+		history.replace({pathname});
 	}
 
 	return (

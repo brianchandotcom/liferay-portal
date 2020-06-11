@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>POLICY_NAME</td>
-	<td>//td[contains(@class,'lfr-name-column')][contains(.,'${key_policyName}')]</td>
+	<td>//td[contains(@class,'lfr-name-column')]/a[contains(.,'${key_policyName}')]</td>
 	<td></td>
 </tr>
 <tr>

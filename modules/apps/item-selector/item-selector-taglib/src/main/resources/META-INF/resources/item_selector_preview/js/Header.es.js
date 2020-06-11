@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -28,9 +29,9 @@ const Header = ({
 	showInfoIcon,
 }) => (
 	<div className="navbar navigation-bar navigation-bar-light">
-		<div className="container-fluid header">
+		<ClayLayout.ContainerFluid className="header">
 			<nav className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
-				<div className="container-fluid container-fluid-max-xl">
+				<ClayLayout.ContainerFluid>
 					<ul className="navbar-nav">
 						<li className="nav-item">
 							<ClayButton
@@ -46,11 +47,11 @@ const Header = ({
 							<strong>{headerTitle}</strong>
 						</li>
 					</ul>
-				</div>
+				</ClayLayout.ContainerFluid>
 			</nav>
 
 			<nav className="navbar navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
-				<div className="container-fluid container-fluid-max-xl">
+				<ClayLayout.ContainerFluid>
 					<ul className="navbar-nav">
 						{showEditIcon && (
 							<li className="btn-group-item nav-item">
@@ -87,9 +88,9 @@ const Header = ({
 							</ClayButton>
 						</li>
 					</ul>
-				</div>
+				</ClayLayout.ContainerFluid>
 			</nav>
-		</div>
+		</ClayLayout.ContainerFluid>
 	</div>
 );
 

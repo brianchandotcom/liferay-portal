@@ -217,4 +217,67 @@ definition {
 		Questions.viewPaginationResults(results = "Showing 9 to 10 of 10");
 	}
 
+	@description = "Validate if the user can select the filter and view the related results."
+	@priority = "4"
+	test ViewQuestionsWithConfiguredFilter {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		for (var num : list "1,2") {
+			Questions.addQuestionByAPI(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Test Category",
+				tagField = "test tag",
+				titleField = "Question ${num}");
+		}
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
+
+		MessageboardsThread.gotoCP(threadSubject = "Question 1");
+
+		MessageboardsThread.editCP(
+			threadBodyEdit = "Question Body 1 Edit",
+			threadSubjectEdit = "Question 1 Edit");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Pause(locator = "3000");
+
+		Questions.configureFilter(filterBy = "Latest Edited");
+
+		Questions.viewFilterResults(
+			lastQuestionTitle = "Question 2",
+			questionTitle = "Question 1 Edit");
+
+		Questions.configureFilter(filterBy = "Voted in the Last Week");
+
+		for (var num : list "1 Edit,2") {
+			AssertElementNotPresent(
+				key_questionTitle = "Question ${num}",
+				locator1 = "Questions#QUESTIONS_TITLE");
+		}
+
+		Questions.configureFilter(filterBy = "Voted in the Last Month");
+
+		for (var num : list "1 Edit,2") {
+			AssertElementNotPresent(
+				key_questionTitle = "Question ${num}",
+				locator1 = "Questions#QUESTIONS_TITLE");
+		}
+
+		Questions.configureFilter(filterBy = "Latest Created");
+
+		Questions.viewFilterResults(
+			lastQuestionTitle = "Question 1 Edit",
+			questionTitle = "Question 2");
+	}
+
 }

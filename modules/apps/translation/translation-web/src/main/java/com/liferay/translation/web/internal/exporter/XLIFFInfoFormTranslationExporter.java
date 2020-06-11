@@ -94,7 +94,10 @@ public class XLIFFInfoFormTranslationExporter<T>
 		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 			InfoField infoField = infoFieldValue.getInfoField();
 
-			if (!infoField.isLocalizable()) {
+			if (!infoField.isLocalizable() ||
+				!TextInfoFieldType.INSTANCE.equals(
+					infoField.getInfoFieldType())) {
+
 				continue;
 			}
 

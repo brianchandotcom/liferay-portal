@@ -18,8 +18,7 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.internal.handler.LayoutExceptionRequestHandler;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -102,8 +101,6 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 			PropertiesParamUtil.getProperties(
 				actionRequest, "TypeSettingsProperties--");
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		try {
 			Layout sourceLayout = _layoutLocalService.fetchLayout(sourcePlid);
 
@@ -152,10 +149,9 @@ public class CopyLayoutMVCActionCommand extends BaseMVCActionCommand {
 			redirectURL.setParameter(
 				"privateLayout", String.valueOf(privateLayout));
 
-			jsonObject.put("redirectURL", redirectURL.toString());
-
 			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+				actionRequest, actionResponse,
+				JSONUtil.put("redirectURL", redirectURL.toString()));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

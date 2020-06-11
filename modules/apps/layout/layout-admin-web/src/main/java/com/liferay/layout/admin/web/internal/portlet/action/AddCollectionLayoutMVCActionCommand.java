@@ -28,8 +28,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -122,8 +121,6 @@ public class AddCollectionLayoutMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		try {
 			Layout layout = _layoutService.addLayout(
 				groupId, privateLayout, parentLayoutId, nameMap,
@@ -150,12 +147,11 @@ public class AddCollectionLayoutMVCActionCommand
 
 			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
 
-			String redirectURL = getContentRedirectURL(actionRequest, layout);
-
-			jsonObject.put("redirectURL", redirectURL);
-
 			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"redirectURL",
+					getContentRedirectURL(actionRequest, layout)));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

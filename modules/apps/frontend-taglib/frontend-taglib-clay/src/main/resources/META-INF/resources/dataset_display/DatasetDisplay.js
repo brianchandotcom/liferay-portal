@@ -197,7 +197,7 @@ function DatasetDisplay({
 		getData(
 			apiUrl,
 			currentUrl,
-			filters.filter((filter) => !!filter.value),
+			filters.filter((filter) => filter.value),
 			searchParam,
 			delta,
 			pageNumber,
@@ -254,7 +254,7 @@ function DatasetDisplay({
 		getData(
 			apiUrl,
 			currentUrl,
-			filters.filter((filter) => !!filter.value),
+			filters.filter((filter) => filter.value),
 			searchParam,
 			delta,
 			pageNumber,

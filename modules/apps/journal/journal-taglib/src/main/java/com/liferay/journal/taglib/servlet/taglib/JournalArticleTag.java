@@ -60,8 +60,10 @@ public class JournalArticleTag extends IncludeTag {
 				portletRequest, portletResponse);
 		}
 
-		_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-			_groupId, _articleId, WorkflowConstants.STATUS_APPROVED);
+		if (_article == null) {
+			_article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+				_groupId, _articleId, WorkflowConstants.STATUS_APPROVED);
+		}
 
 		try {
 			_articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(

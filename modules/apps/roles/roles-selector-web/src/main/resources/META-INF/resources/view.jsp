@@ -129,9 +129,7 @@ else {
 %>
 
 <clay:stripe
-	destroyOnHide="<%= true %>"
 	message="<%= stripeMessage %>"
-	title='<%= LanguageUtil.get(request, "info") %>'
 />
 
 <clay:management-toolbar

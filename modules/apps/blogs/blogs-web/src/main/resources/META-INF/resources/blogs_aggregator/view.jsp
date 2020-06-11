@@ -22,9 +22,8 @@ boolean blogsPortletFound = ParamUtil.getBoolean(request, "blogsPortletFound", t
 
 <c:if test="<%= !blogsPortletFound %>">
 	<clay:stripe
-		message='<%= LanguageUtil.get(resourceBundle, "no-suitable-application-found-to-display-the-blogs-entry") %>'
-		style="danger"
-		title='<%= LanguageUtil.get(resourceBundle, "error") + ":" %>'
+		displayType="danger"
+		message="no-suitable-application-found-to-display-the-blogs-entry"
 	/>
 </c:if>
 

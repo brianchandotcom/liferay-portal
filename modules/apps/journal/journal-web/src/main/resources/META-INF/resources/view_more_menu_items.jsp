@@ -22,9 +22,7 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 
 <c:if test="<%= journalDisplayContext.getAddMenuFavItemsLength() == 0 %>">
 	<clay:stripe
-		destroyOnHide="<%= true %>"
 		message='<%= LanguageUtil.format(resourceBundle, "you-can-add-as-many-as-x-favorites-in-your-quick-menu", journalWebConfiguration.maxAddMenuItems()) %>'
-		title='<%= LanguageUtil.get(resourceBundle, "info") + ":" %>'
 	/>
 </c:if>
 
@@ -32,9 +30,8 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 
 <c:if test="<%= journalDisplayContext.getAddMenuFavItemsLength() >= journalWebConfiguration.maxAddMenuItems() %>">
 	<clay:stripe
-		message='<%= LanguageUtil.get(resourceBundle, "right-now-your-quick-menu-is-full-of-favorites-if-you-want-to-add-another-one-please-remove-at-least-one-of-them") %>'
-		style="warning"
-		title='<%= LanguageUtil.get(resourceBundle, "warning") + ":" %>'
+		displayType="warning"
+		message="right-now-your-quick-menu-is-full-of-favorites-if-you-want-to-add-another-one-please-remove-at-least-one-of-them"
 	/>
 </c:if>
 

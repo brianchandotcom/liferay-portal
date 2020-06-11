@@ -94,12 +94,8 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 				return response.text();
 			})
 			.then(function (text) {
-				var parser = new DOMParser();
-
-				var doc = parser.parseFromString(text, 'text/html');
-
 				Liferay.Util.openModal({
-					bodyHTML: doc.body.innerHTML,
+					bodyHTML: text,
 					size: 'full-screen',
 					title: '<%= UnicodeLanguageUtil.get(request, "cas") %>',
 				});

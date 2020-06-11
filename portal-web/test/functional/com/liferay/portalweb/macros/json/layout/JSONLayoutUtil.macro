@@ -21,10 +21,6 @@ definition {
 			var typeSettings = '''${typeSettings}=${widget}''';
 		}
 
-		var typeSettings = StringUtil.regexReplaceAll("${typeSettings}","\\r\\n|\\r|\\n","%0A");
-
-		var typeSettings = StringUtil.replace("${typeSettings}", "=", "%3D");
-
 		return "${typeSettings}";
 	}
 

@@ -29,6 +29,7 @@ const BAR_CHART = {
 	barHeight: 16,
 	dotRadiusMax: 35,
 	dotRadiusMin: 5,
+	fillXAxis: '#666',
 	height: 400,
 	legendHeight: 70,
 	stroke: '#E7E7ED',
@@ -95,7 +96,7 @@ function CustomTick(props) {
 
 	return (
 		<Text
-			fill="#666"
+			fill={BAR_CHART.fillXAxis}
 			textAnchor="middle"
 			verticalAnchor="start"
 			width={120}

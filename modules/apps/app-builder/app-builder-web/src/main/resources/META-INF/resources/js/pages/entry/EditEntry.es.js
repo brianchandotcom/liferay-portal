@@ -57,7 +57,7 @@ export const EditEntry = ({
 			visitor.mapFields(
 				({fieldName, localizable, repeatable, value, visible}) => {
 					if (!visible) {
-						return;
+						value = '';
 					}
 
 					if (localizable) {

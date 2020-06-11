@@ -57,10 +57,8 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 	<aui:input cssClass="lfr-input-text-container" helpMessage="cas-no-such-user-redirect-url-help" label="no-such-user-redirect-url" name='<%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE + "noSuchUserRedirectURL" %>' type="text" value="<%= noSuchUserRedirectURL %>" />
 </aui:fieldset>
 
-<aui:script use="aui-io-plugin-deprecated,liferay-util-window">
+<aui:script>
 	window['<portlet:namespace />testCasSettings'] = function () {
-		var A = AUI();
-
 		var data = {};
 
 		data.<portlet:namespace />casLoginURL =
@@ -80,19 +78,40 @@ String noSuchUserRedirectURL = casConfiguration.noSuchUserRedirectURL();
 				'<portlet:namespace /><%= PortalSettingsCASConstants.FORM_PARAMETER_NAMESPACE %>serviceURL'
 			].value;
 
-		var url =
+		var baseUrl =
 			'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/portal_settings/test_cas" /></portlet:renderURL>';
 
-		var dialog = Liferay.Util.Window.getWindow({
-			dialog: {
-				destroyOnHide: true,
-			},
-			title: '<%= UnicodeLanguageUtil.get(request, "cas") %>',
+		var url = new URL(baseUrl);
+
+		var searchParams = Liferay.Util.objectToURLSearchParams(data);
+
+		searchParams.forEach(function (value, key) {
+			url.searchParams.append(key, value);
 		});
 
-		dialog.plug(A.Plugin.IO, {
-			data: data,
-			uri: url,
-		});
+		Liferay.Util.fetch(url)
+			.then(function (response) {
+				return response.text();
+			})
+			.then(function (text) {
+				var parser = new DOMParser();
+
+				var doc = parser.parseFromString(text, 'text/html');
+
+				Liferay.Util.openModal({
+					bodyHTML: doc.body.innerHTML,
+					size: 'full-screen',
+					title: '<%= UnicodeLanguageUtil.get(request, "cas") %>',
+				});
+			})
+			.catch(function (error) {
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'an-unexpected-system-error-occurred'
+					),
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
+			});
 	};
 </aui:script>

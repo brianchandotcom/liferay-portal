@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -388,6 +389,13 @@ public interface DDMFormInstanceRecordLocalService
 	public void revertFormInstanceRecord(
 			long userId, long ddmFormInstanceRecordId, String version,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<DDMFormInstanceRecord>
+			searchFormInstanceRecords(
+				long formInstanceId, String[] notEmptyFields, int status,
+				int start, int end, Sort sort)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

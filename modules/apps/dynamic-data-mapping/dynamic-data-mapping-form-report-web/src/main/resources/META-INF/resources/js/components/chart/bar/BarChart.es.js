@@ -71,7 +71,7 @@ export default ({data, height, totalEntries, width}) => {
 					content={
 						<TooltipContent
 							activeIndex={activeIndex}
-							hideBullet={true}
+							showBullet={false}
 							totalEntries={totalEntries}
 						/>
 					}

@@ -9,4 +9,10 @@
 		<dynamic-content language-id="en_US"><![CDATA[Some Text]]></dynamic-content>
 		<dynamic-content language-id="es_ES"><![CDATA[Un poco de texto]]></dynamic-content>
 	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="gxjr2" name="HTML2" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p>Some HTML</p>]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="kfce2" name="Text2" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Some Text]]></dynamic-content>
+	</dynamic-element>
 </root>

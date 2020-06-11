@@ -44,6 +44,47 @@
 				"en_US": ""
 			},
 			"type": "text"
+		},
+		{
+			"dataType": "html",
+			"fieldNamespace": "ddm",
+			"indexType": "text",
+			"label": {
+				"en_US": "HTML"
+			},
+			"localizable": false,
+			"name": "HTML2",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "ddm-text-html"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": false,
+			"name": "Text2",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
 		}
 	],
 	"successPage": {

@@ -945,6 +945,19 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-84418."
+	@priority = "5"
+	test PublishWithImpossibleDateRange {
+		Navigator.openStagingSiteURL(siteName = "Site Name");
+
+		Staging.addRepeatEvent(
+			endOnDate = "true",
+			frequency = "Monthly",
+			scheduleTitleName = "Event Monthly Name");
+
+		AssertConsoleTextNotPresent(value1 = "SchedulerException");
+	}
+
 	@priority = "4"
 	test SearchPublishTemplate {
 		Staging.openStagingAdmin(siteURLKey = "site-name-staging");

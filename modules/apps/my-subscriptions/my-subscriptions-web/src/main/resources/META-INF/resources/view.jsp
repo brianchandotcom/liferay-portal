@@ -115,20 +115,11 @@ int subscriptionsCount = mySubscriptionsManagementToolbarDisplayContext.getTotal
 
 <aui:script>
 	window['<portlet:namespace />displayPopup'] = function (url, title) {
-		Liferay.Util.Window.getWindow({
-			dialog: {
-				align: {
-					node: null,
-					points: ['tc', 'tc'],
-				},
-				constrain2view: true,
-				cssClass: 'portlet-my-subscription',
-				modal: true,
-				resizable: true,
-				width: 950,
-			},
+		Liferay.Util.openModal({
+			iframeBodyCssClass: 'portlet-my-subscription',
+			size: 'full-screen',
 			title: title,
-			uri: url,
+			url: url,
 		});
 	};
 </aui:script>

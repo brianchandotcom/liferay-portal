@@ -14,6 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -47,31 +48,25 @@ const Collaborators = ({
 
 	if (total < 1) {
 		return (
-			<div className="autofit-row sidebar-panel">
-				<div className="autofit-col inline-item-before">
+			<ClayLayout.ContentRow className="sidebar-panel">
+				<ClayLayout.ContentCol className="inline-item-before">
 					<UserIcon {...owner} size="" />
-				</div>
+				</ClayLayout.ContentCol>
 
-				<div className="autofit-col autofit-col-expand">
-					<div className="autofit-row">
-						<div className="autofit-col autofit-col-expand">
-							<div className="component-title h4 username">
-								{owner.displayURL ? (
-									<a href={owner.displayURL}>
-										{owner.fullName}
-									</a>
-								) : (
-									owner.fullName
-								)}
-							</div>
-
-							<small className="text-muted">
-								{Liferay.Language.get('owner')}
-							</small>
-						</div>
+				<ClayLayout.ContentCol expand>
+					<div className="component-title h4 username">
+						{owner.displayURL ? (
+							<a href={owner.displayURL}>{owner.fullName}</a>
+						) : (
+							owner.fullName
+						)}
 					</div>
-				</div>
-			</div>
+
+					<small className="text-muted">
+						{Liferay.Language.get('owner')}
+					</small>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
 		);
 	}
 
@@ -79,8 +74,8 @@ const Collaborators = ({
 
 	return (
 		<>
-			<div className="autofit-row sidebar-panel">
-				<div className="autofit-col collaborators-owner">
+			<ClayLayout.ContentRow className="sidebar-panel">
+				<ClayLayout.ContentCol clasName="collaborators-owner">
 					<div
 						className="lfr-portal-tooltip"
 						data-title={Liferay.Util.sub(
@@ -90,13 +85,13 @@ const Collaborators = ({
 					>
 						<UserIcon {...owner} size="" />
 					</div>
-				</div>
+				</ClayLayout.ContentCol>
 
-				<div className="autofit-col autofit-col-expand">
-					<div className="autofit-row">
+				<ClayLayout.ContentCol expand>
+					<ClayLayout.ContentRow>
 						{collaborators.map((collaborator) => (
-							<div
-								className="autofit-col collaborators-collaborator"
+							<ClayLayout.ContentCol
+								className="collaborators-collaborator"
 								key={collaborator.userId}
 							>
 								<div
@@ -105,10 +100,10 @@ const Collaborators = ({
 								>
 									<UserIcon {...collaborator} size="" />
 								</div>
-							</div>
+							</ClayLayout.ContentCol>
 						))}
 						{moreCollaboratorsCount > 0 && (
-							<div className="autofit-col collaborators-collaborator">
+							<ClayLayout.ContentCol className="collaborators-collaborator">
 								<div
 									className="lfr-portal-tooltip"
 									data-title={
@@ -135,13 +130,14 @@ const Collaborators = ({
 										<ClayIcon symbol="users" />
 									</ClaySticker>
 								</div>
-							</div>
+							</ClayLayout.ContentCol>
 						)}
-					</div>
-				</div>
-			</div>
+					</ClayLayout.ContentRow>
+				</ClayLayout.ContentCol>
+			</ClayLayout.ContentRow>
+
 			{canManageCollaborators && (
-				<div className="autofit-row sidebar-panel">
+				<ClayLayout.ContentRow className="sidebar-panel">
 					<ClayButton
 						className="btn-link collaborators-btn"
 						displayType="link"
@@ -155,7 +151,7 @@ const Collaborators = ({
 					>
 						{Liferay.Language.get('manage-collaborators')}
 					</ClayButton>
-				</div>
+				</ClayLayout.ContentRow>
 			)}
 		</>
 	);

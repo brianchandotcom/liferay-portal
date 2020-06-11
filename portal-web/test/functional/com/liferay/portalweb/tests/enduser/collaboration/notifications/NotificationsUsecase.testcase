@@ -33,6 +33,8 @@ definition {
 	test MarkNotificationAsReadAndAcceptRequest {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -57,7 +59,7 @@ definition {
 			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages",
-			site = "Guest");
+			site = "${siteName}");
 
 		SitePages.addPublicPage(
 			pageName = "Blogs Page",

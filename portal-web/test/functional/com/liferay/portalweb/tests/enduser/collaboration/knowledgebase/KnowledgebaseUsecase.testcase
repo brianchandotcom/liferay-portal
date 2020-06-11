@@ -2000,6 +2000,7 @@ definition {
 	@priority = "3"
 	test ViewUnchangedKBArticleTitleViaLocalizedPage {
 		var portalURL = PropsUtil.get("portal.url");
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		GlobalMenu.gotoPortlet(
 			category = "Sites",
@@ -2010,7 +2011,7 @@ definition {
 			category = "Site Builder",
 			panel = "Site Administration",
 			portlet = "Pages",
-			site = "Guest");
+			site = "${siteName}");
 
 		SitePages.addPublicChildPage(
 			childPageName = "Knowledge Base Display Page",

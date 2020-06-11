@@ -656,6 +656,8 @@ definition {
 	@description = "This test covers LPS-94585. It ensures that users can share via Shared Content app."
 	@priority = "5"
 	test ShareViaSharedContent {
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
 		JSONUser.addUser(
 			userEmailAddress = "userea2@liferay.com",
 			userFirstName = "userfn2",
@@ -751,7 +753,7 @@ definition {
 			category = "People",
 			panel = "Site Administration",
 			portlet = "Memberships",
-			site = "Guest");
+			site = "${siteName}");
 
 		Site.assignUserAsMemberCP(
 			userFirstName = "userfn",

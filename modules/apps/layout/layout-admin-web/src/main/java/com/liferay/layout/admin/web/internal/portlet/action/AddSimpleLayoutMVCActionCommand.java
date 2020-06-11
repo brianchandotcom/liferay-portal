@@ -126,16 +126,18 @@ public class AddSimpleLayoutMVCActionCommand
 				new HashMap<>(), type, typeSettingsUnicodeProperties.toString(),
 				false, masterLayoutPlid, new HashMap<>(), serviceContext);
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
+			if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
 
-			layoutTypePortlet.setLayoutTemplateId(
-				themeDisplay.getUserId(),
-				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+				layoutTypePortlet.setLayoutTemplateId(
+					themeDisplay.getUserId(),
+					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
-			_layoutService.updateLayout(
-				groupId, privateLayout, layout.getLayoutId(),
-				layout.getTypeSettings());
+				_layoutService.updateLayout(
+					groupId, privateLayout, layout.getLayoutId(),
+					layout.getTypeSettings());
+			}
 
 			ActionUtil.updateLookAndFeel(
 				actionRequest, themeDisplay.getCompanyId(), liveGroupId,

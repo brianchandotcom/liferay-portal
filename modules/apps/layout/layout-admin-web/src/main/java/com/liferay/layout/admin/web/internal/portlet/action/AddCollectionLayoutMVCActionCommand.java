@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -52,7 +51,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.HashMap;
@@ -132,17 +130,6 @@ public class AddCollectionLayoutMVCActionCommand
 				new HashMap<>(), new HashMap<>(), new HashMap<>(),
 				new HashMap<>(), type, typeSettingsUnicodeProperties.toString(),
 				false, masterLayoutPlid, new HashMap<>(), serviceContext);
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			layoutTypePortlet.setLayoutTemplateId(
-				themeDisplay.getUserId(),
-				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-
-			layout = _layoutService.updateLayout(
-				groupId, privateLayout, layout.getLayoutId(),
-				layout.getTypeSettings());
 
 			ActionUtil.updateLookAndFeel(
 				actionRequest, themeDisplay.getCompanyId(), liveGroupId,

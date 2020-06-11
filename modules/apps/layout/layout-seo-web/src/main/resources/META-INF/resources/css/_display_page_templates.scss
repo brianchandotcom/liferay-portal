@@ -19,7 +19,7 @@
 	}
 
 	.dpt-mapping-btn:not([disabled]):not(.disabled).active {
-		background-color: transparent;
+		background-color: map-get($btn-secondary, bg);
 		color: $purple;
 
 		&:focus,

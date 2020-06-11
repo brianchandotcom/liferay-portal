@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -43,6 +45,18 @@ import java.util.Map;
  * @author Adam Brandizzi
  */
 public class WorkflowTaskPermissionChecker {
+
+	public void check(
+			long groupId, WorkflowTask workflowTask,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (!hasPermission(groupId, workflowTask, permissionChecker)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, WorkflowTask.class.getName(),
+				workflowTask.getWorkflowTaskId(), ActionKeys.VIEW);
+		}
+	}
 
 	public boolean hasPermission(
 		long groupId, WorkflowTask workflowTask,

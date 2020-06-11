@@ -515,7 +515,7 @@ definition {
 	@description = "This case ensures that a user can map an image to a fragment via the content display."
 	@priority = "5"
 	test MapImageViaContentDisplay {
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -551,6 +551,8 @@ definition {
 	@description = "This case ensures that a user can map the content field from web content to a fragment via the content display."
 	@priority = "5"
 	test MapWebContentContentViaContentDisplay {
+		property portal.acceptance = "true";
+
 		JSONWebcontent.addWebContent(
 			content = "This content maps from web content",
 			groupName = "Test Site Name",

@@ -95,7 +95,7 @@ public class IETopHeadDynamicInclude extends BaseDynamicInclude {
 
 	private static final String[] _JS_FILE_NAMES = {
 		"closest.js", "control.menu.js", "/core-js-bundle.min.js", "/fetch.js",
-		"/svg.contains.js", "/uint16array.slice.js"
+		"remove.js", "/svg.contains.js", "/uint16array.slice.js"
 	};
 
 	@Reference

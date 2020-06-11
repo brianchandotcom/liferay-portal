@@ -18,30 +18,26 @@
 
 <%
 SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplayContext = new SelectLayoutPageTemplateEntryDisplayContext(request);
-
-List<LayoutPageTemplateEntry> masterLayoutPageTemplateEntries = selectLayoutPageTemplateEntryDisplayContext.getMasterLayoutPageTemplateEntries();
 %>
 
 <div class="lfr-search-container-wrapper" id="<portlet:namespace/>layoutTypes">
-	<c:if test="<%= ListUtil.isNotEmpty(masterLayoutPageTemplateEntries) %>">
-		<ul class="card-page card-page-equal-height">
+	<ul class="card-page card-page-equal-height">
 
-			<%
-			for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : masterLayoutPageTemplateEntries) {
-			%>
+		<%
+		for (LayoutPageTemplateEntry masterLayoutPageTemplateEntry : selectLayoutPageTemplateEntryDisplayContext.getMasterLayoutPageTemplateEntries()) {
+		%>
 
-				<li class="card-page-item col-md-4 col-sm-6">
-					<clay:vertical-card
-						verticalCard="<%= new SelectBasicTemplatesVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
-					/>
-				</li>
+			<li class="card-page-item col-md-4 col-sm-6">
+				<clay:vertical-card
+					verticalCard="<%= new SelectBasicTemplatesVerticalCard(masterLayoutPageTemplateEntry, renderRequest, renderResponse) %>"
+				/>
+			</li>
 
-			<%
-			}
-			%>
+		<%
+		}
+		%>
 
-		</ul>
-	</c:if>
+	</ul>
 
 	<c:if test="<%= selectLayoutPageTemplateEntryDisplayContext.getTypesCount() > 0 %>">
 		<h6 class="sheet-subtitle">

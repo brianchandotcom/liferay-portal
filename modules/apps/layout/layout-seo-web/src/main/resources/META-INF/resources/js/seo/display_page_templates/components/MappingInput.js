@@ -39,9 +39,12 @@ function MappingInput({
 		fields.find(({key}) => key === selectedFieldKey) || fields[0]
 	);
 
-	const inititalSourceLabel = selectedSource
-		? selectedSource.classTypeLabel || selectedSource.classNameLabel
-		: '';
+	const isActive = field.key !== UNMAPPED_OPTION.key;
+
+	const inititalSourceLabel =
+		isActive && selectedSource
+			? selectedSource.classTypeLabel || selectedSource.classNameLabel
+			: '';
 
 	const handleOnchange = ({field, source}) => {
 		setSource(source);
@@ -57,7 +60,9 @@ function MappingInput({
 						className="dpt-mapping-input"
 						readOnly
 						type="text"
-						value={`${inititalSourceLabel}: ${field.label}`}
+						value={`${
+							inititalSourceLabel && `${inititalSourceLabel}: `
+						}${field.label}`}
 					/>
 					<ClayInput name={name} type="hidden" value={field.key} />
 				</ClayInput.GroupItem>
@@ -65,7 +70,7 @@ function MappingInput({
 					<MappingPanel
 						field={field}
 						fields={fields}
-						isActive={field.key !== UNMAPPED_OPTION.key}
+						isActive={isActive}
 						name={name}
 						onChange={handleOnchange}
 						source={{

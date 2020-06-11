@@ -73,7 +73,8 @@ public class DLEditDDMStructureDisplayContext {
 
 					editBasicInfoURL.setParameter(
 						"mvcPath",
-						"/document_library/ddm/basic_info_data_engine_editor.jsp");
+						"/document_library/ddm" +
+							"/basic_info_data_engine_editor.jsp");
 					editBasicInfoURL.setParameter(
 						"ddmStructureId", String.valueOf(getDDMStructureId()));
 					editBasicInfoURL.setWindowState(

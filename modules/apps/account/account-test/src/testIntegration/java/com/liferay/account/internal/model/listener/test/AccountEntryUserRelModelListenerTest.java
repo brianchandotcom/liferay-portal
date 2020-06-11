@@ -23,12 +23,11 @@ import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
@@ -41,6 +40,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Pei-Jung Lan
  */
+@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class AccountEntryUserRelModelListenerTest {
 
@@ -60,8 +60,6 @@ public class AccountEntryUserRelModelListenerTest {
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
-
-		_accountEntries.add(accountEntry);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), _user.getUserId());
@@ -86,12 +84,8 @@ public class AccountEntryUserRelModelListenerTest {
 		AccountEntry accountEntry1 = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
 
-		_accountEntries.add(accountEntry1);
-
 		AccountEntry accountEntry2 = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
-
-		_accountEntries.add(accountEntry2);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry1.getAccountEntryId(), _user.getUserId());
@@ -119,8 +113,6 @@ public class AccountEntryUserRelModelListenerTest {
 
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
-
-		_accountEntries.add(accountEntry);
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
 			accountEntry.getAccountEntryId(), _user.getUserId());
@@ -156,16 +148,12 @@ public class AccountEntryUserRelModelListenerTest {
 			expectedAccountEntryId, accountEntryUserRel.getAccountEntryId());
 	}
 
-	@DeleteAfterTestRun
-	private final List<AccountEntry> _accountEntries = new ArrayList<>();
-
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
-	@DeleteAfterTestRun
 	private User _user;
 
 }

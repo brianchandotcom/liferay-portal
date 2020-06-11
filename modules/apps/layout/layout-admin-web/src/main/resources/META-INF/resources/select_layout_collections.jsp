@@ -17,18 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = layoutsAdminDisplayContext.getRedirect();
-
-if (Validator.isNull(backURL)) {
-	PortletURL portletURL = layoutsAdminDisplayContext.getPortletURL();
-
-	backURL = portletURL.toString();
-}
-
 SelectLayoutCollectionDisplayContext selectLayoutCollectionDisplayContext = (SelectLayoutCollectionDisplayContext)request.getAttribute(LayoutAdminWebKeys.SELECT_LAYOUT_COLLECTION_DISPLAY_CONTEXT);
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBack(layoutsAdminDisplayContext.getBackURL());
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 %>

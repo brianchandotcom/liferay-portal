@@ -152,7 +152,7 @@ public class LayoutsAdminDisplayContext {
 
 		portletURL.setParameter(
 			"mvcPath", "/select_layout_page_template_entry.jsp");
-		portletURL.setParameter("backURL", _getBackURL());
+		portletURL.setParameter("backURL", getBackURL());
 		portletURL.setParameter("portletResource", getPortletResource());
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
 		portletURL.setParameter(
@@ -214,6 +214,22 @@ public class LayoutsAdminDisplayContext {
 	public List<SiteNavigationMenu> getAutoSiteNavigationMenus() {
 		return SiteNavigationMenuLocalServiceUtil.getAutoSiteNavigationMenus(
 			themeDisplay.getScopeGroupId());
+	}
+
+	public String getBackURL() {
+		if (_backURL != null) {
+			return _backURL;
+		}
+
+		String backURL = ParamUtil.getString(_liferayPortletRequest, "backURL");
+
+		if (Validator.isNull(backURL)) {
+			backURL = getRedirect();
+		}
+
+		_backURL = backURL;
+
+		return _backURL;
 	}
 
 	public String getConfigureLayoutURL(Layout layout) {
@@ -1526,22 +1542,6 @@ public class LayoutsAdminDisplayContext {
 
 	protected final HttpServletRequest httpServletRequest;
 	protected final ThemeDisplay themeDisplay;
-
-	private String _getBackURL() {
-		if (_backURL != null) {
-			return _backURL;
-		}
-
-		String backURL = ParamUtil.getString(_liferayPortletRequest, "backURL");
-
-		if (Validator.isNull(backURL)) {
-			backURL = getRedirect();
-		}
-
-		_backURL = backURL;
-
-		return _backURL;
-	}
 
 	private BreadcrumbEntry _getBreadcrumbEntry(
 		long plid, boolean privateLayout, String title) {

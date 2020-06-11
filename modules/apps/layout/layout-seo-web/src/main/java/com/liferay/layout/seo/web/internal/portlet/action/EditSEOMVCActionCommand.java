@@ -15,8 +15,6 @@
 package com.liferay.layout.seo.web.internal.portlet.action;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -203,7 +201,7 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 	private Map<Locale, String> _getLocalizationMap(
 		ActionRequest actionRequest, Layout layout, String name) {
 
-		if (_isDisplayPageTemplate(layout.getPlid())) {
+		if (layout.isTypeAssetDisplay()) {
 			return HashMapBuilder.put(
 				LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()),
 				ParamUtil.getString(actionRequest, name)
@@ -211,21 +209,6 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		return LocalizationUtil.getLocalizationMap(actionRequest, name);
-	}
-
-	private boolean _isDisplayPageTemplate(long plid) {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(plid);
-
-		if ((layoutPageTemplateEntry != null) &&
-			(layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	@Reference

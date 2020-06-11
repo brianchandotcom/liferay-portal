@@ -34,7 +34,6 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.canonical.url.LayoutSEOCanonicalURLProvider;
@@ -440,21 +439,6 @@ public class LayoutsSEODisplayContext {
 			_selLayout.getTitle(
 				LocaleUtil.fromLanguageId(_selLayout.getDefaultLanguageId()))
 		).build();
-	}
-
-	public boolean isDisplayPageTemplate() {
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(_selPlid);
-
-		if ((layoutPageTemplateEntry != null) &&
-			(layoutPageTemplateEntry.getType() ==
-				LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	public boolean isPrivateLayout() {

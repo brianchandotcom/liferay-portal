@@ -136,6 +136,8 @@ const Form = React.forwardRef((props, ref) => {
 	return <FormRenderer {...props} ref={containerRef} />;
 });
 
+Form.displayName = 'Form';
+
 const FormProxy = React.forwardRef(({instance, ...otherProps}, ref) => (
 	<FormProvider
 		onEvent={(type, payload) => instance.emit(type, payload)}
@@ -144,6 +146,8 @@ const FormProxy = React.forwardRef(({instance, ...otherProps}, ref) => (
 		{(props) => <Form {...props} ref={ref} />}
 	</FormProvider>
 ));
+
+FormProxy.displayName = 'FormProxy';
 
 const ReactFormAdapter = getConnectedReactComponentAdapter(FormProxy);
 

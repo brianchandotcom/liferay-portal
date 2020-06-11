@@ -15,7 +15,7 @@
 import {useIsMounted} from 'frontend-js-react-web';
 import {useRef} from 'react';
 
-export const useThunk = ([state, dispatch]) => {
+export const useThunkDispatch = (dispatch) => {
 	const isMounted = useIsMounted();
 
 	const thunkDispatch = useRef((action) => {
@@ -33,5 +33,10 @@ export const useThunk = ([state, dispatch]) => {
 		}
 	});
 
-	return [state, thunkDispatch.current];
+	return thunkDispatch.current;
 };
+
+export const useThunk = ([state, dispatch]) => [
+	state,
+	useThunkDispatch(dispatch),
+];

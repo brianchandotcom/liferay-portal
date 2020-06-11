@@ -16,6 +16,8 @@ import React, {useContext} from 'react';
 
 const PageContext = React.createContext({});
 
+PageContext.displayName = 'PageContext';
+
 export const PageProvider = ({children, value}) => (
 	<PageContext.Provider value={value}>{children}</PageContext.Provider>
 );

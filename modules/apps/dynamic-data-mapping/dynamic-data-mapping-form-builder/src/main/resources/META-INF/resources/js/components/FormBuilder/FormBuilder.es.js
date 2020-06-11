@@ -13,7 +13,7 @@
  */
 
 import {
-	FormRenderer,
+	FormNoopRenderer,
 	PagesVisitor,
 	compose,
 	getConnectedReactComponentAdapter,
@@ -29,7 +29,9 @@ import withMoveableFields from './withMoveableFields.es';
 import withMultiplePages from './withMultiplePages.es';
 import withResizeableColumns from './withResizeableColumns.es';
 
-const FormRendererAdapter = getConnectedReactComponentAdapter(FormRenderer);
+const FormNoopRendererAdapter = getConnectedReactComponentAdapter(
+	FormNoopRenderer
+);
 
 /**
  * Builder.
@@ -96,7 +98,7 @@ class FormBuilderBase extends Component {
 		return (
 			<div class="ddm-form-builder-wrapper">
 				<div class="container ddm-form-builder">
-					<FormRendererAdapter
+					<FormNoopRendererAdapter
 						activePage={activePage}
 						allowNestedFields={allowNestedFields}
 						dnd={dnd}

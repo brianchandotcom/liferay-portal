@@ -324,8 +324,8 @@ class Sidebar extends Component {
 		const {focusedField} = this.props;
 
 		if (evaluableForm) {
-			evaluableForm
-				.reactComponentRef.current.evaluate()
+			evaluableForm.reactComponentRef.current
+				.evaluate()
 				.then((pages) => {
 					dispatch('focusedFieldEvaluationEnded', {
 						...focusedField,

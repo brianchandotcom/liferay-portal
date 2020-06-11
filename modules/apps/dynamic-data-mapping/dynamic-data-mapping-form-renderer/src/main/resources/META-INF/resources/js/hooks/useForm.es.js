@@ -16,9 +16,19 @@ import React, {useContext, useEffect, useReducer} from 'react';
 
 import {EVENT_TYPES} from '../actions/types.es';
 import {createReducer} from '../reducers/index.es';
-import {useThunk} from './useThunk.es';
+import {useThunk, useThunkDispatch} from './useThunk.es';
 
 const FormContext = React.createContext(() => {});
+
+FormContext.displayName = 'FormContext';
+
+export const FormNoopProvider = ({children, onEvent}) => (
+	<FormContext.Provider
+		value={useThunkDispatch(({payload, type}) => onEvent(type, payload))}
+	>
+		{children}
+	</FormContext.Provider>
+);
 
 export const FormProvider = ({children, onEvent, value}) => {
 	const [state, dispatch] = useThunk(

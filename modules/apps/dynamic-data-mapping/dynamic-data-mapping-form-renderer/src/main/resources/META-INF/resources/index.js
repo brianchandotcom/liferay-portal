@@ -30,10 +30,11 @@ export {getConnectedReactComponentAdapter} from './js/util/ReactComponentAdapter
 export {default as FormRenderer} from './js/components/FormRenderer/FormRenderer.es';
 export {EVENT_TYPES} from './js/actions/types.es';
 export {PageProvider, usePage} from './js/hooks/usePage.es';
-export {FormProvider, useForm} from './js/hooks/useForm.es';
+export {FormProvider, FormNoopProvider, useForm} from './js/hooks/useForm.es';
 export {Layout} from './js/components/PageRenderer/Layout.es';
 export * as DefaultVariant from './js/components/PageRenderer/DefaultVariant.es';
 
-// Main component
+// Containers
 
 export {default as Form} from './js/containers/Form.es';
+export {FormNoopRenderer} from './js/containers/FormNoopRenderer.es';

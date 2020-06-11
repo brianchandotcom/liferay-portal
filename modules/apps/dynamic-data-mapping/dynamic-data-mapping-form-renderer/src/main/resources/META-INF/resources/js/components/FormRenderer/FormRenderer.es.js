@@ -114,6 +114,8 @@ const FormRenderer = React.forwardRef(
 	}
 );
 
+FormRenderer.displayName = 'FormRenderer';
+
 const FormRendererWithProviders = React.forwardRef((props, ref) => (
 	<DndProvider backend={HTML5Backend} context={window}>
 		<ClayIconSpriteContext.Provider value={props.spritemap}>
@@ -121,5 +123,7 @@ const FormRendererWithProviders = React.forwardRef((props, ref) => (
 		</ClayIconSpriteContext.Provider>
 	</DndProvider>
 ));
+
+FormRendererWithProviders.displayName = 'FormRendererWithProviders';
 
 export default FormRendererWithProviders;

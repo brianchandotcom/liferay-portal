@@ -22,6 +22,7 @@ export default function previousPage({
 	formId,
 	pages,
 	portletNamespace,
+	rules,
 }) {
 	return (dispatch) => {
 		evaluate(null, {
@@ -29,6 +30,7 @@ export default function previousPage({
 			editingLanguageId,
 			pages,
 			portletNamespace,
+			rules,
 		}).then((evaluatedPages) => {
 			let previousActivePageIndex = activePage;
 

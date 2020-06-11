@@ -23,6 +23,7 @@ export default function nextPage({
 	formId,
 	pages,
 	portletNamespace,
+	rules,
 }) {
 	return (dispatch) => {
 		evaluate(null, {
@@ -30,6 +31,7 @@ export default function nextPage({
 			editingLanguageId,
 			pages,
 			portletNamespace,
+			rules,
 		}).then((evaluatedPages) => {
 			let validPage = true;
 			const visitor = new PagesVisitor(evaluatedPages);

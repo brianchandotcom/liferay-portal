@@ -47,6 +47,7 @@ export default function fieldChange({
 	pages,
 	portletNamespace,
 	properties,
+	rules,
 }) {
 	return (dispatch) => {
 		const {fieldInstance, value} = properties;
@@ -75,6 +76,7 @@ export default function fieldChange({
 				editingLanguageId,
 				pages: editedPages,
 				portletNamespace,
+				rules,
 			})
 				.then((evaluatedPages) => {
 					if (REVALIDATE_UPDATES.length > 0) {

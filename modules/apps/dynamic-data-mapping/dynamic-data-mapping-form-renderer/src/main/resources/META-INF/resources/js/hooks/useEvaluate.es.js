@@ -25,6 +25,7 @@ export const useEvaluate = (thunk) => {
 		editingLanguageId,
 		pages,
 		portletNamespace,
+		rules,
 	} = usePage();
 
 	return (args) =>
@@ -33,6 +34,7 @@ export const useEvaluate = (thunk) => {
 			editingLanguageId,
 			pages,
 			portletNamespace,
+			rules,
 			...args,
 		});
 };

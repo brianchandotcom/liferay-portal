@@ -104,19 +104,19 @@ public class HeadlessDiscoveryAPIApplication extends Application {
 
 			scanner.useDelimiter("\\A");
 
-			String page = StringUtil.replace(
+			String html = StringUtil.replace(
 				scanner.next(), "%CSRF-TOKEN%",
 				AuthTokenUtil.getToken(httpServletRequest));
 
 			return Response.ok(
 				(StreamingOutput)streamingOutput -> {
-					InputStream pageInputStream = new ByteArrayInputStream(
-						page.getBytes());
+					InputStream htmlInputStream = new ByteArrayInputStream(
+						html.getBytes());
 
 					byte[] buffer = new byte[1024];
 					int read = 0;
 
-					while ((read = pageInputStream.read(buffer)) != -1) {
+					while ((read = htmlInputStream.read(buffer)) != -1) {
 						streamingOutput.write(buffer, 0, read);
 					}
 				}

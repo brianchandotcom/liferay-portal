@@ -1,0 +1,96 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"autocomplete": false,
+				"dataSourceType": "manual",
+				"dataType": "string",
+				"ddmDataProviderInstanceId": [
+				],
+				"ddmDataProviderInstanceOutput": [
+				],
+				"displayStyle": "singleline",
+				"fieldNamespace": "",
+				"options": {
+					"en_US": [
+						{
+							"label": "Option",
+							"value": "Option"
+						}
+					]
+				},
+				"placeholder": {
+					"en_US": "Placeholder text"
+				},
+				"tooltip": {
+					"en_US": ""
+				},
+				"validation": {
+					"errorMessage": {
+					},
+					"expression": {
+					},
+					"parameter": {
+					}
+				},
+				"visibilityExpression": ""
+			},
+			"defaultValue": {
+				"en_US": ""
+			},
+			"fieldType": "text",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "Text",
+			"nestedDataDefinitionFields": [
+			],
+			"readOnly": false,
+			"repeatable": true,
+			"required": true,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Help Text"
+			}
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Text"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"undefined": ""
+				},
+				"title": {
+					"undefined": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"name": {
+			"en_US": "Parent"
+		},
+		"paginationMode": "wizard"
+	},
+	"defaultLanguageId": "en_US",
+	"name": {
+		"en_US": "Parent"
+	}
+}

@@ -1,0 +1,122 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"dataDefinitionFields": [
+		{
+			"customProperties": {
+				"collapsible": true,
+				"ddmStructureId": 36004,
+				"ddmStructureLayoutId": "",
+				"rows": [
+					{
+						"columns": [
+							{
+								"fields": [
+									"Text"
+								],
+								"size": 12
+							}
+						]
+					}
+				]
+			},
+			"fieldType": "fieldset",
+			"label": {
+				"en_US": "Parent"
+			},
+			"name": "Parent",
+			"nestedDataDefinitionFields": [
+				{
+					"customProperties": {
+						"autocomplete": false,
+						"dataSourceType": "manual",
+						"dataType": "string",
+						"ddmDataProviderInstanceId": "[]",
+						"ddmDataProviderInstanceOutput": "[]",
+						"displayStyle": "singleline",
+						"fieldNamespace": "",
+						"options": {
+							"en_US": [
+								{
+									"label": "Option",
+									"value": "Option"
+								}
+							]
+						},
+						"placeholder": {
+							"en_US": "Placeholder text"
+						},
+						"tooltip": {
+							"en_US": ""
+						},
+						"validation": {
+							"errorMessage": {
+							},
+							"expression": {
+							},
+							"parameter": {
+							}
+						},
+						"visibilityExpression": ""
+					},
+					"defaultValue": {
+						"en_US": ""
+					},
+					"fieldType": "text",
+					"indexType": "keyword",
+					"label": {
+						"en_US": "Text"
+					},
+					"localizable": true,
+					"name": "Text",
+					"nestedDataDefinitionFields": [
+					],
+					"readOnly": false,
+					"repeatable": true,
+					"required": true,
+					"showLabel": true,
+					"tip": {
+						"en_US": "Help Text"
+					}
+				}
+			],
+			"repeatable": true,
+			"showLabel": true
+		}
+	],
+	"defaultDataLayout": {
+		"dataLayoutPages": [
+			{
+				"dataLayoutRows": [
+					{
+						"dataLayoutColumns": [
+							{
+								"columnSize": 12,
+								"fieldNames": [
+									"Parent"
+								]
+							}
+						]
+					}
+				],
+				"description": {
+					"undefined": ""
+				},
+				"title": {
+					"undefined": ""
+				}
+			}
+		],
+		"dataRules": [
+		],
+		"name": {
+			"en_US": "Child"
+		},
+		"paginationMode": "wizard"
+	},
+	"defaultLanguageId": "en_US",
+	"name": {
+		"en_US": "Child"
+	}
+}

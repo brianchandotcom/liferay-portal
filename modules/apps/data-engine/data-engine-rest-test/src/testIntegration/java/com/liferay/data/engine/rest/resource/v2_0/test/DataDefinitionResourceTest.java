@@ -20,11 +20,13 @@ import com.liferay.data.engine.rest.client.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.client.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.client.pagination.Page;
 import com.liferay.data.engine.rest.client.pagination.Pagination;
+import com.liferay.data.engine.rest.client.permission.Permission;
 import com.liferay.data.engine.rest.client.problem.Problem;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataDefinitionTestUtil;
 import com.liferay.data.engine.rest.resource.v2_0.test.util.DataLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -53,6 +55,29 @@ public class DataDefinitionResourceTest
 
 	@Override
 	@Test
+	public void testDeleteDataDefinition() throws Exception {
+		super.testDeleteDataDefinition();
+
+		DataDefinition parentDataDefinition =
+			testDeleteDataDefinition_addDataDefinition(
+				DataDefinition.toDTO(
+					DataDefinitionTestUtil.read("data-definition-parent.json")),
+				DataDefinition.toDTO(
+					DataDefinitionTestUtil.read("data-definition-child.json")));
+
+		assertHttpResponseStatusCode(
+			204,
+			dataDefinitionResource.deleteDataDefinitionHttpResponse(
+				parentDataDefinition.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			dataDefinitionResource.getDataDefinitionHttpResponse(
+				parentDataDefinition.getId()));
+	}
+
+	@Override
+	@Test
 	public void testGetDataDefinitionDataDefinitionFieldFieldTypes()
 		throws Exception {
 
@@ -61,6 +86,18 @@ public class DataDefinitionResourceTest
 				getDataDefinitionDataDefinitionFieldFieldTypes();
 
 		Assert.assertTrue(Validator.isNotNull(fieldTypes));
+	}
+
+	@Test
+	public void testGetDataDefinitionPermissionsPage() throws Exception {
+		DataDefinition postDataDefinition =
+			testGetDataDefinition_addDataDefinition();
+
+		Page<Permission> pagePermissions =
+			dataDefinitionResource.getDataDefinitionPermissionsPage(
+				postDataDefinition.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(pagePermissions);
 	}
 
 	@Override
@@ -424,6 +461,21 @@ public class DataDefinitionResourceTest
 		}
 	}
 
+	@Test
+	public void testPostSiteDataDefinitionByContentTypeWithoutDataLayoutName()
+		throws Exception {
+
+		DataDefinition postDataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), _CONTENT_TYPE,
+				DataDefinition.toDTO(
+					DataDefinitionTestUtil.read("data-definition-must-set-data-layout-name.json")));
+
+		DataLayout dataLayout = postDataDefinition.getDefaultDataLayout();
+
+		Assert.assertNotNull(dataLayout.getName());
+	}
+
 	@Override
 	@Test
 	public void testPutDataDefinition() throws Exception {
@@ -503,6 +555,40 @@ public class DataDefinitionResourceTest
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
 			testGroup.getGroupId(), _CONTENT_TYPE, randomDataDefinition());
+	}
+
+	protected DataDefinition testDeleteDataDefinition_addDataDefinition(
+			DataDefinition dataDefinitionParent,
+			DataDefinition dataDefinitionChild)
+		throws Exception {
+
+		dataDefinitionParent =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), _CONTENT_TYPE, dataDefinitionParent);
+
+		DataDefinitionField[] dataDefinitionFields =
+			dataDefinitionChild.getDataDefinitionFields();
+
+		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
+			dataDefinitionField.setCustomProperties(
+				HashMapBuilder.<String, Object>put(
+					"collapsible", true
+				).put(
+					"ddmStructureId", dataDefinitionParent.getId()
+				).put(
+					"ddmStructureLayoutId", ""
+				).put(
+					"rows",
+					new String[] {
+						"[{\"columns\":[{\"fields\":[\"Text\"],\"size\": 12}]}]"
+					}
+				).build());
+		}
+
+		dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _CONTENT_TYPE, dataDefinitionChild);
+
+		return dataDefinitionParent;
 	}
 
 	@Override

@@ -61,11 +61,10 @@ public class ExpandoInfoItemFieldSetProviderImpl
 		for (ExpandoInfoItemFieldReader expandoInfoItemFieldReader :
 				_getExpandoFieldReaders(itemClassName)) {
 
-			InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
-				expandoInfoItemFieldReader.getField(),
-				expandoInfoItemFieldReader.getValue(itemObject));
-
-			infoFieldValues.add(infoFieldValue);
+			infoFieldValues.add(
+				new InfoFieldValue<>(
+					expandoInfoItemFieldReader.getField(),
+					expandoInfoItemFieldReader.getValue(itemObject)));
 		}
 
 		return infoFieldValues;

@@ -205,15 +205,16 @@ public class JournalArticleInfoItemFormProvider
 	private List<InfoFieldValue<Object>> _getDDMStructureInfoFieldValues(
 		JournalArticle article) {
 
-		JournalArticleDDMFormValuesReader journalArticleDDMFormValuesReader =
-			new JournalArticleDDMFormValuesReader(article);
-
-		journalArticleDDMFormValuesReader.setFieldsToDDMFormValuesConverter(
-			_fieldsToDDMFormValuesConverter);
-		journalArticleDDMFormValuesReader.setJournalConverter(
-			_journalConverter);
-
 		try {
+			JournalArticleDDMFormValuesReader
+				journalArticleDDMFormValuesReader =
+					new JournalArticleDDMFormValuesReader(article);
+
+			journalArticleDDMFormValuesReader.setFieldsToDDMFormValuesConverter(
+				_fieldsToDDMFormValuesConverter);
+			journalArticleDDMFormValuesReader.setJournalConverter(
+				_journalConverter);
+
 			return _ddmFormValuesInfoFieldValuesProvider.getInfoFieldValues(
 				article, journalArticleDDMFormValuesReader.getDDMFormValues());
 		}

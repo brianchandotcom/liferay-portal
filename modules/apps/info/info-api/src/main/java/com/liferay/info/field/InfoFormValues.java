@@ -47,16 +47,13 @@ public class InfoFormValues {
 		Collection<InfoFieldValue<Object>> infoFieldValues =
 			_infoFieldValuesByName.get(fieldName);
 
-		if (infoFieldValues != null) {
-			Iterator<InfoFieldValue<Object>> iterator =
-				infoFieldValues.iterator();
-
-			if (iterator.hasNext()) {
-				return iterator.next();
-			}
+		if ((infoFieldValues == null) || infoFieldValues.isEmpty()) {
+			return null;
 		}
 
-		return null;
+		Iterator<InfoFieldValue<Object>> iterator = infoFieldValues.iterator();
+
+		return iterator.next();
 	}
 
 	public Collection<InfoFieldValue<Object>> getInfoFieldValues() {

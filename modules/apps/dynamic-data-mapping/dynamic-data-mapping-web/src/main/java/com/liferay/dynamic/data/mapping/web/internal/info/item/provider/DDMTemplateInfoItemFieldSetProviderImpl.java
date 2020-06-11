@@ -28,9 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,25 +54,21 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 				"templates"
 			).add(
 				consumer -> {
-					List<DDMTemplate> ddmTemplates =
-						ddmStructure.getTemplates();
-
-					Stream<DDMTemplate> stream = ddmTemplates.stream();
-
 					Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-					stream.map(
-						ddmTemplate -> new InfoField.Builder(
-							TextInfoFieldType.INSTANCE,
-							InfoLocalizedValue.localize(
-								getClass(),
-								ddmTemplate.getName(locale) + StringPool.SPACE +
-									StringPool.STAR),
-							_getTemplateFieldName(ddmTemplate)
-						).build()
-					).forEach(
-						consumer
-					);
+					for (DDMTemplate ddmTemplate :
+							ddmStructure.getTemplates()) {
+
+						consumer.accept(
+							new InfoField.Builder(
+								TextInfoFieldType.INSTANCE,
+								InfoLocalizedValue.localize(
+									getClass(),
+									ddmTemplate.getName(locale) +
+										StringPool.SPACE + StringPool.STAR),
+								_getTemplateFieldName(ddmTemplate)
+							).build());
+					}
 				}
 			).build();
 		}

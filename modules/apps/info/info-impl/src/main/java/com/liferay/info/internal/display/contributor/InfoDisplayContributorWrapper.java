@@ -27,7 +27,6 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
-import com.liferay.info.item.NoSuchInfoItemException;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -54,13 +53,9 @@ public class InfoDisplayContributorWrapper
 
 	@Override
 	public InfoForm getInfoForm() {
-		Locale locale = _getLocale();
-
 		try {
-			Set<InfoDisplayField> infoDisplayFields =
-				_infoDisplayContributor.getInfoDisplayFields(0, locale);
-
-			return _convertToInfoForm(infoDisplayFields);
+			return _convertToInfoForm(
+				_infoDisplayContributor.getInfoDisplayFields(0, _getLocale()));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -69,12 +64,10 @@ public class InfoDisplayContributorWrapper
 
 	@Override
 	public InfoForm getInfoForm(long itemClassTypeId) {
-		Locale locale = _getLocale();
-
 		try {
 			return _convertToInfoForm(
 				_infoDisplayContributor.getInfoDisplayFields(
-					itemClassTypeId, locale));
+					itemClassTypeId, _getLocale()));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(
@@ -86,12 +79,10 @@ public class InfoDisplayContributorWrapper
 
 	@Override
 	public InfoForm getInfoForm(Object itemObject) {
-		Locale locale = _getLocale();
-
 		try {
 			return _convertToInfoForm(
 				_infoDisplayContributor.getInfoDisplayFields(
-					itemObject, locale));
+					itemObject, _getLocale()));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -124,7 +115,7 @@ public class InfoDisplayContributorWrapper
 						).build();
 
 						consumer.accept(
-							new InfoFieldValue(infoField, entry.getValue()));
+							new InfoFieldValue<>(infoField, entry.getValue()));
 					}
 				}
 			).setInfoItemClassPKReference(
@@ -140,7 +131,7 @@ public class InfoDisplayContributorWrapper
 	}
 
 	@Override
-	public Object getInfoItem(long itemClassPK) throws NoSuchInfoItemException {
+	public Object getInfoItem(long itemClassPK) {
 		try {
 			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
 				_infoDisplayContributor.getInfoDisplayObjectProvider(
@@ -201,11 +192,11 @@ public class InfoDisplayContributorWrapper
 	private Locale _getLocale() {
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 
-		if (locale == null) {
-			locale = LocaleUtil.getDefault();
+		if (locale != null) {
+			return locale;
 		}
 
-		return locale;
+		return LocaleUtil.getDefault();
 	}
 
 	private final InfoDisplayContributor<Object> _infoDisplayContributor;

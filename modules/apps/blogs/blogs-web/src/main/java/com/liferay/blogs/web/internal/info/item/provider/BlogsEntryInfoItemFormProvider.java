@@ -122,11 +122,12 @@ public class BlogsEntryInfoItemFormProvider
 	private List<InfoFieldValue<Object>> _getBlogsEntryInfoFieldValues(
 		BlogsEntry blogsEntry) {
 
-		List<InfoFieldValue<Object>> blogsEntryFieldValues = new ArrayList<>();
-
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
 		try {
+			List<InfoFieldValue<Object>> blogsEntryFieldValues =
+				new ArrayList<>();
+
+			ThemeDisplay themeDisplay = _getThemeDisplay();
+
 			blogsEntryFieldValues.add(
 				new InfoFieldValue<>(_titleInfoField, blogsEntry.getTitle()));
 

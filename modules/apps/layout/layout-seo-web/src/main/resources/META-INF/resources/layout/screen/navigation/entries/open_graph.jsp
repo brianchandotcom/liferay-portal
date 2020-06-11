@@ -67,6 +67,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						<aui:input disabled="<%= true %>" label="open-graph-image-alt-description" name="openGraphImageAlt" />
 
 						<react:component
+							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"
 							module="js/seo/display_page_templates/OpenGraphMapping"
 							servletContext="<%= application %>"
 						/>

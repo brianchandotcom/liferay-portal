@@ -24,6 +24,9 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.TextInfoFieldType;
+import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -90,61 +93,85 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		Assert.assertEquals("DDM_Text", infoField.getName());
 		Assert.assertTrue(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(1);
 
 		Assert.assertEquals("authorName", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(2);
 
 		Assert.assertEquals("authorProfileImage", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			ImageInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(3);
 
 		Assert.assertEquals("categories", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(4);
 
 		Assert.assertEquals("description", infoField.getName());
 		Assert.assertTrue(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(5);
 
 		Assert.assertEquals("displayPageURL", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			URLInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(6);
 
 		Assert.assertEquals("lastEditorName", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(7);
 
 		Assert.assertEquals("lastEditorProfileImage", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			ImageInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(8);
 
 		Assert.assertEquals("publishDate", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(9);
 
 		Assert.assertEquals("smallImage", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			ImageInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(10);
 
 		Assert.assertEquals("tagNames", infoField.getName());
 		Assert.assertFalse(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 
 		infoField = infoFields.get(11);
 
 		Assert.assertEquals("title", infoField.getName());
 		Assert.assertTrue(infoField.isLocalizable());
+		Assert.assertEquals(
+			TextInfoFieldType.INSTANCE, infoField.getInfoFieldType());
 	}
 
 	@Test

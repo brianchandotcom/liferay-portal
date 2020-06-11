@@ -18,7 +18,7 @@ import {EVENT_TYPES} from '../actions/types.es';
 import {createReducer} from '../reducers/index.es';
 import {useThunk} from './useThunk.es';
 
-const FormContext = React.createContext({});
+const FormContext = React.createContext(() => {});
 
 export const FormProvider = ({children, onEvent, value}) => {
 	const [state, dispatch] = useThunk(

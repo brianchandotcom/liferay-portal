@@ -36,6 +36,14 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		type: 'panel',
 	},
 
+	containerLink: {
+		icon: 'link',
+		id: 'container_link',
+		panelId: 'container_link',
+		title: Liferay.Language.get('link'),
+		type: 'panel',
+	},
+
 	duplicateItem: {
 		icon: 'paste',
 		id: 'duplicate_item',

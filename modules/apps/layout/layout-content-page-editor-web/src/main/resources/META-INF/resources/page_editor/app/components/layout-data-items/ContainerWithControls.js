@@ -23,6 +23,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
+import {config} from '../../config/index';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -85,6 +86,10 @@ const ContainerWithControls = React.forwardRef(
 			buttons.push(
 				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
 			);
+		}
+
+		if (config.containerItemEnabled) {
+			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerLink);
 		}
 
 		buttons.push(

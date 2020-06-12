@@ -25,12 +25,13 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceReportPersistence;
+import com.liferay.dynamic.data.mapping.service.DDMFormInstanceReportLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -85,8 +86,9 @@ public class DDMFormInstanceReportLocalServiceTest
 			getServiceContext());
 
 		DDMFormInstanceReport ddmFormInstanceReport =
-			_ddmFormInstanceReportPersistence.findByFormInstanceId(
-				_ddmFormInstance.getFormInstanceId());
+			_ddmFormInstanceReportLocalService.
+				getFormInstanceReportByFormInstanceId(
+					_ddmFormInstance.getFormInstanceId());
 
 		Assert.assertNotNull(ddmFormInstanceReport);
 	}
@@ -97,8 +99,9 @@ public class DDMFormInstanceReportLocalServiceTest
 			createDDMFormInstanceRecord();
 
 		DDMFormInstanceReport ddmFormInstanceReport =
-			_ddmFormInstanceReportPersistence.findByFormInstanceId(
-				ddmFormInstanceRecord.getFormInstanceId());
+			_ddmFormInstanceReportLocalService.
+				getFormInstanceReportByFormInstanceId(
+					ddmFormInstanceRecord.getFormInstanceId());
 
 		JSONObject ddmFormInstanceReportDataJSONObject =
 			JSONFactoryUtil.createJSONObject(ddmFormInstanceReport.getData());
@@ -126,8 +129,9 @@ public class DDMFormInstanceReportLocalServiceTest
 			ddmFormInstanceRecord);
 
 		DDMFormInstanceReport ddmFormInstanceReport =
-			_ddmFormInstanceReportPersistence.findByFormInstanceId(
-				ddmFormInstanceRecord.getFormInstanceId());
+			_ddmFormInstanceReportLocalService.
+				getFormInstanceReportByFormInstanceId(
+					ddmFormInstanceRecord.getFormInstanceId());
 
 		JSONObject ddmFormInstanceReportDataJSONObject =
 			JSONFactoryUtil.createJSONObject(ddmFormInstanceReport.getData());
@@ -175,8 +179,9 @@ public class DDMFormInstanceReportLocalServiceTest
 			newDDMFormValues, getServiceContext());
 
 		DDMFormInstanceReport ddmFormInstanceReport =
-			_ddmFormInstanceReportPersistence.findByFormInstanceId(
-				ddmFormInstanceRecord.getFormInstanceId());
+			_ddmFormInstanceReportLocalService.
+				getFormInstanceReportByFormInstanceId(
+					ddmFormInstanceRecord.getFormInstanceId());
 
 		JSONObject ddmFormInstanceReportDataJSONObject =
 			JSONFactoryUtil.createJSONObject(ddmFormInstanceReport.getData());
@@ -246,6 +251,7 @@ public class DDMFormInstanceReportLocalServiceTest
 		_ddmFormInstanceRecordLocalService;
 
 	@Inject
-	private DDMFormInstanceReportPersistence _ddmFormInstanceReportPersistence;
+	private DDMFormInstanceReportLocalService
+		_ddmFormInstanceReportLocalService;
 
 }

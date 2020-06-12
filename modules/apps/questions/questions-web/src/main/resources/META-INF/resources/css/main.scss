@@ -182,3 +182,11 @@
 .questions-container .subnav-tbar .container-fluid-max-xl {
 	max-width: 100%;
 }
+
+.questions-container blockquote {
+	border-color: #ccc;
+	border-style: solid;
+	border-width: 0 0 0 5px;
+	padding-left: 20px;
+	padding-right: 8px;
+}

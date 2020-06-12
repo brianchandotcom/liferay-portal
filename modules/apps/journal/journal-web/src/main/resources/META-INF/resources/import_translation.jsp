@@ -16,4 +16,49 @@
 
 <%@ include file="/init.jsp" %>
 
-<h1> Import Translation </h1>
+<%
+String articleTitle = ParamUtil.getString(request, "articleTitle");
+String redirect = ParamUtil.getString(request, "redirect");
+String title = LanguageUtil.get(resourceBundle, "import-translation");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(title);
+%>
+
+<portlet:actionURL name="/journaly/import_translation" var="importTranslationURL" />
+
+<aui:form action="<%= importTranslationURL %>" name="fm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+
+	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
+		<clay:container-fluid>
+			<ul class="tbar-nav">
+				<li class="tbar-item tbar-item-expand">
+					<div class="tbar-section text-left">
+						<h4 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(articleTitle) %>">
+							<span class="text-truncate"><%= HtmlUtil.escape(articleTitle) %></span>
+						</h4>
+					</div>
+				</li>
+				<li class="tbar-item">
+					<div class="metadata-type-button-row tbar-section text-right">
+						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+
+						<aui:button cssClass="btn-sm mr-3" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
+
+						<aui:button cssClass="btn-sm mr-3" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
+					</div>
+				</li>
+			</ul>
+		</clay:container-fluid>
+	</nav>
+
+	<clay:container-fluid
+		cssClass="container-view"
+	>
+		<h1> Import translation </h1>
+	</clay:container-fluid>
+
+</aui:form>

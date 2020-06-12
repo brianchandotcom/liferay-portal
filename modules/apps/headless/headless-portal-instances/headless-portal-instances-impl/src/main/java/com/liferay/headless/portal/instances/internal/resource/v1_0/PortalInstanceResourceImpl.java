@@ -74,13 +74,11 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	public Page<PortalInstance> getPortalInstancesPage(String skipDefault)
 		throws Exception {
 
-		List<Company> companies = _companyLocalService.getCompanies(false);
-
-		boolean skipDefaultCompany = GetterUtil.get(skipDefault, false);
+		boolean skipDefaultCompany = GetterUtil.getBoolean(skipDefault);
 
 		List<PortalInstance> portalInstances = new ArrayList<>();
 
-		for (Company company : companies) {
+		for (Company company : _companyLocalService.getCompanies(false)) {
 			if (skipDefaultCompany &&
 				(_portalInstancesLocalService.getDefaultCompanyId() ==
 					company.getCompanyId())) {

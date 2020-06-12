@@ -19,6 +19,7 @@ import React, {useContext} from 'react';
 import {AppContext} from '../../AppContext.es';
 import Link from '../../components/Link.es';
 import {getSectionsQuery} from '../../utils/client.es';
+import lang from '../../utils/lang.es';
 
 export default () => {
 	const context = useContext(AppContext);
@@ -71,6 +72,17 @@ export default () => {
 												displayType="text"
 												truncate={false}
 											>
+												<span className="x-questions">
+													{lang.sub(
+														Liferay.Language.get(
+															'x-questions'
+														),
+														[
+															section.numberOfMessageBoardThreads,
+														]
+													)}
+												</span>
+
 												<button className="btn btn-link btn-sm d-xl-none float-right font-weight-bold p-0">
 													View Topic
 												</button>

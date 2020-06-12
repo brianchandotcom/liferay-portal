@@ -367,12 +367,12 @@ class ImageEditor extends PortletBase {
 	 * @param  {String} message The error message to display.
 	 * @protected
 	 */
-	showError_(message) {
+	showError_({message}) {
 		this.components.loading.show = false;
 
 		Liferay.Util.openToast({
 			container: this.element,
-			message: message.message,
+			message: message,
 			type: 'danger',
 		});
 	}

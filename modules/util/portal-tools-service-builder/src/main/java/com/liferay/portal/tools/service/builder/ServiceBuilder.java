@@ -5679,6 +5679,18 @@ public class ServiceBuilder {
 		return Version.getInstance(version);
 	}
 
+	private boolean _hasField(List<Element> elements, String fieldName) {
+		for (Element element : elements) {
+			String elementName = element.attributeValue("name");
+
+			if (elementName.equals(fieldName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _hasHttpMethods(JavaClass javaClass) {
 		for (JavaMethod javaMethod : _getMethods(javaClass)) {
 			if (javaMethod.isPublic() && isCustomMethod(javaMethod)) {
@@ -5687,6 +5699,23 @@ public class ServiceBuilder {
 		}
 
 		return false;
+	}
+
+	private boolean _hasUniqueId(List<Element> elements, String idFieldName) {
+		boolean hasIdField = false;
+
+		for (Element element : elements) {
+			String elementName = element.attributeValue("name");
+
+			if (elementName.equals(idFieldName)) {
+				hasIdField = true;
+			}
+			else if (elementName.endsWith("Id") || elementName.endsWith("PK")) {
+				return false;
+			}
+		}
+
+		return hasIdField;
 	}
 
 	private boolean _isCommercialPlugin(Path pluginPath) throws IOException {
@@ -6496,6 +6525,7 @@ public class ServiceBuilder {
 			for (Element finderColumnElement : finderColumnElements) {
 				String finderColumnName = finderColumnElement.attributeValue(
 					"name");
+
 				boolean finderColCaseSensitive = GetterUtil.getBoolean(
 					finderColumnElement.attributeValue("case-sensitive"), true);
 				String finderColComparator = GetterUtil.getString(
@@ -6523,6 +6553,16 @@ public class ServiceBuilder {
 				entityColumn.validate();
 
 				finderEntityColumns.add(entityColumn);
+			}
+
+			if (isVersionGTE_7_3_0() &&
+				_hasField(columnElements, "companyId") &&
+				_hasUniqueId(finderColumnElements, "classNameId")) {
+
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"Finder ", finderName, " for entity ", entityName,
+						" requires an additional company scope field"));
 			}
 
 			entityFinders.add(

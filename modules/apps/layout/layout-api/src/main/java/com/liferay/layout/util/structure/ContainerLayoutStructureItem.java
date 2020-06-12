@@ -62,6 +62,10 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 				_paddingHorizontal,
 				containerLayoutStructureItem._paddingHorizontal) ||
 			!Objects.equals(
+				_paddingLeft, containerLayoutStructureItem._paddingLeft) ||
+			!Objects.equals(
+				_paddingRight, containerLayoutStructureItem._paddingRight) ||
+			!Objects.equals(
 				_paddingTop, containerLayoutStructureItem._paddingTop)) {
 
 			return false;
@@ -123,9 +127,21 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		return _paddingBottom;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getPaddingLeft()} and {@link #getPaddingRight()}
+	 */
 	@Deprecated
 	public int getPaddingHorizontal() {
 		return _paddingHorizontal;
+	}
+
+	public int getPaddingLeft() {
+		return _paddingLeft;
+	}
+
+	public int getPaddingRight() {
+		return _paddingRight;
 	}
 
 	public int getPaddingTop() {
@@ -164,9 +180,21 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		_paddingBottom = paddingBottom;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #setPaddingLeft(int)} and {@link #setPaddingRight(int)}
+	 */
 	@Deprecated
 	public void setPaddingHorizontal(int paddingHorizontal) {
 		_paddingHorizontal = paddingHorizontal;
+	}
+
+	public void setPaddingLeft(int paddingLeft) {
+		_paddingLeft = paddingLeft;
+	}
+
+	public void setPaddingRight(int paddingRight) {
+		_paddingRight = paddingRight;
 	}
 
 	public void setPaddingTop(int paddingTop) {
@@ -216,6 +244,22 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		if (itemConfigJSONObject.has("paddingHorizontal")) {
 			setPaddingHorizontal(
 				itemConfigJSONObject.getInt("paddingHorizontal"));
+
+			if (!itemConfigJSONObject.has("paddingLeft")) {
+				setPaddingLeft(_paddingHorizontal);
+			}
+
+			if (!itemConfigJSONObject.has("paddingRight")) {
+				setPaddingRight(_paddingHorizontal);
+			}
+		}
+
+		if (itemConfigJSONObject.has("paddingLeft")) {
+			setPaddingLeft(itemConfigJSONObject.getInt("paddingLeft"));
+		}
+
+		if (itemConfigJSONObject.has("paddingRight")) {
+			setPaddingRight(itemConfigJSONObject.getInt("paddingRight"));
 		}
 
 		if (itemConfigJSONObject.has("paddingTop")) {
@@ -228,6 +272,8 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 	private String _containerWidth = "fluid";
 	private int _paddingBottom = 3;
 	private int _paddingHorizontal = 3;
+	private int _paddingLeft = 0;
+	private int _paddingRight = 0;
 	private int _paddingTop = 3;
 
 }

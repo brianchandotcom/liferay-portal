@@ -13,7 +13,7 @@
  */
 
 /*
- * @deprecated As of Athanasius (7.3.x), replaced by Liferay.Util.getCropRegion
+ * @deprecated As of Athanasius (7.3.x), replaced by Liferay.Util.openToast
  * @module liferay-alert
  */
 AUI.add(

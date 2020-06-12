@@ -21,11 +21,11 @@ import WidgetSettings from './settings/WidgetSettings.es';
 
 const Divider = () => {
 	return (
-		<ClayLayout.ContentRow className="mb-4 pl-2 pr-2">
-			<ClayLayout.ContentCol>
+		<div className="mb-4 pl-4 pr-4">
+			<div className="d-flex flex-column">
 				<h4 className="card-divider"></h4>
-			</ClayLayout.ContentCol>
-		</ClayLayout.ContentRow>
+			</div>
+		</div>
 	);
 };
 

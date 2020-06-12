@@ -35,7 +35,7 @@ export default ({deploymentType, settings = () => <></>, subtitle, title}) => {
 
 	return (
 		<>
-			<ClayLayout.ContentRow className="mb-3 pl-4 pr-4">
+			<ClayLayout.ContentRow className="justify-content-between mb-3 pl-4 pr-4">
 				<ClayLayout.ContentCol>
 					<ClayLayout.ContentSection containerElement="section">
 						<h3>{title}</h3>

@@ -1058,6 +1058,10 @@ public class DataDefinitionResourceImpl
 						).put(
 							"nativeField", true
 						).build();
+						defaultValue = HashMapBuilder.<String, Object>put(
+							contextAcceptLanguage.getPreferredLanguageId(),
+							StringPool.BLANK
+						).build();
 						label = HashMapBuilder.<String, Object>put(
 							contextAcceptLanguage.getPreferredLanguageId(),
 							GetterUtil.getString(

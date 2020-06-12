@@ -6,7 +6,6 @@ Export-Package:\
 	com.liferay.frontend.taglib.clay.data.set,\
 	com.liferay.frontend.taglib.clay.data.set.model,\
 	com.liferay.frontend.taglib.clay.data.set.provider,\
-	com.liferay.frontend.taglib.clay.data.set.util,\
 	com.liferay.frontend.taglib.clay.data.set.view.list,\
 	com.liferay.frontend.taglib.clay.data.set.view.table,\
 	com.liferay.frontend.taglib.clay.data.set.view.timeline,\

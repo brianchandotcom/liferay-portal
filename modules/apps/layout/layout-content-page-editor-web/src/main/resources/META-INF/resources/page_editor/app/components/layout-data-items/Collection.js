@@ -195,24 +195,24 @@ const Collection = React.forwardRef(({children, item}, ref) => {
 
 	return (
 		<div className="page-editor__collection" ref={ref}>
-			{collectionIsMapped(collectionConfig) &&
-			!collection.content &&
-			collection.items.length > 0 ? (
-				<Grid
-					child={child}
-					collection={collection.items}
-					collectionFields={collectionFields}
-					collectionId={item.itemId}
-					collectionLength={collection.items.length}
-					numberOfColumns={collectionConfig.numberOfColumns}
-					numberOfItems={collectionConfig.numberOfItems}
-				/>
-			) : collectionIsMapped(collectionConfig) && collection.content ? (
-				<UnsafeHTML markup={collection.content} />
-			) : collectionIsMapped(collectionConfig) ? (
-				<NoItemsMessage />
-			) : (
+			{!collectionIsMapped(collectionConfig) ? (
 				<NotCollectionSelectedMessage />
+			) : collection.items.length > 0 ? (
+				collection.content ? (
+					<UnsafeHTML markup={collection.content} />
+				) : (
+					<Grid
+						child={child}
+						collection={collection.items}
+						collectionFields={collectionFields}
+						collectionId={item.itemId}
+						collectionLength={collection.items.length}
+						numberOfColumns={collectionConfig.numberOfColumns}
+						numberOfItems={collectionConfig.numberOfItems}
+					/>
+				)
+			) : (
+				<NoItemsMessage />
 			)}
 		</div>
 	);

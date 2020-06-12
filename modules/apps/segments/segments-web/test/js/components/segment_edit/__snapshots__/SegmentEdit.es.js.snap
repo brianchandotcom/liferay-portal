@@ -14,7 +14,7 @@ exports[`SegmentEdit renders 1`] = `
       class="form-header"
     >
       <div
-        class="container-fluid container-fluid-max-xl form-header-container"
+        class="form-header-container container-fluid container-fluid-max-xl"
       >
         <div
           class="form-header-section-left"
@@ -118,7 +118,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
       class="form-header"
     >
       <div
-        class="container-fluid container-fluid-max-xl form-header-container"
+        class="form-header-container container-fluid container-fluid-max-xl"
       >
         <div
           class="form-header-section-left"
@@ -302,7 +302,7 @@ exports[`SegmentEdit renders with given values 1`] = `
       class="form-header"
     >
       <div
-        class="container-fluid container-fluid-max-xl form-header-container"
+        class="form-header-container container-fluid container-fluid-max-xl"
       >
         <div
           class="form-header-section-left"
@@ -799,7 +799,7 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
       class="form-header"
     >
       <div
-        class="container-fluid container-fluid-max-xl form-header-container"
+        class="form-header-container container-fluid container-fluid-max-xl"
       >
         <div
           class="form-header-section-left"

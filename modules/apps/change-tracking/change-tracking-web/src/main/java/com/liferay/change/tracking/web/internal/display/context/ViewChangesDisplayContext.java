@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -283,8 +281,6 @@ public class ViewChangesDisplayContext {
 	}
 
 	private List<JSONObject> _getChildJSONObjects(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
 		AtomicInteger nodeIdCounter, Map<Long, List<Long>> childPKsMap) {
 
 		List<JSONObject> childJSONObjects = new ArrayList<>();
@@ -329,16 +325,6 @@ public class ViewChangesDisplayContext {
 				ResourceURL renderURL = _renderResponse.createResourceURL();
 
 				if (ctEntry == null) {
-					dropdownItemsJSONArray.put(
-						JSONUtil.put(
-							"href",
-							_ctDisplayRendererRegistry.getViewURL(
-								liferayPortletResponse, ctCollectionId,
-								classNameId, classPK, title)
-						).put(
-							"label", _language.get(_httpServletRequest, "view")
-						));
-
 					renderURL.setResourceID("/change_lists/render_ct_entry");
 
 					renderURL.setParameter(
@@ -366,17 +352,6 @@ public class ViewChangesDisplayContext {
 								_language.get(_httpServletRequest, "edit")
 							));
 					}
-
-					dropdownItemsJSONArray.put(
-						JSONUtil.put(
-							"href",
-							_ctDisplayRendererRegistry.getViewURL(
-								liferayPortletRequest, liferayPortletResponse,
-								ctEntry, true)
-						).put(
-							"label",
-							_language.get(_httpServletRequest, "view-diff")
-						));
 
 					renderURL.setResourceID("/change_lists/render_diff");
 
@@ -450,10 +425,6 @@ public class ViewChangesDisplayContext {
 
 	private JSONObject _getTreeJsonObject() {
 		CTClosure ctClosure = _getCTClosure();
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(_renderRequest);
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(_renderResponse);
 
 		JSONObject everythingJSONObject = JSONUtil.put(
 			"id", 0
@@ -530,8 +501,7 @@ public class ViewChangesDisplayContext {
 			}
 
 			List<JSONObject> childJSONObjects = _getChildJSONObjects(
-				liferayPortletRequest, liferayPortletResponse, nodeIdCounter,
-				childPKsMap);
+				nodeIdCounter, childPKsMap);
 
 			if (childJSONObjects.isEmpty()) {
 				continue;

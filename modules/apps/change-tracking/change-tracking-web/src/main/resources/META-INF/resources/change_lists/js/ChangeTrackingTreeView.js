@@ -252,7 +252,7 @@ class ChangeTrackingTreeView extends React.Component {
 
 			rows.push(
 				<ClayTable.Row>
-					<ClayTable.Cell style={{width: '99%'}}>
+					<ClayTable.Cell>
 						<button
 							className="change-row-button"
 							onClick={() =>
@@ -266,21 +266,6 @@ class ChangeTrackingTreeView extends React.Component {
 
 							{descriptionMarkup}
 						</button>
-					</ClayTable.Cell>
-					<ClayTable.Cell style={{width: '1%'}}>
-						<ClayDropDownWithItems
-							alignmentPosition={Align.BottomLeft}
-							items={node.dropdownItems}
-							spritemap={this.spritemap}
-							trigger={
-								<ClayButtonWithIcon
-									displayType="unstyled"
-									small
-									spritemap={this.spritemap}
-									symbol="ellipsis-v"
-								/>
-							}
-						/>
 					</ClayTable.Cell>
 				</ClayTable.Row>
 			);
@@ -378,11 +363,41 @@ class ChangeTrackingTreeView extends React.Component {
 			return '';
 		}
 
+		let dropdown = '';
+
+		if (
+			this.state.node.dropdownItems &&
+			this.state.node.dropdownItems.length > 0
+		) {
+			dropdown = (
+				<div className="autofit-col">
+					<ClayDropDownWithItems
+						alignmentPosition={Align.BottomLeft}
+						items={this.state.node.dropdownItems}
+						spritemap={this.spritemap}
+						trigger={
+							<ClayButtonWithIcon
+								displayType="unstyled"
+								small
+								spritemap={this.spritemap}
+								symbol="ellipsis-v"
+							/>
+						}
+					/>
+				</div>
+			);
+		}
+
 		return (
 			<div className="sheet">
-				<div className="sheet-header">
-					<h2 className="sheet-title">{this.state.title}</h2>
-				</div>
+				<h2 className="autofit-row sheet-title">
+					<div className="autofit-col autofit-col-expand">
+						<span className="heading-text">{this.state.title}</span>
+					</div>
+
+					{dropdown}
+				</h2>
+
 				<div
 					className="sheet-section"
 					dangerouslySetInnerHTML={this.state.renderInnerHTML}

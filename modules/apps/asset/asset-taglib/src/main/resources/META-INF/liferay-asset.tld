@@ -11,6 +11,7 @@
 	<short-name>liferay-asset</short-name>
 	<uri>http://liferay.com/tld/asset</uri>
 	<tag>
+		<description>Deprecated as of 7.3.0, with no direct replacement.</description>
 		<name>asset-add-button</name>
 		<tag-class>com.liferay.asset.taglib.servlet.taglib.AssetAddButtonTag</tag-class>
 		<body-content>JSP</body-content>

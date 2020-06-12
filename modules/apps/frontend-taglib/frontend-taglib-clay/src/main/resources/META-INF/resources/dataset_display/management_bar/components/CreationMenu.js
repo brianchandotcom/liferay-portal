@@ -20,22 +20,22 @@ import React, {useContext, useState} from 'react';
 import DatasetDisplayContext from '../../DatasetDisplayContext';
 import {triggerAction} from '../../utilities/actionItems/index';
 
-function CreationMenu({items}) {
+function CreationMenu({primaryItems}) {
 	const [active, setActive] = useState(false);
 	const datasetContext = useContext(DatasetDisplayContext);
 
 	return (
-		items?.length && (
+		primaryItems.length && (
 			<ul className="navbar-nav">
 				<li className="nav-item">
-					{items.length > 1 ? (
+					{primaryItems.length > 1 ? (
 						<ClayDropDown
 							active={active}
 							onActiveChange={setActive}
 							trigger={<ClayButtonWithIcon symbol="plus" />}
 						>
 							<ClayDropDown.ItemList>
-								{items.map((item, i) => (
+								{primaryItems.map((item, i) => (
 									<ClayDropDown.Item
 										key={i}
 										onClick={(event) => {
@@ -52,7 +52,7 @@ function CreationMenu({items}) {
 					) : (
 						<ClayButtonWithIcon
 							onClick={() =>
-								triggerAction(items[0], datasetContext)
+								triggerAction(primaryItems[0], datasetContext)
 							}
 							symbol="plus"
 						/>
@@ -64,13 +64,20 @@ function CreationMenu({items}) {
 }
 
 CreationMenu.propTypes = {
-	items: PropTypes.arrayOf(
+	primaryItems: PropTypes.arrayOf(
 		PropTypes.shape({
 			href: PropTypes.string.isRequired,
 			label: PropTypes.string.isRequired,
 			target: PropTypes.oneOf(['modal', 'sidePanel', 'event', 'link']),
 		})
 	).isRequired,
+	secondaryItems: PropTypes.arrayOf(
+		PropTypes.shape({
+			href: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+			target: PropTypes.oneOf(['modal', 'sidePanel', 'event', 'link']),
+		})
+	),
 };
 
 export default CreationMenu;

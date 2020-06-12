@@ -21,40 +21,32 @@ import CreationMenu from './CreationMenu';
 import FiltersDropdown from './FiltersDropdown';
 import MainSearch from './MainSearch';
 
-function NavBar({
-	activeView,
-	creationMenuItems,
-	setActiveView,
-	showSearch,
-	views,
-}) {
+function NavBar({activeView, creationMenu, setActiveView, showSearch, views}) {
 	const {state} = useAppState();
 
 	return (
 		<nav className="management-bar management-bar-light navbar navbar-expand-md">
 			<div className="container-fluid container-fluid-max-xl">
-				{state.filters.length > 1 ? (
+				{state.filters.length > 1 && (
 					<div className="mr-2 navbar-nav">
 						<FiltersDropdown />
 					</div>
-				) : null}
-				{showSearch ? (
+				)}
+				{showSearch && (
 					<div className="navbar-form navbar-overlay-sm-down pl-0">
 						<MainSearch />
 					</div>
-				) : null}
+				)}
 				<div className="navbar-form navbar-form-autofit navbar-overlay navbar-overlay-sm-down pl-0">
-					{views?.length > 1 ? (
+					{views?.length > 1 && (
 						<ActiveViewSelector
 							activeView={activeView}
 							setActiveView={setActiveView}
 							views={views}
 						/>
-					) : null}
+					)}
 				</div>
-				{creationMenuItems?.length ? (
-					<CreationMenu items={creationMenuItems} />
-				) : null}
+				{creationMenu && <CreationMenu {...creationMenu} />}
 			</div>
 		</nav>
 	);
@@ -62,7 +54,10 @@ function NavBar({
 
 NavBar.propTypes = {
 	activeView: PropTypes.number,
-	creationMenuItems: PropTypes.array,
+	creationMenu: PropTypes.shape({
+		primaryItems: PropTypes.array,
+		secondaryItems: PropTypes.array,
+	}),
 	setActiveView: PropTypes.func,
 	showSearch: PropTypes.bool,
 	views: PropTypes.arrayOf(
@@ -74,7 +69,9 @@ NavBar.propTypes = {
 };
 
 NavBar.defaultProps = {
-	creationMenuItems: [],
+	creationMenu: {
+		primaryItems: [],
+	},
 	showSearch: true,
 };
 

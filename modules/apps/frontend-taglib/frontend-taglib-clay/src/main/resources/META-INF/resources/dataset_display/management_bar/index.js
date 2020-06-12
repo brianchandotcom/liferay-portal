@@ -23,7 +23,7 @@ import NavBar from './components/NavBar';
 function ManagementBar({
 	activeView,
 	bulkActions,
-	creationMenuItems,
+	creationMenu,
 	fluid,
 	onFiltersChange,
 	selectAllItems,
@@ -58,7 +58,7 @@ function ManagementBar({
 			{(!selectedItemsValue.length || selectionType === 'single') && (
 				<NavBar
 					activeView={activeView}
-					creationMenuItems={creationMenuItems}
+					creationMenu={creationMenu}
 					setActiveView={setActiveView}
 					showSearch={showSearch}
 					views={views}
@@ -88,7 +88,10 @@ Wrapper.propTypes = {
 			target: PropTypes.oneOf(['sidePanel', 'modal']),
 		})
 	),
-	creationMenuItems: PropTypes.array,
+	creationMenu: PropTypes.shape({
+		primaryItems: PropTypes.array,
+		secondaryItems: PropTypes.array,
+	}),
 	filters: PropTypes.array,
 	fluid: PropTypes.bool,
 	onFiltersChange: PropTypes.func.isRequired,

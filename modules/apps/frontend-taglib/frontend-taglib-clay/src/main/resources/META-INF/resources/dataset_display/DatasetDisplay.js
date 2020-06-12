@@ -39,7 +39,7 @@ import {getViewById} from './views/index';
 function DatasetDisplay({
 	apiUrl,
 	bulkActions,
-	creationMenuItems,
+	creationMenu,
 	currentUrl,
 	filters: filtersProp,
 	formId,
@@ -307,7 +307,7 @@ function DatasetDisplay({
 			<ManagementBar
 				activeView={activeView}
 				bulkActions={bulkActions}
-				creationMenuItems={creationMenuItems}
+				creationMenu={creationMenu}
 				filters={filters}
 				fluid={style === 'fluid'}
 				onFiltersChange={updateFilters}
@@ -480,7 +480,10 @@ DatasetDisplay.propTypes = {
 	activeViewId: PropTypes.string,
 	apiUrl: PropTypes.string.isRequired,
 	bulkActions: PropTypes.array,
-	creationMenuItems: PropTypes.array,
+	creationMenu: PropTypes.shape({
+		primaryItems: PropTypes.array,
+		secondaryItems: PropTypes.array,
+	}),
 	currentUrl: PropTypes.string,
 	filters: PropTypes.array,
 	formId: PropTypes.string,

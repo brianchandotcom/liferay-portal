@@ -18,7 +18,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.frontend.taglib.clay.data.set.model.ClayPaginationEntry" %><%@
-page import="com.liferay.frontend.taglib.clay.data.set.util.ClayCreationMenu" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
@@ -35,7 +35,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%
 List<DropdownItem> bulkActions = (List<DropdownItem>)request.getAttribute("clay:dataset-display:bulkActions");
 Object clayDataSetDisplayViewsContext = request.getAttribute("clay:dataset-display:clayDataSetDisplayViewsContext");
-ClayCreationMenu clayCreationMenu = (ClayCreationMenu)request.getAttribute("clay:dataset-display:clayCreationMenu");
+CreationMenu creationMenu = (CreationMenu)request.getAttribute("clay:dataset-display:creationMenu");
 String dataProviderKey = (String)request.getAttribute("clay:dataset-display:dataProviderKey");
 String dataSetAPI = (String)request.getAttribute("clay:dataset-display:dataSetAPI");
 String formId = (String)request.getAttribute("clay:dataset-display:formId");

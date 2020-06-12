@@ -58,7 +58,12 @@ renderResponse.setTitle(title);
 	<clay:container-fluid
 		cssClass="container-view"
 	>
-		<h1> Import translation </h1>
+		<clay:sheet>
+			
+			<react:component
+				module="js/ImportTranslation.es"
+			/>
+		</clay:sheet>
 	</clay:container-fluid>
 
 </aui:form>

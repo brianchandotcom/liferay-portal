@@ -57,7 +57,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-67191. After configuring the Navigation Menu widget to use the 'Split Button Dropdowns' display template, various actions should still be working. A user should still be able to 1) select different display templates, 2) add new pages, 3) edit page names, 4) add widgets to a page, 5) configure widget look and feel, 6) see pages in the Navigation Menu widget, 7) sign in after signing out, and 8) reorder pages."
+	@description = "This is a use case for LPS-67191. After configuring the Navigation Menu widget to use the 'Split Button Dropdowns' display template, various actions should still be working. A user should still be able to 1) select different display templates, 2) add new pages, 3) edit page names, 4) add widgets to a page, 5) configure widget look and feel, 6) see pages in the Navigation Menu widget."
 	@priority = "5"
 	test NavigationMenuConfigureDisplayTemplate {
 		task ("Add a page to the site") {
@@ -134,19 +134,6 @@ definition {
 			AssertVisible(
 				key_pageName = "Navigation Test Page2 Edit",
 				locator1 = "Home#PAGE_ACTIVE");
-		}
-
-		task ("Assert user can sign in after signing out") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "test@liferay.com",
-				userLoginFullName = "Test Test");
-		}
-
-		task ("Assert user can reorder pages in the Navigation Menu widget") {
-			DragAndDrop.dragAndDropToObject(
-				locator1 = "Home#PAGE_1",
-				locator2 = "Home#PAGE_2",
-				value1 = "Home");
 		}
 	}
 

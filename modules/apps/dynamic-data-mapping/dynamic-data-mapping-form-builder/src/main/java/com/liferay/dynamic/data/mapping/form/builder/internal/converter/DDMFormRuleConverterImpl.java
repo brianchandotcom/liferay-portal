@@ -151,6 +151,10 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 			return value;
 		}
 
+		if (Objects.equals("string", operand.getType())) {
+			return StringUtil.quote(value);
+		}
+
 		String[] values = StringUtil.split(value);
 
 		UnaryOperator<String> quoteOperation = StringUtil::quote;

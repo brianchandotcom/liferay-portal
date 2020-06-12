@@ -73,18 +73,12 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			}
 		}
 
-		<portlet:namespace/>closePopup();
-	}
-
-	function <portlet:namespace/>closePopup() {
-		var Util = Liferay.Util;
-
-		var openingLiferay = Util.getOpener().Liferay;
+		var openingLiferay = Liferay.Util.getOpener().Liferay;
 
 		openingLiferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', {
 			data: document.getElementById('<portlet:namespace />domain').value,
 		});
 
-		Util.getWindow().hide();
+		openingLiferay.fire('closeModal');
 	}
 </aui:script>

@@ -12,7 +12,13 @@
  * details.
  */
 
-import {DefaultEventHandler, ItemSelectorDialog} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	ItemSelectorDialog,
+	createPortletURL,
+	navigate,
+	openModal,
+} from 'frontend-js-web';
 
 class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	activateAccountUsers(itemData) {
@@ -64,28 +70,22 @@ class ManagementToolbarDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	addAccountUser(itemData) {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				eventName: this.ns('selectAccountEntry'),
-				id: this.ns('addAccountUser'),
-				title: Liferay.Language.get(itemData.dialogTitle),
-				uri: itemData.accountEntrySelectorURL,
-			},
-			(event) => {
-				var addAccountUserURL = Liferay.Util.PortletURL.createPortletURL(
+		openModal({
+			id: this.ns('addAccountUser'),
+			onSelect: (selectedItem) => {
+				var addAccountUserURL = createPortletURL(
 					itemData.addAccountUserURL,
 					{
-						accountEntryId: event.accountentryid,
+						accountEntryId: selectedItem.accountentryid,
 					}
 				);
 
-				window.location.href = addAccountUserURL;
-			}
-		);
+				navigate(addAccountUserURL);
+			},
+			selectEventName: this.ns('selectAccountEntry'),
+			title: Liferay.Language.get(itemData.dialogTitle),
+			url: itemData.accountEntrySelectorURL,
+		});
 	}
 
 	_openAccountEntrySelector(

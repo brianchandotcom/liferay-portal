@@ -137,54 +137,44 @@ if (accountEntryDisplay.getAccountEntryId() > 0) {
 		selectParentAccountEntryIcon.addEventListener('click', function (event) {
 			event.preventDefault();
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer',
-					},
-					eventName:
-						'<%= liferayPortletResponse.getNamespace() + "selectAccountEntry" %>',
-					id:
-						'<%= liferayPortletResponse.getNamespace() + "selectParentAccountEntry" %>',
-					selectedData: [
-						'<%= (accountEntryDisplay.getAccountEntryId() > 0) ? accountEntryDisplay.getAccountEntryId() : "" %>',
-						parentAccountEntryInput.value,
-					],
-					title: '<liferay-ui:message key="assign-parent-account" />',
-
-					<%
-					PortletURL selectParentAccountEntryURL = renderResponse.createRenderURL();
-
-					selectParentAccountEntryURL.setParameter("mvcPath", "/account_users_admin/select_account_entry.jsp");
-					selectParentAccountEntryURL.setWindowState(LiferayWindowState.POP_UP);
-					%>
-
-					uri: '<%= selectParentAccountEntryURL.toString() %>',
-				},
-				function (event) {
-					parentAccountEntryInput.value = event.accountentryid;
+			Liferay.Util.openModal({
+				id:
+					'<%= liferayPortletResponse.getNamespace() + "selectParentAccountEntry" %>',
+				onSelect: function (selectedItem) {
+					parentAccountEntryInput.value = selectedItem.accountentryid;
 
 					var rowColumns = [];
 
-					rowColumns.push(event.entityname);
+					rowColumns.push(selectedItem.entityname);
 					rowColumns.push(
 						'<a class="modify-link" data-rowId="' +
-							event.entityid +
+							selectedItem.entityid +
 							'" href="javascript:;"><%= UnicodeFormatter.toString(removeParentAccountEntryIcon) %></a>'
 					);
 
 					searchContainer.deleteRow(1, searchContainer.getData());
 
-					searchContainer.addRow(rowColumns, event.entityid);
+					searchContainer.addRow(rowColumns, selectedItem.entityid);
 
-					searchContainer.updateDataStore(event.entityid);
-				}
-			);
+					searchContainer.updateDataStore(selectedItem.entityid);
+				},
+				selectEventName:
+					'<%= liferayPortletResponse.getNamespace() + "selectAccountEntry" %>',
+				selectedData: [
+					'<%= (accountEntryDisplay.getAccountEntryId() > 0) ? accountEntryDisplay.getAccountEntryId() : "" %>',
+					parentAccountEntryInput.value,
+				],
+				title: '<liferay-ui:message key="assign-parent-account" />',
+
+				<%
+				PortletURL selectParentAccountEntryURL = renderResponse.createRenderURL();
+
+				selectParentAccountEntryURL.setParameter("mvcPath", "/account_users_admin/select_account_entry.jsp");
+				selectParentAccountEntryURL.setWindowState(LiferayWindowState.POP_UP);
+				%>
+
+				url: '<%= selectParentAccountEntryURL.toString() %>',
+			});
 		});
 	}
 </aui:script>

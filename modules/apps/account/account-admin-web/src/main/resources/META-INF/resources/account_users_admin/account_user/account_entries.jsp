@@ -199,27 +199,14 @@ portletDisplay.setURLBack(backURL);
 				searchContainerData = searchContainerData.split(',');
 			}
 
-			Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					eventName: '<portlet:namespace />selectAccountEntry',
-					id: '<portlet:namespace />selectAccountEntry',
-					selectedData: searchContainerData,
-					title:
-						'<liferay-ui:message arguments="account" key="select-x" />',
-					uri:
-						'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" /><portlet:param name="userId" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:renderURL>',
-				},
-				function (event) {
-					var entityId = event.entityid;
+			Util.openModal({
+				id: '<portlet:namespace />selectAccountEntry',
+				onSelect: function (selectedItem) {
+					var entityId = selectedItem.entityid;
 
 					var rowColumns = [];
 
-					rowColumns.push(event.entityname);
+					rowColumns.push(selectedItem.entityname);
 					rowColumns.push(<%= StringPool.BLANK %>);
 					rowColumns.push(
 						'<a class="modify-link" data-rowId="' +
@@ -241,8 +228,13 @@ portletDisplay.setURLBack(backURL);
 					document.<portlet:namespace />fm.<portlet:namespace />deleteAccountEntryIds.value = deleteAccountEntryIds.join(
 						','
 					);
-				}
-			);
+				},
+				selectEventName: '<portlet:namespace />selectAccountEntry',
+				selectedData: searchContainerData,
+				title: '<liferay-ui:message arguments="account" key="select-x" />',
+				url:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/account_users_admin/select_account_entry.jsp" /><portlet:param name="userId" value="<%= String.valueOf(selUser.getUserId()) %>" /></portlet:renderURL>',
+			});
 		});
 	}
 </aui:script>

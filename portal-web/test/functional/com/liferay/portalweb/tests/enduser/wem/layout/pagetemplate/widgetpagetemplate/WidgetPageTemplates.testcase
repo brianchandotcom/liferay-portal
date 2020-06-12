@@ -26,7 +26,7 @@ definition {
 	}
 
 	@priority = "4"
-	test AddPageTemplate {
+	test AddGlobalPageTemplate {
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@priority = "5"
-	test AddSitePageTemplate {
+	test AddPageBasedOnGlobalPageTemplate {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@priority = "4"
-	test DeactivateAndActivatePageTemplate {
+	test DeactivateAndActivateGlobalPageTemplate {
 		JSONGroup.addGroup(groupName = "Site Name");
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@priority = "5"
-	test DeletePageTemplate {
+	test DeleteGlobalPageTemplate {
 		property portal.acceptance = "true";
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
@@ -156,7 +156,7 @@ definition {
 
 	@description = "This is a use case for LPS-54099."
 	@priority = "5"
-	test EditPageTemplate {
+	test EditGlobalPageTemplate {
 		property portal.acceptance = "true";
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@priority = "4"
-	test EditPageTemplateDescription {
+	test EditGlobalPageTemplateDescription {
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.addCP(
@@ -250,7 +250,7 @@ definition {
 	}
 
 	@priority = "4"
-	test LocalizeDefaultPageTemplates {
+	test LocalizeGlobalDefaultPageTemplates {
 		property test.name.skip.portal.instance = "WidgetPageTemplates#LocalizeDefaultPageTemplates";
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
@@ -291,7 +291,7 @@ definition {
 	}
 
 	@priority = "4"
-	test ViewEditedPageTemplatePageName {
+	test RenameGlobalPageTemplate {
 		property testray.component.names = "Page Templates";
 
 		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();

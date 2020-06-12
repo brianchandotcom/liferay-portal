@@ -145,6 +145,8 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission,
 			_getExportForTranslationActionUnsafeConsumer()
 		).add(
+			() -> hasViewPermission, _getImportTranslationActionUnsafeConsumer()
+		).add(
 			() -> hasViewPermission && (availableLanguageIds.length > 1),
 			_getDeleteArticleTranslationsActionUnsafeConsumer()
 		).add(
@@ -440,6 +442,20 @@ public class JournalArticleActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_httpServletRequest, "export-for-translation"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getImportTranslationActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				_liferayPortletResponse.createRenderURL(), "mvcPath",
+				"/import_translation.jsp", "redirect", _getRedirect(),
+				"referringPortletResource", _getReferringPortletResource(),
+				"rowIdsJournalArticle", _article.getArticleId());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "import-translation"));
 		};
 	}
 

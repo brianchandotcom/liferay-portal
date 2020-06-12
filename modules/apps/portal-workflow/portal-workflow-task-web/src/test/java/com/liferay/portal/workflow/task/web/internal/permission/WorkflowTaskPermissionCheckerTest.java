@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceWrapper;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -79,6 +81,8 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	@Before
 	public void setUp() {
 		_setUpServiceTrackerCollections();
+
+		mockUserNotificationEventLocalServiceUtil(0);
 	}
 
 	@Test
@@ -178,15 +182,25 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testNotContentReviewerWithAssetViewPermissionHasPermission() {
-
-		// Checks permission on completed workflow task
-
+	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnCompletedTask() {
 		mockAssetRendererHasViewPermission(true);
 
 		Assert.assertTrue(
 			_workflowTaskPermissionChecker.hasPermission(
 				RandomTestUtil.randomLong(), mockCompletedWorkflowTask(),
+				mockPermissionChecker(
+					RandomTestUtil.randomLong(), new long[0], false, false,
+					false)));
+	}
+
+	@Test
+	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnPendingTaskWithNotification() {
+		mockAssetRendererHasViewPermission(true);
+		mockUserNotificationEventLocalServiceUtil(1);
+
+		Assert.assertTrue(
+			_workflowTaskPermissionChecker.hasPermission(
+				RandomTestUtil.randomLong(), mockWorkflowTask(),
 				mockPermissionChecker(
 					RandomTestUtil.randomLong(), new long[0], false, false,
 					false)));
@@ -347,6 +361,22 @@ public class WorkflowTaskPermissionCheckerTest extends PowerMockito {
 			}
 
 		};
+	}
+
+	protected void mockUserNotificationEventLocalServiceUtil(int count) {
+		ReflectionTestUtil.setFieldValue(
+			UserNotificationEventLocalServiceUtil.class, "_service",
+			new UserNotificationEventLocalServiceWrapper(null) {
+
+				@Override
+				public int getUserNotificationEventsCount(
+					long userId, String type,
+					Map<String, String> payloadParameter) {
+
+					return count;
+				}
+
+			});
 	}
 
 	protected WorkflowTask mockWorkflowTask() {

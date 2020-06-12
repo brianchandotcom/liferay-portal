@@ -38,6 +38,7 @@ import java.math.BigDecimal;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -144,9 +145,13 @@ public class OpenAPIParserUtil {
 	}
 
 	public static List<String> getExternalReferences(OpenAPIYAML openAPIYAML) {
-		Set<String> externalReferences = new HashSet<>();
-
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		if (pathItems == null) {
+			return Collections.emptyList();
+		}
+
+		Set<String> externalReferences = new HashSet<>();
 
 		for (Map.Entry<String, PathItem> entry1 : pathItems.entrySet()) {
 			List<Operation> operations = getOperations(entry1.getValue());

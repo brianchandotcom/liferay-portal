@@ -39,6 +39,7 @@ import com.liferay.portal.vulcan.yaml.openapi.RequestBody;
 import com.liferay.portal.vulcan.yaml.openapi.Schema;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -65,6 +66,10 @@ public class FreeMarkerTool {
 		OpenAPIYAML openAPIYAML, Map<String, Schema> schemas) {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+
+		if (pathItems == null) {
+			return Collections.emptyMap();
+		}
 
 		Set<Map.Entry<String, PathItem>> entries = pathItems.entrySet();
 

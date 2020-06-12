@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import {
 	DataLayoutBuilderActions,
 	DataLayoutVisitor,
@@ -162,6 +163,24 @@ const getFieldTypes = ({
 
 	return [customDataDefinitionFields, nativeDataDefinitionFields];
 };
+
+const FieldCategory = ({categoryName, showCategory}) => {
+	return showCategory ? (
+		<div
+			className={classNames(
+				'custom-object-sidebar-header',
+				'ml-1 pt-2 pb-2'
+			)}
+		>
+			<div className="autofit-row autofit-row-center">
+				<>
+					<div className="autofit-col autofit-col-expand">
+						<h3 className="category-text">{categoryName}</h3>
+					</div>
+				</>
+			</div>
+		</div>
+	) : null;
 };
 
 export default ({keywords}) => {
@@ -233,17 +252,38 @@ export default ({keywords}) => {
 	const onDeleteDefinitionField = useDeleteDefinitionFieldModal((event) =>
 		deleteField(event)
 	);
+	const showCategories = customFieldTypes.length && nativeFieldTypes.length;
 
 	return (
-		<FieldTypeList
-			deleteLabel={Liferay.Language.get('delete-from-object')}
-			fieldTypes={fieldTypes}
-			keywords={keywords}
-			onClick={handleOnClick}
-			onDelete={(fieldName) =>
-				onDeleteDefinitionField({activePage: 0, fieldName})
-			}
-			onDoubleClick={handleOnDoubleClick}
-		/>
+		<>
+			<FieldCategory
+				categoryName={Liferay.Language.get('custom-fields')}
+				showCategory={showCategories}
+			/>
+			<FieldTypeList
+				deleteLabel={Liferay.Language.get('delete-from-object')}
+				fieldTypes={customFieldTypes}
+				keywords={keywords}
+				onClick={handleOnClick}
+				onDelete={(fieldName) =>
+					onDeleteDefinitionField({activePage: 0, fieldName})
+				}
+				onDoubleClick={handleOnDoubleClick}
+			/>
+			<FieldCategory
+				categoryName={Liferay.Language.get('native-fields')}
+				showCategory={showCategories}
+			/>
+			<FieldTypeList
+				deleteLabel={Liferay.Language.get('delete-from-object')}
+				fieldTypes={nativeFieldTypes}
+				keywords={keywords}
+				onClick={handleOnClick}
+				onDelete={(fieldName) =>
+					onDeleteDefinitionField({activePage: 0, fieldName})
+				}
+				onDoubleClick={handleOnDoubleClick}
+			/>
+		</>
 	);
 };

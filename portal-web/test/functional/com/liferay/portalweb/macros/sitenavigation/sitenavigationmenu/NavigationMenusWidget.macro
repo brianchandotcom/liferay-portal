@@ -61,6 +61,13 @@ definition {
 			value1 = "${templateName}");
 	}
 
+	macro selectLevelsToDisplay {
+		Select(
+			key_selectFieldLabel = "Levels to Display",
+			locator1 = "Select#ANY",
+			value1 = "${levels}");
+	}
+
 	macro selectNavigation {
 		Select(
 			locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",

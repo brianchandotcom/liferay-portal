@@ -19,10 +19,11 @@
 			"config": {
 				"backgroundImage": {
 				},
-				"paddingBottom": 3,
-				"paddingHorizontal": 3,
-				"paddingTop": 3,
-				"type": "fixed"
+				"paddingBottom": 0,
+				"paddingLeft": 0,
+				"paddingRight": 0,
+				"paddingTop": 0,
+				"widthType": "fluid"
 			},
 			"itemId": "ROOT-CONTAINER0",
 			"parentId": "ROOT",
@@ -81,10 +82,11 @@
 			"config": {
 				"backgroundImage": {
 				},
-				"paddingBottom": 3,
-				"paddingHorizontal": 3,
-				"paddingTop": 3,
-				"type": "fixed"
+				"paddingBottom": 0,
+				"paddingLeft": 0,
+				"paddingRight": 0,
+				"paddingTop": 0,
+				"widthType": "fluid"
 			},
 			"itemId": "ROOT-CONTAINER1",
 			"parentId": "ROOT",
@@ -165,10 +167,11 @@
 			"config": {
 				"backgroundImage": {
 				},
-				"paddingBottom": 3,
-				"paddingHorizontal": 3,
-				"paddingTop": 3,
-				"type": "fixed"
+				"paddingBottom": 0,
+				"paddingLeft": 0,
+				"paddingRight": 0,
+				"paddingTop": 0,
+				"widthType": "fluid"
 			},
 			"itemId": "ROOT-CONTAINER2",
 			"parentId": "ROOT",

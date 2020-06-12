@@ -901,4 +901,85 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-113994. The Naviation Menu is able to display more than 2 sublevels page hierarchy when use the default template after enable Live."
+	@priority = "3"
+	test ShowMoreThanTwoSublevelsWhenSelectPublicPagesHierarchyAndBarMinimallyStyled {
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Add a widget page with 3 sublevels child pages") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Home");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Child Page",
+				parentLayoutName = "Home");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Child Child Page",
+				parentLayoutName = "Child Page");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Child Child Child Page",
+				parentLayoutName = "Child Child Page");
+		}
+
+		task ("Activate local live staging") {
+			Staging.openStagingAdmin(siteURLKey = "site-name");
+
+			Staging.activateStagingCP(siteName = "Site Name");
+		}
+
+		task ("Navigate to Home in Staging site") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+		}
+
+		task ("Assert Select Public Pages Hierarchy and Bar minimally styled") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.selectNavigation(menuType = "Public Pages Hierarchy");
+
+			Pause(locator1 = "3000");
+
+			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
+
+			Pause(locator1 = "3000");
+
+			Portlet.saveAndCloseConfig();
+		}
+
+		task ("Navigate to Child Page via Navigation Menu widget") {
+			NavigationMenusWidget.gotoSublevel(
+				itemName = "Child Page",
+				pageName = "Home",
+				type = "Drop Down");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Child Page");
+		}
+
+		task ("Navigate to Home in Live site") {
+			Navigator.gotoSitePage(
+				pageName = "Home",
+				siteName = "Site Name");
+		}
+
+		task ("Navigate to Child Child Page via Navigation Menu widget") {
+			NavigationMenusWidget.gotoSublevel(
+				itemName = "Child Child Page",
+				pageName = "Home",
+				type = "Drop Down");
+
+			AssertLocation.assertPartialLocation(value1 = "web/site-name/child-child-page");
+		}
+	}
+
 }

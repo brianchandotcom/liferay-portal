@@ -342,6 +342,11 @@ public class LayoutWrapper
 		}
 	}
 
+	@Override
+	public Layout fetchDraftLayout() {
+		return model.fetchDraftLayout();
+	}
+
 	/**
 	 * Returns all layouts that are direct or indirect children of the current
 	 * layout.
@@ -628,11 +633,6 @@ public class LayoutWrapper
 	@Override
 	public Map<java.util.Locale, String> getDescriptionMap() {
 		return model.getDescriptionMap();
-	}
-
-	@Override
-	public Layout getDraftLayout() {
-		return model.getDraftLayout();
 	}
 
 	@Override

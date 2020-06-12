@@ -412,7 +412,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			return;
 		}
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(

@@ -119,7 +119,7 @@ public class LayoutAssetRenderer extends BaseJSPAssetRenderer<Layout> {
 			}
 
 			String previewURL = PortalUtil.getLayoutFriendlyURL(
-				_layout.getDraftLayout(), themeDisplay);
+				_layout.fetchDraftLayout(), themeDisplay);
 
 			return HttpUtil.addParameter(
 				previewURL, "p_l_back_url", themeDisplay.getURLCurrent());

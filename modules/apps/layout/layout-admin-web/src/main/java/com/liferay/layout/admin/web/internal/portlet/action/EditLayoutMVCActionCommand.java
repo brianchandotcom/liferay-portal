@@ -138,7 +138,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 			friendlyURLMap, !deleteLogo, iconBytes, masterLayoutPlid,
 			serviceContext);
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout != null) {
 			_layoutService.updateLayout(

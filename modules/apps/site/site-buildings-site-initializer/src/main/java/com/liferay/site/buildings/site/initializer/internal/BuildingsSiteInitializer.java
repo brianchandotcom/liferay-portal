@@ -373,7 +373,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 			new HashMap<>(), _serviceContext);
 
 		if (Validator.isNotNull(dataPath)) {
-			Layout draftLayout = layout.getDraftLayout();
+			Layout draftLayout = layout.fetchDraftLayout();
 
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
@@ -506,7 +506,7 @@ public class BuildingsSiteInitializer implements SiteInitializer {
 	}
 
 	private void _copyLayout(Layout layout) throws Exception {
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout != null) {
 			_layoutCopyHelper.copyLayout(draftLayout, layout);

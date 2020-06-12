@@ -1202,7 +1202,7 @@ public class LayoutPageTemplatesImporterImpl
 		Layout layout = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		draftLayout = _layoutCopyHelper.copyLayout(layout, draftLayout);
 

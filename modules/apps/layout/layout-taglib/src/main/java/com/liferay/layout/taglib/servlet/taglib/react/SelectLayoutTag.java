@@ -185,7 +185,7 @@ public class SelectLayoutTag extends IncludeTag {
 			return false;
 		}
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout != null) {
 			boolean published = GetterUtil.getBoolean(

@@ -48,7 +48,7 @@ public class LayoutDetailsFormNavigatorEntry
 	@Override
 	public boolean isVisible(User user, Layout layout) {
 		if (layout.isTypeAssetDisplay() ||
-			(layout.isTypeContent() && (layout.getDraftLayout() == null))) {
+			(layout.isTypeContent() && (layout.fetchDraftLayout() == null))) {
 
 			return false;
 		}

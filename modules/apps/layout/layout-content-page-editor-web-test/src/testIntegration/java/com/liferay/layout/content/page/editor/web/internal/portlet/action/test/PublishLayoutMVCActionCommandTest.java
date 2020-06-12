@@ -92,7 +92,7 @@ public class PublishLayoutMVCActionCommandTest {
 			new HashMap<>(), LayoutConstants.TYPE_CONTENT, StringPool.BLANK,
 			false, false, 0, new HashMap<>(), _serviceContext);
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		LayoutStructure layoutStructure = _getLayoutStructure(draftLayout);
 

@@ -111,7 +111,7 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 				userId, classPK, status, serviceContext);
 		}
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		try {
 			_layoutCopyHelper.copyLayout(draftLayout, layout);

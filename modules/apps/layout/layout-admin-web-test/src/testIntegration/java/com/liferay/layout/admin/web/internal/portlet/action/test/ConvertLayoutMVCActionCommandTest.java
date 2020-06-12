@@ -187,7 +187,7 @@ public class ConvertLayoutMVCActionCommandTest {
 	private void _validateLayoutConversion(Layout originalLayout)
 		throws Exception {
 
-		Layout persistedDraftLayout = originalLayout.getDraftLayout();
+		Layout persistedDraftLayout = originalLayout.fetchDraftLayout();
 
 		Assert.assertNotNull(persistedDraftLayout);
 

@@ -74,7 +74,7 @@ public class UpdatePortletTitleAction extends JSONAction {
 		portletSetup.store();
 
 		if (layout.isTypeContent()) {
-			Layout draftLayout = layout.getDraftLayout();
+			Layout draftLayout = layout.fetchDraftLayout();
 
 			if (draftLayout != null) {
 				PortletPreferences draftLayoutPortletSetup =

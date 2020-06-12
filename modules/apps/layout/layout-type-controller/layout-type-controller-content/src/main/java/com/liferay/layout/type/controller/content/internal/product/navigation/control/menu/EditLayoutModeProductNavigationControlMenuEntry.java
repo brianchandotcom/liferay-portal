@@ -100,7 +100,7 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 					themeDisplay);
 			}
 			else {
-				Layout draftLayout = layout.getDraftLayout();
+				Layout draftLayout = layout.fetchDraftLayout();
 
 				if (draftLayout == null) {
 					UnicodeProperties unicodeProperties =

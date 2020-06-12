@@ -168,7 +168,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 			addAttributes(httpServletRequest);
 
-			Layout draftLayout = layout.getDraftLayout();
+			Layout draftLayout = layout.fetchDraftLayout();
 
 			if (layoutMode.equals(Constants.EDIT) && (draftLayout != null)) {
 				String layoutFullURL = _portal.getLayoutFullURL(

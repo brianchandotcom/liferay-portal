@@ -349,7 +349,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			throw new PortalException(sb.toString());
 		}
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout == null) {
 			draftLayout = _layoutLocalService.addLayout(

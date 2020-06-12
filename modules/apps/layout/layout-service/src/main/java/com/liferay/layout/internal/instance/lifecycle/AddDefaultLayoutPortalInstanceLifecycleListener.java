@@ -87,7 +87,7 @@ public class AddDefaultLayoutPortalInstanceLifecycleListener
 			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false, friendlyURL,
 			serviceContext);
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		String currentName = PrincipalThreadLocal.getName();
 		ServiceContext currentServiceContext =

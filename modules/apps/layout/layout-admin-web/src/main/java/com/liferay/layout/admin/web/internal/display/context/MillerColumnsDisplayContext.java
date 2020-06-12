@@ -457,7 +457,7 @@ public class MillerColumnsDisplayContext {
 			}
 		}
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (layout.isDenied() || layout.isPending()) {
 			jsonArray.put(
@@ -700,7 +700,7 @@ public class MillerColumnsDisplayContext {
 	private JSONArray _getLayoutStatesJSONArray(Layout layout) {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (layout.isTypeContent()) {
 			boolean published = GetterUtil.getBoolean(

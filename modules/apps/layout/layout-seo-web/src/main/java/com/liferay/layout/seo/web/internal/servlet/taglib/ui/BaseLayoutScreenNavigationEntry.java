@@ -93,7 +93,7 @@ public abstract class BaseLayoutScreenNavigationEntry
 		}
 
 		if ((layout.isTypeAssetDisplay() || layout.isTypeContent()) &&
-			(layout.getDraftLayout() == null)) {
+			(layout.fetchDraftLayout() == null)) {
 
 			return false;
 		}

@@ -139,7 +139,7 @@ public class AddSimpleLayoutMVCActionCommand
 				stagingGroupId, privateLayout, layout.getLayoutId(),
 				layout.getTypeSettingsProperties());
 
-			Layout draftLayout = layout.getDraftLayout();
+			Layout draftLayout = layout.fetchDraftLayout();
 
 			if (draftLayout != null) {
 				_layoutLocalService.updateLayout(

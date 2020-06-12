@@ -50,7 +50,7 @@ public abstract class BaseLayoutFormNavigatorEntry
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		if (layout.getDraftLayout() != null) {
+		if (layout.fetchDraftLayout() != null) {
 			return false;
 		}
 

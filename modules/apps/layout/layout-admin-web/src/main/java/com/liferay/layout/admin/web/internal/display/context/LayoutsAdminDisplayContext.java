@@ -328,7 +328,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public String getDiscardDraftURL(Layout layout) {
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		PortletURL discardDraftURL = _liferayPortletResponse.createActionURL();
 
@@ -361,7 +361,7 @@ public class LayoutsAdminDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		if (layout.getDraftLayout() == null) {
+		if (layout.fetchDraftLayout() == null) {
 			return StringPool.BLANK;
 		}
 
@@ -1046,7 +1046,7 @@ public class LayoutsAdminDisplayContext {
 
 		if (layout.isDenied() || layout.isPending()) {
 			layoutFullURL = PortalUtil.getLayoutFullURL(
-				layout.getDraftLayout(), themeDisplay);
+				layout.fetchDraftLayout(), themeDisplay);
 		}
 		else {
 			layoutFullURL = PortalUtil.getLayoutFullURL(layout, themeDisplay);
@@ -1124,7 +1124,7 @@ public class LayoutsAdminDisplayContext {
 
 	public boolean isConversionDraft(Layout layout) {
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET) &&
-			(layout.getDraftLayout() != null)) {
+			(layout.fetchDraftLayout() != null)) {
 
 			return true;
 		}
@@ -1317,7 +1317,7 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		if (layout.isTypeContent()) {
-			Layout draftLayout = layout.getDraftLayout();
+			Layout draftLayout = layout.fetchDraftLayout();
 
 			boolean published = false;
 
@@ -1363,7 +1363,7 @@ public class LayoutsAdminDisplayContext {
 			return false;
 		}
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout == null) {
 			return false;
@@ -1549,7 +1549,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getDraftLayoutURL(Layout layout) throws Exception {
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout == null) {
 			UnicodeProperties unicodeProperties =

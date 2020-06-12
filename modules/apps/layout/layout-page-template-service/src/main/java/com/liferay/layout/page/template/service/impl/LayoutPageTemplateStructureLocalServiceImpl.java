@@ -372,7 +372,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			return layoutPageTemplateEntry.getType();
 		}
 
-		Layout draftLayout = layout.getDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout != null) {
 			LayoutPageTemplateEntry draftLayoutPageTemplateEntry =

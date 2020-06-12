@@ -15,7 +15,12 @@
 </tr>
 <tr>
 	<td>FILTER_BY_TITLE_OPTION</td>
-	<td>//*[contains(@class, ' dropdown-item') and contains(text(),'Title')]</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(),'Title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_ELEMENT_LISTED</td>
+	<td>(//*[contains(@class, 'text-truncate')])[4]</td>
 	<td></td>
 </tr>
 </tbody>

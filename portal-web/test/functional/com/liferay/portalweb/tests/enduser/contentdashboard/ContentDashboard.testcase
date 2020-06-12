@@ -6,37 +6,53 @@ definition {
 	property testray.main.component.name = "Content Dashboard";
 
 	setUp {
-        TestCase.setUpPortalInstance();
+		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
 
+        JSONGroup.addGroup(groupName = "Test Site Name");
+
 		Navigator.openURL();
 
-        for (var count : list "1,2,3,4,5") {
+		for (var count : list "1,2,3,4,5") {
 			JSONWebcontent.addWebContent(
 				content = "WC Content ${count}",
-				groupName = "Guest",
+				groupName = "Test Site Name",
 				title = "WC Title ${count}");
 		}
-	}
+    }
 
-	tearDown {
+    tearDown {
         var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-	@description = "Validate if the user can filter by title"
-	@priority = "5"
-	test ContentDashboardFilterByTitle {
+        for (var count : list "1,2,3,4,5") {
+			JSONWebcontent.deleteWebContent(
+				groupName = "Test Site Name",
+				title = "WC Title ${count}");
+		}
+
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+        if ("${testPortalInstance}" == "true") {
+	        PortalInstances.tearDownCP();
+        }
+    }
+
+    @description = "Validate if the user can filter by title"
+    @priority = "5"
+    test ContentDashboardFilterByTitle {
         GlobalMenu.gotoPortlet(
-			category = "Content",
-			panel = "Applications",
-			portlet = "Content Dashboard");
-    
+	        category = "Content",
+	        panel = "Applications",
+	        portlet = "Content Dashboard");
+
         ContentDashboard.filterByTitle();
-	}
+
+        AssertTextPresent(
+	        locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+	        value1 = "WC Title 5");
+    }
 
 }

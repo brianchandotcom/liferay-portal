@@ -212,7 +212,7 @@ export default withRouter(
 
 							<div className="col-md-10">
 								<div className="align-items-end flex-column-reverse flex-md-row row">
-									<div className="c-mt-4 c-mt-md-0 col-md-9">
+									<div className="c-mt-4 c-mt-md-0 col-md-8">
 										{!!question.messageBoardSection
 											.numberOfMessageBoardSections && (
 											<Link
@@ -252,7 +252,7 @@ export default withRouter(
 										</p>
 									</div>
 
-									<div className="col-md-3 text-right">
+									<div className="col-md-4 text-right">
 										<ClayButton.Group
 											className="questions-actions"
 											spaced={true}

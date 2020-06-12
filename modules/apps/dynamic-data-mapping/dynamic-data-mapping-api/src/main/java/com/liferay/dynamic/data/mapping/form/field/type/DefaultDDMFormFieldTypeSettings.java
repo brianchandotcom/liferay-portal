@@ -92,6 +92,11 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public boolean localizable();
 
+	@DDMFormField(visibilityExpression = "FALSE")
+	public default boolean nativeField() {
+		return false;
+	}
+
 	@DDMFormField(
 		label = "%predefined-value",
 		properties = {

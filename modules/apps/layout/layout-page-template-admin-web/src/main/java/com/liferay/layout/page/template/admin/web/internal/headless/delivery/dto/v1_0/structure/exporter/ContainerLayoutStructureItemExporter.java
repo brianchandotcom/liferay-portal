@@ -88,10 +88,6 @@ public class ContainerLayoutStructureItemExporter
 									AlignConverter.convertToExternalValue(
 										containerLayoutStructureItem.
 											getAlign()));
-								borderColor = GetterUtil.getString(
-									containerLayoutStructureItem.
-										getBorderColor(),
-									null);
 								borderRadius = BorderRadius.create(
 									BorderRadiusConverter.
 										convertToExternalValue(
@@ -142,6 +138,19 @@ public class ContainerLayoutStructureItemExporter
 									ShadowConverter.convertToExternalValue(
 										containerLayoutStructureItem.
 											getShadow()));
+
+								setBorderColor(
+									() -> {
+										String borderColor =
+											containerLayoutStructureItem.
+												getBorderColor();
+
+										if (Validator.isNull(borderColor)) {
+											return null;
+										}
+
+										return borderColor;
+									});
 
 								setContentDisplay(
 									() -> {

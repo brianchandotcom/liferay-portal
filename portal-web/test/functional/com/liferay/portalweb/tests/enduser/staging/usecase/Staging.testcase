@@ -3942,6 +3942,7 @@ definition {
 		WebContentStructures.addCP(
 			structureDescription = "Structure Description",
 			structureName = "Structure Name");
+
 		DynamicDataMapping.addField(
 			field = "Image",
 			fieldFieldLabel = "Image",

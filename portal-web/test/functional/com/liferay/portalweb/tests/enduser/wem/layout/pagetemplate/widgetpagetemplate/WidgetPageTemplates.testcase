@@ -235,6 +235,48 @@ definition {
 			pageTemplateName = "Page Template Name");
 	}
 
+	@description = "This is a use case for LPS-115361. Edit a widget page template in normal site."
+	@priority = "5"
+	test EditPageTemplate {
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Widget Page Template");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Page Template Name");
+		}
+
+		task ("Edit the widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
+				item = "Edit",
+				pageTemplateName = "Page Template Name");
+
+			Portlet.addPG(portletName = "Asset Publisher");
+
+			Portlet.viewPG(portletName = "Asset Publisher");
+		}
+	}
+
 	@priority = "5"
 	test ImportLAR {
 		property testray.component.names = "Training";

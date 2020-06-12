@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -202,6 +203,11 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 			Pagination pagination, TaskBulkSelection taskBulkSelection)
 		throws Exception {
 
+		if (ArrayUtil.isEmpty(taskBulkSelection.getAssigneeIds())) {
+			taskBulkSelection.setAssigneeIds(
+				new Long[] {-1L, contextUser.getUserId()});
+		}
+
 		SearchSearchResponse searchSearchResponse = _getSearchSearchResponse(
 			taskBulkSelection.getAssigneeIds(),
 			taskBulkSelection.getInstanceIds(),
@@ -249,37 +255,56 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		return Page.of(Collections.emptyList());
 	}
 
-	private BooleanQuery _createAssigneeIdsExistsBooleanQuery(
-		Long[] assigneeIds) {
-
-		BooleanQuery booleanQuery = _queries.booleanQuery();
-
-		if (ArrayUtil.contains(assigneeIds, -1L)) {
-			booleanQuery.addMustNotQueryClauses(_queries.exists("assigneeIds"));
-		}
-
-		return booleanQuery;
-	}
-
 	private BooleanQuery _createAssigneeIdsTermsBooleanQuery(
 		Long[] assigneeIds) {
 
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
-		TermsQuery termsQuery = _queries.terms("assigneeIds");
+		if (ArrayUtil.contains(assigneeIds, -1L)) {
+			BooleanQuery shouldBooleanQuery = _queries.booleanQuery();
 
-		termsQuery.addValues(
-			Stream.of(
-				assigneeIds
-			).filter(
-				assigneeId -> assigneeId > 0
-			).map(
-				String::valueOf
-			).toArray(
-				Object[]::new
-			));
+			TermsQuery termsQuery = _queries.terms("assigneeIds");
 
-		return booleanQuery.addMustQueryClauses(termsQuery);
+			termsQuery.addValues(
+				Stream.of(
+					ArrayUtil.toArray(contextUser.getRoleIds())
+				).map(
+					String::valueOf
+				).toArray(
+					Object[]::new
+				));
+
+			shouldBooleanQuery.addMustQueryClauses(
+				termsQuery,
+				_queries.term("assigneeType", Role.class.getName()));
+
+			booleanQuery.addShouldQueryClauses(shouldBooleanQuery);
+		}
+
+		if (!ArrayUtil.contains(assigneeIds, -1L) || (assigneeIds.length > 1)) {
+			BooleanQuery shouldBooleanQuery = _queries.booleanQuery();
+
+			TermsQuery termsQuery = _queries.terms("assigneeIds");
+
+			termsQuery.addValues(
+				Stream.of(
+					assigneeIds
+				).filter(
+					assigneeId -> assigneeId > 0
+				).map(
+					String::valueOf
+				).toArray(
+					Object[]::new
+				));
+
+			shouldBooleanQuery.addMustQueryClauses(
+				termsQuery,
+				_queries.term("assigneeType", User.class.getName()));
+
+			booleanQuery.addShouldQueryClauses(shouldBooleanQuery);
+		}
+
+		return booleanQuery;
 	}
 
 	private BooleanQuery _createBooleanQuery(long processId) {
@@ -305,9 +330,9 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	private BooleanQuery _createBooleanQuery(
 		Long[] assigneeIds, Long[] instanceIds, Long processId) {
 
-		BooleanQuery booleanQuery = _queries.booleanQuery();
+		BooleanQuery filterBooleanQuery = _queries.booleanQuery();
 
-		booleanQuery.setMinimumShouldMatch(1);
+		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		BooleanQuery slaTaskResultsBooleanQuery = _queries.booleanQuery();
 
@@ -329,8 +354,9 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		tasksBooleanQuery.addMustQueryClauses(
 			_createTasksBooleanQuery(assigneeIds, instanceIds, processId));
 
-		return booleanQuery.addShouldQueryClauses(
-			slaTaskResultsBooleanQuery, tasksBooleanQuery);
+		return filterBooleanQuery.addFilterQueryClauses(
+			booleanQuery.addShouldQueryClauses(
+				slaTaskResultsBooleanQuery, tasksBooleanQuery));
 	}
 
 	private BucketSelectorPipelineAggregation
@@ -451,12 +477,6 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 		booleanQuery.addMustNotQueryClauses(_queries.term("taskId", 0));
 
-		if (assigneeIds != null) {
-			booleanQuery.addShouldQueryClauses(
-				_createAssigneeIdsExistsBooleanQuery(assigneeIds),
-				_createAssigneeIdsTermsBooleanQuery(assigneeIds));
-		}
-
 		if (instanceIds != null) {
 			booleanQuery.addMustQueryClauses(
 				_createInstanceIdsTermsBooleanQuery(instanceIds));
@@ -468,6 +488,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 		}
 
 		return booleanQuery.addMustQueryClauses(
+			_createAssigneeIdsTermsBooleanQuery(assigneeIds),
 			_queries.term("companyId", contextCompany.getCompanyId()),
 			_queries.term("completed", Boolean.FALSE),
 			_queries.term("deleted", Boolean.FALSE),

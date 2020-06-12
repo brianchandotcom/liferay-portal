@@ -23,25 +23,25 @@ import {
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import LinkPanel from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/LinkPanel';
-import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
-import {EDITABLE_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableTypes';
-import serviceFetch from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
-import {StoreAPIContextProvider} from '../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
-import updateEditableValues from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
+import EditableLinkPanel from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/floating-toolbar/EditableLinkPanel';
+import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
+import {EDITABLE_TYPES} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableTypes';
+import serviceFetch from '../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch';
+import {StoreAPIContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
+import updateEditableValues from '../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
 	() => jest.fn(() => Promise.resolve({fieldValue: 'fieldValue'}))
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({config: {}})
 );
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues',
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateEditableValues',
 	() => jest.fn()
 );
 
@@ -74,7 +74,7 @@ function renderLinkPanel(
 ) {
 	return render(
 		<StoreAPIContextProvider dispatch={dispatch} getState={() => state}>
-			<LinkPanel
+			<EditableLinkPanel
 				item={{
 					editableId: 'editable-id-0',
 					editableType,
@@ -89,7 +89,7 @@ function renderLinkPanel(
 	);
 }
 
-describe('LinkPanel', () => {
+describe('EditableLinkPanel', () => {
 	afterEach(() => {
 		cleanup();
 

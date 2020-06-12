@@ -27,7 +27,7 @@ import LinkField, {
 	TARGET_OPTIONS,
 } from '../fragment-configuration-fields/LinkField';
 
-export default function LinkPanel({item}) {
+export default function EditableLinkPanel({item}) {
 	const dispatch = useDispatch();
 	const state = useSelector((state) => state);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -79,7 +79,7 @@ export default function LinkPanel({item}) {
 	);
 }
 
-LinkPanel.propTypes = {
+EditableLinkPanel.propTypes = {
 	item: getEditableItemPropTypes({
 		config: PropTypes.oneOfType([
 			PropTypes.shape({

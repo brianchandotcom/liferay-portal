@@ -181,7 +181,7 @@ class StateSyncronizer extends Component {
 			document.querySelector(
 				`#${namespace}serializedSettingsContext`
 			).value = JSON.stringify({
-				pages: settingsDDMForm.pages,
+				pages: settingsDDMForm.reactComponentRef.current.get('pages'),
 			});
 		}
 

@@ -107,6 +107,7 @@ const Form = React.forwardRef((props, ref) => {
 				rules,
 			});
 		},
+		get: (key) => props[key],
 		validate,
 	}));
 

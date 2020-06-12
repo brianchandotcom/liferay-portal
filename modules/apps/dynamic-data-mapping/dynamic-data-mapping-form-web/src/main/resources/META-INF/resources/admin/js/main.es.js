@@ -644,7 +644,9 @@ class Form extends Component {
 		let requireAuthentication = false;
 
 		if (settingsDDMForm) {
-			const settingsPageVisitor = new PagesVisitor(settingsDDMForm.pages);
+			const settingsPageVisitor = new PagesVisitor(
+				settingsDDMForm.reactComponentRef.current.get('pages')
+			);
 
 			settingsPageVisitor.mapFields((field) => {
 				if (field.fieldName === 'requireAuthentication') {

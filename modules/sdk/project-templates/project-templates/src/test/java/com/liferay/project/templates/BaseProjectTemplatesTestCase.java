@@ -139,6 +139,8 @@ public interface BaseProjectTemplatesTestCase {
 
 	public static final String GRADLE_WRAPPER_VERSION = "5.6.4";
 
+	public static final String MAVEN_GOAL_BUILD_REST = "rest-builder:build";
+
 	public static final String MAVEN_GOAL_BUILD_SERVICE =
 		"service-builder:build";
 

@@ -12,6 +12,7 @@ definition {
 	}
 
 	macro changeFieldType {
+		Pause(locator1 = "2000");
 
 		while (IsElementNotPresent(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON_DROPDOWN")) {
 			Click(locator1 = "FormFields#CHANGE_FIELD_TYPE_BUTTON");
@@ -162,6 +163,8 @@ definition {
 	}
 
 	macro editRepeatingText {
+		Pause(locator1 = "2000");
+
 		var key_fieldName = "${fieldName}";
 
 		Type(
@@ -407,6 +410,8 @@ definition {
 	}
 
 	macro selectSelectOption {
+		Pause(locator1 = "1000");
+
 		var key_fieldName = "${fieldName}";
 		var key_selectOption = "${selectOption}";
 
@@ -686,6 +691,8 @@ definition {
 	}
 
 	macro viewRepeatableTextFieldLabel {
+		Pause(locator1 = "2000");
+
 		var key_fieldLabel = "${fieldLabel}";
 		var key_fieldName = "${fieldName}";
 
@@ -767,6 +774,8 @@ definition {
 	}
 
 	macro viewSelectOptionsList {
+		Pause(locator1 = "2000");
+
 		var key_fieldName = "${fieldName}";
 
 		Click(locator1 = "FormFields#SELECT_FIELD");

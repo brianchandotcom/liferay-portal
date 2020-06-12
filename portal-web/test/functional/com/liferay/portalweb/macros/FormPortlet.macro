@@ -113,6 +113,14 @@ definition {
 			value1 = "${successPageDescription}");
 	}
 
+	macro waitFormRenderer {
+		var key_text = "${text}";
+
+		WaitForElementPresent(locator1 = "Button#ANY_ENABLED");
+
+		Pause(locator1 = "2500");
+	}
+
 	macro waitForValidationErrorNotPresent {
 		WaitForElementNotPresent(
 			locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",

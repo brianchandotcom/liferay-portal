@@ -144,6 +144,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.editTextWithDataProvider(
 			fieldName = "TextFieldWithAutocomplete",
 			fieldValue = "Bra");
@@ -195,6 +197,8 @@ definition {
 		Form.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editText(
 			fieldName = "TextFieldWithAutocomplete",
@@ -282,13 +286,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Pause(locator1 = "1500");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewSelectLabel(
 			fieldLabel = "Data Provider Select Field",
 			fieldName = "DataProviderSelectField");
-
-		Pause(locator1 = "1000");
 
 		FormFields.selectSelectOption(
 			fieldName = "Select Field",

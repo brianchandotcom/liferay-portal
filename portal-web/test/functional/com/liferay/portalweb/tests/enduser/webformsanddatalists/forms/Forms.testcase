@@ -259,6 +259,8 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field Required",
 			fieldName = "${fieldName1}");
@@ -662,6 +664,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Enviar");
+
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field On Spanish Portal",
 			fieldName = "TextFieldOnSpanishPortal");
@@ -752,8 +756,6 @@ definition {
 		FormsAdminNavigator.gotoEditFormByName();
 
 		FormsAdminNavigator.gotoEditField(fieldName = "Testing Title");
-
-		Pause(locator1 = "2000");
 
 		FormFields.changeFieldType(selectOption = "Text");
 
@@ -982,6 +984,8 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.selectSelectOption(
 			fieldName = "TestingTitle",
 			selectOption = "Select 2");
@@ -1054,8 +1058,6 @@ definition {
 			configurationCategory = "Forms",
 			configurationName = "Forms",
 			configurationScope = "Site Scope");
-
-		Pause(locator1 = "2000");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Autosave Interval",
@@ -1197,6 +1199,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextField(
 			fieldLabel = "Text Field",
@@ -1348,6 +1352,8 @@ definition {
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.selectSelectOption(
 			fieldName = "Select",
@@ -1584,8 +1590,6 @@ definition {
 		FormFields.editOptionsRowNameField(
 			optionValue = "Option2Name",
 			rowNumber = "2");
-
-		Pause(locator1 = "3000");
 
 		Form.closeSidebar();
 
@@ -2264,7 +2268,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextField(
 			fieldLabel = "Text Field",
@@ -2427,6 +2431,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		for (var fieldValue : list "${fieldValueList}") {
 			FormFields.editText(
 				fieldName = "TextField",
@@ -2520,6 +2526,8 @@ definition {
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.selectSelectWithMultipleOptions(
 			fieldName = "Select",
@@ -2669,8 +2677,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
-	
-		Pause(locator1 = "2000");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewParagraphField(
 			fieldTitle = "Paragraph",
@@ -2774,8 +2782,8 @@ definition {
 		Form.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
-	
-		Pause(locator1 = "2000");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewParagraphField(
 			fieldName = "Paragraph",
@@ -2987,6 +2995,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
 			fieldName = "TextField");
@@ -3091,6 +3101,8 @@ definition {
 			else if ("${formAccessLevel}" == "public") {
 				Navigator.openSpecificURL(url = "${publishedFormPublicURL}");
 			}
+
+			FormPortlet.waitFormRenderer(text = "Submit");
 
 			FormFields.viewTextField(
 				fieldLabel = "Text Field",
@@ -3300,8 +3312,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
-	
-		Pause(locator1 = "5000");
+
+		FormPortlet.waitFormRenderer(text = "Next");
 
 		FormFields.viewParagraphField(
 			fieldTitle = "Paragraph",
@@ -3487,11 +3499,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.viewTextLabel(
 			fieldLabel = "Text",
 			fieldName = "Text");
-
-		Pause(locator1 = "5000");
 
 		FormFields.editText(
 			fieldName = "Text",
@@ -3616,6 +3628,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
@@ -3757,6 +3771,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.viewCheckboxLabel(
 			fieldLabel = "Checkbox Field",
 			fieldName = "CheckboxField");
@@ -3836,6 +3852,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
@@ -3927,6 +3945,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.viewRadioLabel(
 			fieldLabel = "Radio Field",
 			fieldName = "RadioField");
@@ -4011,11 +4031,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.addRepeatableField(
 			fieldName = "TextField",
 			repeatableFieldNumber = "1");
-
-		Pause(locator1 = "2000");
 
 		FormFields.editRepeatingText(
 			fieldName = "TextField",
@@ -4088,6 +4108,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
@@ -4181,6 +4203,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.viewSwitcherLabel(
 			fieldLabel = "Checkbox Field",
 			fieldName = "CheckboxField");
@@ -4251,6 +4275,8 @@ definition {
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewUploadField(
 			fieldLabel = "Upload Field",
@@ -4326,6 +4352,8 @@ definition {
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewDateField(
 			fieldLabel = "Date Field",
@@ -4489,7 +4517,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		Pause(locator1 = "2000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextField(
 			fieldLabel = ",-+!@#$%^*()=.?/;:{}[]\|",
@@ -4566,6 +4594,8 @@ definition {
 		Form.publishForm();
 
 		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Next");
 
 		FormFields.editText(
 			fieldName = "TextField",
@@ -4657,6 +4687,8 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.viewSwitcher(fieldName = "MultipleSelection");
 
 		FormFields.viewSwitcherLabelNotPresent(
@@ -4717,11 +4749,11 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
+		FormPortlet.waitFormRenderer(text = "Submit");
+
 		FormFields.addRepeatableField(
 			fieldName = "TextField",
 			repeatableFieldNumber = "1");
-
-		Pause(locator1 = "2000");
 
 		FormFields.viewRepeatableTextFieldLabel(
 			fieldLabel = "Text Field",
@@ -4814,6 +4846,8 @@ definition {
 		PortletEntry.save();
 
 		Navigator.gotoPage(pageName = "Form Page");
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",

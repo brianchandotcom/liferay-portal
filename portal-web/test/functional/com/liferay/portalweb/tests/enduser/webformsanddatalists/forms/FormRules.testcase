@@ -121,7 +121,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextLabel(
 			fieldLabel = "Text Field",
@@ -131,8 +131,6 @@ definition {
 			fieldName = "TextField",
 			fieldValue = "test");
 
-		Pause(locator1 = "2000");
-
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",
 			selectOption = "Option");
@@ -140,8 +138,6 @@ definition {
 		FormFields.editText(
 			fieldName = "TextField",
 			fieldValue = "country");
-
-		Pause(locator1 = "2000");
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "Countries",
@@ -241,7 +237,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editText(
 			fieldName = "Value",
@@ -330,7 +326,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewRequiredAsteriskNotPresent();
 
@@ -445,7 +441,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editText(
 			fieldName = "TextField1",
@@ -566,7 +562,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextField(
 			fieldLabel = "Public",
@@ -575,6 +571,8 @@ definition {
 		FormFields.viewTextFieldNotVisible(
 			fieldLabel = "Manager",
 			fieldName = "Manager");
+
+		Navigator.openURL();
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
@@ -585,9 +583,11 @@ definition {
 			siteRoleName = "Site Administrator",
 			userScreenName = "test");
 
+		Navigator.openURL();
+
 		Navigator.gotoPage(pageName = "Form Page");
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewTextField(
 			fieldLabel = "Public",
@@ -771,7 +771,9 @@ definition {
 
 		Form.publishForm();
 
-		FormsAdminNavigator.openPublishURL(publishFormURL = "${publishedFormPublicURL}");
+		FormsAdminNavigator.gotoPublishedForm();
+
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewDateFieldNotPresent(
 			fieldLabel = "Date Field",
@@ -936,7 +938,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.viewRequiredAsterisk();
 
@@ -1135,7 +1137,7 @@ definition {
 
 		FormsAdminNavigator.gotoPublishedForm();
 
-		Pause(locator1 = "5000");
+		FormPortlet.waitFormRenderer(text = "Submit");
 
 		FormFields.editText(
 			fieldName = "TextField2",

@@ -3116,7 +3116,7 @@ definition {
 	@priority = "5"
 	test SubmitFormWithAllFieldTypesAndThreePages {
 		property test.name.skip.portal.instance = "Forms#SubmitFormWithAllFieldTypesAndThreePages";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();

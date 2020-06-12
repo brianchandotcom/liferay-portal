@@ -30,6 +30,10 @@ export function dateToInternationalHuman(
 		month: 'short',
 	};
 
+	if (date.getFullYear() !== new Date().getFullYear()) {
+		options.year = 'numeric';
+	}
+
 	const intl = new Intl.DateTimeFormat(localeKey, options);
 
 	return intl.format(date);

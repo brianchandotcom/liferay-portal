@@ -48,6 +48,8 @@ definition {
 	        panel = "Applications",
 	        portlet = "Content Dashboard");
 
+        Pause(locator1 = "3000");
+        
         ContentDashboard.filterByTitle();
 
         AssertTextPresent(

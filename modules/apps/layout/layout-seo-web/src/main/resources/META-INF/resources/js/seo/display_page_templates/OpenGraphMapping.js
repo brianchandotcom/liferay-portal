@@ -66,10 +66,10 @@ OpenGraphMapping.propTypes = {
 			label: PropTypes.string,
 		})
 	).isRequired,
-	openGraphDescription: PropTypes.string.isRequired,
-	openGraphImage: PropTypes.string.isRequired,
-	openGraphImageAlt: PropTypes.string.isRequired,
-	openGraphTitle: PropTypes.string.isRequired,
+	openGraphDescription: PropTypes.string,
+	openGraphImage: PropTypes.string,
+	openGraphImageAlt: PropTypes.string,
+	openGraphTitle: PropTypes.string,
 	selectedSource: PropTypes.shape({
 		classNameLabel: PropTypes.string,
 		classTypeLabel: PropTypes.string,

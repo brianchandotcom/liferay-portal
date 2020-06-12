@@ -45,7 +45,7 @@ function SeoMapping({
 }
 
 SeoMapping.propTypes = {
-	description: PropTypes.string.isRequired,
+	description: PropTypes.string,
 	fields: PropTypes.arrayOf(
 		PropTypes.shape({
 			key: PropTypes.string,
@@ -56,7 +56,7 @@ SeoMapping.propTypes = {
 		classNameLabel: PropTypes.string,
 		classTypeLabel: PropTypes.string,
 	}).isRequired,
-	title: PropTypes.string.isRequired,
+	title: PropTypes.string,
 };
 
 export default function (props) {

@@ -12,124 +12,90 @@
  * details.
  */
 
-import React, {
-	useContext,
-	useEffect,
-	useLayoutEffect,
-	useRef,
-	useState,
-} from 'react';
+import {
+	EVENT_TYPES,
+	FormProvider,
+	FormRenderer,
+} from 'dynamic-data-mapping-form-renderer';
+import React, {useContext, useMemo} from 'react';
 
 import AppContext from '../../../AppContext.es';
 import {EDIT_CUSTOM_OBJECT_FIELD} from '../../../actions.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
-import renderSettingsForm, {
-	getEvents,
-	getFilteredSettingsContext,
-} from '../../../utils/renderSettingsForm.es';
+import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
+
+const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
 
 export default function () {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
-	const [state, dispatch] = useContext(AppContext);
-	const {editingLanguageId, focusedCustomObjectField, focusedField} = state;
+	const [
+		{config, editingLanguageId, focusedCustomObjectField, focusedField},
+		dispatch,
+	] = useContext(AppContext);
+
 	const {
 		settingsContext: customObjectFieldSettingsContext,
 	} = focusedCustomObjectField;
 	const {settingsContext: fieldSettingsContext} = focusedField;
-	const formRef = useRef();
-	const [form, setForm] = useState(null);
 	const hasFocusedCustomObjectField = !!customObjectFieldSettingsContext;
 	const settingsContext = hasFocusedCustomObjectField
 		? customObjectFieldSettingsContext
 		: fieldSettingsContext;
 
-	useEffect(() => {
-		const filteredSettingsContext = getFilteredSettingsContext({
-			config: state.config,
-			editingLanguageId,
-			settingsContext,
-		});
-
-		const dispatchEvent = (type, payload) => {
-			if (hasFocusedCustomObjectField && type === 'fieldEdited') {
-				dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
-			}
-			else if (!hasFocusedCustomObjectField) {
-				dataLayoutBuilder.dispatch(type, payload);
-			}
-		};
-
-		if (form === null || form.isDisposed()) {
-			setForm(
-				renderSettingsForm(
-					getEvents(dispatchEvent, settingsContext),
-					filteredSettingsContext,
-					formRef.current
-				)
-			);
-		}
-		else {
-			const {pages, rules} = filteredSettingsContext;
-			let newState = {pages, rules};
-
-			if (form.activePage > pages.length - 1) {
-				newState = {
-					...newState,
-					activePage: 0,
-				};
-			}
-
-			form.setState({
-				...newState,
-				events: getEvents(dispatchEvent, settingsContext),
-			});
-		}
-	}, [
-		dataLayoutBuilder,
-		dispatch,
-		editingLanguageId,
-		focusedField,
-		form,
-		formRef,
-		hasFocusedCustomObjectField,
-		settingsContext,
-		state.config,
-	]);
-
-	useEffect(() => {
-		return () => form && form.dispose();
-	}, [form]);
-
-	useEffect(() => {
-		if (form) {
-			form.setState({
-				defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+	const filteredSettingsContext = useMemo(
+		() =>
+			getFilteredSettingsContext({
+				config,
 				editingLanguageId,
-			});
+				settingsContext,
+			}),
+		[config, editingLanguageId, settingsContext]
+	);
+
+	const dispatchEvent = (type, payload) => {
+		if (hasFocusedCustomObjectField && type === 'fieldEdited') {
+			dispatch({payload, type: EDIT_CUSTOM_OBJECT_FIELD});
 		}
-	}, [editingLanguageId, form]);
-
-	const focusedFieldName = focusedField.name;
-
-	useLayoutEffect(() => {
-		if (!form) {
-			return;
+		else if (!hasFocusedCustomObjectField) {
+			dataLayoutBuilder.dispatch(type, payload);
 		}
-
-		form.once('rendered', () => {
-			const firstInput = form.element.querySelector('input');
-
-			if (firstInput && !form.element.contains(document.activeElement)) {
-				firstInput.focus();
-
-				if (firstInput.select) {
-					firstInput.select();
-				}
-			}
-		});
-	}, [focusedFieldName, form]);
+	};
 
 	return (
-		<form onSubmit={(event) => event.preventDefault()} ref={formRef}></form>
+		<form onSubmit={(event) => event.preventDefault()}>
+			<FormProvider
+				onEvent={(type, payload) => {
+					switch (type) {
+						case EVENT_TYPES.FIELD_BLUR:
+						case EVENT_TYPES.FIELD_CHANGE:
+							dispatchEvent(type, {
+								editingLanguageId:
+									settingsContext.editingLanguageId,
+								propertyName: payload.fieldInstance.fieldName,
+								propertyValue: payload.value,
+							});
+							break;
+						case EVENT_TYPES.FIELD_EVALUATED:
+							dispatchEvent('focusedFieldEvaluationEnded', {
+								settingsContext: {
+									...settingsContext,
+									pages: payload,
+								},
+							});
+							break;
+						default:
+							break;
+					}
+				}}
+				value={{
+					...filteredSettingsContext,
+					editable: true,
+					editingLanguageId,
+					spritemap,
+				}}
+			>
+				{(props) => <FormRenderer {...props} />}
+			</FormProvider>
+		</form>
 	);
 }

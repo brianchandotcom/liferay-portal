@@ -21,6 +21,7 @@ import React, {Suspense, lazy, useCallback, useRef, useState} from 'react';
 
 import {usePage} from '../../hooks/usePage.es';
 import {useStorage} from '../../hooks/useStorage.es';
+import {AutoFocus} from '../AutoFocus.es';
 import {ErrorBoundary} from '../ErrorBoundary.es';
 import {MetalComponentAdapter} from './MetalComponentAdapter.es';
 import {ParentFieldContext} from './ParentFieldContext.es';
@@ -145,30 +146,32 @@ export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
 		<ErrorBoundary onError={() => setHasError(true)}>
 			<Suspense fallback={<ClayLoadingIndicator />}>
 				<ParentFieldContext.Provider value={field}>
-					<div
-						className="ddm-field"
-						data-field-name={field.fieldName}
-					>
-						<FieldLazy
-							visible
-							{...field}
-							{...otherProps}
-							onBlur={(event) => {
-								focusDurationRef.current.end = new Date();
-								onBlur(
-									mountStruct(event, field),
-									focusDurationRef.current
-								);
-							}}
-							onChange={(event, value) =>
-								onChange(mountStruct(event, field, value))
-							}
-							onFocus={(event) => {
-								focusDurationRef.current.start = new Date();
-								onFocus(mountStruct(event, field));
-							}}
-						/>
-					</div>
+					<AutoFocus>
+						<div
+							className="ddm-field"
+							data-field-name={field.fieldName}
+						>
+							<FieldLazy
+								visible
+								{...field}
+								{...otherProps}
+								onBlur={(event) => {
+									focusDurationRef.current.end = new Date();
+									onBlur(
+										mountStruct(event, field),
+										focusDurationRef.current
+									);
+								}}
+								onChange={(event, value) =>
+									onChange(mountStruct(event, field, value))
+								}
+								onFocus={(event) => {
+									focusDurationRef.current.start = new Date();
+									onFocus(mountStruct(event, field));
+								}}
+							/>
+						</div>
+					</AutoFocus>
 				</ParentFieldContext.Provider>
 			</Suspense>
 		</ErrorBoundary>

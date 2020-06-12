@@ -16,7 +16,12 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.page.template.util.AlignConverter;
+import com.liferay.layout.page.template.util.BorderRadiusConverter;
+import com.liferay.layout.page.template.util.JustifyConverter;
+import com.liferay.layout.page.template.util.MarginConverter;
 import com.liferay.layout.page.template.util.PaddingConverter;
+import com.liferay.layout.page.template.util.ShadowConverter;
 import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -94,18 +99,116 @@ public class ContainerLayoutStructureItemImporter
 				(Map<String, Object>)definitionMap.get("layout");
 
 			if (layout != null) {
-				containerLayoutStructureItem.setContainerType(
+				containerLayoutStructureItem.setAlign(
+					AlignConverter.convertToInternalValue(
+						(String)containerLayout.get("align")));
+				containerLayoutStructureItem.setBorderColor(
+					(String)containerLayout.get("borderColor"));
+				containerLayoutStructureItem.setBorderRadius(
+					BorderRadiusConverter.convertToInternalValue(
+						(String)containerLayout.get("borderRadius")));
+
+				Integer borderWidth = (Integer)containerLayout.get(
+					"borderWidth");
+
+				if (borderWidth != null) {
+					containerLayoutStructureItem.setBorderWidth(borderWidth);
+				}
+
+				containerLayoutStructureItem.setContentDisplay(
 					StringUtil.toLowerCase(
-						(String)containerLayout.get("containerType")));
-				containerLayoutStructureItem.setPaddingBottom(
+						(String)containerLayout.get("contentDisplay")));
+				containerLayoutStructureItem.setJustify(
+					JustifyConverter.convertToInternalValue(
+						(String)containerLayout.get("justify")));
+				Integer marginBottom = MarginConverter.convertToInternalValue(
+					(Integer)containerLayout.get("marginBottom"));
+
+				if (marginBottom != null) {
+					containerLayoutStructureItem.setMarginBottom(marginBottom);
+				}
+
+				Integer marginLeft = MarginConverter.convertToInternalValue(
+					(Integer)containerLayout.get("marginLeft"));
+
+				if (marginLeft != null) {
+					containerLayoutStructureItem.setMarginLeft(marginLeft);
+				}
+
+				Integer marginRight = MarginConverter.convertToInternalValue(
+					(Integer)containerLayout.get("marginRight"));
+
+				if (marginRight != null) {
+					containerLayoutStructureItem.setMarginRight(marginRight);
+				}
+
+				Integer marginTop = MarginConverter.convertToInternalValue(
+					(Integer)containerLayout.get("marginTop"));
+
+				if (marginTop != null) {
+					containerLayoutStructureItem.setMarginTop(marginTop);
+				}
+
+				Integer opacity = (Integer)containerLayout.get("opacity");
+
+				if (opacity != null) {
+					containerLayoutStructureItem.setOpacity(opacity);
+				}
+
+				Integer paddingBottom = PaddingConverter.convertToInternalValue(
+					(Integer)containerLayout.get("paddingBottom"));
+
+				if (paddingBottom != null) {
+					containerLayoutStructureItem.setPaddingBottom(
+						paddingBottom);
+				}
+
+				Integer paddingHorizontal =
 					PaddingConverter.convertToInternalValue(
-						(Integer)containerLayout.get("paddingBottom")));
-				containerLayoutStructureItem.setPaddingHorizontal(
-					PaddingConverter.convertToInternalValue(
-						(Integer)containerLayout.get("paddingHorizontal")));
-				containerLayoutStructureItem.setPaddingTop(
-					PaddingConverter.convertToInternalValue(
-						(Integer)containerLayout.get("paddingTop")));
+						(Integer)containerLayout.get("paddingHorizontal"));
+				Integer paddingLeft = PaddingConverter.convertToInternalValue(
+					(Integer)containerLayout.get("paddingLeft"));
+				Integer paddingRight = PaddingConverter.convertToInternalValue(
+					(Integer)containerLayout.get("paddingRight"));
+
+				if (paddingLeft != null) {
+					containerLayoutStructureItem.setPaddingLeft(paddingLeft);
+				}
+				else if (paddingHorizontal != null) {
+					containerLayoutStructureItem.setPaddingLeft(
+						paddingHorizontal);
+				}
+
+				if (paddingRight != null) {
+					containerLayoutStructureItem.setPaddingRight(paddingRight);
+				}
+				else if (paddingHorizontal != null) {
+					containerLayoutStructureItem.setPaddingRight(
+						paddingHorizontal);
+				}
+
+				Integer paddingTop = PaddingConverter.convertToInternalValue(
+					(Integer)containerLayout.get("paddingTop"));
+
+				if (paddingTop != null) {
+					containerLayoutStructureItem.setPaddingTop(paddingTop);
+				}
+
+				containerLayoutStructureItem.setShadow(
+					ShadowConverter.convertToInternalValue(
+						(String)containerLayout.get("shadow")));
+
+				String containerType = StringUtil.toLowerCase(
+					(String)containerLayout.get("containerType"));
+				String widthType = StringUtil.toLowerCase(
+					(String)containerLayout.get("widthType"));
+
+				if (widthType != null) {
+					containerLayoutStructureItem.setWidthType(widthType);
+				}
+				else if (containerType != null) {
+					containerLayoutStructureItem.setWidthType(containerType);
+				}
 			}
 		}
 

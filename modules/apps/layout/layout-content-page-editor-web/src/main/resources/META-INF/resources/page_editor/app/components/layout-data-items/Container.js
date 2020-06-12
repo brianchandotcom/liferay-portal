@@ -29,7 +29,6 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 		borderColor,
 		borderRadius,
 		borderWidth,
-		containerWidth,
 		contentDisplay,
 		justify,
 		marginBottom,
@@ -42,6 +41,7 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 		paddingRight,
 		paddingTop,
 		shadow,
+		widthType,
 	} = item.config;
 
 	const languageId = useSelector(selectLanguageId);
@@ -112,7 +112,7 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
 					[`border-${borderColor}`]: !!borderColor,
 					[borderRadius]: !!borderRadius,
-					container: containerWidth === 'fixed',
+					container: widthType === 'fixed',
 					'd-block': contentDisplay === 'block',
 					'd-flex': contentDisplay === 'flex',
 					empty: item.children.length === 0,

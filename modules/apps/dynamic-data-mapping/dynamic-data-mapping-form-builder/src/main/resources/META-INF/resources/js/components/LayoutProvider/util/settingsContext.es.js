@@ -139,17 +139,14 @@ export const updateFieldLabel = (
 	editingLanguageId,
 	fieldNameGenerator,
 	focusedField,
-	shouldAutoGenerateName,
+	generateFieldNameUsingFieldLabel,
 	value
 ) => {
 	let {fieldName, settingsContext} = focusedField;
 
 	if (
-		shouldAutoGenerateName(
-			defaultLanguageId,
-			editingLanguageId,
-			focusedField
-		)
+		generateFieldNameUsingFieldLabel &&
+		defaultLanguageId === editingLanguageId
 	) {
 		const updates = updateFieldName(
 			editingLanguageId,
@@ -213,7 +210,7 @@ export const updateField = (
 		defaultLanguageId,
 		editingLanguageId,
 		fieldNameGenerator,
-		shouldAutoGenerateName,
+		generateFieldNameUsingFieldLabel,
 	},
 	field,
 	propertyName,
@@ -233,7 +230,7 @@ export const updateField = (
 				editingLanguageId,
 				fieldNameGenerator,
 				field,
-				shouldAutoGenerateName,
+				generateFieldNameUsingFieldLabel,
 				propertyValue
 			),
 		};

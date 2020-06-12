@@ -188,6 +188,44 @@ definition {
 		PageTemplatesAdminGlobalSite.viewDefaultCP();
 	}
 
+	@description = "This is a use case for LPS-115361. Delete a widget page template in normal site."
+	@priority = "5"
+	test DeletePageTemplate {
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Widget Page Template");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Page Template Name");
+		}
+
+		task ("Delete the widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.deletePageTemplate(pageTemplateName = "Page Template Name");
+
+			PageTemplatesAdmin.viewPageTemplateNotPresent(pageTemplateName = "Page Template Name");
+		}
+	}
+
 	@description = "This is a use case for LPS-54099."
 	@priority = "5"
 	test EditGlobalPageTemplate {

@@ -17,7 +17,6 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerializer;
 import com.liferay.frontend.taglib.clay.data.set.model.ClayPaginationEntry;
-import com.liferay.frontend.taglib.clay.data.set.util.ClayCreationMenu;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -64,8 +63,8 @@ public class DatasetDisplayTag extends IncludeTag {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		try {
-			if (_clayCreationMenu == null) {
-				_clayCreationMenu = new ClayCreationMenu();
+			if (_creationMenu == null) {
+				_creationMenu = new CreationMenu();
 			}
 
 			_setPagination();
@@ -113,12 +112,12 @@ public class DatasetDisplayTag extends IncludeTag {
 		return _bulkActions;
 	}
 
-	public ClayCreationMenu getClayCreationMenu() {
-		return _clayCreationMenu;
-	}
-
 	public Map<String, String> getContextParams() {
 		return _contextParams;
+	}
+
+	public CreationMenu getCreationMenu() {
+		return _creationMenu;
 	}
 
 	public String getDataProviderKey() {
@@ -197,12 +196,12 @@ public class DatasetDisplayTag extends IncludeTag {
 		_bulkActions = bulkActions;
 	}
 
-	public void setClayCreationMenu(ClayCreationMenu clayCreationMenu) {
-		_clayCreationMenu = clayCreationMenu;
-	}
-
 	public void setContextParams(Map<String, String> contextParams) {
 		_contextParams = contextParams;
+	}
+
+	public void setCreationMenu(CreationMenu clayCreationMenu) {
+		_creationMenu = clayCreationMenu;
 	}
 
 	public void setDataProviderKey(String dataProviderKey) {
@@ -288,10 +287,10 @@ public class DatasetDisplayTag extends IncludeTag {
 		super.cleanUp();
 
 		_bulkActions = new ArrayList<>();
-		_clayCreationMenu = new ClayCreationMenu();
 		_clayDataSetDisplayViewsContext = null;
 		_clayDataSetDisplayViewSerializer = null;
 		_contextParams = new HashMap<>();
+		_creationMenu = new CreationMenu();
 		_dataProviderKey = null;
 		_dataSetAPI = null;
 		_deltaParam = null;
@@ -338,10 +337,10 @@ public class DatasetDisplayTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		request.setAttribute("clay:dataset-display:bulkActions", _bulkActions);
 		request.setAttribute(
-			"clay:dataset-display:clayCreationMenu", _clayCreationMenu);
-		request.setAttribute(
 			"clay:dataset-display:clayDataSetDisplayViewsContext",
 			_clayDataSetDisplayViewsContext);
+		request.setAttribute(
+			"clay:dataset-display:creationMenu", _creationMenu);
 		request.setAttribute(
 			"clay:dataset-display:dataProviderKey", _dataProviderKey);
 		request.setAttribute("clay:dataset-display:dataSetAPI", _dataSetAPI);
@@ -406,10 +405,10 @@ public class DatasetDisplayTag extends IncludeTag {
 		DatasetDisplayTag.class);
 
 	private List<DropdownItem> _bulkActions = new ArrayList<>();
-	private ClayCreationMenu _clayCreationMenu = new ClayCreationMenu();
 	private Object _clayDataSetDisplayViewsContext;
 	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;
 	private Map<String, String> _contextParams = new HashMap<>();
+	private CreationMenu _creationMenu = new CreationMenu();
 	private String _dataProviderKey;
 	private String _dataSetAPI;
 	private String _deltaParam;

@@ -43,12 +43,17 @@ export default ({currentSection, question, showSectionLabel}) => (
 								? 'caret-bottom'
 								: 'caret-top'
 						}
+						tooltip={Liferay.Language.get('votes')}
 						value={normalizeRating(question.aggregateRating)}
 					/>
 				</li>
 
 				<li>
-					<QuestionBadge symbol="view" value={question.viewCount} />
+					<QuestionBadge
+						symbol="view"
+						tooltip={Liferay.Language.get('view-count')}
+						value={question.viewCount}
+					/>
 				</li>
 
 				<li>
@@ -63,6 +68,7 @@ export default ({currentSection, question, showSectionLabel}) => (
 								? 'check-circle-full'
 								: 'message'
 						}
+						tooltip={Liferay.Language.get('number-of-replies')}
 						value={question.numberOfMessageBoardMessages}
 					/>
 				</li>

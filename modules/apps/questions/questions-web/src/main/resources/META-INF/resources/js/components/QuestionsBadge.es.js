@@ -13,16 +13,25 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
-export default ({className, symbol, value}) => {
+export default ({className, symbol, tooltip, value}) => {
 	return (
-		<div
-			className={`c-py-2 c-px-3 rounded stretched-link-layer ${className}`}
-		>
-			<ClayIcon symbol={symbol} />
+		<ClayTooltipProvider>
+			<div
+				className={`c-py-2 c-px-3 rounded stretched-link-layer ${className}`}
+			>
+				<ClayIcon
+					data-tooltip-align="top"
+					symbol={symbol}
+					title={tooltip}
+				/>
 
-			<span className="c-ml-2 font-weight-bold small">{value || 0}</span>
-		</div>
+				<span className="c-ml-2 font-weight-bold small">
+					{value || 0}
+				</span>
+			</div>
+		</ClayTooltipProvider>
 	);
 };

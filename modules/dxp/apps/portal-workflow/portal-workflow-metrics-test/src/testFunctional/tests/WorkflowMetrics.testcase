@@ -685,7 +685,7 @@ definition {
 	@description = "Verify if the default filter values are correct and if the chart is displayed (LPS-98001)"
 	@priority = "5"
 	test DefaultWorkflowMetricsFilterValues {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
 
@@ -1416,7 +1416,7 @@ definition {
 	@description = "View that Custom Range is selected with shown input date"
 	@priority = "5"
 	test VerifyCustomRangeDateInput {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

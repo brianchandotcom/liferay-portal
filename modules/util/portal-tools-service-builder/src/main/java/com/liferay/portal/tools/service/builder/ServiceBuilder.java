@@ -6119,8 +6119,14 @@ public class ServiceBuilder {
 
 		columnElements.addAll(0, derivedColumnElements);
 
+		boolean hasCompanyId = false;
+
 		for (Element columnElement : columnElements) {
 			String columnName = columnElement.attributeValue("name");
+
+			if (columnName.equals("companyId")) {
+				hasCompanyId = true;
+			}
 
 			String columnPluralName = columnElement.attributeValue(
 				"plural-name");
@@ -6488,6 +6494,9 @@ public class ServiceBuilder {
 			boolean finderDBIndex = GetterUtil.getBoolean(
 				finderElement.attributeValue("db-index"), true);
 
+			boolean hasClassNameId = false;
+			boolean hasOtherIds = false;
+
 			List<EntityColumn> finderEntityColumns = new ArrayList<>();
 
 			List<Element> finderColumnElements = finderElement.elements(
@@ -6496,6 +6505,18 @@ public class ServiceBuilder {
 			for (Element finderColumnElement : finderColumnElements) {
 				String finderColumnName = finderColumnElement.attributeValue(
 					"name");
+
+				if (finderColumnName.endsWith("Id") ||
+					finderColumnName.endsWith("PK")) {
+
+					if (finderColumnName.equals("classNameId")) {
+						hasClassNameId = true;
+					}
+					else {
+						hasOtherIds = true;
+					}
+				}
+
 				boolean finderColCaseSensitive = GetterUtil.getBoolean(
 					finderColumnElement.attributeValue("case-sensitive"), true);
 				String finderColComparator = GetterUtil.getString(
@@ -6523,6 +6544,15 @@ public class ServiceBuilder {
 				entityColumn.validate();
 
 				finderEntityColumns.add(entityColumn);
+			}
+
+			if (isVersionGTE_7_3_0() && hasCompanyId && hasClassNameId &&
+				!hasOtherIds) {
+
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"Finder ", finderName, " for entity ", entityName,
+						" requires an additional company scope field"));
 			}
 
 			entityFinders.add(

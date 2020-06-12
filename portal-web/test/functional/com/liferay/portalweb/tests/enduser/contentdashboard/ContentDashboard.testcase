@@ -10,7 +10,7 @@ definition {
 
 		User.firstLoginPG();
 
-        JSONGroup.addGroup(groupName = "Test Site Name");
+		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		Navigator.openURL();
 
@@ -20,41 +20,41 @@ definition {
 				groupName = "Test Site Name",
 				title = "WC Title ${count}");
 		}
-    }
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-        for (var count : list "1,2,3,4,5") {
+		for (var count : list "1,2,3,4,5") {
 			JSONWebcontent.deleteWebContent(
 				groupName = "Test Site Name",
 				title = "WC Title ${count}");
 		}
 
-        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
-        if ("${testPortalInstance}" == "true") {
-	        PortalInstances.tearDownCP();
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-    @description = "Validate if the user can filter by title"
-    @priority = "5"
-    test ContentDashboardFilterByTitle {
-        GlobalMenu.gotoPortlet(
-	        category = "Content",
-	        panel = "Applications",
-	        portlet = "Content Dashboard");
+	@description = "Validate if the user can filter by title"
+	@priority = "5"
+	test ContentDashboardFilterByTitle {
+		GlobalMenu.gotoPortlet(
+			category = "Content",
+			panel = "Applications",
+			portlet = "Content Dashboard");
 
-        Pause(locator1 = "3000");
-        
-        ContentDashboard.filterByTitle();
+		Pause(locator1 = "3000");
 
-        AssertTextPresent(
-	        locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
-	        value1 = "WC Title 5");
-    }
+		ContentDashboard.filterByTitle();
+
+		AssertTextPresent(
+			locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
+			value1 = "WC Title 5");
+	}
 
 }

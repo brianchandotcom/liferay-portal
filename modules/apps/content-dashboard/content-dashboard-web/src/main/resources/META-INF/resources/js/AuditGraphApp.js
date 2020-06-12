@@ -62,9 +62,11 @@ const data = [
 	},
 ];
 
+const rtl = false;
+
 export default function () {
 	return data.length ? (
-		<AuditBarChart bars={bars} data={data} />
+		<AuditBarChart bars={bars} data={data} rtl={rtl} />
 	) : (
 		<EmptyAuditBarChart />
 	);

@@ -36,7 +36,7 @@ const BAR_CHART = {
 	width: 1150,
 };
 
-export default function AuditBarChart({bars, data}) {
+export default function AuditBarChart({bars, data, rtl}) {
 	return (
 		<>
 			<ResponsiveContainer height={BAR_CHART.height}>
@@ -46,7 +46,7 @@ export default function AuditBarChart({bars, data}) {
 					width={BAR_CHART.width}
 				>
 					<Legend
-						align="left"
+						align={rtl ? 'right' : 'left'}
 						height={BAR_CHART.legendHeight}
 						verticalAlign="top"
 					/>
@@ -63,6 +63,7 @@ export default function AuditBarChart({bars, data}) {
 						dataKey="name"
 						height={70}
 						interval={0}
+						reversed={rtl}
 						tick={<CustomTick />}
 						tickLine={false}
 					/>
@@ -70,6 +71,7 @@ export default function AuditBarChart({bars, data}) {
 						axisLine={{
 							stroke: BAR_CHART.stroke,
 						}}
+						orientation={rtl ? 'right' : 'left'}
 						tickLine={false}
 					/>
 
@@ -111,4 +113,5 @@ function CustomTick(props) {
 AuditBarChart.propTypes = {
 	bars: PropTypes.array.isRequired,
 	data: PropTypes.array.isRequired,
+	rtl: PropTypes.bool.isRequired,
 };

@@ -1084,7 +1084,9 @@ public class DataDefinitionResourceImpl
 					column.getSQLType()));
 			dataDefinitionField.setRequired(!column.isNullAllowed());
 
-			if (Objects.equals(dataDefinitionField.getFieldType(), "radio") ||
+			if (Objects.equals(
+					dataDefinitionField.getFieldType(), "checkbox_multiple") ||
+				Objects.equals(dataDefinitionField.getFieldType(), "radio") ||
 				Objects.equals(dataDefinitionField.getFieldType(), "select")) {
 
 				Map<String, Object> customProperties =
@@ -1395,7 +1397,7 @@ public class DataDefinitionResourceImpl
 	}
 
 	private static final String[] _BASIC_FIELD_TYPES = {
-		"date", "numeric", "radio", "select", "text"
+		"checkbox_multiple", "date", "numeric", "radio", "select", "text"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -5730,7 +5730,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/ant.jar</file-name>
-				<version>1.9.14</version>
+				<version>1.9.15</version>
 				<project-name>Ant</project-name>
 				<project-url>http://ant.apache.org</project-url>
 				<licenses>

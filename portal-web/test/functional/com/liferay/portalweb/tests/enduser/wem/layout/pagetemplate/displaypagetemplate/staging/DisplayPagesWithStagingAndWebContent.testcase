@@ -37,9 +37,15 @@ definition {
 				collectionName = "Collection Name",
 				fragmentName = "Title");
 
-			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_ENABLED");
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			Click.waitForMenuToggleJSClick(
+				key_card = "Display Page Name",
+				locator1 = "LexiconCard#CARD_ELLIPSIS");
+
+			MenuItem.viewPresent(menuItem = "Discard Draft");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Collection Name",

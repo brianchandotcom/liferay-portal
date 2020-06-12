@@ -150,6 +150,122 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-113994. The Naviation Menu is able to display the page hierarchy with more than two sublevels when choose a custom menu."
+	@priority = "4"
+	test ShowMoreThanTwoSublevelsWhenSelectCustomMenuAndBarMinimallyStyled {
+		task ("Add 3 pages in the same level with Home") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name 1");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name 2");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Page Name 3");
+		}
+
+		task ("Add a navigation menu") {
+			JSONSitenavigation.addSiteNavigationMenu(
+				groupName = "Guest",
+				siteNavigationMenuName = "Navigation Menu Name");
+		}
+
+		task ("Navigate to the navigation menu") {
+			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoEntry(rowEntry = "Navigation Menu Name");
+		}
+
+		task ("Add page items") {
+			NavigationMenusAdmin.addItem(
+				item = "Page",
+				pageNames = "Home,Test Page Name 1,Test Page Name 2,Test Page Name 3");
+
+			for (var pageName : list "Home,Test Page Name 1,Test Page Name 2,Test Page Name 3") {
+				NavigationMenusAdmin.viewItem(itemName = "${pageName}");
+			}
+		}
+
+		task ("Make a page hierarchy") {
+			DragAndDrop.dragAndDropObjectMoveTwice(
+				key_sourceItemName = "Test Page Name 1",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+				position1 = "100,0",
+				position2 = "100,-25");
+
+			Pause(locator1 = "5000");
+
+			DragAndDrop.dragAndDropObjectMoveTwice(
+				key_sourceItemName = "Test Page Name 2",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+				position1 = "150,0",
+				position2 = "150,-25");
+
+			Pause(locator1 = "5000");
+
+			DragAndDrop.dragAndDropObjectMoveTwice(
+				key_sourceItemName = "Test Page Name 3",
+				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
+				position1 = "200,0",
+				position2 = "200,-25");
+
+			Pause(locator1 = "5000");
+		}
+
+		task ("Navigate to Home") {
+			Navigator.gotoPage(pageName = "Home");
+		}
+
+		task ("Assert Select custom menu and Bar minimally styled") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.chooseMenu(menuName = "Navigation Menu Name");
+
+			Pause(locator1 = "3000");
+
+			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
+
+			Pause(locator1 = "3000");
+
+			Portlet.saveAndCloseConfig();
+		}
+
+		task ("Navigate to Test Page Name 1 via Navigation Menu widget") {
+			NavigationMenusWidget.gotoSublevel(
+				itemName = "Test Page Name 1",
+				pageName = "Home",
+				type = "Drop Down");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Page Name 1");
+		}
+
+		task ("Navigate to Child Child Page via Navigation Menu widget") {
+			NavigationMenusWidget.gotoSublevel(
+				itemName = "Test Page Name 2",
+				pageName = "Home",
+				type = "Drop Down");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Page Name 2");
+		}
+
+		task ("Navigate to Child Child Page via Navigation Menu widget") {
+			NavigationMenusWidget.gotoSublevel(
+				itemName = "Test Page Name 3",
+				pageName = "Home",
+				type = "Drop Down");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Test Page Name 3");
+		}
+	}
 
 	@description = "This is a use case for LPS-113994. The Naviation Menu is able to display the page hierarchy with more than two sublevels when use the Bar minimally styled by default."
 	@priority = "5"

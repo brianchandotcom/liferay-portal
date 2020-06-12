@@ -117,6 +117,7 @@ import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -5689,6 +5690,46 @@ public class ServiceBuilder {
 		return false;
 	}
 
+	private boolean _isClassNameIdCompanyFinder(
+		List<Element> columnElements, List<Element> finderColumnElements) {
+
+		if (!isVersionGTE_7_3_0()) {
+			return false;
+		}
+
+		boolean hasCompanyId = Stream.of(
+			columnElements.toArray(new Element[0])
+		).map(
+			columnElement -> columnElement.attributeValue("name")
+		).anyMatch(
+			columnName -> columnName.equals("companyId")
+		);
+
+		if (!hasCompanyId) {
+			return false;
+		}
+
+		String[] finderIdColumnNames = Stream.of(
+			finderColumnElements.toArray(new Element[0])
+		).map(
+			finderColumnElement -> finderColumnElement.attributeValue("name")
+		).filter(
+			finderColumnName ->
+				finderColumnName.endsWith("Id") ||
+				finderColumnName.endsWith("PK")
+		).toArray(
+			String[]::new
+		);
+
+		if ((finderIdColumnNames.length == 1) &&
+			finderIdColumnNames[0].equals("classNameId")) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isCommercialPlugin(Path pluginPath) throws IOException {
 		if (pluginPath == null) {
 			return false;
@@ -6523,6 +6564,15 @@ public class ServiceBuilder {
 				entityColumn.validate();
 
 				finderEntityColumns.add(entityColumn);
+			}
+
+			if (_isClassNameIdCompanyFinder(
+					columnElements, finderColumnElements)) {
+
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"Finder ", finderName, " for entity ", entityName,
+						" requires an additional company scope field"));
 			}
 
 			entityFinders.add(

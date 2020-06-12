@@ -18,6 +18,7 @@ import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationE
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
 import com.liferay.account.admin.web.internal.security.permission.resource.AccountEntryPermission;
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -70,6 +72,13 @@ public class AccountEntryUsersScreenNavigationCategory
 		User user, AccountEntryDisplay accountEntryDisplay) {
 
 		if (accountEntryDisplay.getAccountEntryId() == 0) {
+			return false;
+		}
+
+		if (Objects.equals(
+				accountEntryDisplay.getType(),
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL)) {
+
 			return false;
 		}
 

@@ -634,16 +634,16 @@
 			<type>java.util.List</type>
 		</attribute>
 		<attribute>
-			<name>clayCreationMenu</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.frontend.taglib.clay.servlet.taglib.data.setCreationMenu</type>
-		</attribute>
-		<attribute>
 			<name>contextParams</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Map</type>
+		</attribute>
+		<attribute>
+			<name>creationMenu</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu</type>
 		</attribute>
 		<attribute>
 			<name>dataProviderKey</name>

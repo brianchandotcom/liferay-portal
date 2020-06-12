@@ -15,9 +15,12 @@
 package com.liferay.layout.page.template.internal.upgrade.v1_1_0;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -97,12 +100,29 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 					int i = 1;
 
 					while (true) {
-						String newName = name + StringPool.DASH + i;
+						String newName;
+
+						if (name.length() == _MAX_NAME_LENGTH) {
+							newName = name.substring(
+								0, _MAX_NAME_LENGTH - (i + 1));
+						}
+						else {
+							newName = name;
+						}
+
+						newName = newName + StringPool.DASH + i;
 
 						if (existingNames.contains(newName)) {
 							i++;
 
 							continue;
+						}
+
+						if (_log.isWarnEnabled()) {
+							_log.error(
+								StringBundler.concat(
+									"Duplicate Layout Prototype name ", name,
+									" found. Renaming to ", newName));
 						}
 
 						name = newName;
@@ -149,6 +169,11 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 
 		runSQLTemplateString(template, false);
 	}
+
+	private static final int _MAX_NAME_LENGTH = 75;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeLayoutPrototype.class);
 
 	private final CompanyLocalService _companyLocalService;
 	private final LayoutPrototypeLocalService _layoutPrototypeLocalService;

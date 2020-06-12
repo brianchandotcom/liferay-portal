@@ -12,28 +12,8 @@
 		padding: 16px;
 
 		.form-control-sm {
-			background-color: $gray-100;
-			border: 1px solid $secondary-l3;
 			padding-left: 12px;
 			padding-right: 12px;
-
-			&:focus {
-				background-color: unset;
-				color: unset;
-			}
-		}
-
-		&__tabs {
-			border-bottom: 1px solid $gray-300;
-			color: $dark;
-			font-size: 12px;
-			margin-bottom: 16px;
-
-			.nav-item {
-				.nav-link.active {
-					color: $gray-600;
-				}
-			}
 		}
 	}
 }

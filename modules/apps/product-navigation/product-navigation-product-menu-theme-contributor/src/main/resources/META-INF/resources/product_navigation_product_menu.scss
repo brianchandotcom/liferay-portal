@@ -57,7 +57,7 @@
 	}
 }
 
-.product-menu {
+.product-menu:not(.light) {
 	.form-control-sm {
 		background-color: #1b2228;
 		border-radius: $border-radius;

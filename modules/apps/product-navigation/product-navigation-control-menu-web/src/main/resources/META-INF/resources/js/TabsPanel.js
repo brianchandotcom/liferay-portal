@@ -15,9 +15,11 @@
 import ClayTabs from '@clayui/tabs';
 import React, {useMemo, useState} from 'react';
 
-import 'product-navigation-control-menu/css/AddPanel.scss';
+import 'product-navigation-control-menu/css/TabsPanel.scss';
+import classNames from 'classnames';
 
 import Collapse from './Collapse';
+import ContentOptions from './ContentOptions';
 import SearchForm from './SearchForm';
 import TabItem from './TabItem';
 
@@ -28,8 +30,16 @@ const useId = () => {
 	return useMemo(() => `useId_${nextId++}`, []);
 };
 
+const filterTotalItems = (items, totalItems, label) => {
+	return label === Liferay.Language.get('content')
+		? items.slice(0, totalItems)
+		: items;
+};
+
 const AddPanel = ({tabs}) => {
 	const [activeTabId, setActiveTabId] = useState(0);
+	const [grid, setGrid] = useState(false);
+	const [totalItems, setTotalItems] = useState(4);
 	const tabIdNamespace = useId();
 
 	const getTabId = (tabId) => `${tabIdNamespace}tab${tabId}`;
@@ -64,27 +74,53 @@ const AddPanel = ({tabs}) => {
 						key={index}
 					>
 						<SearchForm />
+						{index > 0 && (
+							<ContentOptions
+								grid={grid}
+								onChangeListMode={setGrid}
+								onChangeSelect={setTotalItems}
+							/>
+						)}
 						<ul className="list-unstyled">
-							{tab.collections &&
-								tab.collections.map((collection, index) => (
-									<Collapse
-										key={collection.collectionId}
-										label={collection.label}
-										open={
-											index <
-											INITIAL_EXPANDED_ITEM_COLLECTIONS
-										}
+							{tab.collections.map((collection, index) => (
+								<Collapse
+									key={collection.collectionId}
+									label={collection.label}
+									open={
+										index <
+										INITIAL_EXPANDED_ITEM_COLLECTIONS
+									}
+								>
+									<ul
+										className={classNames('list-unstyled', {
+											grid:
+												grid &&
+												tab.label ===
+													Liferay.Language.get(
+														'content'
+													),
+										})}
 									>
-										<ul className="list-unstyled">
-											{collection.children.map((item) => (
-												<TabItem
-													item={item}
-													key={item.itemId}
-												/>
-											))}
-										</ul>
-									</Collapse>
-								))}
+										{filterTotalItems(
+											collection.children,
+											totalItems,
+											tab.label
+										).map((item) => (
+											<TabItem
+												grid={grid}
+												item={item}
+												key={item.itemId}
+												multiline={
+													tab.label ===
+													Liferay.Language.get(
+														'content'
+													)
+												}
+											/>
+										))}
+									</ul>
+								</Collapse>
+							))}
 						</ul>
 					</ClayTabs.TabPane>
 				))}

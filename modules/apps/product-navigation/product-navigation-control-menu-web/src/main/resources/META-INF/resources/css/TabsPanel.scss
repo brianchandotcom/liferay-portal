@@ -1,0 +1,26 @@
+@import 'atlas-variables';
+
+@import 'variables';
+
+.sidebar-content__panel {
+	&__tab-content {
+		ul.grid {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+	}
+
+	&__tabs {
+		border-bottom: 1px solid $gray-300;
+		color: $dark;
+		font-size: 12px;
+		margin-bottom: 16px;
+
+		.nav-item {
+			.nav-link.active {
+				color: $gray-600;
+			}
+		}
+	}
+}

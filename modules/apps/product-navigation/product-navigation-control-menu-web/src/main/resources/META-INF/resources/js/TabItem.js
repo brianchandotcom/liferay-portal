@@ -20,26 +20,35 @@ import React from 'react';
 
 import 'product-navigation-control-menu/css/TabItem.scss';
 
-export default function TabItem({item}) {
+export default function TabItem({grid, item, multiline}) {
 	return (
 		<li
 			className={classNames('sidebar__panel__tab-item', {
 				disabled: item.disabled,
+				multiline: !grid && multiline,
 			})}
 		>
 			<div className="sidebar__panel__tab-item-body">
-				<ClayIcon className="mr-3" symbol={item.icon} />
+				<div className="icon">
+					<ClayIcon symbol={item.icon} />
+				</div>
 				<div className="text-truncate title">{item.label}</div>
+				{multiline && (
+					<div className="subtitle text-truncate">{item.type}</div>
+				)}
 			</div>
 
-			<ClayButton
-				className="btn-monospaced sidebar__panel__tab-item-add"
-				displayType="unstyled"
-				small
-			>
-				<ClayIcon symbol="plus" />
-				<span className="sr-only">{item.name}</span>
-			</ClayButton>
+			{!grid && (
+				<ClayButton
+					className="btn-monospaced sidebar__panel__tab-item-add"
+					displayType="unstyled"
+					small
+					title={item.name}
+				>
+					<ClayIcon symbol="plus" />
+					<span className="sr-only">{item.name}</span>
+				</ClayButton>
+			)}
 		</li>
 	);
 }

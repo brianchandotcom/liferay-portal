@@ -182,6 +182,13 @@ const DatePicker = ({
 				onValueChange={(value) => {
 					setValue(value);
 
+					if (
+						!value ||
+						value === maskInstance.current.state.previousPlaceholder
+					) {
+						return onChange('');
+					}
+
 					if (moment(value).isValid()) {
 						onChange(moment(value).format(dateMask));
 					}

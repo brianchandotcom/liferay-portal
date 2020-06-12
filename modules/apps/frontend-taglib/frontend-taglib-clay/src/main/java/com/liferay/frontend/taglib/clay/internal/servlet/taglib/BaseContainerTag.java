@@ -14,14 +14,20 @@
 
 package com.liferay.frontend.taglib.clay.internal.servlet.taglib;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
+import com.liferay.frontend.taglib.clay.internal.util.ReactRendererProvider;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.template.react.renderer.ComponentDescriptor;
+import com.liferay.portal.template.react.renderer.ReactRenderer;
 import com.liferay.taglib.util.AttributesTagSupport;
 import com.liferay.taglib.util.InlineUtil;
 
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -208,6 +214,10 @@ public class BaseContainerTag extends AttributesTagSupport {
 		cleanUp();
 	}
 
+	protected String getHydratedModuleName() {
+		return null;
+	}
+
 	protected String processCssClasses(Set<String> cssClasses) {
 		if (Validator.isNotNull(_cssClass)) {
 			cssClasses.addAll(StringUtil.split(_cssClass, CharPool.SPACE));
@@ -216,8 +226,34 @@ public class BaseContainerTag extends AttributesTagSupport {
 		return StringUtil.merge(cssClasses, StringPool.SPACE);
 	}
 
+	protected Map<String, Object> processData(Map<String, Object> data) {
+		data.put("cssClass", _cssClass);
+		data.put("id", _id);
+
+		return data;
+	}
+
 	protected int processEndTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
+
+		String hydratedModuleName = getHydratedModuleName();
+
+		if (Validator.isNotNull(hydratedModuleName)) {
+			NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
+
+			String moduleName = npmResolver.resolveModuleName(
+				hydratedModuleName);
+
+			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
+				moduleName, _id, new LinkedHashSet<>(), false);
+
+			ReactRenderer reactRenderer =
+				ReactRendererProvider.getReactRenderer();
+
+			reactRenderer.renderReact(
+				componentDescriptor, processData(new HashMap<>()), request,
+				jspWriter);
+		}
 
 		jspWriter.write("</");
 		jspWriter.write(_containerElement);

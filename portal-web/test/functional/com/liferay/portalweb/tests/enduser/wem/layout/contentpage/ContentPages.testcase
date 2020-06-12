@@ -470,31 +470,47 @@ definition {
 	test DiscardContentPageDraft {
 		property portal.acceptance = "true";
 
-		task ("Assert the Discard Draft button starts off disabled but Publish button starts off enabled") {
+		task ("Assert the Discard Draft button starts off not shown but Publish button starts off enabled") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
 				siteName = "Test Site Name");
 
 			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_DISABLED");
-
-			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForLayout();
+
+			Click(
+				key_pageName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 
 		task ("Add a Title fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title");
 		}
 
 		task ("Discard the draft") {
-			PageEditor.clickDiscardDraft();
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PageEditor.clickDiscardDraft(pageName = "Test Content Page Name");
 		}
 
 		task ("Assert the Title fragment is no longer present") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			AssertElementNotPresent(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
@@ -502,33 +518,53 @@ definition {
 				locator1 = "Fragment#FRAGMENT");
 		}
 
-		task ("Assert the Discard Draft button is now disabled but Publish button still is enabled") {
-			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_DISABLED");
-
+		task ("Assert the Discard Draft button is not shown but Publish button still is enabled") {
 			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForLayout();
+
+			Click(
+				key_pageName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 
 		task ("Add a Title fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Title");
 		}
 
-		task ("Assert the Discard Draft and Publish buttons are now enabled") {
-			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_ENABLED");
-
+		task ("Assert the Discard Draft is shown and Publish button is now enabled") {
 			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForLayout();
+
+			Click(
+				key_pageName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewPresent(menuItem = "Discard Draft");
 		}
 
 		task ("Publish the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.clickPublish();
 		}
 
@@ -538,17 +574,27 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Assert the Discard Draft button is disabled but Publish button is enabled") {
-			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_DISABLED");
-
+		task ("Assert the Discard Draft button is not shown but Publish button is enabled") {
 			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForLayout();
+
+			Click(
+				key_pageName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 
 		task ("Edit the Title fragment's editable text") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.editFragmentText(
 				contributed = "false",
 				fragmentName = "Title",
@@ -556,21 +602,35 @@ definition {
 				text = "New editable fragment text");
 		}
 
-		task ("Assert the Discard Draft and Publish buttons are now enabled") {
-			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_ENABLED");
-
+		task ("Assert the Discard Draft is shown and Publish button is now enabled") {
 			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForLayout();
+
+			Click(
+				key_pageName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewPresent(menuItem = "Discard Draft");
 		}
 
 		task ("Discard the draft") {
-			PageEditor.clickDiscardDraft();
+			MenuItem.clickNoError(menuItem = "Discard Draft");
+
+			AssertConfirm(value1 = "Are you sure you want to discard current draft and apply latest published changes?");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert the Title fragment's text has reverted back to what it was before") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			AssertVisible(
 				key_content = "Lorem ipsum dolor sit amet",
 				key_fragmentClass = "header",
@@ -578,38 +638,62 @@ definition {
 				locator1 = "Fragment#FRAGMENT");
 		}
 
-		task ("Assert the Discard Draft button is now disabled but Publish button still is enabled") {
-			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_DISABLED");
-
+		task ("Assert the Discard Draft button is not shown but Publish button still is enabled") {
 			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForLayout();
+
+			Click(
+				key_pageName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 
 		task ("Add a Rich Text fragment to the content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			PageEditor.addFragment(
 				collectionName = "Collection Name",
 				fragmentName = "Rich Text",
 				targetFragmentName = "Title");
 		}
 
-		task ("Assert the Discard Draft and Publish buttons are now enabled") {
-			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_ENABLED");
-
+		task ("Assert the Discard Draft is shown and Publish button is now enabled") {
 			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForLayout();
+
+			Click(
+				key_pageName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewPresent(menuItem = "Discard Draft");
 		}
 
 		task ("Discard the draft") {
-			PageEditor.clickDiscardDraft();
+			MenuItem.clickNoError(menuItem = "Discard Draft");
+
+			AssertConfirm(value1 = "Are you sure you want to discard current draft and apply latest published changes?");
+
+			Alert.viewSuccessMessage();
 		}
 
 		task ("Assert the Rich Text fragment has been removed") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
 			AssertElementNotPresent(
 				key_content = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 				key_fragmentClass = "rich-text",
@@ -617,14 +701,20 @@ definition {
 				locator1 = "Fragment#FRAGMENT");
 		}
 
-		task ("Assert the Discard Draft button is now disabled but Publish button still is enabled") {
-			AssertVisible(
-				key_text = "Discard Draft",
-				locator1 = "Button#ANY_DISABLED");
-
+		task ("Assert the Discard Draft button is not shown but Publish button still is enabled") {
 			AssertVisible(
 				key_text = "Publish",
 				locator1 = "Button#ANY_ENABLED");
+
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForLayout();
+
+			Click(
+				key_pageName = "Test Content Page Name",
+				locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+			MenuItem.viewNotPresent(menuItem = "Discard Draft");
 		}
 	}
 

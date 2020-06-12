@@ -59,9 +59,9 @@ public class TextDDMFormFieldTypeReportProcessor
 			long formInstanceRecordId, String formInstanceReportEvent)
 		throws Exception {
 
-		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
-
 		boolean nullValue = Validator.isNull(_getValue(ddmFormFieldValue));
+
+		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		int totalEntries = fieldJSONObject.getInt("totalEntries");
 

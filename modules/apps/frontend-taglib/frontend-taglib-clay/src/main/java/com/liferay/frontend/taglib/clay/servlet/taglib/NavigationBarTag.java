@@ -19,6 +19,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.jsp.JspException;
@@ -80,6 +81,11 @@ public class NavigationBarTag extends BaseContainerTag {
 	}
 
 	@Override
+	protected String getHydratedModuleName() {
+		return "frontend-taglib-clay/NavigationBar";
+	}
+
+	@Override
 	protected String processCssClasses(Set<String> cssClasses) {
 		cssClasses.add("navbar");
 		cssClasses.add("navbar-collapse-absolute");
@@ -91,6 +97,14 @@ public class NavigationBarTag extends BaseContainerTag {
 			_inverted ? "navigation-bar-secondary" : "navigation-bar-light");
 
 		return super.processCssClasses(cssClasses);
+	}
+
+	@Override
+	protected Map<String, Object> processData(Map<String, Object> data) {
+		data.put("inverted", _inverted);
+		data.put("navigationItems", _navigationItems);
+
+		return super.processData(data);
 	}
 
 	@Override

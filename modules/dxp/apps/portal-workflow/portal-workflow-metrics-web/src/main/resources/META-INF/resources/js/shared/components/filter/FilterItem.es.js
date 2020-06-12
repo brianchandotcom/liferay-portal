@@ -10,63 +10,43 @@
  */
 
 import getClassName from 'classnames';
-import React, {useEffect, useMemo, useState} from 'react';
+import React from 'react';
 
-const FilterItem = (properties) => {
-	const [checked, setChecked] = useState(active);
+const FilterItem = ({
+	active = false,
+	description,
+	dividerAfter,
+	hideControl,
+	labelPropertyName = 'name',
+	multiple,
+	name,
+	onClick,
+	...otherProps
+}) => {
+	const classes = {
+		control: getClassName(
+			'custom-control',
+			multiple ? 'custom-checkbox' : 'custom-radio'
+		),
+		dropdown: getClassName(
+			'dropdown-item',
 
-	const {
-		active = false,
-		description,
-		dividerAfter,
-		hideControl,
-		itemKey,
-		labelPropertyName = 'name',
-		multiple,
-		name,
-		onChange,
-		onClick,
-	} = properties;
-
-	const classes = useMemo(
-		() => ({
-			control: getClassName(
-				'custom-control',
-				multiple ? 'custom-checkbox' : 'custom-radio'
-			),
-			dropdown: getClassName(
-				'dropdown-item',
-				active && 'active',
-				description && 'with-description',
-				hideControl && 'control-hidden'
-			),
-		}),
-		[active, description, hideControl, multiple]
-	);
-
-	const handleClick = (event) => {
-		event.target.checked = !checked;
-
-		onChange(event);
-		onClick(event);
-		setChecked(!checked);
+			active && 'active',
+			description && 'with-description',
+			hideControl && 'control-hidden'
+		),
 	};
-
-	useEffect(() => {
-		setChecked(active);
-	}, [active]);
 
 	return (
 		<>
-			<li
+			<div
 				className={classes.dropdown}
-				data-key={itemKey}
 				data-testid="filterItem"
-				onClick={handleClick}
+				onClick={onClick}
 			>
-				<label className={classes.control}>
+				<div className={classes.control}>
 					<input
-						checked={checked}
+						checked={active}
 						className="custom-control-input"
 						type={multiple ? 'checkbox' : 'radio'}
 					/>
@@ -76,7 +56,7 @@ const FilterItem = (properties) => {
 							className="custom-control-label-text"
 							data-testid="filterItemName"
 						>
-							{properties[labelPropertyName] || name}
+							{otherProps[labelPropertyName] || name}
 						</span>
 
 						{description && (
@@ -85,8 +65,8 @@ const FilterItem = (properties) => {
 							</span>
 						)}
 					</span>
-				</label>
-			</li>
+				</div>
+			</div>
 
 			{dividerAfter && <li className="dropdown-divider" />}
 		</>

@@ -107,16 +107,10 @@ const Filter = ({
 
 	const getSelectedItems = (items) => items.filter((item) => item.active);
 
-	const onClickHandler = (item) => () =>
-		onClickFilter ? onClickFilter(item) : true;
+	const onClick = (item) => (onClickFilter ? onClickFilter(item) : true);
 
-	const onInputChange = useCallback(
-		({target}) => {
-			const index = items.findIndex(
-				(item) => item.key === target.dataset.key
-			);
-			const current = items[index];
-
+	const onSelect = useCallback(
+		(item) => {
 			if (!preventClick) {
 				if (!multiple) {
 					items.forEach((item) => {
@@ -124,7 +118,7 @@ const Filter = ({
 					});
 				}
 
-				current.active = target.checked;
+				item.active = !item.active;
 
 				if (!multiple) {
 					applyFilterChanges();
@@ -133,6 +127,9 @@ const Filter = ({
 				else {
 					setChanged(true);
 				}
+			}
+			else {
+				onClick(item);
 			}
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -154,7 +151,7 @@ const Filter = ({
 					applyFilterChanges();
 				}
 				else {
-					onClickHandler(items[index])();
+					onClick(items[index]);
 				}
 			}
 		}
@@ -224,12 +221,10 @@ const Filter = ({
 							<FilterItem
 								{...item}
 								hideControl={hideControl}
-								itemKey={item.key}
 								key={index}
 								labelPropertyName={labelPropertyName}
 								multiple={multiple}
-								onChange={onInputChange}
-								onClick={onClickHandler(item)}
+								onClick={() => onSelect(item)}
 							/>
 						))}
 					</ul>

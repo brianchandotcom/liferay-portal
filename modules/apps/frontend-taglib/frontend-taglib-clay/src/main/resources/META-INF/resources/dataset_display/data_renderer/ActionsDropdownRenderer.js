@@ -198,6 +198,28 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		);
 	}
 
+	const renderItems = (items) =>
+		items.map(({items: nestedItems = [], separator, type, ...item}, i) => {
+			if (type === 'group') {
+				return (
+					<ClayDropDown.Group {...item}>
+						{separator && <ClayDropDown.Divider />}
+						{renderItems(nestedItems)}
+					</ClayDropDown.Group>
+				);
+			}
+
+			return (
+				<ActionItem
+					key={i}
+					{...item}
+					closeMenu={() => setActive(false)}
+					handleAction={handleAction}
+					href={item.href && formatActionUrl(item.href, itemData)}
+				/>
+			);
+		});
+
 	return (
 		<ClayDropDown
 			active={active}
@@ -212,22 +234,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 			}
 		>
 			<ClayDropDown.ItemList>
-				<ClayDropDown.Group>
-					{actions.map((action, i) => {
-						return (
-							<ActionItem
-								key={i}
-								{...action}
-								closeMenu={() => setActive(false)}
-								handleAction={handleAction}
-								href={
-									action.href &&
-									formatActionUrl(action.href, itemData)
-								}
-							/>
-						);
-					})}
-				</ClayDropDown.Group>
+				{renderItems(actions)}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);

@@ -32,38 +32,37 @@ import java.util.Locale;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pei-Jung Lan
+ * @author Albert Lee
  */
 @Component(
 	property = {
-		"screen.navigation.category.order:Integer=30",
+		"screen.navigation.category.order:Integer=20",
 		"screen.navigation.entry.order:Integer=10"
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class AccountOrganizationsScreenNavigationCategory
+public class AccountEntryUsersScreenNavigationCategory
 	extends BaseAccountEntryScreenNavigationEntry
 	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_ORGANIZATIONS;
+		return AccountScreenNavigationEntryConstants.CATEGORY_KEY_USERS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return AccountScreenNavigationEntryConstants.ENTRY_KEY_ORGANIZATIONS;
+		return AccountScreenNavigationEntryConstants.ENTRY_KEY_USERS;
 	}
 
 	@Override
 	public String getJspPath() {
-		return "/account_entries_admin/account_entry" +
-			"/view_account_organizations.jsp";
+		return "/account_entries_admin/account_entry/view_account_users.jsp";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "organizations");
+		return LanguageUtil.get(locale, "users");
 	}
 
 	@Override
@@ -78,7 +77,7 @@ public class AccountOrganizationsScreenNavigationCategory
 			if (AccountEntryPermission.contains(
 					PermissionCheckerFactoryUtil.create(user),
 					accountEntryDisplay.getAccountEntryId(),
-					AccountActionKeys.VIEW_ORGANIZATIONS)) {
+					AccountActionKeys.VIEW_USERS)) {
 
 				return true;
 			}
@@ -93,6 +92,6 @@ public class AccountOrganizationsScreenNavigationCategory
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AccountOrganizationsScreenNavigationCategory.class);
+		AccountEntryUsersScreenNavigationCategory.class);
 
 }

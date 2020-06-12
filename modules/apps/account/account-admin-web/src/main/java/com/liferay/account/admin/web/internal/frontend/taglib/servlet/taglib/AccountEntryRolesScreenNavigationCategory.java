@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
-public class AccountRolesScreenNavigationCategory
+public class AccountEntryRolesScreenNavigationCategory
 	extends BaseAccountEntryScreenNavigationEntry
 	implements ScreenNavigationCategory {
 

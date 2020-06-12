@@ -64,13 +64,14 @@ const getFieldTypes = ({
 	fieldTypes,
 	focusedCustomObjectField,
 }) => {
-	const dataDefinitionFields = [];
+	const customDataDefinitionFields = [];
+	const nativeDataDefinitionFields = [];
 	const {dataLayoutPages} = dataLayout;
 	const {dataDefinitionFields: fields} = dataDefinition;
 
 	const setDefinitionField = (
 		{
-			customProperties: {ddmStructureId},
+			customProperties,
 			fieldType,
 			label,
 			name,
@@ -78,6 +79,8 @@ const getFieldTypes = ({
 		},
 		nested
 	) => {
+		const {ddmStructureId} = customProperties;
+
 		if (fieldType === 'section') {
 			return;
 		}
@@ -124,6 +127,7 @@ const getFieldTypes = ({
 				? DragTypes.DRAG_FIELDSET
 				: DragTypes.DRAG_DATA_DEFINITION_FIELD,
 			icon: fieldTypeSettings.icon,
+			isCustomField: !customProperties['nativeField'],
 			isFieldSet,
 			...(isFieldGroup && {
 				fieldSet: getFieldSet({
@@ -143,14 +147,21 @@ const getFieldTypes = ({
 		if (nested) {
 			return dataDefintionField;
 		}
-		dataDefinitionFields.push(dataDefintionField);
+
+		if (dataDefintionField.isCustomField) {
+			customDataDefinitionFields.push(dataDefintionField);
+		}
+		else {
+			nativeDataDefinitionFields.push(dataDefintionField);
+		}
 	};
 
 	fields.forEach((fieldType) => {
 		setDefinitionField(fieldType);
 	});
 
-	return dataDefinitionFields;
+	return [customDataDefinitionFields, nativeDataDefinitionFields];
+};
 };
 
 export default ({keywords}) => {
@@ -158,7 +169,7 @@ export default ({keywords}) => {
 	const [state, dispatch] = useContext(FormViewContext);
 	const {dataDefinition, fieldSets} = state;
 	const {dataDefinitionFields} = dataDefinition;
-	const fieldTypes = getFieldTypes(state);
+	const [customFieldTypes, nativeFieldTypes] = getFieldTypes(state);
 
 	const onClick = ({name}) => {
 		const dataDefinitionField = findFieldByName(dataDefinitionFields, name);

@@ -493,6 +493,10 @@ export const ContainerConfigurationPanel = ({item}) => {
 							typeOptions: {
 								validValues: [
 									{
+										label: Liferay.Language.get('default'),
+										value: '',
+									},
+									{
 										label: Liferay.Language.get('none'),
 										value: 'shadow-none',
 									},

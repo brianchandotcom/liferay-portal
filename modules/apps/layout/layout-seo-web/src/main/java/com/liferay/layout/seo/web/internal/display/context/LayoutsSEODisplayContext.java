@@ -415,6 +415,10 @@ public class LayoutsSEODisplayContext {
 					"key", infoField.getName()
 				).put(
 					"label", infoField.getLabel(_themeDisplay.getLocale())
+				).put(
+					"type",
+					infoField.getInfoFieldType(
+					).getName()
 				)
 			).collect(
 				Collectors.toList()

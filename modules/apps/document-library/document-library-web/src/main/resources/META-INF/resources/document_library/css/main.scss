@@ -151,6 +151,27 @@ $productMenuWidth: 320px;
 				}
 			}
 		}
+
+		.contextual-sidebar-content {
+			margin-top: $toolbarHeight;
+
+			@include media-breakpoint-up(lg) {
+				margin-top: $toolbarDesktopHeight;
+			}
+
+			@media (max-width: 769px) {
+				> .container-fluid {
+					margin: 0;
+					padding: 0;
+
+					> .sheet {
+						border: none;
+						border-radius: 0;
+						min-height: calc(100vh - #{$toolbarHeight});
+					}
+				}
+			}
+		}
 	}
 
 	.file-entry-actions > a {

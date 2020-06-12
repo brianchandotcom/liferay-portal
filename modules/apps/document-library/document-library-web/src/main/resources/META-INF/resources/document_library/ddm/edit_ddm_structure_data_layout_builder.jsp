@@ -70,32 +70,34 @@ renderResponse.setTitle(title);
 		</clay:container-fluid>
 	</nav>
 
-	<clay:container-fluid
-		cssClass="container-view"
-	>
-		<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructure.getPrimaryKey()) > 0) %>">
-			<div class="alert alert-warning">
-				<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
-			</div>
-		</c:if>
+	<div class="contextual-sidebar-content">
+		<clay:container-fluid
+			cssClass="container-view"
+		>
+			<c:if test="<%= (ddmStructure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(ddmStructure.getPrimaryKey()) > 0) %>">
+				<div class="alert alert-warning">
+					<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
+				</div>
+			</c:if>
 
-		<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
-			<div class="alert alert-warning">
-				<liferay-ui:message key="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure" />
-			</div>
-		</c:if>
+			<c:if test="<%= (ddmStructure != null) && (groupId != scopeGroupId) %>">
+				<div class="alert alert-warning">
+					<liferay-ui:message key="this-structure-does-not-belong-to-this-site.-you-may-affect-other-sites-if-you-edit-this-structure" />
+				</div>
+			</c:if>
 
-		<liferay-data-engine:data-layout-builder
-			additionalPanels="<%= dlEditDDMStructureDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
-			componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-			contentType="document-library"
-			dataDefinitionId="<%= ddmStructureId %>"
-			dataLayoutInputId="dataLayout"
-			groupId="<%= groupId %>"
-			localizable="<%= true %>"
-			namespace="<%= renderResponse.getNamespace() %>"
-		/>
-	</clay:container-fluid>
+			<liferay-data-engine:data-layout-builder
+				additionalPanels="<%= dlEditDDMStructureDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
+				componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
+				contentType="document-library"
+				dataDefinitionId="<%= ddmStructureId %>"
+				dataLayoutInputId="dataLayout"
+				groupId="<%= groupId %>"
+				localizable="<%= true %>"
+				namespace="<%= renderResponse.getNamespace() %>"
+			/>
+		</clay:container-fluid>
+	</div>
 </aui:form>
 
 <aui:script>

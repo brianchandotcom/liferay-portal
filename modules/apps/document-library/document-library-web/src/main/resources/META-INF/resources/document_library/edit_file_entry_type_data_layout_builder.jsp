@@ -70,25 +70,27 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 		</clay:container-fluid>
 	</nav>
 
-	<clay:container-fluid
-		cssClass="container-view"
-	>
+	<div class="contextual-sidebar-content">
+		<clay:container-fluid
+			cssClass="container-view"
+		>
 
-		<%
-		DLEditFileEntryTypeDataEngineDisplayContext dlEditFileEntryTypeDataEngineDisplayContext = (DLEditFileEntryTypeDataEngineDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_ENTRY_TYPE_DATA_ENGINE_DISPLAY_CONTEXT);
-		%>
+			<%
+			DLEditFileEntryTypeDataEngineDisplayContext dlEditFileEntryTypeDataEngineDisplayContext = (DLEditFileEntryTypeDataEngineDisplayContext)request.getAttribute(DLWebKeys.DOCUMENT_LIBRARY_EDIT_FILE_ENTRY_TYPE_DATA_ENGINE_DISPLAY_CONTEXT);
+			%>
 
-		<liferay-data-engine:data-layout-builder
-			additionalPanels="<%= dlEditFileEntryTypeDataEngineDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
-			componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
-			contentType="document-library"
-			dataDefinitionId="<%= dataDefinitionId %>"
-			dataLayoutInputId="dataLayout"
-			groupId="<%= scopeGroupId %>"
-			localizable="<%= true %>"
-			namespace="<%= renderResponse.getNamespace() %>"
-		/>
-	</clay:container-fluid>
+			<liferay-data-engine:data-layout-builder
+				additionalPanels="<%= dlEditFileEntryTypeDataEngineDisplayContext.getAdditionalPanels(npmResolvedPackageName) %>"
+				componentId='<%= renderResponse.getNamespace() + "dataLayoutBuilder" %>'
+				contentType="document-library"
+				dataDefinitionId="<%= dataDefinitionId %>"
+				dataLayoutInputId="dataLayout"
+				groupId="<%= scopeGroupId %>"
+				localizable="<%= true %>"
+				namespace="<%= renderResponse.getNamespace() %>"
+			/>
+		</clay:container-fluid>
+	</div>
 </aui:form>
 
 <aui:script>

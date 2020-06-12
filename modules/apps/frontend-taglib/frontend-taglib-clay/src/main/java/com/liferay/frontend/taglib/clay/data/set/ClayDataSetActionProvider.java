@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.data.set;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
@@ -28,7 +29,7 @@ import org.osgi.annotation.versioning.ConsumerType;
 @ConsumerType
 public interface ClayDataSetActionProvider {
 
-	public List<ClayDataSetAction> clayDataSetActions(
+	public List<DropdownItem> getDropdownItems(
 			HttpServletRequest httpServletRequest, long groupId, Object model)
 		throws PortalException;
 

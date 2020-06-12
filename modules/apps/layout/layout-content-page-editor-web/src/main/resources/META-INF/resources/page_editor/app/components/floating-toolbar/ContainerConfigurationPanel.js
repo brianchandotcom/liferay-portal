@@ -166,7 +166,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 									},
 								}}
 								onValueSelect={handleValueSelect}
-								value={item.config.horizontalAlign}
+								value={item.config.justify}
 							/>
 						</FormRow.Column>
 
@@ -213,7 +213,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 									},
 								}}
 								onValueSelect={handleValueSelect}
-								value={item.config.verticalAlign}
+								value={item.config.align}
 							/>
 						</FormRow.Column>
 					</FormRow>
@@ -275,7 +275,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 								value={
 									isHorizontalMarginDisabled
 										? MARGIN_AUTO_OPTION.value
-										: item.config.marginLeft
+										: item.config.marginRight
 								}
 							/>
 						</FormRow.Column>
@@ -374,10 +374,12 @@ export const ContainerConfigurationPanel = ({item}) => {
 					<ColorPaletteField
 						field={{
 							label: Liferay.Language.get('color'),
-							name: 'backgroundColor',
+							name: 'backgroundColorCssClass',
 						}}
-						onValueSelect={handleValueSelect}
-						value={item.config.backgroundColor}
+						onValueSelect={(name, {cssClass}) =>
+							handleValueSelect(name, cssClass)
+						}
+						value={{cssClass: item.config.backgroundColorCssClass}}
 					/>
 
 					<ImageSelector
@@ -455,8 +457,10 @@ export const ContainerConfigurationPanel = ({item}) => {
 							label: Liferay.Language.get('border-color'),
 							name: 'borderColor',
 						}}
-						onValueSelect={handleValueSelect}
-						value={item.config.borderColor}
+						onValueSelect={(name, {cssClass}) =>
+							handleValueSelect(name, cssClass)
+						}
+						value={{cssClass: item.config.borderColor}}
 					/>
 				</Section>
 
@@ -485,7 +489,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 					<SelectField
 						field={{
 							label: Liferay.Language.get('drop-shadow'),
-							name: 'dropShadow',
+							name: 'shadow',
 							typeOptions: {
 								validValues: [
 									{
@@ -508,7 +512,7 @@ export const ContainerConfigurationPanel = ({item}) => {
 							},
 						}}
 						onValueSelect={handleValueSelect}
-						value={item.config.dropShadow}
+						value={item.config.shadow}
 					/>
 				</Section>
 			</ClayForm.Group>

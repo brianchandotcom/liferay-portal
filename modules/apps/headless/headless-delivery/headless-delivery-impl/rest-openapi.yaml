@@ -2107,15 +2107,51 @@ components:
                     $ref: "#/components/schemas/FragmentImage"
                 layout:
                     properties:
+                        align:
+                            enum: [Center, End, None, Start, Stretch]
+                            type: string
+                        borderColor:
+                            type: string
+                        borderRadius:
+                            enum: [Circle, Large, None, Pill, Regular]
+                            type: string
+                        borderWidth:
+                            type: integer
                         containerType:
                             enum: [Fixed, Fluid]
                             type: string
+                        contentDisplay:
+                            enum: [Block, Flex]
+                            type: string
+                        justify:
+                            enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                            type: string
+                        marginBottom:
+                            type: integer
+                        marginLeft:
+                            type: integer
+                        marginRight:
+                            type: integer
+                        marginTop:
+                            type: integer
+                        opacity:
+                            type: integer
                         paddingBottom:
                             type: integer
                         paddingHorizontal:
                             type: integer
+                        paddingLeft:
+                            type: integer
+                        paddingRight:
+                            type: integer
                         paddingTop:
                             type: integer
+                        shadow:
+                            enum: [Default, Large, None, Regular, Small]
+                            type: string
+                        widthType:
+                            enum: [Fixed, Fluid]
+                            type: string
                     type: object
             type: object
         PageTemplate:

@@ -869,6 +869,13 @@ public class ProjectTemplateFilesTest {
 							liferayPluginPackagePropertiesPath);
 					}
 
+					Path restConfigYAMLPath = dirPath.resolve(
+						"rest-config.yaml");
+
+					if (Files.exists(restConfigYAMLPath)) {
+						requireAuthorProperty.set(true);
+					}
+
 					return FileVisitResult.CONTINUE;
 				}
 
@@ -1054,7 +1061,7 @@ public class ProjectTemplateFilesTest {
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "js", "json", "jsp", "jspf", "properties",
-			"vm", "xml"));
+			"vm", "xml", "yaml"));
 	private static final Pattern _velocityDirectivePattern = Pattern.compile(
 		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
 	private static final Pattern _velocitySetDirectivePattern = Pattern.compile(

@@ -2560,7 +2560,7 @@ definition {
 	@priority = "5"
 	test SubmitFormAfterEditingFields {
 		property test.name.skip.portal.instance = "Forms#SubmitFormAfterEditingFields";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
 		Navigator.openURL();
@@ -2773,7 +2773,7 @@ definition {
 
 		Form.save();
 
-		FormsAdminNavigator.gotoPublishedForm();
+		Navigator.gotoPage(pageName = "Form Page");
 	
 		Pause(locator1 = "2000");
 

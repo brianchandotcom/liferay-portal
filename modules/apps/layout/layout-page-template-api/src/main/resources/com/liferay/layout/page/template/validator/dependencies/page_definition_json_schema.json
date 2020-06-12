@@ -731,6 +731,37 @@
 				"layout": {
 					"additionalProperties": false,
 					"properties": {
+						"align": {
+							"enum": [
+								"Center",
+								"End",
+								"None",
+								"Start",
+								"Stretch"
+							],
+							"title": "The align Schema",
+							"type": "string"
+						},
+						"borderColor": {
+							"title": "The borderColor Schema",
+							"type": "string"
+						},
+						"borderRadius": {
+							"enum": [
+								"Circle",
+								"Large",
+								"None",
+								"Pill",
+								"Regular"
+							],
+							"title": "The borderRadius Schema",
+							"type": "string"
+						},
+						"borderWidth": {
+							"minimum": 0,
+							"title": "The borderWidth Schema",
+							"type": "integer"
+						},
 						"containerType": {
 							"enum": [
 								"Fixed",
@@ -738,6 +769,88 @@
 							],
 							"title": "The containerType Schema",
 							"type": "string"
+						},
+						"contentDisplay": {
+							"enum": [
+								"Block",
+								"Flex"
+							],
+							"title": "The contentDisplay Schema",
+							"type": "string"
+						},
+						"justify": {
+							"enum": [
+								"Center",
+								"End",
+								"None",
+								"SpaceAround",
+								"SpaceBetween",
+								"Start"
+							],
+							"title": "The justify Schema",
+							"type": "string"
+						},
+						"marginBottom": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The marginBottom Schema",
+							"type": "integer"
+						},
+						"marginLeft": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The marginLeft Schema",
+							"type": "integer"
+						},
+						"marginRight": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The marginRight Schema",
+							"type": "integer"
+						},
+						"marginTop": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The marginTop Schema",
+							"type": "integer"
+						},
+						"opacity": {
+							"maximum": 100,
+							"minimum": 0,
+							"title": "The opacity Schema",
+							"type": "integer"
 						},
 						"paddingBottom": {
 							"enum": [
@@ -767,6 +880,34 @@
 							"title": "The paddingHorizontal Schema",
 							"type": "integer"
 						},
+						"paddingLeft": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The paddingLeft Schema",
+							"type": "integer"
+						},
+						"paddingRight": {
+							"enum": [
+								0,
+								1,
+								2,
+								4,
+								6,
+								8,
+								10
+							],
+							"minimum": 0,
+							"title": "The paddingRight Schema",
+							"type": "integer"
+						},
 						"paddingTop": {
 							"enum": [
 								0,
@@ -780,6 +921,25 @@
 							"minimum": 0,
 							"title": "The paddingTop Schema",
 							"type": "integer"
+						},
+						"shadow": {
+							"enum": [
+								"Default",
+								"None",
+								"Large",
+								"Regular",
+								"Small"
+							],
+							"title": "The shadow Schema",
+							"type": "string"
+						},
+						"widthType": {
+							"enum": [
+								"Fixed",
+								"Fluid"
+							],
+							"title": "The widthType Schema",
+							"type": "string"
 						}
 					},
 					"title": "The layout Schema",

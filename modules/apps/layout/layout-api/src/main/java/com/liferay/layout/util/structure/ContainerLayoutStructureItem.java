@@ -54,7 +54,8 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 				containerLayoutStructureItem._backgroundImageJSONObject.
 					toJSONString()) ||
 			!Objects.equals(
-				_containerType, containerLayoutStructureItem._containerType) ||
+				_containerWidth,
+				containerLayoutStructureItem._containerWidth) ||
 			!Objects.equals(
 				_paddingBottom, containerLayoutStructureItem._paddingBottom) ||
 			!Objects.equals(
@@ -77,8 +78,17 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		return _backgroundImageJSONObject;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getContainerWidth()}
+	 */
+	@Deprecated
 	public String getContainerType() {
-		return _containerType;
+		return _containerWidth;
+	}
+
+	public String getContainerWidth() {
+		return _containerWidth;
 	}
 
 	@Override
@@ -88,13 +98,19 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		).put(
 			"backgroundImage", _backgroundImageJSONObject
 		).put(
+			"containerWidth", _containerWidth
+		).put(
 			"paddingBottom", _paddingBottom
 		).put(
 			"paddingHorizontal", _paddingHorizontal
 		).put(
+			"paddingLeft", _paddingLeft
+		).put(
+			"paddingRight", _paddingRight
+		).put(
 			"paddingTop", _paddingTop
 		).put(
-			"type", _containerType
+			"type", _containerWidth
 		);
 	}
 
@@ -131,8 +147,17 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		_backgroundImageJSONObject = backgroundImageJSONObject;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #setContainerWidth(String)}
+	 */
+	@Deprecated
 	public void setContainerType(String containerType) {
-		_containerType = containerType;
+		_containerWidth = containerType;
+	}
+
+	public void setContainerWidth(String containerWidth) {
+		_containerWidth = containerWidth;
 	}
 
 	public void setPaddingBottom(int paddingBottom) {
@@ -172,6 +197,18 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 			setBackgroundImageJSONObject(backgroundImageJSONObject);
 		}
 
+		if (itemConfigJSONObject.has("containerWidth") ||
+			itemConfigJSONObject.has("type")) {
+
+			if (itemConfigJSONObject.has("containerWidth")) {
+				setContainerWidth(
+					itemConfigJSONObject.getString("containerWidth"));
+			}
+			else {
+				setContainerWidth(itemConfigJSONObject.getString("type"));
+			}
+		}
+
 		if (itemConfigJSONObject.has("paddingBottom")) {
 			setPaddingBottom(itemConfigJSONObject.getInt("paddingBottom"));
 		}
@@ -184,15 +221,11 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		if (itemConfigJSONObject.has("paddingTop")) {
 			setPaddingTop(itemConfigJSONObject.getInt("paddingTop"));
 		}
-
-		if (itemConfigJSONObject.has("type")) {
-			setContainerType(itemConfigJSONObject.getString("type"));
-		}
 	}
 
 	private String _backgroundColorCssClass;
 	private JSONObject _backgroundImageJSONObject;
-	private String _containerType = "fixed";
+	private String _containerWidth = "fluid";
 	private int _paddingBottom = 3;
 	private int _paddingHorizontal = 3;
 	private int _paddingTop = 3;

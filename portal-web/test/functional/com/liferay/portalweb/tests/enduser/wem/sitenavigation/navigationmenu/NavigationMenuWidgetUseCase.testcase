@@ -411,6 +411,87 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-113994. The Navigation Menu should show the same amount of levels with the number of Levels to Display."
+	@priority = "5"
+	test ShowTheSameAmountOfLevelsWithTheNumberOfLevelsToDisplay {
+		task ("Add 3 sublevels pages under Home") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Child Page",
+				parentLayoutName = "Home");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Child Child Page",
+				parentLayoutName = "Child Page");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Child Child Child Page",
+				parentLayoutName = "Child Child Page");
+		}
+
+		task ("Navigate to Home") {
+			Navigator.gotoPage(pageName = "Home");
+		}
+
+		task ("Select 2 in Levels to Display") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.selectLevelsToDisplay(levels = "2");
+
+			Pause(locator1 = "3000");
+
+			Portlet.saveAndCloseConfig();
+		}
+
+		task ("Assert only 2 levels shown in Navigation Menu") {
+			MouseOver(
+				key_pageName = "Home",
+				locator1 = "Home#PAGE");
+
+			AssertVisible(
+				key_itemName = "Child Page",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Child Child Page",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Child Child Child Page",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Select 3 in Levels to Display") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			NavigationMenusWidget.selectLevelsToDisplay(levels = "3");
+
+			Pause(locator1 = "3000");
+
+			Portlet.saveAndCloseConfig();
+		}
+
+		task ("Assert only 2 levels shown in Navigation Menu") {
+			MouseOver(
+				key_pageName = "Home",
+				locator1 = "Home#PAGE");
+
+			AssertVisible(
+				key_itemName = "Child Page",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+
+			AssertVisible(
+				key_itemName = "Child Child Page",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+
+			AssertElementNotPresent(
+				key_itemName = "Child Child Child Page",
+				locator1 = "NavigationMenusWidget#DROPDOWN_MENU_ITEM");
+		}
+	}
+
 	@description = "Navigation Menu widget should continue to work when reselecting the default display template"
 	@priority = "3"
 	test ValidateReturnToDefaultStyle {

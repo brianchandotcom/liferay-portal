@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ITEM_ENTRY_DRAG_ICON</td>
+	<td>//div[contains(@class,'navigation-menu-item')][@data-title='${key_sourceItemName}']//*[name()='svg'][contains(@class,'lexicon-icon-drag')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ITEM_ENTRY_N</td>
 	<td>xpath=(//div[contains(@class,'navigation-menu-item__content')])[${key_index}]</td>
 	<td></td>

@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
-import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
-import com.liferay.portal.vulcan.yaml.openapi.Items;
-import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
-import com.liferay.portal.vulcan.yaml.openapi.Schema;
+import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Items;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.util.Collections;
 import java.util.List;

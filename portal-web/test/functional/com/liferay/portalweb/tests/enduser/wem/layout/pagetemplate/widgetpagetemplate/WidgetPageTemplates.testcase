@@ -128,6 +128,63 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-115361. Can not delete a widget page template is used by a page in normal site."
+	@priority = "5"
+	test CannotDeletePageTemplateIsUsedByAPage {
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Widget Page Template");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Page Template Name");
+
+			Portlet.addPG(portletName = "Web Content Display");
+		}
+
+		task ("Add a page based on the widget page template") {
+			SitePages.openPagesAdmin(siteURLKey = "site-name");
+
+			SitePages.addPublicPage(
+				collectionName = "Page Template Collection",
+				pageName = "Test Page Name",
+				pageTemplateName = "Page Template Name");
+
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Site Name");
+
+			Pause(locator1 = "3000");
+
+			Portlet.viewPG(portletName = "Web Content Display");
+		}
+
+		task ("Assert can not delete the widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.deletePageTemplate(pageTemplateName = "Page Template Name");
+
+			Alert.viewErrorMessage(errorMessage = "You cannot delete page templates that are used by a page.");
+		}
+	}
+
 	@priority = "4"
 	test DeactivateAndActivateGlobalPageTemplate {
 		JSONGroup.addGroup(groupName = "Site Name");

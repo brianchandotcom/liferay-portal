@@ -328,9 +328,37 @@ definition {
 	}
 
 	macro clickDiscardDraft {
-		Button.clickNoError(button = "Discard Draft");
+		var browserType = PropsUtil.get("browser.type");
 
-		Confirm();
+		if ("${browserType}" == "chrome") {
+			MetalComponent.waitForLayout();
+		}
+
+		Click(
+			key_pageName = "${pageName}",
+			locator1 = "SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON");
+
+		MenuItem.clickNoError(menuItem = "Discard Draft");
+
+		AssertConfirm(value1 = "Are you sure you want to discard current draft and apply latest published changes?");
+
+		if (isSet(failure)) {
+			if (IsElementPresent(locator1 = "Message#ERROR_2")) {
+				Alert.viewRequestFailedToComplete();
+
+				AssertTextEquals(
+					locator1 = "Message#ERROR_2",
+					value1 = "${failure}");
+			}
+			else {
+				AssertTextEquals(
+					locator1 = "Message#ERROR",
+					value1 = "${failure}");
+			}
+		}
+		else {
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	macro clickEditableField {

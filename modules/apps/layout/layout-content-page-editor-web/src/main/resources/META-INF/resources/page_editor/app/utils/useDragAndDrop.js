@@ -403,16 +403,20 @@ function computeHover({
 	// Drop inside target
 
 	const validDropInsideTarget = (() => {
+		const targetIsColumn = targetItem.type == LAYOUT_DATA_ITEM_TYPES.column;
 		const targetIsFragment =
 			targetItem.type == LAYOUT_DATA_ITEM_TYPES.fragment;
-
 		const targetIsEmpty =
 			layoutData.items[targetItem.itemId].children.length === 0;
+		const targetIsSourceParent = layoutData.items[
+			targetItem.itemId
+		].children.includes(sourceItem.itemId);
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITION.MIDDLE &&
-			targetIsEmpty &&
-			!targetIsFragment
+			(targetIsEmpty || targetIsColumn) &&
+			!targetIsFragment &&
+			!targetIsSourceParent
 		);
 	})();
 

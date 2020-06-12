@@ -463,7 +463,7 @@ definition {
 	@priority = "4"
 	test ConfigureUserBelongsToRule {
 		property test.name.skip.portal.instance = "FormRules#ConfigureUserBelongsToRule";
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		Navigator.openURL();
 
 		GlobalMenu.gotoPortlet(

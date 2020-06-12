@@ -94,6 +94,40 @@ definition {
 		Portlet.viewNoSpecificPG(portletName = "Web Content Display");
 	}
 
+	@description = "This is a use case for LPS-115361. Add a widget page template in normal site."
+	@priority = "5"
+	test AddPageTemplate {
+		task ("Add a new site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Add a page template collection") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a widget page template") {
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.addPageTemplate(
+				pageTemplateName = "Page Template Name",
+				pageTemplateType = "Widget Page Template");
+
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Page Template Name");
+		}
+
+		task ("Add a Web Content Display portlet to widget page template") {
+			Portlet.addPG(portletName = "Web Content Display");
+
+			Portlet.viewPG(portletName = "Web Content Display");
+		}
+	}
+
 	@priority = "4"
 	test DeactivateAndActivateGlobalPageTemplate {
 		JSONGroup.addGroup(groupName = "Site Name");

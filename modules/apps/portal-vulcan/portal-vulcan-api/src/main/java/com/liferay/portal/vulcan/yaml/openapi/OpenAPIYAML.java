@@ -21,26 +21,50 @@ import java.util.Map;
  */
 public class OpenAPIYAML {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Components getComponents() {
 		return _components;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Info getInfo() {
 		return _info;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Map<String, PathItem> getPathItems() {
 		return _pathItems;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setComponents(Components components) {
 		_components = components;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setInfo(Info info) {
 		_info = info;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setPathItems(Map<String, PathItem> pathItems) {
 		_pathItems = pathItems;
 	}

@@ -19,34 +19,66 @@ package com.liferay.portal.vulcan.yaml.openapi;
  */
 public class Info {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getDescription() {
 		return _description;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public License getLicense() {
 		return _license;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getTitle() {
 		return _title;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getVersion() {
 		return _version;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setDescription(String description) {
 		_description = description;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setLicense(License license) {
 		_license = license;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setTitle(String title) {
 		_title = title;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setVersion(String version) {
 		_version = version;
 	}

@@ -21,18 +21,34 @@ import java.util.Map;
  */
 public class Response {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Map<String, Content> getContent() {
 		return _content;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getDescription() {
 		return _description;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setContent(Map<String, Content> content) {
 		_content = content;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setDescription(String description) {
 		_description = description;
 	}

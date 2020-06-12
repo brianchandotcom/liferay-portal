@@ -19,26 +19,50 @@ package com.liferay.portal.vulcan.yaml.config;
  */
 public class Security {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getBasicAuth() {
 		return _basicAuth;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getGuestAllowed() {
 		return _guestAllowed;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getOAuth2() {
 		return _oAuth2;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setBasicAuth(String basicAuth) {
 		_basicAuth = basicAuth;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setGuestAllowed(String guestAllowed) {
 		_guestAllowed = guestAllowed;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setOAuth2(String oAuth2) {
 		_oAuth2 = oAuth2;
 	}

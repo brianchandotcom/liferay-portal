@@ -19,18 +19,34 @@ package com.liferay.portal.vulcan.yaml.openapi;
  */
 public class License {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getName() {
 		return _name;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getUrl() {
 		return _url;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setName(String name) {
 		_name = name;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setUrl(String url) {
 		_url = url;
 	}

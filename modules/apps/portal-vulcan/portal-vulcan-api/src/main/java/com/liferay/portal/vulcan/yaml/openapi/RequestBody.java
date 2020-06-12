@@ -21,10 +21,18 @@ import java.util.Map;
  */
 public class RequestBody {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Map<String, Content> getContent() {
 		return _content;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setContent(Map<String, Content> content) {
 		_content = content;
 	}

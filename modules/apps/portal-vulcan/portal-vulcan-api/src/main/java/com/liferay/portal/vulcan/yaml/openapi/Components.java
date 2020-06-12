@@ -21,18 +21,34 @@ import java.util.Map;
  */
 public class Components {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Map<String, Parameter> getParameters() {
 		return _parameters;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Map<String, Schema> getSchemas() {
 		return _schemas;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setParameters(Map<String, Parameter> parameters) {
 		_parameters = parameters;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setSchemas(Map<String, Schema> schemas) {
 		_schemas = schemas;
 	}

@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class ResponseCode {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public ResponseCode(String code) {
 		if (StringUtil.equals(code, "default")) {
 			_defaultResponse = true;
@@ -33,14 +37,26 @@ public class ResponseCode {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Integer getHttpCode() {
 		return _httpCode;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public boolean isDefaultResponse() {
 		return _defaultResponse;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Override
 	public String toString() {
 		if (_defaultResponse) {

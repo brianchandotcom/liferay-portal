@@ -26,6 +26,10 @@ import org.yaml.snakeyaml.error.MarkedYAMLException;
  */
 public class InvalidYAMLException extends IllegalArgumentException {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public InvalidYAMLException(Exception exception) {
 		super(_getProblem(exception), exception);
 	}

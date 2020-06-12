@@ -19,10 +19,18 @@ package com.liferay.portal.vulcan.yaml.openapi;
  */
 public class Content {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Schema getSchema() {
 		return _schema;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setSchema(Schema schema) {
 		_schema = schema;
 	}

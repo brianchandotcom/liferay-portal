@@ -40,6 +40,10 @@ import org.yaml.snakeyaml.representer.Representer;
  */
 public class YAMLUtil {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static ConfigYAML loadConfigYAML(String yamlString) {
 		try {
 			return _YAML_CONFIG.loadAs(yamlString, ConfigYAML.class);
@@ -49,6 +53,10 @@ public class YAMLUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public static OpenAPIYAML loadOpenAPIYAML(String yamlString) {
 		try {
 			return _YAML_OPEN_API.loadAs(yamlString, OpenAPIYAML.class);

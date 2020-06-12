@@ -23,12 +23,24 @@ import java.util.List;
  */
 public class GraphQLNamingUtil {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil#getGraphQLMutationName(
+	 *             String)}
+	 */
+	@Deprecated
 	public static String getGraphQLMutationName(String methodName) {
 		methodName = methodName.replaceFirst("post", "create");
 
 		return methodName.replaceFirst("put", "update");
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil#getGraphQLPropertyName(
+	 *             String, String, List)}
+	 */
+	@Deprecated
 	public static String getGraphQLPropertyName(
 		String methodName, String returnType, List<String> methodNames) {
 

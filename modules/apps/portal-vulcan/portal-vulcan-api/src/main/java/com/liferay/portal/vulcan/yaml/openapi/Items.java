@@ -21,42 +21,82 @@ import java.util.Map;
  */
 public class Items {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Schema getAdditionalPropertySchema() {
 		return _additionalPropertySchema;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getFormat() {
 		return _format;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Map<String, Schema> getPropertySchemas() {
 		return _propertySchemas;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getReference() {
 		return _reference;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getType() {
 		return _type;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setAdditionalPropertySchema(Schema additionalPropertySchema) {
 		_additionalPropertySchema = additionalPropertySchema;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setFormat(String format) {
 		_format = format;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setPropertySchemas(Map<String, Schema> propertySchemas) {
 		_propertySchemas = propertySchemas;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setReference(String reference) {
 		_reference = reference;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setType(String type) {
 		_type = type;
 	}

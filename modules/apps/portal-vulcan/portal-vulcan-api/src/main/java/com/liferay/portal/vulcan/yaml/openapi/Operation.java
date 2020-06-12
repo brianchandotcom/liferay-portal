@@ -23,50 +23,98 @@ import java.util.Map;
  */
 public class Operation {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getDescription() {
 		return _description;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public String getOperationId() {
 		return _operationId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public List<Parameter> getParameters() {
 		return _parameters;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public RequestBody getRequestBody() {
 		return _requestBody;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public Map<ResponseCode, Response> getResponses() {
 		return _responses;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public List<String> getTags() {
 		return _tags;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setDescription(String description) {
 		_description = description;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setOperationId(String operationId) {
 		_operationId = operationId;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setParameters(List<Parameter> parameters) {
 		_parameters = parameters;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setRequestBody(RequestBody requestBody) {
 		_requestBody = requestBody;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setResponses(Map<ResponseCode, Response> responses) {
 		_responses = responses;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	public void setTags(List<String> tags) {
 		_tags = tags;
 	}

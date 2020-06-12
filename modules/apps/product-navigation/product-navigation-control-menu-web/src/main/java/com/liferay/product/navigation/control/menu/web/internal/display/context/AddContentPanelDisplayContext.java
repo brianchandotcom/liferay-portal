@@ -23,10 +23,12 @@ import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.util.AssetHelper;
+import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -39,11 +41,14 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -68,6 +73,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -91,10 +98,59 @@ public class AddContentPanelDisplayContext {
 
 	public Map<String, Object> getAddContentPanelData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"addContentsURLs", _getAddContentsURLs()
+		).put(
 			"contents", _getContents()
 		).put(
 			"widgets", _getWidgets()
 		).build();
+	}
+
+	private List<Map<String, Object>> _getAddContentsURLs() throws Exception {
+		PortletRequest portletRequest =
+			(PortletRequest)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		PortletResponse portletResponse =
+			(PortletResponse)_httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		List<AssetPublisherAddItemHolder> assetPublisherAddItemHolders =
+			_assetHelper.getAssetPublisherAddItemHolders(
+				PortalUtil.getLiferayPortletRequest(portletRequest),
+				PortalUtil.getLiferayPortletResponse(portletResponse),
+				_themeDisplay.getScopeGroupId(), _getClassNameIds(),
+				new long[0], null, null, _getRedirectURL());
+
+		Stream<AssetPublisherAddItemHolder> stream =
+			assetPublisherAddItemHolders.stream();
+
+		return stream.map(
+			assetPublisherAddItemHolder -> HashMapBuilder.<String, Object>put(
+				"label", assetPublisherAddItemHolder.getModelResource()
+			).put(
+				"url",
+				() -> {
+					long curGroupId = _themeDisplay.getScopeGroupId();
+
+					Group group = _themeDisplay.getScopeGroup();
+
+					if (!group.isStagedPortlet(
+							assetPublisherAddItemHolder.getPortletId()) &&
+						!group.isStagedRemotely()) {
+
+						curGroupId = group.getLiveGroupId();
+					}
+
+					return _assetHelper.getAddURLPopUp(
+						curGroupId, _themeDisplay.getPlid(),
+						assetPublisherAddItemHolder.getPortletURL(), false,
+						_themeDisplay.getLayout());
+				}
+			).build()
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private String _getAssetEntryTypeLabel(String className, long classTypeId) {
@@ -154,6 +210,11 @@ public class AddContentPanelDisplayContext {
 		}
 
 		return availableClassNameIds;
+	}
+
+	private long[] _getClassNameIds() {
+		return AssetRendererFactoryRegistryUtil.getClassNameIds(
+			_themeDisplay.getCompanyId());
 	}
 
 	private List<Map<String, Object>> _getContents() throws Exception {
@@ -339,6 +400,16 @@ public class AddContentPanelDisplayContext {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private String _getRedirectURL() throws Exception {
+		String redirectURL = PortalUtil.getLayoutFullURL(
+			_themeDisplay.getLayout(), _themeDisplay);
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		return HttpUtil.addParameter(
+			redirectURL, "portletResource", portletDisplay.getId());
 	}
 
 	private List<Map<String, Object>> _getWidgetCategories(

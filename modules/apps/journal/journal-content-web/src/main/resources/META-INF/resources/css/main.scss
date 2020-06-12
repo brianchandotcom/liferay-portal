@@ -40,6 +40,10 @@
 		}
 	}
 
+	.journal-template-error pre {
+		white-space: pre-wrap;
+	}
+
 	.portlet .portlet-header {
 		flex-wrap: nowrap;
 	}

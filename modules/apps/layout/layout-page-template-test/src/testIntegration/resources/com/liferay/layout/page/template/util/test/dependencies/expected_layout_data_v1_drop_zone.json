@@ -18,10 +18,13 @@
 			"config": {
 				"backgroundImage": {
 				},
-				"paddingBottom": 3,
-				"paddingHorizontal": 3,
-				"paddingTop": 3,
-				"type": "fixed"
+				"paddingBottom": 0,
+				"paddingHorizontal": 0,
+				"paddingLeft": 0,
+				"paddingRight": 0,
+				"paddingTop": 0,
+				"type": "fluid",
+				"widthType": "fluid"
 			},
 			"itemId": "CONTAINER-UUID",
 			"parentId": "MAIN-UUID",

@@ -378,11 +378,17 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 			expectedContainerLayoutStructureItem.getPaddingBottom(),
 			actualContainerLayoutStructureItem.getPaddingBottom());
 		Assert.assertEquals(
-			expectedContainerLayoutStructureItem.getPaddingHorizontal(),
-			actualContainerLayoutStructureItem.getPaddingHorizontal());
+			expectedContainerLayoutStructureItem.getPaddingLeft(),
+			actualContainerLayoutStructureItem.getPaddingLeft());
+		Assert.assertEquals(
+			expectedContainerLayoutStructureItem.getPaddingRight(),
+			actualContainerLayoutStructureItem.getPaddingRight());
 		Assert.assertEquals(
 			expectedContainerLayoutStructureItem.getPaddingTop(),
 			actualContainerLayoutStructureItem.getPaddingTop());
+		Assert.assertEquals(
+			expectedContainerLayoutStructureItem.getWidthType(),
+			actualContainerLayoutStructureItem.getWidthType());
 	}
 
 	private void _validateFragmentLayoutStructureItem(

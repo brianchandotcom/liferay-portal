@@ -107,6 +107,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		return _paddingBottom;
 	}
 
+	@Deprecated
 	public int getPaddingHorizontal() {
 		return _paddingHorizontal;
 	}
@@ -138,6 +139,7 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 		_paddingBottom = paddingBottom;
 	}
 
+	@Deprecated
 	public void setPaddingHorizontal(int paddingHorizontal) {
 		_paddingHorizontal = paddingHorizontal;
 	}

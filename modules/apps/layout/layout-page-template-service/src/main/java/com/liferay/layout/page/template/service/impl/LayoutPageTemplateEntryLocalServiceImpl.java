@@ -180,29 +180,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		validate(groupId, name, type);
 
-		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) &&
-			(layoutPrototypeId == 0)) {
-
-			LayoutPrototype layoutPrototype =
-				_layoutPrototypeLocalService.addLayoutPrototype(
-					userId, user.getCompanyId(),
-					Collections.singletonMap(
-						LocaleUtil.getMostRelevantLocale(), name),
-					Collections.emptyMap(), true, serviceContext);
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				fetchFirstLayoutPageTemplateEntry(
-					layoutPrototype.getLayoutPrototypeId());
-
-			if (layoutPageTemplateEntry != null) {
-				layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
-					layoutPageTemplateCollectionId);
-
-				return layoutPageTemplateEntryPersistence.update(
-					layoutPageTemplateEntry);
-			}
-		}
-
 		long layoutPageTemplateEntryId = counterLocalService.increment();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -228,6 +205,30 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setType(type);
 		layoutPageTemplateEntry.setPreviewFileEntryId(previewFileEntryId);
 		layoutPageTemplateEntry.setDefaultTemplate(defaultTemplate);
+
+		layoutPageTemplateEntry = layoutPageTemplateEntryPersistence.update(
+			layoutPageTemplateEntry);
+
+		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_WIDGET_PAGE) &&
+			(layoutPrototypeId == 0)) {
+
+			serviceContext.setAttribute(
+				"layoutPageTemplateEntryId", layoutPageTemplateEntryId);
+
+			LayoutPrototype layoutPrototype =
+				_layoutPrototypeLocalService.addLayoutPrototype(
+					userId, user.getCompanyId(),
+					Collections.singletonMap(
+						LocaleUtil.getMostRelevantLocale(), name),
+					Collections.emptyMap(), true, serviceContext);
+
+			layoutPrototypeId = layoutPrototype.getLayoutPrototypeId();
+
+			Layout layout = layoutPrototype.getLayout();
+
+			plid = layout.getPlid();
+		}
+
 		layoutPageTemplateEntry.setLayoutPrototypeId(layoutPrototypeId);
 
 		if (plid == 0) {

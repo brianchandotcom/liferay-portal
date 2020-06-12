@@ -24,14 +24,13 @@ import {useSelector} from '../../store/index';
 const Container = React.forwardRef(({children, className, data, item}, ref) => {
 	const {
 		align,
-		backgroundColor,
+		backgroundColorCssClass,
 		backgroundImage,
 		borderColor,
 		borderRadius,
 		borderWidth,
 		containerWidth,
 		contentDisplay,
-		dropShadow,
 		justify,
 		marginBottom,
 		marginLeft,
@@ -42,13 +41,11 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 		paddingLeft,
 		paddingRight,
 		paddingTop,
+		shadow,
 	} = item.config;
 
 	const languageId = useSelector(selectLanguageId);
-
-	const backgroundColorCssClass = backgroundColor && backgroundColor.cssClass;
 	const [backgroundImageValue, setBackgroundImageValue] = useState('');
-	const borderColorCssClass = borderColor && borderColor.cssClass;
 	const [link, setLink] = useState(null);
 
 	useEffect(() => {
@@ -112,15 +109,15 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 				`pt-${paddingTop || 0}`,
 				{
 					[align]: !!align,
+					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
+					[`border-${borderColor}`]: !!borderColor,
 					[borderRadius]: !!borderRadius,
 					container: containerWidth === 'fixed',
 					'd-block': contentDisplay === 'block',
 					'd-flex': contentDisplay === 'flex',
-					[dropShadow]: !!dropShadow,
 					empty: item.children.length === 0,
 					[justify]: !!justify,
-					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-					[`border-${borderColorCssClass}`]: !!borderColorCssClass,
+					[shadow]: !!shadow,
 				}
 			)}
 			ref={ref}

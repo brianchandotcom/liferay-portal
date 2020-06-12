@@ -53,6 +53,58 @@ public class LayoutSerDes {
 
 		sb.append("{");
 
+		if (layout.getAlign() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"align\": ");
+
+			sb.append("\"");
+
+			sb.append(layout.getAlign());
+
+			sb.append("\"");
+		}
+
+		if (layout.getBorderColor() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"borderColor\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(layout.getBorderColor()));
+
+			sb.append("\"");
+		}
+
+		if (layout.getBorderRadius() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"borderRadius\": ");
+
+			sb.append("\"");
+
+			sb.append(layout.getBorderRadius());
+
+			sb.append("\"");
+		}
+
+		if (layout.getBorderWidth() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"borderWidth\": ");
+
+			sb.append(layout.getBorderWidth());
+		}
+
 		if (layout.getContainerType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -65,6 +117,84 @@ public class LayoutSerDes {
 			sb.append(layout.getContainerType());
 
 			sb.append("\"");
+		}
+
+		if (layout.getContentDisplay() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentDisplay\": ");
+
+			sb.append("\"");
+
+			sb.append(layout.getContentDisplay());
+
+			sb.append("\"");
+		}
+
+		if (layout.getJustify() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"justify\": ");
+
+			sb.append("\"");
+
+			sb.append(layout.getJustify());
+
+			sb.append("\"");
+		}
+
+		if (layout.getMarginBottom() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginBottom\": ");
+
+			sb.append(layout.getMarginBottom());
+		}
+
+		if (layout.getMarginLeft() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginLeft\": ");
+
+			sb.append(layout.getMarginLeft());
+		}
+
+		if (layout.getMarginRight() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginRight\": ");
+
+			sb.append(layout.getMarginRight());
+		}
+
+		if (layout.getMarginTop() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginTop\": ");
+
+			sb.append(layout.getMarginTop());
+		}
+
+		if (layout.getOpacity() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"opacity\": ");
+
+			sb.append(layout.getOpacity());
 		}
 
 		if (layout.getPaddingBottom() != null) {
@@ -87,6 +217,26 @@ public class LayoutSerDes {
 			sb.append(layout.getPaddingHorizontal());
 		}
 
+		if (layout.getPaddingLeft() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingLeft\": ");
+
+			sb.append(layout.getPaddingLeft());
+		}
+
+		if (layout.getPaddingRight() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingRight\": ");
+
+			sb.append(layout.getPaddingRight());
+		}
+
 		if (layout.getPaddingTop() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -95,6 +245,34 @@ public class LayoutSerDes {
 			sb.append("\"paddingTop\": ");
 
 			sb.append(layout.getPaddingTop());
+		}
+
+		if (layout.getShadow() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shadow\": ");
+
+			sb.append("\"");
+
+			sb.append(layout.getShadow());
+
+			sb.append("\"");
+		}
+
+		if (layout.getWidthType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widthType\": ");
+
+			sb.append("\"");
+
+			sb.append(layout.getWidthType());
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -115,11 +293,89 @@ public class LayoutSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (layout.getAlign() == null) {
+			map.put("align", null);
+		}
+		else {
+			map.put("align", String.valueOf(layout.getAlign()));
+		}
+
+		if (layout.getBorderColor() == null) {
+			map.put("borderColor", null);
+		}
+		else {
+			map.put("borderColor", String.valueOf(layout.getBorderColor()));
+		}
+
+		if (layout.getBorderRadius() == null) {
+			map.put("borderRadius", null);
+		}
+		else {
+			map.put("borderRadius", String.valueOf(layout.getBorderRadius()));
+		}
+
+		if (layout.getBorderWidth() == null) {
+			map.put("borderWidth", null);
+		}
+		else {
+			map.put("borderWidth", String.valueOf(layout.getBorderWidth()));
+		}
+
 		if (layout.getContainerType() == null) {
 			map.put("containerType", null);
 		}
 		else {
 			map.put("containerType", String.valueOf(layout.getContainerType()));
+		}
+
+		if (layout.getContentDisplay() == null) {
+			map.put("contentDisplay", null);
+		}
+		else {
+			map.put(
+				"contentDisplay", String.valueOf(layout.getContentDisplay()));
+		}
+
+		if (layout.getJustify() == null) {
+			map.put("justify", null);
+		}
+		else {
+			map.put("justify", String.valueOf(layout.getJustify()));
+		}
+
+		if (layout.getMarginBottom() == null) {
+			map.put("marginBottom", null);
+		}
+		else {
+			map.put("marginBottom", String.valueOf(layout.getMarginBottom()));
+		}
+
+		if (layout.getMarginLeft() == null) {
+			map.put("marginLeft", null);
+		}
+		else {
+			map.put("marginLeft", String.valueOf(layout.getMarginLeft()));
+		}
+
+		if (layout.getMarginRight() == null) {
+			map.put("marginRight", null);
+		}
+		else {
+			map.put("marginRight", String.valueOf(layout.getMarginRight()));
+		}
+
+		if (layout.getMarginTop() == null) {
+			map.put("marginTop", null);
+		}
+		else {
+			map.put("marginTop", String.valueOf(layout.getMarginTop()));
+		}
+
+		if (layout.getOpacity() == null) {
+			map.put("opacity", null);
+		}
+		else {
+			map.put("opacity", String.valueOf(layout.getOpacity()));
 		}
 
 		if (layout.getPaddingBottom() == null) {
@@ -138,11 +394,39 @@ public class LayoutSerDes {
 				String.valueOf(layout.getPaddingHorizontal()));
 		}
 
+		if (layout.getPaddingLeft() == null) {
+			map.put("paddingLeft", null);
+		}
+		else {
+			map.put("paddingLeft", String.valueOf(layout.getPaddingLeft()));
+		}
+
+		if (layout.getPaddingRight() == null) {
+			map.put("paddingRight", null);
+		}
+		else {
+			map.put("paddingRight", String.valueOf(layout.getPaddingRight()));
+		}
+
 		if (layout.getPaddingTop() == null) {
 			map.put("paddingTop", null);
 		}
 		else {
 			map.put("paddingTop", String.valueOf(layout.getPaddingTop()));
+		}
+
+		if (layout.getShadow() == null) {
+			map.put("shadow", null);
+		}
+		else {
+			map.put("shadow", String.valueOf(layout.getShadow()));
+		}
+
+		if (layout.getWidthType() == null) {
+			map.put("widthType", null);
+		}
+		else {
+			map.put("widthType", String.valueOf(layout.getWidthType()));
 		}
 
 		return map;
@@ -165,11 +449,78 @@ public class LayoutSerDes {
 			Layout layout, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "containerType")) {
+			if (Objects.equals(jsonParserFieldName, "align")) {
+				if (jsonParserFieldValue != null) {
+					layout.setAlign(
+						Layout.Align.create((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "borderColor")) {
+				if (jsonParserFieldValue != null) {
+					layout.setBorderColor((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "borderRadius")) {
+				if (jsonParserFieldValue != null) {
+					layout.setBorderRadius(
+						Layout.BorderRadius.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "borderWidth")) {
+				if (jsonParserFieldValue != null) {
+					layout.setBorderWidth(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "containerType")) {
 				if (jsonParserFieldValue != null) {
 					layout.setContainerType(
 						Layout.ContainerType.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "contentDisplay")) {
+				if (jsonParserFieldValue != null) {
+					layout.setContentDisplay(
+						Layout.ContentDisplay.create(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "justify")) {
+				if (jsonParserFieldValue != null) {
+					layout.setJustify(
+						Layout.Justify.create((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "marginBottom")) {
+				if (jsonParserFieldValue != null) {
+					layout.setMarginBottom(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "marginLeft")) {
+				if (jsonParserFieldValue != null) {
+					layout.setMarginLeft(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "marginRight")) {
+				if (jsonParserFieldValue != null) {
+					layout.setMarginRight(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "marginTop")) {
+				if (jsonParserFieldValue != null) {
+					layout.setMarginTop(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "opacity")) {
+				if (jsonParserFieldValue != null) {
+					layout.setOpacity(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "paddingBottom")) {
@@ -184,10 +535,34 @@ public class LayoutSerDes {
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "paddingLeft")) {
+				if (jsonParserFieldValue != null) {
+					layout.setPaddingLeft(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "paddingRight")) {
+				if (jsonParserFieldValue != null) {
+					layout.setPaddingRight(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "paddingTop")) {
 				if (jsonParserFieldValue != null) {
 					layout.setPaddingTop(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "shadow")) {
+				if (jsonParserFieldValue != null) {
+					layout.setShadow(
+						Layout.Shadow.create((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "widthType")) {
+				if (jsonParserFieldValue != null) {
+					layout.setWidthType(
+						Layout.WidthType.create((String)jsonParserFieldValue));
 				}
 			}
 			else {

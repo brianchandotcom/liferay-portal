@@ -55,6 +55,136 @@ public class Layout {
 
 	@Schema
 	@Valid
+	public Align getAlign() {
+		return align;
+	}
+
+	@JsonIgnore
+	public String getAlignAsString() {
+		if (align == null) {
+			return null;
+		}
+
+		return align.toString();
+	}
+
+	public void setAlign(Align align) {
+		this.align = align;
+	}
+
+	@JsonIgnore
+	public void setAlign(UnsafeSupplier<Align, Exception> alignUnsafeSupplier) {
+		try {
+			align = alignUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Align align;
+
+	@Schema
+	public String getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(String borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	@JsonIgnore
+	public void setBorderColor(
+		UnsafeSupplier<String, Exception> borderColorUnsafeSupplier) {
+
+		try {
+			borderColor = borderColorUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String borderColor;
+
+	@Schema
+	@Valid
+	public BorderRadius getBorderRadius() {
+		return borderRadius;
+	}
+
+	@JsonIgnore
+	public String getBorderRadiusAsString() {
+		if (borderRadius == null) {
+			return null;
+		}
+
+		return borderRadius.toString();
+	}
+
+	public void setBorderRadius(BorderRadius borderRadius) {
+		this.borderRadius = borderRadius;
+	}
+
+	@JsonIgnore
+	public void setBorderRadius(
+		UnsafeSupplier<BorderRadius, Exception> borderRadiusUnsafeSupplier) {
+
+		try {
+			borderRadius = borderRadiusUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected BorderRadius borderRadius;
+
+	@Schema
+	public Integer getBorderWidth() {
+		return borderWidth;
+	}
+
+	public void setBorderWidth(Integer borderWidth) {
+		this.borderWidth = borderWidth;
+	}
+
+	@JsonIgnore
+	public void setBorderWidth(
+		UnsafeSupplier<Integer, Exception> borderWidthUnsafeSupplier) {
+
+		try {
+			borderWidth = borderWidthUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer borderWidth;
+
+	@Schema
+	@Valid
 	public ContainerType getContainerType() {
 		return containerType;
 	}
@@ -90,6 +220,223 @@ public class Layout {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ContainerType containerType;
+
+	@Schema
+	@Valid
+	public ContentDisplay getContentDisplay() {
+		return contentDisplay;
+	}
+
+	@JsonIgnore
+	public String getContentDisplayAsString() {
+		if (contentDisplay == null) {
+			return null;
+		}
+
+		return contentDisplay.toString();
+	}
+
+	public void setContentDisplay(ContentDisplay contentDisplay) {
+		this.contentDisplay = contentDisplay;
+	}
+
+	@JsonIgnore
+	public void setContentDisplay(
+		UnsafeSupplier<ContentDisplay, Exception>
+			contentDisplayUnsafeSupplier) {
+
+		try {
+			contentDisplay = contentDisplayUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ContentDisplay contentDisplay;
+
+	@Schema
+	@Valid
+	public Justify getJustify() {
+		return justify;
+	}
+
+	@JsonIgnore
+	public String getJustifyAsString() {
+		if (justify == null) {
+			return null;
+		}
+
+		return justify.toString();
+	}
+
+	public void setJustify(Justify justify) {
+		this.justify = justify;
+	}
+
+	@JsonIgnore
+	public void setJustify(
+		UnsafeSupplier<Justify, Exception> justifyUnsafeSupplier) {
+
+		try {
+			justify = justifyUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Justify justify;
+
+	@Schema
+	public Integer getMarginBottom() {
+		return marginBottom;
+	}
+
+	public void setMarginBottom(Integer marginBottom) {
+		this.marginBottom = marginBottom;
+	}
+
+	@JsonIgnore
+	public void setMarginBottom(
+		UnsafeSupplier<Integer, Exception> marginBottomUnsafeSupplier) {
+
+		try {
+			marginBottom = marginBottomUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer marginBottom;
+
+	@Schema
+	public Integer getMarginLeft() {
+		return marginLeft;
+	}
+
+	public void setMarginLeft(Integer marginLeft) {
+		this.marginLeft = marginLeft;
+	}
+
+	@JsonIgnore
+	public void setMarginLeft(
+		UnsafeSupplier<Integer, Exception> marginLeftUnsafeSupplier) {
+
+		try {
+			marginLeft = marginLeftUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer marginLeft;
+
+	@Schema
+	public Integer getMarginRight() {
+		return marginRight;
+	}
+
+	public void setMarginRight(Integer marginRight) {
+		this.marginRight = marginRight;
+	}
+
+	@JsonIgnore
+	public void setMarginRight(
+		UnsafeSupplier<Integer, Exception> marginRightUnsafeSupplier) {
+
+		try {
+			marginRight = marginRightUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer marginRight;
+
+	@Schema
+	public Integer getMarginTop() {
+		return marginTop;
+	}
+
+	public void setMarginTop(Integer marginTop) {
+		this.marginTop = marginTop;
+	}
+
+	@JsonIgnore
+	public void setMarginTop(
+		UnsafeSupplier<Integer, Exception> marginTopUnsafeSupplier) {
+
+		try {
+			marginTop = marginTopUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer marginTop;
+
+	@Schema
+	public Integer getOpacity() {
+		return opacity;
+	}
+
+	public void setOpacity(Integer opacity) {
+		this.opacity = opacity;
+	}
+
+	@JsonIgnore
+	public void setOpacity(
+		UnsafeSupplier<Integer, Exception> opacityUnsafeSupplier) {
+
+		try {
+			opacity = opacityUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer opacity;
 
 	@Schema
 	public Integer getPaddingBottom() {
@@ -148,6 +495,62 @@ public class Layout {
 	protected Integer paddingHorizontal;
 
 	@Schema
+	public Integer getPaddingLeft() {
+		return paddingLeft;
+	}
+
+	public void setPaddingLeft(Integer paddingLeft) {
+		this.paddingLeft = paddingLeft;
+	}
+
+	@JsonIgnore
+	public void setPaddingLeft(
+		UnsafeSupplier<Integer, Exception> paddingLeftUnsafeSupplier) {
+
+		try {
+			paddingLeft = paddingLeftUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer paddingLeft;
+
+	@Schema
+	public Integer getPaddingRight() {
+		return paddingRight;
+	}
+
+	public void setPaddingRight(Integer paddingRight) {
+		this.paddingRight = paddingRight;
+	}
+
+	@JsonIgnore
+	public void setPaddingRight(
+		UnsafeSupplier<Integer, Exception> paddingRightUnsafeSupplier) {
+
+		try {
+			paddingRight = paddingRightUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer paddingRight;
+
+	@Schema
 	public Integer getPaddingTop() {
 		return paddingTop;
 	}
@@ -174,6 +577,82 @@ public class Layout {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer paddingTop;
+
+	@Schema
+	@Valid
+	public Shadow getShadow() {
+		return shadow;
+	}
+
+	@JsonIgnore
+	public String getShadowAsString() {
+		if (shadow == null) {
+			return null;
+		}
+
+		return shadow.toString();
+	}
+
+	public void setShadow(Shadow shadow) {
+		this.shadow = shadow;
+	}
+
+	@JsonIgnore
+	public void setShadow(
+		UnsafeSupplier<Shadow, Exception> shadowUnsafeSupplier) {
+
+		try {
+			shadow = shadowUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Shadow shadow;
+
+	@Schema
+	@Valid
+	public WidthType getWidthType() {
+		return widthType;
+	}
+
+	@JsonIgnore
+	public String getWidthTypeAsString() {
+		if (widthType == null) {
+			return null;
+		}
+
+		return widthType.toString();
+	}
+
+	public void setWidthType(WidthType widthType) {
+		this.widthType = widthType;
+	}
+
+	@JsonIgnore
+	public void setWidthType(
+		UnsafeSupplier<WidthType, Exception> widthTypeUnsafeSupplier) {
+
+		try {
+			widthType = widthTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected WidthType widthType;
 
 	@Override
 	public boolean equals(Object object) {
@@ -202,6 +681,58 @@ public class Layout {
 
 		sb.append("{");
 
+		if (align != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"align\": ");
+
+			sb.append("\"");
+
+			sb.append(align);
+
+			sb.append("\"");
+		}
+
+		if (borderColor != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"borderColor\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(borderColor));
+
+			sb.append("\"");
+		}
+
+		if (borderRadius != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"borderRadius\": ");
+
+			sb.append("\"");
+
+			sb.append(borderRadius);
+
+			sb.append("\"");
+		}
+
+		if (borderWidth != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"borderWidth\": ");
+
+			sb.append(borderWidth);
+		}
+
 		if (containerType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -214,6 +745,84 @@ public class Layout {
 			sb.append(containerType);
 
 			sb.append("\"");
+		}
+
+		if (contentDisplay != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contentDisplay\": ");
+
+			sb.append("\"");
+
+			sb.append(contentDisplay);
+
+			sb.append("\"");
+		}
+
+		if (justify != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"justify\": ");
+
+			sb.append("\"");
+
+			sb.append(justify);
+
+			sb.append("\"");
+		}
+
+		if (marginBottom != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginBottom\": ");
+
+			sb.append(marginBottom);
+		}
+
+		if (marginLeft != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginLeft\": ");
+
+			sb.append(marginLeft);
+		}
+
+		if (marginRight != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginRight\": ");
+
+			sb.append(marginRight);
+		}
+
+		if (marginTop != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"marginTop\": ");
+
+			sb.append(marginTop);
+		}
+
+		if (opacity != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"opacity\": ");
+
+			sb.append(opacity);
 		}
 
 		if (paddingBottom != null) {
@@ -236,6 +845,26 @@ public class Layout {
 			sb.append(paddingHorizontal);
 		}
 
+		if (paddingLeft != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingLeft\": ");
+
+			sb.append(paddingLeft);
+		}
+
+		if (paddingRight != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"paddingRight\": ");
+
+			sb.append(paddingRight);
+		}
+
 		if (paddingTop != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -244,6 +873,34 @@ public class Layout {
 			sb.append("\"paddingTop\": ");
 
 			sb.append(paddingTop);
+		}
+
+		if (shadow != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shadow\": ");
+
+			sb.append("\"");
+
+			sb.append(shadow);
+
+			sb.append("\"");
+		}
+
+		if (widthType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"widthType\": ");
+
+			sb.append("\"");
+
+			sb.append(widthType);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -256,6 +913,76 @@ public class Layout {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Align")
+	public static enum Align {
+
+		CENTER("Center"), END("End"), NONE("None"), START("Start"),
+		STRETCH("Stretch");
+
+		@JsonCreator
+		public static Align create(String value) {
+			for (Align align : values()) {
+				if (Objects.equals(align.getValue(), value)) {
+					return align;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Align(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("BorderRadius")
+	public static enum BorderRadius {
+
+		CIRCLE("Circle"), LARGE("Large"), NONE("None"), PILL("Pill"),
+		REGULAR("Regular");
+
+		@JsonCreator
+		public static BorderRadius create(String value) {
+			for (BorderRadius borderRadius : values()) {
+				if (Objects.equals(borderRadius.getValue(), value)) {
+					return borderRadius;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private BorderRadius(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	@GraphQLName("ContainerType")
 	public static enum ContainerType {
@@ -284,6 +1011,144 @@ public class Layout {
 		}
 
 		private ContainerType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("ContentDisplay")
+	public static enum ContentDisplay {
+
+		BLOCK("Block"), FLEX("Flex");
+
+		@JsonCreator
+		public static ContentDisplay create(String value) {
+			for (ContentDisplay contentDisplay : values()) {
+				if (Objects.equals(contentDisplay.getValue(), value)) {
+					return contentDisplay;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ContentDisplay(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("Justify")
+	public static enum Justify {
+
+		CENTER("Center"), END("End"), NONE("None"), SPACE_AROUND("SpaceAround"),
+		SPACE_BETWEEN("SpaceBetween"), START("Start");
+
+		@JsonCreator
+		public static Justify create(String value) {
+			for (Justify justify : values()) {
+				if (Objects.equals(justify.getValue(), value)) {
+					return justify;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Justify(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("Shadow")
+	public static enum Shadow {
+
+		DEFAULT("Default"), LARGE("Large"), NONE("None"), REGULAR("Regular"),
+		SMALL("Small");
+
+		@JsonCreator
+		public static Shadow create(String value) {
+			for (Shadow shadow : values()) {
+				if (Objects.equals(shadow.getValue(), value)) {
+					return shadow;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Shadow(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("WidthType")
+	public static enum WidthType {
+
+		FIXED("Fixed"), FLUID("Fluid");
+
+		@JsonCreator
+		public static WidthType create(String value) {
+			for (WidthType widthType : values()) {
+				if (Objects.equals(widthType.getValue(), value)) {
+					return widthType;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private WidthType(String value) {
 			_value = value;
 		}
 

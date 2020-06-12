@@ -32,6 +32,104 @@ public class Layout implements Cloneable {
 		return LayoutSerDes.toDTO(json);
 	}
 
+	public Align getAlign() {
+		return align;
+	}
+
+	public String getAlignAsString() {
+		if (align == null) {
+			return null;
+		}
+
+		return align.toString();
+	}
+
+	public void setAlign(Align align) {
+		this.align = align;
+	}
+
+	public void setAlign(UnsafeSupplier<Align, Exception> alignUnsafeSupplier) {
+		try {
+			align = alignUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Align align;
+
+	public String getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(String borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	public void setBorderColor(
+		UnsafeSupplier<String, Exception> borderColorUnsafeSupplier) {
+
+		try {
+			borderColor = borderColorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String borderColor;
+
+	public BorderRadius getBorderRadius() {
+		return borderRadius;
+	}
+
+	public String getBorderRadiusAsString() {
+		if (borderRadius == null) {
+			return null;
+		}
+
+		return borderRadius.toString();
+	}
+
+	public void setBorderRadius(BorderRadius borderRadius) {
+		this.borderRadius = borderRadius;
+	}
+
+	public void setBorderRadius(
+		UnsafeSupplier<BorderRadius, Exception> borderRadiusUnsafeSupplier) {
+
+		try {
+			borderRadius = borderRadiusUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BorderRadius borderRadius;
+
+	public Integer getBorderWidth() {
+		return borderWidth;
+	}
+
+	public void setBorderWidth(Integer borderWidth) {
+		this.borderWidth = borderWidth;
+	}
+
+	public void setBorderWidth(
+		UnsafeSupplier<Integer, Exception> borderWidthUnsafeSupplier) {
+
+		try {
+			borderWidth = borderWidthUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer borderWidth;
+
 	public ContainerType getContainerType() {
 		return containerType;
 	}
@@ -60,6 +158,170 @@ public class Layout implements Cloneable {
 	}
 
 	protected ContainerType containerType;
+
+	public ContentDisplay getContentDisplay() {
+		return contentDisplay;
+	}
+
+	public String getContentDisplayAsString() {
+		if (contentDisplay == null) {
+			return null;
+		}
+
+		return contentDisplay.toString();
+	}
+
+	public void setContentDisplay(ContentDisplay contentDisplay) {
+		this.contentDisplay = contentDisplay;
+	}
+
+	public void setContentDisplay(
+		UnsafeSupplier<ContentDisplay, Exception>
+			contentDisplayUnsafeSupplier) {
+
+		try {
+			contentDisplay = contentDisplayUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ContentDisplay contentDisplay;
+
+	public Justify getJustify() {
+		return justify;
+	}
+
+	public String getJustifyAsString() {
+		if (justify == null) {
+			return null;
+		}
+
+		return justify.toString();
+	}
+
+	public void setJustify(Justify justify) {
+		this.justify = justify;
+	}
+
+	public void setJustify(
+		UnsafeSupplier<Justify, Exception> justifyUnsafeSupplier) {
+
+		try {
+			justify = justifyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Justify justify;
+
+	public Integer getMarginBottom() {
+		return marginBottom;
+	}
+
+	public void setMarginBottom(Integer marginBottom) {
+		this.marginBottom = marginBottom;
+	}
+
+	public void setMarginBottom(
+		UnsafeSupplier<Integer, Exception> marginBottomUnsafeSupplier) {
+
+		try {
+			marginBottom = marginBottomUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer marginBottom;
+
+	public Integer getMarginLeft() {
+		return marginLeft;
+	}
+
+	public void setMarginLeft(Integer marginLeft) {
+		this.marginLeft = marginLeft;
+	}
+
+	public void setMarginLeft(
+		UnsafeSupplier<Integer, Exception> marginLeftUnsafeSupplier) {
+
+		try {
+			marginLeft = marginLeftUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer marginLeft;
+
+	public Integer getMarginRight() {
+		return marginRight;
+	}
+
+	public void setMarginRight(Integer marginRight) {
+		this.marginRight = marginRight;
+	}
+
+	public void setMarginRight(
+		UnsafeSupplier<Integer, Exception> marginRightUnsafeSupplier) {
+
+		try {
+			marginRight = marginRightUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer marginRight;
+
+	public Integer getMarginTop() {
+		return marginTop;
+	}
+
+	public void setMarginTop(Integer marginTop) {
+		this.marginTop = marginTop;
+	}
+
+	public void setMarginTop(
+		UnsafeSupplier<Integer, Exception> marginTopUnsafeSupplier) {
+
+		try {
+			marginTop = marginTopUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer marginTop;
+
+	public Integer getOpacity() {
+		return opacity;
+	}
+
+	public void setOpacity(Integer opacity) {
+		this.opacity = opacity;
+	}
+
+	public void setOpacity(
+		UnsafeSupplier<Integer, Exception> opacityUnsafeSupplier) {
+
+		try {
+			opacity = opacityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer opacity;
 
 	public Integer getPaddingBottom() {
 		return paddingBottom;
@@ -103,6 +365,48 @@ public class Layout implements Cloneable {
 
 	protected Integer paddingHorizontal;
 
+	public Integer getPaddingLeft() {
+		return paddingLeft;
+	}
+
+	public void setPaddingLeft(Integer paddingLeft) {
+		this.paddingLeft = paddingLeft;
+	}
+
+	public void setPaddingLeft(
+		UnsafeSupplier<Integer, Exception> paddingLeftUnsafeSupplier) {
+
+		try {
+			paddingLeft = paddingLeftUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer paddingLeft;
+
+	public Integer getPaddingRight() {
+		return paddingRight;
+	}
+
+	public void setPaddingRight(Integer paddingRight) {
+		this.paddingRight = paddingRight;
+	}
+
+	public void setPaddingRight(
+		UnsafeSupplier<Integer, Exception> paddingRightUnsafeSupplier) {
+
+		try {
+			paddingRight = paddingRightUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer paddingRight;
+
 	public Integer getPaddingTop() {
 		return paddingTop;
 	}
@@ -123,6 +427,64 @@ public class Layout implements Cloneable {
 	}
 
 	protected Integer paddingTop;
+
+	public Shadow getShadow() {
+		return shadow;
+	}
+
+	public String getShadowAsString() {
+		if (shadow == null) {
+			return null;
+		}
+
+		return shadow.toString();
+	}
+
+	public void setShadow(Shadow shadow) {
+		this.shadow = shadow;
+	}
+
+	public void setShadow(
+		UnsafeSupplier<Shadow, Exception> shadowUnsafeSupplier) {
+
+		try {
+			shadow = shadowUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Shadow shadow;
+
+	public WidthType getWidthType() {
+		return widthType;
+	}
+
+	public String getWidthTypeAsString() {
+		if (widthType == null) {
+			return null;
+		}
+
+		return widthType.toString();
+	}
+
+	public void setWidthType(WidthType widthType) {
+		this.widthType = widthType;
+	}
+
+	public void setWidthType(
+		UnsafeSupplier<WidthType, Exception> widthTypeUnsafeSupplier) {
+
+		try {
+			widthType = widthTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected WidthType widthType;
 
 	@Override
 	public Layout clone() throws CloneNotSupportedException {
@@ -155,6 +517,70 @@ public class Layout implements Cloneable {
 		return LayoutSerDes.toJSON(this);
 	}
 
+	public static enum Align {
+
+		CENTER("Center"), END("End"), NONE("None"), START("Start"),
+		STRETCH("Stretch");
+
+		public static Align create(String value) {
+			for (Align align : values()) {
+				if (Objects.equals(align.getValue(), value)) {
+					return align;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Align(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum BorderRadius {
+
+		CIRCLE("Circle"), LARGE("Large"), NONE("None"), PILL("Pill"),
+		REGULAR("Regular");
+
+		public static BorderRadius create(String value) {
+			for (BorderRadius borderRadius : values()) {
+				if (Objects.equals(borderRadius.getValue(), value)) {
+					return borderRadius;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private BorderRadius(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	public static enum ContainerType {
 
 		FIXED("Fixed"), FLUID("Fluid");
@@ -179,6 +605,132 @@ public class Layout implements Cloneable {
 		}
 
 		private ContainerType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum ContentDisplay {
+
+		BLOCK("Block"), FLEX("Flex");
+
+		public static ContentDisplay create(String value) {
+			for (ContentDisplay contentDisplay : values()) {
+				if (Objects.equals(contentDisplay.getValue(), value)) {
+					return contentDisplay;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ContentDisplay(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum Justify {
+
+		CENTER("Center"), END("End"), NONE("None"), SPACE_AROUND("SpaceAround"),
+		SPACE_BETWEEN("SpaceBetween"), START("Start");
+
+		public static Justify create(String value) {
+			for (Justify justify : values()) {
+				if (Objects.equals(justify.getValue(), value)) {
+					return justify;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Justify(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum Shadow {
+
+		DEFAULT("Default"), LARGE("Large"), NONE("None"), REGULAR("Regular"),
+		SMALL("Small");
+
+		public static Shadow create(String value) {
+			for (Shadow shadow : values()) {
+				if (Objects.equals(shadow.getValue(), value)) {
+					return shadow;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Shadow(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum WidthType {
+
+		FIXED("Fixed"), FLUID("Fluid");
+
+		public static WidthType create(String value) {
+			for (WidthType widthType : values()) {
+				if (Objects.equals(widthType.getValue(), value)) {
+					return widthType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private WidthType(String value) {
 			_value = value;
 		}
 

@@ -68,6 +68,7 @@ import com.liferay.portal.util.WebAppPool;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,13 +101,34 @@ public class AddContentPanelDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public Map<String, Object> getAddContentPanelData() throws Exception {
+	public Map<String, Object> getAddContentPanelData() {
 		return HashMapBuilder.<String, Object>put(
-			"addContentsURLs", _getAddContentsURLs()
+			"addContentsURLs",
+			() -> {
+				if (hasAddContentPermission()) {
+					return _getAddContentsURLs();
+				}
+
+				return Collections.emptyList();
+			}
 		).put(
-			"contents", _getContents()
+			"contents",
+			() -> {
+				if (hasAddContentPermission()) {
+					return _getContents();
+				}
+
+				return Collections.emptyList();
+			}
 		).put(
-			"widgets", _getWidgets()
+			"widgets",
+			() -> {
+				if (hasAddApplicationsPermission()) {
+					return _getWidgets();
+				}
+
+				return Collections.emptyList();
+			}
 		).build();
 	}
 

@@ -29,71 +29,10 @@
 
 			<c:if test="<%= addContentPanelDisplayContext.showAddPanel() %>">
 				<div class="add-content-menu" data-qa-id="addPanelBody" id="<portlet:namespace />addPanelContainer">
-					<div aria-multiselectable="true" class="panel-group" id="<portlet:namespace />Accordion" role="tablist">
-
-						<%
-						String selectedTab = GetterUtil.getString(SessionClicks.get(request, "com.liferay.product.navigation.control.menu.web_addPanelTab", addContentPanelDisplayContext.hasAddContentPermission() ? "content" : "applications"));
-						%>
-
-						<c:if test="<%= addContentPanelDisplayContext.hasAddApplicationsPermission() %>">
-							<div class="add-application-panel panel">
-								<div class="panel-header panel-heading" id="<portlet:namespace />addApplicationHeading" role="tab">
-									<div class="panel-title">
-										<a aria-controls="<portlet:namespace />addApplicationCollapse" aria-expanded="<%= selectedTab.equals("applications") %>" class="<%= selectedTab.equals("applications") ? StringPool.BLANK : "collapsed" %> collapse-icon collapse-icon-middle panel-toggler" data-qa-id="addMenuAddApplicationCategory" data-toggle="liferay-collapse" href="#<portlet:namespace />addApplicationCollapse" role="button">
-											<span class="category-name"><liferay-ui:message key="widgets" /></span>
-
-											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
-
-											<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
-										</a>
-									</div>
-								</div>
-
-								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addApplicationHeading" class="collapse panel-collapse <%= selectedTab.equals("applications") ? "show" : StringPool.BLANK %>" data-parent="#<portlet:namespace />Accordion" data-value="applications" id="<portlet:namespace />addApplicationCollapse" role="tabpanel">
-									<div class="panel-body">
-										<liferay-util:include page="/add_application.jsp" servletContext="<%= application %>" />
-									</div>
-								</div>
-							</div>
-						</c:if>
-
-						<c:if test="<%= addContentPanelDisplayContext.hasAddContentPermission() %>">
-							<div class="add-content-panel panel">
-								<div class="panel-header panel-heading" id="<portlet:namespace />addContentHeading" role="tab">
-									<div class="panel-title">
-										<a aria-controls="<portlet:namespace />addContentCollapse" aria-expanded="<%= selectedTab.equals("content") %>" class="<%= selectedTab.equals("content") ? StringPool.BLANK : "collapsed" %> collapse-icon collapse-icon-middle panel-toggler" data-qa-id="addMenuAddContentCategory" data-toggle="liferay-collapse" href="#<portlet:namespace />addContentCollapse" role="button">
-											<span class="category-name"><liferay-ui:message key="content" /></span>
-
-											<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
-
-											<aui:icon cssClass="collapse-icon-open" image="angle-down" markupView="lexicon" />
-										</a>
-									</div>
-								</div>
-
-								<div aria-expanded="false" aria-labelledby="<portlet:namespace />addContentHeading" class="collapse panel-collapse <%= selectedTab.equals("content") ? "show" : StringPool.BLANK %>" data-parent="#<portlet:namespace />Accordion" data-value="content" id="<portlet:namespace />addContentCollapse" role="tabpanel">
-									<div class="panel-body">
-										<liferay-util:include page="/add_content.jsp" servletContext="<%= application %>" />
-									</div>
-								</div>
-							</div>
-						</c:if>
-
-						<c:if test="<%= addContentPanelDisplayContext.hasAddApplicationsPermission() && addContentPanelDisplayContext.hasAddContentPermission() %>">
-							<aui:script>
-								Liferay.on('liferay.collapse.show', function (event) {
-									var panelId = event.panel.getAttribute('id');
-
-									if (panelId === '#<portlet:namespace />Accordion') {
-										Liferay.Util.Session.set(
-											'com.liferay.product.navigation.control.menu.web_addPanelTab',
-											event.target.getAttribute('data-value')
-										);
-									}
-								});
-							</aui:script>
-						</c:if>
-					</div>
+					<react:component
+						data="<%= addContentPanelDisplayContext.getAddContentPanelData() %>"
+						module="js/AddPanel"
+					/>
 				</div>
 			</c:if>
 		</c:if>

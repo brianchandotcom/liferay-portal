@@ -20,11 +20,6 @@
 AssetCategoriesManagementToolbarDisplayContext assetCategoriesManagementToolbarDisplayContext = new AssetCategoriesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetCategoriesDisplayContext);
 %>
 
-<clay:navigation-bar
-	inverted="<%= true %>"
-	navigationItems="<%= assetCategoriesDisplayContext.getAssetCategoriesNavigationItems() %>"
-/>
-
 <clay:management-toolbar
 	displayContext="<%= assetCategoriesManagementToolbarDisplayContext %>"
 />

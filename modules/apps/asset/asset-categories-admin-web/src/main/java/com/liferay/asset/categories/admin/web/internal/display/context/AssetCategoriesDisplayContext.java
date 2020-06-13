@@ -97,20 +97,6 @@ public class AssetCategoriesDisplayContext {
 						ASSET_CATEGORIES_ADMIN_CONFIGURATION);
 	}
 
-	public List<NavigationItem> getAssetCategoriesNavigationItems() {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setHref(
-					_renderResponse.createRenderURL(), "mvcPath",
-					"/view_categories.jsp", "vocabularyId",
-					String.valueOf(getVocabularyId()));
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "categories"));
-			}
-		).build();
-	}
-
 	public String getAssetType(AssetVocabulary vocabulary)
 		throws PortalException {
 
@@ -180,17 +166,6 @@ public class AssetCategoriesDisplayContext {
 		sb.setIndex(sb.index() - 1);
 
 		return sb.toString();
-	}
-
-	public List<NavigationItem> getAssetVocabulariesNavigationItems() {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(true);
-				navigationItem.setHref(_renderResponse.createRenderURL());
-				navigationItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "vocabularies"));
-			}
-		).build();
 	}
 
 	public SearchContainer<AssetCategory> getCategoriesSearchContainer()

@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import {ClayResultsBar} from '@clayui/management-toolbar';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
@@ -125,6 +125,8 @@ export default withRouter(
 			);
 		};
 
+		const sectionChange = useCallback((section) => setSection(section), []);
+
 		return (
 			<section className="questions-section questions-section-list">
 				<div className="questions-container">
@@ -133,7 +135,7 @@ export default withRouter(
 							<QuestionsNavigationBar
 								filterChange={setFilter}
 								searchChange={loadSearch}
-								sectionChange={(section) => setSection(section)}
+								sectionChange={sectionChange}
 							/>
 						</div>
 

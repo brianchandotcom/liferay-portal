@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-
-AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
+AssetVocabulary vocabulary = assetCategoriesDisplayContext.getVocabulary();
 %>
 
 <liferay-ui:icon-menu

@@ -247,7 +247,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 		return portletURL.toString();
 	}
 
-	private String _getViewCategoriesURL() {
+	private String _getViewCategoriesURL() throws PortalException {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_categories.jsp");

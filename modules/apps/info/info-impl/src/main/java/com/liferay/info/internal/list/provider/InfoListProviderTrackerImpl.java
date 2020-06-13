@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 
 	@Override
-	public InfoListProvider getInfoListProvider(String key) {
+	public InfoListProvider<?> getInfoListProvider(String key) {
 		return _infoItemServiceTracker.getInfoItemProviderByKey(
 			InfoListProvider.class, key);
 	}

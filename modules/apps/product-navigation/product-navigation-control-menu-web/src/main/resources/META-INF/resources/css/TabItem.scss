@@ -13,7 +13,6 @@
 	.grid & {
 		border: 1px solid $gray-300;
 		flex-wrap: wrap;
-		height: 136px;
 		margin-bottom: 8px;
 		padding: 0;
 		width: calc(50% - 4px);
@@ -44,6 +43,10 @@
 				margin-left: 8px;
 			}
 		}
+
+		&.multiline {
+			height: 136px;
+		}
 	}
 
 	&.multiline {
@@ -67,7 +70,7 @@
 	&:hover {
 		background-color: $gray-100;
 
-		.sidebar__panel__tab-item-add {
+		.sidebar__add-panel__tab-item-add {
 			opacity: 1;
 		}
 	}

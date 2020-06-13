@@ -18,7 +18,11 @@ import 'product-navigation-control-menu/css/AddPanel.scss';
 
 import TabsPanel from './TabsPanel';
 
-const AddPanel = ({widgets}) => {
+export const LAYOUT_DATA_ITEM_TYPES = {
+	fragment: 'fragment',
+};
+
+const AddPanel = ({contents, portletNamespace, widgets}) => {
 	const tabs = useMemo(
 		() => [
 			{
@@ -30,15 +34,21 @@ const AddPanel = ({widgets}) => {
 				label: Liferay.Language.get('widgets'),
 			},
 			{
+				collections: [
+					{
+						children: contents.map(normalizeContent),
+						label: Liferay.Language.get('recent'),
+					},
+				],
 				label: Liferay.Language.get('content'),
 			},
 		],
-		[widgets]
+		[contents, widgets]
 	);
 
 	return (
 		<div className="sidebar-content__panel">
-			<TabsPanel tabs={tabs} />
+			<TabsPanel portletNamespace={portletNamespace} tabs={tabs} />
 		</div>
 	);
 };
@@ -54,8 +64,23 @@ const normalizeWidget = (widget) => {
 		icon: widget.instanceable ? 'cards2' : 'square-hole',
 		itemId: widget.portletId,
 		label: widget.title,
-		preview: '',
-		type: 'fragment',
+		type: LAYOUT_DATA_ITEM_TYPES.fragment,
+	};
+};
+
+const normalizeContent = (content) => {
+	return {
+		data: {
+			className: content.className,
+			classPK: content.classPK,
+			draggable: content.draggable,
+			instanceable: content.instanceable,
+			portletId: content.portletId,
+		},
+		icon: content.icon,
+		itemId: content.portletId,
+		label: content.title,
+		type: content.type,
 	};
 };
 

@@ -24,23 +24,24 @@ import SearchForm from './SearchForm';
 import TabItem from './TabItem';
 
 let nextId = 0;
+const CONTENT_TAB_NAME = Liferay.Language.get('content');
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
-const useId = () => {
-	return useMemo(() => `useId_${nextId++}`, []);
+const useId = ({portletNamespace}) => {
+	return useMemo(() => `${portletNamespace}_useId_${nextId++}`, [
+		portletNamespace,
+	]);
 };
 
 const filterTotalItems = (items, totalItems, label) => {
-	return label === Liferay.Language.get('content')
-		? items.slice(0, totalItems)
-		: items;
+	return label === CONTENT_TAB_NAME ? items.slice(0, totalItems) : items;
 };
 
-const AddPanel = ({tabs}) => {
+const AddPanel = ({portletNamespace, tabs}) => {
 	const [activeTabId, setActiveTabId] = useState(0);
 	const [grid, setGrid] = useState(false);
 	const [totalItems, setTotalItems] = useState(4);
-	const tabIdNamespace = useId();
+	const tabIdNamespace = useId({portletNamespace});
 
 	const getTabId = (tabId) => `${tabIdNamespace}tab${tabId}`;
 	const getTabPanelId = (tabId) => `${tabIdNamespace}tabPanel${tabId}`;
@@ -74,11 +75,12 @@ const AddPanel = ({tabs}) => {
 						key={index}
 					>
 						<SearchForm />
-						{index > 0 && (
+						{tab.label === CONTENT_TAB_NAME && (
 							<ContentOptions
 								grid={grid}
 								onChangeListMode={setGrid}
 								onChangeSelect={setTotalItems}
+								portletNamespace={portletNamespace}
 							/>
 						)}
 						<ul className="list-unstyled">
@@ -95,10 +97,7 @@ const AddPanel = ({tabs}) => {
 										className={classNames('list-unstyled', {
 											grid:
 												grid &&
-												tab.label ===
-													Liferay.Language.get(
-														'content'
-													),
+												tab.label === CONTENT_TAB_NAME,
 										})}
 									>
 										{filterTotalItems(
@@ -107,15 +106,8 @@ const AddPanel = ({tabs}) => {
 											tab.label
 										).map((item) => (
 											<TabItem
-												grid={grid}
 												item={item}
 												key={item.itemId}
-												multiline={
-													tab.label ===
-													Liferay.Language.get(
-														'content'
-													)
-												}
 											/>
 										))}
 									</ul>

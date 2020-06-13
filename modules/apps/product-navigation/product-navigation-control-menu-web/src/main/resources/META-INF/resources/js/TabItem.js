@@ -18,14 +18,18 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {LAYOUT_DATA_ITEM_TYPES} from './AddPanel';
+
 import 'product-navigation-control-menu/css/TabItem.scss';
 
-export default function TabItem({grid, item, multiline}) {
+export default function TabItem({item}) {
+	const isContent = item.type !== LAYOUT_DATA_ITEM_TYPES.fragment;
+
 	return (
 		<li
 			className={classNames('sidebar__panel__tab-item', {
 				disabled: item.disabled,
-				multiline: !grid && multiline,
+				multiline: isContent,
 			})}
 		>
 			<div className="sidebar__panel__tab-item-body">
@@ -33,22 +37,20 @@ export default function TabItem({grid, item, multiline}) {
 					<ClayIcon symbol={item.icon} />
 				</div>
 				<div className="text-truncate title">{item.label}</div>
-				{multiline && (
+				{isContent && (
 					<div className="subtitle text-truncate">{item.type}</div>
 				)}
 			</div>
 
-			{!grid && (
-				<ClayButton
-					className="btn-monospaced sidebar__panel__tab-item-add"
-					displayType="unstyled"
-					small
-					title={item.name}
-				>
-					<ClayIcon symbol="plus" />
-					<span className="sr-only">{item.name}</span>
-				</ClayButton>
-			)}
+			<ClayButton
+				className="btn-monospaced sidebar__panel__tab-item-add"
+				displayType="unstyled"
+				small
+				title={item.name}
+			>
+				<ClayIcon symbol="plus" />
+				<span className="sr-only">{item.name}</span>
+			</ClayButton>
 		</li>
 	);
 }
@@ -58,7 +60,6 @@ TabItem.propTypes = {
 		data: PropTypes.object.isRequired,
 		icon: PropTypes.string.isRequired,
 		label: PropTypes.string.isRequired,
-		preview: PropTypes.string,
 		type: PropTypes.string.isRequired,
 	}).isRequired,
 };

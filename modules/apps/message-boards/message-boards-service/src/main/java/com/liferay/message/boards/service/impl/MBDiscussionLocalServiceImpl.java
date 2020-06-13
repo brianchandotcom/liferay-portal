@@ -18,6 +18,9 @@ import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.base.MBDiscussionLocalServiceBaseImpl;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -103,10 +106,22 @@ public class MBDiscussionLocalServiceImpl
 			classNameLocalService.getClassNameId(className), classPK);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<MBDiscussion> getDiscussions(String className) {
-		return mbDiscussionPersistence.findByClassNameId(
-			classNameLocalService.getClassNameId(className));
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		Property classNameIdProperty = PropertyFactoryUtil.forName(
+			"classNameId");
+
+		dynamicQuery.add(
+			classNameIdProperty.eq(
+				classNameLocalService.getClassNameId(className)));
+
+		return dynamicQuery(dynamicQuery);
 	}
 
 	@Override

@@ -24,13 +24,15 @@ import {
 
 export default ({
 	onSubscription,
-	section: {id: messageBoardSectionId, subscribed},
+	section: {id: messageBoardSectionId, parentSection, subscribed},
 }) => {
 	const [subscription, setSubscription] = useState(false);
 
 	useEffect(() => {
-		setSubscription(subscribed);
-	}, [subscribed]);
+		setSubscription(
+			subscribed || (parentSection && parentSection.subscribed)
+		);
+	}, [messageBoardSectionId, parentSection, subscribed]);
 
 	const onCompleted = () => {
 		setSubscription(!subscription);
@@ -39,12 +41,19 @@ export default ({
 		}
 	};
 
+	const update = (proxy) => {
+		proxy.evict(`MessageBoardSection:${messageBoardSectionId}`);
+		proxy.gc();
+	};
+
 	const [subscribeSection] = useMutation(subscribeSectionQuery, {
 		onCompleted,
+		update,
 	});
 
 	const [unsubscribeSection] = useMutation(unsubscribeSectionQuery, {
 		onCompleted,
+		update,
 	});
 
 	const changeSubscription = () => {

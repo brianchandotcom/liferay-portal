@@ -33,6 +33,11 @@ const getToolbarSet = (toolbarSet) => {
 export function getCKEditorConfig() {
 	const config = {
 		allowedContent: true,
+		codeSnippet_languages: {
+			html: 'HTML',
+			java: 'Java',
+			javascript: 'JavaScript',
+		},
 		codeSnippet_theme: 'monokai_sublime',
 		extraPlugins: 'codesnippet,itemselector',
 		height: 216,

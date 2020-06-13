@@ -62,6 +62,6 @@ public class InfoItemSelectorTrackerImpl implements InfoItemSelectorTracker {
 	}
 
 	@Reference
-	InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

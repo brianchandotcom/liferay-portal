@@ -52,6 +52,6 @@ public class InfoListRendererTrackerImpl implements InfoListRendererTracker {
 	}
 
 	@Reference
-	InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

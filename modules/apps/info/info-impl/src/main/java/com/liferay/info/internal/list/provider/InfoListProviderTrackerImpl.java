@@ -57,6 +57,6 @@ public class InfoListProviderTrackerImpl implements InfoListProviderTracker {
 	}
 
 	@Reference
-	InfoItemServiceTracker _infoItemServiceTracker;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

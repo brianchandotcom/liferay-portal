@@ -37,6 +37,7 @@ export function getCKEditorConfig() {
 		extraPlugins: 'codesnippet,itemselector',
 		height: 216,
 		removePlugins: 'elementspath',
+		tabSpaces: 4,
 	};
 
 	config.toolbar = [
@@ -96,6 +97,14 @@ const QuestionsEditor = ({
 				onBeforeLoad={(CKEDITOR) => {
 					if (CKEDITOR) {
 						CKEDITOR.disableAutoInline = true;
+
+						if (!CKEDITOR.plugins.externals) {
+							CKEDITOR.plugins.addExternal(
+								'tab',
+								'/plugins/tab/plugin.js'
+							);
+						}
+
 						CKEDITOR.getNextZIndex = () => 1000;
 						CKEDITOR.dtd.$removeEmpty.i = 0;
 						CKEDITOR.dtd.$removeEmpty.span = 0;

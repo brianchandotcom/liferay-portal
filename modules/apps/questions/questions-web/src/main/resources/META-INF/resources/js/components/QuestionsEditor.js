@@ -92,6 +92,31 @@ const QuestionsEditor = ({
 		window
 	);
 
+	const insertTextAtCursor = (el, text) => {
+		const val = el.value;
+		let endIndex;
+		let range;
+		if (
+			typeof el.selectionStart != 'undefined' &&
+			typeof el.selectionEnd != 'undefined'
+		) {
+			endIndex = el.selectionEnd;
+			el.value =
+				val.slice(0, el.selectionStart) + text + val.slice(endIndex);
+			el.selectionStart = el.selectionEnd = endIndex + text.length;
+		}
+		else if (
+			typeof document.selection != 'undefined' &&
+			typeof document.selection.createRange != 'undefined'
+		) {
+			el.focus();
+			range = document.selection.createRange();
+			range.collapse(false);
+			range.text = text;
+			range.select();
+		}
+	};
+
 	return (
 		<div className={cssClass} id={`${name}Container`}>
 			<Editor
@@ -123,6 +148,32 @@ const QuestionsEditor = ({
 									name
 								);
 							}
+
+							editor.on('dialogShow', ({data}) => {
+								if (data._.name === 'codeSnippet') {
+									const {code, lang} = data._.contents.info;
+
+									document.getElementById(
+										lang._.inputId
+									).value = 'java';
+
+									const textarea = document.getElementById(
+										code._.inputId
+									);
+									textarea.onkeydown = (ev) => {
+										if (ev.keyCode === 9) {
+											insertTextAtCursor(
+												textarea,
+												'    '
+											);
+											ev.preventDefault();
+											ev.stopPropagation();
+
+											return false;
+										}
+									};
+								}
+							});
 						});
 					}
 				}}

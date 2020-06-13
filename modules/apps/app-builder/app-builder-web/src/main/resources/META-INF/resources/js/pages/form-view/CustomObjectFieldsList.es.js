@@ -115,7 +115,7 @@ const getFieldTypes = ({
 			return `${FieldTypeLabel} ${description}`;
 		};
 
-		const dataDefintionField = {
+		const dataDefinitionField = {
 			active: name === focusedCustomObjectField.name,
 			className: nested
 				? 'custom-object-field-children'
@@ -145,14 +145,14 @@ const getFieldTypes = ({
 		};
 
 		if (nested) {
-			return dataDefintionField;
+			return dataDefinitionField;
 		}
 
-		if (dataDefintionField.isCustomField) {
-			customDataDefinitionFields.push(dataDefintionField);
+		if (dataDefinitionField.isCustomField) {
+			customDataDefinitionFields.push(dataDefinitionField);
 		}
 		else {
-			nativeDataDefinitionFields.push(dataDefintionField);
+			nativeDataDefinitionFields.push(dataDefinitionField);
 		}
 	};
 

@@ -17,13 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-if (Validator.isNull(redirect)) {
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	redirect = portletURL.toString();
-}
+String redirect = ParamUtil.getString(request, "redirect", assetCategoriesDisplayContext.getDefaultRedirect());
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 

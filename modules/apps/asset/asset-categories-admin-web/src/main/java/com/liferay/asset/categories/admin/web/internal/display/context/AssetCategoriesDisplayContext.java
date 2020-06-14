@@ -353,6 +353,14 @@ public class AssetCategoriesDisplayContext {
 		return null;
 	}
 
+	public String getDefaultRedirect() {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+
+		return portletURL.toString();
+	}
+
 	public String getDisplayStyle() {
 		if (isFlattenedNavigationAllowed()) {
 			_displayStyle = "list";

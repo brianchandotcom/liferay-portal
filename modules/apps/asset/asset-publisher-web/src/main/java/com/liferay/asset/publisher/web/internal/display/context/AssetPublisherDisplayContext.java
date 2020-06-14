@@ -307,43 +307,70 @@ public class AssetPublisherDisplayContext {
 				getAllAssetCategoryIds(), getAllAssetTagNames(), false,
 				isEnablePermissions());
 		}
-		else if (isSelectionStyleAssetList() && (assetListEntry != null)) {
-			return _assetListAssetEntryProvider.getAssetEntries(
-				assetListEntry, _getSegmentsEntryIds(),
-				_getSegmentsAnonymousUserId());
-		}
-		else if (isSelectionStyleAssetListProvider()) {
-			String infoListProviderClassName = GetterUtil.getString(
-				_portletPreferences.getValue(
-					"infoListProviderClassName", null));
+		else if ((isSelectionStyleAssetList() && (assetListEntry != null)) ||
+				 isSelectionStyleAssetListProvider()) {
 
-			if (Validator.isNull(infoListProviderClassName)) {
-				return Collections.emptyList();
+			List<AssetEntry> assetEntries = Collections.emptyList();
+
+			if (isSelectionStyleAssetList() && (assetListEntry != null)) {
+				assetEntries = _assetListAssetEntryProvider.getAssetEntries(
+					assetListEntry, _getSegmentsEntryIds(),
+					_getSegmentsAnonymousUserId());
+			}
+			else if (isSelectionStyleAssetListProvider()) {
+				String infoListProviderClassName = GetterUtil.getString(
+					_portletPreferences.getValue(
+						"infoListProviderClassName", null));
+
+				if (Validator.isNull(infoListProviderClassName)) {
+					return Collections.emptyList();
+				}
+
+				InfoListProvider<AssetEntry> infoListProvider =
+					(InfoListProvider<AssetEntry>)
+						_infoListProviderTracker.getInfoListProvider(
+							infoListProviderClassName);
+
+				if (infoListProvider == null) {
+					return Collections.emptyList();
+				}
+
+				DefaultInfoListProviderContext defaultInfoListProviderContext =
+					new DefaultInfoListProviderContext(
+						_themeDisplay.getScopeGroup(), _themeDisplay.getUser());
+
+				InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
+					(InfoDisplayObjectProvider<?>)_portletRequest.getAttribute(
+						AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+
+				defaultInfoListProviderContext.setInfoDisplayObjectProvider(
+					infoDisplayObjectProvider);
+
+				defaultInfoListProviderContext.setLayout(
+					_themeDisplay.getLayout());
+
+				assetEntries = infoListProvider.getInfoList(
+					defaultInfoListProviderContext);
 			}
 
-			InfoListProvider<AssetEntry> infoListProvider =
-				(InfoListProvider<AssetEntry>)
-					_infoListProviderTracker.getInfoListProvider(
-						infoListProviderClassName);
+			if (assetEntries.isEmpty() ||
+				(ArrayUtil.isEmpty(getAllAssetCategoryIds()) &&
+				 ArrayUtil.isEmpty(getAllAssetTagNames()))) {
 
-			if (infoListProvider == null) {
-				return Collections.emptyList();
+				return assetEntries;
 			}
 
-			DefaultInfoListProviderContext defaultInfoListProviderContext =
-				new DefaultInfoListProviderContext(
-					_themeDisplay.getScopeGroup(), _themeDisplay.getUser());
+			if (!ArrayUtil.isEmpty(getAllAssetCategoryIds())) {
+				assetEntries = _filterAssetCategoriesAssetEntries(
+					assetEntries, getAllAssetCategoryIds());
+			}
 
-			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
-				(InfoDisplayObjectProvider<?>)_portletRequest.getAttribute(
-					AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER);
+			if (!ArrayUtil.isEmpty(getAllAssetTagNames())) {
+				assetEntries = _filterAssetTagNamesAssetEntries(
+					assetEntries, getAllAssetTagNames());
+			}
 
-			defaultInfoListProviderContext.setInfoDisplayObjectProvider(
-				infoDisplayObjectProvider);
-
-			defaultInfoListProviderContext.setLayout(_themeDisplay.getLayout());
-
-			return infoListProvider.getInfoList(defaultInfoListProviderContext);
+			return assetEntries;
 		}
 
 		return Collections.emptyList();
@@ -1991,6 +2018,46 @@ public class AssetPublisherDisplayContext {
 		}
 
 		return filteredCategories;
+	}
+
+	private List<AssetEntry> _filterAssetCategoriesAssetEntries(
+		List<AssetEntry> assetEntries, long[] assetCategoryIds) {
+
+		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
+
+		for (AssetEntry assetEntry : assetEntries) {
+			if (ArrayUtil.containsAll(
+					assetEntry.getCategoryIds(), assetCategoryIds)) {
+
+				filteredAssetEntries.add(assetEntry);
+			}
+		}
+
+		return filteredAssetEntries;
+	}
+
+	private List<AssetEntry> _filterAssetTagNamesAssetEntries(
+		List<AssetEntry> assetEntries, String[] assetTagNames) {
+
+		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
+
+		for (AssetEntry assetEntry : assetEntries) {
+			List<AssetTag> assetTags = assetEntry.getTags();
+
+			String[] assetEntryAssetTagNames = new String[assetTags.size()];
+
+			for (int i = 0; i < assetTags.size(); i++) {
+				AssetTag assetTag = assetTags.get(i);
+
+				assetEntryAssetTagNames[i] = assetTag.getName();
+			}
+
+			if (ArrayUtil.containsAll(assetEntryAssetTagNames, assetTagNames)) {
+				filteredAssetEntries.add(assetEntry);
+			}
+		}
+
+		return filteredAssetEntries;
 	}
 
 	private String _getSegmentsAnonymousUserId() {

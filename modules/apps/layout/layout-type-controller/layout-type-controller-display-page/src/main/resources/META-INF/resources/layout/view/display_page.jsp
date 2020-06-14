@@ -74,16 +74,10 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 				</div>
 			</c:when>
 			<c:when test="<%= infoDisplayObjectProvider != null %>">
-
-				<%
-				LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryLocalServiceUtil.getLayoutPageTemplateEntry(displayPageLayoutTypeControllerDisplayContext.getLayoutPageTemplateEntryId());
-				%>
-
 				<div class="layout-content portlet-layout" id="main-content" role="main">
 					<liferay-layout:render-fragment-layout
 						fieldValues="<%= displayPageLayoutTypeControllerDisplayContext.getInfoDisplayFieldsValues() %>"
 						mode="<%= FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE %>"
-						plid="<%= layoutPageTemplateEntry.getPlid() %>"
 					/>
 				<div
 			</c:when>

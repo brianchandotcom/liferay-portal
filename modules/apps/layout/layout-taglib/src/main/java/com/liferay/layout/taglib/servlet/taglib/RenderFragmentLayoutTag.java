@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.taglib.util.IncludeTag;
@@ -127,10 +129,10 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			"liferay-layout:render-fragment-layout:fieldValues", _fieldValues);
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:layoutStructure",
-			_getLayoutStructure());
+			_getLayoutStructure(httpServletRequest));
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mainItemId",
-			_getMainItemId());
+			_getMainItemId(httpServletRequest));
 		httpServletRequest.setAttribute(
 			"liferay-layout:render-fragment-layout:mode", _mode);
 		httpServletRequest.setAttribute(
@@ -157,13 +159,20 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			_getSegmentsExperienceIds());
 	}
 
-	private LayoutStructure _getLayoutStructure() {
+	private LayoutStructure _getLayoutStructure(
+		HttpServletRequest httpServletRequest) {
+
 		if (_layoutStructure != null) {
 			return _layoutStructure;
 		}
 
 		try {
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(getPlid());
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			Layout layout = LayoutLocalServiceUtil.fetchLayout(
+				themeDisplay.getPlid());
 
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
 				LayoutPageTemplateStructureLocalServiceUtil.
@@ -192,12 +201,13 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		}
 	}
 
-	private String _getMainItemId() {
+	private String _getMainItemId(HttpServletRequest httpServletRequest) {
 		if (Validator.isNotNull(_mainItemId)) {
 			return _mainItemId;
 		}
 
-		LayoutStructure layoutStructure = _getLayoutStructure();
+		LayoutStructure layoutStructure = _getLayoutStructure(
+			httpServletRequest);
 
 		return layoutStructure.getMainItemId();
 	}

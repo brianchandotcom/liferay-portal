@@ -1762,8 +1762,10 @@ public class GraphQLServletExtender {
 			GraphqlErrorBuilder graphqlErrorBuilder =
 				GraphqlErrorBuilder.newError();
 
+			String message = graphQLError.getMessage();
+
 			return graphqlErrorBuilder.message(
-				graphQLError.getMessage()
+				message.replace("%", "")
 			).extensions(
 				HashMapBuilder.put(
 					"code", (Object)status.getReasonPhrase()

@@ -23,11 +23,6 @@ const HEADERS = {
 
 export const client = new ApolloClient({
 	cache: new InMemoryCache(),
-	defaultOptions: {
-		query: {
-			errorPolicy: 'all',
-		},
-	},
 	link: new HttpLink({
 		credentials: 'include',
 		fetch,

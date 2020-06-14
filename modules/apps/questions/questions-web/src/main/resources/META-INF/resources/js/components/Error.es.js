@@ -13,16 +13,33 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
-export default ({error: {message, title}}) => (
-	<>
-		{title && (
-			<ClayAlert.ToastContainer>
-				<ClayAlert displayType="danger" title={title}>
-					{message}
-				</ClayAlert>
-			</ClayAlert.ToastContainer>
-		)}
-	</>
-);
+export default ({error}) => {
+	const [alert, setAlert] = useState(null);
+
+	useEffect(() => {
+		if (error && (error.title || error.message)) {
+			setAlert(error);
+		}
+	}, [error]);
+
+	return (
+		<>
+			{alert && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={5000}
+						displayType="danger"
+						onClose={() => {
+							setAlert(null);
+						}}
+						title={alert.title || alert.message}
+					>
+						{alert.title && alert.message}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
+		</>
+	);
+};

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.taglib.servlet.taglib;
 
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
@@ -108,7 +109,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		_groupId = 0;
 		_layoutStructure = null;
 		_mainItemId = null;
-		_mode = null;
+		_mode = FragmentEntryLinkConstants.VIEW;
 		_plid = 0;
 		_showPreview = false;
 	}
@@ -293,7 +294,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 	private long _groupId;
 	private LayoutStructure _layoutStructure;
 	private String _mainItemId;
-	private String _mode;
+	private String _mode = FragmentEntryLinkConstants.VIEW;
 	private long _plid;
 	private boolean _showPreview;
 

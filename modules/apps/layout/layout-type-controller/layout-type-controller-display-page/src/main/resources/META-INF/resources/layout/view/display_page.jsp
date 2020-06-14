@@ -82,7 +82,6 @@ String ppid = ParamUtil.getString(request, "p_p_id");
 				<div class="layout-content portlet-layout" id="main-content" role="main">
 					<liferay-layout:render-fragment-layout
 						fieldValues="<%= displayPageLayoutTypeControllerDisplayContext.getInfoDisplayFieldsValues() %>"
-						groupId="<%= infoDisplayObjectProvider.getGroupId() %>"
 						mode="<%= FragmentEntryLinkConstants.ASSET_DISPLAY_PAGE %>"
 						plid="<%= layoutPageTemplateEntry.getPlid() %>"
 					/>

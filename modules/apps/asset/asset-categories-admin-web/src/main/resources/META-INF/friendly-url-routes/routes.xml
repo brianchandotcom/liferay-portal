@@ -14,7 +14,7 @@
 	</route>
 	<route>
 		<pattern>/vocabulary/{vocabularyId:\d+}/category/{categoryId:\d+}</pattern>
-		<implicit-parameter name="mvcPath">/view_categories.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
@@ -29,7 +29,7 @@
 	</route>
 	<route>
 		<pattern>/vocabulary/{vocabularyId:\d+}</pattern>
-		<implicit-parameter name="mvcPath">/view_categories.jsp</implicit-parameter>
+		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>

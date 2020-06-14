@@ -20,8 +20,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.fragment.constants.FragmentEntryLinkConstants" %><%@
-page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTemplateConstants" %><%@
 page import="com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.template.StringTemplateResource" %><%@

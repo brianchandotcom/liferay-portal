@@ -70,7 +70,7 @@ AssetVocabulary vocabulary = assetCategoriesDisplayContext.getVocabulary();
 
 	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(vocabulary, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteVocabulary" var="deleteVocabularyURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= assetCategoriesDisplayContext.getDefaultRedirect() %>" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
 		</portlet:actionURL>
 

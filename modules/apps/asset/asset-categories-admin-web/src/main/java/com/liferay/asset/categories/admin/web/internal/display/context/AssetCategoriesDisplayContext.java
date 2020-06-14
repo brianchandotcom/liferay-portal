@@ -374,7 +374,7 @@ public class AssetCategoriesDisplayContext {
 		long parentCategoryId = BeanParamUtil.getLong(
 			getCategory(), _httpServletRequest, "parentCategoryId");
 
-		backURL.setParameter("mvcPath", "/view_categories.jsp");
+		backURL.setParameter("mvcPath", "/view.jsp");
 
 		if (parentCategoryId > 0) {
 			backURL.setParameter(
@@ -714,7 +714,7 @@ public class AssetCategoriesDisplayContext {
 
 		PortletURL iteratorURL = _renderResponse.createRenderURL();
 
-		iteratorURL.setParameter("mvcPath", "/view_categories.jsp");
+		iteratorURL.setParameter("mvcPath", "/view.jsp");
 		iteratorURL.setParameter("redirect", currentURL.toString());
 		iteratorURL.setParameter("navigation", getNavigation());
 

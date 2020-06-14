@@ -76,7 +76,7 @@ public class AssetCategoryUtil {
 
 		BreadcrumbEntry vocabularyBreadcrumbEntry = new BreadcrumbEntry();
 
-		portletURL.setParameter("mvcPath", "/view_categories.jsp");
+		portletURL.setParameter("mvcPath", "/view.jsp");
 
 		String navigation = ParamUtil.getString(
 			httpServletRequest, "navigation");

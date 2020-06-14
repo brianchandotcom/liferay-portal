@@ -104,19 +104,4 @@ public class AssetCategoryUtil {
 		return breadcrumbEntries;
 	}
 
-	public static List<BreadcrumbEntry> getAssetVocabulariesBreadcrumbEntries(
-		HttpServletRequest httpServletRequest) {
-
-		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
-		BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-		breadcrumbEntry.setTitle(
-			LanguageUtil.get(httpServletRequest, "vocabularies"));
-
-		breadcrumbEntries.add(breadcrumbEntry);
-
-		return breadcrumbEntries;
-	}
-
 }

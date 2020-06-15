@@ -18,6 +18,7 @@ import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.DuplicateFragmentEntryKeyException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
+import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -127,35 +128,39 @@ public class FragmentEntryLocalServiceImpl
 			validateContent(html, configuration);
 		}
 
-		long fragmentEntryId = counterLocalService.increment();
+		FragmentEntry draftFragmentEntry = create();
 
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.create(
-			fragmentEntryId);
-
-		fragmentEntry.setUuid(serviceContext.getUuid());
-		fragmentEntry.setGroupId(groupId);
-		fragmentEntry.setCompanyId(companyId);
-		fragmentEntry.setUserId(user.getUserId());
-		fragmentEntry.setUserName(user.getFullName());
-		fragmentEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
-		fragmentEntry.setModifiedDate(
+		draftFragmentEntry.setUuid(serviceContext.getUuid());
+		draftFragmentEntry.setGroupId(groupId);
+		draftFragmentEntry.setCompanyId(companyId);
+		draftFragmentEntry.setUserId(user.getUserId());
+		draftFragmentEntry.setUserName(user.getFullName());
+		draftFragmentEntry.setCreateDate(
+			serviceContext.getCreateDate(new Date()));
+		draftFragmentEntry.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
-		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
-		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
-		fragmentEntry.setName(name);
-		fragmentEntry.setCss(css);
-		fragmentEntry.setHtml(html);
-		fragmentEntry.setJs(js);
-		fragmentEntry.setCacheable(cacheable);
-		fragmentEntry.setConfiguration(configuration);
-		fragmentEntry.setPreviewFileEntryId(previewFileEntryId);
-		fragmentEntry.setType(type);
-		fragmentEntry.setStatus(status);
-		fragmentEntry.setStatusByUserId(userId);
-		fragmentEntry.setStatusByUserName(user.getFullName());
-		fragmentEntry.setStatusDate(new Date());
+		draftFragmentEntry.setFragmentCollectionId(fragmentCollectionId);
+		draftFragmentEntry.setFragmentEntryKey(fragmentEntryKey);
+		draftFragmentEntry.setName(name);
+		draftFragmentEntry.setCss(css);
+		draftFragmentEntry.setHtml(html);
+		draftFragmentEntry.setJs(js);
+		draftFragmentEntry.setCacheable(cacheable);
+		draftFragmentEntry.setConfiguration(configuration);
+		draftFragmentEntry.setPreviewFileEntryId(previewFileEntryId);
+		draftFragmentEntry.setType(type);
+		draftFragmentEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		draftFragmentEntry.setStatusByUserId(userId);
+		draftFragmentEntry.setStatusByUserName(user.getFullName());
+		draftFragmentEntry.setStatusDate(new Date());
 
-		return fragmentEntryPersistence.update(fragmentEntry);
+		FragmentEntry savedDraftFragmentEntry = updateDraft(draftFragmentEntry);
+
+		if (WorkflowConstants.STATUS_APPROVED == status) {
+			return publishDraft(savedDraftFragmentEntry);
+		}
+
+		return savedDraftFragmentEntry;
 	}
 
 	@Override
@@ -206,6 +211,16 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntry createFragmentEntry(long fragmentEntryId) {
+		FragmentEntry draftFragmentEntry = fragmentEntryPersistence.create(
+			fragmentEntryId);
+
+		draftFragmentEntry.setHeadId(fragmentEntryId);
+
+		return draftFragmentEntry;
+	}
+
+	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
 		throws PortalException {
@@ -234,9 +249,11 @@ public class FragmentEntryLocalServiceImpl
 				fragmentEntry.getPreviewFileEntryId());
 		}
 
-		fragmentEntryPersistence.remove(fragmentEntry);
+		if (fragmentEntry.isDraft()) {
+			return deleteDraft(fragmentEntry);
+		}
 
-		return fragmentEntry;
+		return delete(fragmentEntry);
 	}
 
 	@Override
@@ -248,6 +265,33 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntry fetchByG_FEK(long groupId, String fragmentEntryKey) {
+		List<FragmentEntry> list = fragmentEntryPersistence.findByG_FEK(
+			groupId, fragmentEntryKey);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
+	public FragmentEntry fetchByG_FEK(
+		long groupId, String fragmentEntryKey,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		List<FragmentEntry> list = fragmentEntryPersistence.findByG_FEK(
+			groupId, fragmentEntryKey, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
 	public FragmentEntry fetchFragmentEntry(long fragmentEntryId) {
 		return fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 	}
@@ -256,8 +300,22 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry fetchFragmentEntry(
 		long groupId, String fragmentEntryKey) {
 
-		return fragmentEntryPersistence.fetchByG_FEK(
-			groupId, _getFragmentEntryKey(fragmentEntryKey));
+		return fetchByG_FEK(groupId, _getFragmentEntryKey(fragmentEntryKey));
+	}
+
+	@Override
+	public FragmentEntry fetchFragmentEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		FragmentEntry fragmentEntry =
+			fragmentEntryPersistence.fetchByUUID_G_Head(uuid, groupId, true);
+
+		if (fragmentEntry != null) {
+			return fragmentEntry;
+		}
+
+		return fragmentEntryPersistence.fetchByUUID_G_Head(
+			uuid, groupId, false);
 	}
 
 	@Override
@@ -272,7 +330,7 @@ public class FragmentEntryLocalServiceImpl
 		int count = 0;
 
 		while (true) {
-			FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(
+			FragmentEntry fragmentEntry = fetchByG_FEK(
 				groupId, curFragmentEntryKey);
 
 			if (fragmentEntry == null) {
@@ -331,9 +389,40 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return fragmentEntryPersistence.findByUUID_G(uuid, companyId);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<FragmentEntry> orderByComparator) {
+
+		return fragmentEntryPersistence.findByUUID_G(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	@Override
 	public int getFragmentEntriesCount(long fragmentCollectionId) {
 		return fragmentEntryPersistence.countByFragmentCollectionId(
 			fragmentCollectionId);
+	}
+
+	@Override
+	public FragmentEntry getFragmentEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = fetchFragmentEntryByUuidAndGroupId(
+			uuid, groupId);
+
+		if (fragmentEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		return fragmentEntry;
 	}
 
 	@Override
@@ -365,6 +454,34 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry, originalFragmentCollectionId, fragmentCollectionId);
 
 		return fragmentEntryPersistence.update(fragmentEntry);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		FragmentEntry draftFragmentEntry = null;
+
+		if (fragmentEntry.isDraft()) {
+			draftFragmentEntry = fragmentEntry;
+		}
+		else {
+			draftFragmentEntry = fragmentEntryPersistence.fetchByHeadId(
+				fragmentEntry.getFragmentEntryId());
+
+			if (draftFragmentEntry == null) {
+				draftFragmentEntry = getDraft(fragmentEntry);
+			}
+		}
+
+		FragmentEntry updatedDraftFragmentEntry =
+			fragmentEntryPersistence.update(draftFragmentEntry);
+
+		if (fragmentEntry.isDraft()) {
+			return updatedDraftFragmentEntry;
+		}
+
+		return publishDraft(updatedDraftFragmentEntry);
 	}
 
 	@Override
@@ -413,7 +530,11 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setStatusByUserName(user.getFullName());
 		fragmentEntry.setStatusDate(new Date());
 
-		fragmentEntry = fragmentEntryPersistence.update(fragmentEntry);
+		fragmentEntry = getDraft(fragmentEntry);
+
+		if (status == WorkflowConstants.STATUS_APPROVED) {
+			fragmentEntry = publishDraft(fragmentEntry);
+		}
 
 		FragmentServiceConfiguration fragmentServiceConfiguration =
 			_configurationProvider.getCompanyConfiguration(
@@ -505,8 +626,7 @@ public class FragmentEntryLocalServiceImpl
 
 		fragmentEntryKey = _getFragmentEntryKey(fragmentEntryKey);
 
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FEK(
-			groupId, fragmentEntryKey);
+		FragmentEntry fragmentEntry = fetchByG_FEK(groupId, fragmentEntryKey);
 
 		if (fragmentEntry != null) {
 			throw new DuplicateFragmentEntryKeyException();

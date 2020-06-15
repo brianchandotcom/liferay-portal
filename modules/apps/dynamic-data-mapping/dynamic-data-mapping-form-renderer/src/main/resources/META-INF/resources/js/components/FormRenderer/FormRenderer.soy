@@ -8,6 +8,7 @@
 	{@param? _handleFieldEdited: any}
 	{@param? _handleFieldFocused: any}
 	{@param? activePage: int}
+	{@param? allowNestedFields: bool}
 	{@param? cancelLabel: string}
 	{@param? displayable: bool}
 	{@param? dnd: ?}
@@ -78,6 +79,7 @@
 					{foreach $page in $pages}
 						{call PageRenderer.render}
 							{param activePage: $activePage /}
+							{param allowNestedFields: $allowNestedFields /}
 							{param cancelLabel: $cancelLabel ?: 'cancel' /}
 							{param dnd: $dnd /}
 							{param editable: $editable /}

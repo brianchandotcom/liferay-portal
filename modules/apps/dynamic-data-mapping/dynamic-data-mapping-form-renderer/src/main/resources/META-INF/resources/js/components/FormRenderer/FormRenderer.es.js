@@ -76,6 +76,15 @@ FormRenderer.STATE = {
 	activePage: Config.number().value(0),
 
 	/**
+	 * @default true
+	 * @instance
+	 * @memberof FormRenderer
+	 * @type {?bool}
+	 */
+
+	allowNestedFields: Config.bool().value(true),
+
+	/**
 	 * @default undefined
 	 * @memberof FormRenderer
 	 * @type {string}

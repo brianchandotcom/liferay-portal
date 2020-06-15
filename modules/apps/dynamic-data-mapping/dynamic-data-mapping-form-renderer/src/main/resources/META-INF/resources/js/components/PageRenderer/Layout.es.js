@@ -21,7 +21,7 @@ import * as DefaultVariant from './DefaultVariant.es';
 export const Layout = ({components: Components = DefaultVariant, rows}) => {
 	const {
 		dispatch,
-		store: {activePage, editable, pageIndex, spritemap},
+		store: {activePage, allowNestedFields, editable, pageIndex, spritemap},
 	} = usePage();
 
 	return (
@@ -36,6 +36,7 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 					{({column, index}) => (
 						<Components.Column
 							activePage={activePage}
+							allowNestedFields={allowNestedFields}
 							column={column}
 							editable={editable}
 							index={index}

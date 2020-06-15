@@ -41,6 +41,7 @@ export const Container = ({
 
 export const Column = ({
 	activePage,
+	allowNestedFields,
 	children,
 	column,
 	editable,
@@ -102,9 +103,14 @@ export const Column = ({
 						)}
 						{...addr}
 					/>
-					<div className="ddm-drag" ref={drop}>
+
+					<div
+						className="ddm-drag"
+						ref={allowNestedFields ? drop : undefined}
+					>
 						{fields}
 					</div>
+
 					<div
 						className={classnames(
 							'ddm-resize-handle ddm-resize-handle-right',

@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class PropsValues {
 
-	public static final String ACTUAL_PROPERTIES_CONTENT =
-		PropsUtil.getActualPropertiesContent();
-
 	public static final DBType DB_TYPE = DBType.valueOf(
 		StringUtil.toUpperCase(PropsUtil.get(PropsKeys.DB_TYPE)));
 

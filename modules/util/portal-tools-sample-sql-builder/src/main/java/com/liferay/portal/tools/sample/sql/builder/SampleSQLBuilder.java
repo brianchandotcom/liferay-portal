@@ -115,7 +115,7 @@ public class SampleSQLBuilder {
 
 		FileUtil.write(
 			new File(PropsValues.OUTPUT_DIR, "benchmarks-actual.properties"),
-			PropsValues.ACTUAL_PROPERTIES_CONTENT);
+			PropsUtil.getActualPropertiesContent());
 	}
 
 	protected void compressSQL(

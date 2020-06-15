@@ -24,6 +24,7 @@ const UNMAPPED_OPTION = {
 };
 
 function MappingInput({
+	fieldType,
 	initialFields,
 	isUnmappeable,
 	label,
@@ -32,7 +33,7 @@ function MappingInput({
 	selectedSource,
 }) {
 	const fields = (isUnmappeable ? [UNMAPPED_OPTION] : []).concat(
-		initialFields
+		initialFields.filter(({type}) => type === fieldType)
 	);
 	const [source, setSource] = useState(selectedSource);
 	const [field, setField] = useState(

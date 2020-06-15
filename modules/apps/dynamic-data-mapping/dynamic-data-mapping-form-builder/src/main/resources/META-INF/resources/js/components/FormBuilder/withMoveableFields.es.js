@@ -19,6 +19,7 @@ import Component from 'metal-jsx';
 
 import {CSS_DDM_FIELDSET} from '../../util/cssClasses.es';
 import {
+	disableFieldDropTargets,
 	disableFieldSetDragSources,
 	disableFieldSetDropTargets,
 } from '../../util/dragAndDrop.es';
@@ -73,10 +74,14 @@ const withMoveableFields = (ChildComponent) => {
 		}
 
 		rendered() {
-			const {pages} = this.props;
+			const {allowNestedFields = true, pages} = this.props;
 
 			disableFieldSetDragSources(this.element, pages);
 			disableFieldSetDropTargets(this.element, pages);
+
+			if (!allowNestedFields) {
+				disableFieldDropTargets(this.element, pages);
+			}
 
 			this._decorateFieldSets();
 			this._refreshDragAndDrop();

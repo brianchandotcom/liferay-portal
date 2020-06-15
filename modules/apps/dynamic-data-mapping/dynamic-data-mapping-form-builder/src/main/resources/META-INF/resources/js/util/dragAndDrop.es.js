@@ -16,6 +16,20 @@ import dom from 'metal-dom';
 
 import {getField, isFieldSet, isFieldSetChild} from './fieldSupport.es';
 
+export const disableFieldDropTargets = (element) => {
+	const dropTargets = element.querySelectorAll('.ddm-target');
+
+	for (let i = 0; i < dropTargets.length; i++) {
+		const target = dropTargets[i];
+
+		const parentFieldNode = dom.closest(target, '.ddm-field-container');
+
+		if (parentFieldNode) {
+			target.setAttribute('data-drop-disabled', true);
+		}
+	}
+};
+
 export const disableFieldSetDragSources = (element, pages) => {
 	const dragSources = element.querySelectorAll('.ddm-drag');
 

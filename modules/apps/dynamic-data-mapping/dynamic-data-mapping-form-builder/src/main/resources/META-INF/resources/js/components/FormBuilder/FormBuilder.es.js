@@ -76,6 +76,7 @@ class FormBuilderBase extends Component {
 		const {props} = this;
 		const {
 			activePage,
+			allowNestedFields,
 			dnd,
 			editingLanguageId,
 			pages,
@@ -91,6 +92,7 @@ class FormBuilderBase extends Component {
 				<div class="container ddm-form-builder">
 					<FormRenderer
 						activePage={activePage}
+						allowNestedFields={allowNestedFields}
 						dnd={dnd}
 						editable={true}
 						editingLanguageId={editingLanguageId}

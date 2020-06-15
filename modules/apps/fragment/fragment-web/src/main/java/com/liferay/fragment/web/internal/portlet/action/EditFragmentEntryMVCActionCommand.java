@@ -15,32 +15,21 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.exception.FragmentEntryConfigurationException;
-import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -113,61 +102,16 @@ public class EditFragmentEntryMVCActionCommand
 		draftFragmentEntry.setStatus(status);
 
 		try {
-			FragmentEntry updatedDraftFragmentEntry =
-				_fragmentEntryService.updateDraft(draftFragmentEntry);
-
-			if (status == WorkflowConstants.ACTION_SAVE_DRAFT) {
-				String redirect = _getSaveAndContinueRedirect(
-					actionRequest, updatedDraftFragmentEntry);
-
-				jsonObject.put("redirect", redirect);
-			}
+			_fragmentEntryService.updateDraft(draftFragmentEntry);
 		}
-		catch (FragmentEntryConfigurationException |
-			   FragmentEntryContentException exception) {
-
+		catch (PortalException portalException) {
 			hideDefaultErrorMessage(actionRequest);
 
-			String errorMessage = exception.getLocalizedMessage();
-
-			if (exception instanceof FragmentEntryConfigurationException) {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)actionRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					themeDisplay.getLocale(),
-					EditFragmentEntryMVCActionCommand.class);
-
-				errorMessage = LanguageUtil.get(
-					resourceBundle,
-					"please-provide-a-valid-configuration-for-the-fragment");
-			}
-
-			jsonObject.put("error", errorMessage);
+			jsonObject.put("error", portalException.getLocalizedMessage());
 		}
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
-	}
-
-	private String _getSaveAndContinueRedirect(
-		ActionRequest actionRequest, FragmentEntry fragmentEntry) {
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, FragmentPortletKeys.FRAGMENT,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/fragment/edit_fragment_entry");
-		portletURL.setParameter(
-			"fragmentCollectionId",
-			String.valueOf(fragmentEntry.getFragmentCollectionId()));
-		portletURL.setParameter(
-			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId()));
-
-		return portletURL.toString();
 	}
 
 	@Reference

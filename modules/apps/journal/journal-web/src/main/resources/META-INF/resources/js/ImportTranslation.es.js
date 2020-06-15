@@ -12,28 +12,64 @@
  * details.
  */
 
-import {ClayButton} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-
-import React, {useState}from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 export default function ImportTranslation() {
 	const [hasError, setHasError] = useState();
+	const [importFile, setImporFile] = useState();
+
+	const inputFileRef = useRef();
+
+	useEffect(() => {
+		if (importFile) {
+			console.log(importFile);
+			console.log(importFile.name);
+		}
+	}, [importFile]);
 
 	return (
 		<div>
 			<h4>{Liferay.Language.get('import-file')}</h4>
 			<p>
 				<span className="text-secondary">
-					{Liferay.Language.get('please-upload-your-translation-file')}
+					{Liferay.Language.get(
+						'please-upload-your-translation-file'
+					)}
 				</span>
 			</p>
-
 
 			<div className="mb-5 mt-4">
 				<h4>{Liferay.Language.get('file-upload')}</h4>
 
-				<ClayInput className="text-secondary" type="file" name="import-file" label="select-file" />
+
+				{!importFile && (
+					<>
+						<ClayButton
+							displayType="secondary"
+							onClick={(e) => {
+								inputFileRef.current.click()
+							}}
+						>
+							{Liferay.Language.get('select-file')}
+						</ClayButton>
+
+						<ClayInput
+							className="d-none"
+							name="import-file"
+							onChange={e => {
+								setImporFile(e.target.files[0]);
+							}}
+							ref={inputFileRef}
+							type="file"
+						/>
+					</>
+				)}
+
+				{importFile && (
+					<strong>{importFile.name}</strong>
+				)}
 
 				{hasError && (
 					<ClayForm.FeedbackGroup className="has-error">
@@ -48,5 +84,5 @@ export default function ImportTranslation() {
 				)}
 			</div>
 		</div>
-	)
+	);
 }

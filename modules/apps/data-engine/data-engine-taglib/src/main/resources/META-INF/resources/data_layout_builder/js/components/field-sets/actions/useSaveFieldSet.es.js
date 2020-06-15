@@ -80,7 +80,10 @@ export default ({
 			});
 		};
 
-		updateItem(`/o/data-engine/v2.0/data-definitions/${id}`, fieldSet)
+		return updateItem(
+			`/o/data-engine/v2.0/data-definitions/${id}`,
+			fieldSet
+		)
 			.then(() => {
 				if (dataDefinitionField) {
 					fieldName = dataDefinitionField.name;
@@ -152,6 +155,8 @@ export default ({
 			})
 			.then(() => {
 				successToast(Liferay.Language.get('fieldset-saved'));
+
+				return Promise.resolve();
 			})
 			.catch(({message}) => errorToast(message));
 	};

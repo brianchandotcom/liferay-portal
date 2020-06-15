@@ -50,7 +50,7 @@ export default ({childrenContext}) => {
 			name,
 		};
 
-		addItem(
+		return addItem(
 			`/o/data-engine/v2.0/data-definitions/by-content-type/app-builder-fieldset`,
 			fieldSetDefinition
 		)
@@ -63,6 +63,8 @@ export default ({childrenContext}) => {
 				});
 
 				successToast(Liferay.Language.get('fieldset-saved'));
+
+				return Promise.resolve();
 			})
 			.catch(({message}) => errorToast(message));
 	};

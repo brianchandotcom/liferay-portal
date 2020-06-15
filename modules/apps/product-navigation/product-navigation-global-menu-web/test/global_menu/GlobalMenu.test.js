@@ -109,7 +109,7 @@ describe('GlobalMenu', () => {
 		expect(getByTitle('global-menu')).toBeInTheDocument();
 	});
 
-	it('fetch Global Menu data when trigger button is focused', async () => {
+	it('fetches Global Menu data when trigger button is focused', async () => {
 		const {getByTitle} = renderGlobalMenu();
 		const trigger = getByTitle('global-menu');
 
@@ -127,7 +127,7 @@ describe('GlobalMenu', () => {
 		);
 	});
 
-	it('fetch Global Menu data when trigger button is hovered', async () => {
+	it('fetches Global Menu data when trigger button is hovered', async () => {
 		const {getByTitle} = renderGlobalMenu();
 		const trigger = getByTitle('global-menu');
 
@@ -145,7 +145,7 @@ describe('GlobalMenu', () => {
 		);
 	});
 
-	it('fetch Global Menu data when trigger button is clicked', async () => {
+	it('fetches Global Menu data when trigger button is clicked', async () => {
 		const {getByTitle} = renderGlobalMenu();
 		const trigger = getByTitle('global-menu');
 
@@ -203,7 +203,7 @@ describe('GlobalMenu', () => {
 		expect(closeButton).not.toBeInTheDocument();
 	});
 
-	it('closes Global Menu modal when click outside', async () => {
+	it('closes Global Menu modal when clicking outside', async () => {
 		const {getByTitle} = renderGlobalMenu();
 		const trigger = getByTitle('global-menu');
 

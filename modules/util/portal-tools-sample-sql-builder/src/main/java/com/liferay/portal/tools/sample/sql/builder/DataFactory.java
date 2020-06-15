@@ -3369,33 +3369,24 @@ public class DataFactory {
 		getAssetPublisherAssetCategoriesQueryValues(
 			List<AssetCategoryModel> assetCategoryModels, int index) {
 
-		AssetCategoryModel assetCategoryModel0 = assetCategoryModels.get(
-			index % assetCategoryModels.size());
-		AssetCategoryModel assetCategoryModel1 = assetCategoryModels.get(
-			(index +
-				BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT) %
-					assetCategoryModels.size());
-		AssetCategoryModel assetCategoryModel2 = assetCategoryModels.get(
-			(index +
-				BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT *
-					2) % assetCategoryModels.size());
+		String[] categoryIds = new String[4];
 
-		int lastIndex =
-			(index +
-				BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT *
-					3) % assetCategoryModels.size();
+		for (int i = 0; i < 4; i++) {
+			if (i > 0) {
+				index +=
+					BenchmarkPropsValues.
+						MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT;
+			}
 
-		AssetCategoryModel assetCategoryModel3 = assetCategoryModels.get(
-			lastIndex);
+			AssetCategoryModel assetCategoryModel = assetCategoryModels.get(
+				index % assetCategoryModels.size());
+
+			categoryIds[i] = String.valueOf(assetCategoryModel.getCategoryId());
+		}
 
 		return new ObjectValuePair<>(
-			new String[] {
-				String.valueOf(assetCategoryModel0.getCategoryId()),
-				String.valueOf(assetCategoryModel1.getCategoryId()),
-				String.valueOf(assetCategoryModel2.getCategoryId()),
-				String.valueOf(assetCategoryModel3.getCategoryId())
-			},
-			lastIndex +
+			categoryIds,
+			index +
 				BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT);
 	}
 
@@ -3403,30 +3394,23 @@ public class DataFactory {
 		getAssetPublisherAssetTagsQueryValues(
 			List<AssetTagModel> assetTagModels, int index) {
 
-		AssetTagModel assetTagModel0 = assetTagModels.get(
-			index % assetTagModels.size());
-		AssetTagModel assetTagModel1 = assetTagModels.get(
-			(index + BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT) %
-				assetTagModels.size());
-		AssetTagModel assetTagModel2 = assetTagModels.get(
-			(index +
-				BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT * 2) %
-					assetTagModels.size());
+		String[] assetTagNames = new String[4];
 
-		int lastIndex =
-			(index +
-				BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT * 3) %
-					assetTagModels.size();
+		for (int i = 0; i < 4; i++) {
+			if (i > 0) {
+				index +=
+					BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT;
+			}
 
-		AssetTagModel assetTagModel3 = assetTagModels.get(lastIndex);
+			AssetTagModel assetTagModel = assetTagModels.get(
+				index % assetTagModels.size());
+
+			assetTagNames[i] = String.valueOf(assetTagModel.getName());
+		}
 
 		return new ObjectValuePair<>(
-			new String[] {
-				assetTagModel0.getName(), assetTagModel1.getName(),
-				assetTagModel2.getName(), assetTagModel3.getName()
-			},
-			lastIndex +
-				BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT);
+			assetTagNames,
+			index + BenchmarkPropsValues.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT);
 	}
 
 	protected String getClassName(long classNameId) {

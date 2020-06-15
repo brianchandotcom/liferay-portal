@@ -46,6 +46,7 @@ import com.liferay.message.boards.service.MBCategoryService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
 import com.liferay.message.boards.service.MBStatsUserLocalService;
+import com.liferay.message.boards.service.MBThreadFlagLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.MBThreadService;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
@@ -195,8 +196,13 @@ public class MessageBoardThreadResourceImpl
 			_classNameLocalService.getClassNameId(MBThread.class),
 			messageBoardThreadId, 1);
 
-		return _toMessageBoardThread(
-			_mbThreadLocalService.getMBThread(messageBoardThreadId));
+		MBThread mbThread = _mbThreadLocalService.getMBThread(
+			messageBoardThreadId);
+
+		_mbThreadFlagLocalService.addThreadFlag(
+			contextUser.getUserId(), mbThread, new ServiceContext());
+
+		return _toMessageBoardThread(mbThread);
 	}
 
 	@Override
@@ -272,6 +278,10 @@ public class MessageBoardThreadResourceImpl
 			contextCompany.getCompanyId(),
 			_classNameLocalService.getClassNameId(MBThread.class),
 			mbMessage.getThreadId(), 1);
+
+		_mbThreadFlagLocalService.addThreadFlag(
+			contextUser.getUserId(), mbMessage.getThread(),
+			new ServiceContext());
 
 		return _toMessageBoardThread(mbMessage);
 	}
@@ -651,6 +661,8 @@ public class MessageBoardThreadResourceImpl
 					_dtoConverterRegistry, mbMessage.getModelClassName(),
 					mbMessage.getMessageId(),
 					contextAcceptLanguage.getPreferredLocale());
+				seen = _mbThreadFlagLocalService.hasThreadFlag(
+					contextUser.getUserId(), mbThread);
 				showAsQuestion = mbThread.isQuestion();
 				siteId = mbThread.getGroupId();
 				subscribed = _subscriptionLocalService.isSubscribed(
@@ -779,6 +791,9 @@ public class MessageBoardThreadResourceImpl
 
 	@Reference
 	private MBStatsUserLocalService _mbStatsUserLocalService;
+
+	@Reference
+	private MBThreadFlagLocalService _mbThreadFlagLocalService;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

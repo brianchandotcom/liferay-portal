@@ -52,11 +52,9 @@ export default ({children, dataLayoutBuilder}) => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
 
 		const eventHandler = provider.on('focusedFieldChanged', ({newVal}) => {
-			provider.once('rendered', () => {
-				dispatch({
-					payload: {focusedField: newVal},
-					type: UPDATE_FOCUSED_FIELD,
-				});
+			dispatch({
+				payload: {focusedField: newVal},
+				type: UPDATE_FOCUSED_FIELD,
 			});
 		});
 
@@ -67,9 +65,7 @@ export default ({children, dataLayoutBuilder}) => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
 
 		const eventHandler = provider.on('pagesChanged', ({newVal}) => {
-			provider.once('rendered', () => {
-				dispatch({payload: {pages: newVal}, type: UPDATE_PAGES});
-			});
+			dispatch({payload: {pages: newVal}, type: UPDATE_PAGES});
 		});
 
 		return () => eventHandler.removeListener();

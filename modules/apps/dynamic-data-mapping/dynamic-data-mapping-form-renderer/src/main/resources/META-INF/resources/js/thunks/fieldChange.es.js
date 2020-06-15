@@ -68,7 +68,9 @@ export default function fieldChange({
 		// We triggered a dispatch of FIELD_CHANGE just to propagate the event to
 		// the upper layers.
 
-		dispatch({payload: properties, type: EVENT_TYPES.FIELD_CHANGE});
+		requestAnimationFrame(() => {
+			dispatch({payload: properties, type: EVENT_TYPES.FIELD_CHANGE});
+		});
 
 		if (evaluable) {
 			evaluate(fieldName, {
@@ -104,13 +106,15 @@ export default function fieldChange({
 						return;
 					}
 
-					dispatch({
-						payload: evaluatedPages,
-						type: EVENT_TYPES.UPDATE_PAGES,
-					});
-					dispatch({
-						payload: evaluatedPages,
-						type: EVENT_TYPES.FIELD_EVALUATED,
+					requestAnimationFrame(() => {
+						dispatch({
+							payload: evaluatedPages,
+							type: EVENT_TYPES.UPDATE_PAGES,
+						});
+						dispatch({
+							payload: evaluatedPages,
+							type: EVENT_TYPES.FIELD_EVALUATED,
+						});
 					});
 				})
 				.catch((error) =>

@@ -76,14 +76,14 @@ public class BenchmarkPropsUtil {
 			String timeZoneId = properties.getProperty(
 				"sample.sql.db.time.zone");
 
-			if (Validator.isNotNull(timeZoneId)) {
+			if (Validator.isNull(timeZoneId)) {
+				properties.setProperty(
+					"sample.sql.db.time.zone", timeZone.getID());
+			}
+			else {
 				timeZone = TimeZone.getTimeZone(ZoneId.of(timeZoneId));
 
 				TimeZone.setDefault(timeZone);
-			}
-			else {
-				properties.setProperty(
-					"sample.sql.db.time.zone", timeZone.getID());
 			}
 		}
 		catch (Exception exception) {

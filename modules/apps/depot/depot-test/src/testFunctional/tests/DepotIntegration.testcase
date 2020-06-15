@@ -613,7 +613,7 @@ definition {
 	@description = "This ensures that a depot can be connected to the site."
 	@priority = "5"
 	test Smoke {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 
 		JSONDepot.addDepot(

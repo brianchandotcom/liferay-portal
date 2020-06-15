@@ -178,6 +178,7 @@
 		<exception>AccountEntryDomains</exception>
 		<exception>AccountEntryName</exception>
 		<exception>AccountEntryType</exception>
+		<exception>AccountUserEmailAddress</exception>
 		<exception>DuplicateAccountEntryId</exception>
 		<exception>DuplicateAccountEntryOrganizationRel</exception>
 		<exception>DuplicateAccountEntryUserRel</exception>

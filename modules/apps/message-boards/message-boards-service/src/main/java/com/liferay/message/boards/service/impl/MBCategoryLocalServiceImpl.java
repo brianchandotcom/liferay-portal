@@ -22,9 +22,10 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.service.MBMailingListLocalService;
-import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.base.MBCategoryLocalServiceBaseImpl;
+import com.liferay.message.boards.service.persistence.MBMessagePersistence;
+import com.liferay.message.boards.service.persistence.MBThreadPersistence;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -928,9 +929,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			mergeCategories(category, toCategoryId);
 		}
 
-		List<MBThread> threads = _mbThreadLocalService.getThreads(
-			fromCategory.getGroupId(), fromCategory.getCategoryId(),
-			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		List<MBThread> threads = _mbThreadPersistence.findByG_C(
+			fromCategory.getGroupId(), fromCategory.getCategoryId());
 
 		for (MBThread thread : threads) {
 
@@ -938,10 +938,10 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			thread.setCategoryId(toCategoryId);
 
-			_mbThreadLocalService.updateMBThread(thread);
+			thread = _mbThreadPersistence.update(thread);
 
-			List<MBMessage> messages = _mbMessageLocalService.getThreadMessages(
-				thread.getThreadId(), WorkflowConstants.STATUS_ANY, null);
+			List<MBMessage> messages = _mbMessagePersistence.findByThreadId(
+				thread.getThreadId());
 
 			for (MBMessage message : messages) {
 
@@ -949,7 +949,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				message.setCategoryId(toCategoryId);
 
-				_mbMessageLocalService.updateMBMessage(message);
+				message = _mbMessagePersistence.update(message);
 
 				_reindex(MBMessage.class, message);
 			}
@@ -977,7 +977,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				thread.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-				_mbThreadLocalService.updateMBThread(thread);
+				thread = _mbThreadPersistence.update(thread);
 
 				// Trash
 
@@ -1056,7 +1056,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				thread.setStatus(oldStatus);
 
-				_mbThreadLocalService.updateMBThread(thread);
+				thread = _mbThreadPersistence.update(thread);
 
 				// Threads
 
@@ -1145,10 +1145,13 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	private MBMailingListLocalService _mbMailingListLocalService;
 
 	@Reference
-	private MBMessageLocalService _mbMessageLocalService;
+	private MBMessagePersistence _mbMessagePersistence;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
+	private MBThreadPersistence _mbThreadPersistence;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

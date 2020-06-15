@@ -21,7 +21,6 @@ import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -85,12 +84,11 @@ public class PublishFragmentEntryMVCActionCommand
 			FragmentEntry publishedFragmentEntry =
 				_fragmentEntryService.publishDraft(draftFragmentEntry);
 
-			JSONObject jsonObject = JSONUtil.put(
-				"redirectURL",
-				getRedirectURL(actionResponse, publishedFragmentEntry));
-
 			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"redirectURL",
+					getRedirectURL(actionResponse, publishedFragmentEntry)));
 		}
 		catch (PortalException portalException) {
 			_fragmentEntryExceptionRequestHandler.handlePortalException(

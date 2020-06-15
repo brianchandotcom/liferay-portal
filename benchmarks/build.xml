@@ -77,7 +77,7 @@
 			classpathref="sample.sql.builder.classpath"
 		>
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="${sample.sql.properties.file}" />
+			<sysproperty key="sample-sql-properties" value="${sample.sql.properties.file}" />
 		</java>
 
 		<delete dir="build" quiet="true" />

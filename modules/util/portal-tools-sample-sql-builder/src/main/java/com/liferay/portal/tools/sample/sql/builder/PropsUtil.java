@@ -58,7 +58,7 @@ public class PropsUtil {
 	private static final Properties _properties = new SortedProperties() {
 		{
 			try (Reader reader = new FileReader(
-					System.getProperty("properties.file.path"))) {
+					System.getProperty("sample-sql-properties"))) {
 
 				load(reader);
 

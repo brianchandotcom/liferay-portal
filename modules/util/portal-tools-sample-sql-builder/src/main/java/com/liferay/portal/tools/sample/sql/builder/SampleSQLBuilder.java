@@ -55,8 +55,6 @@ public class SampleSQLBuilder {
 	public static void main(String[] args) {
 		ToolDependencies.wireBasic();
 
-		System.setProperty("properties.file.path", args[0]);
-
 		try {
 			DataFactory dataFactory = new DataFactory();
 

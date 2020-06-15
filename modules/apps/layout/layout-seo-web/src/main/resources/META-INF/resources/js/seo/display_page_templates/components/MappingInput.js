@@ -37,10 +37,12 @@ function MappingInput({
 	);
 	const [source, setSource] = useState(selectedSource);
 	const [field, setField] = useState(
-		fields.find(({key}) => key === selectedFieldKey) || fields[0]
+		fields.length
+			? fields.find(({key}) => key === selectedFieldKey) || fields[0]
+			: UNMAPPED_OPTION
 	);
 
-	const isActive = field.key !== UNMAPPED_OPTION.key;
+	const isActive = !!field && field.key !== UNMAPPED_OPTION.key;
 
 	const inititalSourceLabel = selectedSource
 		? selectedSource.classTypeLabel || selectedSource.classNameLabel

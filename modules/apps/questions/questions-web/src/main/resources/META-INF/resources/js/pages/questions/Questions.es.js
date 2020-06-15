@@ -64,6 +64,10 @@ export default withRouter(
 		}, [queryParams]);
 
 		useEffect(() => {
+			setPageSize(queryParams.get('pagesize') || 20);
+		}, [queryParams]);
+
+		useEffect(() => {
 			setSearch(queryParams.get('search') || '');
 		}, [queryParams]);
 
@@ -117,13 +121,13 @@ export default withRouter(
 			setSearchCallback(() => searchCallback);
 		};
 
-		const changePage = (number) => {
+		const changePage = (page, pageSize) => {
 			historyPushParser(
 				`/questions/${context.section}${tag ? '/tag/' + tag : ''}${
 					creatorId ? '/creator/' + creatorId : ''
 				}${
 					search && search !== '' ? '?search=' + search + '&' : '?'
-				}page=${number}`
+				}page=${page}&pagesize=${pageSize}`
 			);
 		};
 
@@ -178,8 +182,12 @@ export default withRouter(
 							<PaginatedList
 								activeDelta={pageSize}
 								activePage={page}
-								changeDelta={setPageSize}
-								changePage={changePage}
+								changeDelta={(pageSize) =>
+									changePage(page, pageSize)
+								}
+								changePage={(page) =>
+									changePage(page, pageSize)
+								}
 								data={questions}
 								loading={loading}
 							>

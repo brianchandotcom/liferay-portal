@@ -46,6 +46,10 @@ export default withRouter(
 			setPage(isNaN(pageNumber) ? 1 : parseInt(pageNumber, 10));
 		}, [queryParams]);
 
+		useEffect(() => {
+			setPageSize(queryParams.get('pagesize') || 20);
+		}, [queryParams]);
+
 		const {data, loading} = useQuery(getUserActivityQuery, {
 			variables: {
 				filter: `creatorId eq ${creatorId}`,
@@ -84,8 +88,10 @@ export default withRouter(
 			};
 		}
 
-		const changePage = (number) => {
-			historyPushParser(`/activity/${creatorId}?page=${number}`);
+		const changePage = (page, pageSize) => {
+			historyPushParser(
+				`/activity/${creatorId}?page=${page}&pagesize=${pageSize}`
+			);
 		};
 
 		return (
@@ -153,8 +159,8 @@ export default withRouter(
 					<PaginatedList
 						activeDelta={pageSize}
 						activePage={page}
-						changeDelta={setPageSize}
-						changePage={changePage}
+						changeDelta={(pageSize) => changePage(page, pageSize)}
+						changePage={(page) => changePage(page, pageSize)}
 						data={data && data.messageBoardThreads}
 						loading={loading}
 					>

@@ -16,18 +16,21 @@ import {useQuery} from '@apollo/client';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
+import useQueryParams from '../../hooks/useQueryParams.es';
 import {getTagsQuery} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {useDebounceCallback} from '../../utils/utils.es';
+import {historyPushWithSlug, useDebounceCallback} from '../../utils/utils.es';
 
 export default withRouter(
 	({
+		history,
+		location,
 		match: {
 			params: {sectionTitle},
 		},
@@ -41,6 +44,24 @@ export default withRouter(
 		const {data, loading} = useQuery(getTagsQuery, {
 			variables: {page, pageSize, search, siteKey: context.siteKey},
 		});
+
+		const queryParams = useQueryParams(location);
+
+		useEffect(() => {
+			setPage(queryParams.get('page') || 1);
+		}, [queryParams]);
+
+		useEffect(() => {
+			setPageSize(queryParams.get('pagesize') || 20);
+		}, [queryParams]);
+
+		const historyPushParser = historyPushWithSlug(history.push);
+
+		const changePage = (page, pageSize) => {
+			historyPushParser(
+				`/questions/${context.section}/tags?page=${page}&pagesize=${pageSize}`
+			);
+		};
 
 		const [debounceCallback] = useDebounceCallback((search) => {
 			setSearch(search);
@@ -89,8 +110,10 @@ export default withRouter(
 						<PaginatedList
 							activeDelta={pageSize}
 							activePage={page}
-							changeDelta={setPageSize}
-							changePage={setPage}
+							changeDelta={(pageSize) =>
+								changePage(page, pageSize)
+							}
+							changePage={(page) => changePage(page, pageSize)}
 							data={data && data.keywordsRanked}
 							loading={loading}
 						>

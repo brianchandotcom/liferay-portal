@@ -314,6 +314,16 @@ public class MessageBoardThreadSerDes {
 			sb.append("]");
 		}
 
+		if (messageBoardThread.getSeen() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"seen\": ");
+
+			sb.append(messageBoardThread.getSeen());
+		}
+
 		if (messageBoardThread.getShowAsQuestion() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -615,6 +625,13 @@ public class MessageBoardThreadSerDes {
 				String.valueOf(messageBoardThread.getRelatedContents()));
 		}
 
+		if (messageBoardThread.getSeen() == null) {
+			map.put("seen", null);
+		}
+		else {
+			map.put("seen", String.valueOf(messageBoardThread.getSeen()));
+		}
+
 		if (messageBoardThread.getShowAsQuestion() == null) {
 			map.put("showAsQuestion", null);
 		}
@@ -833,6 +850,11 @@ public class MessageBoardThreadSerDes {
 						).toArray(
 							size -> new RelatedContent[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "seen")) {
+				if (jsonParserFieldValue != null) {
+					messageBoardThread.setSeen((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "showAsQuestion")) {

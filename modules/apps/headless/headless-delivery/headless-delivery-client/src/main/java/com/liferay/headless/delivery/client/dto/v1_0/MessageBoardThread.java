@@ -422,6 +422,25 @@ public class MessageBoardThread implements Cloneable {
 
 	protected RelatedContent[] relatedContents;
 
+	public Boolean getSeen() {
+		return seen;
+	}
+
+	public void setSeen(Boolean seen) {
+		this.seen = seen;
+	}
+
+	public void setSeen(UnsafeSupplier<Boolean, Exception> seenUnsafeSupplier) {
+		try {
+			seen = seenUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean seen;
+
 	public Boolean getShowAsQuestion() {
 		return showAsQuestion;
 	}

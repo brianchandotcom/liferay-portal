@@ -337,7 +337,13 @@ definition {
 			fragmentName = "Title",
 			targetFragmentName = "Rich Text");
 
-		PageEditor.clickDiscardDraft();
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		PageEditor.clickDiscardDraft(pageName = "Test Content Page Name");
+
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
+
+		ContentPages.clickPencil();
 
 		PageEditor.gotoTab(tabName = "Comments");
 

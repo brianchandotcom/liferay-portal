@@ -35,6 +35,10 @@
 			WHERE
 				(FragmentEntry.groupId = ?) AND
 				(FragmentEntry.fragmentCollectionId = ?) AND
+				(
+					(FragmentEntry.head = [$TRUE$]) OR
+					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
+				) AND
 				([$STATUS$])
 		]]>
 	</sql>
@@ -47,6 +51,10 @@
 			WHERE
 				(FragmentEntry.groupId = ?) AND
 				(FragmentEntry.fragmentCollectionId = ?) AND
+				(
+					(FragmentEntry.head = [$TRUE$]) OR
+					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
+				) AND
 				(FragmentEntry.name LIKE ?) AND
 				([$STATUS$])
 		]]>
@@ -88,6 +96,10 @@
 			WHERE
 				(FragmentEntry.groupId = ?) AND
 				(FragmentEntry.fragmentCollectionId = ?) AND
+				(
+					(FragmentEntry.head = [$TRUE$]) OR
+					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
+				) AND
 				([$STATUS$])
 		]]>
 	</sql>
@@ -101,6 +113,10 @@
 			WHERE
 				(FragmentEntry.groupId = ?) AND
 				(FragmentEntry.fragmentCollectionId = ?) AND
+				(
+					(FragmentEntry.head = [$TRUE$]) OR
+					(FragmentEntry.headId = FragmentEntry.fragmentEntryId)
+				) AND
 				(FragmentEntry.name LIKE ?) AND
 				([$STATUS$])
 		]]>

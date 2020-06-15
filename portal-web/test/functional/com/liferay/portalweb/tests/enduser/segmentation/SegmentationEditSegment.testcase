@@ -85,7 +85,7 @@ definition {
 			userLastName = "OrganizationTag",
 			userScreenName = "OrganizationTag",
 			userTag = "organizationtagtest");
-		
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -178,7 +178,7 @@ definition {
 			userTag = "tagtest");
 
 		Navigator.openURL();
-		
+
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",

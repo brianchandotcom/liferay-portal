@@ -73,8 +73,8 @@ definition {
 		Click(locator1 = "Segmentation#ADD_TAG_BUTTON");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
-		
-		SelectFrame.selectFrameNoLoading(locator1="IFrame#DIALOG");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#DIALOG");
 
 		Click(locator1 = "Segmentation#SEARCH_TAG_FIELD");
 

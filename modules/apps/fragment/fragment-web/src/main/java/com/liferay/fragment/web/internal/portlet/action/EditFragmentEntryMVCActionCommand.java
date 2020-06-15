@@ -17,8 +17,10 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -51,17 +54,44 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
 		"mvc.command.name=/fragment/edit_fragment_entry"
 	},
-	service = MVCActionCommand.class
+	service = AopService.class
 )
-public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class EditFragmentEntryMVCActionCommand
+	extends BaseMVCActionCommand implements AopService, MVCActionCommand {
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
+
+		FragmentEntry fragmentEntry = _fragmentEntryService.fetchFragmentEntry(
+			fragmentEntryId);
+
+		if (fragmentEntry == null) {
+			throw new NoSuchEntryException();
+		}
+
+		FragmentEntry draftFragmentEntry = null;
+
+		if (fragmentEntry.isDraft()) {
+			draftFragmentEntry = fragmentEntry;
+		}
+		else {
+			draftFragmentEntry = _fragmentEntryService.fetchDraft(
+				fragmentEntryId);
+
+			if (draftFragmentEntry == null) {
+				draftFragmentEntry = _fragmentEntryService.getDraft(
+					fragmentEntryId);
+
+				draftFragmentEntry = _fragmentEntryService.updateDraft(
+					draftFragmentEntry);
+			}
+		}
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String css = ParamUtil.getString(actionRequest, "cssContent");
@@ -74,15 +104,21 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		draftFragmentEntry.setName(name);
+		draftFragmentEntry.setCss(css);
+		draftFragmentEntry.setHtml(html);
+		draftFragmentEntry.setJs(js);
+		draftFragmentEntry.setCacheable(cacheable);
+		draftFragmentEntry.setConfiguration(configuration);
+		draftFragmentEntry.setStatus(status);
+
 		try {
-			FragmentEntry fragmentEntry =
-				_fragmentEntryService.updateFragmentEntry(
-					fragmentEntryId, name, css, html, js, cacheable,
-					configuration, status);
+			FragmentEntry updatedDraftFragmentEntry =
+				_fragmentEntryService.updateDraft(draftFragmentEntry);
 
 			if (status == WorkflowConstants.ACTION_SAVE_DRAFT) {
 				String redirect = _getSaveAndContinueRedirect(
-					actionRequest, fragmentEntry);
+					actionRequest, updatedDraftFragmentEntry);
 
 				jsonObject.put("redirect", redirect);
 			}

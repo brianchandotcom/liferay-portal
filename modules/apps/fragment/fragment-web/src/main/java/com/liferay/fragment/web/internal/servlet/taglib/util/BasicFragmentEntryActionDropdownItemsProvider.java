@@ -219,13 +219,28 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 	private UnsafeConsumer<DropdownItem, Exception>
 		_getEditFragmentEntryActionUnsafeConsumer() {
 
+		FragmentEntry fragmentEntry = null;
+
+		if (_fragmentEntry.isDraft()) {
+			fragmentEntry = _fragmentEntry;
+		}
+		else {
+			fragmentEntry = _fragmentEntry.fetchDraft();
+		}
+
+		if (fragmentEntry == null) {
+			fragmentEntry = _fragmentEntry;
+		}
+
+		final FragmentEntry editFragmentEntry = fragmentEntry;
+
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/fragment/edit_fragment_entry", "redirect",
 				_themeDisplay.getURLCurrent(), "fragmentCollectionId",
-				_fragmentEntry.getFragmentCollectionId(), "fragmentEntryId",
-				_fragmentEntry.getFragmentEntryId());
+				editFragmentEntry.getFragmentCollectionId(), "fragmentEntryId",
+				editFragmentEntry.getFragmentEntryId());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};

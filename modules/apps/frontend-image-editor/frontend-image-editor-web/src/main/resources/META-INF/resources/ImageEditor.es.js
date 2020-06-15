@@ -372,7 +372,7 @@ class ImageEditor extends PortletBase {
 
 		Liferay.Util.openToast({
 			container: this.element,
-			message: message,
+			message,
 			type: 'danger',
 		});
 	}

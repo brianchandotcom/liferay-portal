@@ -29,11 +29,13 @@ function SeoMapping({
 			fields={fields}
 			inputs={[
 				{
+					fieldType: 'text',
 					label: Liferay.Language.get('html-title'),
 					name: `${portletNamespace}title`,
 					selectedFieldKey: title,
 				},
 				{
+					fieldType: 'text',
 					label: Liferay.Language.get('description'),
 					name: `${portletNamespace}description`,
 					selectedFieldKey: description,

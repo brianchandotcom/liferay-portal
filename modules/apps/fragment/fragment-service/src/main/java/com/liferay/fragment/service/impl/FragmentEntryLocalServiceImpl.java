@@ -393,9 +393,8 @@ public class FragmentEntryLocalServiceImpl
 
 		validate(name);
 
-		_fragmentEntryValidator.validateConfiguration(configuration);
-
 		if (WorkflowConstants.STATUS_APPROVED == status) {
+			_fragmentEntryValidator.validateConfiguration(configuration);
 			validateContent(html, configuration);
 		}
 

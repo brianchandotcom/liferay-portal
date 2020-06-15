@@ -31,21 +31,25 @@ function OpenGraphMapping({
 			fields={fields}
 			inputs={[
 				{
+					fieldType: 'text',
 					label: Liferay.Language.get('title'),
 					name: `${portletNamespace}openGraphTitle`,
 					selectedFieldKey: openGraphTitle,
 				},
 				{
+					fieldType: 'text',
 					label: Liferay.Language.get('description'),
 					name: `${portletNamespace}openGraphDescription`,
 					selectedFieldKey: openGraphDescription,
 				},
 				{
+					fieldType: 'image',
 					label: Liferay.Language.get('image'),
 					name: `${portletNamespace}openGraphImageTitle`,
 					selectedFieldKey: openGraphImage,
 				},
 				{
+					fieldType: 'text',
 					isUnmappeable: true,
 					label: Liferay.Language.get(
 						'open-graph-image-alt-description'

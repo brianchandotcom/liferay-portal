@@ -30,12 +30,24 @@ public abstract class BaseListClayDataSetDisplayView
 
 	public abstract String getDescription();
 
+	public String getImage() {
+		return StringPool.BLANK;
+	}
+
 	public String getLabel() {
 		return ClayDataSetConstants.CONTENT_RENDERER_LIST;
 	}
 
-	public String getThumbnail() {
+	public String getSticker() {
 		return StringPool.BLANK;
+	}
+
+	public String getSymbol() {
+		return StringPool.BLANK;
+	}
+
+	public String getThumbnail() {
+		return ClayDataSetConstants.CONTENT_RENDERER_LIST;
 	}
 
 	public abstract String getTitle();

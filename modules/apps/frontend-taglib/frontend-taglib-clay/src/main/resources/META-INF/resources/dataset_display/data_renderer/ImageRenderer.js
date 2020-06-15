@@ -16,20 +16,16 @@ import ClaySticker from '@clayui/sticker';
 import PropType from 'prop-types';
 import React from 'react';
 
-function ImageRenderer({value}) {
+function ImageRenderer({
+	sticker = {shape: 'circle', size: 'xl'},
+	value: {alt, src},
+}) {
 	return (
 		<div className="row">
 			<div className="col-auto">
-				<ClaySticker
-					shape={value.shape || 'rounded'}
-					size={value.size || 'xl'}
-				>
+				<ClaySticker {...sticker}>
 					<div className="sticker-overlay">
-						<img
-							alt={value.alt}
-							className="sticker-img"
-							src={value.src}
-						/>
+						<img alt={alt} className="sticker-img" src={src} />
 					</div>
 				</ClaySticker>
 			</div>

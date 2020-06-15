@@ -33,6 +33,8 @@ definition {
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
+		Navigator.openURL();
+
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
@@ -83,6 +85,8 @@ definition {
 			userLastName = "OrganizationTag",
 			userScreenName = "OrganizationTag",
 			userTag = "organizationtagtest");
+		
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "People",
@@ -173,6 +177,8 @@ definition {
 			userScreenName = "UserTag",
 			userTag = "tagtest");
 
+		Navigator.openURL();
+		
 		ProductMenu.gotoPortlet(
 			category = "People",
 			panel = "Site Administration",

@@ -200,24 +200,6 @@ const FragmentEditor = ({
 										</label>
 									</div>
 
-									{status === allowedStatus.draft && (
-										<div className="btn-group-item">
-											<button
-												className="btn btn-secondary btn-sm"
-												disabled={isSaving}
-												onClick={handleSaveButtonClick}
-												type="button"
-												value={allowedStatus.draft}
-											>
-												<span className="lfr-btn-label">
-													{Liferay.Language.get(
-														'save-as-draft'
-													)}
-												</span>
-											</button>
-										</div>
-									)}
-
 									<div className="btn-group-item">
 										<button
 											className="btn btn-primary btn-sm"

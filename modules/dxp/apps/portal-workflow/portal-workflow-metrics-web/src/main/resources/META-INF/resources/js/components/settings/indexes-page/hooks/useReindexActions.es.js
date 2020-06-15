@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import {usePrevious} from 'frontend-js-react-web';
 import {useCallback, useContext} from 'react';
 
 import {useToaster} from '../../../../shared/components/toaster/hooks/useToaster.es';
@@ -22,37 +21,48 @@ import {INDEXES_GROUPS_KEYS} from '../IndexesConstants.es';
 
 const useReindexActions = () => {
 	const {reindexStatuses, setReindexStatuses} = useContext(AppContext);
-	const previousStatuses = usePrevious(reindexStatuses);
 	const schedule = useInterval();
 	const toaster = useToaster();
 
 	const {fetchData} = useFetch({url: '/indexes/reindex/status'});
 	const {patchData} = usePatch({url: '/indexes/reindex'});
 
-	const getReindexStatus = useCallback(
-		(key) => reindexStatuses.find((item) => key === item.key) || {},
-		[reindexStatuses]
-	);
+	const getReindexStatus = (key) =>
+		reindexStatuses.find((item) => key === item.key) || {};
 
 	const getStatuses = useCallback(
-		(key, label = Liferay.Language.get('workflow-indexes')) => {
-			setReindexStatuses([
-				...reindexStatuses,
-				{completionPercentage: 0, key},
-			]);
-
+		() => {
 			const cancelInterval = schedule(() => {
 				fetchData()
-					.then(({items, totalCount}) => {
-						if (!totalCount) {
-							if (previousStatuses) {
-								sendSuccess(key, label);
-							}
-
+					.then(({items}) => {
+						if (!items.length) {
 							cancelInterval();
 						}
 
-						setReindexStatuses(items);
+						setReindexStatuses((prevStatuses) =>
+							prevStatuses
+								.filter(({key, label}) => {
+									const finished =
+										items.findIndex(
+											(item) => item.key === key
+										) === -1;
+
+									if (
+										finished &&
+										/\/settings\/indexes/gi.test(
+											window.location.hash
+										)
+									) {
+										sendSuccess(key, label);
+									}
+
+									return !finished;
+								})
+								.map(({key, ...status}) => ({
+									...status,
+									...items.find((item) => item.key === key),
+								}))
+						);
 					})
 					.catch(() => {
 						cancelInterval();
@@ -62,29 +72,37 @@ const useReindexActions = () => {
 			}, 1000);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[fetchData, previousStatuses, setReindexStatuses, reindexStatuses]
+		[fetchData, isReindexing]
 	);
 
-	const handleReindex = useCallback(
-		(key, label) => {
-			patchData({key})
-				.then(() => getStatuses(key, label))
-				.catch(sendError);
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[getStatuses, patchData]
-	);
+	const handleReindex = (key, label) => {
+		setReindexStatuses((prevStatuses) => [
+			...prevStatuses,
+			{completionPercentage: 0, key, label},
+		]);
 
-	const isReindexing = useCallback(
-		(key) => reindexStatuses.findIndex((item) => key === item.key) > -1,
-		[reindexStatuses]
-	);
+		patchData({key})
+			.then(getStatuses)
+			.catch(() => {
+				sendError();
+
+				setReindexStatuses((prevStatuses) => [
+					...prevStatuses.filter((item) => item.key !== key),
+				]);
+			});
+	};
+
+	const isReindexing = (key) =>
+		reindexStatuses.findIndex((item) => key === item.key) > -1;
 
 	const sendError = () => {
 		toaster.danger(Liferay.Language.get('your-request-has-failed'));
 	};
 
-	const sendSuccess = (key, label) => {
+	const sendSuccess = (
+		key,
+		label = Liferay.Language.get('workflow-indexes')
+	) => {
 		const message = INDEXES_GROUPS_KEYS.includes(key)
 			? Liferay.Language.get('all-x-have-reindexed-successfully')
 			: Liferay.Language.get('x-has-reindexed-successfully');

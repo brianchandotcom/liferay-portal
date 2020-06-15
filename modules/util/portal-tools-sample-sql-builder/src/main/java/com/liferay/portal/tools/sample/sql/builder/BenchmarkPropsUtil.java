@@ -38,23 +38,21 @@ public class BenchmarkPropsUtil {
 	}
 
 	public static String getActualPropertiesContent() {
-		StringBundler sb = new StringBundler();
-
 		List<String> propertyNames = new ArrayList<>(
 			_properties.stringPropertyNames());
 
 		propertyNames.sort(null);
+
+		StringBundler sb = new StringBundler(propertyNames.size() * 4);
 
 		for (String propertyName : propertyNames) {
 			if (!propertyName.startsWith("sample.sql")) {
 				continue;
 			}
 
-			String value = _properties.getProperty(propertyName);
-
 			sb.append(propertyName);
 			sb.append(StringPool.EQUAL);
-			sb.append(value);
+			sb.append(_properties.getProperty(propertyName));
 			sb.append(StringPool.NEW_LINE);
 		}
 

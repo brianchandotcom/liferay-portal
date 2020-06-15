@@ -50,7 +50,9 @@ const Sites = ({label, sites}) => {
 
 const AppsPanel = ({
 	categories = [],
+	companyName,
 	handleCloseButtonClick = () => {},
+	logoURL,
 	portletNamespace,
 	sites,
 }) => {
@@ -62,10 +64,12 @@ const AppsPanel = ({
 				<ClayLayout.ContainerFluid>
 					<ClayLayout.ContentRow verticalAlign="center">
 						<ClayLayout.ContentCol>
-							<ClaySticker>IMG</ClaySticker>
+							<ClaySticker>
+								<img alt="" height="32px" src={logoURL} />
+							</ClaySticker>
 						</ClayLayout.ContentCol>
 						<ClayLayout.ContentCol className="c-mr-3 c-pl-1 c-pr-3 control-menu-level-1-heading">
-							Liferay DXP Text
+							{companyName}
 						</ClayLayout.ContentCol>
 						<ClayLayout.ContentCol expand>
 							<ClayTabs modern>
@@ -201,7 +205,7 @@ const AppsPanel = ({
 	);
 };
 
-const GlobalMenu = ({panelAppsURL}) => {
+const GlobalMenu = ({companyName, logoURL, panelAppsURL}) => {
 	const [appsPanelData, setAppsPanelData] = useState({});
 	const [visible, setVisible] = useState(false);
 
@@ -244,7 +248,9 @@ const GlobalMenu = ({panelAppsURL}) => {
 				>
 					<ClayModal.Body>
 						<AppsPanel
+							companyName={companyName}
 							handleCloseButtonClick={onClose}
+							logoURL={logoURL}
 							{...appsPanelData}
 						/>
 					</ClayModal.Body>
@@ -267,6 +273,8 @@ const GlobalMenu = ({panelAppsURL}) => {
 };
 
 GlobalMenu.propTypes = {
+	companyName: PropTypes.string,
+	logoURL: PropTypes.string,
 	panelAppsURL: PropTypes.string,
 };
 

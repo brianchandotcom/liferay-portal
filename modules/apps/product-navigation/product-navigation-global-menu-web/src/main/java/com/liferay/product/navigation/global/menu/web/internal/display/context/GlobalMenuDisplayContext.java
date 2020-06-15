@@ -14,9 +14,17 @@
 
 package com.liferay.product.navigation.global.menu.web.internal.display.context;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.product.navigation.global.menu.web.internal.constants.ProductNavigationGlobalMenuPortletKeys;
 
 import java.util.Map;
@@ -34,8 +42,26 @@ public class GlobalMenuDisplayContext {
 		_httpServletRequest = httpServletRequest;
 	}
 
-	public Map<String, Object> getGlobalMenuComponentData() {
+	public Map<String, Object> getGlobalMenuComponentData()
+		throws PortalException {
+
+		Company company = PortalUtil.getCompany(_httpServletRequest);
+
 		return HashMapBuilder.<String, Object>put(
+			"companyName", HtmlUtil.escape(company.getName())
+		).put(
+			"logoURL",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				return StringBundler.concat(
+					themeDisplay.getPathImage(), "/company_logo?img_id=",
+					company.getLogoId(), "&t=",
+					WebServerServletTokenUtil.getToken(company.getLogoId()));
+			}
+		).put(
 			"panelAppsURL",
 			() -> {
 				LiferayPortletURL globalMenuPanelAppsURL =

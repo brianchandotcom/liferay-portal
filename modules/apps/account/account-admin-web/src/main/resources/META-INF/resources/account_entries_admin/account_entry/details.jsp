@@ -43,13 +43,20 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 		<liferay-frontend:fieldset-group>
 			<liferay-util:include page="/account_entries_admin/account_entry/display_data.jsp" servletContext="<%= application %>" />
 
-			<c:if test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, accountEntryDisplay.getType()) %>">
-				<div class="business-account-only">
-					<liferay-util:include page="/account_entries_admin/account_entry/domains.jsp" servletContext="<%= application %>" />
+			<c:choose>
+				<c:when test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, accountEntryDisplay.getType()) %>">
+					<div class="business-account-only">
+						<liferay-util:include page="/account_entries_admin/account_entry/domains.jsp" servletContext="<%= application %>" />
 
-					<liferay-util:include page="/account_entries_admin/account_entry/parent_account_entry.jsp" servletContext="<%= application %>" />
-				</div>
-			</c:if>
+						<liferay-util:include page="/account_entries_admin/account_entry/parent_account_entry.jsp" servletContext="<%= application %>" />
+					</div>
+				</c:when>
+				<c:when test="<%= Objects.equals(AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL, accountEntryDisplay.getType()) %>">
+					<div class="person-account-only">
+						<liferay-util:include page="/account_entries_admin/account_entry/person_account_entry_user.jsp" servletContext="<%= application %>" />
+					</div>
+				</c:when>
+			</c:choose>
 
 			<liferay-util:include page="/account_entries_admin/account_entry/categorization.jsp" servletContext="<%= application %>" />
 		</liferay-frontend:fieldset-group>

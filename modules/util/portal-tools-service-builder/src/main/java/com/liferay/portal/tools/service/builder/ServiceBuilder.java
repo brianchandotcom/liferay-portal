@@ -3482,12 +3482,48 @@ public class ServiceBuilder {
 					_outputPath, "/service/base/", entity.getName(),
 					_getSessionTypeName(sessionType), "ServiceBaseImpl.java"));
 
-			JavaSource parentJavaSource = parentJavaClass.getSource();
-
-			imports.addAll(parentJavaSource.getImports());
-
 			methods = _mergeMethods(
 				methods, parentJavaClass.getMethods(), true);
+
+			JavaSource parentJavaSource = parentJavaClass.getSource();
+
+			Map<String, String> importMap = new HashMap<>();
+
+			for (String childImport : imports) {
+				int x = childImport.lastIndexOf('.');
+
+				importMap.put(childImport.substring(x + 1), childImport);
+			}
+
+			for (String parentImport : parentJavaSource.getImports()) {
+				int x = parentImport.lastIndexOf('.');
+
+				String simpleName = parentImport.substring(x + 1);
+
+				String conflictingImport = importMap.get(simpleName);
+
+				if (conflictingImport == null) {
+					imports.add(parentImport);
+				}
+				else if (!conflictingImport.equals(parentImport)) {
+					for (JavaMethod method : methods) {
+						String signiture = method.getDeclarationSignature(
+							false);
+
+						if (signiture.contains(conflictingImport)) {
+							break;
+						}
+
+						if (signiture.contains(parentImport)) {
+							imports.remove(conflictingImport);
+
+							imports.add(parentImport);
+
+							break;
+						}
+					}
+				}
+			}
 		}
 
 		Map<String, Object> context = _getContext();

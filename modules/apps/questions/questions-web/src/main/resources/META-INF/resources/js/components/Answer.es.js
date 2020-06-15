@@ -20,6 +20,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {
+	client,
 	deleteMessageQuery,
 	markAsAnswerMessageBoardMessageQuery,
 } from '../utils/client.es';
@@ -39,16 +40,21 @@ export default withRouter(
 
 		const [deleteMessage] = useMutation(deleteMessageQuery, {
 			onCompleted() {
-				if (answer.messageBoardMessages) {
-					return Promise.all(
-						answer.messageBoardMessages.items.map(({id}) =>
-							deleteMessage({
+				if (comments && comments.length) {
+					Promise.all(
+						comments.map(({id}) =>
+							client.mutate({
+								mutation: deleteMessageQuery,
 								variables: {messageBoardMessageId: id},
 							})
 						)
-					);
+					).then(() => {
+						deleteAnswer(answer);
+					});
 				}
-				deleteAnswer(answer);
+				else {
+					deleteAnswer(answer);
+				}
 			},
 		});
 

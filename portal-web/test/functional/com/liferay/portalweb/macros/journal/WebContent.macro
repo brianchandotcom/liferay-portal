@@ -1136,7 +1136,7 @@ definition {
 
 		ClickNoError(locator1 = "Icon#EXPIRE");
 
-		Confirm();
+		AssertConfirm(value1 = "Are you sure you want to expire the selected version?");
 	}
 
 	macro getAssetId {

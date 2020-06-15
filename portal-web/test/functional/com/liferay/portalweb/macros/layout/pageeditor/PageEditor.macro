@@ -1033,6 +1033,17 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}
 
+	macro gotoContentConfiguration {
+		Click(
+			key_fragmentName = "${fragmentName}",
+			key_rowPosition = "${rowPosition}",
+			locator1 = "Fragment#CONTENT_FRAGMENT_BODY");
+
+		Click(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+	}
+
 	macro gotoDuplicate {
 		PageEditor.clickConfigurableField(fragmentName = "${fragmentName}");
 

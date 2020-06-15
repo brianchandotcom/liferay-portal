@@ -143,10 +143,20 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
+	public FragmentEntry fetchDraft(long primaryKey) {
+		return fragmentEntryLocalService.fetchDraft(primaryKey);
+	}
+
+	@Override
 	public FragmentEntry fetchFragmentEntry(long fragmentEntryId)
 		throws PortalException {
 
 		return fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
+	}
+
+	@Override
+	public FragmentEntry getDraft(long primaryKey) throws PortalException {
+		return fragmentEntryLocalService.getDraft(primaryKey);
 	}
 
 	@Override
@@ -400,6 +410,39 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.moveFragmentEntry(
 			fragmentEntryId, fragmentCollectionId);
+	}
+
+	@Override
+	public FragmentEntry publishDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), draftFragmentEntry.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentEntryLocalService.publishDraft(draftFragmentEntry);
+	}
+
+	@Override
+	public FragmentEntry updateDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), draftFragmentEntry.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentEntryLocalService.updateDraft(draftFragmentEntry);
+	}
+
+	@Override
+	public FragmentEntry updateFragmentEntry(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentEntry.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentEntryLocalService.updateFragmentEntry(fragmentEntry);
 	}
 
 	@Override

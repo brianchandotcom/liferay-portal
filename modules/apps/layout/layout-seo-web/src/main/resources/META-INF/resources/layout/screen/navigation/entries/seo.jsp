@@ -63,13 +63,23 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 			<c:choose>
 				<c:when test="<%= selLayout.isTypeAssetDisplay() %>">
 					<div class="dpt-mapping">
-						<aui:model-context bean="<%= null %>" model="<%= null %>" />
+						<div class="dpt-mapping-placeholder">
+							<aui:model-context bean="<%= null %>" model="<%= null %>" />
 
-						<aui:input disabled="<%= true %>" helpMessage="html-title-help" id="title" label="html-title" localized="<%= false %>" name="title" placeholder="title" />
+							<aui:input disabled="<%= true %>" id="title" label="html-title" localized="<%= false %>" name="title" placeholder="title" />
 
-						<aui:input disabled="<%= true %>" helpMessage="description-help" id="descriptionSEO" localized="<%= false %>" name="description" placeholder="description" />
+							<div class="form-text">
+								<liferay-ui:message arguments='<%= new String[] {"text", "html-title"} %>' key="map-a-x-field-it-will-be-used-as-x" />
+							</div>
 
-						<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+							<aui:input disabled="<%= true %>" id="descriptionSEO" localized="<%= false %>" name="description" placeholder="description" />
+
+							<div class="form-text">
+								<liferay-ui:message arguments='<%= new String[] {"text", "description"} %>' key="map-a-x-field-it-will-be-used-as-x" />
+							</div>
+
+							<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
+						</div>
 
 						<react:component
 							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"

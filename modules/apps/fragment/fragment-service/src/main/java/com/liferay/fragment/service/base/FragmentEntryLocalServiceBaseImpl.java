@@ -22,12 +22,14 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.persistence.FragmentCollectionPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkFinder;
 import com.liferay.fragment.service.persistence.FragmentEntryLinkPersistence;
 import com.liferay.fragment.service.persistence.FragmentEntryPersistence;
+import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -56,6 +58,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.version.VersionService;
+import com.liferay.portal.kernel.service.version.VersionServiceListener;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -63,7 +67,10 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
@@ -82,7 +89,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class FragmentEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements AopService, FragmentEntryLocalService, IdentifiableOSGiService {
+	implements AopService, FragmentEntryLocalService, IdentifiableOSGiService,
+			   VersionService<FragmentEntry, FragmentEntryVersion> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -105,15 +113,22 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Creates a new fragment entry with the primary key. Does not add the fragment entry to the database.
+	 * Creates a new fragment entry. Does not add the fragment entry to the database.
 	 *
-	 * @param fragmentEntryId the primary key for the new fragment entry
 	 * @return the new fragment entry
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public FragmentEntry createFragmentEntry(long fragmentEntryId) {
-		return fragmentEntryPersistence.create(fragmentEntryId);
+	public FragmentEntry create() {
+		long primaryKey = counterLocalService.increment(
+			FragmentEntry.class.getName());
+
+		FragmentEntry draftFragmentEntry = fragmentEntryPersistence.create(
+			primaryKey);
+
+		draftFragmentEntry.setHeadId(primaryKey);
+
+		return draftFragmentEntry;
 	}
 
 	/**
@@ -128,7 +143,14 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)
 		throws PortalException {
 
-		return fragmentEntryPersistence.remove(fragmentEntryId);
+		FragmentEntry fragmentEntry =
+			fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
+
+		if (fragmentEntry != null) {
+			delete(fragmentEntry);
+		}
+
+		return fragmentEntry;
 	}
 
 	/**
@@ -143,7 +165,9 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
 		throws PortalException {
 
-		return fragmentEntryPersistence.remove(fragmentEntry);
+		delete(fragmentEntry);
+
+		return fragmentEntry;
 	}
 
 	@Override
@@ -241,20 +265,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Override
 	public FragmentEntry fetchFragmentEntry(long fragmentEntryId) {
 		return fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
-	}
-
-	/**
-	 * Returns the fragment entry matching the UUID and group.
-	 *
-	 * @param uuid the fragment entry's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
-	 */
-	@Override
-	public FragmentEntry fetchFragmentEntryByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return fragmentEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -476,55 +486,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns all the fragment entries matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the fragment entries
-	 * @param companyId the primary key of the company
-	 * @return the matching fragment entries, or an empty list if no matches were found
-	 */
-	@Override
-	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return fragmentEntryPersistence.findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of fragment entries matching the UUID and company.
-	 *
-	 * @param uuid the UUID of the fragment entries
-	 * @param companyId the primary key of the company
-	 * @param start the lower bound of the range of fragment entries
-	 * @param end the upper bound of the range of fragment entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the range of matching fragment entries, or an empty list if no matches were found
-	 */
-	@Override
-	public List<FragmentEntry> getFragmentEntriesByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<FragmentEntry> orderByComparator) {
-
-		return fragmentEntryPersistence.findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns the fragment entry matching the UUID and group.
-	 *
-	 * @param uuid the fragment entry's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching fragment entry
-	 * @throws PortalException if a matching fragment entry could not be found
-	 */
-	@Override
-	public FragmentEntry getFragmentEntryByUuidAndGroupId(
-			String uuid, long groupId)
-		throws PortalException {
-
-		return fragmentEntryPersistence.findByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns a range of all the fragment entries.
 	 *
 	 * <p>
@@ -555,11 +516,14 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	 *
 	 * @param fragmentEntry the fragment entry
 	 * @return the fragment entry that was updated
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public FragmentEntry updateFragmentEntry(FragmentEntry fragmentEntry) {
-		return fragmentEntryPersistence.update(fragmentEntry);
+	public FragmentEntry updateFragmentEntry(FragmentEntry draftFragmentEntry)
+		throws PortalException {
+
+		return updateDraft(draftFragmentEntry);
 	}
 
 	@Override
@@ -574,6 +538,427 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	public void setAopProxy(Object aopProxy) {
 		fragmentEntryLocalService = (FragmentEntryLocalService)aopProxy;
 	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public FragmentEntry checkout(
+			FragmentEntry publishedFragmentEntry, int version)
+		throws PortalException {
+
+		if (!publishedFragmentEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"Unable to checkout with unpublished changes " +
+					publishedFragmentEntry.getHeadId());
+		}
+
+		FragmentEntry draftFragmentEntry =
+			fragmentEntryPersistence.fetchByHeadId(
+				publishedFragmentEntry.getPrimaryKey());
+
+		if (draftFragmentEntry != null) {
+			throw new IllegalArgumentException(
+				"Unable to checkout with unpublished changes " +
+					publishedFragmentEntry.getPrimaryKey());
+		}
+
+		FragmentEntryVersion fragmentEntryVersion = getVersion(
+			publishedFragmentEntry, version);
+
+		draftFragmentEntry = _createDraft(publishedFragmentEntry);
+
+		fragmentEntryVersion.populateVersionedModel(draftFragmentEntry);
+
+		draftFragmentEntry = fragmentEntryPersistence.update(
+			draftFragmentEntry);
+
+		for (VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterCheckout(draftFragmentEntry, version);
+		}
+
+		return draftFragmentEntry;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public FragmentEntry delete(FragmentEntry publishedFragmentEntry)
+		throws PortalException {
+
+		if (!publishedFragmentEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"FragmentEntry is a draft " +
+					publishedFragmentEntry.getPrimaryKey());
+		}
+
+		FragmentEntry draftFragmentEntry =
+			fragmentEntryPersistence.fetchByHeadId(
+				publishedFragmentEntry.getPrimaryKey());
+
+		if (draftFragmentEntry != null) {
+			deleteDraft(draftFragmentEntry);
+		}
+
+		for (FragmentEntryVersion fragmentEntryVersion :
+				getVersions(publishedFragmentEntry)) {
+
+			fragmentEntryVersionPersistence.remove(fragmentEntryVersion);
+		}
+
+		fragmentEntryPersistence.remove(publishedFragmentEntry);
+
+		for (VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterDelete(publishedFragmentEntry);
+		}
+
+		return publishedFragmentEntry;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public FragmentEntry deleteDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
+
+		if (draftFragmentEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"FragmentEntry is not a draft " +
+					draftFragmentEntry.getPrimaryKey());
+		}
+
+		fragmentEntryPersistence.remove(draftFragmentEntry);
+
+		for (VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterDeleteDraft(draftFragmentEntry);
+		}
+
+		return draftFragmentEntry;
+	}
+
+	@Override
+	public FragmentEntryVersion deleteVersion(
+			FragmentEntryVersion fragmentEntryVersion)
+		throws PortalException {
+
+		FragmentEntryVersion latestFragmentEntryVersion =
+			fragmentEntryVersionPersistence.findByFragmentEntryId_First(
+				fragmentEntryVersion.getVersionedModelId(), null);
+
+		if (latestFragmentEntryVersion.getVersion() ==
+				fragmentEntryVersion.getVersion()) {
+
+			throw new IllegalArgumentException(
+				"Unable to delete latest version " +
+					fragmentEntryVersion.getVersion());
+		}
+
+		fragmentEntryVersion = fragmentEntryVersionPersistence.remove(
+			fragmentEntryVersion);
+
+		for (VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterDeleteVersion(fragmentEntryVersion);
+		}
+
+		return fragmentEntryVersion;
+	}
+
+	@Override
+	public FragmentEntry fetchDraft(FragmentEntry fragmentEntry) {
+		if (fragmentEntry.isHead()) {
+			return fragmentEntryPersistence.fetchByHeadId(
+				fragmentEntry.getPrimaryKey());
+		}
+
+		return fragmentEntry;
+	}
+
+	@Override
+	public FragmentEntry fetchDraft(long primaryKey) {
+		return fragmentEntryPersistence.fetchByHeadId(primaryKey);
+	}
+
+	@Override
+	public FragmentEntryVersion fetchLatestVersion(
+		FragmentEntry fragmentEntry) {
+
+		long primaryKey = fragmentEntry.getHeadId();
+
+		if (fragmentEntry.isHead()) {
+			primaryKey = fragmentEntry.getPrimaryKey();
+		}
+
+		return fragmentEntryVersionPersistence.fetchByFragmentEntryId_First(
+			primaryKey, null);
+	}
+
+	@Override
+	public FragmentEntry fetchPublished(FragmentEntry fragmentEntry) {
+		if (fragmentEntry.isHead()) {
+			return fragmentEntry;
+		}
+
+		if (fragmentEntry.getHeadId() == fragmentEntry.getPrimaryKey()) {
+			return null;
+		}
+
+		return fragmentEntryPersistence.fetchByPrimaryKey(
+			fragmentEntry.getHeadId());
+	}
+
+	@Override
+	public FragmentEntry fetchPublished(long primaryKey) {
+		FragmentEntry fragmentEntry =
+			fragmentEntryPersistence.fetchByPrimaryKey(primaryKey);
+
+		if ((fragmentEntry == null) ||
+			(fragmentEntry.getHeadId() == fragmentEntry.getPrimaryKey())) {
+
+			return null;
+		}
+
+		return fragmentEntry;
+	}
+
+	@Override
+	public FragmentEntry getDraft(FragmentEntry fragmentEntry)
+		throws PortalException {
+
+		if (!fragmentEntry.isHead()) {
+			return fragmentEntry;
+		}
+
+		FragmentEntry draftFragmentEntry =
+			fragmentEntryPersistence.fetchByHeadId(
+				fragmentEntry.getPrimaryKey());
+
+		if (draftFragmentEntry == null) {
+			draftFragmentEntry = fragmentEntryLocalService.updateDraft(
+				_createDraft(fragmentEntry));
+		}
+
+		return draftFragmentEntry;
+	}
+
+	@Override
+	public FragmentEntry getDraft(long primaryKey) throws PortalException {
+		FragmentEntry draftFragmentEntry =
+			fragmentEntryPersistence.fetchByHeadId(primaryKey);
+
+		if (draftFragmentEntry == null) {
+			FragmentEntry fragmentEntry =
+				fragmentEntryPersistence.findByPrimaryKey(primaryKey);
+
+			draftFragmentEntry = fragmentEntryLocalService.updateDraft(
+				_createDraft(fragmentEntry));
+		}
+
+		return draftFragmentEntry;
+	}
+
+	@Override
+	public FragmentEntryVersion getVersion(
+			FragmentEntry fragmentEntry, int version)
+		throws PortalException {
+
+		long primaryKey = fragmentEntry.getHeadId();
+
+		if (fragmentEntry.isHead()) {
+			primaryKey = fragmentEntry.getPrimaryKey();
+		}
+
+		return fragmentEntryVersionPersistence.findByFragmentEntryId_Version(
+			primaryKey, version);
+	}
+
+	@Override
+	public List<FragmentEntryVersion> getVersions(FragmentEntry fragmentEntry) {
+		long primaryKey = fragmentEntry.getPrimaryKey();
+
+		if (!fragmentEntry.isHead()) {
+			if (fragmentEntry.getHeadId() == fragmentEntry.getPrimaryKey()) {
+				return Collections.emptyList();
+			}
+
+			primaryKey = fragmentEntry.getHeadId();
+		}
+
+		return fragmentEntryVersionPersistence.findByFragmentEntryId(
+			primaryKey);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public FragmentEntry publishDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
+
+		if (draftFragmentEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"Can only publish drafts " +
+					draftFragmentEntry.getPrimaryKey());
+		}
+
+		FragmentEntry headFragmentEntry = null;
+
+		int version = 1;
+
+		if (draftFragmentEntry.getHeadId() ==
+				draftFragmentEntry.getPrimaryKey()) {
+
+			headFragmentEntry = create();
+
+			draftFragmentEntry.setHeadId(headFragmentEntry.getPrimaryKey());
+		}
+		else {
+			headFragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+				draftFragmentEntry.getHeadId());
+
+			FragmentEntryVersion latestFragmentEntryVersion =
+				fragmentEntryVersionPersistence.findByFragmentEntryId_First(
+					draftFragmentEntry.getHeadId(), null);
+
+			version = latestFragmentEntryVersion.getVersion() + 1;
+		}
+
+		FragmentEntryVersion fragmentEntryVersion =
+			fragmentEntryVersionPersistence.create(
+				counterLocalService.increment(
+					FragmentEntryVersion.class.getName()));
+
+		fragmentEntryVersion.setVersion(version);
+		fragmentEntryVersion.setVersionedModelId(
+			headFragmentEntry.getPrimaryKey());
+
+		draftFragmentEntry.populateVersionModel(fragmentEntryVersion);
+
+		fragmentEntryVersionPersistence.update(fragmentEntryVersion);
+
+		fragmentEntryVersion.populateVersionedModel(headFragmentEntry);
+
+		headFragmentEntry.setHeadId(-headFragmentEntry.getPrimaryKey());
+
+		headFragmentEntry = fragmentEntryPersistence.update(headFragmentEntry);
+
+		for (VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+				versionServiceListener : _versionServiceListeners) {
+
+			versionServiceListener.afterPublishDraft(
+				draftFragmentEntry, version);
+		}
+
+		deleteDraft(draftFragmentEntry);
+
+		return headFragmentEntry;
+	}
+
+	@Override
+	public void registerListener(
+		VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+			versionServiceListener) {
+
+		_versionServiceListeners.add(versionServiceListener);
+	}
+
+	@Override
+	public void unregisterListener(
+		VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+			versionServiceListener) {
+
+		_versionServiceListeners.remove(versionServiceListener);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public FragmentEntry updateDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException {
+
+		if (draftFragmentEntry.isHead()) {
+			throw new IllegalArgumentException(
+				"Can only update draft entries " +
+					draftFragmentEntry.getPrimaryKey());
+		}
+
+		FragmentEntry previousFragmentEntry =
+			fragmentEntryPersistence.fetchByPrimaryKey(
+				draftFragmentEntry.getPrimaryKey());
+
+		draftFragmentEntry = fragmentEntryPersistence.update(
+			draftFragmentEntry);
+
+		if (previousFragmentEntry == null) {
+			for (VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+					versionServiceListener : _versionServiceListeners) {
+
+				versionServiceListener.afterCreateDraft(draftFragmentEntry);
+			}
+		}
+		else {
+			for (VersionServiceListener<FragmentEntry, FragmentEntryVersion>
+					versionServiceListener : _versionServiceListeners) {
+
+				versionServiceListener.afterUpdateDraft(draftFragmentEntry);
+			}
+		}
+
+		return draftFragmentEntry;
+	}
+
+	private FragmentEntry _createDraft(FragmentEntry publishedFragmentEntry)
+		throws PortalException {
+
+		FragmentEntry draftFragmentEntry = create();
+
+		draftFragmentEntry.setUuid(publishedFragmentEntry.getUuid());
+		draftFragmentEntry.setHeadId(publishedFragmentEntry.getPrimaryKey());
+		draftFragmentEntry.setGroupId(publishedFragmentEntry.getGroupId());
+		draftFragmentEntry.setCompanyId(publishedFragmentEntry.getCompanyId());
+		draftFragmentEntry.setUserId(publishedFragmentEntry.getUserId());
+		draftFragmentEntry.setUserName(publishedFragmentEntry.getUserName());
+		draftFragmentEntry.setCreateDate(
+			publishedFragmentEntry.getCreateDate());
+		draftFragmentEntry.setModifiedDate(
+			publishedFragmentEntry.getModifiedDate());
+		draftFragmentEntry.setFragmentCollectionId(
+			publishedFragmentEntry.getFragmentCollectionId());
+		draftFragmentEntry.setFragmentEntryKey(
+			publishedFragmentEntry.getFragmentEntryKey());
+		draftFragmentEntry.setName(publishedFragmentEntry.getName());
+		draftFragmentEntry.setCss(publishedFragmentEntry.getCss());
+		draftFragmentEntry.setHtml(publishedFragmentEntry.getHtml());
+		draftFragmentEntry.setJs(publishedFragmentEntry.getJs());
+		draftFragmentEntry.setCacheable(publishedFragmentEntry.getCacheable());
+		draftFragmentEntry.setConfiguration(
+			publishedFragmentEntry.getConfiguration());
+		draftFragmentEntry.setPreviewFileEntryId(
+			publishedFragmentEntry.getPreviewFileEntryId());
+		draftFragmentEntry.setReadOnly(publishedFragmentEntry.getReadOnly());
+		draftFragmentEntry.setType(publishedFragmentEntry.getType());
+		draftFragmentEntry.setLastPublishDate(
+			publishedFragmentEntry.getLastPublishDate());
+		draftFragmentEntry.setStatus(publishedFragmentEntry.getStatus());
+		draftFragmentEntry.setStatusByUserId(
+			publishedFragmentEntry.getStatusByUserId());
+		draftFragmentEntry.setStatusByUserName(
+			publishedFragmentEntry.getStatusByUserName());
+		draftFragmentEntry.setStatusDate(
+			publishedFragmentEntry.getStatusDate());
+
+		draftFragmentEntry.resetOriginalValues();
+
+		return draftFragmentEntry;
+	}
+
+	private final Set
+		<VersionServiceListener<FragmentEntry, FragmentEntryVersion>>
+			_versionServiceListeners = Collections.newSetFromMap(
+				new ConcurrentHashMap
+					<VersionServiceListener
+						<FragmentEntry, FragmentEntryVersion>,
+					 Boolean>());
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -639,6 +1024,9 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 	@Reference
 	protected com.liferay.portal.kernel.service.UserLocalService
 		userLocalService;
+
+	@Reference
+	protected FragmentEntryVersionPersistence fragmentEntryVersionPersistence;
 
 	@Reference
 	protected FragmentEntryLinkPersistence fragmentEntryLinkPersistence;

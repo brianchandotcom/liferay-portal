@@ -14,11 +14,10 @@
 
 package com.liferay.fragment.model.impl;
 
-import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
-import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -28,13 +27,13 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing FragmentEntry in entity cache.
+ * The cache model class for representing FragmentEntryVersion in entity cache.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class FragmentEntryCacheModel
-	implements CacheModel<FragmentEntry>, Externalizable, MVCCModel {
+public class FragmentEntryVersionCacheModel
+	implements CacheModel<FragmentEntryVersion>, Externalizable {
 
 	@Override
 	public boolean equals(Object object) {
@@ -42,15 +41,15 @@ public class FragmentEntryCacheModel
 			return true;
 		}
 
-		if (!(object instanceof FragmentEntryCacheModel)) {
+		if (!(object instanceof FragmentEntryVersionCacheModel)) {
 			return false;
 		}
 
-		FragmentEntryCacheModel fragmentEntryCacheModel =
-			(FragmentEntryCacheModel)object;
+		FragmentEntryVersionCacheModel fragmentEntryVersionCacheModel =
+			(FragmentEntryVersionCacheModel)object;
 
-		if ((fragmentEntryId == fragmentEntryCacheModel.fragmentEntryId) &&
-			(mvccVersion == fragmentEntryCacheModel.mvccVersion)) {
+		if (fragmentEntryVersionId ==
+				fragmentEntryVersionCacheModel.fragmentEntryVersionId) {
 
 			return true;
 		}
@@ -60,31 +59,19 @@ public class FragmentEntryCacheModel
 
 	@Override
 	public int hashCode() {
-		int hashCode = HashUtil.hash(0, fragmentEntryId);
-
-		return HashUtil.hash(hashCode, mvccVersion);
-	}
-
-	@Override
-	public long getMvccVersion() {
-		return mvccVersion;
-	}
-
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		this.mvccVersion = mvccVersion;
+		return HashUtil.hash(0, fragmentEntryVersionId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(53);
 
-		sb.append("{mvccVersion=");
-		sb.append(mvccVersion);
+		sb.append("{fragmentEntryVersionId=");
+		sb.append(fragmentEntryVersionId);
+		sb.append(", version=");
+		sb.append(version);
 		sb.append(", uuid=");
 		sb.append(uuid);
-		sb.append(", headId=");
-		sb.append(headId);
 		sb.append(", fragmentEntryId=");
 		sb.append(fragmentEntryId);
 		sb.append(", groupId=");
@@ -137,135 +124,135 @@ public class FragmentEntryCacheModel
 	}
 
 	@Override
-	public FragmentEntry toEntityModel() {
-		FragmentEntryImpl fragmentEntryImpl = new FragmentEntryImpl();
+	public FragmentEntryVersion toEntityModel() {
+		FragmentEntryVersionImpl fragmentEntryVersionImpl =
+			new FragmentEntryVersionImpl();
 
-		fragmentEntryImpl.setMvccVersion(mvccVersion);
+		fragmentEntryVersionImpl.setFragmentEntryVersionId(
+			fragmentEntryVersionId);
+		fragmentEntryVersionImpl.setVersion(version);
 
 		if (uuid == null) {
-			fragmentEntryImpl.setUuid("");
+			fragmentEntryVersionImpl.setUuid("");
 		}
 		else {
-			fragmentEntryImpl.setUuid(uuid);
+			fragmentEntryVersionImpl.setUuid(uuid);
 		}
 
-		fragmentEntryImpl.setHeadId(headId);
-		fragmentEntryImpl.setHead(head);
-		fragmentEntryImpl.setFragmentEntryId(fragmentEntryId);
-		fragmentEntryImpl.setGroupId(groupId);
-		fragmentEntryImpl.setCompanyId(companyId);
-		fragmentEntryImpl.setUserId(userId);
+		fragmentEntryVersionImpl.setFragmentEntryId(fragmentEntryId);
+		fragmentEntryVersionImpl.setGroupId(groupId);
+		fragmentEntryVersionImpl.setCompanyId(companyId);
+		fragmentEntryVersionImpl.setUserId(userId);
 
 		if (userName == null) {
-			fragmentEntryImpl.setUserName("");
+			fragmentEntryVersionImpl.setUserName("");
 		}
 		else {
-			fragmentEntryImpl.setUserName(userName);
+			fragmentEntryVersionImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			fragmentEntryImpl.setCreateDate(null);
+			fragmentEntryVersionImpl.setCreateDate(null);
 		}
 		else {
-			fragmentEntryImpl.setCreateDate(new Date(createDate));
+			fragmentEntryVersionImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			fragmentEntryImpl.setModifiedDate(null);
+			fragmentEntryVersionImpl.setModifiedDate(null);
 		}
 		else {
-			fragmentEntryImpl.setModifiedDate(new Date(modifiedDate));
+			fragmentEntryVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		fragmentEntryImpl.setFragmentCollectionId(fragmentCollectionId);
+		fragmentEntryVersionImpl.setFragmentCollectionId(fragmentCollectionId);
 
 		if (fragmentEntryKey == null) {
-			fragmentEntryImpl.setFragmentEntryKey("");
+			fragmentEntryVersionImpl.setFragmentEntryKey("");
 		}
 		else {
-			fragmentEntryImpl.setFragmentEntryKey(fragmentEntryKey);
+			fragmentEntryVersionImpl.setFragmentEntryKey(fragmentEntryKey);
 		}
 
 		if (name == null) {
-			fragmentEntryImpl.setName("");
+			fragmentEntryVersionImpl.setName("");
 		}
 		else {
-			fragmentEntryImpl.setName(name);
+			fragmentEntryVersionImpl.setName(name);
 		}
 
 		if (css == null) {
-			fragmentEntryImpl.setCss("");
+			fragmentEntryVersionImpl.setCss("");
 		}
 		else {
-			fragmentEntryImpl.setCss(css);
+			fragmentEntryVersionImpl.setCss(css);
 		}
 
 		if (html == null) {
-			fragmentEntryImpl.setHtml("");
+			fragmentEntryVersionImpl.setHtml("");
 		}
 		else {
-			fragmentEntryImpl.setHtml(html);
+			fragmentEntryVersionImpl.setHtml(html);
 		}
 
 		if (js == null) {
-			fragmentEntryImpl.setJs("");
+			fragmentEntryVersionImpl.setJs("");
 		}
 		else {
-			fragmentEntryImpl.setJs(js);
+			fragmentEntryVersionImpl.setJs(js);
 		}
 
-		fragmentEntryImpl.setCacheable(cacheable);
+		fragmentEntryVersionImpl.setCacheable(cacheable);
 
 		if (configuration == null) {
-			fragmentEntryImpl.setConfiguration("");
+			fragmentEntryVersionImpl.setConfiguration("");
 		}
 		else {
-			fragmentEntryImpl.setConfiguration(configuration);
+			fragmentEntryVersionImpl.setConfiguration(configuration);
 		}
 
-		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
-		fragmentEntryImpl.setReadOnly(readOnly);
-		fragmentEntryImpl.setType(type);
+		fragmentEntryVersionImpl.setPreviewFileEntryId(previewFileEntryId);
+		fragmentEntryVersionImpl.setReadOnly(readOnly);
+		fragmentEntryVersionImpl.setType(type);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
-			fragmentEntryImpl.setLastPublishDate(null);
+			fragmentEntryVersionImpl.setLastPublishDate(null);
 		}
 		else {
-			fragmentEntryImpl.setLastPublishDate(new Date(lastPublishDate));
+			fragmentEntryVersionImpl.setLastPublishDate(
+				new Date(lastPublishDate));
 		}
 
-		fragmentEntryImpl.setStatus(status);
-		fragmentEntryImpl.setStatusByUserId(statusByUserId);
+		fragmentEntryVersionImpl.setStatus(status);
+		fragmentEntryVersionImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			fragmentEntryImpl.setStatusByUserName("");
+			fragmentEntryVersionImpl.setStatusByUserName("");
 		}
 		else {
-			fragmentEntryImpl.setStatusByUserName(statusByUserName);
+			fragmentEntryVersionImpl.setStatusByUserName(statusByUserName);
 		}
 
 		if (statusDate == Long.MIN_VALUE) {
-			fragmentEntryImpl.setStatusDate(null);
+			fragmentEntryVersionImpl.setStatusDate(null);
 		}
 		else {
-			fragmentEntryImpl.setStatusDate(new Date(statusDate));
+			fragmentEntryVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
-		fragmentEntryImpl.resetOriginalValues();
+		fragmentEntryVersionImpl.resetOriginalValues();
 
-		return fragmentEntryImpl;
+		return fragmentEntryVersionImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput)
 		throws ClassNotFoundException, IOException {
 
-		mvccVersion = objectInput.readLong();
+		fragmentEntryVersionId = objectInput.readLong();
+
+		version = objectInput.readInt();
 		uuid = objectInput.readUTF();
-
-		headId = objectInput.readLong();
-
-		head = objectInput.readBoolean();
 
 		fragmentEntryId = objectInput.readLong();
 
@@ -304,7 +291,9 @@ public class FragmentEntryCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeLong(mvccVersion);
+		objectOutput.writeLong(fragmentEntryVersionId);
+
+		objectOutput.writeInt(version);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -312,10 +301,6 @@ public class FragmentEntryCacheModel
 		else {
 			objectOutput.writeUTF(uuid);
 		}
-
-		objectOutput.writeLong(headId);
-
-		objectOutput.writeBoolean(head);
 
 		objectOutput.writeLong(fragmentEntryId);
 
@@ -402,10 +387,9 @@ public class FragmentEntryCacheModel
 		objectOutput.writeLong(statusDate);
 	}
 
-	public long mvccVersion;
+	public long fragmentEntryVersionId;
+	public int version;
 	public String uuid;
-	public long headId;
-	public boolean head;
 	public long fragmentEntryId;
 	public long groupId;
 	public long companyId;

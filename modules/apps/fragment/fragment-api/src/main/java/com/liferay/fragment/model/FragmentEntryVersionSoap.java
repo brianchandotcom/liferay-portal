@@ -21,19 +21,21 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.fragment.service.http.FragmentEntryServiceSoap}.
+ * This class is used by SOAP remote services.
  *
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class FragmentEntrySoap implements Serializable {
+public class FragmentEntryVersionSoap implements Serializable {
 
-	public static FragmentEntrySoap toSoapModel(FragmentEntry model) {
-		FragmentEntrySoap soapModel = new FragmentEntrySoap();
+	public static FragmentEntryVersionSoap toSoapModel(
+		FragmentEntryVersion model) {
 
-		soapModel.setMvccVersion(model.getMvccVersion());
+		FragmentEntryVersionSoap soapModel = new FragmentEntryVersionSoap();
+
+		soapModel.setFragmentEntryVersionId(model.getFragmentEntryVersionId());
+		soapModel.setVersion(model.getVersion());
 		soapModel.setUuid(model.getUuid());
-		soapModel.setHeadId(model.getHeadId());
 		soapModel.setFragmentEntryId(model.getFragmentEntryId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -61,8 +63,11 @@ public class FragmentEntrySoap implements Serializable {
 		return soapModel;
 	}
 
-	public static FragmentEntrySoap[] toSoapModels(FragmentEntry[] models) {
-		FragmentEntrySoap[] soapModels = new FragmentEntrySoap[models.length];
+	public static FragmentEntryVersionSoap[] toSoapModels(
+		FragmentEntryVersion[] models) {
+
+		FragmentEntryVersionSoap[] soapModels =
+			new FragmentEntryVersionSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -71,14 +76,17 @@ public class FragmentEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static FragmentEntrySoap[][] toSoapModels(FragmentEntry[][] models) {
-		FragmentEntrySoap[][] soapModels = null;
+	public static FragmentEntryVersionSoap[][] toSoapModels(
+		FragmentEntryVersion[][] models) {
+
+		FragmentEntryVersionSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new FragmentEntrySoap[models.length][models[0].length];
+			soapModels =
+				new FragmentEntryVersionSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new FragmentEntrySoap[0][0];
+			soapModels = new FragmentEntryVersionSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -88,34 +96,45 @@ public class FragmentEntrySoap implements Serializable {
 		return soapModels;
 	}
 
-	public static FragmentEntrySoap[] toSoapModels(List<FragmentEntry> models) {
-		List<FragmentEntrySoap> soapModels = new ArrayList<FragmentEntrySoap>(
-			models.size());
+	public static FragmentEntryVersionSoap[] toSoapModels(
+		List<FragmentEntryVersion> models) {
 
-		for (FragmentEntry model : models) {
+		List<FragmentEntryVersionSoap> soapModels =
+			new ArrayList<FragmentEntryVersionSoap>(models.size());
+
+		for (FragmentEntryVersion model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new FragmentEntrySoap[soapModels.size()]);
+		return soapModels.toArray(
+			new FragmentEntryVersionSoap[soapModels.size()]);
 	}
 
-	public FragmentEntrySoap() {
+	public FragmentEntryVersionSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _fragmentEntryId;
+		return _fragmentEntryVersionId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setFragmentEntryId(pk);
+		setFragmentEntryVersionId(pk);
 	}
 
-	public long getMvccVersion() {
-		return _mvccVersion;
+	public long getFragmentEntryVersionId() {
+		return _fragmentEntryVersionId;
 	}
 
-	public void setMvccVersion(long mvccVersion) {
-		_mvccVersion = mvccVersion;
+	public void setFragmentEntryVersionId(long fragmentEntryVersionId) {
+		_fragmentEntryVersionId = fragmentEntryVersionId;
+	}
+
+	public int getVersion() {
+		return _version;
+	}
+
+	public void setVersion(int version) {
+		_version = version;
 	}
 
 	public String getUuid() {
@@ -124,14 +143,6 @@ public class FragmentEntrySoap implements Serializable {
 
 	public void setUuid(String uuid) {
 		_uuid = uuid;
-	}
-
-	public long getHeadId() {
-		return _headId;
-	}
-
-	public void setHeadId(long headId) {
-		_headId = headId;
 	}
 
 	public long getFragmentEntryId() {
@@ -326,9 +337,9 @@ public class FragmentEntrySoap implements Serializable {
 		_statusDate = statusDate;
 	}
 
-	private long _mvccVersion;
+	private long _fragmentEntryVersionId;
+	private int _version;
 	private String _uuid;
-	private long _headId;
 	private long _fragmentEntryId;
 	private long _groupId;
 	private long _companyId;

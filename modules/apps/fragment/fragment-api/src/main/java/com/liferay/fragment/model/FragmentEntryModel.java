@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.version.VersionedModel;
 
 import java.util.Date;
 
@@ -39,7 +40,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface FragmentEntryModel
 	extends BaseModel<FragmentEntry>, MVCCModel, ShardedModel,
-			StagedGroupedModel, WorkflowedModel {
+			StagedGroupedModel, VersionedModel<FragmentEntryVersion>,
+			WorkflowedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +54,7 @@ public interface FragmentEntryModel
 	 *
 	 * @return the primary key of this fragment entry
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +62,7 @@ public interface FragmentEntryModel
 	 *
 	 * @param primaryKey the primary key of this fragment entry
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -93,6 +97,22 @@ public interface FragmentEntryModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the head ID of this fragment entry.
+	 *
+	 * @return the head ID of this fragment entry
+	 */
+	@Override
+	public long getHeadId();
+
+	/**
+	 * Sets the head ID of this fragment entry.
+	 *
+	 * @param headId the head ID of this fragment entry
+	 */
+	@Override
+	public void setHeadId(long headId);
 
 	/**
 	 * Returns the fragment entry ID of this fragment entry.

@@ -128,6 +128,8 @@ public class FragmentEntryPersistenceTest {
 
 		newFragmentEntry.setUuid(RandomTestUtil.randomString());
 
+		newFragmentEntry.setHeadId(RandomTestUtil.nextLong());
+
 		newFragmentEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newFragmentEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -182,6 +184,8 @@ public class FragmentEntryPersistenceTest {
 			newFragmentEntry.getMvccVersion());
 		Assert.assertEquals(
 			existingFragmentEntry.getUuid(), newFragmentEntry.getUuid());
+		Assert.assertEquals(
+			existingFragmentEntry.getHeadId(), newFragmentEntry.getHeadId());
 		Assert.assertEquals(
 			existingFragmentEntry.getFragmentEntryId(),
 			newFragmentEntry.getFragmentEntryId());
@@ -254,12 +258,34 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUuid_Head() throws Exception {
+		_persistence.countByUuid_Head("", RandomTestUtil.randomBoolean());
+
+		_persistence.countByUuid_Head("null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByUuid_Head(
+			(String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByUUID_G() throws Exception {
 		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
 
 		_persistence.countByUUID_G("null", 0L);
 
 		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUUID_G_Head() throws Exception {
+		_persistence.countByUUID_G_Head(
+			"", RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByUUID_G_Head(
+			"null", 0L, RandomTestUtil.randomBoolean());
+
+		_persistence.countByUUID_G_Head(
+			(String)null, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -272,6 +298,18 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByUuid_C_Head() throws Exception {
+		_persistence.countByUuid_C_Head(
+			"", RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByUuid_C_Head(
+			"null", 0L, RandomTestUtil.randomBoolean());
+
+		_persistence.countByUuid_C_Head(
+			(String)null, 0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByGroupId() throws Exception {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
@@ -279,10 +317,27 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupId_Head() throws Exception {
+		_persistence.countByGroupId_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByGroupId_Head(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByFragmentCollectionId() throws Exception {
 		_persistence.countByFragmentCollectionId(RandomTestUtil.nextLong());
 
 		_persistence.countByFragmentCollectionId(0L);
+	}
+
+	@Test
+	public void testCountByFragmentCollectionId_Head() throws Exception {
+		_persistence.countByFragmentCollectionId_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByFragmentCollectionId_Head(
+			0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -294,12 +349,33 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_FCI_Head() throws Exception {
+		_persistence.countByG_FCI_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FCI_Head(0L, 0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_FEK() throws Exception {
 		_persistence.countByG_FEK(RandomTestUtil.nextLong(), "");
 
 		_persistence.countByG_FEK(0L, "null");
 
 		_persistence.countByG_FEK(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_FEK_Head() throws Exception {
+		_persistence.countByG_FEK_Head(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FEK_Head(
+			0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FEK_Head(
+			0L, (String)null, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -313,6 +389,19 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_FCI_LikeN_Head() throws Exception {
+		_persistence.countByG_FCI_LikeN_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FCI_LikeN_Head(
+			0L, 0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FCI_LikeN_Head(
+			0L, 0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_FCI_T() throws Exception {
 		_persistence.countByG_FCI_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -322,12 +411,32 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_FCI_T_Head() throws Exception {
+		_persistence.countByG_FCI_T_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FCI_T_Head(
+			0L, 0L, 0, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_FCI_S() throws Exception {
 		_persistence.countByG_FCI_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_FCI_S(0L, 0L, 0);
+	}
+
+	@Test
+	public void testCountByG_FCI_S_Head() throws Exception {
+		_persistence.countByG_FCI_S_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FCI_S_Head(
+			0L, 0L, 0, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -342,12 +451,43 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_FCI_LikeN_S_Head() throws Exception {
+		_persistence.countByG_FCI_LikeN_S_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
+			RandomTestUtil.nextInt(), RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FCI_LikeN_S_Head(
+			0L, 0L, "null", 0, RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FCI_LikeN_S_Head(
+			0L, 0L, (String)null, 0, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_FCI_T_S() throws Exception {
 		_persistence.countByG_FCI_T_S(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt(), RandomTestUtil.nextInt());
 
 		_persistence.countByG_FCI_T_S(0L, 0L, 0, 0);
+	}
+
+	@Test
+	public void testCountByG_FCI_T_S_Head() throws Exception {
+		_persistence.countByG_FCI_T_S_Head(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt(), RandomTestUtil.nextInt(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_FCI_T_S_Head(
+			0L, 0L, 0, 0, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByHeadId() throws Exception {
+		_persistence.countByHeadId(RandomTestUtil.nextLong());
+
+		_persistence.countByHeadId(0L);
 	}
 
 	@Test
@@ -375,7 +515,7 @@ public class FragmentEntryPersistenceTest {
 
 	protected OrderByComparator<FragmentEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"FragmentEntry", "mvccVersion", true, "uuid", true,
+			"FragmentEntry", "mvccVersion", true, "uuid", true, "headId", true,
 			"fragmentEntryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
@@ -628,6 +768,11 @@ public class FragmentEntryPersistenceTest {
 				ReflectionTestUtil.invoke(
 					existingFragmentEntry, "getOriginalFragmentEntryKey",
 					new Class<?>[0])));
+
+		Assert.assertEquals(
+			Long.valueOf(existingFragmentEntry.getHeadId()),
+			ReflectionTestUtil.<Long>invoke(
+				existingFragmentEntry, "getOriginalHeadId", new Class<?>[0]));
 	}
 
 	protected FragmentEntry addFragmentEntry() throws Exception {
@@ -638,6 +783,8 @@ public class FragmentEntryPersistenceTest {
 		fragmentEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		fragmentEntry.setUuid(RandomTestUtil.randomString());
+
+		fragmentEntry.setHeadId(RandomTestUtil.nextLong());
 
 		fragmentEntry.setGroupId(RandomTestUtil.nextLong());
 

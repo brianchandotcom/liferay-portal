@@ -39,23 +39,6 @@ definition {
 		Alert.viewWarningSpecific(warningMessage = "Staging is enabled for at least one site in the current virtual instance. Staging and change lists cannot be used together.");
 	}
 
-	@description = "Check Supported Content Types"
-	@priority = "4"
-	test CheckSupportedContentTypes {
-		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Applications",
-			portlet = "Settings");
-
-		for (var changeListContentType : list "Web Content") {
-			var key_changeListContentType = "${changeListContentType}";
-
-			AssertHTMLSourceTextPresent(
-				locator1 = "ChangeListSettings#SUPPORTED_CONTENT_TYPES",
-				value1 = "${changeListContentType}");
-		}
-	}
-
 	@description = "Enable Change List and go to Overview"
 	@priority = "5"
 	test EnableChangeListAndGoToOverview {

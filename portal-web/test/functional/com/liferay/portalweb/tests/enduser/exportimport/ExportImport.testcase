@@ -160,6 +160,8 @@ definition {
 	@description = "This is a use case for LPS-86501."
 	@priority = "3"
 	test EditImportedContentPageViaImportedSiteTemplate {
+		property osgi.module.configuration.file.names = "com.liferay.layout.configuration.LayoutExportImportConfiguration.config";
+		property osgi.module.configurations = "exportDraftLayout=true";
 		property testray.component.names = "Training";
 
 		SiteTemplates.addCP(

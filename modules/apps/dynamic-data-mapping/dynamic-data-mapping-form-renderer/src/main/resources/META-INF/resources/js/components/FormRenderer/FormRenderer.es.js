@@ -17,7 +17,7 @@ import './PageRenderer.soy';
 import {useResource} from '@clayui/data-provider';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useRef} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -70,6 +70,8 @@ const FormRenderer = React.forwardRef(
 			},
 		});
 
+		const containerFallbackRef = useRef();
+
 		const currentPaginationMode = paginationMode ?? 'wizard';
 		const displayable =
 			initialDisplayableValue ||
@@ -80,8 +82,13 @@ const FormRenderer = React.forwardRef(
 			return null;
 		}
 
+		const containerElementRef = ref ?? containerFallbackRef;
+
 		return (
-			<div className={view === 'fieldSets' ? 'sheet' : ''} ref={ref}>
+			<div
+				className={view === 'fieldSets' ? 'sheet' : ''}
+				ref={containerElementRef}
+			>
 				<div
 					className={classNames(
 						'lfr-ddm-form-container position-relative',
@@ -95,7 +102,7 @@ const FormRenderer = React.forwardRef(
 							{...otherProps}
 							activePage={activePage}
 							cancelLabel={cancelLabel}
-							containerElement={ref}
+							containerElement={containerElementRef}
 							editable={editable}
 							editingLanguageId={editingLanguageId}
 							fieldTypes={fieldTypes}

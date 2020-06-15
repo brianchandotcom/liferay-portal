@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.Reader;
 
 import java.time.ZoneId;
@@ -58,11 +57,8 @@ public class PropsUtil {
 
 	private static final Properties _properties = new SortedProperties() {
 		{
-			Reader reader = null;
-
-			try {
-				reader = new FileReader(
-					System.getProperty("properties.file.path"));
+			try (Reader reader = new FileReader(
+					System.getProperty("properties.file.path"))) {
 
 				load(reader);
 
@@ -81,16 +77,6 @@ public class PropsUtil {
 			}
 			catch (Exception exception) {
 				exception.printStackTrace();
-			}
-			finally {
-				if (reader != null) {
-					try {
-						reader.close();
-					}
-					catch (IOException ioException) {
-						ioException.printStackTrace();
-					}
-				}
 			}
 		}
 	};

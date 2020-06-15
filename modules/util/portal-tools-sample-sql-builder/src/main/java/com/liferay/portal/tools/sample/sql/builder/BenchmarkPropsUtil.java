@@ -55,30 +55,36 @@ public class BenchmarkPropsUtil {
 		return sb.toString();
 	}
 
-	private static final Properties _properties = new SortedProperties() {
-		{
-			try (Reader reader = new FileReader(
-					System.getProperty("sample-sql-properties"))) {
+	private static final Properties _properties;
 
-				load(reader);
+	static {
+		Properties properties = new SortedProperties();
 
-				TimeZone timeZone = TimeZone.getDefault();
+		try (Reader reader = new FileReader(
+				System.getProperty("sample-sql-properties"))) {
 
-				String timeZoneId = getProperty("sample.sql.db.time.zone");
+			properties.load(reader);
 
-				if (Validator.isNotNull(timeZoneId)) {
-					timeZone = TimeZone.getTimeZone(ZoneId.of(timeZoneId));
+			TimeZone timeZone = TimeZone.getDefault();
 
-					TimeZone.setDefault(timeZone);
-				}
-				else {
-					setProperty("sample.sql.db.time.zone", timeZone.getID());
-				}
+			String timeZoneId = properties.getProperty(
+				"sample.sql.db.time.zone");
+
+			if (Validator.isNotNull(timeZoneId)) {
+				timeZone = TimeZone.getTimeZone(ZoneId.of(timeZoneId));
+
+				TimeZone.setDefault(timeZone);
 			}
-			catch (Exception exception) {
-				exception.printStackTrace();
+			else {
+				properties.setProperty(
+					"sample.sql.db.time.zone", timeZone.getID());
 			}
 		}
-	};
+		catch (Exception exception) {
+			throw new ExceptionInInitializerError(exception);
+		}
+
+		_properties = properties;
+	}
 
 }

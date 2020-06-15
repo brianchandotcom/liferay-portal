@@ -369,6 +369,26 @@ gradle.beforeProject {
 			}
 		}
 
+		pluginManager.withPlugin("com.liferay.portal.tools.rest.builder") {
+			File dir = new File(rootDir.parentFile, "modules/util/portal-tools-rest-builder")
+
+			if (dir.exists() && !GradleUtil.getProperty(project, "com.liferay.portal.tools.rest.builder.ignore.local", true)) {
+				buildREST {
+					dependsOn ":util:portal-tools-rest-builder:deploy"
+				}
+			}
+		}
+
+		pluginManager.withPlugin("com.liferay.portal.tools.service.builder") {
+			File dir = new File(rootDir.parentFile, "modules/util/portal-tools-service-builder")
+
+			if (dir.exists() && !GradleUtil.getProperty(project, "com.liferay.portal.tools.service.builder.ignore.local", true)) {
+				buildService {
+					dependsOn ":util:portal-tools-service-builder:deploy"
+				}
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.portal.tools.wsdd.builder") {
 			if (bndPrintJarFiles != null) {
 				buildWSDDJar {

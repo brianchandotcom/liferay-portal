@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.internal.upgrade;
 
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.fragment.internal.upgrade.v1_1_0.UpgradePortletPreferences;
 import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentCollectionTable;
 import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryLinkTable;
@@ -21,6 +22,7 @@ import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryTable;
 import com.liferay.fragment.internal.upgrade.v2_1_0.UpgradeSchema;
 import com.liferay.fragment.internal.upgrade.v2_2_1.UpgradeFragmentEntry;
 import com.liferay.fragment.internal.upgrade.v2_4_0.UpgradeFragmentEntryLink;
+import com.liferay.fragment.internal.upgrade.v2_5_0.UpgradeFragmentEntryVersion;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeSQLServerDatetime;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -106,8 +108,14 @@ public class FragmentServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"2.4.0", "2.5.0",
 			new com.liferay.fragment.internal.upgrade.v2_5_0.
-				UpgradeFragmentEntryLink());
+				UpgradeFragmentEntry(),
+			new com.liferay.fragment.internal.upgrade.v2_5_0.
+				UpgradeFragmentEntryLink(),
+			new UpgradeFragmentEntryVersion(_counterLocalService));
 	}
+
+	@Reference
+	private CounterLocalService _counterLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

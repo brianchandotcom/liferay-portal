@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.item.NoSuchClassTypeException;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemServiceTracker;
 import com.liferay.item.selector.ItemSelector;
@@ -393,7 +394,9 @@ public class LayoutsSEODisplayContext {
 			layout.getLayoutId());
 	}
 
-	public HashMap<String, Object> getSEOMappingData() throws PortalException {
+	public HashMap<String, Object> getSEOMappingData()
+		throws NoSuchClassTypeException, PortalException {
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(_selPlid);
@@ -408,6 +411,7 @@ public class LayoutsSEODisplayContext {
 				InfoItemFormProvider.class,
 				layoutPageTemplateEntry.getClassName()
 			).getInfoForm(
+				layoutPageTemplateEntry.getClassTypeId()
 			).getAllInfoFields(
 			).stream(
 			).map(

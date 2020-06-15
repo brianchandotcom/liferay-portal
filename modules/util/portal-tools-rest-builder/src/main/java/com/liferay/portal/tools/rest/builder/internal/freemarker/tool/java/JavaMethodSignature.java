@@ -15,8 +15,8 @@
 package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java;
 
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.FreeMarkerTool;
-import com.liferay.portal.vulcan.yaml.openapi.Operation;
-import com.liferay.portal.vulcan.yaml.openapi.PathItem;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Operation;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 
 import java.util.ArrayList;
 import java.util.List;

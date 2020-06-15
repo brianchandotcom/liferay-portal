@@ -14,8 +14,6 @@
 
 package com.liferay.portal.vulcan.util;
 
-import static com.liferay.portal.vulcan.yaml.graphql.GraphQLNamingUtil.getGraphQLMutationName;
-
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.oauth2.provider.scope.liferay.OAuth2ProviderScopeLiferayAccessControlContext;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -23,7 +21,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.vulcan.yaml.graphql.GraphQLNamingUtil;
+import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -193,7 +191,8 @@ public class ActionUtil {
 				type = "query";
 			}
 			else {
-				operation = getGraphQLMutationName(methodName);
+				operation = GraphQLNamingUtil.getGraphQLMutationName(
+					methodName);
 				type = "mutation";
 			}
 

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//a[contains(@class,'nav-link')]//span[contains(text(),'${key_assetTitle}')] | //a[@title='${key_assetTitle}']</td>
+	<td>//a[contains(@class,'nav-link') and contains(text(),'${key_assetTitle}')] | //a[.='${key_assetTitle}']</td>
 	<td></td>
 </tr>
 <tr>

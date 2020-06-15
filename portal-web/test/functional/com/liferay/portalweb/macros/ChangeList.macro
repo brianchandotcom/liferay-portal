@@ -57,7 +57,7 @@ definition {
 			Click(locator1 = "ChangeListSettings#SAVE_AND_GO_TO_OVERVIEW_BUTTON");
 		}
 		else {
-			Click(locator1 = "Button#SAVE");
+			Click(locator1 = "Button#SUBMIT");
 		}
 
 		Alert.viewSuccessMessage();

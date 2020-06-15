@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>CHANGE_LISTS_TOGGLE_SWITCH</td>
-	<td>//input[contains(@data-qa-id,'changelist-toggle')]</td>
+	<td>//input[contains(@id,'enableChangeLists')]</td>
 	<td></td>
 </tr>
 <tr>

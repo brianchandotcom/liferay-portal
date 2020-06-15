@@ -389,9 +389,6 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
-				"undoEnabled",
-				_ffLayoutContentPageEditorConfiguration.undoEnabled()
-			).put(
 				"updateConfigurationValuesURL",
 				getFragmentEntryActionURL(
 					"/content_layout/update_configuration_values")

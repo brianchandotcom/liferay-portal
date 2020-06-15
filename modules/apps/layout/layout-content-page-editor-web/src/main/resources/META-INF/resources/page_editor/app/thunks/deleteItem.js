@@ -16,7 +16,6 @@ import deleteItemAction from '../actions/deleteItem';
 import deleteWidgets from '../actions/deleteWidgets';
 import updatePageContents from '../actions/updatePageContents';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {config} from '../config/index';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
@@ -24,11 +23,7 @@ export default function deleteItem({itemId, store}) {
 	return (dispatch) => {
 		const {fragmentEntryLinks, layoutData, segmentsExperienceId} = store;
 
-		const service = config.undoEnabled
-			? markItemForDeletion
-			: LayoutService.deleteItem;
-
-		return service({
+		return markItemForDeletion({
 			fragmentEntryLinks,
 			itemId,
 			layoutData,

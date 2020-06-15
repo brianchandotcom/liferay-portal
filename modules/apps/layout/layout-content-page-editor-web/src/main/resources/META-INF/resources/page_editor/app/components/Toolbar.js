@@ -239,7 +239,7 @@ function ToolbarBody() {
 
 			<ul className="navbar-nav" onClick={deselectItem}>
 				<NetworkStatusBar {...network} />
-				{config.undoEnabled && <Undo onRedo={onRedo} onUndo={onUndo} />}
+				<Undo onRedo={onRedo} onUndo={onUndo} />
 
 				<li className="nav-item">
 					<ClayButton

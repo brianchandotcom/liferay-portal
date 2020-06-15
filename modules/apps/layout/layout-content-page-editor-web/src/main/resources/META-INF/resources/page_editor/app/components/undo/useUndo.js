@@ -15,12 +15,11 @@
 import {useRef} from 'react';
 
 import {ADD_REDO_ACTION, ADD_UNDO_ACTION} from '../../actions/types';
-import {config} from '../../config/index';
 import {canUndoAction} from './undoActions';
 
 export default function useUndo([state, dispatch]) {
 	const ref = useRef((action) => {
-		if (config.undoEnabled && canUndoAction(action)) {
+		if (canUndoAction(action)) {
 			if (action.isUndo) {
 				dispatch({
 					...action,

@@ -158,34 +158,16 @@ export default function getAlloyEditorProcessor(
 				}),
 			];
 
-			if (config.undoEnabled) {
-				_eventHandlers.push(
-					nativeEditor.on(
-						'saveSnapshot',
-						debounce(() => {
-							if (_callbacks.changeCallback) {
-								_callbacks.changeCallback(
-									nativeEditor.getData()
-								);
-							}
-						}, 100)
-					)
-				);
-			}
-			else {
-				_eventHandlers.push(
-					nativeEditor.on(
-						'change',
-						debounce(() => {
-							if (_callbacks.changeCallback) {
-								_callbacks.changeCallback(
-									nativeEditor.getData()
-								);
-							}
-						}, 500)
-					)
-				);
-			}
+			_eventHandlers.push(
+				nativeEditor.on(
+					'saveSnapshot',
+					debounce(() => {
+						if (_callbacks.changeCallback) {
+							_callbacks.changeCallback(nativeEditor.getData());
+						}
+					}, 100)
+				)
+			);
 		},
 
 		/**

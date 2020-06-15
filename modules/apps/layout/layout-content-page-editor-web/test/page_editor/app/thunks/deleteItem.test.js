@@ -12,7 +12,6 @@
  * details.
  */
 
-import LayoutService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/LayoutService';
 import deleteItem from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteItem';
 
 jest.mock(
@@ -25,13 +24,6 @@ jest.mock(
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/LayoutService',
 	() => ({markItemForDeletion: jest.fn(() => Promise.resolve())})
-);
-
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
-	() => ({
-		config: {undoEnabled: true},
-	})
 );
 
 const STATE = {
@@ -115,12 +107,6 @@ const STATE = {
 };
 
 describe('deleteItem', () => {
-	it('calls markItemForDeletion if undoEnabled is set to true', () => {
-		deleteItem({itemId: 'container', store: STATE})(() => {});
-
-		expect(LayoutService.markItemForDeletion).toBeCalled();
-	});
-
 	it('dispatches the delete item action with the portletIds of the removed portlets, if any', async () => {
 		const dispatch = jest.fn();
 

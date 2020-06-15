@@ -23,7 +23,7 @@ import {
 } from '../utils/client.es';
 import {normalize, normalizeRating} from '../utils/utils.es';
 
-export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
+export default ({aggregateRating, entityId, myRating, type}) => {
 	const [userRating, setUserRating] = useState(0);
 	const [rating, setRating] = useState(0);
 
@@ -35,27 +35,8 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 		setUserRating(myRating === null ? 0 : normalize(myRating));
 	}, [myRating]);
 
-	const onCompleted = (data) => {
-		const {ratingValue} =
-			type === 'Thread'
-				? data.createMessageBoardThreadMyRating
-				: data.createMessageBoardMessageMyRating;
-
-		const denormalizedValue = normalize(ratingValue);
-
-		setRating(denormalizedValue);
-
-		if (ratingChange) {
-			ratingChange(denormalizedValue);
-		}
-	};
-
-	const [createVoteMessage] = useMutation(createVoteMessageQuery, {
-		onCompleted,
-	});
-	const [createVoteThread] = useMutation(createVoteThreadQuery, {
-		onCompleted,
-	});
+	const [createVoteMessage] = useMutation(createVoteMessageQuery);
+	const [createVoteThread] = useMutation(createVoteThreadQuery);
 
 	const voteChange = (value) => {
 		if (userRating === value) {
@@ -66,6 +47,7 @@ export default ({aggregateRating, entityId, myRating, ratingChange, type}) => {
 		const normalizedValue = (userRating + value + 1) / 2;
 
 		setUserRating(newUserRating);
+		setRating(rating - userRating + newUserRating);
 
 		if (type === 'Thread') {
 			createVoteThread({

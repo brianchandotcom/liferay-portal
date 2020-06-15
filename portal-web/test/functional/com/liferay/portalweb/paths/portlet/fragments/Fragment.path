@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_FRAGMENT_BODY</td>
+	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')]//*[contains(@class,'content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FRAGMENT_BODY_IN_FRAGMENT</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]/div[contains(@class,'page-editor__topper__content')]//preceding-sibling::div[contains(.,'${key_inFragmentName}')]</td>
 	<td></td>

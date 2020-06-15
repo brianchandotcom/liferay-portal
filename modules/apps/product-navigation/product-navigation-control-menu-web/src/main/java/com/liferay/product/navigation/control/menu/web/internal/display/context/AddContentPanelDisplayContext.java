@@ -115,7 +115,7 @@ public class AddContentPanelDisplayContext {
 			"contents",
 			() -> {
 				if (hasAddContentPermission()) {
-					return _getContents();
+					return getContents();
 				}
 
 				return Collections.emptyList();
@@ -132,6 +132,74 @@ public class AddContentPanelDisplayContext {
 				return Collections.emptyList();
 			}
 		).build();
+	}
+
+	public List<Map<String, Object>> getContents() throws Exception {
+		List<Map<String, Object>> contents = new ArrayList<>();
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setClassNameIds(_getAvailableClassNameIds());
+		assetEntryQuery.setEnd(_getDelta());
+		assetEntryQuery.setGroupIds(
+			new long[] {_themeDisplay.getScopeGroupId()});
+		assetEntryQuery.setAllKeywords(new String[] {_getKeywords()});
+		assetEntryQuery.setOrderByCol1("modifiedDate");
+		assetEntryQuery.setOrderByCol2("title");
+		assetEntryQuery.setOrderByType1("DESC");
+		assetEntryQuery.setOrderByType2("ASC");
+		assetEntryQuery.setStart(0);
+
+		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+			_assetHelper.searchAssetEntries(
+				_httpServletRequest, assetEntryQuery, 0, _getDelta());
+
+		for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
+			AssetRendererFactory<?> assetRendererFactory =
+				assetEntry.getAssetRendererFactory();
+
+			if (assetRendererFactory == null) {
+				continue;
+			}
+
+			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
+			if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
+				continue;
+			}
+
+			String portletId = PortletProviderUtil.getPortletId(
+				assetEntry.getClassName(), PortletProvider.Action.ADD);
+
+			contents.add(
+				HashMapBuilder.<String, Object>put(
+					"className", assetEntry.getClassName()
+				).put(
+					"classPK", assetEntry.getClassPK()
+				).put(
+					"draggable",
+					PortletPermissionUtil.contains(
+						_themeDisplay.getPermissionChecker(),
+						_themeDisplay.getLayout(), portletId,
+						ActionKeys.ADD_TO_PAGE)
+				).put(
+					"icon", assetRenderer.getIconCssClass()
+				).put(
+					"portletId", portletId
+				).put(
+					"title",
+					HtmlUtil.escape(
+						StringUtil.shorten(
+							assetRenderer.getTitle(_themeDisplay.getLocale()),
+							60))
+				).put(
+					"type",
+					_getAssetEntryTypeLabel(
+						assetEntry.getClassName(), assetEntry.getClassTypeId())
+				).build());
+		}
+
+		return contents;
 	}
 
 	public boolean hasAddApplicationsPermission() throws Exception {
@@ -343,74 +411,6 @@ public class AddContentPanelDisplayContext {
 	private long[] _getClassNameIds() {
 		return AssetRendererFactoryRegistryUtil.getClassNameIds(
 			_themeDisplay.getCompanyId());
-	}
-
-	private List<Map<String, Object>> _getContents() throws Exception {
-		List<Map<String, Object>> contents = new ArrayList<>();
-
-		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
-
-		assetEntryQuery.setClassNameIds(_getAvailableClassNameIds());
-		assetEntryQuery.setEnd(_getDelta());
-		assetEntryQuery.setGroupIds(
-			new long[] {_themeDisplay.getScopeGroupId()});
-		assetEntryQuery.setAllKeywords(new String[] {_getKeywords()});
-		assetEntryQuery.setOrderByCol1("modifiedDate");
-		assetEntryQuery.setOrderByCol2("title");
-		assetEntryQuery.setOrderByType1("DESC");
-		assetEntryQuery.setOrderByType2("ASC");
-		assetEntryQuery.setStart(0);
-
-		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-			_assetHelper.searchAssetEntries(
-				_httpServletRequest, assetEntryQuery, 0, _getDelta());
-
-		for (AssetEntry assetEntry : baseModelSearchResult.getBaseModels()) {
-			AssetRendererFactory<?> assetRendererFactory =
-				assetEntry.getAssetRendererFactory();
-
-			if (assetRendererFactory == null) {
-				continue;
-			}
-
-			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-			if ((assetRenderer == null) || !assetRenderer.isDisplayable()) {
-				continue;
-			}
-
-			String portletId = PortletProviderUtil.getPortletId(
-				assetEntry.getClassName(), PortletProvider.Action.ADD);
-
-			contents.add(
-				HashMapBuilder.<String, Object>put(
-					"className", assetEntry.getClassName()
-				).put(
-					"classPK", assetEntry.getClassPK()
-				).put(
-					"draggable",
-					PortletPermissionUtil.contains(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getLayout(),
-						portletId, ActionKeys.ADD_TO_PAGE)
-				).put(
-					"icon", assetRenderer.getIconCssClass()
-				).put(
-					"portletId", portletId
-				).put(
-					"title",
-					HtmlUtil.escape(
-						StringUtil.shorten(
-							assetRenderer.getTitle(_themeDisplay.getLocale()),
-							60))
-				).put(
-					"type",
-					_getAssetEntryTypeLabel(
-						assetEntry.getClassName(), assetEntry.getClassTypeId())
-				).build());
-		}
-
-		return contents;
 	}
 
 	private int _getDelta() {

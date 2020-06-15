@@ -35,7 +35,13 @@ public interface DDMStructureLinkManager {
 
 	public void deleteStructureLinks(long classNameId, long classPK);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId);
+
+	public List<DDMStructureLink> getStructureLinks(long structureId);
 
 	public List<DDMStructureLink> getStructureLinks(
 		long classNameId, long classPK);

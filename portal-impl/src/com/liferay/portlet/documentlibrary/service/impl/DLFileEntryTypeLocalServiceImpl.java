@@ -432,10 +432,10 @@ public class DLFileEntryTypeLocalServiceImpl
 			DLFileEntryType.class);
 
 		List<DDMStructureLink> ddmStructureLinks =
-			DDMStructureLinkManagerUtil.getClassNameStructureLinks(classNameId);
+			DDMStructureLinkManagerUtil.getStructureLinks(ddmStructureId);
 
 		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			if (ddmStructureId != ddmStructureLink.getStructureId()) {
+			if (classNameId != ddmStructureLink.getClassNameId()) {
 				continue;
 			}
 

@@ -25,6 +25,7 @@ const UNMAPPED_OPTION = {
 
 function MappingInput({
 	fieldType,
+	helpMessage,
 	initialFields,
 	isUnmappeable,
 	label,
@@ -85,11 +86,13 @@ function MappingInput({
 					/>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
+			{helpMessage && <ClayForm.Text>{helpMessage}</ClayForm.Text>}
 		</ClayForm.Group>
 	);
 }
 
 MappingInput.propTypes = {
+	helpMessage: PropTypes.string,
 	name: PropTypes.string.isRequired,
 	selectedFieldKey: PropTypes.string,
 	selectedSource: PropTypes.shape({

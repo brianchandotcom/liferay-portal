@@ -17,6 +17,8 @@ import React from 'react';
 
 import MappingInputs from './components/MappingInputs';
 
+const sub = Liferay.Util.sub;
+
 function SeoMapping({
 	description,
 	fields,
@@ -30,12 +32,26 @@ function SeoMapping({
 			inputs={[
 				{
 					fieldType: 'text',
+					helpMessage: sub(
+						Liferay.Language.get(
+							'map-a-x-field-it-will-be-used-as-x'
+						),
+						'text',
+						Liferay.Language.get('html-title')
+					),
 					label: Liferay.Language.get('html-title'),
 					name: `${portletNamespace}title`,
 					selectedFieldKey: title,
 				},
 				{
 					fieldType: 'text',
+					helpMessage: sub(
+						Liferay.Language.get(
+							'map-a-x-field-it-will-be-used-as-x'
+						),
+						'text',
+						Liferay.Language.get('description')
+					),
 					label: Liferay.Language.get('description'),
 					name: `${portletNamespace}description`,
 					selectedFieldKey: description,

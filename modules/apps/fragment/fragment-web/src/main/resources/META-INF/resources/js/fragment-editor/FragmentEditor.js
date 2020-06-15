@@ -15,8 +15,8 @@
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import {useIsMounted, usePrevious} from 'frontend-js-react-web';
-import {debounce, fetch, openToast} from 'frontend-js-web';
-import React, {useCallback, useState} from 'react';
+import {cancelDebounce, debounce, fetch, openToast} from 'frontend-js-web';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';
 import FragmentPreview from './FragmentPreview';
@@ -107,6 +107,18 @@ const FragmentEditor = ({
 		}, 500),
 		[configuration, css, html, js]
 	);
+
+	const previousSaveDraft = usePrevious(saveDraft);
+
+	useEffect(() => {
+		if (previousSaveDraft && previousSaveDraft !== saveDraft) {
+			cancelDebounce(previousSaveDraft);
+		}
+	}, [previousSaveDraft, saveDraft]);
+
+	useEffect(() => {
+		saveDraft();
+	}, [configuration, css, html, js, saveDraft]);
 
 	return (
 		<div className="fragment-editor-container">

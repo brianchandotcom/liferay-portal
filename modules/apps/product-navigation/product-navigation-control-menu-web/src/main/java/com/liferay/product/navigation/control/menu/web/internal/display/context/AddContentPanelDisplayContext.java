@@ -80,6 +80,8 @@ import java.util.stream.Stream;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceURL;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -119,6 +121,19 @@ public class AddContentPanelDisplayContext {
 				}
 
 				return Collections.emptyList();
+			}
+		).put(
+			"getContentsURL",
+			() -> {
+				RenderResponse renderResponse =
+					(RenderResponse)_httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+				ResourceURL resourceURL = renderResponse.createResourceURL();
+
+				resourceURL.setResourceID("/add_content_panel/get_contents");
+
+				return resourceURL.toString();
 			}
 		).put(
 			"namespace", _getNamespace()

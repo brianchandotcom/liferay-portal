@@ -47,6 +47,23 @@ public class UserEmailAddressException extends PortalException {
 
 	}
 
+	public static class MustHaveValidDomain extends UserEmailAddressException {
+
+		public MustHaveValidDomain(String emailAddress, String validDomains) {
+			super(
+				String.format(
+					"Email address %s must have one of the valid domains: %s",
+					emailAddress, validDomains));
+
+			this.emailAddress = emailAddress;
+			this.validDomains = validDomains;
+		}
+
+		public final String emailAddress;
+		public final String validDomains;
+
+	}
+
 	public static class MustNotBeDuplicate extends UserEmailAddressException {
 
 		public MustNotBeDuplicate(

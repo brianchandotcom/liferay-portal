@@ -25,13 +25,13 @@ public abstract class BaseListClayDataSetDisplayView
 	implements ClayDataSetDisplayView {
 
 	public String getContentRenderer() {
-		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_LIST;
+		return ClayDataSetConstants.CONTENT_RENDERER_LIST;
 	}
 
 	public abstract String getDescription();
 
 	public String getLabel() {
-		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_LIST;
+		return ClayDataSetConstants.CONTENT_RENDERER_LIST;
 	}
 
 	public String getThumbnail() {

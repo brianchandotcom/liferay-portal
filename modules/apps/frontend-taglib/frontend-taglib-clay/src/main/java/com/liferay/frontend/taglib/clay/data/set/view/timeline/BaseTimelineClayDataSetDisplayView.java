@@ -24,7 +24,7 @@ public abstract class BaseTimelineClayDataSetDisplayView
 	implements ClayDataSetDisplayView {
 
 	public String getContentRenderer() {
-		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_TIMELINE;
+		return ClayDataSetConstants.CONTENT_RENDERER_TIMELINE;
 	}
 
 	public abstract String getDate();
@@ -32,11 +32,11 @@ public abstract class BaseTimelineClayDataSetDisplayView
 	public abstract String getDescription();
 
 	public String getLabel() {
-		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_TIMELINE;
+		return ClayDataSetConstants.CONTENT_RENDERER_TIMELINE;
 	}
 
 	public String getThumbnail() {
-		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_TIMELINE;
+		return ClayDataSetConstants.CONTENT_RENDERER_TIMELINE;
 	}
 
 	public abstract String getTitle();

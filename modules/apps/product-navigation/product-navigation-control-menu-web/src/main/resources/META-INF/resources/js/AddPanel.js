@@ -31,15 +31,18 @@ const AddPanel = ({contents, portletNamespace, widgets}) => {
 					collectionId: collection.path,
 					label: collection.title,
 				})),
+				id: 'widgets',
 				label: Liferay.Language.get('widgets'),
 			},
 			{
 				collections: [
 					{
 						children: contents.map(normalizeContent),
+						collectionId: 'recent-content',
 						label: Liferay.Language.get('recent'),
 					},
 				],
+				id: 'content',
 				label: Liferay.Language.get('content'),
 			},
 		],

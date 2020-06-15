@@ -24,7 +24,7 @@ import SearchForm from './SearchForm';
 import TabItem from './TabItem';
 
 let nextId = 0;
-const CONTENT_TAB_NAME = Liferay.Language.get('content');
+const TAB_ID = 'content';
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
 const useId = ({portletNamespace}) => {
@@ -33,8 +33,8 @@ const useId = ({portletNamespace}) => {
 	]);
 };
 
-const filterTotalItems = (items, totalItems, label) => {
-	return label === CONTENT_TAB_NAME ? items.slice(0, totalItems) : items;
+const filterTotalItems = (items, totalItems, id) => {
+	return id === TAB_ID ? items.slice(0, totalItems) : items;
 };
 
 const AddPanel = ({portletNamespace, tabs}) => {
@@ -75,7 +75,7 @@ const AddPanel = ({portletNamespace, tabs}) => {
 						key={index}
 					>
 						<SearchForm />
-						{tab.label === CONTENT_TAB_NAME && (
+						{tab.id === TAB_ID && (
 							<ContentOptions
 								grid={grid}
 								onChangeListMode={setGrid}
@@ -95,15 +95,13 @@ const AddPanel = ({portletNamespace, tabs}) => {
 								>
 									<ul
 										className={classNames('list-unstyled', {
-											grid:
-												grid &&
-												tab.label === CONTENT_TAB_NAME,
+											grid: grid && tab.id === TAB_ID,
 										})}
 									>
 										{filterTotalItems(
 											collection.children,
 											totalItems,
-											tab.label
+											tab.id
 										).map((item) => (
 											<TabItem
 												item={item}

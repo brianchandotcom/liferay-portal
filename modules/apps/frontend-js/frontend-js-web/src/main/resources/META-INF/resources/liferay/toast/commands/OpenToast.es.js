@@ -39,7 +39,7 @@ const Text = ({allowHTML, string = null}) => {
 };
 
 /**
- * Function used to obtain the root element for rendering the Toast React component.
+ * Function used to obtain the root element for mounting the React Toast component.
  *
  * When providing a container or a containerId, an element will be added as a first
  * child of the element for preventing React replace the container/containerId DOM
@@ -47,8 +47,8 @@ const Text = ({allowHTML, string = null}) => {
  *
  * When a container and containerId were provided, the container have precedence.
  *
- * @param {HTMLElement} container A container to be used to the Alert being positioned relatively.
- * @param {string} containerId A containerId of the element to be opened relatively.
+ * @param {HTMLElement} container Target element where the toast React component should be mounted.
+ * @param {string} containerId The id of the element where the toast React component should be mounted.
  * @returns {HTMLElement} An element used to
  */
 const getContainerElement = ({container, containerId}) => {
@@ -76,8 +76,8 @@ const getContainerElement = ({container, containerId}) => {
  * @param {number|boolean} autoClose Flag to indicate alert should automatically call onClose.
  * It also accepts a duration (in ms) which indicates how long to wait. If true is passed in, the
  * timeout will be 10000ms. See https://clayui.com/docs/components/alert.html for more details.
- * @param {HTMLElement} container A container to be used to the Alert being positioned relatively.
- * @param {string} containerId A containerId of the element to be opened relatively.
+ * @param {HTMLElement} container Target element where the toast React component should be mounted.
+ * @param {string} containerId The id of the element where the toast React component should be mounted.
  * @param {string|HTML} message The message to show in the toast notification
  * @param {string|HTML} title The title associated with the message
  * @param {string} displayType The displayType of notification to show. It can be one of the

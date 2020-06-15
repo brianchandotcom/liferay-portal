@@ -19,16 +19,13 @@ import React from 'react';
 import MappingInput from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingInput';
 
 const baseProps = {
-	fields: [
+	initialFields: [
 		{key: 'field-1', label: 'Field 1'},
 		{key: 'field-2', label: 'Field 2'},
 	],
 	label: 'Label test mapping field',
 	name: 'testMappingInput',
-	selectedField: {
-		key: 'field-2',
-		label: 'Field 2',
-	},
+	selectedFieldKey: 'field-2',
 	selectedSource: {
 		classTypeLabel: 'Label source type',
 	},
@@ -50,7 +47,7 @@ describe('MappingInput', () => {
 		beforeEach(() => {
 			result = renderComponent();
 			inputFeedback = result.getAllByRole('textbox')[0];
-			inputValue = result.getByDisplayValue(baseProps.selectedField.key);
+			inputValue = result.getByDisplayValue(baseProps.selectedFieldKey);
 			mappingButton = result.getByTitle('map');
 			mappingPanel = result.baseElement.querySelector(
 				'.dpt-mapping-panel'
@@ -93,18 +90,20 @@ describe('MappingInput', () => {
 			});
 
 			it('shows the selected field', () => {
-				expect(fieldSelect.value).toBe(baseProps.selectedField.key);
+				expect(fieldSelect.value).toBe(baseProps.selectedFieldKey);
 			});
 
 			describe('and the user selects another field', () => {
 				beforeEach(() => {
 					fireEvent.change(fieldSelect, {
-						target: {value: baseProps.fields[0].key},
+						target: {value: baseProps.initialFields[0].key},
 					});
 				});
 
 				it('sets the new field key in the hidden input', () => {
-					expect(inputValue.value).toBe(baseProps.fields[0].key);
+					expect(inputValue.value).toBe(
+						baseProps.initialFields[0].key
+					);
 				});
 
 				it('sets the new field name in the user feedback input', () => {

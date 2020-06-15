@@ -1832,6 +1832,8 @@ components:
                         $ref: "#/components/schemas/RelatedContent"
                     readOnly: true
                     type: array
+                seen:
+                    type: boolean
                 showAsQuestion:
                     description:
                         A flag that indicates whether this thread was posted as a question that can receive approved

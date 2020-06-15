@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.yaml.exception;
+package com.liferay.portal.tools.rest.builder.internal.yaml.exception;
 
 import com.liferay.petra.string.StringBundler;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.yaml.openapi;
+package com.liferay.portal.tools.rest.builder.internal.yaml.openapi;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;

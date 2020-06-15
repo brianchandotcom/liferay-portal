@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.vulcan.yaml;
+package com.liferay.portal.tools.rest.builder.internal.yaml;
 
 import com.liferay.portal.vulcan.yaml.config.ConfigYAML;
 import com.liferay.portal.vulcan.yaml.config.Security;

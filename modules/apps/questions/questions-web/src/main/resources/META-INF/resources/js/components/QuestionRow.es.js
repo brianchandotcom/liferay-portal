@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React from 'react';
 
 import {
@@ -79,7 +80,16 @@ export default ({currentSection, question, showSectionLabel}) => (
 			className="questions-title stretched-link"
 			to={`/questions/${question.messageBoardSection.title}/${question.friendlyUrlPath}`}
 		>
-			<h2 className="c-mb-0 stretched-link-layer text-dark">
+			<h2
+				className={classNames(
+					'c-mb-0',
+					'stretched-link-layer',
+					'text-dark',
+					{
+						'question-seen': question.seen,
+					}
+				)}
+			>
 				{question.headline}
 			</h2>
 		</Link>

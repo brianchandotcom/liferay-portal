@@ -457,6 +457,7 @@ export const getThreadsQuery = gql`
 					title
 				}
 				numberOfMessageBoardMessages
+				seen
 				viewCount
 			}
 			page
@@ -558,6 +559,7 @@ export const getRankedThreadsQuery = gql`
 					title
 				}
 				numberOfMessageBoardMessages
+				seen
 				viewCount
 			}
 			page
@@ -595,6 +597,7 @@ export const getRelatedThreadsQuery = gql`
 					numberOfMessageBoardSections
 					title
 				}
+				seen
 			}
 			page
 			pageSize

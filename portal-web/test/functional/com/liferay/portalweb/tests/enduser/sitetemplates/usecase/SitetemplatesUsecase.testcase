@@ -332,7 +332,7 @@ definition {
 
 	@priority = "4"
 	test SitesDynamicTemplateInheritance {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 		property portal.upstream = "quarantine";
 
 		// Quanratine for LPS-114960

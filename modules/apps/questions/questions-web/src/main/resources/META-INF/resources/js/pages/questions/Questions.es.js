@@ -120,6 +120,8 @@ export default withRouter(
 		const changePage = (number) => {
 			historyPushParser(
 				`/questions/${context.section}${tag ? '/tag/' + tag : ''}${
+					creatorId ? '/creator/' + creatorId : ''
+				}${
 					search && search !== '' ? '?search=' + search + '&' : '?'
 				}page=${number}`
 			);

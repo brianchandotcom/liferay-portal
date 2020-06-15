@@ -27,6 +27,9 @@ import java.io.FileOutputStream;
 
 import java.net.URI;
 
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+
 import java.util.Optional;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -109,6 +112,37 @@ public class ProjectTemplatesWorkspaceTest
 
 		buildTemplateWithGradle(
 			destinationDir, WorkspaceUtil.WORKSPACE, "forced", "--force");
+	}
+
+	@Test
+	public void testBuildTemplateWorkspaceLegacyProperty() throws Exception {
+		File workspaceProjectDir = buildWorkspace(
+			temporaryFolder, "gradle", "foows", getDefaultLiferayVersion(),
+			mavenExecutor);
+
+		File gradleProperties = new File(
+			workspaceProjectDir, "gradle.properties");
+
+		Assert.assertTrue(gradleProperties.exists());
+
+		String configLine =
+			System.lineSeparator() + "liferay.workspace.wars.dir=wars";
+
+		Files.write(
+			gradleProperties.toPath(), configLine.getBytes(),
+			StandardOpenOption.APPEND);
+
+		File warsProjectDir = buildTemplateWithGradle(
+			new File(workspaceProjectDir, "wars"), "war-mvc-portlet",
+			"foo-portlet");
+
+		if (isBuildProjects()) {
+			executeGradle(
+				workspaceProjectDir, _gradleDistribution,
+				":wars:foo-portlet" + GRADLE_TASK_PATH_BUILD);
+
+			testExists(warsProjectDir, "build/libs/foo-portlet.war");
+		}
 	}
 
 	@Test

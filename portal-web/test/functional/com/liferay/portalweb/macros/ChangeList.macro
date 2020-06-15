@@ -1,19 +1,5 @@
 definition {
 
-	macro addNewChangeList {
-		Click(locator1 = "Button#PLUS");
-
-		Type(
-			locator1 = "ChangeList#CHANGE_LIST_NAME",
-			value1 = "${changeListName}");
-
-		Type(
-			locator1 = "ChangeList#CHANGE_LIST_DESCRIPTION",
-			value1 = "${changeListDescription}");
-
-		Button.clickSave();
-	}
-
 	macro cancelChangeListCreation {
 		Click(locator1 = "Button#PLUS");
 
@@ -26,6 +12,32 @@ definition {
 
 	macro confirmSwitchingChangeList {
 		AssertConfirm.assertPartialConfirmation(value1 = "Do you want to switch to ${changeListName} change list?");
+	}
+
+	macro createNewPublication {
+		if (isSet(gotoManagePublications)) {
+			GlobalMenu.gotoPortlet(
+				category = "Change Lists",
+				panel = "Applications",
+				portlet = "Manage Publications");
+
+			Click(locator1 = "Button#PLUS");
+		}
+		else {
+			Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
+
+			MenuItem.click(menuItem = "Create New Publication");
+		}
+
+		Type(
+			locator1 = "ChangeList#PUBLICATION_NAME",
+			value1 = "${publicationName}");
+
+		Type(
+			locator1 = "ChangeList#PUBLICATION_DESCRIPTION",
+			value1 = "${publicationDescription}");
+
+		Button.click(button = "Create");
 	}
 
 	macro deleteChangeListFromOverviewScreen {

@@ -49,18 +49,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE_LIST_NAME</td>
-	<td>//input[contains(@name,'name')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHANGE_LIST_NAME_CARD_VIEW</td>
 	<td>//span[contains(@data-qa-id,'headerSubTitle')][normalize-space(text())='${key_changeListName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_LIST_DESCRIPTION</td>
-	<td>//textarea[contains(@name,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,6 +106,16 @@
 <tr>
 	<td>OVERVIEW_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATION_NAME</td>
+	<td>//input[contains(@name,'name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATION_DESCRIPTION</td>
+	<td>//textarea[contains(@name,'description')]</td>
 	<td></td>
 </tr>
 <tr>

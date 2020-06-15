@@ -567,6 +567,13 @@ AUI.add(
 
 					var instanceId = instance.get('instanceId');
 
+					var defaultLanguageId = instance.get('definition')
+						.defaultLanguageId;
+
+					Liferay.fire('ddm:default-locale-sync', {
+						defaultLanguageId,
+					});
+
 					var values = instance.get('values');
 
 					var fieldValue = instance.getFieldInfo(

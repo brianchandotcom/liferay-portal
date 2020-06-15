@@ -13,7 +13,9 @@
  */
 
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
+import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
@@ -21,7 +23,11 @@ import React, {useContext} from 'react';
 import ActionsDropdownRenderer from '../../data_renderer/ActionsDropdownRenderer';
 import ImageRenderer from '../../data_renderer/ImageRenderer';
 
-function List({datasetDisplayContext, items, schema}) {
+function List({
+	datasetDisplayContext,
+	items,
+	schema: {description, image, sticker, symbol, title},
+}) {
 	const {
 		itemActions,
 		selectItems,
@@ -63,23 +69,39 @@ function List({datasetDisplayContext, items, schema}) {
 							/>
 						)}
 					</ClayList.ItemField>
-					{schema.thumbnail && item[schema.thumbnail] && (
+					{image && item[image] ? (
 						<ClayList.ItemField>
-							<ImageRenderer value={item[schema.thumbnail]} />
+							<ImageRenderer
+								sticker={sticker && item[sticker]}
+								value={{src: item[image]}}
+							/>
 						</ClayList.ItemField>
+					) : (
+						symbol &&
+						item[symbol] && (
+							<ClayList.ItemField>
+								<ClaySticker
+									{...((sticker && item[sticker]) ?? {})}
+								>
+									{item[symbol] && (
+										<ClayIcon symbol={item[symbol]} />
+									)}
+								</ClaySticker>
+							</ClayList.ItemField>
+						)
 					)}
 					<ClayList.ItemField
 						className="justify-content-center"
 						expand
 					>
-						{schema.title && (
+						{title && (
 							<ClayList.ItemTitle>
-								{item[schema.title]}
+								{item[title]}
 							</ClayList.ItemTitle>
 						)}
-						{schema.description && (
+						{description && (
 							<ClayList.ItemText>
-								{item[schema.description]}
+								{item[description]}
 							</ClayList.ItemText>
 						)}
 					</ClayList.ItemField>

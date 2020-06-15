@@ -55,7 +55,11 @@ public class ListClayDataSetContentRendererContextContributor
 			HashMapBuilder.<String, Object>put(
 				"description", baseListClayDataSetDisplayView.getDescription()
 			).put(
-				"thumbnail", baseListClayDataSetDisplayView.getThumbnail()
+				"image", baseListClayDataSetDisplayView.getImage()
+			).put(
+				"sticker", baseListClayDataSetDisplayView.getSticker()
+			).put(
+				"symbol", baseListClayDataSetDisplayView.getSymbol()
 			).put(
 				"title", baseListClayDataSetDisplayView.getTitle()
 			).build()

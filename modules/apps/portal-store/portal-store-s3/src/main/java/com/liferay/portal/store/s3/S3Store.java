@@ -161,12 +161,12 @@ public class S3Store implements Store {
 		throws PortalException {
 
 		try {
+			_s3FileCache.cleanUpCacheFiles();
+
 			S3Object s3Object = getS3Object(
 				companyId, repositoryId, fileName, versionLabel);
 
 			File file = _s3FileCache.getCacheFile(s3Object, fileName);
-
-			_s3FileCache.cleanUpCacheFiles();
 
 			return new FileInputStream(file);
 		}

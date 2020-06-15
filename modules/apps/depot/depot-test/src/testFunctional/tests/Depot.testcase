@@ -413,6 +413,8 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
+		Pause(locator1 = "3000");
+
 		Search.searchCP(searchTerm = "Depot");
 
 		Depot.viewSearchResult(

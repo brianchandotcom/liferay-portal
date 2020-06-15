@@ -149,9 +149,14 @@
 .product-menu {
 	&.light {
 		.sidebar-header {
+			color: $white;
 			font-size: 14px;
 			font-weight: bold;
 			height: $product-menu-header-height;
+		}
+
+		.sidebar-body {
+			border-left: 1px solid $gray-300;
 		}
 	}
 

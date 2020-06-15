@@ -48,7 +48,7 @@ const AddPanel = ({portletNamespace, tabs}) => {
 
 	return (
 		<>
-			<ClayTabs className="sidebar-content__panel__tabs" modern>
+			<ClayTabs className="sidebar-content__add-panel__tabs" modern>
 				{tabs.map((tab, index) => (
 					<ClayTabs.Item
 						active={activeTabId === index}
@@ -65,7 +65,7 @@ const AddPanel = ({portletNamespace, tabs}) => {
 			</ClayTabs>
 			<ClayTabs.Content
 				activeIndex={activeTabId}
-				className="sidebar-content__panel__tab-content"
+				className="sidebar-content__add-panel__tab-content"
 				fade
 			>
 				{tabs.map((tab, index) => (

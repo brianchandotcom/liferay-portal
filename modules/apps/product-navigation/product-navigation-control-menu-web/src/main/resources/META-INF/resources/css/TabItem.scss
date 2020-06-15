@@ -1,6 +1,6 @@
 @import 'atlas-variables';
 
-.sidebar__panel__tab-item {
+.sidebar__add-panel__tab-item {
 	align-items: center;
 	border-radius: 4px;
 	color: $secondary-d2;
@@ -35,22 +35,33 @@
 			}
 
 			.title {
-				margin-left: 8px;
-				margin-top: 4px;
+				margin: 4px 8px 0;
 			}
 
 			.subtitle {
 				margin-left: 8px;
+				margin-right: 8px;
 			}
 		}
 
 		&.multiline {
 			height: 136px;
+
+			.sidebar__add-panel__tab-item-add {
+				right: 0;
+			}
 		}
 	}
 
 	&.multiline {
-		height: 44px;
+		height: 50px;
+		position: relative;
+
+		.sidebar__add-panel__tab-item-add {
+			position: absolute;
+			right: 4px;
+			top: 0;
+		}
 	}
 
 	&-add {

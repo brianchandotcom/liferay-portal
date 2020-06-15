@@ -27,12 +27,12 @@ export default function TabItem({item}) {
 
 	return (
 		<li
-			className={classNames('sidebar__panel__tab-item', {
+			className={classNames('sidebar__add-panel__tab-item', {
 				disabled: item.disabled,
 				multiline: isContent,
 			})}
 		>
-			<div className="sidebar__panel__tab-item-body">
+			<div className="sidebar__add-panel__tab-item-body">
 				<div className="icon">
 					<ClayIcon symbol={item.icon} />
 				</div>
@@ -43,7 +43,7 @@ export default function TabItem({item}) {
 			</div>
 
 			<ClayButton
-				className="btn-monospaced sidebar__panel__tab-item-add"
+				className="btn-monospaced sidebar__add-panel__tab-item-add"
 				displayType="unstyled"
 				small
 				title={item.name}

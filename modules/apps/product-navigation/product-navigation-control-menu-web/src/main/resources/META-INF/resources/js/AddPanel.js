@@ -47,7 +47,7 @@ const AddPanel = ({contents, portletNamespace, widgets}) => {
 	);
 
 	return (
-		<div className="sidebar-content__panel">
+		<div className="sidebar-content__add-panel">
 			<TabsPanel portletNamespace={portletNamespace} tabs={tabs} />
 		</div>
 	);

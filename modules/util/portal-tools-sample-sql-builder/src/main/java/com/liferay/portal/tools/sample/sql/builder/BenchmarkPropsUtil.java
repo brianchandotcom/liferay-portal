@@ -30,7 +30,7 @@ import java.util.TimeZone;
 /**
  * @author Lily Chi
  */
-public class PropsUtil {
+public class BenchmarkPropsUtil {
 
 	public static String get(String key) {
 		return _properties.getProperty(key);

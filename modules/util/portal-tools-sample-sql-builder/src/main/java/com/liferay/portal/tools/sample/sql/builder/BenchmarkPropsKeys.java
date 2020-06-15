@@ -17,7 +17,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 /**
  * @author Lily Chi
  */
-public interface PropsKeys {
+public interface BenchmarkPropsKeys {
 
 	public static final String DB_TYPE = "sample.sql.db.type";
 

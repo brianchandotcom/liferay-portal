@@ -124,52 +124,57 @@ public class SampleSQLBuilderTest {
 	}
 
 	private void _initProperties(Properties properties, String outputDir) {
-		properties.put(PropsKeys.DB_TYPE, "hypersonic");
-		properties.put(PropsKeys.MAX_ASSET_CATEGORY_COUNT, "1");
-		properties.put(PropsKeys.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT, "1");
-		properties.put(PropsKeys.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT, "1");
-		properties.put(PropsKeys.MAX_ASSETPUBLISHER_PAGE_COUNT, "2");
-		properties.put(PropsKeys.MAX_ASSET_TAG_COUNT, "1");
-		properties.put(PropsKeys.MAX_ASSET_VUCABULARY_COUNT, "1");
-		properties.put(PropsKeys.MAX_BLOGS_ENTRY_COMMENT_COUNT, "1");
-		properties.put(PropsKeys.MAX_BLOGS_ENTRY_COUNT, "1");
-		properties.put(PropsKeys.MAX_COMMERCE_PRODUCT_COUNT, "1");
-		properties.put(PropsKeys.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT, "1");
-		properties.put(PropsKeys.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT, "1");
-		properties.put("PropsKeys.MAX_CONTENT_LAYOUT_COUNT", "1");
-		properties.put(PropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT, "1");
-		properties.put(PropsKeys.MAX_DDL_RECORD_COUNT, "1");
-		properties.put(PropsKeys.MAX_DDL_RECORD_SET_COUNT, "1");
-		properties.put(PropsKeys.MAX_DL_FILE_ENTRY_COUNT, "1");
-		properties.put(PropsKeys.MAX_DL_FILE_ENTRY_SIZE, "1");
-		properties.put(PropsKeys.MAX_DL_FOLDER_COUNT, "1");
-		properties.put(PropsKeys.MAX_DL_FOLDER_DEPTH, "1");
-		properties.put(PropsKeys.MAX_GROUP_COUNT, "1");
-		properties.put(PropsKeys.MAX_JOURNAL_ARTICLE_COUNT, "1");
-		properties.put(PropsKeys.MAX_JOURNAL_ARTICLE_PAGE_COUNT, "1");
-		properties.put(PropsKeys.MAX_JOURNAL_ARTICLE_SIZE, "1");
-		properties.put(PropsKeys.MAX_JOURNAL_ARTICLE_VERSION_COUNT, "1");
-		properties.put(PropsKeys.MAX_MB_CATEGORY_COUNT, "1");
-		properties.put(PropsKeys.MAX_MB_MESSAGE_COUNT, "1");
-		properties.put(PropsKeys.MAX_MB_THREAD_COUNT, "1");
-		properties.put(PropsKeys.MAX_USER_COUNT, "1");
-		properties.put(PropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
-		properties.put(PropsKeys.MAX_WIKI_NODE_COUNT, "1");
-		properties.put(PropsKeys.MAX_WIKI_PAGE_COMMENT_COUNT, "1");
-		properties.put(PropsKeys.MAX_WIKI_PAGE_COUNT, "1");
-		properties.put(PropsKeys.OPTIMIZE_BUFFER_SIZE, "8192");
+		properties.put(BenchmarkPropsKeys.DB_TYPE, "hypersonic");
+		properties.put(BenchmarkPropsKeys.MAX_ASSET_CATEGORY_COUNT, "1");
 		properties.put(
-			PropsKeys.OUTPUT_CSV_FILE_NAMES,
+			BenchmarkPropsKeys.MAX_ASSET_ENTRY_TO_ASSET_CATEGORY_COUNT, "1");
+		properties.put(
+			BenchmarkPropsKeys.MAX_ASSET_ENTRY_TO_ASSET_TAG_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_ASSETPUBLISHER_PAGE_COUNT, "2");
+		properties.put(BenchmarkPropsKeys.MAX_ASSET_TAG_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_ASSET_VUCABULARY_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_BLOGS_ENTRY_COMMENT_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_BLOGS_ENTRY_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_COMMERCE_PRODUCT_COUNT, "1");
+		properties.put(
+			BenchmarkPropsKeys.MAX_COMMERCE_PRODUCT_DEFINITION_COUNT, "1");
+		properties.put(
+			BenchmarkPropsKeys.MAX_COMMERCE_PRODUCT_INSTANCE_COUNT, "1");
+		properties.put("PropsKeys.MAX_CONTENT_LAYOUT_COUNT", "1");
+		properties.put(BenchmarkPropsKeys.MAX_DDL_CUSTOM_FIELD_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_DDL_RECORD_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_DDL_RECORD_SET_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_DL_FILE_ENTRY_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_DL_FILE_ENTRY_SIZE, "1");
+		properties.put(BenchmarkPropsKeys.MAX_DL_FOLDER_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_DL_FOLDER_DEPTH, "1");
+		properties.put(BenchmarkPropsKeys.MAX_GROUP_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_JOURNAL_ARTICLE_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_JOURNAL_ARTICLE_PAGE_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_JOURNAL_ARTICLE_SIZE, "1");
+		properties.put(
+			BenchmarkPropsKeys.MAX_JOURNAL_ARTICLE_VERSION_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_MB_CATEGORY_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_MB_MESSAGE_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_MB_THREAD_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_USER_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_USER_TO_GROUP_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_WIKI_NODE_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_WIKI_PAGE_COMMENT_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.MAX_WIKI_PAGE_COUNT, "1");
+		properties.put(BenchmarkPropsKeys.OPTIMIZE_BUFFER_SIZE, "8192");
+		properties.put(
+			BenchmarkPropsKeys.OUTPUT_CSV_FILE_NAMES,
 			"assetPublisher,blog,company,cpFriendlyURLEntry,documentLibrary," +
 				"dynamicDataList,fragment,layout,mbCategory,mbThread," +
 					"repository,wiki");
-		properties.put(PropsKeys.OUTPUT_DIR, outputDir);
-		properties.put(PropsKeys.OUTPUT_MERGE, "true");
+		properties.put(BenchmarkPropsKeys.OUTPUT_DIR, outputDir);
+		properties.put(BenchmarkPropsKeys.OUTPUT_MERGE, "true");
 		properties.put(
-			PropsKeys.SCRIPT,
+			BenchmarkPropsKeys.SCRIPT,
 			"com/liferay/portal/tools/sample/sql/builder/dependencies" +
 				"/sample.ftl");
-		properties.put(PropsKeys.VIRTUAL_HOST_NAME, "localhost");
+		properties.put(BenchmarkPropsKeys.VIRTUAL_HOST_NAME, "localhost");
 	}
 
 	private void _loadHypersonic(String sqlDir, String outputDir)

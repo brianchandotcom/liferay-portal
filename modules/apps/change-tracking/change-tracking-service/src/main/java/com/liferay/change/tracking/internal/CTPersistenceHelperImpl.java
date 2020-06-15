@@ -67,8 +67,6 @@ public class CTPersistenceHelperImpl implements CTPersistenceHelper {
 					ctCollectionId, modelClassNameId, ctModel, userId,
 					changeType);
 
-				ctModel.setNew(true);
-
 				return true;
 			}
 

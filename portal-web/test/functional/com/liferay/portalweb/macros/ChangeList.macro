@@ -75,16 +75,6 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro gotoDelete {
-		Click.waitForMenuToggleJSClick(
-			key_rowEntry = "${rowEntry}",
-			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Delete");
-
-		AssertConfirm(value1 = "Are you sure you want to delete '${rowEntry}' change list?");
-	}
-
 	macro publishChangeList {
 		Click(locator1 = "Button#PUBLISH");
 

@@ -38,17 +38,6 @@ definition {
 		}
 	}
 
-	@priority = "5"
-	test EmptyChangeListDeletion {
-		ChangeList.selectChangeList(changeListName = "Select Change List");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		ChangeList.gotoDelete(rowEntry = "Change List Name");
-
-		Alert.viewSuccessMessage();
-	}
-
 	@priority = "4"
 	test SwitchPublication {
 		ChangeList.createNewPublication(

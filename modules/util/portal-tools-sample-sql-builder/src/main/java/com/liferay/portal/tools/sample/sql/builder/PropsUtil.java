@@ -79,16 +79,16 @@ public class PropsUtil {
 					setProperty("sample.sql.db.time.zone", timeZone.getID());
 				}
 			}
-			catch (Exception e) {
-				e.printStackTrace();
+			catch (Exception exception) {
+				exception.printStackTrace();
 			}
 			finally {
 				if (reader != null) {
 					try {
 						reader.close();
 					}
-					catch (IOException ioe) {
-						ioe.printStackTrace();
+					catch (IOException ioException) {
+						ioException.printStackTrace();
 					}
 				}
 			}

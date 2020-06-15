@@ -100,17 +100,16 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 					int i = 1;
 
 					while (true) {
-						String newName;
+						String suffix = StringPool.DASH + i;
 
-						if (name.length() == _MAX_NAME_LENGTH) {
-							newName = name.substring(
-								0, _MAX_NAME_LENGTH - (i + 1));
-						}
-						else {
-							newName = name;
-						}
+						String newName = name + suffix;
 
-						newName = newName + StringPool.DASH + i;
+						if (newName.length() > _MAX_NAME_LENGTH) {
+							String prefix = name.substring(
+								0, _MAX_NAME_LENGTH - suffix.length());
+
+							newName = prefix + suffix;
+						}
 
 						if (existingNames.contains(newName)) {
 							i++;

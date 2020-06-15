@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.metrics.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -80,12 +81,14 @@ public class AssigneeResourceTest extends BaseAssigneeResourceTestCase {
 		Assignee assignee1 = randomAssignee();
 
 		_workflowMetricsRESTTestHelper.addTask(
-			assignee1, testGroup.getCompanyId(), _instance);
+			assignee1, testGroup.getCompanyId(), _instance,
+			TestPropsValues.getUser());
 
 		Assignee assignee2 = randomAssignee();
 
 		_workflowMetricsRESTTestHelper.addTask(
-			assignee2, testGroup.getCompanyId(), _instance);
+			assignee2, testGroup.getCompanyId(), _instance,
+			TestPropsValues.getUser());
 
 		Page<Assignee> page = assigneeResource.postProcessAssigneesPage(
 			_process.getId(), new AssigneeBulkSelection());

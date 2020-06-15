@@ -19,6 +19,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -167,7 +168,8 @@ public class InstanceResourceTest extends BaseInstanceResourceTestCase {
 
 		for (Assignee assignee : instance.getAssignees()) {
 			_workflowMetricsRESTTestHelper.addTask(
-				assignee, testGroup.getCompanyId(), instance);
+				assignee, testGroup.getCompanyId(), instance,
+				TestPropsValues.getUser());
 		}
 
 		if (instance.getCompleted()) {

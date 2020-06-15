@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.sample.sql.builder;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -24,6 +23,8 @@ import java.io.Reader;
 
 import java.time.ZoneId;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -39,14 +40,19 @@ public class BenchmarkPropsUtil {
 	public static String getActualPropertiesContent() {
 		StringBundler sb = new StringBundler();
 
-		for (String key : _properties.stringPropertyNames()) {
-			if (!key.startsWith("sample.sql")) {
+		List<String> propertyNames = new ArrayList<>(
+			_properties.stringPropertyNames());
+
+		propertyNames.sort(null);
+
+		for (String propertyName : propertyNames) {
+			if (!propertyName.startsWith("sample.sql")) {
 				continue;
 			}
 
-			String value = _properties.getProperty(key);
+			String value = _properties.getProperty(propertyName);
 
-			sb.append(key);
+			sb.append(propertyName);
 			sb.append(StringPool.EQUAL);
 			sb.append(value);
 			sb.append(StringPool.NEW_LINE);
@@ -58,7 +64,7 @@ public class BenchmarkPropsUtil {
 	private static final Properties _properties;
 
 	static {
-		Properties properties = new SortedProperties();
+		Properties properties = new Properties();
 
 		try (Reader reader = new FileReader(
 				System.getProperty("sample-sql-properties"))) {

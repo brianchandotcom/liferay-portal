@@ -10,7 +10,7 @@
  */
 
 import getClassName from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
 
 const FilterItem = ({
 	active = false,
@@ -23,6 +23,8 @@ const FilterItem = ({
 	onClick,
 	...otherProps
 }) => {
+	const [checked, setChecked] = useState(active);
+
 	const classes = {
 		control: getClassName(
 			'custom-control',
@@ -37,16 +39,21 @@ const FilterItem = ({
 		),
 	};
 
+	const onClickFilter = (event) => {
+		onClick(event);
+		setChecked(!checked);
+	};
+
 	return (
 		<>
 			<div
 				className={classes.dropdown}
 				data-testid="filterItem"
-				onClick={onClick}
+				onClick={onClickFilter}
 			>
 				<div className={classes.control}>
 					<input
-						checked={active}
+						checked={checked}
 						className="custom-control-input"
 						type={multiple ? 'checkbox' : 'radio'}
 					/>

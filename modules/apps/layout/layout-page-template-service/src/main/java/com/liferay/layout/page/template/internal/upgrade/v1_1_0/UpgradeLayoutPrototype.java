@@ -97,44 +97,14 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 				String name = nameMap.get(defaultLocale);
 
 				if (existingNames.contains(name)) {
-					int i = 1;
+					name = _generateNewName(name, existingNames);
 
-					while (true) {
-						String suffix = StringPool.DASH + i;
+					nameMap.put(defaultLocale, name);
 
-						String newName = name + suffix;
+					layoutPrototype.setNameMap(nameMap);
 
-						if (newName.length() > _MAX_NAME_LENGTH) {
-							String prefix = name.substring(
-								0, _MAX_NAME_LENGTH - suffix.length());
-
-							newName = prefix + suffix;
-						}
-
-						if (existingNames.contains(newName)) {
-							i++;
-
-							continue;
-						}
-
-						if (_log.isWarnEnabled()) {
-							_log.error(
-								StringBundler.concat(
-									"Duplicate Layout Prototype name ", name,
-									" found. Renaming to ", newName));
-						}
-
-						name = newName;
-
-						nameMap.put(defaultLocale, name);
-
-						layoutPrototype.setNameMap(nameMap);
-
-						_layoutPrototypeLocalService.updateLayoutPrototype(
-							layoutPrototype);
-
-						break;
-					}
+					_layoutPrototypeLocalService.updateLayoutPrototype(
+						layoutPrototype);
 				}
 
 				existingNames.add(name);
@@ -167,6 +137,38 @@ public class UpgradeLayoutPrototype extends UpgradeProcess {
 				"dependencies/update.sql"));
 
 		runSQLTemplateString(template, false);
+	}
+
+	private String _generateNewName(String name, List<String> existingNames) {
+		int i = 1;
+
+		while (true) {
+			String suffix = StringPool.DASH + i;
+
+			String newName = name + suffix;
+
+			if (newName.length() > _MAX_NAME_LENGTH) {
+				String prefix = name.substring(
+					0, _MAX_NAME_LENGTH - suffix.length());
+
+				newName = prefix + suffix;
+			}
+
+			if (existingNames.contains(newName)) {
+				i++;
+
+				continue;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Duplicate Layout Prototype name ", name,
+						" found. Renaming to ", newName));
+			}
+
+			return newName;
+		}
 	}
 
 	private static final int _MAX_NAME_LENGTH = 75;

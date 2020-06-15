@@ -61,6 +61,12 @@ const AppsPanel = ({
 			<div className="border-bottom global-apps-menu-header">
 				<ClayLayout.ContainerFluid>
 					<ClayLayout.ContentRow verticalAlign="center">
+						<ClayLayout.ContentCol>
+							<ClaySticker>IMG</ClaySticker>
+						</ClayLayout.ContentCol>
+						<ClayLayout.ContentCol className="c-mr-3 c-pl-1 c-pr-3 control-menu-level-1-heading">
+							Liferay DXP Text
+						</ClayLayout.ContentCol>
 						<ClayLayout.ContentCol expand>
 							<ClayTabs modern>
 								{categories.map(({key, label}, index) => (

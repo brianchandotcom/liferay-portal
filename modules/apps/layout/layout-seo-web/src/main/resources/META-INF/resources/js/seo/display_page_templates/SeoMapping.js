@@ -36,7 +36,7 @@ function SeoMapping({
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
 						),
-						'text',
+						Liferay.Language.get('text'),
 						Liferay.Language.get('html-title')
 					),
 					label: Liferay.Language.get('html-title'),
@@ -49,7 +49,7 @@ function SeoMapping({
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
 						),
-						'text',
+						Liferay.Language.get('text'),
 						Liferay.Language.get('description')
 					),
 					label: Liferay.Language.get('description'),

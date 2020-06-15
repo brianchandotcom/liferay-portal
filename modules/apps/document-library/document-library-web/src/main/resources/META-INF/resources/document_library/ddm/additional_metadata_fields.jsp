@@ -74,13 +74,15 @@ if (fileEntryType != null) {
 	/>
 </liferay-ui:search-container>
 
-<liferay-ui:icon
-	cssClass="modify-link select-metadata"
-	label="<%= true %>"
-	linkCssClass="btn btn-secondary"
-	message="select"
-	url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-/>
+<div class="mt-3">
+	<liferay-ui:icon
+		cssClass="modify-link select-metadata"
+		label="<%= true %>"
+		linkCssClass="btn btn-secondary"
+		message="select"
+		url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+	/>
+</div>
 
 <aui:script>
 	function <portlet:namespace />openDDMStructureSelector() {

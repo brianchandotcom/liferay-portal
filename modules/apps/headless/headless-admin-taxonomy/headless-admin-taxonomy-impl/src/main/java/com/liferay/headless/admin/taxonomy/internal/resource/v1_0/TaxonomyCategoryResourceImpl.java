@@ -152,15 +152,15 @@ public class TaxonomyCategoryResourceImpl
 				"add-category",
 				addAction(
 					"ADD_CATEGORY", assetCategory.getCategoryId(),
-					AssetCategory.class.getName(), assetCategory.getUserId(),
 					"postTaxonomyCategoryTaxonomyCategory",
+					assetCategory.getUserId(), AssetCategory.class.getName(),
 					assetCategory.getGroupId())
 			).put(
 				"get",
 				addAction(
 					"VIEW", assetCategory.getCategoryId(),
-					AssetCategory.class.getName(), assetCategory.getUserId(),
 					"getTaxonomyCategoryTaxonomyCategoriesPage",
+					assetCategory.getUserId(), AssetCategory.class.getName(),
 					assetCategory.getGroupId())
 			).build(),
 			booleanQuery -> {

@@ -21,6 +21,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 import CodeMirrorEditor from './CodeMirrorEditor';
 import FragmentPreview from './FragmentPreview';
 
+const CHANGES_STATUS = {
+	saved: Liferay.Language.get('changes-saved'),
+	saving: Liferay.Language.get('saving-changes'),
+	unsaved: Liferay.Language.get('unsaved-changes'),
+};
+
 const FragmentEditor = ({
 	context: {namespace},
 	props: {
@@ -46,7 +52,7 @@ const FragmentEditor = ({
 }) => {
 	const [activeTabKeyValue, setActiveTabKeyValue] = useState(0);
 	const [isCacheable, setIsCacheable] = useState(cacheable);
-	const [isSaving, setIsSaving] = useState(false);
+	const [changesStatus, setChangesStatus] = useState(null);
 	const [configuration, setConfiguration] = useState(initialConfiguration);
 	const [css, setCss] = useState(initialCSS);
 	const [html, setHtml] = useState(initialHTML);
@@ -54,9 +60,27 @@ const FragmentEditor = ({
 
 	const isMounted = useIsMounted();
 
+	const contentHasChanged = useCallback(() => {
+		return (
+			initialConfiguration !== configuration ||
+			initialCSS !== css ||
+			initialHTML !== html ||
+			initialJS !== js
+		);
+	}, [
+		configuration,
+		css,
+		html,
+		initialCSS,
+		initialConfiguration,
+		initialHTML,
+		initialJS,
+		js,
+	]);
+
 	const saveDraft = useCallback(
 		debounce(() => {
-			setIsSaving(true);
+			setChangesStatus(CHANGES_STATUS.saving);
 
 			const formData = new FormData();
 
@@ -86,11 +110,11 @@ const FragmentEditor = ({
 					return response;
 				})
 				.then(() => {
-					setIsSaving(false);
+					setChangesStatus(CHANGES_STATUS.saved);
 				})
 				.catch((error) => {
 					if (isMounted()) {
-						setIsSaving(false);
+						setChangesStatus(CHANGES_STATUS.unsaved);
 					}
 
 					const message =
@@ -117,13 +141,16 @@ const FragmentEditor = ({
 	}, [previousSaveDraft, saveDraft]);
 
 	useEffect(() => {
-		saveDraft();
-	}, [configuration, css, html, js, saveDraft]);
+		if (contentHasChanged()) {
+			setChangesStatus(CHANGES_STATUS.unsaved);
+			saveDraft();
+		}
+	}, [contentHasChanged, saveDraft]);
 
 	return (
 		<div className="fragment-editor-container">
-			<div className="nav-bar-container">
-				<div className="navbar navbar-default">
+			<div className="fragment-editor__toolbar nav-bar-container">
+				<div className="navbar navbar-default pb-2 pt-2">
 					<div className="container">
 						<div className="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light">
 							<ClayTabs modern>
@@ -179,7 +206,13 @@ const FragmentEditor = ({
 										</span>
 									)}
 
-									<div className="btn-group-item custom-checkbox custom-control ml-2 mr-4 mt-1">
+									<div className="btn-group-item ml-2 mr-4">
+										<span className="my-0 navbar-text p-0">
+											{changesStatus}
+										</span>
+									</div>
+
+									<div className="btn-group-item custom-checkbox custom-control mb-1 mr-4 mt-1">
 										<label
 											className="lfr-portal-tooltip"
 											data-title={Liferay.Language.get(
@@ -213,7 +246,10 @@ const FragmentEditor = ({
 									<div className="btn-group-item">
 										<button
 											className="btn btn-primary btn-sm"
-											disabled={isSaving}
+											disabled={
+												changesStatus ===
+												CHANGES_STATUS.saving
+											}
 											type="button"
 										>
 											<span className="lfr-btn-label">

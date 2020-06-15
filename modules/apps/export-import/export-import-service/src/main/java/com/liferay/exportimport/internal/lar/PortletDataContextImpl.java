@@ -65,7 +65,6 @@ import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
@@ -81,7 +80,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -2670,10 +2668,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private boolean _isSiteTemplate() throws PortalException {
 		Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
-		long layoutSetPrototypeClassNameId =
-			ClassNameLocalServiceUtil.getClassNameId(LayoutSetPrototype.class);
-
-		if (layoutSetPrototypeClassNameId == group.getClassNameId()) {
+		if (group.isLayoutSetPrototype()) {
 			return true;
 		}
 

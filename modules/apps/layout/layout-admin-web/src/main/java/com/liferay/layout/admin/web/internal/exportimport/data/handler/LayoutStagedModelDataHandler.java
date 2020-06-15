@@ -74,7 +74,6 @@ import com.liferay.portal.kernel.model.LayoutFriendlyURL;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
 import com.liferay.portal.kernel.model.LayoutTemplate;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -82,7 +81,6 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.adapter.StagedTheme;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
@@ -1918,7 +1916,7 @@ public class LayoutStagedModelDataHandler
 		if (!privateLayout ||
 			Objects.equals(
 				layout.getType(), LayoutConstants.TYPE_CONTROL_PANEL) ||
-			_isSiteTemplate(group)) {
+			group.isLayoutSetPrototype()) {
 
 			addGuestPermissions = true;
 		}
@@ -2412,17 +2410,6 @@ public class LayoutStagedModelDataHandler
 		return null;
 	}
 
-	private boolean _isSiteTemplate(Group group) {
-		long layoutSetPrototypeClassNameId =
-			_classNameLocalService.getClassNameId(LayoutSetPrototype.class);
-
-		if (layoutSetPrototypeClassNameId == group.getClassNameId()) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final String _SAME_GROUP_FRIENDLY_URL =
 		"/[$SAME_GROUP_FRIENDLY_URL$]";
 
@@ -2433,9 +2420,6 @@ public class LayoutStagedModelDataHandler
 		TransactionConfig.Factory.create(
 			Propagation.SUPPORTS,
 			new Class<?>[] {PortalException.class, SystemException.class});
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	private CounterLocalService _counterLocalService;
 

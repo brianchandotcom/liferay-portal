@@ -26,58 +26,58 @@ const mockedData = {
 		{
 			childCategories: [
 				{
+					key: 'childcategory1',
 					label: 'Child Category 1',
 					panelApps: [
 						{
-							portletId: 'panelApp1',
 							label: 'Panel App 1',
+							portletId: 'panelApp1',
 							url: 'panelapp1url',
 						},
 						{
-							portletId: 'panelApp2',
 							label: 'Panel App 2',
+							portletId: 'panelApp2',
 							url: 'panelapp2url',
 						},
 					],
-					key: 'childcategory1',
 				},
 				{
+					key: 'childcategory2',
 					label: 'Child Category 2',
 					panelApps: [
 						{
-							portletId: 'panelApp3',
 							label: 'Panel App 3',
+							portletId: 'panelApp3',
 							url: 'panelapp3url',
 						},
 						{
-							portletId: 'panelApp4',
 							label: 'Panel App 4',
+							portletId: 'panelApp4',
 							url: 'panelapp4url',
 						},
 					],
-					key: 'childcategory2',
 				},
 			],
-			label: 'Category 1',
 			key: 'category1',
+			label: 'Category 1',
 		},
 	],
 	portletNamespace: 'portletNamespace',
 	sites: {
-		recentSites: [
-			{
-				label: 'Recent Site 1',
-				key: 'Recent1',
-				logoURL: 'recentSite1Logo',
-				url: 'recentSite1Url',
-			},
-		],
 		mySites: [
 			{
-				label: 'My Site',
 				key: 'mySite',
+				label: 'My Site',
 				logoURL: 'mySiteLogo',
 				url: 'mySiteUrl',
+			},
+		],
+		recentSites: [
+			{
+				key: 'Recent1',
+				label: 'Recent Site 1',
+				logoURL: 'recentSite1Logo',
+				url: 'recentSite1Url',
 			},
 		],
 	},

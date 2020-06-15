@@ -17,6 +17,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
 
 import '../css/GlobalMenu.scss';
+
 import ClaySticker from '@clayui/sticker';
 import ClayTabs from '@clayui/tabs';
 import {fetch} from 'frontend-js-web';

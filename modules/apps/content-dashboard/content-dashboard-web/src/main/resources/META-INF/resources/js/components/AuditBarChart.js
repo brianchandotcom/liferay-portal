@@ -64,7 +64,7 @@ export default function AuditBarChart({bars, data, rtl}) {
 						height={70}
 						interval={0}
 						reversed={rtl}
-						tick={<CustomTick />}
+						tick={<CustomXAxisTick />}
 						tickLine={false}
 					/>
 					<YAxis
@@ -72,6 +72,7 @@ export default function AuditBarChart({bars, data, rtl}) {
 							stroke: BAR_CHART.stroke,
 						}}
 						orientation={rtl ? 'right' : 'left'}
+						tick={<CustomYAxisTick rtl={rtl} />}
 						tickLine={false}
 					/>
 
@@ -93,7 +94,7 @@ export default function AuditBarChart({bars, data, rtl}) {
 	);
 }
 
-function CustomTick(props) {
+function CustomXAxisTick(props) {
 	const {payload, x, y} = props;
 
 	return (
@@ -104,6 +105,22 @@ function CustomTick(props) {
 			width={120}
 			x={x}
 			y={y + 16}
+		>
+			{payload.value}
+		</Text>
+	);
+}
+
+function CustomYAxisTick(props) {
+	const {payload, rtl, x, y} = props;
+
+	return (
+		<Text
+			fill={BAR_CHART.fillXAxis}
+			textAnchor="end"
+			verticalAnchor="end"
+			x={rtl ? x + 16 : x - 16}
+			y={y}
 		>
 			{payload.value}
 		</Text>

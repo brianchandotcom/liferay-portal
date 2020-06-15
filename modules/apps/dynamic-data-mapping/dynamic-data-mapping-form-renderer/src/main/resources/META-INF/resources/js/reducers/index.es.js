@@ -16,41 +16,51 @@ import defaultReducer from './defaultReducer.es';
 import fieldReducer from './fieldReducer.es';
 import pageReducer from './pageReducer.es';
 
+const reducers = [defaultReducer, fieldReducer, pageReducer];
+
+let hasSentEvent = false;
+
 export const createReducer = (onEvent) => {
 	return (state, action) =>
-		[defaultReducer, fieldReducer, pageReducer].reduce(
-			(prevState, reducer) => {
-				const nextProperties = reducer(prevState, action);
+		reducers.reduce((prevState, reducer, index) => {
+			const nextProperties = reducer(prevState, action);
 
-				if (prevState === nextProperties) {
+			if (prevState === nextProperties) {
+
+				// We only propagate the event when no event has been handled
+				// before and we are at the last interaction of the reducers,
+				// this ensures that we do not send unnecessary events.
+
+				if (index === reducers.length - 1 && !hasSentEvent) {
+					hasSentEvent = true;
 					onEvent(action.type, action.payload);
-
-					return nextProperties;
 				}
 
-				// The reducer propagates the events so that they can be
-				// handled by other components in the upper layer that are
-				// not the responsibility of the form renderer, some
-				// operations are transformed and treated here, we issue
-				// the final result to avoid double operations that are
-				// costly.
+				return nextProperties;
+			}
 
-				let payload = {transformation: nextProperties};
+			// The reducer propagates the events so that they can be
+			// handled by other components in the upper layer that are
+			// not the responsibility of the form renderer, some
+			// operations are transformed and treated here, we issue
+			// the final result to avoid double operations that are
+			// costly.
 
-				if (typeof action.payload === 'object') {
-					payload = {...payload, ...action.payload};
-				}
-				else {
-					payload = {...payload, value: action.payload};
-				}
+			let payload = {transformation: nextProperties};
 
-				onEvent(action.type, payload);
+			if (typeof action.payload === 'object') {
+				payload = {...payload, ...action.payload};
+			}
+			else {
+				payload = {...payload, value: action.payload};
+			}
 
-				return {
-					...prevState,
-					...nextProperties,
-				};
-			},
-			state
-		);
+			hasSentEvent = false;
+			onEvent(action.type, payload);
+
+			return {
+				...prevState,
+				...nextProperties,
+			};
+		}, state);
 };

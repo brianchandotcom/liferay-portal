@@ -1,13 +1,25 @@
+@import 'atlas-variables';
+
 $control-menu-height: 56px;
 $tab-header-height: 38px;
 
 .global-apps-menu-modal {
+	.global-apps-menu-header {
+		.nav-link {
+			line-height: 1.6rem;
+
+			@include media-breakpoint-up(sm) {
+				line-height: 2.15rem;
+			}
+		}
+	}
+
 	.modal-full {
 		margin-top: 0;
 		width: 100%;
 
 		.modal-body {
-			padding-top: 12px;
+			padding: 0;
 		}
 
 		.modal-content {
@@ -19,5 +31,52 @@ $tab-header-height: 38px;
 	.tab-pane {
 		max-height: calc(100vh - #{$control-menu-height + $tab-header-height});
 		overflow-y: auto;
+	}
+}
+
+.global-apps-nav {
+	padding: 1rem;
+
+	@include media-breakpoint-up(sm) {
+		padding: 1.5rem 2.2rem;
+	}
+
+	.global-apps-nav-header {
+		color: $secondary;
+		font-size: 0.875rem;
+		font-weight: 600;
+		line-height: 3rem;
+		text-transform: uppercase;
+	}
+
+	.global-apps-nav-subheader {
+		color: $secondary;
+		font-size: 0.75rem;
+		font-weight: 600;
+		margin-bottom: 0.25rem;
+		text-transform: uppercase;
+	}
+
+	.global-apps-nav-item {
+		margin-bottom: 0.5rem;
+	}
+
+	.global-apps-nav-link {
+		color: $dark;
+		line-height: 1.5rem;
+	}
+}
+
+.global-apps-sites {
+	margin-bottom: 0;
+	width: 100%;
+
+	@include media-breakpoint-up(md) {
+		width: 270px;
+	}
+
+	> ul {
+		margin-bottom: 0;
+		padding: 0 1.5rem 1rem;
 	}
 }

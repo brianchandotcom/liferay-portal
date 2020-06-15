@@ -27,11 +27,11 @@ import React, {useRef, useState} from 'react';
 const Sites = ({label, sites}) => {
 	return (
 		<>
-			<li className="dropdown-subheader">{label}</li>
+			<li className="global-apps-nav-subheader">{label}</li>
 
 			{sites.map(({key, label, logoURL, url}) => (
-				<li key={key}>
-					<a className="dropdown-item" href={url}>
+				<li className="global-apps-nav-item" key={key}>
+					<a className="global-apps-nav-link" href={url}>
 						<ClaySticker
 							className="inline-item-before"
 							inline={true}
@@ -58,35 +58,39 @@ const AppsPanel = ({
 
 	return (
 		<>
-			<ClayLayout.ContainerFluid>
-				<ClayLayout.ContentRow>
-					<ClayLayout.ContentCol expand>
-						<ClayTabs modern>
-							{categories.map(({key, label}, index) => (
-								<ClayTabs.Item
-									active={activeTab === index}
-									id={`${portletNamespace}tab_${index}`}
-									key={key}
-									onClick={() => setActiveTab(index)}
-								>
-									{label}
-								</ClayTabs.Item>
-							))}
-						</ClayTabs>
-					</ClayLayout.ContentCol>
+			<div className="border-bottom global-apps-menu-header">
+				<ClayLayout.ContainerFluid>
+					<ClayLayout.ContentRow verticalAlign="center">
+						<ClayLayout.ContentCol expand>
+							<ClayTabs modern>
+								{categories.map(({key, label}, index) => (
+									<ClayTabs.Item
+										active={activeTab === index}
+										id={`${portletNamespace}tab_${index}`}
+										key={key}
+										onClick={() => setActiveTab(index)}
+									>
+										<span className="c-inner" tabIndex="-1">
+											{label}
+										</span>
+									</ClayTabs.Item>
+								))}
+							</ClayTabs>
+						</ClayLayout.ContentCol>
 
-					<ClayLayout.ContentCol>
-						<ClayButtonWithIcon
-							className="text-secondary"
-							displayType="unstyled"
-							onClick={handleCloseButtonClick}
-							small
-							symbol="times"
-							title={Liferay.Language.get('close')}
-						/>
-					</ClayLayout.ContentCol>
-				</ClayLayout.ContentRow>
-			</ClayLayout.ContainerFluid>
+						<ClayLayout.ContentCol>
+							<ClayButtonWithIcon
+								className="text-secondary"
+								displayType="unstyled"
+								onClick={handleCloseButtonClick}
+								small
+								symbol="times"
+								title={Liferay.Language.get('close')}
+							/>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
+				</ClayLayout.ContainerFluid>
+			</div>
 
 			<ClayTabs.Content activeIndex={activeTab}>
 				{categories.map(({childCategories}, index) => (
@@ -94,22 +98,30 @@ const AppsPanel = ({
 						aria-labelledby={`${portletNamespace}tab_${index}`}
 						key={`tabPane-${index}`}
 					>
-						<ClayLayout.Row className="c-p-md-3">
+						<ClayLayout.Row className="global-apps-nav">
 							{childCategories.map(({key, label, panelApps}) => (
 								<ClayLayout.Col key={key} md>
 									<ul className="list-unstyled">
-										<li className="dropdown-subheader">
+										<li className="global-apps-nav-header">
 											{label}
 										</li>
 
 										{panelApps.map(
 											({label, portletId, url}) => (
-												<li key={portletId}>
+												<li
+													className="global-apps-nav-item"
+													key={portletId}
+												>
 													<a
-														className="dropdown-item"
+														className="component-link global-apps-nav-link"
 														href={url}
 													>
-														{label}
+														<span
+															className="c-inner"
+															tabIndex="-1"
+														>
+															{label}
+														</span>
 													</a>
 												</li>
 											)
@@ -118,9 +130,9 @@ const AppsPanel = ({
 								</ClayLayout.Col>
 							))}
 
-							<ClayLayout.Col md>
+							<div className="global-apps-sites">
 								<ul className="bg-light list-unstyled rounded">
-									<li className="dropdown-subheader">
+									<li className="global-apps-nav-header">
 										{Liferay.Language.get('sites')}
 									</li>
 
@@ -174,7 +186,7 @@ const AppsPanel = ({
 										</li>
 									)}
 								</ul>
-							</ClayLayout.Col>
+							</div>
 						</ClayLayout.Row>
 					</ClayTabs.TabPane>
 				))}

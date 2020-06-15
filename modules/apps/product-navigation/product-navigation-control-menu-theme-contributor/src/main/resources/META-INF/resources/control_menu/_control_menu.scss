@@ -42,11 +42,11 @@ a.control-menu-icon,
 			text-decoration: none;
 		}
 	}
+}
 
-	.control-menu-level-1-heading {
-		font-size: 1rem;
-		font-weight: bold;
-	}
+.control-menu-level-1-heading {
+	font-size: 1rem;
+	font-weight: 600;
 }
 
 .control-menu-level-1-dark {
@@ -251,16 +251,6 @@ a.control-menu-icon,
 	line-height: 32px;
 	text-align: center;
 	width: 32px;
-}
-
-.global-menu-app {
-	.control-menu-level-1 {
-		background-color: $white;
-	}
-
-	.control-menu-level-1-heading {
-		color: $black;
-	}
 }
 
 .tools-control-group {

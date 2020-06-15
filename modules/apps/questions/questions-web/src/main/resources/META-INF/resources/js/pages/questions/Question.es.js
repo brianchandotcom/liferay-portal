@@ -35,7 +35,6 @@ import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {
-	client,
 	createAnswerQuery,
 	deleteMessageBoardThreadQuery,
 	getMessagesQuery,
@@ -146,8 +145,11 @@ export default withRouter(
 
 		const [deleteThread] = useMutation(deleteMessageBoardThreadQuery, {
 			onCompleted() {
-				client.resetStore();
 				history.goBack();
+			},
+			update(proxy) {
+				proxy.evict(`MessageBoardThread:${question.id}`);
+				proxy.gc();
 			},
 		});
 

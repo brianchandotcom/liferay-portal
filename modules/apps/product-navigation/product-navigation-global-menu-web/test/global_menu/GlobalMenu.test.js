@@ -164,8 +164,10 @@ describe('GlobalMenu', () => {
 	});
 
 	it('renders Global Menu modal with a close button when trigger button is clicked', async () => {
-		const {getByTitle} = renderGlobalMenu();
+		const {getByTitle, queryByTitle} = renderGlobalMenu();
 		const trigger = getByTitle('global-menu');
+
+		expect(queryByTitle('close')).not.toBeInTheDocument();
 
 		await act(async () => {
 			fireEvent.click(trigger);

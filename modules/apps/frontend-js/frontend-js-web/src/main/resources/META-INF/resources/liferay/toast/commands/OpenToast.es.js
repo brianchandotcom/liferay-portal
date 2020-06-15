@@ -38,25 +38,36 @@ const Text = ({allowHTML, string = null}) => {
 	return string;
 };
 
-const getDefaultAlertContainer = () => {
-	let container = document.getElementById(DEFAULT_ALERT_CONTAINER_ID);
+/**
+ * Function used to obtain the root element for rendering the Toast React component.
+ *
+ * When providing a container or a containerId, an element will be added as a first
+ * child of the element for preventing React replace the container/containerId DOM
+ * when rendering. Otherwise, the element will be appended to the body.
+ *
+ * When a container and containerId were provided, the container have precedence.
+ *
+ * @param {HTMLElement} container A container to be used to the Alert being positioned relatively.
+ * @param {string} containerId A containerId of the element to be opened relatively.
+ * @returns {HTMLElement} An element used to
+ */
+const getContainerElement = ({container, containerId}) => {
+	const fragment = document.createElement('div');
+	fragment.id = DEFAULT_ALERT_CONTAINER_ID;
 
-	if (!container) {
-		container = document.createElement('div');
-		container.id = DEFAULT_ALERT_CONTAINER_ID;
-		document.body.appendChild(container);
+	if (container || containerId) {
+		const element = container || document.getElementById(containerId);
+
+		element.appendChild(fragment);
+
+		return fragment;
 	}
+	else {
+		document.body.appendChild(fragment);
 
-	return container;
+		return fragment;
+	}
 };
-
-function AlertContainer({children, hasWrapper = true}) {
-	if (hasWrapper) {
-		return <ClayAlert.ToastContainer>{children}</ClayAlert.ToastContainer>;
-	}
-
-	return <>children</>;
-}
 
 /**
  * Function that implements the Toast pattern, which allows to present feedback
@@ -89,17 +100,17 @@ function openToast({
 	type = 'success',
 	variant,
 }) {
-	const componentContainer =
-		container ||
-		document.getElementById(containerId) ||
-		getDefaultAlertContainer();
+	const rootElement = getContainerElement({container, containerId});
 
-	unmountComponentAtNode(componentContainer);
+	unmountComponentAtNode(rootElement);
 
-	const onClose = () => unmountComponentAtNode(componentContainer);
+	const onClose = () => unmountComponentAtNode(rootElement);
+
+	const Container =
+		container || containerId ? React.Fragment : ClayAlert.ToastContainer;
 
 	render(
-		<AlertContainer hasWrapper={!containerId}>
+		<Container>
 			<ClayAlert
 				autoClose={autoClose}
 				displayType={type}
@@ -113,9 +124,9 @@ function openToast({
 			>
 				<Text allowHTML={messageType === TYPES.HTML} string={message} />
 			</ClayAlert>
-		</AlertContainer>,
+		</Container>,
 		renderData,
-		componentContainer
+		rootElement
 	);
 }
 

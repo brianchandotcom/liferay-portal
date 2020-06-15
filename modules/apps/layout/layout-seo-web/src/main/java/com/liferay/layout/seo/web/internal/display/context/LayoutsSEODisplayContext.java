@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.NoSuchClassTypeException;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemServiceTracker;
@@ -401,10 +402,22 @@ public class LayoutsSEODisplayContext {
 			_layoutPageTemplateEntryLocalService.
 				fetchLayoutPageTemplateEntryByPlid(_selPlid);
 
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemFormProvider.class,
+				layoutPageTemplateEntry.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			layoutPageTemplateEntry.getClassTypeId());
+
 		return HashMapBuilder.<String, Object>put(
 			"description",
-			_selLayout.getDescription(
-				LocaleUtil.fromLanguageId(_selLayout.getDefaultLanguageId()))
+			_getMappedFieldName(
+				infoForm,
+				_selLayout.getDescription(
+					LocaleUtil.fromLanguageId(
+						_selLayout.getDefaultLanguageId())),
+				"description")
 		).put(
 			"fields",
 			_infoItemServiceTracker.getInfoItemService(
@@ -444,8 +457,12 @@ public class LayoutsSEODisplayContext {
 			)
 		).put(
 			"title",
-			_selLayout.getTitle(
-				LocaleUtil.fromLanguageId(_selLayout.getDefaultLanguageId()))
+			_getMappedFieldName(
+				infoForm,
+				_selLayout.getTitle(
+					LocaleUtil.fromLanguageId(
+						_selLayout.getDefaultLanguageId())),
+				"title")
 		).build();
 	}
 
@@ -482,6 +499,21 @@ public class LayoutsSEODisplayContext {
 			_liferayPortletRequest, "privateLayout");
 
 		return _privateLayout;
+	}
+
+	private String _getMappedFieldName(
+		InfoForm infoForm, String mappedFieldName,
+		String defaultMappedFieldName) {
+
+		if (infoForm.getInfoFieldSetEntry(mappedFieldName) != null) {
+			return mappedFieldName;
+		}
+
+		if (infoForm.getInfoFieldSetEntry(defaultMappedFieldName) != null) {
+			return defaultMappedFieldName;
+		}
+
+		return null;
 	}
 
 	private Long _getSelPlid() {

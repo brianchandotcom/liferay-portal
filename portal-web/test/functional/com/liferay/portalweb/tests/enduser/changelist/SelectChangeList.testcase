@@ -17,14 +17,9 @@ definition {
 
 		ChangeList.enableChangeList();
 
-		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Applications",
-			portlet = "Overview");
-
-		ChangeList.addNewChangeList(
-			changeListDescription = "Change List Description",
-			changeListName = "Change List Name");
+		ChangeList.createNewPublication(
+			publicationDescription = "Publication Description",
+			publicationName = "Publication Name");
 	}
 
 	tearDown {
@@ -56,16 +51,9 @@ definition {
 
 	@priority = "4"
 	test SwitchActiveChangeList {
-		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Applications",
-			portlet = "Overview");
-
-		ChangeList.selectChangeList(changeListName = "Select Change List");
-
-		ChangeList.addNewChangeList(
-			changeListDescription = "Change List Description",
-			changeListName = "Change List 2 Name");
+		ChangeList.createNewPublication(
+			publicationDescription = "Publication Description",
+			publicationName = "Publication 2 Name");
 
 		ChangeList.selectChangeList(
 			changeListConfirmEnabled = "true",

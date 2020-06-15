@@ -20,7 +20,7 @@ definition {
 
 	macro addFavoriteStructure {
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#INFO",
+			locator1 = "Message#INFO_1",
 			value1 = "You can add as many as 7 favorites in your quick menu.");
 
 		Click(

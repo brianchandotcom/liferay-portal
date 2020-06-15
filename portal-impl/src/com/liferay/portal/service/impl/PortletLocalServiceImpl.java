@@ -316,9 +316,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			Portlet portlet, String[] categoryNames, boolean eagerDestroy)
 		throws PortalException {
 
-		ResourceActionsUtil.check(portlet);
+		_portletsMap.put(portlet.getRootPortletId(), portlet);
 
-		_portletsMap.put(portlet.getPortletId(), portlet);
+		ResourceActionsUtil.check(portlet.getPortletId());
 
 		if (eagerDestroy) {
 			PortletInstanceFactoryUtil.clear(portlet, false);

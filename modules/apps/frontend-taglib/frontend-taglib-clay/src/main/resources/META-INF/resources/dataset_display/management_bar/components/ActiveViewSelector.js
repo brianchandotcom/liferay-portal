@@ -35,10 +35,10 @@ function ActiveViewSelector({activeView, setActiveView, views}) {
 			<ClayDropDown.ItemList>
 				{views.map((view, i) => (
 					<ClayDropDown.Item
-						href="#"
 						key={i}
 						onClick={(event) => {
 							event.preventDefault();
+							setActive(false);
 							setActiveView(i);
 						}}
 					>

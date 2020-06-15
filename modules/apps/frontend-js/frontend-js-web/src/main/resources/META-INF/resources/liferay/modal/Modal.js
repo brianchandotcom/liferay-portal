@@ -104,6 +104,7 @@ const Modal = ({
 	bodyHTML,
 	buttons,
 	headerHTML,
+	height,
 	id,
 	iframeBodyCssClass,
 	iframeProps = {},
@@ -292,6 +293,9 @@ const Modal = ({
 						className={classNames('modal-body', {
 							'modal-body-iframe': url,
 						})}
+						style={{
+							height,
+						}}
 					>
 						{url ? (
 							<>
@@ -462,6 +466,7 @@ Modal.propTypes = {
 		})
 	),
 	headerHTML: PropTypes.string,
+	height: PropTypes.string,
 	id: PropTypes.string,
 	iframeProps: PropTypes.object,
 	onClose: PropTypes.func,

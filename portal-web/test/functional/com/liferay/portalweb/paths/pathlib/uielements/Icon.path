@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>EXPIRE</td>
-	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-time')]]</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-time') and not(contains(@class,'circle'))]]</td>
 	<td></td>
 </tr>
 <tr>

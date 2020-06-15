@@ -70,31 +70,47 @@ String groupId = String.valueOf(group.getGroupId());
 
 <aui:script>
 	function <portlet:namespace />editDefaultFilePermissions(groupId) {
-		var A = AUI();
 
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				on: {
-					destroy: function () {
-						Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
-					},
-				},
-			},
+		<%
+		String selectEventName = renderResponse.getNamespace() + "itemSelected";
+		%>
+
+		<portlet:renderURL var="editDefaultFilePermissionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="groupIds" value="{groupId}" />
+			<portlet:param name="mvcPath" value="/edit_default_file_permissions.jsp" />
+			<portlet:param name="selectEventName" value="<%= selectEventName %>" />
+		</portlet:renderURL>
+
+		var url = Liferay.Util.sub(
+			decodeURIComponent('<%= editDefaultFilePermissionsURL %>'),
+			{
+				groupId: groupId,
+			}
+		);
+
+		Liferay.Util.openModal({
 			id: '<portlet:namespace />editDefaultFilePermissionsDialog',
+			onSelect: function (selectedItem) {
+				Liferay.Util.fetch(selectedItem.uri, {method: 'POST'})
+					.then(function (response) {
+						return response.text();
+					})
+					.then(function () {
+						Liferay.Portlet.refresh('#p_p_id<portlet:namespace />');
+					})
+					.catch(function (error) {
+						Liferay.Util.openToast({
+							message: Liferay.Language.get(
+								'an-unexpected-system-error-occurred'
+							),
+							title: Liferay.Language.get('error'),
+							type: 'danger',
+						});
+					});
+			},
+			selectEventName: '<%= selectEventName %>',
 			title: '<liferay-ui:message key="default-file-permissions" />',
-
-			<portlet:renderURL var="editDefaultFilePermissionsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="groupIds" value="{groupId}" />
-				<portlet:param name="mvcPath" value="/edit_default_file_permissions.jsp" />
-			</portlet:renderURL>
-
-			uri: A.Lang.sub(
-				decodeURIComponent('<%= editDefaultFilePermissionsURL %>'),
-				{
-					groupId: groupId,
-				}
-			),
+			url: url,
 		});
 	}
 </aui:script>

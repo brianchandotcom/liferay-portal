@@ -27,6 +27,8 @@ if (groupIds.length == 1) {
 
 	currentPermissions = GetterUtil.getInteger(group.getTypeSettingsProperty("syncSiteMemberFilePermissions"));
 }
+
+String selectEventName = ParamUtil.getString(request, "selectEventName");
 %>
 
 <liferay-ui:header
@@ -129,20 +131,12 @@ if (groupIds.length == 1) {
 </table>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />setPermissions',
-		function (uri) {
-			Liferay.Util.fetch(uri, {method: 'POST'})
-				.then(function (response) {
-					return response.text();
-				})
-				.then(function () {
-					Liferay.Util.getWindow(
-						'<portlet:namespace />editDefaultFilePermissionsDialog'
-					).destroy();
-				});
-		},
-		['liferay-util-window']
-	);
+	window['<portlet:namespace />setPermissions'] = function (uri) {
+		Liferay.Util.getOpener().Liferay.fire(
+			'<%= HtmlUtil.escape(selectEventName) %>',
+			{
+				uri: uri,
+			}
+		);
+	};
 </aui:script>

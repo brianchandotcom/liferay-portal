@@ -27,8 +27,7 @@ public abstract class BaseSelectableTableClayDataSetDisplayView
 	implements ClayDataSetDisplayView {
 
 	public String getContentRenderer() {
-		return ClayDataSetConstants.
-			CLAY_DATA_SET_CONTENT_RENDERER_SELECTABLE_TABLE;
+		return ClayDataSetConstants.CONTENT_RENDERER_SELECTABLE_TABLE;
 	}
 
 	public abstract String getFirstColumnLabel(Locale locale);
@@ -36,8 +35,7 @@ public abstract class BaseSelectableTableClayDataSetDisplayView
 	public abstract String getFirstColumnName();
 
 	public String getLabel() {
-		return ClayDataSetConstants.
-			CLAY_DATA_SET_CONTENT_RENDERER_SELECTABLE_TABLE;
+		return ClayDataSetConstants.CONTENT_RENDERER_SELECTABLE_TABLE;
 	}
 
 	public String getThumbnail() {

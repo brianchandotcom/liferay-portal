@@ -20,14 +20,13 @@ package com.liferay.frontend.taglib.clay.data.set.constants;
  */
 public class ClayDataSetConstants {
 
-	public static final String CLAY_DATA_SET_CONTENT_RENDERER_LIST = "list";
+	public static final String CONTENT_RENDERER_LIST = "list";
 
-	public static final String CLAY_DATA_SET_CONTENT_RENDERER_SELECTABLE_TABLE =
+	public static final String CONTENT_RENDERER_SELECTABLE_TABLE =
 		"selectableTable";
 
-	public static final String CLAY_DATA_SET_CONTENT_RENDERER_TABLE = "table";
+	public static final String CONTENT_RENDERER_TABLE = "table";
 
-	public static final String CLAY_DATA_SET_CONTENT_RENDERER_TIMELINE =
-		"timeline";
+	public static final String CONTENT_RENDERER_TIMELINE = "timeline";
 
 }

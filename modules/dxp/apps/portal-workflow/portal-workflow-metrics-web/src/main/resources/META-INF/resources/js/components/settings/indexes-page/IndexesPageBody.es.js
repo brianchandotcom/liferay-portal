@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayProgressBar from '@clayui/progress-bar';
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import {ALL_INDEXES_KEY, getIndexesGroups} from './IndexesConstants.es';
@@ -21,22 +21,15 @@ import {useReindexActions} from './hooks/useReindexActions.es';
 const Body = ({items = []}) => {
 	const {getReindexStatus, handleReindex, isReindexing} = useReindexActions();
 
-	const {completionPercentage = 0} = useMemo(
-		() => getReindexStatus(ALL_INDEXES_KEY),
-		[getReindexStatus]
-	);
+	const {completionPercentage = 0} = getReindexStatus(ALL_INDEXES_KEY);
 
-	const groups = useMemo(() => {
-		const groups = getIndexesGroups();
+	const groups = getIndexesGroups();
 
-		items.forEach(({group, ...index}) => {
-			if (groups[group]) {
-				groups[group].indexes.push(index);
-			}
-		});
-
-		return Object.values(groups);
-	}, [items]);
+	items.forEach(({group, ...index}) => {
+		if (groups[group]) {
+			groups[group].indexes.push(index);
+		}
+	});
 
 	return (
 		<>
@@ -71,7 +64,7 @@ const Body = ({items = []}) => {
 			</div>
 
 			<PromisesResolver.Resolved>
-				{groups.map((group, index) => (
+				{Object.values(groups).map((group, index) => (
 					<Body.List
 						disabled={
 							isReindexing(ALL_INDEXES_KEY) ||

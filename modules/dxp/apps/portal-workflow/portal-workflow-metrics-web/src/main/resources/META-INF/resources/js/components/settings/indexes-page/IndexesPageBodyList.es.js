@@ -12,7 +12,7 @@
 import ClayButton from '@clayui/button';
 import ClayList from '@clayui/list';
 import ClayProgressBar from '@clayui/progress-bar';
-import React, {useMemo} from 'react';
+import React from 'react';
 
 const Item = ({
 	btnLabel,
@@ -49,17 +49,15 @@ const List = ({
 	label,
 	...otherProps
 }) => {
-	const items = useMemo(() => {
-		return indexes.map((item) => {
-			const status = getReindexStatus(item.key);
+	const items = indexes.map((item) => {
+		const status = getReindexStatus(item.key);
 
-			return {
-				...item,
-				reindexing: isReindexing(item.key),
-				...status,
-			};
-		});
-	}, [indexes, isReindexing, getReindexStatus]);
+		return {
+			...item,
+			reindexing: isReindexing(item.key),
+			...status,
+		};
+	});
 
 	return (
 		<ClayList data-testid="indexesList">

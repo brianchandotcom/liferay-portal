@@ -7163,6 +7163,19 @@ go</echo>
 		</if>
 	</target>
 
+	<target name="execute-mysql">
+		<loadfile
+			property="mysql.statement"
+			srcfile="${mysql.input.file}"
+		/>
+
+		<sql classpath="${app.server.lib.global.dir}/${jdbc.mysql.driver}" driver="${database.mysql.driver}" onerror="continue" output="${mysql.output.file}" password="${database.mysql.password}" print="true" url="${database.mysql.url}" userid="${database.mysql.username}">
+			<![CDATA[
+				${mysql.statement}
+			]]>
+		</sql>
+	</target>
+
 	<target name="generate-changelog">
 		<record-git-commit-plugins />
 		<record-git-commit-portal />

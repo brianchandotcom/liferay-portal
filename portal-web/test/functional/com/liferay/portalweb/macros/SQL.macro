@@ -1,0 +1,37 @@
+definition {
+
+	@summary = "Search for all databases with filter 'databaseFilter' that contain substring 'databaseSubstring' and assert they match 'expectedCount'"
+	macro assertDatabaseCount {
+		Variables.assertDefined(parameterList = "${databaseFilter},${databaseSubstring},${expectedCount}");
+
+		var mysqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
+
+		var sqlResults = SQL.executeMySQLStatement(
+			mysqlStatement = "${mysqlStatement}");
+
+		var matches = StringUtil.count("${sqlResults}", "${databaseSubstring}");
+
+		if ("${matches}" != "${expectedCount}") {
+			fail("Expected ${expectedCount} matches of ${databaseSubstring}, found ${matches}.");
+		}
+	}
+
+	macro executeMySQLStatement {
+		Variables.assertDefined(parameterList = "${mysqlStatement}");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var inputFile = "mysqltemp.sql";
+		var outputFile = "mysqltemp.txt";
+
+		FileUtil.write("${liferayHome}/${inputFile}", "${mysqlStatement}");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "execute-mysql -Dmysql.input.file=${liferayHome}/${inputFile} -Dmysql.output.file=${liferayHome}/${outputFile}");
+
+		var output = FileUtil.read("${liferayHome}/${outputFile}");
+
+		return "${output}";
+	}
+
+}

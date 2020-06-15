@@ -33,30 +33,10 @@ import java.util.TimeZone;
  */
 public class BenchmarkPropsUtil {
 
+	public static final String ACTUAL_PROPERTIES_CONTENT;
+
 	public static String get(String key) {
 		return _properties.getProperty(key);
-	}
-
-	public static String getActualPropertiesContent() {
-		List<String> propertyNames = new ArrayList<>(
-			_properties.stringPropertyNames());
-
-		propertyNames.sort(null);
-
-		StringBundler sb = new StringBundler(propertyNames.size() * 4);
-
-		for (String propertyName : propertyNames) {
-			if (!propertyName.startsWith("sample.sql")) {
-				continue;
-			}
-
-			sb.append(propertyName);
-			sb.append(StringPool.EQUAL);
-			sb.append(_properties.getProperty(propertyName));
-			sb.append(StringPool.NEW_LINE);
-		}
-
-		return sb.toString();
 	}
 
 	private static final Properties _properties;
@@ -86,6 +66,26 @@ public class BenchmarkPropsUtil {
 		catch (Exception exception) {
 			throw new ExceptionInInitializerError(exception);
 		}
+
+		List<String> propertyNames = new ArrayList<>(
+			properties.stringPropertyNames());
+
+		propertyNames.sort(null);
+
+		StringBundler sb = new StringBundler(propertyNames.size() * 4);
+
+		for (String propertyName : propertyNames) {
+			if (!propertyName.startsWith("sample.sql")) {
+				continue;
+			}
+
+			sb.append(propertyName);
+			sb.append(StringPool.EQUAL);
+			sb.append(properties.getProperty(propertyName));
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		ACTUAL_PROPERTIES_CONTENT = sb.toString();
 
 		_properties = properties;
 	}

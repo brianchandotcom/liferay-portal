@@ -18,10 +18,12 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import ActionsDropdownRenderer from '../../data_renderer/ActionsDropdownRenderer';
 import ImageRenderer from '../../data_renderer/ImageRenderer';
 
 function List({datasetDisplayContext, items, schema}) {
 	const {
+		itemActions,
 		selectItems,
 		selectedItemsKey,
 		selectedItemsValue,
@@ -79,6 +81,16 @@ function List({datasetDisplayContext, items, schema}) {
 							<ClayList.ItemText>
 								{item[schema.description]}
 							</ClayList.ItemText>
+						)}
+					</ClayList.ItemField>
+
+					<ClayList.ItemField>
+						{(itemActions || item.actionItems) && (
+							<ActionsDropdownRenderer
+								actions={itemActions || item.actionItems}
+								itemData={item}
+								itemId={item[selectedItemsKey] || i}
+							/>
 						)}
 					</ClayList.ItemField>
 				</ClayList.Item>

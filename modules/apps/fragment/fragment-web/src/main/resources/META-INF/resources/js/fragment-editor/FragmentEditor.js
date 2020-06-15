@@ -78,6 +78,46 @@ const FragmentEditor = ({
 		js,
 	]);
 
+	const publish = () => {
+		const formData = new FormData();
+
+		formData.append(`${namespace}fragmentEntryId`, fragmentEntryId);
+
+		fetch(urls.publish, {
+			body: formData,
+			method: 'POST',
+		})
+			.then((response) => response.json())
+			.then((response) => {
+				if (response.error) {
+					throw response.error;
+				}
+
+				return response;
+			})
+			.then((response) => {
+				const redirectURL = response.redirect || urls.redirect;
+
+				Liferay.Util.navigate(redirectURL);
+			})
+			.catch((error) => {
+				if (isMounted()) {
+					setChangesStatus(CHANGES_STATUS.unsaved);
+				}
+
+				const message =
+					typeof error === 'string'
+						? error
+						: Liferay.Language.get('error');
+
+				openToast({
+					message,
+					title: Liferay.Language.get('error'),
+					type: 'danger',
+				});
+			});
+	};
+
 	const saveDraft = useCallback(
 		debounce(() => {
 			setChangesStatus(CHANGES_STATUS.saving);
@@ -250,6 +290,7 @@ const FragmentEditor = ({
 												changesStatus ===
 												CHANGES_STATUS.saving
 											}
+											onClick={publish}
 											type="button"
 										>
 											<span className="lfr-btn-label">

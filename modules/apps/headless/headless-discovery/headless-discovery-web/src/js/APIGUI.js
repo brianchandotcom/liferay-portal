@@ -252,14 +252,16 @@ const APIGUI = () => {
 
 						<button
 							onClick={() => {
+								setShowGraphQL(false);
 								setShowSwagger(!showSwagger);
 							}}
 						>
-							{showGraphQL ? 'Hide Swagger' : 'Show Swagger'}
+							{showSwagger ? 'Hide Swagger' : 'Show Swagger'}
 						</button>
 
 						<button
 							onClick={() => {
+								setShowSwagger(false);
 								setShowGraphQL(!showGraphQL);
 							}}
 						>

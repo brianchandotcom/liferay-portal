@@ -22,6 +22,7 @@ import APIGUI from './APIGUI';
 
 import 'graphiql/graphiql.css';
 
+import '../css/main.css';
 import {AppStateProvider} from './hooks/appState';
 import appReducer, {initialState} from './reducers/appReducer';
 

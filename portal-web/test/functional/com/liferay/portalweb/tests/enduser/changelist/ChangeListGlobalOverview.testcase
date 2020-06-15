@@ -16,11 +16,6 @@ definition {
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
-
-		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Applications",
-			portlet = "Overview");
 	}
 
 	tearDown {
@@ -46,50 +41,48 @@ definition {
 
 	@priority = "4"
 	test CreateNewChangeListExistingName {
-		ChangeList.addNewChangeList(
-			changeListDescription = "Change List Description",
-			changeListName = "Change List Name");
+		ChangeList.createNewPublication(
+			gotoManagePublications = "true",
+			publicationDescription = "Publication Description",
+			publicationName = "Publication Name");
 
-		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Applications",
-			portlet = "Overview");
-
-		ChangeList.selectChangeList(changeListName = "Select Change List");
-
-		ChangeList.addNewChangeList(
-			changeListDescription = "Change List Description",
-			changeListName = "Change List Name");
+		ChangeList.createNewPublication(
+			gotoManagePublications = "true",
+			publicationDescription = "Publication Description",
+			publicationName = "Publication Name");
 
 		Alert.viewErrorMessage(errorMessage = "Name is already used by another change list.");
 	}
 
 	@description = "Try to create new change list with too long name"
 	@priority = "3"
-	test CreateNewChangeListWithLongName {
-		ChangeList.addNewChangeList(
-			changeListDescription = "Change List Description",
-			changeListName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
+	test CreateNewPublicationWithLongName {
+		ChangeList.createNewPublication(
+			gotoManagePublications = "true",
+			publicationDescription = "Publication Description",
+			publicationName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
 
 		Alert.viewLengthValidationField();
 	}
 
 	@description = "Try to create new change list with empty string name"
 	@priority = "3"
-	test CreateNewChangeListWithNoName {
-		ChangeList.addNewChangeList(
-			changeListDescription = "Change List Description",
-			changeListName = " ");
+	test CreateNewPublicationWithNoName {
+		ChangeList.createNewPublication(
+			gotoManagePublications = "true",
+			publicationDescription = "Publication Description",
+			publicationtName = " ");
 
 		Alert.viewRequiredField();
 	}
 
 	@description = "Try to create new change list with empty string in the description"
 	@priority = "3"
-	test CreateNewChangeListWithSpaceInTheDescription {
-		ChangeList.addNewChangeList(
-			changeListDescription = " ",
-			changeListName = "Change List Name");
+	test CreateNewPublicationWithSpaceInTheDescription {
+		ChangeList.createNewPublication(
+			gotoManagePublications = "true",
+			publicationDescription = " ",
+			publicationName = "Publication Name");
 
 		AssertTextEquals(
 			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
@@ -97,12 +90,13 @@ definition {
 	}
 
 	@priority = "5"
-	test DeleteChangeListFromOverviewScreen {
-		ChangeList.addNewChangeList(
-			changeListDescription = "Change List Description",
-			changeListName = "Change List Name");
+	test DeletePublicationFromOverviewScreen {
+		ChangeList.createNewPublication(
+			gotoManagePublications = "true",
+			publicationDescription = "Publication Description",
+			publicationName = "Publication Name");
 
-		ChangeList.deleteChangeListFromOverviewScreen(changeListName = "Change List Name");
+		ChangeList.deleteChangeListFromOverviewScreen(changeListName = "Publication Name");
 	}
 
 }

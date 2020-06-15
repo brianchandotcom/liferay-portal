@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_TRACKING_INDICATOR_TITLE</td>
+	<td>//button[contains(@class,'change-tracking-indicator-title')] and contains(.,'${key_publicationName}')</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_LIST_MODIFIED</td>
 	<td>//div[contains(@data-qa-id,'changesModified')]</td>
 	<td></td>
@@ -130,7 +135,7 @@
 </tr>
 <tr>
 	<td>SELECT_CHANGE_LIST_VALUE</td>
-	<td>//a[contains(.,'${key_changeListName}')]</td>
+	<td>//a[contains(.,'${key_publicationName}')]</td>
 	<td></td>
 </tr>
 <tr>

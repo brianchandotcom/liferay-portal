@@ -119,37 +119,28 @@ definition {
 			value1 = "${changeListName}");
 	}
 
-	macro selectChangeList {
-		Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
-
-		var key_changeListName = "${changeListName}";
-
-		if ("${changeListName}" == "Select Change List") {
-			Click(locator1 = "ChangeList#SELECT_CHANGE_LIST");
-
-			AssertTextEquals(
-				locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
-				value1 = "Select Change List");
-		}
-		else {
-			ClickNoError(
-				key_changeListName = "${changeListName}",
-				locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE");
-
-			if ( "${changeListConfirmEnabled}" == "true") {
-				ChangeList.confirmSwitchingChangeList(changeListName = "${changeListName}");
-			}
-
-			AssertTextEquals(
-				locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
-				value1 = "Overview");
-		}
-	}
-
 	macro selectChangeListMenuItem {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "${menuItem}",
 			rowEntry = "${rowEntry}");
+	}
+
+	macro selectPublication {
+		Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
+
+		MenuItem.click(menuItem = "Select a Publication");
+
+		SelectFrame(locator1 = "IFrame#DIALOG");
+
+		var key_publicationName = "${publicationName}";
+
+		Click(
+			locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE",
+			value1 = "${publicationName}");
+
+		AssertTextPresent(
+			locator1 = "ChangeList#CHANGE_TRACKING_INDICATOR_TITLE",
+			value1 = "${publicationName}");
 	}
 
 	macro viewChangeOnOverview {

@@ -50,18 +50,18 @@ definition {
 	}
 
 	@priority = "4"
-	test SwitchActiveChangeList {
+	test SwitchPublication {
 		ChangeList.createNewPublication(
 			publicationDescription = "Publication Description",
 			publicationName = "Publication 2 Name");
 
-		ChangeList.selectChangeList(
-			changeListConfirmEnabled = "true",
-			changeListName = "Change List Name");
+		AssertTextPresent(
+			locator1 = "ChangeList#CHANGE_TRACKING_INDICATOR_TITLE",
+			value1 = "Publication 2 Name");
 
-		AssertTextEquals(
-			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
-			value1 = "Change List Name");
+		ChangeList.selectPublication(publicationName = "Publication Name");
+
+		ChangeList.selectPublication(publicationName = "Publication 2 Name");
 	}
 
 	@priority = "4"

@@ -14,7 +14,8 @@
 
 import parser from 'bbcode-to-react';
 import React from 'react';
-import Highlight from 'react-highlight';
+
+import Highlight from './Highlight.es';
 
 export default ({
 	articleBody,

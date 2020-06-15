@@ -61,6 +61,7 @@ class DataLayoutBuilder extends React.Component {
 					},
 				},
 				formBuilderProps: {
+					allowNestedFields: config.allowNestedFields,
 					dnd: {
 						accept: [
 							DRAG_DATA_DEFINITION_FIELD,

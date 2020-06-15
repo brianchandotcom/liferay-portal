@@ -39,7 +39,7 @@ public class UpgradeDLFileEntryType extends UpgradeProcess {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				"select uuid_, fileEntryTypeId, groupId, fileEntryTypeKey " +
 					"from DLFileEntryType where (dataDefinitionId IS NULL OR " +
-						"dataDefinitionId = '')");
+						"dataDefinitionId = 0)");
 			PreparedStatement ps2 = connection.prepareStatement(
 				"select structureId FROM DDMStructure where groupId = ? AND " +
 					"classNameId = ? AND (structureKey = ? OR structureKey = " +

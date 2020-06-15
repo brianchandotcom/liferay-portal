@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ASSIGNED_TO_ME_ACTIVE</td>
-	<td>//a[(contains(@class,'active')) and (contains(text(),'Assigned to Me'))]</td>
+	<td>//a[contains(@class,'active')]/span[contains(.,'Assigned to Me')]</td>
 	<td></td>
 </tr>
 <tr>

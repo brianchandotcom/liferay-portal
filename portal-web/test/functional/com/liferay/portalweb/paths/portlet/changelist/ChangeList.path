@@ -134,6 +134,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISHED_PUBLICATIONS_NAME</td>
+	<td>//div[contains(@class,'change-list-name')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISHED_PUBLICATIONS_DESCRIPTION</td>
+	<td>//div[contains(@class,'change-list-description')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATIONS_PUBLISHED_BY</td>
+	<td>//td[contains(@class,'published-by')]//span[contains(@class,'${key_publicationPublishedBy}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_CHANGE_LIST</td>
 	<td>//a[contains(@data-qa-id,'selectChangeListMenuItem')]</td>
 	<td></td>
@@ -146,21 +161,6 @@
 <tr>
 	<td>SELECT_CHANGE_LIST_DROPDOWN</td>
 	<td>//a[contains(@data-qa-id,'headerDropDownMenu')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OVERVIEW_CHANGE_LIST_NAME</td>
-	<td>//div[contains(@class,'border-left-green')]//div[contains(@data-qa-id,'headerTitle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OVERVIEW_DESCRIPTION</td>
-	<td>//div[contains(@data-qa-id,'description')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OVERVIEW_PUBLISHED_BY</td>
-	<td>//div[contains(@data-qa-id,'publishedBy')]</td>
 	<td></td>
 </tr>
 <tr>

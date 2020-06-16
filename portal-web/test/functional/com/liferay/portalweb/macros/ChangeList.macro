@@ -182,18 +182,20 @@ definition {
 		Alert.viewWarningSpecific(warningMessage = "Change lists are enabled for the current virtual instance. Staging and change lists cannot be used together.");
 	}
 
-	macro viewPublishedChangeListDetails {
+	macro viewPublishedPublicationDetails {
 		AssertTextEquals(
-			locator1 = "ChangeList#OVERVIEW_CHANGE_LIST_NAME",
-			value1 = "${changeListName}");
+			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME",
+			value1 = "${publicationName}");
 
 		AssertTextEquals(
-			locator1 = "ChangeList#OVERVIEW_DESCRIPTION",
-			value1 = "${changeListDescription}");
+			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_DESCRIPTION",
+			value1 = "${publicationDescription}");
 
-		AssertTextPresent(
-			locator1 = "ChangeList#OVERVIEW_PUBLISHED_BY",
-			value1 = "${changeListPublishedBy}");
+		key_publicationPublishedBy = "${publicationPublishedBy}"
+
+		AssertTextEquals(
+			locator1 = "ChangeList#PUBLICATIONS_PUBLISHED_BY",
+			value1 = "${publicationPublishedBy}");
 	}
 
 	macro viewWarningOnPortletExport {

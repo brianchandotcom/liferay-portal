@@ -132,7 +132,7 @@ public class AppBuilderAppLocalServiceImpl
 				appBuilderAppDeployment.getAppBuilderAppDeploymentId());
 		}
 
-		return super.deleteAppBuilderApp(appBuilderAppId);
+		return appBuilderAppPersistence.remove(appBuilderAppId);
 	}
 
 	@Override

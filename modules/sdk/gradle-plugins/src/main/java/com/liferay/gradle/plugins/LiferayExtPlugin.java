@@ -96,23 +96,25 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		FileCollection compileClasspath = portalConfiguration.plus(
 			project.files(extKernelJar));
 
-		Jar utilBridgesJar = _addSourceSet(
+		Jar extUtilBridgesJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
 			EXT_UTIL_BRIDGES_SOURCE_SET_NAME, compileClasspath);
 
-		compileClasspath = compileClasspath.plus(project.files(utilBridgesJar));
+		compileClasspath = compileClasspath.plus(
+			project.files(extUtilBridgesJar));
 
-		Jar utilJavaJar = _addSourceSet(
+		Jar extUtilJavaJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
 			EXT_UTIL_JAVA_SOURCE_SET_NAME, compileClasspath);
 
-		compileClasspath = compileClasspath.plus(project.files(utilJavaJar));
+		compileClasspath = compileClasspath.plus(project.files(extUtilJavaJar));
 
-		Jar utilTaglibJar = _addSourceSet(
+		Jar extUtilTaglibJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
 			EXT_UTIL_TAGLIB_SOURCE_SET_NAME, compileClasspath);
 
-		compileClasspath = compileClasspath.plus(project.files(utilTaglibJar));
+		compileClasspath = compileClasspath.plus(
+			project.files(extUtilTaglibJar));
 
 		Jar extImplJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
@@ -127,7 +129,7 @@ public class LiferayExtPlugin implements Plugin<Project> {
 			buildExtInfoBaseDirSync, buildExtInfoTask);
 
 		_configureTaskExtImplJar(
-			extImplJar, utilBridgesJar, utilJavaJar, utilTaglibJar);
+			extImplJar, extUtilBridgesJar, extUtilJavaJar, extUtilTaglibJar);
 		_configureTaskWar(war, buildExtInfoTask);
 	}
 

@@ -107,16 +107,12 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		_configureLiferay(project);
 		_configureTaskDeploy(war);
 
+		Jar extImplJar = _addTaskExtJar(project, extImplSourceSet);
 		Jar extKernelJar = _addTaskExtJar(project, extKernelSourceSet);
-
 		Jar extUtilBridgesJar = _addTaskExtJar(
 			project, extUtilBridgesSourceSet);
-
 		Jar extUtilJavaJar = _addTaskExtJar(project, extUtilJavaSourceSet);
-
 		Jar extUtilTaglibJar = _addTaskExtJar(project, extUtilTaglibSourceSet);
-
-		Jar extImplJar = _addTaskExtJar(project, extImplSourceSet);
 
 		Sync buildExtInfoBaseDirSync = _addTaskBuildExtInfoBaseDir(war);
 

@@ -187,22 +187,22 @@ public class LiferayExtPlugin implements Plugin<Project> {
 			portalConfiguration.plus(fileCollection));
 	}
 
-	private void _configureTaskExtJarProvider(
-		final SourceSet extSourceSet, TaskProvider<Jar> extJarTaskProvider) {
+	private void _applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
+		GradleUtil.applyPlugin(project, WarPlugin.class);
+	}
 
-		extJarTaskProvider.configure(
-			new Action<Jar>() {
+	private void _configureLiferay(Project project) {
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
+			project, LiferayExtension.class);
+
+		liferayExtension.setDeployDir(
+			new Callable<File>() {
 
 				@Override
-				public void execute(Jar extJar) {
-					extJar.from(extSourceSet.getOutput());
-
-					extJar.setAppendix(
-						GUtil.toWords(extSourceSet.getName(), '-'));
-
-					extJar.setDescription(
-						"Assembles a jar archive containing the " +
-							extJar.getAppendix() + " classes.");
+				public File call() throws Exception {
+					return new File(
+						liferayExtension.getAppServerParentDir(), "deploy");
 				}
 
 			});
@@ -239,6 +239,63 @@ public class LiferayExtPlugin implements Plugin<Project> {
 					return new File(
 						warPluginConvention.getWebAppDir(),
 						"WEB-INF/" + s + "/src");
+				}
+
+			});
+	}
+
+	private void _configureTaskBuildExtInfoBaseDirProvider(
+		final Project project,
+		TaskProvider<Sync> buildExtInfoBaseDirTaskProvider,
+		final TaskProvider<BuildExtInfoTask> buildExtInfoTaskProvider,
+		final TaskProvider<War> warTaskProvider) {
+
+		buildExtInfoBaseDirTaskProvider.configure(
+			new Action<Sync>() {
+
+				@Override
+				public void execute(Sync buildExtInfoBaseDirSync) {
+					buildExtInfoBaseDirSync.exclude(
+						new Spec<FileTreeElement>() {
+
+							@Override
+							public boolean isSatisfiedBy(
+								FileTreeElement fileTreeElement) {
+
+								BuildExtInfoTask buildExtInfoTask =
+									buildExtInfoTaskProvider.get();
+
+								File outputFile =
+									buildExtInfoTask.getOutputFile();
+
+								String outputFileName = outputFile.getName();
+
+								if (outputFileName.equals(
+										fileTreeElement.getPath())) {
+
+									return true;
+								}
+
+								return false;
+							}
+
+						});
+
+					buildExtInfoBaseDirSync.into(
+						new Callable<File>() {
+
+							@Override
+							public File call() throws Exception {
+								return new File(
+									project.getBuildDir(), "build-ext-info");
+							}
+
+						});
+
+					buildExtInfoBaseDirSync.setDescription(
+						"Copies the exploded war archive into a temporary " +
+							"directory.");
+					buildExtInfoBaseDirSync.with(warTaskProvider.get());
 				}
 
 			});
@@ -311,84 +368,6 @@ public class LiferayExtPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskBuildExtInfoBaseDirProvider(
-		final Project project,
-		TaskProvider<Sync> buildExtInfoBaseDirTaskProvider,
-		final TaskProvider<BuildExtInfoTask> buildExtInfoTaskProvider,
-		final TaskProvider<War> warTaskProvider) {
-
-		buildExtInfoBaseDirTaskProvider.configure(
-			new Action<Sync>() {
-
-				@Override
-				public void execute(Sync buildExtInfoBaseDirSync) {
-					buildExtInfoBaseDirSync.exclude(
-						new Spec<FileTreeElement>() {
-
-							@Override
-							public boolean isSatisfiedBy(
-								FileTreeElement fileTreeElement) {
-
-								BuildExtInfoTask buildExtInfoTask =
-									buildExtInfoTaskProvider.get();
-
-								File outputFile =
-									buildExtInfoTask.getOutputFile();
-
-								String outputFileName = outputFile.getName();
-
-								if (outputFileName.equals(
-										fileTreeElement.getPath())) {
-
-									return true;
-								}
-
-								return false;
-							}
-
-						});
-
-					buildExtInfoBaseDirSync.into(
-						new Callable<File>() {
-
-							@Override
-							public File call() throws Exception {
-								return new File(
-									project.getBuildDir(), "build-ext-info");
-							}
-
-						});
-
-					buildExtInfoBaseDirSync.setDescription(
-						"Copies the exploded war archive into a temporary " +
-							"directory.");
-					buildExtInfoBaseDirSync.with(warTaskProvider.get());
-				}
-
-			});
-	}
-
-	private void _applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
-		GradleUtil.applyPlugin(project, WarPlugin.class);
-	}
-
-	private void _configureLiferay(Project project) {
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
-
-		liferayExtension.setDeployDir(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						liferayExtension.getAppServerParentDir(), "deploy");
-				}
-
-			});
-	}
-
 	private void _configureTaskDeployProvider(
 		TaskProvider<Copy> deployTaskProvider,
 		final TaskProvider<War> warTaskProvider) {
@@ -450,6 +429,27 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 							});
 					}
+				}
+
+			});
+	}
+
+	private void _configureTaskExtJarProvider(
+		final SourceSet extSourceSet, TaskProvider<Jar> extJarTaskProvider) {
+
+		extJarTaskProvider.configure(
+			new Action<Jar>() {
+
+				@Override
+				public void execute(Jar extJar) {
+					extJar.from(extSourceSet.getOutput());
+
+					extJar.setAppendix(
+						GUtil.toWords(extSourceSet.getName(), '-'));
+
+					extJar.setDescription(
+						"Assembles a jar archive containing the " +
+							extJar.getAppendix() + " classes.");
 				}
 
 			});

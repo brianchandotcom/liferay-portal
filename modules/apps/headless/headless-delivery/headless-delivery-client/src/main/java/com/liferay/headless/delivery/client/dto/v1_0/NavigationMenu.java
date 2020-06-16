@@ -181,6 +181,36 @@ public class NavigationMenu implements Cloneable {
 
 	protected NavigationMenuItem[] navigationMenuItems;
 
+	public NavigationType getNavigationType() {
+		return navigationType;
+	}
+
+	public String getNavigationTypeAsString() {
+		if (navigationType == null) {
+			return null;
+		}
+
+		return navigationType.toString();
+	}
+
+	public void setNavigationType(NavigationType navigationType) {
+		this.navigationType = navigationType;
+	}
+
+	public void setNavigationType(
+		UnsafeSupplier<NavigationType, Exception>
+			navigationTypeUnsafeSupplier) {
+
+		try {
+			navigationType = navigationTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected NavigationType navigationType;
+
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -231,6 +261,37 @@ public class NavigationMenu implements Cloneable {
 
 	public String toString() {
 		return NavigationMenuSerDes.toJSON(this);
+	}
+
+	public static enum NavigationType {
+
+		PRIMARY("Primary"), SECONDARY("Secondary"), SOCIAL("Social");
+
+		public static NavigationType create(String value) {
+			for (NavigationType navigationType : values()) {
+				if (Objects.equals(navigationType.getValue(), value)) {
+					return navigationType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private NavigationType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

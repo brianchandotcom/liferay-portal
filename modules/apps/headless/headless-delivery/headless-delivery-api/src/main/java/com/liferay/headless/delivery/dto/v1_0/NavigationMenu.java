@@ -14,9 +14,11 @@
 
 package com.liferay.headless.delivery.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -255,6 +257,45 @@ public class NavigationMenu {
 	protected NavigationMenuItem[] navigationMenuItems;
 
 	@Schema
+	@Valid
+	public NavigationType getNavigationType() {
+		return navigationType;
+	}
+
+	@JsonIgnore
+	public String getNavigationTypeAsString() {
+		if (navigationType == null) {
+			return null;
+		}
+
+		return navigationType.toString();
+	}
+
+	public void setNavigationType(NavigationType navigationType) {
+		this.navigationType = navigationType;
+	}
+
+	@JsonIgnore
+	public void setNavigationType(
+		UnsafeSupplier<NavigationType, Exception>
+			navigationTypeUnsafeSupplier) {
+
+		try {
+			navigationType = navigationTypeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected NavigationType navigationType;
+
+	@Schema
 	public Long getSiteId() {
 		return siteId;
 	}
@@ -404,6 +445,20 @@ public class NavigationMenu {
 			sb.append("]");
 		}
 
+		if (navigationType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"navigationType\": ");
+
+			sb.append("\"");
+
+			sb.append(navigationType);
+
+			sb.append("\"");
+		}
+
 		if (siteId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -424,6 +479,40 @@ public class NavigationMenu {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("NavigationType")
+	public static enum NavigationType {
+
+		PRIMARY("Primary"), SECONDARY("Secondary"), SOCIAL("Social");
+
+		@JsonCreator
+		public static NavigationType create(String value) {
+			for (NavigationType navigationType : values()) {
+				if (Objects.equals(navigationType.getValue(), value)) {
+					return navigationType;
+				}
+			}
+
+			return null;
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private NavigationType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		String string = String.valueOf(object);

@@ -34,6 +34,27 @@ public class NavigationMenuItem implements Cloneable {
 		return NavigationMenuItemSerDes.toDTO(json);
 	}
 
+	public String[] getAvailableLanguages() {
+		return availableLanguages;
+	}
+
+	public void setAvailableLanguages(String[] availableLanguages) {
+		this.availableLanguages = availableLanguages;
+	}
+
+	public void setAvailableLanguages(
+		UnsafeSupplier<String[], Exception> availableLanguagesUnsafeSupplier) {
+
+		try {
+			availableLanguages = availableLanguagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String[] availableLanguages;
+
 	public Creator getCreator() {
 		return creator;
 	}
@@ -54,6 +75,49 @@ public class NavigationMenuItem implements Cloneable {
 	}
 
 	protected Creator creator;
+
+	public String getCustomName() {
+		return customName;
+	}
+
+	public void setCustomName(String customName) {
+		this.customName = customName;
+	}
+
+	public void setCustomName(
+		UnsafeSupplier<String, Exception> customNameUnsafeSupplier) {
+
+		try {
+			customName = customNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String customName;
+
+	public Map<String, String> getCustomName_i18n() {
+		return customName_i18n;
+	}
+
+	public void setCustomName_i18n(Map<String, String> customName_i18n) {
+		this.customName_i18n = customName_i18n;
+	}
+
+	public void setCustomName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			customName_i18nUnsafeSupplier) {
+
+		try {
+			customName_i18n = customName_i18nUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> customName_i18n;
 
 	public Date getDateCreated() {
 		return dateCreated;

@@ -87,7 +87,7 @@ describe('DeployAppModal', () => {
 		).toBeTruthy();
 		expect(queryByText('product-menu')).toBeTruthy();
 		expect(
-			queryByText('deploy-to-the-control-panel-or-a-site-menu')
+			queryByText('deploy-into-applications-or-a-site-menu')
 		).toBeTruthy();
 		expect(queryByText('cancel')).toBeTruthy();
 

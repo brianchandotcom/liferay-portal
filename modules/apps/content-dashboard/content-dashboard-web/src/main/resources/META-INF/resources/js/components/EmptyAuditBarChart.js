@@ -45,17 +45,17 @@ export default function EmptyAuditBarChart() {
 				</ClayButton>
 			</ClayEmptyState>
 
-			<ResponsiveContainer height={BAR_CHART.heightEmpty}>
+			<ResponsiveContainer height={BAR_CHART.emptyHeight}>
 				<BarChart
 					data={[]}
-					height={BAR_CHART.heightEmpty}
+					height={BAR_CHART.emptyHeight}
 					width={BAR_CHART.width}
 				>
 					<CartesianGrid
 						horizontal={true}
 						horizontalPoints={[
 							BAR_CHART.dotRadiusMin,
-							BAR_CHART.heightEmpty - BAR_CHART.dotRadiusMax,
+							BAR_CHART.emptyHeight - BAR_CHART.dotRadiusMax,
 						]}
 						stroke={BAR_CHART.stroke}
 					/>

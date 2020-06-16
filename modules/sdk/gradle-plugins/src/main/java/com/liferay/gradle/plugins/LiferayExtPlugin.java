@@ -107,20 +107,16 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		_configureLiferay(project);
 		_configureTaskDeploy(war);
 
-		Jar extKernelJar = _addTaskExtJar(
-			war, warPluginConvention, extKernelSourceSet);
+		Jar extKernelJar = _addTaskExtJar(project, extKernelSourceSet);
 
 		Jar extUtilBridgesJar = _addTaskExtJar(
-			war, warPluginConvention, extUtilBridgesSourceSet);
+			project, extUtilBridgesSourceSet);
 
-		Jar extUtilJavaJar = _addTaskExtJar(
-			war, warPluginConvention, extUtilJavaSourceSet);
+		Jar extUtilJavaJar = _addTaskExtJar(project, extUtilJavaSourceSet);
 
-		Jar extUtilTaglibJar = _addTaskExtJar(
-			war, warPluginConvention, extUtilTaglibSourceSet);
+		Jar extUtilTaglibJar = _addTaskExtJar(project, extUtilTaglibSourceSet);
 
-		Jar extImplJar = _addTaskExtJar(
-			war, warPluginConvention, extImplSourceSet);
+		Jar extImplJar = _addTaskExtJar(project, extImplSourceSet);
 
 		Sync buildExtInfoBaseDirSync = _addTaskBuildExtInfoBaseDir(war);
 
@@ -132,7 +128,9 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 		_configureTaskExtImplJar(
 			extImplJar, extUtilBridgesJar, extUtilJavaJar, extUtilTaglibJar);
-		_configureTaskWar(war, buildExtInfoTask);
+		_configureTaskWar(
+			war, buildExtInfoTask, extImplJar, extKernelJar, extUtilBridgesJar,
+			extUtilJavaJar, extUtilTaglibJar);
 
 		FileCollection fileCollection = project.files(
 			extKernelJar, extUtilBridgesJar, extUtilJavaJar, extUtilTaglibJar);
@@ -162,16 +160,8 @@ public class LiferayExtPlugin implements Plugin<Project> {
 			portalConfiguration.plus(fileCollection));
 	}
 
-	@SuppressWarnings("serial")
-	private Jar _addTaskExtJar(
-		War war, final WarPluginConvention warPluginConvention,
-		SourceSet extSourceSet) {
-
-		Project project = war.getProject();
-
-		// Jar task
-
-		final Jar jar = GradleUtil.addTask(
+	private Jar _addTaskExtJar(Project project, SourceSet extSourceSet) {
+		Jar jar = GradleUtil.addTask(
 			project, extSourceSet.getJarTaskName(), Jar.class);
 
 		jar.from(extSourceSet.getOutput());
@@ -181,32 +171,6 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		jar.setDescription(
 			"Assembles a jar archive containing the " + jar.getAppendix() +
 				" classes.");
-
-		// War task
-
-		CopySpec copySpec = war.getWebInf();
-
-		copySpec.from(jar);
-
-		copySpec.into(
-			new Callable<String>() {
-
-				@Override
-				public String call() throws Exception {
-					return jar.getAppendix();
-				}
-
-			});
-
-		copySpec.rename(
-			new Closure<String>(project) {
-
-				@SuppressWarnings("unused")
-				public String doCall(String fileName) {
-					return jar.getAppendix() + "." + jar.getExtension();
-				}
-
-			});
 
 		return jar;
 	}
@@ -400,7 +364,7 @@ public class LiferayExtPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskWar(
-		War war, final BuildExtInfoTask buildExtInfoTask) {
+		War war, final BuildExtInfoTask buildExtInfoTask, Jar... extJars) {
 
 		Project project = war.getProject();
 
@@ -423,6 +387,33 @@ public class LiferayExtPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		for (final Jar extJar : extJars) {
+			copySpec.from(extJar);
+
+			copySpec.into(
+				new Callable<String>() {
+
+					@Override
+					public String call() throws Exception {
+						return extJar.getAppendix();
+					}
+
+				});
+
+			copySpec.rename(
+				new Closure<String>(project) {
+
+					@SuppressWarnings("unused")
+					public String doCall(String fileName) {
+						String appendix = extJar.getAppendix();
+						String extension = extJar.getExtension();
+
+						return appendix + '.' + extension;
+					}
+
+				});
+		}
 	}
 
 	@SuppressWarnings("serial")

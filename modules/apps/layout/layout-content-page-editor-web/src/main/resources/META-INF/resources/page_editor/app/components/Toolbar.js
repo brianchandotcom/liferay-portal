@@ -25,11 +25,13 @@ import usePlugins from '../../core/hooks/usePlugins';
 import * as Actions from '../actions/index';
 import {PAGE_TYPES} from '../config/constants/pageTypes';
 import {config} from '../config/index';
+import selectCanSwitchEditMode from '../selectors/selectCanSwitchEditMode';
 import {useDispatch, useSelector} from '../store/index';
 import redo from '../thunks/redo';
 import undo from '../thunks/undo';
 import {useDropClear} from '../utils/useDragAndDrop';
 import {useSelectItem} from './Controls';
+import EditModeSelector from './EditModeSelector';
 import ExperimentsLabel from './ExperimentsLabel';
 import NetworkStatusBar from './NetworkStatusBar';
 import PreviewModal from './PreviewModal';
@@ -47,6 +49,7 @@ function ToolbarBody() {
 	const isMounted = useIsMounted();
 	const load = useLoad();
 	const selectItem = useSelectItem();
+	const canSwitchEditMode = useSelector(selectCanSwitchEditMode);
 	const store = useSelector((state) => state);
 
 	const {
@@ -240,6 +243,12 @@ function ToolbarBody() {
 			<ul className="navbar-nav" onClick={deselectItem}>
 				<NetworkStatusBar {...network} />
 				<Undo onRedo={onRedo} onUndo={onUndo} />
+
+				{canSwitchEditMode && (
+					<li className="nav-item">
+						<EditModeSelector />
+					</li>
+				)}
 
 				<li className="nav-item">
 					<ClayButton

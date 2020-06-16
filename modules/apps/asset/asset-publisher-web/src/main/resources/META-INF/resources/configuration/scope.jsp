@@ -158,28 +158,23 @@ itemSelectorURL.setParameter("portletResource", assetPublisherDisplayContext.get
 				searchContainerData = searchContainerData.split(',');
 			}
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						destroyOnHide: true,
-						modal: true,
-					},
-					eventName: '<%= eventName %>',
-					id: '<%= eventName %>' + event.currentTarget.id,
-					selectedData: searchContainerData,
-					title: '<liferay-ui:message key="scopes" />',
-					uri: '<%= itemSelectorURL.toString() %>',
-				},
-				function (event) {
+			var opener = Liferay.Util.getOpener();
+
+			opener.Liferay.Util.openModal({
+				id: '<%= eventName %>' + event.currentTarget.id,
+				onSelect: function (event) {
 					Liferay.Util.postForm(form, {
 						data: {
 							cmd: 'add-scope',
 							groupId: event.groupid,
 						},
 					});
-				}
-			);
+				},
+				selectEventName: '<%= eventName %>',
+				selectedData: searchContainerData,
+				title: '<liferay-ui:message key="scopes" />',
+				url: '<%= itemSelectorURL.toString() %>',
+			});
 		});
 	}
 </aui:script>

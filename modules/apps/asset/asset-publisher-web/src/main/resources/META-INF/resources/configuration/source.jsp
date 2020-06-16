@@ -545,46 +545,40 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 
 		var btn = delegateTarget.querySelector('.btn');
 
-		var uri = btn.dataset.href;
+		var url = btn.dataset.href;
 
-		uri = Util.addParams(
+		url = Util.addParams(
 			'_<%= HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource()) %>_ddmStructureDisplayFieldValue=' +
 				encodeURIComponent(ddmStructureDisplayFieldValueInput.value),
-			uri
+			url
 		);
-		uri = Util.addParams(
+		url = Util.addParams(
 			'_<%= HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource()) %>_ddmStructureFieldName=' +
 				encodeURIComponent(ddmStructureFieldNameInput.value),
-			uri
+			url
 		);
-		uri = Util.addParams(
+		url = Util.addParams(
 			'_<%= HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortletResource()) %>_ddmStructureFieldValue=' +
 				encodeURIComponent(ddmStructureFieldValueInput.value),
-			uri
+			url
 		);
 
-		Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				eventName: '<portlet:namespace />selectDDMStructureField',
-				id: '<portlet:namespace />selectDDMStructure' + delegateTarget.id,
-				title:
-					'<liferay-ui:message arguments="structure-field" key="select-x" />',
-				uri: uri,
-			},
-			function (event) {
+		Util.openModal({
+			id: '<portlet:namespace />selectDDMStructure' + delegateTarget.id,
+			onSelect: function (selectedItem) {
 				setDDMFields(
-					event.className,
-					event.name,
-					event.value,
-					event.displayValue,
-					event.label + ': ' + event.displayValue
+					selectedItem.className,
+					selectedItem.name,
+					selectedItem.value,
+					selectedItem.displayValue,
+					selectedItem.label + ': ' + selectedItem.displayValue
 				);
-			}
-		);
+			},
+			selectEventName: '<portlet:namespace />selectDDMStructureField',
+			title:
+				'<liferay-ui:message arguments="structure-field" key="select-x" />',
+			url: url,
+		});
 	});
 
 	function setDDMFields(className, name, value, displayValue, message) {

@@ -96,7 +96,7 @@ private String _getURL(long groupId, long plid, PortletURL addPortletURL, String
 	String addPortletURLString = assetHelper.getAddURLPopUp(groupId, plid, addPortletURL, addDisplayPageParameter, layout);
 
 	if (useDialog) {
-		return "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, dialogIframe: {bodyCssClass: 'dialog-with-footer'}, id: '" + portletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format((HttpServletRequest) pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false)) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
+		return "javascript:Liferay.Util.openModal({headerHTML: '" + HtmlUtil.escapeJS(LanguageUtil.format((HttpServletRequest)pageContext.getRequest(), "new-x", HtmlUtil.escape(message), false)) + "', id: '" + portletResponse.getNamespace() + "editAsset', url: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
 	}
 
 	return addPortletURLString;

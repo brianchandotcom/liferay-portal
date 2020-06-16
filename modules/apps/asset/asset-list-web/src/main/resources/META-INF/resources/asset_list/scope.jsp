@@ -137,33 +137,26 @@ PortletURL portletURL = editAssetListDisplayContext.getPortletURL();
 		selectManageableGroupIcon.addEventListener('click', function (event) {
 			event.preventDefault();
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						destroyOnHide: true,
-					},
-					eventName:
-						'<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
-					id:
-						'<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
-					title: '<liferay-ui:message key="scopes" />',
-					uri:
-						'<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>',
-				},
-				function (event) {
-					var entityId = event.groupid;
+			Liferay.Util.openModal({
+				id: '<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
+				onSelect: function (selectedItem) {
+					var entityId = selectedItem.groupid;
 
 					var searchContainerData = searchContainer.getData();
 
 					if (searchContainerData.indexOf(entityId) == -1) {
 						<portlet:namespace />addRow(
 							entityId,
-							event.groupdescriptivename,
-							event.groupscopelabel
+							selectedItem.groupdescriptivename,
+							selectedItem.groupscopelabel
 						);
 					}
-				}
-			);
+				},
+				selectEventName:
+					'<%= editAssetListDisplayContext.getSelectGroupEventName() %>',
+				title: '<liferay-ui:message key="scopes" />',
+				url: '<%= editAssetListDisplayContext.getGroupItemSelectorURL() %>',
+			});
 		});
 	}
 

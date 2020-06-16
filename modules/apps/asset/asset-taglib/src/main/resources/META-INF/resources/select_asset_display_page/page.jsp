@@ -132,15 +132,9 @@
 
 	if (previewDefaultDisplayPageButton) {
 		previewDefaultDisplayPageButton.addEventListener('click', function (event) {
-			Liferay.Util.openWindow({
-				dialog: {
-					destroyOnHide: true,
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer',
-				},
+			Liferay.Util.openModal({
 				title: '<liferay-ui:message key="preview" />',
-				uri:
+				url:
 					'<%= selectAssetDisplayPageDisplayContext.getURLViewInContext() %>',
 			});
 		});
@@ -150,15 +144,9 @@
 		previewSpecificDisplayPageButton.addEventListener('click', function (
 			event
 		) {
-			Liferay.Util.openWindow({
-				dialog: {
-					destroyOnHide: true,
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer',
-				},
+			Liferay.Util.openModal({
 				title: '<liferay-ui:message key="preview" />',
-				uri:
+				url:
 					'<%= selectAssetDisplayPageDisplayContext.getURLViewInContext() %>',
 			});
 		});

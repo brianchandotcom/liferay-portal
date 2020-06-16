@@ -151,26 +151,20 @@ renderResponse.setTitle(assetListDisplayContext.getAssetListEntryTitle());
 	</portlet:actionURL>
 
 	function <portlet:namespace />openSelectSegmentsEntryDialog() {
-		Liferay.Util.selectEntity(
-			{
-				dialog: {
-					constrain: true,
-					modal: true,
-				},
-				id: '<portlet:namespace />selectEntity',
-				title:
-					'<liferay-ui:message arguments="personalized-variation" key="new-x" />',
-				uri:
-					'<%= editAssetListDisplayContext.getSelectSegmentsEntryURL() %>',
-			},
-			function (event) {
+		Liferay.Util.openModal({
+			id: '<portlet:namespace />selectEntity',
+			onSelect: function (selectedItem) {
 				Liferay.Util.postForm(document.<portlet:namespace />fm, {
 					data: {
-						segmentsEntryId: event.entityid,
+						segmentsEntryId: selectedItem.entityid,
 					},
 					url: '<%= addAssetListEntryVariationURL %>',
 				});
-			}
-		);
+			},
+			selectEventName: '<portlet:namespace />selectEntity',
+			title:
+				'<liferay-ui:message arguments="personalized-variation" key="new-x" />',
+			url: '<%= editAssetListDisplayContext.getSelectSegmentsEntryURL() %>',
+		});
 	}
 </script>

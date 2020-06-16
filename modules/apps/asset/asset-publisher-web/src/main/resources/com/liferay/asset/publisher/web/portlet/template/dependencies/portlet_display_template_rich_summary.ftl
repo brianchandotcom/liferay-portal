@@ -162,7 +162,7 @@
 			icon="print"
 			markupView="lexicon"
 			message="print"
-			url="javascript:Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "printAsset', title: '" + languageUtil.format(locale, "print-x-x", ["hide-accessible", entryTitle], false) + "', uri: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
+			url="javascript:Liferay.Util.openModal({headerHTML: '" + languageUtil.format(locale, "print-x-x", ["hide-accessible", entryTitle], false) + "', id:'" + renderResponse.getNamespace() + "printAsset', url: '" + htmlUtil.escapeURL(printURL.toString()) + "'});"
 		/>
 	</#if>
 </#macro>

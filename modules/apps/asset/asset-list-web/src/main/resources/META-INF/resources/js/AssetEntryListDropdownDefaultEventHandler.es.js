@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	openModal,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
@@ -27,10 +31,10 @@ class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 
 	permissionsAssetEntryList(itemData) {
-		this._openWindow(
-			Liferay.Language.get('permissions'),
-			itemData.permissionsAssetEntryListURL
-		);
+		openModal({
+			title: Liferay.Language.get('permissions'),
+			url: itemData.permissionsAssetEntryListURL,
+		});
 	}
 
 	renameAssetListEntry(itemData) {
@@ -45,20 +49,6 @@ class AssetEntryListDropdownDefaultEventHandler extends DefaultEventHandler {
 			mainFieldValue: itemData.assetListEntryTitle,
 			namespace: this.namespace,
 			spritemap: this.spritemap,
-		});
-	}
-
-	_openWindow(label, url) {
-		Liferay.Util.openWindow({
-			dialog: {
-				destroyOnHide: true,
-				modal: true,
-			},
-			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer',
-			},
-			title: Liferay.Language.get(label),
-			uri: url,
 		});
 	}
 

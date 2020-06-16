@@ -31,7 +31,7 @@ const HeaderReindexStatus = ({container}) => {
 						<ClayTooltipProvider>
 							<span
 								aria-hidden="true"
-								className="loading-animation loading-animation-light loading-animation-sm m-0"
+								className="loading-animation loading-animation-sm m-0"
 								data-testid="statusLoading"
 								data-tooltip-align="bottom"
 								title={Liferay.Language.get(

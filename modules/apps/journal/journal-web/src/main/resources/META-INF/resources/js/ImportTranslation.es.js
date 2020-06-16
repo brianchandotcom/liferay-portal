@@ -16,17 +16,15 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useEffect, useRef, useState} from 'react';
 
-export default function ImportTranslation() {
+export default function ImportTranslation({saveDraftBtnId, submitBtnId}) {
 	const [hasError, setHasError] = useState();
 	const [importFile, setImporFile] = useState();
 
 	const inputFileRef = useRef();
 
 	useEffect(() => {
-		if (importFile) {
-			console.log(importFile);
-			console.log(importFile.name);
-		}
+		Liferay.Util.toggleDisabled('#' + saveDraftBtnId, !importFile);
+		Liferay.Util.toggleDisabled('#' + submitBtnId, !importFile);
 	}, [importFile]);
 
 	return (

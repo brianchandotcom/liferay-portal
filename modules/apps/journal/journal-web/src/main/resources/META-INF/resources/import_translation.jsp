@@ -46,9 +46,9 @@ renderResponse.setTitle(title);
 					<div class="metadata-type-button-row tbar-section text-right">
 						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-3" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
+						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
 
-						<aui:button cssClass="btn-sm mr-3" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
+						<aui:button cssClass="btn-sm mr-3" id="submitBtnId" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
 					</div>
 				</li>
 			</ul>
@@ -59,8 +59,15 @@ renderResponse.setTitle(title);
 		cssClass="container-view"
 	>
 		<clay:sheet>
-			
+			<%
+			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"saveDraftBtnId", renderResponse.getNamespace() + "saveDraftBtn"
+			).put(
+				"submitBtnId", renderResponse.getNamespace() + "submitBtnId"
+			).build();
+			%>
 			<react:component
+				data="<%= data %>"
 				module="js/ImportTranslation.es"
 			/>
 		</clay:sheet>

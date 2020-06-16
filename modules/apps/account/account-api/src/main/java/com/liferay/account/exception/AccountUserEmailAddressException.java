@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.account.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +34,24 @@ public class AccountUserEmailAddressException extends PortalException {
 
 	public AccountUserEmailAddressException(Throwable cause) {
 		super(cause);
+	}
+
+	public static class MustHaveValidDomain
+		extends AccountUserEmailAddressException {
+
+		public MustHaveValidDomain(String emailAddress, String validDomains) {
+			super(
+				String.format(
+					"Email address %s must have one of the valid domains: %s",
+					emailAddress, validDomains));
+
+			this.emailAddress = emailAddress;
+			this.validDomains = validDomains;
+		}
+
+		public final String emailAddress;
+		public final String validDomains;
+
 	}
 
 }

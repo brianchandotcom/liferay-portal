@@ -111,7 +111,7 @@ class ScrollTracker {
 
 		const depthLevel = Math.floor(depth / step);
 
-		if (!this.stepsReached.some((val) => val === depthLevel)) {
+		if (this.stepsReached.every((val) => val < depthLevel)) {
 			this.stepsReached.push(depthLevel);
 
 			if (depthLevel > 0) {

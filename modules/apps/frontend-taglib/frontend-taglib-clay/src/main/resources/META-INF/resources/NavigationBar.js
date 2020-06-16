@@ -23,7 +23,7 @@ export default function NavigationBar({cssClass, inverted, navigationItems}) {
 		<ClayLayout.ContainerFluid className={classNames('p-0', cssClass)}>
 			<ClayNavigationBar
 				inverted={inverted}
-				triggerLabel={navigationItems.find(({active}) => active).label}
+				triggerLabel={navigationItems.find(({active}) => active)?.label}
 			>
 				{navigationItems.map(({active, href, label}) => (
 					<ClayNavigationBar.Item active={active} key={label}>

@@ -112,10 +112,8 @@ if (samlRoleIdpOptionDisabled) {
 
 <aui:script>
 	window['<portlet:namespace />showCertificateDialog'] = function (uri) {
-		var id = '<portlet:namespace />certificateDialog';
-
 		Liferay.Util.openModal({
-			id: id,
+			id: '<portlet:namespace />certificateDialog',
 			iframeBodyCssClass: 'dialog-with-footer',
 			title:
 				'<%= UnicodeLanguageUtil.get(request, "certificate-and-private-key") %>',

@@ -1,6 +1,11 @@
 definition {
 
-	macro cancelChangeListCreation {
+	macro cancelPublicationCreation {
+		GlobalMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Applications",
+			portlet = "Manage Publications");
+
 		Click(locator1 = "Button#PLUS");
 
 		Button.clickCancel();

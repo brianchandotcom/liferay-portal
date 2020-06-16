@@ -35,12 +35,12 @@ definition {
 	}
 
 	@priority = "3"
-	test CancelChangeListCreation {
-		ChangeList.cancelChangeListCreation();
+	test CancelPublicationCreation {
+		ChangeList.cancelPublicationCreation();
 	}
 
 	@priority = "4"
-	test CreateNewChangeListExistingName {
+	test CreateNewPublicationExistingName {
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
 			publicationDescription = "Publication Description",

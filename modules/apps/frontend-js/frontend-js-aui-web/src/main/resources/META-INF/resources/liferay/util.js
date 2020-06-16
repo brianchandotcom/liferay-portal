@@ -1525,9 +1525,7 @@
 					}
 
 					var disabled =
-						selectedData && selectedData.includes(assetEntryId)
-							? true
-							: false;
+						selectedData && selectedData.includes(assetEntryId);
 
 					if (disabled) {
 						item.attr('data-prevent-selection', true);

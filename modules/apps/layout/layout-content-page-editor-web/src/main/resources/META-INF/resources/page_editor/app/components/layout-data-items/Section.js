@@ -67,7 +67,8 @@ const Section = React.forwardRef(({children, className, data, item}, ref) => {
 				`pb-${paddingBottom} pt-${paddingTop}`,
 				{
 					[`bg-${backgroundColorCssClass}`]: !!backgroundColorCssClass,
-					[`px-${paddingHorizontal}`]: paddingHorizontal !== 3,
+					[`px-${paddingHorizontal}`]:
+						type === 'fluid' && paddingHorizontal !== 3,
 				}
 			)}
 			ref={ref}

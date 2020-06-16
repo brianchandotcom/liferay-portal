@@ -24,11 +24,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,7 +68,13 @@ public class ProductNavigationProductMenuHelperImpl
 			return false;
 		}
 
-		if (_isGlobalMenuApp(themeDisplay)) {
+		String navigationModel = PrefsPropsUtil.getString(
+			themeDisplay.getCompanyId(), PropsKeys.NAVIGATION_MODEL,
+			"global-navigation");
+
+		if (_isGlobalMenuApp(themeDisplay) &&
+			Objects.equals(navigationModel, "global-navigation")) {
+
 			return false;
 		}
 

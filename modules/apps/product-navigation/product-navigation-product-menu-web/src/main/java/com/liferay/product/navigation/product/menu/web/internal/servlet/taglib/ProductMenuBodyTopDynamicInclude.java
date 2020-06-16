@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SessionClicks;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -67,7 +69,17 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 			return;
 		}
 
-		if (_isGlobalMenuApp(httpServletRequest)) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String navigationModel = PrefsPropsUtil.getString(
+			themeDisplay.getCompanyId(), PropsKeys.NAVIGATION_MODEL,
+			"global-navigation");
+
+		if (_isGlobalMenuApp(httpServletRequest) &&
+			Objects.equals(navigationModel, "global-navigation")) {
+
 			return;
 		}
 

@@ -134,52 +134,24 @@ public class LiferayExtPlugin implements Plugin<Project> {
 	}
 
 	@SuppressWarnings("serial")
-	private Jar _addSourceSet(
+	private Jar _addTaskExtJar(
 		War war, final WarPluginConvention warPluginConvention,
-		SourceSetContainer sourceSetContainer, String name,
-		FileCollection compileClasspath) {
-
-		// Source set
+		SourceSet extSourceSet) {
 
 		Project project = war.getProject();
-
-		SourceSet sourceSet = sourceSetContainer.create(name);
-
-		sourceSet.setCompileClasspath(compileClasspath);
 
 		// Jar task
 
 		final Jar jar = GradleUtil.addTask(
-			project, sourceSet.getJarTaskName(), Jar.class);
+			project, extSourceSet.getJarTaskName(), Jar.class);
 
-		jar.from(sourceSet.getOutput());
+		jar.from(extSourceSet.getOutput());
 
-		jar.setAppendix(GUtil.toWords(name, '-'));
+		jar.setAppendix(GUtil.toWords(extSourceSet.getName(), '-'));
 
 		jar.setDescription(
 			"Assembles a jar archive containing the " + jar.getAppendix() +
 				" classes.");
-
-		// Source directories
-
-		Callable<File> srcDirCallable = new Callable<File>() {
-
-			@Override
-			public File call() throws Exception {
-				return new File(
-					warPluginConvention.getWebAppDir(),
-					"WEB-INF/" + jar.getAppendix() + "/src");
-			}
-
-		};
-
-		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
-
-		javaSourceDirectorySet.srcDir(srcDirCallable);
-
-		SourceDirectorySet resourcesDirectorySet = sourceSet.getResources();
-
-		resourcesDirectorySet.srcDir(srcDirCallable);
 
 		// War task
 
@@ -208,6 +180,43 @@ public class LiferayExtPlugin implements Plugin<Project> {
 			});
 
 		return jar;
+	}
+
+	private void _configureSourceSetExt(
+		Project project, Configuration portalConfiguration,
+		final WarPluginConvention warPluginConvention, SourceSet extSourceSet,
+		final Jar extJar, Jar... extJars) {
+
+		extSourceSet.setCompileClasspath(
+			portalConfiguration.plus(project.files(extJars)));
+
+		SourceDirectorySet javaSourceDirectorySet = extSourceSet.getJava();
+
+		javaSourceDirectorySet.srcDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						warPluginConvention.getWebAppDir(),
+						"WEB-INF/" + extJar.getAppendix() + "/src");
+				}
+
+			});
+
+		SourceDirectorySet resourcesDirectorySet = extSourceSet.getResources();
+
+		resourcesDirectorySet.srcDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						warPluginConvention.getWebAppDir(),
+						"WEB-INF/" + extJar.getAppendix() + "/src");
+				}
+
+			});
 	}
 
 	private BuildExtInfoTask _addTaskBuildExtInfo(

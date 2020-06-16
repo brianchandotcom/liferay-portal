@@ -70,7 +70,7 @@ public class SampleSQLBuilder {
 
 		// Generic
 
-		File tempDir = new File(BenchmarkPropsValues.OUTPUT_DIR, "temp");
+		File tempDir = new File(BenchmarksPropsValues.OUTPUT_DIR, "temp");
 
 		tempDir.mkdirs();
 
@@ -84,10 +84,10 @@ public class SampleSQLBuilder {
 
 			// Merge
 
-			if (BenchmarkPropsValues.OUTPUT_MERGE) {
+			if (BenchmarksPropsValues.OUTPUT_MERGE) {
 				File sqlFile = new File(
-					BenchmarkPropsValues.OUTPUT_DIR,
-					"sample-" + BenchmarkPropsValues.DB_TYPE + ".sql");
+					BenchmarksPropsValues.OUTPUT_DIR,
+					"sample-" + BenchmarksPropsValues.DB_TYPE + ".sql");
 
 				FileUtil.delete(sqlFile);
 
@@ -95,7 +95,7 @@ public class SampleSQLBuilder {
 			}
 			else {
 				File outputDir = new File(
-					BenchmarkPropsValues.OUTPUT_DIR, "output");
+					BenchmarksPropsValues.OUTPUT_DIR, "output");
 
 				FileUtil.deltree(outputDir);
 
@@ -114,9 +114,9 @@ public class SampleSQLBuilder {
 
 		FileUtil.write(
 			new File(
-				BenchmarkPropsValues.OUTPUT_DIR,
+				BenchmarksPropsValues.OUTPUT_DIR,
 				"benchmarks-actual.properties"),
-			BenchmarkPropsValues.ACTUAL_PROPERTIES_CONTENT);
+			BenchmarksPropsValues.ACTUAL_PROPERTIES_CONTENT);
 	}
 
 	protected void compressSQL(
@@ -147,7 +147,7 @@ public class SampleSQLBuilder {
 
 		sb.append(values);
 
-		if (sb.index() >= BenchmarkPropsValues.OPTIMIZE_BUFFER_SIZE) {
+		if (sb.index() >= BenchmarksPropsValues.OPTIMIZE_BUFFER_SIZE) {
 			sb.append(";\n");
 
 			insertSQL = db.buildSQL(sb.toString());
@@ -160,10 +160,10 @@ public class SampleSQLBuilder {
 	}
 
 	protected void compressSQL(Reader reader, File dir) throws Exception {
-		DB db = DBManagerUtil.getDB(BenchmarkPropsValues.DB_TYPE, null);
+		DB db = DBManagerUtil.getDB(BenchmarksPropsValues.DB_TYPE, null);
 
-		if ((BenchmarkPropsValues.DB_TYPE == DBType.MARIADB) ||
-			(BenchmarkPropsValues.DB_TYPE == DBType.MYSQL)) {
+		if ((BenchmarksPropsValues.DB_TYPE == DBType.MARIADB) ||
+			(BenchmarksPropsValues.DB_TYPE == DBType.MYSQL)) {
 
 			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
 		}
@@ -262,11 +262,11 @@ public class SampleSQLBuilder {
 						createUnsyncBufferedWriter(charPipe.getWriter()),
 						createFileWriter(
 							new File(
-								BenchmarkPropsValues.OUTPUT_DIR,
+								BenchmarksPropsValues.OUTPUT_DIR,
 								"sample.sql")));
 
 					FreeMarkerUtil.process(
-						BenchmarkPropsValues.SCRIPT,
+						BenchmarksPropsValues.SCRIPT,
 						Collections.singletonMap("dataFactory", _dataFactory),
 						sampleSQLWriter);
 				}

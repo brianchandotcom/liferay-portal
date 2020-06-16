@@ -16,6 +16,8 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useEffect, useRef, useState} from 'react';
 
+const VALID_EXTENSIONS = '.xliff,.xlf';
+
 export default function ImportTranslation({saveDraftBtnId, submitBtnId}) {
 	const [hasError, setHasError] = useState();
 	const [importFile, setImporFile] = useState();
@@ -54,6 +56,7 @@ export default function ImportTranslation({saveDraftBtnId, submitBtnId}) {
 						</ClayButton>
 
 						<ClayInput
+							accept={VALID_EXTENSIONS}
 							className="d-none"
 							name="import-file"
 							onChange={e => {

@@ -22,6 +22,7 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Plugin;
@@ -84,41 +85,42 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		SourceSetContainer sourceSetContainer =
 			javaPluginConvention.getSourceSets();
 
+		SourceSet extImplSourceSet = sourceSetContainer.create(
+			EXT_IMPL_SOURCE_SET_NAME);
+		SourceSet extKernelSourceSet = sourceSetContainer.create(
+			EXT_KERNEL_SOURCE_SET_NAME);
+		SourceSet extUtilBridgesSourceSet = sourceSetContainer.create(
+			EXT_UTIL_BRIDGES_SOURCE_SET_NAME);
+		SourceSet extUtilJavaSourceSet = sourceSetContainer.create(
+			EXT_UTIL_JAVA_SOURCE_SET_NAME);
+		SourceSet extUtilTaglibSourceSet = sourceSetContainer.create(
+			EXT_UTIL_TAGLIB_SOURCE_SET_NAME);
+
+		_configureSourceSetExt(warPluginConvention, extImplSourceSet);
+		_configureSourceSetExt(warPluginConvention, extKernelSourceSet);
+		_configureSourceSetExt(warPluginConvention, extUtilBridgesSourceSet);
+		_configureSourceSetExt(warPluginConvention, extUtilJavaSourceSet);
+		_configureSourceSetExt(warPluginConvention, extUtilTaglibSourceSet);
+
 		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
 		_configureLiferay(project);
 		_configureTaskDeploy(war);
 
-		Jar extKernelJar = _addSourceSet(
-			war, warPluginConvention, sourceSetContainer,
-			EXT_KERNEL_SOURCE_SET_NAME, portalConfiguration);
+		Jar extKernelJar = _addTaskExtJar(
+			war, warPluginConvention, extKernelSourceSet);
 
-		FileCollection compileClasspath = portalConfiguration.plus(
-			project.files(extKernelJar));
+		Jar extUtilBridgesJar = _addTaskExtJar(
+			war, warPluginConvention, extUtilBridgesSourceSet);
 
-		Jar extUtilBridgesJar = _addSourceSet(
-			war, warPluginConvention, sourceSetContainer,
-			EXT_UTIL_BRIDGES_SOURCE_SET_NAME, compileClasspath);
+		Jar extUtilJavaJar = _addTaskExtJar(
+			war, warPluginConvention, extUtilJavaSourceSet);
 
-		compileClasspath = compileClasspath.plus(
-			project.files(extUtilBridgesJar));
+		Jar extUtilTaglibJar = _addTaskExtJar(
+			war, warPluginConvention, extUtilTaglibSourceSet);
 
-		Jar extUtilJavaJar = _addSourceSet(
-			war, warPluginConvention, sourceSetContainer,
-			EXT_UTIL_JAVA_SOURCE_SET_NAME, compileClasspath);
-
-		compileClasspath = compileClasspath.plus(project.files(extUtilJavaJar));
-
-		Jar extUtilTaglibJar = _addSourceSet(
-			war, warPluginConvention, sourceSetContainer,
-			EXT_UTIL_TAGLIB_SOURCE_SET_NAME, compileClasspath);
-
-		compileClasspath = compileClasspath.plus(
-			project.files(extUtilTaglibJar));
-
-		Jar extImplJar = _addSourceSet(
-			war, warPluginConvention, sourceSetContainer,
-			EXT_IMPL_SOURCE_SET_NAME, compileClasspath);
+		Jar extImplJar = _addTaskExtJar(
+			war, warPluginConvention, extImplSourceSet);
 
 		Sync buildExtInfoBaseDirSync = _addTaskBuildExtInfoBaseDir(war);
 
@@ -131,6 +133,33 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		_configureTaskExtImplJar(
 			extImplJar, extUtilBridgesJar, extUtilJavaJar, extUtilTaglibJar);
 		_configureTaskWar(war, buildExtInfoTask);
+
+		FileCollection fileCollection = project.files(
+			extKernelJar, extUtilBridgesJar, extUtilJavaJar, extUtilTaglibJar);
+
+		extImplSourceSet.setCompileClasspath(
+			portalConfiguration.plus(fileCollection));
+
+		fileCollection = project.files(Collections.emptyList());
+
+		extKernelSourceSet.setCompileClasspath(
+			portalConfiguration.plus(fileCollection));
+
+		fileCollection = project.files(extKernelJar);
+
+		extUtilBridgesSourceSet.setCompileClasspath(
+			portalConfiguration.plus(fileCollection));
+
+		fileCollection = project.files(extKernelJar, extUtilBridgesJar);
+
+		extUtilJavaSourceSet.setCompileClasspath(
+			portalConfiguration.plus(fileCollection));
+
+		fileCollection = project.files(
+			extKernelJar, extUtilBridgesJar, extUtilJavaJar);
+
+		extUtilTaglibSourceSet.setCompileClasspath(
+			portalConfiguration.plus(fileCollection));
 	}
 
 	@SuppressWarnings("serial")

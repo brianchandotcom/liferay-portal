@@ -80,97 +80,78 @@ renderResponse.setTitle((source != null) ? LanguageUtil.format(request, "edit-x"
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />testDatabaseConnection',
-		function () {
-			var A = AUI();
+	window['<portlet:namespace />testDatabaseConnection'] = function () {
+		var baseUrl =
+			'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/admin/data_source/test_database_connection.jsp" /></portlet:renderURL>';
 
-			var url =
-				'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/admin/data_source/test_database_connection.jsp" /></portlet:renderURL>';
+		var data = {};
 
-			var data = {};
+		<c:if test="<%= source != null %>">
+			data.<portlet:namespace />sourceId =
+				document.<portlet:namespace />fm['<portlet:namespace />sourceId'].value;
+		</c:if>
 
-			<c:if test="<%= source != null %>">
-				data.<portlet:namespace />sourceId =
-					document.<portlet:namespace />fm[
-						'<portlet:namespace />sourceId'
-					].value;
-			</c:if>
+		data.<portlet:namespace />driverClassName =
+			document.<portlet:namespace />fm[
+				'<portlet:namespace />driverClassName'
+			].value;
+		data.<portlet:namespace />driverUrl =
+			document.<portlet:namespace />fm[
+				'<portlet:namespace />driverUrl'
+			].value;
+		data.<portlet:namespace />driverUserName =
+			document.<portlet:namespace />fm[
+				'<portlet:namespace />driverUserName'
+			].value;
+		data.<portlet:namespace />driverPassword =
+			document.<portlet:namespace />fm[
+				'<portlet:namespace />driverPassword'
+			].value;
 
-			data.<portlet:namespace />driverClassName =
-				document.<portlet:namespace />fm[
-					'<portlet:namespace />driverClassName'
-				].value;
-			data.<portlet:namespace />driverUrl =
-				document.<portlet:namespace />fm[
-					'<portlet:namespace />driverUrl'
-				].value;
-			data.<portlet:namespace />driverUserName =
-				document.<portlet:namespace />fm[
-					'<portlet:namespace />driverUserName'
-				].value;
-			data.<portlet:namespace />driverPassword =
-				document.<portlet:namespace />fm[
-					'<portlet:namespace />driverPassword'
-				].value;
+		if (baseUrl != null) {
+			var searchParams = new URLSearchParams(data);
 
-			if (url != null) {
-				var databaseConnectionModal = Liferay.Util.Window.getWindow({
-					dialog: {
-						centered: true,
-						destroyOnHide: true,
-						height: 300,
-						hideOn: [],
-						modal: true,
-						resizable: false,
-						toolbars: {
-							footer: [
-								{
-									cssClass: 'btn-lg btn-primary',
-									label: '<liferay-ui:message key="close" />',
-									on: {
-										click: function () {
-											databaseConnectionModal.hide();
-										},
-									},
+			var url = new URL(baseUrl);
+
+			searchParams.forEach(function (value, key) {
+				url.searchParams.append(key, value);
+			});
+
+			var id = '<portlet:namespace />databaseConnectionModal';
+
+			Liferay.Util.fetch(url)
+				.then(function (response) {
+					return response.text();
+				})
+				.then(function (text) {
+					Liferay.Util.openModal({
+						bodyHTML: text,
+						buttons: [
+							{
+								label: '<liferay-ui:message key="close" />',
+								onClick: function () {
+									Liferay.Util.getOpener().Liferay.fire(
+										'closeModal',
+										{
+											id: id,
+										}
+									);
 								},
-							],
-							header: [
-								{
-									cssClass: 'close',
-									discardDefaultButtonCssClasses: true,
-									labelHTML: Liferay.Util.getLexiconIconTpl(
-										'times'
-									),
-									on: {
-										click: function () {
-											databaseConnectionModal.hide();
-										},
-									},
-								},
-							],
-						},
-						width: 600,
-					},
-					title: '<liferay-ui:message key="source" />',
+							},
+						],
+						id: id,
+						title: '<liferay-ui:message key="source" />',
+					});
+				})
+				.catch(function (error) {
+					Liferay.Util.openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-system-error-occurred'
+						),
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
 				});
-
-				databaseConnectionModal.render();
-
-				A.io.request(url, {
-					after: {
-						success: function () {
-							var response = this.get('responseData');
-
-							databaseConnectionModal.bodyNode.append(response);
-							databaseConnectionModal.show();
-						},
-					},
-					data: data,
-				});
-			}
-		},
-		['aui-dialog', 'aui-io']
-	);
+		}
+	};
 </aui:script>

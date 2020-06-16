@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -160,6 +159,22 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			_getSegmentsExperienceIds());
 	}
 
+	private Layout _getLayout(HttpServletRequest httpServletRequest) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout instanceof VirtualLayout) {
+			VirtualLayout virtualLayout = (VirtualLayout)layout;
+
+			layout = virtualLayout.getSourceLayout();
+		}
+
+		return layout;
+	}
+
 	private LayoutStructure _getLayoutStructure(
 		HttpServletRequest httpServletRequest) {
 
@@ -168,17 +183,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		}
 
 		try {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			Layout layout = themeDisplay.getLayout();
-
-			if (layout instanceof VirtualLayout) {
-				VirtualLayout virtualLayout = (VirtualLayout)layout;
-
-				layout = virtualLayout.getSourceLayout();
-			}
+			Layout layout = _getLayout(httpServletRequest);
 
 			LayoutPageTemplateStructure layoutPageTemplateStructure =
 				LayoutPageTemplateStructureLocalServiceUtil.
@@ -188,7 +193,7 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			String data = layoutPageTemplateStructure.getData(
 				_getSegmentsExperienceIds());
 
-			String masterLayoutData = _getMasterLayoutData();
+			String masterLayoutData = _getMasterLayoutData(httpServletRequest);
 
 			if (Validator.isNull(masterLayoutData)) {
 				_layoutStructure = LayoutStructure.of(data);
@@ -218,8 +223,8 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 		return layoutStructure.getMainItemId();
 	}
 
-	private String _getMasterLayoutData() {
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(_plid);
+	private String _getMasterLayoutData(HttpServletRequest httpServletRequest) {
+		Layout layout = _getLayout(httpServletRequest);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.

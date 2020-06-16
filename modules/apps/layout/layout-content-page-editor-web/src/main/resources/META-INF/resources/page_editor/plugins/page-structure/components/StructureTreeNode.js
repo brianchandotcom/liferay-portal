@@ -27,6 +27,7 @@ import {
 } from '../../../app/components/Controls';
 import {fromControlsId} from '../../../app/components/layout-data-items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
+import selectCanUpdatePageStructure from '../../../app/selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import deleteItem from '../../../app/thunks/deleteItem';
 
@@ -41,6 +42,7 @@ export default function StructureTreeNode({node}) {
 	const hoveredItemId = useHoveredItemId();
 	const selectItem = useSelectItem();
 	const toControlsId = useToControlsId();
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 
 	return (
 		<div
@@ -93,7 +95,7 @@ export default function StructureTreeNode({node}) {
 				name={node.name}
 			/>
 
-			{node.removable && (
+			{node.removable && canUpdatePageStructure && (
 				<RemoveButton
 					node={node}
 					visible={

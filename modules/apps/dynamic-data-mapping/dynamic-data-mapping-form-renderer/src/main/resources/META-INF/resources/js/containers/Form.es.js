@@ -116,7 +116,7 @@ const Form = React.forwardRef((props, ref) => {
 			const form = getFormNode(containerRef.current);
 
 			if (form) {
-				dom.on(form, 'submit', handleFormSubmitted.bind(this, form));
+				dom.on(form, 'submit', handleFormSubmitted.bind({form}));
 			}
 
 			Liferay.on(

@@ -41,7 +41,9 @@ export default function nextPage({
 					if (activePage === pageIndex && !valid) {
 						validPage = false;
 					}
-				}
+				},
+				true,
+				true
 			);
 
 			if (validPage) {
@@ -75,7 +77,7 @@ export default function nextPage({
 			}
 			else {
 				dispatch({
-					payload: {pageIndex: activePage},
+					payload: {newPages: evaluatedPages, pageIndex: activePage},
 					type: EVENT_TYPES.PAGE_VALIDATION_FAILED,
 				});
 			}

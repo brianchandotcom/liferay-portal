@@ -42,7 +42,9 @@ export default (state, action) => {
 							...field,
 							displayErrors: currentPageIndex === pageIndex,
 						};
-					}
+					},
+					true,
+					true
 				),
 			};
 		}

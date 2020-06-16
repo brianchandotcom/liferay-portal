@@ -80,7 +80,9 @@ public class ProductMenuPanelApp extends BasePanelApp {
 			super.isShow(permissionChecker, group) &&
 			(Objects.equals(
 				PanelCategoryKeys.CONTROL_PANEL, _panelCategoryKey) ||
-			 Objects.equals(PanelCategoryKeys.GLOBAL_MENU, _panelCategoryKey) ||
+			 Objects.equals(
+				 PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS,
+				 _panelCategoryKey) ||
 			 ArrayUtil.contains(_siteIds, AppBuilderAppConstants.SITE_ID_ALL) ||
 			 ArrayUtil.contains(_siteIds, group.getGroupId()))) {
 

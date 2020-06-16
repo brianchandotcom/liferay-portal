@@ -38,7 +38,6 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 				add(
 					navigationItem -> {
 						navigationItem.setActive(true);
-						navigationItem.setHref(StringPool.BLANK);
 						navigationItem.setLabel(LanguageUtil.get(request, "export-processes"));
 					});
 			}

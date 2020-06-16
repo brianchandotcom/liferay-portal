@@ -444,7 +444,6 @@ public class DDMFormAdminDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
-				navigationItem.setHref(StringPool.BLANK);
 
 				HttpServletRequest httpServletRequest =
 					formAdminRequestHelper.getRequest();
@@ -542,14 +541,12 @@ public class DDMFormAdminDisplayContext {
 			navigationItem -> {
 				navigationItem.putData("action", "showForm");
 				navigationItem.setActive(true);
-				navigationItem.setHref(StringPool.BLANK);
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "form"));
 			}
 		).add(
 			navigationItem -> {
 				navigationItem.putData("action", "showRules");
-				navigationItem.setHref(StringPool.BLANK);
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "rules"));
 			}
@@ -557,7 +554,6 @@ public class DDMFormAdminDisplayContext {
 			this::isShowReport,
 			navigationItem -> {
 				navigationItem.putData("action", "showReport");
-				navigationItem.setHref(StringPool.BLANK);
 				navigationItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "entries"));
 			}

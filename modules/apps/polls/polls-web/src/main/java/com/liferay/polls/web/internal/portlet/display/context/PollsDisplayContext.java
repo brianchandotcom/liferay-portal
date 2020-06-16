@@ -137,7 +137,6 @@ public class PollsDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
-				navigationItem.setHref(StringPool.BLANK);
 
 				ThemeDisplay themeDisplay = getThemeDisplay();
 

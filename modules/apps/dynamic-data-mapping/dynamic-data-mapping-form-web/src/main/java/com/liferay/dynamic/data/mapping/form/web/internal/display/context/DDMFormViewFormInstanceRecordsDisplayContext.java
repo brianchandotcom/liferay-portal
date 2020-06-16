@@ -221,7 +221,6 @@ public class DDMFormViewFormInstanceRecordsDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
-				navigationItem.setHref(StringPool.BLANK);
 
 				DDMFormInstance ddmFormInstance = getDDMFormInstance();
 

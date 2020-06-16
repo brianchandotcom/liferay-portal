@@ -63,7 +63,6 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 					add(
 						navigationItem -> {
 							navigationItem.setActive(true);
-							navigationItem.setHref(StringPool.BLANK);
 							navigationItem.setLabel(LanguageUtil.get(request, "summary"));
 						}
 					);

@@ -256,7 +256,6 @@ public class DDLViewRecordsDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
-				navigationItem.setHref(StringPool.BLANK);
 				navigationItem.setLabel(
 					HtmlUtil.extractText(
 						_ddlRecordSet.getName(_ddlRequestHelper.getLocale())));

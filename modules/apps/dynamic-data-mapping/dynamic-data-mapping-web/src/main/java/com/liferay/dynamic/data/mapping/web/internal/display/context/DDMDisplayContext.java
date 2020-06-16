@@ -209,7 +209,6 @@ public class DDMDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
-				navigationItem.setHref(StringPool.BLANK);
 				navigationItem.setLabel(getScopedStructureLabel());
 			}
 		).build();

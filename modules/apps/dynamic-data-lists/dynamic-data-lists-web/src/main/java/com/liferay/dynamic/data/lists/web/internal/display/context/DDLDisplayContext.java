@@ -319,7 +319,6 @@ public class DDLDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
-				navigationItem.setHref(StringPool.BLANK);
 
 				HttpServletRequest httpServletRequest =
 					_ddlRequestHelper.getRequest();

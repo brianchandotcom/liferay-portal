@@ -35,7 +35,6 @@ List<NavigationItem> navigationItems = new ArrayList<>();
 NavigationItem entriesNavigationItem = new NavigationItem();
 
 entriesNavigationItem.setActive(true);
-entriesNavigationItem.setHref(StringPool.BLANK);
 entriesNavigationItem.setLabel(LanguageUtil.get(request, "users"));
 
 navigationItems.add(entriesNavigationItem);

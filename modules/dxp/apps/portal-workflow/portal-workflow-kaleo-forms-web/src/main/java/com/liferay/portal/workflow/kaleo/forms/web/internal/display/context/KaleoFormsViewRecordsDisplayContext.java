@@ -259,7 +259,6 @@ public class KaleoFormsViewRecordsDisplayContext {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(true);
-				navigationItem.setHref(StringPool.BLANK);
 
 				ThemeDisplay themeDisplay = getThemeDisplay();
 

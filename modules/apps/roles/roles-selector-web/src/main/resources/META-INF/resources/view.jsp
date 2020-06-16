@@ -93,7 +93,6 @@ request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 					add(
 						navigationItem -> {
 							navigationItem.setActive(true);
-							navigationItem.setHref(StringPool.BLANK);
 							navigationItem.setLabel(LanguageUtil.get(request, "roles"));
 						});
 				}

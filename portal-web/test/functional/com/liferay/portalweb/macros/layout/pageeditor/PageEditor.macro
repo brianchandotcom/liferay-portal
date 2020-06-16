@@ -221,13 +221,24 @@ definition {
 
 		PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
 
-		DragAndDrop.javaScriptDragAndDropToObject(
-			key_collectionName = "${collectionName}",
-			key_entryTitle = "${entryTitle}",
-			key_fragmentName = "${fragmentName}",
-			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#COLLECTION_CELL",
-			value1 = "");
+		if (isSet(targetFragmentName)) {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_collectionName = "${collectionName}",
+				key_fragmentName = "${fragmentName}",
+				key_targetFragmentName = "${targetFragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+				value1 = "");
+		}
+		else {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_collectionName = "${collectionName}",
+				key_entryTitle = "${entryTitle}",
+				key_fragmentName = "${fragmentName}",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "PageEditor#COLLECTION_CELL",
+				value1 = "");
+		}
 
 		PageEditor.waitForAutoSave();
 	}
@@ -1034,12 +1045,22 @@ definition {
 	}
 
 	macro gotoContentConfiguration {
-		Click(
-			key_fragmentName = "${fragmentName}",
-			key_rowPosition = "${rowPosition}",
-			locator1 = "Fragment#CONTENT_FRAGMENT_BODY");
+		if (isSet(entryContent)) {
+			Click.clickNoMouseOver(
+				key_colPosition = "${colPosition}",
+				key_entryContent = "${entryContent}",
+				key_fragmentName = "${fragmentName}",
+				key_rowPosition = "${rowPosition}",
+				locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+		}
+		else {
+			Click(
+				key_fragmentName = "${fragmentName}",
+				key_rowPosition = "${rowPosition}",
+				locator1 = "Fragment#CONTENT_FRAGMENT_BODY");
+		}
 
-		Click(
+		Click.clickNoMouseOver(
 			key_elementType = "Fragment",
 			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
 	}

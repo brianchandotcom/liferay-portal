@@ -39,6 +39,7 @@
 		"@clayui/time-picker": "3.1.3",
 		"@clayui/tooltip": "3.3.0",
 		"@clayui/upper-toolbar": "3.1.0",
+		"classnames": "2.2.6",
 		"clay-alert": "2.21.3",
 		"clay-autocomplete": "2.21.3",
 		"clay-badge": "2.21.3",

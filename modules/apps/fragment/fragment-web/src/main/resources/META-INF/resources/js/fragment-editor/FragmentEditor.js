@@ -14,9 +14,9 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
-import {useIsMounted} from 'frontend-js-react-web';
-import {fetch, openToast} from 'frontend-js-web';
-import React, {useState} from 'react';
+import {useIsMounted, usePrevious} from 'frontend-js-react-web';
+import {debounce, fetch, openToast} from 'frontend-js-web';
+import React, {useCallback, useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';
 import FragmentPreview from './FragmentPreview';
@@ -41,7 +41,6 @@ const FragmentEditor = ({
 		name,
 		propagationEnabled,
 		readOnly,
-		status,
 		urls,
 	},
 }) => {
@@ -55,60 +54,59 @@ const FragmentEditor = ({
 
 	const isMounted = useIsMounted();
 
-	const handleSaveButtonClick = (event) => {
-		const status = event.currentTarget.value;
+	const saveDraft = useCallback(
+		debounce(() => {
+			setIsSaving(true);
 
-		setIsSaving(true);
+			const formData = new FormData();
 
-		const formData = new FormData();
+			formData.append(`${namespace}cacheable`, isCacheable);
+			formData.append(`${namespace}configurationContent`, configuration);
+			formData.append(`${namespace}cssContent`, css);
+			formData.append(`${namespace}htmlContent`, html);
+			formData.append(
+				`${namespace}fragmentCollectionId`,
+				fragmentCollectionId
+			);
+			formData.append(`${namespace}fragmentEntryId`, fragmentEntryId);
+			formData.append(`${namespace}jsContent`, js);
+			formData.append(`${namespace}name`, name);
+			formData.append(`${namespace}status`, allowedStatus.draft);
 
-		formData.append(`${namespace}cacheable`, isCacheable);
-		formData.append(`${namespace}configurationContent`, configuration);
-		formData.append(`${namespace}cssContent`, css);
-		formData.append(`${namespace}htmlContent`, html);
-		formData.append(
-			`${namespace}fragmentCollectionId`,
-			fragmentCollectionId
-		);
-		formData.append(`${namespace}fragmentEntryId`, fragmentEntryId);
-		formData.append(`${namespace}jsContent`, js);
-		formData.append(`${namespace}name`, name);
-		formData.append(`${namespace}status`, status);
-
-		fetch(urls.edit, {
-			body: formData,
-			method: 'POST',
-		})
-			.then((response) => response.json())
-			.then((response) => {
-				if (response.error) {
-					throw response.error;
-				}
-
-				return response;
+			fetch(urls.edit, {
+				body: formData,
+				method: 'POST',
 			})
-			.then((response) => {
-				const redirectURL = response.redirect || urls.redirect;
+				.then((response) => response.json())
+				.then((response) => {
+					if (response.error) {
+						throw response.error;
+					}
 
-				Liferay.Util.navigate(redirectURL);
-			})
-			.catch((error) => {
-				if (isMounted()) {
+					return response;
+				})
+				.then(() => {
 					setIsSaving(false);
-				}
+				})
+				.catch((error) => {
+					if (isMounted()) {
+						setIsSaving(false);
+					}
 
-				const message =
-					typeof error === 'string'
-						? error
-						: Liferay.Language.get('error');
+					const message =
+						typeof error === 'string'
+							? error
+							: Liferay.Language.get('error');
 
-				openToast({
-					message,
-					title: Liferay.Language.get('error'),
-					type: 'danger',
+					openToast({
+						message,
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
 				});
-			});
-	};
+		}, 500),
+		[configuration, css, html, js]
+	);
 
 	return (
 		<div className="fragment-editor-container">
@@ -204,9 +202,7 @@ const FragmentEditor = ({
 										<button
 											className="btn btn-primary btn-sm"
 											disabled={isSaving}
-											onClick={handleSaveButtonClick}
 											type="button"
-											value={allowedStatus.approved}
 										>
 											<span className="lfr-btn-label">
 												{Liferay.Language.get(

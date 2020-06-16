@@ -183,12 +183,7 @@ public class LiferayExtPlugin implements Plugin<Project> {
 	}
 
 	private void _configureSourceSetExt(
-		Project project, Configuration portalConfiguration,
-		final WarPluginConvention warPluginConvention, SourceSet extSourceSet,
-		final Jar extJar, Jar... extJars) {
-
-		extSourceSet.setCompileClasspath(
-			portalConfiguration.plus(project.files(extJars)));
+		final WarPluginConvention warPluginConvention, SourceSet extSourceSet) {
 
 		SourceDirectorySet javaSourceDirectorySet = extSourceSet.getJava();
 
@@ -197,9 +192,11 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
+					String s = GUtil.toWords(extSourceSet.getName(), '-');
+
 					return new File(
 						warPluginConvention.getWebAppDir(),
-						"WEB-INF/" + extJar.getAppendix() + "/src");
+						"WEB-INF/" + s + "/src");
 				}
 
 			});
@@ -211,9 +208,11 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
+					String s = GUtil.toWords(extSourceSet.getName(), '-');
+
 					return new File(
 						warPluginConvention.getWebAppDir(),
-						"WEB-INF/" + extJar.getAppendix() + "/src");
+						"WEB-INF/" + s + "/src");
 				}
 
 			});

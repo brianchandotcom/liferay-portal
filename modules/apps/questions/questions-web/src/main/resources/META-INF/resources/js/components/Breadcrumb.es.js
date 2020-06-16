@@ -31,19 +31,22 @@ export default ({section}) => {
 	return (
 		<>
 			{section && section.parentSection && (
-				<ol className="breadcrumb">
-					<li className="breadcrumb-item dropdown">
-						<strong className="breadcrumb-text-truncate">
+				<ol className="breadcrumb c-m-0 c-p-0">
+					<li className="breadcrumb-item breadcrumb-text-truncate">
+						<strong className="breadcrumb-text-truncate text-secondary">
 							{section.parentSection.title}
 						</strong>
 					</li>
 					{!!getParentSubSections().length && (
-						<li className="breadcrumb-item">
+						<li className="breadcrumb-item breadcrumb-text-truncate">
 							<ClayDropDown
 								active={active}
 								onActiveChange={setActive}
 								trigger={
-									<ClayButton displayType="unstyled">
+									<ClayButton
+										className="c-p-0 questions-breadcrumb-unstyled text-truncate"
+										displayType="unstyled"
+									>
 										{section.id === section.parentSection.id
 											? Liferay.Language.get('all')
 											: section.title}

@@ -100,8 +100,8 @@ export default withRouter(
 		};
 
 		return (
-			<div className="d-flex flex-column flex-lg-row justify-content-between">
-				<div className="d-flex flex-grow-1">
+			<div className="d-flex flex-column flex-xl-row justify-content-between">
+				<div className="align-items-center d-flex flex-grow-1">
 					<Breadcrumb section={section} />
 
 					{section && section.actions && section.actions.subscribe && (
@@ -111,8 +111,8 @@ export default withRouter(
 					)}
 				</div>
 
-				<div className="c-mt-3 c-mt-lg-0 d-flex flex-column flex-grow-1 flex-md-row">
-					<ClayInput.Group className="justify-content-lg-end">
+				<div className="c-mt-3 c-mt-xl-0 d-flex flex-column flex-grow-1 flex-md-row">
+					<ClayInput.Group className="justify-content-xl-end">
 						<ClayInput.GroupItem shrink>
 							<label
 								className="align-items-center d-inline-flex m-0 text-secondary"

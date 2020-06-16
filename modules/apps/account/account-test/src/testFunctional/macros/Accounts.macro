@@ -287,6 +287,18 @@ definition {
 			key_selectFieldLabel = "Type",
 			locator1 = "Select#ANY_DISABLED");
 
+		if (isSet(accountTaxID)) {
+			AssertTextEquals(
+				key_fieldLabel = "Tax ID",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${accountTaxID}");
+		}
+
+		AssertTextEquals(
+			key_fieldLabel = "Tax ID",
+			locator1 = "Icon#HELPER",
+			value1 = "Enter the account's tax ID (EIN, VAT number, etc.).");
+
 		if (isSet(domainName)) {
 			LexiconEntry.viewEntryName(rowEntry = "${domainName}");
 		}

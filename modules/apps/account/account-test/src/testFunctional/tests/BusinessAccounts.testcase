@@ -567,7 +567,9 @@ definition {
 			panel = "Control Panel",
 			portlet = "Accounts");
 
-		Accounts.addCP(accountName = "Accounts Name for Test");
+		Accounts.addCP(
+			accountName = "Accounts Name for Test",
+			accountTaxID = "Z9870654786390342199899Y");
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
@@ -581,6 +583,10 @@ definition {
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "Accounts Name for Test",
 			rowStatus = "Active");
+
+		Accounts.viewAccountDetails(
+			accountName = "Accounts Name for Test",
+			accountTaxID = "Z9870654786390342199899Y");
 	}
 
 	@priority = "4"

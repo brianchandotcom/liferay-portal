@@ -335,6 +335,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HELPER</td>
+	<td>//div[label[contains(.,'${key_fieldLabel}')]]//span[contains(@class,'icon-help')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HISTORY_VERTICAL_ELLIPSIS</td>
 	<td>//a[span/*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>

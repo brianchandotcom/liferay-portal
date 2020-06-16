@@ -25,25 +25,17 @@ export default function NavigationBar({cssClass, inverted, navigationItems}) {
 				inverted={inverted}
 				triggerLabel={navigationItems.find(({active}) => active)?.label}
 			>
-				{navigationItems.map(({active, href, label}, index) => {
-					const linkAttributes = href ? {href} : {};
-
-					return (
-						<ClayNavigationBar.Item
-							active={active}
-							data-nav-item-index={index}
-							key={label}
+				{navigationItems.map(({active, href, label}) => (
+					<ClayNavigationBar.Item active={active} key={label}>
+						<ClayLink
+							className="nav-link"
+							displayType="unstyled"
+							{...{href}}
 						>
-							<ClayLink
-								className="nav-link"
-								displayType="unstyled"
-								{...linkAttributes}
-							>
-								{label}
-							</ClayLink>
-						</ClayNavigationBar.Item>
-					);
-				})}
+							{label}
+						</ClayLink>
+					</ClayNavigationBar.Item>
+				))}
 			</ClayNavigationBar>
 		</ClayLayout.ContainerFluid>
 	);

@@ -27,10 +27,6 @@ import javax.portlet.PortletURL;
  */
 public class NavigationItem extends HashMap<String, Object> {
 
-	public NavigationItem() {
-		setHref(StringPool.BLANK);
-	}
-
 	public void putData(String key, String value) {
 		Map<String, Object> data = (Map<String, Object>)get("data");
 

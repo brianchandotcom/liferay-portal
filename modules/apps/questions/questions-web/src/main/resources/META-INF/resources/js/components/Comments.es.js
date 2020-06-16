@@ -75,18 +75,23 @@ export default ({
 							}}
 						/>
 
-						{comment.length < 15 && (
+						{comment.length < 23 && (
 							<p className="float-right small text-secondary">
 								{lang.sub(
 									Liferay.Language.get('x-characters-left'),
-									[15 - comment.length]
+									[
+										15 -
+											(comment.length
+												? comment.length - 8
+												: comment.length),
+									]
 								)}
 							</p>
 						)}
 
 						<ClayButton.Group className="c-mt-3" spaced>
 							<ClayButton
-								disabled={comment.length < 15}
+								disabled={comment.length < 23}
 								displayType="primary"
 								onClick={() => {
 									createComment({

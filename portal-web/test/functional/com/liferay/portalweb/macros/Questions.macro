@@ -143,6 +143,26 @@ definition {
 			value1 = "${nameField}");
 	}
 
+	macro gotoDetails {
+		Click(
+			key_questionTitle = "${questionTitle}",
+			locator1 = "Questions#QUESTIONS_TITLE");
+
+		AssertElementPresent(
+			key_questionTabField = "${questionTabField}",
+			locator1 = "Questions#QUESTIONS_LIST_ACTIVE_TAB_FIELD");
+	}
+
+	macro gotoTab {
+		Click(
+			key_questionTabField = "${questionTabField}",
+			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
+
+		AssertElementPresent(
+			key_questionTabField = "${questionTabField}",
+			locator1 = "Questions#QUESTIONS_LIST_ACTIVE_TAB_FIELD");
+	}
+
 	macro search {
 		Type(
 			locator1 = "Questions#SEARCH_QUESTION_FIELD",

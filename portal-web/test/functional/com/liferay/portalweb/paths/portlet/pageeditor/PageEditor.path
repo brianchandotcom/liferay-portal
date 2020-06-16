@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_NESTED_FRAGMENT_DROP_TARGET</td>
+	<td>//div[contains(@class,'page-editor__topper__content')]//div[contains(@class,'page-editor__topper') and contains(.,'${key_targetFragmentName}')]/div[contains(@class,'page-editor__topper__content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMPTY_NESTED_FRAGMENT_DROP_TARGET</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_targetFragmentName}')]//div[contains(@class,'page-editor__topper__content')]/div[contains(@class,'empty')]</td>
 	<td></td>
@@ -545,7 +550,7 @@
 <!--COLLECTION_DISPLAY-->
 <tr>
 	<td>COLLECTION_CELL</td>
-	<td>//div[contains(@class,'collection-item') and contains(.,'${key_entryTitle}')]</td>
+	<td>//div[contains(@class,'collection-item') and contains(.,'${key_entryTitle}')] | //div[contains(@class,'collection__block') and contains(.,'${key_content}')]</td>
 	<td></td>
 </tr>
 <tr>

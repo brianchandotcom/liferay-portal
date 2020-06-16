@@ -16,8 +16,15 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.headless.delivery.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.headless.delivery.dto.v1_0.ViewportColumnConfig;
+import com.liferay.headless.delivery.dto.v1_0.ViewportColumnConfigDefinition;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.MapUtil;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,9 +53,53 @@ public class ColumnLayoutStructureItemExporter
 				definition = new PageColumnDefinition() {
 					{
 						size = columnLayoutStructureItem.getSize();
+
+						Map<String, JSONObject> viewportConfigurations =
+							columnLayoutStructureItem.
+								getViewportSizeConfigurations();
+
+						if (MapUtil.isNotEmpty(viewportConfigurations)) {
+							viewportColumnConfig = new ViewportColumnConfig() {
+								{
+									landscapeMobile = _getViewportConfiguration(
+										ViewportSize.MOBILE_LANDSCAPE,
+										viewportConfigurations);
+
+									portraitMobile = _getViewportConfiguration(
+										ViewportSize.PORTRAIT_MOBILE,
+										viewportConfigurations);
+
+									tablet = _getViewportConfiguration(
+										ViewportSize.TABLET,
+										viewportConfigurations);
+								}
+							};
+						}
 					}
 				};
 				type = PageElement.Type.COLUMN;
+			}
+		};
+	}
+
+	private ViewportColumnConfigDefinition _getViewportConfiguration(
+		ViewportSize viewportSize,
+		Map<String, JSONObject> viewportConfigurations) {
+
+		if (!viewportConfigurations.containsKey(
+				viewportSize.getViewportSizeId())) {
+
+			return null;
+		}
+
+		JSONObject jsonObject = viewportConfigurations.get(
+			viewportSize.getViewportSizeId());
+
+		return new ViewportColumnConfigDefinition() {
+			{
+				if (jsonObject.has("size")) {
+					size = jsonObject.getInt("size");
+				}
 			}
 		};
 	}

@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -83,10 +81,10 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 		Layout layout = _layoutLocalService.getLayout(
 			groupId, privateLayout, layoutId);
 
-		Map<Locale, String> titleMap = _getLocalizationMap(
-			actionRequest, layout, "title");
-		Map<Locale, String> descriptionMap = _getLocalizationMap(
-			actionRequest, layout, "description");
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "keywords");
@@ -195,19 +193,6 @@ public class EditSEOMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, portletResource + "layoutUpdated", layout);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-	}
-
-	private Map<Locale, String> _getLocalizationMap(
-		ActionRequest actionRequest, Layout layout, String name) {
-
-		if (layout.isTypeAssetDisplay()) {
-			return HashMapBuilder.put(
-				LocaleUtil.fromLanguageId(layout.getDefaultLanguageId()),
-				ParamUtil.getString(actionRequest, name)
-			).build();
-		}
-
-		return LocalizationUtil.getLocalizationMap(actionRequest, name);
 	}
 
 	@Reference

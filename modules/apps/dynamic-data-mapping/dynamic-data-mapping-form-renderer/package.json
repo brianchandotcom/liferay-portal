@@ -16,7 +16,8 @@
 			"Evaluator",
 			"FormSupport",
 			"SuccessPage",
-			"PageRenderer"
+			"PageRenderer",
+			"FormRenderer"
 		]
 	},
 	"main": "index.js",

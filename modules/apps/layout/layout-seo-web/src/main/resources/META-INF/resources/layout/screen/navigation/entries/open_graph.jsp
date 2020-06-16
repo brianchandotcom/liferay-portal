@@ -54,7 +54,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 				value="open-graph"
 			/>
 
-			<p class="text-muted">
+			<p class="text-secondary">
 				<liferay-ui:message key="open-graph-description" />
 			</p>
 

@@ -21,6 +21,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -128,11 +129,21 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			siteNavigationMenu.getGroupId(),
 			siteNavigationMenu.getSiteNavigationMenuId());
 
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			siteNavigationMenu.getGroupId(), null);
+
+		NavigationMenu.NavigationType navigationType =
+			navigationMenu.getNavigationType();
+
+		if (navigationType != null) {
+			_siteNavigationMenuService.updateSiteNavigationMenu(
+				navigationMenuId, navigationType.ordinal() + 1, true,
+				serviceContext);
+		}
+
 		return _toNavigationMenu(
 			_siteNavigationMenuService.updateSiteNavigationMenu(
-				navigationMenuId, navigationMenu.getName(),
-				ServiceContextUtil.createServiceContext(
-					siteNavigationMenu.getGroupId(), null)));
+				navigationMenuId, navigationMenu.getName(), serviceContext));
 	}
 
 	private void _createNavigationMenuItem(
@@ -141,7 +152,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		throws Exception {
 
 		String unicodeProperties = _getUnicodeProperties(
-			true, navigationMenuItem, siteId);
+			true, navigationMenuItem, siteId, null);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
@@ -172,15 +183,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private Layout _getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
-		UnicodeProperties typeSettingsUnicodeProperties =
-			new UnicodeProperties();
+		UnicodeProperties unicodeProperties = _getUnicodeProperties(
+			siteNavigationMenuItem);
 
-		typeSettingsUnicodeProperties.fastLoad(
-			siteNavigationMenuItem.getTypeSettings());
-
-		String layoutUuid = typeSettingsUnicodeProperties.get("layoutUuid");
+		String layoutUuid = unicodeProperties.get("layoutUuid");
 		boolean privateLayout = GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.get("privateLayout"));
+			unicodeProperties.get("privateLayout"));
 
 		return _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
@@ -204,10 +212,14 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private Map<Locale, String> _getLocalizedNamesFromProperties(
-		UnicodeProperties typeSettingsUnicodeProperties) {
+		UnicodeProperties unicodeProperties) {
+
+		if (unicodeProperties == null) {
+			return new HashMap<>();
+		}
 
 		Set<Map.Entry<String, String>> properties =
-			typeSettingsUnicodeProperties.entrySet();
+			unicodeProperties.entrySet();
 
 		Stream<Map.Entry<String, String>> propertiesStream =
 			properties.stream();
@@ -217,6 +229,17 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		).collect(
 			Collectors.toMap(this::_getLocaleFromProperty, Map.Entry::getValue)
 		);
+	}
+
+	private String _getName(UnicodeProperties unicodeProperties) {
+		String preferredLanguageId =
+			contextAcceptLanguage.getPreferredLanguageId();
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getDefault());
+
+		return unicodeProperties.getProperty(
+			"name_" + preferredLanguageId,
+			unicodeProperties.getProperty("name_" + defaultLanguageId));
 	}
 
 	private Map<Long, List<SiteNavigationMenuItem>>
@@ -275,7 +298,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private String _getUnicodeProperties(
-			boolean add, NavigationMenuItem navigationMenuItem, long siteId)
+			boolean add, NavigationMenuItem navigationMenuItem, long siteId,
+			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties(true);
@@ -283,19 +307,35 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		if (navigationMenuItem.getLink() != null) {
 			Layout layout = _getLayout(navigationMenuItem.getLink(), siteId);
 
+			Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				navigationMenuItem.getCustomName(),
+				navigationMenuItem.getCustomName_i18n(),
+				_getLocalizedNamesFromProperties(
+					_getUnicodeProperties(siteNavigationMenuItem)));
+
+			unicodeProperties.setProperty(
+				"defaultLanguageId",
+				LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+			for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+				unicodeProperties.setProperty(
+					"name_" + LocaleUtil.toLanguageId(entry.getKey()),
+					nameMap.get(entry.getKey()));
+			}
+
 			unicodeProperties.setProperty(
 				"groupId", String.valueOf(layout.getGroupId()));
 			unicodeProperties.setProperty("layoutUuid", layout.getUuid());
-			unicodeProperties.setProperty(
-				"name", layout.getName(LocaleUtil.getDefault()));
 			unicodeProperties.setProperty(
 				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 		}
 		else {
 			Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
 				contextAcceptLanguage.getPreferredLocale(),
-				navigationMenuItem.getName(),
-				navigationMenuItem.getName_i18n());
+				navigationMenuItem.getName(), navigationMenuItem.getName_i18n(),
+				_getLocalizedNamesFromProperties(
+					_getUnicodeProperties(siteNavigationMenuItem)));
 
 			LocalizedMapUtil.validateI18n(
 				add, LocaleUtil.getSiteDefault(), "Navigation Menu item",
@@ -318,6 +358,20 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		}
 
 		return unicodeProperties.toString();
+	}
+
+	private UnicodeProperties _getUnicodeProperties(
+		SiteNavigationMenuItem siteNavigationMenuItem) {
+
+		if (siteNavigationMenuItem == null) {
+			return null;
+		}
+
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+		unicodeProperties.fastLoad(siteNavigationMenuItem.getTypeSettings());
+
+		return unicodeProperties;
 	}
 
 	private boolean _isNameProperty(Map.Entry<String, String> property) {
@@ -365,6 +419,15 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						addAction(
 							"UPDATE", siteNavigationMenu, "putNavigationMenu")
 					).build());
+				setNavigationType(
+					() -> {
+						if (siteNavigationMenu.getType() == 0) {
+							return null;
+						}
+
+						return NavigationType.values()
+							[siteNavigationMenu.getType() - 1];
+					});
 			}
 		};
 	}
@@ -373,13 +436,13 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		SiteNavigationMenuItem siteNavigationMenuItem,
 		Map<Long, List<SiteNavigationMenuItem>> siteNavigationMenuItemsMap) {
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			new UnicodeProperties();
-
-		typeSettingsUnicodeProperties.fastLoad(
-			siteNavigationMenuItem.getTypeSettings());
+		UnicodeProperties unicodeProperties = _getUnicodeProperties(
+			siteNavigationMenuItem);
 
 		Layout layout = _getLayout(siteNavigationMenuItem);
+
+		Map<Locale, String> localizedMap = _getLocalizedNamesFromProperties(
+			unicodeProperties);
 
 		return new NavigationMenuItem() {
 			{
@@ -398,8 +461,59 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						item, siteNavigationMenuItemsMap),
 					NavigationMenuItem.class);
 				type = _toType(siteNavigationMenuItem.getType());
-				url = typeSettingsUnicodeProperties.getProperty("url");
+				url = unicodeProperties.getProperty("url");
 
+				setAvailableLanguages(
+					() -> {
+						Set<Locale> locales = localizedMap.keySet();
+
+						return LocaleUtil.toW3cLanguageIds(
+							locales.toArray(new Locale[localizedMap.size()]));
+					});
+				setCustomName(
+					() -> {
+						if (layout == null) {
+							return null;
+						}
+
+						String name = _getName(unicodeProperties);
+
+						if (!name.equals(
+								layout.getName(
+									contextAcceptLanguage.
+										getPreferredLocale()))) {
+
+							return name;
+						}
+
+						return null;
+					});
+				setCustomName_i18n(
+					() -> {
+						if (contextAcceptLanguage.isAcceptAllLanguages()) {
+							if (layout == null) {
+								return null;
+							}
+
+							Map<Locale, String> map = new HashMap<>();
+
+							for (Map.Entry<Locale, String> entry :
+									localizedMap.entrySet()) {
+
+								String value = entry.getValue();
+
+								if (!value.equals(
+										layout.getName(entry.getKey()))) {
+
+									map.put(entry.getKey(), value);
+								}
+							}
+
+							return LocalizedMapUtil.getI18nMap(true, map);
+						}
+
+						return null;
+					});
 				setLink(
 					() -> {
 						if (layout == null) {
@@ -410,31 +524,19 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					});
 				setName(
 					() -> {
-						String preferredLanguageId =
-							contextAcceptLanguage.getPreferredLanguageId();
-						String defaultLanguageId = LocaleUtil.toLanguageId(
-							LocaleUtil.getDefault());
-
-						String name = typeSettingsUnicodeProperties.getProperty(
-							"name_" + preferredLanguageId,
-							typeSettingsUnicodeProperties.getProperty(
-								"name_" + defaultLanguageId));
-
-						if ((name == null) && (layout != null)) {
-							name = layout.getName(
+						if (layout != null) {
+							return layout.getName(
 								contextAcceptLanguage.getPreferredLocale());
 						}
 
-						return name;
+						return _getName(unicodeProperties);
 					});
 				setName_i18n(
 					() -> {
 						if (contextAcceptLanguage.isAcceptAllLanguages()) {
-							Map<Locale, String> localizedNames =
-								_getLocalizedNamesFromProperties(
-									typeSettingsUnicodeProperties);
+							Map<Locale, String> localizedNames = localizedMap;
 
-							if (localizedNames.isEmpty() && (layout != null)) {
+							if (layout != null) {
 								localizedNames = layout.getNameMap();
 							}
 
@@ -485,12 +587,16 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					).findFirst();
 
 				if (siteNavigationMenuItemOptional.isPresent()) {
+					SiteNavigationMenuItem existingSiteNavigationMenuItem =
+						siteNavigationMenuItemOptional.get();
+
 					SiteNavigationMenuItem siteNavigationMenuItem =
 						_siteNavigationMenuItemService.
 							updateSiteNavigationMenuItem(
 								navigationMenuItemId,
 								_getUnicodeProperties(
-									false, navigationMenuItem, siteId),
+									false, navigationMenuItem, siteId,
+									existingSiteNavigationMenuItem),
 								ServiceContextUtil.createServiceContext(
 									siteId, null));
 
@@ -500,7 +606,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						siteId, siteNavigationMenuId);
 
 					siteNavigationMenuItems.remove(
-						siteNavigationMenuItemOptional.get());
+						existingSiteNavigationMenuItem);
 				}
 				else {
 					_createNavigationMenuItem(

@@ -451,7 +451,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		throw new FragmentEntryContentException(
 			LanguageUtil.format(
 				resourceBundle,
-				"you-must-define-all-require-attributes-x-for-each-editable-" +
+				"you-must-define-all-required-attributes-x-for-each-editable-" +
 					"element",
 				StringUtil.merge(_REQUIRED_ATTRIBUTE_NAMES)));
 	}

@@ -136,4 +136,4 @@ const FormRendererWithProviders = React.forwardRef((props, ref) => (
 
 FormRendererWithProviders.displayName = 'FormRendererWithProviders';
 
-export default FormRendererWithProviders;
+export default React.memo(FormRendererWithProviders);

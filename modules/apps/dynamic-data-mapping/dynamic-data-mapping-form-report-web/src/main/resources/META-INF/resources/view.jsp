@@ -56,7 +56,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 	</div>
 
 	<clay:navigation-bar
-		elementClasses="ddm-form-report-tabs"
+		cssClass="ddm-form-report-tabs"
 		navigationItems='<%=
 			new JSPNavigationItemList(pageContext) {
 				{
@@ -89,7 +89,7 @@ int totalItems = ddmFormReportDisplayContext.getTotalItems();
 			var navLink = navItem.querySelector('.nav-link');
 
 			document
-				.querySelector('.ddm-form-report-tabs li > a.active')
+				.querySelector('.ddm-form-report-tabs li > .active')
 				.classList.remove('active');
 			navLink.classList.add('active');
 

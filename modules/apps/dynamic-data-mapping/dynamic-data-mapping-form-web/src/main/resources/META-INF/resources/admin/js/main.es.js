@@ -181,7 +181,7 @@ class Form extends Component {
 				this._handleBackButtonClicked
 			),
 			dom.on(
-				'.forms-management-bar li',
+				'.forms-navigation-bar li',
 				'click',
 				this._handleFormNavClicked
 			)
@@ -735,7 +735,7 @@ class Form extends Component {
 		const navLink = navItem.querySelector('.nav-link');
 
 		document
-			.querySelector('.forms-management-bar li > a.active')
+			.querySelector('.forms-navigation-bar li > .active')
 			.classList.remove('active');
 		navLink.classList.add('active');
 

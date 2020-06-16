@@ -732,6 +732,8 @@ public class LiferaySeleniumUtil {
 
 		if (!_javaScriptExceptions.isEmpty()) {
 			for (Exception exception : _javaScriptExceptions) {
+				sb.append("<value><![CDATA[");
+
 				String message = exception.getMessage();
 
 				if (Validator.isNotNull(message) &&
@@ -741,14 +743,16 @@ public class LiferaySeleniumUtil {
 						0, _CHARS_EXCEPTION_MESSAGE_SIZE_MAX);
 				}
 
-				sb.append("<value><![CDATA[");
 				sb.append(message);
+
 				sb.append("]]></value>\n");
 			}
 		}
 
 		if (!_liferayExceptions.isEmpty()) {
 			for (Exception exception : _liferayExceptions) {
+				sb.append("<value><![CDATA[");
+
 				String message = exception.getMessage();
 
 				if (Validator.isNotNull(message) &&
@@ -758,8 +762,8 @@ public class LiferaySeleniumUtil {
 						0, _CHARS_EXCEPTION_MESSAGE_SIZE_MAX);
 				}
 
-				sb.append("<value><![CDATA[");
 				sb.append(message);
+
 				sb.append("]]></value>\n");
 			}
 		}

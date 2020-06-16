@@ -29,6 +29,7 @@ import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.portal.tools.bundle.support.commands.DownloadCommand;
 import com.liferay.portal.tools.bundle.support.constants.BundleSupportConstants;
+import com.liferay.workspace.bundle.url.codec.BundleURLCodec;
 
 import groovy.lang.Closure;
 import groovy.lang.MissingPropertyException;
@@ -40,7 +41,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -378,6 +378,17 @@ public class WorkspaceExtension {
 		_targetPlatformVersion = targetPlatformVersion;
 	}
 
+	private String _decodeBundleUrl(ProductInfo productInfo) {
+		try {
+			return BundleURLCodec.decode(
+				productInfo.getBundleUrl(), productInfo.getReleaseDate());
+		}
+		catch (Exception exception) {
+			throw new GradleException(
+				"Unable to determine bundle URL", exception);
+		}
+	}
+
 	private String _getDefaultAppServerVersion() {
 		return Optional.ofNullable(
 			_getProductInfo(getProduct())
@@ -402,13 +413,7 @@ public class WorkspaceExtension {
 		return Optional.ofNullable(
 			_getProductInfo(getProduct())
 		).map(
-			ProductInfo::getBundleUrl
-		).map(
-			url -> {
-				Base64.Decoder decoder = Base64.getDecoder();
-
-				return new String(decoder.decode(url));
-			}
+			this::_decodeBundleUrl
 		).orElse(
 			BundleSupportConstants.DEFAULT_BUNDLE_URL
 		);

@@ -23,10 +23,7 @@ export default function selectAvailablePanels(panels) {
 	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
 	 */
 	return function ({permissions}) {
-		if (
-			permissions.LOCKED_SEGMENTS_EXPERIMENT ||
-			!permissions.UPDATE_LAYOUT_CONTENT
-		) {
+		if (permissions.LOCKED_SEGMENTS_EXPERIMENT || !permissions.UPDATE) {
 			return panels
 				.map((group) =>
 					group.filter((panelId) =>

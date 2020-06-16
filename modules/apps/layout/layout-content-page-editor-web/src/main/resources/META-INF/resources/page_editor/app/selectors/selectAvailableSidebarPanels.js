@@ -23,10 +23,7 @@ export default function selectAvailableSidebarPanels(sidebarPanels) {
 	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
 	 */
 	return function ({permissions}) {
-		if (
-			permissions.LOCKED_SEGMENTS_EXPERIMENT ||
-			!permissions.UPDATE_LAYOUT_CONTENT
-		) {
+		if (permissions.LOCKED_SEGMENTS_EXPERIMENT || !permissions.UPDATE) {
 			const availableSidebarPanels = {};
 
 			AVAILABLE_PANELS.forEach((panelId) => {

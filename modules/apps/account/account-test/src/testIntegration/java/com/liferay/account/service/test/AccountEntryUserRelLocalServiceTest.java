@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -156,6 +157,60 @@ public class AccountEntryUserRelLocalServiceTest {
 		Assert.assertNull(
 			_userLocalService.fetchUserByScreenName(
 				TestPropsValues.getCompanyId(), _userInfo.screenName));
+	}
+
+	@Test
+	public void testAddAccountEntryUserRel2WithInvalidUserEmailDomain()
+		throws Exception {
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService, new String[] {"test1.com", "test2.com"});
+
+		_userInfo.emailAddress = _userInfo.screenName + "@invalid-domain.com";
+
+		_addAccountEntryUserRel(accountEntry.getAccountEntryId());
+	}
+
+	@Test
+	public void testAddAccountEntryUserRel2WithInvalidUserEmailDomainAs2BUser()
+		throws Exception {
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+				_accountEntryLocalService,
+				new String[] {"test1.com", "test2.com"});
+
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				accountEntry.getAccountEntryId(), _user.getUserId());
+
+			PrincipalThreadLocal.setName(_user.getUserId());
+
+			_userInfo.emailAddress =
+				_userInfo.screenName + "@invalid-domain.com";
+
+			_addAccountEntryUserRel(_accountEntry.getAccountEntryId());
+
+			Assert.fail();
+		}
+		catch (UserEmailAddressException.MustHaveValidDomain
+					userEmailAddressException) {
+
+			Assert.assertEquals(
+				_userInfo.emailAddress, userEmailAddressException.emailAddress);
+			Assert.assertEquals(
+				_accountEntry.getDomains(),
+				userEmailAddressException.validDomains);
+			Assert.assertEquals(
+				String.format(
+					"Email address %s must have one of the valid domains: %s",
+					_userInfo.emailAddress, _accountEntry.getDomains()),
+				userEmailAddressException.getMessage());
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+		}
 	}
 
 	@Test

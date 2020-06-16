@@ -87,3 +87,20 @@
 		</c:if>
 	</aui:select>
 </aui:fieldset>
+
+<h3 class="sheet-subtitle"><liferay-ui:message key="navigation-model" /></h3>
+
+<aui:fieldset>
+
+	<%
+	String defaultNavigationModel = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.NAVIGATION_MODEL, "global-navigation");
+
+	String leftNavigationLabel = "<strong>" + LanguageUtil.get(resourceBundle, "left-navigation") + "</strong>: " + LanguageUtil.get(resourceBundle, "left-navigation-help");
+
+	String globalNavigationLabel = "<strong>" + LanguageUtil.get(resourceBundle, "global-navigation") + "</strong>: " + LanguageUtil.get(resourceBundle, "global-navigation-help");
+	%>
+
+	<aui:input checked='<%= Objects.equals(defaultNavigationModel, "left-navigation") %>' label="<%= leftNavigationLabel %>" name='<%= "settings--" + PropsKeys.NAVIGATION_MODEL + "--" %>' type="radio" value="left-navigation" />
+
+	<aui:input checked='<%= Objects.equals(defaultNavigationModel, "global-navigation") %>' label="<%= globalNavigationLabel %>" name='<%= "settings--" + PropsKeys.NAVIGATION_MODEL + "--" %>' type="radio" value="global-navigation" />
+</aui:fieldset>

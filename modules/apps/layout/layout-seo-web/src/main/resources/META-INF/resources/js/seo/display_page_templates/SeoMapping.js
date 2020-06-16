@@ -31,13 +31,13 @@ function SeoMapping({
 				{
 					fieldType: 'text',
 					label: Liferay.Language.get('html-title'),
-					name: `${portletNamespace}title`,
+					name: `${portletNamespace}TypeSettingsProperties--mapped-title--`,
 					selectedFieldKey: title,
 				},
 				{
 					fieldType: 'text',
 					label: Liferay.Language.get('description'),
-					name: `${portletNamespace}description`,
+					name: `${portletNamespace}TypeSettingsProperties--mapped-description--`,
 					selectedFieldKey: description,
 				},
 			]}

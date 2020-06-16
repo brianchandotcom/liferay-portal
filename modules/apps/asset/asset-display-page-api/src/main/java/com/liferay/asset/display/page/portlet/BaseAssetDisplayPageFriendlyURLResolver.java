@@ -115,7 +115,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 				HtmlUtil.stripHtml(
 					_getMappedField(
 						infoDisplayObjectProvider, locale,
-						layout::getDescription,
+						layout.getTypeSettingsProperty("mapped-description"),
 						infoDisplayObjectProvider::getDescription))),
 			httpServletRequest);
 
@@ -123,7 +123,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			infoDisplayObjectProvider.getKeywords(locale), httpServletRequest);
 		portal.setPageTitle(
 			_getMappedField(
-				infoDisplayObjectProvider, locale, layout::getTitle,
+				infoDisplayObjectProvider, locale,
+				layout.getTypeSettingsProperty("mapped-title"),
 				infoDisplayObjectProvider::getTitle),
 			httpServletRequest);
 
@@ -297,8 +298,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 	private String _getMappedField(
 		InfoDisplayObjectProvider<?> infoDisplayObjectProvider, Locale locale,
-		Function<Locale, String> mappedFieldNameFunction,
-		Function<Locale, String> defaultValueFunction) {
+		String mappedFieldName, Function<Locale, String> defaultValueFunction) {
 
 		if (infoDisplayObjectProvider != null) {
 			InfoItemFormProvider<Object> infoItemFormProvider =
@@ -310,7 +310,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			InfoFieldValue<Object> infoFieldValue =
 				infoItemFormProvider.getInfoFieldValue(
 					infoDisplayObjectProvider.getDisplayObject(),
-					mappedFieldNameFunction.apply(locale));
+					mappedFieldName);
 
 			if (infoFieldValue != null) {
 				return String.valueOf(infoFieldValue.getValue(locale));

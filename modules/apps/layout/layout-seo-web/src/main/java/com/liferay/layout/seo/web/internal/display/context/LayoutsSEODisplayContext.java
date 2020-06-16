@@ -62,7 +62,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -414,9 +413,7 @@ public class LayoutsSEODisplayContext {
 			"description",
 			_getMappedFieldName(
 				infoForm,
-				_selLayout.getDescription(
-					LocaleUtil.fromLanguageId(
-						_selLayout.getDefaultLanguageId())),
+				_selLayout.getTypeSettingsProperty("mapped-description"),
 				"description")
 		).put(
 			"fields",
@@ -458,10 +455,7 @@ public class LayoutsSEODisplayContext {
 		).put(
 			"title",
 			_getMappedFieldName(
-				infoForm,
-				_selLayout.getTitle(
-					LocaleUtil.fromLanguageId(
-						_selLayout.getDefaultLanguageId())),
+				infoForm, _selLayout.getTypeSettingsProperty("mapped-title"),
 				"title")
 		).build();
 	}

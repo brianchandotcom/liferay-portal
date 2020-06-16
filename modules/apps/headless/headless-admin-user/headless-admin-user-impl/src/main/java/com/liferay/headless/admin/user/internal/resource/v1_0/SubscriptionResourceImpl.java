@@ -16,6 +16,8 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Subscription;
 import com.liferay.headless.admin.user.resource.v1_0.SubscriptionResource;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -78,15 +80,30 @@ public class SubscriptionResourceImpl extends BaseSubscriptionResourceImpl {
 		return new Subscription() {
 			{
 				contentId = subscription.getClassPK();
-				contentType = subscription.getClassName();
 				dateCreated = subscription.getCreateDate();
 				dateModified = subscription.getModifiedDate();
 				frequency = subscription.getFrequency();
 				id = subscription.getSubscriptionId();
 				siteId = subscription.getGroupId();
+
+				setContentType(
+					() -> {
+						DTOConverter<?, ?> dtoConverter =
+							_dtoConverterRegistry.getDTOConverter(
+								subscription.getClassName());
+
+						if (dtoConverter == null) {
+							return subscription.getClassName();
+						}
+
+						return dtoConverter.getContentType();
+					});
 			}
 		};
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

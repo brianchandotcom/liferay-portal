@@ -40,7 +40,7 @@ public class DDMFormInstanceModelListener
 		throws ModelListenerException {
 
 		try {
-			_ddmFormInstanceReportLocalService.addFormInstanceReport(
+			ddmFormInstanceReportLocalService.addFormInstanceReport(
 				ddmFormInstance.getFormInstanceId());
 		}
 		catch (Exception exception) {
@@ -63,13 +63,13 @@ public class DDMFormInstanceModelListener
 
 		try {
 			DDMFormInstanceReport ddmFormInstanceReport =
-				_ddmFormInstanceReportLocalService.
+				ddmFormInstanceReportLocalService.
 					getFormInstanceReportByFormInstanceId(
 						ddmFormInstance.getFormInstanceId());
 
 			_ddmFormInstanceReportPortalExecutor.execute(
 				() ->
-					_ddmFormInstanceReportLocalService.
+					ddmFormInstanceReportLocalService.
 						deleteDDMFormInstanceReport(
 							ddmFormInstanceReport.getFormInstanceReportId()));
 		}
@@ -87,12 +87,12 @@ public class DDMFormInstanceModelListener
 		}
 	}
 
+	@Reference
+	protected DDMFormInstanceReportLocalService
+		ddmFormInstanceReportLocalService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceModelListener.class);
-
-	@Reference
-	private DDMFormInstanceReportLocalService
-		_ddmFormInstanceReportLocalService;
 
 	@Reference
 	private DDMFormInstanceReportPortalExecutor

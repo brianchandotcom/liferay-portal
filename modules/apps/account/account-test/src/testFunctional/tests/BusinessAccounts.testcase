@@ -80,6 +80,31 @@ definition {
 	}
 
 	@priority = "4"
+	test AddPersonalAccount {
+		GlobalMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Accounts.addCP(
+			accountDescription = "This is a Personal Account.",
+			accountName = "Personal Account",
+			accountType = "Personal");
+
+		GlobalMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Search.searchCP(searchTerm = "Personal Account");
+
+		Accounts.viewAccountDetails(
+			accountDescription = "This is a Personal Account.",
+			accountName = "Personal Account",
+			accountType = "Personal");
+	}
+
+	@priority = "4"
 	test AssignExistingUserToAccount {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",

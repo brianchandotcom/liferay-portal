@@ -25,9 +25,16 @@ import {CSS_DDM_FIELDSET} from '../../util/cssClasses.es';
 import {getField, isFieldSet} from '../../util/fieldSupport.es';
 
 const getFieldContainer = (fieldName) => {
-	return document.querySelector(
-		`.ddm-field-container[data-field-name="${fieldName}"]`
-	);
+	const selector = `.ddm-field-container[data-field-name="${fieldName}"]`;
+
+	if (document.querySelectorAll(selector).length > 1) {
+		return (
+			document.querySelector(`${selector}.hovered`) ||
+			document.querySelector(`${selector}.selected`)
+		);
+	}
+
+	return document.querySelector(selector);
 };
 
 class FieldActionsDropDown extends Component {

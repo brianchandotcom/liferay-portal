@@ -149,6 +149,7 @@ export const Field = ({field, onBlur, onChange, onFocus, ...otherProps}) => {
 				<ParentFieldContext.Provider value={field}>
 					<div
 						className="ddm-field"
+						data-field-instanceid={field.instanceId}
 						data-field-name={field.fieldName}
 					>
 						<FieldLazy

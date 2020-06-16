@@ -26,6 +26,7 @@ import {Config} from 'metal-state';
 import {pageStructure, ruleStructure} from '../../util/config.es';
 import {
 	generateInstanceId,
+	getField,
 	getFieldProperties,
 	localizeField,
 } from '../../util/fieldSupport.es';
@@ -332,11 +333,20 @@ class LayoutProvider extends Component {
 	}
 
 	_handleColumnResized({column, container, direction, source}) {
-		const {state} = this;
+		const {props, state} = this;
+		const {pages} = state;
+
+		if (props.contentType === 'app-builder') {
+			const {fieldInstanceid, fieldName} = container.dataset;
+			const field = getField(pages, fieldName);
+			if (!field || field.instanceId !== fieldInstanceid) {
+				return;
+			}
+		}
 
 		this.setState(
 			handleColumnResized(
-				this.props,
+				props,
 				state,
 				source,
 				container,

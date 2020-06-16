@@ -60,6 +60,7 @@ renderResponse.setTitle(title);
 		cssClass="container-view"
 	>
 		<clay:sheet>
+
 			<%
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
 				"articleId", articleId
@@ -76,5 +77,4 @@ renderResponse.setTitle(title);
 			/>
 		</clay:sheet>
 	</clay:container-fluid>
-
 </aui:form>

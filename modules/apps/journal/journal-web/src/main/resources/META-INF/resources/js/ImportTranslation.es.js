@@ -15,11 +15,15 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import {usePrevious} from 'frontend-js-react-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 const VALID_EXTENSIONS = '.xliff,.xlf';
 
-export default function ImportTranslation({articleId, saveDraftBtnId, submitBtnId}) {
+export default function ImportTranslation({
+	articleId,
+	saveDraftBtnId,
+	submitBtnId,
+}) {
 	const [hasError, setHasError] = useState();
 	const [importFile, setImporFile] = useState();
 
@@ -31,7 +35,7 @@ export default function ImportTranslation({articleId, saveDraftBtnId, submitBtnI
 		Liferay.Util.toggleDisabled('#' + saveDraftBtnId, !importFile);
 		Liferay.Util.toggleDisabled('#' + submitBtnId, !importFile);
 
-		if(importFile && window.FileReader) {
+		if (importFile && window.FileReader) {
 			const reader = new FileReader();
 
 			reader.addEventListener('loadend', (event) => {
@@ -40,29 +44,36 @@ export default function ImportTranslation({articleId, saveDraftBtnId, submitBtnI
 
 			reader.readAsText(importFile);
 		}
-	}, [importFile]);
+	}, [importFile, parseFile, saveDraftBtnId, submitBtnId]);
 
-	const parseFile = (filename, fileData) => {
-		try {
-			const xmlDoc = new DOMParser().parseFromString(fileData, 'text/xml');
+	const parseFile = useCallback(
+		(filename, fileData) => {
+			try {
+				const xmlDoc = new DOMParser().parseFromString(
+					fileData,
+					'text/xml'
+				);
 
-			const fileElement = xmlDoc.getElementsByTagName('file')[0];
+				const fileElement = xmlDoc.getElementsByTagName('file')[0];
 
-			const fileId = fileElement.getAttribute('id');
+				const fileId = fileElement.getAttribute('id');
 
-			const id = fileId.substring(fileId.indexOf(':') + 1);
+				const id = fileId.substring(fileId.indexOf(':') + 1);
 
-			const validFile = id === articleId;
+				const validFile = id === articleId;
 
-			setHasError(!validFile);
+				setHasError(!validFile);
 
-			if (!validFile) {
-				setImporFile(null);
+				if (!validFile) {
+					setImporFile(null);
+				}
 			}
-		} catch (e) {
-			setHasError(true);
-		}
-	};
+			catch (_error) {
+				setHasError(true);
+			}
+		},
+		[articleId]
+	);
 
 	return (
 		<div>
@@ -76,15 +87,14 @@ export default function ImportTranslation({articleId, saveDraftBtnId, submitBtnI
 			</p>
 
 			<div className="mb-5 mt-4">
-				<h4>{Liferay.Language.get('file-upload')}</h4>
-
+				<p class="h5">{Liferay.Language.get('file-upload')}</p>
 
 				{!importFile && (
 					<>
 						<ClayButton
 							displayType="secondary"
-							onClick={(e) => {
-								inputFileRef.current.click()
+							onClick={() => {
+								inputFileRef.current.click();
 							}}
 						>
 							{Liferay.Language.get('select-file')}
@@ -94,7 +104,7 @@ export default function ImportTranslation({articleId, saveDraftBtnId, submitBtnI
 							accept={VALID_EXTENSIONS}
 							className="d-none"
 							name="import-file"
-							onChange={e => {
+							onChange={(e) => {
 								setImporFile(e.target.files[0]);
 							}}
 							ref={inputFileRef}
@@ -109,7 +119,9 @@ export default function ImportTranslation({articleId, saveDraftBtnId, submitBtnI
 
 						<ClayButtonWithIcon
 							displayType="unstyled"
-							onClick={() => {setImporFile(null)}}
+							onClick={() => {
+								setImporFile(null);
+							}}
 							symbol="times-circle"
 							title={Liferay.Language.get('delete')}
 						/>
@@ -124,9 +136,11 @@ export default function ImportTranslation({articleId, saveDraftBtnId, submitBtnI
 							<strong>{Liferay.Language.get('error')}: </strong>
 
 							{Liferay.Util.sub(
-								Liferay.Language.get('the-translation-file-x-does-not-correspond-to-this-web-content'),
+								Liferay.Language.get(
+									'the-translation-file-x-does-not-correspond-to-this-web-content'
+								),
 								previousFile ? previousFile.name : ''
-						  	)}
+							)}
 						</ClayForm.FeedbackItem>
 					</ClayForm.FeedbackGroup>
 				)}

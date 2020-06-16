@@ -574,13 +574,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COLLECTION_ITEM_RATING_STAR_DISABLE</td>
+	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'ratings-stars')]//button[@title='Ratings are disabled in Staging']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLLECTION_ITEM_RATING_STAR_EMPTY</td>
-	<td>//div[contains(@class,'page-editor__collection')]/div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'ratings-stars')]//button[contains(@title,'Vote')]</td>
+	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'ratings-stars')]//button[contains(@title,'Vote')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COLLECTION_ITEM_AVERAGE_STAR</td>
-	<td>//div[contains(@class,'page-editor__collection')]/div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'ratings-stars')]//*[name()='svg'][contains(@class,'ratings-stars-average-icon')]</td>
+	<td>//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//div[contains(@class,'ratings-stars')]//*[name()='svg'][contains(@class,'ratings-stars-average-icon')]</td>
 	<td></td>
 </tr>
 </tbody>

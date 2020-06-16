@@ -15,6 +15,7 @@
 package com.liferay.fragment.web.internal.handler;
 
 import com.liferay.fragment.exception.FragmentEntryConfigurationException;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,6 +51,10 @@ public class FragmentEntryExceptionRequestHandler {
 		if (portalException instanceof FragmentEntryConfigurationException) {
 			errorMessage =
 				"please-provide-a-valid-configuration-for-the-fragment";
+		}
+
+		if (portalException instanceof FragmentEntryContentException) {
+			errorMessage = portalException.getLocalizedMessage();
 		}
 
 		if (portalException instanceof FragmentEntryNameException) {

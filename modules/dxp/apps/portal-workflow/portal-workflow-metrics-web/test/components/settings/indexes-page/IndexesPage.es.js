@@ -9,12 +9,8 @@
  * distribution rights of the Software.
  */
 
-import {
-	cleanup,
-	fireEvent,
-	render,
-	waitForElement,
-} from '@testing-library/react';
+import {waitForElementToBeRemoved} from '@testing-library/dom';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -51,11 +47,13 @@ describe('The IndexesPage component should', () => {
 			get: jest
 				.fn()
 				.mockResolvedValueOnce({data: {items}})
-				.mockResolvedValue({data: {items: [], totalCount: 0}}),
+				.mockResolvedValue({data: {items: []}}),
 			patch: jest.fn().mockRejectedValueOnce().mockResolvedValue(),
 		};
 
 		beforeAll(() => {
+			jest.useFakeTimers();
+
 			const renderResult = render(
 				<MockRouter client={clientMock}>
 					<ToasterProvider>
@@ -66,6 +64,8 @@ describe('The IndexesPage component should', () => {
 
 			getAllByTestId = renderResult.getAllByTestId;
 			getByTestId = renderResult.getByTestId;
+
+			window.location.hash = '/settings/indexes';
 		});
 
 		test('Render information correctly ', () => {
@@ -132,18 +132,20 @@ describe('The IndexesPage component should', () => {
 
 			await jest.runOnlyPendingTimers();
 
-			let alertToast = await waitForElement(() =>
-				getByTestId('alertToast')
+			await waitForElementToBeRemoved(() =>
+				document.querySelector('div.progress')
+			);
+
+			let alertToast = getByTestId('alertToast');
+
+			expect(alertToast).toHaveTextContent(
+				'success:all-x-have-reindexed-successfully'
 			);
 
 			expect(indexActions[0].children[0]).not.toBeDisabled();
 			expect(indexActions[1].children[0]).not.toBeDisabled();
 			expect(indexActions[2].children[0]).not.toBeDisabled();
 			expect(indexActions[3].children[0]).not.toBeDisabled();
-
-			expect(alertToast).toHaveTextContent(
-				'success:all-x-have-reindexed-successfully'
-			);
 
 			await jest.runOnlyPendingTimers();
 
@@ -161,16 +163,20 @@ describe('The IndexesPage component should', () => {
 
 			await jest.runOnlyPendingTimers();
 
-			alertToast = await waitForElement(() => getByTestId('alertToast'));
+			await waitForElementToBeRemoved(() =>
+				document.querySelector('div.progress')
+			);
+
+			alertToast = getByTestId('alertToast');
+
+			expect(alertToast).toHaveTextContent(
+				'success:all-x-have-reindexed-successfully'
+			);
 
 			expect(indexActions[0].children[0]).not.toBeDisabled();
 			expect(indexActions[1].children[0]).not.toBeDisabled();
 			expect(indexActions[2].children[0]).not.toBeDisabled();
 			expect(indexActions[3].children[0]).not.toBeDisabled();
-
-			expect(alertToast).toHaveTextContent(
-				'success:all-x-have-reindexed-successfully'
-			);
 
 			await fireEvent.click(indexActions[3].children[0]);
 
@@ -183,16 +189,20 @@ describe('The IndexesPage component should', () => {
 
 			await jest.runOnlyPendingTimers();
 
-			alertToast = await waitForElement(() => getByTestId('alertToast'));
+			await waitForElementToBeRemoved(() =>
+				document.querySelector('div.progress')
+			);
+
+			alertToast = getByTestId('alertToast');
+
+			expect(alertToast).toHaveTextContent(
+				'success:x-has-reindexed-successfully'
+			);
 
 			expect(indexActions[0].children[0]).not.toBeDisabled();
 			expect(indexActions[1].children[0]).not.toBeDisabled();
 			expect(indexActions[2].children[0]).not.toBeDisabled();
 			expect(indexActions[3].children[0]).not.toBeDisabled();
-
-			expect(alertToast).toHaveTextContent(
-				'success:x-has-reindexed-successfully'
-			);
 		});
 	});
 

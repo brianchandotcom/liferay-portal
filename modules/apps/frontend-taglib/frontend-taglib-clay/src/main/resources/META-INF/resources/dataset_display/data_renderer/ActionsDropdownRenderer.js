@@ -30,8 +30,68 @@ import {
 
 const {MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
 
-function isNotALink(target, onClick) {
+export function isNotALink(target, onClick) {
 	return Boolean((target && target !== 'link') || onClick);
+}
+
+export function handleAction(
+	{
+		event,
+		method,
+		onClick = '',
+		size = '',
+		target = '',
+		title = '',
+		itemId = '',
+		setLoading = () => {},
+		url = '',
+	},
+	{executeAsyncItemAction, highlightItems, openModal, openSidePanel}
+) {
+	if (target?.includes('modal')) {
+		event.preventDefault();
+
+		switch (target) {
+			case MODAL_PERMISSIONS:
+				openPermissionsModal(url);
+				break;
+			default:
+				openModal({
+					size: resolveModalSize(target),
+					title,
+					url,
+				});
+				break;
+		}
+	}
+	else if (target === 'sidePanel') {
+		event.preventDefault();
+
+		highlightItems([itemId]);
+		openSidePanel({
+			size: size || 'lg',
+			title,
+			url,
+		});
+	}
+	else if (target === 'async') {
+		event.preventDefault();
+
+		setLoading(true);
+		executeAsyncItemAction(url, method).then(() => setLoading(false));
+	}
+	else if (target === 'blank') {
+		event.preventDefault();
+
+		window.open(url);
+	}
+	else if (onClick) {
+		event.preventDefault();
+
+		event.target.setAttribute('onClick', onClick);
+		event.target.onclick();
+		event.target.removeAttribute('onClick');
+	}
 }
 
 function ActionItem({
@@ -46,17 +106,23 @@ function ActionItem({
 	target,
 	title,
 }) {
+	const context = useContext(DatasetDisplayContext);
+
 	function handleClickOnLink(event) {
 		event.preventDefault();
 
-		handleAction({
-			method: data?.method,
-			onClick,
-			size: size || 'lg',
-			target,
-			title,
-			url: href,
-		});
+		handleAction(
+			{
+				event,
+				method: data?.method,
+				onClick,
+				size: size || 'lg',
+				target,
+				title,
+				url: href,
+			},
+			context
+		);
 
 		closeMenu();
 	}
@@ -65,7 +131,7 @@ function ActionItem({
 
 	return (
 		<ClayDropDown.Item
-			href={notALink ? 'javascript:;' : href}
+			href={notALink ? null : href}
 			onClick={notALink ? handleClickOnLink : null}
 		>
 			{icon && (
@@ -79,57 +145,9 @@ function ActionItem({
 }
 
 function ActionsDropdownRenderer({actions, itemData, itemId}) {
-	const {
-		executeAsyncItemAction,
-		highlightItems,
-		openModal,
-		openSidePanel,
-	} = useContext(DatasetDisplayContext);
-
+	const context = useContext(DatasetDisplayContext);
 	const [active, setActive] = useState(false);
 	const [loading, setLoading] = useState(false);
-
-	function handleAction({
-		method,
-		onClick = '',
-		size = '',
-		target = '',
-		title = '',
-		url = '',
-	}) {
-		if (target?.includes('modal')) {
-			switch (target) {
-				case MODAL_PERMISSIONS:
-					openPermissionsModal(url);
-					break;
-				default:
-					openModal({
-						size: resolveModalSize(target),
-						title,
-						url,
-					});
-					break;
-			}
-		}
-		else if (target === 'sidePanel') {
-			highlightItems([itemId]);
-			openSidePanel({
-				size: size || 'lg',
-				title,
-				url,
-			});
-		}
-		else if (target === 'async') {
-			setLoading(true);
-			executeAsyncItemAction(url, method).then(() => setLoading(false));
-		}
-		else if (target === 'blank') {
-			window.open(url);
-		}
-		else if (onClick && typeof window[onClick] === 'function') {
-			window[onClick]();
-		}
-	}
 
 	if (!actions || !actions.length) {
 		return null;
@@ -160,16 +178,17 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 				href="#"
 				monospaced={Boolean(action.icon)}
 				onClick={(event) => {
-					event.preventDefault();
-
-					handleAction({
-						method: action.data?.method,
-						onClick: action.onClick,
-						size: action.size,
-						target: action.target,
-						title: action.title,
-						url: action.href,
-					});
+					handleAction(
+						{
+							event,
+							itemId,
+							method: action.data?.method,
+							setLoading,
+							url: action.href,
+							...action,
+						},
+						context
+					);
 				}}
 			>
 				{content}

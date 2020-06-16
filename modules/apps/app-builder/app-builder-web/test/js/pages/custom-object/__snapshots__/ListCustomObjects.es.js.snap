@@ -12,7 +12,7 @@ exports[`ListCustomObjects renders 1`] = `
     </div>
   </div>
   <nav
-    class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-secondary"
+    class="navbar navbar-collapse-absolute navbar-expand-md navbar-underline navigation-bar navigation-bar-light"
   >
     <div
       class="container-fluid container-fluid-max-xl"

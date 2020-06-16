@@ -208,7 +208,7 @@ public class CollectionPageLayoutTypeController
 
 	@Override
 	public boolean isParentable() {
-		return true;
+		return false;
 	}
 
 	@Override

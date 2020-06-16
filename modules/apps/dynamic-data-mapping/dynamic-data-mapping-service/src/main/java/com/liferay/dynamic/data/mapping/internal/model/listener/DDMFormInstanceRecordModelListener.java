@@ -42,14 +42,14 @@ public class DDMFormInstanceRecordModelListener
 
 		try {
 			DDMFormInstanceReport ddmFormInstanceReport =
-				_ddmFormInstanceReportLocalService.
+				ddmFormInstanceReportLocalService.
 					getFormInstanceReportByFormInstanceId(
 						ddmFormInstanceRecord.getFormInstanceId());
 
 			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 				ddmFormInstanceRecord.getLatestFormInstanceRecordVersion();
 
-			_ddmFormInstanceReportLocalService.processFormInstanceReportEvent(
+			ddmFormInstanceReportLocalService.processFormInstanceReportEvent(
 				ddmFormInstanceReport.getFormInstanceReportId(),
 				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
 				DDMFormInstanceReportConstants.EVENT_DELETE_RECORD_VERSION);
@@ -68,11 +68,11 @@ public class DDMFormInstanceRecordModelListener
 		}
 	}
 
+	@Reference
+	protected DDMFormInstanceReportLocalService
+		ddmFormInstanceReportLocalService;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormInstanceRecordModelListener.class);
-
-	@Reference
-	private DDMFormInstanceReportLocalService
-		_ddmFormInstanceReportLocalService;
 
 }

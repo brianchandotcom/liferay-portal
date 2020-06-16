@@ -109,6 +109,10 @@ public class DDMFormInstanceRecordVersionModelListener
 		}
 	}
 
+	@Reference
+	protected DDMFormInstanceReportLocalService
+		ddmFormInstanceReportLocalService;
+
 	private void _processFormInstanceReportEvent(
 			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
 			String formInstanceReportEvent)
@@ -116,7 +120,7 @@ public class DDMFormInstanceRecordVersionModelListener
 
 		try {
 			DDMFormInstanceReport ddmFormInstanceReport =
-				_ddmFormInstanceReportLocalService.
+				ddmFormInstanceReportLocalService.
 					getFormInstanceReportByFormInstanceId(
 						ddmFormInstanceRecordVersion.getFormInstanceId());
 
@@ -124,7 +128,7 @@ public class DDMFormInstanceRecordVersionModelListener
 				() -> {
 					_ddmFormInstanceReportPortalExecutor.execute(
 						() ->
-							_ddmFormInstanceReportLocalService.
+							ddmFormInstanceReportLocalService.
 								updateFormInstanceReport(
 									ddmFormInstanceReport.
 										getFormInstanceReportId(),
@@ -152,10 +156,6 @@ public class DDMFormInstanceRecordVersionModelListener
 	@Reference
 	private DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
-
-	@Reference
-	private DDMFormInstanceReportLocalService
-		_ddmFormInstanceReportLocalService;
 
 	@Reference
 	private DDMFormInstanceReportPortalExecutor

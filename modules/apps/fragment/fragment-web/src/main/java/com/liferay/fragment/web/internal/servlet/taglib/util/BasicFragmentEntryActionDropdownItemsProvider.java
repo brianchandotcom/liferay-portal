@@ -126,8 +126,15 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 		).add(
 			() ->
 				hasManageFragmentEntriesPermission &&
-				!_fragmentEntry.isReadOnly(),
+				!_fragmentEntry.isReadOnly() && !_fragmentEntry.isDraft(),
 			_getDeleteFragmentEntryActionUnsafeConsumer()
+		).add(
+			() ->
+				hasManageFragmentEntriesPermission &&
+				!_fragmentEntry.isReadOnly() &&
+				(_fragmentEntry.isDraft() ||
+				 (_fragmentEntry.fetchDraft() != null)),
+			_getDeleteDraftFragmentEntryActionUnsafeConsumer()
 		).build();
 	}
 
@@ -165,6 +172,31 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				selectFragmentCollectionURL.toString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteDraftFragmentEntryActionUnsafeConsumer() {
+
+		PortletURL deleteDraftFragmentEntryURL =
+			_renderResponse.createActionURL();
+
+		deleteDraftFragmentEntryURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/fragment/delete_draft_fragment_entries");
+		deleteDraftFragmentEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		deleteDraftFragmentEntryURL.setParameter(
+			"fragmentEntryId",
+			String.valueOf(_fragmentEntry.getFragmentEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteDraftFragmentEntry");
+			dropdownItem.putData(
+				"deleteDraftFragmentEntryURL",
+				deleteDraftFragmentEntryURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "discard-draft"));
 		};
 	}
 
@@ -259,6 +291,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 			"/fragment/export_fragment_compositions_and_fragment_entries");
 
 		return dropdownItem -> {
+			dropdownItem.setDisabled(_fragmentEntry.isDraft());
 			dropdownItem.setHref(exportFragmentEntryURL);
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));

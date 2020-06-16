@@ -56,6 +56,16 @@ class FragmentEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		);
 	}
 
+	deleteDraftFragmentEntry(itemData) {
+		if (
+			confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
+			this._send(itemData.deleteDraftFragmentEntryURL);
+		}
+	}
+
 	deleteFragmentEntry(itemData) {
 		if (
 			confirm(

@@ -216,14 +216,14 @@ definition {
 		}
 	}
 
-	macro gotoCustomAppCP {
+	macro gotoCustomAppGlobalMenuApplications {
 		Navigator.openURL();
 
 		ProductMenuHelper.closeProductMenu();
 
 		GlobalMenu.gotoPortlet(
 			category = "${portlet}",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "${portlet}");
 	}
 
@@ -370,14 +370,14 @@ definition {
 			value1 = "UNDEPLOYED");
 	}
 
-	macro validateAppIsNotPresentOnControlPanel {
+	macro validateAppIsNotPresentOnGlobalMenuApplications {
 		Navigator.openURL();
 
 		ProductMenuHelper.closeProductMenu();
 
 		GlobalMenuHelper.openGlobalMenu();
 
-		Navigator.gotoNavTab(navTab = "Control Panel");
+		Navigator.gotoNavTab(navTab = "Applications");
 
 		AssertElementNotPresent(
 			key_category = "${portlet}",

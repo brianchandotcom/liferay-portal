@@ -150,7 +150,7 @@ definition {
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "${myAppName}");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName}");
 
 		AppBuilderAdmin.addEntry();
 
@@ -851,7 +851,7 @@ definition {
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.clickDeploy();
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.addEntry();
 		FormViewBuilder.editText(
@@ -905,7 +905,7 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "3");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "4");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Full");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Full");
 
 		AppBuilderAdmin.viewItem(itemName = "1");
 		DetailsView.editEntry();
@@ -929,7 +929,7 @@ definition {
 			radioOption = "Dog");
 		AppBuilderAdmin.save();
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
 		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "1");
@@ -961,7 +961,7 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");
@@ -987,7 +987,7 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.addEntry();
 		FormViewBuilder.editText(
@@ -1032,7 +1032,7 @@ definition {
 
 		TableViewBuilder.save();
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Filtered");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Filtered");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "2");

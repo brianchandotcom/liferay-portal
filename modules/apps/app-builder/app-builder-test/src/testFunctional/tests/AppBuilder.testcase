@@ -524,7 +524,7 @@ definition {
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "Test App");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App");
 
 		AppBuilderAdmin.addEntry();
 
@@ -788,7 +788,7 @@ definition {
 			formViewName = "My Form View 2",
 			tableViewName = "My Table View 2");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "Test App 1");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App 1");
 
 		AppBuilderAdmin.addEntry();
 
@@ -800,7 +800,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "content of form 1");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "Test App 2");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App 2");
 
 		AppBuilderAdmin.addEntry();
 
@@ -1512,7 +1512,7 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App A");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
+		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App A");
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
@@ -1575,7 +1575,7 @@ definition {
 			appTitle = "Test App B",
 			deployOption = "Product Menu",
 			formViewName = "Form View Title",
-			menuOption = "Control Panel and Site Menu",
+			menuOption = "Applications and Site Menu",
 			siteOptionList = "App Builder Site 1",
 			tableViewName = "Table View Title");
 
@@ -1610,11 +1610,11 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App B");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "Test App B");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App B");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App B");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
+		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App A");
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
@@ -1651,9 +1651,9 @@ definition {
 
 		AppBuilderAdmin.validateAppIsNotPresentOnSite(portlet = "Test App B");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
+		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App A");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App B");
+		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App B");
 	}
 
 	@description = "Publish apps in the product menu and reuse its views"
@@ -1713,16 +1713,16 @@ definition {
 		App.selectTableView(tableViewName = "${myTableViewName_1}");
 		App.toggleDeploy(deployOption = "Product Menu");
 		App.openProductMenuPlaceItDropdown();
-		App.validateProductMenuPlaceItDropdownList(menuOption = "Control Panel");
+		App.validateProductMenuPlaceItDropdownList(menuOption = "Applications");
 		App.validateProductMenuPlaceItDropdownList(menuOption = "Site Menu");
-		App.validateProductMenuPlaceItDropdownList(menuOption = "Control Panel and Site Menu");
+		App.validateProductMenuPlaceItDropdownList(menuOption = "Applications and Site Menu");
 
 		App.selectProductMenuPlaceItDropdownOption(menuOption = "Site Menu");
 		App.validateProductMenuSiteDropdownPresent();
-		App.selectProductMenuPlaceItDropdownOption(menuOption = "Control Panel and Site Menu");
+		App.selectProductMenuPlaceItDropdownOption(menuOption = "Applications and Site Menu");
 		App.validateProductMenuSiteDropdownPresent();
 
-		App.selectProductMenuPlaceItDropdownOption(menuOption = "Control Panel");
+		App.selectProductMenuPlaceItDropdownOption(menuOption = "Applications");
 		App.clickDeploy();
 
 		App.add(
@@ -1737,7 +1737,7 @@ definition {
 			formViewName = "${myFormViewName_1}",
 			tableViewName = "${myTableViewName_2}");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "${myAppName_1}");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName_1}");
 
 		AppBuilderAdmin.addEntry();
 
@@ -1749,7 +1749,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 1");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "${myAppName_2}");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName_2}");
 
 		AppBuilderAdmin.addEntry();
 
@@ -1761,7 +1761,7 @@ definition {
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "${myAppName_3}");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName_3}");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content from Form 2");
 
@@ -2255,7 +2255,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "App Admin");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "App Admin");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "App Admin");
 
@@ -2606,7 +2606,7 @@ definition {
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "Test App A");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App A");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
@@ -2657,7 +2657,7 @@ definition {
 
 		AppBuilderAdmin.undeployApp(itemName = "Test App A");
 
-		AppBuilderAdmin.validateAppIsNotPresentOnControlPanel(portlet = "Test App A");
+		AppBuilderAdmin.validateAppIsNotPresentOnGlobalMenuApplications(portlet = "Test App A");
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
@@ -2670,7 +2670,7 @@ definition {
 
 		AppBuilderAdmin.deployApp(itemName = "Test App A");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "Test App A");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App A");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
@@ -2781,7 +2781,7 @@ definition {
 			formViewName = "Form View Title",
 			tableViewName = "Table View Title");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "Test App C");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Test App C");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App C");
 
@@ -2857,7 +2857,7 @@ definition {
 			pageName = "App Builder Test Page",
 			siteName = "App Builder Site Name");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "Changed Name");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "Changed Name");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Changed Name");
 
@@ -3071,7 +3071,7 @@ definition {
 			formViewName = "${myFormViewName}",
 			tableViewName = "${myTableViewName}");
 
-		AppBuilderAdmin.gotoCustomAppCP(portlet = "${myAppName}");
+		AppBuilderAdmin.gotoCustomAppGlobalMenuApplications(portlet = "${myAppName}");
 
 		AppBuilderAdmin.addEntry();
 

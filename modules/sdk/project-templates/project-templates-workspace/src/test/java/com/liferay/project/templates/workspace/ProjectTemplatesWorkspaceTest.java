@@ -115,7 +115,9 @@ public class ProjectTemplatesWorkspaceTest
 	}
 
 	@Test
-	public void testBuildTemplateWorkspaceLegacyProperty() throws Exception {
+	public void testBuildTemplateWorkspaceLegacyWarsDirProperty()
+		throws Exception {
+
 		File workspaceProjectDir = buildWorkspace(
 			temporaryFolder, "gradle", "foows", getDefaultLiferayVersion(),
 			mavenExecutor);

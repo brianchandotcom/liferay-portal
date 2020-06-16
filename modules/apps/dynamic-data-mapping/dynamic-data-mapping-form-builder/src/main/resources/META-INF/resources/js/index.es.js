@@ -14,7 +14,8 @@
 
 import FormBuilderWithLayoutProvider from './components/FormBuilder/FormBuilderWithLayoutProvider.es';
 import RuleEditor from './components/RuleEditor/RuleEditor.es';
+import * as FieldSupport from './util/fieldSupport.es';
 
 export default FormBuilderWithLayoutProvider;
 
-export {RuleEditor};
+export {FieldSupport, RuleEditor};

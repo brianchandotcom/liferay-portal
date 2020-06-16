@@ -12,7 +12,7 @@
  * details.
  */
 
-import {addItem, updateItem} from '../../utils/client.es';
+import {addItem, updateItem} from './client.es';
 
 export default ({
 	dataDefinition,

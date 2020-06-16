@@ -22,7 +22,7 @@ import AppContext from '../../AppContext.es';
 import {isDataLayoutEmpty} from '../../utils/dataLayoutVisitor.es';
 import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
 import useCreateFieldSet from './actions/useCreateFieldSet.es';
-import useSaveAsFieldSet from './actions/useSaveAsFieldSet.es';
+import useSaveFieldSet from './actions/useSaveFieldSet.es';
 
 const ModalContent = ({defaultLanguageId, fieldSet, onClose, otherProps}) => {
 	const [{appProps}] = useContext(AppContext);
@@ -49,7 +49,7 @@ const ModalContent = ({defaultLanguageId, fieldSet, onClose, otherProps}) => {
 	}, [childrenContext]);
 
 	const createFieldSet = useCreateFieldSet({childrenContext});
-	const saveAsFieldSet = useSaveAsFieldSet({
+	const saveAsFieldSet = useSaveFieldSet({
 		childrenContext,
 		defaultLanguageId,
 		fieldSet,
@@ -78,7 +78,6 @@ const ModalContent = ({defaultLanguageId, fieldSet, onClose, otherProps}) => {
 								'untitled-fieldset'
 							)}
 							className="form-control-inline"
-							disabled={!!fieldSet}
 							onChange={({target: {value}}) => setName(value)}
 							placeholder={Liferay.Language.get(
 								'untitled-fieldset'

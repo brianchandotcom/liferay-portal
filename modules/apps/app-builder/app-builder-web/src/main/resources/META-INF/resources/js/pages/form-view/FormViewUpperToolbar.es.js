@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DataLayoutBuilderActions, DataLayoutVisitor} from 'data-engine-taglib';
+import {
+	DataLayoutBuilderActions,
+	DataLayoutVisitor,
+	saveDataDefinition,
+} from 'data-engine-taglib';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext.es';
@@ -20,7 +24,6 @@ import TranslationManager from '../../components/translation-manager/Translation
 import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {errorToast, successToast} from '../../utils/toast.es';
 import FormViewContext from './FormViewContext.es';
-import saveFormView from './saveFormView.es';
 
 export default ({newCustomObject}) => {
 	const [defaultLanguageId, setDefaultLanguageId] = useState('');
@@ -101,7 +104,7 @@ export default ({newCustomObject}) => {
 				dataLayout.name[editingLanguageId];
 		}
 
-		saveFormView(state)
+		saveDataDefinition(state)
 			.then(onSuccess)
 			.catch((error) => {
 				onError(error);

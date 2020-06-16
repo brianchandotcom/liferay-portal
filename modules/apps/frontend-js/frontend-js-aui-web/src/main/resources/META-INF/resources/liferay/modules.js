@@ -520,7 +520,13 @@
 					},
 					'liferay-session': {
 						path: 'session.js',
-						requires: ['aui-base', 'aui-timer', 'cookie', 'plugin'],
+						requires: [
+							'aui-base',
+							'aui-component',
+							'aui-timer',
+							'cookie',
+							'plugin',
+						],
 					},
 					'liferay-sign-in-modal': {
 						path: 'sign_in_modal.js',

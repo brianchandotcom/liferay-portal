@@ -16,6 +16,7 @@ import {AOP} from 'frontend-js-web';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 import {delegate, on} from 'metal-dom';
 import {EventHandler} from 'metal-events';
+import {Config} from 'metal-state';
 
 const ACTION_INPUT_NAME = 'javax-portlet-action';
 
@@ -66,16 +67,14 @@ class JournalPortlet extends PortletBase {
 			);
 		}
 
-		this.defaultLanguageId = themeDisplay.getDefaultLanguageId();
+		this._defaultLocaleChangedHandler = Liferay.after(
+			'inputLocalized:defaultLocaleChanged',
+			this._onDefaultLocaleChange.bind(this)
+		);
 
 		this._localeChangedHandler = Liferay.after(
 			'inputLocalized:localeChanged',
 			this._onLocaleChange.bind(this)
-		);
-
-		this._defaultLocaleChangedHandler = Liferay.after(
-			['inputLocalized:defaultLocaleChanged', 'ddm:default-locale-sync'],
-			this._onDefaultLocaleChange.bind(this)
 		);
 
 		this._setupSidebar();
@@ -93,8 +92,8 @@ class JournalPortlet extends PortletBase {
 	 */
 	detached() {
 		this._eventHandler.removeAllListeners();
-		this._localeChangedHandler.detach();
 		this._defaultLocaleChangedHandler.detach();
+		this._localeChangedHandler.detach();
 	}
 
 	/**
@@ -127,9 +126,6 @@ class JournalPortlet extends PortletBase {
 		if (event.item) {
 			this.defaultLanguageId = event.item.getAttribute('data-value');
 		}
-		else if (event.defaultLanguageId) {
-			this.defaultLanguageId = event.defaultLanguageId;
-		}
 	}
 
 	/**
@@ -137,19 +133,18 @@ class JournalPortlet extends PortletBase {
 	 * @param {Event} event
 	 */
 	_onLocaleChange(event) {
-		const defaultLanguageId = this.defaultLanguageId;
 		const selectedLanguageId = event.item.getAttribute('data-value');
 
 		if (selectedLanguageId) {
 			this._updateLocalizableInput(
 				'descriptionMapAsXML',
-				defaultLanguageId,
+				this.defaultLanguageId,
 				selectedLanguageId
 			);
 
 			this._updateLocalizableInput(
 				'titleMapAsXML',
-				defaultLanguageId,
+				this.defaultLanguageId,
 				selectedLanguageId
 			);
 
@@ -325,6 +320,10 @@ class JournalPortlet extends PortletBase {
 		}
 	}
 }
+
+JournalPortlet.STATE = {
+	defaultLanguageId: Config.string(),
+};
 
 export {JournalPortlet};
 export default JournalPortlet;

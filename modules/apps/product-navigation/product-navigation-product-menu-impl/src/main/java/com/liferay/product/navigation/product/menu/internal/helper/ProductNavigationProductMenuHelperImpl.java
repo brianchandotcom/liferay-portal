@@ -70,10 +70,10 @@ public class ProductNavigationProductMenuHelperImpl
 
 		String navigationModel = PrefsPropsUtil.getString(
 			themeDisplay.getCompanyId(), PropsKeys.NAVIGATION_MODEL,
-			"global-navigation");
+			WebKeys.NAVIGATION_MODEL_GLOBAL);
 
 		if (_isGlobalMenuApp(themeDisplay) &&
-			Objects.equals(navigationModel, "global-navigation")) {
+			Objects.equals(navigationModel, WebKeys.NAVIGATION_MODEL_GLOBAL)) {
 
 			return false;
 		}

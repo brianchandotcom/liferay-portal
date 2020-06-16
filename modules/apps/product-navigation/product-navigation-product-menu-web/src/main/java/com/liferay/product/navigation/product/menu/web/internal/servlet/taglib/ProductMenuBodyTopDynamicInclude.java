@@ -75,10 +75,10 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 
 		String navigationModel = PrefsPropsUtil.getString(
 			themeDisplay.getCompanyId(), PropsKeys.NAVIGATION_MODEL,
-			"global-navigation");
+			WebKeys.NAVIGATION_MODEL_GLOBAL);
 
 		if (_isGlobalMenuApp(httpServletRequest) &&
-			Objects.equals(navigationModel, "global-navigation")) {
+			Objects.equals(navigationModel, WebKeys.NAVIGATION_MODEL_GLOBAL)) {
 
 			return;
 		}

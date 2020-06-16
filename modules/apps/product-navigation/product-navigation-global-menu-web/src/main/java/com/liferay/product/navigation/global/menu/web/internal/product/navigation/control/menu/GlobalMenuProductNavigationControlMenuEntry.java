@@ -66,9 +66,9 @@ public class GlobalMenuProductNavigationControlMenuEntry
 
 		String navigationModel = PrefsPropsUtil.getString(
 			themeDisplay.getCompanyId(), PropsKeys.NAVIGATION_MODEL,
-			"global-navigation");
+			WebKeys.NAVIGATION_MODEL_GLOBAL);
 
-		if (Objects.equals(navigationModel, "left-navigation")) {
+		if (Objects.equals(navigationModel, WebKeys.NAVIGATION_MODEL_LEFT)) {
 			return false;
 		}
 

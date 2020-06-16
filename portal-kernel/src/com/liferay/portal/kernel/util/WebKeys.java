@@ -395,6 +395,11 @@ public interface WebKeys {
 	public static final String MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD =
 		"MESSAGE_BOARDS_TREE_WALKER_VIEWABLE_THREAD";
 
+	public static final String NAVIGATION_MODEL_GLOBAL =
+		"NAVIGATION_MODEL_GLOBAL";
+
+	public static final String NAVIGATION_MODEL_LEFT = "NAVIGATION_MODEL_LEFT";
+
 	public static final String NETVIBES = "NETVIBES";
 
 	public static final String NOTES_LIST = "NOTES_LIST";

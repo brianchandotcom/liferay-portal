@@ -93,14 +93,14 @@
 <aui:fieldset>
 
 	<%
-	String defaultNavigationModel = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.NAVIGATION_MODEL, "global-navigation");
+	String defaultNavigationModel = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.NAVIGATION_MODEL, WebKeys.NAVIGATION_MODEL_GLOBAL);
 
-	String leftNavigationLabel = "<strong>" + LanguageUtil.get(resourceBundle, "left-navigation") + "</strong>: " + LanguageUtil.get(resourceBundle, "left-navigation-help");
+	String leftNavigationLabel = "<strong>" + LanguageUtil.get(resourceBundle, "left-navigation") + "</strong>: " + LanguageUtil.get(resourceBundle, WebKeys.NAVIGATION_MODEL_LEFT);
 
-	String globalNavigationLabel = "<strong>" + LanguageUtil.get(resourceBundle, "global-navigation") + "</strong>: " + LanguageUtil.get(resourceBundle, "global-navigation-help");
+	String globalNavigationLabel = "<strong>" + LanguageUtil.get(resourceBundle, "global-navigation") + "</strong>: " + LanguageUtil.get(resourceBundle, WebKeys.NAVIGATION_MODEL_GLOBAL);
 	%>
 
-	<aui:input checked='<%= Objects.equals(defaultNavigationModel, "left-navigation") %>' label="<%= leftNavigationLabel %>" name='<%= "settings--" + PropsKeys.NAVIGATION_MODEL + "--" %>' type="radio" value="left-navigation" />
+	<aui:input checked="<%= Objects.equals(defaultNavigationModel, WebKeys.NAVIGATION_MODEL_LEFT) %>" label="<%= leftNavigationLabel %>" name='<%= "settings--" + PropsKeys.NAVIGATION_MODEL + "--" %>' type="radio" value="<%= WebKeys.NAVIGATION_MODEL_LEFT %>" />
 
-	<aui:input checked='<%= Objects.equals(defaultNavigationModel, "global-navigation") %>' label="<%= globalNavigationLabel %>" name='<%= "settings--" + PropsKeys.NAVIGATION_MODEL + "--" %>' type="radio" value="global-navigation" />
+	<aui:input checked="<%= Objects.equals(defaultNavigationModel, WebKeys.NAVIGATION_MODEL_GLOBAL) %>" label="<%= globalNavigationLabel %>" name='<%= "settings--" + PropsKeys.NAVIGATION_MODEL + "--" %>' type="radio" value="<%= WebKeys.NAVIGATION_MODEL_GLOBAL %>" />
 </aui:fieldset>

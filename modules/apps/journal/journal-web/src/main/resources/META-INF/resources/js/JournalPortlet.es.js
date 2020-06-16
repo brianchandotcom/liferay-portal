@@ -75,7 +75,7 @@ class JournalPortlet extends PortletBase {
 
 		this._localeChangedHandler = Liferay.after(
 			['inputLocalized:defaultLocaleChanged', 'ddm:default-locale-sync'],
-			this._onDeafultLocaleChange.bind(this)
+			this._onDefaultLocaleChange.bind(this)
 		);
 
 		this._setupSidebar();
@@ -94,7 +94,7 @@ class JournalPortlet extends PortletBase {
 	detached() {
 		this._eventHandler.removeAllListeners();
 		this._localeChangedHandler.detach();
-		this._onDeafultLocaleChange.detach();
+		this._onDefaultLocaleChange.detach();
 	}
 
 	/**
@@ -123,7 +123,7 @@ class JournalPortlet extends PortletBase {
 	 * Updates defaultLocale
 	 * @param {Event} event
 	 */
-	_onDeafultLocaleChange(event) {
+	_onDefaultLocaleChange(event) {
 		if (event.item) {
 			this.defaultLanguageId = event.item.getAttribute('data-value');
 		}

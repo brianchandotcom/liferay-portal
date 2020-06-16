@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_DISABLED</td>
+	<td>//div[not(contains(@class,'hide'))]/div[contains(@class,'input-select-wrapper')][label[contains(.,'${key_selectFieldLabel}')]]/select[contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSIGNMENT_TYPE</td>
 	<td>//select[@name='assignmentType']</td>
 	<td></td>
@@ -191,6 +196,11 @@
 <tr>
 	<td>TYPE</td>
 	<td>//div[label[contains(.,'Type')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_SELECTED</td>
+	<td>//div[label[contains(.,'Type')]]//option[contains(.,'${key_typeName}')]</td>
 	<td></td>
 </tr>
 <tr>

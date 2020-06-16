@@ -263,6 +263,39 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro viewAccountDetails {
+		LexiconEntry.gotoEntry(rowEntry = "${accountName}");
+
+		AssertTextEquals(
+			locator1 = "TextInput#NAME",
+			value1 = "${accountName}");
+
+		if (isSet(accountDescription)) {
+			AssertTextEquals(
+				locator1 = "TextArea#DESCRIPTION",
+				value1 = "${accountDescription}");
+		}
+
+		if (isSet(accountType)) {
+			AssertTextEquals(
+				key_typeName = "${accountType}",
+				locator1 = "Select#TYPE_SELECTED",
+				value1 = "${accountType}");
+		}
+
+		AssertElementPresent(
+			key_selectFieldLabel = "Type",
+			locator1 = "Select#ANY_DISABLED");
+
+		if (isSet(domainName)) {
+			LexiconEntry.viewEntryName(rowEntry = "${domainName}");
+		}
+
+		if (isSet(parentAccount)) {
+			LexiconEntry.viewEntryName(rowEntry = "${parentAccount}");
+		}
+	}
+
 	macro viewAssignee {
 		AssertTextEquals.assertPartialText(
 			key_tableEntry = "${assigneeName}",

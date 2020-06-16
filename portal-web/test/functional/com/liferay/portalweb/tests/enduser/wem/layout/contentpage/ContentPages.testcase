@@ -426,11 +426,12 @@ definition {
 				targetFragmentName = "Row");
 		}
 
-		task ("Assert the Section has Fixed Width, padding bottom x1 and padding top x1") {
+		task ("Assert the Section has Fluid, padding bottom 0, padding horizontal 0 and padding top 0") {
 			PageEditor.viewSectionStyle(
-				container = "Fixed Width",
-				paddingBottom = "3",
-				paddingTop = "3",
+				container = "Fluid",
+				paddingBottom = "0",
+				paddingHorizontal = "0",
+				paddingTop = "0",
 				position = "1");
 		}
 
@@ -442,10 +443,9 @@ definition {
 
 		task ("Edit the section's properties") {
 			PageEditor.editLayoutSection(
-				container = "Fluid",
+				container = "Fixed Width",
 				paddingBottom = "4",
-				paddingHorizontal = "2",
-				paddingTop = "10");
+				paddingTop = "2");
 		}
 
 		task ("Assert the Row has exactly 3 columns and no space between columns") {
@@ -455,12 +455,11 @@ definition {
 				spaceBetweenColumns = "false");
 		}
 
-		task ("Assert the Section has Fluid, padding bottom x4, padding horizontal x2 and padding top x10") {
+		task ("Assert the Section has Fixed Width, padding bottom 4 and padding top 2") {
 			PageEditor.viewSectionStyle(
-				container = "Fluid",
+				container = "Fixed Width",
 				paddingBottom = "5",
-				paddingHorizontal = "4",
-				paddingTop = "8",
+				paddingTop = "4",
 				position = "1");
 		}
 	}

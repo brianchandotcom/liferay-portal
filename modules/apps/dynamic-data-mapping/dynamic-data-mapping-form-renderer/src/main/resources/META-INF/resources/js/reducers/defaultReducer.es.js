@@ -17,13 +17,7 @@ import {EVENT_TYPES} from '../actions/types.es';
 export default (state, action) => {
 	switch (action.type) {
 		case EVENT_TYPES.ALL:
-			return {
-				...action.payload,
-				activePage:
-					state.activePage > action.payload?.pages.length - 1
-						? 0
-						: state.activePage,
-			};
+			return action.payload;
 		default:
 			return state;
 	}

@@ -17,7 +17,7 @@ import {
 	FormProvider,
 	FormRenderer,
 } from 'dynamic-data-mapping-form-renderer';
-import React, {useContext, useMemo} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import AppContext from '../../../AppContext.es';
 import {EDIT_CUSTOM_OBJECT_FIELD} from '../../../actions.es';
@@ -32,6 +32,7 @@ export default function () {
 		{config, editingLanguageId, focusedCustomObjectField, focusedField},
 		dispatch,
 	] = useContext(AppContext);
+	const [activePage, setActivePage] = useState(0);
 
 	const {
 		settingsContext: customObjectFieldSettingsContext,
@@ -61,11 +62,20 @@ export default function () {
 		}
 	};
 
+	useEffect(() => {
+		if (activePage > fieldSettingsContext.pages.length - 1) {
+			setActivePage(0);
+		}
+	}, [fieldSettingsContext, activePage, setActivePage]);
+
 	return (
 		<form onSubmit={(event) => event.preventDefault()}>
 			<FormProvider
 				onEvent={(type, payload) => {
 					switch (type) {
+						case EVENT_TYPES.CHANGE_ACTIVE_PAGE:
+							setActivePage(payload.value);
+							break;
 						case EVENT_TYPES.FIELD_BLUR:
 						case EVENT_TYPES.FIELD_CHANGE:
 							dispatchEvent(type, {
@@ -89,6 +99,7 @@ export default function () {
 				}}
 				value={{
 					...filteredSettingsContext,
+					activePage,
 					editable: true,
 					editingLanguageId,
 					spritemap,

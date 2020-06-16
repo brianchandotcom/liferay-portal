@@ -22,7 +22,7 @@ export const LAYOUT_DATA_ITEM_TYPES = {
 	fragment: 'fragment',
 };
 
-const AddPanel = ({contents, portletNamespace, widgets}) => {
+const AddPanel = ({addContentsURLs, contents, portletNamespace, widgets}) => {
 	const tabs = useMemo(
 		() => [
 			{
@@ -51,7 +51,11 @@ const AddPanel = ({contents, portletNamespace, widgets}) => {
 
 	return (
 		<div className="sidebar-content__add-panel">
-			<TabsPanel portletNamespace={portletNamespace} tabs={tabs} />
+			<TabsPanel
+				addContentsURLs={addContentsURLs}
+				portletNamespace={portletNamespace}
+				tabs={tabs}
+			/>
 		</div>
 	);
 };
@@ -71,7 +75,7 @@ const normalizeWidget = (widget) => {
 	};
 };
 
-const normalizeContent = (content) => {
+export const normalizeContent = (content) => {
 	return {
 		data: {
 			className: content.className,

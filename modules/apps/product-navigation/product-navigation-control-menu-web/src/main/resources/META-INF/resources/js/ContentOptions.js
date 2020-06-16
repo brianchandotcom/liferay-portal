@@ -39,14 +39,9 @@ const OPTIONS = [
 		value: 20,
 	},
 ];
-const TYPES = [
-	'$Basic Document',
-	'$Basic Web Content',
-	'$Blog Entry',
-	'$Bookmarks Entry',
-];
 
 const ContentOptions = ({
+	addContentsURLs,
 	grid,
 	onChangeListMode,
 	onChangeSelect,
@@ -97,12 +92,15 @@ const ContentOptions = ({
 				}
 			>
 				<ClayDropDown.ItemList>
-					{TYPES.map((type) => (
+					{addContentsURLs.map((content, index) => (
 						<ClayDropDown.Item
-							key={type}
-							onClick={() => setActive(false)}
+							key={index}
+							onClick={() => {
+								setActive(false);
+								Liferay.Util.navigate(content.url);
+							}}
 						>
-							{type}
+							{content.label}
 						</ClayDropDown.Item>
 					))}
 				</ClayDropDown.ItemList>

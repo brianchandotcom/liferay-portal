@@ -49,17 +49,18 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		currentAction.href && formatActionUrl(currentAction.href, itemData);
 
 	function handleClickOnLink(event) {
-		event.preventDefault();
-
 		if (currentAction.target === 'modal') {
+			event.preventDefault();
+
 			openModal({
 				size: currentAction.size || 'lg',
 				title: currentAction.title,
 				url: formattedHref,
 			});
 		}
+		else if (currentAction.target === 'sidePanel') {
+			event.preventDefault();
 
-		if (currentAction.target === 'sidePanel') {
 			highlightItems([itemId]);
 			openSidePanel({
 				size: currentAction.size || 'lg',
@@ -67,16 +68,17 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 				url: formattedHref,
 			});
 		}
+		else if (currentAction.target === 'async') {
+			event.preventDefault();
 
-		if (currentAction.target === 'async') {
 			executeAsyncItemAction(formattedHref, currentAction.method);
 		}
+		else if (currentAction.onClick) {
+			event.preventDefault();
 
-		if (
-			currentAction.onClick &&
-			typeof window[currentAction.onClick] === 'function'
-		) {
-			window[currentAction.onClick]();
+			event.target.setAttribute('onClick', currentAction.onClick);
+			event.target.onclick();
+			event.target.removeAttribute('onClick');
 		}
 	}
 

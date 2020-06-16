@@ -352,7 +352,26 @@ public class LiferayExtPlugin implements Plugin<Project> {
 					public void doCall(CopySpec copySpec) {
 						copySpec.from(jar);
 						copySpec.rename(
-							new PortalDeployDependencyRenameClosure(jar));
+							new Closure<String>(project) {
+
+								public String doCall(
+									String fileName) {
+
+									Project project = jar.getProject();
+
+									StringBuilder sb = new StringBuilder();
+
+									sb.append("ext-");
+									sb.append(project.getName());
+									sb.append('-');
+									sb.append(jar.getAppendix());
+									sb.append('.');
+									sb.append(jar.getExtension());
+
+									return sb.toString();
+								}
+
+							});
 					}
 
 				});
@@ -410,36 +429,6 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 				});
 		}
-	}
-
-	@SuppressWarnings("serial")
-	private static class PortalDeployDependencyRenameClosure
-		extends Closure<String> {
-
-		public PortalDeployDependencyRenameClosure(Jar jar) {
-			super(jar.getProject());
-
-			_jar = jar;
-		}
-
-		@SuppressWarnings("unused")
-		public String doCall(String fileName) {
-			Project project = _jar.getProject();
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("ext-");
-			sb.append(project.getName());
-			sb.append('-');
-			sb.append(_jar.getAppendix());
-			sb.append('.');
-			sb.append(_jar.getExtension());
-
-			return sb.toString();
-		}
-
-		private final Jar _jar;
-
 	}
 
 }

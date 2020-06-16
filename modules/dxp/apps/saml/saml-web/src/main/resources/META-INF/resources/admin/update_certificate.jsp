@@ -25,14 +25,12 @@ X509Certificate x509Certificate = (X509Certificate)request.getAttribute(SamlWebK
 %>
 
 <aui:script>
-	Liferay.provide(window, '<portlet:namespace />requestCloseDialog', function (
-		stateChange
-	) {
+	window['<portlet:namespace />requestCloseDialog'] = function (stateChange) {
 		Liferay.Util.getOpener().<portlet:namespace />closeDialog(
 			'<portlet:namespace/>certificateDialog',
 			stateChange
 		);
-	});
+	};
 </aui:script>
 
 <c:if test='<%= cmd.equals("replace") || cmd.equals("import") %>'>

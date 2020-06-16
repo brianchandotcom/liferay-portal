@@ -102,20 +102,15 @@ long clockSkew = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAML_CLOCK_
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />uploadMetadataXml',
-		function () {
-			var A = AUI();
+	window['<portlet:namespace />uploadMetadataXml'] = function () {
+		var uploadMetadataXmlForm = document.getElementById(
+			'<portlet:namespace />uploadMetadataXmlForm'
+		);
 
-			var uploadMetadataXmlForm = A.one(
-				'#<portlet:namespace />uploadMetadataXmlForm'
-			);
-
-			if (uploadMetadataXmlForm) {
-				uploadMetadataXmlForm.show();
-			}
-		},
-		['aui-base']
-	);
+		if (uploadMetadataXmlForm) {
+			uploadMetadataXmlForm.classList.remove('hide');
+			uploadMetadataXmlForm.removeAttribute('hidden');
+			uploadMetadataXmlForm.style.display = '';
+		}
+	};
 </aui:script>

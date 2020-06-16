@@ -111,40 +111,27 @@ if (samlRoleIdpOptionDisabled) {
 </c:choose>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />showCertificateDialog',
-		function (uri) {
-			var dialog = Liferay.Util.Window.getWindow({
-				id: '<portlet:namespace />certificateDialog',
-				title:
-					'<%= UnicodeLanguageUtil.get(request, "certificate-and-private-key") %>',
-				uri: uri,
-				dialog: {
-					cache: false,
-					modal: true,
-				},
-				dialogIframe: {
-					bodyCssClass: 'dialog-with-footer',
-				},
-			});
-		},
-		['aui-io', 'aui-io-plugin-deprecated', 'liferay-util-window']
-	);
+	window['<portlet:namespace />showCertificateDialog'] = function (uri) {
+		var id = '<portlet:namespace />certificateDialog';
+
+		Liferay.Util.openModal({
+			id: id,
+			iframeBodyCssClass: 'dialog-with-footer',
+			title:
+				'<%= UnicodeLanguageUtil.get(request, "certificate-and-private-key") %>',
+			url: uri,
+		});
+	};
 
 	<portlet:renderURL var="refreshViewURL" />
 
-	Liferay.provide(
-		window,
-		'<portlet:namespace />closeDialog',
-		function (dialogId, stateChange) {
-			var namespace = window.parent.namespace;
-			var dialog = Liferay.Util.getWindow(dialogId);
-			dialog.destroy();
-			if (stateChange) {
-				window.location.replace('<%= HtmlUtil.escapeJS(refreshViewURL) %>');
-			}
-		},
-		['aui-base', 'aui-dialog', 'aui-dialog-iframe']
-	);
+	window['<portlet:namespace />closeDialog'] = function (dialogId, stateChange) {
+		Liferay.fire('closeModal', {
+			id: dialogId,
+		});
+
+		if (stateChange) {
+			window.location.replace('<%= HtmlUtil.escapeJS(refreshViewURL) %>');
+		}
+	};
 </aui:script>

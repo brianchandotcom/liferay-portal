@@ -25,16 +25,15 @@ import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
 import NavigationBar from '../NavigationBar.es';
-import Link from "../../components/Link.es";
 
 export default withRouter(
 	({
-		 history,
-		 location,
-		 match: {
-			 params: {creatorId},
-		 },
-	 }) => {
+		history,
+		location,
+		match: {
+			params: {creatorId},
+		},
+	}) => {
 		const context = useContext(AppContext);
 		const historyPushParser = historyPushWithSlug(history.push);
 		const queryParams = useQueryParams(location);
@@ -43,12 +42,7 @@ export default withRouter(
 		const [pageSize, setPageSize] = useState(20);
 
 		useEffect(() => {
-			const pageNumber = queryParams.get('page') || 1;
-			setPage(isNaN(pageNumber) ? 1 : parseInt(pageNumber, 10));
-		}, [queryParams]);
-
-		useEffect(() => {
-			setPageSize(queryParams.get('pagesize') || 20);
+			setPage( queryParams.get('page') || 1);
 		}, [queryParams]);
 
 		const {data, loading} = useQuery(getUserActivityQuery, {
@@ -60,98 +54,28 @@ export default withRouter(
 			},
 		});
 
-		let creatorInfo = {
-			id: creatorId,
-			image: null,
-			name: decodeURI(
-				JSON.parse(`"${Liferay.ThemeDisplay.getUserName()}"`)
-			),
-			postsNumber: 0,
-			rank: context.defaultRank,
-		};
-
-		if (
-			data &&
-			data.messageBoardThreads.items &&
-			data.messageBoardThreads.items.length
-		) {
-			const {
-				creator,
-				creatorStatistics,
-			} = data.messageBoardThreads.items[0];
-
-			creatorInfo = {
-				id: creatorId,
-				image: creator.image,
-				name: creator.name,
-				postsNumber: creatorStatistics.postsNumber,
-				rank: creatorStatistics.rank,
-			};
-		}
-
-		const changePage = (page, pageSize) => {
-			historyPushParser(
-				`/activity/${creatorId}?page=${page}&pagesize=${pageSize}`
-			);
+		const changePage = (number) => {
+			historyPushParser(`/subscriptions/${creatorId}?page=${number}`);
 		};
 
 		return (
 			<>
-				<NavigationBar/>
+				<NavigationBar />
 				<section className="questions-section questions-section-list">
 					<div className="questions-container">
 						<div className="c-p-5 row">
-							<PageHeader/>
-							<Questions/>
+							<Topics />
+							<Questions />
 						</div>
 					</div>
 				</section>
 			</>
 		);
 
-		function PageHeader() {
+		function Topics() {
 			return (
 				<div className="c-mt-3 c-mx-auto c-px-0 col-xl-10">
 					<div className="d-flex flex-row">
-						<div className="c-mt-3">
-							<UserIcon
-								fullName={creatorInfo.name}
-								portraitURL={creatorInfo.image}
-								size="xl"
-								userId={String(creatorInfo.id)}
-							/>
-						</div>
-						<div className="c-ml-4 flex-column">
-							<div>
-								<span className="small">
-									Rank: {creatorInfo.rank}
-								</span>
-							</div>
-							<div>
-								<strong className="h2">
-									{creatorInfo.name}
-								</strong>
-							</div>
-							<div>
-								<span className="small">
-									Posts: {creatorInfo.postsNumber}
-								</span>
-							</div>
-						</div>
-						<div className="flex-column justify-content-end">
-							<Link
-								to={`/questions/subscriptions/creator/${creatorId}`}
-							>
-								<ClayButton
-									displayType="secondary"
-								>
-									Manage Subscriptions
-								</ClayButton>
-							</Link>
-						</div>
-					</div>
-					<div className="border-bottom c-mt-5">
-						<h2>Latest Questions Asked</h2>
 					</div>
 				</div>
 			);
@@ -163,8 +87,8 @@ export default withRouter(
 					<PaginatedList
 						activeDelta={pageSize}
 						activePage={page}
-						changeDelta={(pageSize) => changePage(page, pageSize)}
-						changePage={(page) => changePage(page, pageSize)}
+						changeDelta={setPageSize}
+						changePage={changePage}
 						data={data && data.messageBoardThreads}
 						loading={loading}
 					>

@@ -24,6 +24,7 @@ import NavigationBar from './pages/NavigationBar.es';
 import EditAnswer from './pages/answers/EditAnswer.es';
 import Home from './pages/home/Home';
 import UserActivity from './pages/home/UserActivity.es';
+import UserSubscriptions from './pages/home/UserSubscriptions.es';
 import EditQuestion from './pages/questions/EditQuestion.es';
 import NewQuestion from './pages/questions/NewQuestion.es';
 import Question from './pages/questions/Question.es';
@@ -48,6 +49,11 @@ export default (props) => (
 							component={UserActivity}
 							exact
 							path="/activity/:creatorId"
+						/>
+						<Route
+							component={UserSubscriptions}
+							exact
+							path="/subscriptions/:creatorId"
 						/>
 
 						<Route

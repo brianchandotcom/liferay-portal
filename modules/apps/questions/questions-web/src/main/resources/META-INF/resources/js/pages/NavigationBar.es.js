@@ -32,12 +32,19 @@ export default withRouter(
 	}) => {
 		const isActive = (value) => location.pathname.includes(value);
 
-		const label = () =>
-			location.pathname.includes('tags')
-				? Liferay.Language.get('tags')
-				: location.pathname.includes('activity')
-				? Liferay.Language.get('my-activity')
-				: Liferay.Language.get('questions');
+		const label = () => {
+			if (location.pathname.includes('tags')) {
+				return Liferay.Language.get('tags');
+			}
+			else if (location.pathname.includes('activity')) {
+				return Liferay.Language.get('my-activity');
+			} else if (location.pathname.includes('subscriptions')) {
+				return Liferay.Language.get('my-subscriptions');
+			}
+			else {
+				return Liferay.Language.get('questions');
+			}
+		};
 
 		const context = useContext(AppContext);
 
@@ -104,10 +111,33 @@ export default withRouter(
 									</ClayNavigationBar.Item>
 
 									<ClayNavigationBar.Item
-										active={isActive('activity')}
+										active={isActive('subscriptions')}
 										className={
 											Liferay.ThemeDisplay.isSignedIn()
 												? 'ml-md-auto'
+												: 'd-none'
+										}
+										onClick={() =>
+											historyPushParser(
+												`/subscriptions/${context.userId}`
+											)
+										}
+									>
+										<ClayLink
+											className="nav-link"
+											displayType="unstyled"
+										>
+											{Liferay.Language.get(
+												'my-subscriptions'
+											)}
+										</ClayLink>
+									</ClayNavigationBar.Item>
+
+									<ClayNavigationBar.Item
+										active={isActive('activity')}
+										className={
+											Liferay.ThemeDisplay.isSignedIn()
+												? ''
 												: 'd-none'
 										}
 										onClick={() =>

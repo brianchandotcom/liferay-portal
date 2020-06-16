@@ -65,27 +65,26 @@ definition {
 		Alert.viewLengthValidationField();
 	}
 
+	@description = "Try to create new change list with empty string in the description"
+	@priority = "3"
+	test CreateNewPublicationWithoutDescription {
+		ChangeList.createNewPublication(
+			gotoManagePublications = "true",
+			publicationName = "Publication Name");
+
+		AssertTextPresent(
+			locator1 = "ChangeList#CHANGE_TRACKING_INDICATOR_TITLE",
+			value1 = "Publication Name");
+	}
+
 	@description = "Try to create new change list with empty string name"
 	@priority = "3"
-	test CreateNewPublicationWithNoName {
+	test CreateNewPublicationWithoutName {
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
 			publicationDescription = "Publication Description");
 
 		Alert.viewRequiredField();
-	}
-
-	@description = "Try to create new change list with empty string in the description"
-	@priority = "3"
-	test CreateNewPublicationWithSpaceInTheDescription {
-		ChangeList.createNewPublication(
-			gotoManagePublications = "true",
-			publicationDescription = " ",
-			publicationName = "Publication Name");
-
-		AssertTextEquals(
-			locator1 = "ChangeList#ACTIVE_CHANGE_LIST_TITLE",
-			value1 = "Change List Name");
 	}
 
 	@priority = "5"

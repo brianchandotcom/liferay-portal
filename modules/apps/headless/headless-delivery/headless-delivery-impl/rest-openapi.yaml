@@ -1911,6 +1911,9 @@ components:
                     items:
                         $ref: "#/components/schemas/NavigationMenuItem"
                     type: array
+                navigationType:
+                    enum: [Primary, Secondary, Social]
+                    type: string
                 siteId:
                     format: int64
                     readOnly: true
@@ -1919,10 +1922,23 @@ components:
             description:
                 ""
             properties:
+                availableLanguages:
+                    description:
+                        The list of languages the structure has a translation for.
+                    items:
+                        type: string
+                    readOnly: true
+                    type: array
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
                     readOnly: true
+                customName:
+                    type: string
+                customName_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 dateCreated:
                     format: date-time
                     readOnly: true

@@ -15,10 +15,12 @@
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer;
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.model.Layout;
 
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -36,6 +38,21 @@ public class CollectionItemLayoutStructureItemImporter
 			PageElement pageElement, String parentItemId, int position,
 			Set<String> warningMessages)
 		throws Exception {
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(parentItemId);
+
+		for (String childItemId : layoutStructureItem.getChildrenItemIds()) {
+			LayoutStructureItem childLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childItemId);
+
+			if (Objects.equals(
+					childLayoutStructureItem.getItemType(),
+					LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM)) {
+
+				return childLayoutStructureItem;
+			}
+		}
 
 		return layoutStructure.addCollectionItemLayoutStructureItem(
 			parentItemId, position);

@@ -67,7 +67,7 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 				LanguageUtil.get(
 					getDisplayLocale(
 						ddmFormFieldRenderingContext.getHttpServletRequest()),
-					"field-name")
+					"field-id")
 			).build()
 		).put(
 			"tooltip",

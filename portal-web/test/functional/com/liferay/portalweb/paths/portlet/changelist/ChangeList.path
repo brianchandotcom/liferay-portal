@@ -84,8 +84,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HISTORY_CHANGE_LIST_STATUS</td>
-	<td>//h4[contains(.,'${key_changeListName}')]//following-sibling::span[contains(@class,'label-success')]//span</td>
+	<td>HISTORY_PUBLICATION_STATUS</td>
+	<td>//td[contains(.,'${key_publicationName}')]//following-sibling::td/span[contains(@class,'label-success')]//span</td>
 	<td></td>
 </tr>
 <tr>
@@ -109,8 +109,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OVERVIEW_PAGE_TITLE</td>
+	<td>MANGE_PUBLICATIONS_PAGE_TITLE</td>
 	<td>//span[contains(@data-qa-id,'headerTitle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANGE_PUBLICATIONS_NAVBAR_TITLE</td>
+	<td>//li[contains(@class,'nav-item')]/a[contains(.,'${key_navBarTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,7 +130,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_BUTTON</td>
-	<td>//footer//button[contains(.,'Publish')]</td>
+	<td>//a[contains(@id,'ChangeListsPortlet')]/span[contains(.,'Publish')]</td>
 	<td></td>
 </tr>
 <tr>

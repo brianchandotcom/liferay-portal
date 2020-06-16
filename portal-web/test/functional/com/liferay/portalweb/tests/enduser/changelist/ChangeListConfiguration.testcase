@@ -52,8 +52,8 @@ definition {
 		ChangeList.enableChangeList(gotoOverview = "true");
 
 		AssertTextEquals(
-			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
-			value1 = "Select Change List");
+			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
+			value1 = "Manage Publications");
 
 		AssertElementPresent(
 			locator1 = "ChangeList#PRODUCTION_CARD_TITLE",

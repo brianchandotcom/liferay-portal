@@ -6,8 +6,8 @@ definition {
 		Button.clickCancel();
 
 		AssertTextEquals(
-			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
-			value1 = "Select Change List");
+			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
+			value1 = "Manage Publications");
 	}
 
 	macro createNewPublication {
@@ -42,8 +42,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete '${changeListName}' change list?");
 
 		AssertTextEquals(
-			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
-			value1 = "Select Change List");
+			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
+			value1 = "Manage Publications");
 
 		Alert.viewSuccessMessageText(successMessage = "Production has been checked out. All your modifications will be added to the live site immediately.");
 	}
@@ -71,27 +71,29 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro publishChangeList {
-		Click(locator1 = "Button#PUBLISH");
+	macro publishPublication {
+		Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
 
-		SelectFrame.selectFrameTop();
+		MenuItem.click(menuItem = "Prepare to Publish");
 
 		Click(locator1 = "ChangeList#PUBLISH_BUTTON");
 
 		Alert.viewSuccessMessage();
 
+		var key_navBarTitle = "History";
+
 		AssertTextEquals(
-			locator1 = "ChangeList#OVERVIEW_PAGE_TITLE",
+			locator1 = "ChangeList#MANGE_PUBLICATIONS_NAVBAR_TITLE",
 			value1 = "History");
 
-		Pause(locator1 = "5000");
+		//Workaround LPS-115320
 
 		Refresh();
 
-		var key_changeListName = "${changeListName}";
+		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(
-			locator1 = "ChangeList#HISTORY_CHANGE_LIST_STATUS",
+			locator1 = "ChangeList#HISTORY_PUBLICATION_STATUS",
 			value1 = "Published");
 	}
 

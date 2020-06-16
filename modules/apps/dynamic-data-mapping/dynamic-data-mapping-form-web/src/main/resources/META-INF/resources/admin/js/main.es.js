@@ -221,14 +221,9 @@ class Form extends Component {
 				pages[activePage] &&
 				!pages[activePage].successPageSettings
 			) {
-				this.enableAddButton();
-
 				if (!this._pageHasFields(pages, activePage)) {
 					this.openSidebar();
 				}
-			}
-			else {
-				this.disableAddButton();
 			}
 		});
 
@@ -241,8 +236,6 @@ class Form extends Component {
 			) {
 				this.openSidebar();
 			}
-
-			this.enableAddButton();
 		});
 
 		store.on(
@@ -282,12 +275,6 @@ class Form extends Component {
 		this.submitForm = this.submitForm.bind(this);
 	}
 
-	disableAddButton() {
-		const addButton = document.querySelector('#addFieldButton');
-
-		addButton.setAttribute('disabled', true);
-	}
-
 	disposed() {
 		if (this._autoSave) {
 			this._autoSave.dispose();
@@ -306,12 +293,6 @@ class Form extends Component {
 				handle.detach()
 			);
 		}
-	}
-
-	enableAddButton() {
-		const addButton = document.querySelector('#addFieldButton');
-
-		addButton.removeAttribute('disabled');
 	}
 
 	hideAddButton() {

@@ -89,7 +89,7 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_ACTIVE_TAB</td>
-	<td>//a[contains(@class,'active')]/span[contains(.,'${key_tabName}')]</td>
+	<td>//a[contains(@class,'active') and contains(.,'${key_tabName}')]</td>
 	<td></td>
 </tr>
 <tr>

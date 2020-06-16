@@ -102,6 +102,7 @@ public class DEDataListViewLocalServiceImpl
 			groupId, companyId, ddmStructureId);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DEDataListView updateDEDataListView(
 			long deDataListViewId, String appliedFilters, String fieldNames,

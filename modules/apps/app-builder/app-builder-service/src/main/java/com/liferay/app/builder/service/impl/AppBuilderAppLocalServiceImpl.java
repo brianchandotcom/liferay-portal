@@ -116,6 +116,7 @@ public class AppBuilderAppLocalServiceImpl
 			scope);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AppBuilderApp deleteAppBuilderApp(long appBuilderAppId)
 		throws PortalException {

@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useMemo} from 'react';
+import React from 'react';
 
 import AuditBarChart from './components/AuditBarChart';
 import EmptyAuditBarChart from './components/EmptyAuditBarChart';
@@ -59,39 +59,8 @@ export default function () {
 
 	const rtl = false;
 
-	const auditBarChartData = useMemo(() => {
-		const bars = [];
-		const data = [];
-
-		categories.map((category) => {
-			var dataChild = {name: category.name};
-
-			const children = category.children;
-
-			for (var i = 0; i < children.length; i++) {
-				const barChild = {
-					dataKey: children[i].key,
-					name: children[i].name,
-				};
-				if (!bars.some((bar) => bar.dataKey === children[i].key)) {
-					bars.push(barChild);
-				}
-
-				dataChild = {
-					...dataChild,
-					[children[i].key]: children[i].value,
-				};
-			}
-			data.push(dataChild);
-		});
-
-		return {bars, data};
-	}, [categories]);
-
-	const {bars, data} = auditBarChartData;
-
-	return data.length ? (
-		<AuditBarChart bars={bars} data={data} rtl={rtl} />
+	return categories.length ? (
+		<AuditBarChart categories={categories} rtl={rtl} />
 	) : (
 		<EmptyAuditBarChart />
 	);

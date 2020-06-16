@@ -13,7 +13,7 @@
  */
 
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {
 	Bar,
 	BarChart,
@@ -27,7 +27,38 @@ import {
 
 import {BAR_CHART, COLORS} from '../utils/constants';
 
-export default function AuditBarChart({bars, data, rtl}) {
+export default function AuditBarChart({categories, rtl}) {
+	const auditBarChartData = useMemo(() => {
+		const bars = [];
+		const data = [];
+
+		categories.map((category) => {
+			var dataChild = {name: category.name};
+
+			const children = category.children;
+
+			for (var i = 0; i < children.length; i++) {
+				const barChild = {
+					dataKey: children[i].key,
+					name: children[i].name,
+				};
+				if (!bars.some((bar) => bar.dataKey === children[i].key)) {
+					bars.push(barChild);
+				}
+
+				dataChild = {
+					...dataChild,
+					[children[i].key]: children[i].value,
+				};
+			}
+			data.push(dataChild);
+		});
+
+		return {bars, data};
+	}, [categories]);
+
+	const {bars, data} = auditBarChartData;
+
 	return (
 		<>
 			<ResponsiveContainer height={BAR_CHART.height}>
@@ -119,7 +150,6 @@ function CustomYAxisTick(props) {
 }
 
 AuditBarChart.propTypes = {
-	bars: PropTypes.array.isRequired,
-	data: PropTypes.array.isRequired,
+	categories: PropTypes.array.isRequired,
 	rtl: PropTypes.bool.isRequired,
 };

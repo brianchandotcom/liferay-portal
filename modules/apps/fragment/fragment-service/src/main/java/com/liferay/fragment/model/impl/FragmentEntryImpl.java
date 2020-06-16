@@ -17,7 +17,9 @@ package com.liferay.fragment.model.impl;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentExportImportConstants;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +39,14 @@ import com.liferay.portal.kernel.zip.ZipWriter;
  * @author Eudaldo Alonso
  */
 public class FragmentEntryImpl extends FragmentEntryBaseImpl {
+
+	public FragmentEntry fetchDraft() {
+		if (isDraft()) {
+			return null;
+		}
+
+		return FragmentEntryLocalServiceUtil.fetchDraft(getFragmentEntryId());
+	}
 
 	@Override
 	public String getContent() {

@@ -104,6 +104,110 @@ definition {
 			locator1 = "Questions#ASK_QUESTION_SEARCH_QUESTION");
 	}
 
+	@description = "Validate if the user can view the topic selector and category label."
+	@priority = "4"
+	test AddSubcategoryConfigureParentCategoryDisplay {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Question Body 1",
+			categoryName = "Questions Test Category",
+			tagField = "test tag",
+			titleField = "Question 1");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		AssertElementNotPresent(
+			key_parentCategoryTitle = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAVIGATION_PARENT_CATEGORY_TITLE");
+
+		AssertElementNotPresent(
+			key_categoryItem = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question 1");
+
+		AssertElementNotPresent(
+			key_categoryItem = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
+
+		AssertElementNotPresent(locator1 = "Questions#QUESTIONS_SELECT_TOPIC");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		AssertVisible(
+			key_categoryItem = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
+
+		var messageBoardsCategoryURL = selenium.getLocation();
+		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Subcategory Description",
+			categoryName = "Questions Test Subcategory",
+			parentCategoryId = "${parentCategoryId}",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		AssertVisible(
+			key_parentCategoryTitle = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAVIGATION_PARENT_CATEGORY_TITLE");
+
+		AssertVisible(
+			key_categoryItem = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Question 1");
+
+		AssertVisible(
+			key_categoryItem = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
+
+		AssertVisible(locator1 = "Questions#QUESTIONS_SELECT_TOPIC");
+
+		Questions.gotoTab(questionTabField = "My Activity");
+
+		AssertVisible(
+			key_categoryItem = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
+	}
+
 	@description = "Validate if the anonymous user can ask questions and redirected to login."
 	@priority = "4"
 	test AskQuestionsThroughAnonymousUser {

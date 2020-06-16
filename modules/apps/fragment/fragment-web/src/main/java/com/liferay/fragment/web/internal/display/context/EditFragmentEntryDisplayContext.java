@@ -492,11 +492,8 @@ public class EditFragmentEntryDisplayContext {
 		publishFragmentEntryURL.setParameter(
 			ActionRequest.ACTION_NAME, "/fragment/publish_fragment_entry");
 
-		FragmentEntry fragmentEntry = getFragmentEntry();
-
 		publishFragmentEntryURL.setParameter(
-			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId()));
+			"fragmentEntryId", String.valueOf(getFragmentEntryId()));
 
 		return publishFragmentEntryURL.toString();
 	}

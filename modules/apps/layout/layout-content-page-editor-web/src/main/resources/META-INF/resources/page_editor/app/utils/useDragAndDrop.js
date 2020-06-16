@@ -411,15 +411,11 @@ function computeHover({
 			targetItem.type == LAYOUT_DATA_ITEM_TYPES.fragment;
 		const targetIsEmpty =
 			layoutData.items[targetItem.itemId].children.length === 0;
-		const targetIsSourceParent = layoutData.items[
-			targetItem.itemId
-		].children.includes(sourceItem.itemId);
 
 		return (
 			targetPositionWithMiddle === TARGET_POSITION.MIDDLE &&
 			(targetIsEmpty || targetIsColumn) &&
-			!targetIsFragment &&
-			!targetIsSourceParent
+			!targetIsFragment
 		);
 	})();
 

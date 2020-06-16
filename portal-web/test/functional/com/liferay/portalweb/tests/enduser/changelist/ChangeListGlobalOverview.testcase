@@ -70,8 +70,7 @@ definition {
 	test CreateNewPublicationWithNoName {
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
-			publicationDescription = "Publication Description",
-			publicationtName = " ");
+			publicationDescription = "Publication Description");
 
 		Alert.viewRequiredField();
 	}

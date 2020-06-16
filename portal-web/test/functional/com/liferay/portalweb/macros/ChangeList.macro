@@ -30,15 +30,21 @@ definition {
 			MenuItem.click(menuItem = "Create New Publication");
 		}
 
-		Type(
-			locator1 = "ChangeList#PUBLICATION_NAME",
-			value1 = "${publicationName}");
+		if (isSet(publicationName)) {
+			Type(
+				locator1 = "ChangeList#PUBLICATION_NAME",
+				value1 = "${publicationName}");
+		}
 
-		Type(
-			locator1 = "ChangeList#PUBLICATION_DESCRIPTION",
-			value1 = "${publicationDescription}");
+		if (isSet(publicationDescription)) {
+			Type(
+				locator1 = "ChangeList#PUBLICATION_DESCRIPTION",
+				value1 = "${publicationDescription}");
+		}
 
 		Button.click(button = "Create");
+
+		Pause(locator1 = "5000");
 	}
 
 	macro deletePublication {

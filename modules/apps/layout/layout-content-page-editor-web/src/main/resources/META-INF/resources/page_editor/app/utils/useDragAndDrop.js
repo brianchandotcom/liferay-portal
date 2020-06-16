@@ -348,10 +348,13 @@ function computeDrop({dispatch, layoutData, onDragEnd, state}) {
 			onDragEnd(parentItem.itemId, position);
 		}
 		else {
-			onDragEnd(
-				state.dropTargetItem.itemId,
-				state.dropTargetItem.children.length
-			);
+			const position = state.dropTargetItem.children.includes(
+				state.dropItem.itemId
+			)
+				? state.dropTargetItem.children.length - 1
+				: state.dropTargetItem.children.length;
+
+			onDragEnd(state.dropTargetItem.itemId, position);
 		}
 	}
 

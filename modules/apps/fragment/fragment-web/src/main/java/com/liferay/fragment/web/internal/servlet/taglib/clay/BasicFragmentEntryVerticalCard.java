@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -107,6 +108,17 @@ public class BasicFragmentEntryVerticalCard extends FragmentEntryVerticalCard {
 
 	@Override
 	public List<LabelItem> getLabels() {
+		if (fragmentEntry.isApproved() &&
+			(fragmentEntry.fetchDraft() != null)) {
+
+			return LabelItemListBuilder.add(
+				labelItem -> labelItem.setStatus(
+					WorkflowConstants.STATUS_APPROVED)
+			).add(
+				labelItem -> labelItem.setStatus(WorkflowConstants.STATUS_DRAFT)
+			).build();
+		}
+
 		return LabelItemListBuilder.add(
 			labelItem -> labelItem.setStatus(fragmentEntry.getStatus())
 		).build();

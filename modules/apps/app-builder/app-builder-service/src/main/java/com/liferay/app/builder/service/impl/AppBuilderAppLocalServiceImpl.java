@@ -141,7 +141,8 @@ public class AppBuilderAppLocalServiceImpl
 		List<AppBuilderApp> appBuilderApps = getAppBuilderApps(ddmStructureId);
 
 		for (AppBuilderApp appBuilderApp : appBuilderApps) {
-			deleteAppBuilderApp(appBuilderApp.getAppBuilderAppId());
+			appBuilderAppLocalService.deleteAppBuilderApp(
+				appBuilderApp.getAppBuilderAppId());
 		}
 	}
 

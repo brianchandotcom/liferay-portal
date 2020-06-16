@@ -226,7 +226,7 @@ public class DDLRecordSetLocalServiceImpl
 			ddmStructureId);
 
 		for (DDLRecordSet ddlRecordSet : ddlRecordSets) {
-			deleteRecordSet(ddlRecordSet);
+			ddlRecordSetLocalService.deleteRecordSet(ddlRecordSet);
 		}
 	}
 
@@ -245,7 +245,7 @@ public class DDLRecordSetLocalServiceImpl
 
 		// Record set
 
-		super.deleteDDLRecordSet(recordSet);
+		ddlRecordSetLocalService.deleteDDLRecordSet(recordSet);
 
 		// Resources
 

@@ -73,7 +73,11 @@ public class DEDataListViewLocalServiceImpl
 
 	@Override
 	public void deleteDEDataListViews(long ddmStructureId) {
-		deDataListViewPersistence.removeByDDMStructureId(ddmStructureId);
+		for (DEDataListView deDataListView :
+				getDEDataListViews(ddmStructureId)) {
+
+			deDataListViewLocalService.deleteDEDataListView(deDataListView);
+		}
 	}
 
 	@Override

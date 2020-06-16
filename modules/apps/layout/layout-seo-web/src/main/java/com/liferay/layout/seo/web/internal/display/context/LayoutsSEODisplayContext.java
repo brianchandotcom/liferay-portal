@@ -329,6 +329,43 @@ public class LayoutsSEODisplayContext {
 		}
 	}
 
+	public HashMap<String, Object> getOpenGraphMappingData()
+		throws NoSuchClassTypeException, PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry();
+
+		InfoForm infoForm = _getInfoForm(layoutPageTemplateEntry);
+
+		return HashMapBuilder.<String, Object>putAll(
+			_getBaseSEOMappingData(infoForm, layoutPageTemplateEntry)
+		).put(
+			"openGraphDescription",
+			_getMappedFieldName(
+				infoForm,
+				_selLayout.getTypeSettingsProperty(
+					"mapped-openGraphDescription", "description"))
+		).put(
+			"openGraphImage",
+			_getMappedFieldName(
+				infoForm,
+				_selLayout.getTypeSettingsProperty(
+					"mapped-openGraphImage", null))
+		).put(
+			"openGraphImageAlt",
+			_getMappedFieldName(
+				infoForm,
+				_selLayout.getTypeSettingsProperty(
+					"mapped-openGraphImageAlt", null))
+		).put(
+			"openGraphTitle",
+			_getMappedFieldName(
+				infoForm,
+				_selLayout.getTypeSettingsProperty(
+					"mapped-openGraphTitle", "title"))
+		).build();
+	}
+
 	public String getPageTitleSuffix() throws PortalException {
 		Company company = _themeDisplay.getCompany();
 
@@ -398,65 +435,24 @@ public class LayoutsSEODisplayContext {
 		throws NoSuchClassTypeException, PortalException {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(_selPlid);
+			_getLayoutPageTemplateEntry();
 
-		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceTracker.getInfoItemService(
-				InfoItemFormProvider.class,
-				layoutPageTemplateEntry.getClassName());
+		InfoForm infoForm = _getInfoForm(layoutPageTemplateEntry);
 
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(
-			layoutPageTemplateEntry.getClassTypeId());
-
-		return HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>putAll(
+			_getBaseSEOMappingData(infoForm, layoutPageTemplateEntry)
+		).put(
 			"description",
 			_getMappedFieldName(
 				infoForm,
-				_selLayout.getTypeSettingsProperty("mapped-description"),
-				"description")
-		).put(
-			"fields",
-			_infoItemServiceTracker.getInfoItemService(
-				InfoItemFormProvider.class,
-				layoutPageTemplateEntry.getClassName()
-			).getInfoForm(
-				layoutPageTemplateEntry.getClassTypeId()
-			).getAllInfoFields(
-			).stream(
-			).map(
-				infoField -> JSONUtil.put(
-					"key", infoField.getName()
-				).put(
-					"label", infoField.getLabel(_themeDisplay.getLocale())
-				).put(
-					"type",
-					infoField.getInfoFieldType(
-					).getName()
-				)
-			).collect(
-				Collectors.toList()
-			)
-		).put(
-			"selectedSource",
-			JSONUtil.put(
-				"className", layoutPageTemplateEntry.getClassName()
-			).put(
-				"classNameLabel",
-				_getTypeLabel(layoutPageTemplateEntry.getClassName())
-			).put(
-				"classTypeId", layoutPageTemplateEntry.getClassTypeId()
-			).put(
-				"classTypeLabel",
-				_getSubtypeLabel(
-					layoutPageTemplateEntry.getClassName(),
-					layoutPageTemplateEntry.getClassTypeId())
-			)
+				_selLayout.getTypeSettingsProperty(
+					"mapped-description", "description"))
 		).put(
 			"title",
 			_getMappedFieldName(
-				infoForm, _selLayout.getTypeSettingsProperty("mapped-title"),
-				"title")
+				infoForm,
+				_selLayout.getTypeSettingsProperty(
+					"title-description", "title"))
 		).build();
 	}
 
@@ -495,16 +491,70 @@ public class LayoutsSEODisplayContext {
 		return _privateLayout;
 	}
 
+	private HashMap<String, Object> _getBaseSEOMappingData(
+			InfoForm infoForm, LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws PortalException {
+
+		return HashMapBuilder.<String, Object>put(
+			"defaultLanguageId", _selLayout.getDefaultLanguageId()
+		).put(
+			"fields",
+			infoForm.getAllInfoFields(
+			).stream(
+			).map(
+				infoField -> JSONUtil.put(
+					"key", infoField.getName()
+				).put(
+					"label", infoField.getLabel(_themeDisplay.getLocale())
+				).put(
+					"type",
+					infoField.getInfoFieldType(
+					).getName()
+				)
+			).collect(
+				Collectors.toList()
+			)
+		).put(
+			"selectedSource",
+			JSONUtil.put(
+				"className", layoutPageTemplateEntry.getClassName()
+			).put(
+				"classNameLabel",
+				_getTypeLabel(layoutPageTemplateEntry.getClassName())
+			).put(
+				"classTypeId", layoutPageTemplateEntry.getClassTypeId()
+			).put(
+				"classTypeLabel",
+				_getSubtypeLabel(
+					layoutPageTemplateEntry.getClassName(),
+					layoutPageTemplateEntry.getClassTypeId())
+			)
+		).build();
+	}
+
+	private InfoForm _getInfoForm(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws NoSuchClassTypeException {
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceTracker.getInfoItemService(
+				InfoItemFormProvider.class,
+				layoutPageTemplateEntry.getClassName());
+
+		return infoItemFormProvider.getInfoForm(
+			layoutPageTemplateEntry.getClassTypeId());
+	}
+
+	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {
+		return _layoutPageTemplateEntryLocalService.
+			fetchLayoutPageTemplateEntryByPlid(_selPlid);
+	}
+
 	private String _getMappedFieldName(
-		InfoForm infoForm, String mappedFieldName,
-		String defaultMappedFieldName) {
+		InfoForm infoForm, String mappedFieldName) {
 
 		if (infoForm.getInfoFieldSetEntry(mappedFieldName) != null) {
 			return mappedFieldName;
-		}
-
-		if (infoForm.getInfoFieldSetEntry(defaultMappedFieldName) != null) {
-			return defaultMappedFieldName;
 		}
 
 		return null;

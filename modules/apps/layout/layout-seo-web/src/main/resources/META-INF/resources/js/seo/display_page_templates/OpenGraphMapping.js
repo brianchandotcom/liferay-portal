@@ -41,7 +41,7 @@ function OpenGraphMapping({
 						Liferay.Language.get('title')
 					),
 					label: Liferay.Language.get('title'),
-					name: `${portletNamespace}openGraphTitle`,
+					name: `${portletNamespace}TypeSettingsProperties--mapped-openGraphTitle--`,
 					selectedFieldKey: openGraphTitle,
 				},
 				{
@@ -54,7 +54,7 @@ function OpenGraphMapping({
 						Liferay.Language.get('description')
 					),
 					label: Liferay.Language.get('description'),
-					name: `${portletNamespace}openGraphDescription`,
+					name: `${portletNamespace}TypeSettingsProperties--mapped-openGraphDescription--`,
 					selectedFieldKey: openGraphDescription,
 				},
 				{
@@ -67,7 +67,7 @@ function OpenGraphMapping({
 						Liferay.Language.get('image')
 					),
 					label: Liferay.Language.get('image'),
-					name: `${portletNamespace}openGraphImageTitle`,
+					name: `${portletNamespace}TypeSettingsProperties--mapped-openGraphImage--`,
 					selectedFieldKey: openGraphImage,
 				},
 				{
@@ -82,7 +82,7 @@ function OpenGraphMapping({
 					label: Liferay.Language.get(
 						'open-graph-image-alt-description'
 					),
-					name: `${portletNamespace}openGraphImageAlt`,
+					name: `${portletNamespace}TypeSettingsProperties--mapped-openGraphImageAlt--`,
 					selectedFieldKey: openGraphImageAlt,
 				},
 			]}

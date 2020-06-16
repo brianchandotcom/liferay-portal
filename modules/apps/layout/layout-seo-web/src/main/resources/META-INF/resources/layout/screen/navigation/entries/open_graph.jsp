@@ -88,7 +88,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						</div>
 
 						<react:component
-							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"
+							data="<%= layoutsSEODisplayContext.getOpenGraphMappingData() %>"
 							module="js/seo/display_page_templates/OpenGraphMapping"
 							servletContext="<%= application %>"
 						/>

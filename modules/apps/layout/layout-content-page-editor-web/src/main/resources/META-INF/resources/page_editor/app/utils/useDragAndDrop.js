@@ -406,9 +406,10 @@ function computeHover({
 	// Drop inside target
 
 	const validDropInsideTarget = (() => {
-		const targetIsColumn = targetItem.type == LAYOUT_DATA_ITEM_TYPES.column;
+		const targetIsColumn =
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.column;
 		const targetIsFragment =
-			targetItem.type == LAYOUT_DATA_ITEM_TYPES.fragment;
+			targetItem.type === LAYOUT_DATA_ITEM_TYPES.fragment;
 		const targetIsEmpty =
 			layoutData.items[targetItem.itemId].children.length === 0;
 

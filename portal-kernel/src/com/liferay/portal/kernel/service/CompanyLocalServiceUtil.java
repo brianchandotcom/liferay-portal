@@ -51,6 +51,26 @@ public class CompanyLocalServiceUtil {
 	/**
 	 * Adds a company.
 	 *
+	 * @param companyId primary key (pass <code>null</code> or
+	 <code>0</code> to generate it automatically)
+	 * @param webId the the company's web domain
+	 * @param virtualHostname the company's virtual host name
+	 * @param mx the company's mail domain
+	 * @param active whether the company is active
+	 * @return the company
+	 */
+	public static com.liferay.portal.kernel.model.Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addCompany(
+			companyId, webId, virtualHostname, mx, active);
+	}
+
+	/**
+	 * Adds a company.
+	 *
 	 * @param webId the the company's web domain
 	 * @param virtualHostname the company's virtual host name
 	 * @param mx the company's mail domain

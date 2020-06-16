@@ -77,6 +77,22 @@ public interface CompanyLocalService
 	/**
 	 * Adds a company.
 	 *
+	 * @param companyId primary key (pass <code>null</code> or
+	 <code>0</code> to generate it automatically)
+	 * @param webId the the company's web domain
+	 * @param virtualHostname the company's virtual host name
+	 * @param mx the company's mail domain
+	 * @param active whether the company is active
+	 * @return the company
+	 */
+	public Company addCompany(
+			Long companyId, String webId, String virtualHostname, String mx,
+			boolean active)
+		throws PortalException;
+
+	/**
+	 * Adds a company.
+	 *
 	 * @param webId the the company's web domain
 	 * @param virtualHostname the company's virtual host name
 	 * @param mx the company's mail domain

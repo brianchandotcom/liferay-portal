@@ -44,6 +44,28 @@ public class CompanyLocalServiceWrapper
 	/**
 	 * Adds a company.
 	 *
+	 * @param companyId primary key (pass <code>null</code> or
+	 <code>0</code> to generate it automatically)
+	 * @param webId the the company's web domain
+	 * @param virtualHostname the company's virtual host name
+	 * @param mx the company's mail domain
+	 * @param active whether the company is active
+	 * @return the company
+	 */
+	@Override
+	public com.liferay.portal.kernel.model.Company addCompany(
+			java.lang.Long companyId, java.lang.String webId,
+			java.lang.String virtualHostname, java.lang.String mx,
+			boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyLocalService.addCompany(
+			companyId, webId, virtualHostname, mx, active);
+	}
+
+	/**
+	 * Adds a company.
+	 *
 	 * @param webId the the company's web domain
 	 * @param virtualHostname the company's virtual host name
 	 * @param mx the company's mail domain

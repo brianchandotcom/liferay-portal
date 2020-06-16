@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -68,7 +68,16 @@ export default function ImportTranslation() {
 				)}
 
 				{importFile && (
-					<strong>{importFile.name}</strong>
+					<>
+						<strong>{importFile.name}</strong>
+
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							onClick={() => {setImporFile(null)}}
+							symbol="times-circle"
+							title={Liferay.Language.get('delete')}
+						/>
+					</>
 				)}
 
 				{hasError && (

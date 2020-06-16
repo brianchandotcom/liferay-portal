@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>CONTENT_DISPLAY_FRAGMENT_BODY</td>
-	<td>//div[contains(@class,'content')]/div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@class,'content') and contains(.,'${key_entryContent}')]</td>
+	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@class,'content') and contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>

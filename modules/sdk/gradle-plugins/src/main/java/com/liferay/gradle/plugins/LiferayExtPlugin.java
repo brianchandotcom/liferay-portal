@@ -130,9 +130,8 @@ public class LiferayExtPlugin implements Plugin<Project> {
 			project, WarPlugin.WAR_TASK_NAME, War.class);
 
 		_configureTaskBuildExtInfoBaseDirProvider(
-			project, buildExtInfoBaseDirTaskProvider, warTaskProvider);
-		_configureTaskBuildExtInfoBaseDirProvider(
-			buildExtInfoBaseDirTaskProvider, buildExtInfoTaskProvider);
+			project, buildExtInfoBaseDirTaskProvider, buildExtInfoTaskProvider,
+			warTaskProvider);
 		_configureTaskBuildExtInfoProvider(
 			buildExtInfoBaseDirTaskProvider, buildExtInfoTaskProvider,
 			warTaskProvider, portalConfiguration);
@@ -315,6 +314,7 @@ public class LiferayExtPlugin implements Plugin<Project> {
 	private void _configureTaskBuildExtInfoBaseDirProvider(
 		final Project project,
 		TaskProvider<Sync> buildExtInfoBaseDirTaskProvider,
+		final TaskProvider<BuildExtInfoTask> buildExtInfoTaskProvider,
 		final TaskProvider<War> warTaskProvider) {
 
 		buildExtInfoBaseDirTaskProvider.configure(
@@ -322,6 +322,32 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Sync buildExtInfoBaseDirSync) {
+					buildExtInfoBaseDirSync.exclude(
+						new Spec<FileTreeElement>() {
+
+							@Override
+							public boolean isSatisfiedBy(
+								FileTreeElement fileTreeElement) {
+
+								BuildExtInfoTask buildExtInfoTask =
+									buildExtInfoTaskProvider.get();
+
+								File outputFile =
+									buildExtInfoTask.getOutputFile();
+
+								String outputFileName = outputFile.getName();
+
+								if (outputFileName.equals(
+										fileTreeElement.getPath())) {
+
+									return true;
+								}
+
+								return false;
+							}
+
+						});
+
 					buildExtInfoBaseDirSync.into(
 						new Callable<File>() {
 
@@ -358,45 +384,6 @@ public class LiferayExtPlugin implements Plugin<Project> {
 				public File call() throws Exception {
 					return new File(
 						liferayExtension.getAppServerParentDir(), "deploy");
-				}
-
-			});
-	}
-
-	private void _configureTaskBuildExtInfoBaseDirProvider(
-		TaskProvider<Sync> buildExtInfoBaseDirTaskProvider,
-		final TaskProvider<BuildExtInfoTask> buildExtInfoTaskProvider) {
-
-		buildExtInfoBaseDirTaskProvider.configure(
-			new Action<Sync>() {
-
-				@Override
-				public void execute(Sync buildExtInfoBaseDirSync) {
-					buildExtInfoBaseDirSync.exclude(
-						new Spec<FileTreeElement>() {
-
-							@Override
-							public boolean isSatisfiedBy(
-								FileTreeElement fileTreeElement) {
-
-								BuildExtInfoTask buildExtInfoTask =
-									buildExtInfoTaskProvider.get();
-
-								File outputFile =
-									buildExtInfoTask.getOutputFile();
-
-								String outputFileName = outputFile.getName();
-
-								if (outputFileName.equals(
-										fileTreeElement.getPath())) {
-
-									return true;
-								}
-
-								return false;
-							}
-
-						});
 				}
 
 			});

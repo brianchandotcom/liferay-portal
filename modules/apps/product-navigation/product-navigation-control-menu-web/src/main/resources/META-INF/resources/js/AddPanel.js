@@ -22,7 +22,14 @@ export const LAYOUT_DATA_ITEM_TYPES = {
 	fragment: 'fragment',
 };
 
-const AddPanel = ({addContentsURLs, contents, portletNamespace, widgets}) => {
+const AddPanel = ({
+	addContentsURLs,
+	contents,
+	getContentsURL,
+	namespace,
+	portletNamespace,
+	widgets,
+}) => {
 	const tabs = useMemo(
 		() => [
 			{
@@ -53,6 +60,8 @@ const AddPanel = ({addContentsURLs, contents, portletNamespace, widgets}) => {
 		<div className="sidebar-content__add-panel">
 			<TabsPanel
 				addContentsURLs={addContentsURLs}
+				getContentsURL={getContentsURL}
+				namespace={namespace}
 				portletNamespace={portletNamespace}
 				tabs={tabs}
 			/>

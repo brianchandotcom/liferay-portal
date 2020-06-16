@@ -16,16 +16,10 @@ import ClayTabs from '@clayui/tabs';
 import React, {useMemo, useState} from 'react';
 
 import 'product-navigation-control-menu/css/TabsPanel.scss';
-import classNames from 'classnames';
 
-import Collapse from './Collapse';
-import ContentOptions from './ContentOptions';
-import SearchForm from './SearchForm';
-import TabItem from './TabItem';
+import TabsContent from './TabsContent';
 
 let nextId = 0;
-const TAB_ID = 'content';
-const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
 const useId = ({portletNamespace}) => {
 	return useMemo(() => `${portletNamespace}_useId_${nextId++}`, [
@@ -33,14 +27,14 @@ const useId = ({portletNamespace}) => {
 	]);
 };
 
-const filterTotalItems = (items, totalItems, id) => {
-	return id === TAB_ID ? items.slice(0, totalItems) : items;
-};
-
-const AddPanel = ({portletNamespace, tabs}) => {
+const TabsPanel = ({
+	addContentsURLs,
+	getContentsURL,
+	namespace,
+	portletNamespace,
+	tabs,
+}) => {
 	const [activeTabId, setActiveTabId] = useState(0);
-	const [grid, setGrid] = useState(false);
-	const [totalItems, setTotalItems] = useState(4);
 	const tabIdNamespace = useId({portletNamespace});
 
 	const getTabId = (tabId) => `${tabIdNamespace}tab${tabId}`;
@@ -74,44 +68,13 @@ const AddPanel = ({portletNamespace, tabs}) => {
 						id={getTabPanelId(index)}
 						key={index}
 					>
-						<SearchForm />
-						{tab.id === TAB_ID && (
-							<ContentOptions
-								grid={grid}
-								onChangeListMode={setGrid}
-								onChangeSelect={setTotalItems}
-								portletNamespace={portletNamespace}
-							/>
-						)}
-						<ul className="list-unstyled">
-							{tab.collections.map((collection, index) => (
-								<Collapse
-									key={collection.collectionId}
-									label={collection.label}
-									open={
-										index <
-										INITIAL_EXPANDED_ITEM_COLLECTIONS
-									}
-								>
-									<ul
-										className={classNames('list-unstyled', {
-											grid: grid && tab.id === TAB_ID,
-										})}
-									>
-										{filterTotalItems(
-											collection.children,
-											totalItems,
-											tab.id
-										).map((item) => (
-											<TabItem
-												item={item}
-												key={item.itemId}
-											/>
-										))}
-									</ul>
-								</Collapse>
-							))}
-						</ul>
+						<TabsContent
+							addContentsURLs={addContentsURLs}
+							getContentsURL={getContentsURL}
+							namespace={namespace}
+							portletNamespace={portletNamespace}
+							tab={tab}
+						/>
 					</ClayTabs.TabPane>
 				))}
 			</ClayTabs.Content>
@@ -119,4 +82,4 @@ const AddPanel = ({portletNamespace, tabs}) => {
 	);
 };
 
-export default AddPanel;
+export default TabsPanel;

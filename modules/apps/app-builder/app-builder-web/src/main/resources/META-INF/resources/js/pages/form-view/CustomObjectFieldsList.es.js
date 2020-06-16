@@ -164,24 +164,19 @@ const getFieldTypes = ({
 	return [customDataDefinitionFields, nativeDataDefinitionFields];
 };
 
-const FieldCategory = ({categoryName, showCategory}) => {
-	return showCategory ? (
-		<div
-			className={classNames(
-				'custom-object-sidebar-header',
-				'ml-1 pt-2 pb-2'
-			)}
-		>
-			<div className="autofit-row autofit-row-center">
-				<>
-					<div className="autofit-col autofit-col-expand">
-						<h3 className="category-text">{categoryName}</h3>
-					</div>
-				</>
-			</div>
+const FieldCategory = ({categoryName}) => (
+	<div
+		className={classNames('custom-object-sidebar-header', 'ml-1 pt-2 pb-2')}
+	>
+		<div className="autofit-row autofit-row-center">
+			<>
+				<div className="autofit-col autofit-col-expand">
+					<h3 className="category-text">{categoryName}</h3>
+				</div>
+			</>
 		</div>
-	) : null;
-};
+	</div>
+);
 
 export default ({keywords}) => {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
@@ -252,37 +247,40 @@ export default ({keywords}) => {
 	const onDeleteDefinitionField = useDeleteDefinitionFieldModal((event) =>
 		deleteField(event)
 	);
-	const showCategories = customFieldTypes.length && nativeFieldTypes.length;
+	const showCategories =
+		!!customFieldTypes.length && !!nativeFieldTypes.length;
+
+	const fieldTypeListProps = {
+		deleteLabel: Liferay.Language.get('delete-from-object'),
+		keywords,
+		onClick: handleOnClick,
+		onDelete: (fieldName) =>
+			onDeleteDefinitionField({activePage: 0, fieldName}),
+		onDoubleClick: {handleOnDoubleClick},
+	};
 
 	return (
 		<>
-			<FieldCategory
-				categoryName={Liferay.Language.get('custom-fields')}
-				showCategory={showCategories}
-			/>
+			{showCategories && (
+				<FieldCategory
+					categoryName={Liferay.Language.get('custom-fields')}
+				/>
+			)}
+
 			<FieldTypeList
-				deleteLabel={Liferay.Language.get('delete-from-object')}
+				{...fieldTypeListProps}
 				fieldTypes={customFieldTypes}
-				keywords={keywords}
-				onClick={handleOnClick}
-				onDelete={(fieldName) =>
-					onDeleteDefinitionField({activePage: 0, fieldName})
-				}
-				onDoubleClick={handleOnDoubleClick}
 			/>
-			<FieldCategory
-				categoryName={Liferay.Language.get('native-fields')}
-				showCategory={showCategories}
-			/>
+
+			{showCategories && (
+				<FieldCategory
+					categoryName={Liferay.Language.get('native-fields')}
+				/>
+			)}
+
 			<FieldTypeList
-				deleteLabel={Liferay.Language.get('delete-from-object')}
+				{...fieldTypeListProps}
 				fieldTypes={nativeFieldTypes}
-				keywords={keywords}
-				onClick={handleOnClick}
-				onDelete={(fieldName) =>
-					onDeleteDefinitionField({activePage: 0, fieldName})
-				}
-				onDoubleClick={handleOnDoubleClick}
 			/>
 		</>
 	);

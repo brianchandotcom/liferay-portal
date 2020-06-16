@@ -55,16 +55,17 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 	public static final String BUILD_EXT_INFO_TASK_NAME = "buildExtInfo";
 
-	public static final String EXT_IMPL_SOURCESET_NAME = "extImpl";
+	public static final String EXT_IMPL_SOURCE_SET_NAME = "extImpl";
 
-	public static final String EXT_KERNEL_SOURCESET_NAME = "extKernel";
+	public static final String EXT_KERNEL_SOURCE_SET_NAME = "extKernel";
 
-	public static final String EXT_UTIL_BRIDGES_SOURCESET_NAME =
+	public static final String EXT_UTIL_BRIDGES_SOURCE_SET_NAME =
 		"extUtilBridges";
 
-	public static final String EXT_UTIL_JAVA_SOURCESET_NAME = "extUtilJava";
+	public static final String EXT_UTIL_JAVA_SOURCE_SET_NAME = "extUtilJava";
 
-	public static final String EXT_UTIL_TAGLIB_SOURCESET_NAME = "extUtilTaglib";
+	public static final String EXT_UTIL_TAGLIB_SOURCE_SET_NAME =
+		"extUtilTaglib";
 
 	@Override
 	public void apply(Project project) {
@@ -90,32 +91,32 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 		Jar extKernelJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
-			EXT_KERNEL_SOURCESET_NAME, portalConfiguration);
+			EXT_KERNEL_SOURCE_SET_NAME, portalConfiguration);
 
 		FileCollection compileClasspath = portalConfiguration.plus(
 			project.files(extKernelJar));
 
 		Jar utilBridgesJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
-			EXT_UTIL_BRIDGES_SOURCESET_NAME, compileClasspath);
+			EXT_UTIL_BRIDGES_SOURCE_SET_NAME, compileClasspath);
 
 		compileClasspath = compileClasspath.plus(project.files(utilBridgesJar));
 
 		Jar utilJavaJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
-			EXT_UTIL_JAVA_SOURCESET_NAME, compileClasspath);
+			EXT_UTIL_JAVA_SOURCE_SET_NAME, compileClasspath);
 
 		compileClasspath = compileClasspath.plus(project.files(utilJavaJar));
 
 		Jar utilTaglibJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
-			EXT_UTIL_TAGLIB_SOURCESET_NAME, compileClasspath);
+			EXT_UTIL_TAGLIB_SOURCE_SET_NAME, compileClasspath);
 
 		compileClasspath = compileClasspath.plus(project.files(utilTaglibJar));
 
 		Jar extImplJar = _addSourceSet(
 			war, warPluginConvention, sourceSetContainer,
-			EXT_IMPL_SOURCESET_NAME, compileClasspath);
+			EXT_IMPL_SOURCE_SET_NAME, compileClasspath);
 
 		Sync buildExtInfoBaseDirSync = _addTaskBuildExtInfoBaseDir(war);
 

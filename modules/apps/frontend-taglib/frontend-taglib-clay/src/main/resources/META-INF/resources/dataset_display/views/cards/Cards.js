@@ -17,8 +17,17 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
+import {
+	handleAction,
+	isNotALink,
+} from '../../data_renderer/ActionsDropdownRenderer';
+
 function Cards({datasetDisplayContext, items, schema}) {
 	const {
+		executeAsyncItemAction,
+		highlightItems,
+		openModal,
+		openSidePanel,
 		selectItems,
 		selectable,
 		selectedItemsKey,
@@ -38,15 +47,43 @@ function Cards({datasetDisplayContext, items, schema}) {
 					return (
 						<div className="col-md-3" key={item[selectedItemsKey]}>
 							<ClayCardWithInfo
-								actions={item.actionItems}
+								actions={item.actionDropdownItems.map(
+									({href, ...action}) => ({
+										...action,
+										href: isNotALink(
+											action.target,
+											action.onClick
+										)
+											? null
+											: href,
+										onClick: (event) => {
+											handleAction(
+												{
+													event,
+													itemId:
+														item[selectedItemsKey],
+													method: action.data?.method,
+													url: href,
+													...action,
+												},
+												{
+													executeAsyncItemAction,
+													highlightItems,
+													openModal,
+													openSidePanel,
+												}
+											);
+										},
+									})
+								)}
 								description={
 									schema.description &&
 									item[schema.description]
 								}
-								href={schema.href && item[schema.href]}
-								imgProps={
-									schema.imgProps && item[schema.imgProps]
+								href={
+									(schema.href && item[schema.href]) || null
 								}
+								imgProps={schema.image && item[schema.image]}
 								onSelectChange={
 									selectable &&
 									(() => selectItems(item[selectedItemsKey]))
@@ -59,8 +96,7 @@ function Cards({datasetDisplayContext, items, schema}) {
 									)
 								}
 								stickerProps={
-									schema.stickerProps &&
-									item[schema.stickerProps]
+									schema.sticker && item[schema.sticker]
 								}
 								symbol={schema.symbol && item[schema.symbol]}
 								title={schema.title && item[schema.title]}

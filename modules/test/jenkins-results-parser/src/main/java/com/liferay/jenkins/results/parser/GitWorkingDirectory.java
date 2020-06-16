@@ -680,25 +680,33 @@ public class GitWorkingDirectory {
 			(remoteGitRef instanceof RemoteGitBranch) &&
 			remoteURL.contains("github.com:liferay/")) {
 
-			LocalGitBranch liferayGitHubLocalGitBranch = createLocalGitBranch(
-				JenkinsResultsParserUtil.combine(
-					"temp-", remoteGitRef.getName()),
-				true, remoteGitRef.getSHA());
+			String upstreamBranchSHA = getRemoteGitBranchSHA(
+				remoteGitRef.getName(), getUpstreamGitRemote());
 
-			List<GitRemote> gitHubDevGitRemotes =
-				GitHubDevSyncUtil.getGitHubDevGitRemotes(this);
+			if ((upstreamBranchSHA != null) &&
+				upstreamBranchSHA.equals(remoteGitRef.getSHA())) {
 
-			try {
-				GitHubDevSyncUtil.pushToAllRemotes(
-					true, liferayGitHubLocalGitBranch, remoteGitRef.getName(),
-					gitHubDevGitRemotes);
-			}
-			finally {
-				if (localGitBranch == null) {
-					deleteLocalGitBranch(liferayGitHubLocalGitBranch);
+				LocalGitBranch liferayGitHubLocalGitBranch =
+					createLocalGitBranch(
+						JenkinsResultsParserUtil.combine(
+							"temp-", remoteGitRef.getName()),
+						true, remoteGitRef.getSHA());
+
+				List<GitRemote> gitHubDevGitRemotes =
+					GitHubDevSyncUtil.getGitHubDevGitRemotes(this);
+
+				try {
+					GitHubDevSyncUtil.pushToAllRemotes(
+						true, liferayGitHubLocalGitBranch,
+						remoteGitRef.getName(), gitHubDevGitRemotes);
 				}
+				finally {
+					if (localGitBranch == null) {
+						deleteLocalGitBranch(liferayGitHubLocalGitBranch);
+					}
 
-				removeGitRemotes(gitHubDevGitRemotes);
+					removeGitRemotes(gitHubDevGitRemotes);
+				}
 			}
 		}
 

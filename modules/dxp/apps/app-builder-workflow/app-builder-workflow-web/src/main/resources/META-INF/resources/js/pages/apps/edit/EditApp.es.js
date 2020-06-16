@@ -90,9 +90,11 @@ export default ({
 		history.goBack();
 	};
 
-	const onChangeName = ({target}) => {
+	const onAppNameChange = ({target}) => {
 		dispatch({appName: target.value, type: UPDATE_NAME});
 	};
+
+	const maxLength = 30;
 
 	return (
 		<div className="app-builder-workflow-app">
@@ -102,7 +104,8 @@ export default ({
 				<EditAppContext.Provider value={editState}>
 					<UpperToolbar>
 						<UpperToolbar.Input
-							onChange={onChangeName}
+							maxLength={maxLength}
+							onChange={onAppNameChange}
 							placeholder={Liferay.Language.get('untitled-app')}
 							value={app.name.en_US}
 						/>

@@ -14,6 +14,7 @@
 
 package com.liferay.fragment.web.internal.handler;
 
+import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -45,6 +46,11 @@ public class FragmentEntryExceptionRequestHandler {
 			WebKeys.THEME_DISPLAY);
 
 		String errorMessage = "an-unexpected-error-occurred";
+
+		if (portalException instanceof FragmentEntryConfigurationException) {
+			errorMessage =
+				"please-provide-a-valid-configuration-for-the-fragment";
+		}
 
 		if (portalException instanceof FragmentEntryNameException) {
 			errorMessage = "please-enter-a-valid-name";

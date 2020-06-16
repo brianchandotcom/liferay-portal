@@ -179,7 +179,6 @@ definition {
 	macro save {
 		Click.mouseDownMouseUp(locator1 = "//span[contains(@class,'btn')][normalize-space(text())='Save']/..");
 
-
 		Alert.viewSuccessMessage();
 	}
 

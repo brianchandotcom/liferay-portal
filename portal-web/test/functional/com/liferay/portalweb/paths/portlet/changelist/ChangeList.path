@@ -49,11 +49,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE_LIST_MODIFIED</td>
-	<td>//div[contains(@data-qa-id,'changesModified')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHANGE_LIST_NAME_CARD_VIEW</td>
 	<td>//span[contains(@data-qa-id,'headerSubTitle')][normalize-space(text())='${key_changeListName}']</td>
 	<td></td>
@@ -61,26 +56,6 @@
 <tr>
 	<td>CHANGE_LIST_TABLE_ENTRY_NAME</td>
 	<td>//tr[contains(@data-qa-id,'row')]//td[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_LIST_NAME_WC_HISTORY</td>
-	<td>//td[contains(@class,'change-list-title')]//a[contains(.,'${key_changeListName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHECK_CIRCLE</td>
-	<td>//td[contains(.,'${key_contentTitle}')]//following-sibling::td//span[span/*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COLLISION_DETECTED</td>
-	<td>//span[contains(@data-qa-id,'collision-detected')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMPTY_PRODUCTION_VIEW_TEXT</td>
-	<td>//div[contains(@class,'sheet-text text-center text-strong empty-production-view')]</td>
 	<td></td>
 </tr>
 <tr>

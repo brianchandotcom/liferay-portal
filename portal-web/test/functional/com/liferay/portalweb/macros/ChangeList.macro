@@ -41,14 +41,6 @@ definition {
 		Button.click(button = "Create");
 	}
 
-	macro disableChangeList {
-		Uncheck.uncheckToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");
-
-		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
-	}
-
 	macro deletePublication {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
@@ -61,6 +53,14 @@ definition {
 		AssertTextEquals(
 			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
 			value1 = "Manage Publications");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro disableChangeList {
+		Uncheck.uncheckToggleSwitch(locator1 = "ChangeListSettings#CHANGE_LISTS_TOGGLE_SWITCH");
+
+		Click(locator1 = "Button#SAVE");
 
 		Alert.viewSuccessMessage();
 	}
@@ -95,7 +95,7 @@ definition {
 			locator1 = "ChangeList#MANGE_PUBLICATIONS_NAVBAR_TITLE",
 			value1 = "History");
 
-		//Workaround LPS-115320
+		// Workaround LPS-115320
 
 		Refresh();
 
@@ -114,12 +114,6 @@ definition {
 		AssertTextPresent(
 			locator1 = "ChangeList#CHANGE_LIST_TABLE_ENTRY_NAME",
 			value1 = "${changeListName}");
-	}
-
-	macro selectChangeListMenuItem {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "${menuItem}",
-			rowEntry = "${rowEntry}");
 	}
 
 	macro selectPublication {

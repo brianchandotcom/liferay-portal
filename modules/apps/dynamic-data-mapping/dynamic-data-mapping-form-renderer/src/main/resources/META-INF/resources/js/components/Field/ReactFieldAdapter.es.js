@@ -17,6 +17,7 @@ import Soy from 'metal-soy';
 import React from 'react';
 
 import {PageProvider} from '../../hooks/usePage.es';
+import {useFieldTypesResource} from '../../hooks/useResource.es';
 import {getConnectedReactComponentAdapter} from '../../util/ReactComponentAdapter.es';
 import {Field} from './Field.es';
 import templates from './ReactFieldAdapter.soy';
@@ -30,6 +31,8 @@ import templates from './ReactFieldAdapter.soy';
  * will not have a React context above it.
  */
 export const ReactFieldAdapter = ({fieldType, instance, ...field}) => {
+	const {resource: fieldTypes} = useFieldTypesResource();
+
 	if (!fieldType || fieldType === '') {
 		return null;
 	}
@@ -45,7 +48,7 @@ export const ReactFieldAdapter = ({fieldType, instance, ...field}) => {
 	};
 
 	return (
-		<PageProvider value={field}>
+		<PageProvider value={{...field, fieldTypes}}>
 			<ClayIconSpriteContext.Provider value={field.spritemap}>
 				<Field
 					field={{

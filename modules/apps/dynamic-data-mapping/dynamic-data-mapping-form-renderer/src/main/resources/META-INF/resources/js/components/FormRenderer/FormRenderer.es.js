@@ -14,14 +14,13 @@
 
 import './PageRenderer.soy';
 
-import {useResource} from '@clayui/data-provider';
 import {ClayIconSpriteContext} from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useRef} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import {useStorage} from '../../hooks/useStorage.es';
+import {useFieldTypesResource} from '../../hooks/useResource.es';
 import PageRenderer from '../PageRenderer/index';
 
 function getDisplayableValue({containerId, readOnly, viewMode}) {
@@ -29,14 +28,6 @@ function getDisplayableValue({containerId, readOnly, viewMode}) {
 		readOnly || !viewMode || document.getElementById(containerId) !== null
 	);
 }
-
-const endpoint = `${window.location.origin}/o/dynamic-data-mapping-form-field-types`;
-
-const HEADERS = {
-	Accept: 'application/json',
-	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-	'Content-Type': 'application/json',
-};
 
 const FormRenderer = React.forwardRef(
 	(
@@ -57,18 +48,7 @@ const FormRenderer = React.forwardRef(
 		},
 		ref
 	) => {
-		const storage = useStorage();
-		const {resource: fieldTypes} = useResource({
-			fetchOptions: {
-				headers: HEADERS,
-			},
-			fetchPolicy: 'cache-first',
-			link: endpoint,
-			storage,
-			variables: {
-				p_auth: Liferay.authToken,
-			},
-		});
+		const {resource: fieldTypes} = useFieldTypesResource();
 
 		const containerFallbackRef = useRef();
 

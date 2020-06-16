@@ -13,11 +13,39 @@
  */
 
 import {EVENT_TYPES} from '../actions/types.es';
+import {PagesVisitor} from '../util/visitors.es';
 
 export default (state, action) => {
 	switch (action.type) {
-		case EVENT_TYPES.ALL:
+		case EVENT_TYPES.ALL: {
+			const {defaultLanguageId} = state;
+			const {editingLanguageId, pages} = action.payload;
+
+			if (
+				editingLanguageId &&
+				state.editingLanguageId !== editingLanguageId
+			) {
+				const visitor = new PagesVisitor(pages ?? action.pages);
+
+				return {
+					...action.payload,
+					pages: visitor.mapFields(
+						({localizedValue}) => ({
+							value:
+								localizedValue &&
+								localizedValue[editingLanguageId]
+									? localizedValue[editingLanguageId]
+									: localizedValue[defaultLanguageId]
+									? localizedValue[defaultLanguageId]
+									: null,
+						}),
+						true
+					),
+				};
+			}
+
 			return action.payload;
+		}
 		default:
 			return state;
 	}

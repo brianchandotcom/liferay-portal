@@ -85,8 +85,14 @@ public interface FragmentEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntry fetchDraft(long primaryKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentEntry fetchFragmentEntry(long fragmentEntryId)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public FragmentEntry getDraft(long primaryKey) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Object> getFragmentCompositionsAndFragmentEntries(
@@ -187,6 +193,15 @@ public interface FragmentEntryService extends BaseService {
 
 	public FragmentEntry moveFragmentEntry(
 			long fragmentEntryId, long fragmentCollectionId)
+		throws PortalException;
+
+	public FragmentEntry publishDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException;
+
+	public FragmentEntry updateDraft(FragmentEntry draftFragmentEntry)
+		throws PortalException;
+
+	public FragmentEntry updateFragmentEntry(FragmentEntry fragmentEntry)
 		throws PortalException;
 
 	public FragmentEntry updateFragmentEntry(

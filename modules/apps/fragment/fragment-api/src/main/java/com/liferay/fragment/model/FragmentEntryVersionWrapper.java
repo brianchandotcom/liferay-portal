@@ -14,7 +14,6 @@
 
 package com.liferay.fragment.model;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -24,28 +23,30 @@ import java.util.Map;
 
 /**
  * <p>
- * This class is a wrapper for {@link FragmentEntry}.
+ * This class is a wrapper for {@link FragmentEntryVersion}.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see FragmentEntry
+ * @see FragmentEntryVersion
  * @generated
  */
-public class FragmentEntryWrapper
-	extends BaseModelWrapper<FragmentEntry>
-	implements FragmentEntry, ModelWrapper<FragmentEntry> {
+public class FragmentEntryVersionWrapper
+	extends BaseModelWrapper<FragmentEntryVersion>
+	implements FragmentEntryVersion, ModelWrapper<FragmentEntryVersion> {
 
-	public FragmentEntryWrapper(FragmentEntry fragmentEntry) {
-		super(fragmentEntry);
+	public FragmentEntryVersionWrapper(
+		FragmentEntryVersion fragmentEntryVersion) {
+
+		super(fragmentEntryVersion);
 	}
 
 	@Override
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("fragmentEntryVersionId", getFragmentEntryVersionId());
+		attributes.put("version", getVersion());
 		attributes.put("uuid", getUuid());
-		attributes.put("headId", getHeadId());
 		attributes.put("fragmentEntryId", getFragmentEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -75,22 +76,23 @@ public class FragmentEntryWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long mvccVersion = (Long)attributes.get("mvccVersion");
+		Long fragmentEntryVersionId = (Long)attributes.get(
+			"fragmentEntryVersionId");
 
-		if (mvccVersion != null) {
-			setMvccVersion(mvccVersion);
+		if (fragmentEntryVersionId != null) {
+			setFragmentEntryVersionId(fragmentEntryVersionId);
+		}
+
+		Integer version = (Integer)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
 			setUuid(uuid);
-		}
-
-		Long headId = (Long)attributes.get("headId");
-
-		if (headId != null) {
-			setHeadId(headId);
 		}
 
 		Long fragmentEntryId = (Long)attributes.get("fragmentEntryId");
@@ -233,15 +235,10 @@ public class FragmentEntryWrapper
 		}
 	}
 
-	@Override
-	public FragmentEntry fetchDraft() {
-		return model.fetchDraft();
-	}
-
 	/**
-	 * Returns the cacheable of this fragment entry.
+	 * Returns the cacheable of this fragment entry version.
 	 *
-	 * @return the cacheable of this fragment entry
+	 * @return the cacheable of this fragment entry version
 	 */
 	@Override
 	public boolean getCacheable() {
@@ -249,9 +246,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the company ID of this fragment entry.
+	 * Returns the company ID of this fragment entry version.
 	 *
-	 * @return the company ID of this fragment entry
+	 * @return the company ID of this fragment entry version
 	 */
 	@Override
 	public long getCompanyId() {
@@ -259,24 +256,19 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the configuration of this fragment entry.
+	 * Returns the configuration of this fragment entry version.
 	 *
-	 * @return the configuration of this fragment entry
+	 * @return the configuration of this fragment entry version
 	 */
 	@Override
 	public String getConfiguration() {
 		return model.getConfiguration();
 	}
 
-	@Override
-	public String getContent() {
-		return model.getContent();
-	}
-
 	/**
-	 * Returns the create date of this fragment entry.
+	 * Returns the create date of this fragment entry version.
 	 *
-	 * @return the create date of this fragment entry
+	 * @return the create date of this fragment entry version
 	 */
 	@Override
 	public Date getCreateDate() {
@@ -284,9 +276,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the css of this fragment entry.
+	 * Returns the css of this fragment entry version.
 	 *
-	 * @return the css of this fragment entry
+	 * @return the css of this fragment entry version
 	 */
 	@Override
 	public String getCss() {
@@ -294,9 +286,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the fragment collection ID of this fragment entry.
+	 * Returns the fragment collection ID of this fragment entry version.
 	 *
-	 * @return the fragment collection ID of this fragment entry
+	 * @return the fragment collection ID of this fragment entry version
 	 */
 	@Override
 	public long getFragmentCollectionId() {
@@ -304,9 +296,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the fragment entry ID of this fragment entry.
+	 * Returns the fragment entry ID of this fragment entry version.
 	 *
-	 * @return the fragment entry ID of this fragment entry
+	 * @return the fragment entry ID of this fragment entry version
 	 */
 	@Override
 	public long getFragmentEntryId() {
@@ -314,24 +306,29 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the fragment entry key of this fragment entry.
+	 * Returns the fragment entry key of this fragment entry version.
 	 *
-	 * @return the fragment entry key of this fragment entry
+	 * @return the fragment entry key of this fragment entry version
 	 */
 	@Override
 	public String getFragmentEntryKey() {
 		return model.getFragmentEntryKey();
 	}
 
+	/**
+	 * Returns the fragment entry version ID of this fragment entry version.
+	 *
+	 * @return the fragment entry version ID of this fragment entry version
+	 */
 	@Override
-	public int getGlobalUsageCount() {
-		return model.getGlobalUsageCount();
+	public long getFragmentEntryVersionId() {
+		return model.getFragmentEntryVersionId();
 	}
 
 	/**
-	 * Returns the group ID of this fragment entry.
+	 * Returns the group ID of this fragment entry version.
 	 *
-	 * @return the group ID of this fragment entry
+	 * @return the group ID of this fragment entry version
 	 */
 	@Override
 	public long getGroupId() {
@@ -339,41 +336,19 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the head ID of this fragment entry.
+	 * Returns the html of this fragment entry version.
 	 *
-	 * @return the head ID of this fragment entry
-	 */
-	@Override
-	public long getHeadId() {
-		return model.getHeadId();
-	}
-
-	/**
-	 * Returns the html of this fragment entry.
-	 *
-	 * @return the html of this fragment entry
+	 * @return the html of this fragment entry version
 	 */
 	@Override
 	public String getHtml() {
 		return model.getHtml();
 	}
 
-	@Override
-	public String getIcon() {
-		return model.getIcon();
-	}
-
-	@Override
-	public String getImagePreviewURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-
-		return model.getImagePreviewURL(themeDisplay);
-	}
-
 	/**
-	 * Returns the js of this fragment entry.
+	 * Returns the js of this fragment entry version.
 	 *
-	 * @return the js of this fragment entry
+	 * @return the js of this fragment entry version
 	 */
 	@Override
 	public String getJs() {
@@ -381,9 +356,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the last publish date of this fragment entry.
+	 * Returns the last publish date of this fragment entry version.
 	 *
-	 * @return the last publish date of this fragment entry
+	 * @return the last publish date of this fragment entry version
 	 */
 	@Override
 	public Date getLastPublishDate() {
@@ -391,9 +366,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the modified date of this fragment entry.
+	 * Returns the modified date of this fragment entry version.
 	 *
-	 * @return the modified date of this fragment entry
+	 * @return the modified date of this fragment entry version
 	 */
 	@Override
 	public Date getModifiedDate() {
@@ -401,19 +376,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the mvcc version of this fragment entry.
+	 * Returns the name of this fragment entry version.
 	 *
-	 * @return the mvcc version of this fragment entry
-	 */
-	@Override
-	public long getMvccVersion() {
-		return model.getMvccVersion();
-	}
-
-	/**
-	 * Returns the name of this fragment entry.
-	 *
-	 * @return the name of this fragment entry
+	 * @return the name of this fragment entry version
 	 */
 	@Override
 	public String getName() {
@@ -421,9 +386,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the preview file entry ID of this fragment entry.
+	 * Returns the preview file entry ID of this fragment entry version.
 	 *
-	 * @return the preview file entry ID of this fragment entry
+	 * @return the preview file entry ID of this fragment entry version
 	 */
 	@Override
 	public long getPreviewFileEntryId() {
@@ -431,9 +396,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the primary key of this fragment entry.
+	 * Returns the primary key of this fragment entry version.
 	 *
-	 * @return the primary key of this fragment entry
+	 * @return the primary key of this fragment entry version
 	 */
 	@Override
 	public long getPrimaryKey() {
@@ -441,9 +406,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the read only of this fragment entry.
+	 * Returns the read only of this fragment entry version.
 	 *
-	 * @return the read only of this fragment entry
+	 * @return the read only of this fragment entry version
 	 */
 	@Override
 	public boolean getReadOnly() {
@@ -451,9 +416,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the status of this fragment entry.
+	 * Returns the status of this fragment entry version.
 	 *
-	 * @return the status of this fragment entry
+	 * @return the status of this fragment entry version
 	 */
 	@Override
 	public int getStatus() {
@@ -461,9 +426,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the status by user ID of this fragment entry.
+	 * Returns the status by user ID of this fragment entry version.
 	 *
-	 * @return the status by user ID of this fragment entry
+	 * @return the status by user ID of this fragment entry version
 	 */
 	@Override
 	public long getStatusByUserId() {
@@ -471,9 +436,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the status by user name of this fragment entry.
+	 * Returns the status by user name of this fragment entry version.
 	 *
-	 * @return the status by user name of this fragment entry
+	 * @return the status by user name of this fragment entry version
 	 */
 	@Override
 	public String getStatusByUserName() {
@@ -481,9 +446,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the status by user uuid of this fragment entry.
+	 * Returns the status by user uuid of this fragment entry version.
 	 *
-	 * @return the status by user uuid of this fragment entry
+	 * @return the status by user uuid of this fragment entry version
 	 */
 	@Override
 	public String getStatusByUserUuid() {
@@ -491,9 +456,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the status date of this fragment entry.
+	 * Returns the status date of this fragment entry version.
 	 *
-	 * @return the status date of this fragment entry
+	 * @return the status date of this fragment entry version
 	 */
 	@Override
 	public Date getStatusDate() {
@@ -501,29 +466,19 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the type of this fragment entry.
+	 * Returns the type of this fragment entry version.
 	 *
-	 * @return the type of this fragment entry
+	 * @return the type of this fragment entry version
 	 */
 	@Override
 	public int getType() {
 		return model.getType();
 	}
 
-	@Override
-	public String getTypeLabel() {
-		return model.getTypeLabel();
-	}
-
-	@Override
-	public int getUsageCount() {
-		return model.getUsageCount();
-	}
-
 	/**
-	 * Returns the user ID of this fragment entry.
+	 * Returns the user ID of this fragment entry version.
 	 *
-	 * @return the user ID of this fragment entry
+	 * @return the user ID of this fragment entry version
 	 */
 	@Override
 	public long getUserId() {
@@ -531,9 +486,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the user name of this fragment entry.
+	 * Returns the user name of this fragment entry version.
 	 *
-	 * @return the user name of this fragment entry
+	 * @return the user name of this fragment entry version
 	 */
 	@Override
 	public String getUserName() {
@@ -541,9 +496,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the user uuid of this fragment entry.
+	 * Returns the user uuid of this fragment entry version.
 	 *
-	 * @return the user uuid of this fragment entry
+	 * @return the user uuid of this fragment entry version
 	 */
 	@Override
 	public String getUserUuid() {
@@ -551,9 +506,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns the uuid of this fragment entry.
+	 * Returns the uuid of this fragment entry version.
 	 *
-	 * @return the uuid of this fragment entry
+	 * @return the uuid of this fragment entry version
 	 */
 	@Override
 	public String getUuid() {
@@ -561,9 +516,19 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is approved.
+	 * Returns the version of this fragment entry version.
 	 *
-	 * @return <code>true</code> if this fragment entry is approved; <code>false</code> otherwise
+	 * @return the version of this fragment entry version
+	 */
+	@Override
+	public int getVersion() {
+		return model.getVersion();
+	}
+
+	/**
+	 * Returns <code>true</code> if this fragment entry version is approved.
+	 *
+	 * @return <code>true</code> if this fragment entry version is approved; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isApproved() {
@@ -571,9 +536,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is cacheable.
+	 * Returns <code>true</code> if this fragment entry version is cacheable.
 	 *
-	 * @return <code>true</code> if this fragment entry is cacheable; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is cacheable; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isCacheable() {
@@ -581,9 +546,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is denied.
+	 * Returns <code>true</code> if this fragment entry version is denied.
 	 *
-	 * @return <code>true</code> if this fragment entry is denied; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is denied; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isDenied() {
@@ -591,9 +556,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is a draft.
+	 * Returns <code>true</code> if this fragment entry version is a draft.
 	 *
-	 * @return <code>true</code> if this fragment entry is a draft; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is a draft; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isDraft() {
@@ -601,9 +566,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is expired.
+	 * Returns <code>true</code> if this fragment entry version is expired.
 	 *
-	 * @return <code>true</code> if this fragment entry is expired; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is expired; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isExpired() {
@@ -611,9 +576,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is inactive.
+	 * Returns <code>true</code> if this fragment entry version is inactive.
 	 *
-	 * @return <code>true</code> if this fragment entry is inactive; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is inactive; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isInactive() {
@@ -621,9 +586,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is incomplete.
+	 * Returns <code>true</code> if this fragment entry version is incomplete.
 	 *
-	 * @return <code>true</code> if this fragment entry is incomplete; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is incomplete; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isIncomplete() {
@@ -631,9 +596,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is pending.
+	 * Returns <code>true</code> if this fragment entry version is pending.
 	 *
-	 * @return <code>true</code> if this fragment entry is pending; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is pending; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isPending() {
@@ -641,9 +606,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is read only.
+	 * Returns <code>true</code> if this fragment entry version is read only.
 	 *
-	 * @return <code>true</code> if this fragment entry is read only; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is read only; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isReadOnly() {
@@ -651,32 +616,19 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this fragment entry is scheduled.
+	 * Returns <code>true</code> if this fragment entry version is scheduled.
 	 *
-	 * @return <code>true</code> if this fragment entry is scheduled; <code>false</code> otherwise
+	 * @return <code>true</code> if this fragment entry version is scheduled; <code>false</code> otherwise
 	 */
 	@Override
 	public boolean isScheduled() {
 		return model.isScheduled();
 	}
 
-	@Override
-	public void persist() {
-		model.persist();
-	}
-
-	@Override
-	public void populateZipWriter(
-			com.liferay.portal.kernel.zip.ZipWriter zipWriter, String path)
-		throws Exception {
-
-		model.populateZipWriter(zipWriter, path);
-	}
-
 	/**
-	 * Sets whether this fragment entry is cacheable.
+	 * Sets whether this fragment entry version is cacheable.
 	 *
-	 * @param cacheable the cacheable of this fragment entry
+	 * @param cacheable the cacheable of this fragment entry version
 	 */
 	@Override
 	public void setCacheable(boolean cacheable) {
@@ -684,9 +636,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the company ID of this fragment entry.
+	 * Sets the company ID of this fragment entry version.
 	 *
-	 * @param companyId the company ID of this fragment entry
+	 * @param companyId the company ID of this fragment entry version
 	 */
 	@Override
 	public void setCompanyId(long companyId) {
@@ -694,9 +646,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the configuration of this fragment entry.
+	 * Sets the configuration of this fragment entry version.
 	 *
-	 * @param configuration the configuration of this fragment entry
+	 * @param configuration the configuration of this fragment entry version
 	 */
 	@Override
 	public void setConfiguration(String configuration) {
@@ -704,9 +656,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the create date of this fragment entry.
+	 * Sets the create date of this fragment entry version.
 	 *
-	 * @param createDate the create date of this fragment entry
+	 * @param createDate the create date of this fragment entry version
 	 */
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -714,9 +666,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the css of this fragment entry.
+	 * Sets the css of this fragment entry version.
 	 *
-	 * @param css the css of this fragment entry
+	 * @param css the css of this fragment entry version
 	 */
 	@Override
 	public void setCss(String css) {
@@ -724,9 +676,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the fragment collection ID of this fragment entry.
+	 * Sets the fragment collection ID of this fragment entry version.
 	 *
-	 * @param fragmentCollectionId the fragment collection ID of this fragment entry
+	 * @param fragmentCollectionId the fragment collection ID of this fragment entry version
 	 */
 	@Override
 	public void setFragmentCollectionId(long fragmentCollectionId) {
@@ -734,9 +686,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the fragment entry ID of this fragment entry.
+	 * Sets the fragment entry ID of this fragment entry version.
 	 *
-	 * @param fragmentEntryId the fragment entry ID of this fragment entry
+	 * @param fragmentEntryId the fragment entry ID of this fragment entry version
 	 */
 	@Override
 	public void setFragmentEntryId(long fragmentEntryId) {
@@ -744,9 +696,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the fragment entry key of this fragment entry.
+	 * Sets the fragment entry key of this fragment entry version.
 	 *
-	 * @param fragmentEntryKey the fragment entry key of this fragment entry
+	 * @param fragmentEntryKey the fragment entry key of this fragment entry version
 	 */
 	@Override
 	public void setFragmentEntryKey(String fragmentEntryKey) {
@@ -754,9 +706,19 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the group ID of this fragment entry.
+	 * Sets the fragment entry version ID of this fragment entry version.
 	 *
-	 * @param groupId the group ID of this fragment entry
+	 * @param fragmentEntryVersionId the fragment entry version ID of this fragment entry version
+	 */
+	@Override
+	public void setFragmentEntryVersionId(long fragmentEntryVersionId) {
+		model.setFragmentEntryVersionId(fragmentEntryVersionId);
+	}
+
+	/**
+	 * Sets the group ID of this fragment entry version.
+	 *
+	 * @param groupId the group ID of this fragment entry version
 	 */
 	@Override
 	public void setGroupId(long groupId) {
@@ -764,39 +726,19 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the head ID of this fragment entry.
+	 * Sets the html of this fragment entry version.
 	 *
-	 * @param headId the head ID of this fragment entry
-	 */
-	@Override
-	public void setHeadId(long headId) {
-		model.setHeadId(headId);
-	}
-
-	/**
-	 * Sets the html of this fragment entry.
-	 *
-	 * @param html the html of this fragment entry
+	 * @param html the html of this fragment entry version
 	 */
 	@Override
 	public void setHtml(String html) {
 		model.setHtml(html);
 	}
 
-	@Override
-	public void setIcon(String icon) {
-		model.setIcon(icon);
-	}
-
-	@Override
-	public void setImagePreviewURL(String imagePreviewURL) {
-		model.setImagePreviewURL(imagePreviewURL);
-	}
-
 	/**
-	 * Sets the js of this fragment entry.
+	 * Sets the js of this fragment entry version.
 	 *
-	 * @param js the js of this fragment entry
+	 * @param js the js of this fragment entry version
 	 */
 	@Override
 	public void setJs(String js) {
@@ -804,9 +746,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the last publish date of this fragment entry.
+	 * Sets the last publish date of this fragment entry version.
 	 *
-	 * @param lastPublishDate the last publish date of this fragment entry
+	 * @param lastPublishDate the last publish date of this fragment entry version
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
@@ -814,9 +756,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the modified date of this fragment entry.
+	 * Sets the modified date of this fragment entry version.
 	 *
-	 * @param modifiedDate the modified date of this fragment entry
+	 * @param modifiedDate the modified date of this fragment entry version
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -824,19 +766,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the mvcc version of this fragment entry.
+	 * Sets the name of this fragment entry version.
 	 *
-	 * @param mvccVersion the mvcc version of this fragment entry
-	 */
-	@Override
-	public void setMvccVersion(long mvccVersion) {
-		model.setMvccVersion(mvccVersion);
-	}
-
-	/**
-	 * Sets the name of this fragment entry.
-	 *
-	 * @param name the name of this fragment entry
+	 * @param name the name of this fragment entry version
 	 */
 	@Override
 	public void setName(String name) {
@@ -844,9 +776,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the preview file entry ID of this fragment entry.
+	 * Sets the preview file entry ID of this fragment entry version.
 	 *
-	 * @param previewFileEntryId the preview file entry ID of this fragment entry
+	 * @param previewFileEntryId the preview file entry ID of this fragment entry version
 	 */
 	@Override
 	public void setPreviewFileEntryId(long previewFileEntryId) {
@@ -854,9 +786,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the primary key of this fragment entry.
+	 * Sets the primary key of this fragment entry version.
 	 *
-	 * @param primaryKey the primary key of this fragment entry
+	 * @param primaryKey the primary key of this fragment entry version
 	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -864,9 +796,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets whether this fragment entry is read only.
+	 * Sets whether this fragment entry version is read only.
 	 *
-	 * @param readOnly the read only of this fragment entry
+	 * @param readOnly the read only of this fragment entry version
 	 */
 	@Override
 	public void setReadOnly(boolean readOnly) {
@@ -874,9 +806,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the status of this fragment entry.
+	 * Sets the status of this fragment entry version.
 	 *
-	 * @param status the status of this fragment entry
+	 * @param status the status of this fragment entry version
 	 */
 	@Override
 	public void setStatus(int status) {
@@ -884,9 +816,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the status by user ID of this fragment entry.
+	 * Sets the status by user ID of this fragment entry version.
 	 *
-	 * @param statusByUserId the status by user ID of this fragment entry
+	 * @param statusByUserId the status by user ID of this fragment entry version
 	 */
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
@@ -894,9 +826,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the status by user name of this fragment entry.
+	 * Sets the status by user name of this fragment entry version.
 	 *
-	 * @param statusByUserName the status by user name of this fragment entry
+	 * @param statusByUserName the status by user name of this fragment entry version
 	 */
 	@Override
 	public void setStatusByUserName(String statusByUserName) {
@@ -904,9 +836,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the status by user uuid of this fragment entry.
+	 * Sets the status by user uuid of this fragment entry version.
 	 *
-	 * @param statusByUserUuid the status by user uuid of this fragment entry
+	 * @param statusByUserUuid the status by user uuid of this fragment entry version
 	 */
 	@Override
 	public void setStatusByUserUuid(String statusByUserUuid) {
@@ -914,9 +846,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the status date of this fragment entry.
+	 * Sets the status date of this fragment entry version.
 	 *
-	 * @param statusDate the status date of this fragment entry
+	 * @param statusDate the status date of this fragment entry version
 	 */
 	@Override
 	public void setStatusDate(Date statusDate) {
@@ -924,9 +856,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the type of this fragment entry.
+	 * Sets the type of this fragment entry version.
 	 *
-	 * @param type the type of this fragment entry
+	 * @param type the type of this fragment entry version
 	 */
 	@Override
 	public void setType(int type) {
@@ -934,9 +866,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the user ID of this fragment entry.
+	 * Sets the user ID of this fragment entry version.
 	 *
-	 * @param userId the user ID of this fragment entry
+	 * @param userId the user ID of this fragment entry version
 	 */
 	@Override
 	public void setUserId(long userId) {
@@ -944,9 +876,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the user name of this fragment entry.
+	 * Sets the user name of this fragment entry version.
 	 *
-	 * @param userName the user name of this fragment entry
+	 * @param userName the user name of this fragment entry version
 	 */
 	@Override
 	public void setUserName(String userName) {
@@ -954,9 +886,9 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the user uuid of this fragment entry.
+	 * Sets the user uuid of this fragment entry version.
 	 *
-	 * @param userUuid the user uuid of this fragment entry
+	 * @param userUuid the user uuid of this fragment entry version
 	 */
 	@Override
 	public void setUserUuid(String userUuid) {
@@ -964,35 +896,50 @@ public class FragmentEntryWrapper
 	}
 
 	/**
-	 * Sets the uuid of this fragment entry.
+	 * Sets the uuid of this fragment entry version.
 	 *
-	 * @param uuid the uuid of this fragment entry
+	 * @param uuid the uuid of this fragment entry version
 	 */
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
 	}
 
+	/**
+	 * Sets the version of this fragment entry version.
+	 *
+	 * @param version the version of this fragment entry version
+	 */
 	@Override
-	public StagedModelType getStagedModelType() {
-		return model.getStagedModelType();
+	public void setVersion(int version) {
+		model.setVersion(version);
 	}
 
 	@Override
-	public boolean isHead() {
-		return model.isHead();
+	public long getVersionedModelId() {
+		return model.getVersionedModelId();
 	}
 
 	@Override
-	public void populateVersionModel(
+	public void setVersionedModelId(long id) {
+		model.setVersionedModelId(id);
+	}
+
+	@Override
+	public void populateVersionedModel(FragmentEntry fragmentEntry) {
+		model.populateVersionedModel(fragmentEntry);
+	}
+
+	@Override
+	public FragmentEntry toVersionedModel() {
+		return model.toVersionedModel();
+	}
+
+	@Override
+	protected FragmentEntryVersionWrapper wrap(
 		FragmentEntryVersion fragmentEntryVersion) {
 
-		model.populateVersionModel(fragmentEntryVersion);
-	}
-
-	@Override
-	protected FragmentEntryWrapper wrap(FragmentEntry fragmentEntry) {
-		return new FragmentEntryWrapper(fragmentEntry);
+		return new FragmentEntryVersionWrapper(fragmentEntryVersion);
 	}
 
 }

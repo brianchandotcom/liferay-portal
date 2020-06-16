@@ -56,6 +56,8 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 
 		};
 
+	public FragmentEntry fetchDraft();
+
 	public String getContent();
 
 	public int getGlobalUsageCount();

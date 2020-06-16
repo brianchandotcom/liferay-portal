@@ -342,6 +342,9 @@ const createReducer = (dataLayoutBuilder) => {
 					dataLayout: {
 						...state.dataLayout,
 						...dataLayout,
+						dataRules: dataLayoutBuilder
+							.getLayoutProvider()
+							.getRules(),
 					},
 				};
 			}

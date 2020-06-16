@@ -17,18 +17,19 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import {useDisplayGridContext} from './AddPanelContext';
 import TabItem from './TabItem';
 
-export default function SearchResultsPanel({
-	alertTitle,
-	displayGrid,
-	filteredTabs,
-}) {
+const CONTENT_TAB_ID = 'content';
+
+export default function SearchResultsPanel({alertTitle, filteredTabs}) {
+	const displayGrid = useDisplayGridContext();
+
 	return filteredTabs.map((tab, index) =>
 		tab.collections.length ? (
 			<ul
 				className={classNames('list-unstyled', {
-					grid: displayGrid,
+					grid: displayGrid && tab.id === CONTENT_TAB_ID,
 				})}
 				key={index}
 			>

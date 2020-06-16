@@ -19,6 +19,11 @@ import React, {useEffect, useMemo, useState} from 'react';
 import 'product-navigation-control-menu/css/TabsPanel.scss';
 
 import {normalizeContent} from './AddPanel';
+import {
+	useDisplayGridContext,
+	useGetContentsURLContext,
+	useNamespaceContext,
+} from './AddPanelContext';
 import Collapse from './Collapse';
 import ContentOptions from './ContentOptions';
 import SearchForm from './SearchForm';
@@ -28,14 +33,11 @@ import TabItem from './TabItem';
 const CONTENT_TAB_ID = 'content';
 const INITIAL_EXPANDED_ITEM_COLLECTIONS = 3;
 
-const TabsContent = ({
-	addContentsURLs,
-	getContentsURL,
-	namespace,
-	portletNamespace,
-	tab,
-}) => {
-	const [displayGrid, setDisplayGrid] = useState(false);
+const TabsContent = ({tab}) => {
+	const getContentsURL = useGetContentsURLContext();
+	const namespace = useNamespaceContext();
+	const displayGrid = useDisplayGridContext();
+
 	const [filteredContent, setFilteredContent] = useState(tab);
 	const [totalItems, setTotalItems] = useState(0);
 	const [searchValue, setSearchValue] = useState('');
@@ -119,15 +121,7 @@ const TabsContent = ({
 	return (
 		<>
 			<SearchForm onChange={setSearchValue} value={searchValue} />
-			{isContentTab && (
-				<ContentOptions
-					addContentsURLs={addContentsURLs}
-					displayGrid={displayGrid}
-					onChangeDisplayStyle={setDisplayGrid}
-					onChangeSelect={setTotalItems}
-					portletNamespace={portletNamespace}
-				/>
-			)}
+			{isContentTab && <ContentOptions onChangeSelect={setTotalItems} />}
 			{searchValue ? (
 				<SearchResultsPanel
 					alertTitle={
@@ -139,7 +133,6 @@ const TabsContent = ({
 									'there-are-no-widgets-on-this-page'
 							  )
 					}
-					displayGrid={isContentTab && displayGrid}
 					filteredTabs={
 						isContentTab ? [filteredContent] : filteredWidgets
 					}

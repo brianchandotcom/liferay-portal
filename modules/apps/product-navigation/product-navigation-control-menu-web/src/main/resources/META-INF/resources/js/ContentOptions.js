@@ -18,6 +18,13 @@ import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
+import {
+	useAddContentsURLsContext,
+	useDisplayGridContext,
+	usePortletNamespaceContext,
+	useSetDisplayGridContext,
+} from './AddPanelContext';
+
 import 'product-navigation-control-menu/css/ContentOptions.scss';
 
 const OPTIONS = [
@@ -36,13 +43,12 @@ const OPTIONS = [
 	},
 ];
 
-const ContentOptions = ({
-	addContentsURLs,
-	displayGrid,
-	onChangeDisplayStyle,
-	onChangeSelect,
-	portletNamespace,
-}) => {
+const ContentOptions = ({onChangeSelect}) => {
+	const addContentsURLs = useAddContentsURLsContext();
+	const displayGrid = useDisplayGridContext();
+	const portletNamespace = usePortletNamespaceContext();
+	const setDisplayGrid = useSetDisplayGridContext();
+
 	const [active, setActive] = useState(false);
 
 	return (
@@ -60,7 +66,7 @@ const ContentOptions = ({
 			<ClayButton
 				className="btn-monospaced sidebar-content__add-panel__content-options-list"
 				displayType="unstyled"
-				onClick={() => onChangeDisplayStyle(!displayGrid)}
+				onClick={() => setDisplayGrid(!displayGrid)}
 				small
 				title={Liferay.Language.get('display-style')}
 			>

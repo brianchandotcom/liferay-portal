@@ -12,10 +12,11 @@
  * details.
  */
 
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import 'product-navigation-control-menu/css/AddPanel.scss';
 
+import {AddPanelContextProvider} from './AddPanelContext';
 import TabsPanel from './TabsPanel';
 
 export const LAYOUT_DATA_ITEM_TYPES = {
@@ -30,6 +31,8 @@ const AddPanel = ({
 	portletNamespace,
 	widgets,
 }) => {
+	const [displayGrid, setDisplayGrid] = useState(false);
+
 	const tabs = useMemo(
 		() => [
 			{
@@ -58,13 +61,20 @@ const AddPanel = ({
 
 	return (
 		<div className="sidebar-content__add-panel">
-			<TabsPanel
-				addContentsURLs={addContentsURLs}
-				getContentsURL={getContentsURL}
-				namespace={namespace}
-				portletNamespace={portletNamespace}
-				tabs={tabs}
-			/>
+			<AddPanelContextProvider
+				value={{
+					addContentsURLs,
+					contents,
+					displayGrid,
+					getContentsURL,
+					namespace,
+					portletNamespace,
+					setDisplayGrid,
+					widgets,
+				}}
+			>
+				<TabsPanel tabs={tabs} />
+			</AddPanelContextProvider>
 		</div>
 	);
 };
@@ -94,7 +104,7 @@ export const normalizeContent = (content) => {
 			portletId: content.portletId,
 		},
 		icon: content.icon,
-		itemId: content.portletId,
+		itemId: `${content.portletId}_${content.classPK}`,
 		label: content.title,
 		type: content.type,
 	};

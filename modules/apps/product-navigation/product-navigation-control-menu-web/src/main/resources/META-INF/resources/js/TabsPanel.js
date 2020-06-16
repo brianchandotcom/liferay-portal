@@ -15,9 +15,10 @@
 import ClayTabs from '@clayui/tabs';
 import React, {useMemo, useState} from 'react';
 
-import 'product-navigation-control-menu/css/TabsPanel.scss';
-
+import {usePortletNamespaceContext} from './AddPanelContext';
 import TabsContent from './TabsContent';
+
+import 'product-navigation-control-menu/css/TabsPanel.scss';
 
 let nextId = 0;
 
@@ -27,13 +28,9 @@ const useId = ({portletNamespace}) => {
 	]);
 };
 
-const TabsPanel = ({
-	addContentsURLs,
-	getContentsURL,
-	namespace,
-	portletNamespace,
-	tabs,
-}) => {
+const TabsPanel = ({tabs}) => {
+	const portletNamespace = usePortletNamespaceContext();
+
 	const [activeTabId, setActiveTabId] = useState(0);
 	const tabIdNamespace = useId({portletNamespace});
 
@@ -68,13 +65,7 @@ const TabsPanel = ({
 						id={getTabPanelId(index)}
 						key={index}
 					>
-						<TabsContent
-							addContentsURLs={addContentsURLs}
-							getContentsURL={getContentsURL}
-							namespace={namespace}
-							portletNamespace={portletNamespace}
-							tab={tab}
-						/>
+						<TabsContent tab={tab} />
 					</ClayTabs.TabPane>
 				))}
 			</ClayTabs.Content>

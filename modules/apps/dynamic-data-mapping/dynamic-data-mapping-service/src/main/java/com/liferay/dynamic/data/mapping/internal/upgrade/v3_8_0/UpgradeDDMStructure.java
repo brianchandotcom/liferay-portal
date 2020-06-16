@@ -381,6 +381,9 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 						"type", type.substring(4)
 					);
 				}
+				else if (StringUtil.equals(type, "select")) {
+					_upgradeSelectField(jsonObject);
+				}
 				else if (StringUtil.equals(type, "text")) {
 					_upgradeTextField(companyId, jsonObject);
 				}
@@ -495,6 +498,20 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		}
 
 		return definition;
+	}
+
+	private void _upgradeSelectField(JSONObject jsonObject) {
+		jsonObject.put(
+			"dataSourceType", "[manual]"
+		).put(
+			"ddmDataProviderInstanceId", "[]"
+		).put(
+			"ddmDataProviderInstanceOutput", "[]"
+		).put(
+			"fieldNamespace", StringPool.BLANK
+		).put(
+			"visibilityExpression", StringPool.BLANK
+		);
 	}
 
 	private void _upgradeSeparatorField(JSONObject jsonObject) {

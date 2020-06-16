@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_CATEGORY_LABEL_ITEM</td>
+	<td>//span[contains(@class,'label-item') and contains(.,'${key_categoryItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_LIST</td>
 	<td>//form[@data-fm-namespace='_com_liferay_message_boards_web_portlet_MBAdminPortlet_']//ul</td>
 	<td></td>
@@ -69,8 +74,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_LIST_ACTIVE_TAB_FIELD</td>
+	<td>//a[contains(@class,'active') and contains(.,'${key_questionTabField}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_NAME_FIELD</td>
 	<td>//p[@title='${key_questionNameField}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_NAVIGATION_PARENT_CATEGORY_TITLE</td>
+	<td>//div[contains(@class,'questions-navigation-parent-section-title') and contains(.,'${key_parentCategoryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,6 +106,16 @@
 <tr>
 	<td>QUESTIONS_SELECT_FILTER_VALUE</td>
 	<td>//option[contains(text(),'${key_filter}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_SELECT_TOPIC</td>
+	<td>//select[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>QUESTIONS_SELECT_TOPIC_VALUE</td>
+	<td>//option[contains(text(),'${key_topic}')]</td>
 	<td></td>
 </tr>
 <tr>

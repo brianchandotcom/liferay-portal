@@ -18,7 +18,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextUtil;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.delivery.internal.dto.v1_0.converter.MessageBoardSectionDTOConverter;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.delivery.internal.dto.v1_0.util.EntityFieldsUtil;
 import com.liferay.headless.delivery.internal.odata.entity.v1_0.MessageBoardSectionEntityModel;
@@ -33,18 +33,17 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
+import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
-import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
 
@@ -273,9 +272,10 @@ public class MessageBoardSectionResourceImpl
 	private MessageBoardSection _toMessageBoardSection(MBCategory mbCategory)
 		throws Exception {
 
-		return new MessageBoardSection() {
-			{
-				actions = HashMapBuilder.<String, Map<String, String>>put(
+		return _messageBoardSectionDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Map<String, String>>put(
 					"add-subcategory",
 					addAction(
 						"ADD_SUBCATEGORY", mbCategory,
@@ -308,41 +308,14 @@ public class MessageBoardSectionResourceImpl
 					addAction(
 						"SUBSCRIBE", mbCategory,
 						"putMessageBoardSectionUnsubscribe")
-				).build();
-				creator = CreatorUtil.toCreator(
-					_portal,
-					_userLocalService.fetchUser(mbCategory.getUserId()));
-				customFields = CustomFieldsUtil.toCustomFields(
-					contextAcceptLanguage.isAcceptAllLanguages(),
-					MBCategory.class.getName(), mbCategory.getCategoryId(),
-					mbCategory.getCompanyId(),
-					contextAcceptLanguage.getPreferredLocale());
-				dateCreated = mbCategory.getCreateDate();
-				dateModified = mbCategory.getModifiedDate();
-				description = mbCategory.getDescription();
-				id = mbCategory.getCategoryId();
-				numberOfMessageBoardSections =
-					_mbCategoryService.getCategoriesCount(
-						mbCategory.getGroupId(), mbCategory.getCategoryId(),
-						WorkflowConstants.STATUS_APPROVED);
-				numberOfMessageBoardThreads = mbCategory.getThreadCount();
-				siteId = mbCategory.getGroupId();
-				subscribed = _subscriptionLocalService.isSubscribed(
-					mbCategory.getCompanyId(), contextUser.getUserId(),
-					MBCategory.class.getName(), mbCategory.getCategoryId());
-				title = mbCategory.getName();
-
-				setParentMessageBoardSectionId(
-					() -> {
-						if (mbCategory.getParentCategoryId() == 0L) {
-							return null;
-						}
-
-						return mbCategory.getParentCategoryId();
-					});
-			}
-		};
+				).build(),
+				_dtoConverterRegistry, mbCategory.getCategoryId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
@@ -354,12 +327,9 @@ public class MessageBoardSectionResourceImpl
 	private MBCategoryService _mbCategoryService;
 
 	@Reference
+	private MessageBoardSectionDTOConverter _messageBoardSectionDTOConverter;
+
+	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

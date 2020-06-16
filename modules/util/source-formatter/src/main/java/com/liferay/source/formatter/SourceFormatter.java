@@ -35,6 +35,7 @@ import com.liferay.source.formatter.checks.util.SourceUtil;
 import com.liferay.source.formatter.util.CheckType;
 import com.liferay.source.formatter.util.DebugUtil;
 import com.liferay.source.formatter.util.FileUtil;
+import com.liferay.source.formatter.util.JIRAUtil;
 import com.liferay.source.formatter.util.SourceFormatterUtil;
 
 import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
@@ -148,14 +149,13 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 
+			String gitWorkingBranchName = ArgumentsUtil.getString(
+				arguments, "git.working.branch.name",
+				SourceFormatterArgs.GIT_WORKING_BRANCH_NAME);
+
+			sourceFormatterArgs.setGitWorkingBranchName(gitWorkingBranchName);
+
 			if (formatCurrentBranch) {
-				String gitWorkingBranchName = ArgumentsUtil.getString(
-					arguments, "git.working.branch.name",
-					SourceFormatterArgs.GIT_WORKING_BRANCH_NAME);
-
-				sourceFormatterArgs.setGitWorkingBranchName(
-					gitWorkingBranchName);
-
 				sourceFormatterArgs.addRecentChangesFileNames(
 					GitUtil.getCurrentBranchFileNames(
 						baseDirName, gitWorkingBranchName, false),
@@ -300,6 +300,8 @@ public class SourceFormatter {
 	}
 
 	public void format() throws Exception {
+		_validateCommitMessages();
+
 		_printProgressStatusMessage("Scanning for files...");
 
 		_init();
@@ -954,6 +956,38 @@ public class SourceFormatter {
 		_sourceMismatchExceptions.addAll(
 			sourceProcessor.getSourceMismatchExceptions());
 		_modifiedFileNames.addAll(sourceProcessor.getModifiedFileNames());
+	}
+
+	private void _validateCommitMessages() throws Exception {
+		String parentDirName = _sourceFormatterArgs.getBaseDirName();
+
+		List<String> projectNames = new ArrayList<>();
+
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
+			File file = new File(parentDirName + "ci.properties");
+
+			if (file.exists()) {
+				Properties properties = _getProperties(file);
+
+				projectNames.addAll(
+					ListUtil.fromString(
+						properties.getProperty("jira.project.keys"),
+						StringPool.COMMA));
+			}
+
+			parentDirName += "../";
+		}
+
+		if (projectNames.isEmpty()) {
+			return;
+		}
+
+		List<String> commitMessages = GitUtil.getCurrentBranchCommitMessages(
+			_sourceFormatterArgs.getBaseDirName(),
+			_sourceFormatterArgs.getGitWorkingBranchName());
+
+		JIRAUtil.validateJIRAProjectNames(commitMessages, projectNames);
+		JIRAUtil.validateJIRATicketIds(commitMessages, 20);
 	}
 
 	private static final String _PROPERTIES_FILE_NAME =

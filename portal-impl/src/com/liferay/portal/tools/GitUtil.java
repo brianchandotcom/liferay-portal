@@ -39,6 +39,26 @@ import java.util.Set;
  */
 public class GitUtil {
 
+	public static List<String> getCurrentBranchCommitMessages(
+			String baseDirName, String gitWorkingBranchName)
+		throws Exception {
+
+		String commitId = getCurrentBranchCommitId(gitWorkingBranchName);
+
+		List<String> commitMessages = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git log --pretty=format:%s " + commitId + "..head");
+
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			commitMessages.add(line);
+		}
+
+		return commitMessages;
+	}
+
 	public static String getCurrentBranchFileContent(
 			String gitWorkingBranchName, String fileName)
 		throws Exception {

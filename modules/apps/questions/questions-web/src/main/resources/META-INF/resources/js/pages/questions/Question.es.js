@@ -33,6 +33,7 @@ import RelatedQuestions from '../../components/RelatedQuestions.es';
 import SectionLabel from '../../components/SectionLabel.es';
 import Subscription from '../../components/Subscription.es';
 import TagList from '../../components/TagList.es';
+import TextLengthValidation from '../../components/TextLengthValidation.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {
 	createAnswerQuery,
@@ -450,11 +451,24 @@ export default withRouter(
 															}}
 														/>
 													</div>
+
+													<ClayForm.FeedbackGroup>
+														<ClayForm.FeedbackItem>
+															<TextLengthValidation
+																text={
+																	articleBody
+																}
+															/>
+														</ClayForm.FeedbackItem>
+													</ClayForm.FeedbackGroup>
 												</ClayForm.Group>
 											</ClayForm>
 
 											<ClayButton
-												disabled={!articleBody}
+												disabled={
+													!articleBody ||
+													articleBody.length < 23
+												}
 												displayType="primary"
 												onClick={() => {
 													createAnswer({

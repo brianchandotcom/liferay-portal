@@ -24,6 +24,7 @@ import Error from '../../components/Error.es';
 import Link from '../../components/Link.es';
 import QuestionsEditor from '../../components/QuestionsEditor';
 import TagSelector from '../../components/TagSelector.es';
+import TextLengthValidation from '../../components/TextLengthValidation.es';
 import useSection from '../../hooks/useSection.es';
 import {client, createQuestionQuery} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
@@ -157,9 +158,11 @@ export default withRouter(
 													'include-all-the-information-someone-would-need-to-answer-your-question'
 												)}
 											</span>
-										</ClayForm.FeedbackItem>
 
-										<ClayForm.Text>{''}</ClayForm.Text>
+											<TextLengthValidation
+												text={articleBody}
+											/>
+										</ClayForm.FeedbackItem>
 									</ClayForm.FeedbackGroup>
 								</ClayForm.Group>
 
@@ -200,7 +203,10 @@ export default withRouter(
 								<ClayButton
 									className="c-mt-4 c-mt-sm-0"
 									disabled={
-										!articleBody || !headline || !tagsLoaded
+										!articleBody ||
+										!headline ||
+										!tagsLoaded ||
+										articleBody.length < 23
 									}
 									displayType="primary"
 									onClick={() => {

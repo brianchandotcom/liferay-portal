@@ -19,7 +19,10 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 import java.util.Set;
@@ -68,6 +71,47 @@ public class RowLayoutStructureItemImporter
 			if (definitionMap.containsKey("verticalAlignment")) {
 				rowLayoutStructureItem.setVerticalAlignment(
 					(String)definitionMap.get("verticalAlignment"));
+			}
+
+			if (definitionMap.containsKey("viewportRowConfig")) {
+				Map<String, Object> viewportRowConfiguration =
+					(Map<String, Object>)definitionMap.get("viewportRowConfig");
+
+				for (Map.Entry<String, Object> entry :
+						viewportRowConfiguration.entrySet()) {
+
+					Map<String, Object> viewportConfiguration =
+						(Map<String, Object>)entry.getValue();
+
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+					if (viewportConfiguration.containsKey("modulesPerRow")) {
+						jsonObject.put(
+							"modulesPerRow",
+							GetterUtil.getInteger(
+								viewportConfiguration.get("modulesPerRow")));
+					}
+
+					if (viewportConfiguration.containsKey("reverseOrder")) {
+						jsonObject.put(
+							"reverseOrder",
+							GetterUtil.getBoolean(
+								viewportConfiguration.get("reverseOrder")));
+					}
+
+					if (viewportConfiguration.containsKey(
+							"verticalAlignment")) {
+
+						jsonObject.put(
+							"verticalAlignment",
+							GetterUtil.getString(
+								viewportConfiguration.get(
+									"verticalAlignment")));
+					}
+
+					rowLayoutStructureItem.setViewportSizeConfiguration(
+						entry.getKey(), jsonObject);
+				}
 			}
 		}
 

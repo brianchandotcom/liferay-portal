@@ -16,8 +16,7 @@ import {PropTypes} from 'prop-types';
 import React from 'react';
 
 import MappingInputs from './components/MappingInputs';
-
-const sub = Liferay.Util.sub;
+import lang from './utils/lang';
 
 function SeoMapping({
 	description,
@@ -32,7 +31,7 @@ function SeoMapping({
 			inputs={[
 				{
 					fieldType: 'text',
-					helpMessage: sub(
+					helpMessage: lang.sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
 						),
@@ -45,7 +44,7 @@ function SeoMapping({
 				},
 				{
 					fieldType: 'text',
-					helpMessage: sub(
+					helpMessage: lang.sub(
 						Liferay.Language.get(
 							'map-a-x-field-it-will-be-used-as-x'
 						),

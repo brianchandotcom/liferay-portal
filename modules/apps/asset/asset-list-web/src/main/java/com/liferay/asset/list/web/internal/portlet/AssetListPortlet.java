@@ -21,6 +21,7 @@ import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext;
+import com.liferay.asset.list.web.internal.display.context.AssetListEntryEntriesDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -192,12 +193,9 @@ public class AssetListPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			AssetListWebKeys.ASSET_LIST_ASSET_ENTRY_PROVIDER,
-			_assetListAssetEntryProvider);
-
 		AssetListDisplayContext assetListDisplayContext =
 			new AssetListDisplayContext(
+				_assetListAssetEntryProvider,
 				_assetRendererFactoryClassProvider, renderRequest,
 				renderResponse);
 

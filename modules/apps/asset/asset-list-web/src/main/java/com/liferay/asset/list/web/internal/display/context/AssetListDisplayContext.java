@@ -20,7 +20,6 @@ import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListActionKeys;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
-import com.liferay.asset.list.constants.AssetListWebKeys;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
@@ -59,18 +58,17 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetListDisplayContext {
 
 	public AssetListDisplayContext(
+		AssetListAssetEntryProvider assetListAssetEntryProvider,
 		AssetRendererFactoryClassProvider assetRendererFactoryClassProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_assetListAssetEntryProvider = assetListAssetEntryProvider;
 		_assetRendererFactoryClassProvider = assetRendererFactoryClassProvider;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 
-		_assetListAssetEntryProvider =
-			(AssetListAssetEntryProvider)_httpServletRequest.getAttribute(
-				AssetListWebKeys.ASSET_LIST_ASSET_ENTRY_PROVIDER);
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_httpServletRequest);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(

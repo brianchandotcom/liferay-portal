@@ -195,6 +195,7 @@
 		background-color: $product-menu-list-group-item-bg;
 		font-weight: 600;
 		overflow: hidden;
+		padding-left: 24px;
 		text-overflow: ellipsis;
 		white-space: nowrap;
 
@@ -239,10 +240,6 @@
 		&.panel-header:not(.collapsed) {
 			background-color: $product-menu-list-group-heading-active-bg;
 			color: white;
-		}
-
-		.list-group-heading {
-			padding-left: 24px;
 		}
 
 		.list-group-item-field {

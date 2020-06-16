@@ -17,54 +17,67 @@ import React from 'react';
 import AuditBarChart from './components/AuditBarChart';
 import EmptyAuditBarChart from './components/EmptyAuditBarChart';
 
-const bars = [
+const categories = [
 	{
-		dataKey: 'education',
-		fill: '#4B9BFF',
-		name: Liferay.Language.get('education'),
-	},
-	{
-		dataKey: 'selection',
-		fill: '#50D2A0',
-		name: Liferay.Language.get('selection'),
-	},
-	{
-		dataKey: 'solution',
-		fill: '#FFB46E',
-		name: Liferay.Language.get('solution'),
-	},
-];
-
-const data = [
-	{
-		education: 4000,
+		children: [
+			{key: 'education', name: 'Education', value: 478},
+			{key: 'selection', name: 'Selection', value: 1055},
+			{key: 'selection', name: 'Selection', value: 822},
+		],
+		key: 'business-decision-maker',
 		name: 'Business Decision Maker',
-		selection: 2400,
-		solution: 3100,
 	},
 	{
-		education: 3000,
+		children: [
+			{key: 'education', name: 'Education', value: 125},
+			{key: 'selection', name: 'Selection', value: 1906},
+			{key: 'solution', name: 'Solution', value: 987},
+		],
+		key: 'business-end-user',
 		name: 'Business End User',
-		selection: 1398,
-		solution: 2111,
 	},
 	{
-		education: 2000,
+		children: [
+			{key: 'education', name: 'Education', value: 444},
+			{key: 'selection', name: 'Selection', value: 1733},
+			{key: 'solution', name: 'Solution', value: 1807},
+		],
+		key: 'technical-decision-maker',
 		name: 'Technical Decision Maker',
-		selection: 4800,
-		solution: 1070,
 	},
 	{
-		education: 2780,
+		children: [
+			{key: 'education', name: 'Education', value: 125},
+			{key: 'selection', name: 'Selection', value: 317},
+			{key: 'solution', name: 'Solution', value: 187},
+		],
+		key: 'technical-end-user',
 		name: 'Technical End User',
-		selection: 3908,
-		solution: 1234,
 	},
 ];
 
 const rtl = false;
 
 export default function () {
+	const bars = [];
+	const data = [];
+
+	categories.map((category) => {
+		var dataChild = {name: category.name};
+
+		const children = category.children;
+
+		for (var i = 0; i < children.length; i++) {
+			const barChild = {dataKey: children[i].key, name: children[i].name};
+			if (!bars.some((bar) => bar.dataKey === children[i].key)) {
+				bars.push(barChild);
+			}
+
+			dataChild = {...dataChild, [children[i].key]: children[i].value};
+		}
+		data.push(dataChild);
+	});
+
 	return data.length ? (
 		<AuditBarChart bars={bars} data={data} rtl={rtl} />
 	) : (

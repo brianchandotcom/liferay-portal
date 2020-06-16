@@ -7,6 +7,10 @@
 	border-top: solid $editorBorderWidth $editorBorderColor;
 	box-sizing: border-box;
 
+	&__toolbar {
+		color: $secondary;
+	}
+
 	@at-root {
 		html body.has-control-menu {
 			padding-bottom: 0;

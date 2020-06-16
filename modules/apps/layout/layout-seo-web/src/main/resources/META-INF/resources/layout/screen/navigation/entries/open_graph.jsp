@@ -61,10 +61,31 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			<c:choose>
 				<c:when test="<%= selLayout.isTypeAssetDisplay() %>">
 					<div class="dpt-mapping">
-						<aui:input disabled="<%= true %>" label="title" localized="<%= false %>" name="openGraphTitle" />
-						<aui:input disabled="<%= true %>" label="description" localized="<%= false %>" name="openGraphDescription" />
-						<aui:input disabled="<%= true %>" label="image" localized="<%= false %>" name="openGraphImageTitle" />
-						<aui:input disabled="<%= true %>" label="open-graph-image-alt-description" name="openGraphImageAlt" />
+						<div class="dpt-mapping-placeholder">
+							<aui:input disabled="<%= true %>" label="title" localized="<%= false %>" name="openGraphTitle" />
+
+							<div class="form-text">
+								<liferay-ui:message arguments='<%= new String[] {"text", "title"} %>' key="map-a-x-field-it-will-be-used-as-x" />
+							</div>
+
+							<aui:input disabled="<%= true %>" label="description" localized="<%= false %>" name="openGraphDescription" />
+
+							<div class="form-text">
+								<liferay-ui:message arguments='<%= new String[] {"text", "description"} %>' key="map-a-x-field-it-will-be-used-as-x" />
+							</div>
+
+							<aui:input disabled="<%= true %>" label="image" localized="<%= false %>" name="openGraphImageTitle" />
+
+							<div class="form-text">
+								<liferay-ui:message arguments='<%= new String[] {"image", "image"} %>' key="map-a-x-field-it-will-be-used-as-x" />
+							</div>
+
+							<aui:input disabled="<%= true %>" label="open-graph-image-alt-description" name="openGraphImageAlt" />
+
+							<div class="form-text">
+								<liferay-ui:message arguments='<%= new String[] {"text", "open-graph-image-alt-description"} %>' key="map-a-x-field-it-will-be-used-as-x" />
+							</div>
+						</div>
 
 						<react:component
 							data="<%= layoutsSEODisplayContext.getSEOMappingData() %>"

@@ -90,13 +90,13 @@ definition {
 	}
 
 	@priority = "5"
-	test DeletePublicationFromOverviewScreen {
+	test DeletePublication {
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
 			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
-		ChangeList.deleteChangeListFromOverviewScreen(changeListName = "Publication Name");
+		ChangeList.deletePublication(publicationName = "Publication Name");
 	}
 
 }

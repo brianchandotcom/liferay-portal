@@ -1185,7 +1185,9 @@ public class GraphQLServletExtender {
 
 			String typeName = graphQLOutputType.getName();
 
-			if ((typeName != null) && typeName.equals("Object")) {
+			if ((typeName != null) && typeName.equals("Object") &&
+				StringUtil.endsWith(graphQLFieldDefinition.getName(), "Id")) {
+
 				Class<? extends GraphQLFieldDefinition> fieldClass =
 					graphQLFieldDefinition.getClass();
 
@@ -1560,12 +1562,22 @@ public class GraphQLServletExtender {
 				DataFetchingEnvironmentImpl.newDataFetchingEnvironment(
 					dataFetchingEnvironment);
 
-			Method getIdMethod = clazz.getMethod("getId");
+			Method method = clazz.getMethod("getId");
+
+			Method[] methods = clazz.getMethods();
+
+			for (Method existingMethod : methods) {
+				if (StringUtil.equals(
+						existingMethod.getName(), "getContentId")) {
+
+					method = existingMethod;
+				}
+			}
 
 			return dataFetcher.get(
 				dataFetchingEnvironmentBuilder.arguments(
 					Collections.singletonMap(
-						fieldName + "Id", getIdMethod.invoke(source))
+						fieldName + "Id", method.invoke(source))
 				).build());
 		}
 

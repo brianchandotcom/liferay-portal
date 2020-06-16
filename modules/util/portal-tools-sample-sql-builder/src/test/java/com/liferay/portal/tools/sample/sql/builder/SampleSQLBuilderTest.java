@@ -28,6 +28,7 @@ import com.liferay.portal.tools.ToolDependencies;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.Writer;
 
 import java.net.URL;
 
@@ -86,8 +87,8 @@ public class SampleSQLBuilderTest {
 
 		File tempPropertiesFile = File.createTempFile("test", ".properties");
 
-		try (FileWriter fileWriter = new FileWriter(tempPropertiesFile)) {
-			properties.store(fileWriter, null);
+		try (Writer writer = new FileWriter(tempPropertiesFile)) {
+			properties.store(writer, null);
 
 			System.setProperty(
 				"sample-sql-properties", tempPropertiesFile.getAbsolutePath());

@@ -25,16 +25,7 @@ import {
 	YAxis,
 } from 'recharts';
 
-const BAR_CHART = {
-	barHeight: 16,
-	dotRadiusMax: 35,
-	dotRadiusMin: 5,
-	fillXAxis: '#666',
-	height: 400,
-	legendHeight: 70,
-	stroke: '#E7E7ED',
-	width: 1150,
-};
+import {BAR_CHART, COLORS} from '../utils/constants';
 
 export default function AuditBarChart({bars, data, rtl}) {
 	return (
@@ -81,7 +72,7 @@ export default function AuditBarChart({bars, data, rtl}) {
 							<Bar
 								barSize={BAR_CHART.barHeight}
 								dataKey={bar.dataKey}
-								fill={bar.fill}
+								fill={COLORS[index % COLORS.length]}
 								key={index}
 								legendType="square"
 								name={bar.name}
@@ -104,7 +95,7 @@ function CustomXAxisTick(props) {
 			verticalAnchor="start"
 			width={120}
 			x={x}
-			y={y + 16}
+			y={y + BAR_CHART.axisMargin}
 		>
 			{payload.value}
 		</Text>
@@ -119,7 +110,7 @@ function CustomYAxisTick(props) {
 			fill={BAR_CHART.fillXAxis}
 			textAnchor="end"
 			verticalAnchor="end"
-			x={rtl ? x + 16 : x - 16}
+			x={rtl ? x + BAR_CHART.axisMargin : x - BAR_CHART.axisMargin}
 			y={y}
 		>
 			{payload.value}

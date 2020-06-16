@@ -24,15 +24,7 @@ import {
 	YAxis,
 } from 'recharts';
 
-const EMPTY_DATA = [];
-
-const BAR_CHART = {
-	dotRadiusMax: 35,
-	dotRadiusMin: 5,
-	height: 300,
-	stroke: '#E7E7ED',
-	width: 1150,
-};
+import BAR_CHART from '../utils/constants';
 
 export default function EmptyAuditBarChart() {
 	return (
@@ -53,17 +45,17 @@ export default function EmptyAuditBarChart() {
 				</ClayButton>
 			</ClayEmptyState>
 
-			<ResponsiveContainer height={BAR_CHART.height}>
+			<ResponsiveContainer height={BAR_CHART.heightEmpty}>
 				<BarChart
-					data={EMPTY_DATA}
-					height={BAR_CHART.height}
+					data={[]}
+					height={BAR_CHART.heightEmpty}
 					width={BAR_CHART.width}
 				>
 					<CartesianGrid
 						horizontal={true}
 						horizontalPoints={[
 							BAR_CHART.dotRadiusMin,
-							BAR_CHART.height - BAR_CHART.dotRadiusMax,
+							BAR_CHART.heightEmpty - BAR_CHART.dotRadiusMax,
 						]}
 						stroke={BAR_CHART.stroke}
 					/>

@@ -98,15 +98,16 @@
 
 				<div class="calculate-container-fields col-md-9">
 					<div class="form-group">
-						{delcall PageRenderer.RegisterFieldType variant="'text'"}
+						{call ReactFieldAdapter.render}
 							{param name: 'calculator-expression' /}
+							{param fieldType: 'text' /}
 							{param readOnly: true /}
 							{param displayStyle: 'multiline' /}
 							{param placeholder: $placeholder /}
 							{param showLabel: false /}
 							{param spritemap: $spritemap /}
 							{param value: $expression /}
-						{/delcall}
+						{/call}
 					</div>
 				</div>
 			</div>

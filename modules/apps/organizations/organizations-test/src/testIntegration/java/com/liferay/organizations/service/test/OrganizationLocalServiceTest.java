@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
 import com.liferay.portal.kernel.model.Group;
@@ -27,9 +28,12 @@ import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
@@ -41,12 +45,25 @@ import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.comparator.OrganizationTypeComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.test.util.AssertUtils;
+import com.liferay.portal.search.test.util.SearchStreamUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -850,6 +867,87 @@ public class OrganizationLocalServiceTest {
 		Assert.assertEquals(hits.toString(), 0, hits.getLength());
 	}
 
+	@Test
+	public void testSearchOrganizationsByType() throws Exception {
+		String defaultType = "organization";
+		String orderByCol = "type";
+		String orderByType = "asc";
+
+		String orgType = "test org type";
+
+		String configPid = _createOrganizationType(orgType);
+
+		List<Organization> organizations = new LinkedList<>();
+
+		try {
+			organizations.add(OrganizationTestUtil.addOrganization(orgType));
+
+			organizations.add(OrganizationTestUtil.addOrganization(orgType));
+
+			organizations.add(
+				OrganizationTestUtil.addOrganization(defaultType));
+
+			organizations.add(
+				OrganizationTestUtil.addOrganization(defaultType));
+
+			Organization org1 = organizations.get(0);
+
+			long companyId = org1.getCompanyId();
+
+			Sort sort = SortFactoryUtil.getSort(
+				Organization.class, orderByCol, orderByType);
+
+			BaseModelSearchResult<Organization> baseModelSearchResult =
+				OrganizationLocalServiceUtil.searchOrganizations(
+					companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
+					null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
+
+			List<Organization> indexerSearchResults =
+				baseModelSearchResult.getBaseModels();
+
+			_lowercaseOrganizationNamesForSort(indexerSearchResults);
+
+			List<Organization> expectedResults = new ArrayList<>(
+				indexerSearchResults);
+
+			AssertUtils.assertEquals(
+				"Sorting Error Message",
+				toStringList(
+					ListUtil.sort(
+						expectedResults, new OrganizationTypeComparator(true))),
+				toStringList(indexerSearchResults));
+
+			orderByType = "desc";
+
+			sort = SortFactoryUtil.getSort(
+				Organization.class, orderByCol, orderByType);
+
+			baseModelSearchResult =
+				OrganizationLocalServiceUtil.searchOrganizations(
+					companyId, 0, "", null, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, sort);
+
+			indexerSearchResults = baseModelSearchResult.getBaseModels();
+
+			_lowercaseOrganizationNamesForSort(indexerSearchResults);
+
+			AssertUtils.assertEquals(
+				"Sorting Error Message",
+				toStringList(
+					ListUtil.sort(
+						expectedResults,
+						new OrganizationTypeComparator(false))),
+				toStringList(indexerSearchResults));
+		}
+		finally {
+			for (Organization organization : organizations) {
+				OrganizationLocalServiceUtil.deleteOrganization(organization);
+			}
+
+			ConfigurationTestUtil.deleteConfiguration((String)configPid);
+		}
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
@@ -877,6 +975,62 @@ public class OrganizationLocalServiceTest {
 			QueryUtil.ALL_POS, null);
 	}
 
+	protected String toString(Organization organization) {
+		Map<String, Function<Organization, Object>> map = new LinkedHashMap<>(
+			organization.getAttributeGetterFunctions());
+
+		map.remove("createDate");
+		map.remove("modifiedDate");
+
+		Stream<Map.Entry<String, Function<Organization, Object>>> stream =
+			SearchStreamUtil.stream(map.entrySet());
+
+		return String.valueOf(
+			stream.collect(
+				Collectors.toMap(
+					Map.Entry::getKey,
+					entry -> {
+						Function<Organization, Object> function =
+							entry.getValue();
+
+						return String.valueOf(function.apply(organization));
+					})));
+	}
+
+	protected List<String> toStringList(List<Organization> organizations) {
+		Stream<Organization> stream = organizations.stream();
+
+		return stream.map(
+			this::toString
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	private String _createOrganizationType(String name) throws Exception {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		String[] childTypes = {"organization", name};
+
+		properties.put("childrenTypes", childTypes);
+
+		properties.put("configuration.cleaner.ignore", "true");
+		properties.put("countryEnabled", true);
+		properties.put("countryRequired", false);
+		properties.put("name", name);
+		properties.put("rootable", true);
+		properties.put("service.bundleLocation", "?");
+		properties.put(
+			"service.factoryPid",
+			"com.liferay.organizations.internal.configuration." +
+				"OrganizationTypeConfiguration");
+
+		return ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.organizations.internal.configuration." +
+				"OrganizationTypeConfiguration",
+			properties);
+	}
+
 	private String _getTreePath(Organization[] organizations) {
 		StringBundler sb = new StringBundler();
 
@@ -888,6 +1042,16 @@ public class OrganizationLocalServiceTest {
 		}
 
 		return sb.toString();
+	}
+
+	private void _lowercaseOrganizationNamesForSort(
+		List<Organization> organizations) {
+
+		for (Organization organization : organizations) {
+			String lowercaseName = StringUtil.lowerCase(organization.getName());
+
+			organization.setName(lowercaseName);
+		}
 	}
 
 	private Organization _updateOrganization(Organization organization)

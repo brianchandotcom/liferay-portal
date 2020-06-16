@@ -21,12 +21,18 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.base.AccountEntryUserRelLocalServiceBaseImpl;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.time.Month;
 
@@ -64,7 +70,9 @@ public class AccountEntryUserRelLocalServiceImpl
 			accountEntryLocalService.getAccountEntry(accountEntryId);
 		}
 
-		userLocalService.getUser(accountUserId);
+		User user = userLocalService.getUser(accountUserId);
+
+		_validateEmailAddress(user.getEmailAddress(), accountEntryId);
 
 		accountEntryUserRel = createAccountEntryUserRel(
 			counterLocalService.increment());
@@ -90,6 +98,8 @@ public class AccountEntryUserRelLocalServiceImpl
 
 			companyId = accountEntry.getCompanyId();
 		}
+
+		_validateEmailAddress(emailAddress, accountEntryId);
 
 		boolean autoPassword = true;
 		String password1 = null;
@@ -205,5 +215,39 @@ public class AccountEntryUserRelLocalServiceImpl
 
 	@Reference
 	protected AccountEntryLocalService accountEntryLocalService;
+
+	private void _validateEmailAddress(String emailAddress, long accountEntryId)
+		throws PortalException {
+
+		long userId = GuestOrUserUtil.getGuestOrUserId();
+
+		List<AccountEntryUserRel> accountEntryUserRels =
+			accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountUserId(userId);
+
+		if (ListUtil.isEmpty(accountEntryUserRels)) {
+			return;
+		}
+
+		emailAddress = StringUtil.toLowerCase(emailAddress.trim());
+
+		int pos = emailAddress.indexOf(CharPool.AT);
+
+		if (pos == -1) {
+			return;
+		}
+
+		String emailDomain = emailAddress.substring(pos + 1);
+
+		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		String[] domains = StringUtil.split(accountEntry.getDomains());
+
+		if (!ArrayUtil.contains(domains, emailDomain)) {
+			throw new UserEmailAddressException.MustHaveValidDomain(
+				emailAddress, accountEntry.getDomains());
+		}
+	}
 
 }

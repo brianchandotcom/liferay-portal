@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String articleId = ParamUtil.getString(request, "rowIdsJournalArticle");
 String articleTitle = ParamUtil.getString(request, "articleTitle");
 String redirect = ParamUtil.getString(request, "redirect");
 String title = LanguageUtil.get(resourceBundle, "import-translation");
@@ -61,11 +62,14 @@ renderResponse.setTitle(title);
 		<clay:sheet>
 			<%
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
+				"articleId", articleId
+			).put(
 				"saveDraftBtnId", renderResponse.getNamespace() + "saveDraftBtn"
 			).put(
 				"submitBtnId", renderResponse.getNamespace() + "submitBtnId"
 			).build();
 			%>
+
 			<react:component
 				data="<%= data %>"
 				module="js/ImportTranslation.es"

@@ -1445,6 +1445,7 @@ definition {
 		property custom.properties = "freemarker.engine.restricted.variables=${line.separator}restricted.variables=";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
+		property portal.upstream = "quarantine";
 
 		Navigator.openURL();
 

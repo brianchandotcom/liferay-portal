@@ -35,6 +35,8 @@ import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
 
+import javax.portlet.RenderURL;
+
 /**
  * @author Alejandro Tardín
  */
@@ -77,7 +79,14 @@ public class DepotEntryVerticalCard
 
 	@Override
 	public String getHref() {
-		return _groupURLProvider.getGroupURL(_group, _liferayPortletRequest);
+		RenderURL renderURL = _liferayPortletResponse.createRenderURL();
+
+		renderURL.setParameter(
+			"mvcRenderCommandName", "/depot/view_depot_dashboard");
+		renderURL.setParameter(
+			"depotEntryId", String.valueOf(_depotEntry.getDepotEntryId()));
+
+		return renderURL.toString();
 	}
 
 	@Override

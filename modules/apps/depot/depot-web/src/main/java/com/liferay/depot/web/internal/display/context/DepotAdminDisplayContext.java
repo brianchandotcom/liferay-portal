@@ -49,6 +49,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
+import javax.portlet.RenderURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -123,11 +124,15 @@ public class DepotAdminDisplayContext {
 		return "depotEntries";
 	}
 
-	public String getViewDepotURL(DepotEntry depotEntry)
-		throws PortalException {
+	public String getViewDepotURL(DepotEntry depotEntry) {
+		RenderURL renderURL = _liferayPortletResponse.createRenderURL();
 
-		return _groupURLProvider.getGroupURL(
-			depotEntry.getGroup(), _liferayPortletRequest);
+		renderURL.setParameter(
+			"mvcRenderCommandName", "/depot/view_depot_dashboard");
+		renderURL.setParameter(
+			"depotEntryId", String.valueOf(depotEntry.getDepotEntryId()));
+
+		return renderURL.toString();
 	}
 
 	public boolean isDisplayStyleDescriptive() {

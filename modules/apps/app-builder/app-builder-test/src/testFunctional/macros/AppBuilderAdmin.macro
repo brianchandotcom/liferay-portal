@@ -385,7 +385,7 @@ definition {
 	}
 
 	macro validateAppIsNotPresentOnSite {
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = "Content & Data");
 

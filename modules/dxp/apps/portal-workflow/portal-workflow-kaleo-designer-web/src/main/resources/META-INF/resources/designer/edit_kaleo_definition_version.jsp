@@ -576,6 +576,12 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										}
 									});
 
+									Liferay.on('<portlet:namespace />undoDefinition', function (event) {
+										<portlet:namespace />kaleoDesigner.setEditorContent(previousContent);
+
+										Liferay.KaleoDesignerDialogs.showActionUndoneSuccessMessage();
+									});
+
 									<portlet:namespace />kaleoDesigner.contentTabView.after({
 										selectionChange: <portlet:namespace />afterTabViewChange,
 									});

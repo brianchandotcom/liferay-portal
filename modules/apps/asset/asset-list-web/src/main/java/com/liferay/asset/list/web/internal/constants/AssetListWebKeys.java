@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.asset.list.constants;
+package com.liferay.asset.list.web.internal.constants;
 
 /**
  * @author Pavel Savinov
- * @deprecated As of Athanasius (7.3.x), replaced by {@link
- *			 com.liferay.asset.list.web.internal.constants.AssetListWebKeys}
  */
-@Deprecated
 public class AssetListWebKeys {
 
 	public static final String ASSET_LIST_ASSET_ENTRY_PROVIDER =

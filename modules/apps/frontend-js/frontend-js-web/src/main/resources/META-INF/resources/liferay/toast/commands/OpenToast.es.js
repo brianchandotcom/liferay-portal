@@ -38,22 +38,30 @@ const Text = ({allowHTML, string = null}) => {
 	return string;
 };
 
-const getContainerElement = ({container, containerId}) => {
-	const fragment = document.createElement('div');
-	fragment.id = DEFAULT_ALERT_CONTAINER_ID;
-
+const getRootElement = ({container, containerId}) => {
 	if (container || containerId) {
-		const element = container || document.getElementById(containerId);
+		container = container || document.getElementById(containerId);
 
-		element.appendChild(fragment);
+		if (container) {
+			const child = document.createElement('div');
 
-		return fragment;
+			container.appendChild(child);
+
+			return child;
+		}
 	}
-	else {
-		document.body.appendChild(fragment);
 
-		return fragment;
+	container = document.getElementById(DEFAULT_ALERT_CONTAINER_ID);
+
+	if (!container) {
+		container = document.createElement('div');
+
+		container.id = DEFAULT_ALERT_CONTAINER_ID;
+
+		document.body.appendChild(container);
 	}
+
+	return container;
 };
 
 /**
@@ -87,7 +95,7 @@ function openToast({
 	type = 'success',
 	variant,
 }) {
-	const rootElement = getContainerElement({container, containerId});
+	const rootElement = getRootElement({container, containerId});
 
 	unmountComponentAtNode(rootElement);
 

@@ -890,17 +890,14 @@ public class OrganizationLocalServiceTest {
 			organizations.add(
 				OrganizationTestUtil.addOrganization(defaultType));
 
-			Organization org1 = organizations.get(0);
-
-			long companyId = org1.getCompanyId();
-
 			Sort sort = SortFactoryUtil.getSort(
 				Organization.class, orderByCol, orderByType);
 
 			BaseModelSearchResult<Organization> baseModelSearchResult =
 				OrganizationLocalServiceUtil.searchOrganizations(
-					companyId, OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
-					null, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
+					TestPropsValues.getCompanyId(),
+					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
+					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
 
 			List<Organization> indexerSearchResults =
 				baseModelSearchResult.getBaseModels();
@@ -924,8 +921,8 @@ public class OrganizationLocalServiceTest {
 
 			baseModelSearchResult =
 				OrganizationLocalServiceUtil.searchOrganizations(
-					companyId, 0, "", null, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, sort);
+					TestPropsValues.getCompanyId(), 0, "", null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
 
 			indexerSearchResults = baseModelSearchResult.getBaseModels();
 

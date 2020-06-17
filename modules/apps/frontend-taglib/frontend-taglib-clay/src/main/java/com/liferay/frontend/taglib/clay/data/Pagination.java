@@ -30,18 +30,18 @@ public interface Pagination {
 	public int getEndPosition();
 
 	/**
-	 * Returns the selected number of items per page.
-	 *
-	 * @return the selected number of items per page
-	 */
-	public int getItemsPerPage();
-
-	/**
 	 * Returns the requested page's number.
 	 *
 	 * @return the requested page's number
 	 */
-	public int getPageNumber();
+	public int getPage();
+
+	/**
+	 * Returns the selected number of items per page.
+	 *
+	 * @return the selected number of items per page
+	 */
+	public int getPageSize();
 
 	/**
 	 * Returns the position of the requested page's first element.

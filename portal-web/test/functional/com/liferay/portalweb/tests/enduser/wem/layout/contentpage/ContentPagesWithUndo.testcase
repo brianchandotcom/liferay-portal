@@ -1,0 +1,200 @@
+@component-name = "portal-wcm"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+	property osgi.module.configurations = "undoEnabled = true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Content Pages";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site via JSON") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for for LPS-111548. Reloading the page will clean all Undo states."
+	@priority = "4"
+	test ConfigureHeadingFragmentAndRefreshPageWithUndoEnabled {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.waitForAutoSave();
+
+		AssertVisible(
+			key_text = "undo",
+			locator1 = "Icon#ANY_ENABLED");
+
+		PageEditor.gotoConfiguration(fragmentName = "Heading");
+
+		PageEditor.configureFragment(textAlign = "Center");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "center",
+			fragmentName = "heading");
+
+		Refresh();
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
+	@description = "This is a test for LPS-111946. Undo can bring deleted fragments and widgets back."
+	@priority = "5"
+	test UndoDeletedFragmentAndWidgetInPage {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Button");
+
+		PageEditor.removeFragment(fragmentName = "Button");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Button");
+
+		PageEditor.removeFragment(fragmentName = "Asset Publisher");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Asset Publisher");
+	}
+
+	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."
+	@priority = "5"
+	test UndoPagechangeThreeTimes {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Row");
+
+		PageEditor.viewRowStyle(
+			columnCount = "3",
+			position = "1");
+
+		PageEditor.editLayoutRow(columnCount = "1");
+
+		PageEditor.viewRowStyle(
+			columnCount = "1",
+			position = "1");
+
+		Click.clickNoMouseOver(
+			key_elementType = "Row",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
+		PageEditor.editLayoutRow(columnCount = "2");
+
+		PageEditor.viewRowStyle(
+			columnCount = "2",
+			position = "1");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewRowStyle(
+			columnCount = "1",
+			position = "1");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewRowStyle(
+			columnCount = "3",
+			position = "1");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
+	@description = "This is a use case for for LPS-111548. Undo can make the page editor come back to previous state up to 20 last states when the page has more than 20 states."
+	@priority = "5"
+	test UndoPagechangeTwentyTimes {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "${i}");
+
+			Click.clickNoMouseOver(
+				key_elementType = "Fragment",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		}
+
+		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+		}
+
+		AssertVisible(
+			key_navItem = "Tab 4",
+			locator1 = "Fragment#NAV_ITEM_TAB");
+
+		AssertElementNotPresent(
+			key_navItem = "Tab 5",
+			locator1 = "Fragment#NAV_ITEM_TAB");
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
+}

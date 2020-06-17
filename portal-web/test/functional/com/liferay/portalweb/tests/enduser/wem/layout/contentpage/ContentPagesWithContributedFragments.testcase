@@ -433,41 +433,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for for LPS-111548. Reloading the page will clean all Undo states."
-	@priority = "4"
-	test ConfigureHeadingFragmentAndRefreshPageWithUndoEnabled {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "undoEnabled = true";
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		PageEditor.waitForAutoSave();
-
-		AssertVisible(
-			key_text = "undo",
-			locator1 = "Icon#ANY_ENABLED");
-
-		PageEditor.gotoConfiguration(fragmentName = "Heading");
-
-		PageEditor.configureFragment(textAlign = "Center");
-
-		PageEditor.viewFragmentStyle(
-			alignment = "center",
-			fragmentName = "heading");
-
-		Refresh();
-
-		AssertElementPresent(
-			key_text = "undo",
-			locator1 = "Icon#ANY_DISABLED");
-	}
-
 	@description = "Given a content page with a configured Content fragment, when the content is deleted the fragment should not be visible in view mode and a message should be shown in page editor."
 	@priority = "4"
 	test DeletedContentInContentDisplayFragmentIsNotVisible {
@@ -1303,49 +1268,6 @@ definition {
 				key_pageName = "Content Page Name",
 				locator1 = "PageEditor#CONTENT_PAGE_TEXT_CONTENT");
 		}
-	}
-
-	@description = "This is a use case for for LPS-111548. Undo can make the page editor come back to previous state up to 20 last states when the page has more than 20 states."
-	@priority = "5"
-	test UndoPagechangeTwentyTimes {
-		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
-		property osgi.module.configurations = "undoEnabled = true";
-
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "${i}");
-
-			Click.clickNoMouseOver(
-				key_elementType = "Fragment",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-		}
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
-			Click(
-				key_text = "undo",
-				locator1 = "Icon#ANY");
-		}
-
-		AssertVisible(
-			key_navItem = "Tab 4",
-			locator1 = "Fragment#NAV_ITEM_TAB");
-
-		AssertElementNotPresent(
-			key_navItem = "Tab 5",
-			locator1 = "Fragment#NAV_ITEM_TAB");
-
-		AssertElementPresent(
-			key_text = "undo",
-			locator1 = "Icon#ANY_DISABLED");
 	}
 
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."

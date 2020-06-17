@@ -530,25 +530,24 @@ public class LiferayExtPlugin implements Plugin<Project> {
 						final String archiveExtension =
 							archiveExtensionProperty.get();
 
-						copySpec.from(extJar);
+						copySpec.from(
+							extJarTaskProvider,
+							new Closure<Void>(project) {
 
-						copySpec.into(
-							new Callable<String>() {
+								public void doCall(CopySpec copySpec) {
+									copySpec.into(archiveAppendix);
 
-								@Override
-								public String call() throws Exception {
-									return archiveAppendix;
-								}
+									copySpec.rename(
+										new Closure<String>(project) {
 
-							});
+											public String doCall(
+												String fileName) {
 
-						copySpec.rename(
-							new Closure<String>(project) {
+												return archiveAppendix + '.' +
+													archiveExtension;
+											}
 
-								@SuppressWarnings("unused")
-								public String doCall(String fileName) {
-									return archiveAppendix + '.' +
-										archiveExtension;
+										});
 								}
 
 							});

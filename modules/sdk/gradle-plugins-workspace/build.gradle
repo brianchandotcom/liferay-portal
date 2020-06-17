@@ -85,9 +85,9 @@ dependencies {
 	}
 	compile group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
 
-	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
-
 	compileInclude files("libs/com.liferay.workspace.bundle.url.codec-1.0.0.jar")
+
+	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }
 
 downloadHotFixZip {

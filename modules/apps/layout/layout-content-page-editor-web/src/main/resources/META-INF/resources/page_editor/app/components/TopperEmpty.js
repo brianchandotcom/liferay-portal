@@ -19,15 +19,15 @@ import {
 	LayoutDataPropTypes,
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
-import selectCanUpdate from '../selectors/selectCanUpdate';
+import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../store/index';
 import getLayoutDataItemLabel from '../utils/getLayoutDataItemLabel';
 import {TARGET_POSITION, useDropTarget} from '../utils/useDragAndDrop';
 
 export default function ({children, ...props}) {
-	const canUpdate = useSelector(selectCanUpdate);
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 
-	return canUpdate ? (
+	return canUpdatePageStructure ? (
 		<TopperEmpty {...props}>{children}</TopperEmpty>
 	) : (
 		children

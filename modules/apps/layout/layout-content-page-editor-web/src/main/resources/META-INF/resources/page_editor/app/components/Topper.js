@@ -25,7 +25,7 @@ import {
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
-import selectCanUpdate from '../selectors/selectCanUpdate';
+import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
 import moveItem from '../thunks/moveItem';
@@ -75,9 +75,13 @@ TopperListItem.propTypes = {
 };
 
 export default function ({children, ...props}) {
-	const canUpdate = useSelector(selectCanUpdate);
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 
-	return canUpdate ? <Topper {...props}>{children}</Topper> : children;
+	return canUpdatePageStructure ? (
+		<Topper {...props}>{children}</Topper>
+	) : (
+		children
+	);
 }
 
 function Topper({children, item, itemElement, layoutData}) {

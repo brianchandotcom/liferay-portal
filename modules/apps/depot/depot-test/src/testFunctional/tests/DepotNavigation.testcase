@@ -70,7 +70,7 @@ definition {
 
 		DepotNavigator.gotoDepotViaSpaceIcon(depotName = "Test Depot Name");
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",

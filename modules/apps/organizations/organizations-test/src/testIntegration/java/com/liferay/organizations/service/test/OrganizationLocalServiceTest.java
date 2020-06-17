@@ -868,7 +868,7 @@ public class OrganizationLocalServiceTest {
 	public void testSearchOrganizationsByType() throws Exception {
 		List<String> pids = new ArrayList<>();
 
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 5; i++) {
 			String organizationType = RandomTestUtil.randomString();
 
 			pids.add(_createOrganizationType(organizationType));
@@ -1020,10 +1020,10 @@ public class OrganizationLocalServiceTest {
 
 	private final Comparator<Organization> _organizationTypeComparator =
 		(organization1, organization2) -> {
-			int typeOrder1 = organization1.getTypeOrder();
-			int typeOrder2 = organization2.getTypeOrder();
+			String typeOrder1 = organization1.getType();
+			String typeOrder2 = organization2.getType();
 
-			int value = typeOrder1 - typeOrder2;
+			int value = typeOrder1.compareToIgnoreCase(typeOrder2);
 
 			if (value == 0) {
 				String name1 = organization1.getName();

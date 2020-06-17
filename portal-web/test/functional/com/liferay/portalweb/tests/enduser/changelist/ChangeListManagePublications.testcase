@@ -36,7 +36,7 @@ definition {
 
 	@priority = "3"
 	test CancelPublicationCreation {
-		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CancelPublicationCreation";
+		property test.name.skip.portal.instance = "ChangeListManagePublications#CancelPublicationCreation";
 
 		ChangeList.cancelPublicationCreation();
 	}
@@ -44,7 +44,7 @@ definition {
 	@description = "Try to create new change list with too long name"
 	@priority = "3"
 	test CreateNewPublicationWithLongName {
-		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewPublicationWithLongName";
+		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithLongName";
 
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
@@ -57,7 +57,7 @@ definition {
 	@description = "Try to create new change list with empty string in the description"
 	@priority = "3"
 	test CreateNewPublicationWithoutDescription {
-		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewPublicationWithoutDescription";
+		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithoutDescription";
 
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
@@ -71,7 +71,7 @@ definition {
 	@description = "Try to create new change list with empty string name"
 	@priority = "3"
 	test CreateNewPublicationWithoutName {
-		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewPublicationWithoutName";
+		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithoutName";
 
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
@@ -82,7 +82,7 @@ definition {
 
 	@priority = "5"
 	test DeletePublication {
-		property test.name.skip.portal.instance = "ChangeListGlobalOverview#DeletePublication";
+		property test.name.skip.portal.instance = "ChangeListManagePublications#DeletePublication";
 
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",

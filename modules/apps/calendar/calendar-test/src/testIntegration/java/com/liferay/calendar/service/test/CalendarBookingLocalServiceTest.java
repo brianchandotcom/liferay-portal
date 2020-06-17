@@ -86,6 +86,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -795,6 +796,7 @@ public class CalendarBookingLocalServiceTest {
 		Assert.assertNull(calendarBooking);
 	}
 
+	@Ignore
 	@Test
 	public void testDeleteStagingCalendarBookingDeletesLiveCalendarBooking()
 		throws Exception {
@@ -972,6 +974,7 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendar(childCalendarBooking, resourceCalendar);
 	}
 
+	@Ignore
 	@Test
 	public void testInviteLiveSiteCalendarCreatesStagingSiteCalendarBooking()
 		throws Exception {
@@ -1002,6 +1005,7 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendarBookingsCount(stagingCalendar, 1);
 	}
 
+	@Ignore
 	@Test
 	public void testInviteLiveSiteCalendarWithDeletedStagingSiteCalendarCreatesNoCalendarBooking()
 		throws Exception {
@@ -1034,6 +1038,7 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendarBookingsCount(stagingCalendar, 0);
 	}
 
+	@Ignore
 	@Test
 	public void testInviteLiveSiteResourceCalendarCreatesStagingSiteResourceCalendarBooking()
 		throws Exception {
@@ -1065,6 +1070,7 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendarBookingsCount(stagingCalendar, 1);
 	}
 
+	@Ignore
 	@Test
 	public void testInviteLiveSiteResourceCalendarWithDeletedStagingSiteCalendarCreatesNoCalendarBooking()
 		throws Exception {
@@ -1099,6 +1105,7 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendarBookingsCount(stagingCalendar, 0);
 	}
 
+	@Ignore
 	@Test
 	public void testInviteNonstagedSiteCalendarCreatesLiveSiteCalendarBooking()
 		throws Exception {
@@ -1123,6 +1130,7 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendar(childCalendarBooking, liveCalendar);
 	}
 
+	@Ignore
 	@Test
 	public void testInviteNonstagedSiteResourceCalendarCreatesLiveSiteResourceCalendarBooking()
 		throws Exception {
@@ -1148,6 +1156,7 @@ public class CalendarBookingLocalServiceTest {
 		assertCalendar(childCalendarBooking, liveCalendar);
 	}
 
+	@Ignore
 	@Test
 	public void testInviteStagingCalendarShouldNotCreatesPendingLiveCalendarBookingAfterPublish()
 		throws Exception {
@@ -1259,6 +1268,7 @@ public class CalendarBookingLocalServiceTest {
 		assertStatus(childCalendarBooking, WorkflowConstants.STATUS_PENDING);
 	}
 
+	@Ignore
 	@Test
 	public void testInviteToStagedCalendarBookingResultsInMasterStagedChild()
 		throws Exception {
@@ -1283,6 +1293,7 @@ public class CalendarBookingLocalServiceTest {
 			calendarBooking.getStatus());
 	}
 
+	@Ignore
 	@Test
 	public void testInviteToStagedCalendarBookingResultsInPendingLiveChild()
 		throws Exception {
@@ -1318,6 +1329,7 @@ public class CalendarBookingLocalServiceTest {
 			calendarBooking.getTitle(), childCalendarBooking.getTitle());
 	}
 
+	@Ignore
 	@Test
 	public void testInviteUserCalendarWithWorkflowShouldInviteCalendarBookingOnlyAfterApprovedAndPublished()
 		throws Exception {
@@ -1373,6 +1385,7 @@ public class CalendarBookingLocalServiceTest {
 			childCalendarBookings.toString(), 1, childCalendarBookings.size());
 	}
 
+	@Ignore
 	@Test
 	public void testInviteUserCalendarWithWorkflowShouldNotCreatesCalendarBookingAfterPublish()
 		throws Exception {

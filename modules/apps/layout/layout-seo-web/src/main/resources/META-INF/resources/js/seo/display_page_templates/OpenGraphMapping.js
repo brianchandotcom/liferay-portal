@@ -79,7 +79,6 @@ function OpenGraphMapping({
 						Liferay.Language.get('text'),
 						Liferay.Language.get('open-graph-image-alt-description')
 					),
-					isUnmappeable: true,
 					label: Liferay.Language.get(
 						'open-graph-image-alt-description'
 					),

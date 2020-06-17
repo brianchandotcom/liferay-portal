@@ -27,7 +27,6 @@ function MappingInput({
 	fieldType,
 	helpMessage,
 	initialFields,
-	isUnmappeable,
 	label,
 	name,
 	selectedFieldKey,

@@ -1380,6 +1380,41 @@ definition {
 			locator1 = "PageEditor#VIEWPOINT_RESIZER");
 	}
 
+	@description = "This is a test for LPS-111946. Undo can bring deleted fragments and widgets back."
+	@priority = "5"
+	test UndoDeletedFragmentAndWidgetInPage {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "undoEnabled = true";
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.addWidget(
+			portletName = "Asset Publisher",
+			targetFragmentName = "Button");
+
+		PageEditor.removeFragment(fragmentName = "Button");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Button");
+
+		PageEditor.removeFragment(fragmentName = "Asset Publisher");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Asset Publisher");
+	}
+
 	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."
 	@priority = "5"
 	test UndoPagechangeThreeTimes {

@@ -31,6 +31,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.web.internal.asset.model.JournalArticleAssetRenderer;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
+import com.liferay.journal.web.internal.configuration.util.FFImportExportTranslationConfigurationUtil;
 import com.liferay.journal.web.internal.portlet.JournalPortlet;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.security.permission.resource.JournalFolderPermission;
@@ -142,10 +143,15 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission && hasUpdatePermission,
 			_getViewHistoryArticleActionUnsafeConsumer()
 		).add(
-			() -> hasViewPermission,
+			() ->
+				hasViewPermission &&
+				FFImportExportTranslationConfigurationUtil.enabled(),
 			_getExportForTranslationActionUnsafeConsumer()
 		).add(
-			() -> hasViewPermission, _getImportTranslationActionUnsafeConsumer()
+			() ->
+				hasViewPermission &&
+				FFImportExportTranslationConfigurationUtil.enabled(),
+			_getImportTranslationActionUnsafeConsumer()
 		).add(
 			() -> hasViewPermission && (availableLanguageIds.length > 1),
 			_getDeleteArticleTranslationsActionUnsafeConsumer()
@@ -453,8 +459,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
 				"/import_translation.jsp", "redirect", _getRedirect(),
 				"referringPortletResource", _getReferringPortletResource(),
-				"articleResourceId", _article.getResourcePrimKey(), "articleTitle",
-				_article.getTitle());
+				"articleResourceId", _article.getResourcePrimKey(),
+				"articleTitle", _article.getTitle());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "import-translation"));
 		};

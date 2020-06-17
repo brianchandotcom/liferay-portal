@@ -763,7 +763,7 @@ public class MainServlet extends HttpServlet {
 
 		if (StartupHelperUtil.isDBNew()) {
 			CompanyLocalServiceUtil.addCompany(
-				PropsValues.COMPANY_DEFAULT_WEB_ID, "localhost",
+				null, PropsValues.COMPANY_DEFAULT_WEB_ID, "localhost",
 				PropsValues.COMPANY_DEFAULT_WEB_ID, false, 0, true);
 		}
 

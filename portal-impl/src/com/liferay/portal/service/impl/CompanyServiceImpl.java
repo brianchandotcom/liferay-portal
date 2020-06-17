@@ -75,7 +75,7 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 		}
 
 		return companyLocalService.addCompany(
-			webId, virtualHost, mx, system, maxUsers, active);
+			null, webId, virtualHost, mx, system, maxUsers, active);
 	}
 
 	@JSONWebService(mode = JSONWebServiceMode.IGNORE)

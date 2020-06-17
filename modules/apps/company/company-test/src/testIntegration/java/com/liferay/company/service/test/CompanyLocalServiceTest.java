@@ -848,7 +848,7 @@ public class CompanyLocalServiceTest {
 		String webId = RandomTestUtil.randomString() + "test.com";
 
 		Company company = CompanyLocalServiceUtil.addCompany(
-			webId, webId, "test.com", false, 0, true);
+			null, webId, webId, "test.com", false, 0, true);
 
 		PortalInstances.initCompany(_mockServletContext, webId);
 

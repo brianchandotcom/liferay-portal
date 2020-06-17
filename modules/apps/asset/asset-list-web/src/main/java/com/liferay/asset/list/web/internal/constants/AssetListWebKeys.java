@@ -19,6 +19,9 @@ package com.liferay.asset.list.web.internal.constants;
  */
 public class AssetListWebKeys {
 
+	public static final String ASSET_LIST_CONTENT_DISPLAY_CONTEXT =
+		"ASSET_LIST_CONTENT_DISPLAY_CONTEXT";
+
 	public static final String ASSET_LIST_DISPLAY_CONTEXT =
 		"ASSET_LIST_DISPLAY_CONTEXT";
 

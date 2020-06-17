@@ -16,12 +16,16 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+AssetListContentDisplayContext assetListContentDisplayContext = (AssetListContentDisplayContext)request.getAttribute(AssetListWebKeys.ASSET_LIST_CONTENT_DISPLAY_CONTEXT);
+%>
+
 <clay:container-fluid
 	cssClass="pt-3"
 >
 	<liferay-ui:search-container
 		id="assetEntries"
-		searchContainer="<%= assetListDisplayContext.getAssetListContentSearchContainer() %>"
+		searchContainer="<%= assetListContentDisplayContext.getAssetListContentSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetEntry"

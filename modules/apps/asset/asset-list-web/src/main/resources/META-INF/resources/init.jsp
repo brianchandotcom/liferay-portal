@@ -44,6 +44,7 @@ page import="com.liferay.asset.list.model.AssetListEntry" %><%@
 page import="com.liferay.asset.list.model.AssetListEntryAssetEntryRel" %><%@
 page import="com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel" %><%@
 page import="com.liferay.asset.list.web.internal.constants.AssetListWebKeys" %><%@
+page import="com.liferay.asset.list.web.internal.display.context.AssetListContentDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListEntryUsagesDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListEntryUsagesManagementToolbarDisplayContext" %><%@

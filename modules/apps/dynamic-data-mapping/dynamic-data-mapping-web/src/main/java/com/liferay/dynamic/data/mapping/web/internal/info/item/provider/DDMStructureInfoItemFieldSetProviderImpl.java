@@ -15,26 +15,18 @@
 package com.liferay.dynamic.data.mapping.web.internal.info.item.provider;
 
 import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
+import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMStructureInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
-import com.liferay.info.field.type.BooleanInfoFieldType;
-import com.liferay.info.field.type.ImageInfoFieldType;
-import com.liferay.info.field.type.InfoFieldType;
-import com.liferay.info.field.type.IntegerInfoFieldType;
-import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,21 +66,8 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 					continue;
 				}
 
-				LocalizedValue label = ddmFormField.getLabel();
-
-				InfoLocalizedValue<String> labelInfoLocalizedValue =
-					InfoLocalizedValue.builder(
-					).addValues(
-						label.getValues()
-					).defaultLocale(
-						label.getDefaultLocale()
-					).build();
-
 				infoFieldSet.add(
-					new InfoField(
-						_getInfoFieldType(ddmFormField),
-						labelInfoLocalizedValue, ddmFormField.isLocalizable(),
-						ddmFormField.getName()));
+					_ddmFormFieldInfoFieldConverter.convert(ddmFormField));
 			}
 
 			return infoFieldSet;
@@ -102,28 +81,13 @@ public class DDMStructureInfoItemFieldSetProviderImpl
 		}
 	}
 
-	private InfoFieldType _getInfoFieldType(DDMFormField ddmFormField) {
-		String ddmFormFieldType = ddmFormField.getType();
-
-		if (Objects.equals(ddmFormFieldType, "ddm-image") ||
-			Objects.equals(ddmFormFieldType, "image")) {
-
-			return ImageInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.CHECKBOX)) {
-			return BooleanInfoFieldType.INSTANCE;
-		}
-		else if (Objects.equals(ddmFormFieldType, DDMFormFieldType.INTEGER)) {
-			return IntegerInfoFieldType.INSTANCE;
-		}
-
-		return TextInfoFieldType.INSTANCE;
-	}
-
 	private static final String[] _SELECTABLE_DDM_STRUCTURE_FIELDS = {
 		"checkbox", "ddm-date", "ddm-decimal", "ddm-image", "ddm-integer",
 		"ddm-number", "ddm-text-html", "radio", "select", "text", "textarea"
 	};
+
+	@Reference
+	private DDMFormFieldInfoFieldConverter _ddmFormFieldInfoFieldConverter;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

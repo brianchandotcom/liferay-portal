@@ -15,13 +15,23 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.constants.JournalWebKeys;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import java.io.IOException;
 
 /**
  * @author Ambrín Chaudhary
@@ -41,7 +51,25 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay) renderRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			JournalArticle article = _journalArticleLocalService.getArticle(
+				themeDisplay.getScopeGroupId(),
+				ParamUtil.getString(renderRequest, "articleId"));
+
+			renderRequest.setAttribute(JournalWebKeys.JOURNAL_ARTICLES, article);
+		}
+		catch (PortalException exception) {
+			throw new PortletException(exception);
+		}
+
 		return "/translate_side_by_side.jsp";
 	}
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

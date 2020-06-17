@@ -17,7 +17,6 @@ package com.liferay.asset.categories.admin.web.internal.util;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -50,19 +49,6 @@ public class AssetCategoryUtil {
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
 
-		BreadcrumbEntry vocabulariesBreadcrumbEntry = new BreadcrumbEntry();
-
-		vocabulariesBreadcrumbEntry.setTitle(
-			LanguageUtil.get(httpServletRequest, "vocabularies"));
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-
-		vocabulariesBreadcrumbEntry.setURL(portletURL.toString());
-
-		breadcrumbEntries.add(vocabulariesBreadcrumbEntry);
-
 		if (category == null) {
 			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
 
@@ -75,6 +61,8 @@ public class AssetCategoryUtil {
 		}
 
 		BreadcrumbEntry vocabularyBreadcrumbEntry = new BreadcrumbEntry();
+
+		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
 

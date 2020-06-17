@@ -43,22 +43,15 @@ public class AssetCategoryUtil {
 			RenderResponse renderResponse)
 		throws PortalException {
 
+		if (category == null) {
+			return Collections.emptyList();
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 		List<BreadcrumbEntry> breadcrumbEntries = new ArrayList<>();
-
-		if (category == null) {
-			BreadcrumbEntry breadcrumbEntry = new BreadcrumbEntry();
-
-			breadcrumbEntry.setTitle(
-				vocabulary.getTitle(themeDisplay.getLocale()));
-
-			breadcrumbEntries.add(breadcrumbEntry);
-
-			return breadcrumbEntries;
-		}
 
 		BreadcrumbEntry vocabularyBreadcrumbEntry = new BreadcrumbEntry();
 

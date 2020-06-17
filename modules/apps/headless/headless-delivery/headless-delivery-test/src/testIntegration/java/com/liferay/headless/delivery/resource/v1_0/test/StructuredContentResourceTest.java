@@ -59,6 +59,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -140,6 +141,7 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(title, structuredContent.getTitle());
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testGetStructuredContent() throws Exception {

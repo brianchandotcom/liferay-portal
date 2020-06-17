@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>DETAILS_ACTIVE</td>
-	<td>//a[(@class='nav-link active') and contains(.,'Details')]</td>
+	<td>//*[(@class='nav-link active') and contains(.,'Details')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>ADDRESSES</td>
-	<td>//a[contains(@class,'nav-link') and contains(.,'Addresses')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Addresses')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,17 +30,17 @@
 </tr>
 <tr>
 	<td>ASSET_LIBRARIES</td>
-	<td>//a[contains(@class,'nav-link')]/span[contains(.,'Asset Libraries')]</td>
+	<td>//*[contains(@class,'nav-link')]/span[contains(.,'Asset Libraries')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//a[contains(@class,'nav-link') and contains(text(),'${key_assetTitle}')] | //a[.='${key_assetTitle}']</td>
+	<td>//*[contains(@class,'nav-link') and contains(text(),'${key_assetTitle}')] | //a[.='${key_assetTitle}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TITLE_LINK</td>
-	<td>//a[contains(@class,'nav-link')]//span[contains(text(),'${key_assetTitle}')]/../../a</td>
+	<td>//*[contains(@class,'nav-link')]//span[contains(text(),'${key_assetTitle}')]/../../a</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>MY_SITES</td>
-	<td>//a[contains(@class,'nav-link')]/span[contains(.,'My Sites')]</td>
+	<td>//*[contains(@class,'nav-link')]/span[contains(.,'My Sites')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>NAV_ITEM_REDIRECTION</td>
-	<td>//a[contains(@class,'nav-link')]/span[contains(.,'${key_navItem}')]</td>
+	<td>//*[contains(@class,'nav-link')]/span[contains(.,'${key_navItem}')]</td>
 	<td></td>
 </tr>
 <tr>

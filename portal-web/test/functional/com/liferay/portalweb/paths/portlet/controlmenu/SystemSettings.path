@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SCOPED_CONFIGURATION_NAME</td>
-	<td>//a[contains(.,'${key_configurationScope}')]/following-sibling::div//a[contains(@class,'nav-link') and normalize-space(./text())='${key_configurationName}']</td>
+	<td>//a[contains(.,'${key_configurationScope}')]/following-sibling::div//*[contains(@class,'nav-link') and normalize-space(./text())='${key_configurationName}']</td>
 	<td></td>
 </tr>
 <tr>

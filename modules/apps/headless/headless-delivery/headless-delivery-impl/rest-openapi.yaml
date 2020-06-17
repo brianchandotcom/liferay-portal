@@ -237,6 +237,13 @@ components:
                 - className
                 - classPK
             type: object
+        ColumnViewportConfigDefinition:
+            properties:
+                size:
+                    maximum: 12
+                    minimum: 1
+                    type: integer
+            type: object
         Comment:
             description:
                 Represents a comment. See [Comment](https://www.schema.org/Comment) for more details.
@@ -2012,19 +2019,19 @@ components:
             type: object
         PageColumnDefinition:
             properties:
+                columnViewportConfig:
+                    properties:
+                        landscapeMobile:
+                            $ref: "#/components/schemas/ColumnViewportConfigDefinition"
+                        portraitMobile:
+                            $ref: "#/components/schemas/ColumnViewportConfigDefinition"
+                        tablet:
+                            $ref: "#/components/schemas/ColumnViewportConfigDefinition"
+                    type: object
                 size:
                     maximum: 12
                     minimum: 1
                     type: integer
-                viewportColumnConfig:
-                    properties:
-                        landscapeMobile:
-                            $ref: "#/components/schemas/ViewportColumnConfigDefinition"
-                        portraitMobile:
-                            $ref: "#/components/schemas/ViewportColumnConfigDefinition"
-                        tablet:
-                            $ref: "#/components/schemas/ViewportColumnConfigDefinition"
-                    type: object
             type: object
         PageDefinition:
             description:
@@ -2105,17 +2112,17 @@ components:
                     type: integer
                 reverseOrder:
                     type: boolean
-                verticalAlignment:
-                    type: string
-                viewportRowConfig:
+                rowViewportConfig:
                     properties:
                         landscapeMobile:
-                            $ref: "#/components/schemas/ViewportRowConfigDefinition"
+                            $ref: "#/components/schemas/RowViewportConfigDefinition"
                         portraitMobile:
-                            $ref: "#/components/schemas/ViewportRowConfigDefinition"
+                            $ref: "#/components/schemas/RowViewportConfigDefinition"
                         tablet:
-                            $ref: "#/components/schemas/ViewportRowConfigDefinition"
+                            $ref: "#/components/schemas/RowViewportConfigDefinition"
                     type: object
+                verticalAlignment:
+                    type: string
             type: object
         PageSectionDefinition:
             properties:
@@ -2297,6 +2304,15 @@ components:
                         The title of the content.
                     readOnly: true
                     type: string
+        RowViewportConfigDefinition:
+            properties:
+                modulesPerRow:
+                    type: integer
+                reverseOrder:
+                    type: boolean
+                verticalAlignment:
+                    type: string
+            type: object
         StructuredContent:
             description:
                 Represents content that has fields and is rendered by a template backed by a `ContentStructure`. This is
@@ -2576,24 +2592,6 @@ components:
                         type: string
                     readOnly: true
                     type: object
-            type: object
-        ViewportColumnConfigDefinition:
-            # @review
-            properties:
-                size:
-                    maximum: 12
-                    minimum: 1
-                    type: integer
-            type: object
-        ViewportRowConfigDefinition:
-            # @review
-            properties:
-                modulesPerRow:
-                    type: integer
-                reverseOrder:
-                    type: boolean
-                verticalAlignment:
-                    type: string
             type: object
         WidgetInstance:
             properties:

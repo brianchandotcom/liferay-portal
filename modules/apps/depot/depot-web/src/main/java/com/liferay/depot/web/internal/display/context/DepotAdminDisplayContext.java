@@ -17,7 +17,6 @@ package com.liferay.depot.web.internal.display.context;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryGroupRelServiceUtil;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.depot.web.internal.constants.DepotAdminWebKeys;
 import com.liferay.depot.web.internal.search.DepotEntrySearch;
 import com.liferay.depot.web.internal.servlet.taglib.clay.DepotEntryVerticalCard;
 import com.liferay.depot.web.internal.servlet.taglib.util.DepotActionDropdownItemsProvider;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
 import java.util.Objects;
@@ -69,8 +67,6 @@ public class DepotAdminDisplayContext {
 		_depotEntryLocalService =
 			(DepotEntryLocalService)httpServletRequest.getAttribute(
 				DepotEntryLocalService.class.getName());
-		_groupURLProvider = (GroupURLProvider)httpServletRequest.getAttribute(
-			DepotAdminWebKeys.DEPOT_ADMIN_GROUP_URL_PROVIDER);
 	}
 
 	public List<DropdownItem> getActionDropdownItems(DepotEntry depotEntry) {
@@ -99,8 +95,8 @@ public class DepotAdminDisplayContext {
 		SearchContainer<DepotEntry> searchContainer = searchContainer();
 
 		return new DepotEntryVerticalCard(
-			depotEntry, _groupURLProvider, _liferayPortletRequest,
-			_liferayPortletResponse, searchContainer.getRowChecker());
+			depotEntry, _liferayPortletRequest, _liferayPortletResponse,
+			searchContainer.getRowChecker());
 	}
 
 	public String getDisplayStyle() {
@@ -201,7 +197,6 @@ public class DepotAdminDisplayContext {
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private DepotEntrySearch _depotEntrySearch;
 	private String _displayStyle;
-	private final GroupURLProvider _groupURLProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.util.GroupURLProvider;
 
 import java.util.List;
 
@@ -44,8 +43,7 @@ public class DepotEntryVerticalCard
 	extends BaseBaseClayCard implements VerticalCard {
 
 	public DepotEntryVerticalCard(
-			DepotEntry depotEntry, GroupURLProvider groupURLProvider,
-			LiferayPortletRequest liferayPortletRequest,
+			DepotEntry depotEntry, LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
 			RowChecker rowChecker)
 		throws PortalException {
@@ -53,7 +51,6 @@ public class DepotEntryVerticalCard
 		super(depotEntry, rowChecker);
 
 		_depotEntry = depotEntry;
-		_groupURLProvider = groupURLProvider;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -126,7 +123,6 @@ public class DepotEntryVerticalCard
 
 	private final DepotEntry _depotEntry;
 	private final Group _group;
-	private final GroupURLProvider _groupURLProvider;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final ThemeDisplay _themeDisplay;

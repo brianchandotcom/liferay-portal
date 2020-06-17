@@ -164,9 +164,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected void initPortalCacheManager() {
-		setBlockingPortalCacheAllowed(
-			GetterUtil.getBoolean(
-				props.get(PropsKeys.EHCACHE_BLOCKING_CACHE_ALLOWED)));
 		setTransactionalPortalCacheEnabled(
 			GetterUtil.getBoolean(
 				props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED)));

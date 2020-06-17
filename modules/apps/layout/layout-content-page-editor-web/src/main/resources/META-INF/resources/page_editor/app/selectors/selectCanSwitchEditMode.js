@@ -12,13 +12,11 @@
  * details.
  */
 
-export type ACTION_KEYS =
-	| 'EDIT_SEGMENTS_ENTRY'
-	| 'LOCKED_SEGMENTS_EXPERIMENT'
-	| 'SWITCH_EDIT_MODE'
-	| 'UPDATE'
-	| 'UPDATE_LAYOUT_CONTENT';
-
-export type ActionKeysMap = {
-	[key in ACTION_KEYS]: boolean;
-};
+/**
+ * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
+ */
+export default function selectCanSwitchEditMode({permissions}) {
+	return (
+		!permissions.LOCKED_SEGMENTS_EXPERIMENT && permissions.SWITCH_EDIT_MODE
+	);
+}

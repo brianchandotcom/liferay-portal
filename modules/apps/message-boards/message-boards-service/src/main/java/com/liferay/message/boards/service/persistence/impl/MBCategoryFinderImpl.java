@@ -20,7 +20,6 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.impl.MBCategoryImpl;
 import com.liferay.message.boards.model.impl.MBThreadImpl;
 import com.liferay.message.boards.service.MBMessageLocalService;
-import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.message.boards.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.service.persistence.MBCategoryUtil;
 import com.liferay.message.boards.service.persistence.MBThreadUtil;
@@ -562,9 +561,6 @@ public class MBCategoryFinderImpl
 					groupId);
 
 			if (subscription != null) {
-				int threadCount = _mbThreadLocalService.getCategoryThreadsCount(
-					groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-					WorkflowConstants.STATUS_APPROVED);
 				int messageCount =
 					_mbMessageLocalService.getCategoryMessagesCount(
 						groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
@@ -577,7 +573,6 @@ public class MBCategoryFinderImpl
 				category.setName(group.getDescriptiveName());
 				category.setDescription(
 					group.getDescription(LocaleUtil.getMostRelevantLocale()));
-				category.setThreadCount(threadCount);
 				category.setMessageCount(messageCount);
 
 				list.add(category);
@@ -729,9 +724,6 @@ public class MBCategoryFinderImpl
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;
-
-	@Reference
-	private MBThreadLocalService _mbThreadLocalService;
 
 	@Reference
 	private Portal _portal;

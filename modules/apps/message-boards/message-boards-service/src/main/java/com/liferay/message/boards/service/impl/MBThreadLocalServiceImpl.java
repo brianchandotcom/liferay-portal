@@ -1074,16 +1074,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBUtil.updateThreadMessageCount(oldThread.getThreadId());
 
-		// Category
-
-		if ((message.getCategoryId() !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(message.getCategoryId() !=
-				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			MBUtil.updateCategoryThreadCount(category.getCategoryId());
-		}
-
 		// Indexer
 
 		Indexer<MBThread> threadIndexer =

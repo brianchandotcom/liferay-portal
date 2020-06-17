@@ -122,21 +122,6 @@ public class MBUtil {
 		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
-	public static void updateCategoryThreadCount(final long categoryId) {
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				MBCategoryLocalServiceUtil.updateThreadCount(categoryId);
-
-				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
-	}
-
 	public static void updateThreadMessageCount(final long threadId) {
 		Callable<Void> callable = new Callable<Void>() {
 

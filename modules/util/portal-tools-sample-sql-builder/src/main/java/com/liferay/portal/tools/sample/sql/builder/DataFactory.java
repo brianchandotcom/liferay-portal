@@ -4028,8 +4028,6 @@ public class DataFactory {
 		mbCategoryModel.setName("Test Category " + index);
 		mbCategoryModel.setDisplayStyle(
 			MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
-		mbCategoryModel.setThreadCount(
-			BenchmarksPropsValues.MAX_MB_THREAD_COUNT);
 		mbCategoryModel.setMessageCount(
 			BenchmarksPropsValues.MAX_MB_THREAD_COUNT *
 				BenchmarksPropsValues.MAX_MB_MESSAGE_COUNT);

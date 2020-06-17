@@ -17,7 +17,9 @@ package com.liferay.message.boards.model.impl;
 import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
+import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +72,12 @@ public class MBCategoryImpl extends MBCategoryBaseImpl {
 		}
 
 		return MBCategoryLocalServiceUtil.getCategory(getParentCategoryId());
+	}
+
+	@Override
+	public int getThreadCount() {
+		return MBThreadLocalServiceUtil.getThreadsCount(
+			getGroupId(), getCategoryId(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

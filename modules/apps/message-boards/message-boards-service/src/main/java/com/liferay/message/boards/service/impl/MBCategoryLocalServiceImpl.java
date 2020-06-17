@@ -872,12 +872,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		mbCategory.setMessageCount(messageCount);
 
-		int threadCount = _mbThreadLocalService.getCategoryThreadsCount(
-			mbCategory.getGroupId(), mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		mbCategory.setThreadCount(threadCount);
-
 		return mbCategoryPersistence.update(mbCategory);
 	}
 
@@ -898,24 +892,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setStatusDate(new Date());
 
 		return mbCategoryPersistence.update(category);
-	}
-
-	@Override
-	public MBCategory updateThreadCount(long categoryId) {
-		MBCategory mbCategory = mbCategoryPersistence.fetchByPrimaryKey(
-			categoryId);
-
-		if (mbCategory == null) {
-			return null;
-		}
-
-		int threadCount = _mbThreadLocalService.getCategoryThreadsCount(
-			mbCategory.getGroupId(), mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		mbCategory.setThreadCount(threadCount);
-
-		return mbCategoryPersistence.update(mbCategory);
 	}
 
 	protected long getParentCategoryId(long groupId, long parentCategoryId) {
@@ -1018,8 +994,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory toCategory = mbCategoryPersistence.findByPrimaryKey(
 			toCategoryId);
 
-		toCategory.setThreadCount(
-			fromCategory.getThreadCount() + toCategory.getThreadCount());
 		toCategory.setMessageCount(
 			fromCategory.getMessageCount() + toCategory.getMessageCount());
 

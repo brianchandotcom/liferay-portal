@@ -56,7 +56,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -152,8 +154,7 @@ public class DuplicateItemMVCActionCommand
 			SegmentsExperienceConstants.ID_DEFAULT);
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 
-		JSONArray duplicatedFragmentEntryLinksJSONArray =
-			JSONFactoryUtil.createJSONArray();
+		Set<Long> duplicatedFragmentEntryLinkIds = new HashSet<>();
 		List<String> duplicatedLayoutStructureItemIds = new ArrayList<>();
 
 		JSONObject layoutDataJSONObject =
@@ -181,27 +182,24 @@ public class DuplicateItemMVCActionCommand
 								(FragmentLayoutStructureItem)
 									duplicatedLayoutStructureItem;
 
-						JSONObject fragmentEntryLinkJSONObject =
-							_duplicateFragmentEntryLink(
-								actionRequest, actionResponse,
-								fragmentLayoutStructureItem.
-									getFragmentEntryLinkId());
+						long fragmentEntryLinkId = _duplicateFragmentEntryLink(
+							actionRequest,
+							fragmentLayoutStructureItem.
+								getFragmentEntryLinkId());
 
 						layoutStructure.updateItemConfig(
 							JSONUtil.put(
-								"fragmentEntryLinkId",
-								fragmentEntryLinkJSONObject.get(
-									"fragmentEntryLinkId")),
+								"fragmentEntryLinkId", fragmentEntryLinkId),
 							duplicatedLayoutStructureItem.getItemId());
 
-						duplicatedFragmentEntryLinksJSONArray.put(
-							fragmentEntryLinkJSONObject);
+						duplicatedFragmentEntryLinkIds.add(fragmentEntryLinkId);
 					}
 				});
 
 		JSONObject jsonObject = JSONUtil.put(
 			"duplicatedFragmentEntryLinks",
-			duplicatedFragmentEntryLinksJSONArray);
+			_getDuplicatedFragmentEntryLinks(
+				actionRequest, actionResponse, duplicatedFragmentEntryLinkIds));
 
 		if (!duplicatedLayoutStructureItemIds.isEmpty()) {
 			jsonObject.put(
@@ -235,9 +233,8 @@ public class DuplicateItemMVCActionCommand
 			PortletPreferencesFactoryUtil.toXML(portletPreferences));
 	}
 
-	private JSONObject _duplicateFragmentEntryLink(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			long fragmentEntryLinkId)
+	private long _duplicateFragmentEntryLink(
+			ActionRequest actionRequest, long fragmentEntryLinkId)
 		throws PortalException {
 
 		FragmentEntryLink fragmentEntryLink =
@@ -271,7 +268,7 @@ public class DuplicateItemMVCActionCommand
 				namespace);
 		}
 
-		FragmentEntryLink duplicateFragmentEntryLink =
+		FragmentEntryLink duplicatedFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				fragmentEntryLink.getGroupId(),
 				fragmentEntryLink.getOriginalFragmentEntryLinkId(),
@@ -283,11 +280,36 @@ public class DuplicateItemMVCActionCommand
 				editableValuesJSONObject.toString(), namespace, 0,
 				fragmentEntryLink.getRendererKey(), serviceContext);
 
-		return FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
-			actionRequest, actionResponse, _fragmentEntryConfigurationParser,
-			duplicateFragmentEntryLink, _fragmentCollectionContributorTracker,
-			_fragmentRendererController, _fragmentRendererTracker,
-			_itemSelector, portletId);
+		return duplicatedFragmentEntryLink.getFragmentEntryLinkId();
+	}
+
+	private JSONArray _getDuplicatedFragmentEntryLinks(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			Set<Long> duplicatedFragmentEntryLinkIds)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (long fragmentEntryLinkId : duplicatedFragmentEntryLinkIds) {
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.getFragmentEntryLink(
+					fragmentEntryLinkId);
+
+			JSONObject editableValuesJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					fragmentEntryLink.getEditableValues());
+
+			jsonArray.put(
+				FragmentEntryLinkUtil.getFragmentEntryLinkJSONObject(
+					actionRequest, actionResponse,
+					_fragmentEntryConfigurationParser, fragmentEntryLink,
+					_fragmentCollectionContributorTracker,
+					_fragmentRendererController, _fragmentRendererTracker,
+					_itemSelector,
+					editableValuesJSONObject.getString("portletId")));
+		}
+
+		return jsonArray;
 	}
 
 	@Reference

@@ -18,7 +18,6 @@ definition {
 	test ViewLocalizedChinese {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Localized Page");
@@ -40,7 +39,6 @@ definition {
 	test ViewLocalizedEnglish {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Localized Page");
@@ -64,7 +62,6 @@ definition {
 	test ViewLocalizedFrench {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Localized Page");
@@ -86,7 +83,6 @@ definition {
 	test ViewLocalizedSpanish {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Localized Page");

@@ -1501,7 +1501,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			panel = "Site Administration",
 			portlet = "Test App A");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
@@ -1540,7 +1539,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			panel = "Site Administration",
 			portlet = "Test App A");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
@@ -1585,14 +1583,12 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			panel = "Site Administration",
 			portlet = "Test App A");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			panel = "Site Administration",
 			portlet = "Test App B");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App B");
@@ -1603,7 +1599,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
-			panel = "Site Administration",
 			portlet = "Test App A");
 
 		AppBuilderAdmin.validateProductMenuApp(appName = "Test App A");

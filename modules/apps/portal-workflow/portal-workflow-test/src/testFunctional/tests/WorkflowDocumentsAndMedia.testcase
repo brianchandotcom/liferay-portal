@@ -30,7 +30,6 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
-				panel = "Site Administration",
 				portlet = "Documents and Media",
 				site = "${siteName}");
 
@@ -138,7 +137,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${siteName}");
 
@@ -154,7 +152,6 @@ definition {
 		for (var entryCount : list "1,2,3") {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
-				panel = "Site Administration",
 				portlet = "Documents and Media",
 				site = "${siteName}");
 
@@ -224,7 +221,6 @@ definition {
 		for (var entryCount : list "1,2,3") {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
-				panel = "Site Administration",
 				portlet = "Documents and Media",
 				site = "${siteName}");
 
@@ -244,7 +240,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${siteName}");
 
@@ -291,7 +286,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${siteName}");
 
@@ -381,7 +375,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Categories",
 			site = "${siteName}");
 
@@ -395,7 +388,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Categories",
 			site = "${siteName}");
 
@@ -407,7 +399,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${siteName}");
 
@@ -424,7 +415,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${siteName}");
 
@@ -463,7 +453,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${siteName}");
 
@@ -485,7 +474,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${siteName}");
 

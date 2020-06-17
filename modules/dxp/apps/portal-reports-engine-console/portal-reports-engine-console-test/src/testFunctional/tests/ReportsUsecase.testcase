@@ -36,7 +36,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -58,7 +57,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -77,7 +75,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Reports Page");
@@ -100,7 +97,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		for (var number : list "1,2,3,4,5,6") {
@@ -145,7 +141,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoConfiguration();
@@ -188,7 +183,6 @@ Thanks,<br/>
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -225,7 +219,6 @@ Thanks,<br/>
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.tearDownConfiguration();
@@ -239,7 +232,6 @@ Thanks,<br/>
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -258,7 +250,6 @@ Thanks,<br/>
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Reports Page");

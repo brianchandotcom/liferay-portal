@@ -258,7 +258,7 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Content",
-				panel = "Site Administration",
+
 				portlet = "Blogs"
 			);
 
@@ -273,7 +273,7 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Content",
-				panel = "Site Administration",
+
 				portlet = "Blogs"
 			);
 

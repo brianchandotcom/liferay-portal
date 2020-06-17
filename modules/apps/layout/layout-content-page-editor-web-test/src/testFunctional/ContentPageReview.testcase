@@ -286,7 +286,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Staging",
 			site = "Test Site Name");
 
@@ -530,7 +529,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
-			panel = "Site Administration",
 			portlet = "Segments");
 
 		LexiconEntry.gotoAdd();

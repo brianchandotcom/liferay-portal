@@ -110,7 +110,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		while (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {

@@ -87,7 +87,6 @@ definition {
 	macro disableOpenGraphAtSiteLevel {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Settings");
 
 		Panel.expandPanel(panel = "Open Graph");

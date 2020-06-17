@@ -46,7 +46,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Wiki");
 
 		LexiconEntry.openEntryMenu(rowEntry = "Main");

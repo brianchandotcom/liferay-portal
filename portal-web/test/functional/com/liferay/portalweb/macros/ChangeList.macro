@@ -224,7 +224,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Staging",
 			site = "${site}");
 
@@ -256,7 +255,6 @@ definition {
 	macro viewWarningOnPortletExport {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "${portletName}",
 			site = "${site}");
 
@@ -272,7 +270,6 @@ definition {
 	macro viewWarningOnPortletImport {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "${portletName}",
 			site = "${site}");
 
@@ -290,7 +287,6 @@ definition {
 	macro viewWarningOnSiteExportImport {
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "${portletName}",
 			site = "${site}");
 

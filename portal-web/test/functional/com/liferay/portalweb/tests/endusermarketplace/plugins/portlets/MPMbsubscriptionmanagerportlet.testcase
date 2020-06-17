@@ -16,7 +16,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Message Boards Subscription Manager");
 
 		GlobalMenu.gotoPortlet(

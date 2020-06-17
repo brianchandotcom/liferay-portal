@@ -36,7 +36,6 @@ definition {
 	test ViewCollaborationPortlets {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Collaboration Page");

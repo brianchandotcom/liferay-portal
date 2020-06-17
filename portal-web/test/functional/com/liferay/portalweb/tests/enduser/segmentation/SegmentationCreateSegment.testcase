@@ -14,7 +14,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
-			panel = "Site Administration",
 			portlet = "Segments");
 	}
 
@@ -27,7 +26,6 @@ definition {
 		else {
 			ProductMenu.gotoPortlet(
 				category = "People",
-				panel = "Site Administration",
 				portlet = "Segments");
 
 			if (IsElementPresent(locator1 = "Segmentation#SEGMENT_LIST")) {

@@ -18,7 +18,6 @@ definition {
 	test ViewDependencyAbleFox {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Dependency Page");

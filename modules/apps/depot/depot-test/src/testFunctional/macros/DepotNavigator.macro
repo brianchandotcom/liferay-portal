@@ -79,7 +79,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "${category}",
-			panel = "Site Administration",
 			portlet = "${portlet}");
 	}
 

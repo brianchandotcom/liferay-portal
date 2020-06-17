@@ -35,7 +35,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -97,7 +96,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -128,7 +126,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
@@ -150,7 +147,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -188,7 +184,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -220,7 +215,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.viewReportEntry(reportsDefinitionName = "Reports Definition Name");
@@ -241,7 +235,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -287,7 +280,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -322,7 +314,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -359,7 +350,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -396,7 +386,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -431,7 +420,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -466,7 +454,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -501,7 +488,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -543,7 +529,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoSources();
@@ -583,7 +568,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -661,7 +645,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -713,7 +696,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();

@@ -18,6 +18,7 @@ import {
 	generateInstanceId,
 } from 'dynamic-data-mapping-form-renderer';
 
+import {getDefaultFieldName} from '../../../util/fieldSupport.es';
 import {sub} from '../../../util/strings.es';
 import {getFieldLocalizedValue} from '../util/fields.es';
 import {
@@ -28,8 +29,11 @@ import {
 
 export const createDuplicatedField = (originalField, props, blacklist = []) => {
 	const {editingLanguageId, fieldNameGenerator} = props;
-	const label = getLabel(originalField, editingLanguageId);
-	const newFieldName = fieldNameGenerator(label, null, blacklist);
+	const newFieldName = fieldNameGenerator(
+		getDefaultFieldName(),
+		null,
+		blacklist
+	);
 
 	let duplicatedField = updateField(
 		props,
@@ -39,6 +43,8 @@ export const createDuplicatedField = (originalField, props, blacklist = []) => {
 	);
 
 	duplicatedField.instanceId = generateInstanceId(8);
+
+	const label = getLabel(originalField, editingLanguageId);
 
 	duplicatedField = updateField(props, duplicatedField, 'label', label);
 

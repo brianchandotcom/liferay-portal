@@ -47,7 +47,7 @@ export const createField = (props, event) => {
 			});
 		}
 		else {
-			newFieldName = fieldNameGenerator(fieldType.label);
+			newFieldName = fieldNameGenerator(getDefaultFieldName());
 		}
 	}
 
@@ -88,17 +88,26 @@ export const formatFieldName = (instanceId, languageId, value) => {
 	return `ddm$$${value}$${instanceId}$0$$${languageId}`;
 };
 
-export const generateInstanceId = (length) => {
+export const generateId = (length, allowOnlyNumbers = false) => {
 	let text = '';
 
-	const possible =
-		'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	const possible = allowOnlyNumbers
+		? '0123456789'
+		: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 	for (let i = 0; i < length; i++) {
 		text += possible.charAt(Math.floor(Math.random() * possible.length));
 	}
 
 	return text;
+};
+
+export const generateInstanceId = (length) => {
+	return generateId(length);
+};
+
+export const getDefaultFieldName = () => {
+	return Liferay.Language.get('field') + generateId(8, true);
 };
 
 export const getField = (pages, fieldName) => {

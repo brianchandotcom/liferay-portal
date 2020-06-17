@@ -149,8 +149,11 @@ public class DDMFormInstanceReportLocalServiceTest
 				getFormInstanceReportByFormInstanceId(
 					_ddmFormInstance.getFormInstanceId());
 
+		long formInstanceRecordVersionId = 0;
+
 		_ddmFormInstanceReportLocalService.processFormInstanceReportEvent(
-			ddmFormInstanceReport.getFormInstanceReportId(), 0,
+			ddmFormInstanceReport.getFormInstanceReportId(),
+			formInstanceRecordVersionId,
 			DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		ddmFormInstanceReport =

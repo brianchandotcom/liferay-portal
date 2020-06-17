@@ -21,11 +21,12 @@ import DataLayoutBuilder from '../../data-layout-builder/DataLayoutBuilder.es';
 import DataLayoutBuilderContext from '../../data-layout-builder/DataLayoutBuilderContext.es';
 import {DRAG_FIELDSET} from '../../drag-and-drop/dragTypes.es';
 import {containsFieldSet} from '../../utils/dataDefinition.es';
+import EmptyState from '../empty-state/EmptyState.es';
 import FieldType from '../field-types/FieldType.es';
 import FieldSetModal from './FieldSetModal.es';
 import useDeleteFieldSet from './actions/useDeleteFieldSet.es';
 
-export default function FieldSets() {
+export default function FieldSets({keywords}) {
 	const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 	const [{appProps, dataDefinition, fieldSets}, dispatch] = useContext(
@@ -101,58 +102,88 @@ export default function FieldSets() {
 			})
 		);
 	};
-	fieldSets.sort(({name: a}, {name: b}) =>
-		a[defaultLanguageId].localeCompare(b[defaultLanguageId])
+
+	const AddButton = () => (
+		<ClayButton
+			block
+			className="add-fieldset"
+			displayType="secondary"
+			onClick={() => toggleFieldSet()}
+		>
+			{Liferay.Language.get('add-fieldset')}
+		</ClayButton>
 	);
+
+	const filteredFieldSets = fieldSets
+		.filter(({name}) =>
+			new RegExp(keywords, 'ig').test(name[defaultLanguageId])
+		)
+		.sort(({name: a}, {name: b}) =>
+			a[defaultLanguageId].localeCompare(b[defaultLanguageId])
+		);
 
 	return (
 		<>
-			<ClayButton
-				block
-				className="add-fieldset"
-				displayType="secondary"
-				onClick={() => toggleFieldSet()}
-			>
-				{Liferay.Language.get('add-fieldset')}
-			</ClayButton>
+			{filteredFieldSets.length ? (
+				<>
+					<AddButton />
+					<div className="mt-3">
+						{filteredFieldSets.map((fieldSet) => {
+							const fieldSetName =
+								fieldSet.name[defaultLanguageId];
+							const dropDownActions = [
+								{
+									action: () => toggleFieldSet(fieldSet),
+									name: Liferay.Language.get('edit'),
+								},
+								{
+									action: () => deleteFieldSet(fieldSet),
+									name: Liferay.Language.get('delete'),
+								},
+							];
 
-			<div className="mt-3">
-				{fieldSets.map((fieldSet) => {
-					const dropDownActions = [
-						{
-							action: () => toggleFieldSet(fieldSet),
-							name: Liferay.Language.get('edit'),
-						},
-						{
-							action: () => deleteFieldSet(fieldSet),
-							name: Liferay.Language.get('delete'),
-						},
-					];
+							const disabled =
+								dataDefinition.name[defaultLanguageId] ===
+								fieldSetName;
 
-					const disabled =
-						dataDefinition.name[defaultLanguageId] ===
-						fieldSet.name[defaultLanguageId];
-
-					return (
-						<FieldType
-							actions={dropDownActions}
-							description={`${
-								fieldSet.dataDefinitionFields.length
-							} ${Liferay.Language.get('fields')}`}
-							disabled={
-								disabled ||
-								containsFieldSet(dataDefinition, fieldSet.id)
-							}
-							dragType={DRAG_FIELDSET}
-							fieldSet={fieldSet}
-							icon="forms"
-							key={fieldSet.dataDefinitionKey}
-							label={fieldSet.name[defaultLanguageId]}
-							onDoubleClick={onDoubleClick}
-						/>
-					);
-				})}
-			</div>
+							return (
+								<FieldType
+									actions={dropDownActions}
+									description={`${
+										fieldSet.dataDefinitionFields.length
+									} ${Liferay.Language.get('fields')}`}
+									disabled={
+										disabled ||
+										containsFieldSet(
+											dataDefinition,
+											fieldSet.id
+										)
+									}
+									dragType={DRAG_FIELDSET}
+									fieldSet={fieldSet}
+									icon="forms"
+									key={fieldSet.dataDefinitionKey}
+									label={fieldSetName}
+									onDoubleClick={onDoubleClick}
+								/>
+							);
+						})}
+					</div>
+				</>
+			) : (
+				<div className="mt--2">
+					<EmptyState
+						emptyState={{
+							button: AddButton,
+							title: Liferay.Language.get(
+								'there-are-no-fieldsets'
+							),
+						}}
+						keywords={keywords}
+						small
+					/>
+				</div>
+			)}
 
 			<FieldSetModal
 				defaultLanguageId={defaultLanguageId}

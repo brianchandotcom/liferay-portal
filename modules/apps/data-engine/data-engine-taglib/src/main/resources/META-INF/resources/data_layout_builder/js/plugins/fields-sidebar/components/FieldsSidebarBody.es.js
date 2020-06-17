@@ -21,7 +21,7 @@ import FieldTypeList from '../../../components/field-types/FieldTypeList.es';
 import Sidebar from '../../../components/sidebar/Sidebar.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 
-export default function ({keywords}) {
+export default function ({keywords, setKeywords}) {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 
 	const [
@@ -70,9 +70,9 @@ export default function ({keywords}) {
 	if (allowFieldSets) {
 		tabs.push({
 			label: Liferay.Language.get('fieldsets'),
-			render: () => <FieldSets />,
+			render: () => <FieldSets keywords={keywords} />,
 		});
 	}
 
-	return <Sidebar.Tabs tabs={tabs} />;
+	return <Sidebar.Tabs setKeywords={setKeywords} tabs={tabs} />;
 }

@@ -45,6 +45,7 @@ export default function ({title}) {
 					<ClayForm onSubmit={(event) => event.preventDefault()}>
 						<Sidebar.SearchInput
 							onSearch={(keywords) => setKeywords(keywords)}
+							searchText={keywords}
 						/>
 					</ClayForm>
 				)}
@@ -54,7 +55,10 @@ export default function ({title}) {
 				{displaySettings ? (
 					<FieldsSidebarSettingsBody />
 				) : (
-					<FieldsSidebarBody keywords={keywords} />
+					<FieldsSidebarBody
+						keywords={keywords}
+						setKeywords={setKeywords}
+					/>
 				)}
 			</Sidebar.Body>
 		</Sidebar>

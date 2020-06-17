@@ -47,11 +47,14 @@ const SidebarHeader = ({children, className}) => {
 	);
 };
 
-const SidebarSearchInput = ({children, onSearch}) => (
+const SidebarSearchInput = ({children, onSearch, searchText}) => (
 	<ClayLayout.ContentRow className="sidebar-section">
 		<ClayLayout.ContentCol expand>
 			{onSearch && (
-				<SearchInput onChange={(searchText) => onSearch(searchText)} />
+				<SearchInput
+					onChange={(searchText) => onSearch(searchText)}
+					searchText={searchText}
+				/>
 			)}
 		</ClayLayout.ContentCol>
 
@@ -59,13 +62,16 @@ const SidebarSearchInput = ({children, onSearch}) => (
 	</ClayLayout.ContentRow>
 );
 
-const SidebarTabs = ({initialSelectedTab = 0, tabs}) => {
+const SidebarTabs = ({initialSelectedTab = 0, setKeywords, tabs}) => {
 	const [selectedTab, setSelectedTab] = useState(initialSelectedTab);
 
 	return (
 		<>
 			<SidebarTab
-				onTabClick={setSelectedTab}
+				onTabClick={(value) => {
+					setSelectedTab(value);
+					setKeywords('');
+				}}
 				selectedTab={selectedTab}
 				tabs={tabs}
 			/>

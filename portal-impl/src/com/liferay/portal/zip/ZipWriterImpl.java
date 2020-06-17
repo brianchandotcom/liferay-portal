@@ -48,7 +48,11 @@ public class ZipWriterImpl implements ZipWriter {
 				SystemProperties.get(SystemProperties.TMP_DIR),
 				StringPool.SLASH, PortalUUIDUtil.generate(), ".zip"));
 
-		_file.mkdir();
+		File parentFile = _file.getParentFile();
+
+		if (!parentFile.exists()) {
+			parentFile.mkdirs();
+		}
 
 		try {
 			_zipOutputStream = new ZipOutputStream(new FileOutputStream(_file));

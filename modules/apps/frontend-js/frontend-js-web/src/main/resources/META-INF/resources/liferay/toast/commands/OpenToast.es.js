@@ -38,19 +38,6 @@ const Text = ({allowHTML, string = null}) => {
 	return string;
 };
 
-/**
- * Function used to obtain the root element for mounting the React Toast component.
- *
- * When providing a container or a containerId, an element will be added as a first
- * child of the element for preventing React replace the container/containerId DOM
- * when rendering. Otherwise, the element will be appended to the body.
- *
- * When a container and containerId were provided, the container have precedence.
- *
- * @param {HTMLElement} container Target element where the toast React component should be mounted.
- * @param {string} containerId The id of the element where the toast React component should be mounted.
- * @returns {HTMLElement} An element used to
- */
 const getContainerElement = ({container, containerId}) => {
 	const fragment = document.createElement('div');
 	fragment.id = DEFAULT_ALERT_CONTAINER_ID;

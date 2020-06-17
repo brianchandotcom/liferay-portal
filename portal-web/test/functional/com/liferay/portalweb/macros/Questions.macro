@@ -81,6 +81,14 @@ definition {
 			value1 = "${itemsPerPage}");
 	}
 
+	macro clearSearchResults {
+		Click(locator1 = "Questions#SEARCH_REAULTS_CLEAR_BUTTON");
+
+		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
+
+		AssertElementNotPresent(locator1 = "Questions#SEARCH_REAULTS_CLEAR_BUTTON");
+	}
+
 	macro configureFilter {
 		Click(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
 
@@ -113,6 +121,18 @@ definition {
 			value1 = "${nameField}");
 	}
 
+	macro search {
+		Type(
+			locator1 = "Questions#SEARCH_QUESTION_FIELD",
+			value1 = "${searchKey}");
+
+		AssertTextEquals(
+			locator1 = "Search#SEARCH_INFO",
+			value1 = "${resultsInfo}");
+
+		AssertVisible(locator1 = "Questions#SEARCH_REAULTS_CLEAR_BUTTON");
+	}
+
 	macro tearDown {
 		while (IsElementPresent(locator1 = "Questions#QUESTIONS_LIST")) {
 			Questions._deleteAllQuestions();
@@ -133,10 +153,27 @@ definition {
 			value1 = "${lastQuestionTitle}");
 	}
 
+	macro viewNoSearchResults {
+		for (var questionTitle : list "${questionsList}") {
+			AssertElementNotPresent(
+				key_questionTitle = "${questionTitle}",
+				locator1 = "Questions#QUESTIONS_TITLE");
+		}
+	}
+
 	macro viewPaginationResults {
 		AssertTextEquals(
 			locator1 = "Questions#PAGINATION_RESULTS",
 			value1 = "${results}");
+	}
+
+	macro viewSearchResults {
+		for (var questionTitle : list "${questionsList}") {
+			AssertTextEquals(
+				key_questionTitle = "${questionTitle}",
+				locator1 = "Questions#QUESTIONS_TITLE",
+				value1 = "${questionTitle}");
+		}
 	}
 
 }

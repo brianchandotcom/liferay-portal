@@ -16,8 +16,8 @@ package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dt
 
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageRowDefinition;
-import com.liferay.headless.delivery.dto.v1_0.ViewportRowConfig;
-import com.liferay.headless.delivery.dto.v1_0.ViewportRowConfigDefinition;
+import com.liferay.headless.delivery.dto.v1_0.RowViewportConfig;
+import com.liferay.headless.delivery.dto.v1_0.RowViewportConfigDefinition;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowLayoutStructureItem;
@@ -60,7 +60,7 @@ public class RowLayoutStructureItemExporter
 						reverseOrder = getReverseOrder();
 						verticalAlignment = getVerticalAlignment();
 
-						setViewportRowConfig(
+						setRowViewportConfig(
 							() -> {
 								Map<String, JSONObject> viewportConfigurations =
 									rowLayoutStructureItem.
@@ -70,17 +70,17 @@ public class RowLayoutStructureItemExporter
 									return null;
 								}
 
-								return new ViewportRowConfig() {
+								return new RowViewportConfig() {
 									{
 										landscapeMobile =
-											_toViewportRowConfigDefinition(
+											_toRowViewportConfigDefinition(
 												viewportConfigurations,
 												ViewportSize.MOBILE_LANDSCAPE);
 										portraitMobile =
-											_toViewportRowConfigDefinition(
+											_toRowViewportConfigDefinition(
 												viewportConfigurations,
 												ViewportSize.PORTRAIT_MOBILE);
-										tablet = _toViewportRowConfigDefinition(
+										tablet = _toRowViewportConfigDefinition(
 											viewportConfigurations,
 											ViewportSize.TABLET);
 									}
@@ -93,7 +93,7 @@ public class RowLayoutStructureItemExporter
 		};
 	}
 
-	private ViewportRowConfigDefinition _toViewportRowConfigDefinition(
+	private RowViewportConfigDefinition _toRowViewportConfigDefinition(
 		Map<String, JSONObject> viewportConfigurations,
 		ViewportSize viewportSize) {
 
@@ -106,7 +106,7 @@ public class RowLayoutStructureItemExporter
 		JSONObject jsonObject = viewportConfigurations.get(
 			viewportSize.getViewportSizeId());
 
-		return new ViewportRowConfigDefinition() {
+		return new RowViewportConfigDefinition() {
 			{
 				setModulesPerRow(
 					() -> {

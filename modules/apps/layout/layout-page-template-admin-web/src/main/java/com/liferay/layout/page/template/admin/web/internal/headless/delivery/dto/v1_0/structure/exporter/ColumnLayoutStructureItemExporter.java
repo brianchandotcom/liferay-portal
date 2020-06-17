@@ -14,10 +14,10 @@
 
 package com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.exporter;
 
+import com.liferay.headless.delivery.dto.v1_0.ColumnViewportConfig;
+import com.liferay.headless.delivery.dto.v1_0.ColumnViewportConfigDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageColumnDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
-import com.liferay.headless.delivery.dto.v1_0.ViewportColumnConfig;
-import com.liferay.headless.delivery.dto.v1_0.ViewportColumnConfigDefinition;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -54,7 +54,7 @@ public class ColumnLayoutStructureItemExporter
 					{
 						size = columnLayoutStructureItem.getSize();
 
-						setViewportColumnConfig(
+						setColumnViewportConfig(
 							() -> {
 								Map<String, JSONObject> viewportConfigurations =
 									columnLayoutStructureItem.
@@ -64,18 +64,18 @@ public class ColumnLayoutStructureItemExporter
 									return null;
 								}
 
-								return new ViewportColumnConfig() {
+								return new ColumnViewportConfig() {
 									{
 										landscapeMobile =
-											_toViewportColumnConfigDefinition(
+											_toColumnViewportConfigDefinition(
 												viewportConfigurations,
 												ViewportSize.MOBILE_LANDSCAPE);
 										portraitMobile =
-											_toViewportColumnConfigDefinition(
+											_toColumnViewportConfigDefinition(
 												viewportConfigurations,
 												ViewportSize.PORTRAIT_MOBILE);
 										tablet =
-											_toViewportColumnConfigDefinition(
+											_toColumnViewportConfigDefinition(
 												viewportConfigurations,
 												ViewportSize.TABLET);
 									}
@@ -88,7 +88,7 @@ public class ColumnLayoutStructureItemExporter
 		};
 	}
 
-	private ViewportColumnConfigDefinition _toViewportColumnConfigDefinition(
+	private ColumnViewportConfigDefinition _toColumnViewportConfigDefinition(
 		Map<String, JSONObject> viewportConfigurations,
 		ViewportSize viewportSize) {
 
@@ -101,7 +101,7 @@ public class ColumnLayoutStructureItemExporter
 		JSONObject jsonObject = viewportConfigurations.get(
 			viewportSize.getViewportSizeId());
 
-		return new ViewportColumnConfigDefinition() {
+		return new ColumnViewportConfigDefinition() {
 			{
 				setSize(
 					() -> {

@@ -287,6 +287,7 @@ public class CTCollectionServiceImpl extends CTCollectionServiceBaseImpl {
 		OrderByComparator<CTCollection> obc) {
 
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			CTCollectionTable.INSTANCE
 		).from(
 			CTCollectionTable.INSTANCE
 		).where(

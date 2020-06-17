@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.lists.service.impl;
 
 import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException;
 import com.liferay.dynamic.data.lists.exception.RecordSetDuplicateRecordSetKeyException;
-import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
@@ -121,7 +120,8 @@ public class DDLRecordSetLocalServiceImpl
 			recordSetKey = String.valueOf(counterLocalService.increment());
 		}
 
-		validate(groupId, ddmStructureId, recordSetKey, nameMap);
+		validate(groupId, ddmStructureId, recordSetKey);
+		validateName(nameMap);
 
 		long recordSetId = counterLocalService.increment();
 
@@ -939,8 +939,7 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	protected void validate(
-			long groupId, long ddmStructureId, String recordSetKey,
-			Map<Locale, String> nameMap)
+			long groupId, long ddmStructureId, String recordSetKey)
 		throws PortalException {
 
 		validateDDMStructureId(ddmStructureId);
@@ -960,8 +959,6 @@ public class DDLRecordSetLocalServiceImpl
 				throw recordSetDuplicateRecordSetKeyException;
 			}
 		}
-
-		validateName(nameMap);
 	}
 
 	protected void validateDDMStructureId(long ddmStructureId)
@@ -977,16 +974,11 @@ public class DDLRecordSetLocalServiceImpl
 		}
 	}
 
-	protected void validateName(Map<Locale, String> nameMap)
-		throws PortalException {
-
+	protected void validateName(Map<Locale, String> nameMap) {
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		String name = nameMap.get(locale);
-
-		if (Validator.isNull(name)) {
-			throw new RecordSetNameException(
-				"Name is null for locale " + locale.getDisplayName());
+		if (Validator.isNull(nameMap.get(locale))) {
+			nameMap.put(locale, "Untitled Dynamic Data List");
 		}
 	}
 

@@ -234,6 +234,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-util-window'],
+		requires: ['liferay-alert', 'liferay-util-window'],
 	}
 );

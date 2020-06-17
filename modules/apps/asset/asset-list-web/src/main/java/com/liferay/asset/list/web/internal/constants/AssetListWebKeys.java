@@ -19,9 +19,6 @@ package com.liferay.asset.list.web.internal.constants;
  */
 public class AssetListWebKeys {
 
-	public static final String ASSET_LIST_ASSET_ENTRY_PROVIDER =
-		"ASSET_LIST_ASSET_ENTRY_PROVIDER";
-
 	public static final String ASSET_LIST_DISPLAY_CONTEXT =
 		"ASSET_LIST_DISPLAY_CONTEXT";
 
@@ -31,8 +28,5 @@ public class AssetListWebKeys {
 		"EDIT_ASSET_LIST_DISPLAY_CONTEXT";
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
-
-	public static final String SCREEN_NAVIGATION_REGISTRY =
-		"SCREEN_NAVIGATION_REGISTRY";
 
 }

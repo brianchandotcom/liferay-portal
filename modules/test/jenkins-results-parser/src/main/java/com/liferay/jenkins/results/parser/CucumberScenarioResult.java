@@ -271,16 +271,6 @@ public class CucumberScenarioResult implements Serializable {
 		if (_scenarioDocument == null) {
 			throw new RuntimeException("Scenario Document is null");
 		}
-
-		_scenarioDocumentContent = _scenarioDocument.asXML();
-
-		String backgroundDocumentContent = null;
-
-		if (_backgroundDocument != null) {
-			backgroundDocumentContent = _backgroundDocument.asXML();
-		}
-
-		_backgroundDocumentContent = backgroundDocumentContent;
 	}
 
 	private static long _getDurationFromString(String durationString) {
@@ -308,20 +298,6 @@ public class CucumberScenarioResult implements Serializable {
 	}
 
 	private Document _getBackgroundDocument() {
-		if (_backgroundDocument != null) {
-			return _backgroundDocument;
-		}
-
-		if (_backgroundDocumentContent != null) {
-			try {
-				_backgroundDocument = Dom4JUtil.parse(
-					_backgroundDocumentContent);
-			}
-			catch (DocumentException documentException) {
-				throw new RuntimeException(documentException);
-			}
-		}
-
 		return _backgroundDocument;
 	}
 
@@ -357,19 +333,6 @@ public class CucumberScenarioResult implements Serializable {
 	}
 
 	private Document _getScenarioDocument() {
-		if (_scenarioDocument != null) {
-			return _scenarioDocument;
-		}
-
-		if (_scenarioDocumentContent != null) {
-			try {
-				_scenarioDocument = Dom4JUtil.parse(_scenarioDocumentContent);
-			}
-			catch (DocumentException documentException) {
-				throw new RuntimeException(documentException);
-			}
-		}
-
 		return _scenarioDocument;
 	}
 
@@ -421,13 +384,36 @@ public class CucumberScenarioResult implements Serializable {
 		return steps;
 	}
 
+	private void readObject(ObjectInputStream objectInputStream)
+		throws ClassNotFoundException, IOException {
+
+		objectInputStream.defaultReadObject();
+
+		try {
+			_backgroundDocument = Dom4JUtil.parse(objectInputStream.readUTF());
+
+			_scenarioDocument = Dom4JUtil.parse(objectInputStream.readUTF());
+		}
+		catch (DocumentException documentException) {
+			throw new RuntimeException(documentException);
+		}
+	}
+
+	private void writeObject(ObjectOutputStream objectOutputStream)
+		throws IOException {
+
+		objectOutputStream.defaultWriteObject();
+
+		objectOutputStream.writeUTF(_backgroundDocument.asXML());
+
+		objectOutputStream.writeUTF(_scenarioDocument.asXML());
+	}
+
 	private static final Pattern _durationPattern = Pattern.compile(
 		"((?<mins>\\d+)\\:)?(?<secs>\\d+)\\.(?<ms>\\d{3})");
 
 	private transient Document _backgroundDocument;
-	private final String _backgroundDocumentContent;
 	private final CucumberFeatureResult _cucumberFeatureResult;
 	private transient Document _scenarioDocument;
-	private final String _scenarioDocumentContent;
 
 }

@@ -21,6 +21,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -155,8 +156,10 @@ public class CucumberFeatureResult implements Serializable {
 			String documentContent = JenkinsResultsParserUtil.toString(
 				getURL(), false);
 
-			documentContent = documentContent.replaceAll("&nbsp;", " ");
-			documentContent = documentContent.replaceAll("<br>", "<br />");
+			documentContent = documentContent.replaceAll(
+				Pattern.quote("&nbsp;"), " ");
+			documentContent = documentContent.replaceAll(
+				Pattern.quote("<br>"), "<br />");
 
 			_document = Dom4JUtil.parse(documentContent);
 

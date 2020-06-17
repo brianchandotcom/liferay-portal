@@ -120,15 +120,15 @@ function <portlet:namespace />deleteOrganizations(organizationsRedirect) {
 
 function <portlet:namespace />deleteUsers(cmd) {
 	if (
-		(cmd == '<%= Constants.DEACTIVATE %>' &&
+		(cmd === '<%= Constants.DEACTIVATE %>' &&
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>'
 			)) ||
-		(cmd == '<%= Constants.DELETE %>' &&
+		(cmd === '<%= Constants.DELETE %>' &&
 			confirm(
 				'<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>'
 			)) ||
-		cmd == '<%= Constants.RESTORE %>'
+		cmd === '<%= Constants.RESTORE %>'
 	) {
 		var form = document.<portlet:namespace />fm;
 

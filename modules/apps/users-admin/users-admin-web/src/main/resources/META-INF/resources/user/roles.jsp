@@ -718,8 +718,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 			function <portlet:namespace />deleteGroupRole(roleId, groupId) {
 				for (var i = 0; i < <portlet:namespace />addGroupRolesRoleIds.length; i++) {
 					if (
-						<portlet:namespace />addGroupRolesGroupIds[i] == groupId &&
-						<portlet:namespace />addGroupRolesRoleIds[i] == roleId
+						<portlet:namespace />addGroupRolesGroupIds[i] === groupId &&
+						<portlet:namespace />addGroupRolesRoleIds[i] === roleId
 					) {
 						<portlet:namespace />addGroupRolesGroupIds.splice(i, 1);
 						<portlet:namespace />addGroupRolesRoleIds.splice(i, 1);
@@ -798,8 +798,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						i++
 					) {
 						if (
-							<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId &&
-							<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId
+							<portlet:namespace />deleteGroupRolesGroupIds[i] === groupId &&
+							<portlet:namespace />deleteGroupRolesRoleIds[i] === roleId
 						) {
 							<portlet:namespace />deleteGroupRolesGroupIds.splice(i, 1);
 							<portlet:namespace />deleteGroupRolesRoleIds.splice(i, 1);

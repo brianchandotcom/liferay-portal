@@ -445,6 +445,7 @@ public class WorkspaceExtension {
 					downloadCommand.setToken(false);
 					downloadCommand.setUrl(new URL(_PRODUCT_INFO_URL));
 					downloadCommand.setUserName(null);
+					downloadCommand.setQuiet(true);
 
 					downloadCommand.execute();
 

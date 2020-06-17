@@ -962,10 +962,25 @@ public class OrganizationLocalServiceTest {
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null,
 				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
 
-		Comparator<Organization> comparator = _organizationTypeComparator;
+		Comparator<Organization> comparator =
+			(organization1, organization2) -> {
+				String typeOrder1 = organization1.getType();
+				String typeOrder2 = organization2.getType();
+
+				int value = typeOrder1.compareToIgnoreCase(typeOrder2);
+
+				if (value == 0) {
+					String name1 = organization1.getName();
+					String name2 = organization2.getName();
+
+					value = name1.compareToIgnoreCase(name2);
+				}
+
+				return value;
+			};
 
 		if (sort.isReverse()) {
-			comparator = _organizationTypeComparator.reversed();
+			comparator = comparator.reversed();
 		}
 
 		expectedOrganizations.sort(comparator);
@@ -1017,23 +1032,6 @@ public class OrganizationLocalServiceTest {
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
-
-	private final Comparator<Organization> _organizationTypeComparator =
-		(organization1, organization2) -> {
-			String typeOrder1 = organization1.getType();
-			String typeOrder2 = organization2.getType();
-
-			int value = typeOrder1.compareToIgnoreCase(typeOrder2);
-
-			if (value == 0) {
-				String name1 = organization1.getName();
-				String name2 = organization2.getName();
-
-				value = name1.compareToIgnoreCase(name2);
-			}
-
-			return value;
-		};
 
 	private PermissionChecker _originalPermissionChecker;
 

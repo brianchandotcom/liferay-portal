@@ -39,21 +39,6 @@ definition {
 		ChangeList.cancelPublicationCreation();
 	}
 
-	@priority = "4"
-	test CreateNewPublicationExistingName {
-		ChangeList.createNewPublication(
-			gotoManagePublications = "true",
-			publicationDescription = "Publication Description",
-			publicationName = "Publication Name");
-
-		ChangeList.createNewPublication(
-			gotoManagePublications = "true",
-			publicationDescription = "Publication Description",
-			publicationName = "Publication Name");
-
-		Alert.viewErrorMessage(errorMessage = "Name is already used by another change list.");
-	}
-
 	@description = "Try to create new change list with too long name"
 	@priority = "3"
 	test CreateNewPublicationWithLongName {

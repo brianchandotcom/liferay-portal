@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -77,13 +78,14 @@ public class StandaloneAppDeployer implements AppDeployer {
 						LocaleThreadLocal.getThemeDisplayLocale());
 					String portletName = _getPortletName(appId);
 
-					return new ServiceRegistration<?>[] {
-						_deployLayoutTypeController(
-							appBuilderApp.getCompanyId(), appId, appName,
-							portletName),
+					return ArrayUtil.append(
 						_deployPortlet(appBuilderApp, appName, portletName),
-						_deployLayoutTypeAccessPolicy(portletName)
-					};
+						new ServiceRegistration<?>[] {
+							_deployLayoutTypeController(
+								appBuilderApp.getCompanyId(), appId, appName,
+								portletName),
+							_deployLayoutTypeAccessPolicy(portletName)
+						});
 				}
 				catch (PortalException portalException) {
 					throw new IllegalStateException(portalException);
@@ -228,7 +230,7 @@ public class StandaloneAppDeployer implements AppDeployer {
 			});
 	}
 
-	private ServiceRegistration<?> _deployPortlet(
+	private ServiceRegistration<?>[] _deployPortlet(
 		AppBuilderApp appBuilderApp, String appName, String portletName) {
 
 		return _appDeployerHelper.deployPortlet(

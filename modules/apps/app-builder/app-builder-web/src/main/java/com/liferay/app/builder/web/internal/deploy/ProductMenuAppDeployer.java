@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -78,23 +79,24 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		if (scopeJSONArray.length() == 2) {
 			_serviceRegistrationsMap.computeIfAbsent(
 				appId,
-				key -> new ServiceRegistration<?>[] {
+				key -> ArrayUtil.append(
 					_deployPortlet(
 						appBuilderApp, appName, applicationsMenuLabel),
 					_deployPortlet(appBuilderApp, appName, siteMenuLabel),
-					_deployPanelApp(
-						appBuilderApp.getCompanyId(),
-						PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS,
-						applicationsMenuLabel,
-						JSONUtil.toLongArray(
-							jsonObject.getJSONArray("siteIds"))),
-					_deployPanelApp(
-						appBuilderApp.getCompanyId(),
-						PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
-						siteMenuLabel,
-						JSONUtil.toLongArray(
-							jsonObject.getJSONArray("siteIds")))
-				});
+					new ServiceRegistration<?>[] {
+						_deployPanelApp(
+							appBuilderApp.getCompanyId(),
+							PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS,
+							applicationsMenuLabel,
+							JSONUtil.toLongArray(
+								jsonObject.getJSONArray("siteIds"))),
+						_deployPanelApp(
+							appBuilderApp.getCompanyId(),
+							PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT,
+							siteMenuLabel,
+							JSONUtil.toLongArray(
+								jsonObject.getJSONArray("siteIds")))
+					}));
 		}
 		else {
 			String scope = scopeJSONArray.getString(0);
@@ -111,13 +113,12 @@ public class ProductMenuAppDeployer implements AppDeployer {
 
 			_serviceRegistrationsMap.computeIfAbsent(
 				appId,
-				mapKey -> new ServiceRegistration<?>[] {
+				mapKey -> ArrayUtil.append(
 					_deployPortlet(appBuilderApp, appName, menuLabel),
 					_deployPanelApp(
 						appBuilderApp.getCompanyId(), scope, menuLabel,
 						JSONUtil.toLongArray(
-							jsonObject.getJSONArray("siteIds")))
-				});
+							jsonObject.getJSONArray("siteIds")))));
 		}
 
 		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
@@ -156,7 +157,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 			});
 	}
 
-	private ServiceRegistration<?> _deployPortlet(
+	private ServiceRegistration<?>[] _deployPortlet(
 		AppBuilderApp appBuilderApp, String appName, String portletName) {
 
 		return _appDeployerHelper.deployPortlet(

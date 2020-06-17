@@ -128,6 +128,10 @@ public class AccountUserDisplay {
 			Collectors.toList()
 		);
 
+		if (ListUtil.isEmpty(accountEntryDomains)) {
+			return StringPool.BLANK;
+		}
+
 		Set<String> commonDomains = accountEntryDomains.remove(0);
 
 		for (Set<String> domains : accountEntryDomains) {

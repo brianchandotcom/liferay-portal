@@ -108,7 +108,7 @@ public class DDMFormInstanceReportLocalServiceTest
 		_ddmFormInstance = DDMFormInstanceLocalServiceUtil.addFormInstance(
 			ddmStructure.getUserId(), ddmStructure.getGroupId(),
 			ddmStructure.getStructureId(), ddmStructure.getNameMap(),
-			ddmStructure.getNameMap(),
+			ddmStructure.getDescriptionMap(),
 			DDMFormValuesTestUtil.createDDMFormValues(ddmForm),
 			getServiceContext());
 
@@ -140,7 +140,7 @@ public class DDMFormInstanceReportLocalServiceTest
 		_ddmFormInstance = DDMFormInstanceLocalServiceUtil.addFormInstance(
 			ddmStructure.getUserId(), ddmStructure.getGroupId(),
 			ddmStructure.getStructureId(), ddmStructure.getNameMap(),
-			ddmStructure.getNameMap(),
+			ddmStructure.getDescriptionMap(),
 			DDMFormValuesTestUtil.createDDMFormValues(ddmForm),
 			getServiceContext());
 

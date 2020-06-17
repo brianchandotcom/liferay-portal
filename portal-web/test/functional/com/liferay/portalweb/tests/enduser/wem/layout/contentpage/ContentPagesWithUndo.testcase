@@ -180,6 +180,49 @@ definition {
 			locator1 = "Fragment#NAV_ITEM_TAB");
 	}
 
+	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with mapped content back."
+	@priority = "3"
+	test UndoDeletedFragmentWithMappedContent {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title");
+            
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "HTML");
+
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "HTML",
+			id = "element");
+
+		PageEditorMapping.mapEditableFieldToAsset(
+			entryTitle = "WebContent Title",
+			navItem = "Web Content");
+
+		Select(
+			locator1 = "PageEditorEditableLink#FIELD",
+			value1 = "Title");
+
+		PageEditor.removeFragment(fragmentName = "HTML");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "HTML");
+
+		AssertVisible(
+			key_content = "WC WebContent Title",
+			key_fragmentClass = "content",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with edited inline content back."
 	@priority = "4"
 	test UndoDeletedFragmentWithInlineContent {

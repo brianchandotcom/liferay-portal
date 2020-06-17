@@ -1170,6 +1170,26 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
+	macro removeFragmentViaPageStructure {
+		PageEditor.gotoTab(tabName = "Page Structure");
+
+		if (IsElementNotPresent(key_nodeName = "${fragmentName}", locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_ACTIVE")) {
+			Click(
+				key_nodeName = "${fragmentName}",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE");
+		}
+
+		Click(
+			key_nodeName = "${fragmentName}",
+			locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_DELETE");
+
+		AssertElementNotPresent(
+			key_fragmentName = "${fragmentName}",
+			locator1 = "Fragment#FRAGMENT_HEADER");
+
+		PageEditor.waitForAutoSave();
+	}
+
 	macro removeLayoutElement {
 		var key_elementType = "${elementType}";
 		var key_position = "${position}";

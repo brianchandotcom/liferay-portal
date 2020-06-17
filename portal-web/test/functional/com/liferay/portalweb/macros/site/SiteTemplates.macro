@@ -356,7 +356,7 @@ definition {
 			menuItem = "Manage",
 			rowEntry = "Site Template Name");
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = "Configuration");
 

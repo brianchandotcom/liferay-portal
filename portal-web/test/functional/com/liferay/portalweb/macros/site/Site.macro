@@ -1194,7 +1194,7 @@ definition {
 	}
 
 	macro viewCustomSiteLogoInDifferentViews {
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.openWorkspace();
 

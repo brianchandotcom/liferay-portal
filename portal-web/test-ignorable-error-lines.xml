@@ -17,10 +17,6 @@
 			<matches>.*The web application \[.*\] appears to have started a thread.*\[Thread-[0-9]+\].*</matches>
 		</ignore-error>
 		<ignore-error description="">
-			<contains></contains>
-			<matches>.*The web application \[.*\] appears to have started a thread.*\[TrueZIP InputStream Reader\].*</matches>
-		</ignore-error>
-		<ignore-error description="">
 			<contains>[antelope:post]</contains>
 			<matches></matches>
 		</ignore-error>

@@ -7882,18 +7882,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/truezip.jar</file-name>
-				<version>6.7</version>
-				<project-name>TrueZIP</project-name>
-				<project-url>http://truezip.dev.java.net</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/unoil.jar</file-name>
 				<version>2.3.1</version>
 				<project-name>OpenOffice.org Java Uno</project-name>

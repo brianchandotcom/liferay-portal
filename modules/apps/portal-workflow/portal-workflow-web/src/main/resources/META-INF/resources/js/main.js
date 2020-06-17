@@ -398,24 +398,15 @@ AUI.add(
 				var alert = instance._alert;
 
 				if (alert) {
-					alert.destroy();
+					alert.hide();
 				}
 
 				alert = new Liferay.Alert({
 					closeable: true,
-					delay: {
-						hide: 5000,
-						show: 0,
-					},
 					message: successMessage,
+					render: true,
 					type: 'success',
 				});
-
-				if (!alert.get('rendered')) {
-					alert.render('.portlet-column');
-				}
-
-				alert.show();
 
 				instance._alert = alert;
 			},
@@ -443,24 +434,15 @@ AUI.add(
 				var alert = instance._alert;
 
 				if (alert) {
-					alert.destroy();
+					alert.hide();
 				}
 
 				alert = new Liferay.Alert({
 					closeable: true,
-					delay: {
-						hide: 10000,
-						show: 0,
-					},
 					message: successMessage,
+					render: true,
 					type: 'success',
 				});
-
-				if (!alert.get('rendered')) {
-					alert.render('.portlet-column');
-				}
-
-				alert.show();
 
 				instance._alert = alert;
 			},

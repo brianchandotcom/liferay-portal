@@ -101,6 +101,41 @@ definition {
 		PageEditor.viewFragment(fragmentName = "Asset Publisher");
 	}
 
+	@description = "This is a test for LPS-111946. Undo can bring deleted composition of fragments back."
+	@priority = "5"
+	test UndoDeletedFragmentComposition {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Section");
+
+		Click(
+			key_elementType = "Section",
+			key_position = "1",
+			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "Layout Elements",
+			key_fragmentName = "Row",
+			key_position = "1",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+			locator2 = "PageEditor#SECTION_CONTAINER",
+			value1 = "");
+
+		PageEditor.removeFragmentViaPageStructure(fragmentName = "Section");
+
+		PageEditor.viewNoFragment(fragmentName = "Section");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Section");
+	}
+
 	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."
 	@priority = "5"
 	test UndoPagechangeThreeTimes {

@@ -16,7 +16,6 @@ package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;

@@ -14,13 +14,29 @@
 
 package com.liferay.depot.web.internal.portlet.action;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.depot.web.internal.constants.DepotPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.site.util.GroupURLProvider;
 
+import java.util.Locale;
+
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.RenderURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -36,9 +52,55 @@ public class ViewDepotDashboardMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		return "/view_depot_dashboard.jsp";
+		try {
+			_addBreadcrumbEntries(renderRequest, renderResponse);
+
+			return "/view_depot_dashboard.jsp";
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
 	}
+
+	private void _addBreadcrumbEntries(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
+
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
+
+		Locale locale = _portal.getLocale(renderRequest);
+
+		RenderURL renderURL = renderResponse.createRenderURL();
+
+		_portal.addPortletBreadcrumbEntry(
+			httpServletRequest,
+			_language.get(httpServletRequest, "asset-libraries"),
+			renderURL.toString());
+
+		DepotEntry depotEntry = _depotEntryService.getDepotEntry(
+			ParamUtil.getLong(renderRequest, "depotEntryId"));
+
+		Group group = depotEntry.getGroup();
+
+		_portal.addPortletBreadcrumbEntry(
+			httpServletRequest, group.getDescriptiveName(locale),
+			_groupURLProvider.getGroupURL(group, renderRequest));
+	}
+
+	@Reference
+	private DepotEntryService _depotEntryService;
+
+	@Reference
+	private GroupURLProvider _groupURLProvider;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

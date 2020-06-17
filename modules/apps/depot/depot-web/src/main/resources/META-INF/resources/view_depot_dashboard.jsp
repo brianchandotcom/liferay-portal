@@ -15,3 +15,9 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<clay:container-fluid>
+	<liferay-ui:breadcrumb
+		showLayout="<%= false %>"
+	/>
+</clay:container-fluid>

@@ -88,7 +88,7 @@ definition {
 	@priority = "5"
 	test AssertFragmentsAreOnlyEditableInStagingView {
 		task ("Assert fragments admin is accessible in the staging site") {
-			ProductMenuHelper.expandPanel(panel = "Site Administration");
+			ProductMenuHelper.openProductMenu();
 
 			ProductMenuHelper.expandCategory(category = "Site Builder");
 
@@ -102,7 +102,7 @@ definition {
 		}
 
 		task ("Assert fragments admin is not accessible in the live site") {
-			ProductMenuHelper.expandPanel(panel = "Site Administration");
+			ProductMenuHelper.openProductMenu();
 
 			ProductMenuHelper.expandCategory(category = "Site Builder");
 

@@ -36,7 +36,7 @@ definition {
 	@priority = "5"
 	test AssertAssetListsAreOnlyEditableInStagingView {
 		task ("Navigate to asset list administration in the staging site.") {
-			ProductMenuHelper.expandPanel(panel = "Site Administration");
+			ProductMenuHelper.openProductMenu();
 
 			ProductMenuHelper.expandCategory(category = "Content &amp; Data");
 
@@ -48,7 +48,7 @@ definition {
 		task ("Assert we cannot navigate to asset list administration in the live site.") {
 			ProductMenu.gotoLiveSite(site = "Test Site Name");
 
-			ProductMenuHelper.expandPanel(panel = "Site Administration");
+			ProductMenuHelper.openProductMenu();
 
 			ProductMenuHelper.expandCategory(category = "Content &amp; Data");
 

@@ -740,7 +740,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = "People");
 
@@ -752,7 +752,7 @@ definition {
 
 		Navigator.openURL();
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = "People");
 

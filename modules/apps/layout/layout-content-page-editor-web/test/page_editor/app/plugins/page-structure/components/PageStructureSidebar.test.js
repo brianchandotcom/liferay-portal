@@ -154,7 +154,7 @@ const renderComponent = ({
 					},
 
 					permissions: {
-						UPDATE_LAYOUT_CONTENT: true,
+						UPDATE: true,
 					},
 				})}
 			>

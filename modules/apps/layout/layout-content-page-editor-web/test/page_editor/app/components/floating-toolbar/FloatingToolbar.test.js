@@ -78,6 +78,10 @@ const renderFloatingToolbar = ({onButtonClick = () => {}}) => {
 
 	const state = {
 		languageId: 'language',
+		permissions: {
+			UPDATE: true,
+			UPDATE_LAYOUT_CONTENT: true,
+		},
 	};
 
 	return render(

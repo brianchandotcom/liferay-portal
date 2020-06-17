@@ -67,11 +67,11 @@ portletURL.setParameter("eventName", eventName);
 			<liferay-ui:search-container-column-text
 				name="field"
 			>
-				<portlet:resourceURL id="getFieldValue" var="structureFieldURL">
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/asset_list/get_field_value" var="structureFieldURL">
 					<portlet:param name="structureId" value="<%= String.valueOf(field.getClassTypeId()) %>" />
 					<portlet:param name="name" value="<%= field.getName() %>" />
 					<portlet:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />
-				</portlet:resourceURL>
+				</liferay-portlet:resourceURL>
 
 				<aui:form action="<%= structureFieldURL %>" disabled="<%= !Objects.equals(field.getName(), ddmStructureFieldName) %>" name='<%= field.getName() + "fieldForm" %>' onSubmit="event.preventDefault()">
 					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= renderResponse.getNamespace() + "applyButton" + field.getName() %>' />

@@ -73,39 +73,39 @@ public class RowLayoutStructureItemImporter
 					(String)definitionMap.get("verticalAlignment"));
 			}
 
-			if (definitionMap.containsKey("viewportRowConfig")) {
-				Map<String, Object> viewportRowConfiguration =
-					(Map<String, Object>)definitionMap.get("viewportRowConfig");
+			if (definitionMap.containsKey("rowViewportConfig")) {
+				Map<String, Object> viewportRowConfigurations =
+					(Map<String, Object>)definitionMap.get("rowViewportConfig");
 
 				for (Map.Entry<String, Object> entry :
-						viewportRowConfiguration.entrySet()) {
+						viewportRowConfigurations.entrySet()) {
 
-					Map<String, Object> viewportConfiguration =
+					Map<String, Object> rowViewportConfiguration =
 						(Map<String, Object>)entry.getValue();
 
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-					if (viewportConfiguration.containsKey("modulesPerRow")) {
+					if (rowViewportConfiguration.containsKey("modulesPerRow")) {
 						jsonObject.put(
 							"modulesPerRow",
 							GetterUtil.getInteger(
-								viewportConfiguration.get("modulesPerRow")));
+								rowViewportConfiguration.get("modulesPerRow")));
 					}
 
-					if (viewportConfiguration.containsKey("reverseOrder")) {
+					if (rowViewportConfiguration.containsKey("reverseOrder")) {
 						jsonObject.put(
 							"reverseOrder",
 							GetterUtil.getBoolean(
-								viewportConfiguration.get("reverseOrder")));
+								rowViewportConfiguration.get("reverseOrder")));
 					}
 
-					if (viewportConfiguration.containsKey(
+					if (rowViewportConfiguration.containsKey(
 							"verticalAlignment")) {
 
 						jsonObject.put(
 							"verticalAlignment",
 							GetterUtil.getString(
-								viewportConfiguration.get(
+								rowViewportConfiguration.get(
 									"verticalAlignment")));
 					}
 

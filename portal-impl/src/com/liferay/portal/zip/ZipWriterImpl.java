@@ -25,18 +25,17 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
-import com.liferay.portal.util.PropsValues;
 
-import de.schlichtherle.io.ArchiveDetector;
-import de.schlichtherle.io.ArchiveException;
-import de.schlichtherle.io.DefaultArchiveDetector;
-import de.schlichtherle.io.File;
-import de.schlichtherle.io.FileOutputStream;
-import de.schlichtherle.io.archive.zip.ZipDriver;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.io.IOUtils;
 
 /**
  * @author Raymond Augé
@@ -51,13 +50,19 @@ public class ZipWriterImpl implements ZipWriter {
 
 		_file.mkdir();
 
+		try {
+			_zipOutputStream = new ZipOutputStream(new FileOutputStream(_file));
+		}
+		catch (FileNotFoundException fileNotFoundException) {
+			throw new RuntimeException(fileNotFoundException);
+		}
+
 		FinalizeManager.register(
-			_file.getDelegate(),
-			new DeleteFileFinalizeAction(_file.getAbsolutePath()),
+			_file, new DeleteFileFinalizeAction(_file.getAbsolutePath()),
 			FinalizeManager.PHANTOM_REFERENCE_FACTORY);
 	}
 
-	public ZipWriterImpl(java.io.File file) {
+	public ZipWriterImpl(File file) {
 		_file = new File(file.getAbsolutePath());
 
 		_file.mkdir();
@@ -88,11 +93,13 @@ public class ZipWriterImpl implements ZipWriter {
 			_log.debug("Adding " + name);
 		}
 
-		try (OutputStream outputStream = new FileOutputStream(
-				new File(getPath() + StringPool.SLASH + name))) {
+		ZipEntry zipEntry = new ZipEntry(name);
 
-			File.cat(inputStream, outputStream);
-		}
+		_zipOutputStream.putNextEntry(zipEntry);
+
+		IOUtils.copy(inputStream, _zipOutputStream);
+
+		_zipOutputStream.closeEntry();
 	}
 
 	@Override
@@ -119,15 +126,15 @@ public class ZipWriterImpl implements ZipWriter {
 	}
 
 	@Override
-	public java.io.File getFile() {
+	public File getFile() {
 		try {
-			File.umount(_file);
+			_zipOutputStream.close();
 		}
-		catch (ArchiveException archiveException) {
-			_log.error(archiveException, archiveException);
+		catch (IOException ioException) {
+			_log.error(ioException, ioException);
 		}
 
-		return _file.getDelegate();
+		return _file;
 	}
 
 	@Override
@@ -138,26 +145,18 @@ public class ZipWriterImpl implements ZipWriter {
 	@Override
 	public void umount() {
 		try {
-			File.umount(_file);
+			_zipOutputStream.close();
 		}
-		catch (ArchiveException archiveException) {
+		catch (IOException ioException) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to unmount file entry", archiveException);
+				_log.warn("Unable to unmount file entry", ioException);
 			}
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ZipWriterImpl.class);
 
-	static {
-		File.setDefaultArchiveDetector(
-			new DefaultArchiveDetector(
-				ArchiveDetector.ALL, "lar|" + ArchiveDetector.ALL.getSuffixes(),
-				new ZipDriver(PropsValues.ZIP_FILE_NAME_ENCODING)));
-
-		TrueZIPHelperUtil.initialize();
-	}
-
 	private final File _file;
+	private ZipOutputStream _zipOutputStream;
 
 }

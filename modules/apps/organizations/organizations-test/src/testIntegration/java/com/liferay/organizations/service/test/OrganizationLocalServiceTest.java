@@ -880,8 +880,8 @@ public class OrganizationLocalServiceTest {
 		}
 
 		try {
-			_assertOrganizationsSort(_organizations, "asc");
-			_assertOrganizationsSort(_organizations, "desc");
+			_testSearchOrganizationsByType(_organizations, "asc");
+			_testSearchOrganizationsByType(_organizations, "desc");
 		}
 		finally {
 			for (String pid : pids) {
@@ -949,7 +949,29 @@ public class OrganizationLocalServiceTest {
 		);
 	}
 
-	private void _assertOrganizationsSort(
+	private String _createOrganizationType(String name) throws Exception {
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put("name", name);
+
+		return ConfigurationTestUtil.createFactoryConfiguration(
+			_ORGANIZATION_TYPE_CONFIGURATION_FACTORY_PID, properties);
+	}
+
+	private String _getTreePath(Organization[] organizations) {
+		StringBundler sb = new StringBundler();
+
+		sb.append(StringPool.FORWARD_SLASH);
+
+		for (Organization organization : organizations) {
+			sb.append(organization.getOrganizationId());
+			sb.append(StringPool.FORWARD_SLASH);
+		}
+
+		return sb.toString();
+	}
+
+	private void _testSearchOrganizationsByType(
 			List<Organization> expectedOrganizations, String orderByType)
 		throws Exception {
 
@@ -988,28 +1010,6 @@ public class OrganizationLocalServiceTest {
 		AssertUtils.assertEquals(
 			"Sorting Error Message", toStringList(expectedOrganizations),
 			toStringList(baseModelSearchResult.getBaseModels()));
-	}
-
-	private String _createOrganizationType(String name) throws Exception {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("name", name);
-
-		return ConfigurationTestUtil.createFactoryConfiguration(
-			_ORGANIZATION_TYPE_CONFIGURATION_FACTORY_PID, properties);
-	}
-
-	private String _getTreePath(Organization[] organizations) {
-		StringBundler sb = new StringBundler();
-
-		sb.append(StringPool.FORWARD_SLASH);
-
-		for (Organization organization : organizations) {
-			sb.append(organization.getOrganizationId());
-			sb.append(StringPool.FORWARD_SLASH);
-		}
-
-		return sb.toString();
 	}
 
 	private Organization _updateOrganization(Organization organization)

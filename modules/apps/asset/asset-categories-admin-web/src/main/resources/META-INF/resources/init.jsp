@@ -21,6 +21,7 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/site-navigation" prefix="liferay-site-navigation" %><%@
@@ -31,6 +32,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesConstants" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesManagementToolbarDisplayContext" %><%@
+page import="com.liferay.asset.categories.admin.web.internal.display.context.AssetVocabulariesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.asset.categories.admin.web.internal.util.AssetCategoryUtil" %><%@
 page import="com.liferay.asset.category.property.exception.CategoryPropertyKeyException" %><%@
 page import="com.liferay.asset.category.property.exception.CategoryPropertyValueException" %><%@

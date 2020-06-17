@@ -57,6 +57,12 @@
 													/>
 												</c:if>
 											</li>
+											<li>
+												<clay:dropdown-actions
+													componentId="actionsComponent"
+													dropdownItems="<%= assetCategoriesDisplayContext.getVocabulariesDropdownItems() %>"
+												/>
+											</li>
 										</ul>
 									</clay:content-col>
 								</clay:content-row>
@@ -140,3 +146,70 @@
 		</clay:col>
 	</clay:row>
 </clay:container-fluid>
+
+<aui:form cssClass="hide" name="vocabulariesFm">
+</aui:form>
+
+<aui:script require="metal-dom/src/dom as dom, frontend-js-web/liferay/ItemSelectorDialog.es as ItemSelectorDialog">
+	var deleteVocabularies = function () {
+		var vocabulariesFm = document.<portlet:namespace />vocabulariesFm;
+
+		if (vocabulariesFm) {
+			var itemSelectorDialog = new ItemSelectorDialog.default({
+				buttonAddLabel: '<liferay-ui:message key="delete" />',
+				eventName: '<portlet:namespace />selectVocabularies',
+				title: '<liferay-ui:message key="delete-vocabulary" />',
+				url:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/view_vocabularies.jsp" /></portlet:renderURL>',
+			});
+
+			itemSelectorDialog.on('selectedItemChange', function (event) {
+				var selectedItems = event.selectedItem;
+
+				if (selectedItems) {
+					if (
+						confirm(
+							'<liferay-ui:message key="are-you-sure-you-want-to-delete-the-selected-entries" />'
+						)
+					) {
+						Array.prototype.forEach.call(selectedItems, function (
+							item,
+							index
+						) {
+							dom.append(vocabulariesFm, item);
+						});
+
+						<liferay-portlet:actionURL copyCurrentRenderParameters="<%= false %>" name="deleteVocabulary" var="deleteVocabulariesURL">
+							<portlet:param name="redirect" value="<%= assetCategoriesDisplayContext.getDefaultRedirect() %>" />
+						</liferay-portlet:actionURL>
+
+						submitForm(vocabulariesFm, '<%= deleteVocabulariesURL %>');
+					}
+				}
+			});
+
+			itemSelectorDialog.open();
+		}
+	};
+
+	var ACTIONS = {
+		deleteVocabularies: deleteVocabularies,
+	};
+
+	Liferay.componentReady('actionsComponent').then(function (actionsComponent) {
+		actionsComponent.on(['click', 'itemClicked'], function (event, facade) {
+			var itemData;
+
+			if (event.data && event.data.item) {
+				itemData = event.data.item.data;
+			}
+			else if (!event.data && facade && facade.target) {
+				itemData = facade.target.data;
+			}
+
+			if (itemData && itemData.action && ACTIONS[itemData.action]) {
+				ACTIONS[itemData.action]();
+			}
+		});
+	});
+</aui:script>

@@ -405,6 +405,18 @@ public class AssetCategoriesDisplayContext {
 		return editVocabularyURL;
 	}
 
+	public String getEventName() {
+		if (_eventName != null) {
+			return _eventName;
+		}
+
+		_eventName = ParamUtil.getString(
+			_httpServletRequest, "eventName",
+			_renderResponse.getNamespace() + "selectVocabularies");
+
+		return _eventName;
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -476,6 +488,16 @@ public class AssetCategoriesDisplayContext {
 		return _vocabularies;
 	}
 
+	public List<DropdownItem> getVocabulariesDropdownItems() {
+		return DropdownItemListBuilder.add(
+			dropdownItem -> {
+				dropdownItem.putData("action", "deleteVocabularies");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "delete"));
+			}
+		).build();
+	}
+
 	public SearchContainer<AssetVocabulary> getVocabulariesSearchContainer()
 		throws PortalException {
 
@@ -507,16 +529,6 @@ public class AssetCategoriesDisplayContext {
 
 		EmptyOnClickRowChecker emptyOnClickRowChecker =
 			new EmptyOnClickRowChecker(_renderResponse);
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("^(?!.*");
-		sb.append(_renderResponse.getNamespace());
-		sb.append("redirect).*(/vocabulary/");
-		sb.append(getVocabularyId());
-		sb.append(")");
-
-		emptyOnClickRowChecker.setRememberCheckBoxStateURLRegex(sb.toString());
 
 		vocabulariesSearchContainer.setRowChecker(emptyOnClickRowChecker);
 
@@ -770,6 +782,7 @@ public class AssetCategoriesDisplayContext {
 	private AssetCategory _category;
 	private Long _categoryId;
 	private String _displayStyle;
+	private String _eventName;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;
 	private String _navigation;

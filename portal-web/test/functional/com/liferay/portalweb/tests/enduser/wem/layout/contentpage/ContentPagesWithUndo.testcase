@@ -136,6 +136,36 @@ definition {
 		PageEditor.viewFragment(fragmentName = "Section");
 	}
 
+	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with edited inline content back."
+	@priority = "4"
+	test UndoDeletedFragmentWithInlineContent {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "New editable fragment text");
+
+		PageEditor.removeFragment(fragmentName = "Heading");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Heading");
+
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "New editable fragment text");
+	}
+
 	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."
 	@priority = "5"
 	test UndoPagechangeThreeTimes {

@@ -29,29 +29,43 @@ import {BAR_CHART, COLORS} from '../utils/constants';
 
 export default function AuditBarChart({categories, rtl}) {
 	const auditBarChartData = useMemo(() => {
-		const bars = [];
-		const data = [];
+		const dataKeys = new Set();
 
-		categories.map((category) => {
-			var dataChild = {name: category.name};
-
-			const children = category.children;
-
-			for (var i = 0; i < children.length; i++) {
-				const barChild = {
-					dataKey: children[i].key,
-					name: children[i].name,
-				};
-				if (!bars.some((bar) => bar.dataKey === children[i].key)) {
-					bars.push(barChild);
-				}
-
-				dataChild = {
-					...dataChild,
-					[children[i].key]: children[i].value,
-				};
+		const bars = categories.reduce((acc, category) => {
+			if (!category.children) {
+				return undefined;
 			}
-			data.push(dataChild);
+
+			const newBar = category.children.reduce(
+				(childAcc, {key: dataKey, name}) => {
+					if (dataKeys.has(dataKey)) {
+						return childAcc;
+					}
+
+					dataKeys.add(dataKey);
+
+					return childAcc.concat({dataKey, name});
+				},
+				[]
+			);
+
+			return acc.concat(newBar);
+		}, []);
+
+		const data = categories.map((category) => {
+			if (!category.children) {
+				return category;
+			}
+
+			return category.children.reduce(
+				(acc, {key, value}) => {
+					return {
+						...acc,
+						[key]: value,
+					};
+				},
+				{name: category.name}
+			);
 		});
 
 		return {bars, data};

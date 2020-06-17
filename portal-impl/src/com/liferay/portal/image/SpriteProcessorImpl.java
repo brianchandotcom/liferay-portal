@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -147,7 +146,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 		List<RenderedImage> renderedImages = new ArrayList<>();
 
-		Properties spriteProperties = new SortedProperties();
+		Properties spriteProperties = new Properties();
 
 		float x = 0;
 		float y = 0;

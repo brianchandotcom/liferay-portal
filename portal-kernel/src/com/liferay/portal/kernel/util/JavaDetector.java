@@ -143,7 +143,7 @@ public class JavaDetector {
 		}
 
 		if (_log.isDebugEnabled()) {
-			LogUtil.debug(_log, new SortedProperties(System.getProperties()));
+			LogUtil.debug(_log, System.getProperties());
 		}
 	}
 

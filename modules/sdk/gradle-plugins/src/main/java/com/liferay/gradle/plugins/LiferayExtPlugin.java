@@ -37,6 +37,7 @@ import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
+import org.gradle.api.provider.Property;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
@@ -350,13 +351,17 @@ public class LiferayExtPlugin implements Plugin<Project> {
 							public String call() throws Exception {
 								War war = warTaskProvider.get();
 
-								String servletContextName = war.getBaseName();
+								Property<String> archiveAppendixProperty =
+									war.getArchiveAppendix();
+								Property<String> archiveBaseNameProperty =
+									war.getArchiveBaseName();
 
-								String appendix = war.getAppendix();
+								String servletContextName =
+									archiveBaseNameProperty.get();
 
-								if (appendix != null) {
-									servletContextName =
-										servletContextName + "-" + appendix;
+								if (archiveAppendixProperty.isPresent()) {
+									servletContextName +=
+										'-' + archiveAppendixProperty.get();
 								}
 
 								return servletContextName;
@@ -401,7 +406,19 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 								@SuppressWarnings("unused")
 								public void doCall(CopySpec copySpec) {
-									final Jar extJar = extJarTaskProvider.get();
+									Jar extJar = extJarTaskProvider.get();
+
+									Property<String> archiveAppendixProperty =
+										extJar.getArchiveAppendix();
+
+									final String archiveAppendix =
+										archiveAppendixProperty.get();
+
+									Property<String> archiveExtensionProperty =
+										extJar.getArchiveExtension();
+
+									final String archiveExtension =
+										archiveExtensionProperty.get();
 
 									copySpec.from(extJar);
 									copySpec.rename(
@@ -416,10 +433,9 @@ public class LiferayExtPlugin implements Plugin<Project> {
 												sb.append("ext-");
 												sb.append(project.getName());
 												sb.append('-');
-												sb.append(extJar.getAppendix());
+												sb.append(archiveAppendix);
 												sb.append('.');
-												sb.append(
-													extJar.getExtension());
+												sb.append(archiveExtension);
 
 												return sb.toString();
 											}
@@ -444,12 +460,17 @@ public class LiferayExtPlugin implements Plugin<Project> {
 				public void execute(Jar extJar) {
 					extJar.from(extSourceSet.getOutput());
 
-					extJar.setAppendix(
-						GUtil.toWords(extSourceSet.getName(), '-'));
+					Property<String> archiveAppendixProperty =
+						extJar.getArchiveAppendix();
+
+					String archiveAppendix = GUtil.toWords(
+						extSourceSet.getName(), '-');
+
+					archiveAppendixProperty.set(archiveAppendix);
 
 					extJar.setDescription(
 						"Assembles a jar archive containing the " +
-							extJar.getAppendix() + " classes.");
+							archiveAppendix + " classes.");
 				}
 
 			});
@@ -469,7 +490,10 @@ public class LiferayExtPlugin implements Plugin<Project> {
 					String name = project.getName();
 
 					if (!name.endsWith("-ext")) {
-						war.setAppendix("ext");
+						Property<String> archiveAppendixProperty =
+							war.getArchiveAppendix();
+
+						archiveAppendixProperty.set("ext");
 					}
 
 					CopySpec copySpec = war.getWebInf();
@@ -492,7 +516,19 @@ public class LiferayExtPlugin implements Plugin<Project> {
 					for (TaskProvider<Jar> extJarTaskProvider :
 							extJarTaskProviders) {
 
-						final Jar extJar = extJarTaskProvider.get();
+						Jar extJar = extJarTaskProvider.get();
+
+						Property<String> archiveAppendixProperty =
+							extJar.getArchiveAppendix();
+
+						final String archiveAppendix =
+							archiveAppendixProperty.get();
+
+						Property<String> archiveExtensionProperty =
+							extJar.getArchiveExtension();
+
+						final String archiveExtension =
+							archiveExtensionProperty.get();
 
 						copySpec.from(extJar);
 
@@ -501,7 +537,7 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 								@Override
 								public String call() throws Exception {
-									return extJar.getAppendix();
+									return archiveAppendix;
 								}
 
 							});
@@ -511,10 +547,8 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 								@SuppressWarnings("unused")
 								public String doCall(String fileName) {
-									String appendix = extJar.getAppendix();
-									String extension = extJar.getExtension();
-
-									return appendix + '.' + extension;
+									return archiveAppendix + '.' +
+										archiveExtension;
 								}
 
 							});

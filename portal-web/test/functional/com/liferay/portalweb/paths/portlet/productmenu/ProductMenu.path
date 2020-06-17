@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>CATEGORY</td>
-	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}']</td>
+	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@class,'panel-body')]]//div[contains(@class,'list-group')]/a[@aria-expanded='true' and @data-qa-id='appGroup'][normalize-space(text())='${key_category}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_COLLAPSED</td>
-	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='false']</td>
+	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@class,'panel-body')]]//div[contains(@class,'list-group')]/a[@aria-expanded='false' and @data-qa-id='appGroup'][normalize-space(text())='${key_category}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORY_EXPANDED</td>
-	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@id,'ProductMenu')]/div/a[@aria-expanded='true']]//a[@data-qa-id='appGroup'][normalize-space(.//text())='${key_category}'][@aria-expanded='true']</td>
+	<td>xpath=(//div[@class='panel'] | //div[contains(@class,'panel-secondary')])[div[contains(@class,'panel-body')]]//div[contains(@class,'list-group')]/a[@aria-expanded='true' and @data-qa-id='appGroup'][normalize-space(text())='${key_category}']</td>
 	<td></td>
 </tr>
 <tr>

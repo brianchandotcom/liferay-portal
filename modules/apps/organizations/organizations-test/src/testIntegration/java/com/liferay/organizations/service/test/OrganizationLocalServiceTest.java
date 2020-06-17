@@ -1010,25 +1010,10 @@ public class OrganizationLocalServiceTest {
 	private String _createOrganizationType(String name) throws Exception {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		String[] childTypes = {"organization", name};
-
-		properties.put("childrenTypes", childTypes);
-
-		properties.put("configuration.cleaner.ignore", "true");
-		properties.put("countryEnabled", true);
-		properties.put("countryRequired", false);
 		properties.put("name", name);
-		properties.put("rootable", true);
-		properties.put("service.bundleLocation", "?");
-		properties.put(
-			"service.factoryPid",
-			"com.liferay.organizations.internal.configuration." +
-				"OrganizationTypeConfiguration");
 
 		return ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.organizations.internal.configuration." +
-				"OrganizationTypeConfiguration",
-			properties);
+			_ORGANIZATION_TYPE_CONFIGURATION_FACTORY_PID, properties);
 	}
 
 	private String _getTreePath(Organization[] organizations) {
@@ -1067,6 +1052,10 @@ public class OrganizationLocalServiceTest {
 			organization.getComments(), false, null, organizationGroup.isSite(),
 			null);
 	}
+
+	private static final String _ORGANIZATION_TYPE_CONFIGURATION_FACTORY_PID =
+		"com.liferay.organizations.internal.configuration." +
+			"OrganizationTypeConfiguration";
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();

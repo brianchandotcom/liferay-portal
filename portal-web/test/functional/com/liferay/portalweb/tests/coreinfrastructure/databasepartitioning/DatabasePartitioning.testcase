@@ -15,9 +15,11 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
-	@priority = "4"
+	@priority = "5"
 	test AddNewCompany {
 		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
+		property database.types = "mysql";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompany";
 
 		PortalInstances.openVirtualInstancesAdmin();
@@ -54,9 +56,10 @@ definition {
 			expectedCount = "1");
 	}
 
-	@priority = "5"
+	@priority = "4"
 	test AddMultipleCompanies {
 		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
+		property database.types = "mysql";
 		property test.name.skip.portal.instance = "DatabasePartitioning#AddMultipleCompanies";
 
 		PortalInstances.openVirtualInstancesAdmin();

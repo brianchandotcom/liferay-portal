@@ -54,7 +54,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Dictionary;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -871,7 +870,15 @@ public class OrganizationLocalServiceTest {
 		for (int i = 0; i < 5; i++) {
 			String organizationType = RandomTestUtil.randomString();
 
-			pids.add(_createOrganizationType(organizationType));
+			pids.add(
+				ConfigurationTestUtil.createFactoryConfiguration(
+					"com.liferay.organizations.internal.configuration." +
+						"OrganizationTypeConfiguration",
+					new HashMapDictionary<String, Object>() {
+						{
+							put("name", organizationType);
+						}
+					}));
 
 			_organizations.add(
 				OrganizationTestUtil.addOrganization(organizationType));
@@ -949,15 +956,6 @@ public class OrganizationLocalServiceTest {
 		);
 	}
 
-	private String _createOrganizationType(String name) throws Exception {
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put("name", name);
-
-		return ConfigurationTestUtil.createFactoryConfiguration(
-			_ORGANIZATION_TYPE_CONFIGURATION_FACTORY_PID, properties);
-	}
-
 	private String _getTreePath(Organization[] organizations) {
 		StringBundler sb = new StringBundler();
 
@@ -1025,10 +1023,6 @@ public class OrganizationLocalServiceTest {
 			organization.getComments(), false, null, organizationGroup.isSite(),
 			null);
 	}
-
-	private static final String _ORGANIZATION_TYPE_CONFIGURATION_FACTORY_PID =
-		"com.liferay.organizations.internal.configuration." +
-			"OrganizationTypeConfiguration";
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();

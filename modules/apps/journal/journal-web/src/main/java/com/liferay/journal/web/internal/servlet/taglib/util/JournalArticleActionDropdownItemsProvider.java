@@ -117,6 +117,9 @@ public class JournalArticleActionDropdownItemsProvider {
 		UnsafeConsumer<DropdownItem, Exception> viewContentArticleAction =
 			_getViewContentArticleActionUnsafeConsumer();
 
+		final boolean importExportEnabled = hasViewPermission &&
+			FFImportExportTranslationConfigurationUtil.enabled();
+
 		return DropdownItemListBuilder.add(
 			() -> hasUpdatePermission, _getEditArticleActionUnsafeConsumer()
 		).add(
@@ -143,15 +146,13 @@ public class JournalArticleActionDropdownItemsProvider {
 			() -> hasViewPermission && hasUpdatePermission,
 			_getViewHistoryArticleActionUnsafeConsumer()
 		).add(
-			() ->
-				hasViewPermission &&
-				FFImportExportTranslationConfigurationUtil.enabled(),
+			() -> importExportEnabled,
 			_getExportForTranslationActionUnsafeConsumer()
 		).add(
-			() ->
-				hasViewPermission &&
-				FFImportExportTranslationConfigurationUtil.enabled(),
+			() -> importExportEnabled,
 			_getImportTranslationActionUnsafeConsumer()
+		).add(
+			() -> importExportEnabled, _getTranslateActionUnsafeConsumer()
 		).add(
 			() -> hasViewPermission && (availableLanguageIds.length > 1),
 			_getDeleteArticleTranslationsActionUnsafeConsumer()
@@ -685,6 +686,23 @@ public class JournalArticleActionDropdownItemsProvider {
 				"subscribeArticleURL", subscribeArticleURL.toString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "subscribe"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getTranslateActionUnsafeConsumer() {
+
+		PortletURL translateURL = _liferayPortletResponse.createRenderURL();
+
+		translateURL.setParameter("mvcRenderCommandName", "/journal/translate");
+		translateURL.setParameter("redirect", _getRedirect());
+		translateURL.setParameter(
+			"articleId", String.valueOf(_article.getArticleId()));
+
+		return dropdownItem -> {
+			dropdownItem.setHref(translateURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "translate"));
 		};
 	}
 

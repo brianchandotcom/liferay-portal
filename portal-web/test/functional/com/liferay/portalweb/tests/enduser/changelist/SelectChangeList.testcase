@@ -40,6 +40,8 @@ definition {
 
 	@priority = "4"
 	test SwitchPublication {
+		property test.name.skip.portal.instance = "SelectChangeList#SwitchPublication";
+
 		ChangeList.createNewPublication(
 			publicationDescription = "Publication Description",
 			publicationName = "Publication 2 Name");

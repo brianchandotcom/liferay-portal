@@ -93,6 +93,8 @@ definition {
 	@description = "Enable and Disable Change List"
 	@priority = "5"
 	test EnableDisableChangeList {
+		property test.name.skip.portal.instance = "ChangeListConfiguration#EnableDisableChangeList";
+
 		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Applications",

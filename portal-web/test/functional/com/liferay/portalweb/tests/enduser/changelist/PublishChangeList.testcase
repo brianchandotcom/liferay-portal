@@ -40,7 +40,7 @@ definition {
 
 	@priority = "5"
 	test PublishPublication {
-		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "PublishChangeList#PublishPublication";
 
 		Navigator.openURL();
 

@@ -36,12 +36,16 @@ definition {
 
 	@priority = "3"
 	test CancelPublicationCreation {
+		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CancelPublicationCreation";
+
 		ChangeList.cancelPublicationCreation();
 	}
 
 	@description = "Try to create new change list with too long name"
 	@priority = "3"
 	test CreateNewPublicationWithLongName {
+		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewPublicationWithLongName";
+
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
 			publicationDescription = "Publication Description",
@@ -53,6 +57,8 @@ definition {
 	@description = "Try to create new change list with empty string in the description"
 	@priority = "3"
 	test CreateNewPublicationWithoutDescription {
+		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewPublicationWithoutDescription";
+
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
 			publicationName = "Publication Name");
@@ -65,6 +71,8 @@ definition {
 	@description = "Try to create new change list with empty string name"
 	@priority = "3"
 	test CreateNewPublicationWithoutName {
+		property test.name.skip.portal.instance = "ChangeListGlobalOverview#CreateNewPublicationWithoutName";
+
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
 			publicationDescription = "Publication Description");
@@ -74,6 +82,8 @@ definition {
 
 	@priority = "5"
 	test DeletePublication {
+		property test.name.skip.portal.instance = "ChangeListGlobalOverview#DeletePublication";
+
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
 			publicationDescription = "Publication Description",

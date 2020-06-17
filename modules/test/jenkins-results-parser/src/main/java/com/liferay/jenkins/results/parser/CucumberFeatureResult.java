@@ -153,7 +153,7 @@ public class CucumberFeatureResult implements Serializable {
 
 		try {
 			String documentContent = JenkinsResultsParserUtil.toString(
-				getURL());
+				getURL(), false);
 
 			documentContent = documentContent.replaceAll("&nbsp;", " ");
 			documentContent = documentContent.replaceAll("<br>", "<br />");

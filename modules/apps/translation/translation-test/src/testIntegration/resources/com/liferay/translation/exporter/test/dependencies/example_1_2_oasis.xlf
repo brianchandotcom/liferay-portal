@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2"  version="1.2">
+	<file original="Graphic Example.psd"
+		  source-language="en-US" target-language="ja-JP"
+		  tool="Rainbow" datatype="photoshop">
+		<header>
+			<skl>
+				<external-file uid="3BB236513BB24732" href="Graphic Example.psd.skl"/>
+			</skl>
+			<phase-group>
+				<phase phase-name="extract" process-name="extraction"
+					   tool="Rainbow" date="20010926T152258Z"
+					   company-name="NeverLand Inc." job-id="123"
+					   contact-name="Peter Pan" contact-email="ppan@example.com">
+					<note>Make sure to use the glossary I sent you yesterday.
+						Thanks.</note>
+				</phase>
+			</phase-group>
+		</header>
+		<body>
+			<trans-unit id="1" maxbytes="14">
+				<source xml:lang="en-US">Quetzal</source>
+				<target xml:lang="ja-JP">Quetzal</target>
+			</trans-unit>
+			<trans-unit id="3" maxbytes="114">
+				<source xml:lang="en-US">An application to manipulate and
+					process XLIFF documents</source>
+				<target xml:lang="ja-JP">XLIFF 文書を編集、または処理
+					するアプリケーションです。</target>
+			</trans-unit>
+			<trans-unit id="4" maxbytes="36">
+				<source xml:lang="en-US">XLIFF Data Manager</source>
+				<target xml:lang="ja-JP">XLIFF データ・マネージャ</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

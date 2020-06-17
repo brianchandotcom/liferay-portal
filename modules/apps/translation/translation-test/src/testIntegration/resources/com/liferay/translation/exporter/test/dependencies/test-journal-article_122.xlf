@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" srcLang="en-US" trgLang="es-ES" version="2.0">
+	<file id="com.liferay.journal.model.JournalArticle:122">
+		<unit id="title">
+			<segment>
+				<source><![CDATA[This is the Title]]></source>
+				<target><![CDATA[Este es el titulo]]></target>
+			</segment>
+		</unit>
+		<unit id="content">
+			<segment>
+				<source><![CDATA[<p>This is the content</p>
+
+<p>&nbsp;</p>
+
+<p><img src="/documents/20122/0/ponyo1.jpg/b87b44bd-7bae-5bf7-4927-af67bd07ac88?t=1592294400785" /></p>
+
+<p>&nbsp;</p>]]></source>
+				<target><![CDATA[<p><strong>Este es el contenido</strong></p>]]></target>
+			</segment>
+		</unit>
+	</file>
+</xliff>

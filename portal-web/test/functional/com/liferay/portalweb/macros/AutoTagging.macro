@@ -40,6 +40,7 @@ definition {
 		else if ("${disableAutoTaggingFor}" == "Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
+				panel = "Site Administration",
 				portlet = "Settings",
 				site = "${site}");
 
@@ -96,6 +97,7 @@ definition {
 		else if ("${enableAutoTaggingFor}" == "Settings") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
+				panel = "Site Administration",
 				portlet = "Settings",
 				site = "${site}");
 

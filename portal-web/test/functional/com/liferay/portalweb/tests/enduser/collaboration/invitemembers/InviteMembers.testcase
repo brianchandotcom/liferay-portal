@@ -52,6 +52,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Site Page 1");
@@ -64,6 +65,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships");
 
 		AssertElementNotPresent(locator1 = "Card#SPECIFIC_TEXT");
@@ -108,6 +110,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships");
 
 		Site.viewMemberCP(

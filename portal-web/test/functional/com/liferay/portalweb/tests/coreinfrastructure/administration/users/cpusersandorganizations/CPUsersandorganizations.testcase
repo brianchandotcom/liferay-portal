@@ -298,6 +298,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Private Page");
@@ -337,6 +338,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Public Page");
@@ -403,6 +405,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Organization Public Page");
@@ -411,6 +414,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Teams");
 
 		Team.addCP(
@@ -1387,6 +1391,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Public Page");
@@ -1395,6 +1400,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Teams");
 
 		Team.addCP(
@@ -1471,6 +1477,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Settings");
 
 		var siteID = "siteID";
@@ -1933,6 +1940,7 @@ definition {
 	test ViewOrganizationSiteViaSitesDirectory {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Sites Directory Page");
@@ -1963,6 +1971,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");

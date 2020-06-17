@@ -203,6 +203,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test");
@@ -219,6 +220,7 @@ out.println(PortalUtil.escapeRedirect("/"));
 	test ValidateNoLARRemoteCodeExecution {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Blogs");
 
 		LAR.importPortlet(

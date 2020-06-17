@@ -27,6 +27,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
+			panel = "Site Administration",
 			portlet = "Staging",
 			site = "Guest");
 

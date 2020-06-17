@@ -205,6 +205,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Blogs");
 
 		AssertElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SCOPE");

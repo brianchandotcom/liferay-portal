@@ -66,6 +66,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships");
 
 		Site.assignUserGroupAsMemberCP(
@@ -78,6 +79,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships");
 
 		Site.assignSiteRoleToUserGroup(
@@ -871,6 +873,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
@@ -895,6 +898,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();

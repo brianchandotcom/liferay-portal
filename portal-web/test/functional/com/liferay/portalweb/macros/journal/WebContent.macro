@@ -808,6 +808,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		AssertTextNotPresent(value1 = "${webContentTitle}");
@@ -825,6 +826,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
+			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
@@ -835,6 +837,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		AssertTextNotPresent(value1 = "${webContentTitle}");
@@ -1440,6 +1443,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -1456,6 +1460,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
+			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();

@@ -350,6 +350,7 @@ definition {
 	test ViewDMDocumentNoGuestRole {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Page");
@@ -387,6 +388,7 @@ definition {
 	test ViewDMFolderGuestInline {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Documents and Media Page");

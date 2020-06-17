@@ -23,6 +23,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages",
 			site = "Site Name");
 
@@ -105,6 +106,7 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
+				panel = "Site Administration",
 				portlet = "${portlet}");
 
 			SiteAdmin.viewPortletTitle(portletTitle = "${portlet}");

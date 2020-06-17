@@ -16,6 +16,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
@@ -30,12 +31,14 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		Workflow.configureWCWorkflowViaFolderInfo(workflowDefinition = "Single Approver");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Asset Publisher Page");
@@ -120,6 +123,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		MessageboardsThread.addWithWorkflowCP(

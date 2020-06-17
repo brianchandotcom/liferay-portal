@@ -120,6 +120,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Mock LDAP Page");
@@ -182,6 +183,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships");
 
 		Site.assignUserGroupAsMemberCP(userGroupName = "Agricultural Science");
@@ -190,6 +192,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships");
 
 		for (var userGroupName : list "Business: Accounting,Business: Business Administration") {
@@ -201,6 +204,7 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "People",
+				panel = "Site Administration",
 				portlet = "Memberships");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "Business: ${siteName}");

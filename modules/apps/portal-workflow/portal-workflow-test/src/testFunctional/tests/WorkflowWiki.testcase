@@ -18,6 +18,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow");
 
 		Workflow.configureWorkflow(
@@ -26,6 +27,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Wiki Page");
@@ -84,6 +86,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(
@@ -173,6 +176,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships");
 
 		Site.assignUserAsMemberCP(

@@ -198,6 +198,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
+			panel = "Site Administration",
 			portlet = "Categories");
 
 		if (IsElementPresent(locator1 = "Checkbox#SELECT_ALL")) {

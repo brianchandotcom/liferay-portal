@@ -1090,6 +1090,7 @@ definition {
 	macro getDMLatestVersionURL {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${site}");
 
@@ -1437,6 +1438,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
@@ -1453,6 +1455,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
+			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();

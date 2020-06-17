@@ -453,6 +453,7 @@ definition {
 		task ("Configure Web Content Article workflow to Single Approver") {
 			ProductMenu.gotoPortlet(
 				category = "Configuration",
+				panel = "Site Administration",
 				portlet = "Workflow");
 
 			Workflow.configureWorkflow(

@@ -751,6 +751,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Memberships",
 			site = "${siteName}");
 

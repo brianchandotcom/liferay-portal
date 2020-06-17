@@ -53,6 +53,7 @@ definition {
 	test ViewMentionViaBlogsEntry {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(
@@ -83,6 +84,7 @@ definition {
 	test ViewMentionViaBlogsEntryComment {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(

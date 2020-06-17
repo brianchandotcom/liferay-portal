@@ -159,6 +159,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Dynamic Data Lists");
 
 		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
@@ -174,6 +175,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Dynamic Data Lists");
 
 		DDLList.addCP(ddlListName = "List Name");
@@ -790,6 +792,7 @@ definition {
 		for (var i : list "1,5,3") {
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
+				panel = "Site Administration",
 				portlet = "Web Content");
 
 			WebContentNavigator.gotoAddCP();

@@ -111,6 +111,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
+			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.viewDefaultCP(assetName = "Web Content Title");

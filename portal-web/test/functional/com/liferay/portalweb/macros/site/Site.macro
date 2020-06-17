@@ -450,6 +450,7 @@ definition {
 	macro changeSiteLogo {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.togglePrivacy(privacy = "${pageName}");
@@ -665,6 +666,7 @@ definition {
 	macro getSiteId {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Settings");
 
 		AssertElementPresent(locator1 = "SitesEditSite#SITE_ID");
@@ -835,6 +837,7 @@ definition {
 	macro manageMembershipOptions {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Settings");
 
 		Pause(locator1 = "5000");

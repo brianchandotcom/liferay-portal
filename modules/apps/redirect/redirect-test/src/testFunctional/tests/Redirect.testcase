@@ -1047,6 +1047,7 @@ definition {
 	test Smoke {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Redirection",
 			site = "Guest");
 
@@ -1060,6 +1061,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Redirection");
 
 		Redirect.addEntry(

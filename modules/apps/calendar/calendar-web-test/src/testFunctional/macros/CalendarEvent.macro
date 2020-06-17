@@ -1248,6 +1248,7 @@ definition {
 		if ("${marketplace}" == "true") {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
+				panel = "Site Administration",
 				portlet = "Pages");
 
 			SitePages.addPublicPage(pageName = "Marketplace Calendar Testing");

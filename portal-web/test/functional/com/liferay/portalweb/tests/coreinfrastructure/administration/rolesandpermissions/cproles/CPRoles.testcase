@@ -123,6 +123,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Segments");
 
 		LexiconEntry.gotoAdd();
@@ -288,6 +289,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Segments");
 
 		LexiconEntry.gotoAdd();

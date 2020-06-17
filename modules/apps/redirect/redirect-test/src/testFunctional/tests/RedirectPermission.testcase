@@ -132,6 +132,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Redirection");
 
 		Redirect.addEntry(
@@ -325,6 +326,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Redirection");
 
 		LexiconEntry.viewNoEntryMenuItem(
@@ -536,6 +538,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Redirection");
 
 		LexiconEntry.viewNoEntryMenuItem(
@@ -741,6 +744,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Redirection");
 
 		Redirect.viewEntry(

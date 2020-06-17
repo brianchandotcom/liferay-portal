@@ -120,6 +120,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
+			panel = "Site Administration",
 			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");

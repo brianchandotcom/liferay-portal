@@ -47,6 +47,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -291,6 +292,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -393,6 +395,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -517,6 +520,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -734,6 +738,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -933,6 +938,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Blogs",
 			site = "${siteName}");
 
@@ -940,6 +946,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Blogs",
 			site = "${siteName}");
 
@@ -1162,6 +1169,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1247,6 +1255,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1317,6 +1326,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1412,6 +1422,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1499,6 +1510,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1577,6 +1589,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1633,6 +1646,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1722,6 +1736,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1790,6 +1805,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1852,6 +1868,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 
@@ -1919,6 +1936,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Workflow",
 			site = "${siteName}");
 

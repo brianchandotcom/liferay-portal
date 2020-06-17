@@ -18,6 +18,7 @@ definition {
 	test ViewPublisherSubscriber {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Publisher Subscriber Page");

@@ -39,6 +39,7 @@ definition {
 	test ViewChangeListIconAtWebContentCreatedBeforeActiveChangeList {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content",
 			site = "Guest");
 
@@ -52,6 +53,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -71,6 +73,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content",
 			site = "Guest");
 
@@ -84,6 +87,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -110,6 +114,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content",
 			site = "Guest");
 
@@ -123,6 +128,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content");
 
 		WebContentNavigator.gotoEntryMenuItem(
@@ -162,6 +168,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content",
 			site = "Guest");
 

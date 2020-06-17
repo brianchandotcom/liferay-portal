@@ -32,6 +32,7 @@ definition {
 	test Demo1 {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
+			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Company Picnic");

@@ -147,7 +147,7 @@ Navigator.openURL();
 
 ProductMenu.gotoPortlet(
 	category = "Content",
-	
+	panel = "Site Administration",
 	portlet = "Blogs"
 );
 
@@ -489,7 +489,7 @@ delimited list. The parameter name and value resembles a `var` declaration
 ```javascript
 ProductMenu.gotoPortlet(
 	category = "Content",
-	
+	panel = "Site Administration",
 	portlet = "Blogs"
 );
 ```
@@ -1089,7 +1089,7 @@ task ("Add a blogs entry called 'Blogs Entry1 Title' with content 'Blogs Entry1 
 
 	ProductMenu.gotoPortlet(
 		category = "Content",
-		
+		panel = "Site Administration",
 		portlet = "Blogs"
 	);
 

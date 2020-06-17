@@ -156,6 +156,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		IsElementPresent(locator1 = "Checkbox#SELECT_ALL");

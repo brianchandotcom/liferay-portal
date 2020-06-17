@@ -74,6 +74,7 @@ definition {
 		for (var categoryName : list "Books,Plants,Pets") {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
+				panel = "Site Administration",
 				portlet = "Categories");
 
 			Category.addCP(
@@ -127,6 +128,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
+			panel = "Site Administration",
 			portlet = "Categories");
 
 		Category.addCP(
@@ -339,6 +341,7 @@ definition {
 		for (var categoryName : list "Books,Plants,Pets,Furniture") {
 			ProductMenu.gotoPortlet(
 				category = "Categorization",
+				panel = "Site Administration",
 				portlet = "Categories");
 
 			Category.addCP(

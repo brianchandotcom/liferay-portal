@@ -399,6 +399,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Generador del sitio",
+			panel = "Site Administration",
 			portlet = "Páginas del sitio web");
 
 		SitePages.gotoPageMenuItem(
@@ -419,6 +420,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Generador del sitio",
+			panel = "Site Administration",
 			portlet = "Páginas del sitio web");
 
 		SitePages.gotoPageMenuItem(
@@ -453,6 +455,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuración",
+			panel = "Site Administration",
 			portlet = "Ajustes del sitio");
 
 		Site.configureCurrentLanguagesCP(
@@ -489,6 +492,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuración",
+			panel = "Site Administration",
 			portlet = "Ajustes del sitio");
 
 		Site.configureCurrentLanguagesCP(
@@ -756,6 +760,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Generador del sitio",
+			panel = "Site Administration",
 			portlet = "Páginas del sitio web");
 
 		SitePages.gotoPageMenuItem(

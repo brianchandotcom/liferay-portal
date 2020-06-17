@@ -14,6 +14,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Segments");
 
 		LexiconEntry.gotoAdd();
@@ -40,6 +41,7 @@ definition {
 		else {
 			ProductMenu.gotoPortlet(
 				category = "People",
+				panel = "Site Administration",
 				portlet = "Segments",
 				site = "Guest");
 
@@ -88,6 +90,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Segments",
 			site = "Guest");
 
@@ -178,6 +181,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
+			panel = "Site Administration",
 			portlet = "Segments",
 			site = "Guest");
 

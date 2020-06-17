@@ -905,6 +905,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
+			panel = "Site Administration",
 			portlet = "Staging");
 
 		if (IsElementPresent(locator1 = "Staging#LATEST_PROCESS_RESULT")) {
@@ -992,6 +993,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Settings");
 
 		var siteID = "siteID";
@@ -1011,6 +1013,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
+			panel = "Site Administration",
 			portlet = "Staging");
 
 		Staging.activateStagingCP(

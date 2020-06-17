@@ -43,6 +43,7 @@ definition {
 	test AssertOnCollisionDisplay {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content",
 			site = "Guest");
 
@@ -72,6 +73,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content",
 			site = "Guest");
 
@@ -95,6 +97,7 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
+			panel = "Site Administration",
 			portlet = "Web Content",
 			site = "Guest");
 

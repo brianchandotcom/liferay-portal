@@ -369,6 +369,7 @@ Sincerely,<br />
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoDefinitions();
@@ -393,6 +394,7 @@ Sincerely,<br />
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		while (IsElementPresent(locator1 = "ReportsAdmin#REPORTS_ENTRY_TABLE_ACTIONS_1")) {
@@ -418,6 +420,7 @@ Sincerely,<br />
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
+			panel = "Site Administration",
 			portlet = "Reports Admin");
 
 		ReportsAdmin.gotoSources();

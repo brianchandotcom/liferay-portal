@@ -33,14 +33,13 @@ function MappingInput({
 	selectedFieldKey,
 	selectedSource,
 }) {
-	const fields = (isUnmappeable ? [UNMAPPED_OPTION] : []).concat(
-		initialFields.filter(({type}) => type === fieldType)
-	);
+	const fields = [
+		UNMAPPED_OPTION,
+		...initialFields.filter(({type}) => type === fieldType),
+	];
 	const [source, setSource] = useState(selectedSource);
 	const [field, setField] = useState(
-		fields.length
-			? fields.find(({key}) => key === selectedFieldKey) || fields[0]
-			: UNMAPPED_OPTION
+		fields.find(({key}) => key === selectedFieldKey) || UNMAPPED_OPTION
 	);
 
 	const isActive = !!field && field.key !== UNMAPPED_OPTION.key;

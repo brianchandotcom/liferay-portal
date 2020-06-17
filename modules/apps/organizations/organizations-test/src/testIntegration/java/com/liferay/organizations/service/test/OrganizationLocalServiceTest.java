@@ -866,28 +866,27 @@ public class OrganizationLocalServiceTest {
 
 	@Test
 	public void testSearchOrganizationsByType() throws Exception {
-		String defaultType = "organization";
+		List<String> pids = new ArrayList<>();
 
-		String orgType = "test org type";
+		for (int i = 0; i < 2; i++) {
+			String organizationType = RandomTestUtil.randomString();
 
-		String configPid = _createOrganizationType(orgType);
+			pids.add(_createOrganizationType(organizationType));
+
+			_organizations.add(
+				OrganizationTestUtil.addOrganization(organizationType));
+			_organizations.add(
+				OrganizationTestUtil.addOrganization(organizationType));
+		}
 
 		try {
-			_organizations.add(OrganizationTestUtil.addOrganization(orgType));
-
-			_organizations.add(OrganizationTestUtil.addOrganization(orgType));
-
-			_organizations.add(
-				OrganizationTestUtil.addOrganization(defaultType));
-
-			_organizations.add(
-				OrganizationTestUtil.addOrganization(defaultType));
-
 			_assertOrganizationsSort(_organizations, "asc");
 			_assertOrganizationsSort(_organizations, "desc");
 		}
 		finally {
-			ConfigurationTestUtil.deleteConfiguration((String)configPid);
+			for (String pid : pids) {
+				ConfigurationTestUtil.deleteConfiguration(pid);
+			}
 		}
 	}
 

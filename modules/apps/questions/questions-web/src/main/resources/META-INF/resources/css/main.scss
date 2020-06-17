@@ -8,6 +8,7 @@
 
 .navigation-bar {
 	width: inherit;
+
 	.navbar-nav {
 		width: inherit;
 	}
@@ -15,6 +16,7 @@
 
 .question-row-article-body {
 	height: 2.5rem;
+
 	> * {
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -142,6 +144,7 @@
 	@include media-breakpoint-up(xl) {
 		max-width: 400px;
 	}
+
 	.questions-navigation-section-title {
 		@include media-breakpoint-up(xl) {
 			max-width: 200px;
@@ -156,6 +159,7 @@
 .questions-tag-selector {
 	.form-group {
 		margin-bottom: 1rem;
+
 		.form-control-tag-group.input-group {
 			padding: 0 1rem;
 		}
@@ -179,24 +183,28 @@
 	word-wrap: break-word;
 }
 
-.questions-container .subnav-tbar .container-fluid-max-xl {
-	max-width: 100%;
-}
-
-.questions-container blockquote {
-	border-color: #ccc;
-	border-style: solid;
-	border-width: 0 0 0 5px;
-	padding-left: 20px;
-	padding-right: 8px;
-}
-
-.questions-container .nav-item a {
-	cursor: pointer;
-}
-
 .questions-container {
 	word-break: break-word;
+
+	.cke_contents {
+		border: 1px solid #e7e7ed;
+	}
+
+	blockquote {
+		border-color: #ccc;
+		border-style: solid;
+		border-width: 0 0 0 5px;
+		padding-left: 20px;
+		padding-right: 8px;
+	}
+
+	.nav-item a {
+		cursor: pointer;
+	}
+
+	.subnav-tbar .container-fluid-max-xl {
+		max-width: 100%;
+	}
 }
 
 .cke_dialog_contents_body {
@@ -215,12 +223,15 @@
 	.breadcrumb-item + .breadcrumb-item {
 		padding-left: 0.7rem;
 	}
+
 	.questions-breadcrumb-unstyled {
 		padding: 0 0.3rem;
 	}
+
 	.questions-breadcrumb-unstyled:hover {
 		background-color: rgba($dark, 0.06);
 	}
+
 	.questions-breadcrumb-unstyled:focus {
 		box-shadow: none;
 	}

@@ -100,6 +100,10 @@
 							return response.text();
 						})
 						.then(function (response) {
+							if (!loading) {
+								return;
+							}
+
 							loading = false;
 
 							if (!response) {

@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.model;
 
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Andrea Di Giorgi

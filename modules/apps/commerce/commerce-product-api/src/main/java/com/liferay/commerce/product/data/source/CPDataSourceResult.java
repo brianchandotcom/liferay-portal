@@ -17,7 +17,7 @@ package com.liferay.commerce.product.data.source;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.petra.string.StringBundler;
 
 import java.io.Serializable;
 

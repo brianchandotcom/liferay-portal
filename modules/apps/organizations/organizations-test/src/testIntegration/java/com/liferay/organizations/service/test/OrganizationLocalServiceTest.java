@@ -883,33 +883,8 @@ public class OrganizationLocalServiceTest {
 			_organizations.add(
 				OrganizationTestUtil.addOrganization(defaultType));
 
-			_organizations.sort(_organizationTypeComparator);
-
-			Sort sort = SortFactoryUtil.getSort(
-				Organization.class, "type", "asc");
-
-			BaseModelSearchResult<Organization> baseModelSearchResult =
-				OrganizationLocalServiceUtil.searchOrganizations(
-					TestPropsValues.getCompanyId(),
-					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
-					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
-
-			AssertUtils.assertEquals(
-				"Sorting Error Message", toStringList(_organizations),
-				toStringList(baseModelSearchResult.getBaseModels()));
-
-			sort = SortFactoryUtil.getSort(Organization.class, "type", "desc");
-
-			baseModelSearchResult =
-				OrganizationLocalServiceUtil.searchOrganizations(
-					TestPropsValues.getCompanyId(), 0, "", null,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
-
-			_organizations.sort(_organizationTypeComparator.reversed());
-
-			AssertUtils.assertEquals(
-				"Sorting Error Message", toStringList(_organizations),
-				toStringList(baseModelSearchResult.getBaseModels()));
+			_assertOrganizationsSort(_organizations, "asc");
+			_assertOrganizationsSort(_organizations, "desc");
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration((String)configPid);
@@ -973,6 +948,32 @@ public class OrganizationLocalServiceTest {
 		).collect(
 			Collectors.toList()
 		);
+	}
+
+	private void _assertOrganizationsSort(
+			List<Organization> expectedOrganizations, String orderByType)
+		throws Exception {
+
+		Sort sort = SortFactoryUtil.getSort(
+			Organization.class, "type", orderByType);
+
+		BaseModelSearchResult<Organization> baseModelSearchResult =
+			OrganizationLocalServiceUtil.searchOrganizations(
+				TestPropsValues.getCompanyId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, sort);
+
+		Comparator<Organization> comparator = _organizationTypeComparator;
+
+		if (sort.isReverse()) {
+			comparator = _organizationTypeComparator.reversed();
+		}
+
+		expectedOrganizations.sort(comparator);
+
+		AssertUtils.assertEquals(
+			"Sorting Error Message", toStringList(expectedOrganizations),
+			toStringList(baseModelSearchResult.getBaseModels()));
 	}
 
 	private String _createOrganizationType(String name) throws Exception {

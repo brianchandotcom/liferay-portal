@@ -307,19 +307,21 @@
 	.panel-group {
 		margin-bottom: 0;
 
-		.panel + .panel {
-			margin-top: 0;
+		.panel {
+			&:last-child {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+			}
+
+			+ .panel {
+				margin-top: 0;
+			}
 		}
 
 		.panel-heading + .panel-collapse {
 			> .panel-body,
 			> .list-group {
 				border-top-width: 0;
-			}
-
-			&.in,
-			&.collapsing {
-				border-bottom: 2px solid $product-menu-panel-title-active-border;
 			}
 		}
 	}

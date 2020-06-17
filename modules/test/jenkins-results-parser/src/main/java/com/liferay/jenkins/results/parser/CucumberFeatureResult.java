@@ -15,6 +15,8 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -149,24 +151,14 @@ public class CucumberFeatureResult implements Serializable {
 			return _document;
 		}
 
-		if (_documentContent != null) {
-			try {
-				_document = Dom4JUtil.parse(_documentContent);
-
-				return _document;
-			}
-			catch (DocumentException documentException) {
-				throw new RuntimeException(documentException);
-			}
-		}
-
 		try {
-			_documentContent = JenkinsResultsParserUtil.toString(getURL());
+			String documentContent = JenkinsResultsParserUtil.toString(
+				getURL());
 
-			_documentContent = _documentContent.replaceAll("&nbsp;", " ");
-			_documentContent = _documentContent.replaceAll("<br>", "<br />");
+			documentContent = documentContent.replaceAll("&nbsp;", " ");
+			documentContent = documentContent.replaceAll("<br>", "<br />");
 
-			_document = Dom4JUtil.parse(_documentContent);
+			_document = Dom4JUtil.parse(documentContent);
 
 			return _document;
 		}
@@ -175,9 +167,32 @@ public class CucumberFeatureResult implements Serializable {
 		}
 	}
 
+	private void readObject(ObjectInputStream objectInputStream)
+		throws ClassNotFoundException, IOException {
+
+		objectInputStream.defaultReadObject();
+
+		try {
+			_document = Dom4JUtil.parse(objectInputStream.readUTF());
+		}
+		catch (DocumentException documentException) {
+			throw new RuntimeException(
+				"Unable to deserialize document", documentException);
+		}
+	}
+
+	private void writeObject(ObjectOutputStream objectOutputStream)
+		throws IOException {
+
+		objectOutputStream.defaultWriteObject();
+
+		Document document = _getDocument();
+
+		objectOutputStream.writeUTF(document.asXML());
+	}
+
 	private List<CucumberScenarioResult> _cucumberScenarioResults;
 	private transient Document _document;
-	private String _documentContent;
 	private final String _url;
 
 }

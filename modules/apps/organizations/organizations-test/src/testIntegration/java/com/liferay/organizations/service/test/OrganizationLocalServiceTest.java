@@ -47,19 +47,12 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.test.util.AssertUtils;
-import com.liferay.portal.search.test.util.SearchStreamUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -924,38 +917,6 @@ public class OrganizationLocalServiceTest {
 			QueryUtil.ALL_POS, null);
 	}
 
-	protected String toString(Organization organization) {
-		Map<String, Function<Organization, Object>> map = new LinkedHashMap<>(
-			organization.getAttributeGetterFunctions());
-
-		map.remove("createDate");
-		map.remove("modifiedDate");
-
-		Stream<Map.Entry<String, Function<Organization, Object>>> stream =
-			SearchStreamUtil.stream(map.entrySet());
-
-		return String.valueOf(
-			stream.collect(
-				Collectors.toMap(
-					Map.Entry::getKey,
-					entry -> {
-						Function<Organization, Object> function =
-							entry.getValue();
-
-						return String.valueOf(function.apply(organization));
-					})));
-	}
-
-	protected List<String> toStringList(List<Organization> organizations) {
-		Stream<Organization> stream = organizations.stream();
-
-		return stream.map(
-			this::toString
-		).collect(
-			Collectors.toList()
-		);
-	}
-
 	private String _getTreePath(Organization[] organizations) {
 		StringBundler sb = new StringBundler();
 
@@ -1005,9 +966,17 @@ public class OrganizationLocalServiceTest {
 
 		expectedOrganizations.sort(comparator);
 
-		AssertUtils.assertEquals(
-			"Sorting Error Message", toStringList(expectedOrganizations),
-			toStringList(baseModelSearchResult.getBaseModels()));
+		List<Organization> actualOrganizations =
+			baseModelSearchResult.getBaseModels();
+
+		Assert.assertEquals(
+			actualOrganizations.toString(), expectedOrganizations.size(),
+			actualOrganizations.size());
+
+		for (int i = 0; i < expectedOrganizations.size(); i++) {
+			Assert.assertEquals(
+				expectedOrganizations.get(i), actualOrganizations.get(i));
+		}
 	}
 
 	private Organization _updateOrganization(Organization organization)

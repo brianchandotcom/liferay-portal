@@ -53,6 +53,38 @@ public class PageColumnDefinition {
 		return ObjectMapperUtil.readValue(PageColumnDefinition.class, json);
 	}
 
+	@Schema
+	@Valid
+	public ColumnViewportConfig getColumnViewportConfig() {
+		return columnViewportConfig;
+	}
+
+	public void setColumnViewportConfig(
+		ColumnViewportConfig columnViewportConfig) {
+
+		this.columnViewportConfig = columnViewportConfig;
+	}
+
+	@JsonIgnore
+	public void setColumnViewportConfig(
+		UnsafeSupplier<ColumnViewportConfig, Exception>
+			columnViewportConfigUnsafeSupplier) {
+
+		try {
+			columnViewportConfig = columnViewportConfigUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ColumnViewportConfig columnViewportConfig;
+
 	@DecimalMax("12")
 	@DecimalMin("1")
 	@Schema
@@ -80,38 +112,6 @@ public class PageColumnDefinition {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
-
-	@Schema
-	@Valid
-	public ViewportColumnConfig getViewportColumnConfig() {
-		return viewportColumnConfig;
-	}
-
-	public void setViewportColumnConfig(
-		ViewportColumnConfig viewportColumnConfig) {
-
-		this.viewportColumnConfig = viewportColumnConfig;
-	}
-
-	@JsonIgnore
-	public void setViewportColumnConfig(
-		UnsafeSupplier<ViewportColumnConfig, Exception>
-			viewportColumnConfigUnsafeSupplier) {
-
-		try {
-			viewportColumnConfig = viewportColumnConfigUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ViewportColumnConfig viewportColumnConfig;
 
 	@Override
 	public boolean equals(Object object) {
@@ -141,6 +141,16 @@ public class PageColumnDefinition {
 
 		sb.append("{");
 
+		if (columnViewportConfig != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"columnViewportConfig\": ");
+
+			sb.append(String.valueOf(columnViewportConfig));
+		}
+
 		if (size != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -149,16 +159,6 @@ public class PageColumnDefinition {
 			sb.append("\"size\": ");
 
 			sb.append(size);
-		}
-
-		if (viewportColumnConfig != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"viewportColumnConfig\": ");
-
-			sb.append(String.valueOf(viewportColumnConfig));
 		}
 
 		sb.append("}");

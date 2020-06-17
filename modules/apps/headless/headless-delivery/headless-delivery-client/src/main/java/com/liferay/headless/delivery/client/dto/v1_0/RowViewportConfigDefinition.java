@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.ViewportRowConfigDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.RowViewportConfigDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,10 +26,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ViewportRowConfigDefinition implements Cloneable {
+public class RowViewportConfigDefinition implements Cloneable {
 
-	public static ViewportRowConfigDefinition toDTO(String json) {
-		return ViewportRowConfigDefinitionSerDes.toDTO(json);
+	public static RowViewportConfigDefinition toDTO(String json) {
+		return RowViewportConfigDefinitionSerDes.toDTO(json);
 	}
 
 	public Integer getModulesPerRow() {
@@ -96,10 +96,10 @@ public class ViewportRowConfigDefinition implements Cloneable {
 	protected String verticalAlignment;
 
 	@Override
-	public ViewportRowConfigDefinition clone()
+	public RowViewportConfigDefinition clone()
 		throws CloneNotSupportedException {
 
-		return (ViewportRowConfigDefinition)super.clone();
+		return (RowViewportConfigDefinition)super.clone();
 	}
 
 	@Override
@@ -108,15 +108,15 @@ public class ViewportRowConfigDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof ViewportRowConfigDefinition)) {
+		if (!(object instanceof RowViewportConfigDefinition)) {
 			return false;
 		}
 
-		ViewportRowConfigDefinition viewportRowConfigDefinition =
-			(ViewportRowConfigDefinition)object;
+		RowViewportConfigDefinition rowViewportConfigDefinition =
+			(RowViewportConfigDefinition)object;
 
 		return Objects.equals(
-			toString(), viewportRowConfigDefinition.toString());
+			toString(), rowViewportConfigDefinition.toString());
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class ViewportRowConfigDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return ViewportRowConfigDefinitionSerDes.toJSON(this);
+		return RowViewportConfigDefinitionSerDes.toJSON(this);
 	}
 
 }

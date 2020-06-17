@@ -32,6 +32,30 @@ public class PageColumnDefinition implements Cloneable {
 		return PageColumnDefinitionSerDes.toDTO(json);
 	}
 
+	public ColumnViewportConfig getColumnViewportConfig() {
+		return columnViewportConfig;
+	}
+
+	public void setColumnViewportConfig(
+		ColumnViewportConfig columnViewportConfig) {
+
+		this.columnViewportConfig = columnViewportConfig;
+	}
+
+	public void setColumnViewportConfig(
+		UnsafeSupplier<ColumnViewportConfig, Exception>
+			columnViewportConfigUnsafeSupplier) {
+
+		try {
+			columnViewportConfig = columnViewportConfigUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ColumnViewportConfig columnViewportConfig;
+
 	public Integer getSize() {
 		return size;
 	}
@@ -50,30 +74,6 @@ public class PageColumnDefinition implements Cloneable {
 	}
 
 	protected Integer size;
-
-	public ViewportColumnConfig getViewportColumnConfig() {
-		return viewportColumnConfig;
-	}
-
-	public void setViewportColumnConfig(
-		ViewportColumnConfig viewportColumnConfig) {
-
-		this.viewportColumnConfig = viewportColumnConfig;
-	}
-
-	public void setViewportColumnConfig(
-		UnsafeSupplier<ViewportColumnConfig, Exception>
-			viewportColumnConfigUnsafeSupplier) {
-
-		try {
-			viewportColumnConfig = viewportColumnConfigUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected ViewportColumnConfig viewportColumnConfig;
 
 	@Override
 	public PageColumnDefinition clone() throws CloneNotSupportedException {

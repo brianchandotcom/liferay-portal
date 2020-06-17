@@ -33,6 +33,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,31 +42,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ViewportRowConfigDefinition")
+@GraphQLName("RowViewportConfig")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ViewportRowConfigDefinition")
-public class ViewportRowConfigDefinition {
+@XmlRootElement(name = "RowViewportConfig")
+public class RowViewportConfig {
 
-	public static ViewportRowConfigDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			ViewportRowConfigDefinition.class, json);
+	public static RowViewportConfig toDTO(String json) {
+		return ObjectMapperUtil.readValue(RowViewportConfig.class, json);
 	}
 
 	@Schema
-	public Integer getModulesPerRow() {
-		return modulesPerRow;
+	@Valid
+	public RowViewportConfigDefinition getLandscapeMobile() {
+		return landscapeMobile;
 	}
 
-	public void setModulesPerRow(Integer modulesPerRow) {
-		this.modulesPerRow = modulesPerRow;
+	public void setLandscapeMobile(
+		RowViewportConfigDefinition landscapeMobile) {
+
+		this.landscapeMobile = landscapeMobile;
 	}
 
 	@JsonIgnore
-	public void setModulesPerRow(
-		UnsafeSupplier<Integer, Exception> modulesPerRowUnsafeSupplier) {
+	public void setLandscapeMobile(
+		UnsafeSupplier<RowViewportConfigDefinition, Exception>
+			landscapeMobileUnsafeSupplier) {
 
 		try {
-			modulesPerRow = modulesPerRowUnsafeSupplier.get();
+			landscapeMobile = landscapeMobileUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -76,23 +81,25 @@ public class ViewportRowConfigDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer modulesPerRow;
+	protected RowViewportConfigDefinition landscapeMobile;
 
 	@Schema
-	public Boolean getReverseOrder() {
-		return reverseOrder;
+	@Valid
+	public RowViewportConfigDefinition getPortraitMobile() {
+		return portraitMobile;
 	}
 
-	public void setReverseOrder(Boolean reverseOrder) {
-		this.reverseOrder = reverseOrder;
+	public void setPortraitMobile(RowViewportConfigDefinition portraitMobile) {
+		this.portraitMobile = portraitMobile;
 	}
 
 	@JsonIgnore
-	public void setReverseOrder(
-		UnsafeSupplier<Boolean, Exception> reverseOrderUnsafeSupplier) {
+	public void setPortraitMobile(
+		UnsafeSupplier<RowViewportConfigDefinition, Exception>
+			portraitMobileUnsafeSupplier) {
 
 		try {
-			reverseOrder = reverseOrderUnsafeSupplier.get();
+			portraitMobile = portraitMobileUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -104,23 +111,25 @@ public class ViewportRowConfigDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean reverseOrder;
+	protected RowViewportConfigDefinition portraitMobile;
 
 	@Schema
-	public String getVerticalAlignment() {
-		return verticalAlignment;
+	@Valid
+	public RowViewportConfigDefinition getTablet() {
+		return tablet;
 	}
 
-	public void setVerticalAlignment(String verticalAlignment) {
-		this.verticalAlignment = verticalAlignment;
+	public void setTablet(RowViewportConfigDefinition tablet) {
+		this.tablet = tablet;
 	}
 
 	@JsonIgnore
-	public void setVerticalAlignment(
-		UnsafeSupplier<String, Exception> verticalAlignmentUnsafeSupplier) {
+	public void setTablet(
+		UnsafeSupplier<RowViewportConfigDefinition, Exception>
+			tabletUnsafeSupplier) {
 
 		try {
-			verticalAlignment = verticalAlignmentUnsafeSupplier.get();
+			tablet = tabletUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -132,7 +141,7 @@ public class ViewportRowConfigDefinition {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String verticalAlignment;
+	protected RowViewportConfigDefinition tablet;
 
 	@Override
 	public boolean equals(Object object) {
@@ -140,15 +149,13 @@ public class ViewportRowConfigDefinition {
 			return true;
 		}
 
-		if (!(object instanceof ViewportRowConfigDefinition)) {
+		if (!(object instanceof RowViewportConfig)) {
 			return false;
 		}
 
-		ViewportRowConfigDefinition viewportRowConfigDefinition =
-			(ViewportRowConfigDefinition)object;
+		RowViewportConfig rowViewportConfig = (RowViewportConfig)object;
 
-		return Objects.equals(
-			toString(), viewportRowConfigDefinition.toString());
+		return Objects.equals(toString(), rowViewportConfig.toString());
 	}
 
 	@Override
@@ -163,38 +170,34 @@ public class ViewportRowConfigDefinition {
 
 		sb.append("{");
 
-		if (modulesPerRow != null) {
+		if (landscapeMobile != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"modulesPerRow\": ");
+			sb.append("\"landscapeMobile\": ");
 
-			sb.append(modulesPerRow);
+			sb.append(String.valueOf(landscapeMobile));
 		}
 
-		if (reverseOrder != null) {
+		if (portraitMobile != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"reverseOrder\": ");
+			sb.append("\"portraitMobile\": ");
 
-			sb.append(reverseOrder);
+			sb.append(String.valueOf(portraitMobile));
 		}
 
-		if (verticalAlignment != null) {
+		if (tablet != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"verticalAlignment\": ");
+			sb.append("\"tablet\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(verticalAlignment));
-
-			sb.append("\"");
+			sb.append(String.valueOf(tablet));
 		}
 
 		sb.append("}");
@@ -203,7 +206,7 @@ public class ViewportRowConfigDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ViewportRowConfigDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowViewportConfig",
 		name = "x-class-name"
 	)
 	public String xClassName;

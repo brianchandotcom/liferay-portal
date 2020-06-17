@@ -42,30 +42,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ViewportRowConfig")
+@GraphQLName("ColumnViewportConfig")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ViewportRowConfig")
-public class ViewportRowConfig {
+@XmlRootElement(name = "ColumnViewportConfig")
+public class ColumnViewportConfig {
 
-	public static ViewportRowConfig toDTO(String json) {
-		return ObjectMapperUtil.readValue(ViewportRowConfig.class, json);
+	public static ColumnViewportConfig toDTO(String json) {
+		return ObjectMapperUtil.readValue(ColumnViewportConfig.class, json);
 	}
 
 	@Schema
 	@Valid
-	public ViewportRowConfigDefinition getLandscapeMobile() {
+	public ColumnViewportConfigDefinition getLandscapeMobile() {
 		return landscapeMobile;
 	}
 
 	public void setLandscapeMobile(
-		ViewportRowConfigDefinition landscapeMobile) {
+		ColumnViewportConfigDefinition landscapeMobile) {
 
 		this.landscapeMobile = landscapeMobile;
 	}
 
 	@JsonIgnore
 	public void setLandscapeMobile(
-		UnsafeSupplier<ViewportRowConfigDefinition, Exception>
+		UnsafeSupplier<ColumnViewportConfigDefinition, Exception>
 			landscapeMobileUnsafeSupplier) {
 
 		try {
@@ -81,21 +81,23 @@ public class ViewportRowConfig {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ViewportRowConfigDefinition landscapeMobile;
+	protected ColumnViewportConfigDefinition landscapeMobile;
 
 	@Schema
 	@Valid
-	public ViewportRowConfigDefinition getPortraitMobile() {
+	public ColumnViewportConfigDefinition getPortraitMobile() {
 		return portraitMobile;
 	}
 
-	public void setPortraitMobile(ViewportRowConfigDefinition portraitMobile) {
+	public void setPortraitMobile(
+		ColumnViewportConfigDefinition portraitMobile) {
+
 		this.portraitMobile = portraitMobile;
 	}
 
 	@JsonIgnore
 	public void setPortraitMobile(
-		UnsafeSupplier<ViewportRowConfigDefinition, Exception>
+		UnsafeSupplier<ColumnViewportConfigDefinition, Exception>
 			portraitMobileUnsafeSupplier) {
 
 		try {
@@ -111,21 +113,21 @@ public class ViewportRowConfig {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ViewportRowConfigDefinition portraitMobile;
+	protected ColumnViewportConfigDefinition portraitMobile;
 
 	@Schema
 	@Valid
-	public ViewportRowConfigDefinition getTablet() {
+	public ColumnViewportConfigDefinition getTablet() {
 		return tablet;
 	}
 
-	public void setTablet(ViewportRowConfigDefinition tablet) {
+	public void setTablet(ColumnViewportConfigDefinition tablet) {
 		this.tablet = tablet;
 	}
 
 	@JsonIgnore
 	public void setTablet(
-		UnsafeSupplier<ViewportRowConfigDefinition, Exception>
+		UnsafeSupplier<ColumnViewportConfigDefinition, Exception>
 			tabletUnsafeSupplier) {
 
 		try {
@@ -141,7 +143,7 @@ public class ViewportRowConfig {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ViewportRowConfigDefinition tablet;
+	protected ColumnViewportConfigDefinition tablet;
 
 	@Override
 	public boolean equals(Object object) {
@@ -149,13 +151,14 @@ public class ViewportRowConfig {
 			return true;
 		}
 
-		if (!(object instanceof ViewportRowConfig)) {
+		if (!(object instanceof ColumnViewportConfig)) {
 			return false;
 		}
 
-		ViewportRowConfig viewportRowConfig = (ViewportRowConfig)object;
+		ColumnViewportConfig columnViewportConfig =
+			(ColumnViewportConfig)object;
 
-		return Objects.equals(toString(), viewportRowConfig.toString());
+		return Objects.equals(toString(), columnViewportConfig.toString());
 	}
 
 	@Override
@@ -206,7 +209,7 @@ public class ViewportRowConfig {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ViewportRowConfig",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ColumnViewportConfig",
 		name = "x-class-name"
 	)
 	public String xClassName;

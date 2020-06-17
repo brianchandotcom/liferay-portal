@@ -116,6 +116,28 @@ public class PageRowDefinition implements Cloneable {
 
 	protected Boolean reverseOrder;
 
+	public RowViewportConfig getRowViewportConfig() {
+		return rowViewportConfig;
+	}
+
+	public void setRowViewportConfig(RowViewportConfig rowViewportConfig) {
+		this.rowViewportConfig = rowViewportConfig;
+	}
+
+	public void setRowViewportConfig(
+		UnsafeSupplier<RowViewportConfig, Exception>
+			rowViewportConfigUnsafeSupplier) {
+
+		try {
+			rowViewportConfig = rowViewportConfigUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected RowViewportConfig rowViewportConfig;
+
 	public String getVerticalAlignment() {
 		return verticalAlignment;
 	}
@@ -136,28 +158,6 @@ public class PageRowDefinition implements Cloneable {
 	}
 
 	protected String verticalAlignment;
-
-	public ViewportRowConfig getViewportRowConfig() {
-		return viewportRowConfig;
-	}
-
-	public void setViewportRowConfig(ViewportRowConfig viewportRowConfig) {
-		this.viewportRowConfig = viewportRowConfig;
-	}
-
-	public void setViewportRowConfig(
-		UnsafeSupplier<ViewportRowConfig, Exception>
-			viewportRowConfigUnsafeSupplier) {
-
-		try {
-			viewportRowConfig = viewportRowConfigUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected ViewportRowConfig viewportRowConfig;
 
 	@Override
 	public PageRowDefinition clone() throws CloneNotSupportedException {

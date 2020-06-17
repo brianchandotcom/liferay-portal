@@ -43,14 +43,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ViewportColumnConfigDefinition")
+@GraphQLName("ColumnViewportConfigDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ViewportColumnConfigDefinition")
-public class ViewportColumnConfigDefinition {
+@XmlRootElement(name = "ColumnViewportConfigDefinition")
+public class ColumnViewportConfigDefinition {
 
-	public static ViewportColumnConfigDefinition toDTO(String json) {
+	public static ColumnViewportConfigDefinition toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			ViewportColumnConfigDefinition.class, json);
+			ColumnViewportConfigDefinition.class, json);
 	}
 
 	@DecimalMax("12")
@@ -87,15 +87,15 @@ public class ViewportColumnConfigDefinition {
 			return true;
 		}
 
-		if (!(object instanceof ViewportColumnConfigDefinition)) {
+		if (!(object instanceof ColumnViewportConfigDefinition)) {
 			return false;
 		}
 
-		ViewportColumnConfigDefinition viewportColumnConfigDefinition =
-			(ViewportColumnConfigDefinition)object;
+		ColumnViewportConfigDefinition columnViewportConfigDefinition =
+			(ColumnViewportConfigDefinition)object;
 
 		return Objects.equals(
-			toString(), viewportColumnConfigDefinition.toString());
+			toString(), columnViewportConfigDefinition.toString());
 	}
 
 	@Override
@@ -126,7 +126,7 @@ public class ViewportColumnConfigDefinition {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ViewportColumnConfigDefinition",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ColumnViewportConfigDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

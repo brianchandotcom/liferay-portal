@@ -164,6 +164,36 @@ public class PageRowDefinition {
 	protected Boolean reverseOrder;
 
 	@Schema
+	@Valid
+	public RowViewportConfig getRowViewportConfig() {
+		return rowViewportConfig;
+	}
+
+	public void setRowViewportConfig(RowViewportConfig rowViewportConfig) {
+		this.rowViewportConfig = rowViewportConfig;
+	}
+
+	@JsonIgnore
+	public void setRowViewportConfig(
+		UnsafeSupplier<RowViewportConfig, Exception>
+			rowViewportConfigUnsafeSupplier) {
+
+		try {
+			rowViewportConfig = rowViewportConfigUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected RowViewportConfig rowViewportConfig;
+
+	@Schema
 	public String getVerticalAlignment() {
 		return verticalAlignment;
 	}
@@ -190,36 +220,6 @@ public class PageRowDefinition {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String verticalAlignment;
-
-	@Schema
-	@Valid
-	public ViewportRowConfig getViewportRowConfig() {
-		return viewportRowConfig;
-	}
-
-	public void setViewportRowConfig(ViewportRowConfig viewportRowConfig) {
-		this.viewportRowConfig = viewportRowConfig;
-	}
-
-	@JsonIgnore
-	public void setViewportRowConfig(
-		UnsafeSupplier<ViewportRowConfig, Exception>
-			viewportRowConfigUnsafeSupplier) {
-
-		try {
-			viewportRowConfig = viewportRowConfigUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ViewportRowConfig viewportRowConfig;
 
 	@Override
 	public boolean equals(Object object) {
@@ -288,6 +288,16 @@ public class PageRowDefinition {
 			sb.append(reverseOrder);
 		}
 
+		if (rowViewportConfig != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rowViewportConfig\": ");
+
+			sb.append(String.valueOf(rowViewportConfig));
+		}
+
 		if (verticalAlignment != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -300,16 +310,6 @@ public class PageRowDefinition {
 			sb.append(_escape(verticalAlignment));
 
 			sb.append("\"");
-		}
-
-		if (viewportRowConfig != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"viewportRowConfig\": ");
-
-			sb.append(String.valueOf(viewportRowConfig));
 		}
 
 		sb.append("}");

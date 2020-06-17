@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.ViewportColumnConfigSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.RowViewportConfigSerDes;
 
 import java.util.Objects;
 
@@ -26,24 +26,24 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ViewportColumnConfig implements Cloneable {
+public class RowViewportConfig implements Cloneable {
 
-	public static ViewportColumnConfig toDTO(String json) {
-		return ViewportColumnConfigSerDes.toDTO(json);
+	public static RowViewportConfig toDTO(String json) {
+		return RowViewportConfigSerDes.toDTO(json);
 	}
 
-	public ViewportColumnConfigDefinition getLandscapeMobile() {
+	public RowViewportConfigDefinition getLandscapeMobile() {
 		return landscapeMobile;
 	}
 
 	public void setLandscapeMobile(
-		ViewportColumnConfigDefinition landscapeMobile) {
+		RowViewportConfigDefinition landscapeMobile) {
 
 		this.landscapeMobile = landscapeMobile;
 	}
 
 	public void setLandscapeMobile(
-		UnsafeSupplier<ViewportColumnConfigDefinition, Exception>
+		UnsafeSupplier<RowViewportConfigDefinition, Exception>
 			landscapeMobileUnsafeSupplier) {
 
 		try {
@@ -54,20 +54,18 @@ public class ViewportColumnConfig implements Cloneable {
 		}
 	}
 
-	protected ViewportColumnConfigDefinition landscapeMobile;
+	protected RowViewportConfigDefinition landscapeMobile;
 
-	public ViewportColumnConfigDefinition getPortraitMobile() {
+	public RowViewportConfigDefinition getPortraitMobile() {
 		return portraitMobile;
 	}
 
-	public void setPortraitMobile(
-		ViewportColumnConfigDefinition portraitMobile) {
-
+	public void setPortraitMobile(RowViewportConfigDefinition portraitMobile) {
 		this.portraitMobile = portraitMobile;
 	}
 
 	public void setPortraitMobile(
-		UnsafeSupplier<ViewportColumnConfigDefinition, Exception>
+		UnsafeSupplier<RowViewportConfigDefinition, Exception>
 			portraitMobileUnsafeSupplier) {
 
 		try {
@@ -78,18 +76,18 @@ public class ViewportColumnConfig implements Cloneable {
 		}
 	}
 
-	protected ViewportColumnConfigDefinition portraitMobile;
+	protected RowViewportConfigDefinition portraitMobile;
 
-	public ViewportColumnConfigDefinition getTablet() {
+	public RowViewportConfigDefinition getTablet() {
 		return tablet;
 	}
 
-	public void setTablet(ViewportColumnConfigDefinition tablet) {
+	public void setTablet(RowViewportConfigDefinition tablet) {
 		this.tablet = tablet;
 	}
 
 	public void setTablet(
-		UnsafeSupplier<ViewportColumnConfigDefinition, Exception>
+		UnsafeSupplier<RowViewportConfigDefinition, Exception>
 			tabletUnsafeSupplier) {
 
 		try {
@@ -100,11 +98,11 @@ public class ViewportColumnConfig implements Cloneable {
 		}
 	}
 
-	protected ViewportColumnConfigDefinition tablet;
+	protected RowViewportConfigDefinition tablet;
 
 	@Override
-	public ViewportColumnConfig clone() throws CloneNotSupportedException {
-		return (ViewportColumnConfig)super.clone();
+	public RowViewportConfig clone() throws CloneNotSupportedException {
+		return (RowViewportConfig)super.clone();
 	}
 
 	@Override
@@ -113,14 +111,13 @@ public class ViewportColumnConfig implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof ViewportColumnConfig)) {
+		if (!(object instanceof RowViewportConfig)) {
 			return false;
 		}
 
-		ViewportColumnConfig viewportColumnConfig =
-			(ViewportColumnConfig)object;
+		RowViewportConfig rowViewportConfig = (RowViewportConfig)object;
 
-		return Objects.equals(toString(), viewportColumnConfig.toString());
+		return Objects.equals(toString(), rowViewportConfig.toString());
 	}
 
 	@Override
@@ -131,7 +128,7 @@ public class ViewportColumnConfig implements Cloneable {
 	}
 
 	public String toString() {
-		return ViewportColumnConfigSerDes.toJSON(this);
+		return RowViewportConfigSerDes.toJSON(this);
 	}
 
 }

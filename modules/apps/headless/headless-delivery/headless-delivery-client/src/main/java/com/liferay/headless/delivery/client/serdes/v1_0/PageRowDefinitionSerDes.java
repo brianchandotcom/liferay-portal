@@ -95,6 +95,16 @@ public class PageRowDefinitionSerDes {
 			sb.append(pageRowDefinition.getReverseOrder());
 		}
 
+		if (pageRowDefinition.getRowViewportConfig() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"rowViewportConfig\": ");
+
+			sb.append(String.valueOf(pageRowDefinition.getRowViewportConfig()));
+		}
+
 		if (pageRowDefinition.getVerticalAlignment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -107,16 +117,6 @@ public class PageRowDefinitionSerDes {
 			sb.append(_escape(pageRowDefinition.getVerticalAlignment()));
 
 			sb.append("\"");
-		}
-
-		if (pageRowDefinition.getViewportRowConfig() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"viewportRowConfig\": ");
-
-			sb.append(String.valueOf(pageRowDefinition.getViewportRowConfig()));
 		}
 
 		sb.append("}");
@@ -174,6 +174,15 @@ public class PageRowDefinitionSerDes {
 				String.valueOf(pageRowDefinition.getReverseOrder()));
 		}
 
+		if (pageRowDefinition.getRowViewportConfig() == null) {
+			map.put("rowViewportConfig", null);
+		}
+		else {
+			map.put(
+				"rowViewportConfig",
+				String.valueOf(pageRowDefinition.getRowViewportConfig()));
+		}
+
 		if (pageRowDefinition.getVerticalAlignment() == null) {
 			map.put("verticalAlignment", null);
 		}
@@ -181,15 +190,6 @@ public class PageRowDefinitionSerDes {
 			map.put(
 				"verticalAlignment",
 				String.valueOf(pageRowDefinition.getVerticalAlignment()));
-		}
-
-		if (pageRowDefinition.getViewportRowConfig() == null) {
-			map.put("viewportRowConfig", null);
-		}
-		else {
-			map.put(
-				"viewportRowConfig",
-				String.valueOf(pageRowDefinition.getViewportRowConfig()));
 		}
 
 		return map;
@@ -236,17 +236,17 @@ public class PageRowDefinitionSerDes {
 						(Boolean)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "rowViewportConfig")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setRowViewportConfig(
+						RowViewportConfigSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
 				if (jsonParserFieldValue != null) {
 					pageRowDefinition.setVerticalAlignment(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "viewportRowConfig")) {
-				if (jsonParserFieldValue != null) {
-					pageRowDefinition.setViewportRowConfig(
-						ViewportRowConfigSerDes.toDTO(
-							(String)jsonParserFieldValue));
 				}
 			}
 			else {

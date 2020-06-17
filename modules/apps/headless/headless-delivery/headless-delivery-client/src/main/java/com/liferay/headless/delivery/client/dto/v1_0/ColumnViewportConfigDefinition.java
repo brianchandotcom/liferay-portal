@@ -15,7 +15,7 @@
 package com.liferay.headless.delivery.client.dto.v1_0;
 
 import com.liferay.headless.delivery.client.function.UnsafeSupplier;
-import com.liferay.headless.delivery.client.serdes.v1_0.ViewportColumnConfigDefinitionSerDes;
+import com.liferay.headless.delivery.client.serdes.v1_0.ColumnViewportConfigDefinitionSerDes;
 
 import java.util.Objects;
 
@@ -26,10 +26,10 @@ import javax.annotation.Generated;
  * @generated
  */
 @Generated("")
-public class ViewportColumnConfigDefinition implements Cloneable {
+public class ColumnViewportConfigDefinition implements Cloneable {
 
-	public static ViewportColumnConfigDefinition toDTO(String json) {
-		return ViewportColumnConfigDefinitionSerDes.toDTO(json);
+	public static ColumnViewportConfigDefinition toDTO(String json) {
+		return ColumnViewportConfigDefinitionSerDes.toDTO(json);
 	}
 
 	public Integer getSize() {
@@ -52,10 +52,10 @@ public class ViewportColumnConfigDefinition implements Cloneable {
 	protected Integer size;
 
 	@Override
-	public ViewportColumnConfigDefinition clone()
+	public ColumnViewportConfigDefinition clone()
 		throws CloneNotSupportedException {
 
-		return (ViewportColumnConfigDefinition)super.clone();
+		return (ColumnViewportConfigDefinition)super.clone();
 	}
 
 	@Override
@@ -64,15 +64,15 @@ public class ViewportColumnConfigDefinition implements Cloneable {
 			return true;
 		}
 
-		if (!(object instanceof ViewportColumnConfigDefinition)) {
+		if (!(object instanceof ColumnViewportConfigDefinition)) {
 			return false;
 		}
 
-		ViewportColumnConfigDefinition viewportColumnConfigDefinition =
-			(ViewportColumnConfigDefinition)object;
+		ColumnViewportConfigDefinition columnViewportConfigDefinition =
+			(ColumnViewportConfigDefinition)object;
 
 		return Objects.equals(
-			toString(), viewportColumnConfigDefinition.toString());
+			toString(), columnViewportConfigDefinition.toString());
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class ViewportColumnConfigDefinition implements Cloneable {
 	}
 
 	public String toString() {
-		return ViewportColumnConfigDefinitionSerDes.toJSON(this);
+		return ColumnViewportConfigDefinitionSerDes.toJSON(this);
 	}
 
 }

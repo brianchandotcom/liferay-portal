@@ -15,47 +15,6 @@ definition {
 		PortalInstances.tearDownCP();
 	}
 
-	@priority = "5"
-	test AddNewCompany {
-		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
-		property database.types = "mysql";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompany";
-
-		PortalInstances.openVirtualInstancesAdmin();
-
-		PortalInstances.addCP(
-			mailDomain = "www.able.com",
-			virtualHost = "www.able.com",
-			webId = "www.able.com");
-
-		User.firstLoginPG(
-			password = "test",
-			userEmailAddress = "test@www.able.com",
-			virtualHostsURL = "http://www.able.com:8080");
-
-		Navigator.openSpecificURL(url = "http://www.able.com:8080");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
-
-		SQL.assertDatabaseCount(
-			databaseFilter = "testPartition%",
-			databaseSubstring = "testPartition",
-			expectedCount = "1");
-	}
-
 	@priority = "4"
 	test AddMultipleCompanies {
 		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
@@ -122,6 +81,47 @@ definition {
 			databaseFilter = "testPartition%",
 			databaseSubstring = "testPartition",
 			expectedCount = "2");
+	}
+
+	@priority = "5"
+	test AddNewCompany {
+		property custom.properties = "database.partition.enabled=true${line.separator}database.partition.schema.name.prefix=testPartition";
+		property database.types = "mysql";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "DatabasePartitioning#AddNewCompany";
+
+		PortalInstances.openVirtualInstancesAdmin();
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			panel = "Site Administration",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.doc",
+			dmDocumentTitle = "DM Document Title");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
+
+		DMDocument.viewCP(dmDocumentTitle = "DM Document Title");
+
+		SQL.assertDatabaseCount(
+			databaseFilter = "testPartition%",
+			databaseSubstring = "testPartition",
+			expectedCount = "1");
 	}
 
 }

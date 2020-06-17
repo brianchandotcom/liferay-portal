@@ -256,6 +256,15 @@ function <portlet:namespace />getUsersCount(className, ids, status, callback) {
 		})
 		.then(function (response) {
 			callback(response);
+		})
+		.catch(function (error) {
+			Liferay.Util.openToast({
+				message: Liferay.Language.get(
+					'an-unexpected-system-error-occurred'
+				),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
 		});
 }
 

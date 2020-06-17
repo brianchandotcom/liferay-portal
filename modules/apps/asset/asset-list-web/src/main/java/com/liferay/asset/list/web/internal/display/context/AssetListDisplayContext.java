@@ -390,7 +390,7 @@ public class AssetListDisplayContext {
 	private PortletURL _getAssetListContentURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view_content.jsp");
+		portletURL.setParameter("mvcPath", "/view_asset_list_content.jsp");
 		portletURL.setParameter(
 			"assetListEntryId", String.valueOf(getAssetListEntryId()));
 		portletURL.setParameter(

@@ -25,7 +25,7 @@
 	triggerCssClass="btn btn-unstyled component-action text-secondary"
 >
 	<portlet:renderURL var="viewAssetListEntryVariationContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="mvcPath" value="/view_content.jsp" />
+		<portlet:param name="mvcPath" value="/view_asset_list_content.jsp" />
 		<portlet:param name="assetListEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getAssetListEntryId()) %>" />
 		<portlet:param name="segmentsEntryId" value="<%= String.valueOf(editAssetListDisplayContext.getSegmentsEntryId()) %>" />
 	</portlet:renderURL>

@@ -75,8 +75,13 @@ export default withRouter(
 							<ClayInput.Group className="c-mt-3">
 								<ClayInput.GroupItem>
 									<ClayInput
-										disabled={!search && data && data.keywordsRanked && !data.keywordsRanked.items.length}
 										className="bg-transparent form-control input-group-inset input-group-inset-after"
+										disabled={
+											!search &&
+											data &&
+											data.keywordsRanked &&
+											!data.keywordsRanked.items.length
+										}
 										onChange={(event) =>
 											debounceCallback(event.target.value)
 										}

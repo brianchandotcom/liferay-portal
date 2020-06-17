@@ -12,47 +12,16 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
-import {client, getSectionQuery} from '../utils/client.es';
+import {getSections} from '../utils/client.es';
 
 export default function useSection(sectionTitle, siteKey) {
 	const [section, setSection] = useState({});
 
-	useQuery(getSectionQuery, {
-		onCompleted(data) {
-			const section = data.messageBoardSections.items[0];
-
-			Promise.resolve(section)
-				.then((section) => {
-					if (section.parentMessageBoardSectionId) {
-						return Promise.all([
-							section,
-							client.query({
-								query: getSectionQuery,
-								variables: {
-									filter: `title eq '${section.parentMessageBoardSectionId}' or id eq '${section.parentMessageBoardSectionId}'`,
-									siteKey,
-								},
-							}),
-						]).then(([section, {data}]) => [
-							section,
-							data.messageBoardSections.items[0],
-						]);
-					}
-
-					return [section, section];
-				})
-				.then(([section, parentSection]) => {
-					setSection({...section, parentSection});
-				});
-		},
-		variables: {
-			filter: `title eq '${sectionTitle}' or id eq '${sectionTitle}'`,
-			siteKey,
-		},
-	});
+	useEffect(() => {
+		getSections(sectionTitle, siteKey).then(setSection);
+	}, [sectionTitle, siteKey])
 
 	return section;
 }

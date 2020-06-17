@@ -27,7 +27,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration" %><%@
+<%@ page import="com.liferay.application.list.PanelCategory" %><%@
+page import="com.liferay.asset.auto.tagger.configuration.AssetAutoTaggerConfiguration" %><%@
 page import="com.liferay.depot.application.DepotApplication" %><%@
 page import="com.liferay.depot.exception.DepotEntryNameException" %><%@
 page import="com.liferay.depot.model.DepotEntry" %><%@
@@ -45,6 +46,7 @@ page import="com.liferay.depot.web.internal.display.context.DepotAdminRolesDispl
 page import="com.liferay.depot.web.internal.display.context.DepotAdminSelectRoleDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminSelectRoleManagementToolbarDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotAdminSitesDisplayContext" %><%@
+page import="com.liferay.depot.web.internal.display.context.DepotAdminViewDepotDashboardDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.display.context.DepotApplicationDisplayContext" %><%@
 page import="com.liferay.depot.web.internal.util.DepotLanguageUtil" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@

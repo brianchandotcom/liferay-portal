@@ -16,8 +16,25 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+DepotAdminViewDepotDashboardDisplayContext depotAdminViewDepotDashboardDisplayContext = (DepotAdminViewDepotDashboardDisplayContext)request.getAttribute(DepotAdminViewDepotDashboardDisplayContext.class.getName());
+%>
+
 <clay:container-fluid>
 	<liferay-ui:breadcrumb
 		showLayout="<%= false %>"
 	/>
+
+	<%
+	for (PanelCategory panelCategory : depotAdminViewDepotDashboardDisplayContext.getPanelCategories()) {
+	%>
+
+		<div class="spliter-spaced splitter">
+			<%= panelCategory.getLabel(locale) %>
+		</div>
+
+	<%
+	}
+	%>
+
 </clay:container-fluid>

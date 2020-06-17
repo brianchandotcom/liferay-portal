@@ -159,6 +159,74 @@ definition {
 			value1 = "Title Anonymous User Ask questions");
 	}
 
+	@description = "Validate if the user can search for the questions."
+	@priority = "4"
+	test SearchForQuestions {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Questions.addQuestionByAPI(
+			bodyField = "Content1",
+			categoryName = "Questions Test Category",
+			tagField = "new",
+			titleField = "Question1");
+
+		for (var num : list "2,3,4") {
+			Questions.addQuestionWithoutTagByAPI(
+				bodyField = "Content${num}",
+				categoryName = "Questions Test Category",
+				titleField = "Question${num}");
+		}
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Click(
+			key_questionNameField = "Questions Test Category",
+			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		Pause(locator = "3000");
+
+		Questions.search(
+			resultsInfo = "4 Results for test",
+			searchKey = "Test");
+
+		Questions.viewSearchResults(questionsList = "Question1,Question2,Question3,Question4");
+
+		Questions.search(
+			resultsInfo = "1 Results for question4",
+			searchKey = "Question4");
+
+		Questions.viewSearchResults(questionsList = "Question4");
+
+		Questions.viewNoSearchResults(questionsList = "Question1,Question2,Question3");
+
+		Questions.search(
+			resultsInfo = "1 Results for content2",
+			searchKey = "Content2");
+
+		Questions.viewSearchResults(questionsList = "Question2");
+
+		Questions.viewNoSearchResults(questionsList = "Question1,Question3,Question4");
+
+		Questions.search(
+			resultsInfo = "1 Results for new",
+			searchKey = "New");
+
+		Questions.viewSearchResults(questionsList = "Question1");
+
+		Questions.viewNoSearchResults(questionsList = "Question2,Question3,Question4");
+
+		Questions.clearSearchResults();
+
+		for (var num : list "1,2,3,4") {
+			AssertVisible(
+				key_questionTitle = "Question${num}",
+				locator1 = "Questions#QUESTIONS_TITLE");
+		}
+	}
+
 	@description = "Validate if the My Activity tab appears"
 	@priority = "4"
 	test ValidateIfTheMyActivityAppears {

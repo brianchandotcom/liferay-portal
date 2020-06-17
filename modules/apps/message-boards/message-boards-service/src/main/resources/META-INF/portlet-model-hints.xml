@@ -30,7 +30,6 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="displayStyle" type="String" />
-		<field name="threadCount" type="int" />
 		<field name="messageCount" type="int" />
 		<field name="lastPostDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />

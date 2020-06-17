@@ -55,7 +55,6 @@ public class MBCategoryWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("displayStyle", getDisplayStyle());
-		attributes.put("threadCount", getThreadCount());
 		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -139,12 +138,6 @@ public class MBCategoryWrapper
 
 		if (displayStyle != null) {
 			setDisplayStyle(displayStyle);
-		}
-
-		Integer threadCount = (Integer)attributes.get("threadCount");
-
-		if (threadCount != null) {
-			setThreadCount(threadCount);
 		}
 
 		Integer messageCount = (Integer)attributes.get("messageCount");
@@ -421,11 +414,6 @@ public class MBCategoryWrapper
 		return model.getStatusDate();
 	}
 
-	/**
-	 * Returns the thread count of this message boards category.
-	 *
-	 * @return the thread count of this message boards category
-	 */
 	@Override
 	public int getThreadCount() {
 		return model.getThreadCount();
@@ -823,16 +811,6 @@ public class MBCategoryWrapper
 	@Override
 	public void setStatusDate(Date statusDate) {
 		model.setStatusDate(statusDate);
-	}
-
-	/**
-	 * Sets the thread count of this message boards category.
-	 *
-	 * @param threadCount the thread count of this message boards category
-	 */
-	@Override
-	public void setThreadCount(int threadCount) {
-		model.setThreadCount(threadCount);
 	}
 
 	/**

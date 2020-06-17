@@ -43,7 +43,6 @@ public class MBCategorySoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDisplayStyle(model.getDisplayStyle());
-		soapModel.setThreadCount(model.getThreadCount());
 		soapModel.setMessageCount(model.getMessageCount());
 		soapModel.setLastPostDate(model.getLastPostDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -200,14 +199,6 @@ public class MBCategorySoap implements Serializable {
 		_displayStyle = displayStyle;
 	}
 
-	public int getThreadCount() {
-		return _threadCount;
-	}
-
-	public void setThreadCount(int threadCount) {
-		_threadCount = threadCount;
-	}
-
 	public int getMessageCount() {
 		return _messageCount;
 	}
@@ -276,7 +267,6 @@ public class MBCategorySoap implements Serializable {
 	private String _name;
 	private String _description;
 	private String _displayStyle;
-	private int _threadCount;
 	private int _messageCount;
 	private Date _lastPostDate;
 	private Date _lastPublishDate;

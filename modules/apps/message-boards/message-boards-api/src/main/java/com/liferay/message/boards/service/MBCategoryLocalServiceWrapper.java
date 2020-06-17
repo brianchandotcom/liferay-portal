@@ -794,13 +794,6 @@ public class MBCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.message.boards.model.MBCategory updateThreadCount(
-		long categoryId) {
-
-		return _mbCategoryLocalService.updateThreadCount(categoryId);
-	}
-
-	@Override
 	public MBCategoryLocalService getWrappedService() {
 		return _mbCategoryLocalService;
 	}

@@ -65,6 +65,8 @@ public interface MBCategory extends MBCategoryModel, PersistedModel {
 	public MBCategory getParentCategory()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public int getThreadCount();
+
 	public boolean isRoot();
 
 }

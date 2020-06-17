@@ -85,10 +85,10 @@ public class MBCategoryModelImpl
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"parentCategoryId", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"displayStyle", Types.VARCHAR},
-		{"threadCount", Types.INTEGER}, {"messageCount", Types.INTEGER},
-		{"lastPostDate", Types.TIMESTAMP}, {"lastPublishDate", Types.TIMESTAMP},
-		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
-		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
+		{"messageCount", Types.INTEGER}, {"lastPostDate", Types.TIMESTAMP},
+		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -107,7 +107,6 @@ public class MBCategoryModelImpl
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayStyle", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("threadCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("messageCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -118,7 +117,7 @@ public class MBCategoryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,threadCount INTEGER,messageCount INTEGER,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table MBCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,messageCount INTEGER,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table MBCategory";
 
@@ -181,7 +180,6 @@ public class MBCategoryModelImpl
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setDisplayStyle(soapModel.getDisplayStyle());
-		model.setThreadCount(soapModel.getThreadCount());
 		model.setMessageCount(soapModel.getMessageCount());
 		model.setLastPostDate(soapModel.getLastPostDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -386,10 +384,6 @@ public class MBCategoryModelImpl
 		attributeSetterBiConsumers.put(
 			"displayStyle",
 			(BiConsumer<MBCategory, String>)MBCategory::setDisplayStyle);
-		attributeGetterFunctions.put("threadCount", MBCategory::getThreadCount);
-		attributeSetterBiConsumers.put(
-			"threadCount",
-			(BiConsumer<MBCategory, Integer>)MBCategory::setThreadCount);
 		attributeGetterFunctions.put(
 			"messageCount", MBCategory::getMessageCount);
 		attributeSetterBiConsumers.put(
@@ -666,17 +660,6 @@ public class MBCategoryModelImpl
 	@Override
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
-	}
-
-	@JSON
-	@Override
-	public int getThreadCount() {
-		return _threadCount;
-	}
-
-	@Override
-	public void setThreadCount(int threadCount) {
-		_threadCount = threadCount;
 	}
 
 	@JSON
@@ -1093,7 +1076,6 @@ public class MBCategoryModelImpl
 		mbCategoryImpl.setName(getName());
 		mbCategoryImpl.setDescription(getDescription());
 		mbCategoryImpl.setDisplayStyle(getDisplayStyle());
-		mbCategoryImpl.setThreadCount(getThreadCount());
 		mbCategoryImpl.setMessageCount(getMessageCount());
 		mbCategoryImpl.setLastPostDate(getLastPostDate());
 		mbCategoryImpl.setLastPublishDate(getLastPublishDate());
@@ -1276,8 +1258,6 @@ public class MBCategoryModelImpl
 			mbCategoryCacheModel.displayStyle = null;
 		}
 
-		mbCategoryCacheModel.threadCount = getThreadCount();
-
 		mbCategoryCacheModel.messageCount = getMessageCount();
 
 		Date lastPostDate = getLastPostDate();
@@ -1417,7 +1397,6 @@ public class MBCategoryModelImpl
 	private String _name;
 	private String _description;
 	private String _displayStyle;
-	private int _threadCount;
 	private int _messageCount;
 	private Date _lastPostDate;
 	private Date _lastPublishDate;

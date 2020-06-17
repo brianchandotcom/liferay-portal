@@ -496,6 +496,4 @@ public interface MBCategoryLocalService
 	public MBCategory updateStatus(long userId, long categoryId, int status)
 		throws PortalException;
 
-	public MBCategory updateThreadCount(long categoryId);
-
 }

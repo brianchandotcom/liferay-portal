@@ -267,20 +267,6 @@ public interface MBCategoryModel
 	public void setDisplayStyle(String displayStyle);
 
 	/**
-	 * Returns the thread count of this message boards category.
-	 *
-	 * @return the thread count of this message boards category
-	 */
-	public int getThreadCount();
-
-	/**
-	 * Sets the thread count of this message boards category.
-	 *
-	 * @param threadCount the thread count of this message boards category
-	 */
-	public void setThreadCount(int threadCount);
-
-	/**
 	 * Returns the message count of this message boards category.
 	 *
 	 * @return the message count of this message boards category

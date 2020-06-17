@@ -56,8 +56,6 @@ public class MBCategoryTable extends BaseTable<MBCategoryTable> {
 		"description", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, String> displayStyle = createColumn(
 		"displayStyle", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<MBCategoryTable, Integer> threadCount = createColumn(
-		"threadCount", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, Integer> messageCount = createColumn(
 		"messageCount", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, Date> lastPostDate = createColumn(

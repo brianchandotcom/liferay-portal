@@ -721,12 +721,6 @@ public class MBCategoryLocalServiceUtil {
 		return getService().updateStatus(userId, categoryId, status);
 	}
 
-	public static com.liferay.message.boards.model.MBCategory updateThreadCount(
-		long categoryId) {
-
-		return getService().updateThreadCount(categoryId);
-	}
-
 	public static MBCategoryLocalService getService() {
 		return _serviceTracker.getService();
 	}

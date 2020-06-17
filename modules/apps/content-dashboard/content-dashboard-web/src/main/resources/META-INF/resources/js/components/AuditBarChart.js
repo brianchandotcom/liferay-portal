@@ -73,23 +73,29 @@ export default function AuditBarChart({categories, rtl}) {
 
 	const {bars, data} = auditBarChartData;
 
+	const height =
+		bars === undefined
+			? BAR_CHART.height - BAR_CHART.legendHeight
+			: BAR_CHART.height;
+
+	const horizontalPoints =
+		bars === undefined
+			? [BAR_CHART.dotRadiusMin]
+			: [BAR_CHART.legendHeight + BAR_CHART.dotRadiusMin];
+
 	return (
 		<>
-			<ResponsiveContainer height={BAR_CHART.height}>
-				<BarChart
-					data={data}
-					height={BAR_CHART.height}
-					width={BAR_CHART.width}
-				>
-					<Legend
-						align={rtl ? 'right' : 'left'}
-						height={BAR_CHART.legendHeight}
-						verticalAlign="top"
-					/>
+			<ResponsiveContainer height={height}>
+				<BarChart data={data} height={height} width={BAR_CHART.width}>
+					{bars && (
+						<Legend
+							align={rtl ? 'right' : 'left'}
+							height={BAR_CHART.legendHeight}
+							verticalAlign="top"
+						/>
+					)}
 					<CartesianGrid
-						horizontalPoints={[
-							BAR_CHART.legendHeight + BAR_CHART.dotRadiusMin,
-						]}
+						horizontalPoints={horizontalPoints}
 						stroke={BAR_CHART.stroke}
 					/>
 					<XAxis
@@ -111,19 +117,26 @@ export default function AuditBarChart({categories, rtl}) {
 						tick={<CustomYAxisTick rtl={rtl} />}
 						tickLine={false}
 					/>
-
-					{bars.map((bar, index) => {
-						return (
-							<Bar
-								barSize={BAR_CHART.barHeight}
-								dataKey={bar.dataKey}
-								fill={COLORS[index % COLORS.length]}
-								key={index}
-								legendType="square"
-								name={bar.name}
-							/>
-						);
-					})}
+					{bars &&
+						bars.map((bar, index) => {
+							return (
+								<Bar
+									barSize={BAR_CHART.barHeight}
+									dataKey={bar.dataKey}
+									fill={COLORS[index % COLORS.length]}
+									key={index}
+									legendType="square"
+									name={bar.name}
+								/>
+							);
+						})}
+					{bars === undefined && (
+						<Bar
+							barSize={BAR_CHART.barHeight}
+							dataKey="value"
+							fill={COLORS[0]}
+						/>
+					)}
 				</BarChart>
 			</ResponsiveContainer>
 		</>

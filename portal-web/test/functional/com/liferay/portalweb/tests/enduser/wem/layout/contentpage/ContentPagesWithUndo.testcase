@@ -136,6 +136,74 @@ definition {
 		PageEditor.viewFragment(fragmentName = "Section");
 	}
 
+	@description = "This is a test for LPS-111946. Undo can bring deleted Collection Display with collection items back."
+	@priority = "3"
+	test UndoDeletedFragmentWithCollection {
+		for (var i : list "1,2,3") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content ${i}",
+				groupName = "Test Site Name",
+				title = "WC WebContent Title ${i}");
+		}
+
+		JSONAssetlist.addDynamicAssetListEntry(
+			groupName = "Test Site Name",
+			title = "Dynamic Asset List Test");
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+		AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Asset List Test");
+
+		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Content Display",
+			fragmentName = "Collection Display");
+
+		PageEditor.editCollectionDisplay(
+			assetListName = "Dynamic Asset List Test",
+			fragmentName = "Collection Display");
+
+		PageEditor.removeFragment(fragmentName = "Collection Display");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Collection Display");
+
+		for (var i : list "1,2,3") {
+			if ("${i}" == "1") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title 3",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "2") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title ${i}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+			if ("${i}" == "3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "WC WebContent Title 1",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with custom configuration back."
 	@priority = "4"
 	test UndoDeletedFragmentWithCustomConfiguration {
@@ -180,6 +248,36 @@ definition {
 			locator1 = "Fragment#NAV_ITEM_TAB");
 	}
 
+	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with edited inline content back."
+	@priority = "4"
+	test UndoDeletedFragmentWithInlineContent {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "New editable fragment text");
+
+		PageEditor.removeFragment(fragmentName = "Heading");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Heading");
+
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "New editable fragment text");
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with mapped content back."
 	@priority = "3"
 	test UndoDeletedFragmentWithMappedContent {
@@ -187,7 +285,7 @@ definition {
 			content = "WC WebContent Content",
 			groupName = "Test Site Name",
 			title = "WC WebContent Title");
-            
+
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
@@ -221,36 +319,6 @@ definition {
 			key_fragmentClass = "content",
 			key_position = "1",
 			locator1 = "Fragment#FRAGMENT");
-	}
-
-	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with edited inline content back."
-	@priority = "4"
-	test UndoDeletedFragmentWithInlineContent {
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Heading");
-
-		PageEditor.editFragmentText(
-			fragmentName = "Heading",
-			id = "element-text",
-			text = "New editable fragment text");
-
-		PageEditor.removeFragment(fragmentName = "Heading");
-
-		Click(
-			key_text = "undo",
-			locator1 = "Icon#ANY");
-
-		PageEditor.viewFragment(fragmentName = "Heading");
-
-		AssertTextEquals(
-			key_fragmentName = "heading",
-			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
-			value1 = "New editable fragment text");
 	}
 
 	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."

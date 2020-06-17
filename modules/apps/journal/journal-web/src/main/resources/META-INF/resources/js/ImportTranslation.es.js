@@ -87,7 +87,7 @@ export default function ImportTranslation({
 			</p>
 
 			<div className="mb-5 mt-4">
-				<p class="h5">{Liferay.Language.get('file-upload')}</p>
+				<p className="h5">{Liferay.Language.get('file-upload')}</p>
 
 				{!importFile && (
 					<>

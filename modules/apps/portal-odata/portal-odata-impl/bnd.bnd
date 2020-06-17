@@ -31,6 +31,8 @@ Import-Package:\
 	\
 	!org.jboss.marshalling.*,\
 	\
+	!reactor.blockhound.*,\
+	\
 	!sun.security.util.*,\
 	!sun.security.x509.*,\
 	\

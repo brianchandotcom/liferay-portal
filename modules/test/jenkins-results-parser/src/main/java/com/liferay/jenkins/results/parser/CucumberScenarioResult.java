@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -225,24 +228,35 @@ public class CucumberScenarioResult implements Serializable {
 
 		private Step(Document document) {
 			_document = document;
-			_documentContent = document.asXML();
 		}
 
 		private Document _getDocument() {
-			if (_documentContent != null) {
-				try {
-					_document = Dom4JUtil.parse(_documentContent);
-				}
-				catch (DocumentException documentException) {
-					throw new RuntimeException(documentException);
-				}
-			}
-
 			return _document;
 		}
 
+		private void readObject(ObjectInputStream objectInputStream)
+			throws ClassNotFoundException, IOException {
+
+			objectInputStream.defaultReadObject();
+
+			try {
+				_document = Dom4JUtil.parse(objectInputStream.readUTF());
+			}
+			catch (DocumentException documentException) {
+				throw new RuntimeException(
+					"Unable to deserialize document", documentException);
+			}
+		}
+
+		private void writeObject(ObjectOutputStream objectOutputStream)
+			throws IOException {
+
+			objectOutputStream.defaultWriteObject();
+
+			objectOutputStream.writeUTF(_document.asXML());
+		}
+
 		private transient Document _document;
-		private final String _documentContent;
 
 	}
 

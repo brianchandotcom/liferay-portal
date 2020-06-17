@@ -62,6 +62,7 @@ export interface Config {
 	getCollectionFieldURL: string;
 	getCollectionMappingFieldsURL: string;
 	getExperienceUsedPortletsURL: string;
+	getIframeContentURL: string;
 	getPageContentsURL: string;
 	imageSelectorURL: string;
 	infoItemSelectorURL: string;

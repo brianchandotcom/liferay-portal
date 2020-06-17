@@ -305,6 +305,11 @@ public class ContentPageEditorDisplayContext {
 				"getExperienceUsedPortletsURL",
 				getResourceURL("/content_layout/get_experience_used_portlets")
 			).put(
+				"getIframeContentURL",
+				getResourceURL(
+					"/content_layout/get_iframe_content",
+					!isLayoutPageTemplate())
+			).put(
 				"getPageContentsURL",
 				getResourceURL("/content_layout/get_page_contents")
 			).put(

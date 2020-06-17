@@ -31,7 +31,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -94,7 +93,6 @@ public class CalendarResourceUtilTest {
 		Assert.assertNotNull(calendarResource);
 	}
 
-	@Ignore
 	@Test
 	public void testGetGroupCalendarResourceCreatesStagingCalendarResource()
 		throws Exception {
@@ -112,7 +110,6 @@ public class CalendarResourceUtilTest {
 		Assert.assertNotNull(calendarResource);
 	}
 
-	@Ignore
 	@Test
 	public void testGetGroupCalendarResourceDoesNotCreateLiveCalendarResource()
 		throws Exception {

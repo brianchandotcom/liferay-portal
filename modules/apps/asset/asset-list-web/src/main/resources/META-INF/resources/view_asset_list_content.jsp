@@ -21,7 +21,7 @@ AssetListContentDisplayContext assetListContentDisplayContext = (AssetListConten
 %>
 
 <clay:container-fluid
-	cssClass="pt-3"
+	cssClass="container-view"
 >
 	<liferay-ui:search-container
 		id="assetEntries"
@@ -48,6 +48,21 @@ AssetListContentDisplayContext assetListContentDisplayContext = (AssetListConten
 				name="type"
 				value="<%= assetRendererFactory.getTypeName(locale) %>"
 			/>
+
+			<liferay-ui:search-container-column-text
+				name="author"
+				value="<%= assetEntry.getUserName() %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="modified-date"
+				value="<%= assetEntry.getModifiedDate() %>"
+			/>
+
+			<liferay-ui:search-container-column-date
+				name="create-date"
+				value="<%= assetEntry.getCreateDate() %>"
+			/>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
@@ -55,7 +70,3 @@ AssetListContentDisplayContext assetListContentDisplayContext = (AssetListConten
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
-
-<aui:button-row>
-	<aui:button type="cancel" value="close" />
-</aui:button-row>

@@ -58,7 +58,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -877,17 +876,15 @@ public class OrganizationLocalServiceTest {
 
 		String configPid = _createOrganizationType(orgType);
 
-		List<Organization> organizations = new LinkedList<>();
-
 		try {
-			organizations.add(OrganizationTestUtil.addOrganization(orgType));
+			_organizations.add(OrganizationTestUtil.addOrganization(orgType));
 
-			organizations.add(OrganizationTestUtil.addOrganization(orgType));
+			_organizations.add(OrganizationTestUtil.addOrganization(orgType));
 
-			organizations.add(
+			_organizations.add(
 				OrganizationTestUtil.addOrganization(defaultType));
 
-			organizations.add(
+			_organizations.add(
 				OrganizationTestUtil.addOrganization(defaultType));
 
 			Sort sort = SortFactoryUtil.getSort(
@@ -937,10 +934,6 @@ public class OrganizationLocalServiceTest {
 				toStringList(indexerSearchResults));
 		}
 		finally {
-			for (Organization organization : organizations) {
-				OrganizationLocalServiceUtil.deleteOrganization(organization);
-			}
-
 			ConfigurationTestUtil.deleteConfiguration((String)configPid);
 		}
 	}

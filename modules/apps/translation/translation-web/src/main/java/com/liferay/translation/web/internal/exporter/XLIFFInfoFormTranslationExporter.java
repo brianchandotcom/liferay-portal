@@ -17,23 +17,39 @@ package com.liferay.translation.web.internal.exporter;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.provider.InfoItemServiceTracker;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.translation.exception.InvalidXLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
+import net.sf.okapi.lib.xliff2.core.Fragment;
+import net.sf.okapi.lib.xliff2.core.Part;
+import net.sf.okapi.lib.xliff2.core.StartXliffData;
+import net.sf.okapi.lib.xliff2.core.Unit;
+import net.sf.okapi.lib.xliff2.document.FileNode;
+import net.sf.okapi.lib.xliff2.document.XLIFFDocument;
+import net.sf.okapi.lib.xliff2.reader.XLIFFReaderException;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -109,6 +125,64 @@ public class XLIFFInfoFormTranslationExporter<T>
 		return new ByteArrayInputStream(formattedString.getBytes());
 	}
 
+	@Override
+	public InfoFormValues importXLIFF(
+			long groupId, InfoItemClassPKReference infoItemClassPKReference,
+			InputStream inputStream)
+		throws InvalidXLIFFFileException, IOException {
+
+		InfoFormValues infoFormValues = new InfoFormValues();
+
+		try {
+			XLIFFDocument xliffDocument = new XLIFFDocument();
+
+			xliffDocument.load(FileUtil.createTempFile(inputStream));
+
+			_validateXLIFFFile(infoItemClassPKReference, xliffDocument);
+			StartXliffData startXliffData = xliffDocument.getStartXliffData();
+
+			Locale targetLocale = LocaleUtil.fromLanguageId(
+				startXliffData.getTargetLanguage(), true, false);
+
+			List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
+
+			for (Unit unit : xliffDocument.getUnits()) {
+				String field = unit.getId();
+
+				if (unit.getPartCount() != 1) {
+					throw new InvalidXLIFFFileException(
+						"The file only can have one unit");
+				}
+
+				Part valuePart = unit.getPart(0);
+
+				Fragment value = valuePart.getTarget();
+
+				InfoLocalizedValue<String> infoLocalizedValue =
+					InfoLocalizedValue.builder(
+					).addValue(
+						targetLocale, field
+					).build();
+
+				InfoField infoField = new InfoField(
+					TextInfoFieldType.INSTANCE, infoLocalizedValue, true,
+					field);
+
+				InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
+					infoField, value.getPlainText());
+
+				infoFieldValues.add(infoFieldValue);
+			}
+
+			infoFormValues.addAll(infoFieldValues);
+
+			return infoFormValues;
+		}
+		catch (XLIFFReaderException xliffReaderException) {
+			throw new InvalidXLIFFFileException(xliffReaderException);
+		}
+	}
+
 	private String _getStringValue(Object value) {
 		if (value == null) {
 			return null;
@@ -116,5 +190,64 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 		return value.toString();
 	}
+
+	private void _validateXLIFFCompletion(XLIFFDocument xliffDocument)
+		throws InvalidXLIFFFileException {
+
+		StartXliffData startXliffData = xliffDocument.getStartXliffData();
+
+		String sourceLanguage = startXliffData.getSourceLanguage();
+
+		Locale sourceLocale = LocaleUtil.fromLanguageId(
+			sourceLanguage, true, false);
+
+		if (Validator.isNull(sourceLanguage) || (sourceLocale == null)) {
+			throw new InvalidXLIFFFileException(
+				"There is a lack of translation source ");
+		}
+
+		String targetLanguage = startXliffData.getTargetLanguage();
+
+		Locale targetLocale = LocaleUtil.fromLanguageId(
+			targetLanguage, true, false);
+
+		if (Validator.isNull(targetLanguage) || (targetLocale == null)) {
+			throw new InvalidXLIFFFileException(
+				"There is a lack of translation target ");
+		}
+	}
+
+	private void _validateXLIFFFile(
+			InfoItemClassPKReference infoItemClassPKReference,
+			XLIFFDocument xliffDocument)
+		throws InvalidXLIFFFileException {
+
+		_validateXLIFFCompletion(xliffDocument);
+
+		_validateXLIFFFileNode(infoItemClassPKReference, xliffDocument);
+	}
+
+	private void _validateXLIFFFileNode(
+			InfoItemClassPKReference infoItemClassPKReference,
+			XLIFFDocument xliffDocument)
+		throws InvalidXLIFFFileException {
+
+		List<String> fileNodeIds = xliffDocument.getFileNodeIds();
+
+		if (fileNodeIds.size() != 1) {
+			throw new InvalidXLIFFFileException("Only one node allowed");
+		}
+
+		FileNode fileNode = xliffDocument.getFileNode(
+			infoItemClassPKReference.getClassName() + StringPool.COLON +
+				infoItemClassPKReference.getClassPK());
+
+		if (fileNode == null) {
+			throw new InvalidXLIFFFileException("File id not valid");
+		}
+	}
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -77,15 +76,11 @@ public class CalendarBookingServiceTest {
 		_omnidminUser = UserTestUtil.addOmniAdminUser();
 		_user1 = UserTestUtil.addUser();
 		_user2 = UserTestUtil.addUser();
-
-		_permissionChecker = PermissionThreadLocal.getPermissionChecker();
 	}
 
 	@After
 	public void tearDown() {
 		CalendarStagingTestUtil.cleanUp();
-
-		PermissionThreadLocal.setPermissionChecker(_permissionChecker);
 	}
 
 	@Test
@@ -252,7 +247,6 @@ public class CalendarBookingServiceTest {
 
 	private Group _liveGroup;
 	private User _omnidminUser;
-	private PermissionChecker _permissionChecker;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

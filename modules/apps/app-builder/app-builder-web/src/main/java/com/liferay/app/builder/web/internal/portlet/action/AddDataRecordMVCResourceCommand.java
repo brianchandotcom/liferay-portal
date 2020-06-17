@@ -14,7 +14,6 @@
 
 package com.liferay.app.builder.web.internal.portlet.action;
 
-import com.liferay.app.builder.constants.AppBuilderPortletKeys;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppDataRecordLinkLocalService;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
@@ -22,7 +21,6 @@ import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -36,22 +34,22 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Rafael Praxedes
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + AppBuilderPortletKeys.APPS,
-		"javax.portlet.name=" + AppBuilderPortletKeys.OBJECTS,
-		"mvc.command.name=/app_builder/add_data_record"
-	},
-	service = MVCResourceCommand.class
-)
 public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
+
+	public AddDataRecordMVCResourceCommand(
+		AppBuilderAppDataRecordLinkLocalService
+			appBuilderAppDataRecordLinkLocalService,
+		AppBuilderAppLocalService appBuilderAppLocalService,
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_appBuilderAppDataRecordLinkLocalService =
+			appBuilderAppDataRecordLinkLocalService;
+		_appBuilderAppLocalService = appBuilderAppLocalService;
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
 
 	@Override
 	protected void doServeResource(
@@ -84,7 +82,7 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 
 		AppBuilderApp appBuilderApp =
 			_appBuilderAppLocalService.getAppBuilderApp(
-				ParamUtil.getLong(resourceRequest, "appBuilderAppId"));
+				ParamUtil.getLong(resourceRequest, "appId"));
 
 		DataRecordResource dataRecordResource = DataRecordResource.builder(
 		).user(
@@ -119,14 +117,9 @@ public class AddDataRecordMVCResourceCommand extends BaseMVCResourceCommand {
 		_transactionConfig = builder.build();
 	}
 
-	@Reference
-	private AppBuilderAppDataRecordLinkLocalService
+	private final AppBuilderAppDataRecordLinkLocalService
 		_appBuilderAppDataRecordLinkLocalService;
-
-	@Reference
-	private AppBuilderAppLocalService _appBuilderAppLocalService;
-
-	@Reference
-	private DDLRecordLocalService _ddlRecordLocalService;
+	private final AppBuilderAppLocalService _appBuilderAppLocalService;
+	private final DDLRecordLocalService _ddlRecordLocalService;
 
 }

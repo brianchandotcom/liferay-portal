@@ -1078,6 +1078,10 @@ public interface PropsKeys {
 	public static final String EDITOR_WYSIWYG_DEFAULT =
 		"editor.wysiwyg.default";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String EHCACHE_BLOCKING_CACHE_ALLOWED =
 		"ehcache.blocking.cache.allowed";
 
@@ -2326,6 +2330,10 @@ public interface PropsKeys {
 		PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT =
 			"permissions.custom.attribute.write.check.by.default";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String PERMISSIONS_OBJECT_BLOCKING_CACHE =
 		"permissions.object.blocking.cache";
 
@@ -3308,6 +3316,10 @@ public interface PropsKeys {
 	public static final String USERS_UPDATE_USER_NAME =
 		"users.update.user.name.";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String VALUE_OBJECT_ENTITY_BLOCKING_CACHE =
 		"value.object.entity.blocking.cache";
 
@@ -3317,6 +3329,10 @@ public interface PropsKeys {
 	public static final String VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE =
 		"value.object.entity.thread.local.cache.max.size";
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static final String VALUE_OBJECT_FINDER_BLOCKING_CACHE =
 		"value.object.finder.blocking.cache";
 

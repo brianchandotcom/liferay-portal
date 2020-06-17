@@ -6,6 +6,7 @@
 		<suppress checks="CamelCaseNameCheck" files="gradle-util/src/main/java/com/liferay/gradle/util/FileUtil\.java" />
 		<suppress checks="JSONNamingCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayThemePlugin\.java" />
 		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/internal/WatchOSGiPlugin\.java" />
+		<suppress checks="MissingEmptyLineCheck" files="gradle-plugins/src/main/java/com/liferay/gradle/plugins/LiferayExtPlugin\.java" />
 		<suppress checks="OperatorOperandCheck" files="project-templates/project-templates/src/test/java/com/liferay/project/templates/ProjectTemplateFilesTest\.java" />
 		<suppress checks="TryWithResourcesCheck" files="ant-beanshell/.*" />
 		<suppress checks="TryWithResourcesCheck" files="ant-gradle/.*" />

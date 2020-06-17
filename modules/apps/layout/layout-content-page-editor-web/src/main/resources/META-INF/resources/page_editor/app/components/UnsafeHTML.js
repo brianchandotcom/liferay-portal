@@ -158,7 +158,10 @@ UnsafeHTML.defaultProps = {
 	className: '',
 	contentRef: null,
 	getPortals: () => [],
-	globalContext: window,
+	globalContext: {
+		document,
+		window,
+	},
 	markup: '',
 	onRender: () => {},
 };
@@ -171,7 +174,10 @@ UnsafeHTML.propTypes = {
 		PropTypes.shape({current: PropTypes.object}),
 	]),
 	getPortals: PropTypes.func,
-	globalContext: PropTypes.object,
+	globalContext: PropTypes.shape({
+		document: PropTypes.object,
+		window: PropTypes.object,
+	}),
 	markup: PropTypes.string,
 	onRender: PropTypes.func,
 };

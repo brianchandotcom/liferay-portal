@@ -1,0 +1,16 @@
+.page-editor__global-context-iframe {
+	border: none;
+	height: 100vh;
+	width: 100%;
+
+	&--loading {
+		opacity: 0.5;
+	}
+
+	&--hidden {
+		left: -99999px;
+		opacity: 0;
+		position: absolute;
+		top: -99999px;
+	}
+}

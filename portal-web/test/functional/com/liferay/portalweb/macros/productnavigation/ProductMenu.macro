@@ -6,7 +6,7 @@ definition {
 			GlobalMenu.gotoSite(site = "${site}");
 		}
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		AssertClick(
 			locator1 = "ProductMenu#LIVE_LINK",
@@ -21,7 +21,7 @@ definition {
 			GlobalMenu.gotoSite(site = "${siteName}");
 		}
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.openWorkspace();
 
@@ -37,29 +37,29 @@ definition {
 
 		SelectFrameTop();
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
 			value1 = "${site}");
 	}
 
-	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${portlet}"
+	@summary = "Navigate to Product Menu > ${category} > ${portlet}"
 	macro gotoPortlet {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			GlobalMenu.gotoSite(site = "${site}");
 		}
 
-		ProductMenuHelper.expandPanel(panel = "${panel}");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = "${category}");
 
 		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
 	}
 
-	@summary = "Navigate to Product Menu > ${panel} > ${category} > ${scope} > ${portlet}"
+	@summary = "Navigate to Product Menu > ${category} > ${scope} > ${portlet}"
 	macro gotoScopedPortlet {
-		ProductMenuHelper.expandPanel(panel = "${panel}");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = "${category}");
 
@@ -74,7 +74,7 @@ definition {
 			GlobalMenu.gotoSite(site = "${site}");
 		}
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.openWorkspace();
 
@@ -93,7 +93,7 @@ definition {
 
 			SiteSelector.selectSite(site = "${site}");
 
-			ProductMenuHelper.expandPanel(panel = "Site Administration");
+			ProductMenuHelper.openProductMenu();
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME",
@@ -107,7 +107,7 @@ definition {
 			GlobalMenu.gotoSite(site = "${site}");
 		}
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		AssertClick(
 			locator1 = "ProductMenu#GO_TO_SITES_LINK",
@@ -121,7 +121,7 @@ definition {
 		}
 
 		if (IsElementNotPresent(locator1 = "ProductMenu#STAGING_SELECTED")) {
-			ProductMenuHelper.expandPanel(panel = "Site Administration");
+			ProductMenuHelper.openProductMenu();
 
 			AssertClick(
 				locator1 = "ProductMenu#STAGING_LINK",
@@ -139,7 +139,7 @@ definition {
 			GlobalMenu.gotoSite(site = "${siteName}");
 		}
 
-		ProductMenuHelper.expandPanel(panel = "Site Administration");
+		ProductMenuHelper.openProductMenu();
 
 		if ((IsElementPresent(locator1 = "ProductMenu#BACK_ARROW")) && (IsVisible(locator1 = "ProductMenu#BACK_ARROW"))) {
 			Click(locator1 = "ProductMenu#BACK_ARROW");

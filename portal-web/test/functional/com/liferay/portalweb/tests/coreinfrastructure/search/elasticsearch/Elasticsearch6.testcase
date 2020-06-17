@@ -29,7 +29,6 @@ definition {
 
 	@priority = "4"
 	test AssertIndexOnStartup {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Elasticsearch6#AssertIndexOnStartup";
 
 		JSONWebcontent.addWebContent(

@@ -121,9 +121,6 @@ public class EditAccountEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				mvcPath = "/account_entries_admin/error.jsp";
 			}
-			else if (exception instanceof AccountEntryDomainsException) {
-				SessionErrors.add(actionRequest, exception.getClass());
-			}
 			else {
 				throw exception;
 			}

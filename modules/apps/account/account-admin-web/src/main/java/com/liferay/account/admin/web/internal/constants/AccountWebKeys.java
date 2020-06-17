@@ -21,6 +21,8 @@ public class AccountWebKeys {
 
 	public static final String ACCOUNT_ENTRY_DISPLAY = "ACCOUNT_ENTRY_DISPLAY";
 
+	public static final String ACCOUNT_GROUP_DISPLAY = "ACCOUNT_GROUP_DISPLAY";
+
 	public static final String ACTION_COMMAND_NAME = "ACTION_COMMAND_NAME";
 
 	public static final String EDITABLE = "EDITABLE";

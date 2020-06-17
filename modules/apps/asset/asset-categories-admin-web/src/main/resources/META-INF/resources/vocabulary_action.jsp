@@ -39,18 +39,6 @@ AssetVocabulary vocabulary = assetCategoriesDisplayContext.getVocabulary();
 		/>
 	</c:if>
 
-	<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() %>">
-		<portlet:renderURL var="addCategoryURL">
-			<portlet:param name="mvcPath" value="/edit_category.jsp" />
-			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			message="add-category"
-			url="<%= addCategoryURL %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= assetCategoriesDisplayContext.hasPermission(vocabulary, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= AssetVocabulary.class.getName() %>"

@@ -21,13 +21,13 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 import java.io.FileReader;
 
-import java.util.Enumeration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -135,20 +135,20 @@ public class TCKtoJUnitConverter {
 		sb.append("\">\n");
 		sb.append("\t<properties>\n");
 
-		Properties properties = new SortedProperties(System.getProperties());
+		Properties properties = System.getProperties();
 
-		Enumeration<String> enumeration =
-			(Enumeration<String>)properties.propertyNames();
+		List<String> propertyNames = new ArrayList<>(
+			properties.stringPropertyNames());
 
-		while (enumeration.hasMoreElements()) {
-			String key = enumeration.nextElement();
+		propertyNames.sort(null);
 
-			String value = properties.getProperty(key);
+		for (String propertyName : propertyNames) {
+			String propertyValue = properties.getProperty(propertyName);
 
 			sb.append("\t\t<property name=\"");
-			sb.append(HtmlUtil.escape(key));
+			sb.append(HtmlUtil.escape(propertyName));
 			sb.append("\" value=\"");
-			sb.append(HtmlUtil.escape(value));
+			sb.append(HtmlUtil.escape(propertyValue));
 			sb.append("\" />\n");
 		}
 

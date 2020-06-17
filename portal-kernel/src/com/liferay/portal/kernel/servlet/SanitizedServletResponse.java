@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -31,7 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javax.portlet.PortletRequest;
@@ -214,26 +212,21 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		String httpHeaderSecureXFrameOptionsKey =
 			"http.header.secure.x.frame.options";
 
-		Properties properties = new SortedProperties(
-			new Comparator<String>() {
+		Properties properties = PropertiesUtil.getProperties(
+			SystemProperties.getProperties(),
+			httpHeaderSecureXFrameOptionsKey.concat(StringPool.PERIOD), true);
 
-				@Override
-				public int compare(String key1, String key2) {
-					return GetterUtil.getIntegerStrict(key1) -
-						GetterUtil.getIntegerStrict(key2);
-				}
+		List<String> propertyNames = new ArrayList<>(
+			properties.stringPropertyNames());
 
-			},
-			PropertiesUtil.getProperties(
-				SystemProperties.getProperties(),
-				httpHeaderSecureXFrameOptionsKey.concat(StringPool.PERIOD),
-				true));
+		propertyNames.sort(
+			Comparator.comparingInt(GetterUtil::getIntegerStrict));
 
 		List<KeyValuePair> xFrameOptionKVPs = new ArrayList<>(
 			properties.size());
 
-		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-			String propertyValue = (String)entry.getValue();
+		for (String propertyName : propertyNames) {
+			String propertyValue = properties.getProperty(propertyName);
 
 			String[] propertyValueParts = StringUtil.split(
 				propertyValue, CharPool.PIPE);

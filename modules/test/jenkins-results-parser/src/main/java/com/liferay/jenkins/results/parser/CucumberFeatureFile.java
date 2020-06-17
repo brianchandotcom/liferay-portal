@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,7 +29,7 @@ import java.util.regex.Pattern;
 /**
  * @author Michael Hashimoto
  */
-public class CucumberFeatureFile {
+public class CucumberFeatureFile implements Serializable {
 
 	public CucumberFeatureFile(
 		File faroDir, CucumberFeatureResult cucumberFeatureResult,

@@ -136,6 +136,50 @@ definition {
 		PageEditor.viewFragment(fragmentName = "Section");
 	}
 
+	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with custom configuration back."
+	@priority = "4"
+	test UndoDeletedFragmentWithCustomConfiguration {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+		PageEditor.configureFragment(numberOfTabs = "2");
+
+		Click.clickNoMouseOver(
+			key_elementType = "Fragment",
+			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
+		AssertVisible(
+			key_navItem = "Tab 2",
+			locator1 = "Fragment#NAV_ITEM_TAB");
+
+		AssertElementNotPresent(
+			key_navItem = "Tab 3",
+			locator1 = "Fragment#NAV_ITEM_TAB");
+
+		PageEditor.removeFragment(fragmentName = "Tabs");
+
+		Click(
+			key_text = "undo",
+			locator1 = "Icon#ANY");
+
+		PageEditor.viewFragment(fragmentName = "Tabs");
+
+		AssertVisible(
+			key_navItem = "Tab 2",
+			locator1 = "Fragment#NAV_ITEM_TAB");
+
+		AssertElementNotPresent(
+			key_navItem = "Tab 3",
+			locator1 = "Fragment#NAV_ITEM_TAB");
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments with edited inline content back."
 	@priority = "4"
 	test UndoDeletedFragmentWithInlineContent {

@@ -187,7 +187,7 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 			return true;
 		}
 
-		for (String name : _EXT_SOURCESET_NAMES) {
+		for (String name : _EXT_SOURCE_SET_NAMES) {
 			if (FileUtil.exists(project, "src/" + name)) {
 				return true;
 			}
@@ -198,12 +198,12 @@ public class ExtProjectConfigurator extends BaseProjectConfigurator {
 
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
-	private static final String[] _EXT_SOURCESET_NAMES = {
-		LiferayExtPlugin.EXT_IMPL_SOURCESET_NAME,
-		LiferayExtPlugin.EXT_KERNEL_SOURCESET_NAME,
-		LiferayExtPlugin.EXT_UTIL_BRIDGES_SOURCESET_NAME,
-		LiferayExtPlugin.EXT_UTIL_JAVA_SOURCESET_NAME,
-		LiferayExtPlugin.EXT_UTIL_TAGLIB_SOURCESET_NAME
+	private static final String[] _EXT_SOURCE_SET_NAMES = {
+		LiferayExtPlugin.EXT_IMPL_SOURCE_SET_NAME,
+		LiferayExtPlugin.EXT_KERNEL_SOURCE_SET_NAME,
+		LiferayExtPlugin.EXT_UTIL_BRIDGES_SOURCE_SET_NAME,
+		LiferayExtPlugin.EXT_UTIL_JAVA_SOURCE_SET_NAME,
+		LiferayExtPlugin.EXT_UTIL_TAGLIB_SOURCE_SET_NAME
 	};
 
 	private final boolean _defaultRepositoryEnabled;

@@ -73,10 +73,17 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+
+		// Plugins
+
 		_applyPlugins(project);
+
+		// Configurations
 
 		Configuration portalConfiguration = GradleUtil.getConfiguration(
 			project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+
+		// Conventions
 
 		Convention convention = project.getConvention();
 
@@ -104,6 +111,8 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		_configureSourceSetExt(warPluginConvention, extUtilBridgesSourceSet);
 		_configureSourceSetExt(warPluginConvention, extUtilJavaSourceSet);
 		_configureSourceSetExt(warPluginConvention, extUtilTaglibSourceSet);
+
+		// Tasks
 
 		TaskProvider<Sync> buildExtInfoBaseDirTaskProvider =
 			GradleUtil.addTaskProvider(
@@ -154,6 +163,8 @@ public class LiferayExtPlugin implements Plugin<Project> {
 			extImplJarTaskProvider, extKernelJarTaskProvider,
 			extUtilBridgesJarTaskProvider, extUtilJavaJarTaskProvider,
 			extUtilTaglibJarTaskProvider);
+
+		// Other
 
 		_configureLiferay(project);
 

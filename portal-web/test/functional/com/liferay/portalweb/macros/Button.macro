@@ -72,10 +72,6 @@ definition {
 		Button.click(button = "Publish");
 	}
 
-	macro clickPublishToChangeList {
-		Button.click(button = "Publish to Change List");
-	}
-
 	macro clickRemove {
 		Button.click(button = "Remove");
 	}

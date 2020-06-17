@@ -177,12 +177,8 @@ definition {
 	}
 
 	macro save {
-		if ("${changeListEnabled}" == "true") {
-			Button.clickPublishToChangeList();
-		}
-		else {
-			Click.mouseDownMouseUp(locator1 = "//span[contains(@class,'btn')][normalize-space(text())='Save']/..");
-		}
+		Click.mouseDownMouseUp(locator1 = "//span[contains(@class,'btn')][normalize-space(text())='Save']/..");
+
 
 		Alert.viewSuccessMessage();
 	}

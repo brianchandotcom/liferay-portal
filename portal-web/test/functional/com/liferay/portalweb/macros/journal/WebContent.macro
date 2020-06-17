@@ -882,12 +882,8 @@ definition {
 				value1 = "Draft");
 		}
 		else {
-			if ("${changeListEnabled}" == "true") {
-				Button.clickPublishToChangeList();
-			}
-			else {
-				PortletEntry.publish();
-			}
+			PortletEntry.publish();
+
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 			var key_webContentTitle = "${webContentTitleEdit}";
@@ -1092,12 +1088,7 @@ definition {
 				value1 = "Draft");
 		}
 		else {
-			if ("${changeListEnabled}" == "true") {
-				Button.clickPublishToChangeList();
-			}
-			else {
-				PortletEntry.publish();
-			}
+			PortletEntry.publish();
 		}
 	}
 

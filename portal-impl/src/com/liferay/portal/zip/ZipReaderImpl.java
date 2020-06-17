@@ -24,8 +24,7 @@ import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipReader;
 
-import de.schlichtherle.io.File;
-
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -45,19 +44,19 @@ import java.util.zip.ZipFile;
  */
 public class ZipReaderImpl implements ZipReader {
 
-	public ZipReaderImpl(InputStream inputStream) throws IOException {
-		java.io.File tempFile = FileUtil.createTempFile(inputStream);
-
-		_zipFile = new ZipFile(tempFile);
-	}
-
-	public ZipReaderImpl(java.io.File file) {
+	public ZipReaderImpl(File file) {
 		try {
 			_zipFile = new ZipFile(file);
 		}
 		catch (IOException ioException) {
 			_log.error(ioException, ioException);
 		}
+	}
+
+	public ZipReaderImpl(InputStream inputStream) throws IOException {
+		File tempFile = FileUtil.createTempFile(inputStream);
+
+		_zipFile = new ZipFile(tempFile);
 	}
 
 	@Override
@@ -175,21 +174,6 @@ public class ZipReaderImpl implements ZipReader {
 		}
 
 		return ListUtil.copy(folderEntries);
-	}
-
-	protected void processDirectory(
-		File directory, List<String> folderEntries) {
-
-		File[] files = (File[])directory.listFiles();
-
-		for (File file : files) {
-			if (!file.isDirectory()) {
-				folderEntries.add(file.getEnclEntryName());
-			}
-			else {
-				processDirectory(file, folderEntries);
-			}
-		}
 	}
 
 	private void _initEntriesByFolder() {

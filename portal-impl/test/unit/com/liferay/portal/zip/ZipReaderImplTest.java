@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 
-import de.schlichtherle.io.FileInputStream;
-
 import java.io.InputStream;
 
 import java.nio.charset.Charset;
@@ -308,7 +306,11 @@ public class ZipReaderImplTest {
 				getClass(), _ZIP_FILE_PATH));
 
 		try (InputStream is = zipReader.getEntryAsInputStream(filePath)) {
-			Assert.assertTrue(is instanceof FileInputStream);
+			Class<? extends InputStream> clazz = is.getClass();
+
+			Assert.assertEquals(
+				"java.util.zip.ZipFile$ZipFileInflaterInputStream",
+				clazz.getName());
 		}
 
 		zipReader.close();

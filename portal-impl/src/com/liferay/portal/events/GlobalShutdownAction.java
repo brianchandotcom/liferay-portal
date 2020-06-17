@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.struts.AuthPublicPathRegistry;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.zip.TrueZIPHelperUtil;
 import com.liferay.util.ThirdPartyThreadLocalRegistry;
 
 import java.sql.Connection;
@@ -163,10 +162,6 @@ public class GlobalShutdownAction extends SimpleAction {
 		// Portal executors
 
 		_portalExecutorManager.shutdown(true);
-
-		// TrueZip
-
-		TrueZIPHelperUtil.shutdown();
 	}
 
 	protected void shutdownLevel6() {

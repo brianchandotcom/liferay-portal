@@ -31,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UncheckedIOException;
 
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -67,7 +68,7 @@ public class ZipWriterImpl implements ZipWriter {
 			_zipOutputStream = new ZipOutputStream(new FileOutputStream(_file));
 		}
 		catch (FileNotFoundException fileNotFoundException) {
-			throw new RuntimeException(fileNotFoundException);
+			throw new UncheckedIOException(fileNotFoundException);
 		}
 	}
 

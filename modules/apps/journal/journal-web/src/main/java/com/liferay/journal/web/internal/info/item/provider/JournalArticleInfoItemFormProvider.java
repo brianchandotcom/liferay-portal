@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 
 import java.text.Format;
@@ -323,11 +324,15 @@ public class JournalArticleInfoItemFormProvider
 					).build()));
 
 			if (themeDisplay != null) {
-				journalArticleFieldValues.add(
-					new InfoFieldValue<>(
-						_smallImageInfoField,
-						new WebImage(
-							journalArticle.getArticleImageURL(themeDisplay))));
+				String articleImageURL = journalArticle.getArticleImageURL(
+					themeDisplay);
+
+				if (Validator.isNotNull(articleImageURL)) {
+					journalArticleFieldValues.add(
+						new InfoFieldValue<>(
+							_smallImageInfoField,
+							new WebImage(articleImageURL)));
+				}
 			}
 
 			User user = _getLastVersionUser(journalArticle);

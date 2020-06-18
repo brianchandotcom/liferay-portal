@@ -56,6 +56,8 @@ describe('MappingInputs', () => {
 		let result;
 		let feedbackTitleInput;
 		let feedbackImageInput;
+		let hiddenTitleInput;
+		let hiddenImageInput;
 
 		beforeEach(() => {
 			result = renderComponent();
@@ -65,11 +67,26 @@ describe('MappingInputs', () => {
 			feedbackImageInput = result.getByLabelText(
 				baseProps.inputs[1].label
 			);
+
+			hiddenTitleInput = result.getAllByRole('textbox')[1];
+			hiddenImageInput = result.getAllByRole('textbox')[3];
 		});
 
 		it('has two read only inputs for user feedback with the selected field names', () => {
 			expect(feedbackTitleInput).toBeInTheDocument();
 			expect(feedbackImageInput).toBeInTheDocument();
+		});
+
+		it('has two hidden inputs with the correct selected field keys', () => {
+			expect(hiddenTitleInput.type).toBe('hidden');
+			expect(hiddenTitleInput.name).toBe(baseProps.inputs[0].name);
+			expect(hiddenTitleInput.value).toBe(
+				baseProps.inputs[0].selectedFieldKey
+			);
+
+			expect(hiddenImageInput.type).toBe('hidden');
+			expect(hiddenImageInput.name).toBe(baseProps.inputs[1].name);
+			expect(hiddenImageInput.value).toBe('unmapped');
 		});
 	});
 });

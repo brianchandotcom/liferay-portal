@@ -22,6 +22,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
@@ -133,6 +134,12 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public int getMessageCount() {
+		return MBThreadLocalServiceUtil.getMessageCount(
+			getThreadId(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

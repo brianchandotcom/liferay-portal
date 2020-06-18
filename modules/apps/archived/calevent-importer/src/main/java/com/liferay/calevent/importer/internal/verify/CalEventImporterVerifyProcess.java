@@ -378,8 +378,8 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		String uuid, long threadId, long groupId, long companyId, long userId,
 		String userName, Date createDate, Date modifiedDate, long categoryId,
 		long rootMessageId, long rootMessageUserId, String title,
-		int messageCount, long lastPostByUserId, Date lastPostDate,
-		double priority, boolean question, int status, long statusByUserId,
+		long lastPostByUserId, Date lastPostDate, double priority,
+		boolean question, int status, long statusByUserId,
 		String statusByUserName, Date statusDate, long viewCount) {
 
 		MBThread mbThread = _mbThreadLocalService.createMBThread(threadId);
@@ -395,7 +395,6 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 		mbThread.setRootMessageId(rootMessageId);
 		mbThread.setRootMessageUserId(rootMessageUserId);
 		mbThread.setTitle(title);
-		mbThread.setMessageCount(messageCount);
 		mbThread.setLastPostByUserId(lastPostByUserId);
 		mbThread.setLastPostDate(lastPostDate);
 		mbThread.setPriority(priority);
@@ -1208,9 +1207,8 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 			mbThread.getUserName(), mbThread.getCreateDate(),
 			mbThread.getModifiedDate(), mbThread.getCategoryId(), 0,
 			mbThread.getRootMessageUserId(), mbThread.getTitle(),
-			mbThread.getMessageCount(), mbThread.getLastPostByUserId(),
-			mbThread.getLastPostDate(), mbThread.getPriority(),
-			mbThread.isQuestion(), mbThread.getStatus(),
+			mbThread.getLastPostByUserId(), mbThread.getLastPostDate(),
+			mbThread.getPriority(), mbThread.isQuestion(), mbThread.getStatus(),
 			mbThread.getStatusByUserId(), mbThread.getStatusByUserName(),
 			mbThread.getStatusDate(),
 			_viewCountEntryLocalService.getViewCount(

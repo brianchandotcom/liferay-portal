@@ -16,7 +16,6 @@ package com.liferay.message.boards.internal.util;
 
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -29,13 +28,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 /**
  * @author Sergio González
@@ -89,21 +86,6 @@ public class MBUtil {
 				"href=\"" + themeDisplay.getURLPortal() + "/",
 				"src=\"" + themeDisplay.getURLPortal() + "/"
 			});
-	}
-
-	public static void updateThreadMessageCount(final long threadId) {
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				MBThreadLocalServiceUtil.updateMessageCount(threadId);
-
-				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
 	private static String[] _getRolePermissions(

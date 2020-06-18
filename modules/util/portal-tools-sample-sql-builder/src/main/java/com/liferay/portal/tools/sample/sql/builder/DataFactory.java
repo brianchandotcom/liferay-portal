@@ -2699,7 +2699,7 @@ public class DataFactory {
 
 		return newMBThreadModel(
 			threadId, groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
-			rootMessageId, messageCount);
+			rootMessageId);
 	}
 
 	public List<MBThreadModel> newMBThreadModels(
@@ -2712,8 +2712,7 @@ public class DataFactory {
 			mbThreadModels.add(
 				newMBThreadModel(
 					_counter.get(), mbCategoryModel.getGroupId(),
-					mbCategoryModel.getCategoryId(), _counter.get(),
-					BenchmarksPropsValues.MAX_MB_MESSAGE_COUNT));
+					mbCategoryModel.getCategoryId(), _counter.get()));
 		}
 
 		return mbThreadModels;
@@ -4066,8 +4065,7 @@ public class DataFactory {
 	}
 
 	protected MBThreadModel newMBThreadModel(
-		long threadId, long groupId, long categoryId, long rootMessageId,
-		int messageCount) {
+		long threadId, long groupId, long categoryId, long rootMessageId) {
 
 		MBThreadModel mbThreadModel = new MBThreadModelImpl();
 
@@ -4082,7 +4080,6 @@ public class DataFactory {
 		mbThreadModel.setCategoryId(categoryId);
 		mbThreadModel.setRootMessageId(rootMessageId);
 		mbThreadModel.setRootMessageUserId(_sampleUserId);
-		mbThreadModel.setMessageCount(messageCount);
 		mbThreadModel.setLastPostByUserId(_sampleUserId);
 		mbThreadModel.setLastPostDate(new Date());
 		mbThreadModel.setLastPublishDate(new Date());

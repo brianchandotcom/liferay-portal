@@ -25,7 +25,6 @@ import com.liferay.message.boards.constants.MBThreadConstants;
 import com.liferay.message.boards.exception.SplitThreadException;
 import com.liferay.message.boards.internal.util.MBMessageUtil;
 import com.liferay.message.boards.internal.util.MBThreadUtil;
-import com.liferay.message.boards.internal.util.MBUtil;
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
@@ -415,6 +414,15 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return mbThreadPersistence.countByG_NotC_S(
 			groupId, MBCategoryConstants.DISCUSSION_CATEGORY_ID,
 			queryDefinition.getStatus());
+	}
+
+	@Override
+	public int getMessageCount(long threadId, int status) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return mbMessagePersistence.countByThreadId(threadId);
+		}
+
+		return mbMessagePersistence.countByT_S(threadId, status);
 	}
 
 	@Override
@@ -1022,14 +1030,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		moveChildrenMessages(message, category, oldThread.getThreadId());
 
-		// Update new thread
-
-		MBUtil.updateThreadMessageCount(thread.getThreadId());
-
-		// Update old thread
-
-		MBUtil.updateThreadMessageCount(oldThread.getThreadId());
-
 		// Indexer
 
 		Indexer<MBThread> threadIndexer =
@@ -1040,22 +1040,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		threadIndexer.reindex(message.getThread());
 
 		return thread;
-	}
-
-	@Override
-	public MBThread updateMessageCount(long threadId) {
-		MBThread mbThread = mbThreadPersistence.fetchByPrimaryKey(threadId);
-
-		if (mbThread == null) {
-			return null;
-		}
-
-		int messageCount = mbMessagePersistence.countByT_S(
-			threadId, WorkflowConstants.STATUS_APPROVED);
-
-		mbThread.setMessageCount(messageCount);
-
-		return mbThreadPersistence.update(mbThread);
 	}
 
 	@Override

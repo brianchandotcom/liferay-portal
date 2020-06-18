@@ -792,12 +792,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				}
 			}
 
-			// Thread
-
-			if (message.isApproved()) {
-				MBUtil.updateThreadMessageCount(thread.getThreadId());
-			}
-
 			// Indexer
 
 			Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -2441,14 +2435,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 
 			thread.setLastPostDate(modifiedDate);
-		}
-
-		if ((oldStatus == WorkflowConstants.STATUS_APPROVED) ||
-			(status == WorkflowConstants.STATUS_APPROVED)) {
-
-			// Thread
-
-			MBUtil.updateThreadMessageCount(thread.getThreadId());
 		}
 
 		// Indexer

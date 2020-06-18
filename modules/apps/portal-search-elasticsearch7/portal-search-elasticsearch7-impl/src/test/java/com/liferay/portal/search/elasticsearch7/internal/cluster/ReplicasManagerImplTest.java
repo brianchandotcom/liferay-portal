@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.HealthExpectations;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
@@ -56,39 +56,39 @@ public class ReplicasManagerImplTest {
 	}
 
 	@Test
-	public void testSystemCompanyIndexIsReplicatedAndMigrated()
-		throws Exception {
-
+	public void testSystemCompanyIndexIsReplicatedAndMigrated() {
 		long companyId = RandomTestUtil.randomLong();
 
 		setUpCompanyLocalService(companyId);
 
-		ElasticsearchConnectionFixture elasticsearchFixture1 = createNode(1);
+		ElasticsearchClientResolver elasticsearchClientResolver1 = createNode(
+			1);
 
 		IndexCreator indexCreator1 = new IndexCreator() {
 			{
-				setElasticsearchClientResolver(elasticsearchFixture1);
+				setElasticsearchClientResolver(elasticsearchClientResolver1);
 			}
 		};
 
 		indexCreator1.createIndex(getTestIndexName(CompanyConstants.SYSTEM));
 
-		ElasticsearchConnectionFixture elasticsearchFixture2 = createNode(2);
+		ElasticsearchClientResolver elasticsearchClientResolver2 = createNode(
+			2);
 
-		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture1);
+		assert1PrimaryShardAnd2Nodes(elasticsearchClientResolver1);
 
 		IndexCreator indexCreator2 = new IndexCreator() {
 			{
-				setElasticsearchClientResolver(elasticsearchFixture2);
+				setElasticsearchClientResolver(elasticsearchClientResolver2);
 			}
 		};
 
 		indexCreator2.createIndex(getTestIndexName(companyId));
 
-		ClusterAssert.assert2PrimaryShardsAnd2Nodes(elasticsearchFixture2);
+		assert2PrimaryShardsAnd2Nodes(elasticsearchClientResolver2);
 
 		RestHighLevelClient restHighLevelClient =
-			elasticsearchFixture1.getRestHighLevelClient();
+			elasticsearchClientResolver1.getRestHighLevelClient();
 
 		ReplicasManager replicasManager = new ReplicasManagerImpl(
 			restHighLevelClient.indices());
@@ -96,32 +96,88 @@ public class ReplicasManagerImplTest {
 		replicasManager.updateNumberOfReplicas(
 			1, _replicasClusterContext.getTargetIndexNames());
 
-		ClusterAssert.assert2PrimaryShards1ReplicaAnd2Nodes(
-			elasticsearchFixture1);
+		assert2PrimaryShards1ReplicaAnd2Nodes(elasticsearchClientResolver1);
 
 		createNode(3);
 		createNode(4);
 
 		_testCluster.destroyNode(1);
 
-		ClusterAssert.assertHealth(
-			elasticsearchFixture2,
-			new HealthExpectations() {
-				{
-					setActivePrimaryShards(2);
-					setActiveShards(3);
-					setNumberOfDataNodes(3);
-					setNumberOfNodes(3);
-					setStatus(ClusterHealthStatus.YELLOW);
-					setUnassignedShards(1);
-				}
-			});
+		assert2PrimaryShards1ReplicaAnd3Nodes(elasticsearchClientResolver2);
 	}
 
 	@Rule
 	public TestName testName = new TestName();
 
-	protected ElasticsearchConnectionFixture createNode(int number) {
+	protected static void assert1PrimaryShardAnd2Nodes(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		ClusterAssert.assertHealth(
+			elasticsearchClientResolver,
+			new HealthExpectations() {
+				{
+					setActivePrimaryShards(1);
+					setActiveShards(1);
+					setNumberOfDataNodes(2);
+					setNumberOfNodes(2);
+					setStatus(ClusterHealthStatus.GREEN);
+					setUnassignedShards(0);
+				}
+			});
+	}
+
+	protected static void assert2PrimaryShards1ReplicaAnd2Nodes(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		ClusterAssert.assertHealth(
+			elasticsearchClientResolver,
+			new HealthExpectations() {
+				{
+					setActivePrimaryShards(2);
+					setActiveShards(4);
+					setNumberOfDataNodes(2);
+					setNumberOfNodes(2);
+					setStatus(ClusterHealthStatus.GREEN);
+					setUnassignedShards(0);
+				}
+			});
+	}
+
+	protected static void assert2PrimaryShards1ReplicaAnd3Nodes(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		ClusterAssert.assertHealth(
+			elasticsearchClientResolver,
+			new HealthExpectations() {
+				{
+					setActivePrimaryShards(2);
+					setActiveShards(4);
+					setNumberOfDataNodes(3);
+					setNumberOfNodes(3);
+					setStatus(ClusterHealthStatus.GREEN);
+					setUnassignedShards(0);
+				}
+			});
+	}
+
+	protected static void assert2PrimaryShardsAnd2Nodes(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		ClusterAssert.assertHealth(
+			elasticsearchClientResolver,
+			new HealthExpectations() {
+				{
+					setActivePrimaryShards(2);
+					setActiveShards(2);
+					setNumberOfDataNodes(2);
+					setNumberOfNodes(2);
+					setStatus(ClusterHealthStatus.GREEN);
+					setUnassignedShards(0);
+				}
+			});
+	}
+
+	protected ElasticsearchClientResolver createNode(int number) {
 		_testCluster.createNode(number);
 
 		return _testCluster.getNode(number);

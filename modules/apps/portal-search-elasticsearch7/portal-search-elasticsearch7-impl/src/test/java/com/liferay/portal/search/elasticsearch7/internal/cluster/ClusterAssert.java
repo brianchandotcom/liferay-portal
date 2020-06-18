@@ -17,12 +17,6 @@ package com.liferay.portal.search.elasticsearch7.internal.cluster;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ClusterHealthResponseUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.HealthExpectations;
-import com.liferay.portal.search.test.util.IdempotentRetryAssert;
-
-import java.util.concurrent.TimeUnit;
-
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.cluster.health.ClusterHealthStatus;
 
 import org.junit.Assert;
 
@@ -31,141 +25,16 @@ import org.junit.Assert;
  */
 public class ClusterAssert {
 
-	public static void assert1PrimaryShardAnd2Nodes(
-			ElasticsearchClientResolver elasticsearchClientResolver)
-		throws Exception {
-
-		assertHealth(
-			elasticsearchClientResolver,
-			new HealthExpectations() {
-				{
-					setActivePrimaryShards(1);
-					setActiveShards(1);
-					setNumberOfDataNodes(2);
-					setNumberOfNodes(2);
-					setStatus(ClusterHealthStatus.GREEN);
-					setUnassignedShards(0);
-				}
-			});
-	}
-
-	public static void assert1PrimaryShardOnly(
-			ElasticsearchClientResolver elasticsearchClientResolver)
-		throws Exception {
-
-		assertHealth(
-			elasticsearchClientResolver,
-			new HealthExpectations() {
-				{
-					setActivePrimaryShards(1);
-					setActiveShards(1);
-					setNumberOfDataNodes(1);
-					setNumberOfNodes(1);
-					setStatus(ClusterHealthStatus.GREEN);
-					setUnassignedShards(0);
-				}
-			});
-	}
-
-	public static void assert1ReplicaShard(
-			ElasticsearchClientResolver elasticsearchClientResolver)
-		throws Exception {
-
-		assertHealth(
-			elasticsearchClientResolver,
-			new HealthExpectations() {
-				{
-					setActivePrimaryShards(1);
-					setActiveShards(2);
-					setNumberOfDataNodes(2);
-					setNumberOfNodes(2);
-					setStatus(ClusterHealthStatus.GREEN);
-					setUnassignedShards(0);
-				}
-			});
-	}
-
-	public static void assert2PrimaryShards1ReplicaAnd2Nodes(
-			ElasticsearchClientResolver elasticsearchClientResolver)
-		throws Exception {
-
-		assertHealth(
-			elasticsearchClientResolver,
-			new HealthExpectations() {
-				{
-					setActivePrimaryShards(2);
-					setActiveShards(4);
-					setNumberOfDataNodes(2);
-					setNumberOfNodes(2);
-					setStatus(ClusterHealthStatus.GREEN);
-					setUnassignedShards(0);
-				}
-			});
-	}
-
-	public static void assert2PrimaryShardsAnd2Nodes(
-			ElasticsearchClientResolver elasticsearchClientResolver)
-		throws Exception {
-
-		assertHealth(
-			elasticsearchClientResolver,
-			new HealthExpectations() {
-				{
-					setActivePrimaryShards(2);
-					setActiveShards(2);
-					setNumberOfDataNodes(2);
-					setNumberOfNodes(2);
-					setStatus(ClusterHealthStatus.GREEN);
-					setUnassignedShards(0);
-				}
-			});
-	}
-
-	public static void assert2ReplicaShards(
-			ElasticsearchClientResolver elasticsearchClientResolver)
-		throws Exception {
-
-		assertHealth(
-			elasticsearchClientResolver,
-			new HealthExpectations() {
-				{
-					setActivePrimaryShards(1);
-					setActiveShards(3);
-					setNumberOfDataNodes(3);
-					setNumberOfNodes(3);
-					setStatus(ClusterHealthStatus.GREEN);
-					setUnassignedShards(0);
-				}
-			});
-	}
-
 	public static void assertHealth(
-			final ElasticsearchClientResolver elasticsearchClientResolver,
-			final HealthExpectations healthExpectations)
-		throws Exception {
-
-		IdempotentRetryAssert.retryAssert(
-			25, TimeUnit.SECONDS,
-			() -> {
-				_assertHealth(
-					ClusterHealthResponseUtil.getClusterHealthResponse(
-						elasticsearchClientResolver, healthExpectations),
-					healthExpectations);
-
-				return null;
-			});
-	}
-
-	private static void _assertHealth(
-		ClusterHealthResponse clusterHealthResponse,
-		HealthExpectations expectedHealthExpectations) {
-
-		HealthExpectations actualHealthExpectations = new HealthExpectations(
-			clusterHealthResponse);
+		ElasticsearchClientResolver elasticsearchClientResolver,
+		HealthExpectations healthExpectations) {
 
 		Assert.assertEquals(
-			expectedHealthExpectations.toString(),
-			actualHealthExpectations.toString());
+			String.valueOf(healthExpectations),
+			String.valueOf(
+				new HealthExpectations(
+					ClusterHealthResponseUtil.getClusterHealthResponse(
+						elasticsearchClientResolver, healthExpectations))));
 	}
 
 }

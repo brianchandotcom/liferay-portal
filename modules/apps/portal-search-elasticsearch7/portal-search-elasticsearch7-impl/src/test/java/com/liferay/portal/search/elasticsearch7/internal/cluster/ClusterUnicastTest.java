@@ -34,6 +34,24 @@ import org.junit.rules.TestName;
  */
 public class ClusterUnicastTest {
 
+	public static void assert2ReplicaShards(
+			ElasticsearchClientResolver elasticsearchClientResolver)
+		throws Exception {
+
+		ClusterAssert.assertHealth(
+			elasticsearchClientResolver,
+			new HealthExpectations() {
+				{
+					setActivePrimaryShards(1);
+					setActiveShards(3);
+					setNumberOfDataNodes(3);
+					setNumberOfNodes(3);
+					setStatus(ClusterHealthStatus.GREEN);
+					setUnassignedShards(0);
+				}
+			});
+	}
+
 	@After
 	public void tearDown() throws Exception {
 		_testCluster.destroyNodes();
@@ -58,9 +76,9 @@ public class ClusterUnicastTest {
 
 		updateNumberOfReplicas(2, index1, elasticsearchConnectionFixture1);
 
-		ClusterAssert.assert2ReplicaShards(elasticsearchConnectionFixture1);
-		ClusterAssert.assert2ReplicaShards(elasticsearchConnectionFixture2);
-		ClusterAssert.assert2ReplicaShards(elasticsearchConnectionFixture3);
+		assert2ReplicaShards(elasticsearchConnectionFixture1);
+		assert2ReplicaShards(elasticsearchConnectionFixture2);
+		assert2ReplicaShards(elasticsearchConnectionFixture3);
 
 		_testCluster.createNode(4);
 

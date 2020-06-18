@@ -21,14 +21,14 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public interface ClayDataSetDataJSONBuilder {
+public interface ClayDataSetDataJSONFactory {
 
-	public String build(
+	public String create(
 			long groupId, String tableName, List<Object> items,
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 
-	public String build(
+	public String create(
 			long groupId, String tableName, List<Object> items, int totalItems,
 			HttpServletRequest httpServletRequest)
 		throws Exception;

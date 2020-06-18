@@ -34,7 +34,7 @@ public class WebImage {
 	public Optional<InfoLocalizedValue<String>>
 		getAltInfoLocalizedValueOptional() {
 
-		return Optional.of(_altInfoLocalizedValue);
+		return Optional.ofNullable(_altInfoLocalizedValue);
 	}
 
 	public String getUrl() {

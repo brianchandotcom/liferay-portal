@@ -112,13 +112,13 @@ public class DSLFunctionFactoryUtil {
 		return _DSL_FUNCTION_FACTORY.lower(expression);
 	}
 
-	public static <T extends Number> Expression<T> max(
+	public static <T extends Comparable<T>> Expression<T> max(
 		Expression<T> expression) {
 
 		return _DSL_FUNCTION_FACTORY.max(expression);
 	}
 
-	public static <T extends Number> Expression<T> min(
+	public static <T extends Comparable<T>> Expression<T> min(
 		Expression<T> expression) {
 
 		return _DSL_FUNCTION_FACTORY.min(expression);

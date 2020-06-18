@@ -64,9 +64,11 @@ public interface DSLFunctionFactory {
 
 	public Expression<String> lower(Expression<String> expression);
 
-	public <T extends Number> Expression<T> max(Expression<T> expression);
+	public <T extends Comparable<T>> Expression<T> max(
+		Expression<T> expression);
 
-	public <T extends Number> Expression<T> min(Expression<T> expression);
+	public <T extends Comparable<T>> Expression<T> min(
+		Expression<T> expression);
 
 	public <N extends Number> Expression<N> multiply(
 		Expression<N> expression1, Expression<N> expression2);

@@ -128,12 +128,16 @@ public class DefaultDSLFunctionFactory implements DSLFunctionFactory {
 	}
 
 	@Override
-	public <T extends Number> Expression<T> max(Expression<T> expression) {
+	public <T extends Comparable<T>> Expression<T> max(
+		Expression<T> expression) {
+
 		return new AggregateExpression<>(false, expression, "max");
 	}
 
 	@Override
-	public <T extends Number> Expression<T> min(Expression<T> expression) {
+	public <T extends Comparable<T>> Expression<T> min(
+		Expression<T> expression) {
+
 		return new AggregateExpression<>(false, expression, "min");
 	}
 

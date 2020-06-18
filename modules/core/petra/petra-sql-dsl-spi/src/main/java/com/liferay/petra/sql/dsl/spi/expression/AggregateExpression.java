@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 /**
  * @author Preston Crary
  */
-public class AggregateExpression<T extends Number>
+public class AggregateExpression<T>
 	extends BaseASTNode implements DefaultExpression<T> {
 
 	public AggregateExpression(

@@ -36,6 +36,10 @@ public interface ZipWriter {
 
 	public void addEntry(String name, StringBuilder sb) throws IOException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getFile()}
+	 */
+	@Deprecated
 	public byte[] finish() throws IOException;
 
 	public File getFile();

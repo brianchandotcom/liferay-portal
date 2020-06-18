@@ -670,8 +670,6 @@ public class LayoutPageTemplatesImporterTest {
 				_populateZipWriter(zipWriter, url, valuesMap);
 			}
 
-			zipWriter.finish();
-
 			return zipWriter.getFile();
 		}
 		catch (Exception exception) {

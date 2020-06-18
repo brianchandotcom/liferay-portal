@@ -70,8 +70,6 @@ public class ExportLayoutPageTemplateEntriesStrutsAction
 			fragmentCollection.populateZipWriter(zipWriter, "fragments");
 		}
 
-		zipWriter.finish();
-
 		try {
 			file = zipWriter.getFile();
 

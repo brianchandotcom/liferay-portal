@@ -255,7 +255,7 @@ public class ExportedMissingReferenceBackwardCompatbilityExportImportTest
 					}
 				});
 
-			zipWriter.finish();
+			zipWriter.getFile();
 
 			FileUtil.delete(file);
 		}

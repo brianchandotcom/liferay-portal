@@ -92,8 +92,6 @@ public class LayoutPageTemplatesExporter {
 					layoutPageTemplateEntry, zipWriter);
 			}
 
-			zipWriter.finish();
-
 			return zipWriter.getFile();
 		}
 		catch (Exception exception) {
@@ -148,8 +146,6 @@ public class LayoutPageTemplatesExporter {
 				}
 			}
 
-			zipWriter.finish();
-
 			return zipWriter.getFile();
 		}
 		catch (Exception exception) {
@@ -178,8 +174,6 @@ public class LayoutPageTemplatesExporter {
 				_populateMasterLayoutsZipWriter(
 					layoutPageTemplateEntry, zipWriter);
 			}
-
-			zipWriter.finish();
 
 			return zipWriter.getFile();
 		}
@@ -216,8 +210,6 @@ public class LayoutPageTemplatesExporter {
 					layoutPageTemplateEntry, layoutPageTemplateCollectionKeyMap,
 					zipWriter);
 			}
-
-			zipWriter.finish();
 
 			return zipWriter.getFile();
 		}

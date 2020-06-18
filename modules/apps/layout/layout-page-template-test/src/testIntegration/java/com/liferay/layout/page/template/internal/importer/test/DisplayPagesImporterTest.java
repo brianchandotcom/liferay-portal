@@ -197,8 +197,6 @@ public class DisplayPagesImporterTest {
 				_populateZipWriter(zipWriter, url);
 			}
 
-			zipWriter.finish();
-
 			return zipWriter.getFile();
 		}
 		catch (Exception exception) {

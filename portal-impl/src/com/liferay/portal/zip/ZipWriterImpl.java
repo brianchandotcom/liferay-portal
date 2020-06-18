@@ -128,6 +128,10 @@ public class ZipWriterImpl implements ZipWriter {
 		addEntry(name, sb.toString());
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getFile()}
+	 */
+	@Deprecated
 	@Override
 	public byte[] finish() throws IOException {
 		return FileUtil.getBytes(getFile());

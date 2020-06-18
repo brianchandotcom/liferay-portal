@@ -46,8 +46,6 @@ public class ExportHelper {
 				fragmentCollection.populateZipWriter(zipWriter);
 			}
 
-			zipWriter.finish();
-
 			return zipWriter.getFile();
 		}
 		catch (Exception exception) {
@@ -73,8 +71,6 @@ public class ExportHelper {
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
 				fragmentEntry.populateZipWriter(zipWriter, StringPool.BLANK);
 			}
-
-			zipWriter.finish();
 
 			return zipWriter.getFile();
 		}

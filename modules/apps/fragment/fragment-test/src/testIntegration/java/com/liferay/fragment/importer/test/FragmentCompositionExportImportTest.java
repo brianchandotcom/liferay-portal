@@ -86,8 +86,6 @@ public class FragmentCompositionExportImportTest {
 
 		fragmentComposition.populateZipWriter(zipWriter, "test");
 
-		zipWriter.finish();
-
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
 			zipWriter.getFile());
 

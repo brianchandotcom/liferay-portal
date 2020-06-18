@@ -44,7 +44,7 @@ definition {
 	macro addCP {
 		var key_categoryName = "${categoryName}";
 
-		if(isSet(vocabularyName)) {
+		if (isSet(vocabularyName)) {
 			var key_vocabularyName = "${vocabularyName}";
 		}
 		else {

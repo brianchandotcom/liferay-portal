@@ -94,53 +94,53 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 </aui:form>
 
 <aui:script>
-function <portlet:namespace />getInputLocalizedValues(field) {
-	var inputLocalized = Liferay.component('<portlet:namespace />' + field);
-	var localizedValues = {};
+	function <portlet:namespace />getInputLocalizedValues(field) {
+		var inputLocalized = Liferay.component('<portlet:namespace />' + field);
+		var localizedValues = {};
 
-	if (inputLocalized) {
-		var translatedLanguages = inputLocalized
-			.get('translatedLanguages')
-			.values();
+		if (inputLocalized) {
+			var translatedLanguages = inputLocalized
+				.get('translatedLanguages')
+				.values();
 
-		translatedLanguages.forEach(function (languageId) {
-			localizedValues[languageId] = inputLocalized.getValue(languageId);
-		});
-	}
-
-	return localizedValues;
-}
-
-function <portlet:namespace />saveStructure() {
-	Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
-		function (dataLayoutBuilder) {
-			var name = <portlet:namespace />getInputLocalizedValues('name');
-
-			var description = <portlet:namespace />getInputLocalizedValues(
-				'description'
-			);
-
-			var formData = dataLayoutBuilder.getFormData();
-
-			var dataDefinition = formData.definition;
-
-			dataDefinition.description = description;
-			dataDefinition.name = name;
-
-			var dataLayout = formData.layout;
-
-			dataLayout.description = description;
-			dataLayout.name = name;
-
-			Liferay.Util.postForm(document.<portlet:namespace />fm, {
-				data: {
-					dataDefinition: JSON.stringify(dataDefinition),
-					dataLayout: JSON.stringify(dataLayout),
-				},
+			translatedLanguages.forEach(function (languageId) {
+				localizedValues[languageId] = inputLocalized.getValue(languageId);
 			});
 		}
-	);
-}
+
+		return localizedValues;
+	}
+
+	function <portlet:namespace />saveStructure() {
+		Liferay.componentReady('<portlet:namespace />dataLayoutBuilder').then(
+			function (dataLayoutBuilder) {
+				var name = <portlet:namespace />getInputLocalizedValues('name');
+
+				var description = <portlet:namespace />getInputLocalizedValues(
+					'description'
+				);
+
+				var formData = dataLayoutBuilder.getFormData();
+
+				var dataDefinition = formData.definition;
+
+				dataDefinition.description = description;
+				dataDefinition.name = name;
+
+				var dataLayout = formData.layout;
+
+				dataLayout.description = description;
+				dataLayout.name = name;
+
+				Liferay.Util.postForm(document.<portlet:namespace />fm, {
+					data: {
+						dataDefinition: JSON.stringify(dataDefinition),
+						dataLayout: JSON.stringify(dataLayout),
+					},
+				});
+			}
+		);
+	}
 </aui:script>
 
 <%

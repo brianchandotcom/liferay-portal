@@ -463,64 +463,64 @@ portletURL.setParameter("portletResource", portletResource);
 		</aui:form>
 
 		<aui:script use="aui-base">
-		var liferayForm = Liferay.Form.get('<portlet:namespace />fm1');
+			var liferayForm = Liferay.Form.get('<portlet:namespace />fm1');
 
-		var form = liferayForm.formNode;
+			var form = liferayForm.formNode;
 
-		form.on('submit', function (event) {
-			event.halt();
+			form.on('submit', function (event) {
+				event.halt();
 
-			var exportImport = Liferay.component(
-				'<portlet:namespace />ExportImportComponent'
-			);
+				var exportImport = Liferay.component(
+					'<portlet:namespace />ExportImportComponent'
+				);
 
-			var dateChecker = exportImport.getDateRangeChecker();
+				var dateChecker = exportImport.getDateRangeChecker();
 
-			if (dateChecker.validRange) {
-				submitForm(form, form.attr('action'), false);
-			}
-			else {
-				exportImport.showNotification(dateChecker);
-			}
-		});
+				if (dateChecker.validRange) {
+					submitForm(form, form.attr('action'), false);
+				}
+				else {
+					exportImport.showNotification(dateChecker);
+				}
+			});
 
-		var oldFieldRules = liferayForm.get('fieldRules');
+			var oldFieldRules = liferayForm.get('fieldRules');
 
-		var fieldRules = [
-			{
-				body: function (val, fieldNode, ruleValue) {
+			var fieldRules = [
+				{
+					body: function (val, fieldNode, ruleValue) {
 
-					<%
-					JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
+						<%
+						JSONArray blacklistCharJSONArray = JSONFactoryUtil.createJSONArray();
 
-					for (String s : PropsValues.DL_CHAR_BLACKLIST) {
-						blacklistCharJSONArray.put(s);
-					}
-					%>
-
-					var blacklistCharJSONArray = <%= blacklistCharJSONArray.toJSONString() %>;
-
-					for (var i = 0; i < blacklistCharJSONArray.length; i++) {
-						if (val.indexOf(blacklistCharJSONArray[i]) !== -1) {
-							return false;
+						for (String s : PropsValues.DL_CHAR_BLACKLIST) {
+							blacklistCharJSONArray.put(s);
 						}
-					}
+						%>
 
-					return true;
+						var blacklistCharJSONArray = <%= blacklistCharJSONArray.toJSONString() %>;
+
+						for (var i = 0; i < blacklistCharJSONArray.length; i++) {
+							if (val.indexOf(blacklistCharJSONArray[i]) !== -1) {
+								return false;
+							}
+						}
+
+						return true;
+					},
+					custom: true,
+					errorMessage:
+						'<%= LanguageUtil.get(request, "the-following-are-invalid-characters") + HtmlUtil.escapeJS(Arrays.toString(PropsValues.DL_CHAR_BLACKLIST)) %>',
+					fieldName: '<portlet:namespace />exportFileName',
+					validatorName: 'custom_exportFileNameValidator',
 				},
-				custom: true,
-				errorMessage:
-					'<%= LanguageUtil.get(request, "the-following-are-invalid-characters") + HtmlUtil.escapeJS(Arrays.toString(PropsValues.DL_CHAR_BLACKLIST)) %>',
-				fieldName: '<portlet:namespace />exportFileName',
-				validatorName: 'custom_exportFileNameValidator',
-			},
-		];
+			];
 
-		if (oldFieldRules) {
-			fieldRules = fieldRules.concat(oldFieldRules);
-		}
+			if (oldFieldRules) {
+				fieldRules = fieldRules.concat(oldFieldRules);
+			}
 
-		liferayForm.set('fieldRules', fieldRules);
+			liferayForm.set('fieldRules', fieldRules);
 		</aui:script>
 	</c:when>
 	<c:when test='<%= tabs3.equals("current-and-previous") %>'>

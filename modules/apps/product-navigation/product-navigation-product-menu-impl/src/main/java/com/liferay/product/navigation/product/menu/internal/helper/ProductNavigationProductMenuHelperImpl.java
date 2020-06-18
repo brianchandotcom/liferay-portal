@@ -19,13 +19,18 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.product.navigation.global.menu.configuration.GlobalMenuInstanceConfiguration;
 import com.liferay.product.navigation.product.menu.helper.ProductNavigationProductMenuHelper;
 
 import java.util.List;
@@ -65,7 +70,10 @@ public class ProductNavigationProductMenuHelperImpl
 			return false;
 		}
 
-		if (_isGlobalMenuApp(themeDisplay)) {
+		boolean enableGlobalMenu = _isEnableGlobalMenu(
+			themeDisplay.getCompanyId());
+
+		if (enableGlobalMenu && _isGlobalMenuApp(themeDisplay)) {
 			return false;
 		}
 
@@ -74,11 +82,40 @@ public class ProductNavigationProductMenuHelperImpl
 				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
+		if (!enableGlobalMenu) {
+			childPanelCategories.addAll(
+				_panelCategoryRegistry.getChildPanelCategories(
+					PanelCategoryKeys.GLOBAL_MENU,
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroup()));
+		}
+
 		if (childPanelCategories.isEmpty()) {
 			return false;
 		}
 
 		return true;
+	}
+
+	private boolean _isEnableGlobalMenu(long companyId) {
+		try {
+			GlobalMenuInstanceConfiguration globalMenuInstanceConfiguration =
+				_configurationProvider.getCompanyConfiguration(
+					GlobalMenuInstanceConfiguration.class, companyId);
+
+			if (globalMenuInstanceConfiguration.enableGlobalMenu()) {
+				return true;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get global app menu configuration",
+					configurationException);
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isGlobalMenuApp(ThemeDisplay themeDisplay) {
@@ -101,6 +138,12 @@ public class ProductNavigationProductMenuHelperImpl
 
 		return true;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ProductNavigationProductMenuHelperImpl.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

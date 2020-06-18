@@ -1669,4 +1669,52 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-109298. Can not add elements to each tab of Tabs fragment that is inherited from custom master in content page."
+	@priority = "4"
+	test ViewNoDropzoneAtIndividualTabOfTabsFragmentInContentPage {
+		property test.assert.warning.exceptions = "true";
+
+		MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			dropTarget = "Footer",
+			fragmentName = "Tabs",
+			scope = "Master");
+
+		Button.click(button = "Publish Master");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(
+			masterLayoutName = "Custom Masters Page Template",
+			pageName = "Test Page Name");
+
+		AssertVisible(
+			key_fragmentName = "tabs",
+			locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+		AssertTextEquals(
+			locator1 = "PageEditor#FRAGMENT_DROP_TARGET",
+			value1 = "Place fragments here.");
+
+		AssertElementNotPresent(
+			key_fragmentName = "Place fragments here.",
+			locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+		for (var navItem : list "Tab 2,Tab 3,Tab 4") {
+			PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Place fragments here.",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+			AssertElementNotPresent(
+				key_index = "2",
+				locator1 = "PageEditor#FRAGMENT_WITH_DROP_TARGET");
+		}
+
+		PageEditor.clickPublish();
+	}
+
 }

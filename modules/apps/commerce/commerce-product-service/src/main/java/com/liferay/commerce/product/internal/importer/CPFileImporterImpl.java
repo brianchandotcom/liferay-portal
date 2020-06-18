@@ -20,7 +20,9 @@ import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -526,7 +528,18 @@ public class CPFileImporterImpl implements CPFileImporter {
 		json = getNormalizedContent(
 			json, classLoader, dependencyFilePath, serviceContext);
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(json);
+		DDMFormDeserializerDeserializeRequest
+			ddmFormDeserializerDeserializeRequest =
+				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+					json
+				).build();
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(
+					ddmFormDeserializerDeserializeRequest);
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		ddmForm = _updateDDMFormAvailableLocales(
 			ddmForm, serviceContext.getLocale());
@@ -996,7 +1009,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 	private DDM _ddm;
 
 	@Reference
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormDeserializer _ddmFormDeserializer;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

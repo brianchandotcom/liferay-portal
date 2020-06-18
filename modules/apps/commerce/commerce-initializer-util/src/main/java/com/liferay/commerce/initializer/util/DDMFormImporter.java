@@ -18,9 +18,15 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeResponse;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializerDeserializeRequest;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutDeserializer;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -153,9 +159,19 @@ public class DDMFormImporter {
 			ddmStructure, ddmStructure.getDDMForm(), jsonFormLayout,
 			serviceContext);
 
+		DDMFormValuesDeserializerDeserializeRequest
+			ddmFormValuesDeserializerDeserializeRequest =
+				DDMFormValuesDeserializerDeserializeRequest.Builder.newBuilder(
+					jsonFormSettings, ddmStructure.getDDMForm()
+				).build();
+
+		DDMFormValuesDeserializerDeserializeResponse
+			ddmFormValuesDeserializerDeserializeResponse =
+				_ddmFormValuesDeserializer.deserialize(
+					ddmFormValuesDeserializerDeserializeRequest);
+
 		DDMFormValues settingsDDMFormValues =
-			_ddmFormValuesJSONDeserializer.deserialize(
-				ddmStructure.getDDMForm(), jsonFormSettings);
+			ddmFormValuesDeserializerDeserializeResponse.getDDMFormValues();
 
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceLocalService.addFormInstance(
@@ -219,7 +235,18 @@ public class DDMFormImporter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(jsonForm);
+		DDMFormDeserializerDeserializeRequest
+			ddmFormDeserializerDeserializeRequest =
+				DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+					jsonForm
+				).build();
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(
+					ddmFormDeserializerDeserializeRequest);
+
+		DDMForm ddmForm = ddmFormDeserializerDeserializeResponse.getDDMForm();
 
 		DDMFormLayout defaultDDMFormLayout = DDMUtil.getDefaultDDMFormLayout(
 			ddmForm);
@@ -267,8 +294,19 @@ public class DDMFormImporter {
 
 		long userId = serviceContext.getUserId();
 
-		DDMFormLayout formLayout = _ddmFormLayoutJSONDeserializer.deserialize(
-			jsonFormLayout);
+		DDMFormLayoutDeserializerDeserializeRequest
+			ddmFormLayoutDeserializerDeserializeRequest =
+				DDMFormLayoutDeserializerDeserializeRequest.Builder.newBuilder(
+					jsonFormLayout
+				).build();
+
+		DDMFormLayoutDeserializerDeserializeResponse
+			ddmFormLayoutDeserializerDeserializeResponse =
+				_ddmFormLayoutDeserializer.deserialize(
+					ddmFormLayoutDeserializerDeserializeRequest);
+
+		DDMFormLayout formLayout =
+			ddmFormLayoutDeserializerDeserializeResponse.getDDMFormLayout();
 
 		_ddmStructureLocalService.updateStructure(
 			userId, structure.getStructureId(), ddmForm, formLayout,
@@ -285,13 +323,13 @@ public class DDMFormImporter {
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference
-	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
+	private DDMFormDeserializer _ddmFormDeserializer;
 
 	@Reference
-	private DDMFormLayoutJSONDeserializer _ddmFormLayoutJSONDeserializer;
+	private DDMFormLayoutDeserializer _ddmFormLayoutDeserializer;
 
 	@Reference
-	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
+	private DDMFormValuesDeserializer _ddmFormValuesDeserializer;
 
 	@Reference
 	private DDMStructureLocalService _ddmStructureLocalService;

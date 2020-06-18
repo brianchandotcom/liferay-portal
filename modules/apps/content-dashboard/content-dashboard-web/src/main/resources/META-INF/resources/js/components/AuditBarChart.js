@@ -33,7 +33,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 		const bars = vocabularies.reduce((acc, category) => {
 			if (!category.categories) {
-				return [];
+				return acc;
 			}
 
 			const newBar = category.categories.reduce(

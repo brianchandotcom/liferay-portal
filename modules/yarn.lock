@@ -12067,10 +12067,10 @@ liferay-npm-bundler@3.0.0-snapshot.dda6cd1:
     xml-js "^1.6.8"
     yargs "^14.0.0"
 
-liferay-npm-scripts@32.5.0:
-  version "32.5.0"
-  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-32.5.0.tgz#8977a1f157b2ac7c30462b954f80a347b2ef7a14"
-  integrity sha512-OTsaL4rEeRJhx8F7vk9wGfVkTdQYG8TnwZIND7SOqTqN3lRD3N8uM/8Epgcz/IAggdK/dLJcwZv+d5JBPhbcfA==
+liferay-npm-scripts@32.5.1:
+  version "32.5.1"
+  resolved "https://registry.yarnpkg.com/liferay-npm-scripts/-/liferay-npm-scripts-32.5.1.tgz#ab42a2e3eb5ae47bed8e660b248b8412e48330ad"
+  integrity sha512-XzxZw0ISRwGUXPmryZhkervA63xj+SVn5lq3Bfm69zj3z9ay5u1jHNSjcE28iXvQ4VQDKb8KZqD/twF5TYflSg==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.8.3"

@@ -802,7 +802,7 @@ definition {
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userPassword = PropsUtil.get("email.password.3"),
-			windowTitle = "Documents and Media Page - ${siteName}");
+			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
 		GoogleDrive.selectDocument(googleDocName = "taco.jpg");
 
@@ -1130,7 +1130,7 @@ definition {
 		GoogleDrive.gotoDrive(
 			userEmailAddress = PropsUtil.get("email.address.3"),
 			userPassword = PropsUtil.get("email.password.3"),
-			windowTitle = "Documents and Media Page - ${siteName}");
+			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
 		GoogleDrive.selectDocument(googleDocName = "taco.jpg");
 

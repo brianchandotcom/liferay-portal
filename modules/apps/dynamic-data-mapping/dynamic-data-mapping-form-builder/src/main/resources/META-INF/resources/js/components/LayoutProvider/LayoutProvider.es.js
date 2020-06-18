@@ -39,6 +39,7 @@ import handleFieldClicked from './handlers/fieldClickedHandler.es';
 import handleFieldDeleted from './handlers/fieldDeletedHandler.es';
 import handleFieldDuplicated from './handlers/fieldDuplicatedHandler.es';
 import handleFieldEdited from './handlers/fieldEditedHandler.es';
+import handleFieldEditedProperties from './handlers/fieldEditedPropertiesHandler.es';
 import handleFieldMoved from './handlers/fieldMovedHandler.es';
 import handleFieldSetAdded from './handlers/fieldSetAddedHandler.es';
 import handleFocusedFieldEvaluationEnded from './handlers/focusedFieldEvaluationEndedHandler.es';
@@ -93,6 +94,7 @@ class LayoutProvider extends Component {
 			fieldDeleted: this._handleFieldDeleted.bind(this),
 			fieldDuplicated: this._handleFieldDuplicated.bind(this),
 			fieldEdited: this._handleFieldEdited.bind(this),
+			fieldEditedProperties: this._handleFieldEditedProperties.bind(this),
 			fieldHovered: this._handleFieldHovered.bind(this),
 			fieldMoved: this._handleFieldMoved.bind(this),
 			fieldSetAdded: this._handleFieldSetAdded.bind(this),
@@ -339,7 +341,7 @@ class LayoutProvider extends Component {
 		if (props.contentType === 'app-builder') {
 			const {fieldInstanceid, fieldName} = container.dataset;
 			const field = getField(pages, fieldName);
-			
+
 			if (!field || field.instanceId !== fieldInstanceid) {
 				return;
 			}
@@ -423,6 +425,12 @@ class LayoutProvider extends Component {
 
 	_handleFieldEdited(properties) {
 		this.setState(handleFieldEdited(this.props, this.state, properties));
+	}
+
+	_handleFieldEditedProperties(properties) {
+		this.setState(
+			handleFieldEditedProperties(this.props, this.state, properties)
+		);
 	}
 
 	_handleFieldMoved(event) {

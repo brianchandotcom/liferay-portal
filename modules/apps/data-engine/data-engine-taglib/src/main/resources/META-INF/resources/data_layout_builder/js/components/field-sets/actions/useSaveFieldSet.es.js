@@ -86,29 +86,29 @@ export default ({
 					fieldName = dataDefinitionField.name;
 
 					if (containsField(dataLayout.dataLayoutPages, fieldName)) {
-						dataLayoutBuilder.dispatch('fieldEdited', {
+						dataLayoutBuilder.dispatch('fieldEditedProperties', {
 							fieldName,
-							propertyName: 'nestedFields',
-							propertyValue: dataDefinitionFields.map(({name}) =>
-								DataLayout.getDDMFormField(
-									childrenState.dataDefinition,
-									name
-								)
-							),
-						});
-
-						dataLayoutBuilder.dispatch('fieldEdited', {
-							fieldName,
-							propertyName: 'rows',
-							propertyValue: normalizeDataLayoutRows(
-								dataLayoutPages
-							),
-						});
-
-						dataLayoutBuilder.dispatch('fieldEdited', {
-							fieldName,
-							propertyName: 'label',
-							propertyValue: fieldSetName,
+							properties: [
+								{
+									name: 'nestedFields',
+									value: dataDefinitionFields.map(({name}) =>
+										DataLayout.getDDMFormField(
+											childrenState.dataDefinition,
+											name
+										)
+									),
+								},
+								{
+									name: 'rows',
+									value: normalizeDataLayoutRows(
+										dataLayoutPages
+									),
+								},
+								{
+									name: 'label',
+									value: fieldSetName,
+								},
+							],
 						});
 					}
 					else {

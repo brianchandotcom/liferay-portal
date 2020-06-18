@@ -66,6 +66,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPORTS_DETAIL_CLIENT_IP</td>
+	<td>//span[(@class='control-label') and contains (.,'Client IP')]/..</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPORTS_DETAIL_ADDITIONAL_INFORMATION</td>
 	<td>//span[(@class='control-label') and contains (.,'Additional Information')]/..</td>
 	<td></td>

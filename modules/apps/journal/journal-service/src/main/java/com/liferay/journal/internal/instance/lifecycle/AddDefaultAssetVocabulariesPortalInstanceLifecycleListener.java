@@ -67,7 +67,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-		unicodeProperties.putIfAbsent(
+		unicodeProperties.put(
 			"selectedClassNameIds",
 			_portal.getClassNameId(JournalArticle.class) + ":-1");
 

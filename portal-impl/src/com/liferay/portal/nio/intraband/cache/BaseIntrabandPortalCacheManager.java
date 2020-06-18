@@ -48,13 +48,6 @@ public abstract class BaseIntrabandPortalCacheManager
 
 	@Override
 	public PortalCache<K, V> getPortalCache(String portalCacheName) {
-		return getPortalCache(portalCacheName, false);
-	}
-
-	@Override
-	public PortalCache<K, V> getPortalCache(
-		String portalCacheName, boolean blocking) {
-
 		PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
 
 		if (portalCache == null) {
@@ -66,6 +59,18 @@ public abstract class BaseIntrabandPortalCacheManager
 		}
 
 		return portalCache;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *              #getPortalCache(String)}
+	 */
+	@Deprecated
+	@Override
+	public PortalCache<K, V> getPortalCache(
+		String portalCacheName, boolean blocking) {
+
+		return getPortalCache(portalCacheName);
 	}
 
 	@Override

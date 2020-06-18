@@ -40,16 +40,16 @@ public class PortalCacheHelperUtil {
 			portalCacheName);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getPortalCache(String, String)}
+	 */
+	@Deprecated
 	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(
 		String portalCacheManagerName, String portalCacheName,
 		boolean blocking) {
 
-		PortalCacheManager<?, ?> portalCacheManager =
-			PortalCacheManagerProvider.getPortalCacheManager(
-				portalCacheManagerName);
-
-		return (PortalCache<K, V>)portalCacheManager.getPortalCache(
-			portalCacheName, blocking);
+		return getPortalCache(portalCacheManagerName, portalCacheName);
 	}
 
 	public static <K extends Serializable, V> PortalCache<K, V> getPortalCache(

@@ -43,11 +43,16 @@ public class MultiVMPoolImpl implements MultiVMPool {
 		return _portalCacheManager.getPortalCache(portalCacheName);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *              #getPortalCache(String)}
+	 */
+	@Deprecated
 	@Override
 	public PortalCache<? extends Serializable, ? extends Serializable>
 		getPortalCache(String portalCacheName, boolean blocking) {
 
-		return _portalCacheManager.getPortalCache(portalCacheName, blocking);
+		return _portalCacheManager.getPortalCache(portalCacheName);
 	}
 
 	@Override

@@ -99,12 +99,44 @@ definition {
 		Click(locator1 = "AppBuilder#BUTTON_CANCEL");
 	}
 
+	macro chooseAppSearchFilterByOption {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click(
+			key_FilterOption = "${filterOption}",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+		Button.clickDone();
+	}
+
+	macro chooseMultipleFilter {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click.clickAtNotVisible(
+			key_FilterOption = "${filterOption}",
+			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_STATUS");
+
+		Button.clickDone();
+
+		AppBuilderAdmin.filterByDeploymentType(itemName = "${itemName}");
+
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click.clickAtNotVisible(locator1 = "AppBuilder#CHOOSE_FILTER_BY_AUTHOR_ME");
+
+		Button.clickDone();
+	}
+
 	macro chooseSearchFilterByOption {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click(
 			key_FilterOption = "${filterOption}",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
+	}
+
+	macro clearFilter {
+		Click(locator1 = "AppBuilder#CLEAR_FILTER");
 	}
 
 	macro clearSearch {
@@ -192,6 +224,16 @@ definition {
 	macro editItem {
 		AppBuilderAdmin.openActionMenu(itemName = "${itemName}");
 		MenuItem.clickNoError(menuItem = "Edit");
+	}
+
+	macro filterByDeploymentType {
+		var key_itemName = "${itemName}";
+
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		Click.clickAtNotVisible(locator1 = "AppBuilder#CHOOSE_FILTER_BY_DEPLOYMENT_TYPE");
+
+		Button.clickDone();
 	}
 
 	macro filterListAscendAndDescend {
@@ -414,6 +456,20 @@ definition {
 		AssertElementPresent(
 			key_fieldLabel = "${fieldLabel}",
 			locator1 = "AppBuilder#FIELD_LABEL_IN_TABLE");
+	}
+
+	macro validateFilterAndOrder {
+		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
+
+		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_DEPLOYMENT_TYPE");
+
+		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_STATUS");
+
+		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_AUTHOR");
+
+		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_ORDER");
+
+		Button.clickDone();
 	}
 
 	macro validateIfSearchItemIsFound {

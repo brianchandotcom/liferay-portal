@@ -45,7 +45,7 @@ export default ({keywords, toggleRulesEditorVisibility}) => {
 								displayType="secondary"
 								onClick={() => toggleRulesEditorVisibility()}
 							>
-								{Liferay.Language.get('add-rule')}
+								{Liferay.Language.get('create-new-rule')}
 							</ClayButton>
 						),
 						description: Liferay.Language.get(

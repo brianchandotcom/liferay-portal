@@ -110,7 +110,7 @@ export default function FieldSets({keywords}) {
 			displayType="secondary"
 			onClick={() => toggleFieldSet()}
 		>
-			{Liferay.Language.get('add-fieldset')}
+			{Liferay.Language.get('create-new-fieldset')}
 		</ClayButton>
 	);
 
@@ -175,6 +175,9 @@ export default function FieldSets({keywords}) {
 					<EmptyState
 						emptyState={{
 							button: AddButton,
+							description: Liferay.Language.get(
+								'there-are-no-fieldsets-description'
+							),
 							title: Liferay.Language.get(
 								'there-are-no-fieldsets'
 							),

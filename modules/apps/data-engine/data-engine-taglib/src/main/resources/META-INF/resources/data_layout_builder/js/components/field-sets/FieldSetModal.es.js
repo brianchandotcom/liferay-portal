@@ -68,7 +68,7 @@ const ModalContent = ({defaultLanguageId, fieldSet, onClose, otherProps}) => {
 			<ClayModal.Header>
 				{fieldSet
 					? Liferay.Language.get('edit-fieldset')
-					: Liferay.Language.get('add-fieldset')}
+					: Liferay.Language.get('create-new-fieldset')}
 			</ClayModal.Header>
 			<ClayModal.Header withTitle={false}>
 				<ClayInput.Group className="pl-4 pr-4">

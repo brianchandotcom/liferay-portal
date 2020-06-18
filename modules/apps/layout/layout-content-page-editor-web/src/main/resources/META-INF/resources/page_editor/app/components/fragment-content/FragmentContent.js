@@ -18,7 +18,6 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
-import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useSelector} from '../../store/index';
 import {useGetContent, useGetFieldValue} from '../CollectionItemContext';
@@ -42,9 +41,6 @@ const FragmentContent = React.forwardRef(
 		const editableProcessorUniqueId = useEditableProcessorUniqueId();
 		const frameContext = useFrameContext();
 		const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-		const canUpdateLayoutContent = useSelector(
-			selectCanUpdateLayoutContent
-		);
 
 		const getFieldValue = useGetFieldValue();
 
@@ -189,9 +185,7 @@ const FragmentContent = React.forwardRef(
 					itemId={itemId}
 				>
 					<UnsafeHTML
-						className={classNames('page-editor__fragment-content', {
-							'page-editor__fragment-content--portlet-topper-hidden': !canUpdateLayoutContent,
-						})}
+						className={classNames('page-editor__fragment-content')}
 						contentRef={ref}
 						getPortals={getPortals}
 						globalContext={frameContext || window}
@@ -200,13 +194,11 @@ const FragmentContent = React.forwardRef(
 					/>
 				</FragmentContentInteractionsFilter>
 
-				{canUpdateLayoutContent && (
-					<FragmentContentFloatingToolbar
-						editables={editables}
-						fragmentEntryLinkId={fragmentEntryLinkId}
-						onButtonClick={onFloatingToolbarButtonClick}
-					/>
-				)}
+				<FragmentContentFloatingToolbar
+					editables={editables}
+					fragmentEntryLinkId={fragmentEntryLinkId}
+					onButtonClick={onFloatingToolbarButtonClick}
+				/>
 
 				<FragmentContentProcessor
 					editables={editables}

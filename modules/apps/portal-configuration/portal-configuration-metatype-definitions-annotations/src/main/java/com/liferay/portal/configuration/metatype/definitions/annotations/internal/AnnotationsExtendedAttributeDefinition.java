@@ -103,18 +103,20 @@ public class AnnotationsExtendedAttributeDefinition
 
 	@Override
 	public int getType() {
-		try {
-			Method method = _configurationBeanClass.getMethod(
-				_attributeDefinition.getID());
+		if (_configurationBeanClass != null) {
+			try {
+				Method method = _configurationBeanClass.getMethod(
+					_attributeDefinition.getID());
 
-			Class<?> returnType = method.getReturnType();
+				Class<?> returnType = method.getReturnType();
 
-			if (returnType.isAssignableFrom(LocalizedValuesMap.class)) {
-				return LOCALIZED_VALUES_MAP;
+				if (returnType.isAssignableFrom(LocalizedValuesMap.class)) {
+					return LOCALIZED_VALUES_MAP;
+				}
 			}
-		}
-		catch (NoSuchMethodException noSuchMethodException) {
-			_handleNoSuchMethodException(noSuchMethodException);
+			catch (NoSuchMethodException noSuchMethodException) {
+				_handleNoSuchMethodException(noSuchMethodException);
+			}
 		}
 
 		return _attributeDefinition.getType();

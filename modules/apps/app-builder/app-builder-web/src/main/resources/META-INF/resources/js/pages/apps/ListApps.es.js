@@ -20,6 +20,7 @@ import {Link} from 'react-router-dom';
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import ListView from '../../components/list-view/ListView.es';
+import useBackUrl from '../../hooks/useBackUrl.es';
 import useDeployApp from '../../hooks/useDeployApp.es';
 import {confirmDelete} from '../../utils/client.es';
 import {fromNow} from '../../utils/time.es';
@@ -43,6 +44,7 @@ export default ({
 }) => {
 	const {getStandaloneURL} = useContext(AppContext);
 	const {deployApp, undeployApp} = useDeployApp();
+	const withBackUrl = useBackUrl();
 
 	const ACTIONS = [
 		{
@@ -88,6 +90,16 @@ export default ({
 
 	const ENDPOINT = `/o/app-builder/v1.0/data-definitions/${dataDefinitionId}/apps`;
 
+	const getEditAppUrl = ({dataDefinitionId, id}) => {
+		return withBackUrl(
+			compile(editPath[1])({
+				appId: id,
+				dataDefinitionId,
+				objectType,
+			})
+		);
+	};
+
 	return (
 		<ListView
 			actions={ACTIONS}
@@ -101,17 +113,7 @@ export default ({
 				...app,
 				dateCreated: fromNow(app.dateCreated),
 				dateModified: fromNow(app.dateModified),
-				name: (
-					<Link
-						to={compile(editPath[1])({
-							appId: app.id,
-							dataDefinitionId,
-							objectType,
-						})}
-					>
-						{app.name.en_US}
-					</Link>
-				),
+				name: <Link to={getEditAppUrl(app)}>{app.name.en_US}</Link>,
 				nameText: app.name.en_US,
 				status: (
 					<ClayLabel

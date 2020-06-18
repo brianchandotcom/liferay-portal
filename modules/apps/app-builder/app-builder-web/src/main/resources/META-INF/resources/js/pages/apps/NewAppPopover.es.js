@@ -17,7 +17,7 @@ import {compile} from 'path-to-regexp';
 import React, {useState} from 'react';
 
 import Popover from '../../components/popover/Popover.es';
-import {useNavigation} from '../../hooks/useNavigation.es';
+import useBackUrl from '../../hooks/useBackUrl.es';
 import SelectObjects from './SelectObjectsDropDown.es';
 
 const NewAppPopover = (
@@ -25,12 +25,13 @@ const NewAppPopover = (
 	forwardRef
 ) => {
 	const [selectedObject, setSelectedObject] = useState({});
-
-	const navigation = useNavigation(history);
-
+	const withBackUrl = useBackUrl();
+	
 	const onClick = () => {
-		navigation.push(
-			compile(editPath[0])({dataDefinitionId: selectedObject.id})
+		history.push(
+			withBackUrl(
+				compile(editPath[0])({dataDefinitionId: selectedObject.id})
+			)
 		);
 	};
 

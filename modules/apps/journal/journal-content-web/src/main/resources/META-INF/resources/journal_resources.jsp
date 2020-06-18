@@ -19,12 +19,10 @@
 <%
 String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 
-String randomNamespace = PortalUtil.generateRandomKey(request, refererPortletName) + StringPool.UNDERLINE;
-
 JournalArticle article = journalContentDisplayContext.getArticle();
 %>
 
-<aui:input id='<%= randomNamespace + "ddmTemplateKey" %>' name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.isDefaultTemplate() ? StringPool.BLANK : journalContentDisplayContext.getDDMTemplateKey() %>" />
+<aui:input id='<%= refererPortletName + "ddmTemplateKey" %>' name='<%= refererPortletName + "preferences--ddmTemplateKey--" %>' type="hidden" useNamespace="<%= false %>" value="<%= journalContentDisplayContext.isDefaultTemplate() ? StringPool.BLANK : journalContentDisplayContext.getDDMTemplateKey() %>" />
 
 <clay:sheet-section>
 	<div class="sheet-subtitle">
@@ -64,7 +62,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		for (UserToolAssetAddonEntry userToolAssetAddonEntry : journalContentDisplayContext.getEnabledUserToolAssetAddonEntries()) {
 		%>
 
-			<aui:input checked="<%= selectedUserToolAssetAddonEntries.contains(userToolAssetAddonEntry) %>" id='<%= randomNamespace + "userToolAssetAddonEntryKeys" + StringPool.UNDERLINE + userToolAssetAddonEntry.getKey() %>' label="<%= userToolAssetAddonEntry.getLabel(locale) %>" name="userToolAssetAddonEntryKeys" type="checkbox" value="<%= userToolAssetAddonEntry.getKey() %>" />
+			<aui:input checked="<%= selectedUserToolAssetAddonEntries.contains(userToolAssetAddonEntry) %>" id='<%= refererPortletName + "userToolAssetAddonEntryKeys" + StringPool.UNDERLINE + userToolAssetAddonEntry.getKey() %>' label="<%= userToolAssetAddonEntry.getLabel(locale) %>" name="userToolAssetAddonEntryKeys" type="checkbox" value="<%= userToolAssetAddonEntry.getKey() %>" />
 
 		<%
 		}
@@ -83,7 +81,7 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 		for (ContentMetadataAssetAddonEntry contentMetadataAssetAddonEntry : journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries()) {
 		%>
 
-			<aui:input checked="<%= selectedContentMetadataAssetAddonEntries.contains(contentMetadataAssetAddonEntry) %>" id='<%= randomNamespace + "contentMetadataAssetAddonEntryKeys" + StringPool.UNDERLINE + contentMetadataAssetAddonEntry.getKey() %>' label="<%= contentMetadataAssetAddonEntry.getLabel(locale) %>" name="contentMetadataAssetAddonEntryKeys" type="checkbox" value="<%= contentMetadataAssetAddonEntry.getKey() %>" />
+			<aui:input checked="<%= selectedContentMetadataAssetAddonEntries.contains(contentMetadataAssetAddonEntry) %>" id='<%= refererPortletName + "contentMetadataAssetAddonEntryKeys" + StringPool.UNDERLINE + contentMetadataAssetAddonEntry.getKey() %>' label="<%= contentMetadataAssetAddonEntry.getLabel(locale) %>" name="contentMetadataAssetAddonEntryKeys" type="checkbox" value="<%= contentMetadataAssetAddonEntry.getKey() %>" />
 
 		<%
 		}
@@ -96,6 +94,6 @@ JournalArticle article = journalContentDisplayContext.getArticle();
 			<liferay-ui:message key="enable" />
 		</div>
 
-		<aui:input id='<%= randomNamespace + "enableViewCountIncrement" %>' label="view-count-increment" name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+		<aui:input id='<%= refererPortletName + "enableViewCountIncrement" %>' label="view-count-increment" name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 	</clay:sheet-section>
 </c:if>

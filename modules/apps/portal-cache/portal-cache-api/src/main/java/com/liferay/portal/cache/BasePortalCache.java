@@ -44,6 +44,10 @@ public abstract class BasePortalCache<K extends Serializable, V>
 		return _portalCacheManager;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isBlocking() {
 		return false;

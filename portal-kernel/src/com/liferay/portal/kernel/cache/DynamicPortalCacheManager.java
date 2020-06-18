@@ -73,12 +73,17 @@ public class DynamicPortalCacheManager<K extends Serializable, V>
 		return getPortalCache(portalCacheName, false, false);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *              #getPortalCache(String)}
+	 */
+	@Deprecated
 	@Override
 	public PortalCache<K, V> getPortalCache(
 			String portalCacheName, boolean blocking)
 		throws PortalCacheException {
 
-		return getPortalCache(portalCacheName, blocking, false);
+		return getPortalCache(portalCacheName);
 	}
 
 	@Override

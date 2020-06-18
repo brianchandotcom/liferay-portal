@@ -46,6 +46,11 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public PortalCache<K, V> getPortalCache(String portalCacheName)
 		throws PortalCacheException;
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *              #getPortalCache(String)}
+	 */
+	@Deprecated
 	public PortalCache<K, V> getPortalCache(
 			String portalCacheName, boolean blocking)
 		throws PortalCacheException;

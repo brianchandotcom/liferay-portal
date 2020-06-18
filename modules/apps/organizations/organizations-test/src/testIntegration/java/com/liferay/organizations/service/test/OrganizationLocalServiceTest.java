@@ -83,6 +83,10 @@ public class OrganizationLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		for (String pid : _pids) {
+			ConfigurationTestUtil.deleteConfiguration(pid);
+		}
 	}
 
 	@Test
@@ -858,12 +862,10 @@ public class OrganizationLocalServiceTest {
 
 	@Test
 	public void testSearchOrganizationsByType() throws Exception {
-		List<String> pids = new ArrayList<>();
-
 		for (int i = 0; i < 5; i++) {
 			String organizationType = RandomTestUtil.randomString();
 
-			pids.add(
+			_pids.add(
 				ConfigurationTestUtil.createFactoryConfiguration(
 					"com.liferay.organizations.internal.configuration." +
 						"OrganizationTypeConfiguration",
@@ -879,15 +881,8 @@ public class OrganizationLocalServiceTest {
 				OrganizationTestUtil.addOrganization(organizationType));
 		}
 
-		try {
-			_testSearchOrganizationsByType(_organizations, "asc");
-			_testSearchOrganizationsByType(_organizations, "desc");
-		}
-		finally {
-			for (String pid : pids) {
-				ConfigurationTestUtil.deleteConfiguration(pid);
-			}
-		}
+		_testSearchOrganizationsByType(_organizations, "asc");
+		_testSearchOrganizationsByType(_organizations, "desc");
 	}
 
 	@Rule
@@ -997,6 +992,7 @@ public class OrganizationLocalServiceTest {
 	private final List<Organization> _organizations = new ArrayList<>();
 
 	private PermissionChecker _originalPermissionChecker;
+	private final List<String> _pids = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private User _user;

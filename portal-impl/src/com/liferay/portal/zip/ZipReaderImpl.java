@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipReader;
 
@@ -31,6 +30,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -79,11 +79,13 @@ public class ZipReaderImpl implements ZipReader {
 	public List<String> getEntries() {
 		_initEntriesByFolder();
 
-		List<String> allEntries = new SortedArrayList<>();
+		List<String> allEntries = new ArrayList<>();
 
 		for (List<String> folderEntries : _entriesByFolder.values()) {
 			allEntries.addAll(folderEntries);
 		}
+
+		allEntries.sort(null);
 
 		return allEntries;
 	}
@@ -207,16 +209,14 @@ public class ZipReaderImpl implements ZipReader {
 				folderName = fileName.substring(0, pos);
 			}
 
-			List<String> folderZipEntries = _entriesByFolder.get(folderName);
-
-			if (folderZipEntries == null) {
-				folderZipEntries = new SortedArrayList<>();
-
-				_entriesByFolder.put(folderName, folderZipEntries);
-			}
+			List<String> folderZipEntries = _entriesByFolder.computeIfAbsent(
+				folderName, key -> new ArrayList<>());
 
 			folderZipEntries.add(fileName);
 		}
+
+		_entriesByFolder.forEach(
+			(key, folderZipEntries) -> folderZipEntries.sort(null));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ZipReaderImpl.class);

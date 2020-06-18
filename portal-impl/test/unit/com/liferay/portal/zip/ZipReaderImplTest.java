@@ -14,6 +14,7 @@
 
 package com.liferay.portal.zip;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.test.util.DependenciesTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -155,10 +156,10 @@ public class ZipReaderImplTest {
 
 	@Test
 	public void testGetEntryAsInputStream() throws Exception {
-		_testGetEntryAsInputStream(_FILE_PATH_0);
-		_testGetEntryAsInputStream(_FILE_PATH_1);
-		_testGetEntryAsInputStream(_FILE_PATH_2);
-		_testGetEntryAsInputStream(_FILE_PATH_3);
+		_testGetEntryAsInputStream(_expectedContent0, _FILE_PATH_0);
+		_testGetEntryAsInputStream(_expectedContent1, _FILE_PATH_1);
+		_testGetEntryAsInputStream(_expectedContent2, _FILE_PATH_2);
+		_testGetEntryAsInputStream(_expectedContent3, _FILE_PATH_3);
 	}
 
 	@Test
@@ -300,17 +301,16 @@ public class ZipReaderImplTest {
 		zipReader.close();
 	}
 
-	private void _testGetEntryAsInputStream(String filePath) throws Exception {
+	private void _testGetEntryAsInputStream(
+			String expectedContent, String filePath)
+		throws Exception {
+
 		ZipReader zipReader = new ZipReaderImpl(
 			DependenciesTestUtil.getDependencyAsInputStream(
 				getClass(), _ZIP_FILE_PATH));
 
 		try (InputStream is = zipReader.getEntryAsInputStream(filePath)) {
-			Class<? extends InputStream> clazz = is.getClass();
-
-			Assert.assertEquals(
-				"java.util.zip.ZipFile$ZipFileInflaterInputStream",
-				clazz.getName());
+			Assert.assertEquals(expectedContent, StreamUtil.toString(is));
 		}
 
 		zipReader.close();

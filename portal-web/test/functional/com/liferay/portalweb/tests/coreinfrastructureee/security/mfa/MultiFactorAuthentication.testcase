@@ -50,12 +50,7 @@ definition {
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_DISABLE",
 			value1 = "Disable multi-factor authentication system-wide.");
 
-		GlobalMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
+		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication: Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -69,12 +64,7 @@ definition {
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property test.name.skip.portal.instance = "MultiFactorAuthentication#BlockedAfterReachAllowedFailedAttempts";
 
-		GlobalMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
+		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication: Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -131,12 +121,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		GlobalMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
+		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication: Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -264,12 +249,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		GlobalMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
+		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication: Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");
@@ -362,12 +342,7 @@ definition {
 	test ViewResourceActionsOfOTPVerificationFailure {
 		var portalURL = PropsUtil.get("portal.url");
 
-		GlobalMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
+		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication: Email One-Time Password Configuration",
 			configurationScope = "Virtual Instance Scope");

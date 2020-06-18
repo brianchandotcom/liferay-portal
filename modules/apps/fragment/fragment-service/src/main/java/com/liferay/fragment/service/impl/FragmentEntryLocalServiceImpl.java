@@ -124,9 +124,8 @@ public class FragmentEntryLocalServiceImpl
 		validate(name);
 		validateFragmentEntryKey(groupId, fragmentEntryKey);
 
-		_fragmentEntryValidator.validateConfiguration(configuration);
-
 		if (WorkflowConstants.STATUS_APPROVED == status) {
+			_fragmentEntryValidator.validateConfiguration(configuration);
 			validateContent(html, configuration);
 		}
 

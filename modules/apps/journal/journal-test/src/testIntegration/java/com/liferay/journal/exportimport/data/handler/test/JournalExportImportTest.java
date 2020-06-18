@@ -77,7 +77,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
-import java.io.File;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
@@ -218,7 +217,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 			ZipWriter zipWriter = portletDataContext.getZipWriter();
 
-			larFilePath = zipWriter.getPath();
+			larFile = zipWriter.getFile();
 		}
 
 	}
@@ -535,8 +534,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			ExportImportHelperUtil.getUserIdStrategy(
 				TestPropsValues.getUserId(), userIdStrategyString);
 
-		larFile = new File(larFilePath);
-
 		return PortletDataContextFactoryUtil.createImportPortletDataContext(
 			group.getCompanyId(), importedGroup.getGroupId(), parameterMap,
 			userIdStrategy, ZipReaderFactoryUtil.getZipReader(larFile));
@@ -616,8 +613,6 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			validateImportedStagedModel(article, importedArticle);
 		}
 	}
-
-	protected String larFilePath;
 
 	@Inject(filter = "javax.portlet.name=" + JournalPortletKeys.JOURNAL)
 	private PortletDataHandler _journalPortletDataHandler;

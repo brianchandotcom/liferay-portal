@@ -149,6 +149,10 @@ public class ZipWriterImpl implements ZipWriter {
 		return _file;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getFile()}
+	 */
+	@Deprecated
 	@Override
 	public String getPath() {
 		return _file.getPath();

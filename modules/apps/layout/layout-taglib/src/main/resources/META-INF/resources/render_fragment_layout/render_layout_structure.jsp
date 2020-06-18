@@ -134,9 +134,9 @@ for (String childrenItemId : childrenItemIds) {
 			}
 
 			if (Validator.isNotNull(backgroundImage)) {
-				styleSB.append("background-position: 50% 50%; background-repeat: no-repeat; background-size: cover; background-image: ");
+				styleSB.append("background-position: 50% 50%; background-repeat: no-repeat; background-size: cover; background-image: url(");
 				styleSB.append(backgroundImage);
-				styleSB.append(";");
+				styleSB.append(");");
 			}
 
 			if (Validator.isNotNull(containerLayoutStructureItem.getBorderColor())) {

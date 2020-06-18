@@ -166,7 +166,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 			if (portletDataContext != null) {
 				ZipWriter zipWriter = portletDataContext.getZipWriter();
 
-				zipWriter.umount();
+				zipWriter.getFile();
 			}
 
 			_exportImportLifecycleManager.fireExportImportLifecycleEvent(

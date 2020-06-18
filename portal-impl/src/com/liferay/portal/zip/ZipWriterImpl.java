@@ -158,6 +158,10 @@ public class ZipWriterImpl implements ZipWriter {
 		return _file.getPath();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getFile()}
+	 */
+	@Deprecated
 	@Override
 	public void umount() {
 		try {

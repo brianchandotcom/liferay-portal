@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 
@@ -109,7 +110,7 @@ public class ReactRendererUtil {
 			Writer writer)
 		throws IOException {
 
-		StringBundler dependenciesSB = new StringBundler(7);
+		StringBundler dependenciesSB = new StringBundler();
 
 		dependenciesSB.append(npmResolvedPackageName);
 		dependenciesSB.append("/render.es as render");
@@ -119,18 +120,42 @@ public class ReactRendererUtil {
 		dependenciesSB.append(" as renderFunction");
 		dependenciesSB.append(placeholderId);
 
+		String propsTransformer = componentDescriptor.getPropsTransformer();
+
+		if (Validator.isNotNull(propsTransformer)) {
+			dependenciesSB.append(", ");
+			dependenciesSB.append(propsTransformer);
+			dependenciesSB.append(" as propsTransformer");
+			dependenciesSB.append(placeholderId);
+		}
+
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		StringBundler javascriptSB = new StringBundler(9);
+		StringBundler javascriptSB = new StringBundler();
 
 		javascriptSB.append("render");
 		javascriptSB.append(placeholderId);
 		javascriptSB.append(".default(renderFunction");
 		javascriptSB.append(placeholderId);
 		javascriptSB.append(".default, ");
-		javascriptSB.append(
-			jsonSerializer.serializeDeep(
-				_prepareData(componentDescriptor, data, httpServletRequest)));
+
+		if (Validator.isNotNull(propsTransformer)) {
+			javascriptSB.append("propsTransformer");
+			javascriptSB.append(placeholderId);
+			javascriptSB.append(".default(");
+			javascriptSB.append(
+				jsonSerializer.serializeDeep(
+					_prepareData(
+						componentDescriptor, data, httpServletRequest)));
+			javascriptSB.append(")");
+		}
+		else {
+			javascriptSB.append(
+				jsonSerializer.serializeDeep(
+					_prepareData(
+						componentDescriptor, data, httpServletRequest)));
+		}
+
 		javascriptSB.append(", '");
 		javascriptSB.append(placeholderId);
 		javascriptSB.append("');");

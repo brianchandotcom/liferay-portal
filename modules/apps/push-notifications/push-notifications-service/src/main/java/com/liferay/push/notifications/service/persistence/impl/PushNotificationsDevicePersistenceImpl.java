@@ -220,11 +220,6 @@ public class PushNotificationsDevicePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByToken, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -307,8 +302,6 @@ public class PushNotificationsDevicePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -509,10 +502,6 @@ public class PushNotificationsDevicePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1025,11 +1014,6 @@ public class PushNotificationsDevicePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByU_P, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1114,8 +1098,6 @@ public class PushNotificationsDevicePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1205,9 +1187,6 @@ public class PushNotificationsDevicePersistenceImpl
 					_finderPathWithPaginationCountByU_P, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByU_P, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1787,10 +1766,6 @@ public class PushNotificationsDevicePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1837,9 +1812,6 @@ public class PushNotificationsDevicePersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

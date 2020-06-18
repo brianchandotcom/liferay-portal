@@ -27,11 +27,41 @@ DepotAdminViewDepotDashboardDisplayContext depotAdminViewDepotDashboardDisplayCo
 
 	<%
 	for (PanelCategory panelCategory : depotAdminViewDepotDashboardDisplayContext.getPanelCategories()) {
+		Collection<PanelApp> panelApps = depotAdminViewDepotDashboardDisplayContext.getPanelApps(panelCategory);
 	%>
 
-		<div class="spliter-spaced splitter">
-			<%= panelCategory.getLabel(locale) %>
-		</div>
+		<c:if test="<%= panelApps.size() > 0 %>">
+			<div class="spliter-spaced splitter">
+				<%= panelCategory.getLabel(locale) %>
+			</div>
+
+			<ul class="display-style-icon list-unstyled row">
+
+				<%
+				for (PanelApp panelApp : panelApps) {
+				%>
+
+					<li class="entry-card entry-display-style lfr-asset-item">
+						<c:choose>
+							<c:when test="<%= depotAdminViewDepotDashboardDisplayContext.isPrimaryPanelCategory(panelCategory) %>">
+								<clay:vertical-card
+									verticalCard="<%= depotAdminViewDepotDashboardDisplayContext.getDepotDashboardApplicationVerticalCard(panelApp, locale) %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<clay:horizontal-card
+									horizontalCard="<%= depotAdminViewDepotDashboardDisplayContext.getDepotDashboardApplicationHorizontalCard(panelApp, locale) %>"
+								/>
+							</c:otherwise>
+						</c:choose>
+					</li>
+
+				<%
+				}
+				%>
+
+			</ul>
+		</c:if>
 
 	<%
 	}

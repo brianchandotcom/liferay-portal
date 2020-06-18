@@ -90,7 +90,9 @@ const MillerColumns = ({
 			if (!columns[item.columnIndex]) {
 				columns[item.columnIndex] = {
 					items: [],
-					parent: items.get(item.parentId),
+					parent: Array.from(items.values()).find(
+						(_item) => _item.id === item.parentId
+					),
 				};
 			}
 

@@ -12,30 +12,31 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.data.set.view.list;
+package com.liferay.frontend.taglib.clay.data.set.view.timeline;
 
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.constants.ClayDataSetConstants;
-import com.liferay.petra.string.StringPool;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Marco Leo
  */
-public abstract class ClayListDataSetDisplayView
+public abstract class BaseTimelineClayDataSetDisplayView
 	implements ClayDataSetDisplayView {
 
 	public String getContentRenderer() {
-		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_LIST;
+		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_TIMELINE;
 	}
+
+	public abstract String getDate();
 
 	public abstract String getDescription();
 
 	public String getLabel() {
-		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_LIST;
+		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_TIMELINE;
 	}
 
 	public String getThumbnail() {
-		return StringPool.BLANK;
+		return ClayDataSetConstants.CLAY_DATA_SET_CONTENT_RENDERER_TIMELINE;
 	}
 
 	public abstract String getTitle();

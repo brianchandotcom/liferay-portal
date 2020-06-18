@@ -45,17 +45,25 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		AssetVocabulary audienceVocabulary =
-			_assetVocabularyLocalService.fetchGroupVocabulary(
-				company.getGroupId(), "audience");
+		_addVocabulary(company, "audience");
+		_addVocabulary(company, "stage");
+	}
 
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
+	private void _addVocabulary(Company company, String name) throws Exception {
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.fetchGroupVocabulary(
+				company.getGroupId(), name);
+
+		if (assetVocabulary != null) {
+			return;
+		}
+
 		User defaultUser = company.getDefaultUser();
 
-		ServiceContext serviceContext = new ServiceContext();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			defaultLocale, getClass());
 
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
@@ -63,33 +71,19 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 			"selectedClassNameIds",
 			_portal.getClassNameId(JournalArticle.class) + ":-1");
 
-		if (audienceVocabulary == null) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				defaultLocale, getClass());
+		ServiceContext serviceContext = new ServiceContext();
 
-			_assetVocabularyLocalService.addVocabulary(
-				defaultUser.getUserId(), company.getGroupId(), "audience",
-				StringPool.BLANK,
-				Collections.singletonMap(
-					defaultLocale,
-					LanguageUtil.get(resourceBundle, "audience")),
-				Collections.emptyMap(), unicodeProperties.toString(),
-				serviceContext);
-		}
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 
-		AssetVocabulary stageVocabulary =
-			_assetVocabularyLocalService.fetchGroupVocabulary(
-				company.getGroupId(), "stage");
-
-		if (stageVocabulary == null) {
-			_assetVocabularyLocalService.addVocabulary(
-				defaultUser.getUserId(), company.getGroupId(), "stage",
-				StringPool.BLANK,
-				Collections.singletonMap(
-					defaultLocale, LanguageUtil.get(defaultLocale, "stage")),
-				Collections.emptyMap(), unicodeProperties.toString(),
-				serviceContext);
-		}
+		_assetVocabularyLocalService.addVocabulary(
+			defaultUser.getUserId(), company.getGroupId(), name,
+			StringPool.BLANK,
+			Collections.singletonMap(
+				LocaleUtil.getSiteDefault(),
+				LanguageUtil.get(resourceBundle, name)),
+			Collections.emptyMap(), unicodeProperties.toString(),
+			serviceContext);
 	}
 
 	@Reference

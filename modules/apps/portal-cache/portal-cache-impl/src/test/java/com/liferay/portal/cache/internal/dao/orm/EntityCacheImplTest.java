@@ -48,8 +48,6 @@ public class EntityCacheImplTest {
 			BasePersistenceImpl.class, "nullModel");
 
 		Map<String, Object> properties = HashMapBuilder.<String, Object>put(
-			PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE, "true"
-		).put(
 			PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED, "true"
 		).put(
 			PropsKeys.VALUE_OBJECT_FINDER_CACHE_ENABLED, "true"

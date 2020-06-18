@@ -115,8 +115,7 @@ public class EntityCacheImpl
 
 		portalCache =
 			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(
-					groupKey, _valueObjectEntityBlockingCacheEnabled, mvcc);
+				_multiVMPool.getPortalCache(groupKey, false, mvcc);
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);
@@ -366,8 +365,6 @@ public class EntityCacheImpl
 	@Activate
 	@Modified
 	protected void activate() {
-		_valueObjectEntityBlockingCacheEnabled = GetterUtil.getBoolean(
-			_props.get(PropsKeys.VALUE_OBJECT_ENTITY_BLOCKING_CACHE));
 		_valueObjectEntityCacheEnabled = GetterUtil.getBoolean(
 			_props.get(PropsKeys.VALUE_OBJECT_ENTITY_CACHE_ENABLED));
 		_valueObjectMVCCEntityCacheEnabled = GetterUtil.getBoolean(
@@ -435,7 +432,6 @@ public class EntityCacheImpl
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches = new ConcurrentHashMap<>();
 	private Props _props;
-	private boolean _valueObjectEntityBlockingCacheEnabled;
 	private boolean _valueObjectEntityCacheEnabled;
 	private boolean _valueObjectMVCCEntityCacheEnabled;
 

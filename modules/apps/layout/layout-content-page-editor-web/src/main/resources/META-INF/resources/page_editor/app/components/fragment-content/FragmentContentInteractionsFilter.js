@@ -19,8 +19,7 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editable
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {config} from '../../config/index';
-import selectCanUpdate from '../../selectors/selectCanUpdate';
-import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
+import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import {useSelector} from '../../store/index';
 import {
 	useActivationOrigin,
@@ -65,11 +64,8 @@ export default function FragmentContentInteractionsFilter({
 	const hoveredItemType = useHoveredItemType();
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
-	const canUpdate = useSelector(selectCanUpdate);
+	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const languageId = useSelector((state) => state.languageId);
-
-	const canOnlyUpdateInlineContent = !canUpdate && canUpdateLayoutContent;
 
 	const editableValues = useSelector((state) =>
 		state.fragmentEntryLinks[fragmentEntryLinkId]
@@ -231,7 +227,7 @@ export default function FragmentContentInteractionsFilter({
 			);
 
 			if (activeEditableElement) {
-				if (canUpdateLayoutContent) {
+				if (canUpdateEditables) {
 					requestAnimationFrame(() => {
 						activeEditableElement.addEventListener(
 							'dblclick',
@@ -264,7 +260,7 @@ export default function FragmentContentInteractionsFilter({
 		activationOrigin,
 		activeItemId,
 		activeItemType,
-		canUpdateLayoutContent,
+		canUpdateEditables,
 		editableElements,
 		editableValues,
 		fragmentEntryLinkId,
@@ -313,7 +309,7 @@ export default function FragmentContentInteractionsFilter({
 
 	const props = {};
 
-	if (siblingIds.some(isActive) || canOnlyUpdateInlineContent) {
+	if (siblingIds.some(isActive) || canUpdateEditables) {
 		props.onClickCapture = selectEditable;
 		props.onMouseOverCapture = hoverEditable;
 	}

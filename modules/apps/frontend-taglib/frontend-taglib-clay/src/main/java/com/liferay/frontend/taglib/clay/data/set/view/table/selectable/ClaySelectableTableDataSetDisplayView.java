@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.data.set.view.table.selectable;
 
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.constants.ClayDataSetConstants;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;

@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.taglib.clay.data.set.view.timeline;
 
-import com.liferay.frontend.taglib.clay.data.set.ClayDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
+import com.liferay.frontend.taglib.clay.data.set.constants.ClayDataSetConstants;
 
 /**
  * @author Marco Leo

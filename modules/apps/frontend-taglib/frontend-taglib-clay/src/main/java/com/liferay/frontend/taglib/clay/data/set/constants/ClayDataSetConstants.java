@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.data.set;
+package com.liferay.frontend.taglib.clay.data.set.constants;
 
 /**
  * @author Marco Leo

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.zip;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
@@ -34,8 +35,6 @@ import java.io.UncheckedIOException;
 
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * @author Raymond Augé
@@ -106,7 +105,7 @@ public class ZipWriterImpl implements ZipWriter {
 
 		_zipOutputStream.putNextEntry(zipEntry);
 
-		IOUtils.copy(inputStream, _zipOutputStream);
+		StreamUtil.transfer(inputStream, _zipOutputStream, false);
 
 		_zipOutputStream.closeEntry();
 	}

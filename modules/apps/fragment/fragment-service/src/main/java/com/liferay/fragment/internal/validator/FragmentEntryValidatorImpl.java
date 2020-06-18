@@ -22,13 +22,17 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.InputStream;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -132,11 +136,12 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		}
 		catch (JSONException jsonException) {
 			throw new FragmentEntryConfigurationException(
-				jsonException.getMessage(), jsonException);
+				_getMessage(jsonException.getMessage()), jsonException);
 		}
 		catch (JSONValidatorException jsonValidatorException) {
 			throw new FragmentEntryConfigurationException(
-				jsonValidatorException.getMessage(), jsonValidatorException);
+				_getMessage(jsonValidatorException.getMessage()),
+				jsonValidatorException);
 		}
 	}
 
@@ -186,6 +191,21 @@ public class FragmentEntryValidatorImpl implements FragmentEntryValidator {
 		}
 
 		return false;
+	}
+
+	private String _getMessage(String message) {
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", getClass());
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(
+			LanguageUtil.get(
+				resourceBundle, "fragment-configuration-is-invalid"));
+		sb.append(System.lineSeparator());
+		sb.append(message);
+
+		return sb.toString();
 	}
 
 }

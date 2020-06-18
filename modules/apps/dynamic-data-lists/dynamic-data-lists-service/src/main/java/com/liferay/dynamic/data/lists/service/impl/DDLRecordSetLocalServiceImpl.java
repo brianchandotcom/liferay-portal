@@ -120,8 +120,9 @@ public class DDLRecordSetLocalServiceImpl
 			recordSetKey = String.valueOf(counterLocalService.increment());
 		}
 
+		addDefaultName(nameMap);
+
 		validate(groupId, ddmStructureId, recordSetKey);
-		validateName(nameMap);
 
 		long recordSetId = counterLocalService.increment();
 
@@ -789,8 +790,9 @@ public class DDLRecordSetLocalServiceImpl
 
 		// Record set
 
+		addDefaultName(nameMap);
+
 		validateDDMStructureId(ddmStructureId);
-		validateName(nameMap);
 
 		User user = userLocalService.getUser(userId);
 
@@ -974,7 +976,7 @@ public class DDLRecordSetLocalServiceImpl
 		}
 	}
 
-	protected void validateName(Map<Locale, String> nameMap) {
+	protected void addDefaultName(Map<Locale, String> nameMap) {
 		Locale locale = LocaleUtil.getSiteDefault();
 
 		if (Validator.isNull(nameMap.get(locale))) {

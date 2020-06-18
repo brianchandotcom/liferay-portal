@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -68,15 +69,17 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 		List<AppBuilderWorkflowTaskLink> appBuilderWorkflowTaskLinks =
 			new ArrayList<>();
 
-		for (AppWorkflowTask appWorkflowTask :
-				appWorkflow.getAppWorkflowTasks()) {
+		if (Objects.nonNull(appWorkflow.getAppWorkflowTasks())) {
+			for (AppWorkflowTask appWorkflowTask :
+					appWorkflow.getAppWorkflowTasks()) {
 
-			for (Long dataLayoutId : appWorkflowTask.getDataLayoutIds()) {
-				appBuilderWorkflowTaskLinks.add(
-					_appBuilderWorkflowTaskLinkLocalService.
-						addAppBuilderWorkflowTaskLink(
-							contextCompany.getCompanyId(), appId, dataLayoutId,
-							appWorkflowTask.getName()));
+				for (Long dataLayoutId : appWorkflowTask.getDataLayoutIds()) {
+					appBuilderWorkflowTaskLinks.add(
+						_appBuilderWorkflowTaskLinkLocalService.
+							addAppBuilderWorkflowTaskLink(
+								contextCompany.getCompanyId(), appId,
+								dataLayoutId, appWorkflowTask.getName()));
+				}
 			}
 		}
 

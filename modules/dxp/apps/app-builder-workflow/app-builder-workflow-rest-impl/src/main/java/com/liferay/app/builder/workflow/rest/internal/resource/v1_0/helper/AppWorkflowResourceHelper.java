@@ -36,6 +36,7 @@ import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.builder.DefinitionBuilder;
 
 import java.util.Collections;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,18 +86,21 @@ public class AppWorkflowResourceHelper {
 					appWorkflowState.getInitial()));
 		}
 
-		for (AppWorkflowTask appWorkflowTask :
-				appWorkflow.getAppWorkflowTasks()) {
+		if (Objects.nonNull(appWorkflow.getAppWorkflowTasks())) {
+			for (AppWorkflowTask appWorkflowTask :
+					appWorkflow.getAppWorkflowTasks()) {
 
-			Task task = new Task(appWorkflowTask.getName(), StringPool.BLANK);
+				Task task = new Task(
+					appWorkflowTask.getName(), StringPool.BLANK);
 
-			task.setAssignments(
-				Collections.singleton(
-					new RoleAssignment(
-						RoleConstants.PORTAL_CONTENT_REVIEWER,
-						RoleConstants.TYPE_REGULAR_LABEL)));
+				task.setAssignments(
+					Collections.singleton(
+						new RoleAssignment(
+							RoleConstants.PORTAL_CONTENT_REVIEWER,
+							RoleConstants.TYPE_REGULAR_LABEL)));
 
-			definition.addNode(task);
+				definition.addNode(task);
+			}
 		}
 
 		for (AppWorkflowState appWorkflowState :
@@ -107,12 +111,14 @@ public class AppWorkflowResourceHelper {
 				appWorkflowState.getName());
 		}
 
-		for (AppWorkflowTask appWorkflowTask :
-				appWorkflow.getAppWorkflowTasks()) {
+		if (Objects.nonNull(appWorkflow.getAppWorkflowTasks())) {
+			for (AppWorkflowTask appWorkflowTask :
+					appWorkflow.getAppWorkflowTasks()) {
 
-			_addTransitions(
-				appWorkflowTask.getAppWorkflowTransitions(), definition,
-				appWorkflowTask.getName());
+				_addTransitions(
+					appWorkflowTask.getAppWorkflowTransitions(), definition,
+					appWorkflowTask.getName());
+			}
 		}
 
 		return definition;

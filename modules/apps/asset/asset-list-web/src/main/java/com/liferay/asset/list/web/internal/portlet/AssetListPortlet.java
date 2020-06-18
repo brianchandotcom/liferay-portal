@@ -14,6 +14,8 @@
 
 package com.liferay.asset.list.web.internal.portlet;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
+import com.liferay.asset.info.display.url.provider.AssetInfoEditURLProvider;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.exception.AssetListEntryTitleException;
@@ -23,9 +25,11 @@ import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
 import com.liferay.asset.list.web.internal.display.context.AssetListContentDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext;
+import com.liferay.asset.list.web.internal.servlet.taglib.util.AssetListContentActionDropdownItems;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.IOException;
@@ -68,6 +72,11 @@ public class AssetListPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		renderRequest.setAttribute(
+			AssetListWebKeys.ASSET_LIST_CONTENT_ACTION_DROPDOWN_ITEMS,
+			new AssetListContentActionDropdownItems(
+				_assetDisplayPageFriendlyURLProvider, _assetInfoEditURLProvider,
+				_portal.getHttpServletRequest(renderRequest)));
 		renderRequest.setAttribute(
 			AssetListWebKeys.ASSET_LIST_CONTENT_DISPLAY_CONTEXT,
 			new AssetListContentDisplayContext(
@@ -126,6 +135,13 @@ public class AssetListPortlet extends MVCPortlet {
 	}
 
 	@Reference
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private AssetInfoEditURLProvider _assetInfoEditURLProvider;
+
+	@Reference
 	private AssetListAssetEntryProvider _assetListAssetEntryProvider;
 
 	@Reference
@@ -134,5 +150,8 @@ public class AssetListPortlet extends MVCPortlet {
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private Portal _portal;
 
 }

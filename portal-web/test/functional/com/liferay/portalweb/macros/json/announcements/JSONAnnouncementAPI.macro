@@ -1,0 +1,26 @@
+definition {
+
+	macro _addAnnouncement {
+		Variables.assertDefined(parameterList = "${announcementTitle},${announcementContent}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/api/jsonws/announcementsentry/add-entry \
+			-u ${userEmailAddress}:${userPassword} \
+			-d classNameId=0 \
+			-d classPK=0 \
+			-d title=${announcementTitle} \
+			-d content=${announcementContent} \
+			-d url=${announcementURL} \
+			-d type=${announcementType} \
+			-d displayDate=${displayDate} \
+			-d expirationDate=${expirationDate} \
+			-d priority=0 \
+			-d alert=false
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

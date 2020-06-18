@@ -43,23 +43,11 @@ import org.apache.commons.io.IOUtils;
 public class ZipWriterImpl implements ZipWriter {
 
 	public ZipWriterImpl() {
-		_file = new File(
-			StringBundler.concat(
-				SystemProperties.get(SystemProperties.TMP_DIR),
-				StringPool.SLASH, PortalUUIDUtil.generate(), ".zip"));
-
-		File parentFile = _file.getParentFile();
-
-		if (!parentFile.exists()) {
-			parentFile.mkdirs();
-		}
-
-		try {
-			_zipOutputStream = new ZipOutputStream(new FileOutputStream(_file));
-		}
-		catch (FileNotFoundException fileNotFoundException) {
-			throw new RuntimeException(fileNotFoundException);
-		}
+		this(
+			new File(
+				StringBundler.concat(
+					SystemProperties.get(SystemProperties.TMP_DIR),
+					StringPool.SLASH, PortalUUIDUtil.generate(), ".zip")));
 
 		FinalizeManager.register(
 			_file, new DeleteFileFinalizeAction(_file.getAbsolutePath()),

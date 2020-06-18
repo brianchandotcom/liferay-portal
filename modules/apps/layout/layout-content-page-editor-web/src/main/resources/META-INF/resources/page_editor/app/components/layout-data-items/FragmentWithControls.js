@@ -20,7 +20,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
-import selectCanUpdateLayoutContent from '../../selectors/selectCanUpdateLayoutContent';
+import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
@@ -29,13 +29,13 @@ import FloatingToolbar from '../floating-toolbar/FloatingToolbar';
 import FragmentContent from '../fragment-content/FragmentContent';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
-	const canUpdateLayoutContent = useSelector(selectCanUpdateLayoutContent);
 	const dispatch = useDispatch();
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const segmentsExperienceId = useSelector(
 		(state) => state.segmentsExperienceId
 	);
 	const selectItem = useSelectItem();
+	const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 	const widgets = useSelector((state) => state.widgets);
 
 	const fragmentEntryLink =
@@ -91,7 +91,7 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	return (
 		<Topper item={item} itemElement={itemElement} layoutData={layoutData}>
 			<>
-				{canUpdateLayoutContent && (
+				{showFloatingToolbar && (
 					<FloatingToolbar
 						buttons={floatingToolbarButtons}
 						item={item}

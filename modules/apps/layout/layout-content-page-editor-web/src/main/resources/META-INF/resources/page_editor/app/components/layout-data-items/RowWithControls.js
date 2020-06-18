@@ -24,6 +24,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
+import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -62,6 +63,7 @@ const RowWithControls = React.forwardRef(
 		const selectedViewportSize = useSelector(
 			(state) => state.selectedViewportSize
 		);
+		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 
 		const rowConfig = getResponsiveConfig(config, selectedViewportSize);
 
@@ -129,12 +131,14 @@ const RowWithControls = React.forwardRef(
 							updatedLayoutData,
 						}}
 					>
-						<FloatingToolbar
-							buttons={buttons}
-							item={item}
-							itemElement={itemElement}
-							onButtonClick={handleButtonClick}
-						/>
+						{showFloatingToolbar && (
+							<FloatingToolbar
+								buttons={buttons}
+								item={item}
+								itemElement={itemElement}
+								onButtonClick={handleButtonClick}
+							/>
+						)}
 						{children}
 					</ResizeContextProvider>
 

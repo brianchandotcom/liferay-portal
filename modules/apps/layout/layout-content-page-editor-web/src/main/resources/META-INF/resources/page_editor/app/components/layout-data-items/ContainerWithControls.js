@@ -25,6 +25,7 @@ import {
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {config} from '../../config/index';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
+import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
 import {useSelectItem} from '../Controls';
@@ -51,6 +52,7 @@ const ContainerWithControls = React.forwardRef(
 		});
 
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
+		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 		const selectItem = useSelectItem();
 
 		const [setRef, itemElement] = useSetRef(ref);
@@ -98,12 +100,14 @@ const ContainerWithControls = React.forwardRef(
 
 		return (
 			<>
-				<FloatingToolbar
-					buttons={buttons}
-					item={item}
-					itemElement={itemElement}
-					onButtonClick={handleButtonClick}
-				/>
+				{showFloatingToolbar && (
+					<FloatingToolbar
+						buttons={buttons}
+						item={item}
+						itemElement={itemElement}
+						onButtonClick={handleButtonClick}
+					/>
+				)}
 
 				{openSaveFragmentCompositionModal && (
 					<SaveFragmentCompositionModal

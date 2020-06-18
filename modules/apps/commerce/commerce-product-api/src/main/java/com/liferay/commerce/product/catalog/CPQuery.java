@@ -14,10 +14,6 @@
 
 package com.liferay.commerce.product.catalog;
 
-import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -84,10 +80,6 @@ public class CPQuery {
 		return _allCategoryIds.clone();
 	}
 
-	public long[] getAllLeftAndRightCategoryIds() {
-		return _getLeftAndRightCategoryIds(_allCategoryIds.clone());
-	}
-
 	public long[] getAllTagIds() {
 		return _allTagIds.clone();
 	}
@@ -98,10 +90,6 @@ public class CPQuery {
 
 	public long[] getAnyCategoryIds() {
 		return _anyCategoryIds.clone();
-	}
-
-	public long[] getAnyLeftAndRightCategoryIds() {
-		return _getLeftAndRightCategoryIds(_anyCategoryIds.clone());
 	}
 
 	public long[] getAnyTagIds() {
@@ -120,10 +108,6 @@ public class CPQuery {
 		return _notAllCategoryIds.clone();
 	}
 
-	public long[] getNotAllLeftAndRightCategoryIds() {
-		return _getLeftAndRightCategoryIds(_notAllCategoryIds.clone());
-	}
-
 	public long[] getNotAllTagIds() {
 		return _notAllTagIds.clone();
 	}
@@ -134,10 +118,6 @@ public class CPQuery {
 
 	public long[] getNotAnyCategoryIds() {
 		return _notAnyCategoryIds.clone();
-	}
-
-	public long[] getNotAnyLeftAndRightCategoryIds() {
-		return _getLeftAndRightCategoryIds(_notAnyCategoryIds.clone());
 	}
 
 	public long[] getNotAnyTagIds() {
@@ -331,32 +311,6 @@ public class CPQuery {
 
 		return ArrayUtil.toArray(tagIdsList.toArray(new Long[0]));
 	}
-
-	private long[] _getLeftAndRightCategoryIds(long[] categoryIds) {
-		long[] leftRightIds = new long[categoryIds.length * 3];
-
-		for (int i = 0; i < categoryIds.length; i++) {
-			long categoryId = categoryIds[i];
-
-			try {
-				AssetCategory category =
-					AssetCategoryLocalServiceUtil.getCategory(categoryId);
-
-				leftRightIds[3 * i] = category.getGroupId();
-				leftRightIds[(3 * i) + 1] = category.getLeftCategoryId();
-				leftRightIds[(3 * i) + 2] = category.getRightCategoryId();
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Error retrieving category " + categoryId);
-				}
-			}
-		}
-
-		return leftRightIds;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(CPQuery.class);
 
 	private long[] _allCategoryIds = new long[0];
 	private long[] _allTagIds = new long[0];

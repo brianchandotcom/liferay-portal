@@ -145,7 +145,6 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 							data="<%= headerTogglerData %>"
 							elementClasses="navbar-toggler p-3"
 							icon="bars"
-							spritemap='<%= themeDisplay.getPathThemeImages() + "/lexicon/icons.svg" %>'
 							style="secondary"
 							type="button"
 						/>

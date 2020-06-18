@@ -87,11 +87,11 @@ definition {
 		var key_assetTitle = "Form";
 
 		WaitForElementPresent(
-			locator1 = "NavBar#ASSET_TITLE_LINK",
+			locator1 = "NavBar#ASSET_TITLE",
 			value1 = "Form");
 
 		AssertClick(
-			locator1 = "NavBar#ASSET_TITLE_LINK",
+			locator1 = "NavBar#ASSET_TITLE",
 			value1 = "Form");
 	}
 
@@ -133,11 +133,11 @@ definition {
 		var key_assetTitle = "Rules";
 
 		WaitForElementPresent(
-			locator1 = "NavBar#ASSET_TITLE_LINK",
+			locator1 = "NavBar#ASSET_TITLE",
 			value1 = "Rules");
 
 		AssertClick(
-			locator1 = "NavBar#ASSET_TITLE_LINK",
+			locator1 = "NavBar#ASSET_TITLE",
 			value1 = "Rules");
 	}
 

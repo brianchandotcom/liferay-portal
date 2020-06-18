@@ -232,8 +232,6 @@ definition {
 
 		Form.closeSidebar();
 
-		AssertNotVisible(locator1 = "Form#ADD_FIELD");
-
 		Form.selectTranslation(localizedLanguage = "English (United States)");
 
 		Form.gotoAddElementSet(

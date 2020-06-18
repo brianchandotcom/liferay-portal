@@ -54,11 +54,14 @@ function MappingInput({
 
 	return (
 		<ClayForm.Group>
-			<label className="control-label">{label}</label>
+			<label className="control-label" htmlFor={name}>
+				{label}
+			</label>
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClayInput
 						className="dpt-mapping-input"
+						id={name}
 						readOnly
 						type="text"
 						value={`${

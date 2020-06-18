@@ -115,5 +115,9 @@
 
 	&__resizing {
 		cursor: col-resize;
+
+		.page-editor__layout-viewport__resizer {
+			pointer-events: none;
+		}
 	}
 }

@@ -65,12 +65,25 @@
 					(Subscription.companyId = MBCategory.companyId) AND
 					(Subscription.classNameId = ?) AND
 					(Subscription.classPK = MBCategory.categoryId)
+			LEFT JOIN
+				MBMessage ON
+					MBMessage.categoryId = MBCategory.categoryId
 			WHERE
 				(MBCategory.groupId = ?) AND
 				(MBCategory.parentCategoryId = ?) AND
 				(Subscription.userId = ?)
+			GROUP BY
+				MBCategory.categoryId
 			ORDER BY
-				MBCategory.lastPostDate DESC
+				(
+					CASE WHEN
+						MAX(MBMessage.modifiedDate) IS NULL
+					THEN
+						MBCategory.modifiedDate
+					ELSE
+						MAX(MBMessage.modifiedDate)
+					END
+				) DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.service.persistence.MBCategoryFinder.findT_ByG_C">

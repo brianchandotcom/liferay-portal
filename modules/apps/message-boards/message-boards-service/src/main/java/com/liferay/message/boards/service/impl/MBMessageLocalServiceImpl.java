@@ -2424,17 +2424,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		MBCategory category = null;
-
-		if ((thread.getCategoryId() !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(thread.getCategoryId() !=
-				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			category = _mbCategoryPersistence.findByPrimaryKey(
-				thread.getCategoryId());
-		}
-
 		if (thread.getRootMessageId() == message.getMessageId()) {
 			thread.setModifiedDate(modifiedDate);
 			thread.setStatus(status);
@@ -2452,17 +2441,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			}
 
 			thread.setLastPostDate(modifiedDate);
-
-			if (category != null) {
-				category.setLastPostDate(modifiedDate);
-
-				category = _mbCategoryPersistence.update(category);
-
-				Indexer<MBCategory> indexer =
-					_indexerRegistry.nullSafeGetIndexer(MBCategory.class);
-
-				indexer.reindex(category);
-			}
 		}
 
 		if ((oldStatus == WorkflowConstants.STATUS_APPROVED) ||

@@ -145,8 +145,6 @@ public class MBCategoryStagedModelDataHandlerTest
 			category.getThreadCount(), importedCategory.getThreadCount());
 		Assert.assertEquals(
 			category.getMessageCount(), importedCategory.getMessageCount());
-		Assert.assertEquals(
-			category.getLastPostDate(), importedCategory.getLastPostDate());
 	}
 
 }

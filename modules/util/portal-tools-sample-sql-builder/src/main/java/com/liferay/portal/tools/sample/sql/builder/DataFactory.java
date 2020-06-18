@@ -4028,7 +4028,6 @@ public class DataFactory {
 		mbCategoryModel.setName("Test Category " + index);
 		mbCategoryModel.setDisplayStyle(
 			MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
-		mbCategoryModel.setLastPostDate(new Date());
 		mbCategoryModel.setLastPublishDate(new Date());
 		mbCategoryModel.setStatusDate(new Date());
 

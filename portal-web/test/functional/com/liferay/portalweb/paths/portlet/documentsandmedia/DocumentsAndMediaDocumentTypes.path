@@ -8,6 +8,51 @@
 <tr><td rowspan="1" colspan="3">DocumentsAndMediaDocumentTypes</td></tr>
 </thead>
 <tbody>
+<tr>
+    <td>ADD_FIELD_TYPE</td>
+    <td>//div[contains(@class,'field-type')]//span[normalize-space(text())='${key_fieldType}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>FIELD_DROP_TARGET</td>
+    <td>//div[contains(@class,'ddm-empty-page ddm-target')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>FIELD_BOTTOM_DROP_TARGET</td>
+    <td>//div[contains(@class,'placeholder row')]/div[@data-ddm-field-row='${key_rowNum}']/div[contains(@class,'ddm-target')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>FIELD_NAME</td>
+    <td>//div[contains(@class,'ddm-field')]//div[@data-field-name='${key_fieldName}']</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_ACTIVE_BASIC_TAB</td>
+    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'active') and contains(.,'Basic')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SEARCH_FIELD</td>
+    <td>//div[contains(@class,'input-group-item')]//input[contains(@placeholder,'Search')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_BACK</td>
+    <td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_BUTTON</td>
+    <td>//div[contains(@class,'multi-panel-sidebar')]//ul[contains(@class,'tbar-nav')]//button[contains(@title,'${key_sidebarButton}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_TITLE</td>
+    <td>//div[contains(@class,'sidebar-content-open')]//div[contains(@class,'sidebar-header') and contains(.,'${key_sidebarTitle}')]</td>
+    <td></td>
+</tr>
 <!--DOCUMENT_TYPES_TABLE-->
 <tr>
 	<td>DOCUMENT_TYPES_TABLE_NAME</td>

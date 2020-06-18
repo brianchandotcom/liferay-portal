@@ -380,7 +380,7 @@ definition {
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoAdd();
+		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = "Vocabulary Name");
 

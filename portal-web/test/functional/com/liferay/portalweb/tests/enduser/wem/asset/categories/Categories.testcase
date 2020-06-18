@@ -444,7 +444,7 @@ definition {
 
 	@priority = "3"
 	test DeleteAssociatedAssetTypeViaVocabulary {
-		LexiconEntry.gotoAdd();
+		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = "Vocabulary Name 1");
 
@@ -745,7 +745,7 @@ definition {
 
 	@priority = "3"
 	test ValidateClickingCloseButtonDoesNotSaveVocabulary {
-		LexiconEntry.gotoAdd();
+		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = "Vocabulary Name Test Close");
 

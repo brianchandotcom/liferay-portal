@@ -14,6 +14,7 @@
 
 package com.liferay.journal.internal.instance.lifecycle;
 
+import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.journal.model.JournalArticle;
@@ -27,7 +28,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -65,11 +66,13 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			defaultLocale, getClass());
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper();
 
-		unicodeProperties.put(
-			"selectedClassNameIds",
-			_portal.getClassNameId(JournalArticle.class) + ":-1");
+		assetVocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
+			new long[] {_portal.getClassNameId(JournalArticle.class)},
+			new long[] {AssetCategoryConstants.ALL_CLASS_TYPE_PK},
+			new boolean[] {false});
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -82,7 +85,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
 				LanguageUtil.get(resourceBundle, name)),
-			Collections.emptyMap(), unicodeProperties.toString(),
+			Collections.emptyMap(), assetVocabularySettingsHelper.toString(),
 			serviceContext);
 	}
 

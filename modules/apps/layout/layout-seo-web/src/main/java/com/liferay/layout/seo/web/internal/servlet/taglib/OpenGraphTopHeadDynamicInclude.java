@@ -225,8 +225,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 				if (mappedImageObject instanceof WebImage) {
 					WebImage mappedWebImage = (WebImage)mappedImageObject;
 
-					printWriter.println(
-						_getOpenGraphTag("og:image", mappedWebImage.getUrl()));
+					String url = _getAbsoluteURL(
+						themeDisplay, mappedWebImage.getUrl());
+
+					printWriter.println(_getOpenGraphTag("og:image", url));
 
 					String openGraphImageAlt = _getImageAltTagValue(
 						infoDisplayObjectProvider, infoItemFormProvider, layout,
@@ -255,14 +257,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 					if (themeDisplay.isSecure()) {
 						printWriter.println(
-							_getOpenGraphTag(
-								"og:image:secure_url",
-								mappedWebImage.getUrl()));
+							_getOpenGraphTag("og:image:secure_url", url));
 					}
 
-					printWriter.println(
-						_getOpenGraphTag(
-							"og:image:url", mappedWebImage.getUrl()));
+					printWriter.println(_getOpenGraphTag("og:image:url", url));
 				}
 
 				return;
@@ -345,6 +343,14 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		sb.append("\" />");
 
 		return sb.toString();
+	}
+
+	private String _getAbsoluteURL(ThemeDisplay themeDisplay, String url) {
+		if (url.startsWith("http")) {
+			return url;
+		}
+
+		return themeDisplay.getPortalURL() + url;
 	}
 
 	private String _getDescriptionTagValue(

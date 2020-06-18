@@ -603,9 +603,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Document document = Jsoup.parse(
 			mockHttpServletResponse.getContentAsString());
 
-		_assertMetaTag(document, "og:image", "imageURL");
+		_assertMetaTag(document, "og:image", "http://localhost:8080/imageURL");
 		_assertMetaTag(document, "og:image:alt", "mappedImageAlt");
-		_assertMetaTag(document, "og:image:url", "imageURL");
+		_assertMetaTag(
+			document, "og:image:url", "http://localhost:8080/imageURL");
 	}
 
 	@Test
@@ -1213,7 +1214,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 					new InfoField(
 						ImageInfoFieldType.INSTANCE, null,
 						"mappedImageFieldName"),
-					new WebImage("imageURL")));
+					new WebImage("/imageURL")));
 
 			infoFormValues.add(
 				new InfoFieldValue<>(

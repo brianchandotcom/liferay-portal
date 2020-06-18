@@ -79,7 +79,7 @@ public class GlobalMenuProductNavigationControlMenuEntry
 		catch (ConfigurationException configurationException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Unable to get global app menu configuration",
+					"Unable to get global menu instance configuration",
 					configurationException);
 			}
 		}

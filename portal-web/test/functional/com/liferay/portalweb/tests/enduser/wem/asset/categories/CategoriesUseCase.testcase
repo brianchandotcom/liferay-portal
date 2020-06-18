@@ -1124,64 +1124,6 @@ definition {
 		Subcategory.viewSearchResultsCP(nullResult = "true");
 	}
 
-	@priority = "4"
-	test SearchVocabulary {
-		property testray.component.names = "Categories";
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.addCP(
-			vocabularyDescription = "Sushi",
-			vocabularyName = "Food Vocab");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.addCP(
-			vocabularyDescription = "Futbol",
-			vocabularyName = "Sport Vocab");
-
-		for (var vocabularyName : list "Food,Sport") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Search.searchCP(searchTerm = "${vocabularyName}");
-
-			Vocabulary.viewSearchResultsCP(vocabularyNameList = "${vocabularyName} Vocab");
-		}
-
-		for (var vocabularyDescription : list "Sushi,Futbol") {
-			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-			Search.searchCP(searchTerm = "${vocabularyDescription}");
-
-			Vocabulary.viewSearchResultsCP(vocabularyDefinitionList = "${vocabularyDescription}");
-		}
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Search.searchCP(searchTerm = "Vocab");
-
-		Vocabulary.viewSearchResultsCP(
-			vocabularyDefinitionList = "Sushi,Futbol",
-			vocabularyNameList = "Food Vocab,Sport Vocab");
-	}
-
-	@priority = "3"
-	test SearchVocabularyWithNullResult {
-		property testray.component.names = "Categories";
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Vocabulary.addCP(
-			vocabularyDescription = "Vocabulary Description",
-			vocabularyName = "Vocabulary Name");
-
-		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
-
-		Search.searchCP(searchTerm = "Null");
-
-		Vocabulary.viewSearchResultsCP(nullResult = "true");
-	}
-
 	@Description ="This is for LPS-101409. Validate selecting multiple categories when creating page with blank template."
 	@priority ="4"
 	test SelectMultipleRequiredCategoriesWithBlankPageTemplate {

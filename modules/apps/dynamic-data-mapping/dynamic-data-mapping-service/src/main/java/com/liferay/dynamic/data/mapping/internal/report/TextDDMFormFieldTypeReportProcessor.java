@@ -39,7 +39,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcos Martins
  */
 @Component(
-	immediate = true, property = "ddm.form.field.type.name=text",
+	immediate = true,
+	property = {
+		"ddm.form.field.type.name=date", "ddm.form.field.type.name=text"
+	},
 	service = DDMFormFieldTypeReportProcessor.class
 )
 public class TextDDMFormFieldTypeReportProcessor

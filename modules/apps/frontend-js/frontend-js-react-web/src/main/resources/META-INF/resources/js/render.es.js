@@ -62,7 +62,11 @@ export default function render(renderable, renderData, container) {
 			}
 		);
 
-		const Component = typeof renderable === 'function' ? renderable : null;
+		const Component =
+			typeof renderable === 'function' ||
+			renderable.$$typeof === Symbol.for('react.forward_ref')
+				? renderable
+				: null;
 
 		// eslint-disable-next-line liferay-portal/no-react-dom-render
 		ReactDOM.render(

@@ -23,5 +23,3 @@ export {default as DropZoneWithControls} from './DropZoneWithControls';
 export {default as Root} from './Root';
 export {default as Row} from './Row';
 export {default as RowWithControls} from './RowWithControls';
-export {default as Section} from './Section';
-export {default as SectionWithControls} from './SectionWithControls';

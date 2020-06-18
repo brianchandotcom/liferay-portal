@@ -303,7 +303,6 @@ definition {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "WorkflowUsecase#AddDDLRecordWithDoubleApproverDefinition";
 		property testray.component.names = "Training";
-		property portal.upstream = "quarantine";
 
 		GlobalMenu.gotoPortlet(
 			category = "Workflow",

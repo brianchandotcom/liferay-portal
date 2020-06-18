@@ -28,7 +28,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Web Content");
 
 		AssertVisible.assertVisibleNoSPAWait(locator1 = "//html[contains(@class,'lfr-spa-loading')]");

@@ -47,7 +47,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMNavigator.gotoAddRepositoryCP();
@@ -117,7 +116,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -136,7 +134,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -170,7 +167,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -185,7 +181,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -200,7 +195,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -228,7 +222,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -258,7 +251,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -271,7 +263,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -299,7 +290,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -343,7 +333,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		AssertTextEquals(
@@ -360,7 +349,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -373,7 +361,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -390,7 +377,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -405,7 +391,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -444,7 +429,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentCP(dmDocumentTitle = "Document_1.odt");
@@ -455,7 +439,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -477,7 +460,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		Search.searchCP(searchTerm = "Document_3.odt");
@@ -505,7 +487,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -526,7 +507,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -566,7 +546,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");
@@ -604,7 +583,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMRepository.gotoCP(dmRepositoryName = "Sharepoint Repository Name");

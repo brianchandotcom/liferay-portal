@@ -64,7 +64,6 @@ definition {
 	test ViewMentionViaDMComment {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(
@@ -110,7 +109,6 @@ definition {
 	test ViewReplyMentionViaDMComment {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(

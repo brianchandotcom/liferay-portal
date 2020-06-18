@@ -77,7 +77,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMNavigator.gotoMetadataSets();
@@ -94,7 +93,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media");
 
 		DMNavigator.gotoDocumentType();
@@ -109,7 +107,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Staging");
 
 		Staging.activateStagingCP(

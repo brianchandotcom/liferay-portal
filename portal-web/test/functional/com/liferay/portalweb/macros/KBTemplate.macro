@@ -27,7 +27,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Knowledge Base");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Templates");

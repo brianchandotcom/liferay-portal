@@ -54,7 +54,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		Mentions.addMentionViaMessageBoardThread(
@@ -66,7 +65,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
@@ -82,7 +80,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
@@ -93,7 +90,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		Mentions.addMentionViaMessageBoardsReply(
@@ -106,7 +102,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		MessageboardsThread.gotoCP(threadSubject = "Thread Subject");
@@ -130,7 +125,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		MessageboardsThread.addCP(
@@ -141,7 +135,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		Mentions.addMentionViaMessageBoardThreadEdit(
@@ -154,7 +147,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Message Boards");
 
 		MessageboardsThread.viewCP(

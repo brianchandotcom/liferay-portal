@@ -20,7 +20,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Staging");
 
 		Staging.activateStagingCP(siteName = "Site Name");
@@ -44,7 +43,6 @@ definition {
 	test PublishDraftViaSAP {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		Blogs.addDraft(
@@ -58,7 +56,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		Blogs.assertNoPublishOption(entryTitle = "Blogs Entry Title");
@@ -87,7 +84,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		Blogs.addEntry(
@@ -131,7 +127,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		BlogsNavigator.gotoAddEntry();
@@ -162,7 +157,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
@@ -175,7 +169,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
@@ -200,7 +193,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		BlogsNavigator.gotoEditCP(entryTitle = "Blogs Entry Title");
@@ -217,7 +209,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
@@ -261,7 +252,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		Blogs.addEntry(
@@ -274,7 +264,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -299,7 +288,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		BlogsNavigator.gotoShare(entryTitle = "Blogs Entry Title");
@@ -335,7 +323,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Staging");
 
 		Staging.modifyVariation(enableOnPublicPages = "true");
@@ -346,7 +333,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		Blogs.addEntry(
@@ -370,7 +356,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(
@@ -407,7 +392,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(
@@ -634,7 +618,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Staging");
 
 		Staging.editStagingConfiguration(isNotEditable = "Blogs");

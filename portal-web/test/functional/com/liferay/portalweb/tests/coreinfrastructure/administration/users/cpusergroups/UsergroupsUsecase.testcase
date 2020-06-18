@@ -149,7 +149,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
-			panel = "Site Administration",
 			portlet = "Memberships");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -178,7 +177,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
-			panel = "Site Administration",
 			portlet = "Memberships");
 
 		Site.unassignSiteRoleToUserGroup(

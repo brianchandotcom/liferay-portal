@@ -594,7 +594,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Widget Templates");
 
 		ApplicationDisplayTemplates.addCP(
@@ -628,7 +627,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Widget Templates");
 
 		ApplicationDisplayTemplates.addCP(
@@ -647,7 +645,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Widget Templates");
 
 		ApplicationDisplayTemplates.viewTemplate(adtType = "Asset Publisher");

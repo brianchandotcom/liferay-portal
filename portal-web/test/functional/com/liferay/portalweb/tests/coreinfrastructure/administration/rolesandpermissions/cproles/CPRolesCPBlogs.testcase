@@ -70,7 +70,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		Blogs.addEntry(
@@ -81,7 +80,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		BlogsNavigator.gotoBlogsEntryPermissionsCP(entryTitle = "Blogs Entry Title");
@@ -98,7 +96,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		BlogsEntry.viewDefaultCP(entryTitle = "Blogs Entry Title");
@@ -111,7 +108,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		Pause(locator = "5000");
@@ -130,7 +126,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
@@ -170,7 +165,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		BlogsConfiguration.viewNoPermissionCP();
@@ -211,7 +205,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Blogs");
 
 		BlogsConfiguration.viewNoPermissionCP();

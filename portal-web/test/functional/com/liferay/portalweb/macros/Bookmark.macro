@@ -294,7 +294,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
-			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
@@ -447,7 +446,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Bookmarks");
 
 		var key_assetName = "${bookmarkName}";
@@ -462,7 +460,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Bookmarks");
 
 		var key_assetName = "${bookmarkName}";
@@ -509,7 +506,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Bookmarks");
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
@@ -526,7 +522,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
-			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();

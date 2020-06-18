@@ -14,7 +14,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Export");
 	}
 
@@ -49,7 +48,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
-			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.viewCP(
@@ -63,7 +61,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Export");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
@@ -114,7 +111,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Publishing",
-			panel = "Site Administration",
 			portlet = "Export");
 
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");

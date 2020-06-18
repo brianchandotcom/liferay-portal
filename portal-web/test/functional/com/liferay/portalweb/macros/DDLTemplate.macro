@@ -175,7 +175,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Dynamic Data Lists");
 
 		DDLNavigator.gotoManageDataDefinitions();
@@ -314,7 +313,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Dynamic Data Lists");
 
 		DDLNavigator.gotoManageDataDefinitions();

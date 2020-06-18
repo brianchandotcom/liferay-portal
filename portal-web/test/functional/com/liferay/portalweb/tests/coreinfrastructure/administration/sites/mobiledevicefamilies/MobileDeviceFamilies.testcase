@@ -49,14 +49,12 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Mobile Device Families");
 
 		MobileDevice.addDeviceFamilyCP(deviceFamilyName = "Linux Family Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Mobile Device Families");
 
 		MobileDevice.addClassificationRuleCP(
@@ -67,14 +65,12 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Mobile Device Families");
 
 		MobileDevice.addDeviceFamilyCP(deviceFamilyName = "Windows Device Family Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Mobile Device Families");
 
 		MobileDevice.addClassificationRuleCP(
@@ -89,7 +85,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.gotoPageMenuItem(

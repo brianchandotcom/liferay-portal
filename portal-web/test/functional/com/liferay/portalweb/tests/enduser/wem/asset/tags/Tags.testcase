@@ -13,7 +13,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 	}
 
@@ -34,7 +33,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		Portlet.viewEmptyMessage(message = "There are no tags.");
@@ -48,7 +46,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		Tag.gotoMerge(
@@ -68,7 +65,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		for (var i : list "1,2,3") {
@@ -90,7 +86,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		Tag.viewCP(tagName = "tagname1");
@@ -110,7 +105,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		Tag.viewCP(tagName = "tagname1");
@@ -130,7 +124,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		Tag.viewCP(tagName = "tagname1");
@@ -158,7 +151,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		Tag.viewCP(tagName = "tagname1");
@@ -186,7 +178,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		for (var i : list "1,2,3") {
@@ -220,7 +211,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		for (var i : list "1,2,3,4,5,6,7") {
@@ -260,7 +250,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -297,7 +286,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Tags");
 
 		AssertTextEquals.assertPartialText(

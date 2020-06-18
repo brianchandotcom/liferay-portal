@@ -38,7 +38,6 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
-				panel = "Site Administration",
 				portlet = "Documents and Media",
 				site = "${siteName}");
 		}
@@ -376,7 +375,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Documents and Media",
 			site = "${site}");
 
@@ -396,7 +394,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
-			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();
@@ -419,7 +416,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Recycle Bin",
-			panel = "Site Administration",
 			portlet = "Recycle Bin");
 
 		RecycleBin.emptyCP();

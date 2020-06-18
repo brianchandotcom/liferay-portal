@@ -432,7 +432,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Web Content");
 
 		WebContentNavigator.gotoViewStatus(
@@ -474,7 +473,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Web Content",
 			site = "${siteName}");
 
@@ -549,7 +547,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Categories");
 
 		Vocabulary.deleteByMenuCP(vocabularyName = "Vocabulary Name");

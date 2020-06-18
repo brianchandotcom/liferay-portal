@@ -239,7 +239,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Web Content");
 
 		Navigator.gotoNavItem(navItem = "Templates");

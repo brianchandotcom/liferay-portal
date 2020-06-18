@@ -67,7 +67,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Wiki");
 
 		WikiPortlet.viewNoPermissionCP();
@@ -113,7 +112,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Wiki");
 
 		WikiPortlet.viewNoPermissionCP();

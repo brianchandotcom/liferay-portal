@@ -192,7 +192,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Categories");
 
 		Vocabulary.addWithAssociatedAssetTypeCP(
@@ -204,7 +203,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Categories");
 
 		Category.addCP(
@@ -282,7 +280,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Categories");
 
 		Vocabulary.addWithAssociatedAssetTypeCP(
@@ -294,7 +291,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
-			panel = "Site Administration",
 			portlet = "Categories");
 
 		Category.addCP(
@@ -838,7 +834,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Workflow");
 
 		Workflow.configureWorkflow(

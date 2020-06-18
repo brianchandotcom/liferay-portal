@@ -43,7 +43,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Social Activity");
 
 		SocialActivity.enableBlogsCP();
@@ -101,7 +100,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Social Activity");
 
 		SocialActivity.enableBlogsCP();

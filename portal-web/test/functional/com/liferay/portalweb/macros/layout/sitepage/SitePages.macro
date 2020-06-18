@@ -52,7 +52,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 	}
 
@@ -304,7 +303,6 @@ definition {
 	macro configurePage {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.togglePrivacy(privacy = "${privacy}");

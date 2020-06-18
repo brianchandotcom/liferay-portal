@@ -418,7 +418,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.gotoPageMenuItem(
@@ -505,7 +504,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Bookmarks");
 
 		Bookmark.viewNoCategoryCP(vocabularyName = "Vocabulary Name");
@@ -1257,7 +1255,6 @@ definition {
 		task ("Navigate to the Pages Administration") {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
-				panel = "Site Administration",
 				portlet = "Pages");
 		}
 
@@ -1309,7 +1306,6 @@ definition {
 		task ("Navigate to the Pages Administration") {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
-				panel = "Site Administration",
 				portlet = "Pages");
 		}
 
@@ -1332,7 +1328,6 @@ definition {
 		task ("Navigate to the Pages Administration") {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
-				panel = "Site Administration",
 				portlet = "Pages");
 		}
 

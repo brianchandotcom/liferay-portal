@@ -141,7 +141,6 @@ definition {
 	macro gotoPagePG {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages",
 			site = "${site}");
 
@@ -185,7 +184,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "People",
-			panel = "Site Administration",
 			portlet = "${portletName}");
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -198,7 +196,6 @@ definition {
 	macro gotoSiteTemplateCP {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages",
 			site = "${site}");
 

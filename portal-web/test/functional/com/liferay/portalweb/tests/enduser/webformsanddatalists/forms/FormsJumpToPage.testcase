@@ -15,7 +15,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoAddForm();
@@ -128,7 +127,6 @@ definition {
 
 			ProductMenu.gotoPortlet(
 				category = "Content &amp; Data",
-				panel = "Site Administration",
 				portlet = "Forms");
 
 			FormsAdmin.teardownForms();
@@ -147,7 +145,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -181,7 +178,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -242,7 +238,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -257,7 +252,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -283,7 +277,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -301,7 +294,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -327,7 +319,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();
@@ -340,7 +331,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Forms");
 
 		FormsAdminNavigator.gotoEditFormByName();

@@ -40,7 +40,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Contenido",
-			panel = "Site Administration",
 			portlet = "Formularios");
 
 		FormsAdminNavigator.gotoAddForm();
@@ -377,14 +376,12 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
-			panel = "Site Administration",
 			portlet = "Settings");
 
 		Site.configureCurrentLanguagesCP(defaultSiteLanguage = "Spanish (Spain)");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPublicPage(pageName = "Test Page");

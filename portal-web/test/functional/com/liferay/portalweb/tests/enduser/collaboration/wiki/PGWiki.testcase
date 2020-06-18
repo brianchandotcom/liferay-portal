@@ -62,7 +62,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Wiki");
 
 		WikiNavigator.gotoNode(wikiNodeName = "Main");
@@ -97,7 +96,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.addPrivatePage(pageName = "Child Site Page");
@@ -563,7 +561,6 @@ definition {
 	test AddPageWithInlineImage {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
-			panel = "Site Administration",
 			portlet = "Pages");
 
 		SitePages.configurePage(

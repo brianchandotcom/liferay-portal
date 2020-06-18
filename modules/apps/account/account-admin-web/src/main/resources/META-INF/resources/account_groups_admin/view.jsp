@@ -69,3 +69,8 @@ ViewAccountGroupsManagementToolbarDisplayContext viewAccountGroupsManagementTool
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
+
+<liferay-frontend:component
+	componentId="<%= viewAccountGroupsManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="account_groups_admin/js/AccountGroupsManagementToolbarDefaultEventHandler.es"
+/>

@@ -18,6 +18,8 @@ import com.liferay.account.admin.web.internal.display.AccountGroupDisplay;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,6 +29,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 
+import java.util.List;
+
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,6 +51,33 @@ public class ViewAccountGroupsManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		return DropdownItemList.of(
+			() -> {
+				DropdownItem dropdownItem = new DropdownItem();
+
+				dropdownItem.putData("action", "deleteAccountGroups");
+
+				PortletURL deleteAccountGroupsURL =
+					liferayPortletResponse.createActionURL();
+
+				deleteAccountGroupsURL.setParameter(
+					ActionRequest.ACTION_NAME,
+					"/account_groups_admin/delete_account_groups");
+
+				dropdownItem.putData(
+					"deleteAccountGroupsURL",
+					deleteAccountGroupsURL.toString());
+
+				dropdownItem.setIcon("times-circle");
+				dropdownItem.setLabel(LanguageUtil.get(request, "delete"));
+				dropdownItem.setQuickAction(true);
+
+				return dropdownItem;
+			});
 	}
 
 	@Override
@@ -70,6 +102,11 @@ public class ViewAccountGroupsManagementToolbarDisplayContext
 					LanguageUtil.get(request, "add-account-group"));
 			}
 		).build();
+	}
+
+	@Override
+	public String getDefaultEventHandler() {
+		return "ACCOUNT_GROUPS_MANAGEMENT_TOOLBAR_DEFAULT_EVENT_HANDLER";
 	}
 
 	@Override

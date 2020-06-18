@@ -39,4 +39,13 @@ AccountGroupDisplay accountGroupDisplay = (AccountGroupDisplay)row.getObject();
 		message="edit"
 		url="<%= editAccountGroupURL %>"
 	/>
+
+	<portlet:actionURL name="/account_groups_admin/delete_account_groups" var="deleteAccountGroupURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="accountGroupIds" value="<%= String.valueOf(accountGroupDisplay.getAccountGroupId()) %>" />
+	</portlet:actionURL>
+
+	<liferay-ui:icon-delete
+		url="<%= deleteAccountGroupURL %>"
+	/>
 </liferay-ui:icon-menu>

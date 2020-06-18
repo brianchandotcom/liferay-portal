@@ -25,9 +25,11 @@ import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.type.WebImage;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.layout.seo.service.LayoutSEOSiteLocalService;
@@ -569,6 +571,41 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertMetaTag(document, "og:locale", _group.getDefaultLanguageId());
 		_assertAlternateLocalesTag(
 			document, _language.getAvailableLocales(_group.getGroupId()));
+	}
+
+	@Test
+	public void testIncludeMappedImage() throws Exception {
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_layout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put(
+			"mapped-openGraphImage", "mappedImageFieldName");
+		typeSettingsUnicodeProperties.put(
+			"mapped-openGraphImageAlt", "mappedImageAltFieldName");
+
+		_layoutLocalService.updateLayout(_layout);
+
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
+
+		_testWithMockInfoItem(
+			httpServletRequest,
+			() -> _testWithLayoutSEOCompanyConfiguration(
+				() -> _dynamicInclude.include(
+					httpServletRequest, mockHttpServletResponse,
+					RandomTestUtil.randomString()),
+				true));
+
+		Document document = Jsoup.parse(
+			mockHttpServletResponse.getContentAsString());
+
+		_assertMetaTag(document, "og:image", "imageURL");
+		_assertMetaTag(document, "og:image:alt", "mappedImageAlt");
+		_assertMetaTag(document, "og:image:url", "imageURL");
 	}
 
 	@Test
@@ -1163,6 +1200,27 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 						TextInfoFieldType.INSTANCE, null,
 						"mappedTitleFieldName"),
 					"mappedTitle"));
+
+			infoFormValues.add(
+				new InfoFieldValue<>(
+					new InfoField(
+						TextInfoFieldType.INSTANCE, null,
+						"mappedTitleFieldName"),
+					"mappedTitle"));
+
+			infoFormValues.add(
+				new InfoFieldValue<>(
+					new InfoField(
+						ImageInfoFieldType.INSTANCE, null,
+						"mappedImageFieldName"),
+					new WebImage("imageURL")));
+
+			infoFormValues.add(
+				new InfoFieldValue<>(
+					new InfoField(
+						TextInfoFieldType.INSTANCE, null,
+						"mappedImageAltFieldName"),
+					"mappedImageAlt"));
 
 			return infoFormValues;
 		}

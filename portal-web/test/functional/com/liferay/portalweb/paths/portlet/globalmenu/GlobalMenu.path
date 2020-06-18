@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PORTLET</td>
-	<td>//li[contains(@class,'dropdown-subheader') and contains(.,'${key_category}')]/following-sibling::li/a[normalize-space(text())='${key_portlet}']</td>
+	<td>//li[contains(@class,'global-apps-nav-header') and contains(.,'${key_category}')]/following-sibling::li//span[normalize-space(text())='${key_portlet}']</td>
 	<td></td>
 </tr>
 <tr>

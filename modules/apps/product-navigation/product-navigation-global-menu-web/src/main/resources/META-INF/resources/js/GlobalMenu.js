@@ -58,15 +58,19 @@ const AppsPanel = ({
 	selectedPortletId,
 	sites,
 }) => {
-	const [activeTab, setActiveTab] = useState(
-		categories.findIndex((category) =>
-			category.childCategories.some((childCategory) =>
-				childCategory.panelApps.some(
-					(panelApp) => panelApp.portletId === selectedPortletId
-				)
+	let index = categories.findIndex((category) =>
+		category.childCategories.some((childCategory) =>
+			childCategory.panelApps.some(
+				(panelApp) => panelApp.portletId === selectedPortletId
 			)
 		)
 	);
+
+	if (index === -1) {
+		index = 0;
+	}
+
+	const [activeTab, setActiveTab] = useState(index);
 
 	return (
 		<>

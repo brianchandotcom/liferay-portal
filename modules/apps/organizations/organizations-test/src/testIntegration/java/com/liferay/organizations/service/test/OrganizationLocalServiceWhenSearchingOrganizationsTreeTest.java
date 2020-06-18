@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.comparator.OrganizationIdComparator;
+import com.liferay.portal.kernel.util.comparator.OrganizationNameComparator;
 import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.search.test.util.SearchStreamUtil;
 import com.liferay.portal.search.test.util.SearchTestRule;
@@ -49,6 +49,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -171,7 +172,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 			_user.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null,
 			organizationParams, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new Sort("organizationId", false));
+			new Sort("name", false));
 	}
 
 	protected String toString(Organization organization) {
@@ -245,11 +246,11 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 		List<Organization> indexerSearchResults =
 			baseModelSearchResult.getBaseModels();
 
+		Comparator<Organization> comparator = _organizationNameComparator;
+
 		AssertUtils.assertEquals(
 			String.valueOf(organizationParams),
-			toStringList(
-				ListUtil.sort(
-					expectedSearchResults, new OrganizationIdComparator(true))),
+			toStringList(ListUtil.sort(expectedSearchResults, comparator)),
 			toStringList(indexerSearchResults));
 
 		List<Organization> finderSearchResults =
@@ -257,7 +258,7 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 				_user.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID, null, null,
 				null, null, organizationParams, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, new OrganizationIdComparator(true));
+				QueryUtil.ALL_POS, new OrganizationNameComparator(true));
 
 		AssertUtils.assertEquals(
 			String.valueOf(organizationParams),
@@ -266,6 +267,14 @@ public class OrganizationLocalServiceWhenSearchingOrganizationsTreeTest {
 	}
 
 	private Organization _organization;
+
+	private final Comparator<Organization> _organizationNameComparator =
+		(organization1, organization2) -> {
+			String name1 = organization1.getName();
+			String name2 = organization2.getName();
+
+			return name1.compareToIgnoreCase(name2);
+		};
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();

@@ -67,7 +67,12 @@ export const formatRules = (state, pages) => {
 	return rules;
 };
 
-export const removeField = (props, pages, fieldName) => {
+export const removeField = (
+	props,
+	pages,
+	fieldName,
+	removeEmptyRows = true
+) => {
 	const visitor = new PagesVisitor(pages);
 
 	const filter = (fields) =>
@@ -87,29 +92,31 @@ export const removeField = (props, pages, fieldName) => {
 					};
 				}
 
-				const visitor = new PagesVisitor([
-					{
-						rows:
-							typeof field.rows === 'string'
-								? JSON.parse(field.rows)
-								: field.rows || [],
-					},
-				]);
+				let rows = [];
 
-				const rows = field.rows
-					? FormSupport.removeEmptyRows(
-							visitor.mapColumns((column) => ({
-								...column,
-								fields: column.fields.filter(
-									(nestedFieldName) =>
-										fieldName !== nestedFieldName
-								),
-							})),
-							0
-					  )
-					: [];
+				if (field.rows) {
+					const visitor = new PagesVisitor([
+						{
+							rows:
+								typeof field.rows === 'string'
+									? JSON.parse(field.rows)
+									: field.rows || [],
+						},
+					]);
 
-				field = updateField(props, field, 'rows', rows);
+					const pages = visitor.mapColumns((column) => ({
+						...column,
+						fields: column.fields.filter(
+							(nestedFieldName) => fieldName !== nestedFieldName
+						),
+					}));
+
+					rows = removeEmptyRows
+						? FormSupport.removeEmptyRows(pages, 0)
+						: pages[0].rows;
+
+					field = updateField(props, field, 'rows', rows);
+				}
 
 				return {
 					...field,
@@ -124,7 +131,11 @@ export const removeField = (props, pages, fieldName) => {
 	}));
 };
 
-export const handleFieldDeleted = (props, state, {activePage, fieldName}) => {
+export const handleFieldDeleted = (
+	props,
+	state,
+	{activePage, fieldName, removeEmptyRows = true}
+) => {
 	const {pages} = state;
 
 	if (activePage === undefined) {
@@ -133,12 +144,21 @@ export const handleFieldDeleted = (props, state, {activePage, fieldName}) => {
 
 	const newPages = pages.map((page, pageIndex) => {
 		if (activePage === pageIndex) {
+			const pagesWithFieldRemoved = removeField(
+				props,
+				pages,
+				fieldName,
+				removeEmptyRows
+			);
+
 			return {
 				...page,
-				rows: FormSupport.removeEmptyRows(
-					removeField(props, pages, fieldName),
-					pageIndex
-				),
+				rows: removeEmptyRows
+					? FormSupport.removeEmptyRows(
+							pagesWithFieldRemoved,
+							pageIndex
+					  )
+					: pagesWithFieldRemoved[pageIndex].rows,
 			};
 		}
 

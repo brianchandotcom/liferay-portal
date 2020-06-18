@@ -29,16 +29,18 @@ export default (props, state, event) => {
 		targetParentFieldName,
 	} = event;
 
-	const deletedState = handleFieldDeleted(props, state, {
-		activePage: sourceFieldPage,
-		fieldName: sourceFieldName,
-	});
 	const sourceField = FormSupport.findFieldByFieldName(
 		state.pages,
 		sourceFieldName
 	);
 
-	let mergedState = {...deletedState};
+	let mergedState = {
+		...handleFieldDeleted(props, state, {
+			activePage: sourceFieldPage,
+			fieldName: sourceFieldName,
+			removeEmptyRows: false,
+		}),
+	};
 	let parentField = getParentField(state.pages, sourceFieldName);
 
 	if (
@@ -66,12 +68,18 @@ export default (props, state, event) => {
 				...handleFieldDeleted(props, state, {
 					activePage: sourceFieldPage,
 					fieldName: parentFieldName,
+					removeEmptyRows: false,
 				}),
 			};
 		}
 	}
 
 	if (targetFieldName) {
+		const deletedState = handleFieldDeleted(props, state, {
+			activePage: sourceFieldPage,
+			fieldName: sourceFieldName,
+		});
+
 		return {
 			...handleSectionAdded(
 				props,
@@ -91,12 +99,25 @@ export default (props, state, event) => {
 		};
 	}
 
+	const addedState = addField(props, {
+		indexes: targetIndexes,
+		newField: sourceField,
+		pages: mergedState.pages,
+		parentFieldName: targetParentFieldName,
+	});
+	const {pages} = addedState;
+
 	return {
-		...addField(props, {
-			indexes: targetIndexes,
-			newField: sourceField,
-			pages: mergedState.pages,
-			parentFieldName: targetParentFieldName,
+		...addedState,
+		pages: pages.map((page, pageIndex) => {
+			if (sourceFieldPage === pageIndex) {
+				return {
+					...page,
+					rows: FormSupport.removeEmptyRows(pages, pageIndex),
+				};
+			}
+
+			return page;
 		}),
 	};
 };

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.internal.instance.lifecycle;
+package com.liferay.content.dashboard.web.internal.instance.lifecycle;
 
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;

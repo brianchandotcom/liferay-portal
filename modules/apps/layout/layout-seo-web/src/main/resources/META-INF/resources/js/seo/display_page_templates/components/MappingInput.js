@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 import MappingPanel from './MappingPanel';
 
 const UNMAPPED_OPTION = {
-	key: 'unmapped',
+	key: '',
 	label: `-- ${Liferay.Language.get('unmapped')} --`,
 };
 

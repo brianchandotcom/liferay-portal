@@ -86,7 +86,7 @@ describe('MappingInputs', () => {
 
 			expect(hiddenImageInput.type).toBe('hidden');
 			expect(hiddenImageInput.name).toBe(baseProps.inputs[1].name);
-			expect(hiddenImageInput.value).toBe('unmapped');
+			expect(hiddenImageInput.value).toBe('');
 		});
 	});
 });

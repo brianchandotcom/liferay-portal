@@ -76,10 +76,8 @@ public class DDMFormInstanceRecordModelPreFilterContributor
 
 		String[] languageIds = GetterUtil.getStringValues(
 			searchContext.getAttribute("languageIds"));
-
 		String[] notEmptyFields = GetterUtil.getStringValues(
 			searchContext.getAttribute("notEmptyFields"));
-
 		long structureId = GetterUtil.getLong(
 			searchContext.getAttribute("structureId"));
 

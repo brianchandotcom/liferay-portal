@@ -105,7 +105,6 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 
 		int start = ParamUtil.getInteger(
 			httpServletRequest, "start", QueryUtil.ALL_POS);
-
 		int end = ParamUtil.getInteger(
 			httpServletRequest, "end", QueryUtil.ALL_POS);
 

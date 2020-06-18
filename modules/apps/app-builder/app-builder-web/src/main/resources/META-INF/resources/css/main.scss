@@ -197,3 +197,9 @@ body.open .app-builder-upper-toolbar {
 		color: #6b6c7e;
 	}
 }
+
+.truncated-text {
+	display: flex;
+	overflow: hidden;
+	width: 180px;
+}

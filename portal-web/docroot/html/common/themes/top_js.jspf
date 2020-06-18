@@ -285,7 +285,7 @@
 				return '<%= themeDisplay.getUserId() %>';
 			},
 			getUserName: function() {
-				return '<%= themeDisplay.isSignedIn() ? HtmlUtil.escapeJS(UnicodeFormatter.toString(user.getFullName())) : StringPool.BLANK %>';
+				return '<%= themeDisplay.isSignedIn() ? UnicodeFormatter.toString(user.getFullName()) : StringPool.BLANK %>';
 			},
 			isAddSessionIdToURL: function() {
 				return <%= themeDisplay.isAddSessionIdToURL() %>;

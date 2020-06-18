@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.data.provider;
+package com.liferay.frontend.taglib.clay.data.set.provider;
 
 import java.util.List;
 
@@ -22,10 +22,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Marco Leo
  */
 @ProviderType
-public interface ClayDataProviderRegistry {
+public interface ClayDataSetProviderRegistry {
 
-	public ClayDataSetDataProvider getClayDataProvider(String key);
+	public ClayDataSetDataProvider getClayDataSetProvider(String key);
 
-	public List<ClayDataSetDataProvider> getClayDataProviders();
+	public List<ClayDataSetDataProvider> getClayDataSetProviders();
 
 }

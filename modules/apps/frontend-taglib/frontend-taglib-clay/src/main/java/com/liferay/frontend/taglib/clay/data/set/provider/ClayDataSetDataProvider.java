@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.data.provider;
+package com.liferay.frontend.taglib.clay.data.set.provider;
 
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
@@ -31,12 +31,13 @@ import org.osgi.annotation.versioning.ConsumerType;
 @ConsumerType
 public interface ClayDataSetDataProvider<T> {
 
-	public int countItems(HttpServletRequest httpServletRequest, Filter filter)
-		throws PortalException;
-
 	public List<T> getItems(
 			HttpServletRequest httpServletRequest, Filter filter,
 			Pagination pagination, Sort sort)
+		throws PortalException;
+
+	public int getItemsCount(
+			HttpServletRequest httpServletRequest, Filter filter)
 		throws PortalException;
 
 }

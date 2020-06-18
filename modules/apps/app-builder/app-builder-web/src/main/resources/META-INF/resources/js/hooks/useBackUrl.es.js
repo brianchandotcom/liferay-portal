@@ -12,17 +12,19 @@
  * details.
  */
 
-export const useNavigation = (history) => {
+import {useCallback, useContext} from 'react';
+import {__RouterContext as RouterContext} from 'react-router-dom';
+
+export default function useBackUrl() {
 	const {
 		location: {pathname, search},
-	} = history;
+	} = useContext(RouterContext);
 
-	const push = (url) => {
-		history.push({
+	return useCallback(
+		(url) => ({
 			pathname: url,
 			search: `?backUrl=${pathname}${search}`,
-		});
-	};
-
-	return {push};
-};
+		}),
+		[pathname, search]
+	);
+}

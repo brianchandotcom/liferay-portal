@@ -397,7 +397,7 @@ public class ToolDependencies {
 		public PortalCache<K, V> getPortalCache(String portalCacheName)
 			throws PortalCacheException {
 
-			return getPortalCache(portalCacheName, false);
+			return getPortalCache(portalCacheName, false, false);
 		}
 
 		@Override

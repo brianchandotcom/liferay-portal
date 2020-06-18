@@ -31,12 +31,10 @@ public class DynamicPortalCache<K extends Serializable, V>
 
 	public DynamicPortalCache(
 		PortalCacheManager<K, V> portalCacheManager,
-		PortalCache<K, V> portalCache, String portalCacheName, boolean blocking,
-		boolean mvcc) {
+		PortalCache<K, V> portalCache, String portalCacheName, boolean mvcc) {
 
 		_portalCacheManager = portalCacheManager;
 		_portalCacheName = portalCacheName;
-		_blocking = blocking;
 		_mvcc = mvcc;
 
 		if (portalCache == null) {
@@ -44,6 +42,14 @@ public class DynamicPortalCache<K extends Serializable, V>
 		}
 
 		_portalCache = portalCache;
+	}
+
+	public DynamicPortalCache(
+		PortalCacheManager<K, V> portalCacheManager,
+		PortalCache<K, V> portalCache, String portalCacheName, boolean blocking,
+		boolean mvcc) {
+
+		this(portalCacheManager, portalCache, portalCacheName, mvcc);
 	}
 
 	@Override
@@ -74,7 +80,7 @@ public class DynamicPortalCache<K extends Serializable, V>
 
 	@Override
 	public boolean isBlocking() {
-		return _blocking;
+		return false;
 	}
 
 	@Override
@@ -162,7 +168,6 @@ public class DynamicPortalCache<K extends Serializable, V>
 	private static final PortalCache<? extends Serializable, ?>
 		_DUMMY_PORTAL_CACHE = ProxyFactory.newDummyInstance(PortalCache.class);
 
-	private final boolean _blocking;
 	private final boolean _mvcc;
 	private volatile PortalCache<K, V> _portalCache;
 	private final Map<PortalCacheListener<K, V>, PortalCacheListenerScope>

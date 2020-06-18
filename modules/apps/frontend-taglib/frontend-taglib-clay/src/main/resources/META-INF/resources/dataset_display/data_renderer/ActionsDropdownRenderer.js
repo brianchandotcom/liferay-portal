@@ -36,11 +36,11 @@ function isNotALink(target, onClick) {
 
 function ActionItem({
 	closeMenu,
+	data,
 	handleAction,
 	href,
 	icon,
 	label,
-	method,
 	onClick,
 	size,
 	target,
@@ -50,7 +50,7 @@ function ActionItem({
 		event.preventDefault();
 
 		handleAction({
-			method,
+			method: data?.method,
 			onClick,
 			size: size || 'lg',
 			target,
@@ -61,11 +61,12 @@ function ActionItem({
 		closeMenu();
 	}
 
+	const notALink = isNotALink(target, onClick);
+
 	return (
 		<ClayDropDown.Item
-			data-senna-off
-			href={href || '#'}
-			onClick={isNotALink(target, onClick) ? handleClickOnLink : null}
+			href={notALink ? 'javascript:;' : href}
+			onClick={notALink ? handleClickOnLink : null}
 		>
 			{icon && (
 				<span className="pr-2">
@@ -89,7 +90,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	const [loading, setLoading] = useState(false);
 
 	function handleAction({
-		method = '',
+		method,
 		onClick = '',
 		size = '',
 		target = '',
@@ -110,8 +111,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 					break;
 			}
 		}
-
-		if (target === 'sidePanel') {
+		else if (target === 'sidePanel') {
 			highlightItems([itemId]);
 			openSidePanel({
 				size: size || 'lg',
@@ -119,13 +119,14 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 				url,
 			});
 		}
-
-		if (target === 'async') {
+		else if (target === 'async') {
 			setLoading(true);
 			executeAsyncItemAction(url, method).then(() => setLoading(false));
 		}
-
-		if (onClick && typeof window[onClick] === 'function') {
+		else if (target === 'blank') {
+			window.open(url);
+		}
+		else if (onClick && typeof window[onClick] === 'function') {
 			window[onClick]();
 		}
 	}
@@ -162,7 +163,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 					event.preventDefault();
 
 					handleAction({
-						method: action.method,
+						method: action.data?.method,
 						onClick: action.onClick,
 						size: action.size,
 						target: action.target,
@@ -235,10 +236,12 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 ActionsDropdownRenderer.propTypes = {
 	actions: PropTypes.arrayOf(
 		PropTypes.shape({
+			data: PropTypes.shape({
+				method: PropTypes.oneOf(['get', 'delete']),
+			}),
 			href: PropTypes.string,
 			icon: PropTypes.string,
 			label: PropTypes.string.isRequired,
-			method: PropTypes.oneOf(['get', 'delete']),
 			onClick: PropTypes.string,
 			target: PropTypes.oneOf(['modal', 'sidePanel', 'link', 'async']),
 		})

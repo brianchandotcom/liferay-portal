@@ -81,11 +81,6 @@ public class CPDefinitionAssetRenderer
 	}
 
 	@Override
-	public Date getDisplayDate() {
-		return _cpDefinition.getDisplayDate();
-	}
-
-	@Override
 	public long getGroupId() {
 		return _cpDefinition.getGroupId();
 	}

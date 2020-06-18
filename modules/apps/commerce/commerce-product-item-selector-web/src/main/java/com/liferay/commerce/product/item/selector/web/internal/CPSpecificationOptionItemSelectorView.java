@@ -72,16 +72,6 @@ public class CPSpecificationOptionItemSelectorView
 	}
 
 	@Override
-	public boolean isShowSearch() {
-		return false;
-	}
-
-	@Override
-	public boolean isVisible(ThemeDisplay themeDisplay) {
-		return true;
-	}
-
-	@Override
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
 			CPSpecificationOptionItemSelectorCriterion

@@ -118,16 +118,6 @@ class Form extends Component {
 					this._translationManagerHandles = [
 						translationManager.on('editingLocale', ({newValue}) => {
 							this.props.editingLanguageId = newValue;
-
-							if (
-								translationManager.get('defaultLocale') ===
-								newValue
-							) {
-								this.showAddButton();
-							}
-							else {
-								this.hideAddButton();
-							}
 						}),
 						translationManager.on(
 							'availableLocales',
@@ -920,13 +910,7 @@ class Form extends Component {
 	}
 
 	_toggleFormBuilder(show) {
-		const {
-			defaultLanguageId,
-			editingLanguageId,
-			namespace,
-			published,
-			saved,
-		} = this.props;
+		const {namespace, published, saved} = this.props;
 
 		const managementToolbar = document.querySelector(
 			`#${namespace}managementToolbar`
@@ -959,13 +943,7 @@ class Form extends Component {
 			if (saved || published) {
 				shareURLButton.classList.remove('hide');
 			}
-
-			if (defaultLanguageId === editingLanguageId) {
-				this.showAddButton();
-			}
-			else {
-				this.hideAddButton();
-			}
+			this.showAddButton();
 		}
 		else {
 			managementToolbar.classList.add('hide');

@@ -34,15 +34,9 @@ const withResizeableColumns = (ChildComponent) => {
 			}
 		}
 
-		isResizeEnabled() {
-			const {defaultLanguageId, editingLanguageId} = this.props;
-
-			return defaultLanguageId === editingLanguageId;
-		}
-
 		render() {
 			return (
-				<div class={this.isResizeEnabled() ? 'resizeable' : ''}>
+				<div class="resizeable">
 					<ChildComponent {...this.props} />
 				</div>
 			);

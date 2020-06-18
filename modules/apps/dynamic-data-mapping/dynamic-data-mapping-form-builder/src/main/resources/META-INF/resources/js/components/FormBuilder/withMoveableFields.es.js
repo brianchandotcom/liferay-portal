@@ -57,15 +57,9 @@ const withMoveableFields = (ChildComponent) => {
 			this.disposeDragAndDrop();
 		}
 
-		isDragEnabled() {
-			const {defaultLanguageId, editingLanguageId} = this.props;
-
-			return defaultLanguageId === editingLanguageId;
-		}
-
 		render() {
 			return (
-				<div class={this.isDragEnabled() ? 'moveable' : ''}>
+				<div class="moveable">
 					<ChildComponent {...this.props} />
 				</div>
 			);

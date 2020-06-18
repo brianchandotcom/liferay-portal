@@ -171,7 +171,7 @@ class Sidebar extends Component {
 					...field,
 					defaultLanguageId,
 					editingLanguageId,
-					readOnly: this.isFieldReadOnly(field),
+					readOnly: false,
 				};
 
 				return {
@@ -180,26 +180,6 @@ class Sidebar extends Component {
 				};
 			}),
 		};
-	}
-
-	isActionsDisabled() {
-		const {defaultLanguageId, editingLanguageId} = this.props;
-
-		return defaultLanguageId !== editingLanguageId;
-	}
-
-	isChangeFieldTypeEnabled() {
-		return !this.isActionsDisabled();
-	}
-
-	isFieldReadOnly({localizable, type}) {
-		const {defaultLanguageId, editingLanguageId} = this.props;
-
-		if (type === 'validation') {
-			return false;
-		}
-
-		return defaultLanguageId !== editingLanguageId && !localizable;
 	}
 
 	open() {
@@ -1142,12 +1122,10 @@ class Sidebar extends Component {
 		const editMode = this._isEditMode();
 		const fieldActions = [
 			{
-				disabled: this.isActionsDisabled(),
 				label: Liferay.Language.get('duplicate-field'),
 				settingsItem: 'duplicate-field',
 			},
 			{
-				disabled: this.isActionsDisabled(),
 				label: Liferay.Language.get('remove-field'),
 				settingsItem: 'delete-field',
 			},
@@ -1180,7 +1158,6 @@ class Sidebar extends Component {
 					<Fragment>
 						<li class="tbar-item">
 							<ClayButton
-								disabled={this.isActionsDisabled()}
 								elementClasses="nav-link"
 								events={previousButtonEvents}
 								icon="angle-left"
@@ -1193,7 +1170,6 @@ class Sidebar extends Component {
 						<li class="tbar-item ddm-fieldtypes-dropdown tbar-item-expand text-left">
 							<div>
 								<ClayDropdownBase
-									disabled={!this.isChangeFieldTypeEnabled()}
 									events={{
 										itemClicked: this
 											._handleChangeFieldTypeItemClicked,

@@ -78,6 +78,8 @@ export const Column = ({
 		'data-ddm-field-row': rowIndex,
 	};
 
+	const firstField = column.fields[0];
+
 	return (
 		<div {...addr} className={`col-md-${column.size} col-ddm`} key={index}>
 			{editable && column.fields.length > 0 ? (
@@ -86,19 +88,21 @@ export const Column = ({
 						'ddm-field-container ddm-target h-100',
 						{
 							'active-drop-child':
-								column.fields[0].type === 'fieldset' &&
-								overTarget,
-							selected: column.fields[0].selected,
+								firstField.type === 'fieldset' && overTarget,
+							'ddm-fieldset':
+								firstField.type === 'fieldset' &&
+								firstField.ddmStructureId,
+							selected: firstField.selected,
 							'target-over targetOver': overTarget,
 						}
 					)}
-					data-field-name={column.fields[0].fieldName}
+					data-field-name={firstField.fieldName}
 				>
 					<div
 						className={classnames(
 							'ddm-resize-handle ddm-resize-handle-left',
 							{
-								hide: !column.fields[0].selected,
+								hide: !firstField.selected,
 							}
 						)}
 						{...addr}
@@ -115,7 +119,7 @@ export const Column = ({
 						className={classnames(
 							'ddm-resize-handle ddm-resize-handle-right',
 							{
-								hide: !column.fields[0].selected,
+								hide: !firstField.selected,
 							}
 						)}
 						{...addr}

@@ -28,7 +28,6 @@ import java.io.IOException;
 
 import java.util.Dictionary;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -127,16 +126,11 @@ public class AppPortlet extends MVCPortlet {
 				"viewEntryPoint", appBuilderAppPortletTab.getViewEntryPoint()
 			).build());
 
-		if (Objects.equals(
-				ParamUtil.getString(renderRequest, "mvcPath"),
-				"/edit_entry.jsp")) {
-
-			renderRequest.setAttribute(
-				AppBuilderWebKeys.DATA_LAYOUT_IDS,
-				appBuilderAppPortletTab.getDataLayoutIds(
-					_appBuilderApp,
-					ParamUtil.getLong(renderRequest, "dataRecordId")));
-		}
+		renderRequest.setAttribute(
+			AppBuilderWebKeys.DATA_LAYOUT_IDS,
+			appBuilderAppPortletTab.getDataLayoutIds(
+				_appBuilderApp,
+				ParamUtil.getLong(renderRequest, "dataRecordId")));
 
 		renderRequest.setAttribute(
 			AppBuilderWebKeys.SHOW_FORM_VIEW, _showFormView);

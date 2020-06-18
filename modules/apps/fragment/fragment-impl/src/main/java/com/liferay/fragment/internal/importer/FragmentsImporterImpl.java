@@ -257,6 +257,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 		}
 
 		int status = WorkflowConstants.STATUS_APPROVED;
+		String errorMessage = null;
 
 		try {
 			_fragmentEntryProcessorRegistry.validateFragmentEntryHTML(
@@ -268,6 +269,7 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 			}
 
 			status = WorkflowConstants.STATUS_DRAFT;
+			errorMessage = portalException.getLocalizedMessage();
 		}
 
 		int type = FragmentConstants.getTypeFromLabel(
@@ -302,12 +304,14 @@ public class FragmentsImporterImpl implements FragmentsImporter {
 					FragmentsImporterResultEntry.Status.IMPORTED_DRAFT;
 			}
 
+			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
+				fragmentEntry);
+
 			_fragmentsImporterResultEntries.add(
 				new FragmentsImporterResultEntry(
-					name, fragmentsImporterResultEntryStatus));
+					name, fragmentsImporterResultEntryStatus, errorMessage));
 
-			return _fragmentEntryLocalService.updateFragmentEntry(
-				fragmentEntry);
+			return fragmentEntry;
 		}
 		catch (PortalException portalException) {
 			_fragmentsImporterResultEntries.add(

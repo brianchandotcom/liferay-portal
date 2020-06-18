@@ -86,6 +86,14 @@ public class NavigationBarTag extends BaseContainerTag {
 	}
 
 	@Override
+	protected Map<String, Object> prepareProps(Map<String, Object> props) {
+		props.put("inverted", _inverted);
+		props.put("navigationItems", _navigationItems);
+
+		return super.prepareProps(props);
+	}
+
+	@Override
 	protected String processCssClasses(Set<String> cssClasses) {
 		cssClasses.add("navbar");
 		cssClasses.add("navbar-collapse-absolute");
@@ -97,14 +105,6 @@ public class NavigationBarTag extends BaseContainerTag {
 			_inverted ? "navigation-bar-secondary" : "navigation-bar-light");
 
 		return super.processCssClasses(cssClasses);
-	}
-
-	@Override
-	protected Map<String, Object> processData(Map<String, Object> data) {
-		data.put("inverted", _inverted);
-		data.put("navigationItems", _navigationItems);
-
-		return super.processData(data);
 	}
 
 	@Override

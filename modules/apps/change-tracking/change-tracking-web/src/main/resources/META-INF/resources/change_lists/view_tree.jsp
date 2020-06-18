@@ -20,11 +20,9 @@
 ViewChangesDisplayContext viewChangesDisplayContext = (ViewChangesDisplayContext)request.getAttribute(CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT);
 %>
 
-<clay:container>
-	<div class="view-tree-change-list-wrapper">
-		<react:component
-			data="<%= viewChangesDisplayContext.getReactData() %>"
-			module="change_lists/js/ChangeTrackingTreeView"
-		/>
-	</div>
-</clay:container>
+<div class="view-tree-change-list-wrapper">
+	<react:component
+		data="<%= viewChangesDisplayContext.getReactData() %>"
+		module="change_lists/js/ChangeTrackingTreeView"
+	/>
+</div>

@@ -50,7 +50,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -514,8 +513,6 @@ public class ViewChangesDisplayContext {
 						childJSONObject.getLong("modelClassNameId")));
 			}
 
-			childJSONObjects.sort(SortJSONObjectsByTitleComparator.INSTANCE);
-
 			JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (JSONObject childJSONObject : childJSONObjects) {
@@ -533,8 +530,6 @@ public class ViewChangesDisplayContext {
 			List<Integer> nodeIds = new ArrayList<>();
 
 			List<JSONObject> roodDisplayNodes = entry.getValue();
-
-			roodDisplayNodes.sort(SortJSONObjectsByTitleComparator.INSTANCE);
 
 			for (JSONObject rootDisplayNode : roodDisplayNodes) {
 				nodeIds.add(rootDisplayNode.getInt("id"));
@@ -571,21 +566,5 @@ public class ViewChangesDisplayContext {
 	private SearchContainer<CTEntry> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final Map<Long, String> _typeNameMap = new HashMap<>();
-
-	private static class SortJSONObjectsByTitleComparator
-		implements Comparator<JSONObject> {
-
-		public static final Comparator<JSONObject> INSTANCE =
-			new SortJSONObjectsByTitleComparator();
-
-		@Override
-		public int compare(JSONObject o1, JSONObject o2) {
-			String title1 = o1.getString("title");
-			String title2 = o2.getString("title");
-
-			return title1.compareTo(title2);
-		}
-
-	}
 
 }

@@ -13,9 +13,11 @@
  */
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
-import {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
@@ -34,14 +36,17 @@ class ChangeTrackingTreeView extends React.Component {
 		this.tree = tree;
 
 		this.state = {
+			ascending: true,
 			breadcrumbItems: this._getBreadcrumbItems(
 				'everything',
 				tree.everything
 			),
+			column: 'title',
 			delta: 20,
 			node: tree.everything,
 			page: 1,
 			renderInnerHTML: null,
+			sortDirectionClass: 'order-arrow-down-active',
 			title: tree.everything.title,
 		};
 	}
@@ -208,12 +213,49 @@ class ChangeTrackingTreeView extends React.Component {
 		return null;
 	}
 
-	_getDisplayNodes(delta, nodes, page) {
-		if (nodes.length <= 5) {
-			return nodes;
+	_getDisplayNodes(ascending, column, delta, nodes, page) {
+		const displayNodes = nodes.slice(0);
+
+		if (column === 'title') {
+			displayNodes.sort((a, b) => {
+				const titleA = a.title;
+				const titleB = b.title;
+				const typeNameA = a.typeName.toUpperCase();
+				const typeNameB = b.typeName.toUpperCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				if (titleA < titleB) {
+					if (ascending) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (titleA > titleB) {
+					if (ascending) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
 		}
 
-		return nodes.slice(delta * (page - 1), delta * page);
+		if (displayNodes.length <= 5) {
+			return displayNodes;
+		}
+
+		return displayNodes.slice(delta * (page - 1), delta * page);
 	}
 
 	_getTableRows(nodes) {
@@ -312,6 +354,98 @@ class ChangeTrackingTreeView extends React.Component {
 		}
 	}
 
+	_handleSortColumnChange(column) {
+		this.setState({
+			column,
+		});
+	}
+
+	_handleSortDirectionChange() {
+		if (this.state.ascending) {
+			this.setState({
+				ascending: false,
+				sortDirectionClass: 'order-arrow-up-active',
+			});
+
+			return;
+		}
+
+		this.setState({
+			ascending: true,
+			sortDirectionClass: 'order-arrow-down-active',
+		});
+	}
+
+	_renderManagementToolbar() {
+		const items = [
+			{
+				active: this.state.column === 'title',
+				label: Liferay.Language.get('title'),
+				onClick: () => this._handleSortColumnChange('title'),
+			},
+		];
+
+		const dropdownItems = [
+			{
+				items,
+				label: Liferay.Language.get('order-by'),
+				type: 'group',
+			},
+		];
+
+		return (
+			<ClayManagementToolbar>
+				<ClayManagementToolbar.ItemList>
+					<ClayManagementToolbar.Item>
+						<ClayDropDownWithItems
+							items={dropdownItems}
+							spritemap={this.spritemap}
+							trigger={
+								<ClayButton
+									className="nav-link"
+									displayType="unstyled"
+								>
+									<span className="navbar-breakpoint-down-d-none">
+										<span className="navbar-text-truncate">
+											{Liferay.Language.get(
+												'filter-and-order'
+											)}
+										</span>
+
+										<ClayIcon
+											className="inline-item inline-item-after"
+											spritemap={this.spritemap}
+											symbol="caret-bottom"
+										/>
+									</span>
+									<span className="navbar-breakpoint-d-none">
+										<ClayIcon
+											spritemap={this.spritemap}
+											symbol="filter"
+										/>
+									</span>
+								</ClayButton>
+							}
+						/>
+					</ClayManagementToolbar.Item>
+
+					<ClayManagementToolbar.Item>
+						<ClayButton
+							className={this.state.sortDirectionClass}
+							displayType="unstyled"
+							onClick={() => this._handleSortDirectionChange()}
+						>
+							<ClayIcon
+								spritemap={this.spritemap}
+								symbol="order-arrow"
+							/>
+						</ClayButton>
+					</ClayManagementToolbar.Item>
+				</ClayManagementToolbar.ItemList>
+			</ClayManagementToolbar>
+		);
+	}
+
 	_renderTable() {
 		const nodes = this.state.node.children;
 
@@ -320,11 +454,13 @@ class ChangeTrackingTreeView extends React.Component {
 		}
 
 		return (
-			<div>
+			<>
 				<ClayTable className="change-lists-table" hover={false}>
 					<ClayTable.Body>
 						{this._getTableRows(
 							this._getDisplayNodes(
+								this.state.ascending,
+								this.state.column,
 								this.state.delta,
 								nodes,
 								this.state.page
@@ -334,7 +470,7 @@ class ChangeTrackingTreeView extends React.Component {
 				</ClayTable>
 
 				{this._renderPagination(nodes)}
-			</div>
+			</>
 		);
 	}
 
@@ -347,7 +483,7 @@ class ChangeTrackingTreeView extends React.Component {
 			<ClayPaginationBarWithBasicItems
 				activeDelta={this.state.delta}
 				activePage={this.state.page}
-				deltas={[5, 10, 20, 30, 50, 75, 100].map((size) => ({
+				deltas={[4, 8, 20, 40, 60].map((size) => ({
 					label: size,
 				}))}
 				ellipsisBuffer={3}
@@ -438,38 +574,42 @@ class ChangeTrackingTreeView extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<ClayBreadcrumb
-					ellipsisBuffer={1}
-					items={this.state.breadcrumbItems}
-					spritemap={this.spritemap}
-				/>
+			<>
+				{this._renderManagementToolbar()}
 
-				<div className="row">
-					<div className="col-md-3">
-						<div className="panel panel-secondary">
-							<div className="panel-body">
-								<ClayRadioGroup
-									onSelectedValueChange={(filterClass) =>
-										this._handleNavigationUpdate({
-											filterClass,
-											nodeId: 0,
-										})
-									}
-									selectedValue={this.filterClass}
-								>
-									{this._getRootDisplayOptions()}
-								</ClayRadioGroup>
+				<div className="container-fluid container-fluid-max-xl">
+					<ClayBreadcrumb
+						ellipsisBuffer={1}
+						items={this.state.breadcrumbItems}
+						spritemap={this.spritemap}
+					/>
+
+					<div className="change-lists-changes-content row">
+						<div className="col-md-3">
+							<div className="panel panel-secondary">
+								<div className="panel-body">
+									<ClayRadioGroup
+										onSelectedValueChange={(filterClass) =>
+											this._handleNavigationUpdate({
+												filterClass,
+												nodeId: 0,
+											})
+										}
+										selectedValue={this.filterClass}
+									>
+										{this._getRootDisplayOptions()}
+									</ClayRadioGroup>
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div className="col-md-9">
-						{this._renderEntry()}
-						{this._renderTable()}
+						<div className="col-md-9">
+							{this._renderEntry()}
+							{this._renderTable()}
+						</div>
 					</div>
 				</div>
-			</div>
+			</>
 		);
 	}
 }

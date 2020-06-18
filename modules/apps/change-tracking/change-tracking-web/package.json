@@ -4,6 +4,8 @@
 		"@clayui/button": "3.3.1",
 		"@clayui/drop-down": "3.4.4",
 		"@clayui/form": "3.8.0",
+		"@clayui/icon": "3.0.5",
+		"@clayui/management-toolbar": "3.2.0",
 		"@clayui/pagination-bar": "3.1.4",
 		"@clayui/table": "3.0.7",
 		"frontend-js-web": "*",

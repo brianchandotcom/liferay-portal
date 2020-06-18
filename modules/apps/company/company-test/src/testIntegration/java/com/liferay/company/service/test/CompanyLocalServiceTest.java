@@ -786,6 +786,8 @@ public class CompanyLocalServiceTest {
 
 		user = UserLocalServiceUtil.getDefaultUser(company.getCompanyId());
 
+		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+
 		Assert.assertEquals(languageId, user.getLanguageId());
 		Assert.assertEquals("CET", user.getTimeZoneId());
 	}

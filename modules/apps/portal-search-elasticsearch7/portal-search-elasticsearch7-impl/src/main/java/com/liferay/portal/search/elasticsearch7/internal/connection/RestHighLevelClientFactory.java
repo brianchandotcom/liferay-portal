@@ -172,7 +172,12 @@ public class RestHighLevelClientFactory {
 	protected RestHighLevelClient newRestHighLevelClient(int port) {
 		return ClassLoaderUtil.getWithContextClassLoader(
 			() -> new RestHighLevelClient(
-				RestClient.builder(new HttpHost(_hostName, port, _scheme))),
+				RestClient.builder(
+					new HttpHost(_hostName, port, _scheme)
+				).setRequestConfigCallback(
+					requestConfigBuilder ->
+						requestConfigBuilder.setSocketTimeout(120000)
+				)),
 			getClass());
 	}
 

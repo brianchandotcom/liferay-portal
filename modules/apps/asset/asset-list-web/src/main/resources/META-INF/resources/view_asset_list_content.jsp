@@ -18,6 +18,8 @@
 
 <%
 AssetListContentDisplayContext assetListContentDisplayContext = (AssetListContentDisplayContext)request.getAttribute(AssetListWebKeys.ASSET_LIST_CONTENT_DISPLAY_CONTEXT);
+
+AssetListContentActionDropdownItems assetListContentActionDropdownItems = (AssetListContentActionDropdownItems)request.getAttribute(AssetListWebKeys.ASSET_LIST_CONTENT_ACTION_DROPDOWN_ITEMS);
 %>
 
 <clay:container-fluid
@@ -63,6 +65,15 @@ AssetListContentDisplayContext assetListContentDisplayContext = (AssetListConten
 				name="create-date"
 				value="<%= assetEntry.getCreateDate() %>"
 			/>
+
+			<c:if test="<%= assetListContentDisplayContext.isShowActions() %>">
+				<liferay-ui:search-container-column-text>
+					<clay:dropdown-actions
+						defaultEventHandler="<%= AssetListWebKeys.ASSET_LIST_CONTENT_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+						dropdownItems="<%= assetListContentActionDropdownItems.getActionDropdownItems(assetEntry) %>"
+					/>
+				</liferay-ui:search-container-column-text>
+			</c:if>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
@@ -70,3 +81,8 @@ AssetListContentDisplayContext assetListContentDisplayContext = (AssetListConten
 		/>
 	</liferay-ui:search-container>
 </clay:container-fluid>
+
+<liferay-frontend:component
+	componentId="<%= AssetListWebKeys.ASSET_LIST_CONTENT_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/AssetListContentDropdownDefaultEventHandler.es"
+/>

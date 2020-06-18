@@ -112,6 +112,16 @@ public class AssetListContentDisplayContext {
 		return _segmentsEntryId;
 	}
 
+	public boolean isShowActions() {
+		if (_showActions != null) {
+			return _showActions;
+		}
+
+		_showActions = ParamUtil.get(_renderRequest, "showActions", false);
+
+		return _showActions;
+	}
+
 	private PortletURL _getAssetListContentURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -132,6 +142,7 @@ public class AssetListContentDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private Long _segmentsEntryId;
+	private Boolean _showActions;
 	private final ThemeDisplay _themeDisplay;
 
 }

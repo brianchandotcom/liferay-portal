@@ -5,19 +5,44 @@ definition {
 
 		PortletEntry.inputName(name = "${dmDocumentTypeName}");
 
-		PortletEntry.inputDescription(description = "${dmDocumentTypeDescription}");
+		DMDocumentType.gotoTab(tabName = "Builder");
 
-		Panel.expandPanel(panel = "Main Metadata Fields");
+		var rowNum = "0";
 
 		for (var dmDocumentTypeFieldName : list "${dmDocumentTypeFieldNames}") {
-			DynamicDataMapping.addField(
-				field = "${dmDocumentTypeFieldName}",
-				fieldFieldLabel = "${dmDocumentTypeFieldName}",
-				fieldName = StringUtil.replace("${dmDocumentTypeFieldName}", " ", ""));
+			Type.sendKeys(
+				locator1 = "DocumentsAndMediaDocumentTypes#SEARCH_FIELD",
+				value1 = "${dmDocumentTypeFieldName}");
+
+			var key_fieldType = "${dmDocumentTypeFieldName}";
+
+			if (IsElementPresent(locator1 = "DocumentsAndMediaDocumentTypes#FIELD_DROP_TARGET")) {
+				DragAndDrop.javaScriptDragAndDropToObject(
+					locator1 = "DocumentsAndMediaDocumentTypes#ADD_FIELD_TYPE",
+					locator2 = "DocumentsAndMediaDocumentTypes#FIELD_DROP_TARGET",
+					value1 = "${dmDocumentTypeFieldName}");
+			}
+			else {
+				DragAndDrop.javaScriptDragAndDropToBottom(
+					key_rowNum = "${rowNum}",
+					locator1 = "DocumentsAndMediaDocumentTypes#ADD_FIELD_TYPE",
+					locator2 = "DocumentsAndMediaDocumentTypes#FIELD_BOTTOM_DROP_TARGET",
+					value1 = "${dmDocumentTypeFieldName}");
+			}
+
+			Click(locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_BACK");
+
+			var rowNum = ${rowNum} + 1;
+		}
+
+		if (isSet(dmDocumentTypeDescription)) {
+			DMDocumentType.gotoTab(tabName = "Details");
+
+			PortletEntry.inputDescription(description = "${dmDocumentTypeDescription}");
 		}
 
 		if (isSet(metadataSetName)) {
-			Panel.expandPanel(panel = "Additional Metadata Fields");
+			DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
 
 			DMDocumentType.selectPGMetadataSet(key_metadataSetName = "${metadataSetName}");
 		}
@@ -68,27 +93,40 @@ definition {
 		}
 
 		if (isSet(dmDocumentTypeDescriptionEdit)) {
+			DMDocumentType.gotoTab(tabName = "Details");
+
 			Type(
 				locator1 = "DocumentsAndMediaEditDocumentType#DETAILS_DESCRIPTION_FIELD",
 				value1 = "${dmDocumentTypeDescriptionEdit}");
 		}
 
 		if (isSet(dmDocumentTypeFieldRequiredEdit)) {
-			Panel.expandPanel(panel = "Main Metadata Fields");
+			DMDocumentType.gotoEditField(fieldName = "${dmDocumentTypeFieldRequiredEdit}");
 
-			DynamicDataMapping.editFieldSettings(fieldFieldLabel = "${dmDocumentTypeFieldRequiredEdit}");
-
-			DynamicDataMapping.makeFieldRequired();
+			FormFields.enableSwitcher(fieldName = "Required Field");
 		}
 
 		if (isSet(dmDocumentTypeFieldNames)) {
-			Panel.expandPanel(panel = "Main Metadata Fields");
+			DMDocumentType.gotoTab(tabName = "Builder");
+
+			var rowNum = "${rowNum}";
 
 			for (var dmDocumentTypeFieldName : list "${dmDocumentTypeFieldNames}") {
-				DynamicDataMapping.addField(
-					field = "${dmDocumentTypeFieldName}",
-					fieldFieldLabel = "${dmDocumentTypeFieldName}",
-					fieldName = StringUtil.replace("${dmDocumentTypeFieldName}", " ", ""));
+				Type.sendKeys(
+					locator1 = "DocumentsAndMediaDocumentTypes#SEARCH_FIELD",
+					value1 = "${dmDocumentTypeFieldName}");
+
+				var key_fieldType = "${dmDocumentTypeFieldName}";
+
+				DragAndDrop.javaScriptDragAndDropToBottom(
+					key_rowNum = "${rowNum}",
+					locator1 = "DocumentsAndMediaDocumentTypes#ADD_FIELD_TYPE",
+					locator2 = "DocumentsAndMediaDocumentTypes#FIELD_BOTTOM_DROP_TARGET",
+					value1 = "${dmDocumentTypeFieldName}");
+
+				Click(locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_BACK");
+
+				var rowNum = ${rowNum} + 1;
 			}
 		}
 
@@ -97,7 +135,7 @@ definition {
 		if ("${removeMetadataSet}" == "true") {
 			var key_metadataSetName = "${metadataSetName}";
 
-			Panel.expandPanel(panel = "Additional Metadata Fields");
+			DMDocumentType.gotoTab(tabName = "Additional Metadata Fields");
 
 			Click(locator1 = "DocumentsAndMediaEditDocumentType#REMOVE_METADATA_SET_BUTTON");
 		}
@@ -115,6 +153,22 @@ definition {
 			AssertTextEquals(
 				locator1 = "DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_NAME",
 				value1 = "${dmDocumentTypeName}");
+		}
+	}
+
+	macro gotoEditField {
+		Click(
+			key_fieldName = "${fieldName}",
+			locator1 = "DocumentsAndMediaDocumentTypes#FIELD_NAME");
+
+		AssertElementPresent(locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_ACTIVE_BASIC_TAB");
+	}
+
+	macro gotoTab {
+		if (IsElementNotPresent(key_sidebarTitle = "${tabName}", locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_TITLE")) {
+			Click.clickNoMouseOver(
+				key_sidebarButton = "${tabName}",
+				locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_BUTTON");
 		}
 	}
 

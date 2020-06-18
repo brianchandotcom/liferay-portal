@@ -21,7 +21,9 @@ import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import QuestionsEditor from '../../components/QuestionsEditor';
+import TextLengthValidation from '../../components/TextLengthValidation.es';
 import {getMessageQuery, updateMessageQuery} from '../../utils/client.es';
+import {stripHTML} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -84,6 +86,9 @@ export default withRouter(
 													'include-all-the-information-someone-would-need-to-answer-your-question'
 												)}
 											</span>
+											<TextLengthValidation
+												text={articleBody}
+											/>
 										</ClayForm.FeedbackItem>
 									</ClayForm.FeedbackGroup>
 								</ClayForm.Group>
@@ -92,7 +97,10 @@ export default withRouter(
 							<div className="c-mt-4 d-flex flex-column-reverse flex-sm-row">
 								<ClayButton
 									className="c-mt-4 c-mt-sm-0"
-									disabled={!articleBody}
+									disabled={
+										!articleBody ||
+										stripHTML(articleBody).length < 15
+									}
 									displayType="primary"
 									onClick={() => {
 										addUpdateMessage({

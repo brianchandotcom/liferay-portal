@@ -69,7 +69,18 @@ public class ZipWriterImpl implements ZipWriter {
 	public ZipWriterImpl(File file) {
 		_file = file.getAbsoluteFile();
 
-		_file.mkdir();
+		File parentFile = _file.getParentFile();
+
+		if (!parentFile.exists()) {
+			parentFile.mkdirs();
+		}
+
+		try {
+			_zipOutputStream = new ZipOutputStream(new FileOutputStream(_file));
+		}
+		catch (FileNotFoundException fileNotFoundException) {
+			throw new RuntimeException(fileNotFoundException);
+		}
 	}
 
 	@Override
@@ -161,6 +172,6 @@ public class ZipWriterImpl implements ZipWriter {
 	private static final Log _log = LogFactoryUtil.getLog(ZipWriterImpl.class);
 
 	private final File _file;
-	private ZipOutputStream _zipOutputStream;
+	private final ZipOutputStream _zipOutputStream;
 
 }

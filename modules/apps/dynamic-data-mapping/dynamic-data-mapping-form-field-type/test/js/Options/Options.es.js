@@ -115,7 +115,7 @@ describe('Options', () => {
 		expect(valueInputs[1].value).toEqual('');
 	});
 
-	it('does not show an empty option when translating', () => {
+	it('does show an empty option when translating', () => {
 		const {container} = render(
 			<OptionsWithProvider
 				defaultLanguageId={themeDisplay.getLanguageId()}
@@ -146,7 +146,7 @@ describe('Options', () => {
 
 		const labelInputs = container.querySelectorAll('.ddm-field-text');
 
-		expect(labelInputs.length).toEqual(1);
+		expect(labelInputs.length).toEqual(2);
 	});
 
 	it('edits the value of an option based on the label', () => {

@@ -64,6 +64,10 @@ $tab-header-height: 38px;
 	.global-apps-nav-link {
 		color: $dark;
 		line-height: 1.5rem;
+
+		&.active {
+			font-weight: 700;
+		}
 	}
 }
 

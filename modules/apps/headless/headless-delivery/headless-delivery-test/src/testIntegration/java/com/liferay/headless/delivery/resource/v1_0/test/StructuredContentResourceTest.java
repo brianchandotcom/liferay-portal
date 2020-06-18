@@ -32,6 +32,7 @@ import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResou
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -39,10 +40,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -59,7 +64,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -141,7 +145,6 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(title, structuredContent.getTitle());
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetStructuredContent() throws Exception {
@@ -179,14 +182,29 @@ public class StructuredContentResourceTest
 			ResourceConstants.SCOPE_GROUP,
 			String.valueOf(testGroup.getGroupId()), ActionKeys.ADD_ARTICLE);
 
-		User ownerUser = UserTestUtil.addGroupUser(testGroup, role.getName());
+		String password = RandomTestUtil.randomString();
+
+		User ownerUser = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password,
+			RandomTestUtil.randomString() + StringPool.AT + "liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		UserLocalServiceUtil.updateEmailAddressVerified(
+			ownerUser.getUserId(), true);
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			new long[] {ownerUser.getUserId()}, testGroup.getGroupId(),
+			role.getRoleId());
 
 		StructuredContentResource.Builder builder =
 			StructuredContentResource.builder();
 
 		StructuredContentResource structuredContentResource =
 			builder.authentication(
-				ownerUser.getLogin(), ownerUser.getPasswordUnencrypted()
+				ownerUser.getLogin(), password
 			).locale(
 				LocaleUtil.getDefault()
 			).build();
@@ -222,12 +240,25 @@ public class StructuredContentResourceTest
 			ResourceConstants.SCOPE_GROUP,
 			String.valueOf(testGroup.getGroupId()), ActionKeys.VIEW);
 
-		User regularUser = UserTestUtil.addGroupUser(testGroup, role.getName());
+		User regularUser = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password,
+			RandomTestUtil.randomString() + StringPool.AT + "liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		UserLocalServiceUtil.updateEmailAddressVerified(
+			regularUser.getUserId(), true);
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			new long[] {regularUser.getUserId()}, testGroup.getGroupId(),
+			role.getRoleId());
 
 		builder = StructuredContentResource.builder();
 
 		structuredContentResource = builder.authentication(
-			regularUser.getLogin(), regularUser.getPasswordUnencrypted()
+			regularUser.getLogin(), password
 		).locale(
 			LocaleUtil.getDefault()
 		).build();

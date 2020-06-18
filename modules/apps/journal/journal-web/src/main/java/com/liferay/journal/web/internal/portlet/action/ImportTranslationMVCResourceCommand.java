@@ -91,7 +91,8 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 				String contentType = uploadPortletRequest.getContentType(
 					"file");
 
-				if (!Objects.equals("application/xliff+xml", contentType)) {
+				if (!Objects.equals("application/x-xliff+xml", contentType) &&
+						!Objects.equals("application/xliff+xml", contentType)) {
 					throw new InvalidXLIFFFileException(
 						"Unsupported content type: " + contentType);
 				}

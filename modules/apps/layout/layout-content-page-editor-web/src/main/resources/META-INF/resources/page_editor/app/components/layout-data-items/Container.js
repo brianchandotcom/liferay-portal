@@ -100,8 +100,6 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 			className={classNames(
 				className,
 				`mb-${marginBottom || 0}`,
-				`ml-${marginLeft || 0}`,
-				`mr-${marginRight || 0}`,
 				`mt-${marginTop || 0}`,
 				`pb-${paddingBottom || 0}`,
 				`pl-${paddingLeft || 0}`,
@@ -117,6 +115,8 @@ const Container = React.forwardRef(({children, className, data, item}, ref) => {
 					'd-flex': contentDisplay === 'flex',
 					empty: item.children.length === 0,
 					[justify]: !!justify,
+					[`ml-${marginLeft || 0}`]: widthType !== 'fixed',
+					[`mr-${marginRight || 0}`]: widthType !== 'fixed',
 					[shadow]: !!shadow,
 				}
 			)}

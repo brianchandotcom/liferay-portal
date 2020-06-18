@@ -28,7 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Inácio Nery
  */
 @Component(
-	immediate = true, property = "app.builder.apps.tabs.name=workflow",
+	enabled = false, immediate = true,
+	property = "app.builder.apps.tabs.name=workflow",
 	service = AppBuilderAppsPortletTab.class
 )
 public class WorkflowAppBuilderAppsPortletTab

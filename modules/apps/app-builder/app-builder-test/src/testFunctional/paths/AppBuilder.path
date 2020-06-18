@@ -271,8 +271,62 @@
 </tr>
 
 <tr>
+	<td>CHOOSE_FILTER_BY_AUTHOR_ME</td>
+	<td>//span[text()='Me']//ancestor::label//input</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CHOOSE_APP_SEARCH_FILTER_BY_OPTION</td>
+	<td>//span[contains(text(),'${key_FilterOption}')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CHOOSE_APP_SEARCH_FILTER_BY_STATUS</td>
+	<td>//span[contains(text(),'${key_FilterOption}')]//ancestor::label//input</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CHOOSE_FILTER_BY_DEPLOYMENT_TYPE</td>
+	<td>//span[contains(text(),'${key_itemName}')]//ancestor::label//input</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>CLEAR_FILTER</td>
+	<td>//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+
+<tr>
 	<td>FILTER_LIST_ASCEND_AND_DESCEND_BUTTON</td>
 	<td>//*[contains(@class,'lexicon-icon-order-arrow')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>VALIDATE_FILTER_BY_DEPLOYMENT_TYPE</td>
+	<td>//li[contains(text(),'Filter by Deployment Type')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>VALIDATE_FILTER_BY_STATUS</td>
+	<td>//li[contains(text(),'Filter by Status')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>VALIDATE_FILTER_BY_AUTHOR</td>
+	<td>//li[contains(text(),'Filter by Author')]</td>
+	<td></td>
+</tr>
+
+<tr>
+	<td>VALIDATE_FILTER_BY_ORDER</td>
+	<td>//li[contains(text(),'Order by')]</td>
 	<td></td>
 </tr>
 

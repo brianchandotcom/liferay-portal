@@ -221,10 +221,10 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
 				openGraphImageFileEntryId);
 
-			printWriter.println(
-				_getOpenGraphTag(
-					"og:image",
-					_dlurlHelper.getImagePreviewURL(fileEntry, themeDisplay)));
+			String imagePreviewURL = _dlurlHelper.getImagePreviewURL(
+				fileEntry, themeDisplay);
+
+			printWriter.println(_getOpenGraphTag("og:image", imagePreviewURL));
 
 			printWriter.println(
 				_getOpenGraphTag(
@@ -235,18 +235,13 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 			if (themeDisplay.isSecure()) {
 				printWriter.println(
-					_getOpenGraphTag(
-						"og:image:secure_url",
-						_dlurlHelper.getImagePreviewURL(
-							fileEntry, themeDisplay)));
+					_getOpenGraphTag("og:image:secure_url", imagePreviewURL));
 			}
 
 			printWriter.println(
 				_getOpenGraphTag("og:image:type", fileEntry.getMimeType()));
 			printWriter.println(
-				_getOpenGraphTag(
-					"og:image:url",
-					_dlurlHelper.getImagePreviewURL(fileEntry, themeDisplay)));
+				_getOpenGraphTag("og:image:url", imagePreviewURL));
 
 			for (KeyValuePair keyValuePair :
 					_fileEntryMetadataOpenGraphTagsProvider.

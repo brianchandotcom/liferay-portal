@@ -21,7 +21,7 @@ public interface ClayDataSetDisplayView {
 
 	public String getContentRenderer();
 
-	public default String getContentRendererModuleUrl() {
+	public default String getContentRendererModuleURL() {
 		return null;
 	}
 

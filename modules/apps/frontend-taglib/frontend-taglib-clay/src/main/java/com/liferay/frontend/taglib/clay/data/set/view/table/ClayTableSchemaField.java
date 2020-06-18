@@ -27,8 +27,8 @@ public class ClayTableSchemaField {
 		return _contentRenderer;
 	}
 
-	public String getContentRendererModuleUrl() {
-		return _contentRendererModuleUrl;
+	public String getContentRendererModuleURL() {
+		return _contentRendererModuleURL;
 	}
 
 	public String getFieldName() {
@@ -59,8 +59,8 @@ public class ClayTableSchemaField {
 		_contentRenderer = contentRenderer;
 	}
 
-	public void setContentRendererModuleUrl(String contentRendererModuleUrl) {
-		_contentRendererModuleUrl = contentRendererModuleUrl;
+	public void setContentRendererModuleURL(String contentRendererModuleURL) {
+		_contentRendererModuleURL = contentRendererModuleURL;
 	}
 
 	public void setExpand(boolean expand) {
@@ -91,7 +91,7 @@ public class ClayTableSchemaField {
 
 	private String _actionId;
 	private String _contentRenderer;
-	private String _contentRendererModuleUrl;
+	private String _contentRendererModuleURL;
 	private boolean _expand;
 	private String _fieldName;
 	private String _label;

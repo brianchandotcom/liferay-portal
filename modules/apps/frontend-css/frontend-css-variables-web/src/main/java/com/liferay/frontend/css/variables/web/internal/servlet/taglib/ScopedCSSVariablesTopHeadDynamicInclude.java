@@ -16,6 +16,9 @@ package com.liferay.frontend.css.variables.web.internal.servlet.taglib;
 
 import com.liferay.frontend.css.variables.ScopedCSSVariables;
 import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
@@ -23,18 +26,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Iván Zaera Avellón
@@ -72,21 +72,18 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 			"/html/common/themes/top_head.jsp#post");
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void addScopedCSSVariablesProvider(
-		ScopedCSSVariablesProvider scopedCSSVariablesProvider) {
-
-		_scopedCssVariablesProviders.add(scopedCSSVariablesProvider);
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_scopedCssVariablesProviders = ServiceTrackerListFactory.open(
+			bundleContext, ScopedCSSVariablesProvider.class,
+			new PropertyServiceReferenceComparator<>("service.ranking"));
 	}
 
-	protected void removeScopedCSSVariablesProvider(
-		ScopedCSSVariablesProvider scopedCSSVariablesProvider) {
+	@Deactivate
+	protected void deactivate() {
+		_scopedCssVariablesProviders.close();
 
-		_scopedCssVariablesProviders.remove(scopedCSSVariablesProvider);
+		_scopedCssVariablesProviders = null;
 	}
 
 	private void _writeCSSVariables(
@@ -114,7 +111,8 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 		}
 	}
 
-	private final List<ScopedCSSVariablesProvider>
-		_scopedCssVariablesProviders = new CopyOnWriteArrayList<>();
+	private ServiceTrackerList
+		<ScopedCSSVariablesProvider, ScopedCSSVariablesProvider>
+			_scopedCssVariablesProviders;
 
 }

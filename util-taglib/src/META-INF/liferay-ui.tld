@@ -4005,7 +4005,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A design type for the tabs. Possible values are <![CDATA[<code>tabs</code>]]> and <![CDATA[<code>pills</code>]]>.</description>
+			<description>A design type for the tabs. Possible values are <![CDATA[<code>tabs</code>]]>, <![CDATA[<code>underline</code>]]>, <![CDATA[<code>stacked</code>]]>, <![CDATA[<code>justified</code>]]>, <![CDATA[<code>dropdown</code>]]> and <![CDATA[<code>pills</code>]]>.</description>
 			<name>type</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

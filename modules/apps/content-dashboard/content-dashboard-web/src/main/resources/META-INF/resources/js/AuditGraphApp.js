@@ -18,49 +18,113 @@ import AuditBarChart from './components/AuditBarChart';
 import EmptyAuditBarChart from './components/EmptyAuditBarChart';
 
 export default function () {
-	const categories = [
+	const vocabularies = [
 		{
-			children: [
-				{key: 'education', name: 'Education', value: 478},
-				{key: 'selection', name: 'Selection', value: 1055},
-				{key: 'selection', name: 'Selection', value: 822},
+			categories: [
+				{
+					key: 'education',
+					name: 'Education',
+					value: 478,
+					vocabularyName: 'Stage',
+				},
+				{
+					key: 'selection',
+					name: 'Selection',
+					value: 1055,
+					vocabularyName: 'Stage',
+				},
+				{
+					key: 'selection',
+					name: 'Selection',
+					value: 822,
+					vocabularyName: 'Stage',
+				},
 			],
 			key: 'business-decision-maker',
 			name: 'Business Decision Maker',
+			vocabularyName: 'Audience',
 		},
 		{
-			children: [
-				{key: 'education', name: 'Education', value: 125},
-				{key: 'selection', name: 'Selection', value: 1906},
-				{key: 'solution', name: 'Solution', value: 987},
+			categories: [
+				{
+					key: 'education',
+					name: 'Education',
+					value: 125,
+					vocabularyName: 'Stage',
+				},
+				{
+					key: 'selection',
+					name: 'Selection',
+					value: 1906,
+					vocabularyName: 'Stage',
+				},
+				{
+					key: 'solution',
+					name: 'Solution',
+					value: 987,
+					vocabularyName: 'Stage',
+				},
 			],
 			key: 'business-end-user',
 			name: 'Business End User',
+			vocabularyName: 'Audience',
 		},
 		{
-			children: [
-				{key: 'education', name: 'Education', value: 444},
-				{key: 'selection', name: 'Selection', value: 1733},
-				{key: 'solution', name: 'Solution', value: 1807},
+			categories: [
+				{
+					key: 'education',
+					name: 'Education',
+					value: 444,
+					vocabularyName: 'Stage',
+				},
+				{
+					key: 'selection',
+					name: 'Selection',
+					value: 1733,
+					vocabularyName: 'Stage',
+				},
+				{
+					key: 'solution',
+					name: 'Solution',
+					value: 1807,
+					vocabularyName: 'Stage',
+				},
 			],
 			key: 'technical-decision-maker',
 			name: 'Technical Decision Maker',
+			vocabularyName: 'Audience',
 		},
 		{
-			children: [
-				{key: 'education', name: 'Education', value: 125},
-				{key: 'selection', name: 'Selection', value: 317},
-				{key: 'solution', name: 'Solution', value: 187},
+			categories: [
+				{
+					key: 'education',
+					name: 'Education',
+					value: 125,
+					vocabularyName: 'Stage',
+				},
+				{
+					key: 'selection',
+					name: 'Selection',
+					value: 317,
+					vocabularyName: 'Stage',
+				},
+				{
+					key: 'solution',
+					name: 'Solution',
+					value: 187,
+					vocabularyName: 'Stage',
+				},
 			],
 			key: 'technical-end-user',
 			name: 'Technical End User',
+			vocabularyName: 'Audience',
 		},
 	];
 
 	const rtl = false;
 
-	return categories.length ? (
-		<AuditBarChart categories={categories} rtl={rtl} />
+	return vocabularies.length ? (
+		<AuditBarChart rtl={rtl} vocabularies={vocabularies} />
 	) : (
 		<EmptyAuditBarChart />
 	);

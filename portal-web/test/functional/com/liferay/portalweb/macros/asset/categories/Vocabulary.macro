@@ -258,32 +258,6 @@ definition {
 		}
 	}
 
-	macro viewSearchResultsCP {
-		if (isSet(vocabularyNameList)) {
-			for (var vocabularyName : list "${vocabularyNameList}") {
-				var key_vocabularyName = "${vocabularyName}";
-
-				AssertTextEquals(
-					locator1 = "Categories#VOCABULARY_ENTRY",
-					value1 = "${vocabularyName}");
-			}
-		}
-
-		if (isSet(vocabularyDescriptionList)) {
-			for (var vocabularyDescription : list "${vocabularyDescriptionList}") {
-				var key_vocabularyDescription = "${vocabularyDescription}";
-
-				AssertTextEquals(
-					locator1 = "Categories#VOCABULARY_ENTRY_DESCRIPTION",
-					value1 = "${vocabularyDescription}");
-			}
-		}
-
-		if ("${nullResult}" == "true") {
-			PortletEntry.viewEmptyMessage(entity = "Vocabularies");
-		}
-	}
-
 	macro viewVocabularyPermissionsCP {
 		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 

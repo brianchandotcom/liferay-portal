@@ -106,8 +106,8 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 		int start = ParamUtil.getInteger(
 			httpServletRequest, "start", QueryUtil.ALL_POS);
 
-		int end = (start == QueryUtil.ALL_POS) ? QueryUtil.ALL_POS :
-			start + _DEFAULT_DELTA;
+		int end = ParamUtil.getInteger(
+			httpServletRequest, "end", QueryUtil.ALL_POS);
 
 		BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
 			_ddmFormInstanceRecordService.searchFormInstanceRecords(
@@ -137,8 +137,6 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 
 		return jsonArray;
 	}
-
-	private static final int _DEFAULT_DELTA = 20;
 
 	@Reference
 	private DDMFormInstanceRecordService _ddmFormInstanceRecordService;

@@ -26,7 +26,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AppBuilderAppPortletTab {
 
-	public List<Long> getEditEntryDataLayoutIds(
+	public List<Long> getDataLayoutIds(
 		AppBuilderApp appBuilderApp, long dataRecordId);
 
 	public String getEditEntryPoint();

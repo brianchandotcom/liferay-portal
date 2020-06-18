@@ -41,7 +41,7 @@ public class WorkflowAppBuilderAppPortletTab
 	implements AppBuilderAppPortletTab {
 
 	@Override
-	public List<Long> getEditEntryDataLayoutIds(
+	public List<Long> getDataLayoutIds(
 		AppBuilderApp appBuilderApp, long dataRecordId) {
 
 		WorkflowInstanceLink workflowInstanceLink =

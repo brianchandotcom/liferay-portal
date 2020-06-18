@@ -68,6 +68,10 @@ export default withRouter(
 			onCompleted() {
 				history.goBack();
 			},
+			update(proxy) {
+				proxy.evict(`MessageBoardThread:${id}`);
+				proxy.gc();
+			},
 		});
 
 		return (

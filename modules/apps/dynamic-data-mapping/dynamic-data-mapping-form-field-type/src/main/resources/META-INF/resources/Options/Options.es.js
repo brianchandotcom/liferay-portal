@@ -77,9 +77,7 @@ const refreshFields = (defaultLanguageId, editingLanguageId, options) =>
 			),
 			id: random(),
 		})),
-		defaultLanguageId === editingLanguageId
-			? {...defaultOption, generateKeyword: true, id: random()}
-			: false,
+		{...defaultOption, generateKeyword: true, id: random()},
 	].filter((field) => field && Object.keys(field).length > 0);
 
 const Options = ({
@@ -161,7 +159,7 @@ const Options = ({
 	};
 
 	const synchroniseValue = (fields, languageId) => {
-		if (defaultLanguageId === languageId) {
+		if (editingLanguageId === languageId) {
 			return [...fields];
 		}
 
@@ -213,13 +211,11 @@ const Options = ({
 	const add = (fields, index, property, value) => {
 		fields[index][property] = value;
 
-		if (defaultLanguageId === editingLanguageId) {
-			fields.push({
-				...defaultOption,
-				generateKeyword: true,
-				id: random(),
-			});
-		}
+		fields.push({
+			...defaultOption,
+			generateKeyword: true,
+			id: random(),
+		});
 
 		return [fields, index, property, value];
 	};
@@ -330,9 +326,7 @@ const Main = ({
 					<KeyValue
 						generateKeyword={option.generateKeyword}
 						keyword={option.value}
-						keywordReadOnly={
-							defaultLanguageId !== editingLanguageId
-						}
+						keywordReadOnly={false}
 						name={`option${index}`}
 						onBlur={handleBlur}
 						onChange={(event) =>

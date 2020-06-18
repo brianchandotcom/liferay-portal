@@ -1036,6 +1036,80 @@ definition {
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Content of form deployed as widget.");
 	}
 
+	@description = "Filter and order the apps created using App Builder"
+	@priority = "5"
+	test FilterAndOrderApps {
+
+		AppBuilderAdmin.addCustomObject(
+			customObjectName = "my custom object",
+			isCreatingFormView = "true",
+			isCreatingViaPlusIcon = "true");
+
+		AppBuilderAdmin.createFormViewAndTableView(
+			fieldType = "Text",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "First App",
+			deployOption = "Product Menu",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Second App",
+			deployOption = "Standalone",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		App.add(
+			appTitle = "Third App",
+			deployOption = "Widget",
+			formViewName = "My Form View",
+			tableViewName = "My Table View");
+
+		GlobalMenu.gotoPortlet(
+			category = "App Builder",
+			panel = "Control Panel",
+			portlet = "Apps");
+
+		AppBuilderAdmin.validateFilterAndOrder();
+
+		AppBuilderAdmin.chooseAppSearchFilterByOption(filterOption = "Name");
+
+		AppBuilderAdmin.chooseAppSearchFilterByOption(filterOption = "Create Date");
+
+		AppBuilderAdmin.chooseAppSearchFilterByOption(filterOption = "Modified Date");
+
+		AppBuilderAdmin.filterListAscendAndDescend();
+
+		AppBuilderAdmin.chooseMultipleFilter(
+			filterOption = "Deployed",
+			itemName = "Product Menu");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "First App");
+
+		AppBuilderAdmin.clearSearch();
+
+		AppBuilderAdmin.filterByDeploymentType(itemName = "Standalone");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Second App");
+
+		AppBuilderAdmin.clearFilter();
+
+		AppBuilderAdmin.filterByDeploymentType(itemName = "Widget");
+
+		AppBuilderAdmin.validateListTitleAtRow(
+			rowNumber = "1",
+			title = "Third App");
+
+		AppBuilderAdmin.clearFilter();
+	}
+
 	@description = "Clear search results when clicking the Clear button on the search results banner"
 	@priority = "5"
 	test FormViewClearSearchResults {

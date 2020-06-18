@@ -15,6 +15,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayLayout from '@clayui/layout';
 import ClayModal, {useModal} from '@clayui/modal';
+import classNames from 'classnames';
 
 import '../css/GlobalMenu.scss';
 
@@ -54,9 +55,18 @@ const AppsPanel = ({
 	handleCloseButtonClick = () => {},
 	logoURL,
 	portletNamespace,
+	selectedPortletId,
 	sites,
 }) => {
-	const [activeTab, setActiveTab] = useState(0);
+	const [activeTab, setActiveTab] = useState(
+		categories.findIndex((category) =>
+			category.childCategories.some((childCategory) =>
+				childCategory.panelApps.some(
+					(panelApp) => panelApp.portletId === selectedPortletId
+				)
+			)
+		)
+	);
 
 	return (
 		<>
@@ -123,7 +133,14 @@ const AppsPanel = ({
 													key={portletId}
 												>
 													<a
-														className="component-link global-apps-nav-link"
+														className={classNames(
+															'component-link global-apps-nav-link',
+															{
+																active:
+																	portletId ===
+																	selectedPortletId,
+															}
+														)}
 														href={url}
 													>
 														<span
@@ -219,10 +236,11 @@ const GlobalMenu = ({companyName, logoURL, panelAppsURL}) => {
 		if (!fetchCategoriesPromiseRef.current) {
 			fetchCategoriesPromiseRef.current = fetch(panelAppsURL)
 				.then((response) => response.json())
-				.then(({items, portletNamespace, sites}) => {
+				.then(({items, portletNamespace, selectedPortletId, sites}) => {
 					setAppsPanelData({
 						categories: items,
 						portletNamespace,
+						selectedPortletId,
 						sites,
 					});
 				})

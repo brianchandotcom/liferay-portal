@@ -21,7 +21,6 @@ import {ControlsProvider} from '../../../../../../src/main/resources/META-INF/re
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
-import {config} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import PageStructureSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page-structure/components/PageStructureSidebar';
 
@@ -211,22 +210,15 @@ describe('PageStructureSidebar', () => {
 			activeItemId: '11-container',
 		});
 
-		expect(
-			getByLabelText(
-				config.containerItemEnabled
-					? 'Collapse container'
-					: 'Collapse section'
-			)
-		).toHaveAttribute('aria-expanded', 'true');
+		expect(getByLabelText('Collapse container')).toHaveAttribute(
+			'aria-expanded',
+			'true'
+		);
 	});
 
 	it('disables items that are in masterLayout', () => {
 		const {getByLabelText} = renderComponent();
-		const button = getByLabelText(
-			config.containerItemEnabled
-				? 'select-x-container'
-				: 'select-x-section'
-		);
+		const button = getByLabelText('select-x-container');
 		expect(button).toBeDisabled();
 	});
 
@@ -241,13 +233,7 @@ describe('PageStructureSidebar', () => {
 			],
 		});
 
-		expect(
-			queryByLabelText(
-				config.containerItemEnabled
-					? 'remove-x-container'
-					: 'remove-x-section'
-			)
-		).toBeInTheDocument();
+		expect(queryByLabelText('remove-x-container')).toBeInTheDocument();
 		expect(queryByLabelText('remove-x-row')).toBeInTheDocument();
 		expect(queryByLabelText('remove-x-column')).toBe(null);
 		expect(queryByLabelText('remove-x-Fragment 1')).toBeInTheDocument();

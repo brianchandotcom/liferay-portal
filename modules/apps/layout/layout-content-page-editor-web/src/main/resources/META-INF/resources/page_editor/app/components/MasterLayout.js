@@ -31,21 +31,13 @@ import Layout from './Layout';
 import UnsafeHTML from './UnsafeHTML';
 import getAllEditables from './fragment-content/getAllEditables';
 import resolveEditableValue from './fragment-content/resolveEditableValue';
-import {
-	Collection,
-	Column,
-	Container,
-	Row,
-	Section,
-} from './layout-data-items/index';
+import {Collection, Column, Container, Row} from './layout-data-items/index';
 
 const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.collection]: Collection,
 	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: CollectionItem,
 	[LAYOUT_DATA_ITEM_TYPES.column]: Column,
-	[LAYOUT_DATA_ITEM_TYPES.container]: config.containerItemEnabled
-		? Container
-		: Section,
+	[LAYOUT_DATA_ITEM_TYPES.container]: Container,
 	[LAYOUT_DATA_ITEM_TYPES.dropZone]: DropZoneContainer,
 	[LAYOUT_DATA_ITEM_TYPES.fragment]: Fragment,
 	[LAYOUT_DATA_ITEM_TYPES.fragmentDropZone]: Root,

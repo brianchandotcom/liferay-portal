@@ -12,8 +12,6 @@
  * details.
  */
 
-import {config} from '../index';
-
 /**
  * FloatingToolbar panels
  */
@@ -30,9 +28,7 @@ export const LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS = {
 		icon: 'cog',
 		id: 'container_configuration',
 		panelId: 'container_configuration',
-		title: config.containerItemEnabled
-			? Liferay.Language.get('container-configuration')
-			: Liferay.Language.get('section-configuration'),
+		title: Liferay.Language.get('container-configuration'),
 		type: 'panel',
 	},
 

@@ -162,7 +162,81 @@ const MillerColumns = ({
 		}
 	}, [searchContainer]);
 
-	const onItemDrop = (sources, newParentId, newIndex) => {
+	const getMovedItems = (sources, newParentId, targetIndex) => {
+		const targetColumnItems = Array.from(items.values()).filter(
+			(item) => item.parentId === newParentId
+		);
+
+		// Return sources if target column has no items
+
+		if (!targetColumnItems.length) {
+			return sources.map((source, index) => ({
+				plid: source.id,
+				position: targetIndex + index,
+			}));
+		}
+
+		// Calculate all items of the target column that are changing position
+
+		const movedItems = new Map();
+
+		let previousSources = 0;
+
+		targetColumnItems.forEach((item, index) => {
+
+			// Iterating on target position. Insert sources into movedItems
+
+			if (index === targetIndex) {
+				sources.forEach((source, sourceIndex) => {
+					movedItems.set(source.id, {
+						plid: source.id,
+						position: index - previousSources + sourceIndex,
+					});
+				});
+
+				previousSources = sources.length - previousSources;
+			}
+
+			// Iterating on a source. Don't insert it into movedItems but we
+			// update previous sources counter
+
+			if (sources.some((source) => source.id === item.id)) {
+				previousSources =
+					index < targetIndex
+						? previousSources + 1
+						: previousSources - 1;
+			}
+
+			// Insert item that is not a source into movedItems if it has a new
+			// position
+
+			else if (previousSources) {
+				movedItems.set(item.id, {
+					plid: item.id,
+					position:
+						index < targetIndex
+							? index - previousSources
+							: index + previousSources,
+				});
+			}
+		});
+
+		// Insert sources into movedItems in the case we are targeting last
+		// position of column so the loop does not reach it
+
+		sources.forEach((source, index) => {
+			if (!movedItems.has(source.id)) {
+				movedItems.set(source.id, {
+					plid: source.id,
+					position: targetIndex + index,
+				});
+			}
+		});
+
+		return Array.from(movedItems.values());
+	};
+
+	const onItemDrop = (sources, newParentId, targetIndex) => {
 
 		// Update checked items to keep them selected after updating items
 		// with server response
@@ -178,10 +252,7 @@ const MillerColumns = ({
 		setItems(newItems);
 
 		onItemMove(
-			sources.map((item, index) => ({
-				plid: item.id,
-				position: newIndex + index,
-			})),
+			getMovedItems(sources, newParentId, targetIndex),
 			newParentId
 		);
 	};

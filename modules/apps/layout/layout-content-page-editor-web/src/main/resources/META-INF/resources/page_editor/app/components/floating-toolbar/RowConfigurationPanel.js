@@ -261,12 +261,12 @@ Select.propTypes = {
 	label: PropTypes.string.isRequired,
 	options: PropTypes.arrayOf(
 		PropTypes.shape({
-			label: PropTypes.string.isRequired,
+			label: PropTypes.string,
 			value: PropTypes.oneOfType([
 				PropTypes.string.isRequired,
 				PropTypes.number.isRequired,
 			]),
 		})
 	),
-	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

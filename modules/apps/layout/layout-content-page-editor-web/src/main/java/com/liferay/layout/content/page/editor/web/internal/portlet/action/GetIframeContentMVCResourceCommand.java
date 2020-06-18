@@ -69,6 +69,7 @@ public class GetIframeContentMVCResourceCommand extends BaseMVCResourceCommand {
 			WebKeys.THEME_DISPLAY);
 
 		Locale currentLocale = themeDisplay.getLocale();
+
 		boolean currentPortletDecorate = GetterUtil.getBoolean(
 			resourceRequest.getAttribute(WebKeys.PORTLET_DECORATE));
 		User currentUser = (User)resourceRequest.getAttribute(WebKeys.USER);
@@ -82,6 +83,7 @@ public class GetIframeContentMVCResourceCommand extends BaseMVCResourceCommand {
 				LocaleUtil.toLanguageId(themeDisplay.getLocale()));
 
 			themeDisplay.setLocale(LocaleUtil.fromLanguageId(languageId));
+
 			themeDisplay.setSignedIn(false);
 
 			User defaultUser = _userLocalService.getDefaultUser(

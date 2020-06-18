@@ -22,6 +22,6 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ClayTableSchemaBuilderFactory {
 
-	public ClayTableSchemaBuilder clayTableSchemaBuilder();
+	public ClayTableSchemaBuilder create();
 
 }

@@ -1,9 +1,9 @@
 definition {
 
 	macro addCategoryLocalizationCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Add Category",
-			rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputTitle(title = "${categoryName}");
 
@@ -25,9 +25,9 @@ definition {
 	}
 
 	macro addCategoryViewableByCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Add Category",
-			rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputTitle(title = "${categoryName}");
 
@@ -43,18 +43,17 @@ definition {
 	@summary = "Add a category named '${categoryName}' to the vocabulary named '${vocabularyName}'"
 	macro addCP {
 		var key_categoryName = "${categoryName}";
-		var key_vocabularyName = "${vocabularyName}";
 
-		if (IsElementPresent(locator1 = "Categories#VOCABULARY_HEADER")) {
-			AssertClick(
-				locator1 = "Categories#ADD_CATEGORY_BUTTON",
-				value1 = "Add Category");
+		if(isSet(vocabularyName)) {
+			var key_vocabularyName = "${vocabularyName}";
 		}
 		else {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Add Category",
-				rowEntry = "${vocabularyName}");
+			var key_vocabularyName = "Topic";
 		}
+
+		Navigator.gotoNavNested(navNested = "${key_vocabularyName}");
+
+		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputTitle(title = "${categoryName}");
 
@@ -110,9 +109,9 @@ definition {
 	}
 
 	macro addWithNullTitleCP {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Add Category",
-			rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
+
+		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputTitle(title = " ");
 
@@ -123,11 +122,8 @@ definition {
 
 	macro deleteByIconCP {
 		var key_categoryName = "${categoryName}";
-		var key_vocabularyName = "${vocabularyName}";
 
-		AssertClick(
-			locator1 = "Categories#VOCABULARY_ENTRY_LINK",
-			value1 = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		AssertTextEquals(
 			locator1 = "Categories#VOCABULARY_CATEGORY",
@@ -147,11 +143,7 @@ definition {
 	}
 
 	macro deleteCategoriesCP {
-		var key_vocabularyName = "${vocabularyName}";
-
-		AssertClick(
-			locator1 = "Categories#VOCABULARY_ENTRY_LINK",
-			value1 = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		PortletEntry.selectAll();
 
@@ -165,7 +157,7 @@ definition {
 	}
 
 	macro deleteCategoryByMenuCP {
-		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
@@ -181,7 +173,7 @@ definition {
 	}
 
 	macro deleteCategoryNoPermissionCP {
-		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		LexiconEntry.selectEntry(key_rowEntry = "${rowEntry}");
 
@@ -189,7 +181,7 @@ definition {
 	}
 
 	macro deleteCategoryProperty2CP {
-		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -207,7 +199,7 @@ definition {
 	}
 
 	macro editCP {
-		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -219,7 +211,7 @@ definition {
 	}
 
 	macro editPropertyCP {
-		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -245,10 +237,7 @@ definition {
 	}
 
 	macro moveViaEditCP {
-		AssertClick(
-			key_rowEntry = "${vocabularyName}",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",
-			value1 = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Move",
@@ -262,17 +251,13 @@ definition {
 	}
 
 	macro searchCP {
-		var key_vocabularyName = "${vocabularyName}";
-
-		AssertClick(
-			locator1 = "Categories#VOCABULARY_ENTRY_LINK",
-			value1 = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		Search.searchCP(searchTerm = "${categorySearchEntry}");
 	}
 
 	macro viewCategoryPropertyCP {
-		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -312,11 +297,8 @@ definition {
 
 	macro viewCategoryToVocabularyCP {
 		var key_categoryName = "${categoryName}";
-		var key_vocabularyName = "${vocabularyName}";
 
-		AssertClick(
-			locator1 = "Categories#VOCABULARY_ENTRY_LINK",
-			value1 = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		AssertClick(
 			locator1 = "Categories#VOCABULARY_CATEGORY",
@@ -324,7 +306,7 @@ definition {
 	}
 
 	macro viewCategoryViewableByCP {
-		LexiconEntry.gotoEntry(rowEntry = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
@@ -348,11 +330,8 @@ definition {
 	@summary = "Assert that the category named '${categoryName}' has been added to the vocabulary named '${vocabularyName}'"
 	macro viewCP {
 		var key_categoryName = "${categoryName}";
-		var key_vocabularyName = "${vocabularyName}";
 
-		AssertClick(
-			locator1 = "Categories#VOCABULARY_ENTRY_LINK",
-			value1 = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		AssertTextEquals(
 			locator1 = "Categories#VOCABULARY_CATEGORY",
@@ -380,11 +359,7 @@ definition {
 	}
 
 	macro viewNavigationCP {
-		var key_vocabularyName = "${vocabularyName}";
-
-		AssertClick(
-			locator1 = "Categories#VOCABULARY_ENTRY_LINK",
-			value1 = "${vocabularyName}");
+		Navigator.gotoNavNested(navNested = "${vocabularyName}");
 
 		var key_categoryName = "${categoryName}";
 

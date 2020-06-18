@@ -104,11 +104,11 @@ definition {
 	}
 
 	macro clearSearchResults {
-		Click(locator1 = "Questions#SEARCH_REAULTS_CLEAR_BUTTON");
+		Click(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
 
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
 
-		AssertElementNotPresent(locator1 = "Questions#SEARCH_REAULTS_CLEAR_BUTTON");
+		AssertElementNotPresent(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
 	}
 
 	macro configureFilter {
@@ -152,7 +152,7 @@ definition {
 			locator1 = "Search#SEARCH_INFO",
 			value1 = "${resultsInfo}");
 
-		AssertVisible(locator1 = "Questions#SEARCH_REAULTS_CLEAR_BUTTON");
+		AssertVisible(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
 	}
 
 	macro tearDown {

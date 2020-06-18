@@ -99,7 +99,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_REAULTS_CLEAR_BUTTON</td>
+	<td>SEARCH_RESULTS_CLEAR_BUTTON</td>
 	<td>//button[contains(.,'Clear')]</td>
 	<td></td>
 </tr>

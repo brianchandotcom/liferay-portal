@@ -107,6 +107,9 @@ public class ViewChangesDisplayContext {
 
 		_httpServletRequest = _portal.getHttpServletRequest(renderRequest);
 
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -142,13 +145,7 @@ public class ViewChangesDisplayContext {
 				"everything", _language.get(_httpServletRequest, "everything"))
 		).put(
 			"spritemap",
-			() -> {
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)_renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
-				return themeDisplay.getPathThemeImages() + "/lexicon/icons.svg";
-			}
+			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
 		).put(
 			"tree", _getTreeJsonObject()
 		).build();
@@ -156,7 +153,7 @@ public class ViewChangesDisplayContext {
 
 	public CTEntryResultRowSplitter getResultRowSplitter() {
 		return new CTEntryResultRowSplitter(
-			_ctDisplayRendererRegistry, _httpServletRequest.getLocale());
+			_ctDisplayRendererRegistry, _themeDisplay.getLocale());
 	}
 
 	public SearchContainer<CTEntry> getSearchContainer() {
@@ -448,7 +445,7 @@ public class ViewChangesDisplayContext {
 		}
 
 		return _ctDisplayRendererRegistry.getTitle(
-			_renderRequest.getLocale(), baseModel, classNameId);
+			_themeDisplay.getLocale(), baseModel, classNameId);
 	}
 
 	private JSONObject _getTreeJsonObject() {
@@ -585,7 +582,7 @@ public class ViewChangesDisplayContext {
 		return _typeNameMap.computeIfAbsent(
 			classNameId,
 			key -> _ctDisplayRendererRegistry.getTypeName(
-				_httpServletRequest.getLocale(), classNameId));
+				_themeDisplay.getLocale(), classNameId));
 	}
 
 	private final BasePersistenceRegistry _basePersistenceRegistry;
@@ -602,6 +599,7 @@ public class ViewChangesDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CTEntry> _searchContainer;
+	private final ThemeDisplay _themeDisplay;
 	private final Map<Long, String> _typeNameMap = new HashMap<>();
 
 	private static class SortJSONObjectsByTitleComparator

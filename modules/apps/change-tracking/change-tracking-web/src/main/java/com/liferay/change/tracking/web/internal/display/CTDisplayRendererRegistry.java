@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -127,18 +128,18 @@ public class CTDisplayRendererRegistry {
 			languageKey = "x-deleted-a-x-x-ago";
 		}
 
+		Locale locale = _portal.getLocale(httpServletRequest);
+
 		Date modifiedDate = ctEntry.getModifiedDate();
 
 		return _language.format(
 			httpServletRequest, languageKey,
 			new Object[] {
 				ctEntry.getUserName(),
-				getTypeName(
-					httpServletRequest.getLocale(),
-					ctEntry.getModelClassNameId()),
+				getTypeName(locale, ctEntry.getModelClassNameId()),
 				_language.getTimeDescription(
-					httpServletRequest.getLocale(),
-					System.currentTimeMillis() - modifiedDate.getTime(), true)
+					locale, System.currentTimeMillis() - modifiedDate.getTime(),
+					true)
 			},
 			false);
 	}
@@ -418,6 +419,9 @@ public class CTDisplayRendererRegistry {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private ResourceActions _resourceActions;

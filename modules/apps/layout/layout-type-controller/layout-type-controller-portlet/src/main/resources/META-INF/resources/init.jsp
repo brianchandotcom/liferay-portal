@@ -44,7 +44,6 @@ page import="com.liferay.layout.util.structure.LayoutStructure" %><%@
 page import="com.liferay.layout.util.structure.LayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.RootLayoutStructureItem" %><%@
 page import="com.liferay.layout.util.structure.RowLayoutStructureItem" %><%@
-page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@
@@ -60,8 +59,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Objects" %>
+<%@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 

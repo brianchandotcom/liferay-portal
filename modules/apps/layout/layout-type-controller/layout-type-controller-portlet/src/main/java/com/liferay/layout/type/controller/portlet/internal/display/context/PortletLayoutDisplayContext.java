@@ -34,8 +34,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -77,60 +79,6 @@ public class PortletLayoutDisplayContext {
 		_infoListRendererTracker = infoListRendererTracker;
 		_layoutListRetrieverTracker = layoutListRetrieverTracker;
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
-	}
-
-	public String getBackgroundImage(JSONObject rowConfigJSONObject)
-		throws PortalException {
-
-		if (rowConfigJSONObject == null) {
-			return StringPool.BLANK;
-		}
-
-		String fieldId = rowConfigJSONObject.getString("fieldId");
-
-		if (Validator.isNotNull(fieldId)) {
-			long classNameId = rowConfigJSONObject.getLong("classNameId");
-			long classPK = rowConfigJSONObject.getLong("classPK");
-
-			if ((classNameId != 0L) && (classPK != 0L)) {
-				InfoDisplayContributor<Object> infoDisplayContributor =
-					(InfoDisplayContributor<Object>)
-						_infoDisplayContributorTracker.
-							getInfoDisplayContributor(
-								PortalUtil.getClassName(classNameId));
-
-				if (infoDisplayContributor != null) {
-					InfoDisplayObjectProvider<Object>
-						infoDisplayObjectProvider =
-							(InfoDisplayObjectProvider<Object>)
-								infoDisplayContributor.
-									getInfoDisplayObjectProvider(classPK);
-
-					if (infoDisplayObjectProvider != null) {
-						Object object =
-							infoDisplayContributor.getInfoDisplayFieldValue(
-								infoDisplayObjectProvider.getDisplayObject(),
-								fieldId, LocaleUtil.getDefault());
-
-						if (object instanceof JSONObject) {
-							JSONObject fieldValueJSONObject =
-								(JSONObject)object;
-
-							return fieldValueJSONObject.getString(
-								"url", StringPool.BLANK);
-						}
-					}
-				}
-			}
-		}
-
-		String backgroundImageURL = rowConfigJSONObject.getString("url");
-
-		if (Validator.isNotNull(backgroundImageURL)) {
-			return backgroundImageURL;
-		}
-
-		return StringPool.BLANK;
 	}
 
 	public List<Object> getCollection(
@@ -233,6 +181,114 @@ public class PortletLayoutDisplayContext {
 			className);
 	}
 
+	public String getCssClass(
+		ContainerLayoutStructureItem containerLayoutStructureItem) {
+
+		StringBundler cssClassSB = new StringBundler(31);
+
+		if (Validator.isNotNull(containerLayoutStructureItem.getAlign())) {
+			cssClassSB.append(" ");
+			cssClassSB.append(containerLayoutStructureItem.getAlign());
+		}
+
+		if (Validator.isNotNull(
+				containerLayoutStructureItem.getBackgroundColorCssClass())) {
+
+			cssClassSB.append(" bg-");
+			cssClassSB.append(
+				containerLayoutStructureItem.getBackgroundColorCssClass());
+		}
+
+		if (Validator.isNotNull(
+				containerLayoutStructureItem.getBorderColor())) {
+
+			cssClassSB.append(" border-");
+			cssClassSB.append(containerLayoutStructureItem.getBorderColor());
+		}
+
+		if (Validator.isNotNull(
+				containerLayoutStructureItem.getBorderRadius())) {
+
+			cssClassSB.append(" ");
+			cssClassSB.append(containerLayoutStructureItem.getBorderRadius());
+		}
+
+		if (Objects.equals(
+				containerLayoutStructureItem.getContentDisplay(), "block")) {
+
+			cssClassSB.append(" d-block");
+		}
+
+		if (Objects.equals(
+				containerLayoutStructureItem.getContentDisplay(), "flex")) {
+
+			cssClassSB.append(" d-flex");
+		}
+
+		if (Validator.isNotNull(containerLayoutStructureItem.getJustify())) {
+			cssClassSB.append(" ");
+			cssClassSB.append(containerLayoutStructureItem.getJustify());
+		}
+
+		if (containerLayoutStructureItem.getMarginBottom() != -1L) {
+			cssClassSB.append(" mb-");
+			cssClassSB.append(containerLayoutStructureItem.getMarginBottom());
+		}
+
+		if (!Objects.equals(
+				containerLayoutStructureItem.getWidthType(), "fixed")) {
+
+			if (containerLayoutStructureItem.getMarginLeft() != -1L) {
+				cssClassSB.append(" ml-");
+				cssClassSB.append(containerLayoutStructureItem.getMarginLeft());
+			}
+
+			if (containerLayoutStructureItem.getMarginRight() != -1L) {
+				cssClassSB.append(" mr-");
+				cssClassSB.append(
+					containerLayoutStructureItem.getMarginRight());
+			}
+		}
+
+		if (containerLayoutStructureItem.getMarginTop() != -1L) {
+			cssClassSB.append(" mt-");
+			cssClassSB.append(containerLayoutStructureItem.getMarginTop());
+		}
+
+		if (containerLayoutStructureItem.getPaddingBottom() != -1L) {
+			cssClassSB.append(" pb-");
+			cssClassSB.append(containerLayoutStructureItem.getPaddingBottom());
+		}
+
+		if (containerLayoutStructureItem.getPaddingLeft() != -1L) {
+			cssClassSB.append(" pl-");
+			cssClassSB.append(containerLayoutStructureItem.getPaddingLeft());
+		}
+
+		if (containerLayoutStructureItem.getPaddingRight() != -1L) {
+			cssClassSB.append(" pr-");
+			cssClassSB.append(containerLayoutStructureItem.getPaddingRight());
+		}
+
+		if (containerLayoutStructureItem.getPaddingTop() != -1L) {
+			cssClassSB.append(" pt-");
+			cssClassSB.append(containerLayoutStructureItem.getPaddingTop());
+		}
+
+		if (Validator.isNotNull(containerLayoutStructureItem.getShadow())) {
+			cssClassSB.append(" ");
+			cssClassSB.append(containerLayoutStructureItem.getShadow());
+		}
+
+		if (Objects.equals(
+				containerLayoutStructureItem.getWidthType(), "fixed")) {
+
+			cssClassSB.append(" container");
+		}
+
+		return cssClassSB.toString();
+	}
+
 	public InfoListRenderer<?> getInfoListRenderer(
 		CollectionLayoutStructureItem collectionLayoutStructureItem) {
 
@@ -298,6 +354,94 @@ public class PortletLayoutDisplayContext {
 		_layoutStructure = LayoutStructure.of(data);
 
 		return _layoutStructure;
+	}
+
+	public String getStyle(
+			ContainerLayoutStructureItem containerLayoutStructureItem)
+		throws PortalException {
+
+		String backgroundImage = _getBackgroundImage(
+			containerLayoutStructureItem.getBackgroundImageJSONObject());
+
+		StringBundler styleSB = new StringBundler(12);
+
+		styleSB.append("box-sizing: border-box;");
+
+		if (Validator.isNotNull(backgroundImage)) {
+			styleSB.append("background-position: 50% 50%; background-repeat: ");
+			styleSB.append("no-repeat; background-size: cover; ");
+			styleSB.append("background-image: url(");
+			styleSB.append(backgroundImage);
+			styleSB.append(");");
+		}
+
+		if (containerLayoutStructureItem.getBorderWidth() != -1L) {
+			styleSB.append("border-style: solid; border-width: ");
+			styleSB.append(containerLayoutStructureItem.getBorderWidth());
+			styleSB.append("px;");
+		}
+
+		if (containerLayoutStructureItem.getOpacity() != -1L) {
+			styleSB.append("opacity: ");
+			styleSB.append(containerLayoutStructureItem.getOpacity() / 100.0);
+			styleSB.append(";");
+		}
+
+		return styleSB.toString();
+	}
+
+	private String _getBackgroundImage(JSONObject rowConfigJSONObject)
+		throws PortalException {
+
+		if (rowConfigJSONObject == null) {
+			return StringPool.BLANK;
+		}
+
+		String fieldId = rowConfigJSONObject.getString("fieldId");
+
+		if (Validator.isNotNull(fieldId)) {
+			long classNameId = rowConfigJSONObject.getLong("classNameId");
+			long classPK = rowConfigJSONObject.getLong("classPK");
+
+			if ((classNameId != 0L) && (classPK != 0L)) {
+				InfoDisplayContributor<Object> infoDisplayContributor =
+					(InfoDisplayContributor<Object>)
+						_infoDisplayContributorTracker.
+							getInfoDisplayContributor(
+								PortalUtil.getClassName(classNameId));
+
+				if (infoDisplayContributor != null) {
+					InfoDisplayObjectProvider<Object>
+						infoDisplayObjectProvider =
+							(InfoDisplayObjectProvider<Object>)
+								infoDisplayContributor.
+									getInfoDisplayObjectProvider(classPK);
+
+					if (infoDisplayObjectProvider != null) {
+						Object object =
+							infoDisplayContributor.getInfoDisplayFieldValue(
+								infoDisplayObjectProvider.getDisplayObject(),
+								fieldId, LocaleUtil.getDefault());
+
+						if (object instanceof JSONObject) {
+							JSONObject fieldValueJSONObject =
+								(JSONObject)object;
+
+							return fieldValueJSONObject.getString(
+								"url", StringPool.BLANK);
+						}
+					}
+				}
+			}
+		}
+
+		String backgroundImageURL = rowConfigJSONObject.getString("url");
+
+		if (Validator.isNotNull(backgroundImageURL)) {
+			return backgroundImageURL;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private LayoutStructure _getDefaultMasterLayoutStructure() {

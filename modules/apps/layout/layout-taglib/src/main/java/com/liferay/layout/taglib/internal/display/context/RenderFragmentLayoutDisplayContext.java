@@ -31,7 +31,9 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.util.structure.CollectionLayoutStructureItem;
+import com.liferay.layout.util.structure.ContainerLayoutStructureItem;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -81,7 +83,286 @@ public class RenderFragmentLayoutDisplayContext {
 		_listObjectReferenceFactoryTracker = listObjectReferenceFactoryTracker;
 	}
 
-	public String getBackgroundImage(JSONObject rowConfigJSONObject)
+	public List<Object> getCollection(
+		CollectionLayoutStructureItem collectionLayoutStructureItem,
+		long[] segmentsExperienceIds) {
+
+		JSONObject collectionJSONObject =
+			collectionLayoutStructureItem.getCollectionJSONObject();
+
+		if (collectionJSONObject.length() <= 0) {
+			return Collections.emptyList();
+		}
+
+		ListObjectReference listObjectReference = _getListObjectReference(
+			collectionJSONObject);
+
+		if (listObjectReference == null) {
+			return Collections.emptyList();
+		}
+
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
+			(LayoutListRetriever<?, ListObjectReference>)
+				_layoutListRetrieverTracker.getLayoutListRetriever(
+					collectionJSONObject.getString("type"));
+
+		if (layoutListRetriever == null) {
+			return Collections.emptyList();
+		}
+
+		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
+			new DefaultLayoutListRetrieverContext();
+
+		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
+			segmentsExperienceIds);
+		defaultLayoutListRetrieverContext.setPagination(
+			Pagination.of(collectionLayoutStructureItem.getNumberOfItems(), 0));
+
+		return layoutListRetriever.getList(
+			listObjectReference, defaultLayoutListRetrieverContext);
+	}
+
+	public InfoDisplayContributor<?> getCollectionInfoDisplayContributor(
+		CollectionLayoutStructureItem collectionLayoutStructureItem) {
+
+		ListObjectReference listObjectReference = _getListObjectReference(
+			collectionLayoutStructureItem.getCollectionJSONObject());
+
+		if (listObjectReference == null) {
+			return null;
+		}
+
+		String className = listObjectReference.getItemType();
+
+		if (Objects.equals(className, DLFileEntry.class.getName())) {
+			className = FileEntry.class.getName();
+		}
+
+		return _infoDisplayContributorTracker.getInfoDisplayContributor(
+			className);
+	}
+
+	public String getCssClass(
+		ContainerLayoutStructureItem containerLayoutStructureItem) {
+
+		StringBundler cssClassSB = new StringBundler(31);
+
+		if (Validator.isNotNull(containerLayoutStructureItem.getAlign())) {
+			cssClassSB.append(" ");
+			cssClassSB.append(containerLayoutStructureItem.getAlign());
+		}
+
+		if (Validator.isNotNull(
+				containerLayoutStructureItem.getBackgroundColorCssClass())) {
+
+			cssClassSB.append(" bg-");
+			cssClassSB.append(
+				containerLayoutStructureItem.getBackgroundColorCssClass());
+		}
+
+		if (Validator.isNotNull(
+				containerLayoutStructureItem.getBorderColor())) {
+
+			cssClassSB.append(" border-");
+			cssClassSB.append(containerLayoutStructureItem.getBorderColor());
+		}
+
+		if (Validator.isNotNull(
+				containerLayoutStructureItem.getBorderRadius())) {
+
+			cssClassSB.append(" ");
+			cssClassSB.append(containerLayoutStructureItem.getBorderRadius());
+		}
+
+		if (Objects.equals(
+				containerLayoutStructureItem.getContentDisplay(), "block")) {
+
+			cssClassSB.append(" d-block");
+		}
+
+		if (Objects.equals(
+				containerLayoutStructureItem.getContentDisplay(), "flex")) {
+
+			cssClassSB.append(" d-flex");
+		}
+
+		if (Validator.isNotNull(containerLayoutStructureItem.getJustify())) {
+			cssClassSB.append(" ");
+			cssClassSB.append(containerLayoutStructureItem.getJustify());
+		}
+
+		if (containerLayoutStructureItem.getMarginBottom() != -1L) {
+			cssClassSB.append(" mb-");
+			cssClassSB.append(containerLayoutStructureItem.getMarginBottom());
+		}
+
+		if (!Objects.equals(
+				containerLayoutStructureItem.getWidthType(), "fixed")) {
+
+			if (containerLayoutStructureItem.getMarginLeft() != -1L) {
+				cssClassSB.append(" ml-");
+				cssClassSB.append(containerLayoutStructureItem.getMarginLeft());
+			}
+
+			if (containerLayoutStructureItem.getMarginRight() != -1L) {
+				cssClassSB.append(" mr-");
+				cssClassSB.append(
+					containerLayoutStructureItem.getMarginRight());
+			}
+		}
+
+		if (containerLayoutStructureItem.getMarginTop() != -1L) {
+			cssClassSB.append(" mt-");
+			cssClassSB.append(containerLayoutStructureItem.getMarginTop());
+		}
+
+		if (containerLayoutStructureItem.getPaddingBottom() != -1L) {
+			cssClassSB.append(" pb-");
+			cssClassSB.append(containerLayoutStructureItem.getPaddingBottom());
+		}
+
+		if (containerLayoutStructureItem.getPaddingLeft() != -1L) {
+			cssClassSB.append(" pl-");
+			cssClassSB.append(containerLayoutStructureItem.getPaddingLeft());
+		}
+
+		if (containerLayoutStructureItem.getPaddingRight() != -1L) {
+			cssClassSB.append(" pr-");
+			cssClassSB.append(containerLayoutStructureItem.getPaddingRight());
+		}
+
+		if (containerLayoutStructureItem.getPaddingTop() != -1L) {
+			cssClassSB.append(" pt-");
+			cssClassSB.append(containerLayoutStructureItem.getPaddingTop());
+		}
+
+		if (Validator.isNotNull(containerLayoutStructureItem.getShadow())) {
+			cssClassSB.append(" ");
+			cssClassSB.append(containerLayoutStructureItem.getShadow());
+		}
+
+		if (Objects.equals(
+				containerLayoutStructureItem.getWidthType(), "fixed")) {
+
+			cssClassSB.append(" container");
+		}
+
+		return cssClassSB.toString();
+	}
+
+	public InfoListRenderer<?> getInfoListRenderer(
+		CollectionLayoutStructureItem collectionLayoutStructureItem) {
+
+		if (Validator.isNull(collectionLayoutStructureItem.getListStyle())) {
+			return null;
+		}
+
+		return _infoListRendererTracker.getInfoListRenderer(
+			collectionLayoutStructureItem.getListStyle());
+	}
+
+	public InfoListRendererContext getInfoListRendererContext(
+		String listItemStyle, String templateKey) {
+
+		DefaultInfoListRendererContext defaultInfoListRendererContext =
+			new DefaultInfoListRendererContext(
+				_httpServletRequest, _httpServletResponse);
+
+		defaultInfoListRendererContext.setListItemRendererKey(listItemStyle);
+		defaultInfoListRendererContext.setTemplateKey(templateKey);
+
+		return defaultInfoListRendererContext;
+	}
+
+	public String getPortletFooterPaths() {
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			_httpServletResponse, unsyncStringWriter);
+
+		for (Portlet portlet : _getPortlets()) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			try {
+				PortletJSONUtil.populatePortletJSONObject(
+					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
+
+				PortletJSONUtil.writeHeaderPaths(
+					pipingServletResponse, jsonObject);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to write portlet footer paths " +
+						portlet.getPortletId(),
+					exception);
+			}
+		}
+
+		return unsyncStringWriter.toString();
+	}
+
+	public String getPortletHeaderPaths() {
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		PipingServletResponse pipingServletResponse = new PipingServletResponse(
+			_httpServletResponse, unsyncStringWriter);
+
+		for (Portlet portlet : _getPortlets()) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			try {
+				PortletJSONUtil.populatePortletJSONObject(
+					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
+
+				PortletJSONUtil.writeFooterPaths(
+					pipingServletResponse, jsonObject);
+			}
+			catch (Exception exception) {
+				_log.error(
+					"Unable to write portlet header paths " +
+						portlet.getPortletId(),
+					exception);
+			}
+		}
+
+		return unsyncStringWriter.toString();
+	}
+
+	public String getStyle(
+			ContainerLayoutStructureItem containerLayoutStructureItem)
+		throws PortalException {
+
+		StringBundler styleSB = new StringBundler(12);
+
+		styleSB.append("box-sizing: border-box;");
+
+		String backgroundImage = _getBackgroundImage(
+			containerLayoutStructureItem.getBackgroundImageJSONObject());
+
+		if (Validator.isNotNull(backgroundImage)) {
+			styleSB.append("background-position: 50% 50%; background-repeat: ");
+			styleSB.append("no-repeat; background-size: cover; ");
+			styleSB.append("background-image: url(");
+			styleSB.append(backgroundImage);
+			styleSB.append(");");
+		}
+
+		if (containerLayoutStructureItem.getBorderWidth() != -1L) {
+			styleSB.append("border-style: solid; border-width: ");
+			styleSB.append(containerLayoutStructureItem.getBorderWidth());
+			styleSB.append("px;");
+		}
+
+		if (containerLayoutStructureItem.getOpacity() != -1L) {
+			styleSB.append("opacity: ");
+			styleSB.append(containerLayoutStructureItem.getOpacity() / 100.0);
+			styleSB.append(";");
+		}
+
+		return styleSB.toString();
+	}
+
+	private String _getBackgroundImage(JSONObject rowConfigJSONObject)
 		throws PortalException {
 
 		if (rowConfigJSONObject == null) {
@@ -168,143 +449,6 @@ public class RenderFragmentLayoutDisplayContext {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	public List<Object> getCollection(
-		CollectionLayoutStructureItem collectionLayoutStructureItem,
-		long[] segmentsExperienceIds) {
-
-		JSONObject collectionJSONObject =
-			collectionLayoutStructureItem.getCollectionJSONObject();
-
-		if (collectionJSONObject.length() <= 0) {
-			return Collections.emptyList();
-		}
-
-		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionJSONObject);
-
-		if (listObjectReference == null) {
-			return Collections.emptyList();
-		}
-
-		LayoutListRetriever<?, ListObjectReference> layoutListRetriever =
-			(LayoutListRetriever<?, ListObjectReference>)
-				_layoutListRetrieverTracker.getLayoutListRetriever(
-					collectionJSONObject.getString("type"));
-
-		if (layoutListRetriever == null) {
-			return Collections.emptyList();
-		}
-
-		DefaultLayoutListRetrieverContext defaultLayoutListRetrieverContext =
-			new DefaultLayoutListRetrieverContext();
-
-		defaultLayoutListRetrieverContext.setSegmentsExperienceIdsOptional(
-			segmentsExperienceIds);
-		defaultLayoutListRetrieverContext.setPagination(
-			Pagination.of(collectionLayoutStructureItem.getNumberOfItems(), 0));
-
-		return layoutListRetriever.getList(
-			listObjectReference, defaultLayoutListRetrieverContext);
-	}
-
-	public InfoDisplayContributor<?> getCollectionInfoDisplayContributor(
-		CollectionLayoutStructureItem collectionLayoutStructureItem) {
-
-		ListObjectReference listObjectReference = _getListObjectReference(
-			collectionLayoutStructureItem.getCollectionJSONObject());
-
-		if (listObjectReference == null) {
-			return null;
-		}
-
-		String className = listObjectReference.getItemType();
-
-		if (Objects.equals(className, DLFileEntry.class.getName())) {
-			className = FileEntry.class.getName();
-		}
-
-		return _infoDisplayContributorTracker.getInfoDisplayContributor(
-			className);
-	}
-
-	public InfoListRenderer<?> getInfoListRenderer(
-		CollectionLayoutStructureItem collectionLayoutStructureItem) {
-
-		if (Validator.isNull(collectionLayoutStructureItem.getListStyle())) {
-			return null;
-		}
-
-		return _infoListRendererTracker.getInfoListRenderer(
-			collectionLayoutStructureItem.getListStyle());
-	}
-
-	public InfoListRendererContext getInfoListRendererContext(
-		String listItemStyle, String templateKey) {
-
-		DefaultInfoListRendererContext defaultInfoListRendererContext =
-			new DefaultInfoListRendererContext(
-				_httpServletRequest, _httpServletResponse);
-
-		defaultInfoListRendererContext.setListItemRendererKey(listItemStyle);
-		defaultInfoListRendererContext.setTemplateKey(templateKey);
-
-		return defaultInfoListRendererContext;
-	}
-
-	public String getPortletFooterPaths() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			_httpServletResponse, unsyncStringWriter);
-
-		for (Portlet portlet : _getPortlets()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			try {
-				PortletJSONUtil.populatePortletJSONObject(
-					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
-
-				PortletJSONUtil.writeHeaderPaths(
-					pipingServletResponse, jsonObject);
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to write portlet footer paths " +
-						portlet.getPortletId(),
-					exception);
-			}
-		}
-
-		return unsyncStringWriter.toString();
-	}
-
-	public String getPortletHeaderPaths() {
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			_httpServletResponse, unsyncStringWriter);
-
-		for (Portlet portlet : _getPortlets()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			try {
-				PortletJSONUtil.populatePortletJSONObject(
-					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
-
-				PortletJSONUtil.writeFooterPaths(
-					pipingServletResponse, jsonObject);
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to write portlet header paths " +
-						portlet.getPortletId(),
-					exception);
-			}
-		}
-
-		return unsyncStringWriter.toString();
 	}
 
 	private ListObjectReference _getListObjectReference(

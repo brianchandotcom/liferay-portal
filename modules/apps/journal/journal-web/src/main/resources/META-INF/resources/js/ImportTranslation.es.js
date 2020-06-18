@@ -89,8 +89,18 @@ export default function ImportTranslation({
 			<div className="mb-5 mt-4">
 				<p className="h5">{Liferay.Language.get('file-upload')}</p>
 
+				<ClayInput
+					accept={VALID_EXTENSIONS}
+					className="d-none"
+					name="file"
+					onChange={(e) => {
+						setImporFile(e.target.files[0]);
+					}}
+					ref={inputFileRef}
+					type="file"
+				/>
+
 				{!importFile && (
-					<>
 						<ClayButton
 							displayType="secondary"
 							onClick={() => {
@@ -99,18 +109,6 @@ export default function ImportTranslation({
 						>
 							{Liferay.Language.get('select-file')}
 						</ClayButton>
-
-						<ClayInput
-							accept={VALID_EXTENSIONS}
-							className="d-none"
-							name="import-file"
-							onChange={(e) => {
-								setImporFile(e.target.files[0]);
-							}}
-							ref={inputFileRef}
-							type="file"
-						/>
-					</>
 				)}
 
 				{importFile && (

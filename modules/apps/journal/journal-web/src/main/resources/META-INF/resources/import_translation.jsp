@@ -37,6 +37,7 @@ renderResponse.setTitle(title);
 
 <aui:form action="<%= importTranslationURL %>" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
 		<clay:container-fluid>
@@ -52,7 +53,7 @@ renderResponse.setTitle(title);
 					<div class="metadata-type-button-row tbar-section text-right">
 						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
+						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" primary="<%= false %>" type="submit" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
 
 						<aui:button cssClass="btn-sm mr-3" id="submitBtnId" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
 					</div>
@@ -83,3 +84,18 @@ renderResponse.setTitle(title);
 		</clay:sheet>
 	</clay:container-fluid>
 </aui:form>
+
+<script>
+	var saveDraftBtn = document.getElementById(
+		'<portlet:namespace />saveDraftBtn'
+	);
+
+	saveDraftBtn.addEventListener('click', function () {
+		var workflowActionInput = document.getElementById(
+			'<portlet:namespace />workflowAction'
+		);
+
+		workflowActionInput.value =
+			'<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
+	});
+</script>

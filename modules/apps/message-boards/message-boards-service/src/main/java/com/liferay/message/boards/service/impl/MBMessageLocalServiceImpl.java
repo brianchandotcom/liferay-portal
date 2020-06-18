@@ -695,16 +695,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			_mbThreadLocalService.deleteMBThread(thread);
 
-			// Category
-
-			if ((message.getCategoryId() !=
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-				(message.getCategoryId() !=
-					MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-				MBUtil.updateCategoryStatistics(message.getCategoryId());
-			}
-
 			// Indexer
 
 			Indexer<MBThread> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -806,17 +796,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			if (message.isApproved()) {
 				MBUtil.updateThreadMessageCount(thread.getThreadId());
-			}
-
-			// Category
-
-			if ((message.getCategoryId() !=
-					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-				(message.getCategoryId() !=
-					MBCategoryConstants.DISCUSSION_CATEGORY_ID) &&
-				!message.isDraft()) {
-
-				MBUtil.updateCategoryMessageCount(message.getCategoryId());
 			}
 
 			// Indexer
@@ -2492,20 +2471,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			// Thread
 
 			MBUtil.updateThreadMessageCount(thread.getThreadId());
-
-			// Category
-
-			if ((category != null) &&
-				(thread.getRootMessageId() == message.getMessageId())) {
-
-				MBUtil.updateCategoryStatistics(category.getCategoryId());
-			}
-
-			if ((category != null) &&
-				!(thread.getRootMessageId() == message.getMessageId())) {
-
-				MBUtil.updateCategoryMessageCount(category.getCategoryId());
-			}
 		}
 
 		// Indexer

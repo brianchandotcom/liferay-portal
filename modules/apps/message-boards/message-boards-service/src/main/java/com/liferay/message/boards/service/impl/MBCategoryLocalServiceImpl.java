@@ -840,42 +840,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public MBCategory updateMessageCount(long categoryId) {
-		MBCategory mbCategory = mbCategoryPersistence.fetchByPrimaryKey(
-			categoryId);
-
-		if (mbCategory == null) {
-			return null;
-		}
-
-		int messageCount = _mbMessageLocalService.getCategoryMessagesCount(
-			mbCategory.getGroupId(), mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		mbCategory.setMessageCount(messageCount);
-
-		return mbCategoryPersistence.update(mbCategory);
-	}
-
-	@Override
-	public MBCategory updateStatistics(long categoryId) {
-		MBCategory mbCategory = mbCategoryPersistence.fetchByPrimaryKey(
-			categoryId);
-
-		if (mbCategory == null) {
-			return null;
-		}
-
-		int messageCount = _mbMessageLocalService.getCategoryMessagesCount(
-			mbCategory.getGroupId(), mbCategory.getCategoryId(),
-			WorkflowConstants.STATUS_APPROVED);
-
-		mbCategory.setMessageCount(messageCount);
-
-		return mbCategoryPersistence.update(mbCategory);
-	}
-
-	@Override
 	public MBCategory updateStatus(long userId, long categoryId, int status)
 		throws PortalException {
 
@@ -990,14 +954,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				_reindex(MBMessage.class, message);
 			}
 		}
-
-		MBCategory toCategory = mbCategoryPersistence.findByPrimaryKey(
-			toCategoryId);
-
-		toCategory.setMessageCount(
-			fromCategory.getMessageCount() + toCategory.getMessageCount());
-
-		mbCategoryPersistence.update(toCategory);
 
 		mbCategoryLocalService.deleteCategory(fromCategory);
 	}

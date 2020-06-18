@@ -22,7 +22,6 @@ import com.liferay.message.boards.constants.MBCategoryConstants;
 import com.liferay.message.boards.constants.MBConstants;
 import com.liferay.message.boards.constants.MBMessageConstants;
 import com.liferay.message.boards.constants.MBThreadConstants;
-import com.liferay.message.boards.exception.NoSuchCategoryException;
 import com.liferay.message.boards.exception.SplitThreadException;
 import com.liferay.message.boards.internal.util.MBMessageUtil;
 import com.liferay.message.boards.internal.util.MBThreadUtil;
@@ -239,26 +238,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
 				message.getCompanyId(), message.getGroupId(),
 				message.getWorkflowClassName(), message.getMessageId());
-		}
-
-		// Category
-
-		if ((rootMessage.getCategoryId() !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
-			(rootMessage.getCategoryId() !=
-				MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
-
-			try {
-				MBCategory category = _mbCategoryPersistence.findByPrimaryKey(
-					thread.getCategoryId());
-
-				MBUtil.updateCategoryStatistics(category.getCategoryId());
-			}
-			catch (NoSuchCategoryException noSuchCategoryException) {
-				if (!thread.isInTrash()) {
-					throw noSuchCategoryException;
-				}
-			}
 		}
 
 		// Asset
@@ -615,19 +594,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		long oldCategoryId = thread.getCategoryId();
 
-		MBCategory oldCategory = null;
-
-		if (oldCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			oldCategory = _mbCategoryPersistence.fetchByPrimaryKey(
-				oldCategoryId);
-		}
-
-		MBCategory category = null;
-
-		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			category = _mbCategoryPersistence.fetchByPrimaryKey(categoryId);
-		}
-
 		// Thread
 
 		thread.setCategoryId(categoryId);
@@ -652,16 +618,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				indexer.reindex(message);
 			}
-		}
-
-		// Category
-
-		if ((oldCategory != null) && (categoryId != oldCategoryId)) {
-			MBUtil.updateCategoryStatistics(oldCategory.getCategoryId());
-		}
-
-		if ((category != null) && (categoryId != oldCategoryId)) {
-			MBUtil.updateCategoryStatistics(category.getCategoryId());
 		}
 
 		// Indexer
@@ -1146,21 +1102,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread.setStatusDate(new Date());
 
 		thread = mbThreadPersistence.update(thread);
-
-		// Messages
-
-		if (thread.getCategoryId() !=
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-
-			// Category
-
-			MBCategory category = _mbCategoryPersistence.fetchByPrimaryKey(
-				thread.getCategoryId());
-
-			if (category != null) {
-				MBUtil.updateCategoryStatistics(category.getCategoryId());
-			}
-		}
 
 		// Indexer
 

@@ -15,7 +15,6 @@
 package com.liferay.message.boards.internal.util;
 
 import com.liferay.message.boards.model.MBMessage;
-import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBThreadLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -90,36 +89,6 @@ public class MBUtil {
 				"href=\"" + themeDisplay.getURLPortal() + "/",
 				"src=\"" + themeDisplay.getURLPortal() + "/"
 			});
-	}
-
-	public static void updateCategoryMessageCount(final long categoryId) {
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				MBCategoryLocalServiceUtil.updateMessageCount(categoryId);
-
-				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
-	}
-
-	public static void updateCategoryStatistics(final long categoryId) {
-		Callable<Void> callable = new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				MBCategoryLocalServiceUtil.updateStatistics(categoryId);
-
-				return null;
-			}
-
-		};
-
-		TransactionCommitCallbackUtil.registerCallback(callable);
 	}
 
 	public static void updateThreadMessageCount(final long threadId) {

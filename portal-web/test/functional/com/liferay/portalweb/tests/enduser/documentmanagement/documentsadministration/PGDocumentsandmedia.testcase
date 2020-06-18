@@ -804,15 +804,15 @@ definition {
 			userPassword = PropsUtil.get("email.password.3"),
 			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
-		GoogleDrive.selectDocument(googleDocName = "taco.jpg");
+		GoogleDrive.selectDocument(googleDocName = "liferay.txt");
 
 		PortletEntry.publish();
 
-		DMDocument.viewPG(dmDocumentTitle = "taco.jpg");
+		DMDocument.viewPG(dmDocumentTitle = "liferay.txt");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		DMDocument.deletePG(dmDocumentTitle = "taco.jpg");
+		DMDocument.deletePG(dmDocumentTitle = "liferay.txt");
 	}
 
 	@priority = "5"
@@ -1132,7 +1132,7 @@ definition {
 			userPassword = PropsUtil.get("email.password.3"),
 			windowTitle = "New Google Drive Shortcut - ${siteName}");
 
-		GoogleDrive.selectDocument(googleDocName = "taco.jpg");
+		GoogleDrive.selectDocument(googleDocName = "liferay.txt");
 
 		PortletEntry.publish();
 
@@ -1143,12 +1143,12 @@ definition {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.moveToFolderPG(
-			dmDocumentTitle = "taco.jpg",
+			dmDocumentTitle = "liferay.txt",
 			dmFolderName = "DM Folder Name");
 
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
-		DMDocument.viewPG(dmDocumentTitle = "taco.jpg");
+		DMDocument.viewPG(dmDocumentTitle = "liferay.txt");
 	}
 
 	@priority = "5"

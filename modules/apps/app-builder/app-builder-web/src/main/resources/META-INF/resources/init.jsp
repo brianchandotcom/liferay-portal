@@ -34,6 +34,7 @@ page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %>
 
 <%@ page import="java.util.Arrays" %><%@
+page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
 <liferay-frontend:defineObjects />

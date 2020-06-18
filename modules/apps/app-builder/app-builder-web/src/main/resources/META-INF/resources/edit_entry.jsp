@@ -18,6 +18,7 @@
 
 <%
 AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebKeys.APP);
+List<Long> dataLayoutIds = (List<Long>)request.getAttribute(AppBuilderWebKeys.DATA_LAYOUT_IDS);
 %>
 
 <div class="app-builder-root">
@@ -35,12 +36,21 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 				<div class="card card-root mb-0 mt-4 shadowless-card">
 					<div class="card-body pt-0">
 						<aui:form>
-							<liferay-data-engine:data-layout-renderer
-								containerId='<%= renderResponse.getNamespace() + "container" %>'
-								dataLayoutId="<%= appBuilderApp.getDdmStructureLayoutId() %>"
-								dataRecordId='<%= ParamUtil.getLong(request, "dataRecordId") %>'
-								namespace="<%= renderResponse.getNamespace() %>"
-							/>
+
+							<%
+							for (Long dataLayoutId : dataLayoutIds) {
+							%>
+
+								<liferay-data-engine:data-layout-renderer
+									containerId='<%= renderResponse.getNamespace() + "container" %>'
+									dataLayoutId="<%= dataLayoutId %>"
+									dataRecordId='<%= ParamUtil.getLong(request, "dataRecordId") %>'
+									namespace="<%= renderResponse.getNamespace() %>"
+								/>
+
+							<%
+							}
+							%>
 
 							<div id="<portlet:namespace />-edit-entry-app">
 								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/app_builder/add_data_record" var="addEntryURL" />

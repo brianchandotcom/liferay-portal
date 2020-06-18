@@ -990,8 +990,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 				}
 				catch (Exception exception) {
-					${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
-
 					throw processException(exception);
 				}
 				finally {
@@ -1354,10 +1352,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			}
 			catch (Exception exception) {
-				if (${useCache}) {
-					${finderCache}.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1417,14 +1411,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 			}
 			catch (Exception exception) {
-				<#if entity.isChangeTrackingEnabled()>
-					if (productionMode) {
-						${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-					}
-				<#else>
-					${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-				</#if>
-
 				throw processException(exception);
 			}
 			finally {
@@ -1906,8 +1892,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathWithPaginationCountAncestors, finderArgs, count);
 				}
 				catch (SystemException systemException) {
-					${finderCache}.removeResult(_finderPathWithPaginationCountAncestors, finderArgs);
-
 					throw systemException;
 				}
 			}
@@ -1928,8 +1912,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathWithPaginationCountDescendants, finderArgs, count);
 				}
 				catch (SystemException systemException) {
-					${finderCache}.removeResult(_finderPathWithPaginationCountDescendants, finderArgs);
-
 					throw systemException;
 				}
 			}
@@ -1962,8 +1944,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathWithPaginationGetAncestors, finderArgs, list);
 				}
 				catch (SystemException systemException) {
-					${finderCache}.removeResult(_finderPathWithPaginationGetAncestors, finderArgs);
-
 					throw systemException;
 				}
 			}
@@ -1996,8 +1976,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathWithPaginationGetDescendants, finderArgs, list);
 				}
 				catch (SystemException systemException) {
-					${finderCache}.removeResult(_finderPathWithPaginationGetDescendants, finderArgs);
-
 					throw systemException;
 				}
 			}

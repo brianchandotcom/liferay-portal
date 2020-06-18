@@ -113,14 +113,6 @@ public int countBy${entityFinder.name}(
 			</#if>
 		}
 		catch (Exception exception) {
-			<#if entity.isChangeTrackingEnabled()>
-				if (productionMode) {
-					${finderCache}.removeResult(finderPath, finderArgs);
-				}
-			<#else>
-				${finderCache}.removeResult(finderPath, finderArgs);
-			</#if>
-
 			throw processException(exception);
 		}
 		finally {
@@ -269,14 +261,6 @@ public int countBy${entityFinder.name}(
 				</#if>
 			}
 			catch (Exception exception) {
-				<#if entity.isChangeTrackingEnabled()>
-					if (productionMode) {
-						${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
-					}
-				<#else>
-					${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
-				</#if>
-
 				throw processException(exception);
 			}
 			finally {
@@ -455,14 +439,6 @@ public int countBy${entityFinder.name}(
 					</#if>
 			}
 			catch (Exception exception) {
-				<#if entity.isChangeTrackingEnabled()>
-					if (productionMode) {
-						${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
-					}
-				<#else>
-					${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
-				</#if>
-
 				throw processException(exception);
 			}
 		}

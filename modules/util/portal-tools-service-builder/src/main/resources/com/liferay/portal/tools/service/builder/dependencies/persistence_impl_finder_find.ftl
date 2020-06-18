@@ -299,10 +299,6 @@ that may or may not be enforced with a unique index at the database level. Case
 				}
 			}
 			catch (Exception exception) {
-				if (${useCache}) {
-					${finderCache}.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1705,10 +1701,6 @@ that may or may not be enforced with a unique index at the database level. Case
 				}
 			}
 			catch (Exception exception) {
-				if (${useCache}) {
-					${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2090,10 +2082,6 @@ that may or may not be enforced with a unique index at the database level. Case
 				}
 			}
 			catch (Exception exception) {
-				if (${useCache}) {
-					${finderCache}.removeResult(_finderPathWithPaginationFindBy${entityFinder.name}, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 		}
@@ -2381,10 +2369,6 @@ that may or may not be enforced with a unique index at the database level. Case
 				}
 			}
 			catch (Exception exception) {
-				if (${useCache}) {
-					${finderCache}.removeResult(_finderPathFetchBy${entityFinder.name}, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {

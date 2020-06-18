@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.3.3",
+		"@clayui/alert": "3.3.4",
 		"@clayui/button": "3.3.1",
 		"@clayui/icon": "3.0.5",
-		"@clayui/modal": "3.5.0",
+		"@clayui/modal": "3.5.1",
 		"clay-button": "2.21.3",
 		"clay-icon": "2.21.3",
 		"frontend-js-web": "*",

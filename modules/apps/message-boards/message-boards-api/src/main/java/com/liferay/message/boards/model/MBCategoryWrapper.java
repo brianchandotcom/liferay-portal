@@ -55,7 +55,6 @@ public class MBCategoryWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("displayStyle", getDisplayStyle());
-		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -137,12 +136,6 @@ public class MBCategoryWrapper
 
 		if (displayStyle != null) {
 			setDisplayStyle(displayStyle);
-		}
-
-		Date lastPostDate = (Date)attributes.get("lastPostDate");
-
-		if (lastPostDate != null) {
-			setLastPostDate(lastPostDate);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -268,16 +261,6 @@ public class MBCategoryWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
-	}
-
-	/**
-	 * Returns the last post date of this message boards category.
-	 *
-	 * @return the last post date of this message boards category
-	 */
-	@Override
-	public Date getLastPostDate() {
-		return model.getLastPostDate();
 	}
 
 	/**
@@ -669,16 +652,6 @@ public class MBCategoryWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
-	}
-
-	/**
-	 * Sets the last post date of this message boards category.
-	 *
-	 * @param lastPostDate the last post date of this message boards category
-	 */
-	@Override
-	public void setLastPostDate(Date lastPostDate) {
-		model.setLastPostDate(lastPostDate);
 	}
 
 	/**

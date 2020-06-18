@@ -43,7 +43,6 @@ public class MBCategorySoap implements Serializable {
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setDisplayStyle(model.getDisplayStyle());
-		soapModel.setLastPostDate(model.getLastPostDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setStatusByUserId(model.getStatusByUserId());
@@ -198,14 +197,6 @@ public class MBCategorySoap implements Serializable {
 		_displayStyle = displayStyle;
 	}
 
-	public Date getLastPostDate() {
-		return _lastPostDate;
-	}
-
-	public void setLastPostDate(Date lastPostDate) {
-		_lastPostDate = lastPostDate;
-	}
-
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -258,7 +249,6 @@ public class MBCategorySoap implements Serializable {
 	private String _name;
 	private String _description;
 	private String _displayStyle;
-	private Date _lastPostDate;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;

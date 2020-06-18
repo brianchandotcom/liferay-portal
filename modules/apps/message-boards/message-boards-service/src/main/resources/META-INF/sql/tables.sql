@@ -24,7 +24,6 @@ create table MBCategory (
 	name VARCHAR(75) null,
 	description STRING null,
 	displayStyle VARCHAR(75) null,
-	lastPostDate DATE null,
 	lastPublishDate DATE null,
 	status INTEGER,
 	statusByUserId LONG,

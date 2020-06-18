@@ -267,20 +267,6 @@ public interface MBCategoryModel
 	public void setDisplayStyle(String displayStyle);
 
 	/**
-	 * Returns the last post date of this message boards category.
-	 *
-	 * @return the last post date of this message boards category
-	 */
-	public Date getLastPostDate();
-
-	/**
-	 * Sets the last post date of this message boards category.
-	 *
-	 * @param lastPostDate the last post date of this message boards category
-	 */
-	public void setLastPostDate(Date lastPostDate);
-
-	/**
 	 * Returns the last publish date of this message boards category.
 	 *
 	 * @return the last publish date of this message boards category

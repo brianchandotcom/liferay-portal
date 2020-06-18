@@ -770,7 +770,6 @@ definition {
 		DMDocument.downloadPG(dmDocumentTitle = "/D/M/Document Title");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test EditAndDeleteGoogleDoc {
 		property portal.release = "false";
@@ -1098,7 +1097,6 @@ definition {
 			locationFieldName = "true");
 	}
 
-	@ignore = "true"
 	@priority = "5"
 	test MoveGoogleDocToFolder {
 		property portal.release = "false";

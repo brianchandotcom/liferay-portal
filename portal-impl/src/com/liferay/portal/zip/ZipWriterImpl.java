@@ -18,7 +18,6 @@ import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -78,11 +77,17 @@ public class ZipWriterImpl implements ZipWriter {
 			return;
 		}
 
-		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				new UnsyncByteArrayInputStream(bytes)) {
-
-			addEntry(name, unsyncByteArrayInputStream);
+		if (name.startsWith(StringPool.SLASH)) {
+			name = name.substring(1);
 		}
+
+		ZipEntry zipEntry = new ZipEntry(name);
+
+		_zipOutputStream.putNextEntry(zipEntry);
+
+		_zipOutputStream.write(bytes);
+
+		_zipOutputStream.closeEntry();
 	}
 
 	@Override
@@ -95,10 +100,6 @@ public class ZipWriterImpl implements ZipWriter {
 
 		if (name.startsWith(StringPool.SLASH)) {
 			name = name.substring(1);
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Adding " + name);
 		}
 
 		ZipEntry zipEntry = new ZipEntry(name);

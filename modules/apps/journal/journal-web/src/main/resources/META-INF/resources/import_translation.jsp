@@ -28,7 +28,10 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(title);
 %>
 
-<portlet:actionURL name="/journaly/import_translation" var="importTranslationURL" />
+<portlet:actionURL name="/journal/import_translation" var="importTranslationURL">
+	<portlet:param name="groupId" value="<%= articleResourceId %>" />
+	<portlet:param name="articleId" value="<%= articleResourceId %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= importTranslationURL %>" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

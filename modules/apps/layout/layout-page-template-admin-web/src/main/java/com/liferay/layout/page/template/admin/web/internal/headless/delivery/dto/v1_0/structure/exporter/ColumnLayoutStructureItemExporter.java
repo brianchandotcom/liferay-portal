@@ -56,11 +56,14 @@ public class ColumnLayoutStructureItemExporter
 
 						setColumnViewportConfig(
 							() -> {
-								Map<String, JSONObject> viewportConfigurations =
-									columnLayoutStructureItem.
-										getViewportSizeConfigurations();
+								Map<String, JSONObject>
+									columnViewportConfigurations =
+										columnLayoutStructureItem.
+											getViewportConfigurations();
 
-								if (MapUtil.isEmpty(viewportConfigurations)) {
+								if (MapUtil.isEmpty(
+										columnViewportConfigurations)) {
+
 									return null;
 								}
 
@@ -68,15 +71,15 @@ public class ColumnLayoutStructureItemExporter
 									{
 										landscapeMobile =
 											_toColumnViewportConfigDefinition(
-												viewportConfigurations,
+												columnViewportConfigurations,
 												ViewportSize.MOBILE_LANDSCAPE);
 										portraitMobile =
 											_toColumnViewportConfigDefinition(
-												viewportConfigurations,
+												columnViewportConfigurations,
 												ViewportSize.PORTRAIT_MOBILE);
 										tablet =
 											_toColumnViewportConfigDefinition(
-												viewportConfigurations,
+												columnViewportConfigurations,
 												ViewportSize.TABLET);
 									}
 								};
@@ -89,16 +92,16 @@ public class ColumnLayoutStructureItemExporter
 	}
 
 	private ColumnViewportConfigDefinition _toColumnViewportConfigDefinition(
-		Map<String, JSONObject> viewportConfigurations,
+		Map<String, JSONObject> columnViewportConfigurations,
 		ViewportSize viewportSize) {
 
-		if (!viewportConfigurations.containsKey(
+		if (!columnViewportConfigurations.containsKey(
 				viewportSize.getViewportSizeId())) {
 
 			return null;
 		}
 
-		JSONObject jsonObject = viewportConfigurations.get(
+		JSONObject jsonObject = columnViewportConfigurations.get(
 			viewportSize.getViewportSizeId());
 
 		return new ColumnViewportConfigDefinition() {

@@ -83,8 +83,8 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 				continue;
 			}
 
-			JSONObject viewportSizeConfigurationJSONObject =
-				_viewportSizeConfigurations.getOrDefault(
+			JSONObject viewportConfigurationJSONObject =
+				_viewportConfigurations.getOrDefault(
 					viewportSize.getViewportSizeId(),
 					JSONFactoryUtil.createJSONObject());
 
@@ -92,13 +92,13 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 				viewportSize.getViewportSizeId(),
 				JSONUtil.put(
 					"modulesPerRow",
-					viewportSizeConfigurationJSONObject.get("modulesPerRow")
+					viewportConfigurationJSONObject.get("modulesPerRow")
 				).put(
 					"reverseOrder",
-					viewportSizeConfigurationJSONObject.get("reverseOrder")
+					viewportConfigurationJSONObject.get("reverseOrder")
 				).put(
 					"verticalAlignment",
-					viewportSizeConfigurationJSONObject.get("verticalAlignment")
+					viewportConfigurationJSONObject.get("verticalAlignment")
 				));
 		}
 
@@ -126,8 +126,16 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		return _verticalAlignment;
 	}
 
+	public Map<String, JSONObject> getViewportConfigurations() {
+		return _viewportConfigurations;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getViewportConfigurations()}
+	 */
+	@Deprecated
 	public Map<String, JSONObject> getViewportSizeConfigurations() {
-		return _viewportSizeConfigurations;
+		return getViewportConfigurations();
 	}
 
 	@Override
@@ -163,11 +171,11 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 		_verticalAlignment = verticalAlignment;
 	}
 
-	public void setViewportSizeConfiguration(
+	public void setViewportConfiguration(
 		String viewportSizeId, JSONObject configurationJSONObject) {
 
 		JSONObject currentConfigurationJSONObject =
-			_viewportSizeConfigurations.getOrDefault(
+			_viewportConfigurations.getOrDefault(
 				viewportSizeId, JSONFactoryUtil.createJSONObject());
 
 		if (configurationJSONObject.has("modulesPerRow")) {
@@ -188,8 +196,18 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 				configurationJSONObject.getString("verticalAlignment"));
 		}
 
-		_viewportSizeConfigurations.put(
+		_viewportConfigurations.put(
 			viewportSizeId, currentConfigurationJSONObject);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #setViewportConfiguration(String, JSONObject)}
+	 */
+	@Deprecated
+	public void setViewportSizeConfiguration(
+		String viewportSizeId, JSONObject configurationJSONObject) {
+
+		setViewportConfiguration(viewportSizeId, configurationJSONObject);
 	}
 
 	@Override
@@ -221,7 +239,7 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 			}
 
 			if (itemConfigJSONObject.has(viewportSize.getViewportSizeId())) {
-				setViewportSizeConfiguration(
+				setViewportConfiguration(
 					viewportSize.getViewportSizeId(),
 					itemConfigJSONObject.getJSONObject(
 						viewportSize.getViewportSizeId()));
@@ -234,7 +252,6 @@ public class RowLayoutStructureItem extends LayoutStructureItem {
 	private int _numberOfColumns;
 	private boolean _reverseOrder;
 	private String _verticalAlignment = "top";
-	private Map<String, JSONObject> _viewportSizeConfigurations =
-		new HashMap<>();
+	private Map<String, JSONObject> _viewportConfigurations = new HashMap<>();
 
 }

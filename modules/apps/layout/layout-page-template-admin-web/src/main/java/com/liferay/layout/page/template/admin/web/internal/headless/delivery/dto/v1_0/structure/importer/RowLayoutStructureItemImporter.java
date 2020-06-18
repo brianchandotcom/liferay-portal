@@ -74,11 +74,11 @@ public class RowLayoutStructureItemImporter
 			}
 
 			if (definitionMap.containsKey("rowViewportConfig")) {
-				Map<String, Object> viewportRowConfigurations =
+				Map<String, Object> rowViewportConfigurations =
 					(Map<String, Object>)definitionMap.get("rowViewportConfig");
 
 				for (Map.Entry<String, Object> entry :
-						viewportRowConfigurations.entrySet()) {
+						rowViewportConfigurations.entrySet()) {
 
 					Map<String, Object> rowViewportConfiguration =
 						(Map<String, Object>)entry.getValue();
@@ -109,7 +109,7 @@ public class RowLayoutStructureItemImporter
 									"verticalAlignment")));
 					}
 
-					rowLayoutStructureItem.setViewportSizeConfiguration(
+					rowLayoutStructureItem.setViewportConfiguration(
 						entry.getKey(), jsonObject);
 				}
 			}

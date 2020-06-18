@@ -79,7 +79,7 @@ public class ColumnLayoutStructureItemImporter
 						columnViewportConfiguration.get("size")));
 			}
 
-			columnLayoutStructureItem.setViewportSizeConfiguration(
+			columnLayoutStructureItem.setViewportConfiguration(
 				entry.getKey(), jsonObject);
 		}
 

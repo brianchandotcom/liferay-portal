@@ -62,11 +62,14 @@ public class RowLayoutStructureItemExporter
 
 						setRowViewportConfig(
 							() -> {
-								Map<String, JSONObject> viewportConfigurations =
-									rowLayoutStructureItem.
-										getViewportSizeConfigurations();
+								Map<String, JSONObject>
+									rowViewportConfigurations =
+										rowLayoutStructureItem.
+											getViewportConfigurations();
 
-								if (MapUtil.isEmpty(viewportConfigurations)) {
+								if (MapUtil.isEmpty(
+										rowViewportConfigurations)) {
+
 									return null;
 								}
 
@@ -74,14 +77,14 @@ public class RowLayoutStructureItemExporter
 									{
 										landscapeMobile =
 											_toRowViewportConfigDefinition(
-												viewportConfigurations,
+												rowViewportConfigurations,
 												ViewportSize.MOBILE_LANDSCAPE);
 										portraitMobile =
 											_toRowViewportConfigDefinition(
-												viewportConfigurations,
+												rowViewportConfigurations,
 												ViewportSize.PORTRAIT_MOBILE);
 										tablet = _toRowViewportConfigDefinition(
-											viewportConfigurations,
+											rowViewportConfigurations,
 											ViewportSize.TABLET);
 									}
 								};
@@ -94,16 +97,16 @@ public class RowLayoutStructureItemExporter
 	}
 
 	private RowViewportConfigDefinition _toRowViewportConfigDefinition(
-		Map<String, JSONObject> viewportConfigurations,
+		Map<String, JSONObject> rowViewportConfigurations,
 		ViewportSize viewportSize) {
 
-		if (!viewportConfigurations.containsKey(
+		if (!rowViewportConfigurations.containsKey(
 				viewportSize.getViewportSizeId())) {
 
 			return null;
 		}
 
-		JSONObject jsonObject = viewportConfigurations.get(
+		JSONObject jsonObject = rowViewportConfigurations.get(
 			viewportSize.getViewportSizeId());
 
 		return new RowViewportConfigDefinition() {

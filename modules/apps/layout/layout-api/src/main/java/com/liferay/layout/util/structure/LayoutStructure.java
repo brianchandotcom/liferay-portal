@@ -695,7 +695,7 @@ public class LayoutStructure {
 			}
 
 			Map<String, JSONObject> columnViewportConfigurations =
-				columnLayoutStructureItem.getViewportSizeConfigurations();
+				columnLayoutStructureItem.getViewportConfigurations();
 
 			if (!columnViewportConfigurations.containsKey(viewportSizeId)) {
 				continue;
@@ -741,18 +741,17 @@ public class LayoutStructure {
 		RowLayoutStructureItem rowLayoutStructureItem, String viewportSizeId,
 		int numberOfColumns) {
 
-		Map<String, JSONObject> viewportSizeConfigurations =
-			rowLayoutStructureItem.getViewportSizeConfigurations();
+		Map<String, JSONObject> rowViewportConfigurations =
+			rowLayoutStructureItem.getViewportConfigurations();
 
-		JSONObject viewportSizeConfigurationJSONObject =
-			viewportSizeConfigurations.getOrDefault(
+		JSONObject viewportConfigurationJSONObject =
+			rowViewportConfigurations.getOrDefault(
 				viewportSizeId, JSONFactoryUtil.createJSONObject());
 
-		viewportSizeConfigurationJSONObject.put(
-			"numberOfColumns", numberOfColumns);
+		viewportConfigurationJSONObject.put("numberOfColumns", numberOfColumns);
 
-		if (viewportSizeConfigurationJSONObject.has("modulesPerRow")) {
-			viewportSizeConfigurationJSONObject.put(
+		if (viewportConfigurationJSONObject.has("modulesPerRow")) {
+			viewportConfigurationJSONObject.put(
 				"modulesPerRow", numberOfColumns);
 		}
 

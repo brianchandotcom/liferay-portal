@@ -292,7 +292,10 @@ class DataLayoutBuilder extends React.Component {
 			dataDefinitionField
 		);
 
-		const ddmFormField = {settingsContext};
+		const ddmFormField = {
+			nestedFields: dataDefinitionField.nestedDataDefinitionFields,
+			settingsContext,
+		};
 		const visitor = new PagesVisitor(settingsContext.pages);
 
 		visitor.mapFields((field) => {
@@ -308,6 +311,13 @@ class DataLayoutBuilder extends React.Component {
 
 			ddmFormField[fieldName] = value;
 		});
+
+		if (ddmFormField.nestedFields.length > 0) {
+			ddmFormField.nestedFields = ddmFormField.nestedFields.map(
+				(nestedField) =>
+					this.getDDMFormField(dataDefinition, nestedField.name)
+			);
+		}
 
 		return ddmFormField;
 	}

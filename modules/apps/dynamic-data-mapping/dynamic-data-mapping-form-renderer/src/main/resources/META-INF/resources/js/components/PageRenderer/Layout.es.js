@@ -49,7 +49,7 @@ export const Layout = ({components: Components = DefaultVariant, rows}) => {
 									{...fieldProps}
 									activePage={activePage}
 									editable={editable}
-									key={fieldProps.field.instanceId}
+									key={fieldProps.field?.instanceId ?? fieldProps.field.name}
 									onBlur={(event) =>
 										dispatch({
 											payload: event,

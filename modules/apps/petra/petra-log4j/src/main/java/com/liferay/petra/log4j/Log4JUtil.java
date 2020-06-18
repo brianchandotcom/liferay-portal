@@ -40,6 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerRepository;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import org.dom4j.Document;
@@ -200,6 +201,12 @@ public class Log4JUtil {
 		if (custom) {
 			_customLogSettings.put(name, priority);
 		}
+	}
+
+	public static void shutdownLog4J() {
+		LoggerRepository loggerRepository = LogManager.getLoggerRepository();
+
+		loggerRepository.shutdown();
 	}
 
 	private static String _escapeXMLAttribute(String s) {

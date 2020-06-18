@@ -16,6 +16,7 @@ package com.liferay.portal.spring.context;
 
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.ClassLoaderPool;
+import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -181,6 +182,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception exception) {
 			_log.error(exception, exception);
 		}
+
+		Log4JUtil.shutdownLog4J();
 	}
 
 	@Override

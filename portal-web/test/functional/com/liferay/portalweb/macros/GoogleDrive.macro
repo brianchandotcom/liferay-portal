@@ -37,6 +37,16 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
+		if (IsElementNotPresent(locator1 = "GoogleDrive#GOOGLE_DRIVE_IFRAME")) {
+			Refresh();
+
+			AssertClick(
+				locator1 = "Button#SELECT_FILE",
+				value1 = "Select File");
+
+			SelectWindow.selectWindowNoSPARefresh(locator1 = "title=${windowTitle}");
+		}
+
 		if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
 			Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
 		}

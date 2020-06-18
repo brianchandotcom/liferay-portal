@@ -31,6 +31,7 @@ import lang from '../../utils/lang.es';
 import {
 	historyPushWithSlug,
 	slugToText,
+	stripHTML,
 	useDebounceCallback,
 } from '../../utils/utils.es';
 
@@ -206,7 +207,7 @@ export default withRouter(
 										!articleBody ||
 										!headline ||
 										!tagsLoaded ||
-										articleBody.length < 23
+										stripHTML(articleBody).length < 15
 									}
 									displayType="primary"
 									onClick={() => {

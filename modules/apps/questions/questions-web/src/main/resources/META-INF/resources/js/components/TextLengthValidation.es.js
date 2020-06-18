@@ -12,18 +12,25 @@
  * details.
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import lang from '../utils/lang.es';
+import {stripHTML} from '../utils/utils.es';
 
-export default ({text}) => (
-	<>
-		{text && text.length < 23 && (
-			<p className="float-right small text-secondary">
-				{lang.sub(Liferay.Language.get('x-characters-left'), [
-					15 - (text.length ? text.length - 8 : text.length),
-				])}
-			</p>
-		)}
-	</>
-);
+export default ({text}) => {
+	const [htmlText, setHtmlText] = useState('');
+
+	useEffect(() => setHtmlText(stripHTML(text)), [text]);
+
+	return (
+		<>
+			{text && htmlText.length < 15 && (
+				<p className="float-right small text-secondary">
+					{lang.sub(Liferay.Language.get('x-characters-left'), [
+						15 - htmlText.length,
+					])}
+				</p>
+			)}
+		</>
+	);
+};

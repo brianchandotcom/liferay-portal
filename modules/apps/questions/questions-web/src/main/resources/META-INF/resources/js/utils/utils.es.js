@@ -133,6 +133,7 @@ export function historyPushWithSlug(push) {
 
 export function stripHTML(text) {
 	const htmlTags = /<([^>]+>)/g;
+	const nonBreakableSpace = '&nbsp;';
 
-	return text.replace(htmlTags, '');
+	return text.replace(htmlTags, '').replace(nonBreakableSpace, ' ');
 }

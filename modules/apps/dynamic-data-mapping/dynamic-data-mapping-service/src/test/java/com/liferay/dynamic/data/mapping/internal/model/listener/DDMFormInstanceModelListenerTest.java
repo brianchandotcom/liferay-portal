@@ -45,9 +45,7 @@ public class DDMFormInstanceModelListenerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testAfterCreateShouldCatchNoSuchFormInstanceException()
-		throws PortalException {
-
+	public void testOnAfterCreate() throws PortalException {
 		when(
 			_ddmFormInstanceReportLocalService.addFormInstanceReport(
 				Mockito.anyLong())
@@ -67,9 +65,7 @@ public class DDMFormInstanceModelListenerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testBeforeRemoveShouldCatchNoSuchFormInstanceException()
-		throws PortalException {
-
+	public void testOnBeforeRemove() throws PortalException {
 		when(
 			_ddmFormInstanceReportLocalService.
 				getFormInstanceReportByFormInstanceId(Mockito.anyLong())

@@ -195,34 +195,36 @@ public class DDMFormEvaluatorHelper {
 	}
 
 	protected void evaluateDDMFormRule(DDMFormRule ddmFormRule) {
-		if (evaluateDDMFormRuleCondition(ddmFormRule.getCondition())) {
-			List<String> actions = ddmFormRule.getActions();
-
-			Stream<String> stream = actions.stream();
-
-			evaluateDDMFormRuleAction(
-				stream.collect(Collectors.joining(" AND ")));
-
-			_evaluatedActions = ListUtil.copy(actions);
-		}
-		else {
-			DDMFormRule copyDDMFormRule = new DDMFormRule(ddmFormRule);
-
-			if (_evaluatedActions != null) {
-				List<String> actions = copyDDMFormRule.getActions();
+		if (Validator.isNotNull(ddmFormRule.getCondition())) {
+			if (evaluateDDMFormRuleCondition(ddmFormRule.getCondition())) {
+				List<String> actions = ddmFormRule.getActions();
 
 				Stream<String> stream = actions.stream();
 
-				List<String> actionsNotEvaluated = stream.filter(
-					action -> !_evaluatedActions.contains(action)
-				).collect(
-					Collectors.toList()
-				);
+				evaluateDDMFormRuleAction(
+					stream.collect(Collectors.joining(" AND ")));
 
-				copyDDMFormRule.setActions(actionsNotEvaluated);
+				_evaluatedActions = ListUtil.copy(actions);
 			}
+			else {
+				DDMFormRule copyDDMFormRule = new DDMFormRule(ddmFormRule);
 
-			_ddmFormRuleHelper.checkFieldAffectedByAction(copyDDMFormRule);
+				if (_evaluatedActions != null) {
+					List<String> actions = copyDDMFormRule.getActions();
+
+					Stream<String> stream = actions.stream();
+
+					List<String> actionsNotEvaluated = stream.filter(
+						action -> !_evaluatedActions.contains(action)
+					).collect(
+						Collectors.toList()
+					);
+
+					copyDDMFormRule.setActions(actionsNotEvaluated);
+				}
+
+				_ddmFormRuleHelper.checkFieldAffectedByAction(copyDDMFormRule);
+			}
 		}
 	}
 

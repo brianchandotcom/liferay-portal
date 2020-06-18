@@ -70,7 +70,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 	}
 
 	getEmailDomainFieldRule_() {
-		const accountNames = this.accountNames;
+		const accountEntryNames = this.accountEntryNames;
 		const validDomains = this.validDomains.split(',');
 		const validatorName = 'emailDomain';
 
@@ -92,7 +92,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 							'x-is-not-a-valid-domain-for-the-following-accounts-x'
 						),
 						emailDomain,
-						accountNames
+						accountEntryNames
 					);
 
 					return false;
@@ -177,7 +177,7 @@ class AccountUserEmailDomainValidator extends PortletBase {
 }
 
 AccountUserEmailDomainValidator.STATE = {
-	accountNames: Config.string,
+	accountEntryNames: Config.string,
 	validDomains: Config.string,
 	viewValidDomainsURL: Config.string,
 };

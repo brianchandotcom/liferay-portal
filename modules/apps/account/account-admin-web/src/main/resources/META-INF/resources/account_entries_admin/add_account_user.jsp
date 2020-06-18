@@ -135,7 +135,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 	viewValidDomainsURL.setWindowState(LiferayWindowState.POP_UP);
 
 	Map<String, Object> componentContext = HashMapBuilder.<String, Object>put(
-			"accountNames", accountEntryDisplay.getName()
+			"accountEntryNames", accountEntryDisplay.getName()
 	).put(
 			"validDomains", StringUtil.merge(accountEntryDisplay.getDomains(), StringPool.COMMA)
 	).put(

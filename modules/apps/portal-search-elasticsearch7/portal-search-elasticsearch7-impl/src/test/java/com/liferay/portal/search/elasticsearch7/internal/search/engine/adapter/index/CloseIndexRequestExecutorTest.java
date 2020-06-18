@@ -65,7 +65,7 @@ public class CloseIndexRequestExecutorTest {
 				}
 			};
 
-		org.elasticsearch.action.admin.indices.close.CloseIndexRequest
+		org.elasticsearch.client.indices.CloseIndexRequest
 			elasticsearchCloseIndexRequest =
 				closeIndexRequestExecutorImpl.createCloseIndexRequest(
 					closeIndexRequest);

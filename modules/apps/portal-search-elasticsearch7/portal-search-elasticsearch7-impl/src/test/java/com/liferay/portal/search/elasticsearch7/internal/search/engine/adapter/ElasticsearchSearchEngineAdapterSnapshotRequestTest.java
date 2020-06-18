@@ -51,7 +51,7 @@ import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.SnapshotClient;
-import org.elasticsearch.cluster.metadata.RepositoryMetaData;
+import org.elasticsearch.cluster.metadata.RepositoryMetadata;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.repositories.fs.FsRepository;
 import org.elasticsearch.snapshots.SnapshotInfo;
@@ -159,19 +159,19 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			_getGetRepositoriesResponse(
 				new String[] {"testCreateSnapshotRepository"});
 
-		List<RepositoryMetaData> repositoryMetaDatas =
+		List<RepositoryMetadata> repositoryMetadatas =
 			getRepositoriesResponse.repositories();
 
 		Assert.assertEquals(
-			"Expected 1 RepositoryMetaData", 1, repositoryMetaDatas.size());
+			"Expected 1 RepositoryMetadata", 1, repositoryMetadatas.size());
 
-		RepositoryMetaData repositoryMetaData = repositoryMetaDatas.get(0);
+		RepositoryMetadata repositoryMetadata = repositoryMetadatas.get(0);
 
 		Assert.assertEquals(
-			"testCreateSnapshotRepository", repositoryMetaData.name());
+			"testCreateSnapshotRepository", repositoryMetadata.name());
 		Assert.assertEquals(
 			SnapshotRepositoryDetails.FS_REPOSITORY_TYPE,
-			repositoryMetaData.type());
+			repositoryMetadata.type());
 
 		_deleteRepository("testCreateSnapshotRepository");
 	}

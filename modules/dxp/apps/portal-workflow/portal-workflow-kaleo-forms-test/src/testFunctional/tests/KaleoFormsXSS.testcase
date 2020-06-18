@@ -24,7 +24,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Kaleo Forms Admin");
 	}
 

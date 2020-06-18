@@ -332,7 +332,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 								</div>
 
 								<aui:script>
-									function <portlet:namespace />afterTabViewChange(event) {
+									window['<portlet:namespace />afterTabViewChange'] = function (event) {
 										var tabContentNode = event.newVal.get('boundingBox');
 
 										var kaleoDesigner = <portlet:namespace />kaleoDesigner;
@@ -342,9 +342,9 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 												kaleoDesigner.set('definition', kaleoDesigner.editor.get('value'));
 											}, 0);
 										}
-									}
+									};
 
-									function <portlet:namespace />publishKaleoDefinitionVersion() {
+									window['<portlet:namespace />publishKaleoDefinitionVersion'] = function () {
 										<portlet:namespace />updateContent();
 
 										<portlet:namespace />updateTitle();
@@ -354,9 +354,9 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										);
 
 										submitForm(document.<portlet:namespace />fm);
-									}
+									};
 
-									function <portlet:namespace />saveKaleoDefinitionVersion() {
+									window['<portlet:namespace />saveKaleoDefinitionVersion'] = function () {
 										<portlet:namespace />updateContent();
 
 										<portlet:namespace />updateTitle();
@@ -366,15 +366,15 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										);
 
 										submitForm(document.<portlet:namespace />fm);
-									}
+									};
 
-									function <portlet:namespace />updateAction(action) {
+									window['<portlet:namespace />updateAction'] = function (action) {
 										var form = document.<portlet:namespace />fm;
 
 										form.setAttribute('action', action);
-									}
+									};
 
-									function <portlet:namespace />updateContent() {
+									window['<portlet:namespace />updateContent'] = function () {
 										var content = document.getElementById('<portlet:namespace />content');
 
 										var activeTab = <portlet:namespace />kaleoDesigner.contentTabView.getActiveTab();
@@ -385,9 +385,9 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										else {
 											content.value = <portlet:namespace />kaleoDesigner.getContent();
 										}
-									}
+									};
 
-									function <portlet:namespace />updateTitle() {
+									window['<portlet:namespace />updateTitle'] = function () {
 										var titleComponent = Liferay.component('<portlet:namespace />title');
 
 										var titlePlaceholderInput = titleComponent.get('inputPlaceholder');
@@ -397,7 +397,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 												'<liferay-ui:message key="untitled-workflow" />'
 											);
 										}
-									}
+									};
 
 									Liferay.provide(
 										window,

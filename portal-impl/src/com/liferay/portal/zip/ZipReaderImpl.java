@@ -14,6 +14,7 @@
 
 package com.liferay.portal.zip;
 
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -96,20 +97,14 @@ public class ZipReaderImpl implements ZipReader {
 			return null;
 		}
 
-		byte[] bytes = null;
-
 		try {
-			InputStream is = getEntryAsInputStream(name);
-
-			if (is != null) {
-				bytes = FileUtil.getBytes(is);
-			}
+			return StreamUtil.toByteArray(getEntryAsInputStream(name));
 		}
 		catch (IOException ioException) {
 			_log.error(ioException, ioException);
 		}
 
-		return bytes;
+		return null;
 	}
 
 	@Override

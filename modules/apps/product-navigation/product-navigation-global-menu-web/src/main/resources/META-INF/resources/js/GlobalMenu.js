@@ -226,7 +226,12 @@ const AppsPanel = ({
 	);
 };
 
-const GlobalMenu = ({companyName, logoURL, panelAppsURL}) => {
+const GlobalMenu = ({
+	companyName,
+	logoURL,
+	panelAppsURL,
+	selectedPortletId,
+}) => {
 	const [appsPanelData, setAppsPanelData] = useState({});
 	const [visible, setVisible] = useState(false);
 
@@ -240,7 +245,7 @@ const GlobalMenu = ({companyName, logoURL, panelAppsURL}) => {
 		if (!fetchCategoriesPromiseRef.current) {
 			fetchCategoriesPromiseRef.current = fetch(panelAppsURL)
 				.then((response) => response.json())
-				.then(({items, portletNamespace, selectedPortletId, sites}) => {
+				.then(({items, portletNamespace, sites}) => {
 					setAppsPanelData({
 						categories: items,
 						portletNamespace,
@@ -298,6 +303,7 @@ GlobalMenu.propTypes = {
 	companyName: PropTypes.string,
 	logoURL: PropTypes.string,
 	panelAppsURL: PropTypes.string,
+	selectedPortletId: PropTypes.string,
 };
 
 export default GlobalMenu;

@@ -72,6 +72,8 @@ public class GlobalMenuDisplayContext {
 
 				return globalMenuPanelAppsURL.toString();
 			}
+		).put(
+			"selectedPortletId", themeDisplay.getPpid()
 		).build();
 	}
 

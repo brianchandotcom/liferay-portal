@@ -70,12 +70,6 @@ const withActionableFields = (ChildComponent) => {
 			}
 		}
 
-		isActionsEnabled() {
-			const {defaultLanguageId, editingLanguageId} = this.props;
-
-			return defaultLanguageId === editingLanguageId;
-		}
-
 		hasFocusedField() {
 			const {focusedField} = this.props;
 
@@ -101,7 +95,6 @@ const withActionableFields = (ChildComponent) => {
 
 					<FieldActionsDropDown
 						activePage={activePage}
-						disabled={!this.isActionsEnabled()}
 						events={{
 							mouseLeave: this._handleMouseLeaveActions.bind(
 								this
@@ -118,7 +111,6 @@ const withActionableFields = (ChildComponent) => {
 
 					<FieldActionsDropDown
 						activePage={activePage}
-						disabled={!this.isActionsEnabled()}
 						events={{
 							mouseLeave: this._handleMouseLeaveActions.bind(
 								this

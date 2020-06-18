@@ -142,26 +142,22 @@ const Options = ({
 	const fieldsFilter = (fields) => {
 		const _fields = [...fields];
 
-		if (defaultLanguageId === editingLanguageId) {
-			_fields.splice(_fields.length - 1, 1);
+		_fields.splice(_fields.length - 1, 1);
 
-			let _normalizedValue = {...normalizedValue};
+		let _normalizedValue = {...normalizedValue};
 
-			const availableLanguageIds = Object.getOwnPropertyNames(
-				normalizedValue
-			);
+		const availableLanguageIds = Object.getOwnPropertyNames(
+			normalizedValue
+		);
 
-			availableLanguageIds.forEach((languageId) => {
-				_normalizedValue = {
-					..._normalizedValue,
-					[languageId]: synchroniseValue(_fields, languageId),
-				};
-			});
+		availableLanguageIds.forEach((languageId) => {
+			_normalizedValue = {
+				..._normalizedValue,
+				[languageId]: synchroniseValue(_fields, languageId),
+			};
+		});
 
-			return _normalizedValue;
-		}
-
-		return {...normalizedValue, [editingLanguageId]: _fields};
+		return _normalizedValue;
 	};
 
 	const synchroniseValue = (fields, languageId) => {

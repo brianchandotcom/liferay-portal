@@ -74,6 +74,10 @@ public class ZipWriterImpl implements ZipWriter {
 
 	@Override
 	public void addEntry(String name, byte[] bytes) throws IOException {
+		if (bytes == null) {
+			return;
+		}
+
 		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
 				new UnsyncByteArrayInputStream(bytes)) {
 

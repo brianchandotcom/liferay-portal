@@ -39,7 +39,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ReactRendererUtil {
 
 	public static void renderReact(
-			ComponentDescriptor componentDescriptor, Map<String, Object> data,
+			ComponentDescriptor componentDescriptor, Map<String, Object> props,
 			HttpServletRequest httpServletRequest,
 			String npmResolvedPackageName, Portal portal, Writer writer)
 		throws IOException {
@@ -49,62 +49,62 @@ public class ReactRendererUtil {
 		_renderPlaceholder(writer, placeholderId);
 
 		_renderJavaScript(
-			componentDescriptor, data, httpServletRequest,
+			componentDescriptor, props, httpServletRequest,
 			npmResolvedPackageName, placeholderId, portal, writer);
 	}
 
-	private static Map<String, Object> _prepareData(
-		ComponentDescriptor componentDescriptor, Map<String, Object> data,
+	private static Map<String, Object> _prepareProps(
+		ComponentDescriptor componentDescriptor, Map<String, Object> props,
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, Object> modifiedData = null;
+		Map<String, Object> modifiedProps = null;
 
-		if (!data.containsKey("componentId")) {
-			if (modifiedData == null) {
-				modifiedData = new HashMap<>(data);
+		if (!props.containsKey("componentId")) {
+			if (modifiedProps == null) {
+				modifiedProps = new HashMap<>(props);
 			}
 
-			modifiedData.put(
+			modifiedProps.put(
 				"componentId", componentDescriptor.getComponentId());
 		}
 
-		if (!data.containsKey("locale")) {
-			if (modifiedData == null) {
-				modifiedData = new HashMap<>(data);
+		if (!props.containsKey("locale")) {
+			if (modifiedProps == null) {
+				modifiedProps = new HashMap<>(props);
 			}
 
-			modifiedData.put("locale", LocaleUtil.getMostRelevantLocale());
+			modifiedProps.put("locale", LocaleUtil.getMostRelevantLocale());
 		}
 
-		if (!data.containsKey("portletId")) {
-			if (modifiedData == null) {
-				modifiedData = new HashMap<>(data);
+		if (!props.containsKey("portletId")) {
+			if (modifiedProps == null) {
+				modifiedProps = new HashMap<>(props);
 			}
 
-			modifiedData.put(
+			modifiedProps.put(
 				"portletId",
 				httpServletRequest.getAttribute(WebKeys.PORTLET_ID));
 		}
 
-		if (!data.containsKey("portletNamespace")) {
-			if (modifiedData == null) {
-				modifiedData = new HashMap<>(data);
+		if (!props.containsKey("portletNamespace")) {
+			if (modifiedProps == null) {
+				modifiedProps = new HashMap<>(props);
 			}
 
-			modifiedData.put(
+			modifiedProps.put(
 				"portletNamespace",
 				httpServletRequest.getAttribute(WebKeys.PORTLET_ID));
 		}
 
-		if (modifiedData == null) {
-			return data;
+		if (modifiedProps == null) {
+			return props;
 		}
 
-		return modifiedData;
+		return modifiedProps;
 	}
 
 	private static void _renderJavaScript(
-			ComponentDescriptor componentDescriptor, Map<String, Object> data,
+			ComponentDescriptor componentDescriptor, Map<String, Object> props,
 			HttpServletRequest httpServletRequest,
 			String npmResolvedPackageName, String placeholderId, Portal portal,
 			Writer writer)
@@ -145,15 +145,15 @@ public class ReactRendererUtil {
 			javascriptSB.append(".default(");
 			javascriptSB.append(
 				jsonSerializer.serializeDeep(
-					_prepareData(
-						componentDescriptor, data, httpServletRequest)));
+					_prepareProps(
+						componentDescriptor, props, httpServletRequest)));
 			javascriptSB.append(")");
 		}
 		else {
 			javascriptSB.append(
 				jsonSerializer.serializeDeep(
-					_prepareData(
-						componentDescriptor, data, httpServletRequest)));
+					_prepareProps(
+						componentDescriptor, props, httpServletRequest)));
 		}
 
 		javascriptSB.append(", '");

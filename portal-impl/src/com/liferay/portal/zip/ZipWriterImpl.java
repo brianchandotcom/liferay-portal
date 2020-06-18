@@ -89,12 +89,12 @@ public class ZipWriterImpl implements ZipWriter {
 	public void addEntry(String name, InputStream inputStream)
 		throws IOException {
 
-		if (name.startsWith(StringPool.SLASH)) {
-			name = name.substring(1);
-		}
-
 		if (inputStream == null) {
 			return;
+		}
+
+		if (name.startsWith(StringPool.SLASH)) {
+			name = name.substring(1);
 		}
 
 		if (_log.isDebugEnabled()) {

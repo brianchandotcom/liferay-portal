@@ -49,11 +49,13 @@ export const Column = ({
 	pageIndex,
 	rowIndex,
 }) => {
+	const parentField = useContext(ParentFieldContext);
 	const {drop, overTarget} = useDrop({
 		columnIndex: index,
 		fieldName: column.fields[0]?.fieldName,
 		origin: DND_ORIGIN_TYPE.FIELD,
 		pageIndex,
+		parentField,
 		rowIndex,
 	});
 

@@ -21,7 +21,7 @@ definition {
 
 	@summary = "Add a vocabulary named '${vocabularyName}'"
 	macro addCP {
-		LexiconEntry.gotoAdd();
+		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = "${vocabularyName}");
 
@@ -53,7 +53,7 @@ definition {
 	}
 
 	macro addViewableByCP {
-		LexiconEntry.gotoAdd();
+		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = "${vocabularyName}");
 
@@ -73,7 +73,7 @@ definition {
 	}
 
 	macro addVocabularyWithNullTitle {
-		LexiconEntry.gotoAdd();
+		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = " ");
 
@@ -83,7 +83,7 @@ definition {
 	}
 
 	macro addWithAssociatedAssetTypeCP {
-		LexiconEntry.gotoAdd();
+		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = "${vocabularyName}");
 

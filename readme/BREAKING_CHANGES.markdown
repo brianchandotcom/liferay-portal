@@ -716,3 +716,31 @@ change, which removes the outdated browser references, is now done on the server
 side, improving page loading times.
 
 ---------------------------------------
+
+### Remove support of blocking cache
+- **Date:** 2020-Jun-17
+- **JIRA Ticket:** [LPS-115687](https://issues.liferay.com/browse/LPS-115687)
+
+#### What changed?
+Blocking cache support is removed, these properties can no longer be used to
+enable blocking cache:
+
+`ehcache.blocking.cache.allowed`,
+`permissions.object.blocking.cache`,
+`value.object.entity.blocking.cache`.
+
+#### Who is affected?
+
+This affects anyone using the properties listed above.
+
+#### How should I update my code?
+
+There's no direct replacement for the removed feature. If you have code that
+depends on it, you must implement it yourself.
+
+#### Why was this change made?
+
+This change was made because blocking caches should never be enabled because of
+its bad performance.
+
+---------------------------------------

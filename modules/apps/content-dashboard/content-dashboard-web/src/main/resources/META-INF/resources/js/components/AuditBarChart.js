@@ -27,16 +27,16 @@ import {
 
 import {BAR_CHART, COLORS} from '../utils/constants';
 
-export default function AuditBarChart({categories, rtl}) {
+export default function AuditBarChart({rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
 		const dataKeys = new Set();
 
-		const bars = categories.reduce((acc, category) => {
-			if (!category.children) {
-				return undefined;
+		const bars = vocabularies.reduce((acc, category) => {
+			if (!category.categories) {
+				return [];
 			}
 
-			const newBar = category.children.reduce(
+			const newBar = category.categories.reduce(
 				(childAcc, {key: dataKey, name}) => {
 					if (dataKeys.has(dataKey)) {
 						return childAcc;
@@ -52,12 +52,12 @@ export default function AuditBarChart({categories, rtl}) {
 			return acc.concat(newBar);
 		}, []);
 
-		const data = categories.map((category) => {
-			if (!category.children) {
+		const data = vocabularies.map((category) => {
+			if (!category.categories) {
 				return category;
 			}
 
-			return category.children.reduce(
+			return category.categories.reduce(
 				(acc, {key, value}) => {
 					return {
 						...acc,
@@ -69,25 +69,23 @@ export default function AuditBarChart({categories, rtl}) {
 		});
 
 		return {bars, data};
-	}, [categories]);
+	}, [vocabularies]);
 
 	const {bars, data} = auditBarChartData;
 
-	const height =
-		bars === undefined
-			? BAR_CHART.height - BAR_CHART.legendHeight
-			: BAR_CHART.height;
+	const height = !bars.length
+		? BAR_CHART.height - BAR_CHART.legendHeight
+		: BAR_CHART.height;
 
-	const horizontalPoints =
-		bars === undefined
-			? [BAR_CHART.dotRadiusMin]
-			: [BAR_CHART.legendHeight + BAR_CHART.dotRadiusMin];
+	const horizontalPoints = !bars.length
+		? [BAR_CHART.dotRadiusMin]
+		: [BAR_CHART.legendHeight + BAR_CHART.dotRadiusMin];
 
 	return (
 		<>
 			<ResponsiveContainer height={height}>
 				<BarChart data={data} height={height} width={BAR_CHART.width}>
-					{bars && (
+					{bars.length && (
 						<Legend
 							align={rtl ? 'right' : 'left'}
 							height={BAR_CHART.legendHeight}
@@ -117,7 +115,7 @@ export default function AuditBarChart({categories, rtl}) {
 						tick={<CustomYAxisTick rtl={rtl} />}
 						tickLine={false}
 					/>
-					{bars &&
+					{bars.length &&
 						bars.map((bar, index) => {
 							return (
 								<Bar
@@ -130,7 +128,7 @@ export default function AuditBarChart({categories, rtl}) {
 								/>
 							);
 						})}
-					{bars === undefined && (
+					{!bars.length && (
 						<Bar
 							barSize={BAR_CHART.barHeight}
 							dataKey="value"
@@ -177,6 +175,6 @@ function CustomYAxisTick(props) {
 }
 
 AuditBarChart.propTypes = {
-	categories: PropTypes.array.isRequired,
 	rtl: PropTypes.bool.isRequired,
+	vocabularies: PropTypes.array.isRequired,
 };

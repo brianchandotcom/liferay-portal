@@ -482,6 +482,11 @@ public class MBThreadLocalServiceWrapper
 		return _mbThreadLocalService.getMBThreadsCount();
 	}
 
+	@Override
+	public int getMessageCount(long threadId, int status) {
+		return _mbThreadLocalService.getMessageCount(threadId, status);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -657,13 +662,6 @@ public class MBThreadLocalServiceWrapper
 		com.liferay.message.boards.model.MBThread mbThread) {
 
 		return _mbThreadLocalService.updateMBThread(mbThread);
-	}
-
-	@Override
-	public com.liferay.message.boards.model.MBThread updateMessageCount(
-		long threadId) {
-
-		return _mbThreadLocalService.updateMessageCount(threadId);
 	}
 
 	@Override

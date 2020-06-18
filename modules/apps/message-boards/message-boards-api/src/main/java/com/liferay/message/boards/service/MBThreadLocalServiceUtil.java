@@ -449,6 +449,10 @@ public class MBThreadLocalServiceUtil {
 		return getService().getMBThreadsCount();
 	}
 
+	public static int getMessageCount(long threadId, int status) {
+		return getService().getMessageCount(threadId, status);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -602,12 +606,6 @@ public class MBThreadLocalServiceUtil {
 		com.liferay.message.boards.model.MBThread mbThread) {
 
 		return getService().updateMBThread(mbThread);
-	}
-
-	public static com.liferay.message.boards.model.MBThread updateMessageCount(
-		long threadId) {
-
-		return getService().updateMessageCount(threadId);
 	}
 
 	public static void updateQuestion(long threadId, boolean question)

@@ -344,6 +344,9 @@ public interface MBThreadLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMBThreadsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getMessageCount(long threadId, int status);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -435,8 +438,6 @@ public interface MBThreadLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public MBThread updateMBThread(MBThread mbThread);
-
-	public MBThread updateMessageCount(long threadId);
 
 	public void updateQuestion(long threadId, boolean question)
 		throws PortalException;

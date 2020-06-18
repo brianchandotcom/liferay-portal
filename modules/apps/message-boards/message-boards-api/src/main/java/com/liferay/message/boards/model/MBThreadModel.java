@@ -279,20 +279,6 @@ public interface MBThreadModel
 	public void setTitle(String title);
 
 	/**
-	 * Returns the message count of this message boards thread.
-	 *
-	 * @return the message count of this message boards thread
-	 */
-	public int getMessageCount();
-
-	/**
-	 * Sets the message count of this message boards thread.
-	 *
-	 * @param messageCount the message count of this message boards thread
-	 */
-	public void setMessageCount(int messageCount);
-
-	/**
 	 * Returns the last post by user ID of this message boards thread.
 	 *
 	 * @return the last post by user ID of this message boards thread

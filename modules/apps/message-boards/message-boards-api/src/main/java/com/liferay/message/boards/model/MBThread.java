@@ -67,6 +67,8 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 
 	public com.liferay.portal.kernel.lock.Lock getLock();
 
+	public int getMessageCount();
+
 	public long[] getParticipantUserIds();
 
 	public long getViewCount();

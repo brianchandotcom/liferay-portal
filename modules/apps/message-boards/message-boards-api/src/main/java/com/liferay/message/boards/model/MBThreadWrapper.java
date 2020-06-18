@@ -55,7 +55,6 @@ public class MBThreadWrapper
 		attributes.put("rootMessageId", getRootMessageId());
 		attributes.put("rootMessageUserId", getRootMessageUserId());
 		attributes.put("title", getTitle());
-		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostByUserId", getLastPostByUserId());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("priority", getPriority());
@@ -141,12 +140,6 @@ public class MBThreadWrapper
 
 		if (title != null) {
 			setTitle(title);
-		}
-
-		Integer messageCount = (Integer)attributes.get("messageCount");
-
-		if (messageCount != null) {
-			setMessageCount(messageCount);
 		}
 
 		Long lastPostByUserId = (Long)attributes.get("lastPostByUserId");
@@ -329,11 +322,6 @@ public class MBThreadWrapper
 		return model.getLock();
 	}
 
-	/**
-	 * Returns the message count of this message boards thread.
-	 *
-	 * @return the message count of this message boards thread
-	 */
 	@Override
 	public int getMessageCount() {
 		return model.getMessageCount();
@@ -796,16 +784,6 @@ public class MBThreadWrapper
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
-	}
-
-	/**
-	 * Sets the message count of this message boards thread.
-	 *
-	 * @param messageCount the message count of this message boards thread
-	 */
-	@Override
-	public void setMessageCount(int messageCount) {
-		model.setMessageCount(messageCount);
 	}
 
 	/**

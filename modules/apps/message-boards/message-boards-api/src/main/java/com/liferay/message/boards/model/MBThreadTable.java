@@ -56,8 +56,6 @@ public class MBThreadTable extends BaseTable<MBThreadTable> {
 		"rootMessageUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<MBThreadTable, String> title = createColumn(
 		"title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<MBThreadTable, Integer> messageCount = createColumn(
-		"messageCount", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<MBThreadTable, Long> lastPostByUserId = createColumn(
 		"lastPostByUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<MBThreadTable, Date> lastPostDate = createColumn(

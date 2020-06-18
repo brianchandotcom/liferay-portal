@@ -379,17 +379,6 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 			setBorderWidth(itemConfigJSONObject.getInt("borderWidth"));
 		}
 
-		if (itemConfigJSONObject.has("containerWidth") ||
-			itemConfigJSONObject.has("type")) {
-
-			if (itemConfigJSONObject.has("containerWidth")) {
-				setWidthType(itemConfigJSONObject.getString("containerWidth"));
-			}
-			else {
-				setWidthType(itemConfigJSONObject.getString("type"));
-			}
-		}
-
 		if (itemConfigJSONObject.has("contentDisplay")) {
 			setContentDisplay(itemConfigJSONObject.getString("contentDisplay"));
 		}
@@ -449,6 +438,17 @@ public class ContainerLayoutStructureItem extends LayoutStructureItem {
 
 		if (itemConfigJSONObject.has("shadow")) {
 			setShadow(itemConfigJSONObject.getString("shadow"));
+		}
+
+		if (itemConfigJSONObject.has("widthType") ||
+			itemConfigJSONObject.has("type")) {
+
+			if (itemConfigJSONObject.has("widthType")) {
+				setWidthType(itemConfigJSONObject.getString("widthType"));
+			}
+			else {
+				setWidthType(itemConfigJSONObject.getString("type"));
+			}
 		}
 	}
 

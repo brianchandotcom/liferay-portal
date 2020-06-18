@@ -234,7 +234,7 @@ exports[`ListApps renders 1`] = `
                   class="table-list-title"
                 >
                   <a
-                    href="#/custom-object/123/apps/1"
+                    href="#/custom-object/123/apps/1?backUrl=/"
                   >
                     Item 1
                   </a>

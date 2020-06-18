@@ -13,6 +13,7 @@
  */
 
 export const ACTION_ITEM_TARGETS = {
+	BLANK: 'blank',
 	EVENT: 'event',
 	LINK: 'link',
 	MODAL: 'modal',

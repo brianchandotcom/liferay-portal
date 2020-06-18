@@ -18,6 +18,7 @@ import {resolveModalSize} from '../modals/index';
 import {ACTION_ITEM_TARGETS} from './constants';
 
 const {
+	BLANK,
 	EVENT,
 	MODAL,
 	MODAL_FULL_SCREEN,
@@ -31,6 +32,9 @@ export function triggerAction(item, context) {
 		{loadData, modalId, sidePanelId} = context;
 
 	switch (actionTarget) {
+		case BLANK:
+			window.open(actionTargetURL);
+			break;
 		case MODAL:
 		case MODAL_FULL_SCREEN:
 		case MODAL_LARGE:

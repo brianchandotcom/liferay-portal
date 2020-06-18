@@ -291,4 +291,47 @@ describe('undoReducer', () => {
 			expect(undoAction.itemId).toBe(ITEM_ID);
 		});
 	});
+
+	it('cleans redo history when dispatching an action', () => {
+		const LANGUAGE_ID = 'es_ES';
+		const initialState = {
+			...STATE,
+			languageId: LANGUAGE_ID,
+			redoHistory: [{languageId: 'en_US', type: UPDATE_LANGUAGE_ID}],
+		};
+
+		const action = updateLanguageId({
+			languageId: 'en_US',
+		});
+
+		const {redoHistory} = undoReducer(initialState, {
+			...action,
+			actionType: UPDATE_LANGUAGE_ID,
+			type: ADD_UNDO_ACTION,
+		});
+
+		expect(redoHistory.length).toBe(0);
+	});
+
+	it('preserves redo history when dispatching a redo action', () => {
+		const LANGUAGE_ID = 'es_ES';
+		const initialState = {
+			...STATE,
+			languageId: LANGUAGE_ID,
+			redoHistory: [{languageId: 'en_US', type: UPDATE_LANGUAGE_ID}],
+		};
+
+		const action = updateLanguageId({
+			languageId: 'en_US',
+		});
+
+		const {redoHistory} = undoReducer(initialState, {
+			...action,
+			isRedo: true,
+			actionType: UPDATE_LANGUAGE_ID,
+			type: ADD_UNDO_ACTION,
+		});
+
+		expect(redoHistory.length).toBe(1);
+	});
 });

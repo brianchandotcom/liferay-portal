@@ -55,7 +55,6 @@ public class MBCategoryWrapper
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("displayStyle", getDisplayStyle());
-		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
@@ -138,12 +137,6 @@ public class MBCategoryWrapper
 
 		if (displayStyle != null) {
 			setDisplayStyle(displayStyle);
-		}
-
-		Integer messageCount = (Integer)attributes.get("messageCount");
-
-		if (messageCount != null) {
-			setMessageCount(messageCount);
 		}
 
 		Date lastPostDate = (Date)attributes.get("lastPostDate");
@@ -297,11 +290,6 @@ public class MBCategoryWrapper
 		return model.getLastPublishDate();
 	}
 
-	/**
-	 * Returns the message count of this message boards category.
-	 *
-	 * @return the message count of this message boards category
-	 */
 	@Override
 	public int getMessageCount() {
 		return model.getMessageCount();
@@ -701,16 +689,6 @@ public class MBCategoryWrapper
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
 		model.setLastPublishDate(lastPublishDate);
-	}
-
-	/**
-	 * Sets the message count of this message boards category.
-	 *
-	 * @param messageCount the message count of this message boards category
-	 */
-	@Override
-	public void setMessageCount(int messageCount) {
-		model.setMessageCount(messageCount);
 	}
 
 	/**

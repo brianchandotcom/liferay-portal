@@ -267,20 +267,6 @@ public interface MBCategoryModel
 	public void setDisplayStyle(String displayStyle);
 
 	/**
-	 * Returns the message count of this message boards category.
-	 *
-	 * @return the message count of this message boards category
-	 */
-	public int getMessageCount();
-
-	/**
-	 * Sets the message count of this message boards category.
-	 *
-	 * @param messageCount the message count of this message boards category
-	 */
-	public void setMessageCount(int messageCount);
-
-	/**
 	 * Returns the last post date of this message boards category.
 	 *
 	 * @return the last post date of this message boards category

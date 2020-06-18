@@ -702,18 +702,6 @@ public class MBCategoryLocalServiceUtil {
 		return getService().updateMBCategory(mbCategory);
 	}
 
-	public static com.liferay.message.boards.model.MBCategory
-		updateMessageCount(long categoryId) {
-
-		return getService().updateMessageCount(categoryId);
-	}
-
-	public static com.liferay.message.boards.model.MBCategory updateStatistics(
-		long categoryId) {
-
-		return getService().updateStatistics(categoryId);
-	}
-
 	public static com.liferay.message.boards.model.MBCategory updateStatus(
 			long userId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {

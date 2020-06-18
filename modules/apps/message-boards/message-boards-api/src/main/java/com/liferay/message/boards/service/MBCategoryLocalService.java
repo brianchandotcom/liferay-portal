@@ -489,10 +489,6 @@ public interface MBCategoryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public MBCategory updateMBCategory(MBCategory mbCategory);
 
-	public MBCategory updateMessageCount(long categoryId);
-
-	public MBCategory updateStatistics(long categoryId);
-
 	public MBCategory updateStatus(long userId, long categoryId, int status)
 		throws PortalException;
 

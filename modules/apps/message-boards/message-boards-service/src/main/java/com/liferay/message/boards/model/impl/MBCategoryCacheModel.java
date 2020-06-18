@@ -62,7 +62,7 @@ public class MBCategoryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,8 +88,6 @@ public class MBCategoryCacheModel
 		sb.append(description);
 		sb.append(", displayStyle=");
 		sb.append(displayStyle);
-		sb.append(", messageCount=");
-		sb.append(messageCount);
 		sb.append(", lastPostDate=");
 		sb.append(lastPostDate);
 		sb.append(", lastPublishDate=");
@@ -167,8 +165,6 @@ public class MBCategoryCacheModel
 			mbCategoryImpl.setDisplayStyle(displayStyle);
 		}
 
-		mbCategoryImpl.setMessageCount(messageCount);
-
 		if (lastPostDate == Long.MIN_VALUE) {
 			mbCategoryImpl.setLastPostDate(null);
 		}
@@ -224,8 +220,6 @@ public class MBCategoryCacheModel
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		displayStyle = objectInput.readUTF();
-
-		messageCount = objectInput.readInt();
 		lastPostDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 
@@ -286,7 +280,6 @@ public class MBCategoryCacheModel
 			objectOutput.writeUTF(displayStyle);
 		}
 
-		objectOutput.writeInt(messageCount);
 		objectOutput.writeLong(lastPostDate);
 		objectOutput.writeLong(lastPublishDate);
 
@@ -316,7 +309,6 @@ public class MBCategoryCacheModel
 	public String name;
 	public String description;
 	public String displayStyle;
-	public int messageCount;
 	public long lastPostDate;
 	public long lastPublishDate;
 	public int status;

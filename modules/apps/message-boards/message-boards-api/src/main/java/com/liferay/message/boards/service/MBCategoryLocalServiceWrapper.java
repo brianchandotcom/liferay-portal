@@ -772,20 +772,6 @@ public class MBCategoryLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.message.boards.model.MBCategory updateMessageCount(
-		long categoryId) {
-
-		return _mbCategoryLocalService.updateMessageCount(categoryId);
-	}
-
-	@Override
-	public com.liferay.message.boards.model.MBCategory updateStatistics(
-		long categoryId) {
-
-		return _mbCategoryLocalService.updateStatistics(categoryId);
-	}
-
-	@Override
 	public com.liferay.message.boards.model.MBCategory updateStatus(
 			long userId, long categoryId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {

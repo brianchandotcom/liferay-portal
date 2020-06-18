@@ -21,6 +21,7 @@ import java.util.List;
  */
 public interface ClayDataSetDisplayViewRegistry {
 
-	public List<ClayDataSetDisplayView> getClayDataSetDisplayViews(String key);
+	public List<ClayDataSetDisplayView> getClayDataSetDisplayViews(
+		String clayDataSetDisplayViewKey);
 
 }

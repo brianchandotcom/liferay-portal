@@ -22,6 +22,7 @@ import java.util.List;
 public interface ClayDataSetContentRendererContextContributorRegistry {
 
 	public List<ClayDataSetContentRendererContextContributor>
-		getClayDataSetContentRendererContextContributors(String key);
+		getClayDataSetContentRendererContextContributors(
+			String clayDataSetContentRendererContextContributorKey);
 
 }

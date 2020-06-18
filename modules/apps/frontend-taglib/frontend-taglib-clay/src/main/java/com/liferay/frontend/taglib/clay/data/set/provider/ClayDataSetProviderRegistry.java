@@ -24,7 +24,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ClayDataSetProviderRegistry {
 
-	public ClayDataSetDataProvider getClayDataSetProvider(String key);
+	public ClayDataSetDataProvider getClayDataSetProvider(
+		String clayDataSetProviderKey);
 
 	public List<ClayDataSetDataProvider> getClayDataSetProviders();
 

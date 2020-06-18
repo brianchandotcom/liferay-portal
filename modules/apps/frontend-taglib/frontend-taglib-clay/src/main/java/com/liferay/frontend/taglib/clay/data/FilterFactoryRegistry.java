@@ -26,6 +26,6 @@ public interface FilterFactoryRegistry {
 
 	public List<FilterFactory> getFilterFactories();
 
-	public FilterFactory getFilterFactory(String key);
+	public FilterFactory getFilterFactory(String clayDataSetProviderKey);
 
 }

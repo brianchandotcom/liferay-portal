@@ -54,9 +54,9 @@ public class ZipReaderImpl implements ZipReader {
 	}
 
 	public ZipReaderImpl(InputStream inputStream) throws IOException {
-		File tempFile = FileUtil.createTempFile(inputStream);
+		_tempFile = FileUtil.createTempFile(inputStream);
 
-		_zipFile = new ZipFile(tempFile);
+		_zipFile = new ZipFile(_tempFile);
 	}
 
 	@Override
@@ -68,6 +68,10 @@ public class ZipReaderImpl implements ZipReader {
 			if (_log.isWarnEnabled()) {
 				_log.warn(ioException, ioException);
 			}
+		}
+
+		if (_tempFile != null) {
+			_tempFile.delete();
 		}
 	}
 
@@ -218,6 +222,7 @@ public class ZipReaderImpl implements ZipReader {
 	private static final Log _log = LogFactoryUtil.getLog(ZipReaderImpl.class);
 
 	private Map<String, List<String>> _entriesByFolder;
+	private File _tempFile;
 	private ZipFile _zipFile;
 
 }

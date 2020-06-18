@@ -43,9 +43,12 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 							/>
 
 							<div id="<portlet:namespace />-edit-entry-app">
+								<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/app_builder/add_data_record" var="addEntryURL" />
 
 								<%
 								Map<String, Object> data = HashMapBuilder.<String, Object>put(
+									"addEntryURL", String.valueOf(addEntryURL)
+								).put(
 									"appDeploymentType", request.getAttribute(AppBuilderWebKeys.APP_DEPLOYMENT_TYPE)
 								).put(
 									"appId", appBuilderApp.getAppBuilderAppId()
@@ -65,6 +68,8 @@ AppBuilderApp appBuilderApp = (AppBuilderApp)request.getAttribute(AppBuilderWebK
 									"dataRecordId", ParamUtil.getLong(request, "dataRecordId")
 								).put(
 									"editEntryContainerElementId", renderResponse.getNamespace() + "container"
+								).put(
+									"namespace", renderResponse.getNamespace()
 								).put(
 									"redirect", ParamUtil.getString(request, "redirect")
 								).put(

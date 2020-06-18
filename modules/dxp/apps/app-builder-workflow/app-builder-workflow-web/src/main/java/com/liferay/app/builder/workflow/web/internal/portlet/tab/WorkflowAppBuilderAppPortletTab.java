@@ -14,8 +14,18 @@
 
 package com.liferay.app.builder.workflow.web.internal.portlet.tab;
 
+import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
+import com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink;
+import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalService;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+import com.liferay.portal.kernel.model.WorkflowInstanceLink;
+import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,6 +39,33 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WorkflowAppBuilderAppPortletTab
 	implements AppBuilderAppPortletTab {
+
+	@Override
+	public List<Long> getEditEntryDataLayoutIds(
+		AppBuilderApp appBuilderApp, long dataRecordId) {
+
+		WorkflowInstanceLink workflowInstanceLink =
+			_workflowInstanceLinkLocalService.fetchWorkflowInstanceLink(
+				appBuilderApp.getCompanyId(), appBuilderApp.getGroupId(),
+				AppBuilderApp.class.getName(), dataRecordId);
+
+		if (workflowInstanceLink == null) {
+			return Collections.singletonList(
+				appBuilderApp.getDdmStructureLayoutId());
+		}
+
+		return Stream.of(
+			_appBuilderWorkflowTaskLinkLocalService.
+				getAppBuilderWorkflowTaskLinks(
+					appBuilderApp.getAppBuilderAppId())
+		).flatMap(
+			List::stream
+		).map(
+			AppBuilderWorkflowTaskLink::getDdmStructureLayoutId
+		).collect(
+			Collectors.toList()
+		);
+	}
 
 	@Override
 	public String getEditEntryPoint() {
@@ -49,6 +86,13 @@ public class WorkflowAppBuilderAppPortletTab
 	}
 
 	@Reference
+	private AppBuilderWorkflowTaskLinkLocalService
+		_appBuilderWorkflowTaskLinkLocalService;
+
+	@Reference
 	private NPMResolver _npmResolver;
+
+	@Reference
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 }

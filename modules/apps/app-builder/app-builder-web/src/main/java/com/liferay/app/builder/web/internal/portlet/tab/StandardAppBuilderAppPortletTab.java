@@ -14,8 +14,12 @@
 
 package com.liferay.app.builder.web.internal.portlet.tab;
 
+import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.portlet.tab.AppBuilderAppPortletTab;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+
+import java.util.Collections;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,6 +33,14 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class StandardAppBuilderAppPortletTab
 	implements AppBuilderAppPortletTab {
+
+	@Override
+	public List<Long> getEditEntryDataLayoutIds(
+		AppBuilderApp appBuilderApp, long dataRecordId) {
+
+		return Collections.singletonList(
+			appBuilderApp.getDdmStructureLayoutId());
+	}
 
 	@Override
 	public String getEditEntryPoint() {

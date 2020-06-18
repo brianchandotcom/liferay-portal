@@ -101,14 +101,14 @@ export default function ImportTranslation({
 				/>
 
 				{!importFile && (
-						<ClayButton
-							displayType="secondary"
-							onClick={() => {
-								inputFileRef.current.click();
-							}}
-						>
-							{Liferay.Language.get('select-file')}
-						</ClayButton>
+					<ClayButton
+						displayType="secondary"
+						onClick={() => {
+							inputFileRef.current.click();
+						}}
+					>
+						{Liferay.Language.get('select-file')}
+					</ClayButton>
 				)}
 
 				{importFile && (

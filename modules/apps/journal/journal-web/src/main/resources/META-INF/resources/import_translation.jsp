@@ -86,16 +86,13 @@ renderResponse.setTitle(title);
 </aui:form>
 
 <script>
-	var saveDraftBtn = document.getElementById(
-		'<portlet:namespace />saveDraftBtn'
-	);
+	var saveDraftBtn = document.getElementById('<portlet:namespace />saveDraftBtn');
 
 	saveDraftBtn.addEventListener('click', function () {
 		var workflowActionInput = document.getElementById(
 			'<portlet:namespace />workflowAction'
 		);
 
-		workflowActionInput.value =
-			'<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
+		workflowActionInput.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
 	});
 </script>

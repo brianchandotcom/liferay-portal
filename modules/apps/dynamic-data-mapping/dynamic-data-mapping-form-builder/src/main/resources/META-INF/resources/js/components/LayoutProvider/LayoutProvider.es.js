@@ -339,6 +339,7 @@ class LayoutProvider extends Component {
 		if (props.contentType === 'app-builder') {
 			const {fieldInstanceid, fieldName} = container.dataset;
 			const field = getField(pages, fieldName);
+			
 			if (!field || field.instanceId !== fieldInstanceid) {
 				return;
 			}

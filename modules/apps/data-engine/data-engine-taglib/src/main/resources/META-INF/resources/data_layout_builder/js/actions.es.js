@@ -108,11 +108,11 @@ export const dropFieldSet = ({
 		fieldSet: dataLayoutBuilder.getDDMForm(fieldSet),
 		indexes,
 		parentFieldName,
+		useFieldName,
 		...(fieldSet.id && {
 			rows: normalizeDataLayoutRows(
 				fieldSet.defaultDataLayout.dataLayoutPages
 			),
 		}),
-		useFieldName,
 	};
 };

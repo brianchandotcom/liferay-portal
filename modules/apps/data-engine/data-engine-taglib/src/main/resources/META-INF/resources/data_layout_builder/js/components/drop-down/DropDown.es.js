@@ -18,7 +18,7 @@ import React, {useState} from 'react';
 
 const {Item, ItemList} = ClayDropDown;
 
-export default ({actions, disabled, dropDownSymbol = 'ellipsis-v'}) => {
+export default ({actions, disabled}) => {
 	const [active, setActive] = useState(false);
 
 	const DropdownButton = (
@@ -26,7 +26,7 @@ export default ({actions, disabled, dropDownSymbol = 'ellipsis-v'}) => {
 			className="page-link"
 			disabled={disabled}
 			displayType="unstyled"
-			symbol={dropDownSymbol}
+			symbol="ellipsis-v"
 		/>
 	);
 

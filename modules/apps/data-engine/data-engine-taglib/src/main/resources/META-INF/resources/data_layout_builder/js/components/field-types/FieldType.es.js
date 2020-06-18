@@ -133,9 +133,7 @@ export default (props) => {
 			</ClayLayout.ContentCol>
 
 			<div className="autofit-col pr-2">
-				{actions && (
-					<DropDown actions={actions} dropDownSymbol="ellipsis-h" />
-				)}
+				{actions && <DropDown actions={actions} />}
 			</div>
 
 			{dragAlignment === 'right' && (

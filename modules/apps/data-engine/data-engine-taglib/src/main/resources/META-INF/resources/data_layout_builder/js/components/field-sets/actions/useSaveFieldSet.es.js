@@ -28,7 +28,7 @@ import {errorToast, successToast} from '../../../utils/toast.es';
 export default ({
 	childrenContext,
 	defaultLanguageId,
-	fieldSet,
+	fieldSet: fieldSetDefault,
 	otherProps: {DataLayout},
 }) => {
 	const [context, dispatch] = useContext(AppContext);
@@ -37,21 +37,28 @@ export default ({
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 
 	return (fieldSetName) => {
-		const {id} = fieldSet;
+		let fieldName;
+		const {id} = fieldSetDefault;
+
 		const {
 			dataDefinition: {dataDefinitionFields},
 			dataLayout: {dataLayoutPages},
 		} = childrenState;
 
 		const name = {
-			...fieldSet.name,
+			...fieldSetDefault.name,
 			[defaultLanguageId]: fieldSetName,
 		};
 
-		fieldSet.dataDefinitionFields = dataDefinitionFields;
-		fieldSet.defaultDataLayout.dataLayoutPages = dataLayoutPages;
-		fieldSet.name = name;
-		let fieldName;
+		const fieldSet = {
+			...fieldSetDefault,
+			dataDefinitionFields,
+			defaultDataLayout: {
+				...fieldSetDefault.defaultDataLayout,
+				dataLayoutPages,
+			},
+			name,
+		};
 
 		const dataDefinitionField = dataDefinition.dataDefinitionFields.find(
 			({customProperties: {ddmStructureId}}) => ddmStructureId == id
@@ -77,6 +84,7 @@ export default ({
 			.then(() => {
 				if (dataDefinitionField) {
 					fieldName = dataDefinitionField.name;
+
 					if (containsField(dataLayout.dataLayoutPages, fieldName)) {
 						dataLayoutBuilder.dispatch('fieldEdited', {
 							fieldName,

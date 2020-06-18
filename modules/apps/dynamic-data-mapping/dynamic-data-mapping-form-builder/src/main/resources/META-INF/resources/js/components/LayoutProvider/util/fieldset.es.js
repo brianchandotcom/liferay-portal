@@ -39,6 +39,7 @@ const addNestedFields = ({field, indexes, nestedFields, props}) => {
 	});
 
 	[...nestedFields].reverse().forEach((nestedField) => {
+		
 		if (!nestedField.instanceId) {
 			nestedField.instanceId = generateInstanceId(8);
 		}

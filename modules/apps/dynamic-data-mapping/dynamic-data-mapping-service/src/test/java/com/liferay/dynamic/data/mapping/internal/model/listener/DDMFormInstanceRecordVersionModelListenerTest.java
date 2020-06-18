@@ -47,9 +47,7 @@ public class DDMFormInstanceRecordVersionModelListenerTest
 	}
 
 	@Test
-	public void testAfterUpdateShouldCatchNoSuchFormInstanceException()
-		throws PortalException {
-
+	public void testOnAfterUpdate() throws PortalException {
 		when(
 			_ddmFormInstanceReportLocalService.
 				getFormInstanceReportByFormInstanceId(Mockito.anyLong())
@@ -77,7 +75,7 @@ public class DDMFormInstanceRecordVersionModelListenerTest
 	}
 
 	@Test
-	public void testBeforeUpdate() throws PortalException {
+	public void testOnBeforeUpdate() throws PortalException {
 		when(
 			_ddmFormInstanceReportLocalService.
 				getFormInstanceReportByFormInstanceId(Mockito.anyLong())

@@ -44,9 +44,7 @@ public class DDMFormInstanceRecordModelListenerTest extends PowerMockito {
 	}
 
 	@Test
-	public void testBeforeRemoveShouldCatchNoSuchFormInstanceException()
-		throws PortalException {
-
+	public void testOnBeforeRemove() throws PortalException {
 		when(
 			_ddmFormInstanceReportLocalService.
 				getFormInstanceReportByFormInstanceId(Mockito.anyLong())

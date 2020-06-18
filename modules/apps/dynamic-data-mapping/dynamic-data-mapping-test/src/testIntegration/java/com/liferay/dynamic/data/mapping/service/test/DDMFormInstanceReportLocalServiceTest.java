@@ -95,9 +95,7 @@ public class DDMFormInstanceReportLocalServiceTest
 	}
 
 	@Test(expected = NoSuchFormInstanceReportException.class)
-	public void testDeleteFormInstanceReportShouldThrowException()
-		throws Exception {
-
+	public void testDeleteDDMFormInstance() throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DDMFormInstance.class.getName());
 

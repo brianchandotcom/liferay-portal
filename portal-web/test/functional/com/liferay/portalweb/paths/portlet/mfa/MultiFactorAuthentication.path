@@ -76,6 +76,17 @@
 	<td>//span[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--IP_ADDRESS_CONFIGURATION-->
+<tr>
+	<td>IP_ADDRESS_CONFIGURATION_ALLOWED_IP_FIELD_1</td>
+	<td>xpath=(//textarea[contains(@name,'allowedIPAddress')])[1]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

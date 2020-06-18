@@ -55,7 +55,7 @@ public class AccountUserDisplay {
 		return new AccountUserDisplay(user);
 	}
 
-	public String getAccountNames(HttpServletRequest httpServletRequest) {
+	public String getAccountEntryNames(HttpServletRequest httpServletRequest) {
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_getAccountEntryUserRels(getUserId());
 
@@ -81,8 +81,8 @@ public class AccountUserDisplay {
 			ListUtil.sort(accountEntryNames), StringPool.COMMA_AND_SPACE);
 	}
 
-	public String getAccountNamesStyle() {
-		return _accountNamesStyle;
+	public String getAccountEntryNamesStyle() {
+		return _accountEntryNamesStyle;
 	}
 
 	public String getAccountRoleNames(long accountEntryId, Locale locale)
@@ -104,7 +104,35 @@ public class AccountUserDisplay {
 			ListUtil.sort(accountRoleNames), StringPool.COMMA_AND_SPACE);
 	}
 
-	public String getAccountValidDomains() {
+	public String getEmailAddress() {
+		return _emailAddress;
+	}
+
+	public String getJobTitle() {
+		return _jobTitle;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public String getStatusLabel() {
+		return _statusLabel;
+	}
+
+	public String getStatusLabelStyle() {
+		return _statusLabelStyle;
+	}
+
+	public long getUserId() {
+		return _userId;
+	}
+
+	public String getValidDomains() {
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_getAccountEntryUserRels(getUserId());
 
@@ -145,34 +173,6 @@ public class AccountUserDisplay {
 		return StringUtil.merge(commonDomains, StringPool.COMMA);
 	}
 
-	public String getEmailAddress() {
-		return _emailAddress;
-	}
-
-	public String getJobTitle() {
-		return _jobTitle;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public int getStatus() {
-		return _status;
-	}
-
-	public String getStatusLabel() {
-		return _statusLabel;
-	}
-
-	public String getStatusLabelStyle() {
-		return _statusLabelStyle;
-	}
-
-	public long getUserId() {
-		return _userId;
-	}
-
 	public boolean isValidateEmail() throws PortalException {
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_getAccountEntryUserRels(getUserId());
@@ -193,7 +193,7 @@ public class AccountUserDisplay {
 	}
 
 	private AccountUserDisplay(User user) {
-		_accountNamesStyle = _getAccountNamesStyle(user.getUserId());
+		_accountEntryNamesStyle = _getAccountEntryNamesStyle(user.getUserId());
 		_emailAddress = user.getEmailAddress();
 		_jobTitle = user.getJobTitle();
 		_name = user.getFullName();
@@ -201,6 +201,17 @@ public class AccountUserDisplay {
 		_statusLabel = _getStatusLabel(user);
 		_statusLabelStyle = _getStatusLabelStyle(user);
 		_userId = user.getUserId();
+	}
+
+	private String _getAccountEntryNamesStyle(long userId) {
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_getAccountEntryUserRels(userId);
+
+		if (ListUtil.isEmpty(accountEntryUserRels)) {
+			return "font-italic text-muted";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private List<AccountEntryUserRel> _getAccountEntryUserRels(long userId) {
@@ -213,17 +224,6 @@ public class AccountUserDisplay {
 			accountEntryUserRel -> !Objects.equals(
 				accountEntryUserRel.getAccountEntryId(),
 				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT));
-	}
-
-	private String _getAccountNamesStyle(long userId) {
-		List<AccountEntryUserRel> accountEntryUserRels =
-			_getAccountEntryUserRels(userId);
-
-		if (ListUtil.isEmpty(accountEntryUserRels)) {
-			return "font-italic text-muted";
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private String _getStatusLabel(User user) {
@@ -254,7 +254,7 @@ public class AccountUserDisplay {
 		return StringPool.BLANK;
 	}
 
-	private final String _accountNamesStyle;
+	private final String _accountEntryNamesStyle;
 	private final String _emailAddress;
 	private final String _jobTitle;
 	private final String _name;

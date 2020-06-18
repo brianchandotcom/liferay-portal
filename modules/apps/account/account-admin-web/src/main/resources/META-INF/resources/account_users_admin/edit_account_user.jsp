@@ -53,13 +53,13 @@ AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
 	PortletURL viewValidDomainsURL = renderResponse.createRenderURL();
 
 	viewValidDomainsURL.setParameter("mvcPath", "/account_users_admin/account_user/view_valid_domains.jsp");
-	viewValidDomainsURL.setParameter("validDomains", accountUserDisplay.getAccountValidDomains());
+	viewValidDomainsURL.setParameter("validDomains", accountUserDisplay.getValidDomains());
 	viewValidDomainsURL.setWindowState(LiferayWindowState.POP_UP);
 
 	Map<String, Object> componentContext = HashMapBuilder.<String, Object>put(
-			"accountNames", accountUserDisplay.getAccountNames(request)
+			"accountEntryNames", accountUserDisplay.getAccountEntryNames(request)
 	).put(
-			"validDomains", accountUserDisplay.getAccountValidDomains()
+			"validDomains", accountUserDisplay.getValidDomains()
 	).put(
 			"viewValidDomainsURL", viewValidDomainsURL.toString()
 	).build();

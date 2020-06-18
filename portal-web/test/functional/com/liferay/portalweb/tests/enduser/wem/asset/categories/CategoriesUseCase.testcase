@@ -266,7 +266,7 @@ definition {
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Topic");
+		Navigator.gotoNavNested(navNested = "Topic");
 
 		Category.viewPath(
 			categoryName = "Category Name",
@@ -1385,7 +1385,7 @@ definition {
 
 		Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 
-		LexiconEntry.gotoEntry(rowEntry = "Topic");
+		Navigator.gotoNavNested(navNested = "Topic");
 
 		Category.viewPath(
 			categoryName = "Category Name",

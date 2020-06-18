@@ -51,7 +51,7 @@ definition {
 			Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
 		}
 
-		SelectFrame(locator1 = "GoogleDrive#GOOGLE_DRIVE_IFRAME");
+		SelectFrame.selectFrameNoLoading(locator1 = "GoogleDrive#GOOGLE_DRIVE_IFRAME");
 	}
 
 	macro selectDocument {

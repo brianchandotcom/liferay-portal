@@ -170,14 +170,16 @@ for (String childrenItemId : childrenItemIds) {
 				cssClassSB.append(containerLayoutStructureItem.getMarginBottom());
 			}
 
-			if (containerLayoutStructureItem.getMarginLeft() != -1L) {
-				cssClassSB.append(" ml-");
-				cssClassSB.append(containerLayoutStructureItem.getMarginLeft());
-			}
+			if (!Objects.equals(containerLayoutStructureItem.getWidthType(), "fixed")) {
+				if (containerLayoutStructureItem.getMarginLeft() != -1L) {
+					cssClassSB.append(" ml-");
+					cssClassSB.append(containerLayoutStructureItem.getMarginLeft());
+				}
 
-			if (containerLayoutStructureItem.getMarginRight() != -1L) {
-				cssClassSB.append(" mr-");
-				cssClassSB.append(containerLayoutStructureItem.getMarginRight());
+				if (containerLayoutStructureItem.getMarginRight() != -1L) {
+					cssClassSB.append(" mr-");
+					cssClassSB.append(containerLayoutStructureItem.getMarginRight());
+				}
 			}
 
 			if (containerLayoutStructureItem.getMarginTop() != -1L) {

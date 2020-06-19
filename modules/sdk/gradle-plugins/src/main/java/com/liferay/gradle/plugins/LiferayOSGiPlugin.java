@@ -114,12 +114,14 @@ import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.PluginContainer;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
@@ -197,6 +199,18 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureConfigurationCompileOnly(
 			compileIncludeConfiguration, compileOnlyConfiguration);
 
+		// Conventions
+
+		final Convention convention = project.getConvention();
+
+		BasePluginConvention basePluginConvention = convention.getPlugin(
+			BasePluginConvention.class);
+		final JavaPluginConvention javaPluginConvention = convention.getPlugin(
+			JavaPluginConvention.class);
+
+		_configureConventionBasePlugin(bundleExtension, basePluginConvention);
+		_configureConventionJavaPlugin(project, javaPluginConvention);
+
 		// Tasks
 
 		final TaskProvider<Copy> deployDependenciesTaskProvider =
@@ -236,8 +250,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureTaskDeployDependenciesProvider(
 			liferayExtension, deployDependenciesTaskProvider);
 		_configureTaskDeployFastProvider(
-			project, bundleExtension, liferayExtension, classesTaskProvider,
-			compileJSPTaskProvider, deployFastTaskProvider,
+			project, bundleExtension, liferayExtension, javaPluginConvention,
+			classesTaskProvider, compileJSPTaskProvider, deployFastTaskProvider,
 			processResourcesTaskProvider);
 		_configureTaskJarProvider(project, bundleExtension, jarTaskProvider);
 		_configureTaskJavadocProvider(bundleExtension, javadocTaskProvider);
@@ -252,9 +266,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		// Other
 
-		_configureConventionBasePlugin(project, bundleExtension);
 		_configureProject(project, bundleExtension);
-		_configureSourceSetMain(project);
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -271,9 +283,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					_configureTaskBuildWSDDJarProvider(
 						project, bundleExtension, liferayExtension,
-						liferayOSGiExtension, buildWSDDTask,
-						buildWSDDJarTaskProvider, cleanTaskProvider,
-						deployTaskProvider);
+						liferayOSGiExtension, javaPluginConvention,
+						buildWSDDTask, buildWSDDJarTaskProvider,
+						cleanTaskProvider, deployTaskProvider);
 				}
 
 			});
@@ -304,7 +316,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 					if (plugin instanceof ApplicationPlugin) {
 						_configurePluginApplication(
 							project, bundleExtension,
-							compileIncludeConfiguration);
+							compileIncludeConfiguration, convention);
 					}
 				}
 
@@ -389,10 +401,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureConventionBasePlugin(
-		Project project, BundleExtension bundleExtension) {
-
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
-			project, BasePluginConvention.class);
+		BundleExtension bundleExtension,
+		BasePluginConvention basePluginConvention) {
 
 		String bundleSymbolicName = bundleExtension.getInstruction(
 			Constants.BUNDLE_SYMBOLICNAME);
@@ -507,11 +517,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	private void _configurePluginApplication(
 		Project project, BundleExtension bundleExtension,
-		final Configuration compileIncludeConfiguration) {
+		final Configuration compileIncludeConfiguration,
+		Convention convention) {
 
 		ApplicationPluginConvention applicationPluginConvention =
-			GradleUtil.getConvention(
-				project, ApplicationPluginConvention.class);
+			convention.getPlugin(ApplicationPluginConvention.class);
 
 		String mainClassName = bundleExtension.getInstruction("Main-Class");
 
@@ -555,23 +565,25 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureSourceSetMain(Project project) {
+	private void _configureConventionJavaPlugin(
+		Project project, JavaPluginConvention javaPluginConvention) {
+
 		File docrootDir = project.file("docroot");
 
 		if (!docrootDir.exists()) {
 			return;
 		}
 
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+		SourceSet mainSourceSet = _getSourceSet(
+			javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
 
 		File javaClassesDir = new File(docrootDir, "WEB-INF/classes");
 
-		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+		SourceDirectorySet javaSourceDirectorySet = mainSourceSet.getJava();
 
 		javaSourceDirectorySet.setOutputDir(javaClassesDir);
 
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+		SourceSetOutput sourceSetOutput = mainSourceSet.getOutput();
 
 		sourceSetOutput.setResourcesDir(javaClassesDir);
 
@@ -582,9 +594,18 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		javaSourceDirectorySet.setSrcDirs(srcDirs);
 
 		SourceDirectorySet resourcesSourceDirectorySet =
-			sourceSet.getResources();
+			mainSourceSet.getResources();
 
 		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
+	}
+
+	private SourceSet _getSourceSet(
+		JavaPluginConvention javaPluginConvention, String name) {
+
+		SourceSetContainer sourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		return sourceSetContainer.getByName(name);
 	}
 
 	private void _configureTaskAutoUpdateXmlProvider(
@@ -754,6 +775,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		final Project project, final BundleExtension bundleExtension,
 		LiferayExtension liferayExtension,
 		final LiferayOSGiExtension liferayOSGiExtension,
+		final JavaPluginConvention javaPluginConvention,
 		final BuildWSDDTask buildWSDDTask,
 		TaskProvider<Jar> buildWSDDJarTaskProvider,
 		TaskProvider<Delete> cleanTaskProvider,
@@ -797,10 +819,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 									builder.putAll(properties, true);
 
-									SourceSet sourceSet =
-										GradleUtil.getSourceSet(
-											project,
-											SourceSet.MAIN_SOURCE_SET_NAME);
+									SourceSet sourceSet = _getSourceSet(
+										javaPluginConvention,
+										SourceSet.MAIN_SOURCE_SET_NAME);
 
 									SourceDirectorySet sourceDirectorySet =
 										sourceSet.getJava();
@@ -1143,6 +1164,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	private void _configureTaskDeployFastProvider(
 		final Project project, final BundleExtension bundleExtension,
 		final LiferayExtension liferayExtension,
+		final JavaPluginConvention javaPluginConvention,
 		final TaskProvider<Task> classesTaskProvider,
 		final TaskProvider<JavaCompile> compileJSPTaskProvider,
 		TaskProvider<Copy> deployFastTaskProvider,
@@ -1254,8 +1276,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					deployFastCopy.dependsOn(classesTaskProvider);
 
-					SourceSet mainSourceSet = GradleUtil.getSourceSet(
-						project, SourceSet.MAIN_SOURCE_SET_NAME);
+					SourceSet mainSourceSet = _getSourceSet(
+						javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
 
 					deployFastCopy.from(
 						mainSourceSet.getOutput(),

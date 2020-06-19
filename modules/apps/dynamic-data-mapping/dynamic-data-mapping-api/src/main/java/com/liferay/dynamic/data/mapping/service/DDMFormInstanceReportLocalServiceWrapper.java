@@ -51,11 +51,11 @@ public class DDMFormInstanceReportLocalServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceReport addFormInstanceReport(long formInstanceId)
+	public DDMFormInstanceReport addFormInstanceReport(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceReportLocalService.addFormInstanceReport(
-			formInstanceId);
+			ddmFormInstanceId);
 	}
 
 	/**
@@ -286,11 +286,11 @@ public class DDMFormInstanceReportLocalServiceWrapper
 
 	@Override
 	public DDMFormInstanceReport getFormInstanceReportByFormInstanceId(
-			long formInstanceId)
+			long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceReportLocalService.
-			getFormInstanceReportByFormInstanceId(formInstanceId);
+			getFormInstanceReportByFormInstanceId(ddmFormInstanceId);
 	}
 
 	@Override
@@ -325,12 +325,12 @@ public class DDMFormInstanceReportLocalServiceWrapper
 
 	@Override
 	public void processFormInstanceReportEvent(
-		long formInstanceReportId, long formInstanceRecordVersionId,
-		String formInstanceReportEvent) {
+		long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+		String ddmFormInstanceReportEvent) {
 
 		_ddmFormInstanceReportLocalService.processFormInstanceReportEvent(
-			formInstanceReportId, formInstanceRecordVersionId,
-			formInstanceReportEvent);
+			ddmFormInstanceReportId, ddmFormInstanceRecordVersionId,
+			ddmFormInstanceReportEvent);
 	}
 
 	/**
@@ -349,13 +349,13 @@ public class DDMFormInstanceReportLocalServiceWrapper
 
 	@Override
 	public DDMFormInstanceReport updateFormInstanceReport(
-			long formInstanceReportId, long formInstanceRecordVersionId,
-			String formInstanceReportEvent)
+			long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+			String ddmFormInstanceReportEvent)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceReportLocalService.updateFormInstanceReport(
-			formInstanceReportId, formInstanceRecordVersionId,
-			formInstanceReportEvent);
+			ddmFormInstanceReportId, ddmFormInstanceRecordVersionId,
+			ddmFormInstanceReportEvent);
 	}
 
 	@Override

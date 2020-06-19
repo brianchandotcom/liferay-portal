@@ -53,10 +53,10 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-			addFormInstanceReport(long formInstanceId)
+			addFormInstanceReport(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().addFormInstanceReport(formInstanceId);
+		return getService().addFormInstanceReport(ddmFormInstanceId);
 	}
 
 	/**
@@ -265,11 +265,11 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
-			getFormInstanceReportByFormInstanceId(long formInstanceId)
+			getFormInstanceReportByFormInstanceId(long ddmFormInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getFormInstanceReportByFormInstanceId(
-			formInstanceId);
+			ddmFormInstanceId);
 	}
 
 	public static
@@ -299,12 +299,12 @@ public class DDMFormInstanceReportLocalServiceUtil {
 	}
 
 	public static void processFormInstanceReportEvent(
-		long formInstanceReportId, long formInstanceRecordVersionId,
-		String formInstanceReportEvent) {
+		long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+		String ddmFormInstanceReportEvent) {
 
 		getService().processFormInstanceReportEvent(
-			formInstanceReportId, formInstanceRecordVersionId,
-			formInstanceReportEvent);
+			ddmFormInstanceReportId, ddmFormInstanceRecordVersionId,
+			ddmFormInstanceReportEvent);
 	}
 
 	/**
@@ -323,13 +323,14 @@ public class DDMFormInstanceReportLocalServiceUtil {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceReport
 			updateFormInstanceReport(
-				long formInstanceReportId, long formInstanceRecordVersionId,
-				String formInstanceReportEvent)
+				long ddmFormInstanceReportId,
+				long ddmFormInstanceRecordVersionId,
+				String ddmFormInstanceReportEvent)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().updateFormInstanceReport(
-			formInstanceReportId, formInstanceRecordVersionId,
-			formInstanceReportEvent);
+			ddmFormInstanceReportId, ddmFormInstanceRecordVersionId,
+			ddmFormInstanceReportEvent);
 	}
 
 	public static DDMFormInstanceReportLocalService getService() {

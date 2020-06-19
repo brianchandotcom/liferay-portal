@@ -159,7 +159,8 @@ public class TeamStagedModelDataHandler
 			if ((user != null) &&
 				!_userLocalService.hasTeamUser(
 					importedTeam.getTeamId(), user.getUserId()) &&
-				(ExportImportThreadLocal.isStagingInProcess() ||
+				((ExportImportThreadLocal.isStagingInProcess() &&
+				  !ExportImportThreadLocal.isStagingInProcessOnRemoteLive()) ||
 				 _userLocalService.hasGroupUser(
 					 importedTeam.getGroupId(), user.getUserId()))) {
 

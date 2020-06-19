@@ -222,10 +222,12 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 							});
 
 							function <portlet:namespace />autoSave() {
+								var form = <portlet:namespace />form;
+								var isRendered = form.reactComponentRef && form.reactComponentRef.current;
 								var data = new URLSearchParams({
 									<portlet:namespace />formInstanceId: <%= formInstanceId %>,
 									<portlet:namespace />serializedDDMFormValues: JSON.stringify(
-										<portlet:namespace />form.toJSON()
+										isRendered ? form.reactComponentRef.current.toJSON() : {}
 									),
 								});
 

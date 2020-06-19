@@ -97,6 +97,31 @@ const Form = React.forwardRef((props, ref) => {
 			});
 		},
 		get: (key) => props[key],
+		toJSON: () => {
+			const {
+				defaultLanguageId,
+				description,
+				editingLanguageId,
+				name,
+				pages,
+				paginationMode,
+				portletNamespace,
+				rules,
+				successPageSettings,
+			} = props;
+
+			return {
+				defaultLanguageId,
+				description,
+				editingLanguageId,
+				name,
+				pages,
+				paginationMode,
+				portletNamespace,
+				rules,
+				successPageSettings,
+			};
+		},
 		validate,
 	}));
 

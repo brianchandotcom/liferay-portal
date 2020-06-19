@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -71,6 +72,11 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 
 					editBasicInfoURL.setParameter(
 						"mvcPath", "/document_library/ddm/details.jsp");
+					editBasicInfoURL.setParameter(
+						"fileEntryTypeId",
+						String.valueOf(
+							ParamUtil.getLong(
+								_liferayPortletRequest, "fileEntryTypeId")));
 					editBasicInfoURL.setWindowState(
 						LiferayWindowState.EXCLUSIVE);
 

@@ -1857,11 +1857,22 @@ definition {
 
 		NavItem.gotoTemplates();
 
-		WebContentTemplates.addCP(
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
 			structureName = "Structure Name B",
 			templateDescription = "Template Description B",
 			templateFieldNames = "Web Content",
 			templateName = "Template Name B");
+
+		var templateScript = '''
+<#assign webContentData = jsonFactoryUtil.createJSONObject(WebContent.getData())/>
+${webContentData}
+''';
+
+		WebContentTemplates.inputScript(templateScript = "${templateScript}");
+
+		PortletEntry.save();
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
 

@@ -19,7 +19,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import FormRow from '../../../common/components/FormRow';
-import {ImageSelector} from '../../../common/components/ImageSelector';
 import {
 	BackgroundImagePropTypes,
 	getLayoutDataItemPropTypes,
@@ -29,6 +28,7 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import {useDispatch, useSelector} from '../../store/index';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {ColorPaletteField} from '../fragment-configuration-fields/ColorPaletteField';
+import {ImageSelectorField} from '../fragment-configuration-fields/ImageSelectorField';
 import {SelectField} from '../fragment-configuration-fields/SelectField';
 import {TextField} from '../fragment-configuration-fields/TextField';
 
@@ -382,19 +382,13 @@ export const ContainerConfigurationPanel = ({item}) => {
 						value={{cssClass: item.config.backgroundColorCssClass}}
 					/>
 
-					<ImageSelector
-						imageTitle={
-							(item.config.backgroundImage &&
-								item.config.backgroundImage.title) ||
-							''
-						}
-						label={Liferay.Language.get('image')}
-						onClearButtonPressed={() =>
-							handleValueSelect('backgroundImage', {})
-						}
-						onImageSelected={(image) =>
-							handleValueSelect('backgroundImage', image)
-						}
+					<ImageSelectorField
+						field={{
+							label: Liferay.Language.get('image'),
+							name: 'backgroundImage',
+						}}
+						onValueSelect={handleValueSelect}
+						value={item.config.backgroundImage}
 					/>
 				</Section>
 

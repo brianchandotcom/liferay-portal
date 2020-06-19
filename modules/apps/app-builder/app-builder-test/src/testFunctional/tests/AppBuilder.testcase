@@ -1766,7 +1766,6 @@ definition {
 	}
 
 	@description = "Publish apps in standalone mode and reuse its views"
-	@ignore = "true"
 	@priority = "4"
 	test PublishAppsInStandaloneAndReuseItsViews {
 		property portal.acceptance = "true";

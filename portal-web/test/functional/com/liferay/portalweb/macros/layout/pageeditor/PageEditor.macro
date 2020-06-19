@@ -815,46 +815,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro editLayoutRow {
-		var key_elementType = "Row";
-		var key_position = "1";
-
-		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
-			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
-		}
-
-		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-
-		if (isSet(columnCount)) {
-			Select(
-				key_fieldLabel = "Number of Columns",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${columnCount}");
-
-			Pause(locator1 = "3000");
-		}
-
-		if ("${spaceBetweenColumns}" == "true") {
-			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
-				Click.clickAtNotVisible(
-					checkboxName = "Show Gutter",
-					locator1 = "Checkbox#ANY_CHECKBOX");
-			}
-		}
-
-		if ("${spaceBetweenColumns}" == "false") {
-			while (IsChecked(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
-				Click.clickAtNotVisible(
-					checkboxName = "Show Gutter",
-					locator1 = "Checkbox#ANY_CHECKBOX");
-			}
-		}
-
-		PageEditor.waitForAutoSave();
-	}
-
-	macro editLayoutSection {
-		var key_elementType = "Section";
+	macro editLayoutContainer {
+		var key_elementType = "Container";
 		var key_position = "1";
 
 		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
@@ -934,40 +896,93 @@ definition {
 			Pause(locator1 = "3000");
 		}
 
-		if (isSet(container)) {
+		if (isSet(containerWidth)) {
 			Select(
-				key_fieldLabel = "Container",
+				key_fieldLabel = "Container Width",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${container}");
+				value1 = "${containerWidth}");
 
 			Pause(locator1 = "3000");
 		}
 
-		if (isSet(paddingBottom)) {
+		if (isSet(padding)) {
+			if (isSet(bottom)) {
+				Select(
+					key_borderBottom = "Padding",
+					key_fieldLabel = "Bottom",
+					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					value1 = "${bottom}");
+
+				Pause(locator1 = "3000");
+			}
+
+			if (isSet(left)) {
+				Select(
+					key_borderBottom = "Padding",
+					key_fieldLabel = "Left",
+					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					value1 = "${left}");
+
+				Pause(locator1 = "3000");
+			}
+
+			if (isSet(right)) {
+				Select(
+					key_borderBottom = "Padding",
+					key_fieldLabel = "Right",
+					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					value1 = "${right}");
+
+				Pause(locator1 = "3000");
+			}
+
+			if (isSet(top)) {
+				Select(
+					key_borderBottom = "Padding",
+					key_fieldLabel = "Top",
+					locator1 = "Select#BORDER_BOTTOM_SELECT_FIELD",
+					value1 = "${top}");
+
+				Pause(locator1 = "3000");
+			}
+		}
+
+		PageEditor.waitForAutoSave();
+	}
+
+	macro editLayoutRow {
+		var key_elementType = "Row";
+		var key_position = "1";
+
+		if (IsNotVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER")) {
+			Click.clickNoWaitForVisible(locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
+		}
+
+		Click.clickNoMouseOver(locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
+		if (isSet(columnCount)) {
 			Select(
-				key_fieldLabel = "Padding Bottom",
+				key_fieldLabel = "Number of Columns",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${paddingBottom}");
+				value1 = "${columnCount}");
 
 			Pause(locator1 = "3000");
 		}
 
-		if (isSet(paddingHorizontal)) {
-			Select(
-				key_fieldLabel = "Padding Horizontal",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${paddingHorizontal}");
-
-			Pause(locator1 = "3000");
+		if ("${spaceBetweenColumns}" == "true") {
+			while (IsNotChecked.isNotCheckedNotVisible(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click.clickAtNotVisible(
+					checkboxName = "Show Gutter",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
 		}
 
-		if (isSet(paddingTop)) {
-			Select(
-				key_fieldLabel = "Padding Top",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "${paddingTop}");
-
-			Pause(locator1 = "3000");
+		if ("${spaceBetweenColumns}" == "false") {
+			while (IsChecked(checkboxName = "Show Gutter", locator1 = "Checkbox#ANY_CHECKBOX")) {
+				Click.clickAtNotVisible(
+					checkboxName = "Show Gutter",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
 		}
 
 		PageEditor.waitForAutoSave();
@@ -1378,6 +1393,75 @@ definition {
 			value1 = "${user}");
 	}
 
+	macro viewContainerStyle {
+		if (isSet(backgroundColor)) {
+			AssertElementPresent(
+				key_paletteItem = "${backgroundColor}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_BACKGROUND_COLOR");
+		}
+
+		if (isSet(backgroundImage)) {
+			AssertElementPresent(
+				key_imageName = "${backgroundImage}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_BACKGROUND_IMAGE");
+		}
+
+		if (isSet(containerWidth)) {
+			if ("${containerWidth}" == "Fixed Width") {
+				AssertElementNotPresent(
+					key_marginLeft = "",
+					key_position = "${position}",
+					locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_LEFT");
+
+				AssertElementNotPresent(
+					key_marginRight = "",
+					key_position = "${position}",
+					locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_RIGHT");
+			}
+			else if ("${containerWidth}" == "Fluid") {
+				AssertElementPresent(
+					key_marginLeft = "",
+					key_position = "${position}",
+					locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_LEFT");
+
+				AssertElementPresent(
+					key_marginRight = "",					
+					key_position = "${position}",
+					locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_RIGHT");
+			}
+		}
+
+		if (isSet(paddingBottom)) {
+			AssertElementPresent(
+				key_paddingBottom = "${paddingBottom}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_BOTTOM");
+		}
+
+		if (isSet(paddingLeft)) {
+			AssertElementPresent(
+				key_paddingLeft = "${paddingLeft}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_LEFT");
+		}
+
+		if (isSet(paddingRight)) {
+			AssertElementPresent(
+				key_paddingRight = "${paddingRight}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_RIGHT");
+		}
+
+		if (isSet(paddingTop)) {
+			AssertElementPresent(
+				key_paddingTop = "${paddingTop}",
+				key_position = "${position}",
+				locator1 = "PageEditor#CONTAINER_CONFIGURATION_PADDING_TOP");
+		}
+	}
+
 	macro viewDuplicateFragment {
 		AssertElementPresent(
 			key_fragmentName = "${fragmentName}",
@@ -1557,63 +1641,6 @@ definition {
 					key_position = "${position}",
 					locator1 = "PageEditor#ROW_CONFIGURATION_COLUMNS_NO_GUTTER");
 			}
-		}
-	}
-
-	macro viewSectionStyle {
-		if (isSet(backgroundColor)) {
-			AssertElementPresent(
-				key_paletteItem = "${backgroundColor}",
-				key_position = "${position}",
-				locator1 = "PageEditor#SECTION_CONFIGURATION_BACKGROUND_COLOR");
-		}
-
-		if (isSet(backgroundImage)) {
-			AssertElementPresent(
-				key_imageName = "${backgroundImage}",
-				key_position = "${position}",
-				locator1 = "PageEditor#SECTION_CONFIGURATION_BACKGROUND_IMAGE");
-		}
-
-		if (isSet(container)) {
-			if ("${container}" == "Fixed Width") {
-				AssertElementNotPresent(
-					key_container = "fluid",
-					key_position = "${position}",
-					locator1 = "PageEditor#SECTION_CONFIGURATION_CONTAINER");
-
-				AssertElementNotPresent(
-					key_paddingHorizontal = "",
-					key_position = "${position}",
-					locator1 = "PageEditor#SECTION_CONFIGURATION_PADDING_HORIZONTAL");
-			}
-			else if ("${container}" == "Fluid") {
-				AssertElementPresent(
-					key_container = "fluid",
-					key_position = "${position}",
-					locator1 = "PageEditor#SECTION_CONFIGURATION_CONTAINER");
-			}
-		}
-
-		if (isSet(paddingBottom)) {
-			AssertElementPresent(
-				key_paddingBottom = "${paddingBottom}",
-				key_position = "${position}",
-				locator1 = "PageEditor#SECTION_CONFIGURATION_PADDING_BOTTOM");
-		}
-
-		if (isSet(paddingHorizontal)) {
-			AssertElementPresent(
-				key_paddingHorizontal = "${paddingHorizontal}",
-				key_position = "${position}",
-				locator1 = "PageEditor#SECTION_CONFIGURATION_PADDING_HORIZONTAL");
-		}
-
-		if (isSet(paddingTop)) {
-			AssertElementPresent(
-				key_paddingTop = "${paddingTop}",
-				key_position = "${position}",
-				locator1 = "PageEditor#SECTION_CONFIGURATION_PADDING_TOP");
 		}
 	}
 

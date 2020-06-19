@@ -15,10 +15,7 @@
 package com.liferay.gradle.plugins.util;
 
 import com.liferay.gradle.plugins.extensions.BundleExtension;
-import com.liferay.gradle.plugins.internal.util.GradleUtil;
 
-import org.gradle.api.Project;
-import org.gradle.api.UnknownDomainObjectException;
 import org.gradle.api.plugins.ExtensionContainer;
 
 /**
@@ -27,20 +24,20 @@ import org.gradle.api.plugins.ExtensionContainer;
  */
 public class BndUtil {
 
-	public static BundleExtension getInstructions(Project project) {
-		try {
-			return GradleUtil.getExtension(project, BundleExtension.class);
-		}
-		catch (UnknownDomainObjectException unknownDomainObjectException) {
-			BundleExtension bundleExtension = new BundleExtension();
+	public static BundleExtension getInstructions(
+		ExtensionContainer extensionContainer) {
 
-			ExtensionContainer extensionContainer = project.getExtensions();
+		BundleExtension bundleExtension = extensionContainer.findByType(
+			BundleExtension.class);
+
+		if (bundleExtension == null) {
+			bundleExtension = new BundleExtension();
 
 			extensionContainer.add(
 				BundleExtension.class, "bundle", bundleExtension);
-
-			return bundleExtension;
 		}
+
+		return bundleExtension;
 	}
 
 }

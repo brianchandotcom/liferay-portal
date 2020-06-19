@@ -290,6 +290,97 @@ definition {
 			userPassword = "test");
 	}
 
+	@description = "This is a use case for LPS-101746"
+	@priority = "5"
+	test LoginWithIPBasedVerifierEnabled {
+		var portalURL = PropsUtil.get("portal.url");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Multi-Factor Authentication: Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureOTPEmailSender(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		MultiFactorAuthentication.viewOTPEmailSenderCP(
+			emailAddress = "test@liferay.com",
+			emailSenderName = "Joe Bloggs");
+
+		MultiFactorAuthentication.configureOTP(enableOTP = "true");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "IP Address Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureIPAddress(enableIP = "true");
+
+		AssertTextEquals(
+			locator1 = "MultiFactorAuthentication#IP_ADDRESS_CONFIGURATION_ALLOWED_IP_FIELD_1",
+			value1 = "127.0.0.1/255.0.0.0");
+
+		User.logoutPG();
+
+		User.loginPG();
+
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.searchCP(
+			resourceAction = "MFA_IP_OTP_VERIFICATION_SUCCESS",
+			searchTerm = "MFA_IP_OTP_VERIFICATION_SUCCESS",
+			userName = "Test Test");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "None",
+			clientIP = "127.0.0.1",
+			resourceAction = "MFA_IP_OTP_VERIFICATION_SUCCESS",
+			resourceName = "IPAddressHeadlessMFAChecker",
+			userName = "Test Test");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "IP Address Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureIPAddress(
+			allowedIP = " ",
+			enableIP = "true");
+
+		SignOut.signOut();
+
+		SignIn.signIn(userEmailAddress = "test@liferay.com");
+
+		MultiFactorAuthentication.sendOTPEmailPG();
+
+		MultiFactorAuthentication.verifyOTP(
+			portalURL = "${portalURL}",
+			recipient = "Test Test",
+			userEmailAddress = "test@liferay.com",
+			userPassword = "test");
+
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Audit");
+
+		Audit.searchCP(
+			resourceAction = "MFA_IP_OTP_VERIFICATION_FAILURE",
+			searchTerm = "MFA_IP_OTP_VERIFICATION_FAILURE",
+			userName = "Test Test");
+
+		Audit.viewAuditDetails(
+			additionalInformation = "IP is not allowed",
+			clientIP = "127.0.0.1",
+			resourceAction = "MFA_IP_OTP_VERIFICATION_FAILURE",
+			resourceName = "IPAddressHeadlessMFAChecker",
+			userName = "Test Test");
+	}
+
 	@description = "This is a use case for LPS-101720"
 	@priority = "5"
 	test LoginWithOTPEnabled {

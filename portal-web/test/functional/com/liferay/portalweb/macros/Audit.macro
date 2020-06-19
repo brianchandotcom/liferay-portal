@@ -66,7 +66,7 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "AuditReports#REPORTS_DETAIL_CLIENT_IP",
 				value1 = "${clientIP}");
-			}
+		}
 	}
 
 }

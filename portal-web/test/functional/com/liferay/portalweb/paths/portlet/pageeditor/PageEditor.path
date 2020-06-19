@@ -423,11 +423,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTAINER_CONFIGURATION_CONTAINER_WIDTH</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')]/div[@class='container-${key_containerWidth}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTAINER_CONFIGURATION_PADDING_BOTTOM</td>
 	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'pb-${key_paddingBottom}')]</td>
 	<td></td>

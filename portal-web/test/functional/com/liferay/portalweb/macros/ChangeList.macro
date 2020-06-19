@@ -244,14 +244,6 @@ definition {
 			value1 = "${changeListPublishedBy}");
 	}
 
-	macro viewSpecificChangeListHistory {
-		var key_contentTitle = "${contentTitle}";
-
-		AssertTextEquals(
-			locator1 = "ChangeList#VIEW_CHANGE_LIST_NAME_HISTORY",
-			value1 = "${changeListName}");
-	}
-
 	macro viewWarningOnPortletExport {
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

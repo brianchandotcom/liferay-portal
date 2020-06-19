@@ -62,7 +62,11 @@ const SidebarSearchInput = ({children, onSearch, searchText}) => (
 	</ClayLayout.ContentRow>
 );
 
-const SidebarTabs = ({initialSelectedTab = 0, setKeywords, tabs}) => {
+const SidebarTabs = ({
+	initialSelectedTab = 0,
+	setKeywords = () => {},
+	tabs,
+}) => {
 	const [selectedTab, setSelectedTab] = useState(initialSelectedTab);
 
 	return (

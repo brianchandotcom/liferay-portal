@@ -28,6 +28,7 @@ const withMoveableFields = (ChildComponent) => {
 	class MoveableFields extends Component {
 		createDragAndDrop() {
 			this._dragAndDrop = new DragDrop({
+				container: this.element,
 				sources: '.moveable .ddm-drag:not([data-drag-disabled="true"])',
 				targets:
 					'.moveable .ddm-target:not([data-drop-disabled="true"])',

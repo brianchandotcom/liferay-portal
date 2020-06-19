@@ -26,10 +26,10 @@ import saveDataDefinition from '../../../utils/saveDataDefinition.es';
 import {errorToast, successToast} from '../../../utils/toast.es';
 
 export default ({
+	childrenAppProps: {DataLayout},
 	childrenContext,
 	defaultLanguageId,
 	fieldSet: fieldSetDefault,
-	otherProps: {DataLayout},
 }) => {
 	const [context, dispatch] = useContext(AppContext);
 	const {dataDefinition, dataLayout, fieldSets} = context;

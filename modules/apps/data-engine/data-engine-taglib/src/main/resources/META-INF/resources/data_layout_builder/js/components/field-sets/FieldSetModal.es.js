@@ -24,7 +24,12 @@ import ModalWithEventPrevented from '../modal/ModalWithEventPrevented.es';
 import useCreateFieldSet from './actions/useCreateFieldSet.es';
 import useSaveFieldSet from './actions/useSaveFieldSet.es';
 
-const ModalContent = ({defaultLanguageId, fieldSet, onClose, otherProps}) => {
+const ModalContent = ({
+	childrenAppProps,
+	defaultLanguageId,
+	fieldSet,
+	onClose,
+}) => {
 	const [{appProps}] = useContext(AppContext);
 	const [childrenContext, setChildrenContext] = useState({
 		dispatch: () => {},
@@ -50,10 +55,10 @@ const ModalContent = ({defaultLanguageId, fieldSet, onClose, otherProps}) => {
 
 	const createFieldSet = useCreateFieldSet({childrenContext});
 	const saveAsFieldSet = useSaveFieldSet({
+		childrenAppProps,
 		childrenContext,
 		defaultLanguageId,
 		fieldSet,
-		otherProps,
 	});
 
 	const saveFieldSet = fieldSet ? saveAsFieldSet : createFieldSet;
@@ -95,7 +100,7 @@ const ModalContent = ({defaultLanguageId, fieldSet, onClose, otherProps}) => {
 						dataLayoutBuilderId={`${appProps.dataLayoutBuilderId}_2`}
 						defaultLanguageId={defaultLanguageId}
 						setChildrenContext={setChildrenContext}
-						{...otherProps}
+						{...childrenAppProps}
 					/>
 				</div>
 			</ClayModal.Body>

@@ -49,23 +49,25 @@ const AppContent = ({
 }) => {
 	const [state, dispatch] = useContext(AppContext);
 	const {panels, sidebarPanels, sidebarVariant} = sidebarConfig;
-	const appProps = JSON.stringify(props);
 
 	useEffect(() => {
 		if (dataLayoutBuilder) {
 			dataLayoutBuilder.emit('contextUpdated', state);
 		}
+	}, [dataLayoutBuilder, state]);
+
+	useEffect(() => {
 		if (setChildrenContext) {
 			setChildrenContext({dispatch, state});
 		}
-	}, [dataLayoutBuilder, dispatch, setChildrenContext, state]);
+	}, [dispatch, setChildrenContext, state]);
 
 	useEffect(() => {
 		if (!setChildrenContext) {
-			const payload = JSON.parse(appProps);
-			dispatch({payload, type: UPDATE_APP_PROPS});
+			dispatch({payload: props, type: UPDATE_APP_PROPS});
 		}
-	}, [appProps, dispatch, setChildrenContext]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dispatch, setChildrenContext]);
 
 	return (
 		<>

@@ -79,11 +79,26 @@ export const getURL = (path, params) => {
 };
 
 export const updateItem = (endpoint, item, params) => {
-	return fetch(getURL(endpoint, params), {
-		body: JSON.stringify(item),
-		headers: HEADERS,
-		method: 'PUT',
-	})
-		.then((response) => response.text())
-		.then((text) => (text ? JSON.parse(text) : {}));
+	return new Promise((resolve, reject) => {
+		let isOk;
+		fetch(getURL(endpoint, params), {
+			body: JSON.stringify(item),
+			headers: HEADERS,
+			method: 'PUT',
+		})
+			.then((response) => {
+				isOk = response.ok;
+
+				return response.text();
+			})
+			.then((text) => {
+				const data = text ? JSON.parse(text) : {};
+				if (isOk) {
+					resolve(data);
+				}
+				else {
+					reject(data);
+				}
+			});
+	});
 };

@@ -33,13 +33,13 @@ export default function FieldSets({keywords}) {
 		AppContext
 	);
 	const [state, setState] = useState({
+		childrenAppProps: {},
 		fieldSet: null,
 		isVisible: false,
-		otherProps: {},
 	});
 
 	const toggleFieldSet = (fieldSet) => {
-		let otherProps = {
+		let childrenAppProps = {
 			context: {},
 			dataDefinitionId: null,
 			dataLayoutId: null,
@@ -53,11 +53,11 @@ export default function FieldSets({keywords}) {
 				fieldTypes,
 			});
 			const ddmForm = DataLayout.getDDMForm(fieldSet, defaultDataLayout);
-			const [pages] = ddmForm.pages;
+			const [{rows}] = ddmForm.pages;
 
 			delete ddmForm.pages;
 
-			otherProps = {
+			childrenAppProps = {
 				DataLayout,
 				context: {
 					...context,
@@ -65,7 +65,7 @@ export default function FieldSets({keywords}) {
 						{
 							...ddmForm,
 							description: '',
-							rows: pages.rows,
+							rows,
 							title: '',
 						},
 					],
@@ -76,9 +76,9 @@ export default function FieldSets({keywords}) {
 		}
 
 		setState({
+			childrenAppProps,
 			fieldSet,
 			isVisible: !state.isVisible,
-			otherProps,
 		});
 	};
 

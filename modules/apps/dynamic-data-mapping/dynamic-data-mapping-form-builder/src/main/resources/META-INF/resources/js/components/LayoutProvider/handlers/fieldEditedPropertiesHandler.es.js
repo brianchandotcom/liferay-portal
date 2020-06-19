@@ -17,7 +17,7 @@ import {updateRulesReferences} from '../util/rules.es';
 import {updateField} from '../util/settingsContext.es';
 import {updatePages} from './fieldEditedHandler.es';
 
-export const updateState = (props, state, properties) => {
+const updateState = (props, state, properties) => {
 	const {activePage, focusedField, pages, rules} = state;
 	const {fieldName: previousFocusedFieldName} = focusedField;
 	let newFocusedField;
@@ -63,7 +63,7 @@ export const updateState = (props, state, properties) => {
 	};
 };
 
-export const handleFieldEdited = (props, state, event) => {
+export default (props, state, event) => {
 	const {fieldName, properties} = event;
 
 	if (!Array.isArray(properties) || !properties.length) {
@@ -79,5 +79,3 @@ export const handleFieldEdited = (props, state, event) => {
 
 	return updateState(props, state, properties);
 };
-
-export default handleFieldEdited;

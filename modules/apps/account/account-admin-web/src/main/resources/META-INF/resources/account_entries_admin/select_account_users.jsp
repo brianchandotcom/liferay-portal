@@ -22,13 +22,21 @@ long accountEntryId = ParamUtil.getLong(request, "accountEntryId");
 SearchContainer<AccountUserDisplay> userSearchContainer = AssignableAccountUserDisplaySearchContainerFactory.create(accountEntryId, liferayPortletRequest, liferayPortletResponse);
 
 SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementToolbarDisplayContext = new SelectAccountUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, userSearchContainer);
+
+if (selectAccountUsersManagementToolbarDisplayContext.isSingleSelect()) {
+	userSearchContainer.setRowChecker(null);
+}
+
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "assignAccountUsers");
 %>
 
 <clay:management-toolbar
 	displayContext="<%= selectAccountUsersManagementToolbarDisplayContext %>"
 />
 
-<clay:container-fluid>
+<clay:container-fluid
+	id='<%= renderResponse.getNamespace() + "selectAccountUser" %>'
+>
 	<c:if test='<%= !Objects.equals(selectAccountUsersManagementToolbarDisplayContext.getNavigation(), "all-users") %>'>
 		<clay:alert
 			message="showing-users-with-valid-domains-only"
@@ -60,6 +68,25 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 				name="account-roles"
 				value="<%= accountUserDisplay.getAccountRoleNamesString(accountEntryId, locale) %>"
 			/>
+
+			<c:if test="<%= selectAccountUsersManagementToolbarDisplayContext.isSingleSelect() %>">
+				<liferay-ui:search-container-column-text>
+
+					<%
+					Map<String, Object> data = HashMapBuilder.<String, Object>put(
+						"emailaddress", accountUserDisplay.getEmailAddress()
+					).put(
+						"entityid", accountUserDisplay.getUserId()
+					).put(
+						"entityname", accountUserDisplay.getName()
+					).put(
+						"jobtitle", accountUserDisplay.getJobTitle()
+					).build();
+					%>
+
+					<aui:button cssClass="choose-user selector-button" data="<%= data %>" value="choose" />
+				</liferay-ui:search-container-column-text>
+			</c:if>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
@@ -87,8 +114,13 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 		}
 
 		Liferay.Util.getOpener().Liferay.fire(
-			'<%= HtmlUtil.escapeJS(liferayPortletResponse.getNamespace() + "assignAccountUsers") %>',
+			'<%= HtmlUtil.escapeJS(eventName) %>',
 			result
 		);
 	});
+
+	Liferay.Util.selectEntityHandler(
+		'#<portlet:namespace />selectAccountUser',
+		'<%= HtmlUtil.escapeJS(eventName) %>'
+	);
 </aui:script>

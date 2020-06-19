@@ -112,7 +112,8 @@
 	}
 }
 
-.show-quick-actions-on-hover .miller-columns-item:not(.active) {
+.show-quick-actions-on-hover
+	.miller-columns-item:not(.miller-columns-item--active) {
 	&:hover {
 		.miller-columns-item-quick-action {
 			display: flex;

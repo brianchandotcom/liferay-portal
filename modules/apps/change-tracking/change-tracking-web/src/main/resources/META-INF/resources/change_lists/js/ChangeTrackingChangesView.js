@@ -23,37 +23,37 @@ import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
 
-class ChangeTrackingTreeView extends React.Component {
+class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {displayTitles, spritemap, tree} = props;
+		const {contextView, displayTitles, spritemap} = props;
 
+		this.contextView = contextView;
 		this.displayTitles = displayTitles;
 		this.filterClass = 'everything';
 		this.nodeId = 0;
 		this.spritemap = spritemap;
-		this.tree = tree;
 
 		this.state = {
 			ascending: true,
 			breadcrumbItems: this._getBreadcrumbItems(
 				'everything',
-				tree.everything
+				contextView.everything
 			),
 			column: 'title',
 			delta: 20,
-			node: tree.everything,
+			node: contextView.everything,
 			page: 1,
 			renderInnerHTML: null,
 			sortDirectionClass: 'order-arrow-down-active',
-			title: tree.everything.title,
+			title: contextView.everything.title,
 		};
 	}
 
 	_getBreadcrumbItems(filterClass, node) {
 		const breadcrumbItems = [];
-		const homeBreadcrumbItem = {label: this.tree.everything.title};
+		const homeBreadcrumbItem = {label: this.contextView.everything.title};
 
 		if (filterClass === 'everything' && node.id === 0) {
 			homeBreadcrumbItem.active = true;
@@ -135,11 +135,11 @@ class ChangeTrackingTreeView extends React.Component {
 	}
 
 	_getRootDisplayClassNode(filterClass) {
-		const nodeIds = this.tree[filterClass];
+		const nodeIds = this.contextView[filterClass];
 
 		const children = [];
 
-		const stack = [this.tree.everything];
+		const stack = [this.contextView.everything];
 
 		while (stack.length > 0) {
 			const element = stack.pop();
@@ -169,7 +169,7 @@ class ChangeTrackingTreeView extends React.Component {
 			return this._getRootDisplayClassNode(filterClass);
 		}
 
-		const rootNode = this.tree.everything;
+		const rootNode = this.contextView.everything;
 
 		if (nodeId === 0) {
 			return rootNode;
@@ -552,8 +552,8 @@ class ChangeTrackingTreeView extends React.Component {
 			/>
 		);
 
-		for (let i = 0; i < this.tree.rootDisplayClasses.length; i++) {
-			const className = this.tree.rootDisplayClasses[i];
+		for (let i = 0; i < this.contextView.rootDisplayClasses.length; i++) {
+			const className = this.contextView.rootDisplayClasses[i];
 
 			let label = className;
 
@@ -615,5 +615,5 @@ class ChangeTrackingTreeView extends React.Component {
 }
 
 export default function (props) {
-	return <ChangeTrackingTreeView {...props} />;
+	return <ChangeTrackingChangesView {...props} />;
 }

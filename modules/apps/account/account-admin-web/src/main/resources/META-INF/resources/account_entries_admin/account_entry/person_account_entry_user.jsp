@@ -71,7 +71,9 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 	<liferay-ui:search-container
 		compactEmptyResultsMessage="<%= true %>"
 		emptyResultsMessage="assign-a-user-to-this-person-account"
+		headerNames="name,email-address,job-title,null"
 		id="personAccountEntryUserSearchContainer"
+		total="<%= 1 %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= userList %>"
@@ -106,6 +108,7 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 
 		<liferay-ui:search-iterator
 			markupView="lexicon"
+			paginate="<%= false %>"
 		/>
 	</liferay-ui:search-container>
 </clay:sheet-section>

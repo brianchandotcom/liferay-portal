@@ -28,7 +28,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION,
+	property = {
+		"panel.app.order:Integer=300",
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION
+	},
 	service = PanelApp.class
 )
 public class PushNotificationsPanelApp extends BasePanelApp {

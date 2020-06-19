@@ -16,8 +16,8 @@ package com.liferay.change.tracking.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.web.internal.constants.CTPanelCategoryKeys;
 import com.liferay.portal.kernel.model.Portlet;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.app.order:Integer=200",
-		"panel.category.key=" + CTPanelCategoryKeys.CONTROL_PANEL_CHANGE_LISTS
+		"panel.app.order:Integer=300",
+		"panel.category.key=" + PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS_CONTENT
 	},
 	service = PanelApp.class
 )

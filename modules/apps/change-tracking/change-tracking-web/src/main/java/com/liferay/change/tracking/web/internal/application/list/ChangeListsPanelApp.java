@@ -16,10 +16,10 @@ package com.liferay.change.tracking.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
-import com.liferay.change.tracking.web.internal.constants.CTPanelCategoryKeys;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.app.order:Integer=100",
-		"panel.category.key=" + CTPanelCategoryKeys.CONTROL_PANEL_CHANGE_LISTS
+		"panel.app.order:Integer=400",
+		"panel.category.key=" + PanelCategoryKeys.GLOBAL_MENU_APPLICATIONS_CONTENT
 	},
 	service = PanelApp.class
 )

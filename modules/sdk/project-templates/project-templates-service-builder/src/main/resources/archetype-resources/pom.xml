@@ -12,13 +12,13 @@
 	<packaging>pom</packaging>
 	<profiles>
 		<profile>
-
-			<!-- Enable this profile in standalone -->
-
 			<id>standalone</id>
+
+			<!-- Uncomment the following element if the project is not in workspace
+
 			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>-->
 			<properties>
 #if (${liferayVersion.startsWith("7.0")})
 				<liferay.bom.version>7.0.6-1</liferay.bom.version>

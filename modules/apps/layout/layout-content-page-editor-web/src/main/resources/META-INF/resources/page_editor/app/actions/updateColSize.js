@@ -14,9 +14,10 @@
 
 import {UPDATE_COL_SIZE} from './types';
 
-export default function updateColSize({layoutData}) {
+export default function updateColSize({layoutData, rowItemId}) {
 	return {
 		layoutData,
+		rowItemId,
 		type: UPDATE_COL_SIZE,
 	};
 }

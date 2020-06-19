@@ -243,8 +243,8 @@ public class AddCollectionLayoutMVCActionCommandTest {
 	}
 
 	private void _validateLayoutProperties(Layout layout, long parentLayoutId) {
-		Assert.assertEquals(LayoutConstants.TYPE_COLLECTION, layout.getType());
 		Assert.assertEquals(parentLayoutId, layout.getParentLayoutId());
+		Assert.assertEquals(LayoutConstants.TYPE_COLLECTION, layout.getType());
 		Assert.assertEquals(
 			String.valueOf(_assetListEntry.getAssetListEntryId()),
 			layout.getTypeSettingsProperty("collectionPK"));

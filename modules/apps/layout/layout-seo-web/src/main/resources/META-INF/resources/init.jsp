@@ -31,6 +31,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants" %><%@
 page import="com.liferay.layout.seo.model.LayoutSEOEntry" %><%@
 page import="com.liferay.layout.seo.model.LayoutSEOSite" %><%@
+page import="com.liferay.layout.seo.web.internal.configuration.util.FFMappingInputConfigurationUtil" %><%@
 page import="com.liferay.layout.seo.web.internal.constants.LayoutSEOWebKeys" %><%@
 page import="com.liferay.layout.seo.web.internal.display.context.LayoutsSEODisplayContext" %><%@
 page import="com.liferay.layout.seo.web.internal.display.context.OpenGraphSettingsDisplayContext" %><%@

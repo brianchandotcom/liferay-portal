@@ -27,6 +27,7 @@ import {
 	UPDATE_LANGUAGE_ID,
 } from '../../actions/types';
 import {getItemNameFromAction} from './getItemNameFromAction';
+import * as undoAddItem from './undoAddItem';
 import * as undoDelete from './undoDelete';
 import * as undoDuplicateItem from './undoDuplicateItem';
 import * as undoEditableValuesAction from './undoEditableValuesAction';
@@ -39,7 +40,7 @@ import * as undoUpdateLanguage from './undoUpdateLanguage';
 
 const UNDO_ACTIONS = {
 	[ADD_FRAGMENT_ENTRY_LINKS]: undoFragmentEntryLinks,
-	[ADD_ITEM]: undoLayoutDataAction,
+	[ADD_ITEM]: undoAddItem,
 	[DELETE_ITEM]: undoDelete,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
 	[MOVE_ITEM]: undoMoveItem,

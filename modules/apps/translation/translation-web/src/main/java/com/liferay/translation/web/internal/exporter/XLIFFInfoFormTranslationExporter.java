@@ -134,8 +134,6 @@ public class XLIFFInfoFormTranslationExporter<T>
 			InputStream inputStream)
 		throws InvalidXLIFFFileException, IOException {
 
-		InfoFormValues infoFormValues = new InfoFormValues();
-
 		try {
 			XLIFFDocument xliffDocument = new XLIFFDocument();
 
@@ -162,14 +160,16 @@ public class XLIFFInfoFormTranslationExporter<T>
 				Fragment value = valuePart.getTarget();
 
 				InfoLocalizedValue<String> infoLocalizedValue =
-					InfoLocalizedValue.builder(
-					).addValue(
+					InfoLocalizedValue.<String>builder(
+					).put(
 						targetLocale, field
 					).build();
 
-				InfoField infoField = new InfoField(
-					TextInfoFieldType.INSTANCE, infoLocalizedValue, true,
-					field);
+				InfoField infoField = new InfoField.Builder(
+					TextInfoFieldType.INSTANCE, infoLocalizedValue, field
+				).setLocalizable(
+					true
+				).build();
 
 				InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
 					infoField, value.getPlainText());
@@ -177,9 +177,9 @@ public class XLIFFInfoFormTranslationExporter<T>
 				infoFieldValues.add(infoFieldValue);
 			}
 
-			infoFormValues.addAll(infoFieldValues);
-
-			return infoFormValues;
+			return new InfoFormValues.Builder().addAll(
+				infoFieldValues
+			).build();
 		}
 		catch (XLIFFReaderException xliffReaderException) {
 			throw new InvalidXLIFFFileException(xliffReaderException);

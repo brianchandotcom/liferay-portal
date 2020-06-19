@@ -93,7 +93,7 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Boolean",
+			dmDocumentTypeFieldNames = "Date",
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name");
 
@@ -120,11 +120,12 @@ definition {
 		DMNavigator.gotoFolder(dmFolderName = "DM Folder Name");
 
 		DMDocument.addDocumentTypePG(
-			booleanField = "Boolean Field",
+			dateField = "Date",
 			dmDocumentDescription = "DM Document Description",
 			dmDocumentFile = "Document_1.mp3",
 			dmDocumentTitle = "DM Document Title",
 			dmDocumentTypeName = "DM Document Type Name",
+			fieldValue = "01/01/2022",
 			numberField = "1234",
 			textField = "Text");
 
@@ -150,7 +151,7 @@ definition {
 
 		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
 
-		DMDocument.viewDocumentTypePG(booleanValue = "Yes");
+		DMDocument.viewDocumentTypePG(dateValue = "01/01/2022");
 
 		DMDocument.viewDocumentTypePG(numberValue = "1234");
 

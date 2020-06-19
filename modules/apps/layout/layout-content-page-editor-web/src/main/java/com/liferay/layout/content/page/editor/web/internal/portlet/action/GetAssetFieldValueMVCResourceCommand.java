@@ -19,6 +19,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.type.WebImage;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -133,6 +134,11 @@ public class GetAssetFieldValueMVCResourceCommand
 			ContentAccessor contentAccessor = (ContentAccessor)value;
 
 			value = contentAccessor.getContent();
+		}
+		else if (value instanceof WebImage) {
+			WebImage webImage = (WebImage)value;
+
+			value = webImage.toJSONObject();
 		}
 
 		jsonObject.put("fieldValue", value);

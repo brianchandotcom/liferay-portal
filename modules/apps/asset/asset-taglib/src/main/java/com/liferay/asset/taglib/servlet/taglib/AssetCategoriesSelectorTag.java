@@ -453,15 +453,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 					return false;
 				}
 
-				int vocabularyCategoriesCount =
-					AssetCategoryServiceUtil.getVocabularyCategoriesCount(
-						vocabulary.getGroupId(), vocabulary.getVocabularyId());
-
-				if (vocabularyCategoriesCount > 0) {
-					return true;
-				}
-
-				return false;
+				return true;
 			});
 	}
 

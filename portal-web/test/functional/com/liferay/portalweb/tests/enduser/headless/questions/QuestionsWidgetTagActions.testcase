@@ -58,9 +58,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Question ListOfTagsAppearsInTheTagsTab",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Question ListOfTagsAppearsInTheTagsTab");
 
 		Pause(locator = "3000");
 
@@ -89,9 +87,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Question TagCardRedirectTheUserToTheQuestionsThatAreUsingThisTag");
 
 		Pause(locator = "3000");
 
@@ -124,9 +120,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Question ValidateSearchByQuestionTags",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Question ValidateSearchByQuestionTags");
 
 		Pause(locator = "3000");
 
@@ -167,9 +161,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Question ValidateTagsOccurrences",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Question ValidateTagsOccurrences");
 
 		Pause(locator = "3000");
 

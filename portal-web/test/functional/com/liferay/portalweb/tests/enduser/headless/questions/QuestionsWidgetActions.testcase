@@ -52,9 +52,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			kbArticleContent = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
@@ -82,9 +80,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Question AddQuestionWithTheMaximumTags",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Question AddQuestionWithTheMaximumTags");
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			kbArticleContent = "Body AddQuestionWithTheMaximumTags",
@@ -119,9 +115,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		AssertElementNotPresent(
 			key_parentCategoryTitle = "Questions Test Category",
@@ -141,9 +135,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
 
@@ -170,9 +162,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		AssertVisible(
 			key_parentCategoryTitle = "Questions Test Category",
@@ -192,9 +182,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		Click(locator1 = "Questions#ASK_QUESTION_BUTTON");
 
@@ -243,9 +231,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			anonymousUser = "true",
@@ -285,9 +271,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		Pause(locator = "3000");
 
@@ -340,9 +324,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Question ValidateIfTheMyActivityAppears",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Question ValidateIfTheMyActivityAppears");
 
 		AssertElementPresent(
 			key_questionTabField = "My Activity",
@@ -367,9 +349,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		Pause(locator = "3000");
 
@@ -416,9 +396,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Questions Page");
 
-		Click(
-			key_questionNameField = "Questions Test Category",
-			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+		Questions.gotoCategory(categoryName = "Questions Test Category");
 
 		Pause(locator = "3000");
 

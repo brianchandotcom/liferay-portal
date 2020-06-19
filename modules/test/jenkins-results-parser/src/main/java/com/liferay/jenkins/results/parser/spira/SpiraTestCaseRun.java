@@ -39,6 +39,10 @@ import org.json.JSONObject;
  */
 public class SpiraTestCaseRun extends BaseSpiraArtifact {
 
+	public static void clearCachedSpiraTestCaseRuns() {
+		clearCachedSpiraArtifacts(SpiraTestCaseRun.class);
+	}
+
 	public static List<SpiraTestCaseRun> recordSpiraTestCaseRuns(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
 		SpiraReleaseBuild spiraReleaseBuild, SpiraTestSet spiraTestSet,

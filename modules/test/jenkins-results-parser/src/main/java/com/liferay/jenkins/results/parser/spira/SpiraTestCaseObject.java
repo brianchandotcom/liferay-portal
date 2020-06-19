@@ -36,6 +36,10 @@ import org.json.JSONObject;
  */
 public class SpiraTestCaseObject extends PathSpiraArtifact {
 
+	public static void clearCachedSpiraTestCaseObjects() {
+		clearCachedSpiraArtifacts(SpiraTestCaseObject.class);
+	}
+
 	public static SpiraTestCaseObject createSpiraTestCaseObject(
 		SpiraProject spiraProject, String testCaseName, String testCaseFilePath,
 		SpiraTestCaseType spiraTestCaseType) {

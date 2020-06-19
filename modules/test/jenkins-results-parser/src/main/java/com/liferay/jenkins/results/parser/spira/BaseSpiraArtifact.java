@@ -137,6 +137,50 @@ public abstract class BaseSpiraArtifact implements SpiraArtifact {
 		}
 	}
 
+	protected static void clearCachedSpiraArtifacts(
+		Class<? extends SpiraArtifact> spiraArtifactClass) {
+
+		int cachedSpiraArtifactCount = 0;
+
+		synchronized (_idSpiraArtifactsMap) {
+			Map<Integer, SpiraArtifact> idSpiraArtifactsMap =
+				_getIDSpiraArtifactsMap(spiraArtifactClass);
+
+			cachedSpiraArtifactCount += idSpiraArtifactsMap.size();
+
+			idSpiraArtifactsMap.clear();
+		}
+
+		synchronized (_indentLevelSpiraArtifactsMap) {
+			Map<String, IndentLevelSpiraArtifact> indentLevelSpiraArtifactsMap =
+				_getIndentLevelSpiraArtifactsMap(spiraArtifactClass);
+
+			cachedSpiraArtifactCount += indentLevelSpiraArtifactsMap.size();
+
+			indentLevelSpiraArtifactsMap.clear();
+		}
+
+		synchronized (_pathSpiraArtifactsMap) {
+			Map<String, PathSpiraArtifact> pathSpiraArtifactsMap =
+				_getPathSpiraArtifactsMap(spiraArtifactClass);
+
+			cachedSpiraArtifactCount += pathSpiraArtifactsMap.size();
+
+			pathSpiraArtifactsMap.clear();
+		}
+
+		String artifactTypeName = getArtifactTypeName(spiraArtifactClass);
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Cleared ", String.valueOf(cachedSpiraArtifactCount),
+				" cached ",
+				JenkinsResultsParserUtil.getNounForm(
+					cachedSpiraArtifactCount, artifactTypeName + "s",
+					artifactTypeName),
+				" from memory."));
+	}
+
 	protected static <S extends SpiraArtifact> List<S> getSpiraArtifacts(
 		Class<S> spiraArtifactClass,
 		Supplier<List<JSONObject>> spiraArtifactSupplier,

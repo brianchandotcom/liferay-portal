@@ -393,6 +393,42 @@ definition {
 		PageEditor.clickPublish();
 	}
 
+	@description = "This is a use case for LPS-109298. Can add elements above and below Tabs fragment to page."
+	@priority = "4"
+	test AddFrgamentWithTabsFragmentInTheMiddle {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		DragAndDrop.javaScriptDragAndDropToUp(
+			key_collectionName = "Basic Components",
+			key_fragmentName = "Button",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+			locator2 = "//*[contains(@class,'component-tabs')]",
+			value1 = "");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading",
+			targetFragmentName = "Tabs");
+
+		PageEditor.viewFragmentOrder(
+			fragmentName = "Button",
+			position = "1");
+
+		PageEditor.viewFragmentOrder(
+			fragmentName = "Tabs",
+			position = "2");
+
+		PageEditor.viewFragmentOrder(
+			fragmentName = "Heading",
+			position = "3");
+	}
+
 	@description = "This is a use case for LPS-111274. The selected Tabs fragment should always stay selected when click on the tabs of it."
 	@priority = "5"
 	test ClickTabsFragmentTabAndViewHeader {

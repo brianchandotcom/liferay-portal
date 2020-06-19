@@ -21,6 +21,9 @@ import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowState;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTask;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTransition;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -145,6 +148,15 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 								_appBuilderApp.getDdmStructureLayoutId()
 							};
 							name = appWorkflowTaskName;
+
+							setRoleIds(
+								() -> {
+									Role role = _roleLocalService.getRole(
+										testCompany.getCompanyId(),
+										RoleConstants.PORTAL_CONTENT_REVIEWER);
+
+									return new Long[] {role.getRoleId()};
+								});
 						}
 					}
 				};
@@ -165,5 +177,8 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 
 	@Inject
 	private AppBuilderAppLocalService _appBuilderAppLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 }

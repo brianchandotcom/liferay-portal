@@ -15,7 +15,6 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.document.library.kernel.exception.RequiredFileException;
 import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.journal.constants.JournalPortletKeys;
@@ -24,6 +23,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.exception.InvalidXLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
 import com.liferay.translation.info.InfoFormValuesUpdater;
@@ -81,20 +82,32 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 				actionRequest, "articleResourceId");
 
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"file")) {
+					"file")) {
 
 				InfoFormValues infoFormValues =
 					_translationInfoFormValuesExporter.importXLIFF(
-					themeDisplay.getScopeGroupId(),
-					new InfoItemClassPKReference(
-						JournalArticle.class.getName(), articleResourceId),
-					inputStream);
+						themeDisplay.getScopeGroupId(),
+						new InfoItemClassPKReference(
+							JournalArticle.class.getName(), articleResourceId),
+						inputStream);
 
-				JournalArticle article = _journalArticleService.getArticle(
-					articleResourceId);
+				JournalArticle journalArticle =
+					_infoFormValuesUpdater.updateFromInfoFormValues(
+						_journalArticleService.getArticle(articleResourceId),
+						infoFormValues);
 
-				_infoFormValuesUpdater.updateFromInfoFormValues(
-					article, infoFormValues);
+				int workflowAction = ParamUtil.getInteger(
+					actionRequest, "workflowAction",
+					WorkflowConstants.ACTION_PUBLISH);
+
+				if (workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT) {
+					_journalArticleService.updateStatus(
+						journalArticle.getGroupId(),
+						journalArticle.getArticleId(),
+						journalArticle.getVersion(), workflowAction,
+						journalArticle.getUrlTitle(),
+						ServiceContextFactory.getInstance(actionRequest));
+				}
 			}
 		}
 		catch (Exception exception) {

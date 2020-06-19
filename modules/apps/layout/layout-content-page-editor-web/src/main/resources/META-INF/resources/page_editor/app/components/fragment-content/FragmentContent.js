@@ -18,6 +18,8 @@ import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import {EDITABLE_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/editableFloatingToolbarButtons';
+import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
+import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useSelector} from '../../store/index';
 import {useGetContent, useGetFieldValue} from '../CollectionItemContext';
@@ -45,6 +47,9 @@ const FragmentContent = React.forwardRef(
 		const getFieldValue = useGetFieldValue();
 
 		const [editables, setEditables] = useState([]);
+
+		const canConfigureWidgets = useSelector(selectCanConfigureWidgets);
+		const canUpdateEditables = useSelector(selectCanUpdateEditables);
 
 		const editableElements = useMemo(
 			() => editables.map((editable) => editable.element),
@@ -185,7 +190,9 @@ const FragmentContent = React.forwardRef(
 					itemId={itemId}
 				>
 					<UnsafeHTML
-						className={classNames('page-editor__fragment-content')}
+						className={classNames('page-editor__fragment-content', {
+							'page-editor__fragment-content--portlet-topper-hidden': !canConfigureWidgets,
+						})}
 						contentRef={ref}
 						getPortals={getPortals}
 						globalContext={frameContext || window}
@@ -194,11 +201,13 @@ const FragmentContent = React.forwardRef(
 					/>
 				</FragmentContentInteractionsFilter>
 
-				<FragmentContentFloatingToolbar
-					editables={editables}
-					fragmentEntryLinkId={fragmentEntryLinkId}
-					onButtonClick={onFloatingToolbarButtonClick}
-				/>
+				{canUpdateEditables && (
+					<FragmentContentFloatingToolbar
+						editables={editables}
+						fragmentEntryLinkId={fragmentEntryLinkId}
+						onButtonClick={onFloatingToolbarButtonClick}
+					/>
+				)}
 
 				<FragmentContentProcessor
 					editables={editables}

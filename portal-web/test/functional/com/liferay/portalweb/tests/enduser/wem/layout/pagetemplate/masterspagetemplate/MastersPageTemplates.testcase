@@ -1495,6 +1495,71 @@ definition {
 		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR");
 	}
 
+	@description = "This is for LPS-109298. If move the Drop Zone of master to one tab, only can add elements to that tab in content page."
+	@priority = "4"
+	test MoveDropZoneToOneTabOfTabsFragment {
+		property test.assert.warning.exceptions = "true";
+
+		MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			dropTarget = "Footer",
+			fragmentName = "Tabs",
+			scope = "Master");
+
+		Click(
+			key_fragmentName = "Drop Zone",
+			locator1 = "Fragment#FRAGMENT_BODY");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_dragFragmentName = "Drop Zone",
+			key_index = "2",
+			locator1 = "Fragment#FRAGMENT_HEADER_DRAG_HANDLER",
+			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
+			value1 = "");
+
+		Button.click(button = "Publish Master");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+		ContentPages.addPage(
+			masterLayoutName = "Custom Masters Page Template",
+			pageName = "Test Page Name");
+
+		AssertVisible(
+			key_fragmentName = "tabs",
+			locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+		AssertVisible(
+			key_content = "Place fragments here.",
+			key_fragmentClass = "content",
+			key_position = "1",
+			locator1 = "Fragment#FRAGMENT");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Card");
+
+		AssertElementNotPresent(
+			key_index = "2",
+			locator1 = "PageEditor#FRAGMENT_WITH_DROP_TARGET");
+
+		for (var navItem : list "Tab 2,Tab 3,Tab 4") {
+			PageEditor.gotoTabsFragmentNavItem(navItem = "${navItem}");
+
+			AssertElementNotPresent(
+				key_fragmentName = "Place fragments here.",
+				locator1 = "PageEditor#FRAGMENT_INHERITED_FROM_CUSTOM_MASTERS");
+
+			AssertElementNotPresent(
+				key_index = "2",
+				locator1 = "PageEditor#FRAGMENT_WITH_DROP_TARGET");
+		}
+
+		PageEditor.clickPublish();
+	}
+
 	@description = "This is a test for LPS-102566. The new elements can only be added into Drop Zone in a page based on custom master and the elements inherited from the custom master are changless."
 	@priority = "3"
 	test OnlyAddElementsInDropZoneOfPageAndElementsInheritedAreChangeless {

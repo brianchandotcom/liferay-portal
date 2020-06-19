@@ -97,15 +97,16 @@ public class TextDDMFormFieldTypeReportProcessor
 					DDMFormInstanceReportConstants.
 						EVENT_DELETE_RECORD_VERSION)) {
 
-			DDMFormInstanceRecord formInstanceRecord =
+			DDMFormInstanceRecord ddmFormInstanceRecord =
 				ddmFormInstanceRecordLocalService.getFormInstanceRecord(
 					formInstanceRecordId);
 
-			DDMFormInstance formInstance = formInstanceRecord.getFormInstance();
+			DDMFormInstance ddmFormInstance =
+				ddmFormInstanceRecord.getFormInstance();
 
 			BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
 				ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
-					formInstance.getFormInstanceId(),
+					ddmFormInstance.getFormInstanceId(),
 					new String[] {ddmFormFieldValue.getName()},
 					WorkflowConstants.STATUS_APPROVED, 0,
 					_VALUES_MAX_LENGTH + 1,
@@ -118,16 +119,16 @@ public class TextDDMFormFieldTypeReportProcessor
 				ddmFormInstanceRecords.stream();
 
 			stream.filter(
-				ddmFormInstanceRecord ->
-					ddmFormInstanceRecord.getFormInstanceRecordId() !=
+				currentDDMFormInstanceRecord ->
+					currentDDMFormInstanceRecord.getFormInstanceRecordId() !=
 						formInstanceRecordId
 			).limit(
 				_VALUES_MAX_LENGTH
 			).forEach(
-				ddmFormInstanceRecord -> {
+				currentDDMFormInstanceRecord -> {
 					try {
 						DDMFormValues ddmFormValues =
-							ddmFormInstanceRecord.getDDMFormValues();
+							currentDDMFormInstanceRecord.getDDMFormValues();
 
 						Map<String, List<DDMFormFieldValue>>
 							ddmFormFieldValuesMap =
@@ -141,7 +142,7 @@ public class TextDDMFormFieldTypeReportProcessor
 							formFieldValue -> valuesJSONArray.put(
 								JSONUtil.put(
 									"formInstanceRecordId",
-									ddmFormInstanceRecord.
+									currentDDMFormInstanceRecord.
 										getFormInstanceRecordId()
 								).put(
 									"value", _getValue(formFieldValue)

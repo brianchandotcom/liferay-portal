@@ -30,6 +30,8 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(title);
 %>
 
+<liferay-ui:error exception="<%= InvalidXLIFFFileException.class %>" message="the-file-is-invalid" />
+
 <portlet:actionURL name="/journal/import_translation" var="importTranslationURL">
 	<portlet:param name="groupId" value="<%= groupId %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />

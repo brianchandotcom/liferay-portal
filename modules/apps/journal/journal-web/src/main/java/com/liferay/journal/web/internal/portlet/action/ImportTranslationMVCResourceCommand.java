@@ -75,7 +75,8 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 
 			_checkExceededSizeLimit(uploadPortletRequest);
 
-			String sourceFileName = uploadPortletRequest.getFileName("file");
+			_checkContentType(uploadPortletRequest.getContentType(
+				"file"));
 
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			String articleId = ParamUtil.getString(actionRequest, "articleId");
@@ -83,42 +84,34 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 			JournalArticle article = _journalArticleService.getArticle(
 				groupId, articleId);
 
-			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-					"file")) {
-
-				String contentType = uploadPortletRequest.getContentType(
+			InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file");
 
-				if (!Objects.equals("application/x-xliff+xml", contentType) &&
-					!Objects.equals("application/xliff+xml", contentType)) {
+			_translationInfoFormValuesExporter.importXLIFF(
+				themeDisplay.getScopeGroupId(),
+				new InfoItemClassPKReference(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey()),
+				inputStream);
 
-					throw new InvalidXLIFFFileException(
-						"Unsupported content type: " + contentType);
-				}
+			String redirect = ParamUtil.getString(
+				actionRequest, "redirect");
 
-				_translationInfoFormValuesExporter.importXLIFF(
-					themeDisplay.getScopeGroupId(),
-					new InfoItemClassPKReference(
-						JournalArticle.class.getName(),
-						article.getResourcePrimKey()),
-					inputStream);
-
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
-
-				actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-			}
-			catch (PortalException portalException) {
-				if (Validator.isNotNull(sourceFileName)) {
-					SessionErrors.add(
-						actionRequest, RequiredFileException.class);
-				}
-
-				throw portalException;
-			}
+			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
+		}
+	}
+
+	private void _checkContentType(String contentType)
+		throws InvalidXLIFFFileException{
+
+		if (!Objects.equals("application/x-xliff+xml", contentType) &&
+			!Objects.equals("application/xliff+xml", contentType)) {
+
+			throw new InvalidXLIFFFileException(
+				"Unsupported content type: " + contentType);
 		}
 	}
 

@@ -423,6 +423,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER_CONFIGURATION_MARGIN_BOTTOM</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'mb-${key_marginBottom}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_MARGIN_LEFT</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'ml-${key_marginLeft}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_MARGIN_RIGHT</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'mr-${key_marginRight}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTAINER_CONFIGURATION_MARGIN_TOP</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'mt-${key_marginTop}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTAINER_CONFIGURATION_PADDING_BOTTOM</td>
 	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')][contains(@class,'pb-${key_paddingBottom}')]</td>
 	<td></td>

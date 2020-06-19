@@ -44,23 +44,32 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 	public List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 		getDDMStructures() {
 
+		if (_ddmStructures != null) {
+			return _ddmStructures;
+		}
+
 		DLFileEntryType fileEntryType = getDLFileEntryType();
 
 		if (fileEntryType == null) {
-			return Collections.emptyList();
+			_ddmStructures = Collections.emptyList();
+
+			return _ddmStructures;
 		}
 
 		DDMStructure ddmStructure = _getDDMStructure();
 
 		if (ddmStructure == null) {
-			return fileEntryType.getDDMStructures();
+			_ddmStructures = fileEntryType.getDDMStructures();
+		}
+		else {
+			_ddmStructures = ListUtil.filter(
+				fileEntryType.getDDMStructures(),
+				currentDDMStructure ->
+					currentDDMStructure.getStructureId() !=
+						ddmStructure.getStructureId());
 		}
 
-		return ListUtil.filter(
-			fileEntryType.getDDMStructures(),
-			currentDDMStructure ->
-				currentDDMStructure.getStructureId() !=
-					ddmStructure.getStructureId());
+		return _ddmStructures;
 	}
 
 	public int getDDMStructuresCount() {
@@ -80,6 +89,8 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 			WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 	}
 
+	private List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
+		_ddmStructures;
 	private final HttpServletRequest _httpServletRequest;
 
 }

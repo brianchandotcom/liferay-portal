@@ -399,19 +399,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 										}
 									};
 
-									Liferay.provide(
-										window,
-										'<portlet:namespace />closeKaleoDialog',
-										function () {
-											var dialog = Liferay.Util.getWindow();
-
-											if (dialog) {
-												dialog.destroy();
-											}
-										},
-										['aui-base']
-									);
-
 									<%
 									String saveCallback = ParamUtil.getString(request, "saveCallback");
 									%>
@@ -674,44 +661,6 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 											}
 										</c:when>
 									</c:choose>
-
-									var dialog = Liferay.Util.getWindow();
-
-									if (dialog && !dialog._dialogAction) {
-										dialog._dialogAction = function (event) {
-											if (!event.newVal) {
-
-												<%
-												boolean refreshOpenerOnClose = ParamUtil.getBoolean(request, "refreshOpenerOnClose");
-												%>
-
-												<c:if test="<%= Validator.isNotNull(portletResourceNamespace) && refreshOpenerOnClose %>">
-
-													<%
-													String openerWindowName = ParamUtil.getString(request, "openerWindowName");
-													%>
-
-													var openerWindow = Liferay.Util.getTop();
-
-													<c:if test="<%= Validator.isNotNull(openerWindowName) %>">
-														var openerDialog = Liferay.Util.getWindow(
-															'<%= HtmlUtil.escapeJS(openerWindowName) %>'
-														);
-
-														openerWindow = openerDialog.iframe.node
-															.get('contentWindow')
-															.getDOM();
-													</c:if>
-
-													openerWindow.Liferay.Portlet.refresh(
-														'#p_p_id<%= HtmlUtil.escapeJS(portletResourceNamespace) %>'
-													);
-												</c:if>
-											}
-										};
-
-										dialog.on('visibleChange', dialog._dialogAction);
-									}
 								</aui:script>
 							</aui:fieldset>
 						</aui:fieldset-group>

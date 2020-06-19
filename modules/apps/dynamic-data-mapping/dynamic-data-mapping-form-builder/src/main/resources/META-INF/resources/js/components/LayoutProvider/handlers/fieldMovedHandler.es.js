@@ -64,7 +64,7 @@ export default (props, state, event) => {
 			parentField.nestedFields.length === 1
 		);
 
-		if (parentFieldName) {
+		if (parentFieldName && parentFieldName !== targetParentFieldName) {
 			mergedState = {
 				...handleFieldDeleted(props, state, {
 					activePage: sourceFieldPage,

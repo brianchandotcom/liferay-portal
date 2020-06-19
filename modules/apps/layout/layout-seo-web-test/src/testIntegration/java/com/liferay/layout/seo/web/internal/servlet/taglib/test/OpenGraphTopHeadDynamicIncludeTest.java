@@ -1175,55 +1175,58 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		@Override
 		public InfoFormValues getInfoFormValues(MockObject mockObject) {
-			InfoFormValues infoFormValues = new InfoFormValues();
-
-			infoFormValues.add(
+			return new InfoFormValues.Builder().add(
 				new InfoFieldValue<>(
-					new InfoField(
-						TextInfoFieldType.INSTANCE, null, "description"),
-					"<p>defaultMappedDescription</p>"));
-
-			infoFormValues.add(
+					new InfoField.Builder(
+						TextInfoFieldType.INSTANCE, null, "description"
+					).build(),
+					"<p>defaultMappedDescription</p>")
+			).add(
 				new InfoFieldValue<>(
-					new InfoField(TextInfoFieldType.INSTANCE, null, "title"),
-					"defaultMappedTitle"));
-
-			infoFormValues.add(
+					new InfoField.Builder(
+						TextInfoFieldType.INSTANCE, null, "description"
+					).build(),
+					"<p>defaultMappedDescription</p>")
+			).add(
 				new InfoFieldValue<>(
-					new InfoField(
+					new InfoField.Builder(
+						TextInfoFieldType.INSTANCE, null, "title"
+					).build(),
+					"defaultMappedTitle")
+			).add(
+				new InfoFieldValue<>(
+					new InfoField.Builder(
 						TextInfoFieldType.INSTANCE, null,
-						"mappedDescriptionFieldName"),
-					"<p>mappedDescription</p>"));
-
-			infoFormValues.add(
+						"mappedDescriptionFieldName"
+					).build(),
+					"<p>mappedDescription</p>")
+			).add(
 				new InfoFieldValue<>(
-					new InfoField(
-						TextInfoFieldType.INSTANCE, null,
-						"mappedTitleFieldName"),
-					"mappedTitle"));
-
-			infoFormValues.add(
+					new InfoField.Builder(
+						TextInfoFieldType.INSTANCE, null, "mappedTitleFieldName"
+					).build(),
+					"mappedTitle")
+			).add(
 				new InfoFieldValue<>(
-					new InfoField(
-						TextInfoFieldType.INSTANCE, null,
-						"mappedTitleFieldName"),
-					"mappedTitle"));
-
-			infoFormValues.add(
+					new InfoField.Builder(
+						TextInfoFieldType.INSTANCE, null, "mappedTitleFieldName"
+					).build(),
+					"mappedTitle")
+			).add(
 				new InfoFieldValue<>(
-					new InfoField(
+					new InfoField.Builder(
 						ImageInfoFieldType.INSTANCE, null,
-						"mappedImageFieldName"),
-					new WebImage("/imageURL")));
-
-			infoFormValues.add(
+						"mappedImageFieldName"
+					).build(),
+					new WebImage("/imageURL"))
+			).add(
 				new InfoFieldValue<>(
-					new InfoField(
+					new InfoField.Builder(
 						TextInfoFieldType.INSTANCE, null,
-						"mappedImageAltFieldName"),
-					"mappedImageAlt"));
-
-			return infoFormValues;
+						"mappedImageAltFieldName"
+					).build(),
+					"mappedImageAlt")
+			).build();
 		}
 
 	}

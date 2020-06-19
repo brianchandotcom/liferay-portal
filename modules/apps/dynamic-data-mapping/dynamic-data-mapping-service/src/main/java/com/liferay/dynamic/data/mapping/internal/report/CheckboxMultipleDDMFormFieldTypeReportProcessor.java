@@ -43,7 +43,7 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessor
 	@Override
 	public JSONObject process(
 			DDMFormFieldValue ddmFormFieldValue, JSONObject fieldJSONObject,
-			long formInstanceRecordId, String formInstanceReportEvent)
+			long ddmFormInstanceRecordId, String ddmFormInstanceReportEvent)
 		throws Exception {
 
 		JSONObject valuesJSONObject = fieldJSONObject.getJSONObject("values");
@@ -60,12 +60,12 @@ public class CheckboxMultipleDDMFormFieldTypeReportProcessor
 
 			int count = valuesJSONObject.getInt(key, 0);
 
-			if (formInstanceReportEvent.equals(
+			if (ddmFormInstanceReportEvent.equals(
 					DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION)) {
 
 				count++;
 			}
-			else if (formInstanceReportEvent.equals(
+			else if (ddmFormInstanceReportEvent.equals(
 						DDMFormInstanceReportConstants.
 							EVENT_DELETE_RECORD_VERSION)) {
 

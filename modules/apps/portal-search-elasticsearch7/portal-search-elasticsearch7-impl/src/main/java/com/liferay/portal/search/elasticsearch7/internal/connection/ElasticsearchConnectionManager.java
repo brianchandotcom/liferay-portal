@@ -267,7 +267,20 @@ public class ElasticsearchConnectionManager
 				_elasticsearchConnections.get(
 					String.valueOf(OperationMode.EMBEDDED));
 
-			elasticsearchConnection.connect();
+			try {
+				elasticsearchConnection.connect();
+			}
+			catch (RuntimeException runtimeException) {
+				_log.error(
+					StringBundler.concat(
+						"Elasticsearch sidecar could not be started. Search ",
+						"will be unavailable. Manual installation of ",
+						"Elasticsearch and activation of remote mode is ",
+						"recommended."),
+					runtimeException);
+
+				throw runtimeException;
+			}
 		}
 	}
 

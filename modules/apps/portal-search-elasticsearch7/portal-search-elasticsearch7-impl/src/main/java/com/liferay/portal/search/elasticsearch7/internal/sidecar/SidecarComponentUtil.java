@@ -27,13 +27,17 @@ import org.osgi.service.component.annotations.Component;
 public class SidecarComponentUtil {
 
 	public static void disableSidecarElasticsearchConnectionManager() {
-		_componentContext.disableComponent(
-			SidecarElasticsearchConnectionManager.class.getName());
+		if (_componentContext != null) {
+			_componentContext.disableComponent(
+				SidecarElasticsearchConnectionManager.class.getName());
+		}
 	}
 
 	public static void enableSidecarElasticsearchConnectionManager() {
-		_componentContext.enableComponent(
-			SidecarElasticsearchConnectionManager.class.getName());
+		if (_componentContext != null) {
+			_componentContext.enableComponent(
+				SidecarElasticsearchConnectionManager.class.getName());
+		}
 	}
 
 	@Activate

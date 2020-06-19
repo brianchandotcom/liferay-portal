@@ -39,13 +39,15 @@ definition {
 	}
 
 	@priority = "5"
-	test PublishChangeList {
+	test PublishPublication {
 		property portal.acceptance = "true";
+
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			portlet = "Web Content",
-			site = "Guest");
+			panel = "Site Administration",
+			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -53,30 +55,20 @@ definition {
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "Web Content Title");
 
-		Button.clickPublishToChangeList();
+		PortletEntry.publish();
 
-		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Applications",
-			portlet = "Overview");
+		ChangeList.publishPublication(publicationName = "Publication Name");
 
-		ChangeList.publishChangeList(changeListName = "Change List Name");
-
-		ChangeList.createNewPublication(
+		ChangeList.viewPublishedPublicationDetails(
 			publicationDescription = "Publication Description",
-			publicationName = "New Publication Name");
+			publicationName = "Publication Name",
+			publicationPublishedBy = "Test Test");
 
-		ChangeList.viewPublishedChangeListDetails(
-			changeListDescription = "Change List Description",
-			changeListName = "Change List Name",
-			changeListPublishedBy = "Test Test");
-
-		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Applications",
-			portlet = "Overview");
-
-		ChangeList.viewNoChangeListInSelectDropdown(changeListName = "Change List Name");
+		Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
+		
+		AssertElementNotPresent(
+			key_menuItem = "Review Changes",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
 }

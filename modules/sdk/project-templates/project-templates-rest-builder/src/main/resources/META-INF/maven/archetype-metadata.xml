@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<archetype-descriptor name="liferay-module-rest-builder">
+	<fileSets>
+		<fileSet filtered="true">
+			<directory>__artifactId__-api</directory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory>__artifactId__-client</directory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory>__artifactId__-impl</directory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory>__artifactId__-test</directory>
+			<includes>
+				<include>*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory></directory>
+			<includes>
+				<include>.gitignore</include>
+				<include>build.gradle</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	<requiredProperties>
+		<requiredProperty key="apiPath">
+			<defaultValue>:${artifactId}-api</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="author">
+		</requiredProperty>
+		<requiredProperty key="clientPath">
+			<defaultValue>:${artifactId}-client</defaultValue>
+		</requiredProperty>
+		<requiredProperty key="liferayVersion">
+		</requiredProperty>
+	</requiredProperties>
+</archetype-descriptor>

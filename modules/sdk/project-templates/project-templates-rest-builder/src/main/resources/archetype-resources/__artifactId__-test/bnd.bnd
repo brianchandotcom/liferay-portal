@@ -1,0 +1,4 @@
+Bundle-Name: ${artifactId}-test
+Bundle-SymbolicName: ${package}.test
+Bundle-Version: ${version}
+-includeresource: ${package}.client.jar=${artifactId}-client-*.jar;lib:=true

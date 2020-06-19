@@ -401,9 +401,9 @@ public class LayoutStructure {
 				new DeletedLayoutStructureItem(itemId, portletIds, position));
 		}
 		else {
-		_deletedLayoutStructureItems.put(
-			itemId, new DeletedLayoutStructureItem(itemId, portletIds));
-	}
+			_deletedLayoutStructureItems.put(
+				itemId, new DeletedLayoutStructureItem(itemId, portletIds));
+		}
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(
@@ -480,6 +480,27 @@ public class LayoutStructure {
 		JSONObject jsonObject = toJSONObject();
 
 		return jsonObject.toJSONString();
+	}
+
+	public void unmarkLayoutStructureItemForDeletion(String itemId) {
+		DeletedLayoutStructureItem deletedLayoutStructureItem =
+			_deletedLayoutStructureItems.get(itemId);
+
+		if (deletedLayoutStructureItem == null) {
+			return;
+		}
+
+		LayoutStructureItem layoutStructureItem = _layoutStructureItems.get(
+			itemId);
+
+		LayoutStructureItem parentLayoutStructureItemId =
+			_layoutStructureItems.get(layoutStructureItem.getParentItemId());
+
+		parentLayoutStructureItemId.addChildrenItem(
+			deletedLayoutStructureItem.getPosition(),
+			deletedLayoutStructureItem.getItemId());
+
+		_deletedLayoutStructureItems.remove(itemId);
 	}
 
 	public LayoutStructureItem updateItemConfig(

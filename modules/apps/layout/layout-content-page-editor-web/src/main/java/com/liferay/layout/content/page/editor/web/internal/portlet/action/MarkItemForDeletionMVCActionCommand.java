@@ -59,15 +59,23 @@ public class MarkItemForDeletionMVCActionCommand
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 		String[] portletIds = ParamUtil.getStringValues(
 			actionRequest, "portletIds");
+		boolean unmark = ParamUtil.getBoolean(actionRequest, "unmark");
 
 		return JSONUtil.put(
 			"layoutData",
 			LayoutStructureUtil.updateLayoutPageTemplateData(
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
 				themeDisplay.getPlid(),
-				layoutStructure ->
-					layoutStructure.markLayoutStructureItemForDeletion(
-						itemId, Arrays.asList(portletIds))));
+				layoutStructure -> {
+					if (unmark) {
+						layoutStructure.unmarkLayoutStructureItemForDeletion(
+							itemId);
+					}
+					else {
+						layoutStructure.markLayoutStructureItemForDeletion(
+							itemId, Arrays.asList(portletIds));
+					}
+				}));
 	}
 
 }

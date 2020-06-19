@@ -36,6 +36,20 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 		>
 			<span class="heading-text"><liferay-ui:message key="user" /></span>
 		</clay:content-col>
+
+		<clay:content-col
+			containerElement="span"
+		>
+			<span class="heading-end">
+				<liferay-ui:icon
+					id="selectUserButton"
+					label="<%= true %>"
+					linkCssClass="btn btn-secondary btn-sm"
+					message="select"
+					url="javascript:;"
+				/>
+			</span>
+		</clay:content-col>
 	</clay:content-row>
 
 	<aui:input name="personAccountEntryUserId" type="hidden" value="<%= String.valueOf(userId) %>" />
@@ -77,3 +91,31 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 		/>
 	</liferay-ui:search-container>
 </clay:sheet-section>
+
+<portlet:renderURL var="selectUserURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
+	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>" />
+	<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectPersonAccountEntryUser" %>' />
+	<portlet:param name="navigation" value="all-users" />
+	<portlet:param name="singleSelect" value="<%= Boolean.TRUE.toString() %>" />
+</portlet:renderURL>
+
+<%
+Map<String, Object> context = HashMapBuilder.<String, Object>put(
+	"searchContainer", "personAccountEntryUserSearchContainer"
+).put(
+	"selectUserButton", "#selectUserButton"
+).put(
+	"selectUserEventName", "selectPersonAccountEntryUser"
+).put(
+	"selectUserURL", selectUserURL.toString()
+).put(
+	"userIdInput", "#personAccountEntryUserId"
+).build();
+%>
+
+<liferay-frontend:component
+	componentId="PersonAccountEntryEventHandler"
+	context="<%= context %>"
+	module="account_entries_admin/js/PersonAccountEntryEventHandler.es"
+/>

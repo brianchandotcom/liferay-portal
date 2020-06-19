@@ -27,30 +27,30 @@ import {
 	UPDATE_LANGUAGE_ID,
 } from '../../actions/types';
 import {getItemNameFromAction} from './getItemNameFromAction';
+import * as undoAddFragmentEntryLinks from './undoAddFragmentEntryLinks';
 import * as undoAddItem from './undoAddItem';
-import * as undoDelete from './undoDelete';
+import * as undoDeleteItem from './undoDeleteItem';
 import * as undoDuplicateItem from './undoDuplicateItem';
-import * as undoEditableValuesAction from './undoEditableValuesAction';
-import * as undoFragmentConfiguration from './undoFragmentConfiguration';
-import * as undoFragmentEntryLinks from './undoFragmentEntryLinks';
 import * as undoMoveItem from './undoMoveItem';
 import * as undoSelectExperience from './undoSelectExperience';
 import * as undoSwitchViewportSize from './undoSwitchViewportSize';
 import * as undoUpdateColSize from './undoUpdateColSize';
+import * as undoUpdateEditableValuesAction from './undoUpdateEditableValuesAction';
+import * as undoUpdateFragmentConfiguration from './undoUpdateFragmentConfiguration';
 import * as undoUpdateItemConfig from './undoUpdateItemConfig';
 import * as undoUpdateLanguage from './undoUpdateLanguage';
 
 const UNDO_ACTIONS = {
-	[ADD_FRAGMENT_ENTRY_LINKS]: undoFragmentEntryLinks,
+	[ADD_FRAGMENT_ENTRY_LINKS]: undoAddFragmentEntryLinks,
 	[ADD_ITEM]: undoAddItem,
-	[DELETE_ITEM]: undoDelete,
+	[DELETE_ITEM]: undoDeleteItem,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
 	[MOVE_ITEM]: undoMoveItem,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
 	[SWITCH_VIEWPORT_SIZE]: undoSwitchViewportSize,
 	[UPDATE_COL_SIZE]: undoUpdateColSize,
-	[UPDATE_EDITABLE_VALUES]: undoEditableValuesAction,
-	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoFragmentConfiguration,
+	[UPDATE_EDITABLE_VALUES]: undoUpdateEditableValuesAction,
+	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoUpdateFragmentConfiguration,
 	[UPDATE_ITEM_CONFIG]: undoUpdateItemConfig,
 	[UPDATE_LANGUAGE_ID]: undoUpdateLanguage,
 };

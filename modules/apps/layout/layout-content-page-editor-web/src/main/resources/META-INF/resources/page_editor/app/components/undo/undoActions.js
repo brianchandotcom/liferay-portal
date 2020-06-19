@@ -32,7 +32,7 @@ import * as undoDuplicateItem from './undoDuplicateItem';
 import * as undoEditableValuesAction from './undoEditableValuesAction';
 import * as undoFragmentConfiguration from './undoFragmentConfiguration';
 import * as undoFragmentEntryLinks from './undoFragmentEntryLinks';
-import * as undoLayoutDataAction from './undoLayoutDataAction';
+import * as undoMoveItem from './undoMoveItem';
 import * as undoSelectExperience from './undoSelectExperience';
 import * as undoSwitchViewportSize from './undoSwitchViewportSize';
 import * as undoUpdateLanguage from './undoUpdateLanguage';
@@ -42,7 +42,7 @@ const UNDO_ACTIONS = {
 	[ADD_ITEM]: undoLayoutDataAction,
 	[DELETE_ITEM]: undoDelete,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
-	[MOVE_ITEM]: undoLayoutDataAction,
+	[MOVE_ITEM]: undoMoveItem,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
 	[SWITCH_VIEWPORT_SIZE]: undoSwitchViewportSize,
 	[UPDATE_COL_SIZE]: undoUpdateColSize,

@@ -56,6 +56,8 @@ renderResponse.setTitle(title);
 	<clay:container-fluid
 		cssClass="container-view"
 	>
-		<h1>Translation side by side</h1>
+		<clay:sheet>
+			<h1>Translation side by side</h1>
+		</clay:sheet>
 	</clay:container-fluid>
 </aui:form>

@@ -14,11 +14,20 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -31,7 +40,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import java.io.IOException;
+import java.util.Locale;
 
 /**
  * @author Ambrín Chaudhary
@@ -60,7 +69,18 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				themeDisplay.getScopeGroupId(),
 				ParamUtil.getString(renderRequest, "articleId"));
 
-			renderRequest.setAttribute(JournalWebKeys.JOURNAL_ARTICLES, article);
+			InfoItemFormProvider<JournalArticle> infoItemFormProvider =
+				(InfoItemFormProvider<JournalArticle>)
+					_infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemFormProvider.class,
+						JournalArticle.class.getName());
+
+			renderRequest.setAttribute(
+				JournalWebKeys.JOURNAL_ARTICLES, article);
+			renderRequest.setAttribute("data", _getInfoFormData(
+				infoItemFormProvider.getInfoFormValues(article),
+				themeDisplay.getLocale()));
+
 		}
 		catch (PortalException exception) {
 			throw new PortletException(exception);
@@ -69,7 +89,37 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return "/translate_side_by_side.jsp";
 	}
 
+	private JSONArray _getInfoFormData(
+		InfoFormValues infoFormValues, Locale locale ) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (InfoFieldValue<Object> infoFieldValue :
+			infoFormValues.getInfoFieldValues()) {
+
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			if (infoField.isLocalizable()) {
+				JSONObject jsonObject = JSONUtil.put(
+					"label",
+					infoField.getLabelInfoLocalizedValue().getValue(locale)
+				).put(
+					"type", infoField.getInfoFieldType().getName()
+				).put(
+					"value", infoFieldValue.getValue(locale)
+				);
+
+				jsonArray.put(jsonObject);
+			}
+		}
+
+		return jsonArray;
+	}
+
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 }

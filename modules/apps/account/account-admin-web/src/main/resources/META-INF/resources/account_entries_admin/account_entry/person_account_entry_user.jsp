@@ -25,7 +25,21 @@ List<User> userList = personAccountEntryUserOptional.map(Collections::singletonL
 long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 %>
 
-<clay:sheet-section>
+<liferay-util:buffer
+	var="removeUserIcon"
+>
+	<a class="pull-right remove-user-link" href="javascript:;">
+		<liferay-ui:icon
+			icon="times-circle"
+			markupView="lexicon"
+			message="remove"
+		/>
+	</a>
+</liferay-util:buffer>
+
+<clay:sheet-section
+	id='<%= renderResponse.getNamespace() + "personAccountUserContainer" %>'
+>
 	<clay:content-row
 		containerElement="h3"
 		cssClass="sheet-subtitle"
@@ -84,6 +98,10 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 				name="job-title"
 				property="jobTitle"
 			/>
+
+			<liferay-ui:search-container-column-text>
+				<%= removeUserIcon %>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
@@ -102,6 +120,12 @@ long userId = personAccountEntryUserOptional.map(User::getUserId).orElse(0L);
 
 <%
 Map<String, Object> context = HashMapBuilder.<String, Object>put(
+	"container", "#personAccountUserContainer"
+).put(
+	"removeUserIconMarkup", removeUserIcon
+).put(
+	"removeUserLinkSelector", ".remove-user-link"
+).put(
 	"searchContainer", "personAccountEntryUserSearchContainer"
 ).put(
 	"selectUserButton", "#selectUserButton"

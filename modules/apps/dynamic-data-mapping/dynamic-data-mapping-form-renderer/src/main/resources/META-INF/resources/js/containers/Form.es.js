@@ -14,15 +14,19 @@
 
 import dom from 'metal-dom';
 import Soy from 'metal-soy';
-import React, {useEffect, useImperativeHandle, useRef} from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useImperativeHandle,
+	useRef,
+} from 'react';
 
-import {EVENT_TYPES} from '../actions/types.es';
 import FormRenderer from '../components/FormRenderer/FormRenderer.es';
 import {FormProvider, useForm} from '../hooks/useForm.es';
+import formValidate from '../thunks/formValidate.es';
 import {getConnectedReactComponentAdapter} from '../util/ReactComponentAdapter.es';
 import {evaluate} from '../util/evaluation.es';
 import {getFormId, getFormNode} from '../util/formId.es';
-import {PagesVisitor} from '../util/visitors.es';
 import templates from './Form.soy';
 
 function handleLiferayFormSubmitted(event) {
@@ -35,7 +39,7 @@ const Form = React.forwardRef((props, ref) => {
 	const dispatch = useForm();
 	const containerRef = useRef(null);
 
-	const validate = () => {
+	const validate = useCallback(() => {
 		const {
 			activePage,
 			defaultLanguageId,
@@ -45,49 +49,34 @@ const Form = React.forwardRef((props, ref) => {
 			rules,
 		} = props;
 
-		return evaluate(null, {
-			defaultLanguageId,
-			editingLanguageId,
-			pages,
-			portletNamespace,
-			rules,
-		}).then((evaluatedPages) => {
-			let validForm = true;
-			const visitor = new PagesVisitor(evaluatedPages);
+		return dispatch(
+			formValidate({
+				activePage,
+				defaultLanguageId,
+				editingLanguageId,
+				pages,
+				portletNamespace,
+				rules,
+			})
+		);
+	}, [dispatch, props]);
 
-			visitor.mapFields(({valid}) => {
-				if (!valid) {
-					validForm = false;
+	const handleFormSubmitted = useCallback(
+		(event) => {
+			event.preventDefault();
+
+			validate().then((validForm) => {
+				if (validForm) {
+					Liferay.Util.submitForm(event.target);
+
+					Liferay.fire('ddmFormSubmit', {
+						formId: getFormId(getFormNode(containerRef.current)),
+					});
 				}
 			});
-
-			if (!validForm) {
-				dispatch({
-					payload: {
-						newPages: evaluatedPages,
-						pageIndex: activePage,
-					},
-					type: EVENT_TYPES.PAGE_VALIDATION_FAILED,
-				});
-			}
-
-			return Promise.resolve(validForm);
-		});
-	};
-
-	const handleFormSubmitted = (event) => {
-		event.preventDefault();
-
-		validate().then((validForm) => {
-			if (validForm) {
-				Liferay.Util.submitForm(event.target);
-
-				Liferay.fire('ddmFormSubmit', {
-					formId: getFormId(this.form),
-				});
-			}
-		});
-	};
+		},
+		[containerRef, validate]
+	);
 
 	useImperativeHandle(ref, () => ({
 		evaluate: () => {
@@ -113,10 +102,28 @@ const Form = React.forwardRef((props, ref) => {
 
 	useEffect(() => {
 		if (containerRef.current) {
+			Liferay.fire('ddmFormPageShow', {
+				formId: getFormId(getFormNode(containerRef.current)),
+				page: props.activePage,
+				title: props.pages[props.activePage].title,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [containerRef]);
+
+	useEffect(() => {
+		let domDelegatedEventHandle = null;
+		const form = null;
+
+		if (containerRef.current) {
 			const form = getFormNode(containerRef.current);
 
 			if (form) {
-				dom.on(form, 'submit', handleFormSubmitted.bind({form}));
+				domDelegatedEventHandle = dom.on(
+					form,
+					'submit',
+					handleFormSubmitted
+				);
 			}
 
 			Liferay.on(
@@ -124,29 +131,44 @@ const Form = React.forwardRef((props, ref) => {
 				handleLiferayFormSubmitted.bind({form}),
 				this
 			);
-
-			Liferay.fire('ddmFormPageShow', {
-				formId: getFormId(form),
-				page: props.activePage ?? 0,
-				title: props.pages[props.activePage ?? 0].title,
-			});
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+
+		return () => {
+			Liferay.detach(
+				'submitForm',
+				handleLiferayFormSubmitted.bind({form}),
+				this
+			);
+
+			if (domDelegatedEventHandle) {
+				domDelegatedEventHandle.removeListener();
+			}
+		};
+	}, [containerRef, handleFormSubmitted]);
 
 	return <FormRenderer {...props} ref={containerRef} />;
 });
 
 Form.displayName = 'Form';
 
-const FormProxy = React.forwardRef(({instance, ...otherProps}, ref) => (
-	<FormProvider
-		onEvent={(type, payload) => instance.emit(type, payload)}
-		value={otherProps}
-	>
-		{(props) => <Form {...props} ref={ref} />}
-	</FormProvider>
-));
+const FormProxy = React.forwardRef(
+	(
+		{
+			instance,
+			activePage = 0,
+			defaultLanguageId = themeDisplay.getLanguageId(),
+			...otherProps
+		},
+		ref
+	) => (
+		<FormProvider
+			onEvent={(type, payload) => instance.emit(type, payload)}
+			value={{...otherProps, activePage, defaultLanguageId}}
+		>
+			{(props) => <Form {...props} ref={ref} />}
+		</FormProvider>
+	)
+);
 
 FormProxy.displayName = 'FormProxy';
 

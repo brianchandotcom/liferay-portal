@@ -42,16 +42,19 @@ public class DDMFormFieldInfoFieldConverterImpl
 		LocalizedValue label = ddmFormField.getLabel();
 
 		InfoLocalizedValue<String> labelInfoLocalizedValue =
-			InfoLocalizedValue.builder(
-			).addValues(
+			InfoLocalizedValue.<String>builder(
+			).putAll(
 				label.getValues()
 			).defaultLocale(
 				label.getDefaultLocale()
 			).build();
 
-		return new InfoField(
+		return new InfoField.Builder(
 			_getInfoFieldType(ddmFormField), labelInfoLocalizedValue,
-			ddmFormField.isLocalizable(), ddmFormField.getName());
+			ddmFormField.getName()
+		).setLocalizable(
+			ddmFormField.isLocalizable()
+		).build();
 	}
 
 	private InfoFieldType _getInfoFieldType(DDMFormField ddmFormField) {

@@ -120,7 +120,7 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 		}
 
 		return Optional.of(
-			InfoLocalizedValue.builder(
+			new InfoFieldValue<>(
 				_ddmFormFieldInfoFieldConverter.convert(
 					_ddmBeanTranslator.translate(
 						ddmFormFieldValue.getDDMFormField())),

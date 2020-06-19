@@ -372,12 +372,12 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	@Override
 	public BaseModelSearchResult<DDMFormInstanceRecord>
 			searchFormInstanceRecords(
-				long formInstanceId, String[] notEmptyFields, int status,
+				long ddmFormInstanceId, String[] notEmptyFields, int status,
 				int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = _buildSearchContext(
-			formInstanceId, notEmptyFields, status, start, end, sort);
+			ddmFormInstanceId, notEmptyFields, status, start, end, sort);
 
 		return searchFormInstanceRecords(searchContext);
 	}
@@ -703,14 +703,15 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	protected List<DDMFormInstanceRecord> getFormInstanceRecords(Hits hits)
 		throws PortalException {
 
-		List<DDMFormInstanceRecord> formInstanceRecords = new ArrayList<>();
+		List<DDMFormInstanceRecord> ddmFormInstanceRecords = new ArrayList<>();
 
 		for (Document document : hits.toList()) {
-			long recordId = GetterUtil.getLong(
+			long ddmFormInstanceRecordId = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				formInstanceRecords.add(getFormInstanceRecord(recordId));
+				ddmFormInstanceRecords.add(
+					getFormInstanceRecord(ddmFormInstanceRecordId));
 			}
 			catch (NoSuchFormInstanceRecordException
 						noSuchFormInstanceRecordException) {
@@ -718,7 +719,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"DDM form instance record index is stale and" +
-							"contains record " + recordId,
+							"contains record " + ddmFormInstanceRecordId,
 						noSuchFormInstanceRecordException);
 				}
 
@@ -732,7 +733,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			}
 		}
 
-		return formInstanceRecords;
+		return ddmFormInstanceRecords;
 	}
 
 	protected String getNextVersion(
@@ -955,8 +956,8 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	}
 
 	private SearchContext _buildSearchContext(
-			long formInstanceId, String[] notEmptyFields, int status, int start,
-			int end, Sort sort)
+			long ddmFormInstanceId, String[] notEmptyFields, int status,
+			int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
@@ -964,7 +965,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		searchContext.setAndSearch(true);
 
 		DDMFormInstance ddmFormInstance =
-			ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
+			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
 
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(

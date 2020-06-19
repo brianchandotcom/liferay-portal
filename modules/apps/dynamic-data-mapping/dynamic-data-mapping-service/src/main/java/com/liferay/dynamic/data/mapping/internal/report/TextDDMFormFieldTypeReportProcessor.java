@@ -59,14 +59,14 @@ public class TextDDMFormFieldTypeReportProcessor
 	@Override
 	public JSONObject process(
 			DDMFormFieldValue ddmFormFieldValue, JSONObject fieldJSONObject,
-			long formInstanceRecordId, String formInstanceReportEvent)
+			long ddmFormInstanceRecordId, String ddmFormInstanceReportEvent)
 		throws Exception {
 
 		boolean nullValue = Validator.isNull(_getValue(ddmFormFieldValue));
 		int totalEntries = fieldJSONObject.getInt("totalEntries");
 		JSONArray valuesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		if (formInstanceReportEvent.equals(
+		if (ddmFormInstanceReportEvent.equals(
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION)) {
 
 			if (nullValue) {
@@ -75,7 +75,7 @@ public class TextDDMFormFieldTypeReportProcessor
 
 			valuesJSONArray.put(
 				JSONUtil.put(
-					"formInstanceRecordId", formInstanceRecordId
+					"formInstanceRecordId", ddmFormInstanceRecordId
 				).put(
 					"value", _getValue(ddmFormFieldValue)
 				));
@@ -96,13 +96,13 @@ public class TextDDMFormFieldTypeReportProcessor
 
 			totalEntries++;
 		}
-		else if (formInstanceReportEvent.equals(
+		else if (ddmFormInstanceReportEvent.equals(
 					DDMFormInstanceReportConstants.
 						EVENT_DELETE_RECORD_VERSION)) {
 
 			DDMFormInstanceRecord ddmFormInstanceRecord =
 				ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-					formInstanceRecordId);
+					ddmFormInstanceRecordId);
 
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceRecord.getFormInstance();
@@ -124,7 +124,7 @@ public class TextDDMFormFieldTypeReportProcessor
 			stream.filter(
 				currentDDMFormInstanceRecord ->
 					currentDDMFormInstanceRecord.getFormInstanceRecordId() !=
-						formInstanceRecordId
+						ddmFormInstanceRecordId
 			).limit(
 				_VALUES_MAX_LENGTH
 			).forEach(

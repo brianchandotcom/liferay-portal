@@ -40,7 +40,7 @@ definition {
 
 			DMDocumentType.add(
 				dmDocumentTypeDescription = "DM Document Type Description",
-				dmDocumentTypeFieldNames = "Text Box",
+				dmDocumentTypeFieldNames = "Text",
 				dmDocumentTypeName = "DM Document Type Name ${i}");
 		}
 
@@ -320,7 +320,7 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text Box",
+			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name");
 
 		DepotNavigator.openDepotAdmin();

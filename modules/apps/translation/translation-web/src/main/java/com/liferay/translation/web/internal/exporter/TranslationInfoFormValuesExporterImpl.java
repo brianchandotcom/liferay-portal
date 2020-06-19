@@ -159,22 +159,19 @@ public class TranslationInfoFormValuesExporterImpl<T>
 
 				Fragment value = valuePart.getTarget();
 
-				InfoLocalizedValue<String> infoLocalizedValue =
-					InfoLocalizedValue.<String>builder(
-					).put(
-						targetLocale, field
-					).build();
-
-				InfoField infoField = new InfoField.Builder(
-					TextInfoFieldType.INSTANCE, infoLocalizedValue, field
-				).setLocalizable(
-					true
-				).build();
-
-				InfoFieldValue<Object> infoFieldValue = new InfoFieldValue<>(
-					infoField, value.getPlainText());
-
-				infoFieldValues.add(infoFieldValue);
+				infoFieldValues.add(
+					new InfoFieldValue<>(
+						new InfoField.Builder(
+							TextInfoFieldType.INSTANCE,
+							InfoLocalizedValue.<String>builder(
+							).put(
+								targetLocale, field
+							).build(),
+							field
+						).setLocalizable(
+							true
+						).build(),
+						value.getPlainText()));
 			}
 
 			return new InfoFormValues.Builder().addAll(

@@ -1,0 +1,14 @@
+#set ($applicationName = "")
+#set ($applicationNameChunks = $artifactId.split("[-|_|.]"))
+#foreach($chunk in $applicationNameChunks)
+    #set ($applicationName = "$applicationName$chunk.substring(0,1).toUpperCase()$chunk.substring(1)")
+#end
+apiDir: "../${artifactId}-api/src/main/java"
+apiPackagePath: "${package}"
+application:
+    baseURI: "/${artifactId}"
+    className: "${applicationName}Application"
+    name: "${applicationName}"
+author: "${author}"
+clientDir: "../${artifactId}-client/src/main/java"
+testDir: "../${artifactId}-test/src/main/java"

@@ -1,0 +1,3 @@
+Bundle-Name: ${artifactId}-impl
+Bundle-SymbolicName: ${package}.impl
+Bundle-Version: ${version}

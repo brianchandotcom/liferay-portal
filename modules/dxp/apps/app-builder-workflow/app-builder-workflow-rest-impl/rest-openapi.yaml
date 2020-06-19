@@ -38,6 +38,11 @@ components:
                     type: array
                 name:
                     type: string
+                roleIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
             type: object
         AppWorkflowTransition:
             properties:

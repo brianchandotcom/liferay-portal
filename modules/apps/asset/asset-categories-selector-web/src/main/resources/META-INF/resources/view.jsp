@@ -18,6 +18,8 @@
 
 <%
 Map<String, Object> context = HashMapBuilder.<String, Object>put(
+	"addCategoryURL", assetCategoriesSelectorDisplayContext.getAddCategoryURL()
+).put(
 	"itemSelectorSaveEvent", HtmlUtil.escapeJS(assetCategoriesSelectorDisplayContext.getEventName())
 ).put(
 	"multiSelection", !assetCategoriesSelectorDisplayContext.isSingleSelect()

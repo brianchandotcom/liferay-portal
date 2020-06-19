@@ -258,7 +258,7 @@ definition {
 			userScreenName = "usersn");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 

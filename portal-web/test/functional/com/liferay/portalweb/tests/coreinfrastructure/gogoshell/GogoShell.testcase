@@ -30,7 +30,7 @@ definition {
 		property test.name.skip.portal.instance = "GogoShell#AccessGogoShellCommandViaPortlet";
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
@@ -51,7 +51,7 @@ definition {
 		property test.name.skip.portal.instance = "GogoShell#GogoShellCommandDisconnectNotSupported";
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
@@ -67,7 +67,7 @@ definition {
 		property test.name.skip.portal.instance = "GogoShell#GogoShellPortletOnlyOnMainInstance";
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
 
@@ -79,7 +79,7 @@ definition {
 		PortalInstances.viewCP(virtualHost = "www.able.com");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
@@ -91,7 +91,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
 		Portlet.viewNoPortletsPresentCP(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 	}
@@ -125,7 +125,7 @@ definition {
 			userLoginFullName = "userfn userln");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 
@@ -174,7 +174,7 @@ definition {
 			roleTitle = "Site Administrator");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Gogo Shell");
 

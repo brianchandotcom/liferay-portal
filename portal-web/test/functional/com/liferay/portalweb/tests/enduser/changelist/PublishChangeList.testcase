@@ -11,7 +11,7 @@ definition {
 		User.firstLoginPG();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -28,7 +28,7 @@ definition {
 		}
 		else {
 			GlobalMenu.gotoPortlet(
-				category = "Change Lists",
+				category = "Content",
 				panel = "Applications",
 				portlet = "Settings");
 

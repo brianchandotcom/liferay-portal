@@ -2186,8 +2186,8 @@ definition {
 			userScreenName = "usersn");
 
 		GlobalMenu.gotoPortlet(
-			category = "Users",
-			panel = "Applications",
+			category = "Security",
+			panel = "Control Panel",
 			portlet = "Password Policies");
 
 		PasswordPolicies.togglePasswordChangeRequired(
@@ -2331,7 +2331,7 @@ definition {
 			userScreenName = "usersn");
 
 		GlobalMenu.gotoPortlet(
-			category = "Users",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
 

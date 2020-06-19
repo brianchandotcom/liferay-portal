@@ -55,7 +55,7 @@ definition {
 		var userId = selenium.getElementValue("UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 
@@ -65,7 +65,7 @@ definition {
 			userName = "Test Test");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 
@@ -74,7 +74,7 @@ definition {
 			userName = "Test Test");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 
@@ -84,7 +84,7 @@ definition {
 			userName = "Test Test");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 
@@ -94,7 +94,7 @@ definition {
 			userName = "Test Test");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 
@@ -114,7 +114,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 
@@ -159,7 +159,7 @@ definition {
 		SelectWindow(locator1 = "title=Users and Organizations - Control Panel - ${siteName}");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 
@@ -198,7 +198,7 @@ definition {
 			userScreenName = "test1");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 

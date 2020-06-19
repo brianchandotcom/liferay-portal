@@ -208,7 +208,7 @@ definition {
 
 		task ("Add a new Virtual Instance") {
 			GlobalMenu.gotoPortlet(
-				category = "Configuration",
+				category = "System",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");
 
@@ -301,7 +301,7 @@ definition {
 
 		task ("Add a new Virtual Instance") {
 			GlobalMenu.gotoPortlet(
-				category = "Configuration",
+				category = "System",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");
 
@@ -419,7 +419,7 @@ definition {
 
 		task ("Assert new fragment exists in future virtual instance") {
 			GlobalMenu.gotoPortlet(
-				category = "Configuration",
+				category = "System",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");
 

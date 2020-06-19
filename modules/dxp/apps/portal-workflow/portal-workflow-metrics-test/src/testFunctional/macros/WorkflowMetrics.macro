@@ -416,7 +416,7 @@ definition {
 
 	macro createUsersGroovy {
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
@@ -465,7 +465,7 @@ definition {
 		var key_scriptName = "${scriptName}";
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 

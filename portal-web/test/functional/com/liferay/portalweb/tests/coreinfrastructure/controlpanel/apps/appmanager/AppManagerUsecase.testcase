@@ -20,7 +20,7 @@ definition {
 		var appName = "test-app-portlet";
 
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
@@ -44,7 +44,7 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#ViewIndependentModulesIsNotNestedWithinItself";
 
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 

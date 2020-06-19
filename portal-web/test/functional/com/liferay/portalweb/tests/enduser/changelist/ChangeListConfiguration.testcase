@@ -33,8 +33,8 @@ definition {
 		Staging.activateStagingCP(siteName = "${siteName}");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Control Panel",
+			category = "Content",
+			panel = "Applications",
 			portlet = "Settings");
 
 		Alert.viewWarningSpecific(warningMessage = "Staging is enabled for at least one site in the current virtual instance. Staging and change lists cannot be used together.");
@@ -47,7 +47,7 @@ definition {
 		property portal.acceptance = "true";
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -78,7 +78,7 @@ definition {
 			site = "Guest");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings",
 			site = "Guest");
@@ -96,14 +96,14 @@ definition {
 		property test.name.skip.portal.instance = "ChangeListConfiguration#EnableDisableChangeList";
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
 

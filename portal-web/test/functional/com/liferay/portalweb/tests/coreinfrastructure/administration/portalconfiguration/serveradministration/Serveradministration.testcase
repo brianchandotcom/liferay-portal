@@ -57,7 +57,7 @@ definition {
 	@priority = "4"
 	test ViewSystemAndPortalProperties {
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 

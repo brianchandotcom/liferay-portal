@@ -59,14 +59,14 @@ definition {
 		Portlet.addPG(portletName = "Wall");
 
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.uninstallAppCP(appName = "Social Networking");
 
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 

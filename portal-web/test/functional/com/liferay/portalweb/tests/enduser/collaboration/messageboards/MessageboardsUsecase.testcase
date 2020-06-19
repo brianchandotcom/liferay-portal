@@ -355,7 +355,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
@@ -367,7 +367,7 @@ definition {
 		Navigator.openURL();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
 

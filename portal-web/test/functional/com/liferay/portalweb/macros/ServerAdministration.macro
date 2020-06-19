@@ -175,7 +175,7 @@ definition {
 
 	macro tearDownDMFileUploadSettings {
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
@@ -192,7 +192,7 @@ definition {
 
 	macro tearDownMailServerSettings {
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 

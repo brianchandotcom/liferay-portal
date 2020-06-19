@@ -556,7 +556,7 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
@@ -633,7 +633,7 @@ definition {
 		property test.assert.javascript.errors = "false";
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 

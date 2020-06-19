@@ -12,7 +12,7 @@ definition {
 		var appName = "Marketplace";
 
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 

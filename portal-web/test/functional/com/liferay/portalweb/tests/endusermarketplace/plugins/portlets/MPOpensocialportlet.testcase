@@ -38,14 +38,14 @@ definition {
 			portlet = "OpenSocial Gadget Publisher");
 
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 
 		AppManager.uninstallAppCP(appName = "${appName}");
 
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 

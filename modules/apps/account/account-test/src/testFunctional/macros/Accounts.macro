@@ -230,7 +230,7 @@ definition {
 	macro tearDownCP {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		PortletEntry.selectAll();

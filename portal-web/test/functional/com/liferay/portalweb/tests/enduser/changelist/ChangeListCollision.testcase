@@ -16,8 +16,6 @@ definition {
 			portlet = "Settings");
 
 		ChangeList.enableChangeList();
-
-		ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "disable");
 	}
 
 	tearDown {
@@ -31,8 +29,6 @@ definition {
 				category = "Change Lists",
 				panel = "Applications",
 				portlet = "Settings");
-
-			ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
 
 			ChangeList.disableChangeList();
 		}

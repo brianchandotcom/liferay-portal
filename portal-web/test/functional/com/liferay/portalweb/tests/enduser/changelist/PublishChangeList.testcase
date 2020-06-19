@@ -17,8 +17,6 @@ definition {
 
 		ChangeList.enableChangeList();
 
-		ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "disable");
-
 		GlobalMenu.gotoPortlet(
 			category = "Change Lists",
 			panel = "Applications",
@@ -40,8 +38,6 @@ definition {
 				category = "Change Lists",
 				panel = "Applications",
 				portlet = "Settings");
-
-			ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
 
 			ChangeList.disableChangeList();
 		}

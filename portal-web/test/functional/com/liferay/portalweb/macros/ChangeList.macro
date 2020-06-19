@@ -24,23 +24,6 @@ definition {
 			value1 = "Select Change List");
 	}
 
-	macro changeUserSettingsPopuConfirmation {
-		Click(locator1 = "ChangeList#CHANGE_LIST_NAVIGATION_USER_SETTINGS");
-
-		if ("${changeUserPopupConfirmation}" == "enable") {
-			Check.checkToggleSwitch(locator1 = "ChangeList#CHANGE_LIST_USER_SETTINGS_POPUP_ENABLED");
-		}
-		else {
-			Uncheck.uncheckToggleSwitch(locator1 = "ChangeList#CHANGE_LIST_USER_SETTINGS_POPUP_ENABLED");
-		}
-
-		Click(locator1 = "Button#SAVE");
-
-		Alert.viewSuccessMessage();
-
-		Click(locator1 = "ChangeList#CHANGE_LIST_NAVIGATION_GLOBAL_SETTINGS");
-	}
-
 	macro confirmSwitchingChangeList {
 		AssertConfirm.assertPartialConfirmation(value1 = "Do you want to switch to ${changeListName} change list?");
 	}
@@ -78,14 +61,6 @@ definition {
 		}
 
 		Alert.viewSuccessMessage();
-	}
-
-	macro gotoActivate {
-		Click.waitForMenuToggleJSClick(
-			key_rowEntry = "${rowEntry}",
-			locator1 = "Icon#TABLE_VERTICAL_ELLIPSIS");
-
-		MenuItem.clickNoError(menuItem = "Activate");
 	}
 
 	macro gotoDelete {
@@ -165,12 +140,6 @@ definition {
 			rowEntry = "${rowEntry}");
 	}
 
-	macro viewAddedItemCounter {
-		AssertTextEquals(
-			locator1 = "ChangeList#CHANGE_LIST_ADDED",
-			value1 = "${nbrOfAddedItems}");
-	}
-
 	macro viewChangeOnOverview {
 		var key_contentTitle = "${contentTitle}";
 
@@ -189,14 +158,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "ChangeList#LATEST_CHANGES_CHANGE_TYPE",
 			value1 = "${contentChangeType}");
-	}
-
-	macro viewContentTypeOnOverview {
-		var key_contentTitle = "${contentTitle}";
-
-		AssertTextEquals(
-			locator1 = "ChangeList#LATEST_CHANGES_CONTENT_TYPE",
-			value1 = "${contentType}");
 	}
 
 	macro viewDeletedItemCounter {

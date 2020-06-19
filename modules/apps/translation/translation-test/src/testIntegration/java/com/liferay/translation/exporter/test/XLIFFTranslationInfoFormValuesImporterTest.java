@@ -15,6 +15,7 @@
 package com.liferay.translation.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.Group;
@@ -28,6 +29,7 @@ import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
 
 import java.io.InputStream;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -108,11 +110,18 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 						"/com/liferay/translation/exporter/test/dependencies" +
 							"/test-journal-article_122.xlf")) {
 
-			_xliffTranslationInfoFormValuesImporter.importXLIFF(
-				_group.getGroupId(),
-				new InfoItemClassPKReference(
-					JournalArticle.class.getName(), 122),
-				is);
+			InfoFormValues infoFormValues =
+				_xliffTranslationInfoFormValuesImporter.importXLIFF(
+					_group.getGroupId(),
+					new InfoItemClassPKReference(
+						JournalArticle.class.getName(), 122),
+					is);
+
+			Assert.assertNotNull(infoFormValues);
+			Assert.assertNotNull(infoFormValues.getInfoFieldValues());
+			Assert.assertFalse(
+				infoFormValues.getInfoFieldValues(
+				).isEmpty());
 		}
 	}
 

@@ -30,7 +30,7 @@ public class AggregationFixture {
 			"histogram", Field.PRIORITY);
 
 		histogramAggregation.setInterval(5.0);
-		histogramAggregation.setMinDocCount(1L);
+		histogramAggregation.setMinDocCount(0L);
 
 		SumAggregation sumAggregation = _aggregations.sum(
 			"sum", Field.PRIORITY);

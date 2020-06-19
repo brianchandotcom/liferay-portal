@@ -204,11 +204,19 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 							/>
 						</liferay-ui:search-container-column-text>
 
-						<liferay-ui:search-container-column-date
-							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"
-							name="modified-date"
-							value="<%= curArticle.getModifiedDate() %>"
-						/>
+						<liferay-ui:search-container-column-text
+							cssClass="table-cell-expand-smallest"
+							name="modified"
+						>
+
+							<%
+							Date createDate = curArticle.getModifiedDate();
+
+							String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+							%>
+
+							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(curArticle.getUserName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-date
 							cssClass="table-cell-expand-smallest table-cell-ws-nowrap"

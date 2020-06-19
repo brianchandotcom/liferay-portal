@@ -1072,15 +1072,6 @@
   resolved "https://registry.yarnpkg.com/@braintree/sanitize-url/-/sanitize-url-4.0.1.tgz#16e719eba72693f95989c05f2b3b424f2aabc5b0"
   integrity sha512-THIQtVN491hY2rTZ/h5boj0CwDKrZQIUnfaj6RbpGwRJKfmEIgNpgcCJC3KZl1Vux9bQmdE2P4Q7cYUoSUQ4MA==
 
-"@clayui/alert@3.3.3":
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.3.3.tgz#aab0947af57b2f080db96a2edbe83faade09d5c8"
-  integrity sha512-QJe364reBzE9ntuY3DqwU2KXM7N3rscKo0BHqpXXYGd82hEeAlgWPLsWJtfJVdH+ix2Vd22DTuFwdLt6jxbdAw==
-  dependencies:
-    "@clayui/icon" "^3.0.5"
-    "@clayui/layout" "^3.0.1"
-    classnames "^2.2.6"
-
 "@clayui/alert@3.3.4":
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.3.4.tgz#9e8a897a1b67e83fa7addc9915846447fcebb00b"
@@ -1227,15 +1218,6 @@
     classnames "^2.2.6"
     warning "^4.0.3"
 
-"@clayui/label@3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@clayui/label/-/label-3.3.0.tgz#b9cb7629f185929d87dcf4c963d3370359602d9e"
-  integrity sha512-s06k1ruqzNiRhHXVCo5ffRSqm7cFgcyfSsxbdaqDzVG+69xU/VPrBfHiUmporVAh/DE9V3N/diDlIPk+3HsnLQ==
-  dependencies:
-    "@clayui/icon" "^3.0.5"
-    "@clayui/link" "^3.1.1"
-    classnames "^2.2.6"
-
 "@clayui/label@3.3.1", "@clayui/label@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@clayui/label/-/label-3.3.1.tgz#b2235b61525851bb9333a4df838e1d2f0b59b9d9"
@@ -1369,15 +1351,6 @@
     "@clayui/shared" "^3.1.1"
     classnames "^2.2.6"
 
-"@clayui/panel@3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.2.0.tgz#fab9f77f79fc1a6c41eb6d8a77c8bb0e13913038"
-  integrity sha512-MQS6lSruumfGfV20Eediz96kMesBc2LNgJnB8F25dU7+kS34l5Sw/cp5tFBpt/KH+b8ISpbyKVPO3UO3oc2S4w==
-  dependencies:
-    "@clayui/icon" "^3.0.5"
-    "@clayui/shared" "^3.1.1"
-    classnames "^2.2.6"
-
 "@clayui/panel@3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@clayui/panel/-/panel-3.2.1.tgz#bc01f157ed94ae7c1fc06897457cba47c151cfc0"
@@ -1432,14 +1405,6 @@
   resolved "https://registry.yarnpkg.com/@clayui/table/-/table-3.0.7.tgz#f6d274f7eeb2ea0644c4c0813de9f3394528a37d"
   integrity sha512-E5DgvjzSKWDx/lv1DX6n7zYmCwkcZx0jL1ovlKbou+EdyWqpIq1I5HnQY5QOBd/FB++s/mgRJcQookQcspVDDw==
   dependencies:
-    classnames "^2.2.6"
-
-"@clayui/tabs@3.2.0":
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/@clayui/tabs/-/tabs-3.2.0.tgz#d5f2e72837e2f215fbaef32d7cc264a1e94334e0"
-  integrity sha512-4TZCK5CK+d9asY2t5fn8KWQMTndciCQRus4av3N7drrreMcq8Uh/ejZSTTPVeeN3T4fJc/OQ/iBPPOvj4NF89A==
-  dependencies:
-    "@clayui/shared" "^3.1.1"
     classnames "^2.2.6"
 
 "@clayui/tabs@3.2.1":
@@ -19632,15 +19597,7 @@ yargs-parser@^11.1.1:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs-parser@^13.1.0:
-  version "13.1.1"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.1.1.tgz#d26058532aa06d365fe091f6a1fc06b2f7e5eca0"
-  integrity sha512-oVAVsHz6uFrg3XQheFII8ESO2ssAf9luWuAd6Wexsu4F3OtIW0o8IribPXYrD4WC24LWtPrJlGy87y5udK+dxQ==
-  dependencies:
-    camelcase "^5.0.0"
-    decamelize "^1.2.0"
-
-yargs-parser@^13.1.2:
+yargs-parser@^13.1.0, yargs-parser@^13.1.2:
   version "13.1.2"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.1.2.tgz#130f09702ebaeef2650d54ce6e3e5706f7a4fb38"
   integrity sha512-3lbsNRf/j+A4QuSZfDRA7HRSfWrzO0YjqTJd5kjAq37Zep1CEgaYmrH9Q3GwPiB9cHyd1Y1UwggGhJGoxipbzg==

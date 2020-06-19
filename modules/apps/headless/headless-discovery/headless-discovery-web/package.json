@@ -1,13 +1,13 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.3.3",
+		"@clayui/alert": "3.3.4",
 		"@clayui/badge": "3.1.0",
 		"@clayui/button": "3.3.1",
 		"@clayui/form": "3.8.0",
 		"@clayui/icon": "3.0.5",
-		"@clayui/label": "3.3.0",
-		"@clayui/panel": "3.2.0",
-		"@clayui/tabs": "3.2.0",
+		"@clayui/label": "3.3.1",
+		"@clayui/panel": "3.2.1",
+		"@clayui/tabs": "3.2.1",
 		"graphiql": "1.0.0-alpha.8",
 		"graphql": "^15.0.0",
 		"react": "16.12.0",

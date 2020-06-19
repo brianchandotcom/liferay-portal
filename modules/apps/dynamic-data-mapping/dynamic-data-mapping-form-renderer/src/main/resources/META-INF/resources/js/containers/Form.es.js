@@ -97,6 +97,8 @@ const Form = React.forwardRef((props, ref) => {
 			});
 		},
 		get: (key) => props[key],
+		getFormNode: () =>
+			containerRef.current && getFormNode(containerRef.current),
 		toJSON: () => {
 			const {
 				defaultLanguageId,

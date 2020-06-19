@@ -17,7 +17,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 export function useDDMFormSubmit(ddmForm, onSubmit) {
 	useEffect(() => {
-		const formNode = ddmForm.getFormNode();
+		const formNode = ddmForm.reactComponentRef.current.getFormNode();
 
 		formNode.addEventListener('submit', onSubmit);
 
@@ -27,7 +27,9 @@ export function useDDMFormSubmit(ddmForm, onSubmit) {
 
 export function useDDMFormValidation(ddmForm, onSubmitCallback) {
 	return useCallback(() => {
-		ddmForm.validate().then((isValidForm) => {
+		const ddmReactForm = ddmForm.reactComponentRef.current;
+
+		ddmReactForm.validate().then((isValidForm) => {
 			if (!isValidForm) {
 				return;
 			}
@@ -37,7 +39,7 @@ export function useDDMFormValidation(ddmForm, onSubmitCallback) {
 			};
 
 			const languageId = themeDisplay.getLanguageId();
-			const visitor = new PagesVisitor(ddmForm.pages);
+			const visitor = new PagesVisitor(ddmReactForm.get('pages'));
 
 			visitor.mapFields(
 				({fieldName, localizable, repeatable, value, visible}) => {

@@ -42,36 +42,85 @@ export const EditEntry = ({
 		}
 	}, [basePortletURL, redirect]);
 
-	const onSubmit = useDDMFormValidation(
-		ddmForm,
-		useCallback(
-			(dataRecord) => {
-				if (dataRecordId !== '0') {
-					updateItem(
-						`/o/data-engine/v2.0/data-records/${dataRecordId}`,
-						dataRecord
-					).then(() => {
-						successToast(
-							Liferay.Language.get('an-entry-was-updated')
-						);
-						onCancel();
-					});
+	const onSave = useCallback(() => {
+		const ddmReactForm = ddmForm.reactComponentRef.current;
+		const visitor = new PagesVisitor(ddmReactForm.get('pages'));
+
+		ddmReactForm.validate().then((validForm) => {
+			if (!validForm) {
+				return;
+			}
+
+			const dataRecord = {
+				dataRecordValues: {},
+			};
+
+			const languageId = themeDisplay.getLanguageId();
+
+			visitor.mapFields(
+				({fieldName, localizable, repeatable, value, visible}) => {
+					if (!visible) {
+						value = '';
+					}
+
+					if (localizable) {
+						if (!dataRecord.dataRecordValues[fieldName]) {
+							dataRecord.dataRecordValues[fieldName] = {
+								[languageId]: [],
+							};
+						}
+
+						if (repeatable) {
+							dataRecord.dataRecordValues[fieldName][
+								languageId
+							].push(value);
+						}
+						else {
+							dataRecord.dataRecordValues[fieldName] = {
+								[languageId]: value,
+							};
+						}
+					}
+					else {
+						dataRecord.dataRecordValues[fieldName] = value;
+					}
 				}
-				else {
-					addItem(
-						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
-						dataRecord
-					).then(() => {
-						successToast(
-							Liferay.Language.get('an-entry-was-added')
-						);
-						onCancel();
-					});
-				}
-			},
-			[dataDefinitionId, dataRecordId, onCancel]
-		)
-	);
+			);
+
+			const openSuccessToast = (isNew) => {
+				const message = isNew
+					? Liferay.Language.get('an-entry-was-added')
+					: Liferay.Language.get('an-entry-was-updated');
+
+				successToast(message);
+			};
+
+			if (dataRecordId !== '0') {
+				updateItem(
+					`/o/data-engine/v2.0/data-records/${dataRecordId}`,
+					dataRecord
+				).then(() => {
+					openSuccessToast(false);
+					onCancel();
+				});
+			}
+			else {
+				addItem(
+					`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
+					dataRecord
+				).then(() => {
+					openSuccessToast(true);
+					onCancel();
+				});
+			}
+		});
+	}, [dataDefinitionId, dataRecordId, ddmForm, onCancel]);
+
+	useEffect(() => {
+		const formNode = ddmForm.reactComponentRef.current.getFormNode();
+		const onSubmit = () => onSave();
+
+		formNode.addEventListener('submit', onSubmit);
 
 	useDDMFormSubmit(ddmForm, onSubmit);
 

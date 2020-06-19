@@ -963,7 +963,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 		searchContext.setAndSearch(true);
 
-		DDMFormInstance formInstance =
+		DDMFormInstance ddmFormInstance =
 			ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
 
 		Map<String, Serializable> attributes =
@@ -973,20 +973,20 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			).put(
 				Field.STATUS, status
 			).put(
-				"formInstanceId", formInstance.getFormInstanceId()
+				"formInstanceId", ddmFormInstance.getFormInstanceId()
 			).put(
-				"languageIds", formInstance.getAvailableLanguageIds()
+				"languageIds", ddmFormInstance.getAvailableLanguageIds()
 			).put(
 				"notEmptyFields", notEmptyFields
 			).put(
-				"structureId", formInstance.getStructureId()
+				"structureId", ddmFormInstance.getStructureId()
 			).build();
 
 		searchContext.setAttributes(attributes);
 
-		searchContext.setCompanyId(formInstance.getCompanyId());
+		searchContext.setCompanyId(ddmFormInstance.getCompanyId());
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[] {formInstance.getGroupId()});
+		searchContext.setGroupIds(new long[] {ddmFormInstance.getGroupId()});
 		searchContext.setStart(start);
 
 		searchContext.setSorts(sort);

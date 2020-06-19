@@ -114,11 +114,14 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 				WorkflowConstants.STATUS_APPROVED, start, end,
 				new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true));
 
-		List<DDMFormInstanceRecord> formInstanceRecords =
+		List<DDMFormInstanceRecord> ddmFormInstanceRecords =
 			baseModelSearchResult.getBaseModels();
 
-		for (DDMFormInstanceRecord formInstanceRecord : formInstanceRecords) {
-			DDMFormValues ddmFormValues = formInstanceRecord.getDDMFormValues();
+		for (DDMFormInstanceRecord ddmFormInstanceRecord :
+				ddmFormInstanceRecords) {
+
+			DDMFormValues ddmFormValues =
+				ddmFormInstanceRecord.getDDMFormValues();
 
 			Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 				ddmFormValues.getDDMFormFieldValuesMap(false);

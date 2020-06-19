@@ -144,7 +144,7 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 				</c:choose>
 			</liferay-frontend:fieldset>
 
-			<c:if test="<%= category == null %>">
+			<c:if test="<%= (category == null) && !assetCategoriesDisplayContext.isItemSelector() %>">
 				<liferay-frontend:fieldset
 					collapsed="<%= true %>"
 					collapsible="<%= true %>"
@@ -158,9 +158,57 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 
-	<liferay-frontend:edit-form-footer>
-		<aui:button type="submit" />
+	<c:choose>
+		<c:when test="<%= !assetCategoriesDisplayContext.isItemSelector() %>">
+			<liferay-frontend:edit-form-footer>
+				<aui:button type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
-	</liferay-frontend:edit-form-footer>
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</liferay-frontend:edit-form-footer>
+		</c:when>
+		<c:otherwise>
+			<aui:script>
+				var dialog = Liferay.Util.getWindow(
+					'<%= assetCategoriesDisplayContext.getItemSelectorEventName() %>'
+				);
+				var footer = dialog.getToolbar('footer');
+
+				var controlButtons = footer
+					.get('boundingBox')
+					.all('.add-category-toolbar-button');
+
+				if (controlButtons.size() > 0) {
+					controlButtons.show();
+				}
+				else {
+					var cancelButton = document.createElement('button');
+					cancelButton.setAttribute(
+						'class',
+						'add-category-toolbar-button btn btn-secondary'
+					);
+					cancelButton.setAttribute('type', 'submit');
+					cancelButton.innerText = '<liferay-ui:message key="cancel" />';
+					cancelButton.addEventListener('click', function () {
+						footer.get('boundingBox').all('.add-category-toolbar-button').hide();
+						Liferay.Util.navigate('<%= HtmlUtil.escape(redirect) %>');
+					});
+
+					footer.get('boundingBox').append(cancelButton);
+
+					var submitButton = document.createElement('button');
+					submitButton.setAttribute(
+						'class',
+						'add-category-toolbar-button btn btn-primary'
+					);
+					submitButton.setAttribute('type', 'submit');
+					submitButton.innerText = '<liferay-ui:message key="save" />';
+					submitButton.addEventListener('click', function () {
+						submitForm(document.querySelector('#<portlet:namespace />fm'));
+					});
+
+					footer.get('boundingBox').append(submitButton);
+				}
+			</aui:script>
+		</c:otherwise>
+	</c:choose>
 </liferay-frontend:edit-form>

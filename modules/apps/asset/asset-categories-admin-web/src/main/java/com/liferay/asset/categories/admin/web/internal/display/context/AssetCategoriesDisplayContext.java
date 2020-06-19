@@ -409,6 +409,10 @@ public class AssetCategoriesDisplayContext {
 		return _eventName;
 	}
 
+	public String getItemSelectorEventName() {
+		return ParamUtil.getString(_renderRequest, "itemSelectorEventName");
+	}
+
 	public String getNavigation() {
 		if (_navigation != null) {
 			return _navigation;
@@ -660,6 +664,10 @@ public class AssetCategoriesDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isItemSelector() {
+		return Validator.isNotNull(getItemSelectorEventName());
 	}
 
 	public boolean isShowCategoriesAddButton() {

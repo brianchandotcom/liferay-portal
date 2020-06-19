@@ -15,6 +15,7 @@
 import React from 'react';
 
 const DatasetDisplayContext = React.createContext({
+	actionParameterName: null,
 	formId: null,
 	formRef: null,
 	loadData: () => {},

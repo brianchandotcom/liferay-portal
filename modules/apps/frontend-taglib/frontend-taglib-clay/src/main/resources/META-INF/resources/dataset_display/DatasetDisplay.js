@@ -37,6 +37,7 @@ import {showNotification} from './utilities/notifications';
 import {getViewById} from './views/index';
 
 function DatasetDisplay({
+	actionParameterName,
 	apiUrl,
 	bulkActions,
 	creationMenu,
@@ -330,13 +331,17 @@ function DatasetDisplay({
 	const view =
 		!loading && CurrentViewComponent ? (
 			<div className="dataset-display-content-wrapper">
-				<input
-					hidden
-					name={`${namespace || id + '_'}${selectedItemsKey}`}
-					readOnly
-					value={selectedItemsValue.join(',')}
-				/>
-				{items?.length ? (
+				{!formId && (
+					<input
+						hidden
+						name={`${namespace || id + '_'}${
+							actionParameterName ?? selectedItemsKey
+						}`}
+						readOnly
+						value={selectedItemsValue.join(',')}
+					/>
+				)}
+				{items?.length > 0 && (
 					<CurrentViewComponent
 						datasetDisplayContext={DatasetDisplayContext}
 						itemActions={itemActions}
@@ -344,7 +349,7 @@ function DatasetDisplay({
 						style={style}
 						{...currentViewProps}
 					/>
-				) : null}
+				)}
 				{items?.length === 0 && <EmptyResultMessage />}
 			</div>
 		) : (
@@ -411,6 +416,7 @@ function DatasetDisplay({
 	return (
 		<DatasetDisplayContext.Provider
 			value={{
+				actionParameterName,
 				executeAsyncItemAction,
 				formId,
 				formRef,

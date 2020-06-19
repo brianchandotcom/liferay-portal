@@ -108,6 +108,10 @@ public class DatasetDisplayTag extends IncludeTag {
 		return super.doStartTag();
 	}
 
+	public String getActionParameterName() {
+		return _actionParameterName;
+	}
+
 	public List<DropdownItem> getBulkActions() {
 		return _bulkActions;
 	}
@@ -190,6 +194,10 @@ public class DatasetDisplayTag extends IncludeTag {
 
 	public boolean isShowSearch() {
 		return _showSearch;
+	}
+
+	public void setActionParameterName(String actionParameterName) {
+		_actionParameterName = actionParameterName;
 	}
 
 	public void setBulkActions(List<DropdownItem> bulkActions) {
@@ -286,6 +294,7 @@ public class DatasetDisplayTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_actionParameterName = null;
 		_bulkActions = new ArrayList<>();
 		_clayDataSetDisplayViewsContext = null;
 		_clayDataSetDisplayViewSerializer = null;
@@ -335,6 +344,8 @@ public class DatasetDisplayTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
+		request.setAttribute(
+			"clay:dataset-display:actionParameterName", _actionParameterName);
 		request.setAttribute("clay:dataset-display:bulkActions", _bulkActions);
 		request.setAttribute(
 			"clay:dataset-display:clayDataSetDisplayViewsContext",
@@ -404,6 +415,7 @@ public class DatasetDisplayTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DatasetDisplayTag.class);
 
+	private String _actionParameterName;
 	private List<DropdownItem> _bulkActions = new ArrayList<>();
 	private Object _clayDataSetDisplayViewsContext;
 	private ClayDataSetDisplayViewSerializer _clayDataSetDisplayViewSerializer;

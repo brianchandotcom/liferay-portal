@@ -394,7 +394,7 @@ public interface DDMFormInstanceRecordLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<DDMFormInstanceRecord>
 			searchFormInstanceRecords(
-				long formInstanceId, String[] notEmptyFields, int status,
+				long ddmFormInstanceId, String[] notEmptyFields, int status,
 				int start, int end, Sort sort)
 		throws PortalException;
 

@@ -76,7 +76,7 @@ public interface DDMFormInstanceReportLocalService
 	public DDMFormInstanceReport addDDMFormInstanceReport(
 		DDMFormInstanceReport ddmFormInstanceReport);
 
-	public DDMFormInstanceReport addFormInstanceReport(long formInstanceId)
+	public DDMFormInstanceReport addFormInstanceReport(long ddmFormInstanceId)
 		throws PortalException;
 
 	/**
@@ -237,7 +237,7 @@ public interface DDMFormInstanceReportLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstanceReport getFormInstanceReportByFormInstanceId(
-			long formInstanceId)
+			long ddmFormInstanceId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -259,8 +259,8 @@ public interface DDMFormInstanceReportLocalService
 		throws PortalException;
 
 	public void processFormInstanceReportEvent(
-		long formInstanceReportId, long formInstanceRecordVersionId,
-		String formInstanceReportEvent);
+		long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+		String ddmFormInstanceReportEvent);
 
 	/**
 	 * Updates the ddm form instance report in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -273,8 +273,8 @@ public interface DDMFormInstanceReportLocalService
 		DDMFormInstanceReport ddmFormInstanceReport);
 
 	public DDMFormInstanceReport updateFormInstanceReport(
-			long formInstanceReportId, long formInstanceRecordVersionId,
-			String formInstanceReportEvent)
+			long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+			String ddmFormInstanceReportEvent)
 		throws PortalException;
 
 	@Override

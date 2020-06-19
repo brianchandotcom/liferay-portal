@@ -77,7 +77,7 @@ export default function ImportTranslation({
 
 	return (
 		<div>
-			<h4>{Liferay.Language.get('import-file')}</h4>
+			<h3 className="h4">{Liferay.Language.get('import-file')}</h3>
 			<p>
 				<span className="text-secondary">
 					{Liferay.Language.get(

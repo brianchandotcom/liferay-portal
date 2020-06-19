@@ -42,10 +42,10 @@ renderResponse.setTitle(title);
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
-					<div class="tbar-section text-left">
-						<h4 class="text-truncate-inline upper-tbar-title" title="<%= HtmlUtil.escapeAttribute(articleTitle) %>">
+					<div class="pl-2 tbar-section text-left">
+						<h2 class="h4 text-truncate-inline" title="<%= HtmlUtil.escapeAttribute(articleTitle) %>">
 							<span class="text-truncate"><%= HtmlUtil.escape(articleTitle) %></span>
-						</h4>
+						</h2>
 					</div>
 				</li>
 				<li class="tbar-item">

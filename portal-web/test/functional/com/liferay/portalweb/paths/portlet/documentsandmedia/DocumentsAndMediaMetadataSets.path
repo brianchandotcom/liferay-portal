@@ -9,6 +9,26 @@
 </thead>
 <tbody>
 <tr>
+    <td>ADD_FIELD_TYPE</td>
+    <td>//div[contains(@class,'field-type')]//span[contains(text(),'${key_fieldType}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>ADD_FIELD_TARGET</td>
+    <td>//div[contains(@class,'col-empty')]/div</td>
+    <td></td>
+</tr>
+<tr>
+    <td>FIELD_BOTTOM_DROP_TARGET</td>
+    <td>//div[contains(@class,'placeholder row')]/div[@data-ddm-field-row='${key_rowNum}']/div[contains(@class,'ddm-target')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>FIELD_LABEL</td>
+    <td>xpath=(//div[contains(@class,'ddm-drag')]//div/p[contains(@class,'ddm-label')])[last()]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>METADATA_SETS_NAME</td>
 	<td>//a[contains(.,'${key_metadataSetName}')]</td>
 	<td></td>
@@ -17,6 +37,31 @@
 	<td>METADATA_SETS_TABLE_ACTIONS_1</td>
 	<td>//div[contains(@class,'lfr-icon-menu')]/a[@title='Actions']/span</td>
 	<td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_BASIC_TAB</td>
+    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Basic')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_ACTIVE_BASIC_TAB</td>
+    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'active') and contains(.,'Basic')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_ADVANCED_TAB</td>
+    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Advanced')]</td>
+    <td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_BACK</td>
+	<td>//button[*[name()='svg'][contains(@class,'lexicon-icon-angle-left')]]</td>
+	<td></td>
+</tr>
+<tr>
+    <td>SIDEBAR_FIELDS_TAB</td>
+    <td>//li[contains(@class,'nav-item')]/button[contains(@class,'nav-link') and contains(.,'Fields')]</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

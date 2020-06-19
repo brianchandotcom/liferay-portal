@@ -112,16 +112,6 @@ definition {
 			value1 = "Published");
 	}
 
-	macro searchForChangeList {
-		Search.searchCP(searchTerm = "${changeListName}");
-
-		var key_changeListName = "${changeListName}";
-
-		AssertTextPresent(
-			locator1 = "ChangeList#CHANGE_LIST_TABLE_ENTRY_NAME",
-			value1 = "${changeListName}");
-	}
-
 	macro selectPublication {
 		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
 
@@ -132,52 +122,12 @@ definition {
 		var key_publicationName = "${publicationName}";
 
 		Click(
-			locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE",
+			locator1 = "ChangeList#SELECT_PUBLICATION_NAME",
 			value1 = "${publicationName}");
 
 		AssertTextPresent(
 			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
 			value1 = "${publicationName}");
-	}
-
-	macro viewChangeOnOverview {
-		var key_contentTitle = "${contentTitle}";
-
-		AssertTextEquals(
-			locator1 = "ChangeList#LATEST_CHANGES_TITLE",
-			value1 = "${contentTitle}");
-
-		var key_contentType = "${contentType}";
-
-		AssertTextEquals(
-			locator1 = "ChangeList#LATEST_CHANGES_CONTENT_TYPE",
-			value1 = "${contentType}");
-
-		var key_contentChangeType = "${contentChangeType}";
-
-		AssertTextEquals(
-			locator1 = "ChangeList#LATEST_CHANGES_CHANGE_TYPE",
-			value1 = "${contentChangeType}");
-	}
-
-	macro viewDeletedItemCounter {
-		AssertTextEquals(
-			locator1 = "ChangeList#CHANGE_LIST_DELETED",
-			value1 = "${nbrOfDeletedItems}");
-	}
-
-	macro viewModifiedItemCounter {
-		AssertTextEquals(
-			locator1 = "ChangeList#CHANGE_LIST_MODIFIED",
-			value1 = "${nbrOfModifiedItems}");
-	}
-
-	macro viewNoChangeListInSelectDropdown {
-		Click(locator1 = "ChangeList#SELECT_CHANGE_LIST_DROPDOWN");
-
-		AssertElementNotPresent(
-			key_changeListName = "${changeListName}",
-			locator1 = "ChangeList#SELECT_CHANGE_LIST_VALUE");
 	}
 
 	macro viewNoStagingMenuitemsNotAvailable {

@@ -9,41 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>CHANGE_LIST_NAVIGATION_USER_SETTINGS</td>
-	<td>//li[contains(@class,'nav-item')]//span[contains(.,'User Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_LIST_NAVIGATION_GLOBAL_SETTINGS</td>
-	<td>//li[contains(@class,'nav-item')]//span[contains(.,'Global Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_LIST_USER_SETTINGS_POPUP_ENABLED</td>
-	<td>//div[contains(@class,'change-lists-configuration')]//input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIVE_CHANGE_LIST_TITLE</td>
-	<td>//div[contains(@class,'border-left-blue')]//div[contains(@data-qa-id,'headerTitle')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ACTIVE_CHANGE_LIST_STATUS</td>
-	<td>//td[contains(.,'${key_changeListName}')]//following-sibling::td//span[contains(@class,'label-info')]//span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_LIST_ADDED</td>
-	<td>//div[contains(@data-qa-id,'changesAdded')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_LIST_DELETED</td>
-	<td>//div[contains(@data-qa-id,'changesDeleted')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHANGE_LIST_INDICATOR_BUTTON</td>
 	<td>//button[contains(@class,'dropdown-toggle change-tracking-indicator-button')]</td>
 	<td></td>
@@ -54,16 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE_LIST_NAME_CARD_VIEW</td>
-	<td>//span[contains(@data-qa-id,'headerSubTitle')][normalize-space(text())='${key_changeListName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHANGE_LIST_TABLE_ENTRY_NAME</td>
-	<td>//tr[contains(@data-qa-id,'row')]//td[1]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HISTORY_PUBLICATION_STATUS</td>
 	<td>//td[contains(.,'${key_publicationName}')]//following-sibling::td/span[contains(@class,'label-success')]//span</td>
 	<td></td>
@@ -71,21 +26,6 @@
 <tr>
 	<td>INDICATOR</td>
 	<td>//li[contains(@class,'nav-item')]//span/*[name()='svg'][contains(@class,'change-list')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LATEST_CHANGES_CHANGE_TYPE</td>
-	<td>//div[contains(@id,'change-entry-change-type') and contains(.,'${key_contentChangeType}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LATEST_CHANGES_CONTENT_TYPE</td>
-	<td>//div[contains(@id,'change-entry-title') and contains(.,'${key_contentTitle}')]//parent::td//following-sibling::td//div[contains(@id,'change-entry-content-type')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LATEST_CHANGES_TITLE</td>
-	<td>//div[contains(@id,'change-entry-title') and contains(.,'${key_contentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -124,28 +64,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_CHANGE_LIST</td>
-	<td>//a[contains(@data-qa-id,'selectChangeListMenuItem')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_CHANGE_LIST_VALUE</td>
+	<td>SELECT_PUBLICATION_NAME</td>
 	<td>//a[contains(.,'${key_publicationName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_CHANGE_LIST_DROPDOWN</td>
-	<td>//a[contains(@data-qa-id,'headerDropDownMenu')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCTION_CARD_TITLE</td>
 	<td>//span[contains(@class,'work-on-production')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VIEW_CHANGE_LIST_NAME_HISTORY</td>
-	<td>//tr[contains(.,'${key_contentTitle}')]//td[contains(@class,'change-list-title')]</td>
 	<td></td>
 </tr>
 </tbody>

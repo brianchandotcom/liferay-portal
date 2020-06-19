@@ -29,7 +29,7 @@ public interface ClayDataSetDataJSONFactory {
 		throws Exception;
 
 	public String create(
-			long groupId, String tableName, List<Object> items, int totalItems,
+			long groupId, String tableName, List<Object> items, int itemsCount,
 			HttpServletRequest httpServletRequest)
 		throws Exception;
 

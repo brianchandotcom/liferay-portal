@@ -45,7 +45,7 @@ definition {
 
 		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
-		DMMetadataSet.addField(fieldType = "Text Box");
+		DMMetadataSet.addField(fieldType = "Text");
 
 		DDLDataDefinition.save();
 
@@ -55,7 +55,7 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "DM Document Type Description",
-			dmDocumentTypeFieldNames = "Text Box",
+			dmDocumentTypeFieldNames = "Text",
 			dmDocumentTypeName = "DM Document Type Name",
 			metadataSetName = "DM Metadata Set Name");
 
@@ -186,11 +186,11 @@ definition {
 
 		DMDocument.addCP(
 			dateField = "Date",
-			fieldValue = "01/01/2022",
 			dmDocumentDescription = "DM Document Type Contract Description",
 			dmDocumentFile = "Document_1.doc",
 			dmDocumentTitle = "DM Document Type Contract Title",
-			dmDocumentTypeName = "DM Document Type Name");
+			dmDocumentTypeName = "DM Document Type Name",
+			fieldValue = "01/01/2022");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -1018,7 +1018,7 @@ definition {
 
 		DMDocumentType.add(
 			dmDocumentTypeDescription = "Images",
-			dmDocumentTypeFieldNames = "Text Box,Date",
+			dmDocumentTypeFieldNames = "Text,Date",
 			dmDocumentTypeName = "Photos");
 
 		ApplicationsMenu.gotoPortlet(

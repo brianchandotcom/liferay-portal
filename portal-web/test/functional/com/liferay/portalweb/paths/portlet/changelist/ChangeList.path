@@ -115,12 +115,7 @@
 </tr>
 <tr>
 	<td>PUBLISHED_PUBLICATIONS_NAME</td>
-	<td>//div[contains(@class,'change-list-name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISHED_PUBLICATIONS_DESCRIPTION</td>
-	<td>//div[contains(@class,'change-list-description')]</td>
+	<td>//div[contains(@class,'change-list-name') and contains(.,'${key_publicationName}')]</td>
 	<td></td>
 </tr>
 <tr>

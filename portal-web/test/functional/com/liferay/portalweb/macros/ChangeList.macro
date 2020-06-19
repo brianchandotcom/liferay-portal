@@ -8,11 +8,11 @@ definition {
 
 		Click(locator1 = "Button#PLUS");
 
-		Button.clickCancel();
+		Type(
+			locator1 = "ChangeList#PUBLICATION_NAME",
+			value1 = "${publicationName}");
 
-		AssertTextEquals(
-			locator1 = "ChangeList#MANGE_PUBLICATIONS_PAGE_TITLE",
-			value1 = "Manage Publications");
+		Button.clickCancel();
 	}
 
 	macro createNewPublication {
@@ -192,15 +192,13 @@ definition {
 	}
 
 	macro viewPublishedPublicationDetails {
+		key_publicationName = "${publicationName}";
+
 		AssertTextEquals(
 			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME",
 			value1 = "${publicationName}");
 
-		AssertTextEquals(
-			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_DESCRIPTION",
-			value1 = "${publicationDescription}");
-
-		key_publicationPublishedBy = "${publicationPublishedBy}"
+		key_publicationPublishedBy = "${publicationPublishedBy}";
 
 		AssertTextEquals(
 			locator1 = "ChangeList#PUBLICATIONS_PUBLISHED_BY",

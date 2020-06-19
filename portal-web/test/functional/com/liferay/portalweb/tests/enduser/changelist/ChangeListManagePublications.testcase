@@ -38,7 +38,11 @@ definition {
 	test CancelPublicationCreation {
 		property test.name.skip.portal.instance = "ChangeListManagePublications#CancelPublicationCreation";
 
-		ChangeList.cancelPublicationCreation();
+		ChangeList.cancelPublicationCreation(publicationName = "Publication Name");
+
+		AssertElementNotPresent(
+			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME",
+			value1 = "Publication Name");
 	}
 
 	@priority = "3"
@@ -50,19 +54,6 @@ definition {
 			publicationName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
 
 		Alert.viewLengthValidationField();
-	}
-
-	@priority = "3"
-	test CreateNewPublicationWithoutDescription {
-		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithoutDescription";
-
-		ChangeList.createNewPublication(
-			gotoManagePublications = "true",
-			publicationName = "Publication Name");
-
-		AssertTextPresent(
-			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
-			value1 = "Publication Name");
 	}
 
 	@priority = "3"
@@ -80,9 +71,19 @@ definition {
 
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
+			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
+		GlobalMenu.gotoPortlet(
+			category = "Change Lists",
+			panel = "Applications",
+			portlet = "Manage Publications");
+
 		ChangeList.deletePublication(publicationName = "Publication Name");
+
+		AssertElementNotPresent(
+			key_publicationName = "Publication Name",
+			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME");
 	}
 
 }

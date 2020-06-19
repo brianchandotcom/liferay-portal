@@ -37,6 +37,15 @@ class PersonAccountEntryEventHandler extends PortletBase {
 				this._handleSelectUserButtonClicked.bind(this)
 			)
 		);
+
+		this.eventHandler_.add(
+			dom.delegate(
+				this.container,
+				'click',
+				this.removeUserLinkSelector,
+				this._handleRemoveUserButtonClicked.bind(this)
+			)
+		);
 	}
 
 	/**
@@ -49,6 +58,12 @@ class PersonAccountEntryEventHandler extends PortletBase {
 
 	_handleOnSelect(selectedItemData) {
 		this._setSearchContainerUser(selectedItemData);
+	}
+
+	_handleRemoveUserButtonClicked() {
+		this.searchContainer.deleteRow(1, this.searchContainer.getData());
+
+		this.userIdInput.value = null;
 	}
 
 	_handleSelectUserButtonClicked() {
@@ -75,7 +90,10 @@ class PersonAccountEntryEventHandler extends PortletBase {
 		this.userIdInput.value = userId;
 
 		this.searchContainer.deleteRow(1, this.searchContainer.getData());
-		this.searchContainer.addRow([userName, emailAddress, jobTitle], userId);
+		this.searchContainer.addRow(
+			[userName, emailAddress, jobTitle, this.removeUserIconMarkup],
+			userId
+		);
 		this.searchContainer.updateDataStore([userId]);
 	}
 
@@ -89,6 +107,9 @@ class PersonAccountEntryEventHandler extends PortletBase {
 }
 
 PersonAccountEntryEventHandler.STATE = {
+	container: Config.string().setter('_setElement'),
+	removeUserIconMarkup: Config.string(),
+	removeUserLinkSelector: Config.string(),
 	searchContainer: Config.string().setter('_setSearchContainer'),
 	selectUserButton: Config.string().setter('_setElement'),
 	selectUserEventName: Config.string(),

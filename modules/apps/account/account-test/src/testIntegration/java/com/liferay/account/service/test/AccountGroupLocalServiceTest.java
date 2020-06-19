@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -191,11 +192,9 @@ public class AccountGroupLocalServiceTest {
 			expectedAccountGroups.sort(comparator);
 		}
 
-		for (int i = 0; i < delta; i++) {
-			Assert.assertEquals(
-				expectedAccountGroups.get(start + i),
-				actualAccountGroups.get(i));
-		}
+		Assert.assertEquals(
+			ListUtil.subList(expectedAccountGroups, start, start + delta),
+			actualAccountGroups);
 	}
 
 	@Inject

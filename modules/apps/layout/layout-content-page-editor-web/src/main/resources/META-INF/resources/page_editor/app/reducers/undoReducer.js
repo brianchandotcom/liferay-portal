@@ -21,7 +21,7 @@ import {
 } from '../actions/types';
 import {getDerivedStateForUndo} from '../components/undo/undoActions';
 
-const MAX_UNDO_ACTIONS = 20;
+const MAX_UNDO_ACTIONS = 100;
 
 let actionId = 0;
 

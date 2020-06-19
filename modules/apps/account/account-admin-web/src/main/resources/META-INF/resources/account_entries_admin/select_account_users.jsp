@@ -58,7 +58,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="account-roles"
-				value="<%= accountUserDisplay.getAccountRoleNames(accountEntryId, locale) %>"
+				value="<%= accountUserDisplay.getAccountRoleNamesString(accountEntryId, locale) %>"
 			/>
 		</liferay-ui:search-container-row>
 

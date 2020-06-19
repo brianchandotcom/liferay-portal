@@ -55,7 +55,9 @@ public class AccountUserDisplay {
 		return new AccountUserDisplay(user);
 	}
 
-	public String getAccountEntryNames(HttpServletRequest httpServletRequest) {
+	public String getAccountEntryNamesString(
+		HttpServletRequest httpServletRequest) {
+
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_getAccountEntryUserRels(getUserId());
 
@@ -85,7 +87,7 @@ public class AccountUserDisplay {
 		return _accountEntryNamesStyle;
 	}
 
-	public String getAccountRoleNames(long accountEntryId, Locale locale)
+	public String getAccountRoleNamesString(long accountEntryId, Locale locale)
 		throws PortalException {
 
 		List<AccountRole> accountRoles =
@@ -132,7 +134,7 @@ public class AccountUserDisplay {
 		return _userId;
 	}
 
-	public String getValidDomains() {
+	public String getValidDomainsString() {
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_getAccountEntryUserRels(getUserId());
 

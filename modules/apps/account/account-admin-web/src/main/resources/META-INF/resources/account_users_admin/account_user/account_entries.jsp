@@ -111,7 +111,7 @@ portletDisplay.setURLBack(backURL);
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="roles"
-						value="<%= accountUserDisplay.getAccountRoleNames(accountEntryDisplay.getAccountEntryId(), locale) %>"
+						value="<%= accountUserDisplay.getAccountRoleNamesString(accountEntryDisplay.getAccountEntryId(), locale) %>"
 					/>
 
 					<liferay-ui:search-container-column-text>

@@ -67,7 +67,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					name="account-roles"
-					value="<%= accountUser.getAccountRoleNames(accountEntryDisplay.getAccountEntryId(), locale) %>"
+					value="<%= accountUser.getAccountRoleNamesString(accountEntryDisplay.getAccountEntryId(), locale) %>"
 				/>
 
 				<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryDisplay.getAccountEntryId(), ActionKeys.MANAGE_USERS) %>">

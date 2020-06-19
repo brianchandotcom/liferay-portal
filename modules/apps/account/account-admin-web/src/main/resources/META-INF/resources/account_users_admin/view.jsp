@@ -94,7 +94,7 @@ AccountUsersAdminManagementToolbarDisplayContext accountUsersAdminManagementTool
 					cssClass='<%= "table-cell-expand-small table-cell-minw-150 " + accountUserDisplay.getAccountEntryNamesStyle() %>'
 					href="<%= rowURL %>"
 					name="accounts"
-					value="<%= accountUserDisplay.getAccountEntryNames(request) %>"
+					value="<%= accountUserDisplay.getAccountEntryNamesString(request) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

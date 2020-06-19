@@ -547,6 +547,8 @@ public class FragmentEntryLocalServiceImpl
 			draftFragmentEntry.getHtml(),
 			draftFragmentEntry.getConfiguration());
 
+		draftFragmentEntry.setStatus(WorkflowConstants.STATUS_APPROVED);
+
 		FragmentEntry updatedPublishedFragmentEntry = super.publishDraft(
 			draftFragmentEntry);
 

@@ -242,46 +242,19 @@ public class CTDisplayRendererRegistry {
 		String title = getEntryDescription(
 			liferayPortletRequest.getHttpServletRequest(), ctEntry);
 
-		if (!viewDiff) {
-			return getViewURL(
-				liferayPortletResponse, ctEntry.getCtCollectionId(),
-				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK(),
-				title);
-		}
-
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/change_lists/view_diff");
+		if (viewDiff) {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/change_lists/view_diff");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/change_lists/view_entry");
+		}
+
 		portletURL.setParameter(
 			"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
-
-		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
-		}
-		catch (WindowStateException windowStateException) {
-			ReflectionUtil.throwException(windowStateException);
-		}
-
-		return StringBundler.concat(
-			"javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: ",
-			"true}, title: '", HtmlUtil.escapeJS(title), "', uri: '",
-			portletURL.toString(), "'});");
-	}
-
-	public String getViewURL(
-		LiferayPortletResponse liferayPortletResponse, long ctCollectionId,
-		long modelClassNameId, long modelClassPK, String title) {
-
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-
-		portletURL.setParameter(
-			"mvcRenderCommandName", "/change_lists/view_entry");
-		portletURL.setParameter(
-			"ctCollectionId", String.valueOf(ctCollectionId));
-		portletURL.setParameter(
-			"modelClassNameId", String.valueOf(modelClassNameId));
-		portletURL.setParameter("modelClassPK", String.valueOf(modelClassPK));
 
 		try {
 			portletURL.setWindowState(LiferayWindowState.POP_UP);

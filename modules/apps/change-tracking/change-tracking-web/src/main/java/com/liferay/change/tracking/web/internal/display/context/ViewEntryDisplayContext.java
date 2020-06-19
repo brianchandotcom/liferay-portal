@@ -14,11 +14,9 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
-import com.liferay.change.tracking.constants.CTConstants;
-import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
+import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,11 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 public class ViewEntryDisplayContext {
 
 	public ViewEntryDisplayContext(
-		BasePersistenceRegistry basePersistenceRegistry,
-		CTDisplayRendererRegistry ctDisplayRendererRegistry) {
+		CTDisplayRendererRegistry ctDisplayRendererRegistry, CTEntry ctEntry) {
 
-		_basePersistenceRegistry = basePersistenceRegistry;
 		_ctDisplayRendererRegistry = ctDisplayRendererRegistry;
+		_ctEntry = ctEntry;
 	}
 
 	public <T extends BaseModel<T>> void renderEntry(
@@ -41,28 +38,12 @@ public class ViewEntryDisplayContext {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long ctCollectionId = ParamUtil.getLong(
-			httpServletRequest, "ctCollectionId",
-			CTConstants.CT_COLLECTION_ID_PRODUCTION);
-		long modelClassNameId = ParamUtil.getLong(
-			httpServletRequest, "modelClassNameId");
-		long modelClassPK = ParamUtil.getLong(
-			httpServletRequest, "modelClassPK");
-
-		T model = _ctDisplayRendererRegistry.fetchCTModel(
-			ctCollectionId, modelClassNameId, modelClassPK);
-
-		if (model == null) {
-			model = _basePersistenceRegistry.fetchBaseModel(
-				modelClassNameId, modelClassPK);
-		}
-
 		_ctDisplayRendererRegistry.renderCTEntry(
-			httpServletRequest, httpServletResponse, ctCollectionId, model,
-			modelClassNameId);
+			httpServletRequest, httpServletResponse,
+			_ctEntry.getCtCollectionId(), _ctEntry);
 	}
 
-	private final BasePersistenceRegistry _basePersistenceRegistry;
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+	private final CTEntry _ctEntry;
 
 }

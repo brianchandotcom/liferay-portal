@@ -210,7 +210,7 @@ public abstract class BaseNodeBuilder<T extends Node> implements NodeBuilder {
 				Role role = roleLocalService.fetchRole(assigneeClassPK);
 
 				assignment = new RoleAssignment(
-					role.getName(), role.getTypeLabel());
+					role.getRoleId(), role.getName(), role.getTypeLabel());
 			}
 			else if (assigneeClassName.equals(User.class.getName())) {
 				if (assigneeClassPK == 0) {

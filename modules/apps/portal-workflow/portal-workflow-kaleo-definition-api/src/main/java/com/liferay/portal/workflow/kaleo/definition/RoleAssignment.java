@@ -31,6 +31,14 @@ public class RoleAssignment extends Assignment {
 		_roleType = null;
 	}
 
+	public RoleAssignment(long roleId, String roleName, String roleType) {
+		super(AssignmentType.ROLE);
+
+		_roleId = roleId;
+		_roleName = roleName;
+		_roleType = roleType;
+	}
+
 	public RoleAssignment(String roleName, String roleType) {
 		super(AssignmentType.ROLE);
 

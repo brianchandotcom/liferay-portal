@@ -28,12 +28,16 @@ public class BundleExtension extends HashMap<String, Object> {
 	}
 
 	public Object instruction(String key, Object value) {
-		return put(key, value);
+		return super.put(key, value);
 	}
 
+	/**
+	 * @deprecated Replaced by {@link #instruction(String, Object)}
+	 */
+	@Deprecated
 	@Override
 	public Object put(String key, Object value) {
-		return super.put(key, value);
+		return instruction(key, value);
 	}
 
 	private static final long serialVersionUID = 1L;

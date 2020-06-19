@@ -164,7 +164,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		// Extensions
 
-		BundleExtension bundleExtension = _addExtensionBundle(project);
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		final BundleExtension bundleExtension = BndUtil.getBundleExtension(
+			extensionContainer);
+
 		final LiferayOSGiExtension liferayOSGiExtension =
 			GradleUtil.addExtension(
 				project, PLUGIN_NAME, LiferayOSGiExtension.class);
@@ -219,11 +223,11 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_configureTaskDeployDependenciesProvider(
 			liferayExtension, deployDependenciesTaskProvider);
 		_configureTaskDeployFastProvider(
-			project, liferayExtension, classesTaskProvider,
+			project, bundleExtension, liferayExtension, classesTaskProvider,
 			compileJSPTaskProvider, deployFastTaskProvider,
 			processResourcesTaskProvider);
-		_configureTaskJarProvider(project, jarTaskProvider);
-		_configureTaskJavadocProvider(project, javadocTaskProvider);
+		_configureTaskJarProvider(project, bundleExtension, jarTaskProvider);
+		_configureTaskJavadocProvider(bundleExtension, javadocTaskProvider);
 		_configureTaskTestProvider(testTaskProvider);
 
 		_configureTaskCleanProvider(
@@ -235,8 +239,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		// Other
 
-		_configureConventionBasePlugin(project);
-		_configureProject(project);
+		_configureConventionBasePlugin(project, bundleExtension);
+		_configureProject(project, bundleExtension);
 		_configureSourceSetMain(project);
 
 		TaskContainer taskContainer = project.getTasks();
@@ -253,9 +257,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							Jar.class);
 
 					_configureTaskBuildWSDDJarProvider(
-						project, liferayExtension, liferayOSGiExtension,
-						buildWSDDTask, buildWSDDJarTaskProvider,
-						cleanTaskProvider, deployTaskProvider);
+						project, bundleExtension, liferayExtension,
+						liferayOSGiExtension, buildWSDDTask,
+						buildWSDDJarTaskProvider, cleanTaskProvider,
+						deployTaskProvider);
 				}
 
 			});
@@ -285,7 +290,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				public void execute(Plugin plugin) {
 					if (plugin instanceof ApplicationPlugin) {
 						_configurePluginApplication(
-							project, compileIncludeConfiguration);
+							project, bundleExtension,
+							compileIncludeConfiguration);
 					}
 				}
 
@@ -297,7 +303,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					_configureExtensionBundleAfterEvaluate(
-						project, liferayOSGiExtension,
+						bundleExtension, liferayOSGiExtension,
 						compileIncludeConfiguration);
 					_configureTaskDeployDependenciesProviderAfterEvaluate(
 						deployDependenciesTaskProvider);
@@ -320,17 +326,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		compileOnlyConfiguration.extendsFrom(configuration);
 
 		return configuration;
-	}
-
-	private BundleExtension _addExtensionBundle(Project project) {
-		BundleExtension bundleExtension = new BundleExtension();
-
-		ExtensionContainer extensionContainer = project.getExtensions();
-
-		extensionContainer.add(
-			BundleExtension.class, "bundle", bundleExtension);
-
-		return bundleExtension;
 	}
 
 	private void _applyPlugins(Project project) {
@@ -381,12 +376,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		WatchOSGiPlugin.INSTANCE.apply(project);
 	}
 
-	private void _configureConventionBasePlugin(Project project) {
+	private void _configureConventionBasePlugin(
+		Project project, BundleExtension bundleExtension) {
+
 		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
 			project, BasePluginConvention.class);
 
-		String bundleSymbolicName = BndUtil.getInstruction(
-			project, Constants.BUNDLE_SYMBOLICNAME);
+		String bundleSymbolicName = bundleExtension.getInstruction(
+			Constants.BUNDLE_SYMBOLICNAME);
 
 		if (Validator.isNull(bundleSymbolicName)) {
 			return;
@@ -433,11 +430,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureExtensionBundleAfterEvaluate(
-		Project project, final LiferayOSGiExtension liferayOSGiExtension,
+		BundleExtension bundleExtension,
+		final LiferayOSGiExtension liferayOSGiExtension,
 		final Configuration compileIncludeConfiguration) {
-
-		Map<String, Object> bundleInstructions = BndUtil.getInstructions(
-			project);
 
 		IncludeResourceCompileIncludeInstruction
 			includeResourceCompileIncludeInstruction =
@@ -460,7 +455,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 					});
 
-		bundleInstructions.put(
+		bundleExtension.instruction(
 			Constants.INCLUDERESOURCE + "." +
 				compileIncludeConfiguration.getName(),
 			includeResourceCompileIncludeInstruction);
@@ -473,8 +468,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 			String key = entry.getKey();
 
-			if (!bundleInstructions.containsKey(key)) {
-				bundleInstructions.put(key, entry.getValue());
+			if (!bundleExtension.containsKey(key)) {
+				bundleExtension.instruction(key, entry.getValue());
 			}
 		}
 	}
@@ -499,13 +494,14 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configurePluginApplication(
-		Project project, final Configuration compileIncludeConfiguration) {
+		Project project, BundleExtension bundleExtension,
+		final Configuration compileIncludeConfiguration) {
 
 		ApplicationPluginConvention applicationPluginConvention =
 			GradleUtil.getConvention(
 				project, ApplicationPluginConvention.class);
 
-		String mainClassName = BndUtil.getInstruction(project, "Main-Class");
+		String mainClassName = bundleExtension.getInstruction("Main-Class");
 
 		if (Validator.isNotNull(mainClassName)) {
 			applicationPluginConvention.setMainClassName(mainClassName);
@@ -525,24 +521,25 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureProject(Project project) {
-		String description = BndUtil.getInstruction(
-			project, Constants.BUNDLE_DESCRIPTION);
+	private void _configureProject(
+		Project project, BundleExtension bundleExtension) {
+
+		String description = bundleExtension.getInstruction(
+			Constants.BUNDLE_DESCRIPTION);
 
 		if (Validator.isNull(description)) {
-			description = BndUtil.getInstruction(
-				project, Constants.BUNDLE_NAME);
+			description = bundleExtension.getInstruction(Constants.BUNDLE_NAME);
 		}
 
 		if (Validator.isNotNull(description)) {
 			project.setDescription(description);
 		}
 
-		String bundleVersion = BndUtil.getInstruction(
-			project, Constants.BUNDLE_VERSION);
+		String version = bundleExtension.getInstruction(
+			Constants.BUNDLE_VERSION);
 
-		if (Validator.isNotNull(bundleVersion)) {
-			project.setVersion(bundleVersion);
+		if (Validator.isNotNull(version)) {
+			project.setVersion(version);
 		}
 	}
 
@@ -742,7 +739,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskBuildWSDDJarProvider(
-		final Project project, LiferayExtension liferayExtension,
+		final Project project, final BundleExtension bundleExtension,
+		LiferayExtension liferayExtension,
 		final LiferayOSGiExtension liferayOSGiExtension,
 		final BuildWSDDTask buildWSDDTask,
 		TaskProvider<Jar> buildWSDDJarTaskProvider,
@@ -777,7 +775,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 									Map<String, String> properties =
 										_getBuilderProperties(
-											project, liferayOSGiExtension,
+											project, bundleExtension,
+											liferayOSGiExtension,
 											buildWSDDTask);
 
 									File buildFile = project.getBuildFile();
@@ -1130,7 +1129,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskDeployFastProvider(
-		final Project project, final LiferayExtension liferayExtension,
+		final Project project, final BundleExtension bundleExtension,
+		final LiferayExtension liferayExtension,
 		final TaskProvider<Task> classesTaskProvider,
 		final TaskProvider<JavaCompile> compileJSPTaskProvider,
 		TaskProvider<Copy> deployFastTaskProvider,
@@ -1150,10 +1150,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 						liferayExtension.getLiferayHome());
 					deployFastCopy.setIncludeEmptyDirs(false);
 
-					String bundleSymbolicName = BndUtil.getInstruction(
-						project, Constants.BUNDLE_SYMBOLICNAME);
-					String bundleVersion = BndUtil.getInstruction(
-						project, Constants.BUNDLE_VERSION);
+					String bundleSymbolicName = bundleExtension.getInstruction(
+						Constants.BUNDLE_SYMBOLICNAME);
+					String bundleVersion = bundleExtension.getInstruction(
+						Constants.BUNDLE_VERSION);
 
 					StringBuilder sb = new StringBuilder();
 
@@ -1374,7 +1374,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJarProvider(
-		final Project project, TaskProvider<Jar> jarTaskProvider) {
+		final Project project, final BundleExtension bundleExtension,
+		TaskProvider<Jar> jarTaskProvider) {
 
 		jarTaskProvider.configure(
 			new Action<Jar>() {
@@ -1398,13 +1399,10 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 							@Override
 							public void execute(Task task) {
-								Map<String, Object> instructions =
-									BndUtil.getInstructions(project);
-
 								for (Map.Entry<String, Object> entry :
-										instructions.entrySet()) {
+										bundleExtension.entrySet()) {
 
-									instructions.put(
+									bundleExtension.instruction(
 										entry.getKey(),
 										GradleUtil.toString(entry.getValue()));
 								}
@@ -1423,11 +1421,12 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 									if (matcher.matches() &&
 										(value instanceof String)) {
 
-										instructions.put(key, entry.getValue());
+										bundleExtension.instruction(
+											key, entry.getValue());
 									}
 								}
 
-								bundleTaskConvention.setBnd(instructions);
+								bundleTaskConvention.setBnd(bundleExtension);
 							}
 
 						});
@@ -1467,12 +1466,13 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJavadocProvider(
-		Project project, TaskProvider<Javadoc> javadocTaskProvider) {
+		BundleExtension bundleExtension,
+		TaskProvider<Javadoc> javadocTaskProvider) {
 
-		String bundleName = BndUtil.getInstruction(
-			project, Constants.BUNDLE_NAME);
-		String bundleVersion = BndUtil.getInstruction(
-			project, Constants.BUNDLE_VERSION);
+		String bundleName = bundleExtension.getInstruction(
+			Constants.BUNDLE_NAME);
+		String bundleVersion = bundleExtension.getInstruction(
+			Constants.BUNDLE_VERSION);
 
 		if (Validator.isNull(bundleName) || Validator.isNull(bundleVersion)) {
 			return;
@@ -1515,7 +1515,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private Map<String, String> _getBuilderProperties(
-		Project project, LiferayOSGiExtension liferayOSGiExtension,
+		Project project, BundleExtension bundleExtension,
+		LiferayOSGiExtension liferayOSGiExtension,
 		BuildWSDDTask buildWSDDTask) {
 
 		Map<String, String> properties = GradleUtil.toStringMap(
@@ -1536,16 +1537,16 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			LiferayOSGiExtension.
 				BUNDLE_DEFAULT_INSTRUCTION_LIFERAY_SERVICE_XML);
 
-		String bundleName = BndUtil.getInstruction(
-			project, Constants.BUNDLE_NAME);
+		String bundleName = bundleExtension.getInstruction(
+			Constants.BUNDLE_NAME);
 
 		if (Validator.isNotNull(bundleName)) {
 			properties.put(
 				Constants.BUNDLE_NAME, bundleName + " WSDD descriptors");
 		}
 
-		String bundleSymbolicName = BndUtil.getInstruction(
-			project, Constants.BUNDLE_SYMBOLICNAME);
+		String bundleSymbolicName = bundleExtension.getInstruction(
+			Constants.BUNDLE_SYMBOLICNAME);
 
 		properties.put(
 			Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName + ".wsdd");

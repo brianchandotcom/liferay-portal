@@ -32,17 +32,22 @@ if (Validator.isNotNull(jspPath) || Validator.isNotNull(message)) {
 	int timeout = GetterUtil.getInteger(PortalMessages.get(request, PortalMessages.KEY_TIMEOUT), 10000);
 %>
 
+	<liferay-util:buffer
+		var="alertMessage"
+	>
+		<c:choose>
+			<c:when test="<%= Validator.isNotNull(jspPath) %>">
+				<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-ui:message key="<%= message %>" />
+			</c:otherwise>
+		</c:choose>
+	</liferay-util:buffer>
+
 	<aui:script>
 		Liferay.Util.openToast({
-			message: "
-				<c:choose>
-					<c:when test="<%= Validator.isNotNull(jspPath) %>">
-						<liferay-util:include page="<%= jspPath %>" portletId="<%= portletId %>" />
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:message key="<%= message %>" />
-					</c:otherwise>
-				</c:choose>",
+			message: '<%= HtmlUtil.escapeJS(alertMessage) %>',
 			messageType: 'html',
 			renderData: {
 				portletId: <%= portletId %>

@@ -1,0 +1,8 @@
+.lfr-depot-dashboard-container {
+	a.card-title {
+		&:hover {
+			color: inherit;
+			text-decoration: unset;
+		}
+	}
+}

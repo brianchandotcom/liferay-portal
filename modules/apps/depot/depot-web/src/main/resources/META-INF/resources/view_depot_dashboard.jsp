@@ -20,7 +20,9 @@
 DepotAdminViewDepotDashboardDisplayContext depotAdminViewDepotDashboardDisplayContext = (DepotAdminViewDepotDashboardDisplayContext)request.getAttribute(DepotAdminViewDepotDashboardDisplayContext.class.getName());
 %>
 
-<clay:container-fluid>
+<clay:container-fluid
+	cssClass="lfr-depot-dashboard-container"
+>
 	<liferay-ui:breadcrumb
 		showLayout="<%= false %>"
 	/>

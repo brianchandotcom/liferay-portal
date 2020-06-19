@@ -24,7 +24,7 @@ import org.gradle.api.plugins.ExtensionContainer;
  */
 public class BndUtil {
 
-	public static BundleExtension getInstructions(
+	public static BundleExtension getBundleExtension(
 		ExtensionContainer extensionContainer) {
 
 		BundleExtension bundleExtension = extensionContainer.findByType(

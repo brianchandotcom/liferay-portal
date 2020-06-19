@@ -23,7 +23,6 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -92,7 +90,8 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 					"file");
 
 				if (!Objects.equals("application/x-xliff+xml", contentType) &&
-						!Objects.equals("application/xliff+xml", contentType)) {
+					!Objects.equals("application/xliff+xml", contentType)) {
+
 					throw new InvalidXLIFFFileException(
 						"Unsupported content type: " + contentType);
 				}
@@ -100,12 +99,13 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 				_translationInfoFormValuesExporter.importXLIFF(
 					themeDisplay.getScopeGroupId(),
 					new InfoItemClassPKReference(
-						JournalArticle.class.getName(), article.getClassPK()),
+						JournalArticle.class.getName(),
+						article.getResourcePrimKey()),
 					inputStream);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
-				
+
 				actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 			}
 			catch (PortalException portalException) {

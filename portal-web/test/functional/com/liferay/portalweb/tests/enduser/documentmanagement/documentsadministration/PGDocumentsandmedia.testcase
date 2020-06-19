@@ -1136,7 +1136,8 @@ definition {
 
 		JSONDocument.addFolder(
 			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder Name");
+			dmFolderName = "DM Folder Name",
+			groupName = "Guest");
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 

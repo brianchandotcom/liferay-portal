@@ -26,7 +26,7 @@ const NewAppPopover = (
 ) => {
 	const [selectedObject, setSelectedObject] = useState({});
 	const withBackUrl = useBackUrl();
-	
+
 	const onClick = () => {
 		history.push(
 			withBackUrl(

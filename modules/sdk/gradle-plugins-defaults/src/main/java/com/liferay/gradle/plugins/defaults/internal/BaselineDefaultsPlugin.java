@@ -19,11 +19,9 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.baseline.BaselinePlugin;
 import com.liferay.gradle.plugins.baseline.BaselineTask;
-import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.util.BndUtil;
 import com.liferay.gradle.util.Validator;
-
-import java.util.Map;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -43,7 +41,10 @@ public class BaselineDefaultsPlugin extends BaseDefaultsPlugin<BaselinePlugin> {
 	protected void applyPluginDefaults(
 		Project project, BaselinePlugin baselinePlugin) {
 
-		_configureTasksBaseline(project);
+		BundleExtension bundleExtension = BndUtil.getBundleExtension(
+			project.getExtensions());
+
+		_configureTasksBaseline(project, bundleExtension);
 	}
 
 	@Override
@@ -54,17 +55,16 @@ public class BaselineDefaultsPlugin extends BaseDefaultsPlugin<BaselinePlugin> {
 	private BaselineDefaultsPlugin() {
 	}
 
-	private void _configureTaskBaseline(BaselineTask baselineTask) {
+	private void _configureTaskBaseline(
+		final BundleExtension bundleExtension, BaselineTask baselineTask) {
+
 		baselineTask.onlyIf(
 			new Spec<Task>() {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					Map<String, Object> bundleInstructions =
-						BndUtil.getInstructions(task.getProject());
-
-					String exportPackage = GradleUtil.toString(
-						bundleInstructions.get(Constants.EXPORT_PACKAGE));
+					String exportPackage = bundleExtension.getInstruction(
+						Constants.EXPORT_PACKAGE);
 
 					if (Validator.isNull(exportPackage)) {
 						return false;
@@ -76,7 +76,9 @@ public class BaselineDefaultsPlugin extends BaseDefaultsPlugin<BaselinePlugin> {
 			});
 	}
 
-	private void _configureTasksBaseline(Project project) {
+	private void _configureTasksBaseline(
+		Project project, final BundleExtension bundleExtension) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -85,7 +87,7 @@ public class BaselineDefaultsPlugin extends BaseDefaultsPlugin<BaselinePlugin> {
 
 				@Override
 				public void execute(BaselineTask baselineTask) {
-					_configureTaskBaseline(baselineTask);
+					_configureTaskBaseline(bundleExtension, baselineTask);
 				}
 
 			});

@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.workspace.configurators;
 import com.liferay.ant.bnd.metatype.MetatypePlugin;
 import com.liferay.gradle.plugins.JspCDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
@@ -178,6 +179,9 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 			}
 		}
 
+		final BundleExtension bundleExtension = BndUtil.getBundleExtension(
+			project.getExtensions());
+
 		final WorkspaceExtension workspaceExtension = _getWorkspaceExtension(
 			project);
 
@@ -195,7 +199,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 					if (deployFastTask != null) {
 						_configureTaskDeployFast(
-							(Copy)deployFastTask, workspaceExtension);
+							(Copy)deployFastTask, bundleExtension,
+							workspaceExtension);
 					}
 
 					Task setUpTestableTomcatTask = taskContainer.findByName(
@@ -332,14 +337,15 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskDeployFast(
-		Copy deployFastTask, WorkspaceExtension workspaceExtension) {
+		Copy deployFastTask, BundleExtension bundleExtension,
+		WorkspaceExtension workspaceExtension) {
 
 		Project project = deployFastTask.getProject();
 
-		String bundleSymbolicName = BndUtil.getInstruction(
-			project, Constants.BUNDLE_SYMBOLICNAME);
-		String bundleVersion = BndUtil.getInstruction(
-			project, Constants.BUNDLE_VERSION);
+		String bundleSymbolicName = bundleExtension.getInstruction(
+			Constants.BUNDLE_SYMBOLICNAME);
+		String bundleVersion = bundleExtension.getInstruction(
+			Constants.BUNDLE_VERSION);
 
 		StringBuilder sb = new StringBuilder();
 

@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.StringUtil;
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.util.BndUtil;
 import com.liferay.gradle.util.Validator;
 
@@ -56,7 +57,11 @@ public class PublishPluginDefaultsPlugin
 	protected void applyPluginDefaults(
 		Project project, PublishPlugin publishPlugin) {
 
-		_configurePluginBundle(project);
+		BundleExtension bundleExtension = BndUtil.getBundleExtension(
+			project.getExtensions());
+
+		_configurePluginBundle(project, bundleExtension);
+
 		_configureTaskPublishPlugins(project);
 		_configureTaskUploadArchives(project);
 	}
@@ -69,7 +74,9 @@ public class PublishPluginDefaultsPlugin
 	private PublishPluginDefaultsPlugin() {
 	}
 
-	private void _configurePluginBundle(Project project) {
+	private void _configurePluginBundle(
+		Project project, final BundleExtension bundleExtension) {
+
 		final PluginBundleExtension pluginBundleExtension =
 			GradleUtil.getExtension(project, PluginBundleExtension.class);
 
@@ -94,8 +101,8 @@ public class PublishPluginDefaultsPlugin
 			PluginConfig pluginConfig = pluginConfigs.create(name);
 
 			if (gradlePluginFiles.length == 1) {
-				String displayName = BndUtil.getInstruction(
-					project, Constants.BUNDLE_NAME);
+				String displayName = bundleExtension.getInstruction(
+					Constants.BUNDLE_NAME);
 
 				pluginConfig.setDisplayName(displayName);
 			}
@@ -116,8 +123,8 @@ public class PublishPluginDefaultsPlugin
 					if (Validator.isNull(
 							pluginBundleExtension.getDescription())) {
 
-						String description = BndUtil.getInstruction(
-							project, Constants.BUNDLE_DESCRIPTION);
+						String description = bundleExtension.getInstruction(
+							Constants.BUNDLE_DESCRIPTION);
 
 						pluginBundleExtension.setDescription(description);
 					}

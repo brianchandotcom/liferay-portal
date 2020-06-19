@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
@@ -23,7 +24,6 @@ import com.liferay.gradle.plugins.util.BndUtil;
 import java.io.File;
 
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -53,6 +53,9 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 	@Override
 	protected void applyPluginDefaults(Project project, JspCPlugin jspCPlugin) {
+		final BundleExtension bundleExtension = BndUtil.getBundleExtension(
+			project.getExtensions());
+
 		_configureTaskGenerateJSPJava(project);
 		_configureTaskJar(project);
 		_configureTaskProcessResources(project);
@@ -62,7 +65,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 				@Override
 				public void execute(Project project) {
-					_configureBundleExtensionDefaults(project);
+					_configureBundleExtensionDefaults(project, bundleExtension);
 				}
 
 			});
@@ -76,9 +79,8 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 	private JspCDefaultsPlugin() {
 	}
 
-	private void _configureBundleExtensionDefaults(Project project) {
-		Map<String, Object> bundleInstructions = BndUtil.getInstructions(
-			project);
+	private void _configureBundleExtensionDefaults(
+		Project project, BundleExtension bundleExtension) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -94,7 +96,7 @@ public class JspCDefaultsPlugin extends BaseDefaultsPlugin<JspCPlugin> {
 
 		sb.append(FileUtil.getAbsolutePath(compileJSPTask.getDestinationDir()));
 
-		bundleInstructions.put("-add-resource", sb.toString());
+		bundleExtension.instruction("-add-resource", sb.toString());
 	}
 
 	private void _configureTaskGenerateJSPJava(final Project project) {

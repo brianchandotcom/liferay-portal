@@ -57,6 +57,7 @@ import com.liferay.gradle.plugins.defaults.tasks.WriteArtifactPublishCommandsTas
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
 import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerExtension;
 import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerPlugin;
+import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.CompileJSPTask;
@@ -322,6 +323,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 
+		BundleExtension bundleExtension = BndUtil.getBundleExtension(
+			project.getExtensions());
+
 		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
@@ -336,7 +340,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		boolean syncReleaseVersions = _syncReleaseVersions(
 			project, portalRootDir, versionOverrideFile, testProject);
 
-		_applyVersionOverrides(project, versionOverrideFile);
+		_applyVersionOverrides(project, bundleExtension, versionOverrideFile);
 
 		Gradle gradle = project.getGradle();
 
@@ -358,7 +362,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			deployToTools = true;
 		}
 
-		_applyPlugins(project);
+		_applyPlugins(project, bundleExtension);
 
 		// applyConfigScripts configures the "install" and "uploadArchives"
 		// tasks, and this causes the conf2ScopeMappings.mappings convention
@@ -420,7 +424,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if (!testProject) {
-			_addTaskCheckOSGiBundleState(project);
+			_addTaskCheckOSGiBundleState(project, bundleExtension);
 		}
 
 		InstallCacheTask installCacheTask = _addTaskInstallCache(
@@ -482,13 +486,13 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureSourceSetMain(project);
 		_configureTaskDeploy(project, deployConfigsTask);
 		_configureTaskJar(jar, zipZippableResourcesTask, testProject);
-		_configureTaskJavadoc(project, portalRootDir);
+		_configureTaskJavadoc(project, bundleExtension, portalRootDir);
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
 		_configureTasksCheckOSGiBundleState(project, liferayExtension);
 		_configureTasksJavaCompile(project);
-		_configureTasksJspC(project);
+		_configureTasksJspC(project, bundleExtension);
 		_configureTasksPmd(project);
 		_configureTasksSpotBugs(project);
 		_configureTestIntegrationTomcat(project);
@@ -614,7 +618,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						project, JavaPlugin.JAR_TASK_NAME);
 
 					if (taskExecutionGraph.hasTask(jarTask)) {
-						_configureBundleInstructions(project);
+						_configureBundleInstructions(project, bundleExtension);
 					}
 				}
 
@@ -725,7 +729,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private CheckOSGiBundleStateTask _addTaskCheckOSGiBundleState(
-		final Project project) {
+		final Project project, final BundleExtension bundleExtension) {
 
 		CheckOSGiBundleStateTask checkOSGiBundleStateTask = GradleUtil.addTask(
 			project, CHECK_OSGI_BUNDLE_STATE_TASK_NAME,
@@ -736,8 +740,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return BndUtil.getInstruction(
-						project, Constants.BUNDLE_SYMBOLICNAME);
+					return bundleExtension.getInstruction(
+						Constants.BUNDLE_SYMBOLICNAME);
 				}
 
 			});
@@ -1686,10 +1690,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project);
 	}
 
-	private void _applyPlugins(Project project) {
-		if (Validator.isNotNull(
-				BndUtil.getInstruction(project, "Main-Class"))) {
+	private void _applyPlugins(
+		Project project, BundleExtension bundleExtension) {
 
+		if (Validator.isNotNull(bundleExtension.getInstruction("Main-Class"))) {
 			GradleUtil.applyPlugin(project, ApplicationPlugin.class);
 		}
 
@@ -1758,7 +1762,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _applyVersionOverrides(
-		Project project, File versionOverrideFile) {
+		Project project, BundleExtension bundleExtension,
+		File versionOverrideFile) {
 
 		if ((versionOverrideFile == null) || !versionOverrideFile.exists()) {
 			return;
@@ -1773,10 +1778,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			Constants.BUNDLE_VERSION);
 
 		if (Validator.isNotNull(bundleVersion)) {
-			Map<String, Object> bundleInstructions = BndUtil.getInstructions(
-				project);
-
-			bundleInstructions.put(Constants.BUNDLE_VERSION, bundleVersion);
+			bundleExtension.instruction(
+				Constants.BUNDLE_VERSION, bundleVersion);
 
 			project.setVersion(bundleVersion);
 
@@ -2081,9 +2084,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			bundleDefaultInstructions);
 	}
 
-	private void _configureBundleInstructions(Project project) {
-		Map<String, Object> bundleInstructions = BndUtil.getInstructions(
-			project);
+	private void _configureBundleInstructions(
+		Project project, BundleExtension bundleExtension) {
 
 		String projectPath = project.getPath();
 
@@ -2092,19 +2094,20 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			projectPath.startsWith(":private:apps:")) {
 
 			String exportPackage = GradleUtil.toString(
-				bundleInstructions.get(Constants.EXPORT_PACKAGE));
+				bundleExtension.getInstruction(Constants.EXPORT_PACKAGE));
 
 			if (Validator.isNotNull(exportPackage)) {
 				exportPackage = "!com.liferay.*.kernel.*," + exportPackage;
 
-				bundleInstructions.put(Constants.EXPORT_PACKAGE, exportPackage);
+				bundleExtension.instruction(
+					Constants.EXPORT_PACKAGE, exportPackage);
 			}
 		}
 
-		if (!bundleInstructions.containsKey(Constants.EXPORT_CONTENTS) &&
-			!bundleInstructions.containsKey("-check")) {
+		if (!bundleExtension.containsKey(Constants.EXPORT_CONTENTS) &&
+			!bundleExtension.containsKey("-check")) {
 
-			bundleInstructions.put("-check", "EXPORTS");
+			bundleExtension.instruction("-check", "EXPORTS");
 		}
 	}
 
@@ -3576,13 +3579,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		compileOptions.setWarnings(false);
 	}
 
-	private void _configureTaskJavadoc(Project project, File portalRootDir) {
+	private void _configureTaskJavadoc(
+		Project project, BundleExtension bundleExtension, File portalRootDir) {
+
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
-		_configureTaskJavadocFilter(javadoc);
+		_configureTaskJavadocFilter(bundleExtension, javadoc);
 		_configureTaskJavadocOptions(javadoc, portalRootDir);
-		_configureTaskJavadocTitle(javadoc);
+		_configureTaskJavadocTitle(bundleExtension, javadoc);
 
 		JavaVersion javaVersion = JavaVersion.current();
 
@@ -3594,9 +3599,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskJavadocFilter(Javadoc javadoc) {
-		String exportPackage = BndUtil.getInstruction(
-			javadoc.getProject(), Constants.EXPORT_PACKAGE);
+	private void _configureTaskJavadocFilter(
+		BundleExtension bundleExtension, Javadoc javadoc) {
+
+		String exportPackage = bundleExtension.getInstruction(
+			Constants.EXPORT_PACKAGE);
 
 		if (Validator.isNull(exportPackage)) {
 			javadoc.exclude("**/");
@@ -3689,7 +3696,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskJavadocTitle(Javadoc javadoc) {
+	private void _configureTaskJavadocTitle(
+		BundleExtension bundleExtension, Javadoc javadoc) {
+
 		Project project = javadoc.getProject();
 
 		StringBuilder sb = new StringBuilder();
@@ -3699,7 +3708,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sb.append(' ');
 		sb.append(project.getVersion());
 		sb.append(" - ");
-		sb.append(BndUtil.getInstruction(project, Constants.BUNDLE_NAME));
+		sb.append(bundleExtension.getInstruction(Constants.BUNDLE_NAME));
 
 		javadoc.setTitle(sb.toString());
 	}
@@ -3784,9 +3793,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTasksJspC(Project project) {
-		String fragmentHost = BndUtil.getInstruction(
-			project, Constants.FRAGMENT_HOST);
+	private void _configureTasksJspC(
+		Project project, BundleExtension bundleExtension) {
+
+		String fragmentHost = bundleExtension.getInstruction(
+			Constants.FRAGMENT_HOST);
 
 		if (Validator.isNotNull(fragmentHost)) {
 			Task compileJSPTask = GradleUtil.getTask(

@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
+import com.liferay.portal.workflow.kaleo.definition.RoleAssignment;
 import com.liferay.portal.workflow.kaleo.definition.State;
+import com.liferay.portal.workflow.kaleo.definition.Task;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 
 import java.util.ArrayList;
@@ -36,6 +38,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -158,6 +161,26 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 		};
 	}
 
+	private Long[] _toRoleIds(
+		Node node) {
+
+		Task task = (Task)node;
+
+		return Stream.of(
+			task.getAssignments()
+		).flatMap(
+			Set::stream
+		).filter(
+			assignment -> assignment instanceof RoleAssignment
+		).map(
+			assignment -> (RoleAssignment)assignment
+		).map(
+			RoleAssignment::getRoleId
+		).toArray(
+			Long[]::new
+		);
+	}
+
 	private AppWorkflowState[] _toAppWorkflowStates(List<State> states) {
 		return Stream.of(
 			states
@@ -190,6 +213,7 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 					AppBuilderWorkflowTaskLink::getDdmStructureLayoutId,
 					Long.class);
 				name = taskName;
+				roleIds = _toRoleIds(node);
 			}
 		};
 	}

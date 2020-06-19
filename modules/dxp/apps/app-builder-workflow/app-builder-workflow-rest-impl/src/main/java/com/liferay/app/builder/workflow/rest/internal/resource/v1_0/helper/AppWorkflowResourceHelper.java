@@ -22,7 +22,6 @@ import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTransition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
@@ -35,8 +34,9 @@ import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.export.DefinitionExporter;
 import com.liferay.portal.workflow.kaleo.definition.export.builder.DefinitionBuilder;
 
-import java.util.Collections;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,10 +94,13 @@ public class AppWorkflowResourceHelper {
 					appWorkflowTask.getName(), StringPool.BLANK);
 
 				task.setAssignments(
-					Collections.singleton(
-						new RoleAssignment(
-							RoleConstants.PORTAL_CONTENT_REVIEWER,
-							RoleConstants.TYPE_REGULAR_LABEL)));
+					Stream.of(
+						appWorkflowTask.getRoleIds()
+					).map(
+						RoleAssignment::new
+					).collect(
+						Collectors.toSet()
+					));
 
 				definition.addNode(task);
 			}

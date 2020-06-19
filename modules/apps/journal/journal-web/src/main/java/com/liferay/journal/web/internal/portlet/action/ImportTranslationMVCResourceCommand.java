@@ -15,6 +15,8 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
+import com.liferay.document.library.kernel.exception.RequiredFileException;
+import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -28,12 +30,12 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.upload.UploadRequestSizeException;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.exception.InvalidXLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
+import com.liferay.translation.info.InfoFormValuesUpdater;
 
 import java.io.InputStream;
 
@@ -78,18 +80,22 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 			long articleResourceId = ParamUtil.getLong(
 				actionRequest, "articleResourceId");
 
-			InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"file");
+			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
+				"file")) {
 
-			_translationInfoFormValuesExporter.importXLIFF(
-				themeDisplay.getScopeGroupId(),
-				new InfoItemClassPKReference(
-					JournalArticle.class.getName(), articleResourceId),
-				inputStream);
+				InfoFormValues infoFormValues =
+					_translationInfoFormValuesExporter.importXLIFF(
+					themeDisplay.getScopeGroupId(),
+					new InfoItemClassPKReference(
+						JournalArticle.class.getName(), articleResourceId),
+					inputStream);
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
+				JournalArticle article = _journalArticleService.getArticle(
+					articleResourceId);
 
-			actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+				_infoFormValuesUpdater.updateFromInfoFormValues(
+					article, infoFormValues);
+			}
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
@@ -134,7 +140,7 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference
-	private Http _http;
+	private InfoFormValuesUpdater _infoFormValuesUpdater;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

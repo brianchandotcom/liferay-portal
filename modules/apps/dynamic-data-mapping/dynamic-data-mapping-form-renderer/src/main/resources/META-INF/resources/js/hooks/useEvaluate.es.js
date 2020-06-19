@@ -12,6 +12,8 @@
  * details.
  */
 
+import {useCallback} from 'react';
+
 import {usePage} from './usePage.es';
 
 /**
@@ -28,13 +30,23 @@ export const useEvaluate = (thunk) => {
 		rules,
 	} = usePage();
 
-	return (args) =>
-		thunk({
+	return useCallback(
+		(args) =>
+			thunk({
+				defaultLanguageId,
+				editingLanguageId,
+				pages,
+				portletNamespace,
+				rules,
+				...args,
+			}),
+		[
 			defaultLanguageId,
 			editingLanguageId,
 			pages,
 			portletNamespace,
 			rules,
-			...args,
-		});
+			thunk,
+		]
+	);
 };

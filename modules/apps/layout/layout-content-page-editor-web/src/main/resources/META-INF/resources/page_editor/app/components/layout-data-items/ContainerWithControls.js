@@ -24,6 +24,7 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {config} from '../../config/index';
+import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useDispatch, useSelector} from '../../store/index';
@@ -51,6 +52,9 @@ const ContainerWithControls = React.forwardRef(
 			},
 		});
 
+		const canUpdatePageStructure = useSelector(
+			selectCanUpdatePageStructure
+		);
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 		const showFloatingToolbar = useSelector(selectShowFloatingToolbar);
 		const selectItem = useSelectItem();
@@ -125,8 +129,9 @@ const ContainerWithControls = React.forwardRef(
 					layoutData={layoutData}
 				>
 					<Container
-						className={classNames('page-editor__container', {
+						className={classNames({
 							empty: !item.children.length,
+							'page-editor__container': canUpdatePageStructure,
 						})}
 						item={item}
 						ref={setRef}

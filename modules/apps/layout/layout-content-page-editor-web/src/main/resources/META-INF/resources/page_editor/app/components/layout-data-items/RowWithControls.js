@@ -24,6 +24,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
+import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -43,6 +44,10 @@ const RowWithControls = React.forwardRef(
 		const [resizing, setResizing] = useState(false);
 		const [updatedLayoutData, setUpdatedLayoutData] = useState(null);
 		const [customRow, setCustomRow] = useState(false);
+
+		const canUpdatePageStructure = useSelector(
+			selectCanUpdatePageStructure
+		);
 
 		const [
 			openSaveFragmentCompositionModal,
@@ -112,9 +117,10 @@ const RowWithControls = React.forwardRef(
 				layoutData={layoutData}
 			>
 				<Row
-					className={classNames('page-editor__row', {
+					className={classNames({
 						'align-bottom': verticalAlignment === 'bottom',
 						'align-middle': verticalAlignment === 'middle',
+						'page-editor__row': canUpdatePageStructure,
 						'page-editor__row-overlay-grid': resizing,
 					})}
 					item={item}

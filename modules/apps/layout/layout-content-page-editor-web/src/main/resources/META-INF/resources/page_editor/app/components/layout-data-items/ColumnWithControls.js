@@ -21,6 +21,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
+import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import resizeColumns from '../../thunks/resizeColumns';
@@ -83,6 +84,9 @@ const ColumnWithControls = React.forwardRef(
 		] = useState(false);
 		const parentItem = layoutData.items[item.parentId];
 		const resizeInfo = useRef();
+		const canUpdatePageStructure = useSelector(
+			selectCanUpdatePageStructure
+		);
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 		const [selectedColumn, setColumnSelected] = useState(null);
 		const selectedViewportSize = useSelector(
@@ -401,7 +405,9 @@ const ColumnWithControls = React.forwardRef(
 					item={item}
 					ref={ref}
 				>
-					{parentItemIsActive && columnIndex !== 0 ? (
+					{canUpdatePageStructure &&
+					parentItemIsActive &&
+					columnIndex !== 0 ? (
 						<NotDraggableArea>
 							<button
 								className={classNames(

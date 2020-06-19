@@ -343,7 +343,7 @@ definition {
 			entryTitle = "Blogs Entry2 Title");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
 

@@ -74,7 +74,7 @@ definition {
 		}
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
 

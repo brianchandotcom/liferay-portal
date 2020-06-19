@@ -291,7 +291,7 @@ definition {
 
 		task ("Add a virtual instance") {
 			GlobalMenu.gotoPortlet(
-				category = "Configuration",
+				category = "System",
 				panel = "Control Panel",
 				portlet = "Virtual Instances");
 

@@ -199,7 +199,7 @@ definition {
 	@priority = "4"
 	test AskQuestionsThroughAnonymousUser {
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Service Access Policy");
 

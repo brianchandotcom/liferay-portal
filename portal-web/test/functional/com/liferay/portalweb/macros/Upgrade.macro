@@ -1947,7 +1947,7 @@ definition {
 
 	macro ViewDroolsAppManager {
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "App Manager");
 

@@ -12,7 +12,7 @@ definition {
 		User.firstLoginPG();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -21,7 +21,7 @@ definition {
 		ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "enable");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -38,7 +38,7 @@ definition {
 		}
 		else {
 			GlobalMenu.gotoPortlet(
-				category = "Change Lists",
+				category = "Content",
 				panel = "Applications",
 				portlet = "Settings");
 
@@ -75,7 +75,7 @@ definition {
 		Button.clickPublishToChangeList();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -97,7 +97,7 @@ definition {
 			webContentTitleEdit = "Web Content Title Edit");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -115,7 +115,7 @@ definition {
 			webContentTitle = "Web Content Title Edit");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -142,7 +142,7 @@ definition {
 	@priority = "5"
 	test MakeActiveAnotherChangeList {
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -188,7 +188,7 @@ definition {
 	@priority = "4"
 	test SwitchActiveChangeList {
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -225,7 +225,7 @@ definition {
 		PortletEntry.publish();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 

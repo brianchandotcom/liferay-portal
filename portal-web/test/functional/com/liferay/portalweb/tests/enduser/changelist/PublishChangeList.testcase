@@ -12,7 +12,7 @@ definition {
 		User.firstLoginPG();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -21,7 +21,7 @@ definition {
 		ChangeList.changeUserSettingsPopuConfirmation(changeUserPopupConfirmation = "disable");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -38,7 +38,7 @@ definition {
 		}
 		else {
 			GlobalMenu.gotoPortlet(
-				category = "Change Lists",
+				category = "Content",
 				panel = "Applications",
 				portlet = "Settings");
 
@@ -66,14 +66,14 @@ definition {
 		Button.clickPublishToChangeList();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
 		ChangeList.publishChangeList(changeListName = "Change List Name");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -87,7 +87,7 @@ definition {
 			changeListPublishedBy = "Test Test");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 

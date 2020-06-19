@@ -2189,7 +2189,7 @@ definition {
 			userScreenName = "usersn");
 
 		GlobalMenu.gotoPortlet(
-			category = "Users",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
@@ -2334,7 +2334,7 @@ definition {
 			userScreenName = "usersn");
 
 		GlobalMenu.gotoPortlet(
-			category = "Users",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
 

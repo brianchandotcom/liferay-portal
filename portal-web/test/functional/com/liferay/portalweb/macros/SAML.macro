@@ -15,7 +15,7 @@ definition {
 		}
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -53,7 +53,7 @@ definition {
 		Navigator.openSpecificURL(url = "${spURL}");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -101,7 +101,7 @@ definition {
 		}
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -133,7 +133,7 @@ definition {
 		}
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 

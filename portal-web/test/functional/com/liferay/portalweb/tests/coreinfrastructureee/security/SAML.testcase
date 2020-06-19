@@ -30,7 +30,7 @@ definition {
 		Navigator.openURL();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
@@ -256,7 +256,7 @@ definition {
 		Navigator.openURL();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -348,7 +348,7 @@ definition {
 		User.viewLoggedInPG();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -525,7 +525,7 @@ definition {
 		}
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -557,7 +557,7 @@ definition {
 		SAML.configureLiferaySAMLAsIdP(samlEntityID = "samlidp");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -588,7 +588,7 @@ definition {
 		User.viewLoggedInPG();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -613,7 +613,7 @@ definition {
 		User.viewLoggedInPG();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -624,7 +624,7 @@ definition {
 		Navigator.openSpecificURL(url = "http://www.able.com:9080");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -669,7 +669,7 @@ definition {
 		Navigator.openURL();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -776,7 +776,7 @@ definition {
 		}
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -823,7 +823,7 @@ definition {
 			spURL = "http://www.able.com:9080");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
@@ -1068,7 +1068,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -1083,7 +1083,7 @@ definition {
 		Navigator.gotoLoginPage();
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -1123,7 +1123,7 @@ definition {
 			spURL = "http://www.able.com:9080/");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Server Administration");
 
@@ -1288,7 +1288,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 
@@ -1316,7 +1316,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "SAML Admin");
 

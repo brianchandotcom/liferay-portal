@@ -12,7 +12,7 @@ definition {
 		User.firstLoginPG();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -29,7 +29,7 @@ definition {
 		}
 		else {
 			GlobalMenu.gotoPortlet(
-				category = "Change Lists",
+				category = "Content",
 				panel = "Applications",
 				portlet = "Settings");
 
@@ -54,7 +54,7 @@ definition {
 			templateName = "WC Template Name");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -85,7 +85,7 @@ definition {
 			templatePreviousName = "WC Template Name");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -107,14 +107,14 @@ definition {
 			templatePreviousName = "WC Template Name");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
 		ChangeList.publishChangeList(changeListName = "Second Change List Name");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 

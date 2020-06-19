@@ -180,7 +180,7 @@ definition {
 		FormFields.viewCheckboxNotChecked(fieldName = "Disable Multi-Factor Authentication");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "System",
 			panel = "Control Panel",
 			portlet = "Virtual Instances");
 
@@ -468,7 +468,7 @@ definition {
 			userPassword = "test");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Audit");
 

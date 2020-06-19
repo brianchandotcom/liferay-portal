@@ -12,7 +12,7 @@ definition {
 		User.firstLoginPG();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Settings");
 
@@ -27,7 +27,7 @@ definition {
 		}
 		else {
 			GlobalMenu.gotoPortlet(
-				category = "Change Lists",
+				category = "Content",
 				panel = "Applications",
 				portlet = "Settings");
 
@@ -61,7 +61,7 @@ definition {
 			locator1 = "ChangeList#CHECK_CIRCLE");
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -100,7 +100,7 @@ definition {
 	@priority = "4"
 	test ViewChangeListInformationOnWebContentHistoryDeletion {
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -142,7 +142,7 @@ definition {
 		Alert.viewSuccessMessage();
 
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 
@@ -152,7 +152,7 @@ definition {
 	@priority = "4"
 	test ViewChangeListOverviewScreenFromWebContentHistory {
 		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
+			category = "Content",
 			panel = "Applications",
 			portlet = "Overview");
 

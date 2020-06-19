@@ -26,7 +26,7 @@ definition {
 	test AddAccountUser {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -35,7 +35,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		AccountUsers.addUsers(
@@ -47,7 +47,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
@@ -57,7 +57,7 @@ definition {
 	test AddAccountWithMultiDomains {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -67,7 +67,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoEntry(rowEntry = "Account with Multi Domains");
@@ -83,7 +83,7 @@ definition {
 	test AddPersonalAccount {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -93,7 +93,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Search.searchCP(searchTerm = "Personal Account");
@@ -108,7 +108,7 @@ definition {
 	test AssignExistingUserToAccount {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -117,7 +117,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		AccountUsers.addUsers(
@@ -129,7 +129,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -146,7 +146,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoEntry(rowEntry = "Account with Exist User");
@@ -164,7 +164,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -180,7 +180,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoEntry(rowEntry = "Account with Organization");
@@ -194,7 +194,7 @@ definition {
 	test CancelAccountCreation {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoAdd();
@@ -213,7 +213,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Search.searchCP(searchTerm = "Cancel Accounts Name");
@@ -225,7 +225,7 @@ definition {
 	test DeactivateActivateUser {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -234,7 +234,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		AccountUsers.addUsers(
@@ -246,7 +246,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
@@ -265,7 +265,7 @@ definition {
 		for (var accountNumber : list "1,2,3") {
 			GlobalMenu.gotoPortlet(
 				category = "Accounts",
-				panel = "Control Panel",
+				panel = "Applications",
 				portlet = "Accounts");
 
 			Accounts.addCP(
@@ -275,7 +275,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.deleteAccount(accountName = "Delete Accounts Name 1 for Test");
@@ -284,7 +284,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.deleteAccount(
@@ -295,7 +295,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.deleteAccount(
@@ -306,7 +306,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
@@ -321,7 +321,7 @@ definition {
 	test DeleteInactiveAccount {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -331,7 +331,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
@@ -348,7 +348,7 @@ definition {
 	test FilterAccountUserInTheUsersAdminPortlet {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -357,7 +357,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		AccountUsers.addUsers(
@@ -401,7 +401,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -410,7 +410,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		AccountUsers.addUsers(
@@ -422,7 +422,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");
@@ -437,7 +437,7 @@ definition {
 		for (var accountNumber : list "1,2,3") {
 			GlobalMenu.gotoPortlet(
 				category = "Accounts",
-				panel = "Control Panel",
+				panel = "Applications",
 				portlet = "Accounts");
 
 			Accounts.addCP(
@@ -447,7 +447,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.inactiveAccount(accountName = "Accounts Name 1 for Test");
@@ -456,7 +456,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.inactiveAccount(
@@ -467,7 +467,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.inactiveAccount(
@@ -481,7 +481,7 @@ definition {
 	test RemoveDomain {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -491,7 +491,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.removeDomain(
@@ -500,7 +500,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Account Domain");
@@ -518,7 +518,7 @@ definition {
 	test RemoveUserFromAccount {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -527,7 +527,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		AccountUsers.addUsers(
@@ -539,7 +539,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoEntry(rowEntry = "Remove Account User");
@@ -552,7 +552,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.viewNoAssignee(
@@ -564,7 +564,7 @@ definition {
 	test Smoke {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -573,7 +573,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Search.searchCP(searchTerm = "Accounts Name for Test");
@@ -597,7 +597,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -613,7 +613,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoEntry(rowEntry = "Unassign Organization from Account");
@@ -626,7 +626,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.viewNoAssignee(
@@ -638,7 +638,7 @@ definition {
 	test UpdateAccount {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -649,7 +649,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Search.searchCP(searchTerm = "Accounts Name for Test");
@@ -662,7 +662,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
@@ -677,7 +677,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Accounts Name for Test");
@@ -700,7 +700,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.viewEntryName(rowEntry = "Update Accounts Name via Name Link");
@@ -716,7 +716,7 @@ definition {
 	test UpdateAccountUser {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -725,7 +725,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		AccountUsers.addUsers(
@@ -737,7 +737,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		AccountUsers.editUser(
@@ -746,14 +746,14 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Account Users");
 
 		LexiconEntry.viewEntryName(rowEntry = "edituserfn userln");
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoEntry(rowEntry = "Account with User");
@@ -768,7 +768,7 @@ definition {
 	test UpdateInactiveAccountViaNameLink {
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Accounts.addCP(
@@ -819,7 +819,7 @@ definition {
 		for (var accountNum : list "1,2,3,4,5,6") {
 			GlobalMenu.gotoPortlet(
 				category = "Accounts",
-				panel = "Control Panel",
+				panel = "Applications",
 				portlet = "Accounts");
 
 			Accounts.addCP(accountName = "Accounts Name ${accountNum}");
@@ -827,7 +827,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Pagination.changePagination(itemsPerPage = "4");

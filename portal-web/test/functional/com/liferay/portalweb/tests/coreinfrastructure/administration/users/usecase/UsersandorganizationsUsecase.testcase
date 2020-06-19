@@ -1476,7 +1476,7 @@ definition {
 			userScreenName = "test1");
 
 		GlobalMenu.gotoPortlet(
-			category = "Users",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
@@ -1485,7 +1485,7 @@ definition {
 			passwordPolicyName = "Default Password Policy");
 
 		GlobalMenu.gotoPortlet(
-			category = "Users",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
@@ -1523,7 +1523,7 @@ definition {
 			userScreenName = "test1");
 
 		GlobalMenu.gotoPortlet(
-			category = "Users",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
 
@@ -1567,7 +1567,7 @@ definition {
 			userScreenName = "test1");
 
 		GlobalMenu.gotoPortlet(
-			category = "Users",
+			category = "Security",
 			panel = "Control Panel",
 			portlet = "Password Policies");
 

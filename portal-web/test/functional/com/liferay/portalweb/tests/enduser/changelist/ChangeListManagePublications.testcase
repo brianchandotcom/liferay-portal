@@ -41,20 +41,17 @@ definition {
 		ChangeList.cancelPublicationCreation();
 	}
 
-	@description = "Try to create new change list with too long name"
 	@priority = "3"
 	test CreateNewPublicationWithLongName {
 		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithLongName";
 
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
-			publicationDescription = "Publication Description",
 			publicationName = "Lopadotemachoselachogaleokranioleipsanodrimhypotrimmatosilphioparaomelitokatakechymenokichlepikossyphophattoperisteralektryonoptekephalliokigklopeleiolagoiosiraiobaphetraganopterygon");
 
 		Alert.viewLengthValidationField();
 	}
 
-	@description = "Try to create new change list with empty string in the description"
 	@priority = "3"
 	test CreateNewPublicationWithoutDescription {
 		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithoutDescription";
@@ -68,14 +65,11 @@ definition {
 			value1 = "Publication Name");
 	}
 
-	@description = "Try to create new change list with empty string name"
 	@priority = "3"
 	test CreateNewPublicationWithoutName {
 		property test.name.skip.portal.instance = "ChangeListManagePublications#CreateNewPublicationWithoutName";
 
-		ChangeList.createNewPublication(
-			gotoManagePublications = "true",
-			publicationDescription = "Publication Description");
+		ChangeList.createNewPublication(gotoManagePublications = "true");
 
 		Alert.viewRequiredField();
 	}
@@ -86,7 +80,6 @@ definition {
 
 		ChangeList.createNewPublication(
 			gotoManagePublications = "true",
-			publicationDescription = "Publication Description",
 			publicationName = "Publication Name");
 
 		ChangeList.deletePublication(publicationName = "Publication Name");

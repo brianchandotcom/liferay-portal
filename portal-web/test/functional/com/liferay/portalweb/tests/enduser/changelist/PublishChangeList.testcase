@@ -17,9 +17,7 @@ definition {
 
 		ChangeList.enableChangeList();
 
-		ChangeList.createNewPublication(
-			publicationDescription = "Publication Description",
-			publicationName = "Publication Name");
+		ChangeList.createNewPublication(publicationName = "Publication Name");
 	}
 
 	tearDown {

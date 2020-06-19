@@ -444,8 +444,8 @@ definition {
 
 		task ("Edit the Container's properties") {
 			PageEditor.editLayoutContainer(
-				containerWidth = "Fixed Width",
 				bottom = "4",
+				containerWidth = "Fixed Width",
 				padding = "true",
 				top = "2");
 		}

@@ -1427,7 +1427,7 @@ definition {
 					locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_LEFT");
 
 				AssertElementPresent(
-					key_marginRight = "",					
+					key_marginRight = "",
 					key_position = "${position}",
 					locator1 = "PageEditor#CONTAINER_CONFIGURATION_MARGIN_RIGHT");
 			}

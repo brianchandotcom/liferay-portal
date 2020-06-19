@@ -29,6 +29,12 @@ public interface PanelCategoryKeys {
 	public static final String CONTROL_PANEL_CONFIGURATION =
 		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
 
+	public static final String CONTROL_PANEL_MARKETPLACE =
+		"control_panel.marketplace";
+
+	public static final String CONTROL_PANEL_SECURITY =
+		"control_panel.security";
+
 	public static final String CONTROL_PANEL_SITES =
 		PortletCategoryKeys.CONTROL_PANEL_SITES;
 
@@ -46,8 +52,17 @@ public interface PanelCategoryKeys {
 	public static final String GLOBAL_MENU_APPLICATIONS =
 		"global_menu.applications";
 
+	public static final String GLOBAL_MENU_APPLICATIONS_COMMERCE =
+		"global_menu.applications.commerce";
+
+	public static final String GLOBAL_MENU_APPLICATIONS_COMMUNICATION =
+		"global_menu.applications.communication";
+
 	public static final String GLOBAL_MENU_APPLICATIONS_CONTENT =
 		"global_menu.applications.content";
+
+	public static final String GLOBAL_MENU_APPLICATIONS_CUSTOM_APPS =
+		"global_menu.applications.custom.apps";
 
 	public static final String HIDDEN = "hidden";
 

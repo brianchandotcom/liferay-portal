@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "content.type=application/xliff+xml",
 	service = TranslationInfoFormValuesExporter.class
 )
-public class XLIFFInfoFormTranslationExporter<T>
+public class TranslationInfoFormValuesExporterImpl<T>
 	implements TranslationInfoFormValuesExporter<T> {
 
 	@Override

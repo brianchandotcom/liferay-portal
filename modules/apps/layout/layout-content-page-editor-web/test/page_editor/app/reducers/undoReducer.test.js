@@ -238,14 +238,29 @@ describe('undoReducer', () => {
 		expect(undoAction.editableValues).toBe(EDITABLE_VALUES);
 	});
 
-	it('saves needed state for undo when dispatching layout data related actions', () => {
-		const layoutDataActionTypes = [
-			ADD_ITEM,
-			MOVE_ITEM,
-			UPDATE_COL_SIZE,
-			UPDATE_ITEM_CONFIG,
-		];
+	it('saves needed state for undo when dispatching ADD_ITEM action', () => {
+		const ITEM_ID = 'itemId';
 
+		const initialState = {
+			...STATE,
+		};
+
+		const action = {
+			itemId: ITEM_ID,
+		};
+
+		const {undoHistory} = undoReducer(initialState, {
+			...action,
+			actionType: ADD_ITEM,
+			type: ADD_UNDO_ACTION,
+		});
+
+		const undoAction = undoHistory[0];
+
+		expect(undoAction.itemId).toBe(ITEM_ID);
+	});
+
+	it('saves needed state for undo when dispatching MOVE_ITEN action', () => {
 		const ITEM_ID = 'itemId';
 
 		const LAYOUT_DATA = {
@@ -277,40 +292,156 @@ describe('undoReducer', () => {
 			layoutData: LAYOUT_DATA,
 		};
 
-		layoutDataActionTypes.forEach((type) => {
-			const {undoHistory} = undoReducer(initialState, {
-				actionType: type,
-				itemId: ITEM_ID,
-				layoutData: {items: []},
-				type: ADD_UNDO_ACTION,
-			});
-
-			const undoAction = undoHistory[0];
-
-			expect(undoAction.layoutData).toBe(LAYOUT_DATA);
-			expect(undoAction.itemId).toBe(ITEM_ID);
-		});
-	});
-
-	it('cleans redo history when dispatching an action', () => {
-		const LANGUAGE_ID = 'es_ES';
-		const initialState = {
-			...STATE,
-			languageId: LANGUAGE_ID,
-			redoHistory: [{languageId: 'en_US', type: UPDATE_LANGUAGE_ID}],
+		const action = {
+			itemId: ITEM_ID,
+			layoutData: {items: []},
 		};
 
-		const action = updateLanguageId({
-			languageId: 'en_US',
-		});
-
-		const {redoHistory} = undoReducer(initialState, {
+		const {undoHistory} = undoReducer(initialState, {
 			...action,
-			actionType: UPDATE_LANGUAGE_ID,
+			actionType: MOVE_ITEM,
 			type: ADD_UNDO_ACTION,
 		});
 
-		expect(redoHistory.length).toBe(0);
+		const undoAction = undoHistory[0];
+
+		expect(undoAction.itemId).toBe(ITEM_ID);
+		expect(undoAction.parentItemId).toBe('rootId');
+		expect(undoAction.position).toBe(0);
+	});
+
+	it('saves needed state for undo when dispatching UPDATE_ITEM_CONFIG action', () => {
+		const ITEM_ID = 'itemId';
+
+		const LAYOUT_DATA = {
+			items: {
+				[ITEM_ID]: {
+					children: [],
+					config: {paddingBottom: 3, paddingTop: 1},
+					itemId: 'containerId',
+					parentId: 'rootId',
+					type: 'container',
+				},
+				rootId: {
+					children: [ITEM_ID],
+					config: {},
+					itemId: 'rootId',
+					parentId: '',
+					type: 'root',
+				},
+			},
+			rootItems: {
+				dropZone: '',
+				main: 'a91cab32-3f2a-4278-91a0-399ebd1c8cc1',
+			},
+			version: 1,
+		};
+
+		const initialState = {
+			...STATE,
+			layoutData: LAYOUT_DATA,
+		};
+
+		const action = {
+			itemId: ITEM_ID,
+			layoutData: {items: []},
+		};
+
+		const {undoHistory} = undoReducer(initialState, {
+			...action,
+			actionType: UPDATE_ITEM_CONFIG,
+			type: ADD_UNDO_ACTION,
+		});
+
+		const undoAction = undoHistory[0];
+
+		expect(undoAction.itemId).toBe(ITEM_ID);
+		expect(undoAction.config).toStrictEqual({
+			paddingBottom: 3,
+			paddingTop: 1,
+		});
+	});
+
+	it('saves needed state for undo when dispatching UPDATE_COL_SIZE action', () => {
+		const ROW_ITEM_ID = 'rowItemId';
+
+		const LAYOUT_DATA = {
+			items: {
+				[ROW_ITEM_ID]: {
+					children: ['column1', 'column2', 'column3', 'column4'],
+					config: {},
+					itemId: 'containerId',
+					parentId: 'rootId',
+					type: 'row',
+				},
+				column1: {
+					children: [],
+					config: {size: 2},
+					itemId: 'containerId',
+					parentId: 'rootId',
+					type: 'row',
+				},
+				column2: {
+					children: [],
+					config: {size: 4},
+					itemId: 'containerId',
+					parentId: 'rootId',
+					type: 'row',
+				},
+				column3: {
+					children: [],
+					config: {size: 2},
+					itemId: 'containerId',
+					parentId: 'rootId',
+					type: 'row',
+				},
+				column4: {
+					children: [],
+					config: {size: 4},
+					itemId: 'containerId',
+					parentId: 'rootId',
+					type: 'row',
+				},
+				rootId: {
+					children: [ROW_ITEM_ID],
+					config: {},
+					itemId: 'rootId',
+					parentId: '',
+					type: 'root',
+				},
+			},
+			rootItems: {
+				dropZone: '',
+				main: 'a91cab32-3f2a-4278-91a0-399ebd1c8cc1',
+			},
+			version: 1,
+		};
+
+		const initialState = {
+			...STATE,
+			layoutData: LAYOUT_DATA,
+		};
+
+		const action = {
+			layoutData: {items: []},
+			rowItemId: ROW_ITEM_ID,
+		};
+
+		const {undoHistory} = undoReducer(initialState, {
+			...action,
+			actionType: UPDATE_COL_SIZE,
+			type: ADD_UNDO_ACTION,
+		});
+
+		const undoAction = undoHistory[0];
+
+		expect(undoAction.rowItemId).toBe(ROW_ITEM_ID);
+		expect(undoAction.columnConfigs).toStrictEqual([
+			{config: {size: 2}, itemId: 'column1'},
+			{config: {size: 4}, itemId: 'column2'},
+			{config: {size: 2}, itemId: 'column3'},
+			{config: {size: 4}, itemId: 'column4'},
+		]);
 	});
 
 	it('preserves redo history when dispatching a redo action', () => {
@@ -327,8 +458,8 @@ describe('undoReducer', () => {
 
 		const {redoHistory} = undoReducer(initialState, {
 			...action,
-			isRedo: true,
 			actionType: UPDATE_LANGUAGE_ID,
+			isRedo: true,
 			type: ADD_UNDO_ACTION,
 		});
 

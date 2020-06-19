@@ -36,6 +36,8 @@ import * as undoFragmentEntryLinks from './undoFragmentEntryLinks';
 import * as undoMoveItem from './undoMoveItem';
 import * as undoSelectExperience from './undoSelectExperience';
 import * as undoSwitchViewportSize from './undoSwitchViewportSize';
+import * as undoUpdateColSize from './undoUpdateColSize';
+import * as undoUpdateItemConfig from './undoUpdateItemConfig';
 import * as undoUpdateLanguage from './undoUpdateLanguage';
 
 const UNDO_ACTIONS = {
@@ -49,7 +51,7 @@ const UNDO_ACTIONS = {
 	[UPDATE_COL_SIZE]: undoUpdateColSize,
 	[UPDATE_EDITABLE_VALUES]: undoEditableValuesAction,
 	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoFragmentConfiguration,
-	[UPDATE_ITEM_CONFIG]: undoLayoutDataAction,
+	[UPDATE_ITEM_CONFIG]: undoUpdateItemConfig,
 	[UPDATE_LANGUAGE_ID]: undoUpdateLanguage,
 };
 

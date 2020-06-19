@@ -22,9 +22,9 @@ import ExperienceItem from './ExperienceItem';
 
 const ExperiencesList = ({
 	activeExperienceId,
+	canUpdateExperiences,
 	defaultExperienceId,
 	experiences,
-	hasUpdatePermissions,
 	onDeleteExperience,
 	onEditExperience,
 	onPriorityDecrease,
@@ -43,7 +43,7 @@ const ExperiencesList = ({
 				const lockedIncreasePriority = i === 0;
 
 				const editable =
-					hasUpdatePermissions &&
+					canUpdateExperiences &&
 					experience.segmentsExperienceId !== defaultExperienceId &&
 					!experience.hasLockedSegmentsExperiment;
 

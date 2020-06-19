@@ -28,7 +28,7 @@ import Button from '../../../common/components/Button';
 const ExperienceModal = ({
 	errorMessage,
 	experienceId,
-	hasSegmentsPermission,
+	canUpdateSegments,
 	initialName = '',
 	observer,
 	onErrorDismiss,
@@ -220,7 +220,7 @@ const ExperienceModal = ({
 								)}
 							</ClaySelect>
 
-							{hasSegmentsPermission === true && (
+							{canUpdateSegments === true && (
 								<Button
 									className="flex-shrink-0 ml-2"
 									disabled={loading}

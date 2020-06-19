@@ -21,6 +21,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 
 import {config} from '../../../app/config/index';
+import selectCanUpdateExperiences from '../../../app/selectors/selectCanUpdateExperiences';
+import selectCanUpdateSegments from '../../../app/selectors/selectCanUpdateSegments';
 import {useDispatch, useSelector} from '../../../app/store/index';
 import createExperience from '../thunks/createExperience';
 import removeExperience from '../thunks/removeExperience';
@@ -79,13 +81,8 @@ const ExperienceSelector = ({
 }) => {
 	const dispatch = useDispatch();
 
-	const hasEditSegmentsEntryPermission = useSelector(
-		({permissions}) => permissions.EDIT_SEGMENTS_ENTRY
-	);
-
-	const hasUpdatePermissions = useSelector(
-		({permissions}) => permissions.UPDATE
-	);
+	const canUpdateExperiences = useSelector(selectCanUpdateExperiences);
+	const canUpdateSegments = useSelector(selectCanUpdateSegments);
 
 	const buttonRef = useRef();
 	const [buttonBoundingClientRect, setButtonBoundingClientRect] = useState({
@@ -311,7 +308,7 @@ const ExperienceSelector = ({
 						tabIndex="-1"
 					>
 						<ExperiencesSelectorHeader
-							canCreateExperiences={true}
+							canCreateExperiences={canUpdateExperiences}
 							onNewExperience={handleOnNewExperiecneClick}
 							showEmptyStateMessage={experiences.length <= 1}
 						/>
@@ -321,11 +318,11 @@ const ExperienceSelector = ({
 								activeExperienceId={
 									selectedExperience.segmentsExperienceId
 								}
+								canUpdateExperiences={canUpdateExperiences}
 								defaultExperienceId={
 									config.defaultSegmentsExperienceId
 								}
 								experiences={experiences}
-								hasUpdatePermissions={hasUpdatePermissions}
 								onDeleteExperience={deleteExperience}
 								onEditExperience={handleEditExperienceClick}
 								onPriorityDecrease={decreasePriority}
@@ -338,9 +335,9 @@ const ExperienceSelector = ({
 
 			{openModal && (
 				<ExperienceModal
+					canUpdateSegments={canUpdateSegments}
 					errorMessage={editingExperience.error}
 					experienceId={editingExperience.segmentsExperienceId}
-					hasSegmentsPermission={hasEditSegmentsEntryPermission}
 					initialName={editingExperience.name}
 					observer={modalObserver}
 					onClose={onModalClose}

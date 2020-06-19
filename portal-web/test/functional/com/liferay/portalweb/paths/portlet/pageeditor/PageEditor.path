@@ -382,13 +382,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SECTION_CONTAINER</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')]</td>
+	<td>CONTAINER_CONTAINER</td>
+	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')]</td>
 	<td></td>
 </tr>
 <tr>
-  <td>SECTION_CONTAINER_EMPTY</td>
-  <td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section empty')]</td>
+  <td>CONTAINER_CONTAINER_EMPTY</td>
+  <td>//div[contains(@class,'page-editor__topper') and contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container empty')]</td>
   <td></td>
 </tr>
 <tr>
@@ -397,8 +397,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SECTION_CONTAINER_NESTED_ELEMENT</td>
-	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Section')][${key_position}]//div[@class='container']${key_elementHeader}</td>
+	<td>CONTAINER_CONTAINER_NESTED_ELEMENT</td>
+	<td>//div[contains(@class,'page-editor__topper')]/div[contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container')]${key_elementHeader}</td>
 	<td></td>
 </tr>
 <tr>

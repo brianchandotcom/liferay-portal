@@ -132,6 +132,10 @@ export function historyPushWithSlug(push) {
 }
 
 export function stripHTML(text) {
+	if (!text) {
+		return text;
+	}
+
 	const htmlTags = /<([^>]+>)/g;
 	const nonBreakableSpace = '&nbsp;';
 

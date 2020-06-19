@@ -81,8 +81,9 @@ export default {
 	markItemForDeletion({
 		itemId,
 		onNetworkStatus,
-		portletIds,
+		portletIds = [],
 		segmentsExperienceId,
+		unmark = false,
 	}) {
 		return layoutServiceFetch(
 			config.markItemForDeletionURL,
@@ -91,6 +92,7 @@ export default {
 					itemId,
 					portletIds,
 					segmentsExperienceId,
+					unmark,
 				},
 			},
 			onNetworkStatus

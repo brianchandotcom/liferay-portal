@@ -16,23 +16,23 @@ import addItem from '../../actions/addItem';
 import LayoutService from '../../services/LayoutService';
 
 function undoAction({action, store}) {
-	const {itemId, layoutData, portletIds} = action;
+	const {itemId, portletIds} = action;
 
 	return (dispatch) => {
-		return LayoutService.updateLayoutData({
-			layoutData,
+		return LayoutService.markItemForDeletion({
+			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
-		}).then(() => {
+			unmark: true,
+		}).then(({layoutData}) => {
 			dispatch(addItem({itemId, layoutData, portletIds}));
 		});
 	};
 }
 
-function getDerivedStateForUndo({action, state}) {
+function getDerivedStateForUndo({action}) {
 	return {
 		itemId: action.itemId,
-		layoutData: state.layoutData,
 		portletIds: action.portletIds,
 	};
 }

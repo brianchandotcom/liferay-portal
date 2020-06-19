@@ -166,15 +166,16 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
+		final LiferayOSGiExtension liferayOSGiExtension =
+			new LiferayOSGiExtension(project);
+
+		extensionContainer.add(
+			LiferayOSGiExtension.class, PLUGIN_NAME, liferayOSGiExtension);
+
 		final BundleExtension bundleExtension = BndUtil.getBundleExtension(
 			extensionContainer);
-
-		final LiferayOSGiExtension liferayOSGiExtension =
-			GradleUtil.addExtension(
-				project, PLUGIN_NAME, LiferayOSGiExtension.class);
-
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+		LiferayExtension liferayExtension = extensionContainer.getByType(
+			LiferayExtension.class);
 
 		_configureExtensionBundle(project, bundleExtension);
 		_configureExtensionLiferay(project, liferayExtension);

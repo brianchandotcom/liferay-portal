@@ -12,10 +12,12 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {Treeview} from 'frontend-js-components-web';
-import React, {useCallback, useRef, useState} from 'react';
+import PropTypes from 'prop-types';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 function visit(nodes, callback) {
 	nodes.forEach((node) => {
@@ -28,11 +30,20 @@ function visit(nodes, callback) {
 }
 
 function SelectCategory({
+	addCategoryURL,
 	itemSelectorSaveEvent,
 	multiSelection,
 	namespace,
 	nodes,
 }) {
+	if (
+		nodes.length === 1 &&
+		nodes[0].vocabulary &&
+		nodes[0].children.length > 0
+	) {
+		nodes = nodes[0].children;
+	}
+
 	const [filterQuery, setFilterQuery] = useState('');
 
 	const selectedNodesRef = useRef(null);
@@ -42,6 +53,28 @@ function SelectCategory({
 
 		setFilterQuery(value);
 	}, []);
+
+	const handleAddCategoryClick = useCallback(() => {
+		const dialog = Liferay.Util.getWindow(itemSelectorSaveEvent);
+		const footer = dialog.getToolbar('footer');
+
+		footer.get('boundingBox').one('#addButton').hide();
+
+		footer.get('boundingBox').one('#cancelButton').hide();
+
+		Liferay.Util.navigate(addCategoryURL);
+	}, [addCategoryURL, itemSelectorSaveEvent]);
+
+	useEffect(() => {
+		const dialog = Liferay.Util.getWindow(itemSelectorSaveEvent);
+		const footer = dialog.getToolbar('footer');
+
+		footer.get('boundingBox').all('.add-category-toolbar-button').hide();
+
+		footer.get('boundingBox').one('#addButton').show();
+
+		footer.get('boundingBox').one('#cancelButton').show();
+	}, [itemSelectorSaveEvent]);
 
 	const handleSelectionChange = (selectedNodes) => {
 		const data = {};
@@ -88,7 +121,7 @@ function SelectCategory({
 	return (
 		<div className="select-category">
 			<form className="select-category-filter" role="search">
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid className="d-flex">
 					<div className="input-group">
 						<div className="input-group-item">
 							<input
@@ -103,6 +136,16 @@ function SelectCategory({
 							</div>
 						</div>
 					</div>
+
+					{addCategoryURL && (
+						<ClayButton
+							className="btn-monospaced ml-1"
+							displayType="primary"
+							onClick={handleAddCategoryClick}
+						>
+							<ClayIcon symbol="plus" />
+						</ClayButton>
+					)}
 				</ClayLayout.ContainerFluid>
 			</form>
 
@@ -126,5 +169,9 @@ function SelectCategory({
 		</div>
 	);
 }
+
+SelectCategory.propTypes = {
+	addCategoryURL: PropTypes.string.isRequired,
+};
 
 export default SelectCategory;

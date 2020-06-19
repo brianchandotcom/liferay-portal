@@ -63,9 +63,9 @@ definition {
 
 		DMNavigator.gotoMetadataSets();
 
-		DMMetadataSet.add(
-			dmMetadataSetFieldNames = "Text",
-			metadataSetName = "DM Metadata Set Name");
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
+
+		DMMetadataSet.addField(fieldType = "Text");
 
 		DDLDataDefinition.save();
 

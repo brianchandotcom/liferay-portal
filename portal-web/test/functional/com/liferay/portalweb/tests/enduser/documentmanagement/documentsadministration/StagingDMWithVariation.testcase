@@ -81,15 +81,9 @@ definition {
 
 		DMNavigator.gotoMetadataSets();
 
-		DMMetadataSet.add(
-			dmMetadataSetFieldNames = "Text,Number",
-			metadataSetName = "DM Metadata Set Name");
+		DMMetadataSet.addTitle(metadataSetName = "DM Metadata Set Name");
 
-		DDLDataDefinition.save();
-
-		Navigator.gotoSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
+		DMMetadataSet.addMultipleFields(fieldType = "Numeric,Text");
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

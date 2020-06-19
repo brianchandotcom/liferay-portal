@@ -99,6 +99,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
@@ -182,8 +183,19 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		// Configurations
 
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
 		final Configuration compileIncludeConfiguration =
-			_addConfigurationCompileInclude(project);
+			configurationContainer.create(COMPILE_INCLUDE_CONFIGURATION_NAME);
+
+		Configuration compileOnlyConfiguration =
+			configurationContainer.getByName(
+				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+
+		_configureConfigurationCompileInclude(compileIncludeConfiguration);
+		_configureConfigurationCompileOnly(
+			compileIncludeConfiguration, compileOnlyConfiguration);
 
 		// Tasks
 
@@ -313,20 +325,19 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private Configuration _addConfigurationCompileInclude(Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, COMPILE_INCLUDE_CONFIGURATION_NAME);
+	private void _configureConfigurationCompileInclude(
+		Configuration compileIncludeConfiguration) {
 
-		configuration.setDescription(
+		compileIncludeConfiguration.setDescription(
 			"Additional dependencies to include in the final JAR.");
-		configuration.setVisible(false);
+		compileIncludeConfiguration.setVisible(false);
+	}
 
-		Configuration compileOnlyConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+	private void _configureConfigurationCompileOnly(
+		Configuration compileIncludeConfiguration,
+		Configuration compileOnlyConfiguration) {
 
-		compileOnlyConfiguration.extendsFrom(configuration);
-
-		return configuration;
+		compileOnlyConfiguration.extendsFrom(compileIncludeConfiguration);
 	}
 
 	private void _applyPlugins(Project project) {

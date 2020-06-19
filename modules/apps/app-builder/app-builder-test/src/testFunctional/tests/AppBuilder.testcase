@@ -20,7 +20,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 	}
 
@@ -536,7 +536,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.deleteEntry(itemName = "my custom object");
@@ -909,7 +909,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "Custom Object Title");
@@ -932,7 +932,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "Custom Object Title");
@@ -1515,7 +1515,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
@@ -1545,7 +1545,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Table Views");
@@ -1613,7 +1613,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object 1");
@@ -2190,7 +2190,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Password Policies");
 
 		PasswordPolicies.togglePasswordChangeRequired(
@@ -2200,7 +2200,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Users and Organizations");
 
 		User.editPasswordCP(
@@ -2224,7 +2224,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
@@ -2256,7 +2256,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Admin object");
@@ -2354,7 +2354,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
@@ -2423,7 +2423,7 @@ definition {
 
 				GlobalMenu.gotoPortlet(
 					category = "App Builder",
-					panel = "Control Panel",
+					panel = "Applications",
 					portlet = "Objects");
 
 				LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "App Permissions");
@@ -2626,7 +2626,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
@@ -2643,7 +2643,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
@@ -2656,7 +2656,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
@@ -2671,7 +2671,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
@@ -2688,7 +2688,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
@@ -2705,7 +2705,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
@@ -2801,7 +2801,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
@@ -2858,7 +2858,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");
@@ -2885,7 +2885,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.openItem(itemName = "my custom object");

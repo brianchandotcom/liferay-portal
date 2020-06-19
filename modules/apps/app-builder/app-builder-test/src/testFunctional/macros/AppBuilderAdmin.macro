@@ -336,7 +336,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		Pause(locator1 = "2000");

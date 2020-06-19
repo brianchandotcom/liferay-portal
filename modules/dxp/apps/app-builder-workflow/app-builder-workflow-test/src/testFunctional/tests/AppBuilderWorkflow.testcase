@@ -16,7 +16,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 
 		AppBuilderAdmin.addCustomObject(
@@ -40,7 +40,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Apps");
 	}
 
@@ -62,7 +62,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Objects");
 		AppBuilderAdmin.openItem(itemName = "My Custom Object");
 		AppBuilderAdmin.switchTab(tabName = "Apps");
@@ -79,7 +79,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Apps");
 
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "My App");

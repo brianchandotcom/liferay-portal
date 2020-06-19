@@ -25,6 +25,7 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
 	UPDATE_LANGUAGE_ID,
+	UPDATE_ROW_COLUMNS,
 } from '../../actions/types';
 import {UNDO_TYPES} from '../../config/constants/undoTypes';
 import {config} from '../../config/index';
@@ -88,6 +89,7 @@ export default function getActionLabel(
 			return Liferay.Language.get('update-column-size');
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 		case UPDATE_ITEM_CONFIG:
+		case UPDATE_ROW_COLUMNS:
 			return Liferay.Util.sub(
 				Liferay.Language.get('update-x-configuration'),
 				action.itemName

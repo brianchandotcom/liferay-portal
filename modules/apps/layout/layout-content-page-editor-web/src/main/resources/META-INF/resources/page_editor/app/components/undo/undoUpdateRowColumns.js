@@ -12,26 +12,28 @@
  * details.
  */
 
-import updateRowColumnsAction from '../actions/updateRowColumns';
-import LayoutService from '../services/LayoutService';
+import updateRowColumns from '../../thunks/updateRowColumns';
 
-export default function updateRowColumns({
-	itemId,
-	numberOfColumns,
-	segmentsExperienceId,
-}) {
-	return (dispatch) =>
-		LayoutService.updateRowColumns({
-			itemId,
-			numberOfColumns,
-			onNetworkStatus: dispatch,
-			segmentsExperienceId,
-		}).then(({layoutData}) => {
-			dispatch(
-				updateRowColumnsAction({
-					itemId,
-					layoutData,
-				})
-			);
-		});
+function undoAction({action}) {
+	const {itemId, numberOfColumns, segmentsExperienceId} = action;
+
+	return updateRowColumns({
+		itemId,
+		numberOfColumns,
+		segmentsExperienceId,
+	});
 }
+
+function getDerivedStateForUndo({action, state}) {
+	const {itemId} = action;
+	const {layoutData} = state;
+
+	const config = layoutData.items[itemId]?.config ?? {};
+
+	return {
+		itemId,
+		numberOfColumns: config.numberOfColumns,
+	};
+}
+
+export {undoAction, getDerivedStateForUndo};

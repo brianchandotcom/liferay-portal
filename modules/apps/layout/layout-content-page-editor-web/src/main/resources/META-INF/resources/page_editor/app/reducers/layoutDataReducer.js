@@ -22,6 +22,7 @@ import {
 	UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION,
 	UPDATE_ITEM_CONFIG,
 	UPDATE_LAYOUT_DATA,
+	UPDATE_ROW_COLUMNS,
 } from '../actions/types';
 
 export const INITIAL_STATE = {
@@ -39,6 +40,7 @@ export default function layoutDataReducer(layoutData = INITIAL_STATE, action) {
 		case MOVE_ITEM:
 		case UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION:
 		case UPDATE_ITEM_CONFIG:
+		case UPDATE_ROW_COLUMNS:
 			return action.layoutData;
 
 		default:

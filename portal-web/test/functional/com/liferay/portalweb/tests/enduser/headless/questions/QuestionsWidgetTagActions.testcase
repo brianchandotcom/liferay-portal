@@ -128,9 +128,9 @@ definition {
 			key_questionTabField = "Tags",
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 
-		Type(
-			locator1 = "Questions#SEARCH_QUESTION_FIELD",
-			value1 = "tagvalidatesearchbyquestiontags");
+		Questions.search(
+			searchKey = "tagvalidatesearchbyquestiontags",
+			searchTag = "true");
 
 		Pause(locator = "3000");
 

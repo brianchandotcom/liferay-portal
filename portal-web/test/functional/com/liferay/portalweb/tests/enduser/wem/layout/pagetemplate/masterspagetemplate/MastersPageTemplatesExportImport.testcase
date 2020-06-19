@@ -92,7 +92,7 @@ definition {
 				key_fragmentName = "Heading",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -100,7 +100,7 @@ definition {
 			AssertElementPresent(
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
@@ -163,7 +163,7 @@ definition {
 			AssertElementPresent(
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Heading')]",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 			AssertElementPresent(
 				key_elementType = "Row",

@@ -120,7 +120,7 @@ definition {
 			key_fragmentName = "Row",
 			key_position = "1",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#SECTION_CONTAINER",
+			locator2 = "PageEditor#CONTAINER_CONTAINER",
 			value1 = "");
 
 		PageEditor.removeFragmentViaPageStructure(fragmentName = "Section");

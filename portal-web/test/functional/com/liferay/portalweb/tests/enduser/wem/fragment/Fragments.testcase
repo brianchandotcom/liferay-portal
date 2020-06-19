@@ -144,13 +144,13 @@ definition {
 				key_fragmentName = "Row",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("Assert add second Row fragment to the same Section") {
@@ -165,7 +165,7 @@ definition {
 			AssertElementPresent(
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
@@ -925,13 +925,13 @@ definition {
 			key_fragmentName = "Fragment Name 2",
 			key_position = "1",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-			locator2 = "PageEditor#SECTION_CONTAINER",
+			locator2 = "PageEditor#CONTAINER_CONTAINER",
 			value1 = "");
 
 		AssertElementPresent(
 			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name 2')]//li[contains(@class,'title')]",
 			key_position = "1",
-			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 
 		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
 
@@ -954,7 +954,7 @@ definition {
 		AssertElementPresent(
 			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Fragment Name 2')]//li[contains(@class,'title')]",
 			key_position = "1",
-			locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 	}
 
 	@description = "Fragments that are being used cannot be deleted."

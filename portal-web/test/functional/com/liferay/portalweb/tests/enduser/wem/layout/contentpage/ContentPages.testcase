@@ -341,7 +341,7 @@ definition {
 				key_portletName = "Language Selector",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "Language Selector");
 
 			Pause(locator1 = "5000");
@@ -349,7 +349,7 @@ definition {
 			AssertElementPresent(
 				key_elementHeader = "//div[contains(@class,'page-editor')]//li[contains(.,'Language Selector')]",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("Assert alert message when duplicate Section") {
@@ -790,13 +790,13 @@ definition {
 				key_fragmentName = "Row",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("Assert duplicate Row in the Section") {
@@ -807,7 +807,7 @@ definition {
 			AssertElementPresent(
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][2]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
@@ -943,13 +943,13 @@ definition {
 				key_fragmentName = "Row",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
 		task ("Assert the nested Row is also duplicated with Section") {
@@ -960,7 +960,7 @@ definition {
 			AssertElementPresent(
 				key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Row')]//li[contains(@class,'title')]",
 				key_position = "2",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
@@ -1405,7 +1405,7 @@ definition {
 				key_fragmentName = "Heading",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -1443,7 +1443,7 @@ definition {
 			AssertElementPresent(
 				key_elementHeader = "//*[contains(@class,'component-heading')][contains(@class,'text-white')]",
 				key_position = "2",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
@@ -1473,7 +1473,7 @@ definition {
 				key_fragmentName = "Heading",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -1498,7 +1498,7 @@ definition {
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'New editable fragment text') and contains(@id,'fragment-')]",
 				key_position = "2",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
@@ -1720,7 +1720,7 @@ definition {
 				key_fragmentName = "Heading",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -1760,7 +1760,7 @@ definition {
 			AssertVisible(
 				key_elementHeader = "//div[contains(.,'WC WebContent Content') and contains(@id,'fragment-')]",
 				key_position = "2",
-				locator1 = "PageEditor#SECTION_CONTAINER_NESTED_ELEMENT");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 	}
 
@@ -1789,7 +1789,7 @@ definition {
 			DragOver(
 				key_position = "1",
 				locator1 = "//div[contains(@class,'page-editor__root page-editor__topper')]/div[contains(.,'Section')][2]//li[contains(@class,'drag-handler')]",
-				locator2 = "PageEditor#SECTION_CONTAINER");
+				locator2 = "PageEditor#CONTAINER_CONTAINER");
 
 			AssertVisible(
 				key_position = "1",
@@ -1809,12 +1809,12 @@ definition {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_position = "1",
 				locator1 = "//div[contains(@class,'page-editor__root page-editor__topper')]/div[contains(.,'Section')][2]//li[contains(@class,'drag-handler')]",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_EMPTY");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_EMPTY");
 		}
 	}
 
@@ -1839,7 +1839,7 @@ definition {
 				key_fragmentName = "Section",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER");
+				locator2 = "PageEditor#CONTAINER_CONTAINER");
 
 			AssertVisible(
 				key_position = "1",
@@ -1858,12 +1858,12 @@ definition {
 				key_fragmentName = "Section",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			AssertElementPresent(
 				key_position = "1",
-				locator1 = "PageEditor#SECTION_CONTAINER_EMPTY");
+				locator1 = "PageEditor#CONTAINER_CONTAINER_EMPTY");
 		}
 	}
 
@@ -1945,7 +1945,7 @@ definition {
 				key_fragmentName = "Heading",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();
@@ -2033,7 +2033,7 @@ definition {
 				key_fragmentName = "Heading",
 				key_position = "1",
 				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
-				locator2 = "PageEditor#SECTION_CONTAINER",
+				locator2 = "PageEditor#CONTAINER_CONTAINER",
 				value1 = "");
 
 			PageEditor.waitForAutoSave();

@@ -340,7 +340,7 @@ definition {
 
 		PageEditor.addWidget(
 			portletName = "Language Selector",
-			targetFragmentName = "Section");
+			targetFragmentName = "Container");
 
 		PageEditor.clickPublish();
 

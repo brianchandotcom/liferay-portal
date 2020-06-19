@@ -77,11 +77,11 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				dropTarget = "Footer",
-				fragmentName = "Section",
+				fragmentName = "Container",
 				scope = "Master");
 
 			Click(
-				key_elementType = "Section",
+				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
@@ -156,7 +156,7 @@ definition {
 			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
 
 			AssertElementPresent(
-				key_elementType = "Section",
+				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
@@ -187,7 +187,7 @@ definition {
 				masterPageTemplateEntryName = "Custom Masters Page Template");
 		}
 
-		task ("Add a Section and a Heading to custom master and set up configuration settings of them") {
+		task ("Add a Container and a Heading to custom master and set up configuration settings of them") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
 
 			MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
@@ -197,7 +197,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				dropTarget = "Footer",
-				fragmentName = "Section",
+				fragmentName = "Container",
 				scope = "Master");
 
 			PageEditor.editLayoutContainer(

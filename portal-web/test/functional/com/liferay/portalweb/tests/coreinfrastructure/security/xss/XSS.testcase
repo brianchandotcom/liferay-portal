@@ -320,7 +320,7 @@ definition {
 
 		PageEditor.addWidget(
 			portletName = "Sign In",
-			targetFragmentName = "Section");
+			targetFragmentName = "Container");
 
 		PermissionsInline.gotoConfigurationPG(portletName = "Sign In");
 
@@ -446,7 +446,7 @@ definition {
 
 		PageEditor.addWidget(
 			portletName = "Web Content Display",
-			targetFragmentName = "Section");
+			targetFragmentName = "Container");
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = '''<script>alert(123);</script>''');
 

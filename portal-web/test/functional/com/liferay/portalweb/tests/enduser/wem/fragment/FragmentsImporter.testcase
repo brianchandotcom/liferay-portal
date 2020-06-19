@@ -107,19 +107,19 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Add a Section to page") {
+		task ("Add a Container to page") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Section");
+				fragmentName = "Container");
 		}
 
-		task ("Add the created fragment into Section") {
+		task ("Add the created fragment into Container") {
 			PageEditor.gotoTab(tabName = "Fragments");
 
 			PageEditor.expandFragmentCollection(collectionName = "Collection Name");
 
 			Click(
-				key_elementType = "Section",
+				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
@@ -137,7 +137,7 @@ definition {
 				locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
 		}
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(
 			collectionName = "Collection Name",
@@ -273,19 +273,19 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Add a Section to page") {
+		task ("Add a Container to page") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Section");
+				fragmentName = "Container");
 		}
 
-		task ("Add an Image fragment into Section") {
+		task ("Add an Image fragment into Container") {
 			PageEditor.gotoTab(tabName = "Fragments");
 
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			Click(
-				key_elementType = "Section",
+				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
@@ -324,7 +324,7 @@ definition {
 			key_image = "Document_1.jpg",
 			locator1 = "Fragment#PAGE_EDITOR_FRAGMENT_IMAGE");
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(
 			fragmentName = "New Fragment Name",
@@ -386,10 +386,10 @@ definition {
 				siteName = "Test Site Name");
 		}
 
-		task ("Add a Section to page") {
+		task ("Add a Container to page") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Section");
+				fragmentName = "Container");
 		}
 
 		JSONDocument.addFileWithUploadedFile(
@@ -406,13 +406,13 @@ definition {
 				navItem = "Documents and Media");
 		}
 
-		task ("Add the Heading fragment into Section") {
+		task ("Add the Heading fragment into Container") {
 			PageEditor.gotoTab(tabName = "Fragments");
 
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			Click(
-				key_elementType = "Section",
+				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
@@ -438,7 +438,7 @@ definition {
 			textAlign = "Center",
 			textColor = "danger");
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 
@@ -514,7 +514,7 @@ definition {
 		task ("Add a Section to page") {
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
-				fragmentName = "Section");
+				fragmentName = "Container");
 		}
 
 		task ("Add the Heading fragment into Section") {
@@ -523,7 +523,7 @@ definition {
 			PageEditor.expandFragmentCollection(collectionName = "Basic Components");
 
 			Click(
-				key_elementType = "Section",
+				key_elementType = "Container",
 				key_position = "1",
 				locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
@@ -557,7 +557,7 @@ definition {
 
 		PageEditor.waitForAutoSave();
 
-		PageEditor.gotoSaveAsFrgament(fragmentName = "Section");
+		PageEditor.gotoSaveAsFrgament(fragmentName = "Container");
 
 		PageEditorComposition.saveAsFragment(fragmentName = "New Fragment Name");
 

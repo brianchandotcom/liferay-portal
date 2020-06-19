@@ -108,10 +108,10 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Layout Elements",
-			fragmentName = "Section");
+			fragmentName = "Container");
 
 		Click(
-			key_elementType = "Section",
+			key_elementType = "Container",
 			key_position = "1",
 			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 
@@ -123,15 +123,15 @@ definition {
 			locator2 = "PageEditor#CONTAINER_CONTAINER",
 			value1 = "");
 
-		PageEditor.removeFragmentViaPageStructure(fragmentName = "Section");
+		PageEditor.removeFragmentViaPageStructure(fragmentName = "Container");
 
-		PageEditor.viewNoFragment(fragmentName = "Section");
+		PageEditor.viewNoFragment(fragmentName = "Container");
 
 		Click(
 			key_text = "undo",
 			locator1 = "Icon#ANY");
 
-		PageEditor.viewFragment(fragmentName = "Section");
+		PageEditor.viewFragment(fragmentName = "Container");
 	}
 
 	@description = "This is a test for LPS-111946. Undo can bring deleted Collection Display with collection items back."

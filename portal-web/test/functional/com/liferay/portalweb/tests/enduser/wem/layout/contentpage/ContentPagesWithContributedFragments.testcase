@@ -311,14 +311,14 @@ definition {
 
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_collectionName = "Layout Elements",
-			key_fragmentName = "Section",
+			key_fragmentName = "Container",
 			key_index = "2",
 			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
 			locator2 = "PageEditor#FRAGMENT_WITH_DROP_TARGET",
 			value1 = "");
 
 		AssertElementPresent(
-			key_fragmentName = "Section",
+			key_fragmentName = "Container",
 			key_inFragmentName = "Tabs",
 			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
 

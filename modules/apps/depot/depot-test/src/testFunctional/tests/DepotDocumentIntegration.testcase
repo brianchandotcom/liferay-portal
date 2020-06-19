@@ -109,7 +109,7 @@ definition {
 
 		PageEditor.addFragment(
 			collectionName = "Layout Elements",
-			fragmentName = "Section");
+			fragmentName = "Container");
 
 		PageEditor.editLayoutContainer(
 			backgroundImage = "Manual Selection",

@@ -53,7 +53,7 @@ definition {
 			fragmentName = "Row");
 
 		AssertElementNotPresent(
-			key_elementType = "Section",
+			key_elementType = "Container",
 			key_position = "1",
 			locator1 = "PageEditor#LAYOUT_ELEMENTS_HEADER");
 	}

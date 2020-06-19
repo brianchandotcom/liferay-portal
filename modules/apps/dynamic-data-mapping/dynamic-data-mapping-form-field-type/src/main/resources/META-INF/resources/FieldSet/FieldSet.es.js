@@ -82,6 +82,7 @@ const FieldSet = ({
 
 				{collapsible ? (
 					<Panel
+						name={name}
 						readOnly={readOnly}
 						repeatable={repeatable}
 						showLabel={showLabel}

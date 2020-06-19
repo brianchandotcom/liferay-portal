@@ -29,6 +29,7 @@ import useHeightTransition from './useHeightTransition.es';
  */
 const Panel = ({
 	children,
+	name,
 	readOnly,
 	repeatable,
 	showLabel,

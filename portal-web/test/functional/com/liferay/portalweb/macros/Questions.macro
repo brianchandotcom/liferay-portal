@@ -169,15 +169,22 @@ definition {
 	}
 
 	macro search {
-		Type(
-			locator1 = "Questions#SEARCH_QUESTION_FIELD",
-			value1 = "${searchKey}");
+		if (isSet(searchTag)) {
+			Type(
+				locator1 = "Questions#SEARCH_QUESTION_FIELD",
+				value1 = "${searchKey}");
+		}
+		else {
+			Type(
+				locator1 = "Questions#SEARCH_QUESTION_FIELD",
+				value1 = "${searchKey}");
 
-		AssertTextEquals(
-			locator1 = "Search#SEARCH_INFO",
-			value1 = "${resultsInfo}");
+			AssertTextEquals(
+				locator1 = "Search#SEARCH_INFO",
+				value1 = "${resultsInfo}");
 
-		AssertVisible(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+			AssertVisible(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+		}
 	}
 
 	macro tearDown {

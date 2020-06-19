@@ -18,6 +18,7 @@ import ClayForm from '@clayui/form';
 import React, {useCallback, useState} from 'react';
 
 import {createCommentQuery} from '../utils/client.es';
+import {stripHTML} from '../utils/utils.es';
 import Comment from './Comment.es';
 import QuestionsEditor from './QuestionsEditor';
 import TextLengthValidation from './TextLengthValidation.es';
@@ -79,7 +80,7 @@ export default ({
 
 						<ClayButton.Group className="c-mt-3" spaced>
 							<ClayButton
-								disabled={comment.length < 23}
+								disabled={stripHTML(comment).length < 15}
 								displayType="primary"
 								onClick={() => {
 									createComment({

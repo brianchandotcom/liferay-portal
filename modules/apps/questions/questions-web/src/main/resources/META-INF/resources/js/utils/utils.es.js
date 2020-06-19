@@ -133,11 +133,17 @@ export function historyPushWithSlug(push) {
 
 export function stripHTML(text) {
 	if (!text) {
-		return text;
+		return '';
 	}
 
 	const htmlTags = /<([^>]+>)/g;
 	const nonBreakableSpace = '&nbsp;';
+	const newLines = /\r?\n|\r/g;
 
-	return text.replace(htmlTags, '').replace(nonBreakableSpace, ' ');
+	return (
+		text
+			.replace(htmlTags, '')
+			.replace(nonBreakableSpace, ' ')
+			.replace(newLines, '') || ''
+	);
 }

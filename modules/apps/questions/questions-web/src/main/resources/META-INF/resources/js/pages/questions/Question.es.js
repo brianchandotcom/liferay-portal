@@ -46,6 +46,7 @@ import lang from '../../utils/lang.es';
 import {
 	dateToBriefInternationalHuman,
 	historyPushWithSlug,
+	stripHTML,
 } from '../../utils/utils.es';
 
 export default withRouter(
@@ -467,7 +468,8 @@ export default withRouter(
 											<ClayButton
 												disabled={
 													!articleBody ||
-													articleBody.length < 23
+													stripHTML(articleBody)
+														.length < 15
 												}
 												displayType="primary"
 												onClick={() => {

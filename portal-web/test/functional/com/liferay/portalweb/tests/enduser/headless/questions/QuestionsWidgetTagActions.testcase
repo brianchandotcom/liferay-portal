@@ -147,17 +147,13 @@ definition {
 			categoryName = "Question ValidateTagsOccurrences",
 			userEmailAddress = "test@liferay.com");
 
-		Questions.addQuestionByAPI(
-			bodyField = "1- Body ValidateTagsOccurrences",
-			categoryName = "Question ValidateTagsOccurrences",
-			tagField = "tag1",
-			titleField = "1- Title ValidateTagsOccurrences");
-
-		Questions.addQuestionByAPI(
-			bodyField = "2- Body ValidateTagsOccurrences",
-			categoryName = "Question ValidateTagsOccurrences",
-			tagField = "tag1",
-			titleField = "2- Title ValidateTagsOccurrences");
+		for (var num : list "1,2") {
+			Questions.addQuestionByAPI(
+				bodyField = "${num}- Body ValidateTagsOccurrences",
+				categoryName = "Question ValidateTagsOccurrences",
+				tagField = "tag1",
+				titleField = "${num}- Title ValidateTagsOccurrences");
+		}
 
 		Navigator.gotoPage(pageName = "Questions Page");
 

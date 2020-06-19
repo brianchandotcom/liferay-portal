@@ -26,12 +26,17 @@ import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -43,6 +48,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -71,7 +77,7 @@ public class ViewChangesDisplayContext {
 		CTDisplayRendererRegistry ctDisplayRendererRegistry,
 		CTEntryLocalService ctEntryLocalService, Language language,
 		Portal portal, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		RenderResponse renderResponse, UserLocalService userLocalService) {
 
 		_activeCtCollectionId = activeCtCollectionId;
 		_basePersistenceRegistry = basePersistenceRegistry;
@@ -103,6 +109,7 @@ public class ViewChangesDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_userLocalService = userLocalService;
 	}
 
 	public String getBackURL() {
@@ -203,6 +210,21 @@ public class ViewChangesDisplayContext {
 				}
 			}
 
+			Date modifiedDate = ctEntry.getModifiedDate();
+
+			String portraitURL = null;
+
+			User user = _userLocalService.fetchUser(ctEntry.getUserId());
+
+			if ((user != null) && (user.getPortraitId() != 0)) {
+				try {
+					portraitURL = user.getPortraitURL(_themeDisplay);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException, portalException);
+				}
+			}
+
 			ResourceURL renderURL = _renderResponse.createResourceURL();
 
 			renderURL.setResourceID("/change_lists/render_diff");
@@ -224,11 +246,31 @@ public class ViewChangesDisplayContext {
 				).put(
 					"modelClassPK", ctEntry.getModelClassPK()
 				).put(
+					"modifiedTime", modifiedDate.getTime()
+				).put(
+					"portraitURL", portraitURL
+				).put(
 					"renderURL", renderURL.toString()
+				).put(
+					"timeDescription",
+					_language.format(
+						_httpServletRequest, "x-ago",
+						new Object[] {
+							_language.getTimeDescription(
+								_httpServletRequest,
+								System.currentTimeMillis() -
+									modifiedDate.getTime(),
+								true)
+						},
+						false)
 				).put(
 					"title", title
 				).put(
 					"typeName", _getTypeName(ctEntry.getModelClassNameId())
+				).put(
+					"userId", ctEntry.getUserId()
+				).put(
+					"userName", ctEntry.getUserName()
 				));
 		}
 
@@ -512,6 +554,9 @@ public class ViewChangesDisplayContext {
 				_themeDisplay.getLocale(), classNameId));
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewChangesDisplayContext.class);
+
 	private final long _activeCtCollectionId;
 	private final BasePersistenceRegistry _basePersistenceRegistry;
 	private CTClosure _ctClosure;
@@ -528,5 +573,6 @@ public class ViewChangesDisplayContext {
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 	private final Map<Long, String> _typeNameMap = new HashMap<>();
+	private final UserLocalService _userLocalService;
 
 }

@@ -179,7 +179,7 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_getDisplayNodes(ascending, column, delta, nodes, page) {
-		const displayNodes = nodes.slice(0);
+		let displayNodes = nodes.slice(0);
 
 		if (column === 'title') {
 			displayNodes.sort((a, b) => {
@@ -215,12 +215,74 @@ class ChangeTrackingChangesView extends React.Component {
 				return 0;
 			});
 		}
+		else {
+			displayNodes.sort((a, b) => {
+				if (a.modifiedTime < b.modifiedTime) {
+					if (ascending) {
+						return -1;
+					}
 
-		if (displayNodes.length <= 5) {
-			return displayNodes;
+					return 1;
+				}
+
+				if (a.modifiedTime > b.modifiedTime) {
+					if (ascending) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
 		}
 
-		return displayNodes.slice(delta * (page - 1), delta * page);
+		if (nodes.length > 5) {
+			displayNodes = displayNodes.slice(delta * (page - 1), delta * page);
+		}
+
+		if (column === 'modifiedDate') {
+			displayNodes.sort((a, b) => {
+				const typeNameA = a.typeName.toUpperCase();
+				const typeNameB = b.typeName.toUpperCase();
+
+				if (typeNameA < typeNameB) {
+					return -1;
+				}
+
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				if (a.modifiedTime < b.modifiedTime) {
+					if (ascending) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (a.modifiedTime > b.modifiedTime) {
+					if (ascending) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
+		}
+
+		return displayNodes;
+	}
+
+	_getColumn() {
+		if (this.state.navigation === 'contextView') {
+			return 'title';
+		}
+
+		return this.state.column;
 	}
 
 	_getNode(filterClass, navigation, nodeId) {
@@ -352,11 +414,65 @@ class ChangeTrackingChangesView extends React.Component {
 
 				rows.push(
 					<ClayTable.Row divider>
-						<ClayTable.Cell colSpan={2}>
+						<ClayTable.Cell
+							colSpan={
+								this.state.navigation === 'changes' ? 3 : 1
+							}
+						>
 							{node.typeName}
 						</ClayTable.Cell>
 					</ClayTable.Row>
 				);
+			}
+
+			const cells = [];
+
+			if (this.state.navigation === 'changes') {
+				if (node.portraitURL) {
+					cells.push(
+						<ClayTable.Cell>
+							<span
+								className="lfr-portal-tooltip"
+								title={node.userName}
+							>
+								<span className="rounded-circle sticker sticker-primary">
+									<span className="sticker-overlay">
+										<img
+											alt="thumbnail"
+											className="img-fluid"
+											src={node.portraitURL}
+										/>
+									</span>
+								</span>
+							</span>
+						</ClayTable.Cell>
+					);
+				}
+				else {
+					let userPortraitCss =
+						'sticker sticker-circle sticker-light user-icon-color-';
+
+					userPortraitCss += node.userId % 10;
+
+					cells.push(
+						<ClayTable.Cell>
+							<span
+								className="lfr-portal-tooltip"
+								title={node.userName}
+							>
+								<span className={userPortraitCss}>
+									<span className="inline-item">
+										<svg className="lexicon-icon">
+											<use
+												href={this.spritemap + '#user'}
+											/>
+										</svg>
+									</span>
+								</span>
+							</span>
+						</ClayTable.Cell>
+					);
+				}
 			}
 
 			let descriptionMarkup = '';
@@ -369,25 +485,30 @@ class ChangeTrackingChangesView extends React.Component {
 				);
 			}
 
-			rows.push(
-				<ClayTable.Row>
-					<ClayTable.Cell>
-						<button
-							className="change-row-button"
-							onClick={() =>
-								this._handleNavigationUpdate({
-									filterClass: this.filterClass,
-									nodeId: node.id,
-								})
-							}
-						>
-							<div className="change-list-name">{node.title}</div>
+			cells.push(
+				<ClayTable.Cell>
+					<button
+						className="change-row-button"
+						onClick={() =>
+							this._handleNavigationUpdate({
+								nodeId: node.id,
+							})
+						}
+					>
+						<div className="change-list-name">{node.title}</div>
 
-							{descriptionMarkup}
-						</button>
-					</ClayTable.Cell>
-				</ClayTable.Row>
+						{descriptionMarkup}
+					</button>
+				</ClayTable.Cell>
 			);
+
+			if (this.state.navigation === 'changes') {
+				cells.push(
+					<ClayTable.Cell>{node.timeDescription}</ClayTable.Cell>
+				);
+			}
+
+			rows.push(<ClayTable.Row>{cells}</ClayTable.Row>);
 		}
 
 		return rows;
@@ -518,11 +639,19 @@ class ChangeTrackingChangesView extends React.Component {
 	_renderManagementToolbar() {
 		const items = [
 			{
-				active: this.state.column === 'title',
+				active: this._getColumn() === 'title',
 				label: Liferay.Language.get('title'),
 				onClick: () => this._handleSortColumnChange('title'),
 			},
 		];
+
+		if (this.state.navigation === 'changes') {
+			items.push({
+				active: this._getColumn() === 'modifiedDate',
+				label: Liferay.Language.get('modified-date'),
+				onClick: () => this._handleSortColumnChange('modifiedDate'),
+			});
+		}
 
 		const dropdownItems = [
 			{
@@ -641,11 +770,13 @@ class ChangeTrackingChangesView extends React.Component {
 		return (
 			<>
 				<ClayTable className="change-lists-table" hover={false}>
+					{this._getTableHead()}
+
 					<ClayTable.Body>
 						{this._getTableRows(
 							this._getDisplayNodes(
 								this.state.ascending,
-								this.state.column,
+								this._getColumn(),
 								this.state.delta,
 								nodes,
 								this.state.page
@@ -656,6 +787,30 @@ class ChangeTrackingChangesView extends React.Component {
 
 				{this._renderPagination(nodes)}
 			</>
+		);
+	}
+
+	_getTableHead() {
+		if (this.state.navigation === 'contextView') {
+			return '';
+		}
+
+		return (
+			<ClayTable.Head>
+				<ClayTable.Row>
+					<ClayTable.Cell headingCell style={{width: '5%'}}>
+						{Liferay.Language.get('user')}
+					</ClayTable.Cell>
+
+					<ClayTable.Cell headingCell style={{width: '80%'}}>
+						{Liferay.Language.get('change')}
+					</ClayTable.Cell>
+
+					<ClayTable.Cell headingCell style={{width: '15%'}}>
+						{Liferay.Language.get('last-modified')}
+					</ClayTable.Cell>
+				</ClayTable.Row>
+			</ClayTable.Head>
 		);
 	}
 

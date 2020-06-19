@@ -30,6 +30,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -89,7 +90,7 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 					_ctCollectionLocalService.getCTCollection(ctCollectionId),
 					_ctConfiguration, _ctDisplayRendererRegistry,
 					_ctEntryLocalService, _language, _portal, renderRequest,
-					renderResponse);
+					renderResponse, _userLocalService);
 
 			renderRequest.setAttribute(
 				CTWebKeys.VIEW_CHANGES_DISPLAY_CONTEXT,
@@ -134,5 +135,8 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

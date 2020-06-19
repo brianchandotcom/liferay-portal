@@ -60,6 +60,12 @@ definition {
 			PortletEntry.inputDescription(description = "${dmDocumentDescription}");
 		}
 
+		if (isSet(dateField)) {
+			FormFields.editDate(
+				fieldName = "${fieldName}",
+				fieldValue = "${fieldValue}");
+		}
+
 		if (isSet(documentsAndMediaField)) {
 			var key_fieldName = "DocumentsandMedia";
 

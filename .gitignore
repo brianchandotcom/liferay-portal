@@ -43,6 +43,8 @@
 /dist
 /intellij
 /jacoco
+/modules/.releng/dxp/apps/lcs
+/modules/dxp/apps/lcs
 /modules/node_modules_cache
 /nbproject/private
 /out

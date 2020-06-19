@@ -73,6 +73,15 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 	}
 
 	@Override
+	public Boolean isSelectable() {
+		return !isSingleSelect();
+	}
+
+	public boolean isSingleSelect() {
+		return ParamUtil.getBoolean(liferayPortletRequest, "singleSelect");
+	}
+
+	@Override
 	protected String[] getNavigationKeys() {
 		return new String[] {"current-account-users", "all-users"};
 	}

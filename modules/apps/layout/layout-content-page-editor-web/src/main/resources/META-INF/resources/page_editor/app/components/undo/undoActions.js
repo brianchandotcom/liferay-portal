@@ -45,7 +45,7 @@ const UNDO_ACTIONS = {
 	[MOVE_ITEM]: undoLayoutDataAction,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
 	[SWITCH_VIEWPORT_SIZE]: undoSwitchViewportSize,
-	[UPDATE_COL_SIZE]: undoLayoutDataAction,
+	[UPDATE_COL_SIZE]: undoUpdateColSize,
 	[UPDATE_EDITABLE_VALUES]: undoEditableValuesAction,
 	[UPDATE_FRAGMENT_ENTRY_LINK_CONFIGURATION]: undoFragmentConfiguration,
 	[UPDATE_ITEM_CONFIG]: undoLayoutDataAction,

@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE_TRACKING_INDICATOR</td>
-	<td>//button[contains(@class,'dropdown-toggle change-tracking-indicator-button')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EMPTY_MESSAGE_DROPDOWN</td>
 	<td>//div[contains(@class,'empty-result-message')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>

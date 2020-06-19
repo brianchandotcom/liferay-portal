@@ -25,7 +25,7 @@ definition {
 			Click(locator1 = "Button#PLUS");
 		}
 		else {
-			Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
+			Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
 
 			MenuItem.click(menuItem = "Create New Publication");
 		}
@@ -87,7 +87,7 @@ definition {
 	}
 
 	macro publishPublication {
-		Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
+		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
 
 		MenuItem.click(menuItem = "Prepare to Publish");
 
@@ -123,7 +123,7 @@ definition {
 	}
 
 	macro selectPublication {
-		Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
+		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
 
 		MenuItem.click(menuItem = "Select a Publication");
 
@@ -136,7 +136,7 @@ definition {
 			value1 = "${publicationName}");
 
 		AssertTextPresent(
-			locator1 = "ChangeList#CHANGE_TRACKING_INDICATOR_TITLE",
+			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
 			value1 = "${publicationName}");
 	}
 
@@ -249,7 +249,7 @@ definition {
 	}
 
 	macro workOnProduction {
-		Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
+		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
 
 		MenuItem.click(menuItem = "Work on Production");
 	}

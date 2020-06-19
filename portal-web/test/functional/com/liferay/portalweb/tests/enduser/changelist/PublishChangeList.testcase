@@ -64,8 +64,8 @@ definition {
 			publicationName = "Publication Name",
 			publicationPublishedBy = "Test Test");
 
-		Click(locator1 = "Dropdown#CHANGE_TRACKING_INDICATOR");
-		
+		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
+
 		AssertElementNotPresent(
 			key_menuItem = "Review Changes",
 			locator1 = "MenuItem#ANY_MENU_ITEM");

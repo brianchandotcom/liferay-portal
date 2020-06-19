@@ -44,7 +44,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHANGE_TRACKING_INDICATOR_TITLE</td>
+	<td>CHANGE_LIST_INDICATOR_BUTTON</td>
+	<td>//button[contains(@class,'dropdown-toggle change-tracking-indicator-button')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_LIST_INDICATOR_TITLE</td>
 	<td>//button[contains(@class,'change-tracking-indicator-title')] and contains(.,'${key_publicationName}')</td>
 	<td></td>
 </tr>

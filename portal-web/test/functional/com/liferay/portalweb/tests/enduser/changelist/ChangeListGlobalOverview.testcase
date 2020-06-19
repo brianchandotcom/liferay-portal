@@ -58,7 +58,7 @@ definition {
 			publicationName = "Publication Name");
 
 		AssertTextPresent(
-			locator1 = "ChangeList#CHANGE_TRACKING_INDICATOR_TITLE",
+			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
 			value1 = "Publication Name");
 	}
 

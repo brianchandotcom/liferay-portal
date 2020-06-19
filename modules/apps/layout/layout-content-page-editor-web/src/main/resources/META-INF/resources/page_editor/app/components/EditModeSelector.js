@@ -17,7 +17,8 @@ import ClayDropDown, {Align} from '@clayui/drop-down';
 import React, {useState} from 'react';
 
 import togglePermission from '../actions/togglePermission';
-import {useDispatch} from '../store/index';
+import selectCanSwitchEditMode from '../selectors/selectCanSwitchEditMode';
+import {useDispatch, useSelector} from '../store/index';
 
 const EDIT_MODES = {
 	contentEdition: Liferay.Language.get('content-edition'),
@@ -25,10 +26,13 @@ const EDIT_MODES = {
 };
 
 export default function EditModeSelector() {
-	const [active, setActive] = useState(false);
-	const [editMode, setEditMode] = useState(EDIT_MODES.pageDesign);
-
+	const canSwitchEditMode = useSelector(selectCanSwitchEditMode);
 	const dispatch = useDispatch();
+
+	const [active, setActive] = useState(false);
+	const [editMode, setEditMode] = useState(
+		canSwitchEditMode ? EDIT_MODES.pageDesign : EDIT_MODES.contentEdition
+	);
 
 	return (
 		<ClayDropDown
@@ -39,6 +43,7 @@ export default function EditModeSelector() {
 			trigger={
 				<ClayButton
 					className="form-control-select page-editor__edit-mode-selector text-left"
+					disabled={!canSwitchEditMode}
 					displayType="secondary"
 					small
 					type="button"

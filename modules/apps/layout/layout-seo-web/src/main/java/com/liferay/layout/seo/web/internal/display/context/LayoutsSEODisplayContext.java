@@ -332,37 +332,23 @@ public class LayoutsSEODisplayContext {
 	public HashMap<String, Object> getOpenGraphMappingData()
 		throws NoSuchClassTypeException, PortalException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getLayoutPageTemplateEntry();
-
-		InfoForm infoForm = _getInfoForm(layoutPageTemplateEntry);
-
 		return HashMapBuilder.<String, Object>putAll(
-			_getBaseSEOMappingData(infoForm, layoutPageTemplateEntry)
+			_getBaseSEOMappingData(
+				_getInfoForm(_getLayoutPageTemplateEntry()),
+				_getLayoutPageTemplateEntry())
 		).put(
 			"openGraphDescription",
-			_getMappedFieldName(
-				infoForm,
-				_selLayout.getTypeSettingsProperty(
-					"mapped-openGraphDescription", "description"))
+			_selLayout.getTypeSettingsProperty(
+				"mapped-openGraphDescription", "description")
 		).put(
 			"openGraphImage",
-			_getMappedFieldName(
-				infoForm,
-				_selLayout.getTypeSettingsProperty(
-					"mapped-openGraphImage", null))
+			_selLayout.getTypeSettingsProperty("mapped-openGraphImage", null)
 		).put(
 			"openGraphImageAlt",
-			_getMappedFieldName(
-				infoForm,
-				_selLayout.getTypeSettingsProperty(
-					"mapped-openGraphImageAlt", null))
+			_selLayout.getTypeSettingsProperty("mapped-openGraphImageAlt", null)
 		).put(
 			"openGraphTitle",
-			_getMappedFieldName(
-				infoForm,
-				_selLayout.getTypeSettingsProperty(
-					"mapped-openGraphTitle", "title"))
+			_selLayout.getTypeSettingsProperty("mapped-openGraphTitle", "title")
 		).build();
 	}
 
@@ -434,25 +420,17 @@ public class LayoutsSEODisplayContext {
 	public HashMap<String, Object> getSEOMappingData()
 		throws NoSuchClassTypeException, PortalException {
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getLayoutPageTemplateEntry();
-
-		InfoForm infoForm = _getInfoForm(layoutPageTemplateEntry);
-
 		return HashMapBuilder.<String, Object>putAll(
-			_getBaseSEOMappingData(infoForm, layoutPageTemplateEntry)
+			_getBaseSEOMappingData(
+				_getInfoForm(_getLayoutPageTemplateEntry()),
+				_getLayoutPageTemplateEntry())
 		).put(
 			"description",
-			_getMappedFieldName(
-				infoForm,
-				_selLayout.getTypeSettingsProperty(
-					"mapped-description", "description"))
+			_selLayout.getTypeSettingsProperty(
+				"mapped-description", "description")
 		).put(
 			"title",
-			_getMappedFieldName(
-				infoForm,
-				_selLayout.getTypeSettingsProperty(
-					"title-description", "title"))
+			_selLayout.getTypeSettingsProperty("title-description", "title")
 		).build();
 	}
 
@@ -548,16 +526,6 @@ public class LayoutsSEODisplayContext {
 	private LayoutPageTemplateEntry _getLayoutPageTemplateEntry() {
 		return _layoutPageTemplateEntryLocalService.
 			fetchLayoutPageTemplateEntryByPlid(_selPlid);
-	}
-
-	private String _getMappedFieldName(
-		InfoForm infoForm, String mappedFieldName) {
-
-		if (infoForm.getInfoFieldSetEntry(mappedFieldName) != null) {
-			return mappedFieldName;
-		}
-
-		return null;
 	}
 
 	private Long _getSelPlid() {

@@ -53,35 +53,4 @@ definition {
 		ChangeList.selectPublication(publicationName = "Publication 2 Name");
 	}
 
-	@priority = "4"
-	test WorkOnProduction {
-		ChangeList.workOnProduction(changeListConfirmEnabled = "true");
-
-		ProductMenu.gotoPortlet(
-			category = "Content &amp; Data",
-			portlet = "Web Content",
-			site = "Guest");
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "Web Content Title");
-
-		PortletEntry.publish();
-
-		GlobalMenu.gotoPortlet(
-			category = "Change Lists",
-			panel = "Applications",
-			portlet = "Overview");
-
-		ClickNoError(
-			key_changeListName = "Change List Name",
-			locator1 = "ChangeList#CHANGE_LIST_NAME_CARD_VIEW");
-
-		ChangeList.confirmSwitchingChangeList(changeListName = "Change List Name");
-
-		ChangeList.viewAddedItemCounter(nbrOfAddedItems = "0");
-	}
-
 }

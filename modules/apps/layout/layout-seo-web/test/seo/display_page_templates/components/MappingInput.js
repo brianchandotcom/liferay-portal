@@ -19,9 +19,13 @@ import React from 'react';
 import MappingInput from '../../../../src/main/resources/META-INF/resources/js/seo/display_page_templates/components/MappingInput';
 
 const baseProps = {
+	fieldType: 'text',
 	initialFields: [
-		{key: 'field-1', label: 'Field 1'},
-		{key: 'field-2', label: 'Field 2'},
+		{key: 'field-1', label: 'Field 1', type: 'text'},
+		{key: 'field-2', label: 'Field 2', type: 'text'},
+		{key: 'field-3', label: 'Field 3', type: 'image'},
+		{key: 'field-4', label: 'Field 4', type: 'text'},
+		{key: 'field-5', label: 'Field 5', type: 'text'},
 	],
 	label: 'Label test mapping field',
 	name: 'testMappingInput',
@@ -132,6 +136,49 @@ describe('MappingInput', () => {
 					expect(mappingPanel).not.toBeInTheDocument();
 				});
 			});
+
+			describe('and the user unmap the field', () => {
+				beforeEach(() => {
+					fireEvent.change(fieldSelect, {
+						target: {value: ''},
+					});
+				});
+
+				it('sets the new field key in the hidden input', () => {
+					expect(inputValue.value).toBe('');
+				});
+
+				it('sets the new field name in the user feedback input', () => {
+					expect(inputFeedback.value).toBe('-- unmapped --');
+				});
+			});
+		});
+	});
+
+	describe('when rendered without selected key', () => {
+		let inputValue;
+		let result;
+		let inputFeedback;
+
+		beforeEach(() => {
+			result = renderComponent({
+				...baseProps,
+				selectedFieldKey: undefined,
+			});
+			inputFeedback = result.getAllByRole('textbox')[0];
+			inputValue = result.getAllByRole('textbox')[1];
+		});
+
+		it('has a hidden input with unmapped key', () => {
+			expect(inputValue.type).toBe('hidden');
+			expect(inputValue.name).toBe('testMappingInput');
+			expect(inputValue.value).toBe('');
+		});
+
+		it('has a read only input for user feedback with the selected field name', () => {
+			expect(inputFeedback).toBeInTheDocument();
+			expect(inputFeedback.readOnly).toBeTruthy();
+			expect(inputFeedback.value).toBe('-- unmapped --');
 		});
 	});
 });

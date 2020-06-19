@@ -392,11 +392,18 @@ public class LayoutStructure {
 			List<String> childrenItemIds =
 				parentLayoutStructureItem.getChildrenItemIds();
 
-			childrenItemIds.remove(itemId);
-		}
+			int position = childrenItemIds.indexOf(itemId);
 
+			childrenItemIds.remove(itemId);
+
+			_deletedLayoutStructureItems.put(
+				itemId,
+				new DeletedLayoutStructureItem(itemId, portletIds, position));
+		}
+		else {
 		_deletedLayoutStructureItems.put(
 			itemId, new DeletedLayoutStructureItem(itemId, portletIds));
+	}
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(

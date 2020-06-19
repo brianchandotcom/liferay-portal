@@ -137,6 +137,34 @@ public class AppWorkflowTask {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
+	@Schema
+	public Long[] getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(Long[] roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	@JsonIgnore
+	public void setRoleIds(
+		UnsafeSupplier<Long[], Exception> roleIdsUnsafeSupplier) {
+
+		try {
+			roleIds = roleIdsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long[] roleIds;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -216,6 +244,26 @@ public class AppWorkflowTask {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		if (roleIds != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleIds\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < roleIds.length; i++) {
+				sb.append(roleIds[i]);
+
+				if ((i + 1) < roleIds.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		sb.append("}");

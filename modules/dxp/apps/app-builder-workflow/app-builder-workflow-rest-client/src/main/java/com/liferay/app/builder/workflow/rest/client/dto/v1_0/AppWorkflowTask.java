@@ -96,6 +96,27 @@ public class AppWorkflowTask implements Cloneable {
 
 	protected String name;
 
+	public Long[] getRoleIds() {
+		return roleIds;
+	}
+
+	public void setRoleIds(Long[] roleIds) {
+		this.roleIds = roleIds;
+	}
+
+	public void setRoleIds(
+		UnsafeSupplier<Long[], Exception> roleIdsUnsafeSupplier) {
+
+		try {
+			roleIds = roleIdsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long[] roleIds;
+
 	@Override
 	public AppWorkflowTask clone() throws CloneNotSupportedException {
 		return (AppWorkflowTask)super.clone();

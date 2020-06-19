@@ -119,6 +119,26 @@ public class AppWorkflowTaskSerDes {
 			sb.append("\"");
 		}
 
+		if (appWorkflowTask.getRoleIds() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleIds\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < appWorkflowTask.getRoleIds().length; i++) {
+				sb.append(appWorkflowTask.getRoleIds()[i]);
+
+				if ((i + 1) < appWorkflowTask.getRoleIds().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -161,6 +181,13 @@ public class AppWorkflowTaskSerDes {
 		}
 		else {
 			map.put("name", String.valueOf(appWorkflowTask.getName()));
+		}
+
+		if (appWorkflowTask.getRoleIds() == null) {
+			map.put("roleIds", null);
+		}
+		else {
+			map.put("roleIds", String.valueOf(appWorkflowTask.getRoleIds()));
 		}
 
 		return map;
@@ -206,6 +233,12 @@ public class AppWorkflowTaskSerDes {
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					appWorkflowTask.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleIds")) {
+				if (jsonParserFieldValue != null) {
+					appWorkflowTask.setRoleIds(
+						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else {

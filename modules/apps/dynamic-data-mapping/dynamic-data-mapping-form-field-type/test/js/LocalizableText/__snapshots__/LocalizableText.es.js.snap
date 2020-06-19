@@ -650,7 +650,6 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
               aria-haspopup="true"
               class="dropdown-toggle btn btn-monospaced btn-secondary"
               data-testid="triggerButton"
-              style=""
               type="button"
             >
               <span
@@ -675,7 +674,6 @@ exports[`Field LocalizableText emits field edit event on field change 1`] = `
             <div>
               <div
                 class="dropdown-menu"
-                style="left: -999px; top: -995px;"
               >
                 <ul
                   class="list-unstyled"
@@ -2491,7 +2489,6 @@ exports[`Field LocalizableText has a label 1`] = `
               aria-haspopup="true"
               class="dropdown-toggle btn btn-monospaced btn-secondary"
               data-testid="triggerButton"
-              style=""
               type="button"
             >
               <span
@@ -2516,7 +2513,6 @@ exports[`Field LocalizableText has a label 1`] = `
             <div>
               <div
                 class="dropdown-menu"
-                style="left: -999px; top: -995px;"
               >
                 <ul
                   class="list-unstyled"
@@ -3103,7 +3099,6 @@ exports[`Field LocalizableText has a placeholder 1`] = `
               aria-haspopup="true"
               class="dropdown-toggle btn btn-monospaced btn-secondary"
               data-testid="triggerButton"
-              style=""
               type="button"
             >
               <span
@@ -3128,7 +3123,6 @@ exports[`Field LocalizableText has a placeholder 1`] = `
             <div>
               <div
                 class="dropdown-menu"
-                style="left: -999px; top: -995px;"
               >
                 <ul
                   class="list-unstyled"
@@ -3715,7 +3709,6 @@ exports[`Field LocalizableText is not readOnly 1`] = `
               aria-haspopup="true"
               class="dropdown-toggle btn btn-monospaced btn-secondary"
               data-testid="triggerButton"
-              style=""
               type="button"
             >
               <span
@@ -3740,7 +3733,6 @@ exports[`Field LocalizableText is not readOnly 1`] = `
             <div>
               <div
                 class="dropdown-menu"
-                style="left: -999px; top: -995px;"
               >
                 <ul
                   class="list-unstyled"
@@ -4327,7 +4319,6 @@ exports[`Field LocalizableText is not required 1`] = `
               aria-haspopup="true"
               class="dropdown-toggle btn btn-monospaced btn-secondary"
               data-testid="triggerButton"
-              style=""
               type="button"
             >
               <span
@@ -4352,7 +4343,6 @@ exports[`Field LocalizableText is not required 1`] = `
             <div>
               <div
                 class="dropdown-menu"
-                style="left: -999px; top: -995px;"
               >
                 <ul
                   class="list-unstyled"
@@ -5551,7 +5541,6 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
               aria-haspopup="true"
               class="dropdown-toggle btn btn-monospaced btn-secondary"
               data-testid="triggerButton"
-              style=""
               type="button"
             >
               <span
@@ -5576,7 +5565,6 @@ exports[`Field LocalizableText renders no values when values come empty 1`] = `
             <div>
               <div
                 class="dropdown-menu"
-                style="left: -999px; top: -995px;"
               >
                 <ul
                   class="list-unstyled"
@@ -6163,7 +6151,6 @@ exports[`Field LocalizableText renders values 1`] = `
               aria-haspopup="true"
               class="dropdown-toggle btn btn-monospaced btn-secondary"
               data-testid="triggerButton"
-              style=""
               type="button"
             >
               <span
@@ -6188,7 +6175,6 @@ exports[`Field LocalizableText renders values 1`] = `
             <div>
               <div
                 class="dropdown-menu"
-                style="left: -999px; top: -995px;"
               >
                 <ul
                   class="list-unstyled"
@@ -6775,7 +6761,6 @@ exports[`Field LocalizableText shows default language value when no other langua
               aria-haspopup="true"
               class="dropdown-toggle btn btn-monospaced btn-secondary"
               data-testid="triggerButton"
-              style=""
               type="button"
             >
               <span
@@ -6800,7 +6785,6 @@ exports[`Field LocalizableText shows default language value when no other langua
             <div>
               <div
                 class="dropdown-menu"
-                style="left: -999px; top: -995px;"
               >
                 <ul
                   class="list-unstyled"

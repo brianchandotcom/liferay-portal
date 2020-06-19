@@ -27,7 +27,6 @@ exports[`ListApps renders 1`] = `
             <button
               class="dropdown-toggle nav-link btn btn-unstyled"
               id="filter-and-order"
-              style=""
               type="button"
             >
               <span
@@ -276,7 +275,6 @@ exports[`ListApps renders 1`] = `
                 >
                   <button
                     class="dropdown-toggle page-link btn btn-unstyled"
-                    style=""
                     type="button"
                   >
                     <svg

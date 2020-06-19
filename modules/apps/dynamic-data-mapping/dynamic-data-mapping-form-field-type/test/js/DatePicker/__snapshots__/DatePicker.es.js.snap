@@ -17,7 +17,6 @@ exports[`DatePicker has a predefinedValue 1`] = `
     >
       <div
         class="input-group"
-        style=""
       >
         <div
           class="input-group-item"

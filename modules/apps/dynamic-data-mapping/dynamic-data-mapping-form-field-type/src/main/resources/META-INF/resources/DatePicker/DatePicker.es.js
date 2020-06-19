@@ -50,13 +50,13 @@ const getDateMask = (dateFormat, dateDelimiter) => {
 			let currentFormat;
 
 			if (item === '%Y') {
-				currentFormat = 'yyyy';
+				currentFormat = 'YYYY';
 			}
 			else if (item === '%m') {
 				currentFormat = 'MM';
 			}
 			else {
-				currentFormat = 'dd';
+				currentFormat = 'DD';
 			}
 
 			return currentFormat;

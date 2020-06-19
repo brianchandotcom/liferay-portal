@@ -207,7 +207,6 @@ public class FileInstall
 			_set(map, DirectoryWatcher.UPDATE_WITH_LISTENERS);
 			_set(map, DirectoryWatcher.OPTIONAL_SCOPE);
 			_set(map, DirectoryWatcher.FRAGMENT_SCOPE);
-			_set(map, DirectoryWatcher.DISABLE_NIO2);
 			_set(map, DirectoryWatcher.SUBDIR_MODE);
 			_set(map, DirectoryWatcher.WEB_START_LEVEL);
 

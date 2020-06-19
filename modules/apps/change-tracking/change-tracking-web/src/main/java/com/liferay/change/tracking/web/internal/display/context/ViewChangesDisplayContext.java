@@ -415,10 +415,6 @@ public class ViewChangesDisplayContext {
 			List<JSONObject> rootNodes = new ArrayList<>();
 
 			rootDisplayMap.put(classNameId, rootNodes);
-
-			String typeName = _getTypeName(classNameId);
-
-			rootDisplayClassesJSONArray.put(typeName);
 		}
 
 		for (String childClassName :
@@ -435,10 +431,6 @@ public class ViewChangesDisplayContext {
 				List<JSONObject> rootNodes = new ArrayList<>();
 
 				rootDisplayMap.put(parentClassNameId, rootNodes);
-
-				String typeName = _getTypeName(parentClassNameId);
-
-				rootDisplayClassesJSONArray.put(typeName);
 			}
 		}
 
@@ -494,17 +486,22 @@ public class ViewChangesDisplayContext {
 		for (Map.Entry<Long, List<JSONObject>> entry :
 				rootDisplayMap.entrySet()) {
 
+			List<JSONObject> rootDisplayNodes = entry.getValue();
+
+			if (rootDisplayNodes.isEmpty()) {
+				continue;
+			}
+
 			List<Integer> nodeIds = new ArrayList<>();
 
-			List<JSONObject> roodDisplayNodes = entry.getValue();
-
-			for (JSONObject rootDisplayNode : roodDisplayNodes) {
+			for (JSONObject rootDisplayNode : rootDisplayNodes) {
 				nodeIds.add(rootDisplayNode.getInt("id"));
 			}
 
 			String typeName = _getTypeName(entry.getKey());
 
 			contextViewJSONObject.put(typeName, nodeIds);
+			rootDisplayClassesJSONArray.put(typeName);
 		}
 
 		return contextViewJSONObject;

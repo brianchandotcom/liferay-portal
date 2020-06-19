@@ -85,8 +85,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	public static final String DISABLE_CONFIG_SAVE =
 		"felix.fileinstall.disableConfigSave";
 
-	public static final String DISABLE_NIO2 = "felix.fileinstall.disableNio2";
-
 	public static final String ENABLE_CONFIG_SAVE =
 		"felix.fileinstall.enableConfigSave";
 
@@ -181,25 +179,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			properties, UPDATE_WITH_LISTENERS, false);
 		_fragmentScope = properties.get(FRAGMENT_SCOPE);
 		_optionalScope = properties.get(OPTIONAL_SCOPE);
-		_disableNio2 = _getBoolean(properties, DISABLE_NIO2, false);
 		_webStartLevel = _getInt(properties, WEB_START_LEVEL, _startLevel);
 		_bundleContext.addBundleListener(this);
 
-		if (_disableNio2) {
-			scanner = new Scanner(
-				_watchedDirectory, _filter, properties.get(SUBDIR_MODE));
-		}
-		else {
-			try {
-				scanner = new WatcherScanner(
-					bundleContext, _watchedDirectory, _filter,
-					properties.get(SUBDIR_MODE));
-			}
-			catch (Throwable throwable) {
-				scanner = new Scanner(
-					_watchedDirectory, _filter, properties.get(SUBDIR_MODE));
-			}
-		}
+		scanner = new Scanner(
+			_watchedDirectory, _filter, properties.get(SUBDIR_MODE));
 	}
 
 	public void addListener(ArtifactListener listener, long timeStamp) {
@@ -1769,7 +1753,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final Map<File, Artifact> _currentManagedArtifacts =
 		new HashMap<>();
 	private final Set<Bundle> _delayedStart = new HashSet<>();
-	private final boolean _disableNio2;
 	private final FileInstall _fileInstall;
 	private final String _filter;
 	private final String _fragmentScope;

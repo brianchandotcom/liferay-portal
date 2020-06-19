@@ -101,10 +101,10 @@ public class InfoField implements InfoFieldSetEntry {
 
 		public Builder(
 			InfoFieldType infoFieldType,
-			InfoLocalizedValue<String> labelInfoLocalizaedValue, String name) {
+			InfoLocalizedValue<String> labelInfoLocalizedValue, String name) {
 
 			_infoFieldType = infoFieldType;
-			_labelInfoLocalizedValue = labelInfoLocalizaedValue;
+			_labelInfoLocalizedValue = labelInfoLocalizedValue;
 			_name = name;
 		}
 

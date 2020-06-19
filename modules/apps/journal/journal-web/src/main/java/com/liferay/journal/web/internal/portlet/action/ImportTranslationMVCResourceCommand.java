@@ -105,13 +105,7 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
-
-				_journalArticleService.updateArticleTranslation(
-					article.getGroupId(), article.getArticleId(),
-					article.getVersion(), LocaleUtil.getDefault(),
-					article.getTitle(), article.getDescription(),
-					article.getContent(), null,
-					ServiceContextFactory.getInstance(actionRequest));
+				
 				actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 			}
 			catch (PortalException portalException) {

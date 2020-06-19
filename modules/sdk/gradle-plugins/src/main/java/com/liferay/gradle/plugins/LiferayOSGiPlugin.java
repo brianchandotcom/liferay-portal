@@ -337,21 +337,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureConfigurationCompileInclude(
-		Configuration compileIncludeConfiguration) {
-
-		compileIncludeConfiguration.setDescription(
-			"Additional dependencies to include in the final JAR.");
-		compileIncludeConfiguration.setVisible(false);
-	}
-
-	private void _configureConfigurationCompileOnly(
-		Configuration compileIncludeConfiguration,
-		Configuration compileOnlyConfiguration) {
-
-		compileOnlyConfiguration.extendsFrom(compileIncludeConfiguration);
-	}
-
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, LiferayBasePlugin.class);
 
@@ -400,6 +385,21 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		WatchOSGiPlugin.INSTANCE.apply(project);
 	}
 
+	private void _configureConfigurationCompileInclude(
+		Configuration compileIncludeConfiguration) {
+
+		compileIncludeConfiguration.setDescription(
+			"Additional dependencies to include in the final JAR.");
+		compileIncludeConfiguration.setVisible(false);
+	}
+
+	private void _configureConfigurationCompileOnly(
+		Configuration compileIncludeConfiguration,
+		Configuration compileOnlyConfiguration) {
+
+		compileOnlyConfiguration.extendsFrom(compileIncludeConfiguration);
+	}
+
 	private void _configureConventionBasePlugin(
 		BundleExtension bundleExtension,
 		BasePluginConvention basePluginConvention) {
@@ -420,6 +420,40 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		bundleSymbolicName = iterator.next();
 
 		basePluginConvention.setArchivesBaseName(bundleSymbolicName);
+	}
+
+	private void _configureConventionJavaPlugin(
+		Project project, JavaPluginConvention javaPluginConvention) {
+
+		File docrootDir = project.file("docroot");
+
+		if (!docrootDir.exists()) {
+			return;
+		}
+
+		SourceSet mainSourceSet = _getSourceSet(
+			javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		File javaClassesDir = new File(docrootDir, "WEB-INF/classes");
+
+		SourceDirectorySet javaSourceDirectorySet = mainSourceSet.getJava();
+
+		javaSourceDirectorySet.setOutputDir(javaClassesDir);
+
+		SourceSetOutput sourceSetOutput = mainSourceSet.getOutput();
+
+		sourceSetOutput.setResourcesDir(javaClassesDir);
+
+		File srcDir = new File(docrootDir, "WEB-INF/src");
+
+		Set<File> srcDirs = Collections.singleton(srcDir);
+
+		javaSourceDirectorySet.setSrcDirs(srcDirs);
+
+		SourceDirectorySet resourcesSourceDirectorySet =
+			mainSourceSet.getResources();
+
+		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
 	}
 
 	private void _configureExtensionBundle(
@@ -563,49 +597,6 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		if (Validator.isNotNull(version)) {
 			project.setVersion(version);
 		}
-	}
-
-	private void _configureConventionJavaPlugin(
-		Project project, JavaPluginConvention javaPluginConvention) {
-
-		File docrootDir = project.file("docroot");
-
-		if (!docrootDir.exists()) {
-			return;
-		}
-
-		SourceSet mainSourceSet = _getSourceSet(
-			javaPluginConvention, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		File javaClassesDir = new File(docrootDir, "WEB-INF/classes");
-
-		SourceDirectorySet javaSourceDirectorySet = mainSourceSet.getJava();
-
-		javaSourceDirectorySet.setOutputDir(javaClassesDir);
-
-		SourceSetOutput sourceSetOutput = mainSourceSet.getOutput();
-
-		sourceSetOutput.setResourcesDir(javaClassesDir);
-
-		File srcDir = new File(docrootDir, "WEB-INF/src");
-
-		Set<File> srcDirs = Collections.singleton(srcDir);
-
-		javaSourceDirectorySet.setSrcDirs(srcDirs);
-
-		SourceDirectorySet resourcesSourceDirectorySet =
-			mainSourceSet.getResources();
-
-		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
-	}
-
-	private SourceSet _getSourceSet(
-		JavaPluginConvention javaPluginConvention, String name) {
-
-		SourceSetContainer sourceSetContainer =
-			javaPluginConvention.getSourceSets();
-
-		return sourceSetContainer.getByName(name);
 	}
 
 	private void _configureTaskAutoUpdateXmlProvider(
@@ -1603,6 +1594,15 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		properties.put(Constants.INCLUDE_RESOURCE, sb.toString());
 
 		return properties;
+	}
+
+	private SourceSet _getSourceSet(
+		JavaPluginConvention javaPluginConvention, String name) {
+
+		SourceSetContainer sourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		return sourceSetContainer.getByName(name);
 	}
 
 	private static final String _CACHE_PLUGIN_ID = "com.liferay.cache";

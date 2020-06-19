@@ -78,11 +78,8 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 			_checkContentType(uploadPortletRequest.getContentType(
 				"file"));
 
-			long groupId = ParamUtil.getLong(actionRequest, "groupId");
-			String articleId = ParamUtil.getString(actionRequest, "articleId");
-
-			JournalArticle article = _journalArticleService.getArticle(
-				groupId, articleId);
+			long articleResourceId = ParamUtil.getLong(
+				actionRequest, "articleResourceId");
 
 			InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file");
@@ -91,7 +88,7 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 				themeDisplay.getScopeGroupId(),
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(),
-					article.getResourcePrimKey()),
+					articleResourceId),
 				inputStream);
 
 			String redirect = ParamUtil.getString(

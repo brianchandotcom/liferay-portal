@@ -33,6 +33,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <liferay-theme:defineObjects />
 
 <%
+String actionParameterName = (String)request.getAttribute("clay:dataset-display:actionParameterName");
 List<DropdownItem> bulkActions = (List<DropdownItem>)request.getAttribute("clay:dataset-display:bulkActions");
 Object clayDataSetDisplayViewsContext = request.getAttribute("clay:dataset-display:clayDataSetDisplayViewsContext");
 CreationMenu creationMenu = (CreationMenu)request.getAttribute("clay:dataset-display:creationMenu");

@@ -628,6 +628,11 @@
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.DatasetDisplayTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
+			<name>actionParameterName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>bulkActions</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

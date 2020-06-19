@@ -16,28 +16,28 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import DatasetDisplayContext from '../../DatasetDisplayContext';
 import {OPEN_SIDE_PANEL} from '../../utilities/eventsDefinitions';
+import {logError} from '../../utilities/logError';
 import {getOpenedSidePanel} from '../../utilities/sidePanels';
 
-function submit(action, method = 'get', formId, form) {
-	let queriedForm;
+function submit({action, data, formId, formRef}) {
+	let form;
 
 	if (formId) {
-		queriedForm = document.getElementById(formId);
+		form = document.getElementById(formId);
 	}
-	if (form.current) {
-		queriedForm = form.current;
+	if (formRef.current) {
+		form = formRef.current;
 	}
-	if (!queriedForm) {
-		throw new Error('Form not found');
+	if (form) {
+		Liferay.Util.postForm(form, {data, url: action || form.action});
 	}
-
-	queriedForm.action = action;
-	queriedForm.method = method;
-	queriedForm.submit();
+	else {
+		logError(`Form not found.`);
+	}
 }
 
 function getQueryString(key, values = []) {
@@ -61,6 +61,7 @@ function BulkActions({
 	selectedItemsValue,
 	totalItemsCount,
 }) {
+	const {actionParameterName} = useContext(DatasetDisplayContext);
 	const [
 		currentSidePanelActionPayload,
 		setCurrentSidePanelActionPayload,
@@ -73,12 +74,14 @@ function BulkActions({
 		loadData,
 		sidePanelId
 	) {
-		if (actionDefinition.target === 'sidePanel') {
+		const {data, href, slug, target} = actionDefinition;
+
+		if (target === 'sidePanel') {
 			const sidePanelActionPayload = {
-				baseUrl: actionDefinition.href,
+				baseUrl: href,
 				id: sidePanelId,
 				onAfterSubmit: () => loadData(),
-				slug: actionDefinition.slug || null,
+				slug: slug ?? null,
 			};
 
 			Liferay.fire(
@@ -93,12 +96,17 @@ function BulkActions({
 			setCurrentSidePanelActionPayload(sidePanelActionPayload);
 		}
 		else {
-			submit(
-				actionDefinition.href,
-				actionDefinition.method || 'post',
+			submit({
+				action: href,
+				data: {
+					...data,
+					[`${
+						actionParameterName || selectedItemsKey
+					}`]: selectedItemsValue.join(','),
+				},
 				formId,
-				formRef
-			);
+				formRef,
+			});
 		}
 	}
 

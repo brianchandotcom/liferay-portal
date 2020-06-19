@@ -83,6 +83,34 @@ public class AddCollectionLayoutMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		try {
+			Layout layout = _addCollectionLayout(actionRequest);
+
+			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONUtil.put(
+					"redirectURL",
+					getContentRedirectURL(actionRequest, layout)));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException, portalException);
+			}
+
+			SessionErrors.add(actionRequest, "layoutNameInvalid");
+
+			hideDefaultErrorMessage(actionRequest);
+
+			_layoutExceptionRequestHandler.handlePortalException(
+				actionRequest, actionResponse, portalException);
+		}
+	}
+
+	private Layout _addCollectionLayout(ActionRequest actionRequest)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -120,51 +148,31 @@ public class AddCollectionLayoutMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Layout.class.getName(), actionRequest);
 
-		try {
-			Layout layout = _layoutService.addLayout(
-				groupId, privateLayout, parentLayoutId, nameMap,
-				new HashMap<>(), new HashMap<>(), new HashMap<>(),
-				new HashMap<>(), LayoutConstants.TYPE_COLLECTION,
-				typeSettingsUnicodeProperties.toString(), false,
-				masterLayoutPlid, new HashMap<>(), serviceContext);
+		Layout layout = _layoutService.addLayout(
+			groupId, privateLayout, parentLayoutId, nameMap, new HashMap<>(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			LayoutConstants.TYPE_COLLECTION,
+			typeSettingsUnicodeProperties.toString(), false, masterLayoutPlid,
+			new HashMap<>(), serviceContext);
 
-			ActionUtil.updateLookAndFeel(
-				actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-				stagingGroupId, privateLayout, layout.getLayoutId(),
-				layout.getTypeSettingsProperties());
+		ActionUtil.updateLookAndFeel(
+			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
+			stagingGroupId, privateLayout, layout.getLayoutId(),
+			layout.getTypeSettingsProperties());
 
-			Layout draftLayout = _layoutLocalService.fetchLayout(
-				_portal.getClassNameId(Layout.class), layout.getPlid());
+		Layout draftLayout = _layoutLocalService.fetchLayout(
+			_portal.getClassNameId(Layout.class), layout.getPlid());
 
-			if (draftLayout != null) {
-				layout = _layoutLocalService.updateLayout(
-					groupId, privateLayout, layout.getLayoutId(),
-					draftLayout.getModifiedDate());
-			}
-
-			_updateLayoutPageTemplateData(
-				draftLayout, collectionType, collectionPK);
-
-			MultiSessionMessages.add(actionRequest, "layoutAdded", layout);
-
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse,
-				JSONUtil.put(
-					"redirectURL",
-					getContentRedirectURL(actionRequest, layout)));
+		if (draftLayout != null) {
+			layout = _layoutLocalService.updateLayout(
+				groupId, privateLayout, layout.getLayoutId(),
+				draftLayout.getModifiedDate());
 		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException, portalException);
-			}
 
-			SessionErrors.add(actionRequest, "layoutNameInvalid");
+		_updateLayoutPageTemplateData(
+			draftLayout, collectionType, collectionPK);
 
-			hideDefaultErrorMessage(actionRequest);
-
-			_layoutExceptionRequestHandler.handlePortalException(
-				actionRequest, actionResponse, portalException);
-		}
+		return layout;
 	}
 
 	private String _getCollectionLayoutDefinitionJSON(

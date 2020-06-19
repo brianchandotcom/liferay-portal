@@ -18,13 +18,20 @@ import com.liferay.fragment.exception.FragmentEntryConfigurationException;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.util.FileImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
-import org.hamcrest.core.StringStartsWith;
+import org.hamcrest.core.StringContains;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -33,6 +40,22 @@ import org.junit.rules.ExpectedException;
  * @author Rubén Pulido
  */
 public class FragmentEntryValidatorImplTest {
+
+	@BeforeClass
+	public static void setUpClass() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+
+		Registry registry = new BasicRegistryImpl();
+
+		RegistryUtil.setRegistry(registry);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		RegistryUtil.setRegistry(null);
+	}
 
 	@Before
 	public void setUp() {
@@ -53,7 +76,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/defaultValue: required key [cssClass] " +
 					"not found"));
 
@@ -69,7 +92,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/defaultValue: required key [rgbValue] " +
 					"not found"));
 
@@ -85,7 +108,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/defaultValue: unsupported is not a " +
 					"valid enum value"));
 
@@ -101,7 +124,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
 					"permitted"));
 
@@ -116,7 +139,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/defaultValue: extraneous key [extra] " +
 					"is not permitted"));
 
@@ -132,7 +155,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
 					"permitted"));
 
@@ -148,7 +171,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/defaultValue: required key " +
 					"[className] not found"));
 
@@ -164,7 +187,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/defaultValue: required key [classPK] " +
 					"not found"));
 
@@ -180,7 +203,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/defaultValue: extraneous key [extra] " +
 					"is not permitted"));
 
@@ -196,7 +219,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
 					"permitted"));
 
@@ -212,7 +235,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/typeOptions: extraneous key [extra] " +
 					"is not permitted"));
 
@@ -228,7 +251,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/name: expected minLength: 1, actual: " +
 					"0"));
 
@@ -242,7 +265,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0: required key [name] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
@@ -255,7 +278,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/name: string [a_b-c.d?e] does not " +
 					"match pattern"));
 
@@ -269,7 +292,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/name: string [a b] does not match " +
 					"pattern"));
 
@@ -283,7 +306,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/dataType: unsupported is not a valid " +
 					"enum value"));
 
@@ -299,7 +322,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0: required key [defaultValue] not " +
 					"found"));
 
@@ -315,7 +338,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
 					"permitted"));
 
@@ -329,7 +352,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/typeOptions: extraneous key [extra] " +
 					"is not permitted"));
 
@@ -345,7 +368,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0: required key [typeOptions] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
@@ -359,7 +382,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/typeOptions/validValues/0: extraneous " +
 					"key [extra] is not permitted"));
 
@@ -375,7 +398,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/typeOptions: required key " +
 					"[validValues] not found"));
 
@@ -391,7 +414,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/typeOptions/validValues/0: required " +
 					"key [value] not found"));
 
@@ -407,7 +430,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith("extraneous key [extra] is not permitted"));
+			new StringContains("extraneous key [extra] is not permitted"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_sets_extra_properties.json"));
@@ -419,7 +442,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith("required key [fieldSets] not found"));
+			new StringContains("required key [fieldSets] not found"));
 
 		_fragmentEntryValidatorImpl.validateConfiguration(
 			_read("configuration_invalid_field_sets_missing.json"));
@@ -431,7 +454,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0/dataType: unsupported is not a valid " +
 					"enum value"));
 
@@ -446,7 +469,7 @@ public class FragmentEntryValidatorImplTest {
 
 		expectedException.expect(FragmentEntryConfigurationException.class);
 		expectedException.expectMessage(
-			new StringStartsWith(
+			new StringContains(
 				"/fieldSets/0/fields/0: extraneous key [extra] is not " +
 					"permitted"));
 

@@ -1038,36 +1038,38 @@ if (themeDisplay.isStatePopUp()) {
 		<aui:script use="aui-base">
 			var dialog = Liferay.Util.getWindow();
 
-			var hideDialogSignature = '<portlet:namespace />hideRefreshDialog|*';
+			if (dialog) {
+				var hideDialogSignature = '<portlet:namespace />hideRefreshDialog|*';
 
-			dialog.detach(hideDialogSignature);
+				dialog.detach(hideDialogSignature);
 
-			dialog.on(
-				'<portlet:namespace />hideRefreshDialog|visibleChange',
-				function(event) {
-					if (!event.newVal && event.src !== 'hideLink') {
-						var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
+				dialog.on(
+					'<portlet:namespace />hideRefreshDialog|visibleChange',
+					function(event) {
+						if (!event.newVal && event.src !== 'hideLink') {
+							var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
 
-						var topA = refreshWindow.AUI();
+							var topA = refreshWindow.AUI();
 
-						topA.use(
-							'aui-loading-mask-deprecated',
-							function(A) {
-								new A.LoadingMask(
-									{
-										target: A.getBody()
-									}
-								).show();
-							}
-						);
+							topA.use(
+								'aui-loading-mask-deprecated',
+								function(A) {
+									new A.LoadingMask(
+										{
+											target: A.getBody()
+										}
+									).show();
+								}
+							);
 
-						refreshWindow.location.href = '<%= HtmlUtil.escapeJS(closeRedirect) %>';
+							refreshWindow.location.href = '<%= HtmlUtil.escapeJS(closeRedirect) %>';
+						}
+						else {
+							dialog.detach(hideDialogSignature);
+						}
 					}
-					else {
-						dialog.detach(hideDialogSignature);
-					}
-				}
-			);
+				);
+			}
 		</aui:script>
 
 	<%

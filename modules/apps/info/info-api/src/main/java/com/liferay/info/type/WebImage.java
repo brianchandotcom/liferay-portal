@@ -70,6 +70,11 @@ public class WebImage {
 		return jsonObject;
 	}
 
+	@Override
+	public String toString() {
+		return getUrl();
+	}
+
 	private InfoLocalizedValue<String> _altInfoLocalizedValue;
 	private final String _url;
 

@@ -13,6 +13,7 @@ import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import SelectObjects from 'app-builder-web/js/pages/apps/SelectObjectsDropDown.es';
 import EditAppContext, {
+	UPDATE_DATA_DEFINITION_ID,
 	UPDATE_DATA_LAYOUT_ID,
 	UPDATE_DATA_LIST_VIEW_ID,
 } from 'app-builder-web/js/pages/apps/edit/EditAppContext.es';
@@ -59,8 +60,8 @@ export default () => {
 		});
 
 		dispatch({
-			...formView,
-			type: UPDATE_DATA_LAYOUT_ID,
+			...dataObject,
+			type: UPDATE_DATA_DEFINITION_ID,
 		});
 	};
 

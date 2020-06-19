@@ -16,7 +16,7 @@ definition {
 	}
 
 	macro createNewPublication {
-		if (isSet(gotoManagePublications)) {
+		if ("${gotoManagePublications}" == "true") {
 			GlobalMenu.gotoPortlet(
 				category = "Change Lists",
 				panel = "Applications",

@@ -1797,7 +1797,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-97544 and LPS-90886."
-	@ignore = "true"
 	@priority = "3"
 	test ImportStagedSiteWithCircularReference {
 		JSONGroup.addGroup(groupName = "Site Name");

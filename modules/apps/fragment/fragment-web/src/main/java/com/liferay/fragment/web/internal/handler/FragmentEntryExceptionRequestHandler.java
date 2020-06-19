@@ -46,23 +46,23 @@ public class FragmentEntryExceptionRequestHandler {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String errorMessage = "an-unexpected-error-occurred";
+		String errorMessage = LanguageUtil.get(
+			themeDisplay.getRequest(), "an-unexpected-error-occurred");
 
 		if (portalException instanceof FragmentEntryConfigurationException) {
-			errorMessage =
-				"please-provide-a-valid-configuration-for-the-fragment";
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(),
+				"please-provide-a-valid-configuration-for-the-fragment");
 		}
-
-		if (portalException instanceof FragmentEntryContentException) {
+		else if (portalException instanceof FragmentEntryContentException) {
 			errorMessage = portalException.getLocalizedMessage();
 		}
-
-		if (portalException instanceof FragmentEntryNameException) {
-			errorMessage = "please-enter-a-valid-name";
+		else if (portalException instanceof FragmentEntryNameException) {
+			errorMessage = LanguageUtil.get(
+				themeDisplay.getRequest(), "please-enter-a-valid-name");
 		}
 
-		JSONObject jsonObject = JSONUtil.put(
-			"error", LanguageUtil.get(themeDisplay.getRequest(), errorMessage));
+		JSONObject jsonObject = JSONUtil.put("error", errorMessage);
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

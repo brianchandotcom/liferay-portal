@@ -17,8 +17,6 @@ package com.liferay.gradle.plugins.util;
 import com.liferay.gradle.plugins.extensions.BundleExtension;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 
-import java.util.Map;
-
 import org.gradle.api.Project;
 import org.gradle.api.UnknownDomainObjectException;
 import org.gradle.api.plugins.ExtensionContainer;
@@ -28,12 +26,6 @@ import org.gradle.api.plugins.ExtensionContainer;
  * @author Raymond Augé
  */
 public class BndUtil {
-
-	public static String getInstruction(Project project, String key) {
-		Map<String, Object> bundleInstructions = getInstructions(project);
-
-		return GradleUtil.toString(bundleInstructions.get(key));
-	}
 
 	public static BundleExtension getInstructions(Project project) {
 		try {

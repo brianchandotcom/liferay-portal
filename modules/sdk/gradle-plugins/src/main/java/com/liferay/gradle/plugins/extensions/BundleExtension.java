@@ -14,12 +14,18 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import com.liferay.gradle.plugins.internal.util.GradleUtil;
+
 import java.util.HashMap;
 
 /**
  * @author Raymond Augé
  */
 public class BundleExtension extends HashMap<String, Object> {
+
+	public String getInstruction(String key) {
+		return GradleUtil.toString(super.get(key));
+	}
 
 	public Object instruction(String key, Object value) {
 		return put(key, value);

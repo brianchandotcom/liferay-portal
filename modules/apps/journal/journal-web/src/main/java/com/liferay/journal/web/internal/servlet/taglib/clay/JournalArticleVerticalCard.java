@@ -20,6 +20,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.journal.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalArticleActionDropdownItemsProvider;
@@ -27,13 +29,16 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.taglib.util.LexiconUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
@@ -159,6 +164,52 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 	}
 
 	@Override
+	public String getStickerCssClass() {
+		User user = _getOriginalAuthor();
+
+		if (user == null) {
+			return StringPool.BLANK;
+		}
+
+		return "sticker-user-icon " + LexiconUtil.getUserColorCssClass(user);
+	}
+
+	@Override
+	public String getStickerIcon() {
+		User user = _getOriginalAuthor();
+
+		if (user == null) {
+			return StringPool.BLANK;
+		}
+
+		if (user.getPortraitId() == 0) {
+			return "user";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getStickerImageSrc() {
+		try {
+			User user = _getOriginalAuthor();
+
+			if (user == null) {
+				return StringPool.BLANK;
+			}
+
+			if (user.getPortraitId() <= 0) {
+				return null;
+			}
+
+			return user.getPortraitURL(themeDisplay);
+		}
+		catch (Exception exception) {
+			return StringPool.BLANK;
+		}
+	}
+
+	@Override
 	public String getSubtitle() {
 		Date createDate = _article.getModifiedDate();
 
@@ -182,6 +233,17 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 			_article.getDefaultLanguageId());
 
 		return HtmlUtil.escape(_article.getTitle(defaultLanguage));
+	}
+
+	private User _getOriginalAuthor() {
+		List<JournalArticle> articles =
+			JournalArticleLocalServiceUtil.getArticles(
+				_article.getGroupId(), _article.getArticleId(), 0, 1,
+				new ArticleVersionComparator(true));
+
+		JournalArticle article = articles.get(0);
+
+		return UserLocalServiceUtil.fetchUser(article.getUserId());
 	}
 
 	private final JournalArticle _article;

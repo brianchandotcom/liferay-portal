@@ -191,6 +191,8 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 
 		dataDefinitionResource.deleteDataDefinition(
 			fileEntryType.getDataDefinitionId());
+
+		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
 	}
 
 	private void _subscribeFileEntryType(ActionRequest actionRequest)

@@ -111,8 +111,13 @@ public class AccountGroupLocalServiceTest {
 
 		Assert.assertEquals(
 			expectedAccountGroups.size(), baseModelSearchResult.getLength());
+	}
 
-		expectedAccountGroups = Arrays.asList(
+	@Test
+	public void testSearchAccountGroupsWithPagination() throws Exception {
+		String keywords = RandomTestUtil.randomString();
+
+		List<AccountGroup> expectedAccountGroups = Arrays.asList(
 			_addAccountGroup(RandomTestUtil.randomString(), keywords),
 			_addAccountGroup(RandomTestUtil.randomString(), keywords),
 			_addAccountGroup(RandomTestUtil.randomString(), keywords),
@@ -127,9 +132,9 @@ public class AccountGroupLocalServiceTest {
 				return name1.compareToIgnoreCase(name2);
 			};
 
-		_testSearchAccountGroups(
+		_testSearchAccountGroupsWithPagination(
 			comparator, expectedAccountGroups, keywords, false);
-		_testSearchAccountGroups(
+		_testSearchAccountGroupsWithPagination(
 			comparator, expectedAccountGroups, keywords, true);
 	}
 
@@ -158,7 +163,7 @@ public class AccountGroupLocalServiceTest {
 				accountGroup.getAccountGroupId()));
 	}
 
-	private void _testSearchAccountGroups(
+	private void _testSearchAccountGroupsWithPagination(
 			Comparator<AccountGroup> comparator,
 			List<AccountGroup> expectedAccountGroups, String keywords,
 			boolean reversed)

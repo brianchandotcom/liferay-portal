@@ -372,11 +372,6 @@
   <td></td>
 </tr>
 <tr>
-	<td>ROW_COLUMN_RESTRICTION_VISUAL_FEEDBACK</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}][@data-not-droppable-message='A Section cannot be dropped inside a Column.']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ROW_COLUMN_NESTED_ELEMENT</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Row')][${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]${key_elementHeader}</td>
 	<td></td>
@@ -390,11 +385,6 @@
   <td>CONTAINER_CONTAINER_EMPTY</td>
   <td>//div[contains(@class,'page-editor__topper') and contains(.,'Container')][${key_position}]//div[contains(@class,'page-editor__container empty')]</td>
   <td></td>
-</tr>
-<tr>
-	<td>SECTION_CONTAINER_RESTRICTION_VISUAL_FEEDBACK</td>
-	<td>//div[contains(@class,'page-editor__topper') and contains(.,'Section')][${key_position}]//div[contains(@class,'page-editor__section')]/div[@data-not-droppable-message='A Section cannot be dropped inside a Section.']</td>
-	<td></td>
 </tr>
 <tr>
 	<td>CONTAINER_CONTAINER_NESTED_ELEMENT</td>

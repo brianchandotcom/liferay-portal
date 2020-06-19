@@ -21,8 +21,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
  */
 public class DepotDashboardApplicationHorizontalCard implements HorizontalCard {
 
-	public DepotDashboardApplicationHorizontalCard(String href, String title) {
+	public DepotDashboardApplicationHorizontalCard(
+		String href, String icon, String title) {
+
 		_href = href;
+		_icon = icon;
 		_title = title;
 	}
 
@@ -38,7 +41,7 @@ public class DepotDashboardApplicationHorizontalCard implements HorizontalCard {
 
 	@Override
 	public String getIcon() {
-		return "cards2";
+		return _icon;
 	}
 
 	@Override
@@ -52,6 +55,7 @@ public class DepotDashboardApplicationHorizontalCard implements HorizontalCard {
 	}
 
 	private final String _href;
+	private final String _icon;
 	private final String _title;
 
 }

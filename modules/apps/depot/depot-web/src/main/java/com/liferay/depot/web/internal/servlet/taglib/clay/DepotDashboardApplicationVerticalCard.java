@@ -21,14 +21,18 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
  */
 public class DepotDashboardApplicationVerticalCard implements VerticalCard {
 
-	public DepotDashboardApplicationVerticalCard(String href, String title) {
+	public DepotDashboardApplicationVerticalCard(
+		String href, String icon, String title) {
+
 		_href = href;
+		_icon = icon;
 		_title = title;
 	}
 
 	@Override
 	public String getElementClasses() {
-		return "card card-interactive card-interactive-primary card-type-template template-card";
+		return "card card-interactive card-interactive-primary " +
+			"card-type-template template-card";
 	}
 
 	@Override
@@ -38,7 +42,7 @@ public class DepotDashboardApplicationVerticalCard implements VerticalCard {
 
 	@Override
 	public String getIcon() {
-		return "cards2";
+		return _icon;
 	}
 
 	@Override
@@ -52,6 +56,7 @@ public class DepotDashboardApplicationVerticalCard implements VerticalCard {
 	}
 
 	private final String _href;
+	private final String _icon;
 	private final String _title;
 
 }

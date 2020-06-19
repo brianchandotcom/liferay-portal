@@ -19,18 +19,28 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
+import com.liferay.asset.tags.constants.AssetTagsAdminPortletKeys;
+import com.liferay.depot.web.internal.constants.DepotPortletKeys;
 import com.liferay.depot.web.internal.servlet.taglib.clay.DepotDashboardApplicationHorizontalCard;
 import com.liferay.depot.web.internal.servlet.taglib.clay.DepotDashboardApplicationVerticalCard;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
+import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
+import com.liferay.trash.constants.TrashPortletKeys;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletRequest;
@@ -61,7 +71,7 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 		PanelApp panelApp, Locale locale) {
 
 		return new DepotDashboardApplicationHorizontalCard(
-			_getPortletURL(panelApp),
+			_getPortletURL(panelApp), _getIcon(panelApp),
 			_portal.getPortletTitle(panelApp.getPortletId(), locale));
 	}
 
@@ -69,7 +79,7 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 		PanelApp panelApp, Locale locale) {
 
 		return new DepotDashboardApplicationVerticalCard(
-			_getPortletURL(panelApp),
+			_getPortletURL(panelApp), _getIcon(panelApp),
 			_portal.getPortletTitle(panelApp.getPortletId(), locale));
 	}
 
@@ -114,6 +124,10 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 		return false;
 	}
 
+	private String _getIcon(PanelApp panelApp) {
+		return _panelAppIcons.getOrDefault(panelApp.getPortletId(), "cards2");
+	}
+
 	private String _getPortletURL(PanelApp panelApp) {
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
 			_httpServletRequest, _group, panelApp.getPortletId(), 0, 0,
@@ -133,8 +147,26 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 		PanelCategoryKeys.SITE_ADMINISTRATION_PUBLISHING
 	};
 
-	private final Group _group;
+	private static final Map<String, String> _panelAppIcons =
+		HashMapBuilder.put(
+			AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN, "categories"
+		).put(
+			AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN, "tag"
+		).put(
+			DepotPortletKeys.DEPOT_SETTINGS, "cog"
+		).put(
+			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, "documents-and-media"
+		).put(
+			JournalPortletKeys.JOURNAL, "web-content"
+		).put(
+			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "users"
+		).put(
+			TrashPortletKeys.TRASH, "trash"
+		).put(
+			WorkflowPortletKeys.SITE_ADMINISTRATION_WORKFLOW, "workflow"
+		).build();
 
+	private final Group _group;
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;
 	private final PanelCategoryRegistry _panelCategoryRegistry;

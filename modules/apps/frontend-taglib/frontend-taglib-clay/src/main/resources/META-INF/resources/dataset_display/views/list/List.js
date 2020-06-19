@@ -107,9 +107,11 @@ function List({
 					</ClayList.ItemField>
 
 					<ClayList.ItemField>
-						{(itemActions || item.actionItems) && (
+						{(itemActions || item.actionDropdownItems) && (
 							<ActionsDropdownRenderer
-								actions={itemActions || item.actionItems}
+								actions={
+									itemActions || item.actionDropdownItems
+								}
 								itemData={item}
 								itemId={item[selectedItemsKey] || i}
 							/>

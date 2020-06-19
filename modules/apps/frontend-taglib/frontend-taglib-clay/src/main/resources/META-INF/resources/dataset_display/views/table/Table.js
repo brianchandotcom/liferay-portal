@@ -131,7 +131,8 @@ function Table({itemActions, items, schema, style}) {
 	} = useContext(DatasetDisplayContext);
 
 	const showActionItems = Boolean(
-		itemActions?.length || items.find((element) => element.actionItems)
+		itemActions?.length ||
+			items.find((element) => element.actionDropdownItems)
 	);
 
 	const SelectionComponent =
@@ -199,11 +200,11 @@ function Table({itemActions, items, schema, style}) {
 									{showActionItems && (
 										<ClayTable.Cell className="dataset-item-actions-wrapper">
 											{(itemActions ||
-												item.actionItems) && (
+												item.actionDropdownItems) && (
 												<ActionsDropdownRenderer
 													actions={
 														itemActions ||
-														item.actionItems
+														item.actionDropdownItems
 													}
 													itemData={item}
 													itemId={itemId}

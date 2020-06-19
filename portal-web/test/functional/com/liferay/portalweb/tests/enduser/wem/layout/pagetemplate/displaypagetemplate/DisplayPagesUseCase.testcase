@@ -253,7 +253,7 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Section");
 
-		PageEditor.editLayoutSection(
+		PageEditor.editLayoutContainer(
 			backgroundImage = "Content Mapping",
 			entryTitle = "Document_1.jpg",
 			fieldName = "File URL",
@@ -489,7 +489,7 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Section");
 
-		PageEditor.editLayoutSection(
+		PageEditor.editLayoutContainer(
 			backgroundImage = "Content Mapping",
 			entryTitle = "WC WebContent Title",
 			navItem = "Web Content");

@@ -92,7 +92,7 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Section");
 
-		PageEditor.editLayoutSection(
+		PageEditor.editLayoutContainer(
 			backgroundImage = "Manual Selection",
 			entryTitle = "Document_1.svg",
 			navItem = "Documents and Media");
@@ -153,7 +153,7 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Section");
 
-		PageEditor.editLayoutSection(
+		PageEditor.editLayoutContainer(
 			backgroundImage = "Manual Selection",
 			entryTitle = "Document_1.jpeg",
 			navItem = "Documents and Media");

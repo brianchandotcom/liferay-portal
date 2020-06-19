@@ -111,7 +111,7 @@ definition {
 			collectionName = "Layout Elements",
 			fragmentName = "Section");
 
-		PageEditor.editLayoutSection(
+		PageEditor.editLayoutContainer(
 			backgroundImage = "Manual Selection",
 			depotName = "Test Depot Name",
 			imageFileName = "Document_1.jpeg");

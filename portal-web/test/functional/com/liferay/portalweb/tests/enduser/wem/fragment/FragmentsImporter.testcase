@@ -400,7 +400,7 @@ definition {
 			sourceFileName = "Document_1.jpg");
 
 		task ("Configure the section") {
-			PageEditor.editLayoutSection(
+			PageEditor.editLayoutContainer(
 				backgroundImage = "Manual Selection",
 				entryTitle = "Document_1.jpg",
 				navItem = "Documents and Media");

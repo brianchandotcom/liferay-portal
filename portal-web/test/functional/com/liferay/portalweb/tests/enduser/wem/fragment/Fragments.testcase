@@ -589,7 +589,7 @@ definition {
 		}
 
 		task ("Configure the section") {
-			PageEditor.editLayoutSection(backgroundColor = "warning");
+			PageEditor.editLayoutContainer(backgroundColor = "warning");
 		}
 
 		task ("View the fragment style") {

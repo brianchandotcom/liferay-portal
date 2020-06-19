@@ -427,7 +427,7 @@ definition {
 		}
 
 		task ("Assert the Section has Fluid, padding bottom 0, padding horizontal 0 and padding top 0") {
-			PageEditor.viewSectionStyle(
+			PageEditor.viewContainerStyle(
 				container = "Fluid",
 				paddingBottom = "0",
 				paddingHorizontal = "0",
@@ -442,7 +442,7 @@ definition {
 		}
 
 		task ("Edit the section's properties") {
-			PageEditor.editLayoutSection(
+			PageEditor.editLayoutContainer(
 				container = "Fixed Width",
 				paddingBottom = "4",
 				paddingTop = "2");
@@ -456,7 +456,7 @@ definition {
 		}
 
 		task ("Assert the Section has Fixed Width, padding bottom 4 and padding top 2") {
-			PageEditor.viewSectionStyle(
+			PageEditor.viewContainerStyle(
 				container = "Fixed Width",
 				paddingBottom = "5",
 				paddingTop = "4",
@@ -1416,9 +1416,9 @@ definition {
 		}
 
 		task ("Configure the Section") {
-			PageEditor.editLayoutSection(backgroundColor = "success");
+			PageEditor.editLayoutContainer(backgroundColor = "success");
 
-			PageEditor.viewSectionStyle(
+			PageEditor.viewContainerStyle(
 				backgroundColor = "success",
 				position = "1");
 		}
@@ -1436,7 +1436,7 @@ definition {
 		task ("Assert configuration duplicated with Section and Heading") {
 			PageEditor.gotoDuplicate(fragmentName = "Section");
 
-			PageEditor.viewSectionStyle(
+			PageEditor.viewContainerStyle(
 				backgroundColor = "success",
 				position = "2");
 

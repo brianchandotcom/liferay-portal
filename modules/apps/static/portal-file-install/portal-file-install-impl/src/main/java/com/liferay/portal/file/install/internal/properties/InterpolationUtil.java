@@ -27,7 +27,7 @@ import org.osgi.framework.BundleContext;
 /**
  * @author Matthew Tambara
  */
-public class InterpolationHelper {
+public class InterpolationUtil {
 
 	public static void performSubstitution(Map<String, String> properties) {
 		performSubstitution(properties, (BundleContext)null);
@@ -392,7 +392,7 @@ public class InterpolationHelper {
 		return value;
 	}
 
-	private InterpolationHelper() {
+	private InterpolationUtil() {
 	}
 
 	private static final String _DELIM_START = "${";

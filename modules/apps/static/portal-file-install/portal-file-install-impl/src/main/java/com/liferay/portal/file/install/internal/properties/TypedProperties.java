@@ -14,7 +14,7 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
-import static com.liferay.portal.file.install.internal.properties.InterpolationHelper.substVars;
+import static com.liferay.portal.file.install.internal.properties.InterpolationUtil.substVars;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -379,8 +379,8 @@ public class TypedProperties extends AbstractMap<String, Object> {
 		}
 
 		private String _compute(final String key) {
-			InterpolationHelper.SubstitutionCallback wrapper =
-				new InterpolationHelper.SubstitutionCallback() {
+			InterpolationUtil.SubstitutionCallback wrapper =
+				new InterpolationUtil.SubstitutionCallback() {
 
 					@Override
 					public String getValue(String value) {

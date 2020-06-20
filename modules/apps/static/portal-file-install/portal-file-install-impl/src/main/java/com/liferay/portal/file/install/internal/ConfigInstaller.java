@@ -18,7 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.internal.collections.DictionaryAsMap;
-import com.liferay.portal.file.install.internal.properties.InterpolationHelper;
+import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.file.install.internal.properties.TypedProperties;
 import com.liferay.portal.file.install.listener.ArtifactInstaller;
 import com.liferay.portal.file.install.listener.ArtifactListener;
@@ -310,8 +310,8 @@ public class ConfigInstaller
 	}
 
 	private TypedProperties.SubstitutionCallback _bundleSubstitution() {
-		InterpolationHelper.SubstitutionCallback substitutionCallback =
-			new InterpolationHelper.BundleContextSubstitutionCallback(
+		InterpolationUtil.SubstitutionCallback substitutionCallback =
+			new InterpolationUtil.BundleContextSubstitutionCallback(
 				_bundleContext);
 
 		return new TypedProperties.SubstitutionCallback() {
@@ -453,7 +453,7 @@ public class ConfigInstaller
 						key.toString(), properties.getProperty(key.toString()));
 				}
 
-				InterpolationHelper.performSubstitution(map, _bundleContext);
+				InterpolationUtil.performSubstitution(map, _bundleContext);
 
 				for (Map.Entry<String, String> entry : map.entrySet()) {
 					dictionary.put(entry.getKey(), entry.getValue());

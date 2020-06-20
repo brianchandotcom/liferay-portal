@@ -67,6 +67,10 @@ public class ContentFieldUtil {
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
+		if (ddmFormField == null) {
+			return null;
+		}
+
 		LocalizedValue localizedValue = ddmFormField.getLabel();
 
 		return new ContentField() {

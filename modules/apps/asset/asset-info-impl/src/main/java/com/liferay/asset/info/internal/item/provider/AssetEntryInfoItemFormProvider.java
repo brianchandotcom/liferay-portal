@@ -19,10 +19,10 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
@@ -59,17 +59,17 @@ public class AssetEntryInfoItemFormProvider
 	}
 
 	@Override
-	public InfoFormValues getInfoFormValues(AssetEntry assetEntry) {
-		InfoFormValues infoFormValues = new InfoFormValues();
+	public InfoItemFieldValues getInfoFormValues(AssetEntry assetEntry) {
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
 
-		infoFormValues.addAll(
+		infoItemFieldValues.addAll(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry));
-		infoFormValues.addAll(_getAssetEntryInfoFieldValues(assetEntry));
-		infoFormValues.setInfoItemClassPKReference(
+		infoItemFieldValues.addAll(_getAssetEntryInfoFieldValues(assetEntry));
+		infoItemFieldValues.setInfoItemClassPKReference(
 			new InfoItemClassPKReference(
 				AssetEntry.class.getName(), assetEntry.getEntryId()));
 
-		return infoFormValues;
+		return infoItemFieldValues;
 	}
 
 	private List<InfoFieldSetEntry> _getAssetEntryFieldSetEntries() {

@@ -26,7 +26,7 @@ import com.liferay.info.display.contributor.InfoDisplayContributor;
 import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.type.WebImage;
@@ -227,10 +227,10 @@ public class FragmentEntryProcessorHelperImpl
 		Map<String, Object> fieldsValues = infoDisplaysFieldValues.get(classPK);
 
 		if (fieldsValues == null) {
-			InfoFormValues infoFormValues =
+			InfoItemFieldValues infoItemFieldValues =
 				infoItemFormProvider.getInfoFormValues(object);
 
-			fieldsValues = infoFormValues.getMap(
+			fieldsValues = infoItemFieldValues.getMap(
 				fragmentEntryProcessorContext.getLocale());
 
 			infoDisplaysFieldValues.put(classPK, fieldsValues);

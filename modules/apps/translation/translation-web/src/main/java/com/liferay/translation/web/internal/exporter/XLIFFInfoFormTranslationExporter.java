@@ -16,9 +16,9 @@ package com.liferay.translation.web.internal.exporter;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
@@ -64,7 +64,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 	@Override
 	public InputStream export(
-			InfoFormValues infoFormValues, Locale sourceLocale,
+			InfoItemFieldValues infoItemFieldValues, Locale sourceLocale,
 			Locale targetLocale)
 		throws IOException {
 
@@ -82,7 +82,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 		Element fileElement = xliffElement.addElement("file");
 
 		InfoItemClassPKReference infoItemClassPKReference =
-			infoFormValues.getInfoItemClassPKReference();
+			infoItemFieldValues.getInfoItemClassPKReference();
 
 		fileElement.addAttribute(
 			"id",
@@ -90,7 +90,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 				infoItemClassPKReference.getClassPK());
 
 		Collection<InfoFieldValue<Object>> infoFieldValues =
-			infoFormValues.getInfoFieldValues();
+			infoItemFieldValues.getInfoFieldValues();
 
 		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 			InfoField infoField = infoFieldValue.getInfoField();
@@ -127,12 +127,12 @@ public class XLIFFInfoFormTranslationExporter<T>
 	}
 
 	@Override
-	public InfoFormValues importXLIFF(
+	public InfoItemFieldValues importXLIFF(
 			long groupId, InfoItemClassPKReference infoItemClassPKReference,
 			InputStream inputStream)
 		throws InvalidXLIFFFileException, IOException {
 
-		InfoFormValues infoFormValues = new InfoFormValues();
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
 
 		try {
 			XLIFFDocument xliffDocument = new XLIFFDocument();
@@ -175,9 +175,9 @@ public class XLIFFInfoFormTranslationExporter<T>
 				infoFieldValues.add(infoFieldValue);
 			}
 
-			infoFormValues.addAll(infoFieldValues);
+			infoItemFieldValues.addAll(infoFieldValues);
 
-			return infoFormValues;
+			return infoItemFieldValues;
 		}
 		catch (XLIFFReaderException xliffReaderException) {
 			throw new InvalidXLIFFFileException(xliffReaderException);

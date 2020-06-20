@@ -125,13 +125,19 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
+			int fileEntryCount = 0;
+
 			while (enumeration.hasMoreElements()) {
 				ZipEntry zipEntry = enumeration.nextElement();
 
-				_validateZipEntry(zipEntry, zipFile);
+				if (!zipEntry.isDirectory()) {
+					_validateZipEntry(zipEntry, zipFile);
+
+					fileEntryCount++;
+				}
 			}
 
-			Assert.assertEquals(3, zipFile.size());
+			Assert.assertEquals(3, fileEntryCount);
 		}
 	}
 

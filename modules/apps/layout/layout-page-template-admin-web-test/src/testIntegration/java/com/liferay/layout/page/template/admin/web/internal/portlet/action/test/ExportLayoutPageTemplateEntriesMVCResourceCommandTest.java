@@ -126,14 +126,20 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
+			int fileEntryCount = 0;
+
 			while (enumeration.hasMoreElements()) {
 				ZipEntry zipEntry = enumeration.nextElement();
 
-				_validateZipEntry(
-					new String[] {name1, name2}, zipEntry, zipFile);
+				if (!zipEntry.isDirectory()) {
+					_validateZipEntry(
+						new String[] {name1, name2}, zipEntry, zipFile);
+
+					fileEntryCount++;
+				}
 			}
 
-			Assert.assertEquals(7, zipFile.size());
+			Assert.assertEquals(7, fileEntryCount);
 		}
 	}
 
@@ -213,13 +219,19 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 		try (ZipFile zipFile = new ZipFile(file)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
+			int fileEntryCount = 0;
+
 			while (enumeration.hasMoreElements()) {
 				ZipEntry zipEntry = enumeration.nextElement();
 
-				_validateZipEntry(new String[] {name}, zipEntry, zipFile);
+				if (!zipEntry.isDirectory()) {
+					_validateZipEntry(new String[] {name}, zipEntry, zipFile);
+
+					fileEntryCount++;
+				}
 			}
 
-			Assert.assertEquals(4, zipFile.size());
+			Assert.assertEquals(4, fileEntryCount);
 		}
 	}
 

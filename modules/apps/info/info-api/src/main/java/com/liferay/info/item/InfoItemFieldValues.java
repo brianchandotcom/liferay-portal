@@ -33,6 +33,12 @@ import java.util.Map;
  */
 public class InfoItemFieldValues {
 
+	public InfoItemFieldValues(
+		InfoItemClassPKReference infoItemClassPKReference) {
+
+		_infoItemClassPKReference = infoItemClassPKReference;
+	}
+
 	public InfoItemFieldValues add(InfoFieldValue<Object> infoFieldValue) {
 		_infoFieldValues.add(infoFieldValue);
 

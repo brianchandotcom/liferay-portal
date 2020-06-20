@@ -217,36 +217,6 @@ public class StructuredContent {
 	@NotNull
 	protected Long contentStructureId;
 
-	@Schema
-	@Valid
-	public ContentTemplate[] getContentTemplates() {
-		return contentTemplates;
-	}
-
-	public void setContentTemplates(ContentTemplate[] contentTemplates) {
-		this.contentTemplates = contentTemplates;
-	}
-
-	@JsonIgnore
-	public void setContentTemplates(
-		UnsafeSupplier<ContentTemplate[], Exception>
-			contentTemplatesUnsafeSupplier) {
-
-		try {
-			contentTemplates = contentTemplatesUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ContentTemplate[] contentTemplates;
-
 	@Schema(description = "The structured content's creator.")
 	@Valid
 	public Creator getCreator() {
@@ -1064,26 +1034,6 @@ public class StructuredContent {
 			sb.append("\"contentStructureId\": ");
 
 			sb.append(contentStructureId);
-		}
-
-		if (contentTemplates != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contentTemplates\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < contentTemplates.length; i++) {
-				sb.append(String.valueOf(contentTemplates[i]));
-
-				if ((i + 1) < contentTemplates.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		if (creator != null) {

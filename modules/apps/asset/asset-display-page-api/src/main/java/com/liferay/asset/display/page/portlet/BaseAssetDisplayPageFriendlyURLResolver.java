@@ -32,7 +32,7 @@ import com.liferay.info.display.url.provider.InfoEditURLProvider;
 import com.liferay.info.display.url.provider.InfoEditURLProviderTracker;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.string.CharPool;
@@ -301,14 +301,14 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		String mappedFieldName, Function<Locale, String> defaultValueFunction) {
 
 		if (infoDisplayObjectProvider != null) {
-			InfoItemFormProvider<Object> infoItemFormProvider =
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFormProvider.class,
+					InfoItemFieldValuesProvider.class,
 					portal.getClassName(
 						infoDisplayObjectProvider.getClassNameId()));
 
 			InfoFieldValue<Object> infoFieldValue =
-				infoItemFormProvider.getInfoFieldValue(
+				infoItemFieldValuesProvider.getInfoItemFieldValue(
 					infoDisplayObjectProvider.getDisplayObject(),
 					mappedFieldName);
 

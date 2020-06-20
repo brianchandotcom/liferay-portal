@@ -15,7 +15,7 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -70,11 +70,12 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 				themeDisplay.getScopeGroupId(),
 				ParamUtil.getString(resourceRequest, "articleId"));
 
-			InfoItemFormProvider<JournalArticle> infoItemFormProvider =
-				(InfoItemFormProvider<JournalArticle>)
-					_infoItemServiceTracker.getFirstInfoItemService(
-						InfoItemFormProvider.class,
-						JournalArticle.class.getName());
+			InfoItemFieldValuesProvider<JournalArticle>
+				infoItemFieldValuesProvider =
+					(InfoItemFieldValuesProvider<JournalArticle>)
+						_infoItemServiceTracker.getFirstInfoItemService(
+							InfoItemFieldValuesProvider.class,
+							JournalArticle.class.getName());
 
 			String sourceLanguageId = ParamUtil.getString(
 				resourceRequest, "sourceLanguageId");
@@ -92,7 +93,8 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						StringPool.DASH, sourceLanguageId, StringPool.DASH,
 						targetLanguageId, ".xlf"),
 					_translationInfoFormValuesExporter.export(
-						infoItemFormProvider.getInfoFormValues(article),
+						infoItemFieldValuesProvider.getInfoItemFieldValues(
+							article),
 						LocaleUtil.fromLanguageId(sourceLanguageId),
 						LocaleUtil.fromLanguageId(targetLanguageId)));
 			}

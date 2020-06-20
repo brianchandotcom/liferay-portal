@@ -90,13 +90,11 @@ public class BlogsEntryInfoItemFormProvider
 
 	@Override
 	public InfoItemFieldValues getInfoFormValues(BlogsEntry blogsEntry) {
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
-
-		infoItemFieldValues.addAll(_getBlogsEntryInfoFieldValues(blogsEntry));
-
-		infoItemFieldValues.setInfoItemClassPKReference(
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
 			new InfoItemClassPKReference(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+
+		infoItemFieldValues.addAll(_getBlogsEntryInfoFieldValues(blogsEntry));
 
 		try {
 			infoItemFieldValues.addAll(

@@ -60,14 +60,13 @@ public class AssetEntryInfoItemFormProvider
 
 	@Override
 	public InfoItemFieldValues getInfoFormValues(AssetEntry assetEntry) {
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
+			new InfoItemClassPKReference(
+				AssetEntry.class.getName(), assetEntry.getEntryId()));
 
 		infoItemFieldValues.addAll(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(assetEntry));
 		infoItemFieldValues.addAll(_getAssetEntryInfoFieldValues(assetEntry));
-		infoItemFieldValues.setInfoItemClassPKReference(
-			new InfoItemClassPKReference(
-				AssetEntry.class.getName(), assetEntry.getEntryId()));
 
 		return infoItemFieldValues;
 	}

@@ -105,9 +105,7 @@ public class InfoDisplayContributorWrapper
 		try {
 			InfoItemFieldValues infoItemFieldValues = _convertToInfoFormValues(
 				_infoDisplayContributor.getInfoDisplayFieldsValues(
-					itemObject, locale));
-
-			infoItemFieldValues.setInfoItemClassPKReference(
+					itemObject, locale),
 				new InfoItemClassPKReference(
 					_infoDisplayContributor.getClassName(),
 					_infoDisplayContributor.getInfoDisplayObjectClassPK(
@@ -162,11 +160,13 @@ public class InfoDisplayContributorWrapper
 	}
 
 	private InfoItemFieldValues _convertToInfoFormValues(
-		Map<String, Object> infoDisplayFieldsValues) {
+		Map<String, Object> infoDisplayFieldsValues,
+		InfoItemClassPKReference infoItemClassPKReference) {
 
 		Locale locale = _getLocale();
 
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
+			infoItemClassPKReference);
 
 		for (Map.Entry<String, Object> entry :
 				infoDisplayFieldsValues.entrySet()) {

@@ -132,7 +132,8 @@ public class XLIFFInfoFormTranslationExporter<T>
 			InputStream inputStream)
 		throws InvalidXLIFFFileException, IOException {
 
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
+			infoItemClassPKReference);
 
 		try {
 			XLIFFDocument xliffDocument = new XLIFFDocument();

@@ -30,9 +30,9 @@ import java.util.Map;
 /**
  * @author Jorge Ferrer
  */
-public class InfoFormValues {
+public class InfoItemFieldValues {
 
-	public InfoFormValues add(InfoFieldValue<Object> infoFieldValue) {
+	public InfoItemFieldValues add(InfoFieldValue<Object> infoFieldValue) {
 		_infoFieldValues.add(infoFieldValue);
 
 		InfoField infoField = infoFieldValue.getInfoField();
@@ -46,7 +46,7 @@ public class InfoFormValues {
 		return this;
 	}
 
-	public InfoFormValues addAll(List<InfoFieldValue<Object>> infoFieldValues) {
+	public InfoItemFieldValues addAll(List<InfoFieldValue<Object>> infoFieldValues) {
 		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 			add(infoFieldValue);
 		}

@@ -25,6 +25,7 @@ import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -128,7 +129,7 @@ public class ViewChangesDisplayContext {
 		return _ctCollection;
 	}
 
-	public Map<String, Object> getReactData() {
+	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"changes", _getChangesJSONObject()
 		).put(
@@ -177,7 +178,7 @@ public class ViewChangesDisplayContext {
 		rootDisplayNodes.add(node);
 	}
 
-	private JSONObject _getChangesJSONObject() {
+	private JSONObject _getChangesJSONObject() throws PortalException {
 		int counter = 1;
 
 		List<JSONObject> jsonObjects = new ArrayList<>();
@@ -188,7 +189,7 @@ public class ViewChangesDisplayContext {
 
 		for (CTEntry ctEntry : ctEntries) {
 			String title = _ctDisplayRendererRegistry.getTitle(
-				ctEntry, _themeDisplay.getLocale());
+				_ctCollection, ctEntry, _themeDisplay.getLocale());
 
 			JSONArray dropdownItemsJSONArray =
 				JSONFactoryUtil.createJSONArray();
@@ -290,7 +291,8 @@ public class ViewChangesDisplayContext {
 	}
 
 	private List<JSONObject> _getChildJSONObjects(
-		AtomicInteger nodeIdCounter, Map<Long, List<Long>> childPKsMap) {
+			AtomicInteger nodeIdCounter, Map<Long, List<Long>> childPKsMap)
+		throws PortalException {
 
 		List<JSONObject> childJSONObjects = new ArrayList<>();
 
@@ -305,26 +307,12 @@ public class ViewChangesDisplayContext {
 			Map<Serializable, CTEntry> ctEntryMap = _getCTEntryMap(classNameId);
 
 			for (long classPK : classPKs) {
-				long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
-
 				CTEntry ctEntry = ctEntryMap.get(classPK);
-
-				if ((ctEntry != null) &&
-					(ctEntry.getChangeType() !=
-						CTConstants.CT_CHANGE_TYPE_DELETION)) {
-
-					ctCollectionId = _ctCollection.getCtCollectionId();
-				}
-
-				String title = _getTitle(
-					baseModelMap, ctCollectionId, classNameId, classPK);
 
 				JSONObject childJSONObject = JSONUtil.put(
 					"modelClassNameId", classNameId
 				).put(
 					"modelClassPK", classPK
-				).put(
-					"title", title
 				).put(
 					"typeName", _getTypeName(classNameId)
 				);
@@ -337,11 +325,23 @@ public class ViewChangesDisplayContext {
 					renderURL.setResourceID("/change_lists/render_ct_entry");
 
 					renderURL.setParameter(
-						"ctCollectionId", String.valueOf(ctCollectionId));
+						"ctCollectionId",
+						String.valueOf(
+							CTConstants.CT_COLLECTION_ID_PRODUCTION));
+					renderURL.setParameter(
+						"ctSQLMode",
+						CTSQLModeThreadLocal.CTSQLMode.DEFAULT.toString());
 					renderURL.setParameter(
 						"modelClassNameId", String.valueOf(classNameId));
 					renderURL.setParameter(
 						"modelClassPK", String.valueOf(classPK));
+
+					childJSONObject.put(
+						"title",
+						_getTitle(
+							baseModelMap, classNameId, classPK,
+							CTConstants.CT_COLLECTION_ID_PRODUCTION,
+							CTSQLModeThreadLocal.CTSQLMode.DEFAULT));
 				}
 				else {
 					childJSONObject.put(
@@ -372,6 +372,11 @@ public class ViewChangesDisplayContext {
 
 					renderURL.setParameter(
 						"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
+					childJSONObject.put(
+						"title",
+						_ctDisplayRendererRegistry.getTitle(
+							_ctCollection, ctEntry, _themeDisplay.getLocale()));
 				}
 
 				childJSONObject.put(
@@ -389,7 +394,7 @@ public class ViewChangesDisplayContext {
 		return childJSONObjects;
 	}
 
-	private JSONObject _getContextViewJSONObject() {
+	private JSONObject _getContextViewJSONObject() throws PortalException {
 		CTClosure ctClosure = _getCTClosure();
 
 		JSONObject everythingJSONObject = JSONUtil.put(
@@ -531,17 +536,19 @@ public class ViewChangesDisplayContext {
 
 	private <T extends BaseModel<T>> String _getTitle(
 		Map<Serializable, ? extends BaseModel<?>> baseModelMap,
-		long ctCollectionId, long classNameId, long classPK) {
+		long classNameId, long classPK, long ctCollectionId,
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode) {
 
 		T baseModel = (T)baseModelMap.get(classPK);
 
 		if (baseModel == null) {
 			baseModel = _ctDisplayRendererRegistry.fetchCTModel(
-				ctCollectionId, classNameId, classPK);
+				ctCollectionId, ctSQLMode, classNameId, classPK);
 		}
 
 		return _ctDisplayRendererRegistry.getTitle(
-			_themeDisplay.getLocale(), baseModel, classNameId);
+			ctCollectionId, ctSQLMode, _themeDisplay.getLocale(), baseModel,
+			classNameId);
 	}
 
 	private String _getTypeName(long classNameId) {

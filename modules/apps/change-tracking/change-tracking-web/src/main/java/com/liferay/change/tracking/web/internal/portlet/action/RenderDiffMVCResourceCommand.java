@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.Portal;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -61,16 +59,12 @@ public class RenderDiffMVCResourceCommand extends BaseMVCResourceCommand {
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			ctEntry.getCtCollectionId());
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			resourceRequest);
-
-		String name = _ctDisplayRendererRegistry.getTitle(
-			ctEntry, _portal.getLocale(httpServletRequest));
-
 		CTEntryDiffDisplay ctEntryDiffDisplay = new CTEntryDiffDisplay(
 			ctCollection, _ctDisplayRendererRegistry, ctEntry,
-			_ctEntryLocalService, httpServletRequest,
-			_portal.getHttpServletResponse(resourceResponse), _language, name);
+			_ctEntryLocalService,
+			_portal.getHttpServletRequest(resourceRequest),
+			_portal.getHttpServletResponse(resourceResponse), _language,
+			_portal.getLocale(resourceRequest));
 
 		resourceRequest.setAttribute(
 			CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);

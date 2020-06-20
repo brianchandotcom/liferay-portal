@@ -16,7 +16,9 @@ package com.liferay.change.tracking.web.internal.display;
 
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.display.CTDisplayRenderer;
+import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.model.CTEntry;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
@@ -24,6 +26,7 @@ import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Date;
@@ -66,7 +70,8 @@ import org.osgi.service.component.annotations.Reference;
 public class CTDisplayRendererRegistry {
 
 	public <T extends BaseModel<T>> T fetchCTModel(
-		long ctCollectionId, long modelClassNameId, long modelClassPK) {
+		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
+		long modelClassNameId, long modelClassPK) {
 
 		CTService<?> ctService = _ctServiceServiceTrackerMap.getService(
 			modelClassNameId);
@@ -75,12 +80,38 @@ public class CTDisplayRendererRegistry {
 			return null;
 		}
 
-		try (SafeClosable safeClosable =
-				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId)) {
+		try (SafeClosable safeClosable1 =
+				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId);
+			SafeClosable safeClosable2 = CTSQLModeThreadLocal.setCTSQLMode(
+				ctSQLMode)) {
 
 			return (T)ctService.updateWithUnsafeFunction(
 				ctPersistence -> ctPersistence.fetchByPrimaryKey(modelClassPK));
 		}
+	}
+
+	public CTSQLModeThreadLocal.CTSQLMode getCTSQLMode(
+		long ctCollectionId, CTEntry ctEntry) {
+
+		if (ctCollectionId == CTConstants.CT_COLLECTION_ID_PRODUCTION) {
+			return CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
+		}
+
+		if (ctCollectionId != ctEntry.getCtCollectionId()) {
+			ctEntry = _ctEntryLocalService.fetchCTEntry(
+				ctCollectionId, ctEntry.getModelClassNameId(),
+				ctEntry.getModelClassPK());
+
+			if (ctEntry == null) {
+				return CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
+			}
+		}
+
+		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
+			return CTSQLModeThreadLocal.CTSQLMode.CT_ONLY;
+		}
+
+		return CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
 	}
 
 	public <T extends CTModel<T>> String getEditURL(
@@ -95,15 +126,23 @@ public class CTDisplayRendererRegistry {
 		}
 
 		T ctModel = fetchCTModel(
-			ctEntry.getCtCollectionId(), ctEntry.getModelClassNameId(),
-			ctEntry.getModelClassPK());
+			ctEntry.getCtCollectionId(), CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 		if (ctModel == null) {
 			return null;
 		}
 
 		try {
-			return ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
+			try (SafeClosable safeClosable1 =
+					CTCollectionThreadLocal.setCTCollectionId(
+						ctEntry.getCtCollectionId());
+				SafeClosable safeClosable2 = CTSQLModeThreadLocal.setCTSQLMode(
+					CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
+
+				return ctDisplayRenderer.getEditURL(
+					httpServletRequest, ctModel);
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -145,28 +184,47 @@ public class CTDisplayRendererRegistry {
 	}
 
 	public <T extends BaseModel<T>> String getTitle(
-		CTEntry ctEntry, Locale locale) {
+			CTCollection ctCollection, CTEntry ctEntry, Locale locale)
+		throws PortalException {
 
-		long ctCollectionId = ctEntry.getCtCollectionId();
+		long ctCollectionId = ctCollection.getCtCollectionId();
 
-		if (ctEntry.getChangeType() == CTConstants.CT_CHANGE_TYPE_DELETION) {
+		if (ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			ctCollectionId = _ctEntryLocalService.getCTRowCTCollectionId(
+				ctEntry);
+		}
+		else if (ctEntry.getChangeType() ==
+					CTConstants.CT_CHANGE_TYPE_DELETION) {
+
 			ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
 		}
 
+		return getTitle(ctCollectionId, ctEntry, locale);
+	}
+
+	public <T extends BaseModel<T>> String getTitle(
+		long ctCollectionId, CTEntry ctEntry, Locale locale) {
+
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode = getCTSQLMode(
+			ctCollectionId, ctEntry);
+
 		T model = fetchCTModel(
-			ctCollectionId, ctEntry.getModelClassNameId(),
+			ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
 			ctEntry.getModelClassPK());
 
 		if (model == null) {
 			return StringBundler.concat(
 				getTypeName(locale, ctEntry.getModelClassNameId()),
-				StringPool.SPACE, model.getPrimaryKeyObj());
+				StringPool.SPACE, ctEntry.getModelClassPK());
 		}
 
-		return getTitle(locale, model, ctEntry.getModelClassNameId());
+		return getTitle(
+			ctCollectionId, ctSQLMode, locale, model,
+			ctEntry.getModelClassNameId());
 	}
 
 	public <T extends BaseModel<T>> String getTitle(
+		long ctCollectionId, CTSQLModeThreadLocal.CTSQLMode ctSQLMode,
 		Locale locale, T model, long modelClassNameId) {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
@@ -176,7 +234,11 @@ public class CTDisplayRendererRegistry {
 		String name = null;
 
 		if (ctDisplayRenderer != null) {
-			try {
+			try (SafeClosable safeClosable1 =
+					CTCollectionThreadLocal.setCTCollectionId(ctCollectionId);
+				SafeClosable safeClosable2 = CTSQLModeThreadLocal.setCTSQLMode(
+					ctSQLMode)) {
+
 				name = ctDisplayRenderer.getTitle(locale, model);
 			}
 			catch (PortalException portalException) {
@@ -275,8 +337,11 @@ public class CTDisplayRendererRegistry {
 			CTEntry ctEntry)
 		throws Exception {
 
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode = getCTSQLMode(
+			ctCollectionId, ctEntry);
+
 		T model = fetchCTModel(
-			ctCollectionId, ctEntry.getModelClassNameId(),
+			ctCollectionId, ctSQLMode, ctEntry.getModelClassNameId(),
 			ctEntry.getModelClassPK());
 
 		if (model == null) {
@@ -284,14 +349,15 @@ public class CTDisplayRendererRegistry {
 		}
 
 		renderCTEntry(
-			httpServletRequest, httpServletResponse, ctCollectionId, model,
-			ctEntry.getModelClassNameId());
+			httpServletRequest, httpServletResponse, ctCollectionId, ctSQLMode,
+			model, ctEntry.getModelClassNameId());
 	}
 
 	public <T extends BaseModel<T>> void renderCTEntry(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, long ctCollectionId,
-			T model, long modelClassNameId)
+			CTSQLModeThreadLocal.CTSQLMode ctSQLMode, T model,
+			long modelClassNameId)
 		throws Exception {
 
 		CTDisplayRenderer<T> ctDisplayRenderer =
@@ -307,8 +373,10 @@ public class CTDisplayRendererRegistry {
 			return;
 		}
 
-		try (SafeClosable safeClosable =
+		try (SafeClosable safeClosable1 =
 				CTCollectionThreadLocal.setCTCollectionId(ctCollectionId);
+			SafeClosable safeClosable2 = CTSQLModeThreadLocal.setCTSQLMode(
+				ctSQLMode);
 			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter()) {
 
 			PipingServletResponse pipingServletResponse =
@@ -385,6 +453,10 @@ public class CTDisplayRendererRegistry {
 
 	private ServiceTrackerMap<Long, CTDisplayRenderer<?>>
 		_ctDisplayServiceTrackerMap;
+
+	@Reference
+	private CTEntryLocalService _ctEntryLocalService;
+
 	private ServiceTrackerMap<Long, CTService<?>> _ctServiceServiceTrackerMap;
 
 	@Reference

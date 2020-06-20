@@ -18,11 +18,13 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
+import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -58,12 +60,23 @@ public class RenderCTEntryMVCResourceCommand extends BaseMVCResourceCommand {
 		long ctCollectionId = ParamUtil.getLong(
 			resourceRequest, "ctCollectionId",
 			CTConstants.CT_COLLECTION_ID_PRODUCTION);
+
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
+
+		String ctSQLModeString = ParamUtil.getString(
+			resourceRequest, "ctSQLMode");
+
+		if (Validator.isNotNull(ctSQLModeString)) {
+			ctSQLMode = CTSQLModeThreadLocal.CTSQLMode.valueOf(ctSQLModeString);
+		}
+
 		long modelClassNameId = ParamUtil.getLong(
 			resourceRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(resourceRequest, "modelClassPK");
 
 		T model = _ctDisplayRendererRegistry.fetchCTModel(
-			ctCollectionId, modelClassNameId, modelClassPK);
+			ctCollectionId, ctSQLMode, modelClassNameId, modelClassPK);
 
 		if (model == null) {
 			model = _basePersistenceRegistry.fetchBaseModel(
@@ -73,7 +86,7 @@ public class RenderCTEntryMVCResourceCommand extends BaseMVCResourceCommand {
 		_ctDisplayRendererRegistry.renderCTEntry(
 			_portal.getHttpServletRequest(resourceRequest),
 			_portal.getHttpServletResponse(resourceResponse), ctCollectionId,
-			model, modelClassNameId);
+			ctSQLMode, model, modelClassNameId);
 	}
 
 	@Reference

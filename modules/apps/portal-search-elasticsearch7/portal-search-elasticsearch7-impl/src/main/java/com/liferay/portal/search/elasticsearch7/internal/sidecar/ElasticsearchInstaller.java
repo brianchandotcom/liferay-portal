@@ -49,20 +49,27 @@ public class ElasticsearchInstaller {
 			return;
 		}
 
+		createDestinationDirectory();
+
 		try {
 			createTemporaryDownloadDirectory();
 
-			createDestinationDirectory();
+			try {
+				downloadAndInstallElasticsearch();
 
-			downloadAndInstallElasticsearch();
+				downloadAndInstallPlugins();
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+			finally {
+				deleteTemporaryDownloadDirectory();
+			}
+		}
+		catch (RuntimeException runtimeException) {
+			deleteDestinationDirectory();
 
-			downloadAndInstallPlugins();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-		finally {
-			deleteTemporaryDownloadDirectory();
+			throw runtimeException;
 		}
 	}
 
@@ -86,12 +93,25 @@ public class ElasticsearchInstaller {
 		}
 	}
 
-	protected void createDestinationDirectory() throws IOException {
-		Files.createDirectories(_destinationDirectoryPath);
+	protected void createDestinationDirectory() {
+		createDirectories(_destinationDirectoryPath);
 	}
 
-	protected void createTemporaryDownloadDirectory() throws IOException {
-		Files.createDirectories(_temporaryDownloadDirectoryPath);
+	protected void createDirectories(Path directoryPath) {
+		try {
+			Files.createDirectories(directoryPath);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	protected void createTemporaryDownloadDirectory() {
+		createDirectories(_temporaryDownloadDirectoryPath);
+	}
+
+	protected void deleteDestinationDirectory() {
+		PathUtil.deleteDir(_destinationDirectoryPath);
 	}
 
 	protected void deleteTemporaryDownloadDirectory() {
@@ -158,7 +178,7 @@ public class ElasticsearchInstaller {
 		Path pluginsDirectoryPath = _destinationDirectoryPath.resolve(
 			"plugins");
 
-		Files.createDirectories(pluginsDirectoryPath);
+		createDirectories(pluginsDirectoryPath);
 
 		Path pluginDestinationDirectoryPath = pluginsDirectoryPath.resolve(
 			pluginName);

@@ -14,27 +14,30 @@
 
 package com.liferay.portal.zip;
 
-import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.net.URI;
+
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
+
+import java.util.Collections;
 
 /**
  * @author Raymond Augé
@@ -56,17 +59,15 @@ public class ZipWriterImpl implements ZipWriter {
 	public ZipWriterImpl(File file) {
 		_file = file.getAbsoluteFile();
 
-		File parentFile = _file.getParentFile();
+		URI fileURI = _file.toURI();
 
-		if (!parentFile.exists()) {
-			parentFile.mkdirs();
-		}
+		_uri = URI.create("jar:file:" + fileURI.getPath());
 
-		try {
-			_zipOutputStream = new ZipOutputStream(new FileOutputStream(_file));
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				_uri, Collections.singletonMap("create", "true"))) {
 		}
-		catch (FileNotFoundException fileNotFoundException) {
-			throw new UncheckedIOException(fileNotFoundException);
+		catch (IOException ioException) {
+			throw new UncheckedIOException(ioException);
 		}
 	}
 
@@ -76,17 +77,21 @@ public class ZipWriterImpl implements ZipWriter {
 			return;
 		}
 
-		if (name.startsWith(StringPool.SLASH)) {
-			name = name.substring(1);
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				_uri, Collections.emptyMap())) {
+
+			Path path = fileSystem.getPath(name);
+
+			Path parentPath = path.getParent();
+
+			if (parentPath != null) {
+				Files.createDirectories(parentPath);
+			}
+
+			Files.write(
+				path, bytes, StandardOpenOption.CREATE,
+				StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
 		}
-
-		ZipEntry zipEntry = new ZipEntry(name);
-
-		_zipOutputStream.putNextEntry(zipEntry);
-
-		_zipOutputStream.write(bytes);
-
-		_zipOutputStream.closeEntry();
 	}
 
 	@Override
@@ -97,17 +102,19 @@ public class ZipWriterImpl implements ZipWriter {
 			return;
 		}
 
-		if (name.startsWith(StringPool.SLASH)) {
-			name = name.substring(1);
+		try (FileSystem fileSystem = FileSystems.newFileSystem(
+				_uri, Collections.emptyMap())) {
+
+			Path path = fileSystem.getPath(name);
+
+			Path parentPath = path.getParent();
+
+			if (parentPath != null) {
+				Files.createDirectories(parentPath);
+			}
+
+			Files.copy(inputStream, path, StandardCopyOption.REPLACE_EXISTING);
 		}
-
-		ZipEntry zipEntry = new ZipEntry(name);
-
-		_zipOutputStream.putNextEntry(zipEntry);
-
-		StreamUtil.transfer(inputStream, _zipOutputStream, false);
-
-		_zipOutputStream.closeEntry();
 	}
 
 	@Override
@@ -139,13 +146,6 @@ public class ZipWriterImpl implements ZipWriter {
 
 	@Override
 	public File getFile() {
-		try {
-			_zipOutputStream.close();
-		}
-		catch (IOException ioException) {
-			_log.error(ioException, ioException);
-		}
-
 		return _file;
 	}
 
@@ -164,19 +164,9 @@ public class ZipWriterImpl implements ZipWriter {
 	@Deprecated
 	@Override
 	public void umount() {
-		try {
-			_zipOutputStream.close();
-		}
-		catch (IOException ioException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to unmount file entry", ioException);
-			}
-		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(ZipWriterImpl.class);
-
 	private final File _file;
-	private final ZipOutputStream _zipOutputStream;
+	private final URI _uri;
 
 }

@@ -21,7 +21,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
 import com.liferay.info.list.renderer.InfoListRenderer;
 import com.liferay.info.list.renderer.InfoListRendererTracker;
@@ -168,12 +168,13 @@ public class GetCollectionFieldMVCResourceCommand
 					itemType = FileEntry.class.getName();
 				}
 
-				InfoItemFormProvider<Object> infoItemFormProvider =
-					(InfoItemFormProvider<Object>)
-						_infoItemServiceTracker.getFirstInfoItemService(
-							InfoItemFormProvider.class, itemType);
+				InfoItemFieldValuesProvider<Object>
+					infoItemFieldValuesProvider =
+						(InfoItemFieldValuesProvider<Object>)
+							_infoItemServiceTracker.getFirstInfoItemService(
+								InfoItemFieldValuesProvider.class, itemType);
 
-				if (infoItemFormProvider == null) {
+				if (infoItemFieldValuesProvider == null) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to get info item form provdier for class " +
@@ -191,7 +192,7 @@ public class GetCollectionFieldMVCResourceCommand
 				for (Object object : list) {
 					jsonArray.put(
 						_getDisplayObjectJSONObject(
-							infoItemFormProvider, object, locale));
+							infoItemFieldValuesProvider, object, locale));
 				}
 
 				InfoListRenderer<Object> infoListRenderer =
@@ -235,13 +236,13 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private JSONObject _getDisplayObjectJSONObject(
-		InfoItemFormProvider<Object> infoItemFormProvider, Object object,
-		Locale locale) {
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		Object object, Locale locale) {
 
 		JSONObject displayObjectJSONObject = JSONFactoryUtil.createJSONObject();
 
 		InfoItemFieldValues infoItemFieldValues =
-			infoItemFormProvider.getInfoFormValues(object);
+			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
 
 		for (InfoFieldValue<Object> infoFieldValue :
 				infoItemFieldValues.getInfoFieldValues()) {

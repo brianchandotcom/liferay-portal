@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.seo.kernel.LayoutSEOLink;
 import com.liferay.layout.seo.kernel.LayoutSEOLinkManager;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -167,8 +167,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			InfoDisplayObjectProvider<Object> infoDisplayObjectProvider =
 				_getObjectInfoDisplayObjectProvider(httpServletRequest);
 
-			InfoItemFormProvider<Object> infoItemFormProvider =
-				_getInfoItemFormProvider(infoDisplayObjectProvider, layout);
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+				_getInfoItemFieldValuesProvider(
+					infoDisplayObjectProvider, layout);
 
 			printWriter.println(
 				_getOpenGraphTag(
@@ -176,8 +177,9 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					HtmlUtil.unescape(
 						HtmlUtil.stripHtml(
 							_getDescriptionTagValue(
-								infoDisplayObjectProvider, infoItemFormProvider,
-								layout, layoutSEOEntry, themeDisplay)))));
+								infoDisplayObjectProvider,
+								infoItemFieldValuesProvider, layout,
+								layoutSEOEntry, themeDisplay)))));
 
 			printWriter.println(
 				_getOpenGraphTag("og:locale", themeDisplay.getLanguageId()));
@@ -198,7 +200,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 					"og:title",
 					_getTitleTagValue(
 						httpServletRequest, infoDisplayObjectProvider,
-						infoItemFormProvider, layout, layoutSEOEntry)));
+						infoItemFieldValuesProvider, layout, layoutSEOEntry)));
 
 			printWriter.println(_getOpenGraphTag("og:type", "website"));
 
@@ -213,8 +215,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 			Optional<OpenGraphImageProvider.OpenGraphImage>
 				openGraphImageOptional =
 					_openGraphImageProvider.getOpenGraphImageOptional(
-						infoDisplayObjectProvider, infoItemFormProvider, layout,
-						layoutSEOEntry, themeDisplay);
+						infoDisplayObjectProvider, infoItemFieldValuesProvider,
+						layout, layoutSEOEntry, themeDisplay);
 
 			openGraphImageOptional.ifPresent(
 				openGraphImage -> {
@@ -300,12 +302,13 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 	private String _getDescriptionTagValue(
 		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFormProvider<Object> infoItemFormProvider, Layout layout,
-		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		Layout layout, LayoutSEOEntry layoutSEOEntry,
+		ThemeDisplay themeDisplay) {
 
 		String mappedDescription = _getMappedStringValue(
 			"description", "openGraphDescription", infoDisplayObjectProvider,
-			infoItemFormProvider, layout, themeDisplay.getLocale());
+			infoItemFieldValuesProvider, layout, themeDisplay.getLocale());
 
 		if (Validator.isNotNull(mappedDescription)) {
 			return mappedDescription;
@@ -321,21 +324,21 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 		return layout.getDescription(themeDisplay.getLanguageId());
 	}
 
-	private InfoItemFormProvider<Object> _getInfoItemFormProvider(
+	private InfoItemFieldValuesProvider<Object> _getInfoItemFieldValuesProvider(
 		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
 		Layout layout) {
 
 		if (layout.isTypeAssetDisplay() &&
 			(infoDisplayObjectProvider != null)) {
 
-			InfoItemFormProvider<Object> infoItemFormProvider =
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
 				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFormProvider.class,
+					InfoItemFieldValuesProvider.class,
 					_portal.getClassName(
 						infoDisplayObjectProvider.getClassNameId()));
 
-			if (infoItemFormProvider != null) {
-				return infoItemFormProvider;
+			if (infoItemFieldValuesProvider != null) {
+				return infoItemFieldValuesProvider;
 			}
 		}
 
@@ -345,12 +348,12 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	private String _getMappedStringValue(
 		String defaultFieldName, String fieldName,
 		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFormProvider<Object> infoItemFormProvider, Layout layout,
-		Locale locale) {
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		Layout layout, Locale locale) {
 
 		Object mappedValueObject = _getMappedValue(
 			defaultFieldName, fieldName, infoDisplayObjectProvider,
-			infoItemFormProvider, layout, locale);
+			infoItemFieldValuesProvider, layout, locale);
 
 		if (mappedValueObject != null) {
 			return String.valueOf(mappedValueObject);
@@ -362,17 +365,17 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	private Object _getMappedValue(
 		String defaultFieldName, String fieldName,
 		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFormProvider<Object> infoItemFormProvider, Layout layout,
-		Locale locale) {
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+		Layout layout, Locale locale) {
 
 		if ((infoDisplayObjectProvider == null) ||
-			(infoItemFormProvider == null)) {
+			(infoItemFieldValuesProvider == null)) {
 
 			return null;
 		}
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFormProvider.getInfoFieldValue(
+			infoItemFieldValuesProvider.getInfoItemFieldValue(
 				infoDisplayObjectProvider.getDisplayObject(),
 				layout.getTypeSettingsProperty(
 					"mapped-" + fieldName, defaultFieldName));
@@ -405,8 +408,8 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 	private String _getTitleTagValue(
 			HttpServletRequest httpServletRequest,
 			InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-			InfoItemFormProvider<Object> infoItemFormProvider, Layout layout,
-			LayoutSEOEntry layoutSEOEntry)
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
+			Layout layout, LayoutSEOEntry layoutSEOEntry)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -415,7 +418,7 @@ public class OpenGraphTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		String mappedTitle = _getMappedStringValue(
 			"title", "openGraphTitle", infoDisplayObjectProvider,
-			infoItemFormProvider, layout, themeDisplay.getLocale());
+			infoItemFieldValuesProvider, layout, themeDisplay.getLocale());
 
 		if (Validator.isNotNull(mappedTitle)) {
 			return mappedTitle;

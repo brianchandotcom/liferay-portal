@@ -32,6 +32,7 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebImage;
@@ -217,15 +218,17 @@ public class JournalArticleInfoItemFormProviderTest {
 
 	@Test
 	public void testGetInfoFormValues() throws Exception {
-		InfoItemFormProvider<JournalArticle> infoItemFormProvider =
-			(InfoItemFormProvider<JournalArticle>)
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFormProvider.class, JournalArticle.class.getName());
+		InfoItemFieldValuesProvider<JournalArticle>
+			infoItemFieldValuesProvider =
+				(InfoItemFieldValuesProvider<JournalArticle>)
+					_infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemFieldValuesProvider.class,
+						JournalArticle.class.getName());
 
 		JournalArticle journalArticle = _getJournalArticle();
 
 		InfoItemFieldValues infoItemFieldValues =
-			infoItemFormProvider.getInfoFormValues(journalArticle);
+			infoItemFieldValuesProvider.getInfoItemFieldValues(journalArticle);
 
 		InfoItemClassPKReference infoItemClassPKReference =
 			infoItemFieldValues.getInfoItemClassPKReference();

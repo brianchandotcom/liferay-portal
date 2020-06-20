@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.io.StreamUtil;
@@ -63,10 +63,12 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 	public void testExportReturnsTheXLIFFRepresentationOfAJournalArticle()
 		throws Exception {
 
-		InfoItemFormProvider<JournalArticle> infoItemFormProvider =
-			(InfoItemFormProvider<JournalArticle>)
-				_infoItemServiceTracker.getFirstInfoItemService(
-					InfoItemFormProvider.class, JournalArticle.class.getName());
+		InfoItemFieldValuesProvider<JournalArticle>
+			infoItemFieldValuesProvider =
+				(InfoItemFieldValuesProvider<JournalArticle>)
+					_infoItemServiceTracker.getFirstInfoItemService(
+						InfoItemFieldValuesProvider.class,
+						JournalArticle.class.getName());
 
 		JournalArticle journalArticle = _getJournalArticle();
 
@@ -78,7 +80,8 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			StreamUtil.toString(
 				_xliffTranslationInfoFormValuesExporter.export(
-					infoItemFormProvider.getInfoFormValues(journalArticle),
+					infoItemFieldValuesProvider.getInfoItemFieldValues(
+						journalArticle),
 					LocaleUtil.getDefault(),
 					LocaleUtil.fromLanguageId("es_ES"))));
 	}

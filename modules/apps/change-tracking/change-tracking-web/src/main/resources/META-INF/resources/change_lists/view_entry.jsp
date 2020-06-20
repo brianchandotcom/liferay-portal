@@ -17,11 +17,13 @@
 <%@ include file="/change_lists/init.jsp" %>
 
 <clay:container-fluid>
+	<div class="change-lists-view-entry-wrapper">
 
-	<%
-	ViewEntryDisplayContext viewEntryDisplayContext = (ViewEntryDisplayContext)request.getAttribute(CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT);
+		<%
+		ViewEntryDisplayContext viewEntryDisplayContext = (ViewEntryDisplayContext)request.getAttribute(CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT);
 
-	viewEntryDisplayContext.renderEntry(request, response);
-	%>
+		viewEntryDisplayContext.renderEntry(request, response);
+		%>
 
+	</div>
 </clay:container-fluid>

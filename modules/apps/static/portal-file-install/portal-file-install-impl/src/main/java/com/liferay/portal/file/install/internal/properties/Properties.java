@@ -75,7 +75,7 @@ public class Properties extends AbstractMap<String, String> {
 	}
 
 	public Properties(File location) throws IOException {
-		this(location, (InterpolationHelper.SubstitutionCallback)null);
+		this(location, (InterpolationUtil.SubstitutionCallback)null);
 	}
 
 	public Properties(File location, boolean substitute) {
@@ -86,11 +86,11 @@ public class Properties extends AbstractMap<String, String> {
 	public Properties(File location, BundleContext context) throws IOException {
 		this(
 			location,
-			new InterpolationHelper.BundleContextSubstitutionCallback(context));
+			new InterpolationUtil.BundleContextSubstitutionCallback(context));
 	}
 
 	public Properties(
-			File location, InterpolationHelper.SubstitutionCallback callback)
+			File location, InterpolationUtil.SubstitutionCallback callback)
 		throws IOException {
 
 		_location = location;
@@ -422,13 +422,13 @@ public class Properties extends AbstractMap<String, String> {
 		substitute(_callback);
 	}
 
-	public void substitute(InterpolationHelper.SubstitutionCallback callback) {
+	public void substitute(InterpolationUtil.SubstitutionCallback callback) {
 		if (callback == null) {
-			callback =
-				new InterpolationHelper.BundleContextSubstitutionCallback(null);
+			callback = new InterpolationUtil.BundleContextSubstitutionCallback(
+				null);
 		}
 
-		InterpolationHelper.performSubstitution(_storage, callback);
+		InterpolationUtil.performSubstitution(_storage, callback);
 	}
 
 	public boolean update(Map<String, String> props) {
@@ -1094,7 +1094,7 @@ public class Properties extends AbstractMap<String, String> {
 
 	private static final char[] _WHITE_SPACE = {' ', '\t', '\f'};
 
-	private InterpolationHelper.SubstitutionCallback _callback;
+	private InterpolationUtil.SubstitutionCallback _callback;
 	private List<String> _footer;
 	private List<String> _header;
 	private final Map<String, Layout> _layoutMap = new LinkedHashMap<>();

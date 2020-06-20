@@ -17,7 +17,7 @@ package com.liferay.portal.file.install.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.file.install.internal.properties.InterpolationHelper;
+import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.file.install.listener.ArtifactInstaller;
 import com.liferay.portal.file.install.listener.ArtifactListener;
 import com.liferay.portal.file.install.listener.ArtifactTransformer;
@@ -291,7 +291,7 @@ public class FileInstall
 	}
 
 	public void updated(String pid, Map<String, String> properties) {
-		InterpolationHelper.performSubstitution(properties, _bundleContext);
+		InterpolationUtil.performSubstitution(properties, _bundleContext);
 
 		DirectoryWatcher directoryWatcher = null;
 

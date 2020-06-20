@@ -13,6 +13,7 @@
  */
 
 import {useQuery} from '@apollo/client';
+import classNames from 'classnames';
 import React, {useContext} from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -87,7 +88,16 @@ export default withRouter(
 											className="c-mt-2 d-block questions-title stretched-link text-reset"
 											to={`/questions/${sectionTitle}/${relatedQuestion.friendlyUrlPath}`}
 										>
-											<h3 className="h2 stretched-link-layer">
+											<h3
+												className={classNames(
+													'h2',
+													'stretched-link-layer',
+													{
+														'question-seen':
+															relatedQuestion.seen,
+													}
+												)}
+											>
 												{relatedQuestion.headline}
 											</h3>
 										</Link>

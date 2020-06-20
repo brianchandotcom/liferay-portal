@@ -223,6 +223,7 @@ export const getThreadQuery = gql`
 			myRating {
 				ratingValue
 			}
+			seen
 			subscribed
 			viewCount
 		}

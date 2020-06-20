@@ -118,23 +118,30 @@ public class ZipReaderImpl implements ZipReader {
 
 			ZipEntry zipEntry = zipFile.getEntry(name);
 
-			if ((zipEntry == null) || zipEntry.isDirectory()) {
-				zipFile.close();
+			if ((zipEntry != null) && !zipEntry.isDirectory()) {
+				InputStream inputStream = zipFile.getInputStream(zipEntry);
 
-				return null;
+				// Null check inputStream to overcome
+				// jdk.util.zip.ensureTrailingSlash issue in between
+				// [JDK 8u141, JDK 8u144)
+
+				if (inputStream != null) {
+					return new UnsyncFilterInputStream(inputStream) {
+
+						@Override
+						public void close() throws IOException {
+							super.close();
+
+							zipFile.close();
+						}
+
+					};
+				}
 			}
 
-			return new UnsyncFilterInputStream(
-				zipFile.getInputStream(zipEntry)) {
+			zipFile.close();
 
-				@Override
-				public void close() throws IOException {
-					super.close();
-
-					zipFile.close();
-				}
-
-			};
+			return null;
 		}
 		catch (IOException ioException) {
 			throw new UncheckedIOException(ioException);

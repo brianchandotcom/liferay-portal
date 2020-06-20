@@ -84,7 +84,7 @@ public class AssetEntryInfoItemFieldValuesProvider
 				_getDateValue(assetEntry.getExpirationDate())),
 			new InfoFieldValue<>(
 				AssetEntryInfoItemFields.viewCountInfoField,
-				assetEntry.getViewCount()),
+				() -> assetEntry.getViewCount()),
 			new InfoFieldValue<>(
 				AssetEntryInfoItemFields.urlInfoField, assetEntry.getUrl()));
 	}

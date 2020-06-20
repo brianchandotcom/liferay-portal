@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
+import com.liferay.portal.file.install.listener.ArtifactUrlTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,8 +29,6 @@ import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.apache.felix.fileinstall.ArtifactUrlTransformer;
 
 /**
  * @author Miguel Pastor

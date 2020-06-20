@@ -14,6 +14,7 @@
 
 package com.liferay.portal.license.deployer.internal.installer;
 
+import com.liferay.portal.file.install.listener.ArtifactInstaller;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
@@ -23,8 +24,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.io.File;
-
-import org.apache.felix.fileinstall.ArtifactInstaller;
 
 /**
  * @author Amos Fong

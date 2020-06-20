@@ -14,6 +14,7 @@
 
 package com.liferay.portal.license.deployer.internal;
 
+import com.liferay.portal.file.install.listener.ArtifactInstaller;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -29,8 +30,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.apache.felix.fileinstall.ArtifactInstaller;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleEvent;

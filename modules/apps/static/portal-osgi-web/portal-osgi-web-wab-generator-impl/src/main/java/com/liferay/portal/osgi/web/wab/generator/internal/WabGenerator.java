@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal;
 
+import com.liferay.portal.file.install.listener.ArtifactUrlTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -49,8 +50,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import javax.servlet.ServletContext;
-
-import org.apache.felix.fileinstall.ArtifactUrlTransformer;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

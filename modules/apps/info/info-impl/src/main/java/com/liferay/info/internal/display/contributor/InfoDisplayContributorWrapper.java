@@ -21,13 +21,13 @@ import com.liferay.info.display.contributor.field.InfoDisplayContributorFieldTyp
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -99,21 +99,21 @@ public class InfoDisplayContributorWrapper
 	}
 
 	@Override
-	public InfoFormValues getInfoFormValues(Object itemObject) {
+	public InfoItemFieldValues getInfoFormValues(Object itemObject) {
 		Locale locale = _getLocale();
 
 		try {
-			InfoFormValues infoFormValues = _convertToInfoFormValues(
+			InfoItemFieldValues infoItemFieldValues = _convertToInfoFormValues(
 				_infoDisplayContributor.getInfoDisplayFieldsValues(
 					itemObject, locale));
 
-			infoFormValues.setInfoItemClassPKReference(
+			infoItemFieldValues.setInfoItemClassPKReference(
 				new InfoItemClassPKReference(
 					_infoDisplayContributor.getClassName(),
 					_infoDisplayContributor.getInfoDisplayObjectClassPK(
 						itemObject)));
 
-			return infoFormValues;
+			return infoItemFieldValues;
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -161,12 +161,12 @@ public class InfoDisplayContributorWrapper
 		return infoForm;
 	}
 
-	private InfoFormValues _convertToInfoFormValues(
+	private InfoItemFieldValues _convertToInfoFormValues(
 		Map<String, Object> infoDisplayFieldsValues) {
 
 		Locale locale = _getLocale();
 
-		InfoFormValues infoFormValues = new InfoFormValues();
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
 
 		for (Map.Entry<String, Object> entry :
 				infoDisplayFieldsValues.entrySet()) {
@@ -186,10 +186,10 @@ public class InfoDisplayContributorWrapper
 			InfoFieldValue<Object> infoFormValue = new InfoFieldValue(
 				infoField, entry.getValue());
 
-			infoFormValues.add(infoFormValue);
+			infoItemFieldValues.add(infoFormValue);
 		}
 
-		return infoFormValues;
+		return infoItemFieldValues;
 	}
 
 	private InfoFieldType _getInfoFieldTypeType(String infoDisplayFieldType) {

@@ -18,8 +18,8 @@ import com.liferay.asset.info.display.contributor.util.ContentAccessor;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.list.renderer.DefaultInfoListRendererContext;
@@ -240,11 +240,11 @@ public class GetCollectionFieldMVCResourceCommand
 
 		JSONObject displayObjectJSONObject = JSONFactoryUtil.createJSONObject();
 
-		InfoFormValues infoFormValues = infoItemFormProvider.getInfoFormValues(
-			object);
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFormProvider.getInfoFormValues(object);
 
 		for (InfoFieldValue<Object> infoFieldValue :
-				infoFormValues.getInfoFieldValues()) {
+				infoItemFieldValues.getInfoFieldValues()) {
 
 			Object value = infoFieldValue.getValue(locale);
 
@@ -265,7 +265,7 @@ public class GetCollectionFieldMVCResourceCommand
 		}
 
 		InfoItemClassPKReference infoItemClassPKReference =
-			infoFormValues.getInfoItemClassPKReference();
+			infoItemFieldValues.getInfoItemClassPKReference();
 
 		if (infoItemClassPKReference != null) {
 			displayObjectJSONObject.put(

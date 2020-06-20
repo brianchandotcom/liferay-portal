@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.IntegerInfoFieldType;
@@ -31,6 +30,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -224,11 +224,11 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		JournalArticle journalArticle = _getJournalArticle();
 
-		InfoFormValues infoFormValues = infoItemFormProvider.getInfoFormValues(
-			journalArticle);
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFormProvider.getInfoFormValues(journalArticle);
 
 		InfoItemClassPKReference infoItemClassPKReference =
-			infoFormValues.getInfoItemClassPKReference();
+			infoItemFieldValues.getInfoItemClassPKReference();
 
 		Assert.assertEquals(
 			journalArticle.getResourcePrimKey(),
@@ -238,13 +238,13 @@ public class JournalArticleInfoItemFormProviderTest {
 			infoItemClassPKReference.getClassName());
 
 		Collection<InfoFieldValue<Object>> infoFieldValues =
-			infoFormValues.getInfoFieldValues();
+			infoItemFieldValues.getInfoFieldValues();
 
 		Assert.assertEquals(
 			infoFieldValues.toString(), 12, infoFieldValues.size());
 
 		InfoFieldValue<Object> descriptionInfoFieldValue =
-			infoFormValues.getInfoFieldValue("description");
+			infoItemFieldValues.getInfoFieldValue("description");
 
 		Assert.assertEquals(
 			"Description",
@@ -254,7 +254,7 @@ public class JournalArticleInfoItemFormProviderTest {
 			descriptionInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
 		InfoFieldValue<Object> titleInfoFieldValue =
-			infoFormValues.getInfoFieldValue("title");
+			infoItemFieldValues.getInfoFieldValue("title");
 
 		Assert.assertEquals(
 			"Test Article",
@@ -264,7 +264,7 @@ public class JournalArticleInfoItemFormProviderTest {
 			titleInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
 		InfoFieldValue<Object> ddmTextInfoFieldValue =
-			infoFormValues.getInfoFieldValue("DDM_Text");
+			infoItemFieldValues.getInfoFieldValue("DDM_Text");
 
 		Assert.assertEquals(
 			"Some text",
@@ -274,7 +274,7 @@ public class JournalArticleInfoItemFormProviderTest {
 			ddmTextInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
 		Collection<InfoFieldValue<Object>> ddmTextInfoFieldValues =
-			infoFormValues.getInfoFieldValues("DDM_Text");
+			infoItemFieldValues.getInfoFieldValues("DDM_Text");
 
 		Iterator<InfoFieldValue<Object>> ddmTextInfoFieldValuesIterator =
 			ddmTextInfoFieldValues.iterator();
@@ -299,10 +299,10 @@ public class JournalArticleInfoItemFormProviderTest {
 			"Un poco más de texto",
 			secondDDMTextInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
-		Assert.assertNotNull(infoFormValues.getInfoFieldValue("boolean"));
+		Assert.assertNotNull(infoItemFieldValues.getInfoFieldValue("boolean"));
 
 		InfoFieldValue<Object> imageInfoFieldValue =
-			infoFormValues.getInfoFieldValue("image");
+            infoItemFieldValues.getInfoFieldValue("image");
 
 		WebImage webImage = (WebImage)imageInfoFieldValue.getValue(
 			LocaleUtil.getDefault());
@@ -319,7 +319,7 @@ public class JournalArticleInfoItemFormProviderTest {
 
 		Assert.assertNotNull(webImage.getUrl());
 
-		Assert.assertNotNull(infoFormValues.getInfoFieldValue("integer"));
+		Assert.assertNotNull(infoItemFieldValues.getInfoFieldValue("integer"));
 	}
 
 	private JournalArticle _getJournalArticle() throws Exception {

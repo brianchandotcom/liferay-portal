@@ -29,12 +29,12 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -149,18 +149,21 @@ public class JournalArticleInfoItemFormProvider
 	}
 
 	@Override
-	public InfoFormValues getInfoFormValues(JournalArticle journalArticle) {
-		InfoFormValues infoFormValues = new InfoFormValues();
+	public InfoItemFieldValues getInfoFormValues(
+		JournalArticle journalArticle) {
 
-		infoFormValues.addAll(_getJournalArticleFormValues(journalArticle));
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
 
-		infoFormValues.setInfoItemClassPKReference(
+		infoItemFieldValues.addAll(
+			_getJournalArticleFormValues(journalArticle));
+
+		infoItemFieldValues.setInfoItemClassPKReference(
 			new InfoItemClassPKReference(
 				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey()));
 
 		try {
-			infoFormValues.addAll(
+			infoItemFieldValues.addAll(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(
 					JournalArticle.class.getName(),
 					journalArticle.getResourcePrimKey()));
@@ -170,19 +173,21 @@ public class JournalArticleInfoItemFormProvider
 				"Caught unexpected exception", noSuchInfoItemException);
 		}
 
-		infoFormValues.addAll(
+		infoItemFieldValues.addAll(
 			_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(), journalArticle));
 
-		infoFormValues.addAll(
+		infoItemFieldValues.addAll(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 				JournalArticle.class.getName(), journalArticle));
 
-		infoFormValues.addAll(_getDDMStructureInfoFieldValues(journalArticle));
+		infoItemFieldValues.addAll(
+			_getDDMStructureInfoFieldValues(journalArticle));
 
-		infoFormValues.addAll(_getDDMTemplateInfoFieldValues(journalArticle));
+		infoItemFieldValues.addAll(
+			_getDDMTemplateInfoFieldValues(journalArticle));
 
-		return infoFormValues;
+		return infoItemFieldValues;
 	}
 
 	private String _getDateValue(Date date) {

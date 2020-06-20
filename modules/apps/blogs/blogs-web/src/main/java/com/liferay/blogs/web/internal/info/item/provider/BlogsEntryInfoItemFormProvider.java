@@ -23,12 +23,12 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -89,17 +89,17 @@ public class BlogsEntryInfoItemFormProvider
 	}
 
 	@Override
-	public InfoFormValues getInfoFormValues(BlogsEntry blogsEntry) {
-		InfoFormValues infoFormValues = new InfoFormValues();
+	public InfoItemFieldValues getInfoFormValues(BlogsEntry blogsEntry) {
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
 
-		infoFormValues.addAll(_getBlogsEntryInfoFieldValues(blogsEntry));
+		infoItemFieldValues.addAll(_getBlogsEntryInfoFieldValues(blogsEntry));
 
-		infoFormValues.setInfoItemClassPKReference(
+		infoItemFieldValues.setInfoItemClassPKReference(
 			new InfoItemClassPKReference(
 				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 
 		try {
-			infoFormValues.addAll(
+			infoItemFieldValues.addAll(
 				_assetEntryInfoItemFieldSetProvider.getInfoFieldValues(
 					BlogsEntry.class.getName(), blogsEntry.getEntryId()));
 		}
@@ -108,14 +108,14 @@ public class BlogsEntryInfoItemFormProvider
 				"Caught unexpected exception", noSuchInfoItemException);
 		}
 
-		infoFormValues.addAll(
+		infoItemFieldValues.addAll(
 			_expandoInfoItemFieldSetProvider.getInfoFieldValues(
 				BlogsEntry.class.getName(), blogsEntry));
-		infoFormValues.addAll(
+		infoItemFieldValues.addAll(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldValues(
 				BlogsEntry.class.getName(), blogsEntry));
 
-		return infoFormValues;
+		return infoItemFieldValues;
 	}
 
 	private Collection<InfoFieldSetEntry> _getBlogsEntryInfoFieldSetEntries() {

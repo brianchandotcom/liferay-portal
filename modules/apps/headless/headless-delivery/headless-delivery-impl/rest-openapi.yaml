@@ -2385,10 +2385,6 @@ components:
                         The ID of the `ContentStructure`.
                     format: int64
                     type: integer
-                contentTemplates:
-                    items:
-                        $ref: "#/components/schemas/ContentTemplate"
-                    type: array
                 creator:
                     allOf:
                         - $ref: "#/components/schemas/Creator"

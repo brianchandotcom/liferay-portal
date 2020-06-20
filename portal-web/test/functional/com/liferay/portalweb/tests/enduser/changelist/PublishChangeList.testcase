@@ -44,7 +44,6 @@ definition {
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",
-			panel = "Site Administration",
 			portlet = "Web Content");
 
 		WebContentNavigator.gotoAddCP();
@@ -58,15 +57,23 @@ definition {
 		ChangeList.publishPublication(publicationName = "Publication Name");
 
 		ChangeList.viewPublishedPublicationDetails(
-			publicationDescription = "Publication Description",
 			publicationName = "Publication Name",
 			publicationPublishedBy = "Test Test");
 
-		Click(locator1 = "ChangeList#CHANGE_LIST_INDICATOR_BUTTON");
+		AssertTextPresent(
+			key_publicationName = "Production",
+			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
+			value1 = "Production");
 
-		AssertElementNotPresent(
-			key_menuItem = "Review Changes",
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		AssertElementPresent(
+			key_webContentTitle = "Web Content Title",
+			locator1 = "WC#ENTRY_LIST_TITLE");
 	}
 
 }

@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_PUBLISHED_BY</td>
-	<td>//td[contains(@class,'published-by')]//span[contains(@class,'${key_publicationPublishedBy}')]</td>
+	<td>//td[contains(@class,'published-by')]/span[contains(@title,'${key_publicationPublishedBy}')]</td>
 	<td></td>
 </tr>
 <tr>

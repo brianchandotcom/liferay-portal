@@ -198,11 +198,9 @@ definition {
 			locator1 = "ChangeList#PUBLISHED_PUBLICATIONS_NAME",
 			value1 = "${publicationName}");
 
-		key_publicationPublishedBy = "${publicationPublishedBy}";
-
-		AssertTextEquals(
-			locator1 = "ChangeList#PUBLICATIONS_PUBLISHED_BY",
-			value1 = "${publicationPublishedBy}");
+		AssertElementPresent(
+			key_publicationPublishedBy = "${publicationPublishedBy}",
+			locator1 = "ChangeList#PUBLICATIONS_PUBLISHED_BY");
 	}
 
 	macro viewWarningOnPortletExport {

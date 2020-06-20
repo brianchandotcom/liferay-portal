@@ -171,12 +171,20 @@ const Options = ({
 
 		const _values = [];
 
-		fields.forEach((localizedValue) => {
+		fields.forEach((localizedValue, index) => {
+			let newLocalizedValue = localizedValue;
+
+			if (normalizedValue[languageId][index]) {
+				newLocalizedValue = {
+					...newLocalizedValue,
+					label: normalizedValue[languageId][index].label,
+				};
+			}
 			_values.push(
 				normalizedValue[languageId].find(
 					(_localizedValue) =>
 						_localizedValue.value == localizedValue.value
-				) || localizedValue
+				) || newLocalizedValue
 			);
 		});
 

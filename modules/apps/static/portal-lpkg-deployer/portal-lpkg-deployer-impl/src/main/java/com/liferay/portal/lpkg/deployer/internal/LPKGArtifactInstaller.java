@@ -18,6 +18,7 @@ import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.file.install.listener.ArtifactInstaller;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,8 +40,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import org.apache.felix.fileinstall.ArtifactInstaller;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

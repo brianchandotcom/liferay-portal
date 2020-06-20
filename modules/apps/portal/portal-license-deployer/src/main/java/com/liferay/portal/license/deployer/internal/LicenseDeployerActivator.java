@@ -14,11 +14,10 @@
 
 package com.liferay.portal.license.deployer.internal;
 
+import com.liferay.portal.file.install.listener.ArtifactInstaller;
+import com.liferay.portal.file.install.listener.ArtifactListener;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.license.deployer.internal.installer.LicenseInstaller;
-
-import org.apache.felix.fileinstall.ArtifactInstaller;
-import org.apache.felix.fileinstall.ArtifactListener;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

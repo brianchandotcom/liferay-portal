@@ -40,15 +40,61 @@ definition {
 	test SwitchPublication {
 		property test.name.skip.portal.instance = "SelectChangeList#SwitchPublication";
 
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content 1",
+			webContentTitle = "Web Content Title 1");
+
+		PortletEntry.publish();
+
 		ChangeList.createNewPublication(publicationName = "Publication 2 Name");
 
-		AssertTextPresent(
-			locator1 = "ChangeList#CHANGE_LIST_INDICATOR_TITLE",
-			value1 = "Publication 2 Name");
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content &amp; Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddCP();
+
+		WebContent.addCP(
+			webContentContent = "WC WebContent Content 2",
+			webContentTitle = "Web Content Title 2");
+
+		PortletEntry.publish();
 
 		ChangeList.selectPublication(publicationName = "Publication Name");
 
+		AssertElementPresent(
+			key_webContentTitle = "Web Content Title 1",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		AssertElementNotPresent(
+			key_webContentTitle = "Web Content Title 2",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
 		ChangeList.selectPublication(publicationName = "Publication 2 Name");
+
+		AssertElementPresent(
+			key_webContentTitle = "Web Content Title 2",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		AssertElementNotPresent(
+			key_webContentTitle = "Web Content Title 1",
+			locator1 = "WC#ENTRY_LIST_TITLE");
+
+		ChangeList.workOnProduction();
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No web content was found.");
 	}
 
 }

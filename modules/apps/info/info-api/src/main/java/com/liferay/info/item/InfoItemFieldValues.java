@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.info.field;
+package com.liferay.info.item;
 
-import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.petra.string.StringBundler;
 
 import java.util.ArrayList;

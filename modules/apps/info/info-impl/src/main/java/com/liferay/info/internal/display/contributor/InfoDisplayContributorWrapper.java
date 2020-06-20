@@ -28,6 +28,7 @@ import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -44,7 +45,8 @@ import java.util.Set;
  * @author Jorge Ferrer
  */
 public class InfoDisplayContributorWrapper
-	implements InfoItemFormProvider<Object>, InfoItemObjectProvider<Object> {
+	implements InfoItemFieldValuesProvider<Object>,
+			   InfoItemFormProvider<Object>, InfoItemObjectProvider<Object> {
 
 	public InfoDisplayContributorWrapper(
 		InfoDisplayContributor<Object> infoDisplayContributor) {
@@ -99,26 +101,6 @@ public class InfoDisplayContributorWrapper
 	}
 
 	@Override
-	public InfoItemFieldValues getInfoFormValues(Object itemObject) {
-		Locale locale = _getLocale();
-
-		try {
-			InfoItemFieldValues infoItemFieldValues = _convertToInfoFormValues(
-				_infoDisplayContributor.getInfoDisplayFieldsValues(
-					itemObject, locale),
-				new InfoItemClassPKReference(
-					_infoDisplayContributor.getClassName(),
-					_infoDisplayContributor.getInfoDisplayObjectClassPK(
-						itemObject)));
-
-			return infoItemFieldValues;
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
-	}
-
-	@Override
 	public Object getInfoItem(long itemClassPK) throws NoSuchInfoItemException {
 		try {
 			InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
@@ -126,6 +108,24 @@ public class InfoDisplayContributorWrapper
 					itemClassPK);
 
 			return infoDisplayObjectProvider.getDisplayObject();
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Override
+	public InfoItemFieldValues getInfoItemFieldValues(Object itemObject) {
+		Locale locale = _getLocale();
+
+		try {
+			return _convertToInfoItemFieldValues(
+				_infoDisplayContributor.getInfoDisplayFieldsValues(
+					itemObject, locale),
+				new InfoItemClassPKReference(
+					_infoDisplayContributor.getClassName(),
+					_infoDisplayContributor.getInfoDisplayObjectClassPK(
+						itemObject)));
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
@@ -159,7 +159,7 @@ public class InfoDisplayContributorWrapper
 		return infoForm;
 	}
 
-	private InfoItemFieldValues _convertToInfoFormValues(
+	private InfoItemFieldValues _convertToInfoItemFieldValues(
 		Map<String, Object> infoDisplayFieldsValues,
 		InfoItemClassPKReference infoItemClassPKReference) {
 

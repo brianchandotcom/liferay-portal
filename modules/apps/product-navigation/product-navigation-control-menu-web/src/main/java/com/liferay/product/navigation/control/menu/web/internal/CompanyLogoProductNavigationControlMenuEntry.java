@@ -29,14 +29,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuWebKeys;
 import com.liferay.product.navigation.global.menu.configuration.GlobalMenuInstanceConfiguration;
-
-import java.io.IOException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,25 +55,6 @@ public class CompanyLogoProductNavigationControlMenuEntry
 	@Override
 	public String getIconJspPath() {
 		return "/entries/company_logo.jsp";
-	}
-
-	@Override
-	public boolean includeIcon(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		httpServletRequest.setAttribute(
-			ProductNavigationControlMenuWebKeys.PORTLET_TITLE,
-			portletDisplay.getTitle());
-
-		return super.includeIcon(httpServletRequest, httpServletResponse);
 	}
 
 	@Override

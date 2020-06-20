@@ -16,22 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String portletTitle = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.PORTLET_TITLE);
-%>
-
-<li class="control-menu-nav-item control-menu-nav-item-content">
-	<clay:content-row
-		verticalAlign="center"
-	>
-		<clay:content-col
-			cssClass="c-pr-1"
-		>
-			<img alt="" class="company-logo" height="32px" src="<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>" />
-		</clay:content-col>
-
-		<clay:content-col>
-			<span class="control-menu-level-1-heading text-truncate" data-qa-id="headerTitle"><%= HtmlUtil.escape(portletTitle) %></span>
-		</clay:content-col>
-	</clay:content-row>
+<li class="control-menu-nav-item">
+	<img alt="" class="company-logo" height="32px" src="<%= themeDisplay.getPathImage() + "/company_logo?img_id=" + company.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(company.getLogoId()) %>" />
 </li>

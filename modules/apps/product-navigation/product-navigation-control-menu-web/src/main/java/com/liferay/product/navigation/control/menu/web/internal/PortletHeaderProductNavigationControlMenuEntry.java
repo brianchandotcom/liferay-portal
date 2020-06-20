@@ -14,24 +14,15 @@
 
 package com.liferay.product.navigation.control.menu.web.internal;
 
-import com.liferay.application.list.PanelAppRegistry;
-import com.liferay.application.list.PanelCategoryRegistry;
-import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.product.navigation.control.menu.web.internal.constants.ProductNavigationControlMenuWebKeys;
-import com.liferay.product.navigation.global.menu.configuration.GlobalMenuInstanceConfiguration;
 
 import java.io.IOException;
 
@@ -89,12 +80,6 @@ public class PortletHeaderProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (_isEnableGlobalMenu(themeDisplay.getCompanyId()) &&
-			_isGlobalMenuApp(themeDisplay)) {
-
-			return false;
-		}
-
 		Layout layout = themeDisplay.getLayout();
 
 		if (!layout.isTypeControlPanel()) {
@@ -118,59 +103,5 @@ public class PortletHeaderProductNavigationControlMenuEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private boolean _isEnableGlobalMenu(long companyId) {
-		try {
-			GlobalMenuInstanceConfiguration globalMenuInstanceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					GlobalMenuInstanceConfiguration.class, companyId);
-
-			if (globalMenuInstanceConfiguration.enableGlobalMenu()) {
-				return true;
-			}
-		}
-		catch (ConfigurationException configurationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get global menu instance configuration",
-					configurationException);
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _isGlobalMenuApp(ThemeDisplay themeDisplay) {
-		if (Validator.isNull(themeDisplay.getPpid())) {
-			return false;
-		}
-
-		PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(
-			_panelAppRegistry, _panelCategoryRegistry);
-
-		if (!panelCategoryHelper.isGlobalMenuApp(themeDisplay.getPpid())) {
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if ((layout != null) && !layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PortletHeaderProductNavigationControlMenuEntry.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private PanelAppRegistry _panelAppRegistry;
-
-	@Reference
-	private PanelCategoryRegistry _panelCategoryRegistry;
 
 }

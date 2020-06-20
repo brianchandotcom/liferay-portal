@@ -152,15 +152,13 @@ public class JournalArticleInfoItemFormProvider
 	public InfoItemFieldValues getInfoFormValues(
 		JournalArticle journalArticle) {
 
-		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues();
-
-		infoItemFieldValues.addAll(
-			_getJournalArticleFormValues(journalArticle));
-
-		infoItemFieldValues.setInfoItemClassPKReference(
+		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
 			new InfoItemClassPKReference(
 				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey()));
+
+		infoItemFieldValues.addAll(
+			_getJournalArticleFormValues(journalArticle));
 
 		try {
 			infoItemFieldValues.addAll(

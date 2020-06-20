@@ -59,7 +59,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 			</p>
 
 			<c:choose>
-				<c:when test="<%= selLayout.isTypeAssetDisplay() %>">
+				<c:when test="<%= selLayout.isTypeAssetDisplay() && FFMappingInputConfigurationUtil.enabled() %>">
 					<div class="dpt-mapping">
 						<div class="dpt-mapping-placeholder">
 							<aui:input disabled="<%= true %>" label="title" localized="<%= false %>" name="openGraphTitle" />
@@ -94,7 +94,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						/>
 					</div>
 				</c:when>
-				<c:otherwise>
+				<c:when test="<%= !selLayout.isTypeAssetDisplay() %>">
 					<aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
 					<div class="form-group">
@@ -189,7 +189,7 @@ Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 						module="js/seo/openGraph.es"
 						servletContext="<%= application %>"
 					/>
-				</c:otherwise>
+				</c:when>
 			</c:choose>
 		</clay:sheet-section>
 

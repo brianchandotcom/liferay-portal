@@ -395,6 +395,10 @@ public class ViewChangesDisplayContext {
 	}
 
 	private JSONObject _getContextViewJSONObject() throws PortalException {
+		if (_ctCollection.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return null;
+		}
+
 		CTClosure ctClosure = _getCTClosure();
 
 		JSONObject everythingJSONObject = JSONUtil.put(

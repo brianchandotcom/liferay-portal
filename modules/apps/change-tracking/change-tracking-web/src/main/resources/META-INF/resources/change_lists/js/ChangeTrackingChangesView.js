@@ -815,40 +815,50 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	render() {
+		const items = [];
+
+		items.push(
+			<ClayNavigationBar.Item
+				active={this.state.navigation === 'changes'}
+				onClick={() =>
+					this._handleNavigationUpdate({
+						filterClass: 'everything',
+						navigation: 'changes',
+						nodeId: 0,
+					})
+				}
+			>
+				<ClayLink className="nav-link" displayType="unstyled">
+					{Liferay.Language.get('changes')}
+				</ClayLink>
+			</ClayNavigationBar.Item>
+		);
+
+		if (this.contextView) {
+			items.push(
+				<ClayNavigationBar.Item
+					active={this.state.navigation === 'contextView'}
+					onClick={() =>
+						this._handleNavigationUpdate({
+							navigation: 'contextView',
+							nodeId: 0,
+						})
+					}
+				>
+					<ClayLink className="nav-link" displayType="unstyled">
+						{Liferay.Language.get('context-view')}
+					</ClayLink>
+				</ClayNavigationBar.Item>
+			);
+		}
+
 		return (
 			<>
 				<ClayNavigationBar
 					className="navigation-bar"
 					triggerLabel={Liferay.Language.get(this.state.navigation)}
 				>
-					<ClayNavigationBar.Item
-						active={this.state.navigation === 'changes'}
-						onClick={() =>
-							this._handleNavigationUpdate({
-								filterClass: 'everything',
-								navigation: 'changes',
-								nodeId: 0,
-							})
-						}
-					>
-						<ClayLink className="nav-link" displayType="unstyled">
-							{Liferay.Language.get('changes')}
-						</ClayLink>
-					</ClayNavigationBar.Item>
-
-					<ClayNavigationBar.Item
-						active={this.state.navigation === 'contextView'}
-						onClick={() =>
-							this._handleNavigationUpdate({
-								navigation: 'contextView',
-								nodeId: 0,
-							})
-						}
-					>
-						<ClayLink className="nav-link" displayType="unstyled">
-							{Liferay.Language.get('context-view')}
-						</ClayLink>
-					</ClayNavigationBar.Item>
+					{items}
 				</ClayNavigationBar>
 
 				{this._renderManagementToolbar()}

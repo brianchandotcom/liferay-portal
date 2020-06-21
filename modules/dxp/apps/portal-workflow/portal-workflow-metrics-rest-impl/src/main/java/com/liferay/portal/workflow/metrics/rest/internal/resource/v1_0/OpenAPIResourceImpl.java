@@ -58,7 +58,26 @@ public class OpenAPIResourceImpl {
 	public Response getOpenAPI(@PathParam("type") String type)
 		throws Exception {
 
-		return _openAPIResource.getOpenAPI(_resourceClasses, type, _uriInfo);
+		if (_uriInfoMethodExists()) {
+			return _openAPIResource.getOpenAPI(
+				_resourceClasses, type, _uriInfo);
+		}
+
+		return _openAPIResource.getOpenAPI(_resourceClasses, type);
+	}
+
+	private boolean _uriInfoMethodExists() {
+		try {
+			Class<? extends OpenAPIResource> clazz =
+				_openAPIResource.getClass();
+			clazz.getMethod(
+				"getOpenAPI", Set.class, String.class, UriInfo.class);
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference

@@ -351,7 +351,7 @@ public class Document {
 	@GraphQLField(
 		description = "The ID of the `DocumentFolder` where this document is stored."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long documentFolderId;
 
 	@Schema

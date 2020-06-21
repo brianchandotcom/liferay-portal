@@ -150,6 +150,13 @@ const APIGUI = () => {
 			'meta[name="csrf-token"]'
 		).content;
 
+		for (let i = 0; i < headers.length; i++) {
+			const header = headers[i];
+			if (header.key && header.value) {
+				req.headers[header.key] = header.value;
+			}
+		}
+
 		return req;
 	};
 

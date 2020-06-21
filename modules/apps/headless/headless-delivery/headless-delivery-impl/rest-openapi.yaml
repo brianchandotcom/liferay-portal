@@ -1939,12 +1939,6 @@ components:
                     allOf:
                         - $ref: "#/components/schemas/Creator"
                     readOnly: true
-                customName:
-                    type: string
-                customName_i18n:
-                    additionalProperties:
-                        type: string
-                    type: object
                 dateCreated:
                     format: date-time
                     readOnly: true
@@ -1981,6 +1975,8 @@ components:
                     type: string
                 url:
                     type: string
+                useCustomName:
+                    type: boolean
         PageCollectionDefinition:
             description:
                 ""

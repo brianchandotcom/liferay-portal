@@ -279,6 +279,7 @@ const APIGUI = () => {
 
 				{showSwagger && !showGraphQL && (
 					<SwaggerUI
+						displayOperationId={true}
 						requestInterceptor={requestInterceptor}
 						supportedSubmitMethods={[
 							'get',

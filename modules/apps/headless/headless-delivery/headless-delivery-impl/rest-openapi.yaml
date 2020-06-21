@@ -1940,11 +1940,7 @@ components:
                         - $ref: "#/components/schemas/Creator"
                     readOnly: true
                 customName:
-                    type: string
-                customName_i18n:
-                    additionalProperties:
-                        type: string
-                    type: object
+                    type: boolean
                 dateCreated:
                     format: date-time
                     readOnly: true

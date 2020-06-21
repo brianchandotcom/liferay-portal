@@ -14,6 +14,9 @@
 
 package com.liferay.portal.vulcan.dto.converter;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 /**
  * @author Rubén Pulido
  * @author Víctor Galán
@@ -21,6 +24,26 @@ package com.liferay.portal.vulcan.dto.converter;
 public interface DTOConverter<E, D> {
 
 	public String getContentType();
+
+	public default String getDTOClassName() {
+		Type[] types = getClass().getGenericInterfaces();
+
+		for (Type type : types) {
+			String typeName = type.getTypeName();
+
+			if (!typeName.contains(DTOConverter.class.getSimpleName())) {
+				continue;
+			}
+
+			ParameterizedType parameterizedType = (ParameterizedType)type;
+
+			Type[] argumentTypes = parameterizedType.getActualTypeArguments();
+
+			return argumentTypes[0].getTypeName();
+		}
+
+		return null;
+	}
 
 	public default E getObject(String externalReferenceCode) throws Exception {
 		return null;

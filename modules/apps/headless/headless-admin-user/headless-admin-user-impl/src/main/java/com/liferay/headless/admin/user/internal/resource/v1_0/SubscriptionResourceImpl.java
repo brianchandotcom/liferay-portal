@@ -60,7 +60,7 @@ public class SubscriptionResourceImpl extends BaseSubscriptionResourceImpl {
 			return Page.of(
 				transform(
 					_subscriptionLocalService.getUserSubscriptions(
-						userId, contentType),
+						userId, _getDTOClassName(contentType)),
 					this::_toSubscription));
 		}
 
@@ -72,6 +72,19 @@ public class SubscriptionResourceImpl extends BaseSubscriptionResourceImpl {
 				this::_toSubscription),
 			pagination,
 			_subscriptionLocalService.getUserSubscriptionsCount(userId));
+	}
+
+	private String _getDTOClassName(String contentType) {
+		for (String dtoClassName : _dtoConverterRegistry.getDTOClassNames()) {
+			DTOConverter<?, ?> dtoConverter =
+				_dtoConverterRegistry.getDTOConverter(dtoClassName);
+
+			if (contentType.equals(dtoConverter.getContentType())) {
+				return dtoConverter.getDTOClassName();
+			}
+		}
+
+		return contentType;
 	}
 
 	private Subscription _toSubscription(

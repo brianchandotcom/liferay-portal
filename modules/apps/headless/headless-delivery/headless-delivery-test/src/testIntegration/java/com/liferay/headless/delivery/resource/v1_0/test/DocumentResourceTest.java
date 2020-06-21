@@ -107,6 +107,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	protected Document randomDocument() throws Exception {
 		Document document = super.randomDocument();
 
+		document.setDocumentFolderId(0L);
 		document.setViewableBy(Document.ViewableBy.ANYONE);
 
 		return document;

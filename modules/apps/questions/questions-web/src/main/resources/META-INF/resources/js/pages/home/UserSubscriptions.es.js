@@ -12,96 +12,146 @@
  * details.
  */
 
-import {useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
-import React, {useContext, useEffect, useState} from 'react';
+import {useMutation, useQuery} from '@apollo/client';
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
+import React from 'react';
 import {withRouter} from 'react-router-dom';
 
-import {AppContext} from '../../AppContext.es';
-import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
-import UserIcon from '../../components/UserIcon.es';
-import useQueryParams from '../../hooks/useQueryParams.es';
-import {getUserActivityQuery} from '../../utils/client.es';
+import {
+	getSubscriptionsQuery,
+	unsubscribeMyUserAccountQuery,
+} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
 import NavigationBar from '../NavigationBar.es';
 
-export default withRouter(
-	({
-		history,
-		location,
-		match: {
-			params: {creatorId},
-		},
-	}) => {
-		const context = useContext(AppContext);
-		const historyPushParser = historyPushWithSlug(history.push);
-		const queryParams = useQueryParams(location);
-		const siteKey = context.siteKey;
-		const [page, setPage] = useState(1);
-		const [pageSize, setPageSize] = useState(20);
-
-		useEffect(() => {
-			setPage( queryParams.get('page') || 1);
-		}, [queryParams]);
-
-		const {data, loading} = useQuery(getUserActivityQuery, {
+export default withRouter(({history}) => {
+	const {data: threads, refetch: refetchThreads} = useQuery(
+		getSubscriptionsQuery,
+		{
+			fetchPolicy: 'network-only',
 			variables: {
-				filter: `creatorId eq ${creatorId}`,
-				page,
-				pageSize,
-				siteKey,
+				contentType: 'MessageBoardThread',
 			},
-		});
+		}
+	);
 
-		const changePage = (number) => {
-			historyPushParser(`/subscriptions/${creatorId}?page=${number}`);
-		};
+	const {data: topics, refetch: refetchTopics} = useQuery(
+		getSubscriptionsQuery,
+		{
+			fetchPolicy: 'network-only',
+			variables: {
+				contentType: 'MessageBoardSection',
+			},
+		}
+	);
 
+	const [unsubscribe] = useMutation(unsubscribeMyUserAccountQuery, {
+		onCompleted() {
+			refetchThreads();
+			refetchTopics();
+		},
+	});
+
+	const historyPushParser = historyPushWithSlug(history.push);
+
+	const navigate = (data) => {
+		historyPushParser(`/questions/${data.graphQLNode.title}`);
+	};
+
+	return (
+		<>
+			<NavigationBar />
+			<section className="questions-section questions-section-list">
+				<div className="c-p-5 questions-container row">
+					<div className="col-lg-8 offset-lg-2">
+						<h2 className="sheet-subtitle">Topics</h2>
+						<Topics />
+						<h2 className="mt-5 sheet-subtitle">Questions</h2>
+						<Questions />
+					</div>
+				</div>
+			</section>
+		</>
+	);
+
+	function Topics() {
 		return (
-			<>
-				<NavigationBar />
-				<section className="questions-section questions-section-list">
-					<div className="questions-container">
-						<div className="c-p-5 row">
-							<Topics />
-							<Questions />
+			<div className="row">
+				{topics &&
+					topics.myUserAccountSubscriptions.items &&
+					topics.myUserAccountSubscriptions.items.map((data) => (
+						<div
+							className="col-lg-4 question-tags"
+							key={data.graphQLNode.id}
+						>
+							<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
+								<div className="card-body">
+									<div className="card-row">
+										<div
+											className="autofit-col autofit-col-expand"
+											onClick={() => navigate(data)}
+										>
+											<div className="autofit-section">
+												<div className="card-title">
+													<span className="text-truncate-inline">
+														{data.graphQLNode.title}
+													</span>
+												</div>
+											</div>
+										</div>
+										<div className="autofit-col">
+											<ClayDropDownWithItems
+												items={[
+													{
+														label: 'Unsubscribe',
+														onClick: () => {
+															unsubscribe({
+																variables: {
+																	subscriptionId:
+																		data.id,
+																},
+															});
+														},
+													},
+												]}
+												trigger={
+													<ClayButtonWithIcon
+														displayType="unstyled"
+														small
+														symbol="ellipsis-v"
+													/>
+												}
+											/>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-				</section>
-			</>
+					))}
+			</div>
 		);
-
-		function Topics() {
-			return (
-				<div className="c-mt-3 c-mx-auto c-px-0 col-xl-10">
-					<div className="d-flex flex-row">
-					</div>
-				</div>
-			);
-		}
-
-		function Questions() {
-			return (
-				<div className="c-mx-auto c-px-0 col-xl-10">
-					<PaginatedList
-						activeDelta={pageSize}
-						activePage={page}
-						changeDelta={setPageSize}
-						changePage={changePage}
-						data={data && data.messageBoardThreads}
-						loading={loading}
-					>
-						{(question) => (
-							<QuestionRow
-								key={question.id}
-								question={question}
-								showSectionLabel={true}
-							/>
-						)}
-					</PaginatedList>
-				</div>
-			);
-		}
 	}
-);
+
+	function Questions() {
+		return (
+			<div>
+				{threads &&
+					threads.myUserAccountSubscriptions.items &&
+					threads.myUserAccountSubscriptions.items.map((data) => (
+						<QuestionRow
+							key={data.id}
+							question={data.graphQLNode}
+							showSectionLabel={true}
+							unsubscribe={() =>
+								unsubscribe({
+									variables: {subscriptionId: data.id},
+								})
+							}
+						/>
+					))}
+			</div>
+		);
+	}
+});

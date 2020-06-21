@@ -117,17 +117,17 @@ public class NavigationMenuItem {
 	protected Creator creator;
 
 	@Schema
-	public String getCustomName() {
+	public Boolean getCustomName() {
 		return customName;
 	}
 
-	public void setCustomName(String customName) {
+	public void setCustomName(Boolean customName) {
 		this.customName = customName;
 	}
 
 	@JsonIgnore
 	public void setCustomName(
-		UnsafeSupplier<String, Exception> customNameUnsafeSupplier) {
+		UnsafeSupplier<Boolean, Exception> customNameUnsafeSupplier) {
 
 		try {
 			customName = customNameUnsafeSupplier.get();
@@ -142,37 +142,7 @@ public class NavigationMenuItem {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String customName;
-
-	@Schema
-	@Valid
-	public Map<String, String> getCustomName_i18n() {
-		return customName_i18n;
-	}
-
-	public void setCustomName_i18n(Map<String, String> customName_i18n) {
-		this.customName_i18n = customName_i18n;
-	}
-
-	@JsonIgnore
-	public void setCustomName_i18n(
-		UnsafeSupplier<Map<String, String>, Exception>
-			customName_i18nUnsafeSupplier) {
-
-		try {
-			customName_i18n = customName_i18nUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> customName_i18n;
+	protected Boolean customName;
 
 	@Schema
 	public Date getDateCreated() {
@@ -521,21 +491,7 @@ public class NavigationMenuItem {
 
 			sb.append("\"customName\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(customName));
-
-			sb.append("\"");
-		}
-
-		if (customName_i18n != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customName_i18n\": ");
-
-			sb.append(_toJSON(customName_i18n));
+			sb.append(customName);
 		}
 
 		if (dateCreated != null) {

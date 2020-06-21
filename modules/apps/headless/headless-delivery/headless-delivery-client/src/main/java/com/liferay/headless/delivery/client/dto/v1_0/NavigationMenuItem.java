@@ -76,16 +76,16 @@ public class NavigationMenuItem implements Cloneable {
 
 	protected Creator creator;
 
-	public String getCustomName() {
+	public Boolean getCustomName() {
 		return customName;
 	}
 
-	public void setCustomName(String customName) {
+	public void setCustomName(Boolean customName) {
 		this.customName = customName;
 	}
 
 	public void setCustomName(
-		UnsafeSupplier<String, Exception> customNameUnsafeSupplier) {
+		UnsafeSupplier<Boolean, Exception> customNameUnsafeSupplier) {
 
 		try {
 			customName = customNameUnsafeSupplier.get();
@@ -95,29 +95,7 @@ public class NavigationMenuItem implements Cloneable {
 		}
 	}
 
-	protected String customName;
-
-	public Map<String, String> getCustomName_i18n() {
-		return customName_i18n;
-	}
-
-	public void setCustomName_i18n(Map<String, String> customName_i18n) {
-		this.customName_i18n = customName_i18n;
-	}
-
-	public void setCustomName_i18n(
-		UnsafeSupplier<Map<String, String>, Exception>
-			customName_i18nUnsafeSupplier) {
-
-		try {
-			customName_i18n = customName_i18nUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, String> customName_i18n;
+	protected Boolean customName;
 
 	public Date getDateCreated() {
 		return dateCreated;

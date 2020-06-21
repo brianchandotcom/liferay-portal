@@ -108,21 +108,7 @@ public class NavigationMenuItemSerDes {
 
 			sb.append("\"customName\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(navigationMenuItem.getCustomName()));
-
-			sb.append("\"");
-		}
-
-		if (navigationMenuItem.getCustomName_i18n() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customName_i18n\": ");
-
-			sb.append(_toJSON(navigationMenuItem.getCustomName_i18n()));
+			sb.append(navigationMenuItem.getCustomName());
 		}
 
 		if (navigationMenuItem.getDateCreated() != null) {
@@ -318,15 +304,6 @@ public class NavigationMenuItemSerDes {
 				String.valueOf(navigationMenuItem.getCustomName()));
 		}
 
-		if (navigationMenuItem.getCustomName_i18n() == null) {
-			map.put("customName_i18n", null);
-		}
-		else {
-			map.put(
-				"customName_i18n",
-				String.valueOf(navigationMenuItem.getCustomName_i18n()));
-		}
-
 		if (navigationMenuItem.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -444,14 +421,7 @@ public class NavigationMenuItemSerDes {
 			else if (Objects.equals(jsonParserFieldName, "customName")) {
 				if (jsonParserFieldValue != null) {
 					navigationMenuItem.setCustomName(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "customName_i18n")) {
-				if (jsonParserFieldValue != null) {
-					navigationMenuItem.setCustomName_i18n(
-						(Map)NavigationMenuItemSerDes.toMap(
-							(String)jsonParserFieldValue));
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

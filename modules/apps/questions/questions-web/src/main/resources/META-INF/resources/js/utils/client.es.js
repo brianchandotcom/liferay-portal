@@ -764,3 +764,62 @@ export const unsubscribeSectionQuery = gql`
 		)
 	}
 `;
+
+export const getSubscriptionsQuery = gql`
+	query myUserAccountSubscriptions($contentType: String!) {
+		myUserAccountSubscriptions(contentType: $contentType) {
+			items {
+				id
+				contentType
+				graphQLNode {
+					... on MessageBoardSection {
+						id
+						title
+					}
+					... on MessageBoardThread {
+						actions
+						aggregateRating {
+							ratingAverage
+							ratingCount
+							ratingValue
+						}
+						articleBody
+						creator {
+							id
+							image
+							name
+						}
+						creatorStatistics {
+							joinDate
+							lastPostDate
+							postsNumber
+							rank
+						}
+						dateCreated
+						dateModified
+						encodingFormat
+						friendlyUrlPath
+						headline
+						id
+						keywords
+						messageBoardSection {
+							numberOfMessageBoardSections
+							title
+						}
+						myRating {
+							ratingValue
+						}
+						subscribed
+						viewCount
+					}
+				}
+			}
+		}
+	}
+`;
+
+export const unsubscribeMyUserAccountQuery = gql`
+	mutation deleteMyUserAccountSubscription($subscriptionId: Long!) {
+		deleteMyUserAccountSubscription(subscriptionId: $subscriptionId)
+	}
+`;

@@ -130,10 +130,7 @@ export default withRouter(
 												<div className="card-row">
 													<div className="autofit-col autofit-col-expand">
 														<div className="autofit-section">
-															<div
-																className="card-title"
-																title="Content Page"
-															>
+															<div className="card-title">
 																<span className="text-truncate-inline">
 																	{tag.name}
 																</span>

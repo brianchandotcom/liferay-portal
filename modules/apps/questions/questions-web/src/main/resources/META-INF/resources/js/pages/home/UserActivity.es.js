@@ -18,6 +18,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
@@ -25,16 +26,15 @@ import useQueryParams from '../../hooks/useQueryParams.es';
 import {getUserActivityQuery} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
 import NavigationBar from '../NavigationBar.es';
-import Link from "../../components/Link.es";
 
 export default withRouter(
 	({
-		 history,
-		 location,
-		 match: {
-			 params: {creatorId},
-		 },
-	 }) => {
+		history,
+		location,
+		match: {
+			params: {creatorId},
+		},
+	}) => {
 		const context = useContext(AppContext);
 		const historyPushParser = historyPushWithSlug(history.push);
 		const queryParams = useQueryParams(location);
@@ -97,12 +97,12 @@ export default withRouter(
 
 		return (
 			<>
-				<NavigationBar/>
+				<NavigationBar />
 				<section className="questions-section questions-section-list">
 					<div className="questions-container">
 						<div className="c-p-5 row">
-							<PageHeader/>
-							<Questions/>
+							<PageHeader />
+							<Questions />
 						</div>
 					</div>
 				</section>
@@ -138,16 +138,14 @@ export default withRouter(
 								</span>
 							</div>
 						</div>
-						<div className="flex-column justify-content-end">
-							<Link
-								to={`/questions/subscriptions/creator/${creatorId}`}
-							>
-								<ClayButton
-									displayType="secondary"
-								>
-									Manage Subscriptions
-								</ClayButton>
-							</Link>
+						<div className="flex-column justify-content-end ml-auto">
+							{context.userId === creatorId && (
+								<Link to={`/subscriptions/${creatorId}`}>
+									<ClayButton displayType="secondary">
+										Manage Subscriptions
+									</ClayButton>
+								</Link>
+							)}
 						</div>
 					</div>
 					<div className="border-bottom c-mt-5">

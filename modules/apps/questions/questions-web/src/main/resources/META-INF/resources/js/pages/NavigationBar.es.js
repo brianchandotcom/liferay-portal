@@ -38,12 +38,12 @@ export default withRouter(
 			}
 			else if (location.pathname.includes('activity')) {
 				return Liferay.Language.get('my-activity');
-			} else if (location.pathname.includes('subscriptions')) {
+			}
+			else if (location.pathname.includes('subscriptions')) {
 				return Liferay.Language.get('my-subscriptions');
 			}
-			else {
-				return Liferay.Language.get('questions');
-			}
+
+			return Liferay.Language.get('questions');
 		};
 
 		const context = useContext(AppContext);
@@ -78,7 +78,8 @@ export default withRouter(
 									<ClayNavigationBar.Item
 										active={
 											!isActive('activity') &&
-											!isActive('tags')
+											!isActive('tags') &&
+											!isActive('subscriptions')
 										}
 										onClick={() =>
 											historyPushParser(

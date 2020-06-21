@@ -12,6 +12,8 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -27,7 +29,7 @@ import SectionLabel from './SectionLabel.es';
 import TagList from './TagList.es';
 import UserIcon from './UserIcon.es';
 
-export default ({currentSection, question, showSectionLabel}) => (
+export default ({currentSection, question, showSectionLabel, unsubscribe}) => (
 	<div className="c-mt-4 c-p-3 position-relative question-row text-secondary">
 		<div className="align-items-center d-flex flex-wrap justify-content-between">
 			<span>
@@ -73,6 +75,29 @@ export default ({currentSection, question, showSectionLabel}) => (
 						value={question.numberOfMessageBoardMessages}
 					/>
 				</li>
+
+				{unsubscribe && (
+					<li>
+						<ClayDropDownWithItems
+							className="c-py-1"
+							items={[
+								{
+									label: 'Unsubscribe',
+									onClick: () => {
+										unsubscribe();
+									},
+								},
+							]}
+							trigger={
+								<ClayButtonWithIcon
+									displayType="unstyled"
+									small
+									symbol="ellipsis-v"
+								/>
+							}
+						/>
+					</li>
+				)}
 			</ul>
 		</div>
 

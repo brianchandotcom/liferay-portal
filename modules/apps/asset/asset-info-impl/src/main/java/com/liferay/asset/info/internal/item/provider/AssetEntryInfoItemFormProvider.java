@@ -38,10 +38,11 @@ public class AssetEntryInfoItemFormProvider
 	public InfoForm getInfoForm() {
 		InfoForm infoForm = new InfoForm(AssetEntry.class.getName());
 
+		infoForm.addAll(_getAssetEntryFieldSetEntries());
+
 		infoForm.add(
 			_assetEntryInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetEntry.class.getName()));
-		infoForm.addAll(_getAssetEntryFieldSetEntries());
 
 		return infoForm;
 	}

@@ -19,9 +19,8 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
@@ -64,20 +63,16 @@ public class OpenGraphImageProvider {
 	}
 
 	public Optional<OpenGraphImage> getOpenGraphImageOptional(
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Layout layout, LayoutSEOEntry layoutSEOEntry,
-		ThemeDisplay themeDisplay) {
+		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
 
 		return _getMappedOpenGraphImageOptional(
-			infoDisplayObjectProvider, infoItemFieldValuesProvider, layout,
-			layoutSEOEntry, themeDisplay
+			infoItemFieldValues, layout, layoutSEOEntry, themeDisplay
 		).map(
 			Optional::of
 		).orElseGet(
 			() -> _getFileEntryOpenGraphImageOptional(
-				infoDisplayObjectProvider, infoItemFieldValuesProvider, layout,
-				layoutSEOEntry, themeDisplay)
+				infoItemFieldValues, layout, layoutSEOEntry, themeDisplay)
 		);
 	}
 
@@ -102,10 +97,8 @@ public class OpenGraphImageProvider {
 	}
 
 	private Optional<OpenGraphImage> _getFileEntryOpenGraphImageOptional(
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Layout layout, LayoutSEOEntry layoutSEOEntry,
-		ThemeDisplay themeDisplay) {
+		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
 
 		try {
 			long openGraphImageFileEntryId = _getOpenGraphImageFileEntryId(
@@ -131,9 +124,8 @@ public class OpenGraphImageProvider {
 						public Optional<String> getAltOptional() {
 							return Optional.ofNullable(
 								_getImageAltTagValue(
-									infoDisplayObjectProvider,
-									infoItemFieldValuesProvider, layout,
-									layoutSEOEntry, themeDisplay.getLocale()));
+									infoItemFieldValues, layout, layoutSEOEntry,
+									themeDisplay.getLocale()));
 						}
 
 						@Override
@@ -164,13 +156,11 @@ public class OpenGraphImageProvider {
 	}
 
 	private String _getImageAltTagValue(
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Layout layout, LayoutSEOEntry layoutSEOEntry, Locale locale) {
+		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		LayoutSEOEntry layoutSEOEntry, Locale locale) {
 
 		String mappedImageAltTagValue = _getMappedStringValue(
-			null, "openGraphImageAlt", infoDisplayObjectProvider,
-			infoItemFieldValuesProvider, layout, locale);
+			null, "openGraphImageAlt", infoItemFieldValues, layout, locale);
 
 		if (Validator.isNotNull(mappedImageAltTagValue)) {
 			return mappedImageAltTagValue;
@@ -196,14 +186,12 @@ public class OpenGraphImageProvider {
 	}
 
 	private Optional<OpenGraphImage> _getMappedOpenGraphImageOptional(
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Layout layout, LayoutSEOEntry layoutSEOEntry,
-		ThemeDisplay themeDisplay) {
+		InfoItemFieldValues infoItemFieldValues, Layout layout,
+		LayoutSEOEntry layoutSEOEntry, ThemeDisplay themeDisplay) {
 
 		Object mappedImageObject = _getMappedValue(
-			null, "openGraphImage", infoDisplayObjectProvider,
-			infoItemFieldValuesProvider, layout, themeDisplay.getLocale());
+			null, "openGraphImage", infoItemFieldValues, layout,
+			themeDisplay.getLocale());
 
 		if (mappedImageObject instanceof WebImage) {
 			WebImage mappedWebImage = (WebImage)mappedImageObject;
@@ -214,8 +202,7 @@ public class OpenGraphImageProvider {
 					@Override
 					public Optional<String> getAltOptional() {
 						String openGraphImageAlt = _getImageAltTagValue(
-							infoDisplayObjectProvider,
-							infoItemFieldValuesProvider, layout, layoutSEOEntry,
+							infoItemFieldValues, layout, layoutSEOEntry,
 							themeDisplay.getLocale());
 
 						if (Validator.isNotNull(openGraphImageAlt)) {
@@ -259,13 +246,10 @@ public class OpenGraphImageProvider {
 
 	private String _getMappedStringValue(
 		String defaultFieldName, String fieldName,
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Layout layout, Locale locale) {
+		InfoItemFieldValues infoItemFieldValues, Layout layout, Locale locale) {
 
 		Object mappedValueObject = _getMappedValue(
-			defaultFieldName, fieldName, infoDisplayObjectProvider,
-			infoItemFieldValuesProvider, layout, locale);
+			defaultFieldName, fieldName, infoItemFieldValues, layout, locale);
 
 		if (mappedValueObject != null) {
 			return String.valueOf(mappedValueObject);
@@ -276,19 +260,14 @@ public class OpenGraphImageProvider {
 
 	private Object _getMappedValue(
 		String defaultFieldName, String fieldName,
-		InfoDisplayObjectProvider<Object> infoDisplayObjectProvider,
-		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider,
-		Layout layout, Locale locale) {
+		InfoItemFieldValues infoItemFieldValues, Layout layout, Locale locale) {
 
-		if ((infoDisplayObjectProvider == null) ||
-			(infoItemFieldValuesProvider == null)) {
-
+		if (infoItemFieldValues == null) {
 			return null;
 		}
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValuesProvider.getInfoItemFieldValue(
-				infoDisplayObjectProvider.getDisplayObject(),
+			infoItemFieldValues.getInfoFieldValue(
 				layout.getTypeSettingsProperty(
 					"mapped-" + fieldName, defaultFieldName));
 

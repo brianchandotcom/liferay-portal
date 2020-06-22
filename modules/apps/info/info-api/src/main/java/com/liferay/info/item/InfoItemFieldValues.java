@@ -53,7 +53,9 @@ public class InfoItemFieldValues {
 		return this;
 	}
 
-	public InfoItemFieldValues addAll(List<InfoFieldValue<Object>> infoFieldValues) {
+	public InfoItemFieldValues addAll(
+		List<InfoFieldValue<Object>> infoFieldValues) {
+
 		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 			add(infoFieldValue);
 		}

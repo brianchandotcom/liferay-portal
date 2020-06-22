@@ -21,13 +21,15 @@ JournalArticle article = (JournalArticle)request.getAttribute(JournalWebKeys.JOU
 String title = article.getTitle();
 String redirect = ParamUtil.getString(request, "redirect");
 
+JSONArray data = (JSONArray)request.getAttribute("data");
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(title);
 %>
 
-<aui:form name="translate_fm">
+<aui:form name="translate_fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
@@ -56,8 +58,28 @@ renderResponse.setTitle(title);
 	<clay:container-fluid
 		cssClass="container-view"
 	>
-		<clay:sheet>
-			<h1>Translation side by side</h1>
-		</clay:sheet>
+		<div class="bg-white p-4">
+			<%
+			for (int i = 0; i < data.length(); i++) {
+				JSONObject fieldJSONObject = data.getJSONObject(i);
+
+				String label = fieldJSONObject.getString("label");
+				String type = fieldJSONObject.getString("type");
+				String value = fieldJSONObject.getString("value");
+			%>
+				<clay:row>
+					<clay:col md="6">
+						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" type="<%= type %>" value="<%= value %>" />
+					</clay:col>
+
+					<clay:col md="6">
+						<aui:input label="<%= label %>" name="<%= label %>" type="<%= type %>" value="" />
+					</clay:col>
+				</clay:row>
+			<%
+			}
+			%>
+
+		</div>
 	</clay:container-fluid>
 </aui:form>

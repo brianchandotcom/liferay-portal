@@ -25,6 +25,7 @@ import {
 import {switchSidebarPanel} from '../actions/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {config} from '../config/index';
+import selectCanUpdateItemConfiguration from '../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
 import {useDispatch, useSelector} from '../store/index';
 import deleteItem from '../thunks/deleteItem';
@@ -74,17 +75,25 @@ TopperListItem.propTypes = {
 	expand: PropTypes.bool,
 };
 
-export default function ({children, ...props}) {
+export default function ({children, item, ...props}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-
-	return canUpdatePageStructure ? (
-		<Topper {...props}>{children}</Topper>
-	) : (
-		children
+	const canUpdateItemConfiguration = useSelector(
+		selectCanUpdateItemConfiguration
 	);
+
+	if (canUpdatePageStructure || canUpdateItemConfiguration) {
+		return (
+			<Topper item={item} {...props}>
+				{children}
+			</Topper>
+		);
+	}
+
+	return children;
 }
 
 function Topper({children, item, itemElement, layoutData}) {
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
 	const activeItemId = useActiveItemId();
@@ -115,10 +124,10 @@ function Topper({children, item, itemElement, layoutData}) {
 			)
 	);
 
-	const itemIsRemovable = useMemo(() => isRemovable(item, layoutData), [
-		item,
-		layoutData,
-	]);
+	const itemIsRemovable = useMemo(
+		() => canUpdatePageStructure && isRemovable(item, layoutData),
+		[canUpdatePageStructure, item, layoutData]
+	);
 
 	const commentsPanelId = config.sidebarPanels.comments.sidebarPanelId;
 
@@ -233,7 +242,7 @@ function Topper({children, item, itemElement, layoutData}) {
 
 				hoverItem(item.itemId);
 			}}
-			ref={handlerRef}
+			ref={canUpdatePageStructure ? handlerRef : null}
 		>
 			<div
 				className={classNames('page-editor__topper__bar', 'tbar', {
@@ -245,10 +254,12 @@ function Topper({children, item, itemElement, layoutData}) {
 			>
 				<ul className="tbar-nav">
 					<TopperListItem className="page-editor__topper__drag-handler">
-						<ClayIcon
-							className="page-editor__topper__drag-icon page-editor__topper__icon"
-							symbol="drag"
-						/>
+						{canUpdatePageStructure && (
+							<ClayIcon
+								className="page-editor__topper__drag-icon page-editor__topper__icon"
+								symbol="drag"
+							/>
+						)}
 					</TopperListItem>
 					<TopperListItem
 						className="page-editor__topper__title"

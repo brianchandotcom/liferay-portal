@@ -20,6 +20,8 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
+import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
+import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useDispatch, useSelector} from '../../store/index';
 import duplicateItem from '../../thunks/duplicateItem';
@@ -30,6 +32,10 @@ import FragmentContent from '../fragment-content/FragmentContent';
 
 const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const dispatch = useDispatch();
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const canUpdateItemConfiguration = useSelector(
+		selectCanUpdateItemConfiguration
+	);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const segmentsExperienceId = useSelector(
 		(state) => state.segmentsExperienceId
@@ -61,17 +67,22 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 	const floatingToolbarButtons = useMemo(() => {
 		const buttons = [];
 
-		const portletId = fragmentEntryLink.editableValues.portletId;
+		if (canUpdatePageStructure) {
+			const portletId = fragmentEntryLink.editableValues.portletId;
 
-		const widget = portletId && getWidget(widgets, portletId);
+			const widget = portletId && getWidget(widgets, portletId);
 
-		if (!widget || widget.instanceable) {
-			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem);
+			if (!widget || widget.instanceable) {
+				buttons.push(
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem
+				);
+			}
 		}
 
 		const configuration = fragmentEntryLink.configuration;
 
 		if (
+			canUpdateItemConfiguration &&
 			configuration &&
 			Array.isArray(configuration.fieldSets) &&
 			configuration.fieldSets.length
@@ -83,6 +94,8 @@ const FragmentWithControls = React.forwardRef(({item, layoutData}, ref) => {
 
 		return buttons;
 	}, [
+		canUpdateItemConfiguration,
+		canUpdatePageStructure,
 		fragmentEntryLink.configuration,
 		fragmentEntryLink.editableValues.portletId,
 		widgets,

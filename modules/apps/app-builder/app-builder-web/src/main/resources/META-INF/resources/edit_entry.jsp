@@ -34,7 +34,7 @@ List<Long> dataLayoutIds = (List<Long>)request.getAttribute(AppBuilderWebKeys.DA
 				lg="12"
 			>
 				<div class="card card-root mb-0 mt-4 shadowless-card">
-					<div class="card-body pt-0">
+					<div class="card-body px-0">
 						<aui:form>
 
 							<%

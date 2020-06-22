@@ -23,6 +23,8 @@ import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {PAGE_TYPES} from '../../../app/config/constants/pageTypes';
 import {config} from '../../../app/config/index';
+import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
+import selectCanUpdateItemConfiguration from '../../../app/selectors/selectCanUpdateItemConfiguration';
 import {useSelector} from '../../../app/store/index';
 import getLayoutDataItemLabel from '../../../app/utils/getLayoutDataItemLabel';
 import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
@@ -90,6 +92,8 @@ function isRemovable(item, layoutData) {
 function visit(item, items, {activeItemId, isMasterPage, state}) {
 	const children = [];
 	const {fragmentEntryLinks, layoutData, masterLayoutData} = state;
+	const canUpdateEditables = selectCanUpdateEditables(state);
+	const canUpdateItemConfiguration = selectCanUpdateItemConfiguration(state);
 
 	const itemInMasterLayout =
 		masterLayoutData &&
@@ -108,7 +112,7 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 			const childId = `${item.config.fragmentEntryLinkId}-${editableId}`;
 
 			children.push({
-				activable: true,
+				activable: canUpdateEditables,
 				children: [],
 				disabled: !isMasterPage && itemInMasterLayout,
 				expanded: childId === activeItemId,
@@ -164,13 +168,11 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 		});
 	}
 
-	const node = {
+	return {
 		activable:
-			layoutData.items[item.itemId] &&
-			layoutData.items[item.itemId].type !==
-				LAYOUT_DATA_ITEM_TYPES.column &&
-			layoutData.items[item.itemId].type !==
-				LAYOUT_DATA_ITEM_TYPES.collectionItem,
+			item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
+			item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
+			canUpdateItemConfiguration,
 		children,
 		disabled: !isMasterPage && itemInMasterLayout,
 		expanded: item.itemId === activeItemId,
@@ -179,6 +181,4 @@ function visit(item, items, {activeItemId, isMasterPage, state}) {
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),
 		type: ITEM_TYPES.layoutDataItem,
 	};
-
-	return node;
 }

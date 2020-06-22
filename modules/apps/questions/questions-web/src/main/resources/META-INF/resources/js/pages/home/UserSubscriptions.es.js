@@ -15,6 +15,7 @@
 import {useMutation, useQuery} from '@apollo/client';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 
@@ -78,65 +79,91 @@ export default withRouter(({history}) => {
 
 	function Topics() {
 		return (
-			<div className="row">
+			<>
 				{topics &&
 					topics.myUserAccountSubscriptions.items &&
-					topics.myUserAccountSubscriptions.items.map((data) => (
-						<div
-							className="col-lg-4 question-tags"
-							key={data.graphQLNode.id}
-						>
-							<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
-								<div className="card-body">
-									<div className="card-row">
-										<div
-											className="autofit-col autofit-col-expand"
-											onClick={() => navigate(data)}
-										>
-											<div className="autofit-section">
-												<div className="card-title">
-													<span className="text-truncate-inline">
-														{data.graphQLNode.title}
-													</span>
+					!topics.myUserAccountSubscriptions.items.length && (
+						<ClayEmptyState
+							description={Liferay.Language.get(
+								'there-are-no-results'
+							)}
+							title={Liferay.Language.get('there-are-no-results')}
+						/>
+					)}
+				<div className="row">
+					{topics &&
+						topics.myUserAccountSubscriptions.items &&
+						topics.myUserAccountSubscriptions.items.map((data) => (
+							<div
+								className="col-lg-4 question-tags"
+								key={data.graphQLNode.id}
+							>
+								<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
+									<div className="card-body">
+										<div className="card-row">
+											<div
+												className="autofit-col autofit-col-expand"
+												onClick={() => navigate(data)}
+											>
+												<div className="autofit-section">
+													<div className="card-title">
+														<span className="text-truncate-inline">
+															{
+																data.graphQLNode
+																	.title
+															}
+														</span>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div className="autofit-col">
-											<ClayDropDownWithItems
-												items={[
-													{
-														label: 'Unsubscribe',
-														onClick: () => {
-															unsubscribe({
-																variables: {
-																	subscriptionId:
-																		data.id,
-																},
-															});
+											<div className="autofit-col">
+												<ClayDropDownWithItems
+													items={[
+														{
+															label:
+																'Unsubscribe',
+															onClick: () => {
+																unsubscribe({
+																	variables: {
+																		subscriptionId:
+																			data.id,
+																	},
+																});
+															},
 														},
-													},
-												]}
-												trigger={
-													<ClayButtonWithIcon
-														displayType="unstyled"
-														small
-														symbol="ellipsis-v"
-													/>
-												}
-											/>
+													]}
+													trigger={
+														<ClayButtonWithIcon
+															displayType="unstyled"
+															small
+															symbol="ellipsis-v"
+														/>
+													}
+												/>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					))}
-			</div>
+						))}
+				</div>
+			</>
 		);
 	}
 
 	function Questions() {
 		return (
 			<div>
+				{threads &&
+					threads.myUserAccountSubscriptions.items &&
+					!threads.myUserAccountSubscriptions.items.length && (
+						<ClayEmptyState
+							description={Liferay.Language.get(
+								'there-are-no-results'
+							)}
+							title={Liferay.Language.get('there-are-no-results')}
+						/>
+					)}
 				{threads &&
 					threads.myUserAccountSubscriptions.items &&
 					threads.myUserAccountSubscriptions.items.map((data) => (

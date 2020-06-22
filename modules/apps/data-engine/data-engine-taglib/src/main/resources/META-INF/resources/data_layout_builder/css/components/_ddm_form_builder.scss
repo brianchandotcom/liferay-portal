@@ -1,15 +1,16 @@
 $baseline: 24px;
 
 .ddm-form-builder {
+	padding-right: $sidebarMainWidth + $sidebarMiniWidth;
 	transition: padding ease 0.5s;
-
-	&--sidebar-open {
-		padding-right: $sidebarMainWidth + $sidebarMiniWidth;
-	}
 }
 
 .data-engine-form-builder {
 	> .sheet {
+		margin-bottom: 0 !important;
+		margin-left: auto !important;
+		margin-right: auto !important;
+		margin-top: 24px !important;
 		max-width: 808px;
 		padding: 0;
 	}

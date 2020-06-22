@@ -1255,7 +1255,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		BundleContext bundleContext = _framework.getBundleContext();
 
 		Class<?> configInstallerClass = classLoader.loadClass(
-			"org.apache.felix.fileinstall.internal.ConfigInstaller");
+			"com.liferay.portal.file.install.internal.ConfigInstaller");
 
 		Method method = configInstallerClass.getDeclaredMethod(
 			"install", File.class);
@@ -1265,7 +1265,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				BundleContext.class,
 				classLoader.loadClass("org.osgi.service.cm.ConfigurationAdmin"),
 				classLoader.loadClass(
-					"org.apache.felix.fileinstall.internal.FileInstall"));
+					"com.liferay.portal.file.install.internal." +
+						"FileInstallImplBundleActivator"));
 
 		constructor.setAccessible(true);
 
@@ -1768,7 +1769,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (!_isFragmentBundle(bundle)) {
 				if (Objects.equals(
 						bundle.getSymbolicName(),
-						"org.apache.felix.fileinstall")) {
+						"com.liferay.portal.file.install.impl")) {
 
 					fileInstallBundle = bundle;
 				}

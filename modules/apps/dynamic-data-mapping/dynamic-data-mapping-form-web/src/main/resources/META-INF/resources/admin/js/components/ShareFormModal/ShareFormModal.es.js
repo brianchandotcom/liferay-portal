@@ -21,7 +21,6 @@ import dom from 'metal-dom';
 import {EventHandler} from 'metal-events';
 import Component, {Config} from 'metal-jsx';
 
-import Notifications from '../../util/Notifications.es';
 import Email from './Email.es';
 import Link from './Link.es';
 
@@ -126,6 +125,22 @@ class ShareFormModal extends Component {
 		);
 	}
 
+	showNotification(message, error) {
+		const parentOpenToast = Liferay.Util.getOpener().Liferay.Util.openToast;
+
+		const openToastParams = {message};
+
+		if (error) {
+			openToastParams.title = Liferay.Language.get('error-colon');
+			openToastParams.type = 'danger';
+		}
+		else {
+			openToastParams.title = Liferay.Language.get('success-colon');
+		}
+
+		parentOpenToast(openToastParams);
+	}
+
 	submitEmailContent() {
 		const {portletNamespace, shareFormInstanceURL} = this.props;
 		const {emailContent} = this.refs.shareFormModalRef.refs.emailRef.state;
@@ -150,8 +165,8 @@ class ShareFormModal extends Component {
 		})
 			.then((response) => {
 				return response.successMessage
-					? Notifications.showAlert(response.successMessage)
-					: Notifications.showError(response.errorMessage);
+					? this.showNotification(response.successMessage)
+					: this.showNotification(response.errorMessage, true);
 			})
 			.catch((error) => {
 				throw new Error(error);

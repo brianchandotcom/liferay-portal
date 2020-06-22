@@ -1790,13 +1790,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 			graphQLFields.add(new GraphQLField("siteId"));
 		</#if>
 
-		for (Field field : ReflectionUtil.getDeclaredFields(${freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)}.class)) {
-			if (!ArrayUtil.contains(getAdditionalAssertFieldNames(), field.getName())){
-				continue;
-			}
+		<#if freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)??>
+			for (Field field : ReflectionUtil.getDeclaredFields(${freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)}.class)) {
+				if (!ArrayUtil.contains(getAdditionalAssertFieldNames(), field.getName())){
+					continue;
+				}
 
-			graphQLFields.addAll(getGraphQLFields(field));
-		}
+				graphQLFields.addAll(getGraphQLFields(field));
+			}
+		</#if>
 
 		return graphQLFields;
 	}

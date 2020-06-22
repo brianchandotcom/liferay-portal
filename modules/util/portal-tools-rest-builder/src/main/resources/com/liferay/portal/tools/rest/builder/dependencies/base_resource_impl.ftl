@@ -87,8 +87,10 @@ import javax.ws.rs.core.UriInfo;
 @Path("/${openAPIYAML.info.version}")
 public abstract class Base${schemaName}ResourceImpl
 	implements ${schemaName}Resource
-
-	<#if configYAML.generateBatch>
+	<#assign
+		generateBatch = configYAML.generateBatch && freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)??
+	/>
+	<#if generateBatch>
 		, EntityModelResource, VulcanBatchEngineTaskItemDelegate<${schemaName}>
 	</#if>
 
@@ -131,7 +133,7 @@ public abstract class Base${schemaName}ResourceImpl
 		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, openAPIYAML, javaMethodSignature.operation, true)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
-			<#elseif configYAML.generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
+			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
 				vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
 				vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
 				vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
@@ -143,7 +145,7 @@ public abstract class Base${schemaName}ResourceImpl
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.deleteImportTask(${schemaName}.class.getName(), callbackURL, object)
 				).build();
-			<#elseif configYAML.generateBatch && stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "Batch")>
+			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName + "Batch")>
 				vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
 				vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
 				vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
@@ -155,7 +157,7 @@ public abstract class Base${schemaName}ResourceImpl
 				return responseBuilder.entity(
 					vulcanBatchEngineImportTaskResource.postImportTask(${schemaName}.class.getName(), callbackURL, null, object)
 				).build();
-			<#elseif configYAML.generateBatch && stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Batch")>
+			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "Batch")>
 				vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(contextAcceptLanguage);
 				vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
 				vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(contextHttpServletRequest);
@@ -253,7 +255,7 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 	</#list>
 
-	<#if configYAML.generateBatch>
+	<#if generateBatch>
 		@Override
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		public void create(java.util.Collection<${schemaName}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
@@ -282,7 +284,9 @@ public abstract class Base${schemaName}ResourceImpl
 
 		@Override
 		public void delete(java.util.Collection<${schemaName}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
-			<#if deleteBatchJavaMethodSignature??>
+			<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema) />
+
+			<#if deleteBatchJavaMethodSignature?? && properties?keys?seq_contains('id')??>
 				for (${schemaName} ${schemaVarName} : ${schemaVarNames}) {
 					delete${schemaName}(${schemaVarName}.getId());
 				}
@@ -480,7 +484,7 @@ public abstract class Base${schemaName}ResourceImpl
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 	protected RoleLocalService roleLocalService;
 
-	<#if configYAML.generateBatch>
+	<#if generateBatch>
 		protected VulcanBatchEngineImportTaskResource vulcanBatchEngineImportTaskResource;
 	</#if>
 

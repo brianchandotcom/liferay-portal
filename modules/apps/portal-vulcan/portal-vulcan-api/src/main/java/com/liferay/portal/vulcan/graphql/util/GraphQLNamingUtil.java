@@ -43,7 +43,8 @@ public class GraphQLNamingUtil {
 
 		if (returnType.contains("Collection<") ||
 			(returnType.contains("Page<") &&
-			 (methodName.lastIndexOf("Page") != -1))) {
+			 (methodName.lastIndexOf("Page") != -1) &&
+			 methodName.contains("Page"))) {
 
 			methodName = methodName.substring(
 				0, methodName.lastIndexOf("Page"));

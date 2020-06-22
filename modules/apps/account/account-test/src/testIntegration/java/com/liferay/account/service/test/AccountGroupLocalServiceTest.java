@@ -175,6 +175,9 @@ public class AccountGroupLocalServiceTest {
 				OrderByComparatorFactoryUtil.create(
 					"AccountGroup", "name", !reversed));
 
+		Assert.assertEquals(
+			expectedAccountGroups.size(), baseModelSearchResult.getLength());
+
 		List<AccountGroup> actualAccountGroups =
 			baseModelSearchResult.getBaseModels();
 

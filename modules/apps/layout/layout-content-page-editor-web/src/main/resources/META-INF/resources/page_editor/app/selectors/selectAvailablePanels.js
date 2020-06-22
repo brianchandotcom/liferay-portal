@@ -12,7 +12,7 @@
  * details.
  */
 
-export const AVAILABLE_PANELS = ['comments', 'contents'];
+export const CONTENT_CHANGE_PANELS = ['comments', 'contents'];
 
 /**
  * @param {Array<Array<string>>} panels
@@ -27,7 +27,7 @@ export default function selectAvailablePanels(panels) {
 			return panels
 				.map((group) =>
 					group.filter((panelId) =>
-						AVAILABLE_PANELS.includes(panelId)
+						CONTENT_CHANGE_PANELS.includes(panelId)
 					)
 				)
 				.filter((group) => group.length);

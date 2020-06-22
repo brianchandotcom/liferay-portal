@@ -12,7 +12,7 @@
  * details.
  */
 
-import {AVAILABLE_PANELS} from './selectAvailablePanels';
+import {CONTENT_CHANGE_PANELS} from './selectAvailablePanels';
 
 /**
  * @param {{ [panelId: string]: object }} sidebarPanels
@@ -26,7 +26,7 @@ export default function selectAvailableSidebarPanels(sidebarPanels) {
 		if (permissions.LOCKED_SEGMENTS_EXPERIMENT || !permissions.UPDATE) {
 			const availableSidebarPanels = {};
 
-			AVAILABLE_PANELS.forEach((panelId) => {
+			CONTENT_CHANGE_PANELS.forEach((panelId) => {
 				availableSidebarPanels[panelId] = sidebarPanels[panelId];
 			});
 

@@ -174,7 +174,8 @@ definition {
 
 	macro viewSubscribedPG {
 		AssertTextEquals(
-			locator1 = "Button#UNSUBSCRIBE",
+			key_text = "Unsubscribe",
+			locator1 = "Button#ANY",
 			value1 = "Unsubscribe");
 	}
 

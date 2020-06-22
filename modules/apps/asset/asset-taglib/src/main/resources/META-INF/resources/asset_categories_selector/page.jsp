@@ -38,10 +38,6 @@ List<Map<String, Object>> vocabularies = (List<Map<String, Object>>)data.get("vo
 						<label>
 							<%= vocabulary.get("title") %>
 
-							<c:if test='<%= Validator.isNotNull(vocabulary.get("group")) %>'>
-								<%= StringPool.BLANK + "(" + vocabulary.get("group") + ")" %>
-							</c:if>
-
 							<%
 							boolean required = GetterUtil.getBoolean(vocabulary.get("required"));
 							%>

@@ -25,11 +25,9 @@ import com.liferay.asset.taglib.internal.util.AssetVocabularyUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -310,25 +308,6 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 
 			Map<String, Object> vocabularyMap =
 				HashMapBuilder.<String, Object>put(
-					"group",
-					() -> {
-						String vocabularyGroupName = StringPool.BLANK;
-
-						if (vocabulary.getGroupId() !=
-								themeDisplay.getSiteGroupId()) {
-
-							Group vocabularyGroup =
-								GroupLocalServiceUtil.getGroup(
-									vocabulary.getGroupId());
-
-							vocabularyGroupName =
-								vocabularyGroup.getDescriptiveName(
-									themeDisplay.getLocale());
-						}
-
-						return vocabularyGroupName;
-					}
-				).put(
 					"id", vocabulary.getVocabularyId()
 				).put(
 					"required",
@@ -338,7 +317,10 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 				).put(
 					"selectedCategories", selectedCategoryIds
 				).put(
-					"title", vocabulary.getTitle(themeDisplay.getLocale())
+					"title",
+					vocabulary.getUnambiguousTitle(
+						vocabularies, themeDisplay.getScopeGroupId(),
+						themeDisplay.getLocale())
 				).build();
 
 			if (Validator.isNotNull(selectedCategoryIds)) {

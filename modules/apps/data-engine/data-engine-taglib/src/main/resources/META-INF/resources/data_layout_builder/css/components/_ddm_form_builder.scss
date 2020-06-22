@@ -10,11 +10,14 @@ $baseline: 24px;
 
 .data-engine-form-builder {
 	> .sheet {
-		margin-top: 0;
+		max-width: 808px;
 		padding: 0;
 	}
 
 	.container.ddm-form-builder {
+		margin-left: 0;
+		margin-right: 0;
+		max-width: 808px;
 		padding: 0;
 	}
 

@@ -63,10 +63,10 @@ export default function () {
 	};
 
 	useEffect(() => {
-		if (activePage > fieldSettingsContext.pages.length - 1) {
+		if (activePage > filteredSettingsContext.pages.length - 1) {
 			setActivePage(0);
 		}
-	}, [fieldSettingsContext, activePage, setActivePage]);
+	}, [filteredSettingsContext, activePage, setActivePage]);
 
 	return (
 		<form onSubmit={(event) => event.preventDefault()}>

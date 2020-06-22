@@ -22,7 +22,7 @@ import {prettifyFilterValue} from '../../../utilities/dates';
 import {renderFilter} from '../../../utilities/filters';
 import getAppContext from '../Context';
 
-function Resume(props) {
+function ResumeFilter(props) {
 	const {actions} = getAppContext();
 	const [open, setOpen] = useState(false);
 
@@ -70,4 +70,4 @@ function Resume(props) {
 	return props.disabled ? label : dropDown;
 }
 
-export default Resume;
+export default ResumeFilter;

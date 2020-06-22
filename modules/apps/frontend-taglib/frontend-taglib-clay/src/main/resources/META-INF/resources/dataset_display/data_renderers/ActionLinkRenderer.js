@@ -37,11 +37,23 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		return null;
 	}
 
-	const currentAction = options?.actionId
+	let currentAction = options?.actionId
 		? actions.find((action) => action.id === options.actionId)
 		: actions[0];
 
 	if (!currentAction) {
+		return null;
+	}
+
+	if (currentAction.id && !currentAction.href && itemData.actions) {
+		if (itemData.actions[currentAction.id]) {
+			currentAction = {
+				...currentAction,
+				...itemData.actions[currentAction.id],
+				target: 'async',
+			};
+		}
+
 		return null;
 	}
 

@@ -237,7 +237,7 @@ QuantitySelector.propTypes = {
 	multipleQuantity: PropTypes.number,
 	prependedIcon: PropTypes.string,
 	prependedText: PropTypes.string,
-	quantity: PropTypes.number.isRequired,
+	quantity: PropTypes.number,
 	size: PropTypes.oneOf(['large', 'medium', 'small']),
 	style: PropTypes.oneOf(['default', 'simple']),
 	updateQuantity: PropTypes.func,

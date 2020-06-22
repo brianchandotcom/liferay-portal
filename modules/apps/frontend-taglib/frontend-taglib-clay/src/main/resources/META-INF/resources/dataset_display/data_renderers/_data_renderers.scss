@@ -1,0 +1,31 @@
+.status {
+	background-color: #fff;
+	border-color: $info-secondary;
+	color: $info-primary;
+
+	&.awaiting-pickup,
+	&.in-progress,
+	&.partially-refunded,
+	&.partially-shipped,
+	&.pending,
+	&.processing,
+	&.on-hold,
+	&.shipped {
+		border-color: $warning-secondary;
+		color: $warning-primary;
+	}
+
+	&.disputed,
+	&.cancelled,
+	&.declined {
+		border-color: $danger-secondary;
+		color: $danger-primary;
+	}
+
+	&.refunded,
+	&.subscription,
+	&.completed {
+		border-color: $success-secondary;
+		color: $success-primary;
+	}
+}

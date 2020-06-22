@@ -18,17 +18,17 @@
 
 <%
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
-boolean setCustomName = GetterUtil.getBoolean(request.getAttribute(SiteNavigationMenuItemTypeLayoutWebKeys.SET_CUSTOM_NAME));
+boolean customName = GetterUtil.getBoolean(request.getAttribute(SiteNavigationMenuItemTypeLayoutWebKeys.CUSTOM_NAME));
 SiteNavigationMenuItem siteNavigationMenuItem = (SiteNavigationMenuItem)request.getAttribute(SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM);
 
 String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletResponse.getNamespace() + "nameBoundingBox input, [for=" + liferayPortletResponse.getNamespace() + "name]', !event.target.checked)";
 %>
 
 <aui:fieldset>
-	<aui:input checked="<%= setCustomName %>" helpMessage="set-custom-name-help" label="set-custom-name" name="TypeSettingsProperties--setCustomName--" onChange="<%= taglibOnChange %>" type="checkbox" />
+	<aui:input checked="<%= customName %>" helpMessage="set-custom-name-help" label="set-custom-name" name="TypeSettingsProperties--customName--" onChange="<%= taglibOnChange %>" type="checkbox" />
 </aui:fieldset>
 
-<aui:input autoFocus="<%= true %>" disabled="<%= !setCustomName %>" label="name" localized="<%= true %>" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="name" placeholder="name" type="text" value='<%= SiteNavigationMenuItemUtil.getSiteNavigationMenuItemXML(siteNavigationMenuItem, "name") %>'>
+<aui:input autoFocus="<%= true %>" disabled="<%= !customName %>" label="name" localized="<%= true %>" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="name" placeholder="name" type="text" value='<%= SiteNavigationMenuItemUtil.getSiteNavigationMenuItemXML(siteNavigationMenuItem, "name") %>'>
 	<aui:validator name="required" />
 </aui:input>
 

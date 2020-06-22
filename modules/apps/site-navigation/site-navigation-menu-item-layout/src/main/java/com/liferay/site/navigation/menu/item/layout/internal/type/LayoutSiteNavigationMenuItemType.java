@@ -435,7 +435,7 @@ public class LayoutSiteNavigationMenuItemType
 			_itemSelector);
 
 		httpServletRequest.setAttribute(
-			SiteNavigationMenuItemTypeLayoutWebKeys.SET_CUSTOM_NAME,
+			SiteNavigationMenuItemTypeLayoutWebKeys.CUSTOM_NAME,
 			_isUseCustomName(siteNavigationMenuItem));
 		httpServletRequest.setAttribute(
 			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
@@ -522,7 +522,7 @@ public class LayoutSiteNavigationMenuItemType
 			siteNavigationMenuItem.getTypeSettings());
 
 		return GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.get("setCustomName"));
+			typeSettingsUnicodeProperties.get("customName"));
 	}
 
 	@Reference

@@ -328,7 +328,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			}
 
 			unicodeProperties.setProperty(
-				"setCustomName",
+				"customName",
 				String.valueOf(navigationMenuItem.getCustomName()));
 
 			unicodeProperties.setProperty(
@@ -482,7 +482,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 						return Boolean.valueOf(
 							unicodeProperties.getProperty(
-								"setCustomName", "false"));
+								"customName", "false"));
 					});
 				setLink(
 					() -> {

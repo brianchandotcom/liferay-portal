@@ -529,6 +529,83 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-112030. Can return to a give saved interactions via Undo History list in Staging site."
+	@priority = "3"
+	test RestoreSavedInteractionsViaUndoHistoryInStagingSite {
+		JSONLayout.addPublicLayout(
+			groupName = "Test Site Name-staging",
+			layoutName = "Test Content Page Name 2",
+			site = "false",
+			type = "content");
+
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name 2",
+			siteName = "Test Site Name Staging");
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Container");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "Basic Components",
+			key_fragmentName = "Heading",
+			key_position = "1",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+			locator2 = "PageEditor#CONTAINER_CONTAINER",
+			value1 = "");
+
+		PageEditor.editFragmentText(
+			fragmentName = "Heading",
+			id = "element-text",
+			text = "New editable fragment text");
+
+		PageEditor.editLayoutContainer(backgroundColor = "success");
+
+		PageEditor.removeFragment(fragmentName = "Container");
+
+		Click(locator1 = "PageEditor#UNDO_HISTORY");
+
+		for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {
+			MenuItem.viewVisible(menuItem = "${menuItem}");
+		}
+
+		MenuItem.click(menuItem = "Add Container");
+
+		PageEditor.viewFragment(fragmentName = "Container");
+
+		for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {
+			MenuItem.viewVisible(menuItem = "${menuItem}");
+		}
+
+		MenuItem.click(menuItem = "Add Heading");
+
+		AssertElementPresent(
+			key_elementHeader = "//div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Heading')]//li[contains(@class,'title')]",
+			key_position = "1",
+			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+		MenuItem.click(menuItem = "Update Heading Editable Values");
+
+		AssertTextEquals(
+			key_fragmentName = "heading",
+			locator1 = "Fragment#FRAGMENT_BASIC_COMPONENT",
+			value1 = "New editable fragment text");
+
+		for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {
+			MenuItem.viewVisible(menuItem = "${menuItem}");
+		}
+
+		MenuItem.click(menuItem = "Update Container Configuration");
+
+		PageEditor.viewContainerStyle(
+			backgroundColor = "success",
+			position = "1");
+
+		for (var menuItem : list "Add Container,Add Heading,Update Heading Editable Values,Update Container Configuration") {
+			MenuItem.viewVisible(menuItem = "${menuItem}");
+		}
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments back in Staging site."
 	@priority = "3"
 	test UndoDeletedFragmentInStagingSite {

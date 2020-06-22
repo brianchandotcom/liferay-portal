@@ -124,8 +124,8 @@ public class InfoDisplayContributorTrackerImpl
 					try {
 						InfoDisplayContributorWrapper
 							infoDisplayContributorWrapper =
-							new InfoDisplayContributorWrapper(
-								infoDisplayContributor);
+								new InfoDisplayContributorWrapper(
+									infoDisplayContributor);
 
 						return (ServiceRegistration<InfoDisplayContributor<?>>)
 							bundleContext.registerService(

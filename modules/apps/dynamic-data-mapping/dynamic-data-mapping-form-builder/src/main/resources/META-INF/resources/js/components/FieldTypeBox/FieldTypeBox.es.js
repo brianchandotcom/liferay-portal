@@ -12,6 +12,8 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
+
 const FieldTypeBox = ({fieldType, spritemap}) => {
 	const {description, icon, label, name} = fieldType;
 
@@ -22,7 +24,7 @@ const FieldTypeBox = ({fieldType, spritemap}) => {
 			key={`fieldType_${name}`}
 			ref={`fieldType_${name}`}
 		>
-			<div class="autofit-col">
+			<ClayLayout.ContentCol>
 				<span class="sticker sticker-secondary">
 					<span class="inline-item">
 						<svg
@@ -33,8 +35,8 @@ const FieldTypeBox = ({fieldType, spritemap}) => {
 						</svg>
 					</span>
 				</span>
-			</div>
-			<div class="autofit-col autofit-col-expand">
+			</ClayLayout.ContentCol>
+			<ClayLayout.ContentCol expand>
 				<h4 class="list-group-title text-truncate">
 					<span>{label}</span>
 				</h4>
@@ -43,7 +45,7 @@ const FieldTypeBox = ({fieldType, spritemap}) => {
 						{description}
 					</p>
 				)}
-			</div>
+			</ClayLayout.ContentCol>
 		</div>
 	);
 };

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import {makeFetch} from 'dynamic-data-mapping-form-renderer/js/util/fetch.es';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
@@ -49,7 +50,7 @@ class RuleBuilder extends Component {
 		const {dataProvider, index, mode, roles, rules} = this.state;
 
 		return (
-			<div class="container">
+			<ClayLayout.Container>
 				{mode === 'create' && (
 					<RuleEditor
 						actions={[]}
@@ -112,7 +113,7 @@ class RuleBuilder extends Component {
 						spritemap={spritemap}
 					/>
 				)}
-			</div>
+			</ClayLayout.Container>
 		);
 	}
 

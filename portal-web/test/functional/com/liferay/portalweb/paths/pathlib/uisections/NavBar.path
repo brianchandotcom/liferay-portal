@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ASSET_LIBRARIES</td>
-	<td>//*[contains(@class,'nav-link')]/span[contains(.,'Asset Libraries')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'Asset Libraries')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>MY_SITES</td>
-	<td>//*[contains(@class,'nav-link')]/span[contains(.,'My Sites')]</td>
+	<td>//*[contains(@class,'nav-link') and contains(.,'My Sites')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>RECENT</td>
-	<td>//a[contains(@class,'navbar-toggler') and contains(.,'Recent')]</td>
+	<td>//button[contains(@class,'navbar-toggler')]/span[contains(.,'Recent')]</td>
 	<td></td>
 </tr>
 <tr>

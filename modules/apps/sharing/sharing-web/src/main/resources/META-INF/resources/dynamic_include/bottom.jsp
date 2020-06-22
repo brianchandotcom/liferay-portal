@@ -44,48 +44,36 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 		});
 	}
 
-	var Sharing = {};
+	Liferay.Sharing = Liferay.Sharing || {};
 
-	Liferay.provide(
-		Sharing,
-		'share',
-		function (classNameId, classPK, title) {
-			var sharingParameters = {
-				classNameId: classNameId,
-				classPK: classPK,
-			};
+	Liferay.Sharing.share = function (classNameId, classPK, title) {
+		var sharingParameters = {
+			classNameId: classNameId,
+			classPK: classPK,
+		};
 
-			var sharingURL = Liferay.Util.PortletURL.createPortletURL(
-				'<%= sharingURL.toString() %>',
-				sharingParameters
-			);
+		var sharingURL = Liferay.Util.PortletURL.createPortletURL(
+			'<%= sharingURL.toString() %>',
+			sharingParameters
+		);
 
-			showDialog(sharingURL.toString(), title);
-		},
-		[]
-	);
+		showDialog(sharingURL.toString(), title);
+	};
 
-	Liferay.provide(
-		Sharing,
-		'manageCollaborators',
-		function (classNameId, classPK) {
-			var manageCollaboratorsParameters = {
-				classNameId: classNameId,
-				classPK: classPK,
-			};
+	Liferay.Sharing.manageCollaborators = function (classNameId, classPK) {
+		var manageCollaboratorsParameters = {
+			classNameId: classNameId,
+			classPK: classPK,
+		};
 
-			var manageCollaboratorsURL = Liferay.Util.PortletURL.createPortletURL(
-				'<%= manageCollaboratorsURL.toString() %>',
-				manageCollaboratorsParameters
-			);
+		var manageCollaboratorsURL = Liferay.Util.PortletURL.createPortletURL(
+			'<%= manageCollaboratorsURL.toString() %>',
+			manageCollaboratorsParameters
+		);
 
-			showDialog(
-				manageCollaboratorsURL.toString(),
-				'<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
-			);
-		},
-		[]
-	);
-
-	Liferay.Sharing = Sharing;
+		showDialog(
+			manageCollaboratorsURL.toString(),
+			'<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
+		);
+	};
 </aui:script>

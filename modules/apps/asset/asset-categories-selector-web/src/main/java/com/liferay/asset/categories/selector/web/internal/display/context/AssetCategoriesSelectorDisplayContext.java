@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -44,6 +45,7 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -137,6 +139,20 @@ public class AssetCategoriesSelectorDisplayContext {
 		);
 
 		return JSONUtil.put(jsonObject);
+	}
+
+	public Map<String, Object> getData() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"addCategoryURL", getAddCategoryURL()
+		).put(
+			"itemSelectorSaveEvent", HtmlUtil.escapeJS(getEventName())
+		).put(
+			"multiSelection", !isSingleSelect()
+		).put(
+			"namespace", _renderResponse.getNamespace()
+		).put(
+			"nodes", getCategoriesJSONArray()
+		).build();
 	}
 
 	public String getEventName() {

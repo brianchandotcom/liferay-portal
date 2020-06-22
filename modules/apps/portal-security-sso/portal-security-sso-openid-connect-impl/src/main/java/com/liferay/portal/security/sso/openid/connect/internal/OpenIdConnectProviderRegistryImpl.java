@@ -292,7 +292,7 @@ public class OpenIdConnectProviderRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectProviderRegistryImpl.class);
 
-	private Map
+	private final Map
 		<Long,
 		 Map
 			 <String,

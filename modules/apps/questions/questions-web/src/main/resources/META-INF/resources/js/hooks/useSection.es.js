@@ -21,7 +21,7 @@ export default function useSection(sectionTitle, siteKey) {
 
 	useEffect(() => {
 		getSections(sectionTitle, siteKey).then(setSection);
-	}, [sectionTitle, siteKey])
+	}, [sectionTitle, siteKey]);
 
 	return section;
 }

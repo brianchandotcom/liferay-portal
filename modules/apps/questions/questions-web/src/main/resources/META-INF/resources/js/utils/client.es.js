@@ -12,7 +12,7 @@
  * details.
  */
 
-import {ApolloClient, gql, HttpLink, InMemoryCache} from '@apollo/client';
+import {ApolloClient, HttpLink, InMemoryCache, gql} from '@apollo/client';
 import {fetch} from 'frontend-js-web';
 
 const HEADERS = {
@@ -417,16 +417,17 @@ export const getThreads = (
 		.then((result) => ({...result, data: result.data.messageBoardThreads}));
 };
 
-export const getSections = (sectionTitle, siteKey) => {
-	client.query({
+export const getSections = (sectionTitle, siteKey) =>
+	client
+		.query({
 			query: getSectionQuery,
 			variables: {
 				filter: `title eq '${sectionTitle}' or id eq '${sectionTitle}'`,
 				siteKey,
-			}
-		}
-	).then(data => data.messageBoardSections.items[0]
-	).then((section) => {
+			},
+		})
+		.then(({data}) => data.messageBoardSections.items[0])
+		.then((section) => {
 			if (section.parentMessageBoardSectionId) {
 				return Promise.all([
 					section,
@@ -444,11 +445,10 @@ export const getSections = (sectionTitle, siteKey) => {
 			}
 
 			return [section, section];
-		}
-	).then(data => {
-		return {...(data[0]), parentMessageBoardSection: data[1]};
-	});
-}
+		})
+		.then((data) => {
+			return {...data[0], parentMessageBoardSection: data[1]};
+		});
 
 export const getThreadsQuery = gql`
 	query messageBoardThreads(

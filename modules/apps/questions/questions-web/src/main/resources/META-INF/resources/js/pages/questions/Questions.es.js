@@ -12,20 +12,49 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayInput, ClaySelect} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayResultsBar} from '@clayui/management-toolbar';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
+import Breadcrumb from '../../components/Breadcrumb.es';
 import Error from '../../components/Error.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
+import SectionSubscription from '../../components/SectionSubscription.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
-import {getQuestionThreads} from '../../utils/client.es';
+import {getQuestionThreads, getSections} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {historyPushWithSlug, slugToText} from '../../utils/utils.es';
-import QuestionsNavigationBar from '../QuestionsNavigationBar.es';
+import {
+	historyPushWithSlug,
+	slugToText,
+	useDebounceCallback,
+} from '../../utils/utils.es';
+
+function getFilterOptions() {
+	return [
+		{
+			label: Liferay.Language.get('latest-created'),
+			value: 'latest-created',
+		},
+		{
+			label: Liferay.Language.get('latest-edited'),
+			value: 'latest-edited',
+		},
+		{
+			label: Liferay.Language.get('voted-in-the-last-week'),
+			value: 'week',
+		},
+		{
+			label: Liferay.Language.get('voted-in-the-last-month'),
+			value: 'month',
+		},
+	];
+}
 
 export default withRouter(
 	({
@@ -43,7 +72,6 @@ export default withRouter(
 		const [pageSize, setPageSize] = useState(20);
 		const [questions, setQuestions] = useState([]);
 		const [search, setSearch] = useState('');
-		const [searchCallback, setSearchCallback] = useState();
 		const [section, setSection] = useState({});
 
 		const queryParams = useQueryParams(location);
@@ -89,9 +117,6 @@ export default withRouter(
 				.then(({data, loading}) => {
 					setQuestions(data || []);
 					setLoading(loading);
-					if (searchCallback) {
-						searchCallback(false);
-					}
 				})
 				.catch((error) => {
 					if (process.env.NODE_ENV === 'development') {
@@ -101,7 +126,6 @@ export default withRouter(
 					setError({message: 'Loading Questions', title: 'Error'});
 				});
 		}, [
-			searchCallback,
 			creatorId,
 			currentTag,
 			filter,
@@ -111,15 +135,6 @@ export default withRouter(
 			section,
 			siteKey,
 		]);
-
-		const loadSearch = (search, searchCallback) => {
-			historyPushParser(
-				`/questions/${sectionTitle}${
-					search && search !== '' ? '?search=' + search : ''
-				}`
-			);
-			setSearchCallback(() => searchCallback);
-		};
 
 		const changePage = (page, pageSize) => {
 			historyPushParser(
@@ -131,18 +146,47 @@ export default withRouter(
 			);
 		};
 
-		const sectionChange = useCallback((section) => setSection(section), []);
+		const [debounceCallback] = useDebounceCallback((value) => {
+			setLoading(true);
+			historyPushParser(
+				`/questions/${sectionTitle}${
+					value && value !== '' ? '?search=' + value : ''
+				}`
+			);
+		}, 500);
+
+		useEffect(() => {
+			getSections(slugToText(sectionTitle), context.siteKey).then(
+				setSection
+			);
+		}, [sectionTitle, context.siteKey]);
+
+		const filterOptions = getFilterOptions();
+
+		const navigateToNewQuestion = () => {
+			if (context.redirectToLogin && !themeDisplay.isSignedIn()) {
+				const baseURL = window.location.href.substring(
+					window.location.origin.length,
+					window.location.href.indexOf('#')
+				);
+
+				window.location.replace(
+					`/c/portal/login?redirect=${baseURL}#/questions/${sectionTitle}/new`
+				);
+			}
+			else {
+				historyPushParser(`/questions/${sectionTitle}/new`);
+			}
+
+			return false;
+		};
 
 		return (
 			<section className="questions-section questions-section-list">
 				<div className="questions-container">
 					<div className="row">
 						<div className="c-mt-3 col col-xl-12">
-							<QuestionsNavigationBar
-								filterChange={setFilter}
-								searchChange={loadSearch}
-								sectionChange={sectionChange}
-							/>
+							<QuestionsNavigationBar />
 						</div>
 
 						{!!search && (
@@ -167,9 +211,11 @@ export default withRouter(
 										<ClayButton
 											className="component-link tbar-link"
 											displayType="unstyled"
-											onClick={() =>
-												loadSearch('', searchCallback)
-											}
+											onClick={() => {
+												historyPushParser(
+													`/questions/${context.section}`
+												);
+											}}
 										>
 											{Liferay.Language.get('clear')}
 										</ClayButton>
@@ -209,5 +255,127 @@ export default withRouter(
 				</div>
 			</section>
 		);
+
+		function QuestionsNavigationBar() {
+			return (
+				<div className="d-flex flex-column flex-xl-row justify-content-between">
+					<div className="align-items-center d-flex flex-grow-1">
+						<Breadcrumb section={section} />
+
+						{section &&
+							section.actions &&
+							section.actions.subscribe && (
+								<div className="c-ml-3">
+									<SectionSubscription section={section} />
+								</div>
+							)}
+					</div>
+
+					<div className="c-mt-3 c-mt-xl-0 d-flex flex-column flex-grow-1 flex-md-row">
+						<ClayInput.Group className="justify-content-xl-end">
+							<ClayInput.GroupItem shrink>
+								<label
+									className="align-items-center d-inline-flex m-0 text-secondary"
+									htmlFor="questionsFilter"
+								>
+									{Liferay.Language.get('filter-by')}
+								</label>
+							</ClayInput.GroupItem>
+
+							<ClayInput.GroupItem shrink>
+								<ClaySelect
+									className="bg-transparent border-0"
+									id="questionsFilter"
+									onChange={(event) =>
+										setFilter(event.target.value)
+									}
+								>
+									{filterOptions.map((option) => (
+										<ClaySelect.Option
+											key={option.value}
+											label={option.label}
+											value={option.value}
+										/>
+									))}
+								</ClaySelect>
+							</ClayInput.GroupItem>
+						</ClayInput.Group>
+
+						<ClayInput.Group className="c-mt-3 c-mt-md-0">
+							<ClayInput.GroupItem>
+								<ClayInput
+									className="bg-transparent form-control input-group-inset input-group-inset-after"
+									disabled={
+										!search &&
+										questions &&
+										questions.items &&
+										!questions.items.length
+									}
+									onChange={(event) =>
+										debounceCallback(event.target.value)
+									}
+									placeholder={Liferay.Language.get('search')}
+									type="text"
+								/>
+
+								<ClayInput.GroupInsetItem
+									after
+									className="bg-transparent"
+									tag="span"
+								>
+									{loading && (
+										<button
+											className="btn btn-monospaced btn-unstyled"
+											type="submit"
+										>
+											<ClayLoadingIndicator
+												className="mb-0 mt-0"
+												small
+											/>
+										</button>
+									)}
+									{!loading && (
+										<ClayButtonWithIcon
+											displayType="unstyled"
+											symbol="search"
+											type="submit"
+										/>
+									)}
+								</ClayInput.GroupInsetItem>
+							</ClayInput.GroupItem>
+
+							{(context.redirectToLogin ||
+								(section &&
+									section.actions &&
+									section.actions['add-thread'])) && (
+								<ClayInput.GroupItem shrink>
+									<ClayButton
+										className="c-ml-3 d-none d-sm-block text-nowrap"
+										displayType="primary"
+										onClick={navigateToNewQuestion}
+									>
+										{Liferay.Language.get('ask-question')}
+									</ClayButton>
+
+									<ClayButton
+										className="btn-monospaced d-block d-sm-none position-fixed questions-button shadow"
+										displayType="primary"
+										onClick={navigateToNewQuestion}
+									>
+										<ClayIcon symbol="pencil" />
+
+										<span className="sr-only">
+											{Liferay.Language.get(
+												'ask-question'
+											)}
+										</span>
+									</ClayButton>
+								</ClayInput.GroupItem>
+							)}
+						</ClayInput.Group>
+					</div>
+				</div>
+			);
+		}
 	}
 );

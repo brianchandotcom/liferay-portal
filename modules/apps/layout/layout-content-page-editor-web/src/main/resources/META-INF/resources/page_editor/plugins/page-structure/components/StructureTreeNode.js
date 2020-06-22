@@ -74,16 +74,18 @@ export default function StructureTreeNode({node}) {
 					node.name,
 				])}
 				className="page-editor__page-structure__tree-node__mask"
-				disabled={node.disabled}
+				disabled={!node.activable || node.disabled}
 				displayType="unstyled"
 				onClick={(event) => {
 					event.stopPropagation();
 					event.target.focus();
 
-					selectItem(toControlsId(node.id), {
-						itemType: node.type,
-						origin: ITEM_ACTIVATION_ORIGINS.structureTree,
-					});
+					if (node.activable) {
+						selectItem(toControlsId(node.id), {
+							itemType: node.type,
+							origin: ITEM_ACTIVATION_ORIGINS.structureTree,
+						});
+					}
 				}}
 				onDoubleClick={(event) => event.stopPropagation()}
 			/>

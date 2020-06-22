@@ -21,6 +21,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
+import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
@@ -84,6 +85,9 @@ const ColumnWithControls = React.forwardRef(
 		] = useState(false);
 		const parentItem = layoutData.items[item.parentId];
 		const resizeInfo = useRef();
+		const canUpdateItemConfiguration = useSelector(
+			selectCanUpdateItemConfiguration
+		);
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
@@ -408,7 +412,7 @@ const ColumnWithControls = React.forwardRef(
 					item={item}
 					ref={ref}
 				>
-					{canUpdatePageStructure &&
+					{(canUpdatePageStructure || canUpdateItemConfiguration) &&
 					parentItemIsActive &&
 					columnIndex !== 0 ? (
 						<NotDraggableArea>

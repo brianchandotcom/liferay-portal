@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../../store/index';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
@@ -24,6 +25,9 @@ import {useUpdatedLayoutDataContext} from '../ResizeContext';
 
 const Column = React.forwardRef(
 	({children, className, item, ...props}, ref) => {
+		const canUpdateItemConfiguration = useSelector(
+			selectCanUpdateItemConfiguration
+		);
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
@@ -41,11 +45,12 @@ const Column = React.forwardRef(
 			selectedViewportSize
 		);
 
-		const columnContent = canUpdatePageStructure ? (
-			<div className="page-editor__col__border">{children}</div>
-		) : (
-			children
-		);
+		const columnContent =
+			canUpdatePageStructure || canUpdateItemConfiguration ? (
+				<div className="page-editor__col__border">{children}</div>
+			) : (
+				children
+			);
 
 		return (
 			<div

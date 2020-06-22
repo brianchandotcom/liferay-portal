@@ -14,8 +14,8 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.InfoItemServiceTracker;
-import com.liferay.info.item.NoSuchInfoItemException;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.info.item.renderer.InfoItemRendererTracker;

@@ -12,21 +12,19 @@
  * details.
  */
 
-package com.liferay.info.item;
+package com.liferay.info.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Jorge Ferrer
  */
-public class NoSuchInfoItemException extends PortalException {
+public class NoSuchClassTypeException extends PortalException {
 
-	public NoSuchInfoItemException(String msg) {
-		super(msg);
-	}
-
-	public NoSuchInfoItemException(String msg, Throwable cause) {
-		super(cause);
+	public NoSuchClassTypeException(long classTypeId, Throwable cause) {
+		super(
+			"Unable to get class type found with class type ID " + classTypeId,
+			cause);
 	}
 
 }

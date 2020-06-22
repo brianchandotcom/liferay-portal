@@ -15,9 +15,9 @@
 package com.liferay.asset.info.item.provider;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.item.NoSuchInfoItemException;
 
 import java.util.List;
 

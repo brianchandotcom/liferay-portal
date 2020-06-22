@@ -16,7 +16,7 @@ package com.liferay.blogs.web.internal.info.item.provider;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.info.item.NoSuchInfoItemException;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 
 import org.osgi.service.component.annotations.Component;

@@ -14,7 +14,7 @@
 
 package com.liferay.info.item.provider;
 
-import com.liferay.info.item.NoSuchInfoItemException;
+import com.liferay.info.exception.NoSuchInfoItemException;
 
 /**
  * @author Jorge Ferrer

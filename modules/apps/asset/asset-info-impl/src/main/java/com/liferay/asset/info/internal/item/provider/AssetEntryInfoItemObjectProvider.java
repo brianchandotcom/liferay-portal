@@ -17,7 +17,7 @@ package com.liferay.asset.info.internal.item.provider;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.info.item.NoSuchInfoItemException;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 

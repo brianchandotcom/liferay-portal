@@ -14,7 +14,7 @@
 
 package com.liferay.journal.web.internal.info.item.provider;
 
-import com.liferay.info.item.NoSuchInfoItemException;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;

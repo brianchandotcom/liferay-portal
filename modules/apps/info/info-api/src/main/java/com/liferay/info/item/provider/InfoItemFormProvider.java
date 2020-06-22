@@ -14,10 +14,10 @@
 
 package com.liferay.info.item.provider;
 
+import com.liferay.info.exception.NoSuchClassTypeException;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.NoSuchClassTypeException;
 
 /**
  * @author Jorge Ferrer

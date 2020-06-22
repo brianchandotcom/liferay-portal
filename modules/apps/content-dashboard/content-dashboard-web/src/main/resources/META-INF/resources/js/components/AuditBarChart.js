@@ -12,8 +12,9 @@
  * details.
  */
 
+import {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
 	Bar,
 	BarChart,
@@ -68,10 +69,18 @@ export default function AuditBarChart({rtl, vocabularies}) {
 			);
 		});
 
-		return {bars, data};
+		const legendCheckboxes = bars.reduce(
+			(acc, {dataKey}) => ({
+				...acc,
+				[dataKey]: true,
+			}),
+			{}
+		);
+
+		return {bars, data, legendCheckboxes};
 	}, [vocabularies]);
 
-	const {bars, data} = auditBarChartData;
+	const {bars, data, legendCheckboxes} = auditBarChartData;
 
 	const height = !bars.length
 		? BAR_CHART.height - BAR_CHART.legendHeight
@@ -81,6 +90,32 @@ export default function AuditBarChart({rtl, vocabularies}) {
 		? [BAR_CHART.dotRadiusMin]
 		: [BAR_CHART.legendHeight + BAR_CHART.dotRadiusMin];
 
+	const [checkboxes, setCheckbox] = useState(legendCheckboxes);
+
+	const renderLegend = (props) => {
+		const {payload} = props;
+
+		return (
+			<>
+				{payload.map((entry) => (
+					<ClayCheckbox
+						aria-labelledby={entry.value}
+						checked={checkboxes[entry.dataKey]}
+						inline
+						key={entry.dataKey}
+						label={entry.value}
+						onChange={() =>
+							setCheckbox({
+								...checkboxes,
+								[entry.dataKey]: !checkboxes[entry.dataKey],
+							})
+						}
+					/>
+				))}
+			</>
+		);
+	};
+
 	return (
 		<>
 			<ResponsiveContainer height={height}>
@@ -88,6 +123,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 					{bars.length && (
 						<Legend
 							align={rtl ? 'right' : 'left'}
+							content={renderLegend}
 							height={BAR_CHART.legendHeight}
 							verticalAlign="top"
 						/>
@@ -119,7 +155,11 @@ export default function AuditBarChart({rtl, vocabularies}) {
 						bars.map((bar, index) => {
 							return (
 								<Bar
-									barSize={BAR_CHART.barHeight}
+									barSize={
+										checkboxes[bar.dataKey] === true
+											? BAR_CHART.barHeight
+											: 0
+									}
 									dataKey={bar.dataKey}
 									fill={COLORS[index % COLORS.length]}
 									key={index}

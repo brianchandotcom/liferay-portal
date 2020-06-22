@@ -218,7 +218,10 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 			System.currentTimeMillis() - createDate.getTime(), true);
 
 		return LanguageUtil.format(
-			_httpServletRequest, "modified-x-ago", modifiedDateDescription);
+			_httpServletRequest, "modified-x-ago-by-x",
+			new String[] {
+				modifiedDateDescription, HtmlUtil.escape(_article.getUserName())
+			});
 	}
 
 	@Override

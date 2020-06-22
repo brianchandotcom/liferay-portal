@@ -49,17 +49,21 @@
 	</clay:content-col>
 
 	<c:if test="<%= (group != null) && (group.getType() != GroupConstants.TYPE_DEPOT) && !group.isCompany() %>">
-		<div class="icon-pages-tree">
-			<liferay-ui:icon
-				icon="pages-tree"
-				id="pagesTreeSidenavToggleId"
-				label="<%= false %>"
-				linkCssClass="icon-monospaced"
-				markupView="lexicon"
-				message="find-a-page"
-				url="javascript:;"
-			/>
-		</div>
+		<clay:content-col
+			cssClass="autofit-col-end"
+		>
+			<div class="icon-pages-tree">
+				<liferay-ui:icon
+					icon="pages-tree"
+					id="pagesTreeSidenavToggleId"
+					label="<%= false %>"
+					linkCssClass="icon-monospaced"
+					markupView="lexicon"
+					message="find-a-page"
+					url="javascript:;"
+				/>
+			</div>
+		</clay:content-col>
 
 		<aui:script sandbox="<%= true %>">
 			var pagesTreeToggle = document.getElementById(
@@ -105,17 +109,21 @@
 	</c:if>
 
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
-		<div class="icon-sites">
-			<liferay-ui:icon
-				icon="sites"
-				id="manageSitesLink"
-				label="<%= false %>"
-				linkCssClass="icon-monospaced"
-				markupView="lexicon"
-				message="go-to-other-site-or-library"
-				url="javascript:;"
-			/>
-		</div>
+		<clay:content-col
+			cssClass="autofit-col-end"
+		>
+			<div class="icon-sites">
+				<liferay-ui:icon
+					icon="sites"
+					id="manageSitesLink"
+					label="<%= false %>"
+					linkCssClass="icon-monospaced"
+					markupView="lexicon"
+					message="go-to-other-site-or-library"
+					url="javascript:;"
+				/>
+			</div>
+		</clay:content-col>
 
 		<%
 		String eventName = liferayPortletResponse.getNamespace() + "selectSite";

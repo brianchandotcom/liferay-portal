@@ -579,10 +579,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -629,9 +625,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {
@@ -682,9 +675,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 					_finderPathWithPaginationCountAncestors, finderArgs, count);
 			}
 			catch (SystemException systemException) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountAncestors, finderArgs);
-
 				throw systemException;
 			}
 		}
@@ -713,9 +703,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 					count);
 			}
 			catch (SystemException systemException) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountDescendants, finderArgs);
-
 				throw systemException;
 			}
 		}
@@ -763,9 +750,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 					_finderPathWithPaginationGetAncestors, finderArgs, list);
 			}
 			catch (SystemException systemException) {
-				finderCache.removeResult(
-					_finderPathWithPaginationGetAncestors, finderArgs);
-
 				throw systemException;
 			}
 		}
@@ -814,9 +798,6 @@ public class NestedSetsTreeEntryPersistenceImpl
 					_finderPathWithPaginationGetDescendants, finderArgs, list);
 			}
 			catch (SystemException systemException) {
-				finderCache.removeResult(
-					_finderPathWithPaginationGetDescendants, finderArgs);
-
 				throw systemException;
 			}
 		}

@@ -205,11 +205,6 @@ public class WebDAVPropsPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -286,8 +281,6 @@ public class WebDAVPropsPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -828,10 +821,6 @@ public class WebDAVPropsPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -877,9 +866,6 @@ public class WebDAVPropsPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

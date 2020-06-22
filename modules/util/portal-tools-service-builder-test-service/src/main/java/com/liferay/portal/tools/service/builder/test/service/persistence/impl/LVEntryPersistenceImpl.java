@@ -253,10 +253,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -605,8 +601,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -801,10 +795,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1180,8 +1170,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1380,10 +1368,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1760,8 +1744,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1933,11 +1915,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G_Head, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2032,8 +2009,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2236,10 +2211,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2618,8 +2589,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2830,10 +2799,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3236,8 +3201,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3413,10 +3376,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3838,11 +3797,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByGroupId, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 		}
@@ -3961,8 +3915,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4015,9 +3967,6 @@ public class LVEntryPersistenceImpl
 					_finderPathWithPaginationCountByGroupId, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByGroupId, finderArgs);
-
 				throw processException(exception);
 			}
 		}
@@ -4244,10 +4193,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4702,12 +4647,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByGroupId_Head,
-						finderArgs);
-				}
-
 				throw processException(exception);
 			}
 		}
@@ -4841,8 +4780,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4898,9 +4835,6 @@ public class LVEntryPersistenceImpl
 					count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByGroupId_Head, finderArgs);
-
 				throw processException(exception);
 			}
 		}
@@ -5151,10 +5085,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5535,8 +5465,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5712,11 +5640,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByG_UGK_Head, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5814,8 +5737,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5950,11 +5871,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByHeadId, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6022,8 +5938,6 @@ public class LVEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6853,10 +6767,6 @@ public class LVEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6902,9 +6812,6 @@ public class LVEntryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

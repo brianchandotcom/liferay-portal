@@ -250,10 +250,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -591,8 +587,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -799,10 +793,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1332,12 +1322,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByC_MCNI_SMCPK,
-						finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1421,8 +1405,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1507,9 +1489,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 					count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByC_MCNI_SMCPK, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2059,10 +2038,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2109,9 +2084,6 @@ public class CTAutoResolutionInfoPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

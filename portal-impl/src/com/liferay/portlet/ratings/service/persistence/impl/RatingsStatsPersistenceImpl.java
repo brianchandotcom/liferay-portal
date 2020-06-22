@@ -270,11 +270,6 @@ public class RatingsStatsPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 		}
@@ -471,11 +466,6 @@ public class RatingsStatsPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -564,10 +554,6 @@ public class RatingsStatsPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -633,11 +619,6 @@ public class RatingsStatsPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationCountByC_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 		}
@@ -1401,10 +1382,6 @@ public class RatingsStatsPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1459,11 +1436,6 @@ public class RatingsStatsPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY);
-				}
-
 				throw processException(exception);
 			}
 			finally {

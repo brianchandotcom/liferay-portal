@@ -233,10 +233,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -886,8 +882,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1101,10 +1095,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1429,8 +1419,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1602,10 +1590,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1936,8 +1920,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2109,10 +2091,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2443,8 +2421,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2625,10 +2601,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3318,8 +3290,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3558,10 +3528,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4259,8 +4225,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4499,10 +4463,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5200,8 +5160,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5439,10 +5397,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5915,11 +5869,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByU_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5992,8 +5941,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6066,9 +6013,6 @@ public class TasksEntryPersistenceImpl
 					_finderPathWithPaginationCountByU_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByU_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6257,10 +6201,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6739,11 +6679,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByA_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6816,8 +6751,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6892,9 +6825,6 @@ public class TasksEntryPersistenceImpl
 					_finderPathWithPaginationCountByA_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByA_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -7093,10 +7023,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -8113,11 +8039,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByG_U_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -8196,8 +8117,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -8277,9 +8196,6 @@ public class TasksEntryPersistenceImpl
 					_finderPathWithPaginationCountByG_U_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByG_U_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -8618,10 +8534,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -9645,11 +9557,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathWithPaginationFindByG_A_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -9728,8 +9635,6 @@ public class TasksEntryPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -9809,9 +9714,6 @@ public class TasksEntryPersistenceImpl
 					_finderPathWithPaginationCountByG_A_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathWithPaginationCountByG_A_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -10773,10 +10675,6 @@ public class TasksEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -10822,9 +10720,6 @@ public class TasksEntryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

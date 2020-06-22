@@ -264,10 +264,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -621,10 +617,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -799,12 +791,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(
-						_finderPathFetchByFriendlyURLEntryId_LanguageId,
-						finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -912,10 +898,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1103,11 +1085,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(
-						_finderPathFetchByG_C_U, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1216,10 +1193,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1461,10 +1434,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1915,10 +1884,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2780,10 +2745,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2841,11 +2802,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY);
-				}
-
 				throw processException(exception);
 			}
 			finally {

@@ -259,10 +259,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -612,10 +608,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -780,10 +772,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(_finderPathFetchByA_L, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -886,10 +874,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1072,11 +1056,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(
-						_finderPathFetchByC_A_L, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1185,10 +1164,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1397,11 +1372,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(
-						_finderPathFetchByC_A_T_L, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1530,10 +1500,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2381,10 +2347,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2442,11 +2404,6 @@ public class JournalArticleLocalizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY);
-				}
-
 				throw processException(exception);
 			}
 			finally {

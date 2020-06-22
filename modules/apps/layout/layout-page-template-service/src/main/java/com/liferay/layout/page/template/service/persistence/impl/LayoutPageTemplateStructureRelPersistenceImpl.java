@@ -266,10 +266,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -633,8 +629,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -799,11 +793,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -894,8 +883,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1103,10 +1090,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1493,8 +1476,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1692,10 +1673,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2059,8 +2036,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2244,10 +2219,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2594,8 +2565,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2751,10 +2720,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByL_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2836,8 +2801,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3637,10 +3600,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3689,9 +3648,6 @@ public class LayoutPageTemplateStructureRelPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

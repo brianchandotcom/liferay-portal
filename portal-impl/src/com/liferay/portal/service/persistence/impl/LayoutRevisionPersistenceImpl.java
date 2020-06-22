@@ -243,10 +243,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -582,8 +578,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -750,10 +744,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1080,8 +1070,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1247,10 +1235,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1579,8 +1563,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1766,10 +1748,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2127,8 +2105,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2315,10 +2291,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2676,8 +2648,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2864,10 +2834,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3225,8 +3191,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3410,10 +3374,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3767,8 +3727,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3939,10 +3897,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4297,8 +4251,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4503,10 +4455,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4892,8 +4840,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5102,10 +5048,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5494,8 +5436,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5676,11 +5616,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByL_H_P, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5765,8 +5700,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5968,10 +5901,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6354,8 +6283,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6558,10 +6485,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6943,8 +6866,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -7146,10 +7067,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -7529,8 +7446,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -7727,11 +7642,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByL_L_H_P, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -7827,8 +7737,6 @@ public class LayoutRevisionPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -8819,10 +8727,6 @@ public class LayoutRevisionPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -8868,9 +8772,6 @@ public class LayoutRevisionPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

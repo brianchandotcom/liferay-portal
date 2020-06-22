@@ -249,10 +249,6 @@ public class DepotAppCustomizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -589,8 +585,6 @@ public class DepotAppCustomizationPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -753,10 +747,6 @@ public class DepotAppCustomizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByD_E, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -833,8 +823,6 @@ public class DepotAppCustomizationPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -997,10 +985,6 @@ public class DepotAppCustomizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByD_P, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1091,8 +1075,6 @@ public class DepotAppCustomizationPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1705,10 +1687,6 @@ public class DepotAppCustomizationPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1755,9 +1733,6 @@ public class DepotAppCustomizationPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

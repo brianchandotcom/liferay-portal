@@ -263,10 +263,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -617,8 +613,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -776,11 +770,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -869,8 +858,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1071,10 +1058,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1457,8 +1440,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1632,10 +1613,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2550,11 +2527,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByGroupId, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2619,8 +2591,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2686,9 +2656,6 @@ public class SegmentsEntryPersistenceImpl
 					_finderPathWithPaginationCountByGroupId, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByGroupId, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2982,10 +2949,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3339,8 +3302,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3522,10 +3483,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3876,8 +3833,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4036,10 +3991,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByG_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4128,8 +4079,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4317,10 +4266,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5299,11 +5244,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_A, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5375,8 +5315,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5451,9 +5389,6 @@ public class SegmentsEntryPersistenceImpl
 					_finderPathWithPaginationCountByG_A, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_A, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5782,10 +5717,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6165,8 +6096,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6379,10 +6308,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -7478,11 +7403,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_A_T, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -7573,8 +7493,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -7669,9 +7587,6 @@ public class SegmentsEntryPersistenceImpl
 					_finderPathWithPaginationCountByG_A_T, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_A_T, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -8086,10 +8001,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -9300,11 +9211,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_A_S_T, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -9417,8 +9323,6 @@ public class SegmentsEntryPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -9532,9 +9436,6 @@ public class SegmentsEntryPersistenceImpl
 					_finderPathWithPaginationCountByG_A_S_T, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_A_S_T, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -10622,10 +10523,6 @@ public class SegmentsEntryPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -10671,9 +10568,6 @@ public class SegmentsEntryPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

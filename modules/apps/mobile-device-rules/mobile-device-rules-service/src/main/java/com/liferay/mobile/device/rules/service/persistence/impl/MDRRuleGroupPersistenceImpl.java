@@ -263,10 +263,6 @@ public class MDRRuleGroupPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -615,8 +611,6 @@ public class MDRRuleGroupPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -774,11 +768,6 @@ public class MDRRuleGroupPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -867,8 +856,6 @@ public class MDRRuleGroupPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1069,10 +1056,6 @@ public class MDRRuleGroupPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1453,8 +1436,6 @@ public class MDRRuleGroupPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1628,10 +1609,6 @@ public class MDRRuleGroupPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2544,11 +2521,6 @@ public class MDRRuleGroupPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByGroupId, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2613,8 +2585,6 @@ public class MDRRuleGroupPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2680,9 +2650,6 @@ public class MDRRuleGroupPersistenceImpl
 					_finderPathWithPaginationCountByGroupId, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByGroupId, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3427,10 +3394,6 @@ public class MDRRuleGroupPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3476,9 +3439,6 @@ public class MDRRuleGroupPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

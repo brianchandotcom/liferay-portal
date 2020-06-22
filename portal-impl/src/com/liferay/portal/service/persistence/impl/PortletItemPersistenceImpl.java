@@ -248,10 +248,6 @@ public class PortletItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -608,8 +604,6 @@ public class PortletItemPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -820,10 +814,6 @@ public class PortletItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1230,8 +1220,6 @@ public class PortletItemPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1451,11 +1439,6 @@ public class PortletItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByG_N_P_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1575,8 +1558,6 @@ public class PortletItemPersistenceImpl
 				FinderCacheUtil.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2203,10 +2184,6 @@ public class PortletItemPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2252,9 +2229,6 @@ public class PortletItemPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				FinderCacheUtil.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

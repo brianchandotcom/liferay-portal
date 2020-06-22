@@ -261,10 +261,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -594,8 +590,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -775,10 +769,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1127,8 +1117,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1286,11 +1274,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1379,8 +1362,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1581,10 +1562,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1963,8 +1940,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2153,10 +2128,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2853,8 +2824,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3052,10 +3021,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByR_V, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3131,8 +3096,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3319,10 +3282,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3805,11 +3764,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByR_L, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3881,8 +3835,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3959,9 +3911,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByR_L, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByR_L, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4150,10 +4099,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4635,11 +4580,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByR_M, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4711,8 +4651,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4789,9 +4727,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByR_M, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByR_M, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4981,10 +4916,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5466,11 +5397,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByR_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5542,8 +5468,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5620,9 +5544,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByR_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByR_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5809,10 +5730,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6501,8 +6418,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6739,10 +6654,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -7430,8 +7341,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -7668,10 +7577,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -8360,8 +8265,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -8599,10 +8502,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -8956,8 +8855,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -9141,10 +9038,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -9497,8 +9390,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -9683,10 +9574,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -10040,8 +9927,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -10231,10 +10116,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -10723,11 +10604,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByP_L, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -10799,8 +10675,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -10878,9 +10752,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByP_L, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByP_L, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -11071,10 +10942,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -11561,11 +11428,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByP_M, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -11637,8 +11499,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -11716,9 +11576,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByP_M, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByP_M, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -11909,10 +11766,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -12401,11 +12254,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByP_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -12477,8 +12325,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -12556,9 +12402,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByP_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByP_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -12721,11 +12564,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByR_G_V, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -12808,8 +12646,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -13012,10 +12848,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -14048,11 +13880,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByR_G_L, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -14134,8 +13961,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -14219,9 +14044,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByR_G_L, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByR_G_L, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -14566,10 +14388,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -15598,11 +15416,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByR_G_M, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -15682,8 +15495,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -15767,9 +15578,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByR_G_M, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByR_G_M, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -16114,10 +15922,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -17147,11 +16951,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByR_G_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -17229,8 +17028,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -17312,9 +17109,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByR_G_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByR_G_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -17665,10 +17459,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -18705,11 +18495,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_P_L, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -18793,8 +18578,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -18879,9 +18662,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByG_P_L, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_P_L, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -19233,10 +19013,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -20273,11 +20049,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_P_M, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -20361,8 +20132,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -20447,9 +20216,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByG_P_M, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_P_M, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -20801,10 +20567,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -21841,11 +21603,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_P_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -21929,8 +21686,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -22015,9 +21770,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByG_P_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_P_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -22374,10 +22126,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -23166,8 +22914,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -23443,10 +23189,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -24181,8 +23923,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -24442,10 +24182,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -25178,8 +24914,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -25443,10 +25177,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -26545,11 +26275,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_S_L, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -26640,8 +26365,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -26742,9 +26465,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByG_S_L, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_S_L, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -27129,10 +26849,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -28231,11 +27947,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_S_M, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -28326,8 +28037,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -28428,9 +28137,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByG_S_M, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_S_M, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -28813,10 +28519,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -29915,11 +29617,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_S_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -30010,8 +29707,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -30112,9 +29807,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByG_S_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_S_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -30510,10 +30202,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -31601,11 +31289,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_P_L_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -31695,8 +31378,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -31787,9 +31468,6 @@ public class KBArticlePersistenceImpl
 					_finderPathWithPaginationCountByG_P_L_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_P_L_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -32178,10 +31856,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -33319,12 +32993,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_KBFI_UT_ST,
-						finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -33427,8 +33095,6 @@ public class KBArticlePersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -33529,9 +33195,6 @@ public class KBArticlePersistenceImpl
 					count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_KBFI_UT_ST, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -35246,10 +34909,6 @@ public class KBArticlePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -35295,9 +34954,6 @@ public class KBArticlePersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

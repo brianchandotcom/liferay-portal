@@ -250,10 +250,6 @@ public class WeDeployAuthTokenPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(_finderPathFetchByT_T, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -342,8 +338,6 @@ public class WeDeployAuthTokenPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -548,11 +542,6 @@ public class WeDeployAuthTokenPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathFetchByCI_T_T, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -661,8 +650,6 @@ public class WeDeployAuthTokenPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1268,10 +1255,6 @@ public class WeDeployAuthTokenPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1317,9 +1300,6 @@ public class WeDeployAuthTokenPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

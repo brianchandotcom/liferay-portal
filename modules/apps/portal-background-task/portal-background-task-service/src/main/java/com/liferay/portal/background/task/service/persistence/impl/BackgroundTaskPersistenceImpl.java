@@ -247,10 +247,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -578,8 +574,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -750,10 +744,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1081,8 +1071,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1253,10 +1241,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1588,8 +1572,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -1755,10 +1737,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2086,8 +2064,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -2288,10 +2264,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2835,11 +2807,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_T, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2924,8 +2891,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3040,9 +3005,6 @@ public class BackgroundTaskPersistenceImpl
 					_finderPathWithPaginationCountByG_T, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_T, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3232,10 +3194,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3592,8 +3550,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -3796,10 +3752,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4324,11 +4276,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByT_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4413,8 +4360,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4514,9 +4459,6 @@ public class BackgroundTaskPersistenceImpl
 					_finderPathWithPaginationCountByT_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByT_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -4757,10 +4699,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5357,11 +5295,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_N_T, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5470,8 +5403,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5607,9 +5538,6 @@ public class BackgroundTaskPersistenceImpl
 					_finderPathWithPaginationCountByG_N_T, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_N_T, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -5840,10 +5768,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6417,11 +6341,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_T_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6518,8 +6437,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6644,9 +6561,6 @@ public class BackgroundTaskPersistenceImpl
 					_finderPathWithPaginationCountByG_T_C, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_T_C, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -6881,10 +6795,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -7436,11 +7346,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_T_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -7537,8 +7442,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -7645,9 +7548,6 @@ public class BackgroundTaskPersistenceImpl
 					_finderPathWithPaginationCountByG_T_S, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_T_S, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -7903,10 +7803,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -8508,11 +8404,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByG_N_T_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -8629,8 +8520,6 @@ public class BackgroundTaskPersistenceImpl
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(finderPath, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -8745,9 +8634,6 @@ public class BackgroundTaskPersistenceImpl
 					_finderPathWithPaginationCountByG_N_T_C, finderArgs, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathWithPaginationCountByG_N_T_C, finderArgs);
-
 				throw processException(exception);
 			}
 			finally {
@@ -9587,10 +9473,6 @@ public class BackgroundTaskPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -9636,9 +9518,6 @@ public class BackgroundTaskPersistenceImpl
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception exception) {
-				finderCache.removeResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY);
-
 				throw processException(exception);
 			}
 			finally {

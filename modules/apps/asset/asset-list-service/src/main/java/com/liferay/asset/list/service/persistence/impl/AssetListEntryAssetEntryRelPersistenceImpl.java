@@ -275,10 +275,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -653,10 +649,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -822,11 +814,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(
-						_finderPathFetchByUUID_G, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -928,10 +915,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1140,10 +1123,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1542,10 +1521,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1732,10 +1707,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2087,10 +2058,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2286,10 +2253,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2791,11 +2754,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(
-						_finderPathWithPaginationFindByA_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2879,10 +2837,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2968,11 +2922,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(
-						_finderPathWithPaginationCountByA_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3145,11 +3094,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(
-						_finderPathFetchByA_S_P, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3249,10 +3193,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3456,10 +3396,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3864,10 +3800,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4807,10 +4739,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4868,11 +4796,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY);
-				}
-
 				throw processException(exception);
 			}
 			finally {

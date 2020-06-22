@@ -241,10 +241,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -584,10 +580,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -759,10 +751,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1102,10 +1090,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1274,10 +1258,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1615,10 +1595,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1803,10 +1779,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2174,10 +2146,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2364,10 +2332,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2734,10 +2698,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2925,10 +2885,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3296,10 +3252,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3447,11 +3399,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByC_R, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3540,10 +3487,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -3731,10 +3674,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4103,10 +4042,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4267,11 +4202,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(
-						_finderPathFetchByT_C_C, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4366,10 +4296,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -4585,10 +4511,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5004,10 +4926,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -5958,10 +5876,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					FinderCacheUtil.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -6016,11 +5930,6 @@ public class ExpandoValuePersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					FinderCacheUtil.removeResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY);
-				}
-
 				throw processException(exception);
 			}
 			finally {

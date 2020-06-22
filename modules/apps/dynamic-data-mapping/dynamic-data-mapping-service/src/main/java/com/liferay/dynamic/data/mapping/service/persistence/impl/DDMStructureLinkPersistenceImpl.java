@@ -255,10 +255,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -605,10 +601,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -783,10 +775,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1133,10 +1121,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1321,10 +1305,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1693,10 +1673,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1860,11 +1836,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(
-						_finderPathFetchByC_C_S, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -1960,10 +1931,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2724,10 +2691,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (useFinderCache && productionMode) {
-					finderCache.removeResult(finderPath, finderArgs);
-				}
-
 				throw processException(exception);
 			}
 			finally {
@@ -2782,11 +2745,6 @@ public class DDMStructureLinkPersistenceImpl
 				}
 			}
 			catch (Exception exception) {
-				if (productionMode) {
-					finderCache.removeResult(
-						_finderPathCountAll, FINDER_ARGS_EMPTY);
-				}
-
 				throw processException(exception);
 			}
 			finally {

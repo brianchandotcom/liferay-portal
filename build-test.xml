@@ -10531,6 +10531,16 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</then>
 		</if>
 
+		<if>
+			<or>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<equals arg1="${app.server.type}" arg2="websphere" />
+			</or>
+			<then>
+				<gradle-execute dir="modules/apps/portal-search-elasticsearch7" task="deploySidecar" />
+			</then>
+		</if>
+
 		<lstopwatch action="total" name="prepare.bundles.${app.server.name}" />
 	</target>
 

@@ -38,6 +38,7 @@ const RESIZE_CONTEXT_STATE = {
 	setUpdatedLayoutData: () => null,
 	updatedLayoutData: null,
 };
+
 const STATE = {
 	segmentsExperienceId: '0',
 	selectedViewportSize: 'desktop',

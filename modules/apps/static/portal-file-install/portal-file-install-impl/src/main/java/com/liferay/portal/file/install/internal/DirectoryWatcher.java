@@ -14,6 +14,7 @@
 
 package com.liferay.portal.file.install.internal;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.internal.manifest.Clause;
@@ -311,15 +312,43 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 
 		try {
-			_log(
-				Util.Logger.LOG_DEBUG,
-				StringBundler.concat(
-					"{", POLL, " (ms) = ", _poll, ", ", DIR, " = ",
-					_watchedDirectory.getAbsolutePath(), ", ", LOG_LEVEL, " = ",
-					_logLevel, ", ", START_NEW_BUNDLES, " = ", _startBundles,
-					", ", TMPDIR, " = ", _tmpDir, ", ", FILTER, " = ", _filter,
-					", ", START_LEVEL, " = ", _startLevel, "}"),
-				null);
+			StringBundler sb = new StringBundler(33);
+
+			sb.append(StringPool.OPEN_CURLY_BRACE);
+			sb.append(POLL);
+			sb.append(" (ms) = ");
+			sb.append(_poll);
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(DIR);
+			sb.append(" = ");
+			sb.append(_watchedDirectory.getAbsolutePath());
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(LOG_LEVEL);
+			sb.append(" = ");
+			sb.append(_logLevel);
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(START_NEW_BUNDLES);
+			sb.append(" = ");
+			sb.append(_startBundles);
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(START_NEW_BUNDLES);
+			sb.append(" = ");
+			sb.append(_startBundles);
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(TMPDIR);
+			sb.append(" = ");
+			sb.append(_tmpDir);
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(FILTER);
+			sb.append(" = ");
+			sb.append(_filter);
+			sb.append(StringPool.COMMA_AND_SPACE);
+			sb.append(START_LEVEL);
+			sb.append(" = ");
+			sb.append(_startLevel);
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			_log(Util.Logger.LOG_DEBUG, sb.toString(), null);
 
 			if (!_noInitialDelay) {
 				try {
@@ -975,7 +1004,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 							lastIndexOfFileProtocol + "file:".length();
 					}
 
-					int firstIndexOfDollar = schemeSpecificPart.indexOf("$");
+					int firstIndexOfDollar = schemeSpecificPart.indexOf(
+						StringPool.DOLLAR);
 
 					int endOfPath = schemeSpecificPart.length();
 
@@ -995,7 +1025,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 				continue;
 			}
 
-			int index = path.lastIndexOf('/');
+			int index = path.lastIndexOf(CharPool.SLASH);
 
 			if ((index != -1) && path.startsWith(watchedDirPath)) {
 				String fileName = path.substring(index + 1);
@@ -1570,7 +1600,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					Util.Logger.LOG_INFO,
 					StringBundler.concat(
 						"Uninstalling bundle ", bundle.getBundleId(), " (",
-						bundle.getSymbolicName(), ")"),
+						bundle.getSymbolicName(), StringPool.CLOSE_PARENTHESIS),
 					null);
 
 				bundle.uninstall();

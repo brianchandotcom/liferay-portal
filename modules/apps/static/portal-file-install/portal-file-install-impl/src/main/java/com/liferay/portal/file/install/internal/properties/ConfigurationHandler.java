@@ -14,6 +14,9 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -186,7 +189,7 @@ public class ConfigurationHandler {
 		for (int i = 0; i < length; i++) {
 			c = simple.charAt(i);
 
-			if ((c == '\\') || (c == _TOKEN_VAL_CLOS) || (c == ' ') ||
+			if ((c == '\\') || (c == _TOKEN_VAL_CLOS) || (c == CharPool.SPACE) ||
 				(c == _TOKEN_EQ) || (c == _TOKEN_BRACE_OPEN) ||
 				(c == _TOKEN_BRACE_CLOS)) {
 
@@ -208,7 +211,7 @@ public class ConfigurationHandler {
 			else if (c == '\r') {
 				writer.write("\\r");
 			}
-			else if (c < ' ') {
+			else if (c < CharPool.SPACE) {
 				String hexString = "000" + Integer.toHexString(c);
 
 				writer.write(
@@ -507,7 +510,7 @@ public class ConfigurationHandler {
 		sb.append(_line);
 		sb.append(", pos=");
 		sb.append(_pos);
-		sb.append(")");
+		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		return new IOException(sb.toString());
 	}
@@ -556,7 +559,7 @@ public class ConfigurationHandler {
 	private String _readQuoted(PushbackReader pushbackReader)
 		throws IOException {
 
-		StringBuffer buffer = new StringBuffer();
+		StringBundler sb = new StringBundler();
 
 		while (true) {
 			int c = _read(pushbackReader);
@@ -565,19 +568,19 @@ public class ConfigurationHandler {
 				c = _read(pushbackReader);
 
 				if (c == 'b') {
-					buffer.append('\b');
+					sb.append('\b');
 				}
 				else if (c == 't') {
-					buffer.append('\t');
+					sb.append('\t');
 				}
 				else if (c == 'n') {
-					buffer.append('\n');
+					sb.append('\n');
 				}
 				else if (c == 'f') {
-					buffer.append('\f');
+					sb.append('\f');
 				}
 				else if (c == 'r') {
-					buffer.append('\r');
+					sb.append('\r');
 				}
 				else if (c == 'u') {
 					char[] charBuffer = new char[4];
@@ -585,20 +588,20 @@ public class ConfigurationHandler {
 					if (_read(pushbackReader, charBuffer) == 4) {
 						c = Integer.parseInt(new String(charBuffer), 16);
 
-						buffer.append((char)c);
+						sb.append((char)c);
 					}
 				}
 				else {
-					buffer.append((char)c);
+					sb.append((char)c);
 				}
 			}
 			else if ((c == -1) || (c == _TOKEN_VAL_CLOS)) {
 				pushbackReader.unread(c);
 
-				return buffer.toString();
+				return sb.toString();
 			}
 			else {
-				buffer.append((char)c);
+				sb.append((char)c);
 			}
 		}
 	}
@@ -627,7 +630,7 @@ public class ConfigurationHandler {
 
 			String floatString = _readQuoted(pushbackReader);
 
-			if (floatString.indexOf('.') >= 0) {
+			if (floatString.indexOf(CharPool.PERIOD) >= 0) {
 				return Float.valueOf(floatString);
 			}
 
@@ -638,7 +641,7 @@ public class ConfigurationHandler {
 
 			String doubleString = _readQuoted(pushbackReader);
 
-			if (doubleString.indexOf('.') >= 0) {
+			if (doubleString.indexOf(CharPool.PERIOD) >= 0) {
 				return Double.valueOf(doubleString);
 			}
 
@@ -678,7 +681,7 @@ public class ConfigurationHandler {
 	private String _readUnquoted(PushbackReader pushbackReader)
 		throws IOException {
 
-		StringBuffer buffer = new StringBuffer();
+		StringBundler sb = new StringBundler();
 
 		while (true) {
 			int c = _read(pushbackReader);
@@ -687,19 +690,19 @@ public class ConfigurationHandler {
 				c = _read(pushbackReader);
 
 				if (c == 'b') {
-					buffer.append('\b');
+					sb.append('\b');
 				}
 				else if (c == 't') {
-					buffer.append('\t');
+					sb.append('\t');
 				}
 				else if (c == 'n') {
-					buffer.append('\n');
+					sb.append('\n');
 				}
 				else if (c == 'f') {
-					buffer.append('\f');
+					sb.append('\f');
 				}
 				else if (c == 'r') {
-					buffer.append('\r');
+					sb.append('\r');
 				}
 				else if (c == 'u') {
 					char[] charBuffer = new char[4];
@@ -707,11 +710,11 @@ public class ConfigurationHandler {
 					if (_read(pushbackReader, charBuffer) == 4) {
 						c = Integer.parseInt(new String(charBuffer), 16);
 
-						buffer.append((char)c);
+						sb.append((char)c);
 					}
 				}
 				else {
-					buffer.append((char)c);
+					sb.append((char)c);
 				}
 			}
 			else if ((c == -1) || (c == _TOKEN_VAL_CLOS) ||
@@ -719,10 +722,10 @@ public class ConfigurationHandler {
 
 				pushbackReader.unread(c);
 
-				return buffer.toString();
+				return sb.toString();
 			}
 			else {
-				buffer.append((char)c);
+				sb.append((char)c);
 			}
 		}
 	}
@@ -785,9 +788,9 @@ public class ConfigurationHandler {
 				set(i);
 			}
 
-			set('_');
-			set('-');
-			set('.');
+			set(CharPool.UNDERLINE);
+			set(CharPool.DASH);
+			set(CharPool.PERIOD);
 			set('\\');
 		}
 	};

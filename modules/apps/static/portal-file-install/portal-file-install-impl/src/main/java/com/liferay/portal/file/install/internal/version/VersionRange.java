@@ -14,6 +14,10 @@
 
 package com.liferay.portal.file.install.internal.version;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
 import java.io.Serializable;
 
 import org.osgi.framework.Version;
@@ -136,10 +140,10 @@ public class VersionRange implements Serializable {
 
 		int first = value.charAt(0);
 
-		if (first == '[') {
+		if (first == CharPool.OPEN_BRACKET) {
 			_openFloor = false;
 		}
-		else if (first == '(') {
+		else if (first == CharPool.OPEN_PARENTHESIS) {
 			_openFloor = true;
 		}
 		else {
@@ -163,10 +167,10 @@ public class VersionRange implements Serializable {
 
 		int last = value.charAt(value.length() - 1);
 
-		if (last == ']') {
+		if (last == CharPool.CLOSE_BRACKET) {
 			_openCeiling = false;
 		}
-		else if (last == ')') {
+		else if (last == CharPool.CLOSE_PARENTHESIS) {
 			_openCeiling = true;
 		}
 		else {
@@ -175,14 +179,14 @@ public class VersionRange implements Serializable {
 					": range must end in ')' or ']'");
 		}
 
-		int comma = value.indexOf(',');
+		int comma = value.indexOf(CharPool.COMMA);
 
 		if (comma == -1) {
 			throw new IllegalArgumentException(
 				"Illegal version range syntax no comma");
 		}
 
-		if (value.indexOf(',', comma + 1) > 0) {
+		if (value.indexOf(CharPool.COMMA, comma + 1) > 0) {
 			throw new IllegalArgumentException(
 				"Illegal version range syntax too many commas");
 		}
@@ -193,7 +197,7 @@ public class VersionRange implements Serializable {
 
 		_floor = VersionTable.getVersion(floor, clean);
 
-		if (ceiling.equals("*")) {
+		if (ceiling.equals(StringPool.STAR)) {
 			_ceiling = INFINITE_VERSION;
 		}
 		else {
@@ -490,7 +494,7 @@ public class VersionRange implements Serializable {
 		boolean openFloor, Version floor, Version ceiling,
 		boolean openCeiling) {
 
-		StringBuffer sb = new StringBuffer(32);
+		StringBundler sb = new StringBundler(4);
 
 		if (INFINITE_VERSION.equals(ceiling)) {
 			if (Version.emptyVersion.equals(floor)) {
@@ -502,10 +506,10 @@ public class VersionRange implements Serializable {
 		}
 		else {
 			if (openFloor) {
-				sb.append("(");
+				sb.append(StringPool.OPEN_PARENTHESIS);
 			}
 			else {
-				sb.append("[");
+				sb.append(StringPool.OPEN_BRACKET);
 			}
 
 			if (Version.emptyVersion.equals(floor)) {
@@ -515,13 +519,13 @@ public class VersionRange implements Serializable {
 				sb.append(floor.toString());
 			}
 
-			sb.append(",");
+			sb.append(StringPool.COMMA);
 
 			if (openCeiling) {
-				sb.append(")");
+				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 			else {
-				sb.append("]");
+				sb.append(StringPool.CLOSE_BRACKET);
 			}
 		}
 
@@ -564,10 +568,11 @@ public class VersionRange implements Serializable {
 			_removeable[i] = Character.isWhitespace(i);
 		}
 
-		_removeable['"'] = true;
+		_removeable[CharPool.QUOTE] = true;
 
 		INFINITE_VERSION = new Version(
-			Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, "");
+			Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE,
+			StringPool.BLANK);
 
 		ANY_VERSION = new VersionRange(
 			false, Version.emptyVersion, VersionRange.INFINITE_VERSION, true);

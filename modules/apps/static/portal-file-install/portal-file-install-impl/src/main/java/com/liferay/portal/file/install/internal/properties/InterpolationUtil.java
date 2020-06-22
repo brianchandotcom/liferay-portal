@@ -14,6 +14,7 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
@@ -319,7 +320,8 @@ public class InterpolationUtil {
 			}
 			else {
 				throw new IllegalArgumentException(
-					"Bad substitution: ${" + original + "}");
+					"Bad substitution: ${" + original +
+						StringPool.CLOSE_CURLY_BRACE);
 			}
 		}
 
@@ -381,7 +383,9 @@ public class InterpolationUtil {
 		while ((escape >= 0) && (escape < (value.length() - 1))) {
 			char c = value.charAt(escape + 1);
 
-			if ((c == '{') || (c == '}') || (c == _ESCAPE_CHAR)) {
+			if ((c == CharPool.OPEN_CURLY_BRACE) ||
+				(c == CharPool.CLOSE_CURLY_BRACE) || (c == _ESCAPE_CHAR)) {
+
 				value =
 					value.substring(0, escape) + value.substring(escape + 1);
 			}

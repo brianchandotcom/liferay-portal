@@ -17,6 +17,7 @@ package com.liferay.portal.file.install.internal.version;
 import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Map;
 
@@ -34,10 +35,11 @@ public final class VersionTable {
 	public static Version getVersion(
 		int major, int minor, int micro, String qualifier) {
 
-		String key = StringBundler.concat(major, ".", minor, ".", micro);
+		String key = StringBundler.concat(
+			major, StringPool.PERIOD, minor, StringPool.PERIOD, micro);
 
 		if ((qualifier != null) && (qualifier.length() != 0)) {
-			key = key + "." + qualifier;
+			key = key + StringPool.PERIOD + qualifier;
 		}
 
 		synchronized (_versions) {

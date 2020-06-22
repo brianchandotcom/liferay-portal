@@ -161,9 +161,13 @@ export default function FloatingToolbar({
 
 	useEffect(() => {
 		alignElement(toolbarRef.current, itemElement, () => {
-			alignElement(panelRef.current, toolbarRef.current, () => {
-				setHidden(false);
-			});
+			alignElement(
+				panelRef.current,
+				toolbarRef.current || itemElement,
+				() => {
+					setHidden(false);
+				}
+			);
 		});
 	}, [
 		alignElement,
@@ -272,59 +276,70 @@ export default function FloatingToolbar({
 		}
 	}, [panelId, show]);
 
+	useEffect(() => {
+		if (show && buttons.length === 1) {
+			const [button] = buttons;
+
+			if (button.panelId && button.panelId !== panelId) {
+				setPanelId(button.panelId);
+			}
+		}
+	}, [buttons, panelId, show]);
+
 	return (
-		show &&
-		buttons.length > 0 && (
+		show && (
 			<div onClick={(event) => event.stopPropagation()}>
-				{createPortal(
-					<div
-						className={classNames(
-							'p-2',
-							'page-editor__floating-toolbar',
-							'position-fixed',
-							{
-								'page-editor__floating-toolbar--hidden': hidden,
-							}
-						)}
-						onMouseOver={(event) => {
-							event.stopPropagation();
-							hoverItem(null);
-						}}
-						ref={toolbarRef}
-					>
-						<div className="popover position-static">
-							<div className="d-flex p-2 popover-body">
-								{buttons.map((button) => (
-									<ClayButtonWithIcon
-										borderless
-										className={classNames(
-											'mx-1',
-											button.className,
-											{
-												active:
-													button.panelId === panelId,
-												'lfr-portal-tooltip':
-													button.title,
+				{(buttons.length > 1 || (buttons.length > 0 && !panelId)) &&
+					createPortal(
+						<div
+							className={classNames(
+								'p-2',
+								'page-editor__floating-toolbar',
+								'position-fixed',
+								{
+									'page-editor__floating-toolbar--hidden': hidden,
+								}
+							)}
+							onMouseOver={(event) => {
+								event.stopPropagation();
+								hoverItem(null);
+							}}
+							ref={toolbarRef}
+						>
+							<div className="popover position-static">
+								<div className="d-flex p-2 popover-body">
+									{buttons.map((button) => (
+										<ClayButtonWithIcon
+											borderless
+											className={classNames(
+												'mx-1',
+												button.className,
+												{
+													active:
+														button.panelId ===
+														panelId,
+													'lfr-portal-tooltip':
+														button.title,
+												}
+											)}
+											displayType="secondary"
+											key={button.id}
+											onClick={() =>
+												handleButtonClick(
+													button.id,
+													button.panelId
+												)
 											}
-										)}
-										displayType="secondary"
-										key={button.id}
-										onClick={() =>
-											handleButtonClick(
-												button.id,
-												button.panelId
-											)
-										}
-										small
-										symbol={button.icon}
-										title={button.title}
-									/>
-								))}
+											small
+											symbol={button.icon}
+											title={button.title}
+										/>
+									))}
+								</div>
 							</div>
-						</div>
-					</div>,
-					document.body
-				)}
+						</div>,
+						document.body
+					)}
 				{PanelComponent &&
 					createPortal(
 						<div

@@ -65,11 +65,6 @@ public class RegistryWrapper implements Registry {
 	}
 
 	@Override
-	public long getLastModified(ClassLoader classLoader) {
-		return _registry.getLastModified(classLoader);
-	}
-
-	@Override
 	public Registry getRegistry() throws SecurityException {
 		return this;
 	}

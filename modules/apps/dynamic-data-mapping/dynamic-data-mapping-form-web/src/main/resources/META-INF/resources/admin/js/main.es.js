@@ -198,8 +198,7 @@ class Form extends Component {
 			if (published) {
 				this._showPublishedAlert(this._createFormURL());
 				shareURLButton.removeAttribute('title');
-			}
-			else {
+			} else {
 				this._showUnpublishedAlert();
 			}
 		}
@@ -526,7 +525,7 @@ class Form extends Component {
 							url={this._createFormURL()}
 						/>
 					)}
-				</div>
+				</ClayLayout.ContainerFluid>
 			</div>
 		);
 	}
@@ -587,8 +586,7 @@ class Form extends Component {
 			this.refs.ruleBuilder.showRuleCreation();
 
 			this.hideAddButton();
-		}
-		else {
+		} else {
 			this.openSidebar();
 		}
 	}
@@ -606,8 +604,7 @@ class Form extends Component {
 			editor.create();
 
 			promise = Promise.resolve(CKEDITOR.instances[editorName]);
-		}
-		else {
+		} else {
 			promise = new Promise((resolve) => {
 				Liferay.on('editorAPIReady', (event) => {
 					if (event.editorName === editorName) {
@@ -677,8 +674,7 @@ class Form extends Component {
 
 		if (settingsDDMForm) {
 			promise = Promise.resolve(settingsDDMForm);
-		}
-		else {
+		} else {
 			promise = Liferay.componentReady('settingsDDMForm');
 		}
 
@@ -1014,8 +1010,7 @@ class Form extends Component {
 
 		if (show) {
 			formReport.classList.remove('hide');
-		}
-		else {
+		} else {
 			formReport.classList.add('hide');
 		}
 	}
@@ -1029,15 +1024,13 @@ class Form extends Component {
 
 		if (show) {
 			managementToolbar.classList.remove('hide');
-		}
-		else {
+		} else {
 			managementToolbar.classList.add('hide');
 		}
 
 		if (this.refs.ruleBuilder.isViewMode()) {
 			this.showAddButton();
-		}
-		else {
+		} else {
 			this.hideAddButton();
 		}
 	}
@@ -1049,8 +1042,7 @@ class Form extends Component {
 
 		if (savedAsDraft) {
 			message = Liferay.Language.get('draft-x');
-		}
-		else {
+		} else {
 			message = Liferay.Language.get('saved-x');
 		}
 
@@ -1063,7 +1055,6 @@ class Form extends Component {
 }
 
 Form.PROPS = {
-
 	/**
 	 * @default undefined
 	 * @instance
@@ -1305,7 +1296,6 @@ Form.PROPS = {
 };
 
 Form.STATE = {
-
 	/**
 	 * Current active tab index.
 	 * @default

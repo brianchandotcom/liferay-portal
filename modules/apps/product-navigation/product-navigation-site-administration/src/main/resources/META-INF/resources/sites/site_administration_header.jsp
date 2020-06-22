@@ -47,7 +47,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 				</a>
 			</c:when>
 			<c:otherwise>
-				<span class="collapse-icon collapse-icon-middle panel-toggler site-administration-toggler" data-qa-id="productMenuSiteAdministrationPanelCategory">
+				<span class="collapse-icon" data-qa-id="productMenuSiteAdministrationPanelCategory">
 					<%@ include file="/sites/site_administration_header_title.jspf" %>
 				</span>
 			</c:otherwise>

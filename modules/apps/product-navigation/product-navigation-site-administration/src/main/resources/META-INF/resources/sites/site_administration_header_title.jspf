@@ -161,15 +161,18 @@
 			})();
 		</script>
 	</c:if>
-</clay:content-row>
 
-<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
-	<clay:sticker
-		cssClass="panel-notifications-count"
-		displayType="warning"
-		position="top-right"
-		size="sm"
-	>
-		<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %>
-	</clay:sticker>
-</c:if>
+	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
+		<clay:content-col
+			cssClass="autofit-col-end"
+		>
+			<clay:sticker
+				cssClass="mr-0 panel-notifications-count"
+				displayType="warning"
+				size="sm"
+			>
+				<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %>
+			</clay:sticker>
+		</clay:content-col>
+	</c:if>
+</clay:content-row>

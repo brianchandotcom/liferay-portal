@@ -14,6 +14,9 @@
 
 package com.liferay.portal.file.install.internal.properties;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.io.File;
@@ -278,13 +281,13 @@ public class Properties extends AbstractMap<String, String> {
 
 		String escapedKey = _escapeKey(key);
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		if (valueLines.isEmpty()) {
-			valueLines.add(escapedKey + "=");
+			valueLines.add(escapedKey + StringPool.EQUAL);
 
 			sb.append(escapedKey);
-			sb.append("=");
+			sb.append(StringPool.EQUAL);
 		}
 		else {
 			String value = valueLines.get(0);
@@ -554,7 +557,7 @@ public class Properties extends AbstractMap<String, String> {
 			_commentLines.clear();
 			_valueLines.clear();
 
-			StringBuffer buffer = new StringBuffer();
+			StringBundler sb = new StringBundler();
 
 			while (true) {
 				String line = readLine();
@@ -586,14 +589,14 @@ public class Properties extends AbstractMap<String, String> {
 					line = line.substring(1);
 				}
 
-				buffer.append(line);
+				sb.append(line);
 
 				if (!combine) {
 					break;
 				}
 			}
 
-			return buffer.toString();
+			return sb.toString();
 		}
 
 		private static boolean _checkCombineLines(String line) {
@@ -619,8 +622,8 @@ public class Properties extends AbstractMap<String, String> {
 
 			String[] result = new String[2];
 
-			StringBuffer key = new StringBuffer();
-			StringBuffer value = new StringBuffer();
+			StringBundler keySB = new StringBundler();
+			StringBundler valueSB = new StringBundler();
 
 			// state of the automaton:
 			// 0: key parsing
@@ -651,7 +654,7 @@ public class Properties extends AbstractMap<String, String> {
 						state = 3;
 					}
 					else {
-						key.append(c);
+						keySB.append(c);
 					}
 				}
 				else if (state == 1) {
@@ -659,14 +662,14 @@ public class Properties extends AbstractMap<String, String> {
 
 						// this is an escaped separator or white space
 
-						key.append(c);
+						keySB.append(c);
 					}
 					else {
 
 						// another escaped character, the '\' is preserved
 
-						key.append('\\');
-						key.append(c);
+						keySB.append('\\');
+						keySB.append(c);
 					}
 
 					// return to the key parsing state
@@ -691,7 +694,7 @@ public class Properties extends AbstractMap<String, String> {
 						// any other character indicates we encoutered the
 						// beginning of the value
 
-						value.append(c);
+						valueSB.append(c);
 
 						// switch to the value parsing state
 
@@ -710,7 +713,7 @@ public class Properties extends AbstractMap<String, String> {
 						// any other character indicates we encoutered the
 						// beginning of the value
 
-						value.append(c);
+						valueSB.append(c);
 
 						// switch to the value parsing state
 
@@ -718,12 +721,12 @@ public class Properties extends AbstractMap<String, String> {
 					}
 				}
 				else if (state == 4) {
-					value.append(c);
+					valueSB.append(c);
 				}
 			}
 
-			result[0] = key.toString();
-			result[1] = value.toString();
+			result[0] = keySB.toString();
+			result[1] = valueSB.toString();
 
 			return result;
 		}
@@ -835,7 +838,7 @@ public class Properties extends AbstractMap<String, String> {
 
 		int length = string.length();
 
-		StringBuffer stringBuffer = new StringBuffer(length * 2);
+		StringBundler sb = new StringBundler(length * 2);
 
 		for (int i = 0; i < length; i++) {
 			char c = string.charAt(i);
@@ -843,69 +846,69 @@ public class Properties extends AbstractMap<String, String> {
 			// handle unicode
 
 			if (c > 0xfff) {
-				stringBuffer.append("\\u");
-				stringBuffer.append(_hex(c));
+				sb.append("\\u");
+				sb.append(_hex(c));
 			}
 			else if (c > 0xff) {
-				stringBuffer.append("\\u0");
-				stringBuffer.append(_hex(c));
+				sb.append("\\u0");
+				sb.append(_hex(c));
 			}
 			else if (c > 0x7f) {
-				stringBuffer.append("\\u00");
-				stringBuffer.append(_hex(c));
+				sb.append("\\u00");
+				sb.append(_hex(c));
 			}
 			else if (c < 32) {
 				if (c == 'b') {
-					stringBuffer.append('\\');
-					stringBuffer.append('b');
+					sb.append('\\');
+					sb.append('b');
 				}
 				else if (c == 'n') {
-					stringBuffer.append('\\');
-					stringBuffer.append('n');
+					sb.append('\\');
+					sb.append('n');
 				}
 				else if (c == 't') {
-					stringBuffer.append('\\');
-					stringBuffer.append('t');
+					sb.append('\\');
+					sb.append('t');
 				}
 				else if (c == 'f') {
-					stringBuffer.append('\\');
-					stringBuffer.append('f');
+					sb.append('\\');
+					sb.append('f');
 				}
 				else if (c == 'r') {
-					stringBuffer.append('\\');
-					stringBuffer.append('r');
+					sb.append('\\');
+					sb.append('r');
 				}
 				else {
 					if (c > 0xf) {
-						stringBuffer.append("\\u00");
-						stringBuffer.append(_hex(c));
+						sb.append("\\u00");
+						sb.append(_hex(c));
 					}
 					else {
-						stringBuffer.append("\\u000");
-						stringBuffer.append(_hex(c));
+						sb.append("\\u000");
+						sb.append(_hex(c));
 					}
 				}
 			}
 			else {
-				if (c == '"') {
-					stringBuffer.append('\\');
-					stringBuffer.append('"');
+				if (c == CharPool.QUOTE) {
+					sb.append('\\');
+					sb.append(CharPool.QUOTE);
 				}
 				else if (c == '\\') {
-					stringBuffer.append('\\');
-					stringBuffer.append('\\');
+					sb.append('\\');
+					sb.append('\\');
 				}
 				else {
-					stringBuffer.append(c);
+					sb.append(c);
 				}
 			}
 		}
 
-		return stringBuffer.toString();
+		return sb.toString();
 	}
 
 	private static String _escapeKey(String key) {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBundler sb = new StringBundler();
 
 		for (int i = 0; i < key.length(); i++) {
 			char c = key.charAt(i);
@@ -914,15 +917,15 @@ public class Properties extends AbstractMap<String, String> {
 
 				// escape the separator
 
-				stringBuffer.append('\\');
-				stringBuffer.append(c);
+				sb.append('\\');
+				sb.append(c);
 			}
 			else {
-				stringBuffer.append(c);
+				sb.append(c);
 			}
 		}
 
-		return stringBuffer.toString();
+		return sb.toString();
 	}
 
 	private static String _hex(char ch) {
@@ -952,7 +955,7 @@ public class Properties extends AbstractMap<String, String> {
 
 		int size = string.length();
 
-		StringBuffer stringBuffer = new StringBuffer(size);
+		StringBundler sb = new StringBundler(size);
 
 		StringBuffer unicode = new StringBuffer(_UNICODE_LEN);
 
@@ -979,7 +982,7 @@ public class Properties extends AbstractMap<String, String> {
 						int value = Integer.parseInt(
 							unicode.toString(), _HEX_RADIX);
 
-						stringBuffer.append((char)value);
+						sb.append((char)value);
 
 						unicode.setLength(0);
 
@@ -1004,34 +1007,34 @@ public class Properties extends AbstractMap<String, String> {
 				hadSlash = false;
 
 				if (c == '\\') {
-					stringBuffer.append("\\");
+					sb.append("\\");
 				}
-				else if (c == '\'') {
-					stringBuffer.append('\'');
+				else if (c == CharPool.APOSTROPHE) {
+					sb.append(CharPool.APOSTROPHE);
 				}
-				else if (c == '"') {
-					stringBuffer.append('"');
+				else if (c == CharPool.QUOTE) {
+					sb.append(CharPool.QUOTE);
 				}
 				else if (c == 'r') {
-					stringBuffer.append('\r');
+					sb.append('\r');
 				}
 				else if (c == 'f') {
-					stringBuffer.append('\f');
+					sb.append('\f');
 				}
 				else if (c == 't') {
-					stringBuffer.append('\t');
+					sb.append('\t');
 				}
 				else if (c == 'n') {
-					stringBuffer.append('\n');
+					sb.append('\n');
 				}
 				else if (c == 'b') {
-					stringBuffer.append('\b');
+					sb.append('\b');
 				}
 				else if (c == 'u') {
 					inUnicode = true;
 				}
 				else {
-					stringBuffer.append(c);
+					sb.append(c);
 				}
 
 				continue;
@@ -1042,7 +1045,7 @@ public class Properties extends AbstractMap<String, String> {
 				continue;
 			}
 
-			stringBuffer.append(c);
+			sb.append(c);
 		}
 
 		if (hadSlash) {
@@ -1050,10 +1053,10 @@ public class Properties extends AbstractMap<String, String> {
 			// then we're in the weird case of a \ at the end of the
 			// string, let's output it anyway.
 
-			stringBuffer.append('\\');
+			sb.append('\\');
 		}
 
-		return stringBuffer.toString();
+		return sb.toString();
 	}
 
 	private int _checkHeaderComment(List<String> commentLines) {
@@ -1088,11 +1091,11 @@ public class Properties extends AbstractMap<String, String> {
 	private static final String _LINE_SEPARATOR = System.getProperty(
 		"line.separator");
 
-	private static final char[] _SEPARATORS = {'=', ':'};
+	private static final char[] _SEPARATORS = {CharPool.EQUAL, CharPool.COLON};
 
 	private static final int _UNICODE_LEN = 4;
 
-	private static final char[] _WHITE_SPACE = {' ', '\t', '\f'};
+	private static final char[] _WHITE_SPACE = {CharPool.SPACE, '\t', '\f'};
 
 	private InterpolationUtil.SubstitutionCallback _callback;
 	private List<String> _footer;

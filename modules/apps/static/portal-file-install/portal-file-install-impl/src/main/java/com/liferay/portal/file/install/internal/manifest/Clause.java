@@ -14,6 +14,9 @@
 
 package com.liferay.portal.file.install.internal.manifest;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
 /**
  * @author Matthew Tambara
  */
@@ -59,22 +62,22 @@ public class Clause {
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer();
+		StringBundler sb = new StringBundler();
 
 		sb.append(_name);
 
 		if (_directives != null) {
 			for (Directive directive : _directives) {
-				sb.append(";");
+				sb.append(StringPool.SEMICOLON);
 				sb.append(directive.getName());
 				sb.append(":=");
 
 				String value = directive.getValue();
 
-				if (value.contains(",")) {
-					sb.append("\"");
+				if (value.contains(StringPool.COMMA)) {
+					sb.append(StringPool.QUOTE);
 					sb.append(value);
-					sb.append("\"");
+					sb.append(StringPool.QUOTE);
 				}
 				else {
 					sb.append(value);
@@ -84,16 +87,16 @@ public class Clause {
 
 		if (_attributes != null) {
 			for (Attribute attribute : _attributes) {
-				sb.append(";");
+				sb.append(StringPool.SEMICOLON);
 				sb.append(attribute.getName());
-				sb.append("=");
+				sb.append(StringPool.EQUAL);
 
 				String value = attribute.getValue();
 
-				if (value.contains(",")) {
-					sb.append("\"");
+				if (value.contains(StringPool.COMMA)) {
+					sb.append(StringPool.QUOTE);
 					sb.append(value);
-					sb.append("\"");
+					sb.append(StringPool.QUOTE);
 				}
 				else {
 					sb.append(value);

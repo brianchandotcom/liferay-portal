@@ -14,6 +14,10 @@
 
 package com.liferay.portal.file.install.internal.version;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,7 +37,7 @@ public final class VersionCleaner {
 			return clean;
 		}
 
-		StringBuffer result = new StringBuffer();
+		StringBundler sb = new StringBundler();
 
 		Matcher matcher = _fuzzyVersion.matcher(version);
 
@@ -44,61 +48,62 @@ public final class VersionCleaner {
 			String qualifier = matcher.group(7);
 
 			if (major != null) {
-				result.append(major);
+				sb.append(major);
 
 				if (minor != null) {
-					result.append(".");
-					result.append(minor);
+					sb.append(StringPool.PERIOD);
+					sb.append(minor);
 
 					if (micro != null) {
-						result.append(".");
-						result.append(micro);
+						sb.append(StringPool.PERIOD);
+						sb.append(micro);
 
 						if (qualifier != null) {
-							result.append(".");
+							sb.append(StringPool.PERIOD);
 
-							_cleanupModifier(result, qualifier);
+							_cleanupModifier(sb, qualifier);
 						}
 					}
 					else if (qualifier != null) {
-						result.append(".0.");
+						sb.append(".0.");
 
-						_cleanupModifier(result, qualifier);
+						_cleanupModifier(sb, qualifier);
 					}
 					else {
-						result.append(".0");
+						sb.append(".0");
 					}
 				}
 				else if (qualifier != null) {
-					result.append(".0.0.");
+					sb.append(".0.0.");
 
-					_cleanupModifier(result, qualifier);
+					_cleanupModifier(sb, qualifier);
 				}
 				else {
-					result.append(".0.0");
+					sb.append(".0.0");
 				}
 			}
 		}
 		else {
-			result.append("0.0.0.");
+			sb.append("0.0.0.");
 
-			_cleanupModifier(result, version);
+			_cleanupModifier(sb, version);
 		}
 
-		return result.toString();
+		return sb.toString();
 	}
 
-	private static void _cleanupModifier(StringBuffer result, String modifier) {
+	private static void _cleanupModifier(StringBundler sb, String modifier) {
 		for (int i = 0; i < modifier.length(); i++) {
 			char c = modifier.charAt(i);
 
 			if (((c >= '0') && (c <= '9')) || ((c >= 'a') && (c <= 'z')) ||
-				((c >= 'A') && (c <= 'Z')) || (c == '_') || (c == '-')) {
+				((c >= 'A') && (c <= 'Z')) || (c == CharPool.UNDERLINE) ||
+				(c == CharPool.DASH)) {
 
-				result.append(c);
+				sb.append(c);
 			}
 			else {
-				result.append('_');
+				sb.append('_');
 			}
 		}
 	}
@@ -117,7 +122,7 @@ public final class VersionCleaner {
 				state++;
 			}
 			else if ((state == 1) || (state == 3) || (state == 5)) {
-				if (c == '.') {
+				if (c == CharPool.PERIOD) {
 					state++;
 				}
 				else if ((c < '0') || (c > '9')) {
@@ -125,7 +130,7 @@ public final class VersionCleaner {
 				}
 			}
 			else if (state == 6) {
-				if (c == '.') {
+				if (c == CharPool.PERIOD) {
 					return null;
 				}
 			}

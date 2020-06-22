@@ -14,6 +14,9 @@
 
 package com.liferay.portal.file.install.internal.manifest;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +35,13 @@ public final class Parser {
 		List<Clause> completeList = new ArrayList<>();
 
 		for (String clause : clauses) {
-			String[] tokens = parseDelimitedString(clause, ";");
+			String[] tokens = parseDelimitedString(
+				clause, StringPool.SEMICOLON);
 
 			int pathCount = 0;
 
 			for (String token : tokens) {
-				if (token.indexOf('=') != -1) {
+				if (token.indexOf(CharPool.EQUAL) != -1) {
 					break;
 				}
 
@@ -66,19 +70,19 @@ public final class Parser {
 
 				String piece = tokens[pieceIndex];
 
-				index = piece.indexOf("=");
+				index = piece.indexOf(StringPool.EQUAL);
 
 				if (index <= 0) {
 					throw new IllegalArgumentException(
 						"Not a directive/attribute: " + clause);
 				}
 
-				if (piece.charAt(index - 1) == ':') {
+				if (piece.charAt(index - 1) == CharPool.COLON) {
 					index--;
 					separator = ":=";
 				}
 				else {
-					separator = "=";
+					separator = StringPool.EQUAL;
 				}
 
 				String key = piece.substring(0, index);
@@ -89,7 +93,9 @@ public final class Parser {
 
 				value = value.trim();
 
-				if (value.startsWith("\"") && value.endsWith("\"")) {
+				if (value.startsWith(StringPool.QUOTE) &&
+					value.endsWith(StringPool.QUOTE)) {
+
 					value = value.substring(1, value.length() - 1);
 				}
 
@@ -151,11 +157,11 @@ public final class Parser {
 
 				expecting = _CHAR | _DELIMITER | _STARTQUOTE;
 			}
-			else if ((c == '"') && ((expecting & _STARTQUOTE) > 0)) {
+			else if ((c == CharPool.QUOTE) && ((expecting & _STARTQUOTE) > 0)) {
 				sb.append(c);
 				expecting = _CHAR | _ENDQUOTE;
 			}
-			else if ((c == '"') && ((expecting & _ENDQUOTE) > 0)) {
+			else if ((c == CharPool.QUOTE) && ((expecting & _ENDQUOTE) > 0)) {
 				sb.append(c);
 				expecting = _CHAR | _STARTQUOTE | _DELIMITER;
 			}
@@ -190,7 +196,7 @@ public final class Parser {
 					"The header cannot be an empty string");
 			}
 
-			String[] headers = parseDelimitedString(header, ",");
+			String[] headers = parseDelimitedString(header, StringPool.COMMA);
 
 			clauses = parseClauses(headers);
 		}

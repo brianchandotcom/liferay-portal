@@ -330,7 +330,7 @@ public class ConfigInstaller
 		String logString = StringPool.BLANK;
 
 		if (pid[1] != null) {
-			logString = "-" + pid[1];
+			logString = StringPool.DASH + pid[1];
 		}
 
 		Util.log(
@@ -402,16 +402,17 @@ public class ConfigInstaller
 		}
 
 		if (factoryPid != null) {
-			return _configurationAdmin.createFactoryConfiguration(pid, "?");
+			return _configurationAdmin.createFactoryConfiguration(
+				pid, StringPool.QUESTION);
 		}
 
-		return _configurationAdmin.getConfiguration(pid, "?");
+		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
 	}
 
 	private String[] _parsePid(String path) {
 		String pid = path.substring(0, path.lastIndexOf(CharPool.PERIOD));
 
-		int index = pid.indexOf('-');
+		int index = pid.indexOf(CharPool.DASH);
 
 		if (index > 0) {
 			String factoryPid = pid.substring(index + 1);
@@ -435,7 +436,7 @@ public class ConfigInstaller
 
 			boolean xml = false;
 
-			if (inputStream.read() == '<') {
+			if (inputStream.read() == CharPool.LESS_THAN) {
 				xml = true;
 			}
 

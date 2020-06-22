@@ -16,6 +16,8 @@ package com.liferay.portal.file.install.internal.properties;
 
 import static com.liferay.portal.file.install.internal.properties.InterpolationUtil.substVars;
 
+import com.liferay.petra.string.CharPool;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -400,13 +402,17 @@ public class TypedProperties extends AbstractMap<String, Object> {
 
 						char t = string.charAt(0);
 
-						if ((t == '[') || (t == '(')) {
+						if ((t == CharPool.OPEN_BRACKET) ||
+							(t == CharPool.OPEN_PARENTHESIS)) {
+
 							mult = true;
 						}
 						else {
 							t = string.charAt(1);
 
-							if ((t == '[') || (t == '(')) {
+							if ((t == CharPool.OPEN_BRACKET) ||
+								(t == CharPool.OPEN_PARENTHESIS)) {
+
 								mult = true;
 							}
 

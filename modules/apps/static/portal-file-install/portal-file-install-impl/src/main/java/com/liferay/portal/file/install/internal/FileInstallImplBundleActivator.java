@@ -212,7 +212,7 @@ public class FileInstallImplBundleActivator
 
 			String dirs = map.get(DirectoryWatcher.DIR);
 
-			if ((dirs != null) && (dirs.indexOf(',') != -1)) {
+			if ((dirs != null) && (dirs.indexOf(CharPool.COMMA) != -1)) {
 				int index = 0;
 
 				for (String dir : StringUtil.split(dirs, CharPool.COMMA)) {

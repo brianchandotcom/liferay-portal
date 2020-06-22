@@ -22,7 +22,6 @@ import ImageRenderer from './ImageRenderer';
 import LabelRenderer from './LabelRenderer';
 import LinkRenderer from './LinkRenderer';
 import ListRenderer from './ListRenderer';
-import ModalLinkRenderer from './ModalLinkRenderer';
 import QuantitySelectorRenderer from './QuantitySelectorRenderer';
 import StatusRenderer from './StatusRenderer';
 import TooltipPriceRenderer from './TooltipPriceRenderer';
@@ -37,7 +36,6 @@ const dataRenderers = {
 	label: LabelRenderer,
 	link: LinkRenderer,
 	list: ListRenderer,
-	modalLink: ModalLinkRenderer,
 	quantitySelector: QuantitySelectorRenderer,
 	status: StatusRenderer,
 	tooltipPrice: TooltipPriceRenderer,

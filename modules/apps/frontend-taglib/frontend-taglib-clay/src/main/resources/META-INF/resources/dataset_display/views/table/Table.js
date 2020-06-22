@@ -88,15 +88,12 @@ function CustomTableCell({
 
 function getItemFields(item, fields, itemId, itemsActions) {
 	return fields.map((field, i) => {
-		const fieldName = field.fieldName;
-		const {actionItems, ...otherProps} = item;
-		const rawValue = getValueFromItem(item, fieldName);
+		const {actionItems, comments} = item;
+		const rawValue = getValueFromItem(item, field.fieldName);
 		const formattedValue = field.mapData
 			? field.mapData(rawValue)
 			: rawValue;
-		const comment = otherProps.comments
-			? otherProps.comments[field.fieldName]
-			: null;
+		const comment = comments ? comments[field.fieldName] : null;
 
 		return (
 			<CustomTableCell
@@ -104,7 +101,7 @@ function getItemFields(item, fields, itemId, itemsActions) {
 				comment={comment}
 				itemData={item}
 				itemId={itemId}
-				key={fieldName || i}
+				key={field.fieldName || i}
 				options={field}
 				value={formattedValue}
 				view={{

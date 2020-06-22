@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.language;
 
-import com.liferay.petra.concurrent.ConcurrentReferenceValueHashMap;
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringPool;
 
@@ -29,6 +29,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Raymond Augé
@@ -56,60 +57,39 @@ public class UTF8Control extends ResourceBundle.Control {
 			return null;
 		}
 
+		if (!reload) {
+			Map<URL, ResourceBundle> resourceBundles = _resourceBundlesMap.get(
+				classLoader);
+
+			if (resourceBundles != null) {
+				ResourceBundle resourceBundle = resourceBundles.get(url);
+
+				if (resourceBundle != null) {
+					return resourceBundle;
+				}
+			}
+		}
+
 		URLConnection urlConnection = url.openConnection();
 
 		urlConnection.setUseCaches(!reload);
-
-		if (!reload) {
-			CachedResourceBundle cachedResourceBundle =
-				_cachedResourceBundles.get(url);
-
-			if ((cachedResourceBundle != null) &&
-				(urlConnection.getLastModified() <=
-					cachedResourceBundle.getLastModified())) {
-
-				return cachedResourceBundle.getResourceBundle();
-			}
-		}
 
 		try (InputStream inputStream = urlConnection.getInputStream()) {
 			ResourceBundle resourceBundle = new PropertyResourceBundle(
 				new InputStreamReader(inputStream, StringPool.UTF8));
 
-			CachedResourceBundle cachedResourceBundle =
-				new CachedResourceBundle(
-					resourceBundle, urlConnection.getLastModified());
+			Map<URL, ResourceBundle> resourceBundles =
+				_resourceBundlesMap.computeIfAbsent(
+					classLoader, key -> new ConcurrentHashMap<>());
 
-			_cachedResourceBundles.put(url, cachedResourceBundle);
+			resourceBundles.put(url, resourceBundle);
 
 			return resourceBundle;
 		}
 	}
 
-	private static final Map<URL, CachedResourceBundle> _cachedResourceBundles =
-		new ConcurrentReferenceValueHashMap<>(
-			FinalizeManager.SOFT_REFERENCE_FACTORY);
-
-	private static final class CachedResourceBundle {
-
-		public CachedResourceBundle(
-			ResourceBundle resourceBundle, long lastModified) {
-
-			_resourceBundle = resourceBundle;
-			_lastModified = lastModified;
-		}
-
-		public long getLastModified() {
-			return _lastModified;
-		}
-
-		public ResourceBundle getResourceBundle() {
-			return _resourceBundle;
-		}
-
-		private final long _lastModified;
-		private final ResourceBundle _resourceBundle;
-
-	}
+	private static final Map<ClassLoader, Map<URL, ResourceBundle>>
+		_resourceBundlesMap = new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 
 }

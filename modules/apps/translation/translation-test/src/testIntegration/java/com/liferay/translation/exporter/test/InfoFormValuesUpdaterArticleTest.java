@@ -38,8 +38,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
 import com.liferay.translation.info.InfoFormValuesUpdater;
-
-import java.io.InputStream;
+import com.liferay.translation.test.util.TranslationTestUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -91,97 +90,85 @@ public class InfoFormValuesUpdaterArticleTest {
 
 	@Test
 	public void testUpdateArticleFromInfoFormValues() throws Exception {
-		try (InputStream is =
-				XLIFFTranslationInfoFormValuesImporterTest.class.
-					getResourceAsStream(
-						"/com/liferay/translation/exporter/test/dependencies" +
-							"/test-journal-article_122.xlf")) {
+		Map<Locale, String> contentMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
-			Map<Locale, String> contentMap = HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build();
+		Map<Locale, String> descriptionMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
-			Map<Locale, String> descriptionMap = HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build();
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
-			Map<Locale, String> titleMap = HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build();
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class), titleMap,
+			descriptionMap, contentMap, LocaleUtil.getSiteDefault(), false,
+			true, _serviceContext);
 
-			JournalArticle article = JournalTestUtil.addArticle(
-				_group.getGroupId(), 0,
-				PortalUtil.getClassNameId(JournalArticle.class), titleMap,
-				descriptionMap, contentMap, LocaleUtil.getSiteDefault(), false,
-				true, _serviceContext);
+		InfoFormValues infoFormValues =
+			_xliffTranslationInfoFormValuesImporter.importXLIFF(
+				_group.getGroupId(),
+				new InfoItemClassPKReference(
+					JournalArticle.class.getName(), 122),
+				TranslationTestUtil.readFileToInputStream(
+					"test-journal-article_122.xlf"));
 
-			InfoFormValues infoFormValues =
-				_xliffTranslationInfoFormValuesImporter.importXLIFF(
-					_group.getGroupId(),
-					new InfoItemClassPKReference(
-						JournalArticle.class.getName(), 122),
-					is);
+		JournalArticle journalArticle =
+			_infoFormValuesUpdater.updateFromInfoFormValues(
+				article, infoFormValues);
 
-			JournalArticle journalArticle =
-				_infoFormValuesUpdater.updateFromInfoFormValues(
-					article, infoFormValues);
+		Assert.assertEquals(
+			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
 
-			Assert.assertEquals(
-				"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
-
-			Assert.assertEquals(
-				"Este es el resumen",
-				journalArticle.getDescription(LocaleUtil.SPAIN));
-		}
+		Assert.assertEquals(
+			"Este es el resumen",
+			journalArticle.getDescription(LocaleUtil.SPAIN));
 	}
 
 	@Test
 	public void testUpdateArticleFromInfoFormValuesOnlyTitle()
 		throws Exception {
 
-		try (InputStream is =
-				XLIFFTranslationInfoFormValuesImporterTest.class.
-					getResourceAsStream(
-						"/com/liferay/translation/exporter/test/dependencies" +
-							"/test-journal-article_122_only_title.xlf")) {
+		Map<Locale, String> contentMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
-			Map<Locale, String> contentMap = HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build();
+		Map<Locale, String> descriptionMap = HashMapBuilder.put(
+			LocaleUtil.SPAIN, "Descripcion"
+		).put(
+			LocaleUtil.US, "description"
+		).build();
 
-			Map<Locale, String> descriptionMap = HashMapBuilder.put(
-				LocaleUtil.SPAIN, "Descripcion"
-			).put(
-				LocaleUtil.US, "description"
-			).build();
+		Map<Locale, String> titleMap = HashMapBuilder.put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
 
-			Map<Locale, String> titleMap = HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build();
+		JournalArticle article = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class), titleMap,
+			descriptionMap, contentMap, LocaleUtil.getSiteDefault(), false,
+			true, _serviceContext);
 
-			JournalArticle article = JournalTestUtil.addArticle(
-				_group.getGroupId(), 0,
-				PortalUtil.getClassNameId(JournalArticle.class), titleMap,
-				descriptionMap, contentMap, LocaleUtil.getSiteDefault(), false,
-				true, _serviceContext);
+		InfoFormValues infoFormValues =
+			_xliffTranslationInfoFormValuesImporter.importXLIFF(
+				_group.getGroupId(),
+				new InfoItemClassPKReference(
+					JournalArticle.class.getName(), 122),
+				TranslationTestUtil.readFileToInputStream(
+					"test-journal-article_122_only_title.xlf"));
 
-			InfoFormValues infoFormValues =
-				_xliffTranslationInfoFormValuesImporter.importXLIFF(
-					_group.getGroupId(),
-					new InfoItemClassPKReference(
-						JournalArticle.class.getName(), 122),
-					is);
+		JournalArticle journalArticle =
+			_infoFormValuesUpdater.updateFromInfoFormValues(
+				article, infoFormValues);
 
-			JournalArticle journalArticle =
-				_infoFormValuesUpdater.updateFromInfoFormValues(
-					article, infoFormValues);
+		Assert.assertEquals(
+			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
 
-			Assert.assertEquals(
-				"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
-
-			Assert.assertEquals(
-				"Descripcion", journalArticle.getDescription(LocaleUtil.SPAIN));
-		}
+		Assert.assertEquals(
+			"Descripcion", journalArticle.getDescription(LocaleUtil.SPAIN));
 	}
 
 	@DeleteAfterTestRun

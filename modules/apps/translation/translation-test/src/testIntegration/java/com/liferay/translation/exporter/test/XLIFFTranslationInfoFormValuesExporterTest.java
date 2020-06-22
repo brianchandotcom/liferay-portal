@@ -29,12 +29,12 @@ import com.liferay.petra.io.StreamUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
+import com.liferay.translation.test.util.TranslationTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -72,7 +72,8 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 
 		Assert.assertEquals(
 			StringUtil.replace(
-				_readFileToString("dependencies/test-journal-article.xlf"),
+				TranslationTestUtil.readFileToString(
+					"test-journal-article.xlf"),
 				"$ARTICLE_ID",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			StreamUtil.toString(
@@ -85,7 +86,7 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 	private JournalArticle _getJournalArticle() throws Exception {
 		DDMFormDeserializerDeserializeRequest.Builder builder =
 			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				_readFileToString("dependencies/test-ddm-form.json"));
+				TranslationTestUtil.readFileToString("test-ddm-form.json"));
 
 		DDMFormDeserializerDeserializeResponse
 			ddmFormDeserializerDeserializeResponse =
@@ -98,12 +99,8 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 
 		return JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(),
-			_readFileToString("dependencies/test-journal-content.xml"),
+			TranslationTestUtil.readFileToString("test-journal-content.xml"),
 			ddmStructure.getStructureKey(), null);
-	}
-
-	private String _readFileToString(String s) throws Exception {
-		return new String(FileUtil.getBytes(getClass(), s));
 	}
 
 	@Inject(filter = "ddm.form.deserializer.type=json")

@@ -228,7 +228,8 @@ public class DDMFormRuleConverterImpl implements SPIDDMFormRuleConverter {
 		String functionName, List<SPIDDMFormRuleCondition.Operand> operands) {
 
 		if (Objects.equals(functionName, "belongsTo")) {
-			operands.remove(0);
+			operands.removeIf(
+				operand -> StringUtil.equals(operand.getType(), "user"));
 		}
 
 		return String.format(

@@ -63,7 +63,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Matthew Tambara
  */
-public class FileInstall
+public class FileInstallImplBundleActivator
 	implements BundleActivator,
 			   ServiceTrackerCustomizer<ArtifactListener, ArtifactListener> {
 
@@ -322,7 +322,8 @@ public class FileInstall
 	}
 
 	private void _addListener(
-		ServiceReference serviceReference, ArtifactListener artifactListener) {
+		ServiceReference<ArtifactListener> serviceReference,
+		ArtifactListener artifactListener) {
 
 		synchronized (_listeners) {
 			_listeners.put(serviceReference, artifactListener);
@@ -344,7 +345,8 @@ public class FileInstall
 	}
 
 	private void _removeListener(
-		ServiceReference serviceReference, ArtifactListener artifactListener) {
+		ServiceReference<ArtifactListener> serviceReference,
+		ArtifactListener artifactListener) {
 
 		synchronized (_listeners) {
 			_listeners.remove(serviceReference);
@@ -382,9 +384,10 @@ public class FileInstall
 	private final BundleTransformer _bundleTransformer =
 		new BundleTransformer();
 	private Runnable _cmSupport;
-	private final Map<ServiceReference, ArtifactListener> _listeners =
-		new TreeMap<>();
-	private ServiceTracker _listenersTracker;
+	private final Map<ServiceReference<ArtifactListener>, ArtifactListener>
+		_listeners = new TreeMap<>();
+	private ServiceTracker<ArtifactListener, ArtifactListener>
+		_listenersTracker;
 	private final ReadWriteLock _lock = new ReentrantReadWriteLock();
 	private final Lock _readLock = _lock.readLock();
 	private volatile boolean _stopped;
@@ -401,7 +404,8 @@ public class FileInstall
 		}
 
 		private ConfigAdminSupport(
-			BundleContext bundleContext, FileInstall fileInstall) {
+			BundleContext bundleContext,
+			FileInstallImplBundleActivator fileInstall) {
 
 			_tracker = new Tracker(bundleContext, fileInstall);
 
@@ -526,7 +530,8 @@ public class FileInstall
 			}
 
 			private Tracker(
-				BundleContext bundleContext, FileInstall fileInstall) {
+				BundleContext bundleContext,
+				FileInstallImplBundleActivator fileInstall) {
 
 				super(bundleContext, ConfigurationAdmin.class.getName(), null);
 
@@ -537,7 +542,7 @@ public class FileInstall
 				new HashMap<>();
 			private final Set<String> _configs = Collections.synchronizedSet(
 				new HashSet<>());
-			private final FileInstall _fileInstall;
+			private final FileInstallImplBundleActivator _fileInstall;
 
 		}
 

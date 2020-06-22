@@ -67,7 +67,7 @@ public class ConfigInstaller
 
 	public ConfigInstaller(
 		BundleContext bundleContext, ConfigurationAdmin configurationAdmin,
-		FileInstall fileInstall) {
+		FileInstallImplBundleActivator fileInstall) {
 
 		_bundleContext = bundleContext;
 		_configurationAdmin = configurationAdmin;
@@ -554,7 +554,7 @@ public class ConfigInstaller
 
 	private final BundleContext _bundleContext;
 	private final ConfigurationAdmin _configurationAdmin;
-	private final FileInstall _fileInstall;
+	private final FileInstallImplBundleActivator _fileInstall;
 	private final Map<String, String> _pidToFile = new HashMap<>();
 	private ServiceRegistration<?> _serviceRegistration;
 

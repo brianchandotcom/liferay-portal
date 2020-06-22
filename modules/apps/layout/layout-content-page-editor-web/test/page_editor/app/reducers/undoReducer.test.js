@@ -47,10 +47,10 @@ const STATE = {
 };
 
 describe('undoReducer', () => {
-	it('allows only having 20 maximun undo items', () => {
+	it('allows having 100 maximum undo items', () => {
 		const initialState = {...STATE};
 
-		const actions = new Array(25).fill({
+		const actions = new Array(105).fill({
 			actionType: DUPLICATE_ITEM,
 			type: ADD_UNDO_ACTION,
 		});
@@ -59,7 +59,7 @@ describe('undoReducer', () => {
 			return undoReducer(state, action);
 		}, initialState);
 
-		expect(finalState.undoHistory.length).toBe(20);
+		expect(finalState.undoHistory.length).toBe(100);
 	});
 
 	it('saves needed state for undo when dispatching ADD_FRAGMENT_ENTRY_LINKS action', () => {

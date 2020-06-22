@@ -1956,6 +1956,43 @@ public class VerifyProperties extends VerifyProcess {
 			"velocity.engine.restricted.variables"
 		},
 		{
+			"module.framework.properties.felix.fileinstall.bundles.new.start",
+			"module.framework.properties.file.install.bundles.new.start"
+		},
+		{
+			"module.framework.properties.felix.fileinstall.bundles." +
+				"startActivationPolicy",
+			"module.framework.properties.file.install.bundles." +
+				"startActivationPolicy"
+		},
+		{
+			"module.framework.properties.felix.fileinstall.bundles." +
+				"startTransient",
+			"module.framework.properties.file.install.bundles.startTransient"
+		},
+		{
+			"module.framework.properties.felix.fileinstall.disableNio2",
+			"module.framework.properties.file.install.disableNio2"
+		},
+		{
+			"module.framework.properties.felix.fileinstall.log.level",
+			"module.framework.properties.file.install.log.level"
+		},
+		{
+			"module.framework.properties.felix.fileinstall.noInitialDelay",
+			"module.framework.properties.file.install.noInitialDelay"
+		},
+		{
+			"module.framework.properties.felix.fileinstall." +
+				"optionalImportRefreshScope",
+			"module.framework.properties.file.install." +
+				"optionalImportRefreshScope"
+		},
+		{
+			"module.framework.properties.felix.fileinstall.subdir.mode",
+			"module.framework.properties.file.install.subdir.mode"
+		},
+		{
 			"passwords.passwordpolicytoolkit.charset.lowercase",
 			"passwords.passwordpolicytoolkit.validator.charset.lowercase"
 		},

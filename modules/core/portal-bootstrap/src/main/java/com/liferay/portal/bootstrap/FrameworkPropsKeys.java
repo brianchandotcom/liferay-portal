@@ -20,22 +20,20 @@ package com.liferay.portal.bootstrap;
  */
 public interface FrameworkPropsKeys {
 
-	public static final String FELIX_FILEINSTALL_DIR = "felix.fileinstall.dir";
+	public static final String FILE_INSTALL_DIR = "file.install.dir";
 
-	public static final String FELIX_FILEINSTALL_LOG_LEVEL =
-		"felix.fileinstall.log.level";
+	public static final String FILE_INSTALL_LOG_LEVEL =
+		"file.install.log.level";
 
-	public static final String FELIX_FILEINSTALL_POLL =
-		"felix.fileinstall.poll";
+	public static final String FILE_INSTALL_POLL = "file.install.poll";
 
-	public static final String FELIX_FILEINSTALL_START_LEVEL =
-		"felix.fileinstall.start.level";
+	public static final String FILE_INSTALL_START_LEVEL =
+		"file.install.start.level";
 
-	public static final String FELIX_FILEINSTALL_TMPDIR =
-		"felix.fileinstall.tmpdir";
+	public static final String FILE_INSTALL_TMPDIR = "file.install.tmpdir";
 
-	public static final String FELIX_FILEINSTALL_WEB_START_LEVEL =
-		"felix.fileinstall.start.level";
+	public static final String FILE_INSTALL_WEB_START_LEVEL =
+		"file.install.start.level";
 
 	public static final String OSGI_FRAMEWORK = "osgi.framework";
 

@@ -16,7 +16,6 @@ import React from 'react';
 
 import AutocompleteFilter from '../management_bar/components/filters/AutocompleteFilter';
 import CheckboxesFilter from '../management_bar/components/filters/CheckboxesFilter';
-import DateFilter from '../management_bar/components/filters/DateFilter';
 import DateRangeFilter from '../management_bar/components/filters/DateRangeFilter';
 import NumberFilter from '../management_bar/components/filters/NumberFilter';
 import RadioFilter from '../management_bar/components/filters/RadioFilter';
@@ -26,7 +25,6 @@ import TextFilter from '../management_bar/components/filters/TextFilter';
 export const filterIdToComponentMap = {
 	autocomplete: AutocompleteFilter,
 	checkbox: CheckboxesFilter,
-	date: DateFilter,
 	dateRange: DateRangeFilter,
 	number: NumberFilter,
 	radio: RadioFilter,

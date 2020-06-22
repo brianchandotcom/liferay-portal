@@ -93,8 +93,6 @@ export function prettifyFilterValue({items, type, value}) {
 		case 'radio':
 		case 'select':
 			return prettifySelectValue(value, items);
-		case 'date':
-			return prettifyDateObject(value);
 		case 'dateRange':
 			return prettifyDateRangeObject(value);
 		default:

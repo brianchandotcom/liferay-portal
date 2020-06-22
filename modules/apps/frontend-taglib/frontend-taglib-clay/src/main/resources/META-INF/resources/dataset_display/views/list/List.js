@@ -20,8 +20,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
-import ActionsDropdownRenderer from '../../data_renderer/ActionsDropdownRenderer';
-import ImageRenderer from '../../data_renderer/ImageRenderer';
+import ActionsDropdownRenderer from '../../data_renderers/ActionsDropdownRenderer';
+import ImageRenderer from '../../data_renderers/ImageRenderer';
 
 function List({
 	datasetDisplayContext,

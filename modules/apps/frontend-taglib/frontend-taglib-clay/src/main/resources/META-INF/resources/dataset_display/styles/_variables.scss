@@ -1,7 +1,17 @@
-$danger: #da1414;
-$error-l1: lighten($danger, 28%);
+$warning-secondary: #ff8f39;
+$warning-primary: #863a00;
+
+$danger-secondary: #f48989;
+$danger-primary: #da1414;
+
+$success-secondary: #5aca76;
+$success-primary: #287d3d;
+
+$info-secondary: #89a7e0;
+$info-primary: #2e5aac;
+
+$error-l1: lighten($danger-primary, 28%);
 $gray-600: #6b6c7e;
-$info: #2e5aac;
 $secondary-text: $gray-600;
 $spacer: 1rem;
 

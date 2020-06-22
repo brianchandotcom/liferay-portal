@@ -149,8 +149,8 @@ function SelectableTable({items: itemsProp, schema, style}) {
 }
 
 SelectableTable.propTypes = {
-	itemActions: PropTypes.array,
 	items: PropTypes.arrayOf(PropTypes.object),
+	itemsActions: PropTypes.array,
 	schema: PropTypes.shape({
 		firstColumnLabel: PropTypes.string.isRequired,
 		firstColumnName: PropTypes.string.isRequired,

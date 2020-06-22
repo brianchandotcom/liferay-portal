@@ -447,7 +447,7 @@ definition {
 		}
 	}
 
-	@description = "Navigation menus can be published to live and do not appear in live until published. This test has the Navigation Menu widget display a specific navigation menu. This test covers LPS-86142."
+	@description = "Navigation menus can be published to live and do not appear in live until published. This is a use case for LPS-86142 and LPS-112993."
 	@priority = "5"
 	test PublishNavigationMenu {
 		task ("Add the first page to the navigation menu") {
@@ -554,8 +554,8 @@ definition {
 				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
 		}
 
-		task ("Navigate to the Navigation Menu widget in the live site") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
+		task ("Navigate to the live site via Global Menu") {
+			GlobalMenu.gotoSite(site = "Test Site Name");
 		}
 
 		task ("Assert the Navigation Menu widget is display the navigation menu and not the site hierarchy - the navigation menu has the first page and the URL item but does not have the second page or third page") {

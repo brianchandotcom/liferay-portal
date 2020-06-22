@@ -537,7 +537,7 @@ public class LayoutsSEODisplayContext {
 		throws NoSuchClassTypeException {
 
 		InfoItemFormProvider<?> infoItemFormProvider =
-			_infoItemServiceTracker.getInfoItemService(
+			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemFormProvider.class,
 				layoutPageTemplateEntry.getClassName());
 

@@ -30,11 +30,7 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 	} = useContext(DatasetDisplayContext);
 
 	if (!actions || !actions.length) {
-		if (value) {
-			return <DefaultContent value={value} />;
-		}
-
-		return null;
+		return value ? <DefaultContent value={value} /> : null;
 	}
 
 	let currentAction = options?.actionId
@@ -45,16 +41,18 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 		return null;
 	}
 
-	if (currentAction.id && !currentAction.href && itemData.actions) {
-		if (itemData.actions[currentAction.id]) {
-			currentAction = {
-				...currentAction,
-				...itemData.actions[currentAction.id],
-				target: 'async',
-			};
+	if (currentAction.permissionKey) {
+		if (itemData.actions[currentAction.permissionKey]) {
+			if (currentAction.target === 'headless') {
+				currentAction = {
+					...currentAction,
+					...itemData.actions[currentAction.id],
+				};
+			}
 		}
-
-		return null;
+		else {
+			return value ? <DefaultContent value={value} /> : null;
+		}
 	}
 
 	const formattedHref =
@@ -80,7 +78,10 @@ function ActionLinkRenderer({actions, itemData, itemId, options, value}) {
 				url: formattedHref,
 			});
 		}
-		else if (currentAction.target === 'async') {
+		else if (
+			currentAction.target === 'async' ||
+			currentAction.target === 'headless'
+		) {
 			event.preventDefault();
 
 			executeAsyncItemAction(formattedHref, currentAction.method);
@@ -123,7 +124,13 @@ ActionLinkRenderer.propTypes = {
 			method: PropTypes.oneOf(['get', 'delete']),
 			onClick: PropTypes.string,
 			size: PropTypes.string,
-			target: PropTypes.oneOf(['modal', 'sidePanel', 'link', 'async']),
+			target: PropTypes.oneOf([
+				'modal',
+				'sidePanel',
+				'link',
+				'async',
+				'headless',
+			]),
 			title: PropTypes.string,
 		})
 	),

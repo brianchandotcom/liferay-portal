@@ -74,7 +74,7 @@ export function handleAction(
 			url,
 		});
 	}
-	else if (target === 'async') {
+	else if (target === 'async' || target === 'headless') {
 		event.preventDefault();
 
 		setLoading(true);
@@ -149,28 +149,34 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 	const [active, setActive] = useState(false);
 	const [loading, setLoading] = useState(false);
 
-	if (!actions || !actions.length) {
+	const formattedActions = actions
+		? actions.reduce((actions, action) => {
+				if (action.permissionKey) {
+					if (itemData.actions[action.permissionKey]) {
+						if (action.target === 'headless') {
+							return [
+								...actions,
+								{
+									...action,
+									...itemData.actions[action.permissionKey],
+								},
+							];
+						}
+						else {
+							return [...actions, action];
+						}
+					}
+
+					return actions;
+				}
+
+				return [...actions, action];
+		  }, [])
+		: [];
+
+	if (!formattedActions || !formattedActions.length) {
 		return null;
 	}
-
-	const formattedActions = actions.reduce((actions, action) => {
-		if (action.id && !action.href && itemData.actions) {
-			if (itemData.actions[action.id]) {
-				return [
-					...actions,
-					{
-						...action,
-						...itemData.actions[action.id],
-						target: 'async',
-					},
-				];
-			}
-
-			return actions;
-		}
-
-		return [...actions, action];
-	}, []);
 
 	if (actions.length === 1) {
 		const action = formattedActions[0];
@@ -293,7 +299,14 @@ ActionsDropdownRenderer.propTypes = {
 			icon: PropTypes.string,
 			label: PropTypes.string.isRequired,
 			onClick: PropTypes.string,
-			target: PropTypes.oneOf(['modal', 'sidePanel', 'link', 'async']),
+			permissionKey: PropTypes.string,
+			target: PropTypes.oneOf([
+				'modal',
+				'sidePanel',
+				'link',
+				'async',
+				'headless',
+			]),
 		})
 	),
 	itemData: PropTypes.object,

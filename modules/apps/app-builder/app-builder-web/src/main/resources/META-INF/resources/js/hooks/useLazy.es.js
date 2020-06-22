@@ -18,7 +18,7 @@ import React, {Suspense, lazy} from 'react';
 
 import useLoader from './useLoader.es';
 
-export default function useLazy() {
+export default function useLazy(hideLoading) {
 	const load = useLoader();
 
 	return ({module, props, ...otherProps}) => {
@@ -26,7 +26,9 @@ export default function useLazy() {
 
 		return (
 			<ErrorBoundary {...otherProps}>
-				<Suspense fallback={<ClayLoadingIndicator />}>
+				<Suspense
+					fallback={hideLoading ? <></> : <ClayLoadingIndicator />}
+				>
 					<Component {...props} />
 				</Suspense>
 			</ErrorBoundary>

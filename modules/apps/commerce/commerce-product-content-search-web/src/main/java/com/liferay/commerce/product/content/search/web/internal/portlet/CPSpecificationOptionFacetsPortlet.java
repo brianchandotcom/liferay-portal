@@ -242,14 +242,12 @@ public class CPSpecificationOptionFacetsPortlet
 
 		searchContext.addFacet(facet);
 
-		QueryConfig queryConfig = new QueryConfig();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
 		queryConfig.addSelectedFieldNames(CPField.SPECIFICATION_NAMES);
 
 		queryConfig.setHighlightEnabled(false);
 		queryConfig.setScoreEnabled(false);
-
-		searchContext.setQueryConfig(queryConfig);
 
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPDefinition.class);

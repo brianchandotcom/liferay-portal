@@ -104,7 +104,7 @@ public class SoyComponentRendererHelper {
 		String moduleName = StringUtil.extractLast(
 			module, CharPool.FORWARD_SLASH);
 
-		return StringUtil.strip(moduleName, _UNSAFE_MODULE_NAME_CHARS);
+		return StringUtil.removeChars(moduleName, _UNSAFE_MODULE_NAME_CHARS);
 	}
 
 	private void _prepareContext() {
@@ -146,7 +146,7 @@ public class SoyComponentRendererHelper {
 			sb.append(StringPool.COMMA);
 			sb.append(dependency);
 			sb.append(" as ");
-			sb.append(StringUtil.strip(dependency, _UNSAFE_MODULE_NAME_CHARS));
+			sb.append(StringUtil.removeChars(dependency, _UNSAFE_MODULE_NAME_CHARS));
 		}
 
 		if (_componentDescriptor.isPositionInLine()) {

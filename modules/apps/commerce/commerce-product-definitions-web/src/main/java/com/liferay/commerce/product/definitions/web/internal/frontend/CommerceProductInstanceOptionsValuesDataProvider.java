@@ -41,7 +41,6 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -77,14 +76,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CommerceProductInstanceOptionsValuesDataProvider
 	implements DDMDataProvider {
-
-	@Override
-	public List<KeyValuePair> getData(
-			DDMDataProviderContext ddmDataProviderContext)
-		throws DDMDataProviderException {
-
-		return Collections.emptyList();
-	}
 
 	@Override
 	public DDMDataProviderResponse getData(
@@ -151,11 +142,11 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			for (CPDefinitionOptionRel cpDefinitionOptionRel :
 					cpDefinitionOptionRels) {
 
-				Map<String, String> parameters =
+				Map<String, Object> parameters =
 					ddmDataProviderRequest.getParameters();
 
-				String parameterValue = parameters.get(
-					cpDefinitionOptionRel.getKey());
+				String parameterValue = String.valueOf(parameters.get(
+					cpDefinitionOptionRel.getKey()));
 
 				// Collect filters and outputs
 
@@ -283,30 +274,15 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 		public static DDMDataProviderResponse toDDMDataProviderResponse(
 			List<Output> outputs) {
 
-			if (ReleaseInfo.getBuildNumber() >= _RELEASE_7_2_0_BUILD_NUMBER) {
-				DDMDataProviderResponse.Builder ddmDataProviderResponseBuilder =
-					DDMDataProviderResponse.Builder.newBuilder();
+			DDMDataProviderResponse.Builder ddmDataProviderResponseBuilder =
+				DDMDataProviderResponse.Builder.newBuilder();
 
-				for (Output output : outputs) {
-					ddmDataProviderResponseBuilder.withOutput(
-						output._name, output._value);
-				}
-
-				return ddmDataProviderResponseBuilder.build();
+			for (Output output : outputs) {
+				ddmDataProviderResponseBuilder.withOutput(
+					output._name, output._value);
 			}
 
-			DDMDataProviderResponseOutput[] ddmDataProviderResponseOutputs =
-				new DDMDataProviderResponseOutput[outputs.size()];
-
-			for (int i = 0; i < outputs.size(); i++) {
-				Output output = outputs.get(i);
-
-				ddmDataProviderResponseOutputs[i] =
-					DDMDataProviderResponseOutput.of(
-						output._name, output._type, output._value);
-			}
-
-			return DDMDataProviderResponse.of(ddmDataProviderResponseOutputs);
+			return ddmDataProviderResponseBuilder.build();
 		}
 
 		public Output(String name, String type, Object value) {
@@ -331,7 +307,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 			selectedCPDefinitionOptionCPDefinitionOptionValues =
 				new HashMap<>();
 
-		Map<String, String> parameters = ddmDataProviderRequest.getParameters();
+		Map<String, Object> parameters = ddmDataProviderRequest.getParameters();
 
 		List<CPDefinitionOptionRel> nonSKUContributingCPDefinitionOptionRels =
 			_cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
@@ -340,8 +316,8 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 		for (CPDefinitionOptionRel nonSKUContributingDefinitionOptionRel :
 				nonSKUContributingCPDefinitionOptionRels) {
 
-			String parameterValue = parameters.get(
-				nonSKUContributingDefinitionOptionRel.getKey());
+			String parameterValue = String.valueOf(parameters.get(
+				nonSKUContributingDefinitionOptionRel.getKey()));
 
 			String optionValueKey = parameterValue;
 
@@ -484,7 +460,7 @@ public class CommerceProductInstanceOptionsValuesDataProvider
 	private long _getParameter(
 		DDMDataProviderRequest ddmDataProviderRequest, String param) {
 
-		Map<String, String> parameters = ddmDataProviderRequest.getParameters();
+		Map<String, Object> parameters = ddmDataProviderRequest.getParameters();
 
 		return GetterUtil.getLong(parameters.get(param));
 	}

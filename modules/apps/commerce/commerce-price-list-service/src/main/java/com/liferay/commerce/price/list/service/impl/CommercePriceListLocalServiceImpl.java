@@ -31,7 +31,7 @@ import com.liferay.commerce.pricing.exception.CommerceUndefinedBasePriceListExce
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
+import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -386,7 +386,7 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public void cleanPriceListCache(long companyId) {
-		MultiVMPoolUtil.removePortalCache("PRICE_LISTS_" + companyId);
+		_multiVMPool.removePortalCache("PRICE_LISTS_" + companyId);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -564,7 +564,7 @@ public class CommercePriceListLocalServiceImpl
 			StringUtil.merge(commerceAccountGroupIds));
 
 		PortalCache<String, Serializable> portalCache =
-			MultiVMPoolUtil.getPortalCache(
+			(PortalCache<String, Serializable>)_multiVMPool.getPortalCache(
 				"PRICE_LISTS_" + company.getCompanyId());
 
 		boolean priceListCalculated = GetterUtil.getBoolean(
@@ -1633,5 +1633,8 @@ public class CommercePriceListLocalServiceImpl
 	@ServiceReference(type = CommercePriceModifierLocalService.class)
 	private CommercePriceModifierLocalService
 		_commercePriceModifierLocalService;
+
+	@ServiceReference(type = MultiVMPool.class)
+	private MultiVMPool _multiVMPool;
 
 }

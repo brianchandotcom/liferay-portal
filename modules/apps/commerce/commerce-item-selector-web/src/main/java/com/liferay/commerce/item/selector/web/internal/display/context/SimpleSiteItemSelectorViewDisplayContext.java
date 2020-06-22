@@ -133,7 +133,7 @@ public class SimpleSiteItemSelectorViewDisplayContext
 		params.put("site", true);
 
 		int total = _groupService.searchCount(
-			cpRequestHelper.getCompanyId(), null, null, null);
+			cpRequestHelper.getCompanyId(), null, null, new String[] {});
 		List<Group> groups = _groupService.search(
 			cpRequestHelper.getCompanyId(),
 			new long[] {

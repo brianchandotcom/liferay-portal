@@ -19,7 +19,6 @@ import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
-import com.liferay.portal.kernel.service.persistence.UserGroupRolePK;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -46,7 +45,7 @@ public class AccountRoleDTOConverter
 
 		UserGroupRole userGroupRole =
 			_userGroupRoleLocalService.getUserGroupRole(
-				(UserGroupRolePK)dtoConverterContext.getId());
+				(long)dtoConverterContext.getId());
 
 		Role role = userGroupRole.getRole();
 

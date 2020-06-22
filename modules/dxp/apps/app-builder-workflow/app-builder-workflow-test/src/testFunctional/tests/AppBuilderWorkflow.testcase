@@ -13,6 +13,23 @@ definition {
 		User.firstLoginPG();
 
 		Navigator.openURL();
+	}
+
+	tearDown {
+
+		AppBuilderAdmin.teardownAppBuilder();
+
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Automate LPS-111262 & LPS-111681"
+	@priority = "5"
+	test ValidateListOfStandardApps {
+		property portal.acceptance = "true";
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",
@@ -37,28 +54,6 @@ definition {
 			deployOption = "Product Menu",
 			formViewName = "My Form View",
 			tableViewName = "My Table View");
-
-		GlobalMenu.gotoPortlet(
-			category = "App Builder",
-			panel = "Applications",
-			portlet = "Apps");
-	}
-
-	tearDown {
-
-		AppBuilderAdmin.teardownAppBuilder();
-
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
-
-	@description = "Automate LPS-111262 & LPS-111681"
-	@priority = "5"
-	test ValidateListOfStandardApps {
-		property portal.acceptance = "true";
 
 		GlobalMenu.gotoPortlet(
 			category = "App Builder",

@@ -330,7 +330,7 @@ public class LayoutsSEODisplayContext {
 	}
 
 	public HashMap<String, Object> getOpenGraphMappingData()
-		throws NoSuchClassTypeException, PortalException {
+		throws PortalException {
 
 		return HashMapBuilder.<String, Object>putAll(
 			_getBaseSEOMappingData(
@@ -417,9 +417,7 @@ public class LayoutsSEODisplayContext {
 			layout.getLayoutId());
 	}
 
-	public HashMap<String, Object> getSEOMappingData()
-		throws NoSuchClassTypeException, PortalException {
-
+	public HashMap<String, Object> getSEOMappingData() throws PortalException {
 		return HashMapBuilder.<String, Object>putAll(
 			_getBaseSEOMappingData(
 				_getInfoForm(_getLayoutPageTemplateEntry()),

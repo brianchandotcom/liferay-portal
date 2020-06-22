@@ -57,18 +57,19 @@ export default ({onCancel}) => {
 	};
 
 	const onSuccess = (app) => {
+		onClose();
 		successToast(
 			<>
 				{Liferay.Language.get('the-app-was-deployed-successfully')}{' '}
 				{getStandaloneLink(app)}
 			</>
 		);
-
 		setDeploying(false);
 		setModalVisible(false);
 	};
 
 	const onError = ({title}) => {
+		onClose();
 		errorToast(title ? `${title}.` : title);
 		setDeploying(false);
 		setModalVisible(false);

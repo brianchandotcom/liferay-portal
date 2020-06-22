@@ -68,6 +68,7 @@ const FieldSet = ({
 			name={name}
 			readOnly={readOnly}
 			repeatable={collapsible ? false : repeatable}
+			required={false}
 			showLabel={false}
 		>
 			<div className="ddm-field-types-fieldset__nested">

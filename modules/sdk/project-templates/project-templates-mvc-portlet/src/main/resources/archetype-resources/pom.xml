@@ -13,9 +13,9 @@
 		<profile>
 			<id>standalone</id>
 
-			<!-- Uncomment the following element if the project is not in workspace
+			<!-- Uncomment the following element if the project is not in workspace -->
 
-			<activation>
+			<!--<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>-->
 			<properties>

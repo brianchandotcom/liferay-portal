@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.info;
+package com.liferay.translation.info.item.updater;
 
 import com.liferay.info.field.InfoFormValues;
 import com.liferay.journal.model.JournalArticle;

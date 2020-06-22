@@ -39,7 +39,7 @@ const NewAppPopover = (
 		<>
 			<Popover
 				alignElement={alignElement}
-				className="apps-popover mw-100"
+				className="apps-popover"
 				content={() => (
 					<div className="px-2">
 						<label>{Liferay.Language.get('object')}</label>

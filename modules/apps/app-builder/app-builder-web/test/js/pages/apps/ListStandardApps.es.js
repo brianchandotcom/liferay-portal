@@ -75,7 +75,7 @@ describe('ListStandardApps', () => {
 		await fireEvent.mouseOver(newAppButton);
 
 		expect(
-			document.querySelector('.popover.apps-popover.mw-100')
+			document.querySelector('.popover.apps-popover')
 		).toBeInTheDocument();
 		expect(
 			document.querySelector('.popover.clay-popover-bottom-right')
@@ -87,14 +87,14 @@ describe('ListStandardApps', () => {
 		await fireEvent.click(newAppButton);
 		await fireEvent.mouseOut(newAppButton);
 
-		expect(document.querySelector('.popover.apps-popover.mw-100.hide'));
+		expect(document.querySelector('.popover.apps-popover.hide'));
 		expect(
 			document.querySelector('.popover.clay-popover-bottom-right')
 		).not.toBeInTheDocument();
 
 		await fireEvent.click(newAppButton);
 
-		expect(document.querySelector('.popover.apps-popover.mw-100.hide'));
+		expect(document.querySelector('.popover.apps-popover.hide'));
 	});
 
 	it('renders with empty state', async () => {

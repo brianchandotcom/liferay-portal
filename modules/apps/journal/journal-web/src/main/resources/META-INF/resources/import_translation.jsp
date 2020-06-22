@@ -17,8 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String articleId = ParamUtil.getString(request, "articleId");
 String articleResourceId = ParamUtil.getString(request, "articleResourceId");
 String articleTitle = ParamUtil.getString(request, "articleTitle");
+String groupId = ParamUtil.getString(request, "groupId");
 String redirect = ParamUtil.getString(request, "redirect");
 String title = LanguageUtil.get(resourceBundle, "import-translation");
 
@@ -31,7 +33,9 @@ renderResponse.setTitle(title);
 <liferay-ui:error exception="<%= InvalidXLIFFFileException.class %>" message="the-file-is-invalid" />
 
 <portlet:actionURL name="/journal/import_translation" var="importTranslationURL">
+	<portlet:param name="articleId" value="<%= articleId %>" />
 	<portlet:param name="articleResourceId" value="<%= articleResourceId %>" />
+	<portlet:param name="groupId" value="<%= groupId %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= importTranslationURL %>" name="fm">

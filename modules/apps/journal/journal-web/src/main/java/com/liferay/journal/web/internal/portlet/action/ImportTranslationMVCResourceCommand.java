@@ -91,9 +91,13 @@ public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
 							JournalArticle.class.getName(), articleResourceId),
 						inputStream);
 
+				long groupId = ParamUtil.getLong(actionRequest, "groupId");
+				String articleId = ParamUtil.getString(
+					actionRequest, "articleId");
+
 				JournalArticle journalArticle =
 					_infoFormValuesUpdater.updateFromInfoFormValues(
-						_journalArticleService.getArticle(articleResourceId),
+						_journalArticleService.getArticle(groupId, articleId),
 						infoFormValues);
 
 				int workflowAction = ParamUtil.getInteger(

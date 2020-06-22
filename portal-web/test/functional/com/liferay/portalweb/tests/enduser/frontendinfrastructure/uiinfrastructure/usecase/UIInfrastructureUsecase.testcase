@@ -82,6 +82,11 @@ definition {
 			locator2 = "display",
 			value1 = "flex");
 
+		AssertCssValue(
+			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator2 = "list-style",
+			value1 = "none outside none");
+
 		takeScreenshot();
 
 		ProductMenuHelper.openProductMenu();
@@ -92,6 +97,11 @@ definition {
 			locator1 = "//ul[contains(@id,'controlMenu')]",
 			locator2 = "display",
 			value1 = "flex");
+
+		AssertCssValue(
+			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator2 = "list-style",
+			value1 = "none outside none");
 
 		takeScreenshot();
 	}
@@ -112,6 +122,11 @@ definition {
 			locator1 = "//ul[contains(@id,'controlMenu')]",
 			locator2 = "display",
 			value1 = "flex");
+
+		AssertCssValue(
+			locator1 = "//ul[contains(@id,'controlMenu')]",
+			locator2 = "list-style",
+			value1 = "none outside none");
 
 		takeScreenshot();
 	}

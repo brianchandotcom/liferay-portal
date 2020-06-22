@@ -12,6 +12,7 @@
  * details.
  */
 
+import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 import {CONTENT_CHANGE_PANELS} from './selectAvailablePanels';
 
 /**
@@ -20,10 +21,14 @@ import {CONTENT_CHANGE_PANELS} from './selectAvailablePanels';
 export default function selectAvailableSidebarPanels(sidebarPanels) {
 
 	/**
-	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
+	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportSize: string }} state
 	 */
-	return function ({permissions}) {
-		if (permissions.LOCKED_SEGMENTS_EXPERIMENT || !permissions.UPDATE) {
+	return function ({permissions, selectedViewportSize}) {
+		if (
+			permissions.LOCKED_SEGMENTS_EXPERIMENT ||
+			!permissions.UPDATE ||
+			selectedViewportSize !== VIEWPORT_SIZES.desktop
+		) {
 			const availableSidebarPanels = {};
 
 			CONTENT_CHANGE_PANELS.forEach((panelId) => {

@@ -31,8 +31,14 @@ export default function multipleUndo({numberOfActions, store, type}) {
 
 		const actions = [];
 
+		let updatedLayoutData = store.layoutData;
+
 		const multipleUndoDispatch = (originalType) => (action) => {
 			if (canUndoAction(action)) {
+				if (action.layoutData) {
+					updatedLayoutData = action.layoutData;
+				}
+
 				actions.push({action, originalType});
 			}
 			else if (action.type !== UPDATE_NETWORK) {
@@ -83,9 +89,10 @@ export default function multipleUndo({numberOfActions, store, type}) {
 		undosToUndo
 			.reduce((promise, undo) => {
 				return promise.then(() => {
-					return undoAction({action: undo, store})(
-						multipleUndoDispatch(undo.originalType || undo.type)
-					);
+					return undoAction({
+						action: undo,
+						store: {...store, layoutData: updatedLayoutData},
+					})(multipleUndoDispatch(undo.originalType || undo.type));
 				});
 			}, Promise.resolve())
 			.then(() => {

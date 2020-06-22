@@ -17,6 +17,7 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 import com.liferay.fragment.contributor.FragmentCollectionContributorTracker;
 import com.liferay.fragment.exception.NoSuchEntryLinkException;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.renderer.FragmentRendererTracker;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
@@ -38,14 +39,20 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -209,6 +216,35 @@ public class DuplicateItemMVCActionCommand
 		return jsonObject.put("layoutData", layoutDataJSONObject);
 	}
 
+	private void _copyPortletPermissions(
+			long companyId, long groupId, String newInstanceId,
+			String oldInstanceId, long plid, String portletId)
+		throws PortalException {
+
+		String sourceResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			plid, PortletIdCodec.encode(portletId, oldInstanceId));
+		String targetResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			plid, PortletIdCodec.encode(portletId, newInstanceId));
+		List<String> actionIds = ResourceActionsUtil.getPortletResourceActions(
+			portletId);
+
+		List<Role> roles = _roleLocalService.getGroupRelatedRoles(groupId);
+
+		for (Role role : roles) {
+			List<String> actions =
+				_resourcePermissionLocalService.
+					getAvailableResourcePermissionActionIds(
+						companyId, portletId,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						sourceResourcePrimKey, role.getRoleId(), actionIds);
+
+			_resourcePermissionLocalService.setResourcePermissions(
+				companyId, portletId, ResourceConstants.SCOPE_INDIVIDUAL,
+				targetResourcePrimKey, role.getRoleId(),
+				actions.toArray(new String[0]));
+		}
+	}
+
 	private void _copyPortletPreferences(
 			HttpServletRequest httpServletRequest, String portletId,
 			String oldInstanceId, String newInstanceId)
@@ -266,6 +302,10 @@ public class DuplicateItemMVCActionCommand
 			_copyPortletPreferences(
 				serviceContext.getRequest(), portletId, oldInstanceId,
 				namespace);
+			_copyPortletPermissions(
+				fragmentEntryLink.getCompanyId(),
+				fragmentEntryLink.getGroupId(), namespace, oldInstanceId,
+				fragmentEntryLink.getPlid(), portletId);
 		}
 
 		FragmentEntryLink duplicatedFragmentEntryLink =
@@ -345,5 +385,14 @@ public class DuplicateItemMVCActionCommand
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private PortletRegistry _portletRegistry;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 }

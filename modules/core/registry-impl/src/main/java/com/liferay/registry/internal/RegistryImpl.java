@@ -150,19 +150,6 @@ public class RegistryImpl implements Registry {
 	}
 
 	@Override
-	public long getLastModified(ClassLoader classLoader) {
-		if (classLoader instanceof BundleReference) {
-			BundleReference bundleReference = (BundleReference)classLoader;
-
-			Bundle bundle = bundleReference.getBundle();
-
-			return bundle.getLastModified();
-		}
-
-		return 0;
-	}
-
-	@Override
 	public Registry getRegistry() throws SecurityException {
 		return this;
 	}

@@ -29,12 +29,12 @@ export default ({
 	endpoint,
 	isDisabled = () => false,
 	isOpen,
-	onClose,
+	onClose = () => {},
 	onSave = () => Promise.resolve(),
 	rolesFilter = () => true,
 	title,
 }) => {
-	const {observer} = useModal({
+	const {observer, onClose: close} = useModal({
 		onClose,
 	});
 
@@ -108,7 +108,7 @@ export default ({
 
 	const handleOnSave = () =>
 		Promise.all([updateItem(endpoint, permissions), onSave(permissions)])
-			.then(() => onClose())
+			.then(() => close())
 			.then(() => successToast())
 			.catch(() => errorToast());
 
@@ -202,7 +202,7 @@ export default ({
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={() => onClose()}
+							onClick={() => close()}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>

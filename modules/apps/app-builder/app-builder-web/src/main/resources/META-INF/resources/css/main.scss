@@ -178,6 +178,12 @@ body.open .app-builder-upper-toolbar {
 	max-width: 418px;
 	width: 100%;
 
+	.dropdown-item {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
 	.dropdown-section {
 		padding: 0.5rem;
 	}
@@ -196,10 +202,4 @@ body.open .app-builder-upper-toolbar {
 	&.empty-message-color {
 		color: #6b6c7e;
 	}
-}
-
-.truncated-text {
-	display: flex;
-	overflow: hidden;
-	width: 180px;
 }

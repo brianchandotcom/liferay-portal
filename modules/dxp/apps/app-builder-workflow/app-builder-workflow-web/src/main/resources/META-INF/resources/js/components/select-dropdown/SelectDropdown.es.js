@@ -98,7 +98,7 @@ const SelectDropdown = ({
 							selectRef.current = element;
 						}}
 					>
-						<span className="float-left">
+						<span className="float-left text-left text-truncate w90">
 							{selectedValue || label}
 						</span>
 

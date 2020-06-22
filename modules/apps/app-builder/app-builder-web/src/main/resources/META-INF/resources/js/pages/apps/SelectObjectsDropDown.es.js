@@ -117,9 +117,11 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 		},
 	};
 
-	const ItemWithLabel = ({className, name, type}) => (
+	const ItemWithLabel = ({name, type}) => (
 		<>
-			<span className={`${className} float-left`}>{name || label}</span>
+			<span className="float-left text-left text-truncate w70">
+				{name || label}
+			</span>
 
 			{type && (
 				<ClayLabel
@@ -150,10 +152,7 @@ export default ({defaultValue, label, onSelect, selectedValue, visible}) => {
 							symbol="caret-bottom"
 						/>
 
-						<ItemWithLabel
-							className="truncated-text"
-							{...selectedValue}
-						/>
+						<ItemWithLabel {...selectedValue} />
 					</ClayButton>
 				}
 				visible={visible}

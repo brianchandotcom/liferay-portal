@@ -20,7 +20,7 @@ import React, {useContext} from 'react';
 import {
 	handleAction,
 	isNotALink,
-} from '../../data_renderer/ActionsDropdownRenderer';
+} from '../../data_renderers/ActionsDropdownRenderer';
 
 function Cards({datasetDisplayContext, items, schema}) {
 	const {

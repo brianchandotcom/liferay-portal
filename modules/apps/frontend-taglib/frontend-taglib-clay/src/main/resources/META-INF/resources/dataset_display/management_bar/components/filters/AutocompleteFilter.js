@@ -12,17 +12,17 @@
  * details.
  */
 
+import ClayAutocomplete from '@clayui/autocomplete';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayRadio} from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayMultiSelect from '@clayui/multi-select';
 import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import {getValueFromItem} from '../../../utilities/index';
+import {fetchParams, getValueFromItem} from '../../../utilities/index';
 import {logError} from '../../../utilities/logError';
-import {showErrorNotification} from '../../../utilities/notifications';
 import getAppContext from '../Context';
 
 const DEFAULT_PAGE_SIZE = 10;
@@ -33,21 +33,22 @@ function fetchData(apiUrl, searchParam, currentPage = 1) {
 			searchParam ? `&search=${encodeURIComponent(searchParam)}` : ''
 		}`,
 		{
+			...fetchParams,
 			method: 'GET',
 		}
 	).then((response) => response.json());
 }
 
-function Item({label, onChange, selected, selectionType, value}) {
-	const Input = selectionType === 'single' ? ClayRadio : ClayCheckbox;
+function Item(props) {
+	const Input = props.selectionType === 'single' ? ClayRadio : ClayCheckbox;
 
 	return (
 		<li>
 			<Input
-				checked={selected}
-				label={label}
-				onChange={onChange}
-				value={value}
+				checked={props.selected}
+				label={props.label}
+				onChange={props.onChange}
+				value={props.value}
 			/>
 		</li>
 	);
@@ -61,21 +62,13 @@ Item.propTypes = {
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
-function AutocompleteFilter({
-	apiUrl,
-	id,
-	inputPlaceholder,
-	itemKey,
-	itemLabel,
-	panelType,
-	selectionType,
-	value,
-}) {
+function AutocompleteFilter(props) {
 	const {actions} = getAppContext();
 	const [query, setQuery] = useState('');
 	const [search, setSearch] = useState('');
-	const [selectedItems, setSelectedItems] = useState(value || []);
+	const [selectedItems, setSelectedItems] = useState(props.value || []);
 	const [items, updateItems] = useState(null);
+	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [totalItems, updateTotalItems] = useState(0);
 	const scrollingArea = useRef(null);
@@ -83,11 +76,11 @@ function AutocompleteFilter({
 	const infiniteLoader = useRef(null);
 	const [infiniteLoaderRendered, setInfiniteLoaderRendered] = useState(false);
 
-	const loaderVisible = items?.length < totalItems;
+	const loaderVisible = items && items.length < totalItems;
 
 	useEffect(() => {
-		setSelectedItems(value || []);
-	}, [value]);
+		setSelectedItems(props.value || []);
+	}, [props.value]);
 
 	useEffect(() => {
 		if (query === search) {
@@ -98,8 +91,10 @@ function AutocompleteFilter({
 	}, [query, search]);
 
 	useEffect(() => {
-		fetchData(apiUrl, search, currentPage)
+		setLoading(true);
+		fetchData(props.apiUrl, search, currentPage)
 			.then((data) => {
+				setLoading(false);
 				if (currentPage === 1) {
 					updateItems(data.items);
 				}
@@ -109,10 +104,10 @@ function AutocompleteFilter({
 				updateTotalItems(data.totalCount);
 			})
 			.catch((error) => {
-				showErrorNotification();
 				logError(error);
+				setLoading(false);
 			});
-	}, [apiUrl, currentPage, search]);
+	}, [currentPage, props.apiUrl, search]);
 
 	const setScrollingArea = useCallback((node) => {
 		scrollingArea.current = node;
@@ -161,67 +156,60 @@ function AutocompleteFilter({
 			return true;
 		}
 
-		const prevValues = prevValue.map((element) => element.value).sort();
-		const newValues = newValue.map((element) => element.value).sort();
+		let changed = false;
 
-		return prevValues.some((element, i) => element !== newValues[i]);
+		const prevValues = prevValue.map((el) => el.value).sort();
+		const newValues = newValue.map((el) => el.value).sort();
+
+		prevValues.forEach((element, i) => {
+			if (element !== newValues[i]) {
+				changed = true;
+			}
+		});
+
+		return changed;
 	}
 
 	return (
 		<div className="form-group">
-			{selectionType === 'multiple' ? (
-				<ClayMultiSelect
-					inputValue={query || ''}
-					items={selectedItems}
-					onChange={setQuery}
-					onItemsChange={(event) => {
-						if (event.length < selectedItems.length) {
-							return setSelectedItems(event);
-						}
-						else {
-							if (!items.length) {
-								return;
-							}
-
-							const firstEl = {
-								label: getValueFromItem(items[0], itemLabel),
-								value: getValueFromItem(items[0], itemKey),
-							};
-							const added = selectedItems.find(
-								(selectedItem) =>
-									selectedItem.value === firstEl.value
-							);
-
-							return setSelectedItems(
-								added
-									? selectedItems.filter(
-											(selectedItem) =>
-												selectedItem.value !==
-												firstEl.value
-									  )
-									: [...selectedItems, firstEl]
-							);
-						}
-					}}
-					placeholder={inputPlaceholder}
-				/>
-			) : (
-				<input
-					className="form-control"
+			<ClayAutocomplete className="mb-2">
+				<ClayAutocomplete.Input
 					onChange={(event) => setQuery(event.target.value)}
-					placeholder={inputPlaceholder}
-					type="text"
-					value={query}
 				/>
-			)}
-			{items?.length ? (
+				{loading && <ClayAutocomplete.LoadingIndicator />}
+			</ClayAutocomplete>
+			<div className="selected-elements-wrapper">
+				{selectedItems.map((selectedItem) => {
+					return (
+						<ClayLabel
+							closeButtonProps={{
+								onClick: () =>
+									setSelectedItems((items) =>
+										items.filter(
+											(item) =>
+												item.value !==
+												selectedItem.value
+										)
+									),
+							}}
+							key={selectedItem.value}
+						>
+							{selectedItem.label}
+						</ClayLabel>
+					);
+				})}
+			</div>
+			{items && items.length ? (
 				<ul
 					className="inline-scroller mt-2 mx-n3 px-3"
 					ref={setScrollingArea}
 				>
 					{items.map((item) => {
-						const itemValue = item[itemKey];
-						const itemLabel = getValueFromItem(item, itemLabel);
+						const itemValue = item[props.itemKey];
+						const itemLabel = getValueFromItem(
+							item,
+							props.itemLabel
+						);
 						const newValue = {
 							label: itemLabel,
 							value: itemValue,
@@ -234,25 +222,23 @@ function AutocompleteFilter({
 								onChange={() => {
 									setSelectedItems(
 										selectedItems.find(
-											(element) =>
-												element.value === itemValue
+											(el) => el.value === itemValue
 										)
 											? selectedItems.filter(
-													(element) =>
-														element.value !==
-														itemValue
+													(el) =>
+														el.value !== itemValue
 											  )
-											: selectionType === 'multiple'
+											: props.selectionType === 'multiple'
 											? [...selectedItems, newValue]
 											: [newValue]
 									);
 								}}
 								selected={Boolean(
 									selectedItems.find(
-										(element) => element.value === itemValue
+										(el) => el.value === itemValue
 									)
 								)}
-								selectionType={selectionType}
+								selectionType={props.selectionType}
 								value={itemValue}
 							/>
 						);
@@ -269,15 +255,15 @@ function AutocompleteFilter({
 			<div className="mt-3">
 				<ClayButton
 					className="btn-sm"
-					disabled={!isValueChanged(value || [], selectedItems)}
+					disabled={!isValueChanged(props.value || [], selectedItems)}
 					onClick={() =>
 						actions.updateFilterValue(
-							id,
+							props.id,
 							selectedItems.length ? selectedItems : null
 						)
 					}
 				>
-					{panelType === 'edit'
+					{props.panelType === 'edit'
 						? Liferay.Language.get('edit-filter')
 						: Liferay.Language.get('add-filter')}
 				</ClayButton>
@@ -289,9 +275,11 @@ function AutocompleteFilter({
 AutocompleteFilter.propTypes = {
 	id: PropTypes.string.isRequired,
 	inputPlaceholder: PropTypes.string,
+	invisible: PropTypes.bool,
 	itemKey: PropTypes.string.isRequired,
 	itemLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.array])
 		.isRequired,
+	label: PropTypes.string.isRequired,
 	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
 	type: PropTypes.oneOf(['autocomplete']).isRequired,
 	value: PropTypes.arrayOf(
@@ -300,6 +288,10 @@ AutocompleteFilter.propTypes = {
 			label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 		})
 	),
+};
+
+AutocompleteFilter.defaultProps = {
+	selectionType: 'multiple',
 };
 
 export default AutocompleteFilter;

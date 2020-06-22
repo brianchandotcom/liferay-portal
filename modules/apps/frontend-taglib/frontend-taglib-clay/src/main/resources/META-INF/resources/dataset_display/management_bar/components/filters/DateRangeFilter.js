@@ -15,7 +15,7 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {
 	formatDateObject,
@@ -33,19 +33,15 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 		value?.to && formatDateObject(value.to)
 	);
 
-	useEffect(() => {
-		setFromValue(() => (value?.from ? formatDateObject(value.from) : ''));
-		setToValue(() => (value?.to ? formatDateObject(value.to) : ''));
-	}, [value]);
-
 	return (
 		<div className="form-group">
 			<ClayForm.Group className="form-group-sm">
-				<label htmlFor="basicInput">
+				<label htmlFor={`from-${id}`}>
 					{Liferay.Language.get('from')}
 				</label>
 				<input
 					className="form-control"
+					id={`from-${id}`}
 					max={toValue || (max && formatDateObject(max))}
 					min={min && formatDateObject(min)}
 					onChange={(event) => setFromValue(event.target.value)}
@@ -56,9 +52,10 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 				/>
 			</ClayForm.Group>
 			<ClayForm.Group className="form-group-sm mt-2">
-				<label htmlFor="basicInput">{Liferay.Language.get('to')}</label>
+				<label htmlFor={`to-${id}`}>{Liferay.Language.get('to')}</label>
 				<input
 					className="form-control"
+					id={`to-${id}`}
 					max={max && formatDateObject(max)}
 					min={fromValue || (min && formatDateObject(min))}
 					onChange={(event) => setToValue(event.target.value)}
@@ -103,33 +100,23 @@ function DateRangeFilter({id, max, min, panelType, placeholder, value}) {
 	);
 }
 
+const dateShape = PropTypes.shape({
+	day: PropTypes.number,
+	month: PropTypes.number,
+	year: PropTypes.number,
+});
+
 DateRangeFilter.propTypes = {
 	id: PropTypes.string.isRequired,
 	invisible: PropTypes.bool,
 	label: PropTypes.string.isRequired,
-	max: PropTypes.shape({
-		day: PropTypes.number,
-		month: PropTypes.number,
-		year: PropTypes.number,
-	}),
-	min: PropTypes.shape({
-		day: PropTypes.number,
-		month: PropTypes.number,
-		year: PropTypes.number,
-	}),
+	max: dateShape,
+	min: dateShape,
 	placeholder: PropTypes.string,
 	type: PropTypes.oneOf(['dateRange']).isRequired,
 	value: PropTypes.shape({
-		from: PropTypes.shape({
-			day: PropTypes.number,
-			month: PropTypes.number,
-			year: PropTypes.number,
-		}),
-		to: PropTypes.shape({
-			day: PropTypes.number,
-			month: PropTypes.number,
-			year: PropTypes.number,
-		}),
+		from: dateShape,
+		to: dateShape,
 	}),
 };
 

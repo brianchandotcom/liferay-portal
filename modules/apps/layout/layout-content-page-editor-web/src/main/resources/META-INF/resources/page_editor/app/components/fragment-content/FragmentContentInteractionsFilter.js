@@ -312,7 +312,10 @@ export default function FragmentContentInteractionsFilter({
 
 	const props = {};
 
-	if (siblingIds.some(isActive) || !canUpdatePageStructure) {
+	if (
+		canUpdateEditables &&
+		(siblingIds.some(isActive) || !canUpdatePageStructure)
+	) {
 		props.onClickCapture = selectEditable;
 		props.onMouseLeave = () => hoverItem(null);
 		props.onMouseOverCapture = hoverEditable;

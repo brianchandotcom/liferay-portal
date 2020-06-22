@@ -18,6 +18,7 @@
 
 <%
 JournalArticle article = (JournalArticle)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLES);
+
 String title = article.getTitle();
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -59,6 +60,7 @@ renderResponse.setTitle(title);
 		cssClass="container-view"
 	>
 		<div class="bg-white p-4">
+
 			<%
 			for (int i = 0; i < data.length(); i++) {
 				JSONObject fieldJSONObject = data.getJSONObject(i);
@@ -67,15 +69,21 @@ renderResponse.setTitle(title);
 				String type = fieldJSONObject.getString("type");
 				String value = fieldJSONObject.getString("value");
 			%>
+
 				<clay:row>
-					<clay:col md="6">
+					<clay:col
+						md="6"
+					>
 						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" type="<%= type %>" value="<%= value %>" />
 					</clay:col>
 
-					<clay:col md="6">
+					<clay:col
+						md="6"
+					>
 						<aui:input label="<%= label %>" name="<%= label %>" type="<%= type %>" value="" />
 					</clay:col>
 				</clay:row>
+
 			<%
 			}
 			%>

@@ -117,7 +117,8 @@ public class JournalArticleActionDropdownItemsProvider {
 		UnsafeConsumer<DropdownItem, Exception> viewContentArticleAction =
 			_getViewContentArticleActionUnsafeConsumer();
 
-		final boolean importExportEnabled = hasViewPermission &&
+		final boolean importExportEnabled =
+			hasViewPermission &&
 			FFImportExportTranslationConfigurationUtil.enabled();
 
 		return DropdownItemListBuilder.add(

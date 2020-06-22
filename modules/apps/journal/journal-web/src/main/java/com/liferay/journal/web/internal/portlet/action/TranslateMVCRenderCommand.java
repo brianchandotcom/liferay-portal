@@ -29,18 +29,18 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-
-import java.util.Locale;
 
 /**
  * @author Ambrín Chaudhary
@@ -62,8 +62,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay) renderRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 			JournalArticle article = _journalArticleLocalService.getArticle(
 				themeDisplay.getScopeGroupId(),
@@ -77,34 +76,40 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				JournalWebKeys.JOURNAL_ARTICLES, article);
-			renderRequest.setAttribute("data", _getInfoFormData(
-				infoItemFormProvider.getInfoFormValues(article),
-				themeDisplay.getLocale()));
-
+			renderRequest.setAttribute(
+				"data",
+				_getInfoFormData(
+					infoItemFormProvider.getInfoFormValues(article),
+					themeDisplay.getLocale()));
 		}
-		catch (PortalException exception) {
-			throw new PortletException(exception);
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
 		}
 
 		return "/translate_side_by_side.jsp";
 	}
 
 	private JSONArray _getInfoFormData(
-		InfoFormValues infoFormValues, Locale locale ) {
+		InfoFormValues infoFormValues, Locale locale) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoFieldValue<Object> infoFieldValue :
-			infoFormValues.getInfoFieldValues()) {
+				infoFormValues.getInfoFieldValues()) {
 
 			InfoField infoField = infoFieldValue.getInfoField();
 
 			if (infoField.isLocalizable()) {
 				JSONObject jsonObject = JSONUtil.put(
 					"label",
-					infoField.getLabelInfoLocalizedValue().getValue(locale)
+					infoField.getLabelInfoLocalizedValue(
+					).getValue(
+						locale
+					)
 				).put(
-					"type", infoField.getInfoFieldType().getName()
+					"type",
+					infoField.getInfoFieldType(
+					).getName()
 				).put(
 					"value", infoFieldValue.getValue(locale)
 				);
@@ -117,9 +122,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private JournalArticleLocalService _journalArticleLocalService;
+	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

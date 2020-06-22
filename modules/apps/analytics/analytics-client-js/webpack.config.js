@@ -20,6 +20,11 @@ module.exports = {
 	entry: [
 		'core-js/fn/array/from',
 		'core-js/fn/array/find',
+		'core-js/fn/array/includes',
+		'core-js/fn/math/sign',
+		'core-js/fn/math/trunc',
+		'core-js/fn/string/includes',
+		'core-js/fn/string/pad-start',
 		'core-js/es6/symbol',
 		'core-js/fn/promise',
 		'whatwg-fetch',

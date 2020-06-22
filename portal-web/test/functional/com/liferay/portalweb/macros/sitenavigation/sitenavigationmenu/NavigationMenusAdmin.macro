@@ -245,19 +245,17 @@ definition {
 	}
 
 	macro viewItemNested {
-		AssertNotAttributeValue(
+		AssertElementPresent(
 			key_itemName = "${itemName}",
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY",
-			locator2 = "data-parent-site-navigation-menu-item-id",
-			value1 = "0");
+			key_parentItemName = "${parentItemName}",
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
 	}
 
 	macro viewItemNotNested {
-		AssertAttributeValue(
+		AssertElementNotPresent(
 			key_itemName = "${itemName}",
-			locator1 = "SiteNavigationMenu#ITEM_ENTRY",
-			locator2 = "data-parent-site-navigation-menu-item-id",
-			value1 = "0");
+			key_parentItemName = "${parentItemName}",
+			locator1 = "SiteNavigationMenu#ITEM_ENTRY_NESTED");
 	}
 
 	macro viewItemOrder {

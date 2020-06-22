@@ -105,7 +105,7 @@ describe('Collection', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders no items message when a collection without items is selected', async () => {
+	it('renders an item when the collection is empty', async () => {
 		CollectionService.getCollectionField.mockImplementation(() =>
 			Promise.resolve({
 				items: [],
@@ -122,12 +122,7 @@ describe('Collection', () => {
 			});
 		});
 
-		expect(
-			getByText(
-				document.body,
-				'you-do-not-have-any-items-in-this-collection'
-			)
-		).toBeInTheDocument();
+		expect(getByText(document.body, 'title')).toBeInTheDocument();
 	});
 
 	it('renders empty collection items', async () => {

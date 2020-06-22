@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.exception.InvalidXLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
-import com.liferay.translation.info.InfoFormValuesUpdater;
+import com.liferay.translation.info.item.updater.InfoFormValuesUpdater;
 
 import java.io.InputStream;
 

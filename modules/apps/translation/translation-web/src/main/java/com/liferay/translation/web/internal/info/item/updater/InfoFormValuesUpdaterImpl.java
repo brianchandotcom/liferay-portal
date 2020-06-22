@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.translation.web.internal.info;
+package com.liferay.translation.web.internal.info.item.updater;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -23,7 +23,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.translation.info.InfoFormValuesUpdater;
+import com.liferay.translation.info.item.updater.InfoFormValuesUpdater;
 
 import java.util.HashMap;
 import java.util.HashSet;

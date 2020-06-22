@@ -18,7 +18,7 @@ import {AppContextProvider} from '../../AppContext.es';
 import useLazy from '../../hooks/useLazy.es';
 
 export default ({appTab, ...props}) => {
-	const EditPage = useLazy();
+	const EditPage = useLazy(true);
 
 	return (
 		<AppContextProvider {...props}>

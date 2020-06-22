@@ -14,10 +14,12 @@
 
 package com.liferay.info.item;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Jorge Ferrer
  */
-public class NoSuchInfoItemException extends Exception {
+public class NoSuchInfoItemException extends PortalException {
 
 	public NoSuchInfoItemException(String msg) {
 		super(msg);

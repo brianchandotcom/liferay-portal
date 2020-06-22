@@ -14,6 +14,7 @@
 
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
@@ -47,8 +48,8 @@ export default ({
 	totalEntries,
 }) => (
 	<div className="report-cards-area">
-		<div className="sheet">
-			<div className="col-md-12">
+		<ClayLayout.Sheet>
+			<ClayLayout.Col>
 				<ClayCard displayType="image">
 					<ClayCard.AspectRatio className="card-header card-item-first">
 						<ClayTooltipProvider>
@@ -87,7 +88,7 @@ export default ({
 						)}
 					</ClayCard.Body>
 				</ClayCard>
-			</div>
-		</div>
+			</ClayLayout.Col>
+		</ClayLayout.Sheet>
 	</div>
 );

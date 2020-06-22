@@ -1178,10 +1178,11 @@ definition {
 			key_fragmentName = "${fragmentName}",
 			locator1 = "Fragment#FRAGMENT_HEADER_DELETE_BUTTON");
 
-		AssertElementNotPresent(
-			key_fragmentName = "${fragmentName}",
-			locator1 = "Fragment#FRAGMENT_HEADER");
-
+		if (!(isSet(duplicateFragment))) {
+			AssertElementNotPresent(
+				key_fragmentName = "${fragmentName}",
+				locator1 = "Fragment#FRAGMENT_HEADER");
+		}
 		PageEditor.waitForAutoSave();
 	}
 

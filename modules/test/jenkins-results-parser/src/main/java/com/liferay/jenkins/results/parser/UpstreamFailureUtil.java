@@ -193,7 +193,7 @@ public class UpstreamFailureUtil {
 		String url = JenkinsResultsParserUtil.getLocalURL(
 			JenkinsResultsParserUtil.combine(
 				_URL_BASE_UPSTREAM_FAILURES_JOB,
-				jobName.replace("pullrequest", "upstream-dxp"),
+				topLevelBuild.getAcceptanceUpstreamJobName(),
 				"/builds/latest/test.results.json"));
 
 		try {

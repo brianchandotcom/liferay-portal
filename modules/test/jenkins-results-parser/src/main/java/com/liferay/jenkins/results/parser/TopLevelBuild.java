@@ -114,13 +114,29 @@ public abstract class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	public String getAcceptanceUpstreamJobName() {
+		String jobName = getJobName();
+
+		if (jobName.contains("pullrequest")) {
+			String branchName = getBranchName();
+
+			if (branchName.startsWith("ee-")) {
+				return jobName.replace("pullrequest", "upstream");
+			}
+
+			return jobName.replace("pullrequest", "upstream-dxp");
+		}
+
+		return "";
+	}
+
 	public String getAcceptanceUpstreamJobURL() {
 		String jobName = getJobName();
 
 		if (jobName.contains("pullrequest")) {
 			String acceptanceUpstreamJobURL = JenkinsResultsParserUtil.combine(
 				"https://test-1-1.liferay.com/job/",
-				jobName.replace("pullrequest", "upstream-dxp"));
+				getAcceptanceUpstreamJobName());
 
 			try {
 				JenkinsResultsParserUtil.toString(

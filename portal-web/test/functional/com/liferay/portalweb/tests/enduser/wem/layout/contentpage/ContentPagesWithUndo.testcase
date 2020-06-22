@@ -67,6 +67,72 @@ definition {
 			locator1 = "Icon#ANY_DISABLED");
 	}
 
+	@description = "This is a test for LPS-112030. Can return to a given saved interactions via Undo History list."
+	@priority = "5"
+	test RestoreSavedInteractionsViaUndoHistory {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Button");
+
+		PageEditor.gotoConfiguration(fragmentName = "Button");
+
+		PageEditor.configureFragment(alignment = "Center");
+
+		PageEditor.gotoDuplicate(fragmentName = "Button");
+
+		PageEditor.removeFragment(
+			duplicateFragment = "true",
+			fragmentName = "Button");
+
+		Click(locator1 = "PageEditor#UNDO_HISTORY");
+
+		MenuItem.click(menuItem = "Add Button");
+
+		PageEditor.viewFragment(fragmentName = "Button");
+
+		MenuItem.click(menuItem = "Update Button Configuration");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "center",
+			fragmentName = "button");
+
+		for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
+			MenuItem.viewVisible(menuItem = "${menuItem}");
+		}
+
+		MenuItem.click(menuItem = "Duplicate Button");
+
+		PageEditor.viewDuplicateFragment(fragmentName = "Button");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "center",
+			fragmentName = "button");
+
+		for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
+			MenuItem.viewVisible(menuItem = "${menuItem}");
+		}
+
+		MenuItem.click(menuItem = "Delete Button");
+
+		AssertElementNotPresent(
+			key_fragmentName = "Button",
+			locator1 = "Fragment#FRAGMENT_HEADER_2");
+
+		PageEditor.viewFragment(fragmentName = "Button");
+
+		PageEditor.viewFragmentStyle(
+			alignment = "center",
+			fragmentName = "button");
+
+		for (var menuItem : list "Add Button,Update Button Configuration,Duplicate Button,Delete Button") {
+			MenuItem.viewVisible(menuItem = "${menuItem}");
+		}
+	}
+
 	@description = "This is a test for LPS-111946. Undo can bring deleted fragments and widgets back."
 	@priority = "5"
 	test UndoDeletedFragmentAndWidgetInPage {

@@ -20,6 +20,8 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
+import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
+import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useDispatch, useSelector} from '../../store/index';
@@ -31,6 +33,12 @@ import Collection from './Collection';
 
 const CollectionWithControls = React.forwardRef(
 	({children, item, layoutData}, ref) => {
+		const canUpdatePageStructure = useSelector(
+			selectCanUpdatePageStructure
+		);
+		const canUpdateItemConfiguration = useSelector(
+			selectCanUpdateItemConfiguration
+		);
 		const dispatch = useDispatch();
 		const selectItem = useSelectItem();
 		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -40,10 +48,15 @@ const CollectionWithControls = React.forwardRef(
 
 		const buttons = [];
 
-		buttons.push(
-			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem,
-			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration
-		);
+		if (canUpdatePageStructure) {
+			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem);
+		}
+
+		if (canUpdateItemConfiguration) {
+			buttons.push(
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.collectionConfiguration
+			);
+		}
 
 		const handleButtonClick = useCallback(
 			(id) => {

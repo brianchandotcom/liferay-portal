@@ -24,6 +24,7 @@ import {
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
 import {config} from '../../config/index';
+import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
@@ -52,6 +53,9 @@ const ContainerWithControls = React.forwardRef(
 			},
 		});
 
+		const canUpdateItemConfiguration = useSelector(
+			selectCanUpdateItemConfiguration
+		);
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
@@ -87,20 +91,24 @@ const ContainerWithControls = React.forwardRef(
 
 		const buttons = [];
 
-		if (!hasDropZoneChild(item, layoutData)) {
+		if (canUpdatePageStructure && !hasDropZoneChild(item, layoutData)) {
 			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem);
 			buttons.push(
 				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
 			);
 		}
 
-		if (config.containerItemEnabled) {
-			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerLink);
-		}
+		if (canUpdateItemConfiguration) {
+			if (config.containerItemEnabled) {
+				buttons.push(
+					LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerLink
+				);
+			}
 
-		buttons.push(
-			LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
-		);
+			buttons.push(
+				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.containerConfiguration
+			);
+		}
 
 		return (
 			<>
@@ -131,7 +139,9 @@ const ContainerWithControls = React.forwardRef(
 					<Container
 						className={classNames({
 							empty: !item.children.length,
-							'page-editor__container': canUpdatePageStructure,
+							'page-editor__container':
+								canUpdatePageStructure ||
+								canUpdateItemConfiguration,
 						})}
 						item={item}
 						ref={setRef}

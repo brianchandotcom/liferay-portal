@@ -24,6 +24,7 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../../prop-types/index';
 import {LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS} from '../../config/constants/layoutDataFloatingToolbarButtons';
+import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import selectShowFloatingToolbar from '../../selectors/selectShowFloatingToolbar';
 import {useDispatch, useSelector} from '../../store/index';
@@ -99,14 +100,16 @@ const RowWithControls = React.forwardRef(
 
 		const buttons = [];
 
-		if (!hasDropZoneChild(item, layoutData)) {
+		if (canUpdatePageStructure && !hasDropZoneChild(item, layoutData)) {
 			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.duplicateItem);
 			buttons.push(
 				LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.saveFragmentComposition
 			);
 		}
 
-		buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
+		if (selectCanUpdateItemConfiguration) {
+			buttons.push(LAYOUT_DATA_FLOATING_TOOLBAR_BUTTONS.rowConfiguration);
+		}
 
 		const {verticalAlignment} = rowConfig;
 

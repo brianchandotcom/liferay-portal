@@ -79,13 +79,12 @@ public class AccountGroupLocalServiceImpl
 		long companyId, String keywords, int start, int end,
 		OrderByComparator<AccountGroup> orderByComparator) {
 
-		DynamicQuery dynamicQuery = _getDynamicQuery(
-			companyId, keywords, orderByComparator);
-
 		return new BaseModelSearchResult<>(
 			accountGroupLocalService.dynamicQuery(
-				dynamicQuery, start, end, orderByComparator),
-			(int)accountGroupLocalService.dynamicQueryCount(dynamicQuery));
+				_getDynamicQuery(companyId, keywords, orderByComparator), start,
+				end, orderByComparator),
+			(int)accountGroupLocalService.dynamicQueryCount(
+				_getDynamicQuery(companyId, keywords, null)));
 	}
 
 	@Override

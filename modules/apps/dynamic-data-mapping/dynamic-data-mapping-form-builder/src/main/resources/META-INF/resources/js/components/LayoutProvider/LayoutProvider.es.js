@@ -422,11 +422,16 @@ class LayoutProvider extends Component {
 		this.setState(handleFieldSetAdded(this.props, this.state, event));
 	}
 
-	_handleFocusedFieldEvaluationEnded({instanceId, settingsContext}) {
+	_handleFocusedFieldEvaluationEnded({
+		changedFieldType,
+		instanceId,
+		settingsContext,
+	}) {
 		this.setState(
 			handleFocusedFieldEvaluationEnded(
 				this.props,
 				this.state,
+				changedFieldType,
 				instanceId,
 				settingsContext
 			)

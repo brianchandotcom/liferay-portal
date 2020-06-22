@@ -87,6 +87,7 @@ class Sidebar extends Component {
 				defaultLanguageId,
 				editingLanguageId
 			),
+			changedFieldType: true,
 			instanceId: generateInstanceId(8),
 			settingsContext,
 			type: newFieldType.name,

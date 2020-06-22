@@ -113,12 +113,14 @@ public int countBy${entityFinder.name}(
 			</#if>
 		}
 		catch (Exception exception) {
-			<#if entity.isChangeTrackingEnabled()>
-				if (productionMode) {
+			<#if serviceBuilder.isVersionLTE_7_2_0()>
+				<#if entity.isChangeTrackingEnabled()>
+					if (productionMode) {
+						${finderCache}.removeResult(finderPath, finderArgs);
+					}
+				<#else>
 					${finderCache}.removeResult(finderPath, finderArgs);
-				}
-			<#else>
-				${finderCache}.removeResult(finderPath, finderArgs);
+				</#if>
 			</#if>
 
 			throw processException(exception);
@@ -269,12 +271,14 @@ public int countBy${entityFinder.name}(
 				</#if>
 			}
 			catch (Exception exception) {
-				<#if entity.isChangeTrackingEnabled()>
-					if (productionMode) {
+				<#if serviceBuilder.isVersionLTE_7_2_0()>
+					<#if entity.isChangeTrackingEnabled()>
+						if (productionMode) {
+							${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
+						}
+					<#else>
 						${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
-					}
-				<#else>
-					${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
+					</#if>
 				</#if>
 
 				throw processException(exception);
@@ -455,12 +459,14 @@ public int countBy${entityFinder.name}(
 					</#if>
 			}
 			catch (Exception exception) {
-				<#if entity.isChangeTrackingEnabled()>
-					if (productionMode) {
+				<#if serviceBuilder.isVersionLTE_7_2_0()>
+					<#if entity.isChangeTrackingEnabled()>
+						if (productionMode) {
+							${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
+						}
+					<#else>
 						${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
-					}
-				<#else>
-					${finderCache}.removeResult(_finderPathWithPaginationCountBy${entityFinder.name}, finderArgs);
+					</#if>
 				</#if>
 
 				throw processException(exception);

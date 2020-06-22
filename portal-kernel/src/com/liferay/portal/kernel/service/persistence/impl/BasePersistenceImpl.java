@@ -289,9 +289,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 				}
 			}
 			catch (Exception exception) {
-				entityCache.removeResult(
-					entityCacheEnabled, _modelImplClass, primaryKey);
-
 				throw processException(exception);
 			}
 			finally {

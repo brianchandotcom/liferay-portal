@@ -990,7 +990,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					}
 				}
 				catch (Exception exception) {
-					${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
+					</#if>
 
 					throw processException(exception);
 				}
@@ -1354,9 +1356,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			}
 			catch (Exception exception) {
-				if (${useCache}) {
-					${finderCache}.removeResult(finderPath, finderArgs);
-				}
+				<#if serviceBuilder.isVersionLTE_7_2_0()>
+					if (${useCache}) {
+						${finderCache}.removeResult(finderPath, finderArgs);
+					}
+				</#if>
 
 				throw processException(exception);
 			}
@@ -1417,12 +1421,14 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				</#if>
 			}
 			catch (Exception exception) {
-				<#if entity.isChangeTrackingEnabled()>
-					if (productionMode) {
+				<#if serviceBuilder.isVersionLTE_7_2_0()>
+					<#if entity.isChangeTrackingEnabled()>
+						if (productionMode) {
+							${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+						}
+					<#else>
 						${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
-					}
-				<#else>
-					${finderCache}.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+					</#if>
 				</#if>
 
 				throw processException(exception);
@@ -1906,7 +1912,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathWithPaginationCountAncestors, finderArgs, count);
 				}
 				catch (SystemException systemException) {
-					${finderCache}.removeResult(_finderPathWithPaginationCountAncestors, finderArgs);
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${finderCache}.removeResult(_finderPathWithPaginationCountAncestors, finderArgs);
+					</#if>
 
 					throw systemException;
 				}
@@ -1928,7 +1936,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathWithPaginationCountDescendants, finderArgs, count);
 				}
 				catch (SystemException systemException) {
-					${finderCache}.removeResult(_finderPathWithPaginationCountDescendants, finderArgs);
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${finderCache}.removeResult(_finderPathWithPaginationCountDescendants, finderArgs);
+					</#if>
 
 					throw systemException;
 				}
@@ -1962,7 +1972,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathWithPaginationGetAncestors, finderArgs, list);
 				}
 				catch (SystemException systemException) {
-					${finderCache}.removeResult(_finderPathWithPaginationGetAncestors, finderArgs);
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${finderCache}.removeResult(_finderPathWithPaginationGetAncestors, finderArgs);
+					</#if>
 
 					throw systemException;
 				}
@@ -1996,7 +2008,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${finderCache}.putResult(_finderPathWithPaginationGetDescendants, finderArgs, list);
 				}
 				catch (SystemException systemException) {
-					${finderCache}.removeResult(_finderPathWithPaginationGetDescendants, finderArgs);
+					<#if serviceBuilder.isVersionLTE_7_2_0()>
+						${finderCache}.removeResult(_finderPathWithPaginationGetDescendants, finderArgs);
+					</#if>
 
 					throw systemException;
 				}

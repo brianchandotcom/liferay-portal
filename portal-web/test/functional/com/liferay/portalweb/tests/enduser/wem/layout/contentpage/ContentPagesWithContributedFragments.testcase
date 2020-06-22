@@ -429,6 +429,53 @@ definition {
 			position = "3");
 	}
 
+	@description = "This is a use case for LPS-109298. Can add Tabs fragment to container of Layout elements."
+	@priority = "3"
+	test AddTabsFragmentToLayoutElements {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Container");
+
+		PageEditor.addFragment(
+			collectionName = "Layout Elements",
+			fragmentName = "Row",
+			targetFragmentName = "Container");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "Basic Components",
+			key_fragmentName = "Tabs",
+			key_position = "1",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+			locator2 = "PageEditor#CONTAINER_CONTAINER",
+			value1 = "");
+
+		AssertElementPresent(
+			key_fragmentName = "Tabs",
+			key_inFragmentName = "Container",
+			locator1 = "Fragment#FRAGMENT_BODY_IN_FRAGMENT");
+
+		DragAndDrop.javaScriptDragAndDropToObject(
+			key_collectionName = "Basic Components",
+			key_columnNumber = "1",
+			key_fragmentName = "Tabs",
+			key_position = "1",
+			locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+			locator2 = "PageEditor#ROW_COLUMN",
+			value1 = "");
+
+		PageEditor.waitForAutoSave();
+
+		AssertElementPresent(
+			key_columnNumber = "1",
+			key_elementHeader = "/div[contains(@class,'page-editor__topper')][1]/div[contains(.,'Tabs')]//li[contains(@class,'title')]",
+			key_position = "1",
+			locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+	}
+
 	@description = "This is a use case for LPS-111274. The selected Tabs fragment should always stay selected when click on the tabs of it."
 	@priority = "5"
 	test ClickTabsFragmentTabAndViewHeader {

@@ -61,7 +61,7 @@ public class ShareFormInstanceMVCActionCommand extends BaseMVCActionCommand {
 				"successMessage",
 				LanguageUtil.get(
 					_portal.getHttpServletRequest(actionRequest),
-					"your-request-completed-successfully"));
+					"form-shared-via-email"));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);

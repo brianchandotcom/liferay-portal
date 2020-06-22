@@ -185,6 +185,10 @@ definition {
 
 			Pause(locator1 = "5000");
 
+			NavigationMenusAdmin.viewItemNested(
+				itemName = "Test Page Name 1",
+				parentItemName = "Home");
+
 			DragAndDrop.dragAndDropObjectMoveTwice(
 				key_sourceItemName = "Test Page Name 2",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
@@ -193,6 +197,10 @@ definition {
 
 			Pause(locator1 = "5000");
 
+			NavigationMenusAdmin.viewItemNested(
+				itemName = "Test Page Name 2",
+				parentItemName = "Test Page Name 1");
+
 			DragAndDrop.dragAndDropObjectMoveTwice(
 				key_sourceItemName = "Test Page Name 3",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_DRAG_ICON",
@@ -200,6 +208,10 @@ definition {
 				position2 = "200,-25");
 
 			Pause(locator1 = "5000");
+
+			NavigationMenusAdmin.viewItemNested(
+				itemName = "Test Page Name 3",
+				parentItemName = "Test Page Name 2");
 		}
 
 		task ("Navigate to Home") {

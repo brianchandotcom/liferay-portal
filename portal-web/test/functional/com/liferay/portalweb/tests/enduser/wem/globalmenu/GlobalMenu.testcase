@@ -23,8 +23,9 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-112989. View All link will be shown in Global Menu when the total amount of Recently Visited and My Sites more than 7."
-	@priority = "4"
+	@priority = "5"
 	test ShowViewAllWhenTotalAmountOfSitesFromRecentlyVisitedAndMySitesMoreThanSeven {
+		property portal.acceptance = "true";
 		property testray.component.names = "Web Content Administration";
 
 		task ("Add six new sites") {

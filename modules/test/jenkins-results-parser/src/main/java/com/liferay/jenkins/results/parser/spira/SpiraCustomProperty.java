@@ -40,6 +40,15 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		final Class<? extends SpiraArtifact> spiraArtifactClass,
 		String customPropertyName, Type type) {
 
+		return createSpiraCustomProperty(
+			spiraProject, spiraArtifactClass, customPropertyName, type, false);
+	}
+
+	public static SpiraCustomProperty createSpiraCustomProperty(
+		final SpiraProject spiraProject,
+		final Class<? extends SpiraArtifact> spiraArtifactClass,
+		String customPropertyName, Type type, boolean enableRichText) {
+
 		List<SpiraCustomProperty> spiraCustomProperties =
 			getSpiraCustomProperties(
 				spiraProject, spiraArtifactClass,
@@ -72,6 +81,19 @@ public class SpiraCustomProperty extends BaseSpiraArtifact {
 		requestJSONObject.put("CustomPropertyTypeId", type.getID());
 		requestJSONObject.put("Name", customPropertyName);
 		requestJSONObject.put("ProjectTemplateId", projectTemplateID);
+
+		if (enableRichText) {
+			JSONObject enableRichTextJSONObject = new JSONObject();
+
+			enableRichTextJSONObject.put("CustomPropertyOptionId", 4);
+			enableRichTextJSONObject.put("Value", "Y");
+
+			JSONArray optionsJSONArray = new JSONArray();
+
+			optionsJSONArray.put(enableRichTextJSONObject);
+
+			requestJSONObject.put("Options", optionsJSONArray);
+		}
 
 		spiraCustomProperties = getSpiraCustomProperties(
 			spiraProject, spiraArtifactClass);

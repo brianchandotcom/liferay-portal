@@ -18,14 +18,14 @@ import PropTypes from 'prop-types';
 import React, {useContext, useEffect, useState} from 'react';
 
 import DatasetDisplayContext from '../../DatasetDisplayContext';
-import ActionsDropdownRenderer from '../../data_renderer/ActionsDropdownRenderer';
-import CheckboxRenderer from '../../data_renderer/CheckboxRenderer';
-import CommentRenderer from '../../data_renderer/CommentRenderer';
-import RadioRenderer from '../../data_renderer/RadioRenderer';
+import ActionsDropdownRenderer from '../../data_renderers/ActionsDropdownRenderer';
+import CheckboxRenderer from '../../data_renderers/CheckboxRenderer';
+import CommentRenderer from '../../data_renderers/CommentRenderer';
+import RadioRenderer from '../../data_renderers/RadioRenderer';
 import {
 	getDataRendererById,
 	getDataRendererByUrl,
-} from '../../data_renderer/index';
+} from '../../data_renderers/index';
 import {getValueFromItem} from '../../utilities/index';
 import TableHeadRow from './TableHeadRow';
 
@@ -86,7 +86,7 @@ function CustomTableCell({
 	);
 }
 
-function getItemFields(item, fields, itemId, itemActions) {
+function getItemFields(item, fields, itemId, itemsActions) {
 	return fields.map((field, i) => {
 		const fieldName = field.fieldName;
 		const {actionItems, ...otherProps} = item;
@@ -100,7 +100,7 @@ function getItemFields(item, fields, itemId, itemActions) {
 
 		return (
 			<CustomTableCell
-				actions={itemActions || actionItems}
+				actions={itemsActions || actionItems}
 				comment={comment}
 				itemData={item}
 				itemId={itemId}
@@ -116,7 +116,7 @@ function getItemFields(item, fields, itemId, itemActions) {
 	});
 }
 
-function Table({itemActions, items, schema, style}) {
+function Table({items, itemsActions, schema, style}) {
 	const {
 		highlightedItemsValue,
 		nestedItemsKey,
@@ -131,7 +131,7 @@ function Table({itemActions, items, schema, style}) {
 	} = useContext(DatasetDisplayContext);
 
 	const showActionItems = Boolean(
-		itemActions?.length ||
+		itemsActions?.length ||
 			items.find((element) => element.actionDropdownItems)
 	);
 
@@ -195,15 +195,15 @@ function Table({itemActions, items, schema, style}) {
 										item,
 										schema.fields,
 										itemId,
-										itemActions
+										itemsActions
 									)}
 									{showActionItems && (
 										<ClayTable.Cell className="dataset-item-actions-wrapper">
-											{(itemActions ||
+											{(itemsActions ||
 												item.actionDropdownItems) && (
 												<ActionsDropdownRenderer
 													actions={
-														itemActions ||
+														itemsActions ||
 														item.actionDropdownItems
 													}
 													itemData={item}
@@ -233,7 +233,7 @@ function Table({itemActions, items, schema, style}) {
 													nestedItem,
 													schema.fields,
 													nestedItem[nestedItemsKey],
-													itemActions
+													itemsActions
 												)}
 												{showActionItems ? (
 													<ClayTable.Cell />
@@ -251,8 +251,8 @@ function Table({itemActions, items, schema, style}) {
 }
 
 Table.propTypes = {
-	itemActions: PropTypes.array,
 	items: PropTypes.arrayOf(PropTypes.object),
+	itemsActions: PropTypes.array,
 	schema: PropTypes.shape({
 		fields: PropTypes.arrayOf(
 			PropTypes.shape({

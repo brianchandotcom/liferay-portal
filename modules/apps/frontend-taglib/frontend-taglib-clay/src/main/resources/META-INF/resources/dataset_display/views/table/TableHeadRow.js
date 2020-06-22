@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import Checkbox from '../../data_renderer/CheckboxRenderer';
+import Checkbox from '../../data_renderers/CheckboxRenderer';
 
 function TableHeadCell({
 	contentRenderer,
@@ -28,18 +28,20 @@ function TableHeadCell({
 	label,
 	sortable,
 	sorting,
+	sortingKey: sortingKeyProp,
 	updateSorting,
 }) {
-	const sortingMatch = sorting.find(
-		(element) => element.fieldName === fieldName
-	);
+	const sortingKey =
+		sortingKeyProp || (Array.isArray(fieldName) ? fieldName[0] : fieldName);
+
+	const sortingMatch = sorting.find((element) => element.key === sortingKey);
 
 	function handleSortingCellClick(event) {
 		event.preventDefault();
 
 		if (sortingMatch) {
 			const updatedSortedElements = sorting.map((element) =>
-				element.fieldName === fieldName
+				element.key === sortingKey
 					? {
 							...element,
 							direction:
@@ -52,8 +54,8 @@ function TableHeadCell({
 		else {
 			updateSorting([
 				{
-					direction: 'asc',
 					fieldName,
+					key: sortingKey,
 				},
 			]);
 		}
@@ -84,7 +86,7 @@ function TableHeadCell({
 								sortingMatch?.direction === 'asc' && 'active'
 							)}
 							draggable
-							symbol={'order-arrow-up'}
+							symbol="order-arrow-up"
 						/>
 						<ClayIcon
 							className={classNames(
@@ -92,7 +94,7 @@ function TableHeadCell({
 								sortingMatch?.direction === 'desc' && 'active'
 							)}
 							draggable
-							symbol={'order-arrow-down'}
+							symbol="order-arrow-down"
 						/>
 					</span>
 				</a>
@@ -126,7 +128,7 @@ function TableHeadRow({
 				<TableHeadCell
 					{...field}
 					expandableColumns={expandableColumns}
-					key={field.fieldName || i}
+					key={field.sortingKey || i}
 					sorting={sorting}
 					updateSorting={updateSorting}
 				/>
@@ -176,10 +178,11 @@ TableHeadRow.propTypes = {
 				expand: PropTypes.bool,
 				fieldName: PropTypes.oneOfType([
 					PropTypes.string,
-					PropTypes.array,
+					PropTypes.arrayOf(PropTypes.string),
 				]),
 				label: PropTypes.string,
 				sortable: PropTypes.bool,
+				sortingKey: PropTypes.string,
 			}).isRequired
 		),
 	}),

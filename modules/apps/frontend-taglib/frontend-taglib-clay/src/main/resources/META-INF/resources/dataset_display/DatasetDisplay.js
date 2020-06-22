@@ -45,8 +45,8 @@ function DatasetDisplay({
 	filters: filtersProp,
 	formId,
 	id,
-	itemActions,
 	items: itemsProp,
+	itemsActions,
 	namespace,
 	nestedItemsKey,
 	nestedItemsReferenceKey,
@@ -344,8 +344,8 @@ function DatasetDisplay({
 				{items?.length > 0 && (
 					<CurrentViewComponent
 						datasetDisplayContext={DatasetDisplayContext}
-						itemActions={itemActions}
 						items={items}
+						itemsActions={itemsActions}
 						style={style}
 						{...currentViewProps}
 					/>
@@ -422,7 +422,7 @@ function DatasetDisplay({
 				formRef,
 				highlightItems,
 				highlightedItemsValue,
-				itemActions,
+				itemsActions,
 				loadData: refreshData,
 				modalId: datasetDisplaySupportModalId,
 				namespace,
@@ -494,8 +494,8 @@ DatasetDisplay.propTypes = {
 	filters: PropTypes.array,
 	formId: PropTypes.string,
 	id: PropTypes.string.isRequired,
-	itemActions: PropTypes.array,
 	items: PropTypes.array,
+	itemsActions: PropTypes.array,
 	namespace: PropTypes.string,
 	nestedItemsKey: PropTypes.string,
 	nestedItemsReferenceKey: PropTypes.string,
@@ -515,7 +515,12 @@ DatasetDisplay.propTypes = {
 	showPagination: PropTypes.bool,
 	showSearch: PropTypes.bool,
 	sidePanelId: PropTypes.string,
-	sorting: PropTypes.array,
+	sorting: PropTypes.arrayOf(
+		PropTypes.shape({
+			direction: PropTypes.oneOf(['asc', 'desc']),
+			key: PropTypes.string,
+		})
+	),
 	style: PropTypes.oneOf(['default', 'fluid', 'stacked']),
 	views: PropTypes.arrayOf(
 		PropTypes.shape({
@@ -532,8 +537,8 @@ DatasetDisplay.propTypes = {
 DatasetDisplay.defaultProps = {
 	bulkActions: [],
 	filters: [],
-	itemActions: null,
 	items: null,
+	itemsActions: null,
 	selectedItemsKey: 'id',
 	selectionType: 'multiple',
 	showManagementBar: true,

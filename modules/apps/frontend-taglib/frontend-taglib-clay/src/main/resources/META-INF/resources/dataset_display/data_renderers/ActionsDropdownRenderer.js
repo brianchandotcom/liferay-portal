@@ -153,8 +153,32 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 		return null;
 	}
 
+	const formattedActions = actions.reduce((actions, action) => {
+		if (action.id && !action.href && itemData.actions) {
+			if (itemData.actions[action.id]) {
+				return [
+					...actions,
+					{
+						...action,
+						...itemData.actions[action.id],
+						target: 'async',
+					},
+				];
+			}
+
+			return actions;
+		}
+
+		return [...actions, action];
+	}, []);
+
 	if (actions.length === 1) {
-		const action = actions[0];
+		const action = formattedActions[0];
+
+		if (action.id && !action.href) {
+			return null;
+		}
+
 		const formattedHref = formatActionUrl(action.href, itemData);
 
 		if (loading) {
@@ -253,7 +277,7 @@ function ActionsDropdownRenderer({actions, itemData, itemId}) {
 			}
 		>
 			<ClayDropDown.ItemList>
-				{renderItems(actions)}
+				{renderItems(formattedActions)}
 			</ClayDropDown.ItemList>
 		</ClayDropDown>
 	);

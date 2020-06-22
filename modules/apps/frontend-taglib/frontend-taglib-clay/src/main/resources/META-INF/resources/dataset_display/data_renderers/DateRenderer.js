@@ -12,35 +12,34 @@
  * details.
  */
 
-import {default as distanceInWordsToNow} from 'date-fns/distance_in_words_to_now';
-import {default as formatDate} from 'date-fns/format';
 import PropType from 'prop-types';
 
 function DateRenderer({options, value}) {
-	switch (options.type) {
-		case 'relative': {
-			const date = distanceInWordsToNow(value);
-
-			return date.replace(/^./, date[0].toUpperCase());
-		}
-		default:
-			return formatDate(value, options.format || 'MMMM Do YYYY');
+	if (!value) {
+		return null;
 	}
+
+	const locale = themeDisplay.getLanguageId().replace('_', '-');
+	const dateOptions = options.format || {
+		day: 'numeric',
+		hour: 'numeric',
+		minute: 'numeric',
+		month: 'short',
+		second: 'numeric',
+		year: 'numeric',
+	};
+	const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(
+		new Date(value)
+	);
+
+	return formattedDate;
 }
 
 DateRenderer.propTypes = {
 	options: PropType.shape({
-		format: PropType.string,
-		type: PropType.oneOf(['relative', 'default']),
+		format: PropType.object,
 	}),
 	value: PropType.string.isRequired,
-};
-
-DateRenderer.defaultProps = {
-	options: {
-		format: 'MMMM Do YYYY',
-		type: 'default',
-	},
 };
 
 export default DateRenderer;

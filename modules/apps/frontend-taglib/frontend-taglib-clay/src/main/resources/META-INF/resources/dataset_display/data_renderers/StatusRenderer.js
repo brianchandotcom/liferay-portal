@@ -12,8 +12,29 @@
  * details.
  */
 
-const applyMiddleware = (dispatch) => (action) => {
-	dispatch(action);
+import PropTypes from 'prop-types';
+import React from 'react';
+
+function StatusRenderer(props) {
+	return props.value ? (
+		<span className="taglib-workflow-status">
+			<span className="workflow-status">
+				<strong
+					className={`label status workflow-status-${props.value.label} ${props.value.label} workflow-value`}
+				>
+					{props.value.label_i18n}
+				</strong>
+			</span>
+		</span>
+	) : null;
+}
+
+StatusRenderer.propTypes = {
+	value: PropTypes.shape({
+		code: PropTypes.number,
+		label: PropTypes.string,
+		label_i18n: PropTypes.string,
+	}),
 };
 
-export default applyMiddleware;
+export default StatusRenderer;

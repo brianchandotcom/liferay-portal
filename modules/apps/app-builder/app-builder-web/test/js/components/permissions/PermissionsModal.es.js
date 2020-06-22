@@ -82,7 +82,6 @@ describe('PermissionsModal', () => {
 				actions={ACTIONS}
 				endpoint={'/permissions'}
 				isOpen={true}
-				onClose={() => {}}
 				rolesFilter={() => true}
 				title={'title'}
 			/>
@@ -108,7 +107,6 @@ describe('PermissionsModal', () => {
 				endpoint={'/permissions'}
 				isDisabled={() => false}
 				isOpen={false}
-				onClose={() => {}}
 				onSave={() => Promise.resolve()}
 				rolesFilter={() => true}
 				title={'title'}
@@ -166,6 +164,10 @@ describe('PermissionsModal', () => {
 
 		fireEvent.click(cancelButton);
 
+		await act(async () => {
+			jest.runAllTimers();
+		});
+
 		expect(onCloseCallback.mock.calls.length).toBe(1);
 	});
 
@@ -182,7 +184,6 @@ describe('PermissionsModal', () => {
 				endpoint={'/permissions'}
 				isDisabled={() => false}
 				isOpen={true}
-				onClose={() => {}}
 				onSave={onSaveCallback}
 				rolesFilter={() => true}
 				title={'title'}
@@ -226,7 +227,6 @@ describe('PermissionsModal', () => {
 				endpoint={'/permissions'}
 				isDisabled={() => false}
 				isOpen={true}
-				onClose={() => {}}
 				onSave={onSaveCallback}
 				rolesFilter={() => true}
 				title={'title'}

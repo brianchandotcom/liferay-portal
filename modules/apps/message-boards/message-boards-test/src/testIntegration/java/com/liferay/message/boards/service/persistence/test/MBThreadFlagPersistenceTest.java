@@ -234,6 +234,21 @@ public class MBThreadFlagPersistenceTest {
 	}
 
 	@Test
+	public void testCountByU_ThreadIds() throws Exception {
+		_persistence.countByU_ThreadIds(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByU_ThreadIds(0L, 0L);
+	}
+
+	@Test
+	public void testCountByU_ThreadIdsArrayable() throws Exception {
+		_persistence.countByU_ThreadIds(
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		MBThreadFlag newMBThreadFlag = addMBThreadFlag();
 

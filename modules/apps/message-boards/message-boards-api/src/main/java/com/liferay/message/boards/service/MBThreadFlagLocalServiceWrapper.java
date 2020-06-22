@@ -398,6 +398,17 @@ public class MBThreadFlagLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.Set<com.liferay.message.boards.model.MBThread>
+			getThreadFlagSet(
+				long userId,
+				java.util.List<com.liferay.message.boards.model.MBThread>
+					threads)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbThreadFlagLocalService.getThreadFlagSet(userId, threads);
+	}
+
+	@Override
 	public boolean hasThreadFlag(
 			long userId, com.liferay.message.boards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {

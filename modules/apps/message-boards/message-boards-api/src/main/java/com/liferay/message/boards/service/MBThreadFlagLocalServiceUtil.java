@@ -384,6 +384,16 @@ public class MBThreadFlagLocalServiceUtil {
 		return getService().getThreadFlag(userId, thread);
 	}
 
+	public static java.util.Set<com.liferay.message.boards.model.MBThread>
+			getThreadFlagSet(
+				long userId,
+				java.util.List<com.liferay.message.boards.model.MBThread>
+					threads)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getThreadFlagSet(userId, threads);
+	}
+
 	public static boolean hasThreadFlag(
 			long userId, com.liferay.message.boards.model.MBThread thread)
 		throws com.liferay.portal.kernel.exception.PortalException {

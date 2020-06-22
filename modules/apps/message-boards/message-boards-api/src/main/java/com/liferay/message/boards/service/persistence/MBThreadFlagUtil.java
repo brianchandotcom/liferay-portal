@@ -932,6 +932,286 @@ public class MBThreadFlagUtil {
 	}
 
 	/**
+	 * Returns all the message boards thread flags where userId = &#63; and threadId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @return the matching message boards thread flags
+	 */
+	public static List<MBThreadFlag> findByU_ThreadIds(
+		long userId, long threadId) {
+
+		return getPersistence().findByU_ThreadIds(userId, threadId);
+	}
+
+	/**
+	 * Returns a range of all the message boards thread flags where userId = &#63; and threadId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param start the lower bound of the range of message boards thread flags
+	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
+	 * @return the range of matching message boards thread flags
+	 */
+	public static List<MBThreadFlag> findByU_ThreadIds(
+		long userId, long threadId, int start, int end) {
+
+		return getPersistence().findByU_ThreadIds(userId, threadId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards thread flags where userId = &#63; and threadId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param start the lower bound of the range of message boards thread flags
+	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards thread flags
+	 */
+	public static List<MBThreadFlag> findByU_ThreadIds(
+		long userId, long threadId, int start, int end,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+
+		return getPersistence().findByU_ThreadIds(
+			userId, threadId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards thread flags where userId = &#63; and threadId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param start the lower bound of the range of message boards thread flags
+	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching message boards thread flags
+	 */
+	public static List<MBThreadFlag> findByU_ThreadIds(
+		long userId, long threadId, int start, int end,
+		OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_ThreadIds(
+			userId, threadId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first message boards thread flag in the ordered set where userId = &#63; and threadId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread flag
+	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
+	 */
+	public static MBThreadFlag findByU_ThreadIds_First(
+			long userId, long threadId,
+			OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+
+		return getPersistence().findByU_ThreadIds_First(
+			userId, threadId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first message boards thread flag in the ordered set where userId = &#63; and threadId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
+	 */
+	public static MBThreadFlag fetchByU_ThreadIds_First(
+		long userId, long threadId,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+
+		return getPersistence().fetchByU_ThreadIds_First(
+			userId, threadId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last message boards thread flag in the ordered set where userId = &#63; and threadId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread flag
+	 * @throws NoSuchThreadFlagException if a matching message boards thread flag could not be found
+	 */
+	public static MBThreadFlag findByU_ThreadIds_Last(
+			long userId, long threadId,
+			OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+
+		return getPersistence().findByU_ThreadIds_Last(
+			userId, threadId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last message boards thread flag in the ordered set where userId = &#63; and threadId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching message boards thread flag, or <code>null</code> if a matching message boards thread flag could not be found
+	 */
+	public static MBThreadFlag fetchByU_ThreadIds_Last(
+		long userId, long threadId,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+
+		return getPersistence().fetchByU_ThreadIds_Last(
+			userId, threadId, orderByComparator);
+	}
+
+	/**
+	 * Returns the message boards thread flags before and after the current message boards thread flag in the ordered set where userId = &#63; and threadId = &#63;.
+	 *
+	 * @param threadFlagId the primary key of the current message boards thread flag
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next message boards thread flag
+	 * @throws NoSuchThreadFlagException if a message boards thread flag with the primary key could not be found
+	 */
+	public static MBThreadFlag[] findByU_ThreadIds_PrevAndNext(
+			long threadFlagId, long userId, long threadId,
+			OrderByComparator<MBThreadFlag> orderByComparator)
+		throws com.liferay.message.boards.exception.NoSuchThreadFlagException {
+
+		return getPersistence().findByU_ThreadIds_PrevAndNext(
+			threadFlagId, userId, threadId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the message boards thread flags where userId = &#63; and threadId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param threadIds the thread IDs
+	 * @return the matching message boards thread flags
+	 */
+	public static List<MBThreadFlag> findByU_ThreadIds(
+		long userId, long[] threadIds) {
+
+		return getPersistence().findByU_ThreadIds(userId, threadIds);
+	}
+
+	/**
+	 * Returns a range of all the message boards thread flags where userId = &#63; and threadId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param threadIds the thread IDs
+	 * @param start the lower bound of the range of message boards thread flags
+	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
+	 * @return the range of matching message boards thread flags
+	 */
+	public static List<MBThreadFlag> findByU_ThreadIds(
+		long userId, long[] threadIds, int start, int end) {
+
+		return getPersistence().findByU_ThreadIds(
+			userId, threadIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards thread flags where userId = &#63; and threadId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param threadIds the thread IDs
+	 * @param start the lower bound of the range of message boards thread flags
+	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards thread flags
+	 */
+	public static List<MBThreadFlag> findByU_ThreadIds(
+		long userId, long[] threadIds, int start, int end,
+		OrderByComparator<MBThreadFlag> orderByComparator) {
+
+		return getPersistence().findByU_ThreadIds(
+			userId, threadIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards thread flags where userId = &#63; and threadId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadFlagModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @param start the lower bound of the range of message boards thread flags
+	 * @param end the upper bound of the range of message boards thread flags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching message boards thread flags
+	 */
+	public static List<MBThreadFlag> findByU_ThreadIds(
+		long userId, long[] threadIds, int start, int end,
+		OrderByComparator<MBThreadFlag> orderByComparator,
+		boolean useFinderCache) {
+
+		return getPersistence().findByU_ThreadIds(
+			userId, threadIds, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Removes all the message boards thread flags where userId = &#63; and threadId = &#63; from the database.
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 */
+	public static void removeByU_ThreadIds(long userId, long threadId) {
+		getPersistence().removeByU_ThreadIds(userId, threadId);
+	}
+
+	/**
+	 * Returns the number of message boards thread flags where userId = &#63; and threadId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @return the number of matching message boards thread flags
+	 */
+	public static int countByU_ThreadIds(long userId, long threadId) {
+		return getPersistence().countByU_ThreadIds(userId, threadId);
+	}
+
+	/**
+	 * Returns the number of message boards thread flags where userId = &#63; and threadId = any &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param threadIds the thread IDs
+	 * @return the number of matching message boards thread flags
+	 */
+	public static int countByU_ThreadIds(long userId, long[] threadIds) {
+		return getPersistence().countByU_ThreadIds(userId, threadIds);
+	}
+
+	/**
 	 * Caches the message boards thread flag in the entity cache if it is enabled.
 	 *
 	 * @param mbThreadFlag the message boards thread flag

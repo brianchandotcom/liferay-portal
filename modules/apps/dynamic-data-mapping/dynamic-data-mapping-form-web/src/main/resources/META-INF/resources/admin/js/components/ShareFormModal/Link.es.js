@@ -30,6 +30,12 @@ class Link extends Component {
 		this._clipboard.destroy();
 	}
 
+	init() {
+		this.setState({
+			success: false,
+		});
+	}
+
 	render() {
 		const {spritemap, url} = this.props;
 

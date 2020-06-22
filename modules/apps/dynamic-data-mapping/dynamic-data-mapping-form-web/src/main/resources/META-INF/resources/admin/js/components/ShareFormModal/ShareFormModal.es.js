@@ -51,6 +51,7 @@ class ShareFormModal extends Component {
 
 	open() {
 		this.refs.shareFormModalRef.refs.emailRef.init();
+		this.refs.shareFormModalRef.refs.linkRef.init();
 		this.refs.shareFormModalRef.visible = true;
 	}
 
@@ -67,7 +68,13 @@ class ShareFormModal extends Component {
 									{Liferay.Language.get('link')}
 								</div>
 								<div class="popover-body">
-									{<Link spritemap={spritemap} url={url} />}
+									{
+										<Link
+											ref="linkRef"
+											spritemap={spritemap}
+											url={url}
+										/>
+									}
 								</div>
 							</div>
 							<div class="share-form-modal-item">

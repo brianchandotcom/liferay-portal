@@ -149,8 +149,8 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	}
 
 	public DirectoryWatcher(
-		FileInstall fileInstall, Map<String, String> properties,
-		BundleContext bundleContext) {
+		FileInstallImplBundleActivator fileInstall,
+		Map<String, String> properties, BundleContext bundleContext) {
 
 		super("fileinstall-" + getThreadName(properties));
 
@@ -1349,7 +1349,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private void _refresh(Collection<Bundle> bundles)
 		throws InterruptedException {
 
-		FileInstall.refresh(_systemBundle, bundles);
+		FileInstallImplBundleActivator.refresh(_systemBundle, bundles);
 	}
 
 	private void _removeArtifact(File file) {
@@ -1753,7 +1753,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private final Map<File, Artifact> _currentManagedArtifacts =
 		new HashMap<>();
 	private final Set<Bundle> _delayedStart = new HashSet<>();
-	private final FileInstall _fileInstall;
+	private final FileInstallImplBundleActivator _fileInstall;
 	private final String _filter;
 	private final String _fragmentScope;
 	private int _frameworkStartLevel;

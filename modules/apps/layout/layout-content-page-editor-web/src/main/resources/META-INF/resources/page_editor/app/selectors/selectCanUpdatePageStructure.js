@@ -12,9 +12,18 @@
  * details.
  */
 
+import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
+
 /**
- * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap }} state
+ * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportsize: string }} state
  */
-export default function selectCanUpdatePageStructure({permissions}) {
-	return !permissions.LOCKED_SEGMENTS_EXPERIMENT && permissions.UPDATE;
+export default function selectCanUpdatePageStructure({
+	permissions,
+	selectedViewportSize,
+}) {
+	return (
+		!permissions.LOCKED_SEGMENTS_EXPERIMENT &&
+		permissions.UPDATE &&
+		selectedViewportSize === VIEWPORT_SIZES.desktop
+	);
 }

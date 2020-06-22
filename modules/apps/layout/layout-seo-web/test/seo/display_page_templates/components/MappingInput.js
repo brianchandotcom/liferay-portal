@@ -20,6 +20,7 @@ import MappingInput from '../../../../src/main/resources/META-INF/resources/js/s
 
 const baseProps = {
 	fieldType: 'text',
+	helpMessage: 'Map a text field, it will be used as Title.',
 	initialFields: [
 		{key: 'field-1', label: 'Field 1', type: 'text'},
 		{key: 'field-2', label: 'Field 2', type: 'text'},
@@ -75,6 +76,10 @@ describe('MappingInput', () => {
 
 		it('does not have the mapping panel', () => {
 			expect(mappingPanel).not.toBeInTheDocument();
+		});
+
+		it('has a help message', () => {
+			expect(result.getByText(baseProps.helpMessage)).toBeInTheDocument();
 		});
 
 		describe('when the user clicks the mapping button', () => {

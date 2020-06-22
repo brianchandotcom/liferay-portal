@@ -51,8 +51,8 @@ public class UpgradeFragmentEntry extends UpgradeProcess {
 		try (Statement s = connection.createStatement()) {
 			StringBundler sb = new StringBundler(3);
 
-			sb.append("update FragmentEntry set headId = - fragmentEntryId, ");
-			sb.append("head = [$TRUE$] where status = ");
+			sb.append("update FragmentEntry set headId = -1 * fragmentEntryId");
+			sb.append(", head = [$TRUE$] where status = ");
 			sb.append(WorkflowConstants.STATUS_APPROVED);
 
 			s.execute(SQLTransformer.transform(sb.toString()));

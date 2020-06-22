@@ -256,7 +256,7 @@ export default ({keywords}) => {
 		onClick: handleOnClick,
 		onDelete: (fieldName) =>
 			onDeleteDefinitionField({activePage: 0, fieldName}),
-		onDoubleClick: {handleOnDoubleClick},
+		onDoubleClick: handleOnDoubleClick,
 	};
 
 	return (

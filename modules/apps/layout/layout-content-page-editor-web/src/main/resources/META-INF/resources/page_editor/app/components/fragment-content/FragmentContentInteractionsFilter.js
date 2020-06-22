@@ -19,8 +19,8 @@ import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/editable
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {config} from '../../config/index';
-import selectCanOnlyUpdateEditables from '../../selectors/selectCanOnlyUpdateEditables';
 import selectCanUpdateEditables from '../../selectors/selectCanUpdateEditables';
+import selectCanUpdatePageStructure from '../../selectors/selectCanUpdatePageStructure';
 import {useSelector} from '../../store/index';
 import {
 	useActivationOrigin,
@@ -65,7 +65,7 @@ export default function FragmentContentInteractionsFilter({
 	const hoveredItemType = useHoveredItemType();
 	const selectItem = useSelectItem();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-	const canOnlyUpdateEditables = useSelector(selectCanOnlyUpdateEditables);
+	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const languageId = useSelector((state) => state.languageId);
 
@@ -159,7 +159,7 @@ export default function FragmentContentInteractionsFilter({
 					hovered = true;
 				}
 				else if (
-					(siblingIds.some(isActive) || canOnlyUpdateEditables) &&
+					(siblingIds.some(isActive) || !canUpdatePageStructure) &&
 					isHovered(editableUniqueId)
 				) {
 					hovered = true;
@@ -176,7 +176,7 @@ export default function FragmentContentInteractionsFilter({
 			}
 		});
 	}, [
-		canOnlyUpdateEditables,
+		canUpdatePageStructure,
 		editableElements,
 		editableValues,
 		fragmentEntryLinkId,
@@ -312,7 +312,7 @@ export default function FragmentContentInteractionsFilter({
 
 	const props = {};
 
-	if (siblingIds.some(isActive) || canOnlyUpdateEditables) {
+	if (siblingIds.some(isActive) || !canUpdatePageStructure) {
 		props.onClickCapture = selectEditable;
 		props.onMouseLeave = () => hoverItem(null);
 		props.onMouseOverCapture = hoverEditable;

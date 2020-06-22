@@ -55,7 +55,17 @@
 			assetEntryQuery.setEnd(searchContainer.getEnd());
 			assetEntryQuery.setStart(searchContainer.getStart());
 
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+
+			List<MBThread> threads = new ArrayList<>(assetEntries.size());
+
+			for (AssetEntry assetEntry : assetEntries) {
+				MBMessage message = MBMessageLocalServiceUtil.getMessage(assetEntry.getClassPK());
+
+				threads.add(message.getThread());
+			}
+
+			results = threads;
 		}
 
 		searchContainer.setResults(results);
@@ -64,12 +74,10 @@
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.model.BaseModel"
+		className="com.liferay.message.boards.model.MBThread"
 		keyProperty="primaryKeyObj"
-		modelVar="result"
+		modelVar="thread"
 	>
-		<%@ include file="/message_boards/thread_cast_result.jspf" %>
-
 		<%
 		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());
 

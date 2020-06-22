@@ -1,5 +1,23 @@
 # Liferay Gradle Plugins Node Change Log
 
+## 7.0.5 - 2020-04-28
+
+### Commits
+- [LPS-110422] Apply (9a704b4ca9)
+- [LPS-110422] Gradle plugins not compatible with gradle 6.0+ * Add OsgiHelper
+in gradle-util * Replace gradle osgi plugin dependency by local OsgiHelper
+(53e90cb8f3)
+
+### Dependencies
+- [LPS-110422] Update the com.liferay.gradle.util dependency to version 1.0.39.
+- [LPS-111896] Update the com.liferay.gradle.util dependency to version 1.0.38.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.37.
+
+## 7.0.4 - 2020-03-30
+
+### Commits
+- [LPS-111192] Property to add the offline flag for Yarn commands (8a9422bd06)
+
 ## 7.0.3 - 2020-03-17
 
 ### Commits
@@ -1151,6 +1169,7 @@ symbolic links in it will be lost (0a1438b324)
 [LPS-87465]: https://issues.liferay.com/browse/LPS-87465
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-87479]: https://issues.liferay.com/browse/LPS-87479
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-88909]: https://issues.liferay.com/browse/LPS-88909
 [LPS-89126]: https://issues.liferay.com/browse/LPS-89126
 [LPS-89369]: https://issues.liferay.com/browse/LPS-89369
@@ -1175,7 +1194,10 @@ symbolic links in it will be lost (0a1438b324)
 [LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
 [LPS-110486]: https://issues.liferay.com/browse/LPS-110486
+[LPS-111192]: https://issues.liferay.com/browse/LPS-111192
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
 [LRDOCS-3663]: https://issues.liferay.com/browse/LRDOCS-3663
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129
 [LRQA-52072]: https://issues.liferay.com/browse/LRQA-52072

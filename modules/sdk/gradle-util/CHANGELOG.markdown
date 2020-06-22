@@ -1,5 +1,58 @@
 # Liferay Gradle Utilities Change Log
 
+## 1.0.43 - 2020-06-08
+
+### Commits
+- [LPS-115020] Debug forked jvm (9dd277e09f)
+- [LPS-105380] Rename variable: obj -> object (64cb899b48)
+
+## 1.0.42 - 2020-05-20
+
+### Commits
+- [LPS-88645] Provider safe replacement (bb43f1e1fd)
+
+## 1.0.41 - 2020-05-13
+
+### Commits
+- [LPS-88645] Provider safe replacement (facfa36cc0)
+
+## 1.0.40 - 2020-05-13
+
+### Commits
+- [LPS-113624] Using Java lambdas disables the Gradle cache (628bab0be4)
+- [LPS-113624] Pass environment variables (64c7c83a1c)
+
+## 1.0.39 - 2020-04-28
+
+### Commits
+- [LPS-110422] Rename class (6088212ccd)
+- [LPS-110422] Authors (22186130de)
+- [LPS-110422] Method name (47d7c6213f)
+- [LPS-110422] As used (63422c7491)
+- [LPS-110422] Static (af9b8c7b63)
+- [LPS-110422] Inline (ae57016783)
+- [LPS-110422] Avoid chaining (0c37eeedd9)
+- [LPS-110422] Variable name (517cc4ebd5)
+- [LPS-110422] Use GradleUtil (0ba5707732)
+- [LPS-110422] Remove unused code (d6cee1186e)
+- [LPS-110422] Gradle plugins not compatible with gradle 6.0+ * Add OsgiHelper
+in gradle-util * Replace gradle osgi plugin dependency by local OsgiHelper
+(53e90cb8f3)
+
+## 1.0.38 - 2020-04-14
+
+### Commits
+- [LPS-111896] Add reusable methods to util project (a4caf0cc9b)
+
+## 1.0.37 - 2020-04-13
+
+### Commits
+- [LPS-88645] Sort (52a2fc6035)
+- [LPS-88645] Add helper method (3f6c1cf839)
+- [LPS-88645] Rename task provider methods (beb0df5b27)
+- [LPS-88645] add named task (2218459eaa)
+- [LPS-88645] add register task method (f25b3479a8)
+
 ## 1.0.36 - 2020-03-12
 
 ### Commits
@@ -275,9 +328,14 @@ up-to-date check (59fd9e696c)
 [LPS-87192]: https://issues.liferay.com/browse/LPS-87192
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-88524]: https://issues.liferay.com/browse/LPS-88524
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-96247]: https://issues.liferay.com/browse/LPS-96247
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
 [LPS-105380]: https://issues.liferay.com/browse/LPS-105380
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-109812]: https://issues.liferay.com/browse/LPS-109812
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020

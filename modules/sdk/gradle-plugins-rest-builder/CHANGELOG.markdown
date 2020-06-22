@@ -1,5 +1,201 @@
 # Liferay Gradle Plugins REST Builder Change Log
 
+## 1.0.111 - 2020-06-16
+
+### Dependencies
+- [LPS-114479] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.110.
+
+## 1.0.110 - 2020-06-15
+
+### Dependencies
+- [LPS-115496] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.109.
+- [LPS-115020] Update the com.liferay.gradle.util dependency to version 1.0.43.
+
+## 1.0.109 - 2020-06-07
+
+### Dependencies
+- [LPS-114979] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.108.
+
+## 1.0.108 - 2020-06-03
+
+### Commits
+- [LPS-114849] p rep next (d751612847)
+
+### Dependencies
+- [LPS-114849] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.107.
+
+## 1.0.107 - 2020-06-02
+
+### Dependencies
+- [LPS-114806] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.106.
+
+## 1.0.106 - 2020-06-01
+
+### Dependencies
+- [LPS-114504] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.105.
+
+## 1.0.105 - 2020-05-31
+
+### Dependencies
+- [LPS-114486] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.104.
+
+## 1.0.104 - 2020-05-27
+
+### Dependencies
+- [LPS-113978] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.103.
+
+## 1.0.103 - 2020-05-26
+
+### Dependencies
+- [LPS-113978] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.102.
+
+## 1.0.102 - 2020-05-22
+
+### Dependencies
+- [LPS-114114] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.101.
+
+## 1.0.101 - 2020-05-21
+
+### Dependencies
+- [LPS-113914] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.100.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.42.
+
+## 1.0.100 - 2020-05-20
+
+### Dependencies
+- [LPS-113977] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.99.
+
+## 1.0.99 - 2020-05-19
+
+### Dependencies
+- [LPS-113333] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.98.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.41.
+- [LPS-113624] Update the com.liferay.gradle.util dependency to version 1.0.40.
+
+## 1.0.98 - 2020-05-12
+
+### Dependencies
+- [LPS-113319] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.97.
+
+## 1.0.97 - 2020-05-10
+
+### Dependencies
+- [LPS-110685] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.96.
+
+## 1.0.96 - 2020-05-07
+
+### Dependencies
+- [LPS-112153] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.95.
+
+## 1.0.95 - 2020-05-06
+
+### Dependencies
+- [LPS-112999] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.94.
+
+## 1.0.94 - 2020-05-04
+
+### Dependencies
+- [LPS-112102] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.93.
+
+## 1.0.93 - 2020-05-03
+
+### Dependencies
+- [LPS-111236] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.92.
+
+## 1.0.92 - 2020-05-01
+
+### Dependencies
+- [LPS-111236] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.91.
+- [LPS-110422] Update the com.liferay.gradle.util dependency to version 1.0.39.
+
+## 1.0.91 - 2020-04-26
+
+### Dependencies
+- [LPS-112101] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.90.
+
+## 1.0.90 - 2020-04-23
+
+### Dependencies
+- [LPS-109953 LPS-112101] Update the com.liferay.portal.tools.rest.builder
+dependency to version 1.0.89.
+
+## 1.0.89 - 2020-04-22
+
+### Dependencies
+- [LPS-109953] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.88.
+
+## 1.0.88 - 2020-04-22
+
+### Dependencies
+- [LPS-111049] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.87.
+
+## 1.0.87 - 2020-04-19
+
+### Dependencies
+- [LPS-112101 LPS-112013] Update the com.liferay.portal.tools.rest.builder
+dependency to version 1.0.86.
+
+## 1.0.86 - 2020-04-16
+
+### Dependencies
+- [LPS-109953] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.85.
+
+## 1.0.85 - 2020-04-15
+
+### Dependencies
+- [LPS-109953] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.84.
+- [LPS-111896] Update the com.liferay.gradle.util dependency to version 1.0.38.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.37.
+
+## 1.0.84 - 2020-03-30
+
+### Dependencies
+- [LPS-111138] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.83.
+
+## 1.0.83 - 2020-03-29
+
+### Dependencies
+- [LPS-109882] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.82.
+
+## 1.0.82 - 2020-03-29
+
+### Dependencies
+- [LPS-111084] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.81.
+
+## 1.0.81 - 2020-03-25
+
+### Dependencies
+- [LPS-107004] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.80.
+
 ## 1.0.80 - 2020-03-17
 
 ### Dependencies
@@ -548,6 +744,7 @@ version 1.0.1.
 [COMMERCE-1067]: https://issues.liferay.com/browse/COMMERCE-1067
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-85855]: https://issues.liferay.com/browse/LPS-85855
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-89415]: https://issues.liferay.com/browse/LPS-89415
 [LPS-91222]: https://issues.liferay.com/browse/LPS-91222
 [LPS-91378]: https://issues.liferay.com/browse/LPS-91378
@@ -587,6 +784,7 @@ version 1.0.1.
 [LPS-106317]: https://issues.liferay.com/browse/LPS-106317
 [LPS-106646]: https://issues.liferay.com/browse/LPS-106646
 [LPS-106886]: https://issues.liferay.com/browse/LPS-106886
+[LPS-107004]: https://issues.liferay.com/browse/LPS-107004
 [LPS-107224]: https://issues.liferay.com/browse/LPS-107224
 [LPS-107377]: https://issues.liferay.com/browse/LPS-107377
 [LPS-107646]: https://issues.liferay.com/browse/LPS-107646
@@ -598,7 +796,36 @@ version 1.0.1.
 [LPS-108912]: https://issues.liferay.com/browse/LPS-108912
 [LPS-109307]: https://issues.liferay.com/browse/LPS-109307
 [LPS-109569]: https://issues.liferay.com/browse/LPS-109569
+[LPS-109882]: https://issues.liferay.com/browse/LPS-109882
+[LPS-109953]: https://issues.liferay.com/browse/LPS-109953
 [LPS-110024]: https://issues.liferay.com/browse/LPS-110024
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110347]: https://issues.liferay.com/browse/LPS-110347
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-110685]: https://issues.liferay.com/browse/LPS-110685
+[LPS-111049]: https://issues.liferay.com/browse/LPS-111049
+[LPS-111084]: https://issues.liferay.com/browse/LPS-111084
+[LPS-111138]: https://issues.liferay.com/browse/LPS-111138
+[LPS-111236]: https://issues.liferay.com/browse/LPS-111236
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-112013]: https://issues.liferay.com/browse/LPS-112013
+[LPS-112101]: https://issues.liferay.com/browse/LPS-112101
+[LPS-112102]: https://issues.liferay.com/browse/LPS-112102
+[LPS-112153]: https://issues.liferay.com/browse/LPS-112153
+[LPS-112999]: https://issues.liferay.com/browse/LPS-112999
+[LPS-113319]: https://issues.liferay.com/browse/LPS-113319
+[LPS-113333]: https://issues.liferay.com/browse/LPS-113333
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-113914]: https://issues.liferay.com/browse/LPS-113914
+[LPS-113977]: https://issues.liferay.com/browse/LPS-113977
+[LPS-113978]: https://issues.liferay.com/browse/LPS-113978
+[LPS-114114]: https://issues.liferay.com/browse/LPS-114114
+[LPS-114479]: https://issues.liferay.com/browse/LPS-114479
+[LPS-114486]: https://issues.liferay.com/browse/LPS-114486
+[LPS-114504]: https://issues.liferay.com/browse/LPS-114504
+[LPS-114806]: https://issues.liferay.com/browse/LPS-114806
+[LPS-114849]: https://issues.liferay.com/browse/LPS-114849
+[LPS-114979]: https://issues.liferay.com/browse/LPS-114979
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-115496]: https://issues.liferay.com/browse/LPS-115496
 [LRDOCS-6650]: https://issues.liferay.com/browse/LRDOCS-6650

@@ -1,5 +1,635 @@
 # Liferay Gradle Plugins Defaults Change Log
 
+## 6.1.300 - 2020-06-17
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.plugins dependency to version 9.0.0.
+
+## 6.1.299 - 2020-06-17
+
+### Dependencies
+- [POSHI-90] Update the com.liferay.gradle.plugins.poshi.runner dependency to
+version 2.2.29.
+
+## 6.1.298 - 2020-06-16
+
+### Dependencies
+- [LPS-115447 LPS-105380 LPS-114479] Update the com.liferay.gradle.plugins
+dependency to version 8.0.3.
+
+## 6.1.297 - 2020-06-15
+
+### Dependencies
+- [LPS-115496] Update the com.liferay.gradle.plugins dependency to version
+8.0.2.
+
+## 6.1.296 - 2020-06-15
+
+### Dependencies
+- [LPS-115443 LPS-105380] Update the com.liferay.gradle.plugins dependency to
+version 8.0.1.
+
+## 6.1.295 - 2020-06-11
+
+### Dependencies
+- [LPS-98022] Update the com.liferay.gradle.plugins dependency to version 8.0.0.
+
+## 6.1.294 - 2020-06-10
+
+### Commits
+- [LPS-115015] Honor ignore conditions (cc3a7eebf3)
+
+### Dependencies
+- [LPS-115015] Update the com.liferay.gradle.plugins dependency to version
+7.0.22.
+
+## 6.1.293 - 2020-06-09
+
+### Dependencies
+- [POSHI-87] Update the com.liferay.gradle.plugins.poshi.runner dependency to
+version 2.2.28.
+
+## 6.1.292 - 2020-06-08
+
+### Commits
+- [LPS-105380] Rename variables (bda606fabd)
+
+### Dependencies
+- [LPS-105380 LPS-115020] Update the com.liferay.gradle.plugins dependency to
+version 7.0.21.
+
+## 6.1.291 - 2020-06-07
+
+### Dependencies
+- [LPS-114165 LPS-114979] Update the com.liferay.gradle.plugins dependency to
+version 7.0.20.
+
+## 6.1.290 - 2020-06-05
+
+### Commits
+- [LPS-113024] [LPS-114570] update because of CI CDN issues (8a163df22c)
+
+### Dependencies
+- [LPS-113024 LPS-114570] Update the com.liferay.gradle.plugins dependency to
+version 7.0.19.
+
+## 6.1.289 - 2020-06-05
+
+### Commits
+- [LPS-113024] [LPS-114570] temp rollback (e9d7755c3c)
+
+### Dependencies
+- [LPS-113024 LPS-114570] Update the com.liferay.gradle.plugins dependency to
+version 7.0.18.
+
+## 6.1.288 - 2020-06-03
+
+### Dependencies
+- [LPS-114849 LPS-114565] Update the com.liferay.gradle.plugins dependency to
+version 7.0.17.
+
+## 6.1.287 - 2020-06-02
+
+### Commits
+- [LPS-114465] Migrate from package com.liferay.spring.mock.web.portlet to
+com.liferay.portletmvc4spring.test.mock.web.portlet (a6f1975c2e)
+
+### Dependencies
+- [LPS-114806] Update the com.liferay.gradle.plugins dependency to version
+7.0.16.
+
+## 6.1.286 - 2020-06-02
+
+### Dependencies
+- [LPS-114705] Update the com.liferay.gradle.plugins dependency to version
+7.0.15.
+
+## 6.1.285 - 2020-06-01
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.plugins dependency to version
+7.0.14.
+
+## 6.1.284 - 2020-06-01
+
+### Dependencies
+- [LPS-114504 LPS-105380 LPS-113715] Update the com.liferay.gradle.plugins
+dependency to version 7.0.13.
+
+## 6.1.283 - 2020-05-31
+
+### Dependencies
+- [LPS-114486] Update the com.liferay.gradle.plugins dependency to version
+7.0.12.
+
+## 6.1.282 - 2020-05-29
+
+### Commits
+- [LPS-114616] Allow to debug FindSecurityBugs subprocess using
+findSecurityBugs.debug, follow jvm.debug and maven.debug system properties.
+(0b6b65012f)
+- [LPS-114616] Update FindSecurityBugs to 1.10.1 (dee7553272)
+
+### Dependencies
+- [LPS-114616 LPS-105380] Update the com.liferay.gradle.plugins dependency to
+version 7.0.11.
+
+## 6.1.281 - 2020-05-28
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.plugins dependency to version
+7.0.10.
+
+## 6.1.280 - 2020-05-27
+
+### Dependencies
+- [LPS-105380 LPS-113978] Update the com.liferay.gradle.plugins dependency to
+version 7.0.9.
+
+## 6.1.279 - 2020-05-26
+
+### Commits
+- [LPS-88645] Organize plugin logic (a1a5a872c4)
+- [LPS-88645] Move TaskContainer logic (c61647cc61)
+- [LPS-88645] Rename method (ba19c01463)
+- [LPS-88645] Move extension logic (b4e2e1c03d)
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.plugins dependency to version 7.0.8.
+
+## 6.1.278 - 2020-05-26
+
+### Dependencies
+- [LPS-113978 LPS-113715] Update the com.liferay.gradle.plugins dependency to
+version 7.0.7.
+
+## 6.1.277 - 2020-05-22
+
+### Dependencies
+- [LPS-114114] Update the com.liferay.gradle.plugins dependency to version
+7.0.6.
+
+## 6.1.276 - 2020-05-21
+
+### Dependencies
+- [LPS-113914 LPS-105380 LPS-88645] Update the com.liferay.gradle.plugins
+dependency to version 7.0.5.
+
+## 6.1.275 - 2020-05-20
+
+### Dependencies
+- [LPS-113044] Update the com.liferay.gradle.plugins dependency to version
+7.0.4.
+
+## 6.1.274 - 2020-05-20
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.plugins dependency to version 7.0.3.
+
+## 6.1.273 - 2020-05-20
+
+### Dependencies
+- [LPS-113977] Update the com.liferay.gradle.plugins dependency to version
+7.0.2.
+
+## 6.1.272 - 2020-05-19
+
+### Dependencies
+- [LPS-113333] Update the com.liferay.gradle.plugins dependency to version
+7.0.1.
+
+## 6.1.271 - 2020-05-18
+
+### Commits
+- [LPS-88645] Sort alphabetically (f93a513508)
+- [LPS-88645] Private (6a27772fff)
+- [LPS-88645] Update plugins (6a5f7b10d3)
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.plugins dependency to version 7.0.0.
+
+## 6.1.270 - 2020-05-17
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+6.0.12.
+
+## 6.1.269 - 2020-05-15
+
+### Dependencies
+- [LPS-113044] Update the com.liferay.gradle.plugins dependency to version
+6.0.11.
+
+## 6.1.268 - 2020-05-13
+
+### Dependencies
+- [LPS-105380 LPS-88645 LPS-113624] Update the com.liferay.gradle.plugins
+dependency to version 6.0.10.
+
+## 6.1.267 - 2020-05-12
+
+### Dependencies
+- [LPS-74544 LPS-105380 LPS-113319] Update the com.liferay.gradle.plugins
+dependency to version 6.0.9.
+
+## 6.1.266 - 2020-05-11
+
+### Dependencies
+- [LPS-112226] Update the com.liferay.gradle.plugins dependency to version
+6.0.8.
+
+## 6.1.265 - 2020-05-10
+
+### Dependencies
+- [LPS-110685] Update the com.liferay.gradle.plugins dependency to version
+6.0.7.
+
+## 6.1.264 - 2020-05-10
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+6.0.6.
+
+## 6.1.263 - 2020-05-08
+
+### Commits
+- [LPS-105380] revert (c22fc8b3e7)
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+6.0.5.
+
+## 6.1.262 - 2020-05-07
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+6.0.4.
+
+## 6.1.261 - 2020-05-07
+
+### Dependencies
+- [POSHI-77] Update the com.liferay.gradle.plugins.poshi.runner dependency to
+version 2.2.27.
+
+## 6.1.260 - 2020-05-07
+
+### Dependencies
+- [LPS-112153 LPS-104679] Update the com.liferay.gradle.plugins dependency to
+version 6.0.3.
+
+## 6.1.259 - 2020-05-07
+
+### Commits
+- [LPS-113180] Configure SpotBugs in gradle-plugins-defaults (78ad75569f)
+
+### Dependencies
+- [LPS-113180] Update the com.liferay.gradle.plugins dependency to version
+6.0.2.
+- [LPS-113180] Update the spotbugs-gradle-plugin dependency to version 4.0.0.
+
+## 6.1.258 - 2020-05-06
+
+### Dependencies
+- [LPS-112857 LPS-112999] Update the com.liferay.gradle.plugins dependency to
+version 6.0.1.
+
+## 6.1.257 - 2020-05-06
+
+### Commits
+- [LPS-88645] Update plugins (fae3ac7fda)
+- [LPS-88645] Update base plugin classes (fc49ffa00c)
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.plugins dependency to version 6.0.0.
+
+## 6.1.256 - 2020-05-04
+
+### Dependencies
+- [LPS-112102] Update the com.liferay.gradle.plugins dependency to version
+5.0.56.
+
+## 6.1.255 - 2020-05-04
+
+### Dependencies
+- [LPS-112922] Update the com.liferay.gradle.plugins dependency to version
+5.0.55.
+- [LPS-112922] Update the com.liferay.gradle.plugins.lang.merger dependency to
+version 2.0.1.
+
+## 6.1.254 - 2020-05-03
+
+### Dependencies
+- [LPS-111236] Update the com.liferay.gradle.plugins dependency to version
+5.0.54.
+
+## 6.1.253 - 2020-05-01
+
+### Dependencies
+- [LPS-111236] Update the com.liferay.gradle.plugins dependency to version
+5.0.53.
+
+## 6.1.252 - 2020-04-30
+
+### Dependencies
+- [LPS-100268] Update the com.liferay.gradle.plugins dependency to version
+5.0.52.
+
+## 6.1.251 - 2020-04-29
+
+### Dependencies
+- [LPS-111193 LPS-105380] Update the com.liferay.gradle.plugins dependency to
+version 5.0.51.
+
+## 6.1.250 - 2020-04-28
+
+### Dependencies
+- [LPS-110422] Update the com.liferay.gradle.plugins dependency to version
+5.0.50.
+- [LPS-110422] Update the com.liferay.gradle.plugins.jsdoc dependency to version
+2.0.51.
+
+## 6.1.249 - 2020-04-27
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+5.0.49.
+
+## 6.1.248 - 2020-04-27
+
+### Dependencies
+- [LPS-104679] Update the com.liferay.gradle.plugins dependency to version
+5.0.48.
+
+## 6.1.247 - 2020-04-27
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+5.0.47.
+
+## 6.1.246 - 2020-04-27
+
+### Dependencies
+- [LPS-84119 LPS-105380] Update the com.liferay.gradle.plugins dependency to
+version 5.0.46.
+
+## 6.1.245 - 2020-04-27
+
+### Dependencies
+- [LPS-112568] Update the com.liferay.gradle.plugins dependency to version
+5.0.45.
+
+## 6.1.244 - 2020-04-26
+
+### Dependencies
+- [LPS-112101] Update the com.liferay.gradle.plugins dependency to version
+5.0.44.
+
+## 6.1.243 - 2020-04-23
+
+### Dependencies
+- [LPS-88645 LPS-109953 LPS-112101] Update the com.liferay.gradle.plugins
+dependency to version 5.0.43.
+
+## 6.1.242 - 2020-04-22
+
+### Dependencies
+- [LPS-109953] Update the com.liferay.gradle.plugins dependency to version
+5.0.42.
+
+## 6.1.241 - 2020-04-22
+
+### Dependencies
+- [LPS-111049] Update the com.liferay.gradle.plugins dependency to version
+5.0.41.
+
+## 6.1.240 - 2020-04-22
+
+### Dependencies
+- [LPS-112232] Update the com.liferay.gradle.plugins.lang.merger dependency to
+version 2.0.0.
+
+## 6.1.239 - 2020-04-19
+
+### Dependencies
+- [LPS-112101 LPS-112013] Update the com.liferay.gradle.plugins dependency to
+version 5.0.40.
+
+## 6.1.238 - 2020-04-17
+
+### Dependencies
+- [LPS-109953] Update the com.liferay.gradle.plugins dependency to version
+5.0.39.
+
+## 6.1.237 - 2020-04-16
+
+### Dependencies
+- [LPS-109953] Update the com.liferay.gradle.plugins dependency to version
+5.0.38.
+
+## 6.1.236 - 2020-04-15
+
+### Dependencies
+- [LPS-111934] Update the com.liferay.gradle.plugins dependency to version
+5.0.37.
+
+## 6.1.235 - 2020-04-15
+
+### Dependencies
+- [LPS-88645 LPS-105380 LPS-109953 LPS-111857] Update the
+com.liferay.gradle.plugins dependency to version 5.0.36.
+
+## 6.1.234 - 2020-04-14
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+5.0.35.
+
+## 6.1.233 - 2020-04-14
+
+### Commits
+- [LPS-111896] Check abbreviated task names (02054a7f22)
+
+### Dependencies
+- [LPS-111896] Update the com.liferay.gradle.plugins dependency to version
+5.0.34.
+
+## 6.1.232 - 2020-04-13
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.plugins dependency to version
+5.0.33.
+
+## 6.1.231 - 2020-04-09
+
+### Dependencies
+- [LPS-105380 POSHI-70] Update the com.liferay.gradle.plugins dependency to
+version 5.0.32.
+- [POSHI-70] Update the com.liferay.gradle.plugins.poshi.runner dependency to
+version 2.2.26.
+
+## 6.1.230 - 2020-04-08
+
+### Dependencies
+- [LPS-105380 LPS-111647] Update the com.liferay.gradle.plugins dependency to
+version 5.0.31.
+- [LPS-105380 LPS-111647] Update the com.liferay.gradle.plugins.poshi.runner
+dependency to version 2.2.25.
+
+## 6.1.229 - 2020-04-06
+
+### Dependencies
+- [LPS-110835] Update the com.liferay.gradle.plugins dependency to version
+5.0.30.
+- [LPS-110835] Update the com.liferay.gradle.plugins.baseline dependency to
+version 6.0.2.
+
+## 6.1.228 - 2020-04-03
+
+### Dependencies
+- [LPS-110835] Update the com.liferay.gradle.plugins dependency to version
+5.0.29.
+- [LPS-110835] Update the com.liferay.gradle.plugins.baseline dependency to
+version 6.0.1.
+
+## 6.1.227 - 2020-04-03
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+5.0.28.
+
+## 6.1.226 - 2020-04-02
+
+### Dependencies
+- [LPS-106397] Update the com.liferay.gradle.plugins dependency to version
+5.0.27.
+
+## 6.1.225 - 2020-04-01
+
+### Dependencies
+- [POSHI-64] Update the com.liferay.gradle.plugins dependency to version 5.0.26.
+- [POSHI-64] Update the com.liferay.gradle.plugins.poshi.runner dependency to
+version 2.2.24.
+
+## 6.1.224 - 2020-03-30
+
+### Dependencies
+- [LPS-111192] Update the com.liferay.gradle.plugins dependency to version
+5.0.25.
+- [LPS-111192] Update the com.liferay.gradle.plugins.jsdoc dependency to version
+2.0.50.
+
+## 6.1.223 - 2020-03-30
+
+### Dependencies
+- [LPS-111070] Update the com.liferay.gradle.plugins dependency to version
+5.0.24.
+- [LPS-111070] Update the com.liferay.gradle.plugins.baseline dependency to
+version 6.0.0.
+
+## 6.1.222 - 2020-03-30
+
+### Dependencies
+- [LPS-111138] Update the com.liferay.gradle.plugins dependency to version
+5.0.23.
+
+## 6.1.221 - 2020-03-29
+
+### Dependencies
+- [LPS-109882] Update the com.liferay.gradle.plugins dependency to version
+5.0.22.
+
+## 6.1.220 - 2020-03-29
+
+### Dependencies
+- [LPS-110426] Update the com.liferay.gradle.plugins dependency to version
+5.0.21.
+
+## 6.1.219 - 2020-03-29
+
+### Dependencies
+- [LPS-108394] Update the com.liferay.gradle.plugins dependency to version
+5.0.20.
+
+## 6.1.218 - 2020-03-29
+
+### Dependencies
+- [LPS-111084 LPS-111098] Update the com.liferay.gradle.plugins dependency to
+version 5.0.19.
+
+## 6.1.217 - 2020-03-29
+
+### Commits
+- [LPS-111098] (4a047d409f)
+- [LPS-110943] Check project files (a7d869ce57)
+- [LPS-110943] Check tasks automatically run by clean (15e9ff84fd)
+- [LPS-110943] Files shouldn't be deleted from the src directory (a41e795d86)
+- [LPS-110943] Add test for clean task (a7c46fdc15)
+
+### Dependencies
+- [LPS-111098] Update the plugin-publish-plugin dependency to version 0.11.0.
+
+## 6.1.216 - 2020-03-25
+
+### Dependencies
+- [LPS-107004] Update the com.liferay.gradle.plugins dependency to version
+5.0.18.
+
+## 6.1.215 - 2020-03-25
+
+### Dependencies
+- [LPS-110781] Update the com.liferay.gradle.plugins.baseline dependency to
+version 5.0.0.
+
+## 6.1.214 - 2020-03-25
+
+### Commits
+- [LPS-110781] fix by peter (af0499db31)
+
+### Dependencies
+- [LPS-110781] Update the com.liferay.gradle.plugins.baseline dependency to
+version 4.1.1.
+
+## 6.1.213 - 2020-03-25
+
+### Commits
+- [LPS-110781] temporary revert, update gradle plugins defaults (d51dd78196)
+- [LPS-110781] temporary revert, please talk Peter Shin/Juergen (4f19315d4d)
+
+### Dependencies
+- [LPS-110781] Update the com.liferay.gradle.plugins.baseline dependency to
+version 4.0.0.
+
+## 6.1.212 - 2020-03-25
+
+### Dependencies
+- [LPS-84181] Update the com.liferay.gradle.plugins dependency to version
+5.0.17.
+
+## 6.1.211 - 2020-03-24
+
+### Dependencies
+- [LPS-110781] Update the com.liferay.gradle.plugins.baseline dependency to
+version 4.1.0.
+
+## 6.1.210 - 2020-03-23
+
+### Dependencies
+- [POSHI-61] Update the com.liferay.gradle.plugins dependency to version 5.0.16.
+- [POSHI-61] Update the com.liferay.gradle.plugins.poshi.runner dependency to
+version 2.2.23.
+
+## 6.1.209 - 2020-03-23
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.gradle.plugins dependency to version
+5.0.15.
+
+## 6.1.208 - 2020-03-22
+
+### Dependencies
+- [LPS-108394] Update the com.liferay.gradle.plugins dependency to version
+5.0.14.
+
 ## 6.1.207 - 2020-03-17
 
 ### Commits
@@ -10699,6 +11329,7 @@ both Gradle 2.14+ and Gradle 3.0.
 [LPS-84094]: https://issues.liferay.com/browse/LPS-84094
 [LPS-84119]: https://issues.liferay.com/browse/LPS-84119
 [LPS-84138]: https://issues.liferay.com/browse/LPS-84138
+[LPS-84181]: https://issues.liferay.com/browse/LPS-84181
 [LPS-84213]: https://issues.liferay.com/browse/LPS-84213
 [LPS-84307]: https://issues.liferay.com/browse/LPS-84307
 [LPS-84313]: https://issues.liferay.com/browse/LPS-84313
@@ -10778,6 +11409,7 @@ both Gradle 2.14+ and Gradle 3.0.
 [LPS-88382]: https://issues.liferay.com/browse/LPS-88382
 [LPS-88552]: https://issues.liferay.com/browse/LPS-88552
 [LPS-88588]: https://issues.liferay.com/browse/LPS-88588
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-88665]: https://issues.liferay.com/browse/LPS-88665
 [LPS-88823]: https://issues.liferay.com/browse/LPS-88823
 [LPS-88851]: https://issues.liferay.com/browse/LPS-88851
@@ -10915,6 +11547,7 @@ both Gradle 2.14+ and Gradle 3.0.
 [LPS-100166]: https://issues.liferay.com/browse/LPS-100166
 [LPS-100168]: https://issues.liferay.com/browse/LPS-100168
 [LPS-100170]: https://issues.liferay.com/browse/LPS-100170
+[LPS-100268]: https://issues.liferay.com/browse/LPS-100268
 [LPS-100290]: https://issues.liferay.com/browse/LPS-100290
 [LPS-100352]: https://issues.liferay.com/browse/LPS-100352
 [LPS-100427]: https://issues.liferay.com/browse/LPS-100427
@@ -10999,6 +11632,7 @@ both Gradle 2.14+ and Gradle 3.0.
 [LPS-106646]: https://issues.liferay.com/browse/LPS-106646
 [LPS-106662]: https://issues.liferay.com/browse/LPS-106662
 [LPS-106666]: https://issues.liferay.com/browse/LPS-106666
+[LPS-107004]: https://issues.liferay.com/browse/LPS-107004
 [LPS-107224]: https://issues.liferay.com/browse/LPS-107224
 [LPS-107238]: https://issues.liferay.com/browse/LPS-107238
 [LPS-107313]: https://issues.liferay.com/browse/LPS-107313
@@ -11016,6 +11650,7 @@ both Gradle 2.14+ and Gradle 3.0.
 [LPS-108380]: https://issues.liferay.com/browse/LPS-108380
 [LPS-108386]: https://issues.liferay.com/browse/LPS-108386
 [LPS-108388]: https://issues.liferay.com/browse/LPS-108388
+[LPS-108394]: https://issues.liferay.com/browse/LPS-108394
 [LPS-108455]: https://issues.liferay.com/browse/LPS-108455
 [LPS-108456]: https://issues.liferay.com/browse/LPS-108456
 [LPS-108911]: https://issues.liferay.com/browse/LPS-108911
@@ -11029,14 +11664,72 @@ both Gradle 2.14+ and Gradle 3.0.
 [LPS-109743]: https://issues.liferay.com/browse/LPS-109743
 [LPS-109812]: https://issues.liferay.com/browse/LPS-109812
 [LPS-109820]: https://issues.liferay.com/browse/LPS-109820
+[LPS-109882]: https://issues.liferay.com/browse/LPS-109882
 [LPS-109921]: https://issues.liferay.com/browse/LPS-109921
+[LPS-109953]: https://issues.liferay.com/browse/LPS-109953
 [LPS-110024]: https://issues.liferay.com/browse/LPS-110024
 [LPS-110200]: https://issues.liferay.com/browse/LPS-110200
 [LPS-110215]: https://issues.liferay.com/browse/LPS-110215
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110347]: https://issues.liferay.com/browse/LPS-110347
 [LPS-110414]: https://issues.liferay.com/browse/LPS-110414
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-110426]: https://issues.liferay.com/browse/LPS-110426
 [LPS-110486]: https://issues.liferay.com/browse/LPS-110486
+[LPS-110685]: https://issues.liferay.com/browse/LPS-110685
+[LPS-110781]: https://issues.liferay.com/browse/LPS-110781
+[LPS-110835]: https://issues.liferay.com/browse/LPS-110835
+[LPS-110943]: https://issues.liferay.com/browse/LPS-110943
+[LPS-111049]: https://issues.liferay.com/browse/LPS-111049
+[LPS-111070]: https://issues.liferay.com/browse/LPS-111070
+[LPS-111084]: https://issues.liferay.com/browse/LPS-111084
+[LPS-111098]: https://issues.liferay.com/browse/LPS-111098
+[LPS-111138]: https://issues.liferay.com/browse/LPS-111138
+[LPS-111192]: https://issues.liferay.com/browse/LPS-111192
+[LPS-111193]: https://issues.liferay.com/browse/LPS-111193
+[LPS-111236]: https://issues.liferay.com/browse/LPS-111236
+[LPS-111647]: https://issues.liferay.com/browse/LPS-111647
+[LPS-111857]: https://issues.liferay.com/browse/LPS-111857
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-111934]: https://issues.liferay.com/browse/LPS-111934
+[LPS-112013]: https://issues.liferay.com/browse/LPS-112013
+[LPS-112101]: https://issues.liferay.com/browse/LPS-112101
+[LPS-112102]: https://issues.liferay.com/browse/LPS-112102
+[LPS-112153]: https://issues.liferay.com/browse/LPS-112153
+[LPS-112226]: https://issues.liferay.com/browse/LPS-112226
+[LPS-112232]: https://issues.liferay.com/browse/LPS-112232
+[LPS-112568]: https://issues.liferay.com/browse/LPS-112568
+[LPS-112857]: https://issues.liferay.com/browse/LPS-112857
+[LPS-112922]: https://issues.liferay.com/browse/LPS-112922
+[LPS-112999]: https://issues.liferay.com/browse/LPS-112999
+[LPS-113024]: https://issues.liferay.com/browse/LPS-113024
+[LPS-113044]: https://issues.liferay.com/browse/LPS-113044
+[LPS-113180]: https://issues.liferay.com/browse/LPS-113180
+[LPS-113319]: https://issues.liferay.com/browse/LPS-113319
+[LPS-113333]: https://issues.liferay.com/browse/LPS-113333
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-113715]: https://issues.liferay.com/browse/LPS-113715
+[LPS-113914]: https://issues.liferay.com/browse/LPS-113914
+[LPS-113977]: https://issues.liferay.com/browse/LPS-113977
+[LPS-113978]: https://issues.liferay.com/browse/LPS-113978
+[LPS-114114]: https://issues.liferay.com/browse/LPS-114114
+[LPS-114165]: https://issues.liferay.com/browse/LPS-114165
+[LPS-114465]: https://issues.liferay.com/browse/LPS-114465
+[LPS-114479]: https://issues.liferay.com/browse/LPS-114479
+[LPS-114486]: https://issues.liferay.com/browse/LPS-114486
+[LPS-114504]: https://issues.liferay.com/browse/LPS-114504
+[LPS-114565]: https://issues.liferay.com/browse/LPS-114565
+[LPS-114570]: https://issues.liferay.com/browse/LPS-114570
+[LPS-114616]: https://issues.liferay.com/browse/LPS-114616
+[LPS-114705]: https://issues.liferay.com/browse/LPS-114705
+[LPS-114806]: https://issues.liferay.com/browse/LPS-114806
+[LPS-114849]: https://issues.liferay.com/browse/LPS-114849
+[LPS-114979]: https://issues.liferay.com/browse/LPS-114979
+[LPS-115015]: https://issues.liferay.com/browse/LPS-115015
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-115443]: https://issues.liferay.com/browse/LPS-115443
+[LPS-115447]: https://issues.liferay.com/browse/LPS-115447
+[LPS-115496]: https://issues.liferay.com/browse/LPS-115496
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350
@@ -11062,4 +11755,10 @@ both Gradle 2.14+ and Gradle 3.0.
 [LRQA-54214]: https://issues.liferay.com/browse/LRQA-54214
 [POSHI-51]: https://issues.liferay.com/browse/POSHI-51
 [POSHI-56]: https://issues.liferay.com/browse/POSHI-56
+[POSHI-61]: https://issues.liferay.com/browse/POSHI-61
+[POSHI-64]: https://issues.liferay.com/browse/POSHI-64
+[POSHI-70]: https://issues.liferay.com/browse/POSHI-70
+[POSHI-77]: https://issues.liferay.com/browse/POSHI-77
+[POSHI-87]: https://issues.liferay.com/browse/POSHI-87
+[POSHI-90]: https://issues.liferay.com/browse/POSHI-90
 [RELEASE-1607]: https://issues.liferay.com/browse/RELEASE-1607

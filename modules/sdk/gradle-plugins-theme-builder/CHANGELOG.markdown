@@ -1,5 +1,11 @@
 # Liferay Gradle Plugins Theme Builder Change Log
 
+## 2.0.13 - 2020-05-04
+
+### Dependencies
+- [LPS-112922] Update the com.liferay.gradle.plugins.css.builder dependency to
+version 3.1.3.
+
 ## 2.0.12 - 2020-03-04
 
 ### Commits
@@ -242,4 +248,5 @@ aren't mixed in with source files (fb7f330f69)
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-109055]: https://issues.liferay.com/browse/LPS-109055
 [LPS-109374]: https://issues.liferay.com/browse/LPS-109374
+[LPS-112922]: https://issues.liferay.com/browse/LPS-112922
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129

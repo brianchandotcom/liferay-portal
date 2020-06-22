@@ -1,5 +1,70 @@
 # Liferay Gradle Plugins Service Builder Change Log
 
+## 4.0.16 - 2020-06-15
+
+### Dependencies
+- [LPS-105380] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.345.
+- [LPS-115020] Update the com.liferay.gradle.util dependency to version 1.0.43.
+
+## 4.0.15 - 2020-06-05
+
+### Dependencies
+- [LPS-113024] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.344.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.42.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.41.
+- [LPS-113624] Update the com.liferay.gradle.util dependency to version 1.0.40.
+
+## 4.0.14 - 2020-05-11
+
+### Dependencies
+- [LPS-112226] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.343.
+
+## 4.0.13 - 2020-05-06
+
+### Dependencies
+- [LPS-112857] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.342.
+
+## 4.0.12 - 2020-05-06
+
+### Dependencies
+- [LPS-112857] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.341.
+
+## 4.0.11 - 2020-04-30
+
+### Dependencies
+- [LPS-100268] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.340.
+
+## 4.0.10 - 2020-04-29
+
+### Dependencies
+- [LPS-111193] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.339.
+
+## 4.0.9 - 2020-04-28
+
+### Commits
+- [LPS-110422] Apply (9a704b4ca9)
+- [LPS-110422] Gradle plugins not compatible with gradle 6.0+ * Add OsgiHelper
+in gradle-util * Replace gradle osgi plugin dependency by local OsgiHelper
+(53e90cb8f3)
+
+### Dependencies
+- [LPS-110422] Update the com.liferay.gradle.util dependency to version 1.0.39.
+- [LPS-111896] Update the com.liferay.gradle.util dependency to version 1.0.38.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.37.
+
+## 4.0.8 - 2020-04-02
+
+### Dependencies
+- [LPS-106397] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.338.
+
 ## 4.0.7 - 2020-03-16
 
 ### Dependencies
@@ -1778,6 +1843,7 @@ version 2.4.
 [LPS-88170]: https://issues.liferay.com/browse/LPS-88170
 [LPS-88181]: https://issues.liferay.com/browse/LPS-88181
 [LPS-88183]: https://issues.liferay.com/browse/LPS-88183
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-88665]: https://issues.liferay.com/browse/LPS-88665
 [LPS-88823]: https://issues.liferay.com/browse/LPS-88823
 [LPS-89210]: https://issues.liferay.com/browse/LPS-89210
@@ -1811,6 +1877,7 @@ version 2.4.
 [LPS-99252]: https://issues.liferay.com/browse/LPS-99252
 [LPS-99807]: https://issues.liferay.com/browse/LPS-99807
 [LPS-100077]: https://issues.liferay.com/browse/LPS-100077
+[LPS-100268]: https://issues.liferay.com/browse/LPS-100268
 [LPS-100352]: https://issues.liferay.com/browse/LPS-100352
 [LPS-100436]: https://issues.liferay.com/browse/LPS-100436
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
@@ -1845,6 +1912,14 @@ version 2.4.
 [LPS-109743]: https://issues.liferay.com/browse/LPS-109743
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
 [LPS-110414]: https://issues.liferay.com/browse/LPS-110414
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111193]: https://issues.liferay.com/browse/LPS-111193
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-112226]: https://issues.liferay.com/browse/LPS-112226
+[LPS-112857]: https://issues.liferay.com/browse/LPS-112857
+[LPS-113024]: https://issues.liferay.com/browse/LPS-113024
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319
 [LRDOCS-5050]: https://issues.liferay.com/browse/LRDOCS-5050

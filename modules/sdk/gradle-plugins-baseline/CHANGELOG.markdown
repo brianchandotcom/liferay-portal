@@ -1,5 +1,46 @@
 # Liferay Gradle Plugins Baseline Change Log
 
+## 6.0.2 - 2020-04-06
+
+### Dependencies
+- [LPS-110835] Update the com.liferay.ant.bnd dependency to version 3.2.5.
+
+## 6.0.1 - 2020-04-03
+
+### Dependencies
+- [LPS-110835] Update the com.liferay.ant.bnd dependency to version 3.2.4.
+
+## 6.0.0 - 2020-03-30
+
+### Commits
+- [LPS-111070] When the micro version is zero check Nexus for the last published
+jar (36abf9dba0)
+- [LPS-111135] Persist the baseline log file (9b4c0b5116)
+
+## 5.0.1 - 2020-03-27
+
+### Commits
+- [LPS-110781] Mark packageinfo files as inputs to detect manual updates to
+generated data (44c3557814)
+
+## 4.1.2 - 2020-03-25
+
+### Commits
+- [LPS-110781] Fix cleanBaseline task (edcb19a095)
+
+## 4.1.1 - 2020-03-25
+
+### Commits
+- [LPS-110781] fix by peter (af0499db31)
+- [LPS-110781] Fix cleanBaseline task (a39492a400)
+
+## 4.0.1 - 2020-03-24
+
+### Commits
+- [LPS-110781] Always run against previous releases (6400bd75db)
+- [LPS-110781] Update baseline task inputs (3944a768eb)
+- [LPS-110781] Add baseline task outputs (34c2f70de6)
+
 ## 3.0.1 - 2020-03-13
 
 ### Commits
@@ -531,4 +572,8 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 [LPS-109820]: https://issues.liferay.com/browse/LPS-109820
 [LPS-110200]: https://issues.liferay.com/browse/LPS-110200
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
+[LPS-110781]: https://issues.liferay.com/browse/LPS-110781
+[LPS-110835]: https://issues.liferay.com/browse/LPS-110835
+[LPS-111070]: https://issues.liferay.com/browse/LPS-111070
+[LPS-111135]: https://issues.liferay.com/browse/LPS-111135
 [LRQA-39761]: https://issues.liferay.com/browse/LRQA-39761

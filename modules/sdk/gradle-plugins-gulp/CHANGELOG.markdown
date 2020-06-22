@@ -1,5 +1,17 @@
 # Liferay Gradle Plugins Gulp Change Log
 
+## 2.0.75 - 2020-04-28
+
+### Dependencies
+- [LPS-110422] Update the com.liferay.gradle.plugins.node dependency to version
+7.0.5.
+
+## 2.0.74 - 2020-03-30
+
+### Dependencies
+- [LPS-111192] Update the com.liferay.gradle.plugins.node dependency to version
+7.0.4.
+
 ## 2.0.73 - 2020-03-17
 
 ### Dependencies
@@ -677,7 +689,9 @@
 [LPS-103580]: https://issues.liferay.com/browse/LPS-103580
 [LPS-104132]: https://issues.liferay.com/browse/LPS-104132
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
 [LPS-110486]: https://issues.liferay.com/browse/LPS-110486
+[LPS-111192]: https://issues.liferay.com/browse/LPS-111192
 [LRDOCS-4129]: https://issues.liferay.com/browse/LRDOCS-4129
 [LRDOCS-6412]: https://issues.liferay.com/browse/LRDOCS-6412
 [LRQA-52072]: https://issues.liferay.com/browse/LRQA-52072

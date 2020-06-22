@@ -1,5 +1,54 @@
 # Liferay Gradle Plugins Target Platform Change Log
 
+## 2.1.18 - 2020-06-11
+
+### Commits
+- [LPS-111461] exclude gradle-util (9839838e5a)
+- [LPS-105380] Rename variable: obj -> object (64cb899b48)
+- [LPS-113024] [LPS-114570] update because of CI CDN issues (8a163df22c)
+
+### Dependencies
+- [LPS-115020] Update the com.liferay.gradle.util dependency to version 1.0.43.
+
+## 2.1.17 - 2020-06-04
+
+### Commits
+- [LPS-114882] Add providedModules to whitelist (00cde5380b)
+
+## 2.1.11 - 2020-05-20
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.42.
+
+## 2.1.9 - 2020-05-13
+
+### Commits
+- [LPS-105380] revert (c22fc8b3e7)
+
+### Dependencies
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.41.
+- [LPS-113624] Update the com.liferay.gradle.util dependency to version 1.0.40.
+
+## 2.1.5 - 2020-04-28
+
+### Commits
+- [LPS-112500] Add jsCompile to whitelist for TP configurations (79afe309f9)
+- [LPS-98417] Revert "LPS-98417 Add jsCompile to whitelist for TP
+configurations" (37bcf0a44a)
+
+### Dependencies
+- [LPS-110422] Update the com.liferay.gradle.util dependency to version 1.0.39.
+
+## 2.1.4 - 2020-04-22
+
+### Commits
+- [LPS-98417] Add jsCompile to whitelist for TP configurations (91020459c6)
+
+### Dependencies
+- [LPS-111896] Update the com.liferay.gradle.util dependency to version 1.0.38.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.37.
+- [LPS-110283] Update the com.liferay.gradle.util dependency to version 1.0.36.
+
 ## 2.1.3 - 2020-03-04
 
 ### Dependencies
@@ -398,6 +447,7 @@ and unit tests) (045479bf7c)
 [LPS-87419]: https://issues.liferay.com/browse/LPS-87419
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-88382]: https://issues.liferay.com/browse/LPS-88382
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-91342]: https://issues.liferay.com/browse/LPS-91342
 [LPS-91772]: https://issues.liferay.com/browse/LPS-91772
 [LPS-93483]: https://issues.liferay.com/browse/LPS-93483
@@ -409,6 +459,7 @@ and unit tests) (045479bf7c)
 [LPS-96290]: https://issues.liferay.com/browse/LPS-96290
 [LPS-97601]: https://issues.liferay.com/browse/LPS-97601
 [LPS-98190]: https://issues.liferay.com/browse/LPS-98190
+[LPS-98417]: https://issues.liferay.com/browse/LPS-98417
 [LPS-98877]: https://issues.liferay.com/browse/LPS-98877
 [LPS-99577]: https://issues.liferay.com/browse/LPS-99577
 [LPS-100448]: https://issues.liferay.com/browse/LPS-100448
@@ -422,3 +473,13 @@ and unit tests) (045479bf7c)
 [LPS-105889]: https://issues.liferay.com/browse/LPS-105889
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-107155]: https://issues.liferay.com/browse/LPS-107155
+[LPS-110283]: https://issues.liferay.com/browse/LPS-110283
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111461]: https://issues.liferay.com/browse/LPS-111461
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-112500]: https://issues.liferay.com/browse/LPS-112500
+[LPS-113024]: https://issues.liferay.com/browse/LPS-113024
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-114570]: https://issues.liferay.com/browse/LPS-114570
+[LPS-114882]: https://issues.liferay.com/browse/LPS-114882
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020

@@ -1,5 +1,30 @@
 # Liferay Gradle Plugins Lang Merger Change Log
 
+## 2.0.1 - 2020-05-04
+
+### Commits
+- [LPS-112922] Faster (d75501eecd)
+- [LPS-112922] Fix mergeLang (commerce) (410121b64f)
+
+### Dependencies
+- [LPS-110422] Update the com.liferay.gradle.util dependency to version 1.0.39.
+
+## 1.1.4 - 2020-04-22
+
+### Commits
+- [LPS-112232] Serializable (af41bdfd26)
+- [LPS-112232] Logging (3c7406d5bd)
+- [LPS-112232] Task action (f6731ed7b9)
+- [LPS-112232] Sort merged properties (b1dabad46b)
+- [LPS-112232] Worker api (9b3f8c15bd)
+- [LPS-112232] Sort (6755d77410)
+- [LPS-112232] Inline (1f40f39597)
+
+### Dependencies
+- [LPS-111896] Update the com.liferay.gradle.util dependency to version 1.0.38.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.37.
+- [LPS-110283] Update the com.liferay.gradle.util dependency to version 1.0.36.
+
 ## 1.1.3 - 2020-03-04
 
 ### Commits
@@ -158,6 +183,12 @@ Include-Resource" (94f30d28e7)
 [LPS-86589]: https://issues.liferay.com/browse/LPS-86589
 [LPS-87192]: https://issues.liferay.com/browse/LPS-87192
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-96247]: https://issues.liferay.com/browse/LPS-96247
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
+[LPS-110283]: https://issues.liferay.com/browse/LPS-110283
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-112232]: https://issues.liferay.com/browse/LPS-112232
+[LPS-112922]: https://issues.liferay.com/browse/LPS-112922

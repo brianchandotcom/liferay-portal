@@ -1,5 +1,53 @@
 # Liferay Gradle Plugins Poshi Runner Change Log
 
+## 2.2.29 - 2020-06-17
+
+### Commits
+- [POSHI-90] Update gradle plugin default poshi runner version to 1.0.270
+(0fceb18954)
+
+## 2.2.28 - 2020-06-09
+
+### Commits
+- [POSHI-87] Update gradle plugin default poshi runner version to 1.0.269
+(4cb002e72f)
+
+### Dependencies
+- [LPS-115020] Update the com.liferay.gradle.util dependency to version 1.0.43.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.42.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.41.
+- [LPS-113624] Update the com.liferay.gradle.util dependency to version 1.0.40.
+
+## 2.2.27 - 2020-05-07
+
+### Commits
+- [POSHI-77] Update default poshi runner version to 1.0.266 (4c7e1046c6)
+
+### Dependencies
+- [LPS-110422] Update the com.liferay.gradle.util dependency to version 1.0.39.
+- [LPS-111896] Update the com.liferay.gradle.util dependency to version 1.0.38.
+- [LPS-88645] Update the com.liferay.gradle.util dependency to version 1.0.37.
+
+## 2.2.26 - 2020-04-09
+
+### Commits
+- [POSHI-70] Update to poshi runner 1.0.264 (b0e5b16be3)
+
+## 2.2.25 - 2020-04-08
+
+### Commits
+- [LPS-111647] Always execute the runPoshi task (5eb3cdba97)
+
+## 2.2.24 - 2020-04-01
+
+### Commits
+- [POSHI-64] Update default poshi runner to 1.0.261 (f56926cce5)
+
+## 2.2.23 - 2020-03-23
+
+### Commits
+- [POSHI-61] apply (c6eef20107)
+
 ## 2.2.22 - 2020-03-13
 
 ### Commits
@@ -399,11 +447,17 @@ up-to-date check (59fd9e696c)
 [LPS-87192]: https://issues.liferay.com/browse/LPS-87192
 [LPS-87466]: https://issues.liferay.com/browse/LPS-87466
 [LPS-87890]: https://issues.liferay.com/browse/LPS-87890
+[LPS-88645]: https://issues.liferay.com/browse/LPS-88645
 [LPS-94947]: https://issues.liferay.com/browse/LPS-94947
 [LPS-96247]: https://issues.liferay.com/browse/LPS-96247
 [LPS-100515]: https://issues.liferay.com/browse/LPS-100515
 [LPS-106149]: https://issues.liferay.com/browse/LPS-106149
 [LPS-110283]: https://issues.liferay.com/browse/LPS-110283
+[LPS-110422]: https://issues.liferay.com/browse/LPS-110422
+[LPS-111647]: https://issues.liferay.com/browse/LPS-111647
+[LPS-111896]: https://issues.liferay.com/browse/LPS-111896
+[LPS-113624]: https://issues.liferay.com/browse/LPS-113624
+[LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350
@@ -417,3 +471,9 @@ up-to-date check (59fd9e696c)
 [LRQA-17405]: https://issues.liferay.com/browse/LRQA-17405
 [POSHI-51]: https://issues.liferay.com/browse/POSHI-51
 [POSHI-56]: https://issues.liferay.com/browse/POSHI-56
+[POSHI-61]: https://issues.liferay.com/browse/POSHI-61
+[POSHI-64]: https://issues.liferay.com/browse/POSHI-64
+[POSHI-70]: https://issues.liferay.com/browse/POSHI-70
+[POSHI-77]: https://issues.liferay.com/browse/POSHI-77
+[POSHI-87]: https://issues.liferay.com/browse/POSHI-87
+[POSHI-90]: https://issues.liferay.com/browse/POSHI-90

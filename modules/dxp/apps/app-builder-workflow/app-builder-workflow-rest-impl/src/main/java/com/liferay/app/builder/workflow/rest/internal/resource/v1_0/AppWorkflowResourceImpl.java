@@ -161,26 +161,6 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 		};
 	}
 
-	private Long[] _toRoleIds(
-		Node node) {
-
-		Task task = (Task)node;
-
-		return Stream.of(
-			task.getAssignments()
-		).flatMap(
-			Set::stream
-		).filter(
-			assignment -> assignment instanceof RoleAssignment
-		).map(
-			assignment -> (RoleAssignment)assignment
-		).map(
-			RoleAssignment::getRoleId
-		).toArray(
-			Long[]::new
-		);
-	}
-
 	private AppWorkflowState[] _toAppWorkflowStates(List<State> states) {
 		return Stream.of(
 			states
@@ -213,7 +193,7 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 					AppBuilderWorkflowTaskLink::getDdmStructureLayoutId,
 					Long.class);
 				name = taskName;
-				roleIds = _toRoleIds(node);
+				roleIds = _toRoleIds((Task)node);
 			}
 		};
 	}
@@ -241,6 +221,22 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 			}
 		).toArray(
 			AppWorkflowTransition[]::new
+		);
+	}
+
+	private Long[] _toRoleIds(Task task) {
+		return Stream.of(
+			task.getAssignments()
+		).flatMap(
+			Set::stream
+		).filter(
+			RoleAssignment.class::isInstance
+		).map(
+			RoleAssignment.class::cast
+		).map(
+			RoleAssignment::getRoleId
+		).toArray(
+			Long[]::new
 		);
 	}
 

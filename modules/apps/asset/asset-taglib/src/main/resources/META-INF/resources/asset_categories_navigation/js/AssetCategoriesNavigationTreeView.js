@@ -15,18 +15,6 @@
 import {Treeview} from 'frontend-js-components-web';
 import React from 'react';
 
-function buildNodes(vocabularies, categories) {
-	return vocabularies.map((vocabulary) => ({
-		...vocabulary,
-		children: categories.filter((category) => {
-			return category.vocabularyId === vocabulary.vocabularyId;
-		}),
-		disabled: true,
-		icon: 'vocabulary',
-		id: vocabulary.vocabularyId,
-	}));
-}
-
 function findCategory(categoryId, categories = []) {
 	// eslint-disable-next-line no-for-of-loops/no-for-of-loops
 	for (const category of categories) {
@@ -45,15 +33,12 @@ function findCategory(categoryId, categories = []) {
 }
 
 const AssetCategoriesNavigationTreeView = ({
-	categories,
 	selectedCategoryId,
 	vocabularies,
 }) => {
-	const nodes = buildNodes(vocabularies, categories);
-
 	const handleSelectionChange = ([selectedNodeId]) => {
 		if (selectedNodeId && selectedCategoryId !== selectedNodeId) {
-			const category = findCategory(selectedNodeId, categories);
+			const category = findCategory(selectedNodeId, vocabularies);
 
 			if (category) {
 				Liferay.Util.navigate(category.url);
@@ -68,7 +53,7 @@ const AssetCategoriesNavigationTreeView = ({
 			}
 			multiSelection={false}
 			NodeComponent={Treeview.Card}
-			nodes={nodes}
+			nodes={vocabularies}
 			onSelectedNodesChange={handleSelectionChange}
 		/>
 	);

@@ -20,7 +20,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 const VALID_EXTENSIONS = '.xliff,.xlf';
 
 export default function ImportTranslation({
-	articleResourceId,
+	articleResourcePrimKey,
 	saveDraftBtnId,
 	submitBtnId,
 }) {
@@ -60,7 +60,7 @@ export default function ImportTranslation({
 
 				const id = fileId.substring(fileId.indexOf(':') + 1);
 
-				const validFile = id === articleResourceId;
+				const validFile = id === articleResourcePrimKey;
 
 				setHasError(!validFile);
 
@@ -72,7 +72,7 @@ export default function ImportTranslation({
 				setHasError(true);
 			}
 		},
-		[articleResourceId]
+		[articleResourcePrimKey]
 	);
 
 	return (

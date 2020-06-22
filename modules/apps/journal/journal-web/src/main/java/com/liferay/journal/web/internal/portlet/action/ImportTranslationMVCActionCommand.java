@@ -78,8 +78,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			_checkContentType(uploadPortletRequest.getContentType("file"));
 
-			long articleResourceId = ParamUtil.getLong(
-				actionRequest, "articleResourceId");
+			long articleResourcePrimKey = ParamUtil.getLong(
+				actionRequest, "articleResourcePrimKey");
 
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
@@ -88,7 +88,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					_translationInfoFormValuesExporter.importXLIFF(
 						themeDisplay.getScopeGroupId(),
 						new InfoItemClassPKReference(
-							JournalArticle.class.getName(), articleResourceId),
+							JournalArticle.class.getName(),
+							articleResourcePrimKey),
 						inputStream);
 
 				long groupId = ParamUtil.getLong(actionRequest, "groupId");

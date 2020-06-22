@@ -18,7 +18,7 @@
 
 <%
 String articleId = ParamUtil.getString(request, "articleId");
-String articleResourceId = ParamUtil.getString(request, "articleResourceId");
+String articleResourcePrimKey = ParamUtil.getString(request, "articleResourcePrimKey");
 String articleTitle = ParamUtil.getString(request, "articleTitle");
 String groupId = ParamUtil.getString(request, "groupId");
 String redirect = ParamUtil.getString(request, "redirect");
@@ -34,7 +34,7 @@ renderResponse.setTitle(title);
 
 <portlet:actionURL name="/journal/import_translation" var="importTranslationURL">
 	<portlet:param name="articleId" value="<%= articleId %>" />
-	<portlet:param name="articleResourceId" value="<%= articleResourceId %>" />
+	<portlet:param name="articleResourcePrimKey" value="<%= articleResourcePrimKey %>" />
 	<portlet:param name="groupId" value="<%= groupId %>" />
 </portlet:actionURL>
 
@@ -72,7 +72,7 @@ renderResponse.setTitle(title);
 
 			<%
 			Map<String, Object> data = HashMapBuilder.<String, Object>put(
-				"articleResourceId", articleResourceId
+				"articleResourcePrimKey", articleResourcePrimKey
 			).put(
 				"saveDraftBtnId", renderResponse.getNamespace() + "saveDraftBtn"
 			).put(

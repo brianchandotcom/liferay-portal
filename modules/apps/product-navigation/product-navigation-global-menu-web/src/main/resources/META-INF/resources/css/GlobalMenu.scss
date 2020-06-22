@@ -35,10 +35,11 @@ $tab-header-height: 38px;
 }
 
 .global-apps-nav {
+	margin: 0;
 	padding: 1rem;
 
 	@include media-breakpoint-up(sm) {
-		padding: 1.5rem 2.2rem;
+		padding: 1.5rem 2.5rem 1.5rem 1.75rem;
 	}
 
 	.global-apps-nav-header {

@@ -67,6 +67,8 @@ List<Long> dataLayoutIds = (List<Long>)request.getAttribute(AppBuilderWebKeys.DA
 								).put(
 									"basePortletURL", String.valueOf(renderResponse.createRenderURL())
 								).put(
+									"containerElementId", renderResponse.getNamespace() + "container"
+								).put(
 									"controlMenuElementId", liferayPortletResponse.getNamespace() + "-control-menu"
 								).put(
 									"dataDefinitionId", appBuilderApp.getDdmStructureId()
@@ -76,8 +78,6 @@ List<Long> dataLayoutIds = (List<Long>)request.getAttribute(AppBuilderWebKeys.DA
 									"dataListViewId", appBuilderApp.getDeDataListViewId()
 								).put(
 									"dataRecordId", ParamUtil.getLong(request, "dataRecordId")
-								).put(
-									"editEntryContainerElementId", liferayPortletResponse.getNamespace() + "container"
 								).put(
 									"namespace", liferayPortletResponse.getNamespace()
 								).put(

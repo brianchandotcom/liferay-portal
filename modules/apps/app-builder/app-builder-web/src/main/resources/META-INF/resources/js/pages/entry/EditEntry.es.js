@@ -13,12 +13,15 @@
  */
 
 import ClayButton from '@clayui/button';
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext} from 'react';
 
 import {AppContext} from '../../AppContext.es';
 import Button from '../../components/button/Button.es';
 import {ControlMenuBase} from '../../components/control-menu/ControlMenu.es';
+import withDDMForm, {
+	useDDMFormSubmit,
+	useDDMFormValidation,
+} from '../../hooks/withDDMForm.es';
 import {addItem, updateItem} from '../../utils/client.es';
 import {successToast} from '../../utils/toast.es';
 
@@ -39,88 +42,38 @@ export const EditEntry = ({
 		}
 	}, [basePortletURL, redirect]);
 
-	const onSave = useCallback(() => {
-		const {pages} = ddmForm;
-		const visitor = new PagesVisitor(pages);
-
-		ddmForm.validate().then((validForm) => {
-			if (!validForm) {
-				return;
-			}
-
-			const dataRecord = {
-				dataRecordValues: {},
-			};
-
-			const languageId = themeDisplay.getLanguageId();
-
-			visitor.mapFields(
-				({fieldName, localizable, repeatable, value, visible}) => {
-					if (!visible) {
-						value = '';
-					}
-
-					if (localizable) {
-						if (!dataRecord.dataRecordValues[fieldName]) {
-							dataRecord.dataRecordValues[fieldName] = {
-								[languageId]: [],
-							};
-						}
-
-						if (repeatable) {
-							dataRecord.dataRecordValues[fieldName][
-								languageId
-							].push(value);
-						}
-						else {
-							dataRecord.dataRecordValues[fieldName] = {
-								[languageId]: value,
-							};
-						}
-					}
-					else {
-						dataRecord.dataRecordValues[fieldName] = value;
-					}
+	const onSubmit = useDDMFormValidation(
+		ddmForm,
+		useCallback(
+			(dataRecord) => {
+				if (dataRecordId !== '0') {
+					updateItem(
+						`/o/data-engine/v2.0/data-records/${dataRecordId}`,
+						dataRecord
+					).then(() => {
+						successToast(
+							Liferay.Language.get('an-entry-was-updated')
+						);
+						onCancel();
+					});
 				}
-			);
+				else {
+					addItem(
+						`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
+						dataRecord
+					).then(() => {
+						successToast(
+							Liferay.Language.get('an-entry-was-added')
+						);
+						onCancel();
+					});
+				}
+			},
+			[dataDefinitionId, dataRecordId, onCancel]
+		)
+	);
 
-			const openSuccessToast = (isNew) => {
-				const message = isNew
-					? Liferay.Language.get('an-entry-was-added')
-					: Liferay.Language.get('an-entry-was-updated');
-
-				successToast(message);
-			};
-
-			if (dataRecordId !== '0') {
-				updateItem(
-					`/o/data-engine/v2.0/data-records/${dataRecordId}`,
-					dataRecord
-				).then(() => {
-					openSuccessToast(false);
-					onCancel();
-				});
-			}
-			else {
-				addItem(
-					`/o/data-engine/v2.0/data-definitions/${dataDefinitionId}/data-records`,
-					dataRecord
-				).then(() => {
-					openSuccessToast(true);
-					onCancel();
-				});
-			}
-		});
-	}, [dataDefinitionId, dataRecordId, ddmForm, onCancel]);
-
-	useEffect(() => {
-		const formNode = ddmForm.getFormNode();
-		const onSubmit = () => onSave();
-
-		formNode.addEventListener('submit', onSubmit);
-
-		return () => formNode.removeEventListener('submit', onSubmit);
-	}, [ddmForm, onSave]);
+	useDDMFormSubmit(ddmForm, onSubmit);
 
 	return (
 		<>
@@ -135,7 +88,10 @@ export const EditEntry = ({
 			/>
 
 			<ClayButton.Group className="app-builder-form-buttons" spaced>
-				<Button onClick={onSave}>{Liferay.Language.get('save')}</Button>
+				<Button onClick={onSubmit}>
+					{Liferay.Language.get('save')}
+				</Button>
+
 				<Button displayType="secondary" onClick={onCancel}>
 					{Liferay.Language.get('cancel')}
 				</Button>
@@ -144,12 +100,4 @@ export const EditEntry = ({
 	);
 };
 
-export default ({editEntryContainerElementId, ...props}) => {
-	const [ddmForm, setDDMForm] = useState();
-
-	if (!ddmForm) {
-		Liferay.componentReady(editEntryContainerElementId).then(setDDMForm);
-	}
-
-	return ddmForm ? <EditEntry ddmForm={ddmForm} {...props} /> : null;
-};
+export default withDDMForm(EditEntry);

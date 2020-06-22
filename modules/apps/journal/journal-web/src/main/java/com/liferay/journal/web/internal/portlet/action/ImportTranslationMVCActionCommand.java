@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class ImportTranslationMVCResourceCommand extends BaseMVCActionCommand {
+public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

@@ -24,11 +24,10 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
@@ -1050,11 +1049,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		ServiceRegistration<InfoItemFormProvider<?>>
-			infoItemFormProviderServiceRegistration = registry.registerService(
-				(Class<InfoItemFormProvider<?>>)
-					(Class<?>)InfoItemFormProvider.class,
-				new MockInfoItemFormProvider(), new HashMap<>());
+		ServiceRegistration<InfoItemFieldValuesProvider<?>>
+			infoItemFieldValuesProviderServiceRegistration = registry.registerService(
+				(Class<InfoItemFieldValuesProvider<?>>)
+					(Class<?>)InfoItemFieldValuesProvider.class,
+				new MockInfoItemFieldValuesProvider(), new HashMap<>());
 
 		httpServletRequest.setAttribute(
 			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
@@ -1064,7 +1063,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			unsafeRunnable.run();
 		}
 		finally {
-			infoItemFormProviderServiceRegistration.unregister();
+			infoItemFieldValuesProviderServiceRegistration.unregister();
 		}
 	}
 
@@ -1165,65 +1164,61 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 	}
 
-	private static class MockInfoItemFormProvider
-		implements InfoItemFormProvider<MockObject> {
+	private static class MockInfoItemFieldValuesProvider
+		implements InfoItemFieldValuesProvider<MockObject> {
 
 		@Override
-		public InfoForm getInfoForm() {
-			return null;
-		}
+		public InfoItemFieldValues getInfoItemFieldValues(MockObject mockObject) {
+			InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
+				null);
 
-		@Override
-		public InfoFormValues getInfoFormValues(MockObject mockObject) {
-			InfoFormValues infoFormValues = new InfoFormValues();
-
-			infoFormValues.add(
+			infoItemFieldValues.add(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null, "description"),
 					"<p>defaultMappedDescription</p>"));
 
-			infoFormValues.add(
+			infoItemFieldValues.add(
 				new InfoFieldValue<>(
 					new InfoField(TextInfoFieldType.INSTANCE, null, "title"),
 					"defaultMappedTitle"));
 
-			infoFormValues.add(
+			infoItemFieldValues.add(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null,
 						"mappedDescriptionFieldName"),
 					"<p>mappedDescription</p>"));
 
-			infoFormValues.add(
+			infoItemFieldValues.add(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null,
 						"mappedTitleFieldName"),
 					"mappedTitle"));
 
-			infoFormValues.add(
+			infoItemFieldValues.add(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null,
 						"mappedTitleFieldName"),
 					"mappedTitle"));
 
-			infoFormValues.add(
+			infoItemFieldValues.add(
 				new InfoFieldValue<>(
 					new InfoField(
 						ImageInfoFieldType.INSTANCE, null,
 						"mappedImageFieldName"),
 					new WebImage("/imageURL")));
 
-			infoFormValues.add(
+			infoItemFieldValues.add(
 				new InfoFieldValue<>(
 					new InfoField(
 						TextInfoFieldType.INSTANCE, null,
 						"mappedImageAltFieldName"),
 					"mappedImageAlt"));
 
-			return infoFormValues;
+			return infoItemFieldValues;
 		}
 
 	}

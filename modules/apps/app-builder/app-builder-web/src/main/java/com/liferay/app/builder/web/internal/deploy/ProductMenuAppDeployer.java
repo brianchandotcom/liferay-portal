@@ -19,10 +19,8 @@ import com.liferay.app.builder.deploy.AppDeployer;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.model.AppBuilderAppDeployment;
 import com.liferay.app.builder.service.AppBuilderAppDeploymentLocalService;
-import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.web.internal.application.list.ProductMenuPanelApp;
 import com.liferay.app.builder.web.internal.portlet.AppPortlet;
-import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -34,13 +32,9 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
 import java.util.Collections;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -50,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = "app.builder.deploy.type=productMenu",
 	service = AppDeployer.class
 )
-public class ProductMenuAppDeployer implements AppDeployer {
+public class ProductMenuAppDeployer extends BaseAppDeployer {
 
 	@Override
 	public void deploy(long appId) throws Exception {
@@ -64,7 +58,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		JSONArray scopeJSONArray = jsonObject.getJSONArray("scope");
 
 		AppBuilderApp appBuilderApp =
-			_appBuilderAppLocalService.getAppBuilderApp(appId);
+			appBuilderAppLocalService.getAppBuilderApp(appId);
 
 		appBuilderApp.setActive(true);
 
@@ -77,7 +71,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		String siteMenuLabel = portletName.concat("site");
 
 		if (scopeJSONArray.length() == 2) {
-			_serviceRegistrationsMap.computeIfAbsent(
+			serviceRegistrationsMap.computeIfAbsent(
 				appId,
 				key -> ArrayUtil.append(
 					_deployPortlet(
@@ -111,7 +105,7 @@ public class ProductMenuAppDeployer implements AppDeployer {
 				menuLabel = siteMenuLabel;
 			}
 
-			_serviceRegistrationsMap.computeIfAbsent(
+			serviceRegistrationsMap.computeIfAbsent(
 				appId,
 				mapKey -> ArrayUtil.append(
 					_deployPortlet(appBuilderApp, appName, menuLabel),
@@ -121,32 +115,14 @@ public class ProductMenuAppDeployer implements AppDeployer {
 							jsonObject.getJSONArray("siteIds")))));
 		}
 
-		_appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
-	}
-
-	@Override
-	public void undeploy(long appId) throws Exception {
-		undeploy(_appBuilderAppLocalService, appId, _serviceRegistrationsMap);
-	}
-
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_bundleContext = null;
-
-		_serviceRegistrationsMap.clear();
+		appBuilderAppLocalService.updateAppBuilderApp(appBuilderApp);
 	}
 
 	private ServiceRegistration<?> _deployPanelApp(
 		long companyId, String panelCategoryKey, String portletName,
 		long[] siteIds) {
 
-		return _bundleContext.registerService(
-			PanelApp.class,
+		return deployPanelApp(
 			new ProductMenuPanelApp(
 				companyId, panelCategoryKey, portletName, siteIds),
 			new HashMapDictionary<String, Object>() {
@@ -160,9 +136,9 @@ public class ProductMenuAppDeployer implements AppDeployer {
 	private ServiceRegistration<?>[] _deployPortlet(
 		AppBuilderApp appBuilderApp, String appName, String portletName) {
 
-		return _appDeployerHelper.deployPortlet(
+		return deployPortlet(
 			new AppPortlet(appBuilderApp, "productMenu", appName, portletName),
-			_bundleContext, Collections.emptyMap());
+			Collections.emptyMap());
 	}
 
 	private String _getPortletName(long appId) {
@@ -174,17 +150,6 @@ public class ProductMenuAppDeployer implements AppDeployer {
 		_appBuilderAppDeploymentLocalService;
 
 	@Reference
-	private AppBuilderAppLocalService _appBuilderAppLocalService;
-
-	@Reference
-	private AppDeployerHelper _appDeployerHelper;
-
-	private BundleContext _bundleContext;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	private final ConcurrentHashMap<Long, ServiceRegistration<?>[]>
-		_serviceRegistrationsMap = new ConcurrentHashMap<>();
 
 }

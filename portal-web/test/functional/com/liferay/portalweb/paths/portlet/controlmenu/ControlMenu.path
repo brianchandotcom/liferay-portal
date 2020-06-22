@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GLOBAL_MENU_ICON</td>
+	<td>//div[contains(@class,'control-menu')]//button[@data-qa-id='globalMenu']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADING</td>
 	<td>//*[@data-qa-id='headerTitle']</td>
 	<td></td>

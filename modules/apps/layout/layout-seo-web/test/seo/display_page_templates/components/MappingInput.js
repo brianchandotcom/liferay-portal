@@ -181,4 +181,36 @@ describe('MappingInput', () => {
 			expect(inputFeedback.value).toBe('-- unmapped --');
 		});
 	});
+
+	describe('when rendered filtred with fieldType image', () => {
+		let result;
+		let fieldSelect;
+		let options;
+
+		beforeEach(() => {
+			result = renderComponent({
+				...baseProps,
+				fieldType: 'image',
+				selectedFieldKey: undefined,
+			});
+
+			fireEvent.click(result.getByTitle('map'));
+
+			fieldSelect = result.getByLabelText('field');
+			options = fieldSelect.querySelectorAll('option');
+		});
+
+		it('only have to filtred options', () => {
+			expect(options.length).toBe(2);
+		});
+
+		it('the first and the selected one is unmapped', () => {
+			expect(options[0].value).toBe('');
+			expect(fieldSelect.value).toBe('');
+		});
+
+		it('the second is the field type image', () => {
+			expect(options[1].value).toBe(baseProps.initialFields[2].key);
+		});
+	});
 });

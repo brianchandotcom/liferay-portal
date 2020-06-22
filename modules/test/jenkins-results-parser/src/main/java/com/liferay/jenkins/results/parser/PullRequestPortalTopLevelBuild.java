@@ -87,14 +87,29 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 		String batchWhitelist = buildProperties.getProperty(
 			"pull.request.forward.upstream.failure.comparison.batch.whitelist");
 
-		List<String> whitelistedBatchNames = Arrays.asList(
+		List<String> whitelistedBatchRegexes = Arrays.asList(
 			batchWhitelist.split("\\s*,\\s*"));
 
 		for (Build downstreamBuild : downstreamBuildFailures) {
-			if (downstreamBuild.isUniqueFailure() ||
-				!whitelistedBatchNames.contains(
-					downstreamBuild.getJobVariant())) {
+			if (downstreamBuild.isUniqueFailure()) {
+				return result;
+			}
 
+			boolean approved = false;
+
+			String jobVariant = downstreamBuild.getJobVariant();
+
+			jobVariant = jobVariant.replaceAll("(.*)/.*", "$1");
+
+			for (String whiteListedBatchRegex : whitelistedBatchRegexes) {
+				if (jobVariant.matches(".*" + whiteListedBatchRegex + ".*")) {
+					approved = true;
+
+					break;
+				}
+			}
+
+			if (!approved) {
 				return result;
 			}
 		}

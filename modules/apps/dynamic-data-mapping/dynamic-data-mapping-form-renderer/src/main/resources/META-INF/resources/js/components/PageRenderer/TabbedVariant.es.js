@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import {Tabs} from '../Tabs.es';
@@ -23,9 +24,9 @@ export const Column = ({children, column, index}) => {
 	}
 
 	return (
-		<div className={`col-md-${column.size}`} key={index}>
+		<ClayLayout.Col key={index} md={column.size}>
 			{column.fields.map((field, index) => children({field, index}))}
-		</div>
+		</ClayLayout.Col>
 	);
 };
 

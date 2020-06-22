@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
 import React, {useContext} from 'react';
 
@@ -83,7 +84,12 @@ export const Column = ({
 	const firstField = column.fields[0];
 
 	return (
-		<div {...addr} className={`col-md-${column.size} col-ddm`} key={index}>
+		<ClayLayout.Col
+			{...addr}
+			className={`col-ddm`}
+			key={index}
+			md={column.size}
+		>
 			{editable && column.fields.length > 0 ? (
 				<div
 					className={classnames(
@@ -130,7 +136,7 @@ export const Column = ({
 			) : (
 				fields
 			)}
-		</div>
+		</ClayLayout.Col>
 	);
 };
 
@@ -157,9 +163,9 @@ export const Page = ({
 			{activePage === pageIndex && Header}
 
 			{empty && editable && activePage === pageIndex ? (
-				<div className="row">
-					<div
-						className="col col-ddm col-empty col-md-12 last-col lfr-initial-col mb-4 mt-5"
+				<ClayLayout.Row>
+					<ClayLayout.Col
+						className="col-ddm col-empty last-col lfr-initial-col mb-4 mt-5"
 						data-ddm-field-column="0"
 						data-ddm-field-page={pageIndex}
 						data-ddm-field-row="0"
@@ -177,8 +183,8 @@ export const Page = ({
 								)}
 							</p>
 						</div>
-					</div>
-				</div>
+					</ClayLayout.Col>
+				</ClayLayout.Row>
 			) : (
 				children
 			)}
@@ -213,11 +219,12 @@ export const Placeholder = ({
 	});
 
 	const Content = (
-		<div
-			className={`col col-ddm col-empty col-md-${size}`}
+		<ClayLayout.Col
+			className={`col-ddm col-empty`}
 			data-ddm-field-column={columnIndex}
 			data-ddm-field-page={pageIndex}
 			data-ddm-field-row={rowIndex}
+			md={size}
 		>
 			<div
 				className={classnames('ddm-target', {
@@ -225,7 +232,7 @@ export const Placeholder = ({
 				})}
 				ref={drop}
 			/>
-		</div>
+		</ClayLayout.Col>
 	);
 
 	if (isRow) {

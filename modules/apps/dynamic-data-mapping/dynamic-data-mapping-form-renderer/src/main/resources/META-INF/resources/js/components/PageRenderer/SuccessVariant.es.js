@@ -14,6 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import ClayLayout from '@clayui/layout';
 import {usePrevious} from 'frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
@@ -28,7 +29,7 @@ export const Container = ({children, pages, strings = {}}) => {
 
 	return (
 		<div className="page">
-			<div className="ddm-page-success-layout sheet simple-page">
+			<ClayLayout.Sheet className="ddm-page-success-layout simple-page">
 				<div className="form-builder-layout">
 					<h5 className="pagination">
 						{strings['success-page'] ??
@@ -37,7 +38,7 @@ export const Container = ({children, pages, strings = {}}) => {
 
 					{children}
 				</div>
-			</div>
+			</ClayLayout.Sheet>
 
 			<div className="ddm-paginated-builder-dropdown">
 				<ClayDropDownWithItems

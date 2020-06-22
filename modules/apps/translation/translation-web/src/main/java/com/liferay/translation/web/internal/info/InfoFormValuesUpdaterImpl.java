@@ -63,17 +63,17 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 
 				translatedLocales.add(locale);
 
-				Object value = infoFieldValue.getValue(locale);
-
-				if (value instanceof String) {
+				if (infoFieldValue.getValue(locale) instanceof String) {
 					String fieldName = infoField.getName();
 
-					if (Objects.equals("description", fieldName)) {
-						importedLocaleDescriptionMap.put(locale, (String)value);
-					}
+					String valueString = String.valueOf(
+						infoFieldValue.getValue(locale));
 
-					if (Objects.equals("title", fieldName)) {
-						importedLocaleTitleMap.put(locale, (String)value);
+					if (Objects.equals("description", fieldName)) {
+						importedLocaleDescriptionMap.put(locale, valueString);
+					}
+					else if (Objects.equals("title", fieldName)) {
+						importedLocaleTitleMap.put(locale, valueString);
 					}
 				}
 			}

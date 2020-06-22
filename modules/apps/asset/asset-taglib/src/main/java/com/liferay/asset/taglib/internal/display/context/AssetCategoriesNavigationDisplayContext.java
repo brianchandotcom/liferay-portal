@@ -226,11 +226,16 @@ public class AssetCategoriesNavigationDisplayContext {
 		_vocabulariesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (AssetVocabulary vocabulary : getVocabularies()) {
+			JSONArray categoriesJSONArray = _getCategoriesJSONArray(
+				vocabulary.getGroupId(), vocabulary.getVocabularyId());
+
+			if (categoriesJSONArray.length() <= 0) {
+				continue;
+			}
+
 			_vocabulariesJSONArray.put(
 				JSONUtil.put(
-					"children",
-					_getCategoriesJSONArray(
-						vocabulary.getGroupId(), vocabulary.getVocabularyId())
+					"children", categoriesJSONArray
 				).put(
 					"disabled", true
 				).put(

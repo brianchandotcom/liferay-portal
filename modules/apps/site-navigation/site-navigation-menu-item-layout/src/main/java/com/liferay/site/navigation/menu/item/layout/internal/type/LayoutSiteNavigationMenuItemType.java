@@ -202,7 +202,7 @@ public class LayoutSiteNavigationMenuItemType
 
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
-		if (!_isUseCustomName(siteNavigationMenuItem)) {
+		if (!_useCustomName(siteNavigationMenuItem)) {
 			return layout.getName(locale);
 		}
 
@@ -435,8 +435,8 @@ public class LayoutSiteNavigationMenuItemType
 			_itemSelector);
 
 		httpServletRequest.setAttribute(
-			SiteNavigationMenuItemTypeLayoutWebKeys.SET_CUSTOM_NAME,
-			_isUseCustomName(siteNavigationMenuItem));
+			SiteNavigationMenuItemTypeLayoutWebKeys.USE_CUSTOM_NAME,
+			_useCustomName(siteNavigationMenuItem));
 		httpServletRequest.setAttribute(
 			SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM,
 			siteNavigationMenuItem);
@@ -512,7 +512,7 @@ public class LayoutSiteNavigationMenuItemType
 		return layout;
 	}
 
-	private boolean _isUseCustomName(
+	private boolean _useCustomName(
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -522,7 +522,7 @@ public class LayoutSiteNavigationMenuItemType
 			siteNavigationMenuItem.getTypeSettings());
 
 		return GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.get("setCustomName"));
+			typeSettingsUnicodeProperties.get("useCustomName"));
 	}
 
 	@Reference

@@ -75,41 +75,39 @@ import org.osgi.framework.wiring.BundleRevision;
  */
 public class DirectoryWatcher extends Thread implements BundleListener {
 
-	public static final String ACTIVE_LEVEL = "felix.fileinstall.active.level";
+	public static final String ACTIVE_LEVEL = "file.install.active.level";
 
-	public static final String CONFIG_ENCODING =
-		"felix.fileinstall.configEncoding";
+	public static final String CONFIG_ENCODING = "file.install.configEncoding";
 
-	public static final String DIR = "felix.fileinstall.dir";
+	public static final String DIR = "file.install.dir";
 
 	public static final String DISABLE_CONFIG_SAVE =
-		"felix.fileinstall.disableConfigSave";
+		"file.install.disableConfigSave";
 
 	public static final String ENABLE_CONFIG_SAVE =
-		"felix.fileinstall.enableConfigSave";
+		"file.install.enableConfigSave";
 
 	public static final String FILENAME = "felix.fileinstall.filename";
 
-	public static final String FILTER = "felix.fileinstall.filter";
+	public static final String FILTER = "file.install.filter";
 
 	public static final String FRAGMENT_SCOPE =
-		"felix.fileinstall.fragmentRefreshScope";
+		"file.install.fragmentRefreshScope";
 
-	public static final String LOG_DEFAULT = "felix.fileinstall.log.default";
+	public static final String LOG_DEFAULT = "file.install.log.default";
 
 	public static final String LOG_JUL = "jul";
 
-	public static final String LOG_LEVEL = "felix.fileinstall.log.level";
+	public static final String LOG_LEVEL = "file.install.log.level";
 
 	public static final String LOG_STDOUT = "stdout";
 
-	public static final String NO_INITIAL_DELAY =
-		"felix.fileinstall.noInitialDelay";
+	public static final String NO_INITIAL_DELAY = "file.install.noInitialDelay";
 
 	public static final String OPTIONAL_SCOPE =
-		"felix.fileinstall.optionalImportRefreshScope";
+		"file.install.optionalImportRefreshScope";
 
-	public static final String POLL = "felix.fileinstall.poll";
+	public static final String POLL = "file.install.poll";
 
 	public static final String SCOPE_ALL = "all";
 
@@ -117,26 +115,25 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 	public static final String SCOPE_NONE = "none";
 
-	public static final String START_LEVEL = "felix.fileinstall.start.level";
+	public static final String START_LEVEL = "file.install.start.level";
 
 	public static final String START_NEW_BUNDLES =
-		"felix.fileinstall.bundles.new.start";
+		"file.install.bundles.new.start";
 
-	public static final String SUBDIR_MODE = "felix.fileinstall.subdir.mode";
+	public static final String SUBDIR_MODE = "file.install.subdir.mode";
 
-	public static final String TMPDIR = "felix.fileinstall.tmpdir";
+	public static final String TMPDIR = "file.install.tmpdir";
 
 	public static final String UPDATE_WITH_LISTENERS =
-		"felix.fileinstall.bundles.updateWithListeners";
+		"file.install.bundles.updateWithListeners";
 
 	public static final String USE_START_ACTIVATION_POLICY =
-		"felix.fileinstall.bundles.startActivationPolicy";
+		"file.install.bundles.startActivationPolicy";
 
 	public static final String USE_START_TRANSIENT =
-		"felix.fileinstall.bundles.startTransient";
+		"file.install.bundles.startTransient";
 
-	public static final String WEB_START_LEVEL =
-		"felix.fileinstall.web.start.level";
+	public static final String WEB_START_LEVEL = "file.install.web.start.level";
 
 	public static String getThreadName(Map<String, String> properties) {
 		String name = properties.get(DIR);

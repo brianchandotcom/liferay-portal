@@ -703,20 +703,19 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		// Fileinstall. See LPS-56385.
 
 		properties.put(
-			FrameworkPropsKeys.FELIX_FILEINSTALL_DIR,
-			_getFelixFileInstallDir());
+			FrameworkPropsKeys.FILE_INSTALL_DIR, _getFileInstallDir());
 		properties.put(
-			FrameworkPropsKeys.FELIX_FILEINSTALL_POLL,
+			FrameworkPropsKeys.FILE_INSTALL_POLL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
 		properties.put(
-			FrameworkPropsKeys.FELIX_FILEINSTALL_START_LEVEL,
+			FrameworkPropsKeys.FILE_INSTALL_START_LEVEL,
 			String.valueOf(
 				PropsValues.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
 		properties.put(
-			FrameworkPropsKeys.FELIX_FILEINSTALL_TMPDIR,
+			FrameworkPropsKeys.FILE_INSTALL_TMPDIR,
 			SystemProperties.get(SystemProperties.TMP_DIR));
 		properties.put(
-			FrameworkPropsKeys.FELIX_FILEINSTALL_WEB_START_LEVEL,
+			FrameworkPropsKeys.FILE_INSTALL_WEB_START_LEVEL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_WEB_START_LEVEL));
 
 		// Framework
@@ -1038,7 +1037,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
-	private String _getFelixFileInstallDir() {
+	private String _getFileInstallDir() {
 		return PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
 			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
 	}
@@ -1168,7 +1167,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			_log.debug("Initializing required startup directories");
 		}
 
-		String[] dirNames = StringUtil.split(_getFelixFileInstallDir());
+		String[] dirNames = StringUtil.split(_getFileInstallDir());
 
 		for (String dirName : dirNames) {
 			FileUtil.mkdirs(dirName);
@@ -1393,7 +1392,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		BundleContext bundleContext = _framework.getBundleContext();
 
 		String subdirMode = bundleContext.getProperty(
-			"felix.fileinstall.subdir.mode");
+			"file.install.subdir.mode");
 
 		if (Objects.equals(subdirMode, "recurse")) {
 			Queue<File> queue = new LinkedList<>();

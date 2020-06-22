@@ -23,6 +23,10 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalE
 %>
 
 <p class="mb-2 text-secondary">
+	<liferay-ui:message key="changing-the-friendly-url-will-affect-all-web-content-article-versions,-even-when-saving-it-as-draft" />
+
+	<br />
+	<br />
 	<%= journalEditArticleDisplayContext.getFriendlyURLBase() %>
 </p>
 

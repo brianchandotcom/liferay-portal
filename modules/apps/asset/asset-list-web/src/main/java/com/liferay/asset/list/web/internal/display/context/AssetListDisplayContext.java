@@ -237,7 +237,7 @@ public class AssetListDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public List<NavigationItem> getNavigationBarItems(String currentItem) {
+	public List<NavigationItem> getNavigationItems(String currentItem) {
 		return NavigationItemListBuilder.add(
 			navigationItem -> {
 				navigationItem.setActive(currentItem.equals("collections"));

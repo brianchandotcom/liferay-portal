@@ -22,7 +22,7 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems='<%= assetListDisplayContext.getNavigationBarItems("collection-providers") %>'
+	navigationItems='<%= assetListDisplayContext.getNavigationItems("collection-providers") %>'
 />
 
 <div class="container-fluid-1280 lfr-search-container-wrapper" id="<portlet:namespace/>collectionProviders">

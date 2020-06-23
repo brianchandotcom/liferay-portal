@@ -76,7 +76,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			throw new PortletException(portalException);
 		}
 
-		return "/translate_side_by_side.jsp";
+		return "/translate.jsp";
 	}
 
 	@Reference

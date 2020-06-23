@@ -85,7 +85,7 @@ public class InfoFormValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoFormValuesAddTranslation()
+	public void testUpdateArticleFromInfoFormValuesAddsTranslatedContent()
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -126,12 +126,12 @@ public class InfoFormValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"<p>Este es el contenido</p>",
-			_assertTranslatedContent(
+			_getContent(
 				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_ES));
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoFormValuesTranslateDoNotModifyOthersTranslations()
+	public void testUpdateArticleFromInfoFormValuesDoesNotModifyOtherTranslations()
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -179,7 +179,7 @@ public class InfoFormValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"Este es el contenido",
-			_assertTranslatedContent(
+			_getContent(
 				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_ES));
 
 		Assert.assertEquals("これはタイトルです", journalArticle.getTitle(_LOCALE_JA));
@@ -189,12 +189,12 @@ public class InfoFormValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"<p>これが内容です</p>",
-			_assertTranslatedContent(
+			_getContent(
 				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_JA));
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoFormValuesUpdateOnlyTitle()
+	public void testUpdateArticleFromInfoFormValuesUpdatesOnlyTheTitle()
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -237,12 +237,12 @@ public class InfoFormValuesUpdaterTest {
 
 		Assert.assertEquals(
 			StringPool.BLANK,
-			_assertTranslatedContent(
+			_getContent(
 				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_ES));
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoFormValuesUpdateTranslations()
+	public void testUpdateArticleFromInfoFormValuesUpdatesTranslations()
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -278,7 +278,7 @@ public class InfoFormValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"translate content to japanese",
-			_assertTranslatedContent(
+			_getContent(
 				article.getContent(), "name", _LOCALE_US, _LOCALE_JA));
 
 		InfoFormValues infoFormValues =
@@ -300,11 +300,11 @@ public class InfoFormValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"<p>これが内容です</p>",
-			_assertTranslatedContent(
+			_getContent(
 				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_JA));
 	}
 
-	private String _assertTranslatedContent(
+	private String _getContent(
 			String actualXML, String fieldName, Locale sourceLocale,
 			Locale targetLocale)
 		throws Exception {
@@ -316,8 +316,8 @@ public class InfoFormValuesUpdaterTest {
 		String availableLanguageIds = rootElement.attributeValue(
 			"available-locales");
 
-		if (!availableLanguageIds.contains(sourceLocale.toString()) ||
-			!availableLanguageIds.contains(targetLocale.toString())) {
+		if (!availableLanguageIds.contains(LocaleUtil.toLanguageId(sourceLocale)) ||
+			!availableLanguageIds.contains(LocaleUtil.toLanguageId(targetLocale))) {
 
 			return StringPool.BLANK;
 		}

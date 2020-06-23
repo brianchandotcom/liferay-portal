@@ -108,7 +108,7 @@ function FloatingToolbar({
 				callback();
 			}
 		},
-		[isMounted, languageId, show]
+		[globalContext, isMounted, languageId, show]
 	);
 
 	const handleButtonClick = useCallback(
@@ -438,7 +438,7 @@ const align = (element, anchor, {globalContext, rtl}) => {
 			right: wrapperRight,
 		} = globalContext.document
 			?.getElementById('page-editor')
-			?.getBoundingClientRect() ?? { left: 0, right: 0 };
+			?.getBoundingClientRect() ?? {left: 0, right: 0};
 
 		const {
 			left: anchorLeft,
@@ -492,4 +492,13 @@ const align = (element, anchor, {globalContext, rtl}) => {
 	})();
 
 	Align.align(element, anchor, ELEMENT_POSITION[vertical][horizontal], false);
+
+	if (globalContext.iframe) {
+		const {left, top} = globalContext.iframe.getBoundingClientRect();
+
+		element.style.transform = `translateX(${left}px) translateY(${top}px)`;
+	}
+	else {
+		element.style.transform = '';
+	}
 };

@@ -14,7 +14,7 @@
 
 package com.liferay.translation.info.item.updater;
 
-import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface InfoFormValuesUpdater {
 
 	public JournalArticle updateFromInfoFormValues(
-			JournalArticle article, InfoFormValues infoFormValues)
+			JournalArticle article, InfoItemFieldValues infoItemFieldValues)
 		throws PortalException;
 
 }

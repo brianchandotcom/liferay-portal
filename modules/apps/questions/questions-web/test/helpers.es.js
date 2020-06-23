@@ -26,23 +26,23 @@ export const renderComponent = ({
 	apolloAddTypename = false,
 	apolloMocks = null,
 	contextValue = {},
+	link,
 	ui,
 	route = '/',
 	history = createMemoryHistory({initialEntries: [route]}),
-}) => {
-	return {
-		...render(
-			<Router history={history}>
-				<AppContext.Provider value={contextValue}>
-					<MockedProvider
-						addTypename={apolloAddTypename}
-						mocks={apolloMocks}
-					>
-						{ui}
-					</MockedProvider>
-				</AppContext.Provider>
-			</Router>
-		),
-		history,
-	};
-};
+}) => ({
+	...render(
+		<Router history={history}>
+			<AppContext.Provider value={contextValue}>
+				<MockedProvider
+					addTypename={apolloAddTypename}
+					link={link}
+					mocks={apolloMocks}
+				>
+					{ui}
+				</MockedProvider>
+			</AppContext.Provider>
+		</Router>
+	),
+	history,
+});

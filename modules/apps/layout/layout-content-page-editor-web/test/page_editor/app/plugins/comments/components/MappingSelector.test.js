@@ -28,6 +28,7 @@ import {useCollectionFields} from '../../../../../../src/main/resources/META-INF
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/editableFragmentEntryProcessor';
 import {PAGE_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/pageTypes';
 import {config} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
+import InfoItemService from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/store/index';
 import MappingSelector from '../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/MappingSelector';
 
@@ -122,6 +123,10 @@ function renderMappingSelector({mappedItem = {}, onMappingSelect = () => {}}) {
 }
 
 describe('MappingSelector', () => {
+	Liferay.Util.sub.mockImplementation((langKey, args) =>
+		[langKey, args].join('-')
+	);
+
 	afterEach(() => {
 		cleanup();
 	});
@@ -274,5 +279,28 @@ describe('MappingSelector', () => {
 		collectionFields.forEach((field) =>
 			expect(getByText(document.body, field.label)).toBeInTheDocument()
 		);
+
+		useCollectionFields.mockRestore();
+	});
+
+	it('shows a warning and disables the selector if the fields array is empty', async () => {
+		config.pageType = PAGE_TYPES.content;
+
+		InfoItemService.getAvailableAssetMappingFields.mockImplementation(() =>
+			Promise.resolve([])
+		);
+
+		await act(async () => {
+			renderMappingSelector({
+				mappedItem: infoItem,
+			});
+		});
+
+		const fieldSelect = getByLabelText(document.body, 'field');
+
+		expect(fieldSelect).toBeInTheDocument();
+		expect(
+			getByText(document.body, 'no-fields-available-for-x-editable-text')
+		).toBeInTheDocument();
 	});
 });

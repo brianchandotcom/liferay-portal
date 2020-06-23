@@ -18,7 +18,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +25,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.CrossClusterReplicationConfigurationWrapper;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserverComparator;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.util.SearchLogHelperUtil;
 
 import java.net.InetAddress;
@@ -35,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.elasticsearch.client.RestHighLevelClient;
@@ -43,24 +44,65 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
 	immediate = true,
 	service = {
 		ElasticsearchClientResolver.class, ElasticsearchConnectionManager.class
 	}
 )
 public class ElasticsearchConnectionManager
-	implements ElasticsearchClientResolver {
+	implements ElasticsearchClientResolver, ElasticsearchConfigurationObserver {
+
+	public void addElasticsearchConnection(
+		ElasticsearchConnection elasticsearchConnection) {
+
+		String connectionId = elasticsearchConnection.getConnectionId();
+
+		if (connectionId == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Not adding connection. Connection ID is null.");
+			}
+
+			return;
+		}
+
+		if (elasticsearchConnection.isActive()) {
+			try {
+				elasticsearchConnection.connect();
+			}
+			catch (RuntimeException runtimeException) {
+				if (connectionId.equals(
+						ConnectionConstants.SIDECAR_CONNECTION_ID)) {
+
+					_log.error(
+						StringBundler.concat(
+							"Elasticsearch sidecar could not be started. ",
+							"Search will be unavailable. Manual installation ",
+							"of Elasticsearch and activation of remote mode ",
+							"is recommended."),
+						runtimeException);
+				}
+
+				throw runtimeException;
+			}
+		}
+
+		_elasticsearchConnections.put(connectionId, elasticsearchConnection);
+	}
+
+	@Override
+	public int compareTo(
+		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
+
+		return elasticsearchConfigurationObserverComparator.compare(
+			this, elasticsearchConfigurationObserver);
+	}
 
 	public ElasticsearchConnection getElasticsearchConnection() {
 		return getElasticsearchConnection(null, false);
@@ -146,6 +188,11 @@ public class ElasticsearchConnectionManager
 	}
 
 	@Override
+	public int getPriority() {
+		return 2;
+	}
+
+	@Override
 	public RestHighLevelClient getRestHighLevelClient() {
 		return getRestHighLevelClient(null);
 	}
@@ -198,84 +245,58 @@ public class ElasticsearchConnectionManager
 		return crossClusterReplicationConfigurationWrapper.isCCREnabled();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MANDATORY,
-		target = "(operation.mode=EMBEDDED)",
-		unbind = "unsetElasticsearchConnection"
-	)
-	public void setEmbeddedElasticsearchConnection(
-		ElasticsearchConnection elasticsearchConnection) {
-
-		_elasticsearchConnections.put(
-			String.valueOf(OperationMode.EMBEDDED), elasticsearchConnection);
+	@Override
+	public void onElasticsearchConfigurationUpdate() {
+		applyConfigurations();
 	}
 
-	public void setOperationMode(OperationMode operationMode) {
-		_operationMode = operationMode;
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(operation.mode=REMOTE)",
-		unbind = "unsetElasticsearchConnection"
-	)
-	public void setRemoteElasticsearchConnection(
-		ElasticsearchConnection elasticsearchConnection) {
-
-		if (elasticsearchConnection.isActive()) {
-			elasticsearchConnection.connect();
+	public void removeElasticsearchConnection(String connectionId) {
+		if (connectionId == null) {
+			return;
 		}
 
-		String connectionId = elasticsearchConnection.getConnectionId();
+		ElasticsearchConnection elasticsearchConnection =
+			_elasticsearchConnections.get(connectionId);
 
-		if (connectionId != null) {
-			_elasticsearchConnections.put(
-				connectionId, elasticsearchConnection);
+		if (elasticsearchConnection == null) {
+			return;
 		}
-	}
-
-	public void unsetElasticsearchConnection(
-		ElasticsearchConnection elasticsearchConnection) {
 
 		elasticsearchConnection.close();
 
-		String connectionId = elasticsearchConnection.getConnectionId();
-
-		if (connectionId != null) {
-			_elasticsearchConnections.remove(connectionId);
-		}
+		_elasticsearchConnections.remove(connectionId);
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
-		setConfiguration(properties);
+	protected void activate() {
+		elasticsearchConfigurationWrapper.register(this);
 
-		if (_operationMode == OperationMode.EMBEDDED) {
-			ElasticsearchConnection elasticsearchConnection =
-				_elasticsearchConnections.get(
-					String.valueOf(OperationMode.EMBEDDED));
+		applyConfigurations();
+	}
 
-			try {
-				elasticsearchConnection.connect();
+	protected void applyConfigurations() {
+		SearchLogHelperUtil.setRESTClientLoggerLevel(
+			elasticsearchConfigurationWrapper.restClientLoggerLevel());
+
+		if (operationModeResolver.isProductionModeEnabled()) {
+			if (Validator.isBlank(
+					elasticsearchConfigurationWrapper.
+						remoteClusterConnectionId())) {
+
+				addElasticsearchConnection(
+					_createRemoteElasticsearchConnection());
 			}
-			catch (RuntimeException runtimeException) {
-				_log.error(
-					StringBundler.concat(
-						"Elasticsearch sidecar could not be started. Search ",
-						"will be unavailable. Manual installation of ",
-						"Elasticsearch and activation of remote mode is ",
-						"recommended."),
-					runtimeException);
-
-				throw runtimeException;
-			}
+		}
+		else {
+			removeElasticsearchConnection(
+				ConnectionConstants.REMOTE_CONNECTION_ID);
 		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
+		elasticsearchConfigurationWrapper.unregister(this);
+
 		Collection<ElasticsearchConnection> elasticsearchConnections =
 			_elasticsearchConnections.values();
 
@@ -289,14 +310,6 @@ public class ElasticsearchConnectionManager
 	protected ElasticsearchConnection getElasticsearchConnection(
 		String connectionId, boolean preferLocalCluster) {
 
-		if (_operationMode == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Operation mode is not set");
-			}
-
-			return null;
-		}
-
 		if (!Validator.isBlank(connectionId)) {
 			if (_log.isInfoEnabled()) {
 				_log.info("Getting connection with ID: " + connectionId);
@@ -305,13 +318,15 @@ public class ElasticsearchConnectionManager
 			return _elasticsearchConnections.get(connectionId);
 		}
 
-		if (isOperationModeEmbedded()) {
+		if (operationModeResolver.isDevelopmentModeEnabled()) {
 			if (_log.isInfoEnabled()) {
-				_log.info("Getting EMBEDDED connection");
+				_log.info(
+					"Getting " + ConnectionConstants.SIDECAR_CONNECTION_ID +
+						" connection");
 			}
 
 			return _elasticsearchConnections.get(
-				String.valueOf(OperationMode.EMBEDDED));
+				ConnectionConstants.SIDECAR_CONNECTION_ID);
 		}
 
 		if (preferLocalCluster && isCrossClusterReplicationEnabled()) {
@@ -329,10 +344,11 @@ public class ElasticsearchConnectionManager
 		}
 
 		String remoteClusterConnectionId =
-			_elasticsearchConfiguration.remoteClusterConnectionId();
+			elasticsearchConfigurationWrapper.remoteClusterConnectionId();
 
 		if (Validator.isBlank(remoteClusterConnectionId)) {
-			remoteClusterConnectionId = "remote";
+			remoteClusterConnectionId =
+				ConnectionConstants.REMOTE_CONNECTION_ID;
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -344,48 +360,63 @@ public class ElasticsearchConnectionManager
 		return _elasticsearchConnections.get(remoteClusterConnectionId);
 	}
 
-	protected boolean isOperationModeEmbedded() {
-		return Objects.equals(_operationMode, OperationMode.EMBEDDED);
-	}
-
-	@Modified
-	protected synchronized void modified(Map<String, Object> properties) {
-		setConfiguration(properties);
-	}
-
 	@Reference(unbind = "-")
 	protected void setClusterExecutor(ClusterExecutor clusterExecutor) {
 		_clusterExecutor = clusterExecutor;
-	}
-
-	protected void setConfiguration(Map<String, Object> properties) {
-		_elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
-
-		setOperationMode(
-			translate(_elasticsearchConfiguration.operationMode()));
-		SearchLogHelperUtil.setRESTClientLoggerLevel(
-			_elasticsearchConfiguration.restClientLoggerLevel());
-	}
-
-	protected OperationMode translate(
-		com.liferay.portal.search.elasticsearch7.configuration.OperationMode
-			operationMode) {
-
-		return OperationMode.valueOf(operationMode.name());
 	}
 
 	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
 	protected volatile CrossClusterReplicationConfigurationWrapper
 		crossClusterReplicationConfigurationWrapper;
 
+	@Reference
+	protected ElasticsearchConfigurationObserverComparator
+		elasticsearchConfigurationObserverComparator;
+
+	@Reference
+	protected volatile ElasticsearchConfigurationWrapper
+		elasticsearchConfigurationWrapper;
+
+	@Reference
+	protected OperationModeResolver operationModeResolver;
+
+	private ElasticsearchConnection _createRemoteElasticsearchConnection() {
+		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
+			new ElasticsearchConnectionBuilder();
+
+		elasticsearchConnectionBuilder.active(
+			true
+		).authenticationEnabled(
+			elasticsearchConfigurationWrapper.authenticationEnabled()
+		).connectionId(
+			ConnectionConstants.REMOTE_CONNECTION_ID
+		).httpSSLEnabled(
+			elasticsearchConfigurationWrapper.httpSSLEnabled()
+		).networkHostAddresses(
+			elasticsearchConfigurationWrapper.networkHostAddresses()
+		).password(
+			elasticsearchConfigurationWrapper.password()
+		).truststorePassword(
+			elasticsearchConfigurationWrapper.truststorePassword()
+		).truststorePath(
+			elasticsearchConfigurationWrapper.truststorePath()
+		).truststoreType(
+			elasticsearchConfigurationWrapper.truststoreType()
+		).userName(
+			elasticsearchConfigurationWrapper.userName()
+		);
+
+		return elasticsearchConnectionBuilder.build();
+	}
+
 	private String _getExceptionMessage(
 		String message, String connectionId, boolean preferLocalCluster) {
 
 		return StringBundler.concat(
-			message, " Operation Mode: ", _operationMode, ", Connection ID: ",
-			connectionId, ", Prefer Local Cluster: ", preferLocalCluster,
-			", Cross-Cluster Replication Enabled: ",
+			message, " Production Mode Enabled: ",
+			operationModeResolver.isProductionModeEnabled(),
+			", Connection ID: ", connectionId, ", Prefer Local Cluster: ",
+			preferLocalCluster, ", Cross-Cluster Replication Enabled: ",
 			isCrossClusterReplicationEnabled(), ". Enable INFO logs on ",
 			ElasticsearchConnectionManager.class, " for more information");
 	}
@@ -394,9 +425,7 @@ public class ElasticsearchConnectionManager
 		ElasticsearchConnectionManager.class);
 
 	private ClusterExecutor _clusterExecutor;
-	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<String, ElasticsearchConnection>
 		_elasticsearchConnections = new ConcurrentHashMap<>();
-	private volatile OperationMode _operationMode;
 
 }

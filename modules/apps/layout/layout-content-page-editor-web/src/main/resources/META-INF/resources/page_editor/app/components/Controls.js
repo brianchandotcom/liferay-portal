@@ -28,7 +28,8 @@ const INITIAL_STATE = {
 const HOVER_ITEM = 'HOVER_ITEM';
 const SELECT_ITEM = 'SELECT_ITEM';
 
-const ControlsContext = React.createContext([INITIAL_STATE, () => {}]);
+const ControlsStateContext = React.createContext(INITIAL_STATE);
+const ControlsDispatchContext = React.createContext(() => {});
 
 const reducer = (state, action) => {
 	const {itemId, itemType, origin, type} = action;
@@ -54,49 +55,33 @@ const reducer = (state, action) => {
 };
 
 const ControlsProvider = ({initialState = INITIAL_STATE, children}) => {
-	const stateAndDispatch = useReducer(reducer, initialState);
+	const [state, dispatch] = useReducer(reducer, initialState);
 
 	return (
-		<ControlsContext.Provider value={stateAndDispatch}>
-			{children}
-		</ControlsContext.Provider>
+		<ControlsDispatchContext.Provider value={dispatch}>
+			<ControlsStateContext.Provider value={state}>
+				{children}
+			</ControlsStateContext.Provider>
+		</ControlsDispatchContext.Provider>
 	);
 };
 
-const useActivationOrigin = () => {
-	const [state] = useContext(ControlsContext);
+const useActivationOrigin = () =>
+	useContext(ControlsStateContext).activationOrigin;
 
-	return state.activationOrigin;
-};
+const useActiveItemId = () =>
+	useFromControlsId()(useContext(ControlsStateContext).activeItemId);
 
-const useActiveItemId = () => {
-	const [state] = useContext(ControlsContext);
-	const fromControlsId = useFromControlsId();
+const useActiveItemType = () => useContext(ControlsStateContext).activeItemType;
 
-	return fromControlsId(state.activeItemId);
-};
+const useHoveredItemId = () =>
+	useFromControlsId()(useContext(ControlsStateContext).hoveredItemId);
 
-const useActiveItemType = () => {
-	const [state] = useContext(ControlsContext);
-
-	return state.activeItemType;
-};
-
-const useHoveredItemId = () => {
-	const [state] = useContext(ControlsContext);
-	const fromControlsId = useFromControlsId();
-
-	return fromControlsId(state.hoveredItemId);
-};
-
-const useHoveredItemType = () => {
-	const [state] = useContext(ControlsContext);
-
-	return state.hoveredItemType;
-};
+const useHoveredItemType = () =>
+	useContext(ControlsStateContext).hoveredItemType;
 
 const useHoverItem = () => {
-	const [, dispatch] = useContext(ControlsContext);
+	const dispatch = useContext(ControlsDispatchContext);
 	const toControlsId = useToControlsId();
 
 	return useCallback(
@@ -116,27 +101,27 @@ const useHoverItem = () => {
 };
 
 const useIsActive = () => {
-	const [state] = useContext(ControlsContext);
+	const {activeItemId} = useContext(ControlsStateContext);
 	const toControlsId = useToControlsId();
 
-	return useCallback(
-		(itemId) => state.activeItemId === toControlsId(itemId),
-		[state.activeItemId, toControlsId]
-	);
+	return useCallback((itemId) => activeItemId === toControlsId(itemId), [
+		activeItemId,
+		toControlsId,
+	]);
 };
 
 const useIsHovered = () => {
-	const [state] = useContext(ControlsContext);
+	const {hoveredItemId} = useContext(ControlsStateContext);
 	const toControlsId = useToControlsId();
 
-	return useCallback(
-		(itemId) => state.hoveredItemId === toControlsId(itemId),
-		[state.hoveredItemId, toControlsId]
-	);
+	return useCallback((itemId) => hoveredItemId === toControlsId(itemId), [
+		hoveredItemId,
+		toControlsId,
+	]);
 };
 
 const useSelectItem = () => {
-	const [, dispatch] = useContext(ControlsContext);
+	const dispatch = useContext(ControlsDispatchContext);
 	const toControlsId = useToControlsId();
 
 	return useCallback(

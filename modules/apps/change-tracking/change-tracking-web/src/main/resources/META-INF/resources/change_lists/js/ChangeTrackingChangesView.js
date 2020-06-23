@@ -134,34 +134,49 @@ class ChangeTrackingChangesView extends React.Component {
 		return breadcrumbItems;
 	}
 
-	_getRootDisplayClassNode(filterClass) {
-		const nodeIds = this.contextView[filterClass];
+	_getDisplayNodes(ascending, column, delta, nodes, page) {
+		const displayNodes = nodes.slice(0);
 
-		const children = [];
+		if (column === 'title') {
+			displayNodes.sort((a, b) => {
+				const titleA = a.title;
+				const titleB = b.title;
+				const typeNameA = a.typeName.toUpperCase();
+				const typeNameB = b.typeName.toUpperCase();
 
-		const stack = [this.contextView.everything];
-
-		while (stack.length > 0) {
-			const element = stack.pop();
-
-			if (!element.children) {
-				continue;
-			}
-
-			for (let i = 0; i < element.children.length; i++) {
-				const child = element.children[i];
-
-				if (nodeIds.includes(child.id)) {
-					children.push(child);
-
-					continue;
+				if (typeNameA < typeNameB) {
+					return -1;
 				}
 
-				stack.push(child);
-			}
+				if (typeNameA > typeNameB) {
+					return 1;
+				}
+
+				if (titleA < titleB) {
+					if (ascending) {
+						return -1;
+					}
+
+					return 1;
+				}
+
+				if (titleA > titleB) {
+					if (ascending) {
+						return 1;
+					}
+
+					return -1;
+				}
+
+				return 0;
+			});
 		}
 
-		return {children, id: 0, title: filterClass};
+		if (displayNodes.length <= 5) {
+			return displayNodes;
+		}
+
+		return displayNodes.slice(delta * (page - 1), delta * page);
 	}
 
 	_getNode(filterClass, nodeId) {
@@ -213,49 +228,64 @@ class ChangeTrackingChangesView extends React.Component {
 		return null;
 	}
 
-	_getDisplayNodes(ascending, column, delta, nodes, page) {
-		const displayNodes = nodes.slice(0);
+	_getRootDisplayClassNode(filterClass) {
+		const nodeIds = this.contextView[filterClass];
 
-		if (column === 'title') {
-			displayNodes.sort((a, b) => {
-				const titleA = a.title;
-				const titleB = b.title;
-				const typeNameA = a.typeName.toUpperCase();
-				const typeNameB = b.typeName.toUpperCase();
+		const children = [];
 
-				if (typeNameA < typeNameB) {
-					return -1;
+		const stack = [this.contextView.everything];
+
+		while (stack.length > 0) {
+			const element = stack.pop();
+
+			if (!element.children) {
+				continue;
+			}
+
+			for (let i = 0; i < element.children.length; i++) {
+				const child = element.children[i];
+
+				if (nodeIds.includes(child.id)) {
+					children.push(child);
+
+					continue;
 				}
 
-				if (typeNameA > typeNameB) {
-					return 1;
-				}
-
-				if (titleA < titleB) {
-					if (ascending) {
-						return -1;
-					}
-
-					return 1;
-				}
-
-				if (titleA > titleB) {
-					if (ascending) {
-						return 1;
-					}
-
-					return -1;
-				}
-
-				return 0;
-			});
+				stack.push(child);
+			}
 		}
 
-		if (displayNodes.length <= 5) {
-			return displayNodes;
+		return {children, id: 0, title: filterClass};
+	}
+
+	_getRootDisplayOptions() {
+		const rootDisplayOptions = [];
+
+		rootDisplayOptions.push(
+			<ClayRadio
+				label={this.displayTitles.everything}
+				value="everything"
+			/>
+		);
+
+		for (let i = 0; i < this.contextView.rootDisplayClasses.length; i++) {
+			const className = this.contextView.rootDisplayClasses[i];
+
+			let label = className;
+
+			if (label.includes('.')) {
+				label = label.substring(
+					label.lastIndexOf('.') + 1,
+					label.length
+				);
+			}
+
+			rootDisplayOptions.push(
+				<ClayRadio label={label} value={className} />
+			);
 		}
 
-		return displayNodes.slice(delta * (page - 1), delta * page);
+		return rootDisplayOptions;
 	}
 
 	_getTableRows(nodes) {
@@ -323,12 +353,6 @@ class ChangeTrackingChangesView extends React.Component {
 		});
 	}
 
-	_handlePageChange(page) {
-		this.setState({
-			page,
-		});
-	}
-
 	_handleNavigationUpdate(json) {
 		this.filterClass = json.filterClass;
 		this.nodeId = json.nodeId;
@@ -354,6 +378,12 @@ class ChangeTrackingChangesView extends React.Component {
 		}
 	}
 
+	_handlePageChange(page) {
+		this.setState({
+			page,
+		});
+	}
+
 	_handleSortColumnChange(column) {
 		this.setState({
 			column,
@@ -374,6 +404,54 @@ class ChangeTrackingChangesView extends React.Component {
 			ascending: true,
 			sortDirectionClass: 'order-arrow-down-active',
 		});
+	}
+
+	_renderEntry() {
+		if (this.state.renderInnerHTML == null) {
+			return '';
+		}
+
+		let dropdown = '';
+
+		if (
+			this.state.node.dropdownItems &&
+			this.state.node.dropdownItems.length > 0
+		) {
+			dropdown = (
+				<div className="autofit-col">
+					<ClayDropDownWithItems
+						alignmentPosition={Align.BottomLeft}
+						items={this.state.node.dropdownItems}
+						spritemap={this.spritemap}
+						trigger={
+							<ClayButtonWithIcon
+								displayType="unstyled"
+								small
+								spritemap={this.spritemap}
+								symbol="ellipsis-v"
+							/>
+						}
+					/>
+				</div>
+			);
+		}
+
+		return (
+			<div className="sheet">
+				<h2 className="autofit-row sheet-title">
+					<div className="autofit-col autofit-col-expand">
+						<span className="heading-text">{this.state.title}</span>
+					</div>
+
+					{dropdown}
+				</h2>
+
+				<div
+					className="sheet-section"
+					dangerouslySetInnerHTML={this.state.renderInnerHTML}
+				/>
+			</div>
+		);
 	}
 
 	_renderManagementToolbar() {
@@ -446,6 +524,26 @@ class ChangeTrackingChangesView extends React.Component {
 		);
 	}
 
+	_renderPagination(nodes) {
+		if (nodes.length <= 5) {
+			return '';
+		}
+
+		return (
+			<ClayPaginationBarWithBasicItems
+				activeDelta={this.state.delta}
+				activePage={this.state.page}
+				deltas={[4, 8, 20, 40, 60].map((size) => ({
+					label: size,
+				}))}
+				ellipsisBuffer={3}
+				onDeltaChange={(delta) => this._handleDeltaChange(delta)}
+				onPageChange={(page) => this._handlePageChange(page)}
+				totalItems={nodes.length}
+			/>
+		);
+	}
+
 	_renderTable() {
 		const nodes = this.state.node.children;
 
@@ -472,104 +570,6 @@ class ChangeTrackingChangesView extends React.Component {
 				{this._renderPagination(nodes)}
 			</>
 		);
-	}
-
-	_renderPagination(nodes) {
-		if (nodes.length <= 5) {
-			return '';
-		}
-
-		return (
-			<ClayPaginationBarWithBasicItems
-				activeDelta={this.state.delta}
-				activePage={this.state.page}
-				deltas={[4, 8, 20, 40, 60].map((size) => ({
-					label: size,
-				}))}
-				ellipsisBuffer={3}
-				onDeltaChange={(delta) => this._handleDeltaChange(delta)}
-				onPageChange={(page) => this._handlePageChange(page)}
-				totalItems={nodes.length}
-			/>
-		);
-	}
-
-	_renderEntry() {
-		if (this.state.renderInnerHTML == null) {
-			return '';
-		}
-
-		let dropdown = '';
-
-		if (
-			this.state.node.dropdownItems &&
-			this.state.node.dropdownItems.length > 0
-		) {
-			dropdown = (
-				<div className="autofit-col">
-					<ClayDropDownWithItems
-						alignmentPosition={Align.BottomLeft}
-						items={this.state.node.dropdownItems}
-						spritemap={this.spritemap}
-						trigger={
-							<ClayButtonWithIcon
-								displayType="unstyled"
-								small
-								spritemap={this.spritemap}
-								symbol="ellipsis-v"
-							/>
-						}
-					/>
-				</div>
-			);
-		}
-
-		return (
-			<div className="sheet">
-				<h2 className="autofit-row sheet-title">
-					<div className="autofit-col autofit-col-expand">
-						<span className="heading-text">{this.state.title}</span>
-					</div>
-
-					{dropdown}
-				</h2>
-
-				<div
-					className="sheet-section"
-					dangerouslySetInnerHTML={this.state.renderInnerHTML}
-				/>
-			</div>
-		);
-	}
-
-	_getRootDisplayOptions() {
-		const rootDisplayOptions = [];
-
-		rootDisplayOptions.push(
-			<ClayRadio
-				label={this.displayTitles.everything}
-				value="everything"
-			/>
-		);
-
-		for (let i = 0; i < this.contextView.rootDisplayClasses.length; i++) {
-			const className = this.contextView.rootDisplayClasses[i];
-
-			let label = className;
-
-			if (label.includes('.')) {
-				label = label.substring(
-					label.lastIndexOf('.') + 1,
-					label.length
-				);
-			}
-
-			rootDisplayOptions.push(
-				<ClayRadio label={label} value={className} />
-			);
-		}
-
-		return rootDisplayOptions;
 	}
 
 	render() {

@@ -17,6 +17,8 @@ package com.liferay.fragment.entry.processor.editable.internal.parser;
 import com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
+import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import org.jsoup.nodes.Element;
@@ -71,6 +74,19 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 			alt = fieldValueJSONObject.getString("alt");
 		}
+		else if (fieldValue instanceof WebImage) {
+			WebImage webImage = (WebImage)fieldValue;
+
+			Optional<InfoLocalizedValue<String>> altInfoLocalizedValueOptional =
+				webImage.getAltInfoLocalizedValueOptional();
+
+			if (altInfoLocalizedValueOptional.isPresent()) {
+				InfoLocalizedValue<String> infoLocalizedValue =
+					altInfoLocalizedValueOptional.get();
+
+				alt = infoLocalizedValue.getValue();
+			}
+		}
 
 		return JSONUtil.put("alt", alt);
 	}
@@ -103,13 +119,19 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 	@Override
 	public String parseFieldValue(Object fieldValue) {
-		if (!(fieldValue instanceof JSONObject)) {
+		if (fieldValue instanceof JSONObject) {
+			JSONObject jsonObject = (JSONObject)fieldValue;
+
+			return GetterUtil.getString(jsonObject.getString("url"));
+		}
+		else if (fieldValue instanceof WebImage) {
+			WebImage webImage = (WebImage)fieldValue;
+
+			return GetterUtil.getString(webImage.getUrl());
+		}
+		else {
 			return StringPool.BLANK;
 		}
-
-		JSONObject jsonObject = (JSONObject)fieldValue;
-
-		return GetterUtil.getString(jsonObject.getString("url"));
 	}
 
 	@Override

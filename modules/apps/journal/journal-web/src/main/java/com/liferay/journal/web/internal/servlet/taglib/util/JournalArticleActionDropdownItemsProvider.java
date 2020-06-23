@@ -458,8 +458,8 @@ public class JournalArticleActionDropdownItemsProvider {
 			dropdownItem.setHref(
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
 				"/import_translation.jsp", "redirect", _getRedirect(),
-				"referringPortletResource", "articleResourcePrimKey",
-				_article.getResourcePrimKey(), _getReferringPortletResource(),
+				"referringPortletResource", _getReferringPortletResource(),
+				"articleResourcePrimKey", _article.getResourcePrimKey(),
 				"groupId", _article.getGroupId(), "articleId",
 				_article.getArticleId(), "articleTitle", _article.getTitle());
 			dropdownItem.setLabel(

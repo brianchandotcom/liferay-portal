@@ -56,6 +56,17 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 					<strong><liferay-ui:message key="<%= HtmlUtil.escape(infoListProviderDisplayContext.getSubtitle(infoListProvider)) %>" /></strong>
 				</h6>
 			</liferay-ui:search-container-column-text>
+
+			<%
+			InfoListProviderActionDropdownItems infoListProviderActionDropdownItems = new InfoListProviderActionDropdownItems(infoListProvider, liferayPortletRequest, liferayPortletResponse);
+			%>
+
+			<liferay-ui:search-container-column-text>
+				<clay:dropdown-actions
+					defaultEventHandler="infoListProviderDropdownDefaultEventHandler"
+					dropdownItems="<%= infoListProviderActionDropdownItems.getActionDropdownItems() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator
@@ -64,3 +75,8 @@ InfoListProviderDisplayContext infoListProviderDisplayContext = (InfoListProvide
 		/>
 	</liferay-ui:search-container>
 </div>
+
+<liferay-frontend:component
+	componentId="infoListProviderDropdownDefaultEventHandler"
+	module="js/InfoListProviderDropdownDefaultEventHandler.es"
+/>

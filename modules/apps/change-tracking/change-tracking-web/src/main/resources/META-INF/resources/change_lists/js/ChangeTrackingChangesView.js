@@ -17,7 +17,9 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClayTable from '@clayui/table';
 import {fetch} from 'frontend-js-web';
@@ -27,10 +29,10 @@ class ChangeTrackingChangesView extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const {contextView, displayTitles, spritemap} = props;
+		const {changes, contextView, spritemap} = props;
 
+		this.changes = changes;
 		this.contextView = contextView;
-		this.displayTitles = displayTitles;
 		this.filterClass = 'everything';
 		this.nodeId = 0;
 		this.spritemap = spritemap;
@@ -39,19 +41,45 @@ class ChangeTrackingChangesView extends React.Component {
 			ascending: true,
 			breadcrumbItems: this._getBreadcrumbItems(
 				'everything',
-				contextView.everything
+				'changes',
+				changes
 			),
 			column: 'title',
 			delta: 20,
-			node: contextView.everything,
+			navigation: 'changes',
+			node: changes,
 			page: 1,
 			renderInnerHTML: null,
 			sortDirectionClass: 'order-arrow-down-active',
-			title: contextView.everything.title,
 		};
 	}
 
-	_getBreadcrumbItems(filterClass, node) {
+	_getBreadcrumbItems(filterClass, navigation, node) {
+		if (navigation === 'changes') {
+			if (node.id === 0) {
+				return [
+					{
+						active: true,
+						label: node.title,
+					},
+				];
+			}
+
+			return [
+				{
+					label: this.changes.title,
+					onClick: () =>
+						this._handleNavigationUpdate({
+							nodeId: 0,
+						}),
+				},
+				{
+					active: true,
+					label: node.title,
+				},
+			];
+		}
+
 		const breadcrumbItems = [];
 		const homeBreadcrumbItem = {label: this.contextView.everything.title};
 
@@ -134,6 +162,22 @@ class ChangeTrackingChangesView extends React.Component {
 		return breadcrumbItems;
 	}
 
+	_getChangesNode(nodeId) {
+		if (nodeId === 0) {
+			return this.changes;
+		}
+
+		for (let i = 0; i < this.changes.children.length; i++) {
+			const child = this.changes.children[i];
+
+			if (child.id === nodeId) {
+				return child;
+			}
+		}
+
+		return null;
+	}
+
 	_getDisplayNodes(ascending, column, delta, nodes, page) {
 		const displayNodes = nodes.slice(0);
 
@@ -179,8 +223,11 @@ class ChangeTrackingChangesView extends React.Component {
 		return displayNodes.slice(delta * (page - 1), delta * page);
 	}
 
-	_getNode(filterClass, nodeId) {
-		if (filterClass !== 'everything' && nodeId === 0) {
+	_getNode(filterClass, navigation, nodeId) {
+		if (navigation === 'changes') {
+			return this._getChangesNode(nodeId);
+		}
+		else if (filterClass !== 'everything' && nodeId === 0) {
 			return this._getRootDisplayClassNode(filterClass);
 		}
 
@@ -263,7 +310,7 @@ class ChangeTrackingChangesView extends React.Component {
 
 		rootDisplayOptions.push(
 			<ClayRadio
-				label={this.displayTitles.everything}
+				label={Liferay.Language.get('everything')}
 				value="everything"
 			/>
 		);
@@ -354,13 +401,27 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_handleNavigationUpdate(json) {
-		this.filterClass = json.filterClass;
+		if (json.filterClass) {
+			this.filterClass = json.filterClass;
+		}
+
+		let navigation = json.navigation;
+
+		if (!navigation) {
+			navigation = this.state.navigation;
+		}
+
 		this.nodeId = json.nodeId;
 
-		const node = this._getNode(this.filterClass, this.nodeId);
+		const node = this._getNode(this.filterClass, navigation, this.nodeId);
 
 		this.setState({
-			breadcrumbItems: this._getBreadcrumbItems(this.filterClass, node),
+			breadcrumbItems: this._getBreadcrumbItems(
+				this.filterClass,
+				navigation,
+				node
+			),
+			navigation,
 			node,
 			page: 1,
 			renderInnerHTML: null,
@@ -544,6 +605,32 @@ class ChangeTrackingChangesView extends React.Component {
 		);
 	}
 
+	_renderPanel() {
+		if (this.state.navigation === 'changes') {
+			return '';
+		}
+
+		return (
+			<div className="col-md-3">
+				<div className="panel panel-secondary">
+					<div className="panel-body">
+						<ClayRadioGroup
+							onSelectedValueChange={(filterClass) =>
+								this._handleNavigationUpdate({
+									filterClass,
+									nodeId: 0,
+								})
+							}
+							selectedValue={this.filterClass}
+						>
+							{this._getRootDisplayOptions()}
+						</ClayRadioGroup>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
 	_renderTable() {
 		const nodes = this.state.node.children;
 
@@ -575,6 +662,40 @@ class ChangeTrackingChangesView extends React.Component {
 	render() {
 		return (
 			<>
+				<ClayNavigationBar
+					className="navigation-bar"
+					triggerLabel={Liferay.Language.get(this.state.navigation)}
+				>
+					<ClayNavigationBar.Item
+						active={this.state.navigation === 'changes'}
+						onClick={() =>
+							this._handleNavigationUpdate({
+								filterClass: 'everything',
+								navigation: 'changes',
+								nodeId: 0,
+							})
+						}
+					>
+						<ClayLink className="nav-link" displayType="unstyled">
+							{Liferay.Language.get('changes')}
+						</ClayLink>
+					</ClayNavigationBar.Item>
+
+					<ClayNavigationBar.Item
+						active={this.state.navigation === 'contextView'}
+						onClick={() =>
+							this._handleNavigationUpdate({
+								navigation: 'contextView',
+								nodeId: 0,
+							})
+						}
+					>
+						<ClayLink className="nav-link" displayType="unstyled">
+							{Liferay.Language.get('context-view')}
+						</ClayLink>
+					</ClayNavigationBar.Item>
+				</ClayNavigationBar>
+
 				{this._renderManagementToolbar()}
 
 				<div className="container-fluid container-fluid-max-xl">
@@ -585,25 +706,15 @@ class ChangeTrackingChangesView extends React.Component {
 					/>
 
 					<div className="change-lists-changes-content row">
-						<div className="col-md-3">
-							<div className="panel panel-secondary">
-								<div className="panel-body">
-									<ClayRadioGroup
-										onSelectedValueChange={(filterClass) =>
-											this._handleNavigationUpdate({
-												filterClass,
-												nodeId: 0,
-											})
-										}
-										selectedValue={this.filterClass}
-									>
-										{this._getRootDisplayOptions()}
-									</ClayRadioGroup>
-								</div>
-							</div>
-						</div>
+						{this._renderPanel()}
 
-						<div className="col-md-9">
+						<div
+							className={
+								this.state.navigation === 'changes'
+									? 'col-md-12'
+									: 'col-md-9'
+							}
+						>
 							{this._renderEntry()}
 							{this._renderTable()}
 						</div>

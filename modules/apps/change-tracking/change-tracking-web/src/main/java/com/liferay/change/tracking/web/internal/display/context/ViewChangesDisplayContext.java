@@ -25,6 +25,7 @@ import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTClosureUtil;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -63,6 +64,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ViewChangesDisplayContext {
 
 	public ViewChangesDisplayContext(
+		long activeCtCollectionId,
 		BasePersistenceRegistry basePersistenceRegistry,
 		CTClosureFactory ctClosureFactory, CTCollection ctCollection,
 		CTConfiguration ctConfiguration,
@@ -71,6 +73,7 @@ public class ViewChangesDisplayContext {
 		Portal portal, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
 
+		_activeCtCollectionId = activeCtCollectionId;
 		_basePersistenceRegistry = basePersistenceRegistry;
 		_ctClosureFactory = ctClosureFactory;
 		_ctCollection = ctCollection;
@@ -120,11 +123,9 @@ public class ViewChangesDisplayContext {
 
 	public Map<String, Object> getReactData() {
 		return HashMapBuilder.<String, Object>put(
-			"contextView", _getContextViewJSONObject()
+			"changes", _getChangesJSONObject()
 		).put(
-			"displayTitles",
-			JSONUtil.put(
-				"everything", _language.get(_httpServletRequest, "everything"))
+			"contextView", _getContextViewJSONObject()
 		).put(
 			"spritemap",
 			_themeDisplay.getPathThemeImages() + "/lexicon/icons.svg"
@@ -167,6 +168,83 @@ public class ViewChangesDisplayContext {
 		}
 
 		rootDisplayNodes.add(node);
+	}
+
+	private JSONObject _getChangesJSONObject() {
+		int counter = 1;
+
+		List<JSONObject> jsonObjects = new ArrayList<>();
+
+		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
+			_ctCollection.getCtCollectionId(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+
+		for (CTEntry ctEntry : ctEntries) {
+			String title = _ctDisplayRendererRegistry.getTitle(
+				ctEntry, _themeDisplay.getLocale());
+
+			JSONArray dropdownItemsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			if ((_ctCollection.getCtCollectionId() == _activeCtCollectionId) &&
+				(ctEntry.getChangeType() !=
+					CTConstants.CT_CHANGE_TYPE_DELETION)) {
+
+				String editURL = _ctDisplayRendererRegistry.getEditURL(
+					_httpServletRequest, ctEntry);
+
+				if (Validator.isNotNull(editURL)) {
+					dropdownItemsJSONArray.put(
+						JSONUtil.put(
+							"href", editURL
+						).put(
+							"label", _language.get(_httpServletRequest, "edit")
+						));
+				}
+			}
+
+			ResourceURL renderURL = _renderResponse.createResourceURL();
+
+			renderURL.setResourceID("/change_lists/render_diff");
+
+			renderURL.setParameter(
+				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
+
+			jsonObjects.add(
+				JSONUtil.put(
+					"description",
+					_ctDisplayRendererRegistry.getEntryDescription(
+						_httpServletRequest, ctEntry)
+				).put(
+					"dropdownItems", dropdownItemsJSONArray
+				).put(
+					"id", counter++
+				).put(
+					"modelClassNameId", ctEntry.getModelClassNameId()
+				).put(
+					"modelClassPK", ctEntry.getModelClassPK()
+				).put(
+					"renderURL", renderURL.toString()
+				).put(
+					"title", title
+				).put(
+					"typeName", _getTypeName(ctEntry.getModelClassNameId())
+				));
+		}
+
+		JSONArray children = JSONFactoryUtil.createJSONArray();
+
+		for (JSONObject jsonObject : jsonObjects) {
+			children.put(jsonObject);
+		}
+
+		return JSONUtil.put(
+			"children", children
+		).put(
+			"id", 0
+		).put(
+			"title", _language.get(_httpServletRequest, "home")
+		);
 	}
 
 	private List<JSONObject> _getChildJSONObjects(
@@ -229,17 +307,23 @@ public class ViewChangesDisplayContext {
 						_ctDisplayRendererRegistry.getEntryDescription(
 							_httpServletRequest, ctEntry));
 
-					String editURL = _ctDisplayRendererRegistry.getEditURL(
-						_httpServletRequest, ctEntry);
+					if ((_ctCollection.getCtCollectionId() ==
+							_activeCtCollectionId) &&
+						(ctEntry.getChangeType() !=
+							CTConstants.CT_CHANGE_TYPE_DELETION)) {
 
-					if (Validator.isNotNull(editURL)) {
-						dropdownItemsJSONArray.put(
-							JSONUtil.put(
-								"href", editURL
-							).put(
-								"label",
-								_language.get(_httpServletRequest, "edit")
-							));
+						String editURL = _ctDisplayRendererRegistry.getEditURL(
+							_httpServletRequest, ctEntry);
+
+						if (Validator.isNotNull(editURL)) {
+							dropdownItemsJSONArray.put(
+								JSONUtil.put(
+									"href", editURL
+								).put(
+									"label",
+									_language.get(_httpServletRequest, "edit")
+								));
+						}
 					}
 
 					renderURL.setResourceID("/change_lists/render_diff");
@@ -428,6 +512,7 @@ public class ViewChangesDisplayContext {
 				_themeDisplay.getLocale(), classNameId));
 	}
 
+	private final long _activeCtCollectionId;
 	private final BasePersistenceRegistry _basePersistenceRegistry;
 	private CTClosure _ctClosure;
 	private final CTClosureFactory _ctClosureFactory;

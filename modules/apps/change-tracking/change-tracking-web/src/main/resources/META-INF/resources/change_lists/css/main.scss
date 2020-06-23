@@ -99,6 +99,12 @@
 		margin-bottom: 0;
 	}
 
+	.navigation-bar {
+		a:hover {
+			cursor: pointer;
+		}
+	}
+
 	.taglib-empty-result-message {
 		margin-top: 20px;
 	}

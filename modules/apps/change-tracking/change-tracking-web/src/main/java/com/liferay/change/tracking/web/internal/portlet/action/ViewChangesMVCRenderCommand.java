@@ -14,10 +14,13 @@
 
 package com.liferay.change.tracking.web.internal.portlet.action;
 
+import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.reference.closure.CTClosureFactory;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
+import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.web.internal.configuration.CTConfiguration;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
@@ -27,8 +30,10 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
@@ -60,13 +65,27 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		CTPreferences ctPreferences =
+			_ctPreferencesLocalService.fetchCTPreferences(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId());
+
+		long activeCtCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+		if (ctPreferences != null) {
+			activeCtCollectionId = ctPreferences.getCtCollectionId();
+		}
+
 		long ctCollectionId = ParamUtil.getLong(
 			renderRequest, "ctCollectionId");
 
 		try {
 			ViewChangesDisplayContext viewChangesDisplayContext =
 				new ViewChangesDisplayContext(
-					_basePersistenceRegistry, _ctClosureFactory,
+					activeCtCollectionId, _basePersistenceRegistry,
+					_ctClosureFactory,
 					_ctCollectionLocalService.getCTCollection(ctCollectionId),
 					_ctConfiguration, _ctDisplayRendererRegistry,
 					_ctEntryLocalService, _language, _portal, renderRequest,
@@ -106,6 +125,9 @@ public class ViewChangesMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
+
+	@Reference
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Reference
 	private Language _language;

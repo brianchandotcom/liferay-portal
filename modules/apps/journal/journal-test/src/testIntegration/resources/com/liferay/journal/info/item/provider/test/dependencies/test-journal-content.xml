@@ -13,7 +13,7 @@
 		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="text" instance-id="dqqn" name="image" type="image">
-		<dynamic-content language-id="en_US"></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[{"groupId":"$GROUP_ID","alt":"alt text","uuid":"$UUID"}]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="bajz" name="integer" type="ddm-integer">
 		<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>

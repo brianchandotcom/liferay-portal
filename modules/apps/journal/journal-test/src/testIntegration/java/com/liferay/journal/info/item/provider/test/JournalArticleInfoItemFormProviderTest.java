@@ -33,23 +33,35 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.type.WebImage;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.io.InputStream;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,8 +78,10 @@ public class JournalArticleInfoItemFormProviderTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule testRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -286,7 +300,25 @@ public class JournalArticleInfoItemFormProviderTest {
 			secondDDMTextInfoFieldValue.getValue(LocaleUtil.SPAIN));
 
 		Assert.assertNotNull(infoFormValues.getInfoFieldValue("boolean"));
-		Assert.assertNotNull(infoFormValues.getInfoFieldValue("image"));
+
+		InfoFieldValue<Object> imageInfoFieldValue =
+			infoFormValues.getInfoFieldValue("image");
+
+		WebImage webImage = (WebImage)imageInfoFieldValue.getValue(
+			LocaleUtil.getDefault());
+
+		Optional<InfoLocalizedValue<String>> altInfoLocalizedValueOptional =
+			webImage.getAltInfoLocalizedValueOptional();
+
+		InfoLocalizedValue<String> altInfoLocalizedValue =
+			altInfoLocalizedValueOptional.get();
+
+		Assert.assertEquals(
+			"alt text",
+			altInfoLocalizedValue.getValue(LocaleUtil.getDefault()));
+
+		Assert.assertNotNull(webImage.getUrl());
+
 		Assert.assertNotNull(infoFormValues.getInfoFieldValue("integer"));
 	}
 
@@ -304,10 +336,27 @@ public class JournalArticleInfoItemFormProviderTest {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), ddmForm);
 
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"/com/liferay/journal/dependencies/liferay.png");
+
+		FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			JournalArticle.class.getName(), "image.png", inputStream,
+			ContentTypes.IMAGE_PNG);
+
 		JournalArticle journalArticle =
 			JournalTestUtil.addArticleWithXMLContent(
 				_group.getGroupId(),
-				_readFileToString("dependencies/test-journal-content.xml"),
+				StringUtil.replace(
+					StringUtil.replace(
+						_readFileToString(
+							"dependencies/test-journal-content.xml"),
+						"$UUID", String.valueOf(tempFileEntry.getUuid())),
+					"$GROUP_ID", String.valueOf(_group.getGroupId())),
 				ddmStructure.getStructureKey(), null);
 
 		journalArticle.setDescriptionMap(

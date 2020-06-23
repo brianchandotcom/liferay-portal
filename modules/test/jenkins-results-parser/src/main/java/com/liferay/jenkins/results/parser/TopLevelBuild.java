@@ -218,9 +218,6 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 		List<Build> downstreamBuilds = getDownstreamBuilds(null);
 
-		Collections.sort(
-			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
-
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (!(downstreamBuild instanceof BatchBuild)) {
 				continue;
@@ -228,6 +225,9 @@ public abstract class TopLevelBuild extends BaseBuild {
 
 			downstreamBatchBuilds.add((BatchBuild)downstreamBuild);
 		}
+
+		Collections.sort(
+			downstreamBatchBuilds, new BaseBuild.BuildDisplayNameComparator());
 
 		return downstreamBatchBuilds;
 	}

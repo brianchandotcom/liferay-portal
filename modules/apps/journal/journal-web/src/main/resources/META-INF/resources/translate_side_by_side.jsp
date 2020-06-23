@@ -66,22 +66,24 @@ renderResponse.setTitle(title);
 					InfoField infoField = infoFieldValue.getInfoField();
 
 					if (infoField.isLocalizable()) {
-						String label = infoField.getLabelInfoLocalizedValue().getValue(locale);
-						String type = infoField.getInfoFieldType().getName();
-						String value = String.valueOf(infoFieldValue.getValue(locale));
+						InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+						InfoLocalizedValue<String> labelInfoLocalizedValue = infoField.getLabelInfoLocalizedValue();
+
+						String label = labelInfoLocalizedValue.getValue(locale);
 			%>
 
 				<clay:row>
 					<clay:col
 						md="6"
 					>
-						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" type="<%= type %>" value="<%= value %>" />
+						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" type="<%= infoFieldType.getName() %>" value="<%= String.valueOf(infoFieldValue.getValue(locale)) %>" />
 					</clay:col>
 
 					<clay:col
 						md="6"
 					>
-						<aui:input label="<%= label %>" name="<%= label %>" type="<%= type %>" value="" />
+						<aui:input label="<%= label %>" name="<%= label %>" type="<%= infoFieldType.getName() %>" value="" />
 					</clay:col>
 				</clay:row>
 

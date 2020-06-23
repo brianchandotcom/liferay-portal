@@ -106,7 +106,7 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				setProperty("ddmStructureLayoutId", parentStructureLayoutId);
 				setRepeatable(false);
 				setRequired(false);
-				setShowLabel(true);
+				setShowLabel(false);
 				setTip(
 					new LocalizedValue() {
 						{

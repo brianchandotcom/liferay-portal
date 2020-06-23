@@ -69,7 +69,6 @@ definition {
 	@priority = "5"
 	test RefreshHomePage {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		Navigator.gotoPage(pageName = "Home");
 
@@ -110,7 +109,6 @@ definition {
 	@priority = "5"
 	test RefreshWebContent {
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		ProductMenu.gotoPortlet(
 			category = "Content &amp; Data",

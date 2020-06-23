@@ -59,7 +59,9 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 		<clay:col
 			md="5"
 		>
-			<div class="text-center">
+			<div align="middle">
+				<label class="control-label"></label>
+
 				<liferay-ui:logo-selector
 					currentLogoURL="<%= (accountEntryDisplay.getLogoId() == 0) ? accountEntryDisplay.getDefaultLogoURL(liferayPortletRequest) : accountEntryDisplay.getLogoURL(themeDisplay) %>"
 					defaultLogo="<%= accountEntryDisplay.getLogoId() == 0 %>"

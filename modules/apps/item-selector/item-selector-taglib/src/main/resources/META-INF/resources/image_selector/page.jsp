@@ -116,7 +116,7 @@ if (fileEntryId != 0) {
 	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
 		<clay:button
 			cssClass="browse-image"
-			displaytype="secondary"
+			displayType="secondary"
 			icon="picture"
 			title="change-image"
 		/>

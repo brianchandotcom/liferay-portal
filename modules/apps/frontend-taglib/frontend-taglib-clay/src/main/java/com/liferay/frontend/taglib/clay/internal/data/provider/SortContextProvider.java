@@ -14,7 +14,6 @@
 
 package com.liferay.frontend.taglib.clay.internal.data.provider;
 
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -29,7 +28,6 @@ import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -55,8 +53,5 @@ public class SortContextProvider implements ContextProvider<Sort> {
 		return SortFactoryUtil.create(
 			StringUtil.trim(sortString), sortDir.equals("desc"));
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

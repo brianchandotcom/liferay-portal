@@ -246,6 +246,18 @@ definition {
 	test EndUserPermissionCheck {
 		var portalURL = PropsUtil.get("portal.url");
 
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		User.openUsersAdmin();
+
+		User.editPasswordCP(
+			userEmailAddress = "userea@liferay.com",
+			userScreenName = "usersn");
+
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Multi-Factor Authentication",
 			configurationName = "Multi-Factor Authentication: Email One-Time Password Configuration",
@@ -271,17 +283,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#IP_ADDRESS_CONFIGURATION_ALLOWED_IP_FIELD_1",
 			value1 = "127.0.0.1/255.0.0.0");
-
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONUser.setFirstPassword(
-			agreeToTermsAndAnswerReminderQuery = "true",
-			requireReset = "false",
-			userEmailAddress = "userea@liferay.com");
 
 		User.logoutPG();
 

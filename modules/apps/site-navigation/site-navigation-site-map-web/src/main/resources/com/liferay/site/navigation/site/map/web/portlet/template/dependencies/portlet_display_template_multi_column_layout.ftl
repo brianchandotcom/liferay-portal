@@ -1,7 +1,7 @@
 <#if entries?has_content>
 	<@liferay_aui.row>
 		<#list entries as entry>
-			<#if layoutPermission.containsWithoutViewableGroup(permissionChecker, entry, "VIEW")>
+			<#if (getterUtil.getBoolean(showHiddenPages) || !entry.isHidden()) && layoutPermission.containsWithoutViewableGroup(permissionChecker, entry, "VIEW")>
 				<@liferay_aui.col width=25>
 					<div class="results-header">
 						<h3>
@@ -34,22 +34,24 @@
 	<#if pages?has_content && ((depth < displayDepth?number) || (displayDepth?number == 0))>
 		<ul class="child-pages">
 			<#list pages as page>
-				<li>
-					<a
+				<#if getterUtil.getBoolean(showHiddenPages) || !page.isHidden()>
+					<li>
+						<a
 
-					<#assign pageType = page.getLayoutType() />
+						<#assign pageType = page.getLayoutType() />
 
-					<#if pageType.isBrowsable()>
-						href="${portalUtil.getLayoutURL(page, themeDisplay)}"
-					</#if>
+						<#if pageType.isBrowsable()>
+							href="${portalUtil.getLayoutURL(page, themeDisplay)}"
+						</#if>
 
-					>${page.getName(locale)}</a>
+						>${page.getName(locale)}</a>
 
-					<@displayPages
-						depth=depth + 1
-						pages=page.getChildren(permissionChecker)
-					/>
-				</li>
+						<@displayPages
+							depth=depth + 1
+							pages=page.getChildren(permissionChecker)
+						/>
+					</li>
+				</#if>
 			</#list>
 		</ul>
 	</#if>

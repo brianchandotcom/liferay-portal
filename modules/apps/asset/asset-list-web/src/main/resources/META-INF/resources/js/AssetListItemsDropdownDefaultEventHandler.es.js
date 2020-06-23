@@ -15,7 +15,7 @@
 import {DefaultEventHandler} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
-class AssetListContentDropdownDefaultEventHandler extends DefaultEventHandler {
+class AssetListItemsDropdownDefaultEventHandler extends DefaultEventHandler {
 	editContent(itemData) {
 		this._navigate(itemData.editContentURL);
 	}
@@ -35,8 +35,8 @@ class AssetListContentDropdownDefaultEventHandler extends DefaultEventHandler {
 	}
 }
 
-AssetListContentDropdownDefaultEventHandler.STATE = {
+AssetListItemsDropdownDefaultEventHandler.STATE = {
 	spritemap: Config.string(),
 };
 
-export default AssetListContentDropdownDefaultEventHandler;
+export default AssetListItemsDropdownDefaultEventHandler;

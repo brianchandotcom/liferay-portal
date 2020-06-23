@@ -36,9 +36,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class AssetListContentDisplayContext {
+public class AssetListItemsDisplayContext {
 
-	public AssetListContentDisplayContext(
+	public AssetListItemsDisplayContext(
 		AssetListAssetEntryProvider assetListAssetEntryProvider,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -125,7 +125,7 @@ public class AssetListContentDisplayContext {
 	private PortletURL _getAssetListContentURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view_asset_list_content.jsp");
+		portletURL.setParameter("mvcPath", "/view_asset_list_items.jsp");
 		portletURL.setParameter(
 			"assetListEntryId", String.valueOf(getAssetListEntryId()));
 		portletURL.setParameter(

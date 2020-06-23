@@ -22,11 +22,11 @@ import com.liferay.asset.list.exception.AssetListEntryTitleException;
 import com.liferay.asset.list.exception.DuplicateAssetListEntryTitleException;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
-import com.liferay.asset.list.web.internal.display.context.AssetListContentDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext;
+import com.liferay.asset.list.web.internal.display.context.AssetListItemsDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.InfoListProviderDisplayContext;
-import com.liferay.asset.list.web.internal.servlet.taglib.util.AssetListContentActionDropdownItems;
+import com.liferay.asset.list.web.internal.servlet.taglib.util.AssetListItemsActionDropdownItems;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.list.provider.InfoListProviderTracker;
@@ -76,13 +76,13 @@ public class AssetListPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(
-			AssetListWebKeys.ASSET_LIST_CONTENT_ACTION_DROPDOWN_ITEMS,
-			new AssetListContentActionDropdownItems(
+			AssetListWebKeys.ASSET_LIST_ITEMS_ACTION_DROPDOWN_ITEMS,
+			new AssetListItemsActionDropdownItems(
 				_assetDisplayPageFriendlyURLProvider, _assetInfoEditURLProvider,
 				_portal.getHttpServletRequest(renderRequest)));
 		renderRequest.setAttribute(
-			AssetListWebKeys.ASSET_LIST_CONTENT_DISPLAY_CONTEXT,
-			new AssetListContentDisplayContext(
+			AssetListWebKeys.ASSET_LIST_ITEMS_DISPLAY_CONTEXT,
+			new AssetListItemsDisplayContext(
 				_assetListAssetEntryProvider, renderRequest, renderResponse));
 
 		AssetListDisplayContext assetListDisplayContext =

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_LIST_ENTRY_TYPE_SELECTED</td>
+	<td>//select[contains(@class,'left-selector')]/option[contains(.,'${key_type}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_LIST_KEYWORDS_FIELD</td>
 	<td>//div[contains(@class,'form-group') and label[contains(.,'Keywords')]]/input</td>
 	<td></td>

@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetListContentActionDropdownItems assetListContentActionDropdownItems = (AssetListContentActionDropdownItems)request.getAttribute(AssetListWebKeys.ASSET_LIST_CONTENT_ACTION_DROPDOWN_ITEMS);
-AssetListContentDisplayContext assetListContentDisplayContext = (AssetListContentDisplayContext)request.getAttribute(AssetListWebKeys.ASSET_LIST_CONTENT_DISPLAY_CONTEXT);
+AssetListItemsActionDropdownItems assetListItemsActionDropdownItems = (AssetListItemsActionDropdownItems)request.getAttribute(AssetListWebKeys.ASSET_LIST_ITEMS_ACTION_DROPDOWN_ITEMS);
+AssetListItemsDisplayContext assetListItemsDisplayContext = (AssetListItemsDisplayContext)request.getAttribute(AssetListWebKeys.ASSET_LIST_ITEMS_DISPLAY_CONTEXT);
 %>
 
 <clay:container-fluid
@@ -26,7 +26,7 @@ AssetListContentDisplayContext assetListContentDisplayContext = (AssetListConten
 >
 	<liferay-ui:search-container
 		id="assetEntries"
-		searchContainer="<%= assetListContentDisplayContext.getAssetListContentSearchContainer() %>"
+		searchContainer="<%= assetListItemsDisplayContext.getAssetListContentSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.asset.kernel.model.AssetEntry"
@@ -65,11 +65,11 @@ AssetListContentDisplayContext assetListContentDisplayContext = (AssetListConten
 				value="<%= assetEntry.getCreateDate() %>"
 			/>
 
-			<c:if test="<%= assetListContentDisplayContext.isShowActions() %>">
+			<c:if test="<%= assetListItemsDisplayContext.isShowActions() %>">
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						defaultEventHandler="<%= AssetListWebKeys.ASSET_LIST_CONTENT_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-						dropdownItems="<%= assetListContentActionDropdownItems.getActionDropdownItems(assetEntry) %>"
+						defaultEventHandler="<%= AssetListWebKeys.ASSET_LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+						dropdownItems="<%= assetListItemsActionDropdownItems.getActionDropdownItems(assetEntry) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:if>
@@ -82,6 +82,6 @@ AssetListContentDisplayContext assetListContentDisplayContext = (AssetListConten
 </clay:container-fluid>
 
 <liferay-frontend:component
-	componentId="<%= AssetListWebKeys.ASSET_LIST_CONTENT_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/AssetListContentDropdownDefaultEventHandler.es"
+	componentId="<%= AssetListWebKeys.ASSET_LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/AssetListItemsDropdownDefaultEventHandler.es"
 />

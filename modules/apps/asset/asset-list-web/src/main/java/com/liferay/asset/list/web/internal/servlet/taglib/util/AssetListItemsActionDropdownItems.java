@@ -41,9 +41,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class AssetListContentActionDropdownItems {
+public class AssetListItemsActionDropdownItems {
 
-	public AssetListContentActionDropdownItems(
+	public AssetListItemsActionDropdownItems(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		AssetInfoEditURLProvider assetInfoEditURLProvider,
 		HttpServletRequest httpServletRequest) {

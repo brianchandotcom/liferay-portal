@@ -51,8 +51,18 @@ definition {
 	}
 
 	macro setStatus {
-		if (!(isSet(status))) {
+		if (!(isSet(fragmentStatus))) {
+			var fragmentStatus = "Draft";
+		}
+
+		if ("${fragmentStatus}" == "Draft") {
 			var status = "2";
+		}
+		else if ("${fragmentStatus}" == "Approved") {
+			var status = "0";
+		}
+		else {
+			fail("'fragmentStatus' is either invalid or not yet set.");
 		}
 
 		return "${status}";

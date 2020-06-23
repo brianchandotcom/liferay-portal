@@ -1207,6 +1207,13 @@ public class DDMFormAdminDisplayContext {
 	}
 
 	protected Locale getDefaultLocale() {
+		String i18nLanguageId = (String)renderRequest.getAttribute(
+			WebKeys.I18N_LANGUAGE_ID);
+
+		if (Validator.isNotNull(i18nLanguageId)) {
+			return LocaleUtil.fromLanguageId(i18nLanguageId);
+		}
+
 		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
 
 		return Optional.ofNullable(

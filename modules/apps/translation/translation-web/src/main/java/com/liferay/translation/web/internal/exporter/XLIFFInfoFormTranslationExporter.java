@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.translation.exception.InvalidXLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
+import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -94,10 +95,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
 			InfoField infoField = infoFieldValue.getInfoField();
 
-			if (!infoField.isLocalizable() ||
-				!TextInfoFieldType.INSTANCE.equals(
-					infoField.getInfoFieldType())) {
-
+			if (!_translationInfoFieldChecker.isTranslatable(infoField)) {
 				continue;
 			}
 
@@ -252,5 +250,8 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 	@Reference
 	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private TranslationInfoFieldChecker _translationInfoFieldChecker;
 
 }

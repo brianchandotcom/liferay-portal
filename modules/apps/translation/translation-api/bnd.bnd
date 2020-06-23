@@ -4,4 +4,5 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.translation.exception,\
 	com.liferay.translation.exporter,\
+	com.liferay.translation.info.field,\
 	com.liferay.translation.info.item.updater

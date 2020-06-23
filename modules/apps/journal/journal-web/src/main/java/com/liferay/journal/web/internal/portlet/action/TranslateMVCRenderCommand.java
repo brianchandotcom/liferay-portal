@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -71,6 +72,9 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				InfoFormValues.class.getName(),
 				infoItemFormProvider.getInfoFormValues(article));
+			renderRequest.setAttribute(
+				TranslationInfoFieldChecker.class.getName(),
+				_translationInfoFieldChecker);
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
@@ -84,5 +88,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference
+	private TranslationInfoFieldChecker _translationInfoFieldChecker;
 
 }

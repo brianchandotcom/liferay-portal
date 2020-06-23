@@ -71,8 +71,6 @@ page import="com.liferay.exportimport.kernel.exception.ExportImportContentValida
 page import="com.liferay.info.field.InfoField" %><%@
 page import="com.liferay.info.field.InfoFieldValue" %><%@
 page import="com.liferay.info.field.InfoFormValues" %><%@
-page import="com.liferay.info.field.type.InfoFieldType" %><%@
-page import="com.liferay.info.field.type.TextInfoFieldType" %><%@
 page import="com.liferay.info.localized.InfoLocalizedValue" %><%@
 page import="com.liferay.journal.configuration.JournalFileUploadsConfiguration" %><%@
 page import="com.liferay.journal.configuration.JournalGroupServiceConfiguration" %><%@
@@ -215,7 +213,8 @@ page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.util.CustomAttributesUtil" %><%@
-page import="com.liferay.translation.exception.InvalidXLIFFFileException" %>
+page import="com.liferay.translation.exception.InvalidXLIFFFileException" %><%@
+page import="com.liferay.translation.info.field.TranslationInfoFieldChecker" %>
 
 <%@ page import="java.text.Format" %>
 

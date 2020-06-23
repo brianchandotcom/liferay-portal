@@ -24,6 +24,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 InfoFormValues infoFormValues = (InfoFormValues)request.getAttribute(InfoFormValues.class.getName());
 
+TranslationInfoFieldChecker translationInfoFieldChecker = (TranslationInfoFieldChecker)request.getAttribute(TranslationInfoFieldChecker.class.getName());
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -65,9 +67,7 @@ renderResponse.setTitle(title);
 				for (InfoFieldValue<Object> infoFieldValue : infoFormValues.getInfoFieldValues()) {
 					InfoField infoField = infoFieldValue.getInfoField();
 
-					InfoFieldType infoFieldType = infoField.getInfoFieldType();
-
-					if (infoField.isLocalizable() && infoFieldType.equals(TextInfoFieldType.INSTANCE)) {
+					if (translationInfoFieldChecker.isTranslatable(infoField)) {
 						InfoLocalizedValue<String> labelInfoLocalizedValue = infoField.getLabelInfoLocalizedValue();
 
 						String label = labelInfoLocalizedValue.getValue(locale);

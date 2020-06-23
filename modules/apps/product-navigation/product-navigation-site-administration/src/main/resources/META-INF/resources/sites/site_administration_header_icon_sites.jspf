@@ -14,7 +14,7 @@
  */
 --%>
 
-<div class="icon-sites">
+<div class="icon-sites <%= (childPanelCategoriesSize == 1) ? "" : "collapsible-icon" %>">
 	<liferay-ui:icon
 		icon="sites"
 		id="manageSitesLink"

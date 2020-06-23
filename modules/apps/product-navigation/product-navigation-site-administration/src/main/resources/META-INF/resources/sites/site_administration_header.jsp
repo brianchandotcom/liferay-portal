@@ -27,15 +27,12 @@ PortletURL portletURL = PortletURLFactoryUtil.create(request, ProductNavigationP
 portletURL.setParameter("mvcPath", "/portlet/pages_tree.jsp");
 portletURL.setParameter("selPpid", portletDisplay.getId());
 portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+
+int childPanelCategoriesSize = GetterUtil.getInteger(request.getAttribute("product_menu.jsp-childPanelCategoriesSize"));
 %>
 
 <c:choose>
 	<c:when test="<%= group != null %>">
-
-		<%
-		int childPanelCategoriesSize = GetterUtil.getInteger(request.getAttribute("product_menu.jsp-childPanelCategoriesSize"));
-		%>
-
 		<c:choose>
 			<c:when test="<%= childPanelCategoriesSize > 1 %>">
 				<c:if test="<%= (group.getType() != GroupConstants.TYPE_DEPOT) && !group.isCompany() %>">

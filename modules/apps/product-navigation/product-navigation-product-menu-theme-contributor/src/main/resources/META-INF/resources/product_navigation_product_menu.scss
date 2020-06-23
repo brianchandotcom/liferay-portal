@@ -401,12 +401,24 @@
 			color: $product-menu-panel-title-color;
 		}
 
+		&.collapsible-icon {
+			position: absolute;
+			right: 46px;
+			top: 9px;
+		}
+
 		z-index: 1;
 	}
 
 	.icon-pages-tree {
 		a {
 			color: $product-menu-panel-title-color;
+		}
+
+		&.collapsible-icon {
+			position: absolute;
+			right: 76px;
+			top: 9px;
 		}
 
 		z-index: 1;

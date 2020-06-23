@@ -14,7 +14,7 @@
  */
 --%>
 
-<div class="icon-pages-tree">
+<div class="icon-pages-tree <%= (childPanelCategoriesSize == 1) ? "" : "collapsible-icon" %>">
 	<liferay-ui:icon
 		icon="pages-tree"
 		id="pagesTreeSidenavToggleId"

@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
+import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
@@ -697,8 +698,46 @@ public class PDFProcessorImpl
 					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
 					generatePreview, generateThumbnail);
 
+			ProcessConfig processConfig =
+				PortalClassPathUtil.getPortalProcessConfig();
+
+			int maxMemory =
+				PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_MAX_MEMORY;
+
+			if (maxMemory > 0) {
+				ProcessConfig.Builder pdfProcessBuilder =
+					new ProcessConfig.Builder();
+
+				List<String> arguments = new ArrayList<>(
+					processConfig.getArguments());
+
+				arguments.add(StringBundler.concat("-Xmx", maxMemory, "m"));
+
+				pdfProcessBuilder.setArguments(arguments);
+				pdfProcessBuilder =
+					pdfProcessBuilder.setBootstrapClassPath(
+						processConfig.getBootstrapClassPath());
+				pdfProcessBuilder =
+					pdfProcessBuilder.setEnvironment(
+						processConfig.getEnvironment());
+				pdfProcessBuilder =
+					pdfProcessBuilder.setJavaExecutable(
+						processConfig.getJavaExecutable());
+				pdfProcessBuilder =
+					pdfProcessBuilder.setProcessLogConsumer(
+						processConfig.getProcessLogConsumer());
+				pdfProcessBuilder =
+					pdfProcessBuilder.setReactClassLoader(
+						processConfig.getReactClassLoader());
+				pdfProcessBuilder =
+					pdfProcessBuilder.setRuntimeClassPath(
+						processConfig.getRuntimeClassPath());
+
+				processConfig = pdfProcessBuilder.build();
+			}
+
 			ProcessChannel<String> processChannel = _processExecutor.execute(
-				PortalClassPathUtil.getPortalProcessConfig(), processCallable);
+				processConfig, processCallable);
 
 			Future<String> future = processChannel.getProcessNoticeableFuture();
 

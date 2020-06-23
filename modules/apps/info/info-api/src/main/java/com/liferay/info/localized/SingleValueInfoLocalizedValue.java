@@ -26,6 +26,7 @@ import java.util.Set;
 public class SingleValueInfoLocalizedValue<T> implements InfoLocalizedValue<T> {
 
 	public SingleValueInfoLocalizedValue(T value) {
+		_value = value;
 	}
 
 	@Override
@@ -50,6 +51,6 @@ public class SingleValueInfoLocalizedValue<T> implements InfoLocalizedValue<T> {
 
 	private final Set<Locale> _availableLocales = SetUtil.fromArray(
 		new Locale[] {LocaleUtil.getDefault()});
-	private T _value;
+	private final T _value;
 
 }

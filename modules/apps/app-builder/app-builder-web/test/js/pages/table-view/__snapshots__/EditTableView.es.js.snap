@@ -98,7 +98,7 @@ exports[`EditTableView renders 1`] = `
           >
             <form>
               <div
-                class="autofit-row sidebar-section"
+                class="sidebar-section autofit-row"
               >
                 <div
                   class="autofit-col autofit-col-expand"
@@ -163,7 +163,7 @@ exports[`EditTableView renders 1`] = `
               class="component-tbar tbar"
             >
               <div
-                class="container-fluid"
+                class="container-fluid container-fluid-max-xl"
               >
                 <ul
                   class="nav nav-underline"
@@ -202,12 +202,12 @@ exports[`EditTableView renders 1`] = `
                 role="tabpanel"
               >
                 <div
-                  class="autofit-row autofit-row-center field-type"
+                  class="field-type autofit-row autofit-row-center"
                   data-field-type-name="Text"
                   draggable="true"
                 >
                   <div
-                    class="autofit-col pl-2 pr-2"
+                    class="pl-2 pr-2 autofit-col"
                   >
                     <svg
                       class="lexicon-icon lexicon-icon-drag"
@@ -219,7 +219,7 @@ exports[`EditTableView renders 1`] = `
                     </svg>
                   </div>
                   <div
-                    class="autofit-col pr-2"
+                    class="pr-2 autofit-col"
                   >
                     <span
                       class="sticker data-layout-builder-field-sticker sticker-rounded sticker-light sticker-md"
@@ -239,7 +239,7 @@ exports[`EditTableView renders 1`] = `
                     </span>
                   </div>
                   <div
-                    class="autofit-col autofit-col-expand pr-2"
+                    class="pr-2 autofit-col autofit-col-expand"
                   >
                     <h4
                       class="list-group-title text-truncate"

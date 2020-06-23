@@ -107,21 +107,9 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 					article.getDescription(),
 					importedLocaleDescriptionMap.get(targetLocale));
 
-				Map<String, String> contentFieldMap =
-					importedLocaleContentMap.get(targetLocale);
-				String translatedContent = article.getContent();
-
-				if ((contentFieldMap != null) && !contentFieldMap.isEmpty()) {
-					Document document = SAXReaderUtil.read(translatedContent);
-
-					for (Map.Entry<String, String> entry :
-							contentFieldMap.entrySet()) {
-
-						translatedContent = _getTranslatedContent(
-							entry.getValue(), document, entry.getKey(),
-							targetLocale);
-					}
-				}
+				String translatedContent =
+					_getTranslatedContent(article.getContent(), importedLocaleContentMap,
+						targetLocale);
 
 				article = _journalArticleService.updateArticleTranslation(
 					article.getGroupId(), article.getArticleId(),
@@ -137,12 +125,66 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 		return article;
 	}
 
-	private String _getTranslatedContent(
-		String content, Document document, String fieldName,
+	private String _updateContent(
+		Document document, String fieldName, String importedContent,
 		Locale targetLocale) {
 
 		Element rootElement = document.getRootElement();
 
+		_setTargetLocale(rootElement, targetLocale);
+
+		List<Element> dynamicElementElements = rootElement.elements(
+			"dynamic-element");
+
+		for (Element dynamicElementElement : dynamicElementElements) {
+			String attribute = dynamicElementElement.attributeValue(
+				"name", StringPool.BLANK);
+
+			if (Objects.equals(attribute, fieldName)) {
+
+				_updateElement(
+					dynamicElementElement, importedContent, targetLocale);
+			}
+		}
+
+		return document.asXML();
+	}
+
+	private void _updateElement(
+		Element dynamicElementElement, String importedContent,
+		Locale targetLocale) {
+		boolean exists = false;
+
+		for (Element element :
+				dynamicElementElement.elements("dynamic-content")) {
+
+			String languageId = element.attributeValue(
+				"language-id", StringPool.BLANK);
+
+			if (Objects.equals(languageId, LocaleUtil.toLanguageId(
+				targetLocale))) {
+
+				element.clearContent();
+				element.addCDATA(importedContent);
+
+				exists = true;
+				break;
+			}
+
+		}
+
+		if (!exists) {
+			Element element = dynamicElementElement.addElement(
+				"dynamic-content");
+
+			element.addAttribute(
+				"language-id", LocaleUtil.toLanguageId(targetLocale));
+			element.addCDATA(importedContent);
+		}
+	}
+
+	private void _setTargetLocale(
+		Element rootElement, Locale targetLocale) {
 		String availableLanguageIds = rootElement.attributeValue(
 			"available-locales");
 
@@ -150,47 +192,31 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 			availableLanguageIds += StringPool.COMMA + targetLocale.toString();
 			rootElement.addAttribute("available-locales", availableLanguageIds);
 		}
+	}
 
-		List<Element> dynamicElementElements = rootElement.elements(
-			"dynamic-element");
+	private String _getTranslatedContent(
+		String articleContent,
+		Map<Locale, Map<String, String>> importedLocaleContentMap,
+		Locale targetLocale) throws DocumentException {
 
-		for (Element dynamicElementElement : dynamicElementElements) {
-			if (dynamicElementElement != null) {
-				String attribute = dynamicElementElement.attributeValue(
-					"name", StringPool.BLANK);
+		Map<String, String> contentFieldMap =
+			importedLocaleContentMap.get(targetLocale);
 
-				if (Objects.equals(attribute, fieldName)) {
-					Element replace = null;
-
-					for (Element element :
-							dynamicElementElement.elements("dynamic-content")) {
-
-						String languageId = element.attributeValue(
-							"language-id", StringPool.BLANK);
-
-						if (Objects.equals(
-								languageId,
-								LocaleUtil.toLanguageId(targetLocale))) {
-
-							replace = element;
-						}
-					}
-
-					if (replace != null) {
-						dynamicElementElement.remove(replace);
-					}
-
-					Element element = dynamicElementElement.addElement(
-						"dynamic-content");
-
-					element.addAttribute(
-						"language-id", LocaleUtil.toLanguageId(targetLocale));
-					element.addCDATA(content);
-				}
-			}
+		if ((contentFieldMap == null)||contentFieldMap.isEmpty()) {
+			return articleContent;
 		}
 
-		return document.asXML();
+		String translatedContent = articleContent;
+
+		for (Map.Entry<String, String> entry : contentFieldMap.entrySet()) {
+			Document document = SAXReaderUtil.read(translatedContent);
+
+			translatedContent = _updateContent(
+				document, entry.getKey(), entry.getValue(),
+				targetLocale);
+		}
+
+		return translatedContent;
 	}
 
 	private String _getTranslatedString(

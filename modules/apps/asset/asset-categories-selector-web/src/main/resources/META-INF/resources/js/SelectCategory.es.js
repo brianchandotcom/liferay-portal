@@ -114,13 +114,17 @@ function SelectCategory({
 		Liferay.Util.getOpener().Liferay.fire(itemSelectorSaveEvent, {data});
 	};
 
-	const initialSelectedNodeIds = [];
+	const initialSelectedNodeIds = useMemo(() => {
+		const selectedNodes = [];
 
-	visit(flattenedNodes, (node) => {
-		if (node.selected) {
-			initialSelectedNodeIds.push(node.id);
-		}
-	});
+		visit(flattenedNodes, (node) => {
+			if (node.selected) {
+				selectedNodes.push(node.id);
+			}
+		});
+
+		return selectedNodes;
+	}, [flattenedNodes]);
 
 	return (
 		<div className="select-category">

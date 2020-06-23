@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayIconSpriteContext} from '@clayui/icon';
 import {
 	EVENT_TYPES,
 	FormProvider,
@@ -24,9 +25,9 @@ import {EDIT_CUSTOM_OBJECT_FIELD} from '../../../actions.es';
 import DataLayoutBuilderContext from '../../../data-layout-builder/DataLayoutBuilderContext.es';
 import {getFilteredSettingsContext} from '../../../utils/settingsForm.es';
 
-const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/lexicon/icons.svg`;
-
 export default function () {
+	const spritemap = useContext(ClayIconSpriteContext);
+
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [
 		{config, editingLanguageId, focusedCustomObjectField, focusedField},

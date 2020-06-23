@@ -18,8 +18,7 @@ import com.liferay.frontend.taglib.clay.data.set.ClayDataSetContentRendererConte
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.constants.ClayDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.view.timeline.BaseTimelineClayDataSetDisplayView;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
@@ -27,7 +26,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -55,22 +53,16 @@ public class TimelineClayDataSetContentRendererContextContributor
 	private Map<String, Object> _serialize(
 		BaseTimelineClayDataSetDisplayView timelineClayDataSetDisplayView) {
 
-		JSONObject schemaJSONObject = _jsonFactory.createJSONObject();
-
-		schemaJSONObject.put(
-			"date", timelineClayDataSetDisplayView.getDate()
-		).put(
-			"description", timelineClayDataSetDisplayView.getDescription()
-		).put(
-			"title", timelineClayDataSetDisplayView.getTitle()
-		);
-
 		return HashMapBuilder.<String, Object>put(
-			"schema", schemaJSONObject
+			"schema",
+			JSONUtil.put(
+				"date", timelineClayDataSetDisplayView.getDate()
+			).put(
+				"description", timelineClayDataSetDisplayView.getDescription()
+			).put(
+				"title", timelineClayDataSetDisplayView.getTitle()
+			)
 		).build();
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

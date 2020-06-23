@@ -18,8 +18,7 @@ import com.liferay.frontend.taglib.clay.data.set.ClayDataSetContentRendererConte
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.constants.ClayDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
@@ -27,7 +26,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -59,22 +57,17 @@ public class SelectableTableClayDataSetContentRendererContextContributor
 			selectableTableClayDataSetDisplayView,
 		Locale locale) {
 
-		JSONObject schemaJSONObject = _jsonFactory.createJSONObject();
-
-		schemaJSONObject.put(
-			"firstColumnLabel",
-			selectableTableClayDataSetDisplayView.getFirstColumnLabel(locale)
-		).put(
-			"firstColumnName",
-			selectableTableClayDataSetDisplayView.getFirstColumnName()
-		);
-
 		return HashMapBuilder.<String, Object>put(
-			"schema", schemaJSONObject
+			"schema",
+			JSONUtil.put(
+				"firstColumnLabel",
+				selectableTableClayDataSetDisplayView.getFirstColumnLabel(
+					locale)
+			).put(
+				"firstColumnName",
+				selectableTableClayDataSetDisplayView.getFirstColumnName()
+			)
 		).build();
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

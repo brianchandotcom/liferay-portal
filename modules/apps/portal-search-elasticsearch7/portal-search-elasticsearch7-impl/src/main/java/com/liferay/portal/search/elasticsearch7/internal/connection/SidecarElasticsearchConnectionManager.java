@@ -16,16 +16,15 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserverComparator;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.ProcessExecutorPathsImpl;
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.Sidecar;
 import com.liferay.portal.search.elasticsearch7.settings.SettingsContributor;
@@ -37,9 +36,6 @@ import java.nio.file.Paths;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -51,55 +47,53 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Tina Tian
  */
-@Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
-	enabled = true, immediate = true, service = {}
-)
-public class SidecarElasticsearchConnectionManager {
+@Component(enabled = true, immediate = true, service = {})
+public class SidecarElasticsearchConnectionManager
+	implements ElasticsearchConfigurationObserver {
 
-	protected static Path resolveHomePath(
-		Path workPath, ElasticsearchConfiguration elasticsearchConfiguration) {
+	@Override
+	public int compareTo(
+		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
 
-		workPath = workPath.toAbsolutePath();
+		return elasticsearchConfigurationObserverComparator.compare(
+			this, elasticsearchConfigurationObserver);
+	}
 
-		Path sidecarHomePath = workPath.resolve(
-			elasticsearchConfiguration.sidecarHome());
+	@Override
+	public int getPriority() {
+		return 1;
+	}
 
-		if (!Files.isDirectory(sidecarHomePath)) {
-			Path sidecarSubhomePath = Paths.get(
-				elasticsearchConfiguration.sidecarHome());
-
-			if (Files.isDirectory(sidecarSubhomePath)) {
-				sidecarHomePath = sidecarSubhomePath;
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Sidecar Elasticsearch home " +
-							elasticsearchConfiguration.sidecarHome() +
-								" does not exist");
-				}
-			}
-		}
-
-		return sidecarHomePath;
+	@Override
+	public void onElasticsearchConfigurationUpdate() {
+		applyConfigurations();
 	}
 
 	@Activate
-	protected void activate(ComponentContext componentContext) {
-		BundleContext bundleContext = componentContext.getBundleContext();
+	protected void activate() {
+		elasticsearchConfigurationWrapper.register(this);
 
-		ElasticsearchConfiguration elasticsearchConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ElasticsearchConfiguration.class,
-				componentContext.getProperties());
+		applyConfigurations();
+	}
 
-		ElasticsearchConnection elasticsearchConnection;
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(operation.mode=SIDECAR)"
+	)
+	protected void addSettingsContributor(
+		SettingsContributor settingsContributor) {
 
-		if (elasticsearchConfiguration.operationMode() ==
-				com.liferay.portal.search.elasticsearch7.configuration.
-					OperationMode.EMBEDDED) {
+		_settingsContributors.add(settingsContributor);
+	}
 
+	protected void applyConfigurations() {
+		if (operationModeResolver.isProductionModeEnabled()) {
+			elasticsearchConnectionManager.removeElasticsearchConnection(
+				ConnectionConstants.SIDECAR_CONNECTION_ID);
+		}
+		else {
 			if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(8);
 
@@ -115,56 +109,55 @@ public class SidecarElasticsearchConnectionManager {
 				_log.warn(sb.toString());
 			}
 
-			elasticsearchConnection = new SidecarElasticsearchConnection(
-				elasticsearchConfiguration.restClientLoggerLevel(),
-				new Sidecar(
-					_clusterExecutor, elasticsearchConfiguration,
-					getElasticsearchInstancePaths(elasticsearchConfiguration),
-					_processExecutor, new ProcessExecutorPathsImpl(_props),
-					_settingsContributors));
+			if (_sidecar != null) {
+				_sidecar.stop();
+			}
+
+			_sidecar = new Sidecar(
+				clusterExecutor, elasticsearchConfigurationWrapper,
+				getElasticsearchInstancePaths(), processExecutor,
+				new ProcessExecutorPathsImpl(props), _settingsContributors);
+
+			ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
+				new ElasticsearchConnectionBuilder();
+
+			elasticsearchConnectionBuilder.active(
+				true
+			).connectionId(
+				ConnectionConstants.SIDECAR_CONNECTION_ID
+			).postCloseRunnable(
+				_sidecar::stop
+			).preConnectElasticsearchConnectionConsumer(
+				elasticsearchConnection -> {
+					_sidecar.start();
+
+					elasticsearchConnection.setNetworkHostAddresses(
+						new String[] {_sidecar.getNetworkHostAddress()});
+				}
+			);
+
+			elasticsearchConnectionManager.addElasticsearchConnection(
+				elasticsearchConnectionBuilder.build());
 		}
-		else {
-			elasticsearchConnection = ProxyFactory.newDummyInstance(
-				ElasticsearchConnection.class);
-		}
-
-		_serviceRegistration = bundleContext.registerService(
-			ElasticsearchConnection.class, elasticsearchConnection,
-			MapUtil.singletonDictionary(
-				"operation.mode", String.valueOf(OperationMode.EMBEDDED)));
-	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(operation.mode=EMBEDDED)"
-	)
-	protected void addSettingsContributor(
-		SettingsContributor settingsContributor) {
-
-		_settingsContributors.add(settingsContributor);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
+		elasticsearchConfigurationWrapper.unregister(this);
 	}
 
-	protected ElasticsearchInstancePaths getElasticsearchInstancePaths(
-		ElasticsearchConfiguration elasticsearchConfiguration) {
-
+	protected ElasticsearchInstancePaths getElasticsearchInstancePaths() {
 		ElasticsearchInstancePathsBuilder elasticsearchInstancePathsBuilder =
 			new ElasticsearchInstancePathsBuilder();
 
-		Path workPath = Paths.get(_props.get(PropsKeys.LIFERAY_HOME));
+		Path workPath = Paths.get(props.get(PropsKeys.LIFERAY_HOME));
 
 		Path dataPath = workPath.resolve("data/elasticsearch7");
 
 		return elasticsearchInstancePathsBuilder.dataPath(
 			dataPath
 		).homePath(
-			resolveHomePath(workPath, elasticsearchConfiguration)
+			resolveHomePath(workPath)
 		).workPath(
 			workPath
 		).build();
@@ -176,23 +169,55 @@ public class SidecarElasticsearchConnectionManager {
 		_settingsContributors.remove(settingsContributor);
 	}
 
+	protected Path resolveHomePath(Path workPath) {
+		workPath = workPath.toAbsolutePath();
+
+		Path sidecarHomePath = workPath.resolve(
+			elasticsearchConfigurationWrapper.sidecarHome());
+
+		if (!Files.isDirectory(sidecarHomePath)) {
+			sidecarHomePath = Paths.get(
+				elasticsearchConfigurationWrapper.sidecarHome());
+
+			if (!Files.isDirectory(sidecarHomePath)) {
+				throw new IllegalArgumentException(
+					"Sidecar Elasticsearch home " +
+						elasticsearchConfigurationWrapper.sidecarHome() +
+							" does not exist");
+			}
+		}
+
+		return sidecarHomePath;
+	}
+
+	@Reference
+	protected ClusterExecutor clusterExecutor;
+
+	@Reference
+	protected ElasticsearchConfigurationObserverComparator
+		elasticsearchConfigurationObserverComparator;
+
+	@Reference
+	protected volatile ElasticsearchConfigurationWrapper
+		elasticsearchConfigurationWrapper;
+
+	@Reference
+	protected ElasticsearchConnectionManager elasticsearchConnectionManager;
+
+	@Reference
+	protected OperationModeResolver operationModeResolver;
+
+	@Reference
+	protected ProcessExecutor processExecutor;
+
+	@Reference
+	protected Props props;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SidecarElasticsearchConnectionManager.class);
 
-	@Reference
-	private ClusterExecutor _clusterExecutor;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private ProcessExecutor _processExecutor;
-
-	@Reference
-	private Props _props;
-
-	private ServiceRegistration<ElasticsearchConnection> _serviceRegistration;
 	private final Set<SettingsContributor> _settingsContributors =
 		new ConcurrentSkipListSet<>();
+	private Sidecar _sidecar;
 
 }

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchInstancePaths;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchInstanceSettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.connection.HttpPortRange;
@@ -74,7 +74,7 @@ public class Sidecar {
 
 	public Sidecar(
 		ClusterExecutor clusterExecutor,
-		ElasticsearchConfiguration elasticsearchConfiguration,
+		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper,
 		ElasticsearchInstancePaths elasticsearchInstancePaths,
 		ProcessExecutor processExecutor,
 		ProcessExecutorPaths processExecutorPaths,
@@ -82,7 +82,7 @@ public class Sidecar {
 
 		_clusterExecutor = clusterExecutor;
 		_dataHomePath = elasticsearchInstancePaths.getDataPath();
-		_elasticsearchConfiguration = elasticsearchConfiguration;
+		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
 		_elasticsearchInstancePaths = elasticsearchInstancePaths;
 		_processExecutor = processExecutor;
 		_processExecutorPaths = processExecutorPaths;
@@ -139,7 +139,7 @@ public class Sidecar {
 
 		try {
 			noticeableFuture.get(
-				_elasticsearchConfiguration.sidecarShutdownTimeout(),
+				_elasticsearchConfigurationWrapper.sidecarShutdownTimeout(),
 				TimeUnit.MILLISECONDS);
 		}
 		catch (Exception exception) {
@@ -149,7 +149,7 @@ public class Sidecar {
 						StringBundler.concat(
 							"Forcibly shutdown sidecar Elasticsearch process ",
 							"because it did not shut down in ",
-							_elasticsearchConfiguration.
+							_elasticsearchConfigurationWrapper.
 								sidecarShutdownTimeout(),
 							" ms"));
 				}
@@ -225,7 +225,8 @@ public class Sidecar {
 			return _processExecutor.execute(
 				_createProcessConfig(sidecarLibClassPath),
 				new SidecarMainProcessCallable(
-					_elasticsearchConfiguration.sidecarHeartbeatInterval(),
+					_elasticsearchConfigurationWrapper.
+						sidecarHeartbeatInterval(),
 					_getModifiedClasses(sidecarLibClassPath)));
 		}
 		catch (ProcessException processException) {
@@ -250,7 +251,7 @@ public class Sidecar {
 	}
 
 	protected String getClusterName() {
-		return _elasticsearchConfiguration.clusterName();
+		return _elasticsearchConfigurationWrapper.clusterName();
 	}
 
 	protected Path getDataHomePath() {
@@ -270,7 +271,7 @@ public class Sidecar {
 	}
 
 	protected String getNodeName() {
-		String nodeName = _elasticsearchConfiguration.nodeName();
+		String nodeName = _elasticsearchConfigurationWrapper.nodeName();
 
 		if (!Validator.isBlank(nodeName)) {
 			return nodeName;
@@ -296,12 +297,12 @@ public class Sidecar {
 			getClusterName()
 		).discoveryTypeSingleNode(
 			true
-		).elasticsearchConfiguration(
-			_elasticsearchConfiguration
+		).elasticsearchConfigurationWrapper(
+			_elasticsearchConfigurationWrapper
 		).elasticsearchInstancePaths(
 			_elasticsearchInstancePaths
 		).httpPortRange(
-			new HttpPortRange(_elasticsearchConfiguration)
+			new HttpPortRange(_elasticsearchConfigurationWrapper)
 		).localBindInetAddressSupplier(
 			_clusterExecutor::getBindInetAddress
 		).nodeName(
@@ -398,13 +399,14 @@ public class Sidecar {
 		List<String> arguments = new ArrayList<>();
 
 		for (String jvmOption :
-				_elasticsearchConfiguration.sidecarJVMOptions()) {
+				_elasticsearchConfigurationWrapper.sidecarJVMOptions()) {
 
 			arguments.add(jvmOption);
 		}
 
-		if (_elasticsearchConfiguration.sidecarDebug()) {
-			arguments.add(_elasticsearchConfiguration.sidecarDebugSettings());
+		if (_elasticsearchConfigurationWrapper.sidecarDebug()) {
+			arguments.add(
+				_elasticsearchConfigurationWrapper.sidecarDebugSettings());
 		}
 
 		try {
@@ -549,7 +551,8 @@ public class Sidecar {
 	private String _address;
 	private final ClusterExecutor _clusterExecutor;
 	private final Path _dataHomePath;
-	private final ElasticsearchConfiguration _elasticsearchConfiguration;
+	private final ElasticsearchConfigurationWrapper
+		_elasticsearchConfigurationWrapper;
 	private final ElasticsearchInstancePaths _elasticsearchInstancePaths;
 	private ProcessChannel<Serializable> _processChannel;
 	private final ProcessExecutor _processExecutor;

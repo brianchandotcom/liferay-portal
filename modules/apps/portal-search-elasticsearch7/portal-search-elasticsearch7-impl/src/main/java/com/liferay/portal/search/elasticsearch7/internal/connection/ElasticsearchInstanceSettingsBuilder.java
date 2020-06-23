@@ -17,7 +17,7 @@ package com.liferay.portal.search.elasticsearch7.internal.connection;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch7.settings.ClientSettingsHelper;
@@ -84,10 +84,12 @@ public class ElasticsearchInstanceSettingsBuilder {
 		return this;
 	}
 
-	public ElasticsearchInstanceSettingsBuilder elasticsearchConfiguration(
-		ElasticsearchConfiguration elasticsearchConfiguration) {
+	public ElasticsearchInstanceSettingsBuilder
+		elasticsearchConfigurationWrapper(
+			ElasticsearchConfigurationWrapper
+				elasticsearchConfigurationWrapper) {
 
-		_elasticsearchConfiguration = elasticsearchConfiguration;
+		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
 
 		return this;
 	}
@@ -162,25 +164,28 @@ public class ElasticsearchInstanceSettingsBuilder {
 	protected void configureHttp() {
 		put("http.port", _httpPortRange.toSettingsString());
 
-		put("http.cors.enabled", _elasticsearchConfiguration.httpCORSEnabled());
+		put(
+			"http.cors.enabled",
+			_elasticsearchConfigurationWrapper.httpCORSEnabled());
 
-		if (!_elasticsearchConfiguration.httpCORSEnabled()) {
+		if (!_elasticsearchConfigurationWrapper.httpCORSEnabled()) {
 			return;
 		}
 
 		put(
 			"http.cors.allow-origin",
-			_elasticsearchConfiguration.httpCORSAllowOrigin());
+			_elasticsearchConfigurationWrapper.httpCORSAllowOrigin());
 
 		_settingsBuilder.loadFromSource(
-			_elasticsearchConfiguration.httpCORSConfigurations());
+			_elasticsearchConfigurationWrapper.httpCORSConfigurations());
 	}
 
 	protected void configureNetworking() {
-		String networkBindHost = _elasticsearchConfiguration.networkBindHost();
-		String networkHost = _elasticsearchConfiguration.networkHost();
+		String networkBindHost =
+			_elasticsearchConfigurationWrapper.networkBindHost();
+		String networkHost = _elasticsearchConfigurationWrapper.networkHost();
 		String networkPublishHost =
-			_elasticsearchConfiguration.networkPublishHost();
+			_elasticsearchConfigurationWrapper.networkPublishHost();
 
 		if (Validator.isNotNull(networkBindHost)) {
 			put("network.bind.host", networkBindHost);
@@ -211,7 +216,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 		}
 
 		String transportTcpPort =
-			_elasticsearchConfiguration.transportTcpPort();
+			_elasticsearchConfigurationWrapper.transportTcpPort();
 
 		if (Validator.isNotNull(transportTcpPort)) {
 			put("transport.port", transportTcpPort);
@@ -268,7 +273,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 
 	protected void loadAdditionalConfigurations() {
 		_settingsBuilder.loadFromSource(
-			_elasticsearchConfiguration.additionalConfigurations());
+			_elasticsearchConfigurationWrapper.additionalConfigurations());
 	}
 
 	protected void loadDefaultConfigurations() {
@@ -280,7 +285,7 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("action.auto_create_index", false);
 		put(
 			"bootstrap.memory_lock",
-			_elasticsearchConfiguration.bootstrapMlockAll());
+			_elasticsearchConfigurationWrapper.bootstrapMlockAll());
 
 		configureClustering();
 
@@ -335,7 +340,8 @@ public class ElasticsearchInstanceSettingsBuilder {
 	private String _clusterName;
 	private String _discoverySeedHosts;
 	private boolean _discoveryTypeSingleNode;
-	private ElasticsearchConfiguration _elasticsearchConfiguration;
+	private ElasticsearchConfigurationWrapper
+		_elasticsearchConfigurationWrapper;
 	private ElasticsearchInstancePaths _elasticsearchInstancePaths;
 	private HttpPortRange _httpPortRange;
 	private Supplier<InetAddress> _localBindInetAddressSupplier;

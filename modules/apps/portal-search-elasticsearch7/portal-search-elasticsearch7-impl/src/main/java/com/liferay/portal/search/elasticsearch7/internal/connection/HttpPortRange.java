@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.connection;
 
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 
 import java.util.Objects;
 
@@ -27,9 +27,9 @@ public class HttpPortRange {
 	public static final String AUTO = "AUTO";
 
 	public HttpPortRange(
-		ElasticsearchConfiguration elasticsearchConfiguration) {
+		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper) {
 
-		String httpPort = getHttpPort(elasticsearchConfiguration);
+		String httpPort = getHttpPort(elasticsearchConfigurationWrapper);
 
 		_httpPort = httpPort;
 	}
@@ -43,9 +43,10 @@ public class HttpPortRange {
 	}
 
 	protected static String getHttpPort(
-		ElasticsearchConfiguration elasticsearchConfiguration) {
+		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper) {
 
-		String sidecarHttpPort = elasticsearchConfiguration.sidecarHttpPort();
+		String sidecarHttpPort =
+			elasticsearchConfigurationWrapper.sidecarHttpPort();
 
 		if (Objects.equals(sidecarHttpPort, HttpPortRange.AUTO)) {
 			return "9201-9300";
@@ -55,7 +56,8 @@ public class HttpPortRange {
 			return sidecarHttpPort;
 		}
 
-		return String.valueOf(elasticsearchConfiguration.embeddedHttpPort());
+		return String.valueOf(
+			elasticsearchConfigurationWrapper.embeddedHttpPort());
 	}
 
 	private final String _httpPort;

@@ -15,6 +15,7 @@
 import {VIEWPORT_SIZES} from '../config/constants/viewportSizes';
 
 export const CONTENT_CHANGE_PANELS = ['comments', 'contents'];
+export const RESPONSIVE_PANELS = ['comments', 'contents', 'page-structure'];
 
 /**
  * @param {Array<Array<string>>} panels
@@ -25,15 +26,20 @@ export default function selectAvailablePanels(panels) {
 	 * @param {{ permissions: import("../../types/ActionKeys").ActionKeysMap, selectedViewportSize: string }} state
 	 */
 	return function ({permissions, selectedViewportSize}) {
-		if (
-			permissions.LOCKED_SEGMENTS_EXPERIMENT ||
-			!permissions.UPDATE ||
-			selectedViewportSize !== VIEWPORT_SIZES.desktop
-		) {
+		if (permissions.LOCKED_SEGMENTS_EXPERIMENT || !permissions.UPDATE) {
 			return panels
 				.map((group) =>
 					group.filter((panelId) =>
 						CONTENT_CHANGE_PANELS.includes(panelId)
+					)
+				)
+				.filter((group) => group.length);
+		}
+		else if (selectedViewportSize !== VIEWPORT_SIZES.desktop) {
+			return panels
+				.map((group) =>
+					group.filter((panelId) =>
+						RESPONSIVE_PANELS.includes(panelId)
 					)
 				)
 				.filter((group) => group.length);

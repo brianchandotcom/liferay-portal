@@ -17,6 +17,7 @@
 
 		<column name="appBuilderAppId" type="long" />
 		<column name="ddmStructureLayoutId" type="long" />
+		<column name="readOnly" type="boolean" />
 		<column name="workflowTaskName" type="String" />
 
 		<!-- Order -->

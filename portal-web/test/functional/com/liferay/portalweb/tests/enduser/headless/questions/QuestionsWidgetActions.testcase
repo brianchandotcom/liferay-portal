@@ -142,7 +142,7 @@ definition {
 		Questions.gotoCategory(categoryName = "Question AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			kbArticleContent = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
+			contentField = "Body AddQuestionWithMoreThanTheMaximumTagsIsNotPossible",
 			titleField = "Title AddQuestionWithMoreThanTheMaximumTagsIsNotPossible");
 
 		Questions.addTags(tagLocator = "Tag1");
@@ -170,7 +170,7 @@ definition {
 		Questions.gotoCategory(categoryName = "Question AddQuestionWithTheMaximumTags");
 
 		Questions.askQuestionFillingTheMandatoryFields(
-			kbArticleContent = "Body AddQuestionWithTheMaximumTags",
+			contentField = "Body AddQuestionWithTheMaximumTags",
 			titleField = "Title AddQuestionWithTheMaximumTags");
 
 		Questions.addTags(tagLocator = "Tag1");
@@ -322,7 +322,7 @@ definition {
 
 		Questions.askQuestionFillingTheMandatoryFields(
 			anonymousUser = "true",
-			kbArticleContent = "Body Anonymous User Ask questions",
+			contentField = "Body Anonymous User Ask questions",
 			password = "test",
 			titleField = "Title Anonymous User Ask questions",
 			userEmailAddress = "test@liferay.com");

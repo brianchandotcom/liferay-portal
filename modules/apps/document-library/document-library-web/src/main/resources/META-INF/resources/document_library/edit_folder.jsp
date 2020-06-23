@@ -215,11 +215,12 @@ renderResponse.setTitle(headerTitle);
 							<liferay-ui:icon
 								cssClass="modify-link select-file-entry-type"
 								icon="search"
+								id="selectDocumentTypeButton"
 								label="<%= true %>"
 								linkCssClass="btn btn-secondary"
 								markupView="lexicon"
 								message="select-document-type"
-								url='<%= "javascript:" + liferayPortletResponse.getNamespace() + "openFileEntryTypeSelector();" %>'
+								url="javascript:;"
 							/>
 
 							<aui:select cssClass='<%= !fileEntryTypes.isEmpty() ? "default-document-type" : "default-document-type hide" %>' helpMessage="default-document-type-help" label="default-document-type" name="defaultFileEntryTypeId">
@@ -330,38 +331,8 @@ renderResponse.setTitle(headerTitle);
 	</c:if>
 </liferay-util:buffer>
 
-<aui:script use="liferay-search-container">
-	var <portlet:namespace />documentTypesChanged = false;
-
-	window['<portlet:namespace />openFileEntryTypeSelector'] = function () {
-		var searchContainer = Liferay.SearchContainer.get(
-			'<portlet:namespace />dlFileEntryTypesSearchContainer'
-		);
-
-		var searchContainerData = searchContainer.getData();
-
-		if (!searchContainerData.length) {
-			searchContainerData = [];
-		}
-		else {
-			searchContainerData = searchContainerData.split(',');
-		}
-
-		Liferay.Util.openModal({
-			id: '<portlet:namespace />fileEntryTypeSelector',
-			onSelect: function (selectedItem) {
-				<portlet:namespace />selectFileEntryType(
-					selectedItem.entityid,
-					selectedItem.entityname
-				);
-			},
-			selectEventName: '<portlet:namespace />selectFileEntryType',
-			selectedData: searchContainerData,
-			title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
-			url:
-				'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>',
-		});
-	};
+<aui:script sandbox="<%= true %>">
+	window['<portlet:namespace />documentTypesChanged'] = false;
 
 	window['<portlet:namespace />savePage'] = function () {
 		var message =
@@ -380,10 +351,28 @@ renderResponse.setTitle(headerTitle);
 		}
 	};
 
-	window['<portlet:namespace />selectFileEntryType'] = function (
-		fileEntryTypeId,
-		fileEntryTypeName
-	) {
+	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', [
+		'<portlet:namespace />restrictionTypeDefinedDiv',
+		'<portlet:namespace />restrictionTypeWorkflowDiv',
+	]);
+
+	Liferay.Util.toggleRadio(
+		'<portlet:namespace />restrictionTypeDefined',
+		'<portlet:namespace />restrictionTypeDefinedDiv',
+		'<portlet:namespace />restrictionTypeWorkflowDiv'
+	);
+
+	<c:if test="<%= !rootFolder %>">
+		Liferay.Util.toggleRadio(
+			'<portlet:namespace />restrictionTypeWorkflow',
+			'<portlet:namespace />restrictionTypeWorkflowDiv',
+			'<portlet:namespace />restrictionTypeDefinedDiv'
+		);
+	</c:if>
+</aui:script>
+
+<aui:script use="liferay-search-container">
+	var selectFileEntryType = function (fileEntryTypeId, fileEntryTypeName) {
 		var searchContainer = Liferay.SearchContainer.get(
 			'<portlet:namespace />dlFileEntryTypesSearchContainer'
 		);
@@ -455,23 +444,41 @@ renderResponse.setTitle(headerTitle);
 		select.appendChild(option);
 	};
 
-	Liferay.Util.toggleRadio('<portlet:namespace />restrictionTypeInherit', '', [
-		'<portlet:namespace />restrictionTypeDefinedDiv',
-		'<portlet:namespace />restrictionTypeWorkflowDiv',
-	]);
-	Liferay.Util.toggleRadio(
-		'<portlet:namespace />restrictionTypeDefined',
-		'<portlet:namespace />restrictionTypeDefinedDiv',
-		'<portlet:namespace />restrictionTypeWorkflowDiv'
+	var selectDocumentTypeButton = document.getElementById(
+		'<portlet:namespace />selectDocumentTypeButton'
 	);
 
-	<c:if test="<%= !rootFolder %>">
-		Liferay.Util.toggleRadio(
-			'<portlet:namespace />restrictionTypeWorkflow',
-			'<portlet:namespace />restrictionTypeWorkflowDiv',
-			'<portlet:namespace />restrictionTypeDefinedDiv'
-		);
-	</c:if>
+	if (selectDocumentTypeButton) {
+		selectDocumentTypeButton.addEventListener('click', function () {
+			var searchContainer = Liferay.SearchContainer.get(
+				'<portlet:namespace />dlFileEntryTypesSearchContainer'
+			);
+
+			var searchContainerData = searchContainer.getData();
+
+			if (!searchContainerData.length) {
+				searchContainerData = [];
+			}
+			else {
+				searchContainerData = searchContainerData.split(',');
+			}
+
+			Liferay.Util.openModal({
+				id: '<portlet:namespace />fileEntryTypeSelector',
+				onSelect: function (selectedItem) {
+					selectFileEntryType(
+						selectedItem.entityid,
+						selectedItem.entityname
+					);
+				},
+				selectEventName: '<portlet:namespace />selectFileEntryType',
+				selectedData: searchContainerData,
+				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
+				url:
+					'<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/document_library/select_restricted_file_entry_type.jsp" /><portlet:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" /></portlet:renderURL>',
+			});
+		});
+	}
 
 	var searchContainer = Liferay.SearchContainer.get(
 		'<portlet:namespace />dlFileEntryTypesSearchContainer'

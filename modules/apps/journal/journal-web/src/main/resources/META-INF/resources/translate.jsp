@@ -88,7 +88,7 @@ renderResponse.setTitle(title);
 				</clay:row>
 
 			<%
-			}
+					}
 				}
 			%>
 

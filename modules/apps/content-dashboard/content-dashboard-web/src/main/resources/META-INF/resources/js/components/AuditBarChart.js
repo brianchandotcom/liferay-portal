@@ -27,6 +27,7 @@ import {
 } from 'recharts';
 
 import {BAR_CHART, COLORS} from '../utils/constants';
+import {numberShorten} from '../utils/numberShorten';
 
 export default function AuditBarChart({rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
@@ -150,6 +151,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 						orientation={rtl ? 'right' : 'left'}
 						tick={<CustomYAxisTick rtl={rtl} />}
 						tickLine={false}
+						width={45}
 					/>
 					{bars.length &&
 						bars.map((bar, index) => {
@@ -211,7 +213,7 @@ function CustomYAxisTick(props) {
 			x={rtl ? x + BAR_CHART.axisMargin : x - BAR_CHART.axisMargin}
 			y={y}
 		>
-			{payload.value}
+			{numberShorten(payload.value)}
 		</Text>
 	);
 }

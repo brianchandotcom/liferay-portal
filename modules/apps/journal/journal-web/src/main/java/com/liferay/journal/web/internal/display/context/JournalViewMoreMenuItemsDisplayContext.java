@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.internal.display.context;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -66,15 +69,13 @@ public class JournalViewMoreMenuItemsDisplayContext {
 
 		if (Validator.isNull(_getKeywords())) {
 			_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId()),
+				_getCurrentAndAncestorSiteAndDepotGroupIds(themeDisplay),
 				_folderId, _restrictionType);
 		}
 		else {
 			_ddmStructures = JournalFolderServiceUtil.searchDDMStructures(
 				themeDisplay.getCompanyId(),
-				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					themeDisplay.getScopeGroupId()),
+				_getCurrentAndAncestorSiteAndDepotGroupIds(themeDisplay),
 				_folderId, _restrictionType, _getKeywords(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, _getOrderByComparator());
 		}
@@ -173,6 +174,20 @@ public class JournalViewMoreMenuItemsDisplayContext {
 		_redirect = ParamUtil.getString(_renderRequest, "redirect");
 
 		return _redirect;
+	}
+
+	private long[] _getCurrentAndAncestorSiteAndDepotGroupIds(
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return ArrayUtil.append(
+			PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				themeDisplay.getScopeGroupId()),
+			ListUtil.toLongArray(
+				DepotEntryServiceUtil.getGroupConnectedDepotEntries(
+					themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS),
+				DepotEntry::getGroupId));
 	}
 
 	private String _getKeywords() {

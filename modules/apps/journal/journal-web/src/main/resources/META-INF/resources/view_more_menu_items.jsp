@@ -69,6 +69,24 @@ JournalViewMoreMenuItemsDisplayContext journalViewMoreMenuItemsDisplayContext = 
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-text
+				name="scope"
+			>
+				<c:choose>
+					<c:when test="<%= ddmStructure.getGroupId() == themeDisplay.getScopeGroupId() %>">
+						<liferay-ui:message key="current-site" />
+					</c:when>
+					<c:otherwise>
+
+						<%
+						Group ddmStructureGroup = GroupServiceUtil.getGroup(ddmStructure.getGroupId());
+						%>
+
+						<%= ddmStructureGroup.getName(locale) %>
+					</c:otherwise>
+				</c:choose>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
 				name="user"
 				property="userName"
 			/>

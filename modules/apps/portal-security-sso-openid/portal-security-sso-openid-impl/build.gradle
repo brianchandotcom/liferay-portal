@@ -6,7 +6,7 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.1"
 	compileInclude group: "org.eclipse.birt.runtime.3_7_1", name: "org.apache.xml.resolver", version: "1.2.0"
 	compileInclude group: "org.openid4java", name: "openid4java", version: "0.9.8"
-	compileInclude group: "xerces", name: "xercesImpl", version: "2.8.1"
+	compileInclude group: "xerces", name: "xercesImpl", version: "2.12.0"
 	compileInclude group: "xml-apis", name: "xml-apis", version: "1.4.01"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

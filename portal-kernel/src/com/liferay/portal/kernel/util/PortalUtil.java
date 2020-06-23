@@ -255,6 +255,10 @@ public class PortalUtil {
 			themeDisplay, url, typeControlPanel, doAsUser);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void addUserLocaleOptionsMessage(
 		HttpServletRequest httpServletRequest) {
 

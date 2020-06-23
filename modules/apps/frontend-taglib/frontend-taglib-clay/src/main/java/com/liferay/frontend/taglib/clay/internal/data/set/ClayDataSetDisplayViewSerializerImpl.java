@@ -22,6 +22,7 @@ import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayViewSerialize
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -54,9 +55,7 @@ public class ClayDataSetDisplayViewSerializerImpl
 		for (ClayDataSetDisplayView clayDataSetDisplayView :
 				clayDataSetDisplayViews) {
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"contentRenderer", clayDataSetDisplayView.getContentRenderer()
 			).put(
 				"contentRendererModuleUrl",

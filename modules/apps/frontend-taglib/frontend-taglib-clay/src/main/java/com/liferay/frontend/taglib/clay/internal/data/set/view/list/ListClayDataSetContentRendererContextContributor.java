@@ -18,7 +18,6 @@ import com.liferay.frontend.taglib.clay.data.set.ClayDataSetContentRendererConte
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
 import com.liferay.frontend.taglib.clay.data.set.constants.ClayDataSetConstants;
 import com.liferay.frontend.taglib.clay.data.set.view.list.BaseListClayDataSetDisplayView;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
@@ -26,7 +25,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -63,8 +61,5 @@ public class ListClayDataSetContentRendererContextContributor
 			).build()
 		).build();
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

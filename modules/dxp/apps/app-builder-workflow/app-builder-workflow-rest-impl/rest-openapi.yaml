@@ -17,6 +17,14 @@ components:
                         $ref: "#/components/schemas/AppWorkflowTask"
                     type: array
             type: object
+        AppWorkflowDataLayoutLink:
+            properties:
+                dataLayoutId:
+                    format: int64
+                    type: integer
+                readOnly:
+                    type: boolean
+            type: object
         AppWorkflowState:
             properties:
                 appWorkflowTransitions:
@@ -30,14 +38,13 @@ components:
             type: object
         AppWorkflowTask:
             properties:
+                appWorkflowDataLayoutLinks:
+                    items:
+                        $ref: "#/components/schemas/AppWorkflowDataLayoutLink"
+                    type: array
                 appWorkflowTransitions:
                     items:
                         $ref: "#/components/schemas/AppWorkflowTransition"
-                    type: array
-                dataLayoutIds:
-                    items:
-                        format: int64
-                        type: integer
                     type: array
                 name:
                     type: string

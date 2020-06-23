@@ -45,7 +45,6 @@ definition {
 			DepotNavigator.openDepotAdmin();
 
 			DepotNavigator.gotoDepotPortlet(
-				category = "People",
 				depotName = "Test Depot Name",
 				portlet = "Memberships");
 
@@ -91,7 +90,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "People",
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
@@ -152,7 +150,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "People",
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 
@@ -169,7 +166,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "People",
 			depotName = "Test Depot Name",
 			portlet = "Memberships");
 

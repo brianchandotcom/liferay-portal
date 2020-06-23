@@ -57,7 +57,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "Recycle Bin",
 			depotName = "Test Depot Name",
 			portlet = "Recycle Bin");
 
@@ -127,7 +126,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "Configuration",
 			depotName = "Test Depot Name",
 			portlet = "Settings");
 
@@ -162,7 +160,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "Recycle Bin",
 			depotName = "Test Depot Name",
 			portlet = "Recycle Bin");
 
@@ -210,7 +207,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "Recycle Bin",
 			depotName = "Test Depot Name",
 			portlet = "Recycle Bin");
 

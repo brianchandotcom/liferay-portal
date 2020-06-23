@@ -39,8 +39,9 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			listView = "true",
-			portlet = "Documents and Media");
+			listView = "true");
+
+		DepotNavigator.gotoPortlet(portlet = "Web Content");
 	}
 
 	@description = "This ensures that a depot can be accessed in the table view."
@@ -56,8 +57,9 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Test Depot Name",
-			portlet = "Documents and Media",
 			tableView = "true");
+
+		DepotNavigator.gotoPortlet(portlet = "Documents and Media");
 	}
 
 	@description = "This ensures that a user can not create a repository with the same escape characters name as another repository."
@@ -274,9 +276,7 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(
-			depotName = "Edited Test Depot Name",
-			portlet = "Documents and Media");
+		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 	}
 
 	@description = "This ensures that a depot can be edited in the list view."
@@ -302,8 +302,7 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Edited Test Depot Name",
-			listView = "true",
-			portlet = "Documents and Media");
+			listView = "true");
 	}
 
 	@description = "This ensures that a depot can be edited in the table view."
@@ -329,7 +328,6 @@ definition {
 
 		DepotNavigator.gotoDepot(
 			depotName = "Edited Test Depot Name",
-			portlet = "Documents and Media",
 			tableView = "true");
 	}
 
@@ -353,9 +351,7 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name 2",
-			portlet = "Documents and Media");
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name 2");
 	}
 
 	@description = "This ensures that a depot's description can be searched."
@@ -387,9 +383,7 @@ definition {
 			resultCount = "3",
 			searchTerm = "Description");
 
-		DepotNavigator.gotoDepot(
-			depotName = "Depot 1",
-			portlet = "Documents and Media");
+		DepotNavigator.gotoDepot(depotName = "Depot 1");
 	}
 
 	@description = "This ensures that a depot's title can be searched."
@@ -423,9 +417,7 @@ definition {
 			resultCount = "3",
 			searchTerm = "Depot");
 
-		DepotNavigator.gotoDepot(
-			depotName = "Depot 1",
-			portlet = "Documents and Media");
+		DepotNavigator.gotoDepot(depotName = "Depot 1");
 	}
 
 	@description = "This ensures that all depots can be deleted when the user selects all."
@@ -502,9 +494,7 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(
-			depotName = "Test Depot Name",
-			portlet = "Documents and Media");
+		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
 	}
 
 }

@@ -193,7 +193,7 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(
+		DepotNavigator.gotoDepotPortlet(
 			depotName = "Test Depot Name",
 			portlet = "Web Content");
 

@@ -159,7 +159,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "Configuration",
 			depotName = "Test Depot Name",
 			portlet = "Settings");
 

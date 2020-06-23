@@ -36,7 +36,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "Configuration",
 			depotName = "Test Depot Name",
 			portlet = "Settings");
 
@@ -48,9 +47,7 @@ definition {
 
 		DepotNavigator.openDepotAdmin();
 
-		DepotNavigator.gotoDepot(
-			depotName = "Edited Test Depot Name",
-			portlet = "Documents and Media");
+		DepotNavigator.gotoDepot(depotName = "Edited Test Depot Name");
 	}
 
 	@description = "This ensures that a user can set the depot site connection via settings."
@@ -84,7 +81,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "Configuration",
 			depotName = "Test Depot Name",
 			portlet = "Settings");
 
@@ -133,7 +129,6 @@ definition {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepotPortlet(
-			category = "Configuration",
 			depotName = "Test Depot Name",
 			portlet = "Settings");
 

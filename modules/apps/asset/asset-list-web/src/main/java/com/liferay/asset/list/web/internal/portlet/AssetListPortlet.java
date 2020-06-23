@@ -25,8 +25,11 @@ import com.liferay.asset.list.web.internal.constants.AssetListWebKeys;
 import com.liferay.asset.list.web.internal.display.context.AssetListContentDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.AssetListDisplayContext;
 import com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext;
+import com.liferay.asset.list.web.internal.display.context.InfoListProviderDisplayContext;
 import com.liferay.asset.list.web.internal.servlet.taglib.util.AssetListContentActionDropdownItems;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
@@ -90,12 +93,19 @@ public class AssetListPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT,
 			assetListDisplayContext);
+
 		renderRequest.setAttribute(
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
 				_assetRendererFactoryClassProvider, _itemSelector,
 				renderRequest, renderResponse,
 				_getUnicodeProperties(assetListDisplayContext)));
+
+		renderRequest.setAttribute(
+			AssetListWebKeys.INFO_LIST_PROVIDER_DISPLAY_CONTEXT,
+			new InfoListProviderDisplayContext(
+				_infoItemServiceTracker, _infoListProviderTracker,
+				renderRequest, renderResponse));
 
 		renderRequest.setAttribute(
 			AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
@@ -147,6 +157,12 @@ public class AssetListPortlet extends MVCPortlet {
 	@Reference
 	private AssetRendererFactoryClassProvider
 		_assetRendererFactoryClassProvider;
+
+	@Reference
+	private InfoItemServiceTracker _infoItemServiceTracker;
+
+	@Reference
+	private InfoListProviderTracker _infoListProviderTracker;
 
 	@Reference
 	private ItemSelector _itemSelector;

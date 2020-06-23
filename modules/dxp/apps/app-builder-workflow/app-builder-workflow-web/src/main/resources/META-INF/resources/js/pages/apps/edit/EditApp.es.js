@@ -22,8 +22,12 @@ import React, {useEffect, useReducer, useState} from 'react';
 
 import '../../../../css/EditApp.scss';
 import DeployAppModal from './DeployAppModal.es';
-import configReducer from './configReducer.es';
+import configReducer, {
+	UPDATE_WORKFLOW_APP,
+	initialConfig,
+} from './configReducer.es';
 import EditAppSidebar from './sidebar/EditAppSidebar.es';
+import WorkflowBuilder from './workflow-builder/WorkflowBuilder.es';
 
 export default ({
 	history,
@@ -44,11 +48,7 @@ export default ({
 			scope,
 		},
 	});
-	const [config, dispatchConfig] = useReducer(configReducer, {
-		dataObject: {},
-		formView: {},
-		tableView: {},
-	});
+	const [config, dispatchConfig] = useReducer(configReducer, initialConfig);
 
 	const [isModalVisible, setModalVisible] = useState(false);
 	const [isLoading, setLoading] = useState(false);
@@ -67,11 +67,21 @@ export default ({
 		if (appId) {
 			setLoading(true);
 
-			getItem(`/o/app-builder/v1.0/apps/${appId}`)
-				.then((app) => {
+			Promise.all([
+				getItem(`/o/app-builder/v1.0/apps/${appId}`),
+				getItem(
+					`/o/app-builder-workflow/v1.0/apps/${appId}/app-workflows`
+				),
+			])
+				.then(([app, workflowApp]) => {
 					dispatch({
 						app,
 						type: UPDATE_APP,
+					});
+
+					dispatchConfig({
+						...workflowApp,
+						type: UPDATE_WORKFLOW_APP,
 					});
 
 					setLoading(false);
@@ -130,6 +140,8 @@ export default ({
 							</UpperToolbar.Button>
 						</UpperToolbar.Group>
 					</UpperToolbar>
+
+					<WorkflowBuilder />
 
 					<EditAppSidebar />
 

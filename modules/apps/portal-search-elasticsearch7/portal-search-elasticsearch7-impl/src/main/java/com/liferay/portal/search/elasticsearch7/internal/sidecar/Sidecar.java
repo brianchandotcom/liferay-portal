@@ -124,6 +124,10 @@ public class Sidecar {
 	}
 
 	public void stop() {
+		if (_log.isInfoEnabled()) {
+			_log.info("Stopping sidecar Elasticsearch");
+		}
+
 		PathUtil.deleteDir(_sidecarTempDirPath);
 
 		if (_processChannel == null) {

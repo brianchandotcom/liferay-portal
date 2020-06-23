@@ -56,10 +56,10 @@ public class AppBuilderWorkflowTaskLinkLocalServiceTest {
 
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
 			TestPropsValues.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
-			appBuilderApp.getDdmStructureLayoutId(), "A");
+			appBuilderApp.getDdmStructureLayoutId(), true, "A");
 		_appBuilderWorkflowTaskLinkLocalService.addAppBuilderWorkflowTaskLink(
 			TestPropsValues.getCompanyId(), appBuilderApp.getAppBuilderAppId(),
-			appBuilderApp.getDdmStructureLayoutId(), "A");
+			appBuilderApp.getDdmStructureLayoutId(), true, "A");
 	}
 
 	@Inject

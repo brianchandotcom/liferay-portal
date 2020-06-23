@@ -17,6 +17,7 @@ package com.liferay.app.builder.workflow.rest.resource.v1_0.test;
 import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflow;
+import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowDataLayoutLink;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowState;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTask;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTransition;
@@ -133,6 +134,17 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 				appWorkflowTasks = new AppWorkflowTask[] {
 					new AppWorkflowTask() {
 						{
+							appWorkflowDataLayoutLinks =
+								new AppWorkflowDataLayoutLink[] {
+									new AppWorkflowDataLayoutLink() {
+										{
+											dataLayoutId =
+												_appBuilderApp.
+													getDdmStructureLayoutId();
+											readOnly = false;
+										}
+									}
+								};
 							appWorkflowTransitions =
 								new AppWorkflowTransition[] {
 									new AppWorkflowTransition() {
@@ -144,9 +156,6 @@ public class AppWorkflowResourceTest extends BaseAppWorkflowResourceTestCase {
 										}
 									}
 								};
-							dataLayoutIds = new Long[] {
-								_appBuilderApp.getDdmStructureLayoutId()
-							};
 							name = appWorkflowTaskName;
 
 							setRoleIds(

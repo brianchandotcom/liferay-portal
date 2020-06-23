@@ -29,7 +29,6 @@ const HOVER_ITEM = 'HOVER_ITEM';
 const SELECT_ITEM = 'SELECT_ITEM';
 
 const ControlsContext = React.createContext([INITIAL_STATE, () => {}]);
-const ControlsConsumer = ControlsContext.Consumer;
 
 const reducer = (state, action) => {
 	const {itemId, itemType, origin, type} = action;
@@ -161,7 +160,6 @@ const useSelectItem = () => {
 };
 
 export {
-	ControlsConsumer,
 	ControlsProvider,
 	reducer,
 	useActivationOrigin,

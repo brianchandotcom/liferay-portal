@@ -84,7 +84,6 @@ public class Sidecar {
 		_dataHomePath = elasticsearchInstancePaths.getDataPath();
 		_elasticsearchConfiguration = elasticsearchConfiguration;
 		_elasticsearchInstancePaths = elasticsearchInstancePaths;
-		_indicesPath = elasticsearchInstancePaths.getIndicesPath();
 		_processExecutor = processExecutor;
 		_processExecutorPaths = processExecutorPaths;
 		_settingsContributors = settingsContributors;
@@ -278,10 +277,6 @@ public class Sidecar {
 		}
 
 		return "liferay";
-	}
-
-	protected Path getPathData() {
-		return _indicesPath;
 	}
 
 	protected URL getSecurityPolicyURL(URL bundleURL) {
@@ -538,10 +533,15 @@ public class Sidecar {
 	}
 
 	private void _installElasticsearchIfNeeded() {
-		ElasticsearchInstaller installer = new ElasticsearchInstaller(
-			_sidecarHomePath, new Elasticsearch730Distribution());
-
-		installer.install();
+		ElasticsearchInstaller.builder(
+		).distributablesDirectoryPath(
+			_elasticsearchInstancePaths.getWorkPath()
+		).distribution(
+			new Elasticsearch730Distribution()
+		).installationDirectoryPath(
+			_sidecarHomePath
+		).build(
+		).install();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(Sidecar.class);
@@ -551,7 +551,6 @@ public class Sidecar {
 	private final Path _dataHomePath;
 	private final ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final ElasticsearchInstancePaths _elasticsearchInstancePaths;
-	private final Path _indicesPath;
 	private ProcessChannel<Serializable> _processChannel;
 	private final ProcessExecutor _processExecutor;
 	private final ProcessExecutorPaths _processExecutorPaths;

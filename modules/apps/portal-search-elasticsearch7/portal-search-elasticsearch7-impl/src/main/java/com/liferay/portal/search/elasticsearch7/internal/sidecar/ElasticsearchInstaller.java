@@ -37,11 +37,21 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ElasticsearchInstaller {
 
-	public ElasticsearchInstaller(
-		Path destinationDirectoryPath, Distribution distribution) {
+	public static Builder builder() {
+		return new Builder();
+	}
 
-		_destinationDirectoryPath = destinationDirectoryPath;
-		_distribution = distribution;
+	public ElasticsearchInstaller() {
+	}
+
+	public ElasticsearchInstaller(
+		ElasticsearchInstaller elasticsearchInstaller) {
+
+		_distributablesDirectoryPath =
+			elasticsearchInstaller._distributablesDirectoryPath;
+		_distribution = elasticsearchInstaller._distribution;
+		_installationDirectoryPath =
+			elasticsearchInstaller._installationDirectoryPath;
 	}
 
 	public void install() {
@@ -73,13 +83,60 @@ public class ElasticsearchInstaller {
 		}
 	}
 
+	public static class Builder {
+
+		public ElasticsearchInstaller build() {
+			return new ElasticsearchInstaller(_elasticsearchInstaller);
+		}
+
+		public Builder distributablesDirectoryPath(
+			Path distributablesDirectoryPath) {
+
+			_elasticsearchInstaller._distributablesDirectoryPath =
+				distributablesDirectoryPath;
+
+			return this;
+		}
+
+		public Builder distribution(Distribution distribution) {
+			_elasticsearchInstaller._distribution = distribution;
+
+			return this;
+		}
+
+		public Builder installationDirectoryPath(
+			Path installationDirectoryPath) {
+
+			_elasticsearchInstaller._installationDirectoryPath =
+				installationDirectoryPath;
+
+			return this;
+		}
+
+		private final ElasticsearchInstaller _elasticsearchInstaller =
+			new ElasticsearchInstaller();
+
+	}
+
 	protected static String getChecksum(Path path) throws IOException {
 		try (InputStream inputStream = Files.newInputStream(path)) {
 			return DigestUtils.sha512Hex(inputStream);
 		}
 	}
 
-	protected static Path getTemporaryDownloadDirectoryPath() {
+	protected static Path getExtractedElasticsearchDirectoryPath(
+			Path extractedRootDirectoryPath)
+		throws IOException {
+
+		try (Stream<Path> stream = Files.list(extractedRootDirectoryPath)) {
+			return stream.filter(
+				Files::isDirectory
+			).findAny(
+			).get();
+		}
+	}
+
+	protected static Path getTemporaryDirectoryPath() {
 		Path path = Paths.get(SystemProperties.get(SystemProperties.TMP_DIR));
 
 		return path.resolve(ElasticsearchInstaller.class.getSimpleName());
@@ -94,7 +151,7 @@ public class ElasticsearchInstaller {
 	}
 
 	protected void createDestinationDirectory() {
-		createDirectories(_destinationDirectoryPath);
+		createDirectories(_installationDirectoryPath);
 	}
 
 	protected void createDirectories(Path directoryPath) {
@@ -107,75 +164,53 @@ public class ElasticsearchInstaller {
 	}
 
 	protected void createTemporaryDownloadDirectory() {
-		createDirectories(_temporaryDownloadDirectoryPath);
+		createDirectories(_temporaryDirectoryPath);
 	}
 
 	protected void deleteDestinationDirectory() {
-		PathUtil.deleteDir(_destinationDirectoryPath);
+		PathUtil.deleteDir(_installationDirectoryPath);
 	}
 
 	protected void deleteTemporaryDownloadDirectory() {
-		PathUtil.deleteDir(_temporaryDownloadDirectoryPath);
+		PathUtil.deleteDir(_temporaryDirectoryPath);
 	}
 
 	protected void downloadAndInstallElasticsearch() throws IOException {
-		Distributable distributable =
-			_distribution.getElasticsearchDistributable();
+		Path filePath = getFilePath(
+			_distribution.getElasticsearchDistributable());
 
-		String downloadURLString = distributable.getDownloadURLString();
+		UncompressUtil.unarchive(filePath, _temporaryDirectoryPath);
 
-		String fileName = StringUtils.substringAfterLast(
-			downloadURLString, StringPool.FORWARD_SLASH);
-
-		Path downloadedFilePath = _temporaryDownloadDirectoryPath.resolve(
-			fileName);
-
-		PathUtil.download(new URL(downloadURLString), downloadedFilePath);
-
-		guardChecksum(downloadedFilePath, distributable.getChecksum());
-
-		UncompressUtil.unarchive(
-			downloadedFilePath, _temporaryDownloadDirectoryPath);
-
-		Path extractedDirectoryPath = getExtractedElasticsearchDirectoryPath();
+		Path extractedElasticsearchDirectoryPath =
+			getExtractedElasticsearchDirectoryPath(_temporaryDirectoryPath);
 
 		PathUtil.copyDirectory(
-			extractedDirectoryPath.resolve("lib"),
-			_destinationDirectoryPath.resolve("lib"));
+			extractedElasticsearchDirectoryPath.resolve("lib"),
+			_installationDirectoryPath.resolve("lib"));
 
-		Path extractedModulesDirectoryPath = extractedDirectoryPath.resolve(
-			"modules");
+		Path extractedModulesDirectoryPath =
+			extractedElasticsearchDirectoryPath.resolve("modules");
 
 		PathUtil.copyDirectory(
 			extractedModulesDirectoryPath,
-			_destinationDirectoryPath.resolve("modules"),
+			_installationDirectoryPath.resolve("modules"),
 			extractedModulesDirectoryPath.resolve("ingest-geoip"));
 	}
 
 	protected void downloadAndInstallPlugin(Distributable distributable)
 		throws IOException {
 
-		String downloadURLString = distributable.getDownloadURLString();
-
-		String fileName = StringUtils.substringAfterLast(
-			downloadURLString, StringPool.FORWARD_SLASH);
-
-		Path downloadedFilePath = _temporaryDownloadDirectoryPath.resolve(
-			fileName);
-
-		PathUtil.download(new URL(downloadURLString), downloadedFilePath);
-
-		guardChecksum(downloadedFilePath, distributable.getChecksum());
+		Path filePath = getFilePath(distributable);
 
 		String pluginName = StringUtils.substringBeforeLast(
-			fileName, StringPool.DASH);
+			String.valueOf(filePath.getFileName()), StringPool.DASH);
 
-		Path extractedDirectoryPath = _temporaryDownloadDirectoryPath.resolve(
+		Path extractedDirectoryPath = _temporaryDirectoryPath.resolve(
 			pluginName);
 
-		UncompressUtil.unzip(downloadedFilePath, extractedDirectoryPath);
+		UncompressUtil.unzip(filePath, extractedDirectoryPath);
 
-		Path pluginsDirectoryPath = _destinationDirectoryPath.resolve(
+		Path pluginsDirectoryPath = _installationDirectoryPath.resolve(
 			"plugins");
 
 		createDirectories(pluginsDirectoryPath);
@@ -195,25 +230,45 @@ public class ElasticsearchInstaller {
 		}
 	}
 
-	protected Path getExtractedElasticsearchDirectoryPath() throws IOException {
-		try (Stream<Path> stream = Files.list(
-				_temporaryDownloadDirectoryPath)) {
+	protected Path getFilePath(Distributable distributable) throws IOException {
+		Path filePath = locateOrDownload(distributable);
 
-			return stream.filter(
-				Files::isDirectory
-			).findAny(
-			).get();
-		}
+		guardChecksum(filePath, distributable.getChecksum());
+
+		return filePath;
 	}
 
 	protected boolean isAlreadyInstalled() {
-		return Files.exists(_destinationDirectoryPath);
+		return Files.exists(_installationDirectoryPath);
 	}
 
-	private static final Path _temporaryDownloadDirectoryPath =
-		getTemporaryDownloadDirectoryPath();
+	protected Path locateOrDownload(Distributable distributable)
+		throws IOException {
 
-	private final Path _destinationDirectoryPath;
-	private final Distribution _distribution;
+		String downloadURLString = distributable.getDownloadURLString();
+
+		String fileName = StringUtils.substringAfterLast(
+			downloadURLString, StringPool.FORWARD_SLASH);
+
+		Path distributableFilePath = _distributablesDirectoryPath.resolve(
+			fileName);
+
+		if (Files.exists(distributableFilePath)) {
+			return distributableFilePath;
+		}
+
+		Path downloadedFilePath = _temporaryDirectoryPath.resolve(fileName);
+
+		PathUtil.download(new URL(downloadURLString), downloadedFilePath);
+
+		return downloadedFilePath;
+	}
+
+	private static final Path _temporaryDirectoryPath =
+		getTemporaryDirectoryPath();
+
+	private Path _distributablesDirectoryPath;
+	private Distribution _distribution;
+	private Path _installationDirectoryPath;
 
 }

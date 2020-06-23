@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -53,16 +54,16 @@ const Column = React.forwardRef(
 			);
 
 		return (
-			<div
+			<ClayLayout.Col
 				{...props}
-				className={classNames(className, 'col', {
-					[`col-${columnSize}`]: columnSize,
+				className={classNames(className, {
 					empty: !item.children.length,
 				})}
 				ref={ref}
+				size={columnSize}
 			>
 				{columnContent}
-			</div>
+			</ClayLayout.Col>
 		);
 	}
 );

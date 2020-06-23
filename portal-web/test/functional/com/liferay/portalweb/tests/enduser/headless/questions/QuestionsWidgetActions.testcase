@@ -42,6 +42,93 @@ definition {
 		}
 	}
 
+	@description = "Validate if the user can create a question with an AL image."
+	@priority = "4"
+	test AddQuestionWithALImage {
+		JSONDepot.addDepot(
+			depotDescription = "This is the description of a depot",
+			depotName = "Test Depot Name");
+
+		DepotNavigator.openDepotAdmin();
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_2.jpeg",
+			groupName = "Test Depot Name",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_2.jpeg");
+
+		DepotNavigator.openDepotAdmin();
+
+		DepotNavigator.gotoEdit(depotName = "Test Depot Name");
+
+		DepotNavigator.gotoSites(depotName = "Test Depot Name");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		Depot.connectSite(siteList = "${siteName}");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithTheALImage",
+			depotName = "Test Depot Name",
+			imageFileName = "Document_2.jpeg",
+			titleField = "Title AddQuestionWithTheALImage");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestionWithTheALImage");
+
+		AssertVisible(
+			key_imageFileName = "Document_2.jpeg",
+			locator1 = "Questions#QUESTIONS_IMAGE_NAME");
+	}
+
+	@description = "Validate if the user can create a question with an image."
+	@priority = "4"
+	test AddQuestionWithImage {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "Document_1.svg",
+			groupName = "Guest",
+			mimeType = "image/svg+xml",
+			sourceFileName = "Document_1.svg");
+
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Body AddQuestionWithTheImage",
+			imageFileName = "Document_1.svg",
+			titleField = "Title AddQuestionWithTheImage");
+
+		Click(locator1 = "Questions#ASK_QUESTION_POST_YOUR_QUESTION_BUTTON");
+
+		Questions.gotoDetails(
+			questionTabField = "Questions",
+			questionTitle = "Title AddQuestionWithTheImage");
+
+		AssertVisible(
+			key_imageFileName = "Document_1.svg",
+			locator1 = "Questions#QUESTIONS_IMAGE_NAME");
+	}
+
 	@description = "Validate if the user can not create a question with the maximum of 6 tags with unexisting tag"
 	@priority = "2"
 	test AddQuestionWithMoreThanTheMaximumTagsIsNotPossible {

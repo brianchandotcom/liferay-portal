@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -63,8 +64,6 @@ public class TableClayDataSetContentRendererContextContributor
 		BaseTableClayDataSetDisplayView tableClayDataSetDisplayView,
 		Locale locale) {
 
-		JSONObject schemaJSONObject = _jsonFactory.createJSONObject();
-
 		JSONArray fieldsJSONArray = _jsonFactory.createJSONArray();
 
 		ClayTableSchema clayTableSchema =
@@ -77,8 +76,6 @@ public class TableClayDataSetContentRendererContextContributor
 			tableClayDataSetDisplayView.getResourceBundle(locale);
 
 		for (ClayTableSchemaField clayTableSchemaField : fieldsMap.values()) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 			String label = LanguageUtil.get(
 				resourceBundle, clayTableSchemaField.getLabel());
 
@@ -88,7 +85,7 @@ public class TableClayDataSetContentRendererContextContributor
 
 			String name = clayTableSchemaField.getFieldName();
 
-			jsonObject.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"actionId", clayTableSchemaField.getActionId()
 			).put(
 				"contentRenderer", clayTableSchemaField.getContentRenderer()
@@ -117,10 +114,8 @@ public class TableClayDataSetContentRendererContextContributor
 			fieldsJSONArray.put(jsonObject);
 		}
 
-		schemaJSONObject.put("fields", fieldsJSONArray);
-
 		return HashMapBuilder.<String, Object>put(
-			"schema", schemaJSONObject
+			"schema", JSONUtil.put("fields", fieldsJSONArray)
 		).build();
 	}
 

@@ -286,7 +286,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				dropdownItem.setHref(
 					getPortletURL(), "authorIds",
 					_contentDashboardAdminDisplayContext.getUserId());
-				dropdownItem.setLabel(LanguageUtil.get(request, "mine"));
+				dropdownItem.setLabel(LanguageUtil.get(request, "me"));
 
 				return dropdownItem;
 			},

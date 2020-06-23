@@ -38,8 +38,58 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 		<c:choose>
 			<c:when test="<%= childPanelCategoriesSize > 1 %>">
+				<c:if test="<%= (group.getType() != GroupConstants.TYPE_DEPOT) && !group.isCompany() %>">
+					<%@ include file="/sites/site_administration_header_icon_pages_tree.jspf" %>
+				</c:if>
+
+				<%@ include file="/sites/site_administration_header_icon_sites.jspf" %>
+
 				<a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= (group != null) ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %> site-administration-toggler" data-parent="#<portlet:namespace />Accordion" data-qa-id="productMenuSiteAdministrationPanelCategory" data-toggle="liferay-collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= (group != null) ? "role=\"button\"" : StringPool.BLANK %>>
-					<%@ include file="/sites/site_administration_header_no_collapsible.jspf" %>
+					<clay:content-row
+						verticalAlign="center"
+					>
+						<clay:content-col>
+							<c:choose>
+								<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
+									<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
+								</c:when>
+								<c:otherwise>
+									<clay:sticker
+										displayType="secondary"
+										icon="<%= group.getIconCssClass() %>"
+									/>
+								</c:otherwise>
+							</c:choose>
+						</clay:content-col>
+
+						<clay:content-col
+							cssClass="mr-4"
+							expand="<%= true %>"
+						>
+							<div class="depot-type">
+								<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "asset-library" : "site" %>' />
+							</div>
+
+							<div class="lfr-portal-tooltip site-name text-truncate" title="<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>">
+								<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
+
+								<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">
+									<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
+								</c:if>
+							</div>
+						</clay:content-col>
+					</clay:content-row>
+
+					<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
+						<clay:sticker
+							cssClass="panel-notifications-count"
+							displayType="warning"
+							position="top-right"
+							size="sm"
+						>
+							<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %>
+						</clay:sticker>
+					</c:if>
 
 					<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 
@@ -47,9 +97,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 				</a>
 			</c:when>
 			<c:otherwise>
-				<span class="collapse-icon pr-2" data-qa-id="productMenuSiteAdministrationPanelCategory">
-					<%@ include file="/sites/site_administration_header_no_collapsible.jspf" %>
-				</span>
+				<%@ include file="/sites/site_administration_header_no_collapsible.jspf" %>
 			</c:otherwise>
 		</c:choose>
 	</c:when>

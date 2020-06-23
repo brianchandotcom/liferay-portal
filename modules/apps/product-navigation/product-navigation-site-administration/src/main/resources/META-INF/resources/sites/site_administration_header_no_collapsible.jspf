@@ -14,67 +14,69 @@
  */
 --%>
 
-<clay:content-row
-	verticalAlign="center"
->
-	<clay:content-col>
-		<c:choose>
-			<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
-				<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
-			</c:when>
-			<c:otherwise>
-				<clay:sticker
-					displayType="secondary"
-					icon="<%= group.getIconCssClass() %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</clay:content-col>
-
-	<clay:content-col
-		cssClass="mr-4"
-		expand="<%= true %>"
+<span class="collapse-icon pr-2" data-qa-id="productMenuSiteAdministrationPanelCategory">
+	<clay:content-row
+		verticalAlign="center"
 	>
-		<div class="depot-type">
-			<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "asset-library" : "site" %>' />
-		</div>
-
-		<div class="lfr-portal-tooltip site-name text-truncate" title="<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>">
-			<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
-
-			<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">
-				<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
-			</c:if>
-		</div>
-	</clay:content-col>
-
-	<c:if test="<%= (group != null) && (group.getType() != GroupConstants.TYPE_DEPOT) && !group.isCompany() %>">
-		<clay:content-col
-			cssClass="autofit-col-end"
-		>
-			<%@ include file="/sites/site_administration_header_icon_pages_tree.jspf" %>
+		<clay:content-col>
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(siteAdministrationPanelCategoryDisplayContext.getLogoURL()) %>">
+					<div class="aspect-ratio-bg-cover sticker" style="background-image: url(<%= siteAdministrationPanelCategoryDisplayContext.getLogoURL() %>);"></div>
+				</c:when>
+				<c:otherwise>
+					<clay:sticker
+						displayType="secondary"
+						icon="<%= group.getIconCssClass() %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</clay:content-col>
-	</c:if>
 
-	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
 		<clay:content-col
-			cssClass="autofit-col-end"
+			cssClass="mr-4"
+			expand="<%= true %>"
 		>
-			<%@ include file="/sites/site_administration_header_icon_sites.jspf" %>
+			<div class="depot-type">
+				<liferay-ui:message key='<%= (group.getType() == GroupConstants.TYPE_DEPOT) ? "asset-library" : "site" %>' />
+			</div>
+
+			<div class="lfr-portal-tooltip site-name text-truncate" title="<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>">
+				<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
+
+				<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">
+					<span class="site-sub-name"> - <liferay-ui:message key="<%= siteAdministrationPanelCategoryDisplayContext.getStagingLabel() %>" /></span>
+				</c:if>
+			</div>
 		</clay:content-col>
-	</c:if>
 
-	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
-		<clay:content-col
-			cssClass="autofit-col-end"
-		>
-			<clay:sticker
-				cssClass="mr-0 panel-notifications-count"
-				displayType="warning"
-				size="sm"
+		<c:if test="<%= (group != null) && (group.getType() != GroupConstants.TYPE_DEPOT) && !group.isCompany() %>">
+			<clay:content-col
+				cssClass="autofit-col-end"
 			>
-				<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %>
-			</clay:sticker>
-		</clay:content-col>
-	</c:if>
-</clay:content-row>
+				<%@ include file="/sites/site_administration_header_icon_pages_tree.jspf" %>
+			</clay:content-col>
+		</c:if>
+
+		<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
+			<clay:content-col
+				cssClass="autofit-col-end"
+			>
+				<%@ include file="/sites/site_administration_header_icon_sites.jspf" %>
+			</clay:content-col>
+		</c:if>
+
+		<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">
+			<clay:content-col
+				cssClass="autofit-col-end"
+			>
+				<clay:sticker
+					cssClass="mr-0 panel-notifications-count"
+					displayType="warning"
+					size="sm"
+				>
+					<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() %>
+				</clay:sticker>
+			</clay:content-col>
+		</c:if>
+	</clay:content-row>
+</span>

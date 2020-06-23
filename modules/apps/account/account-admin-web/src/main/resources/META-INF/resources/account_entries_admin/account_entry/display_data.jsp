@@ -61,9 +61,9 @@ AccountEntryDisplay accountEntryDisplay = (AccountEntryDisplay)request.getAttrib
 		>
 			<div class="text-center">
 				<liferay-ui:logo-selector
-					currentLogoURL='<%= (accountEntryDisplay.getLogoId() == 0) ? themeDisplay.getPathThemeImages() + "/lexicon/briefcase.svg" : accountEntryDisplay.getLogoURL(themeDisplay) %>'
+					currentLogoURL="<%= (accountEntryDisplay.getLogoId() == 0) ? accountEntryDisplay.getDefaultLogoURL(liferayPortletRequest) : accountEntryDisplay.getLogoURL(themeDisplay) %>"
 					defaultLogo="<%= accountEntryDisplay.getLogoId() == 0 %>"
-					defaultLogoURL='<%= themeDisplay.getPathThemeImages() + "/lexicon/briefcase.svg" %>'
+					defaultLogoURL="<%= accountEntryDisplay.getDefaultLogoURL(liferayPortletRequest) %>"
 					tempImageFileName="<%= String.valueOf(accountEntryDisplay.getAccountEntryId()) %>"
 				/>
 			</div>

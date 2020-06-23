@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -36,6 +37,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Pei-Jung Lan
@@ -57,6 +60,11 @@ public class AccountEntryDisplay {
 
 	public long getAccountEntryId() {
 		return _accountEntryId;
+	}
+
+	public String getDefaultLogoURL(PortletRequest portletRequest) {
+		return PortalUtil.getPathContext(portletRequest) +
+			"/account_entries_admin/icons/briefcase.svg";
 	}
 
 	public String getDescription() {

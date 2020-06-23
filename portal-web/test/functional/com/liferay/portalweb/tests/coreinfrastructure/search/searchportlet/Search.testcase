@@ -411,6 +411,8 @@ definition {
 			Pause(locator1 = "5000");
 		}
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",
 			portletOption = "Configuration");

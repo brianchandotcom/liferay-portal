@@ -393,9 +393,16 @@ definition {
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
 			value1 = "${searchTerm}");
 
-		KeyPress(
-			locator1 = "Search#EMBEDDED_SEARCH_BAR",
-			value1 = "\RETURN");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Click(locator1 = "Icon#BASIC_SEARCH");
+		}
+		else {
+			KeyPress(
+				locator1 = "Search#EMBEDDED_SEARCH_BAR",
+				value1 = "\RETURN");
+		}
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}

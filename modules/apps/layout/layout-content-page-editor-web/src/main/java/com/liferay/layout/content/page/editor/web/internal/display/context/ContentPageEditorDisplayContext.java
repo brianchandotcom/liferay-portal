@@ -390,6 +390,10 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"themeColorsCssClasses", _getThemeColorsCssClasses()
 			).put(
+				"unmarkItemForDeletionURL",
+				getFragmentEntryActionURL(
+					"/content_layout/unmark_item_for_deletion")
+			).put(
 				"updateConfigurationValuesURL",
 				getFragmentEntryActionURL(
 					"/content_layout/update_configuration_values")

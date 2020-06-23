@@ -16,7 +16,7 @@ package com.liferay.translation.web.internal.info.item.updater;
 
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
-import com.liferay.info.field.InfoFormValues;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -43,7 +43,7 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 
 	@Override
 	public JournalArticle updateFromInfoFormValues(
-			JournalArticle article, InfoFormValues infoFormValues)
+			JournalArticle article, InfoItemFieldValues infoItemFieldValues)
 		throws PortalException {
 
 		Map<Locale, String> importedLocaleTitleMap = new HashMap<>();
@@ -51,7 +51,7 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 		Set<Locale> translatedLocales = new HashSet<>();
 
 		for (InfoFieldValue<Object> infoFieldValue :
-				infoFormValues.getInfoFieldValues()) {
+				infoItemFieldValues.getInfoFieldValues()) {
 
 			InfoField infoField = infoFieldValue.getInfoField();
 

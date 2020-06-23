@@ -15,6 +15,7 @@
 package com.liferay.translation.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.journal.model.JournalArticle;
@@ -27,6 +28,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.translation.exception.InvalidXLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
 import com.liferay.translation.test.util.TranslationTestUtil;
+
+import java.util.Collection;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -91,9 +94,11 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 
 		Assert.assertNotNull(infoItemFieldValues);
 		Assert.assertNotNull(infoItemFieldValues.getInfoFieldValues());
-		Assert.assertFalse(
-			infoItemFieldValues.getInfoFieldValues(
-			).isEmpty());
+
+		Collection<InfoFieldValue<Object>> infoFieldValues =
+			infoItemFieldValues.getInfoFieldValues();
+
+		Assert.assertFalse(infoFieldValues.isEmpty());
 	}
 
 	@DeleteAfterTestRun

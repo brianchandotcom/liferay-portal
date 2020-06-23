@@ -20,6 +20,8 @@ import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
 import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
 
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -138,6 +140,13 @@ public class ElasticsearchConfigurationWrapper {
 		return elasticsearchConfiguration.productionModeEnabled();
 	}
 
+	public void register(
+		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
+
+		_elasticsearchConfigurationObservers.add(
+			elasticsearchConfigurationObserver);
+	}
+
 	public String remoteClusterConnectionId() {
 		return elasticsearchConfiguration.remoteClusterConnectionId();
 	}
@@ -190,6 +199,13 @@ public class ElasticsearchConfigurationWrapper {
 		return elasticsearchConfiguration.truststoreType();
 	}
 
+	public void unregister(
+		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
+
+		_elasticsearchConfigurationObservers.remove(
+			elasticsearchConfigurationObserver);
+	}
+
 	public String userName() {
 		return elasticsearchConfiguration.username();
 	}
@@ -199,8 +215,16 @@ public class ElasticsearchConfigurationWrapper {
 	protected void activate(Map<String, Object> properties) {
 		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
+
+		_elasticsearchConfigurationObservers.forEach(
+			elasticsearchConfigurationObserver ->
+				elasticsearchConfigurationObserver.
+					onElasticsearchConfigurationUpdate());
 	}
 
 	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
+
+	private final Set<ElasticsearchConfigurationObserver>
+		_elasticsearchConfigurationObservers = new ConcurrentSkipListSet<>();
 
 }

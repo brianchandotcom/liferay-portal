@@ -4,6 +4,11 @@ dependencies {
 #end
 #if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.lang"
+#end
+#if (${liferayVersion.startsWith("7.3")})
+	compileOnly group: "com.liferay", name: "com.liferay.petra.sql.dsl.api"
+#end
+#if (${liferayVersion.startsWith("7.2")} || ${liferayVersion.startsWith("7.3")})
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
 #end
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"

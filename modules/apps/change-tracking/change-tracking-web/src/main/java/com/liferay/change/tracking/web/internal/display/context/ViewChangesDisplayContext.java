@@ -181,7 +181,7 @@ public class ViewChangesDisplayContext {
 	private JSONObject _getChangesJSONObject() throws PortalException {
 		int counter = 1;
 
-		List<JSONObject> jsonObjects = new ArrayList<>();
+		JSONArray children = JSONFactoryUtil.createJSONArray();
 
 		List<CTEntry> ctEntries = _ctEntryLocalService.getCTCollectionCTEntries(
 			_ctCollection.getCtCollectionId(), QueryUtil.ALL_POS,
@@ -233,7 +233,7 @@ public class ViewChangesDisplayContext {
 			renderURL.setParameter(
 				"ctEntryId", String.valueOf(ctEntry.getCtEntryId()));
 
-			jsonObjects.add(
+			children.put(
 				JSONUtil.put(
 					"description",
 					_ctDisplayRendererRegistry.getEntryDescription(
@@ -275,12 +275,6 @@ public class ViewChangesDisplayContext {
 				));
 		}
 
-		JSONArray children = JSONFactoryUtil.createJSONArray();
-
-		for (JSONObject jsonObject : jsonObjects) {
-			children.put(jsonObject);
-		}
-
 		return JSONUtil.put(
 			"children", children
 		).put(
@@ -290,11 +284,11 @@ public class ViewChangesDisplayContext {
 		);
 	}
 
-	private List<JSONObject> _getChildJSONObjects(
+	private JSONArray _getChildren(
 			AtomicInteger nodeIdCounter, Map<Long, List<Long>> childPKsMap)
 		throws PortalException {
 
-		List<JSONObject> childJSONObjects = new ArrayList<>();
+		JSONArray children = JSONFactoryUtil.createJSONArray();
 
 		for (Map.Entry<Long, List<Long>> entry : childPKsMap.entrySet()) {
 			long classNameId = entry.getKey();
@@ -387,11 +381,11 @@ public class ViewChangesDisplayContext {
 					"renderURL", renderURL.toString()
 				);
 
-				childJSONObjects.add(childJSONObject);
+				children.put(childJSONObject);
 			}
 		}
 
-		return childJSONObjects;
+		return children;
 	}
 
 	private JSONObject _getContextViewJSONObject() throws PortalException {
@@ -480,29 +474,23 @@ public class ViewChangesDisplayContext {
 				continue;
 			}
 
-			List<JSONObject> childJSONObjects = _getChildJSONObjects(
-				nodeIdCounter, childPKsMap);
+			JSONArray children = _getChildren(nodeIdCounter, childPKsMap);
 
-			if (childJSONObjects.isEmpty()) {
+			if (children.length() == 0) {
 				continue;
 			}
 
-			for (JSONObject childJSONObject : childJSONObjects) {
+			for (int i = 0; i < children.length(); i++) {
+				JSONObject child = children.getJSONObject(i);
+
 				_addRootDisplayNode(
-					childJSONObject,
-					rootDisplayMap.get(
-						childJSONObject.getLong("modelClassNameId")));
+					child,
+					rootDisplayMap.get(child.getLong("modelClassNameId")));
+
+				deque.push(child);
 			}
 
-			JSONArray childrenJSONArray = JSONFactoryUtil.createJSONArray();
-
-			for (JSONObject childJSONObject : childJSONObjects) {
-				childrenJSONArray.put(childJSONObject);
-
-				deque.push(childJSONObject);
-			}
-
-			jsonObject.put("children", childrenJSONArray);
+			jsonObject.put("children", children);
 		}
 
 		for (Map.Entry<Long, List<JSONObject>> entry :
@@ -514,15 +502,16 @@ public class ViewChangesDisplayContext {
 				continue;
 			}
 
-			List<Integer> nodeIds = new ArrayList<>();
+			JSONArray nodeIds = JSONFactoryUtil.createJSONArray();
 
 			for (JSONObject rootDisplayNode : rootDisplayNodes) {
-				nodeIds.add(rootDisplayNode.getInt("id"));
+				nodeIds.put(rootDisplayNode.getInt("id"));
 			}
 
 			String typeName = _getTypeName(entry.getKey());
 
 			contextViewJSONObject.put(typeName, nodeIds);
+
 			rootDisplayClassesJSONArray.put(typeName);
 		}
 

@@ -17,12 +17,6 @@
 <%@ include file="/html/common/themes/init.jsp" %>
 
 <%
-if (!user.isDefaultUser() && !locale.equals(user.getLocale())) {
-	PortalUtil.addUserLocaleOptionsMessage(request);
-}
-%>
-
-<%
 String jspPath = (String)PortalMessages.get(request, PortalMessages.KEY_JSP_PATH);
 String message = (String)PortalMessages.get(request, PortalMessages.KEY_MESSAGE);
 

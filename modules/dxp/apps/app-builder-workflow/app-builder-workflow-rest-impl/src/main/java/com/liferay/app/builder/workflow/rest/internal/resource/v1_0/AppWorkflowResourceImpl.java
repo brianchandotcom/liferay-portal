@@ -86,7 +86,8 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 						_appBuilderWorkflowTaskLinkLocalService.
 							addAppBuilderWorkflowTaskLink(
 								contextCompany.getCompanyId(), appId,
-								dataLayoutId, appWorkflowTask.getName()));
+								dataLayoutId, false,
+								appWorkflowTask.getName()));
 				}
 			}
 		}

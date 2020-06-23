@@ -38,7 +38,7 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 	@Override
 	public AppBuilderWorkflowTaskLink addAppBuilderWorkflowTaskLink(
 			long companyId, long appBuilderAppId, long ddmStructureLayoutId,
-			String workflowTaskName)
+			boolean readOnly, String workflowTaskName)
 		throws PortalException {
 
 		AppBuilderWorkflowTaskLink appBuilderWorkflowTaskLink =
@@ -57,6 +57,7 @@ public class AppBuilderWorkflowTaskLinkLocalServiceImpl
 		appBuilderWorkflowTaskLink.setAppBuilderAppId(appBuilderAppId);
 		appBuilderWorkflowTaskLink.setDdmStructureLayoutId(
 			ddmStructureLayoutId);
+		appBuilderWorkflowTaskLink.setReadOnly(readOnly);
 		appBuilderWorkflowTaskLink.setWorkflowTaskName(workflowTaskName);
 
 		return appBuilderWorkflowTaskLinkPersistence.update(

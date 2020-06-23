@@ -429,8 +429,7 @@ public class LayoutsSEODisplayContext {
 			_selLayout.getTypeSettingsProperty(
 				"mapped-description", "description")
 		).put(
-			"title",
-			_selLayout.getTypeSettingsProperty("title-description", "title")
+			"title", _selLayout.getTypeSettingsProperty("mapped-title", "title")
 		).build();
 	}
 

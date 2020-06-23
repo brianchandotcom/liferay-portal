@@ -157,10 +157,7 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "STOPPED classic-theme");
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages",
-			site = "Guest");
+		SitePages.openPagesAdmin(siteURLKey = "guest");
 
 		SitePages.gotoPageMenuItem(
 			menuItem = "Configure",

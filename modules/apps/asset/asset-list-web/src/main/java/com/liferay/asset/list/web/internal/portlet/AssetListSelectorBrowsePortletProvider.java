@@ -47,7 +47,7 @@ public class AssetListSelectorBrowsePortletProvider
 
 		PortletURL portletURL = super.getPortletURL(httpServletRequest);
 
-		portletURL.setParameter("mvcPath", "/view_asset_list_content.jsp");
+		portletURL.setParameter("mvcPath", "/view_asset_list_items.jsp");
 
 		return portletURL;
 	}

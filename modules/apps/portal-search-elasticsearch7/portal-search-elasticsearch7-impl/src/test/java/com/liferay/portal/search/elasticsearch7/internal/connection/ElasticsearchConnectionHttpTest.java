@@ -44,7 +44,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author André de Oliveira
  */
-public class EmbeddedElasticsearchConnectionHttpTest {
+public class ElasticsearchConnectionHttpTest {
 
 	@BeforeClass
 	public static void setUpClass() {
@@ -59,7 +59,7 @@ public class EmbeddedElasticsearchConnectionHttpTest {
 		ElasticsearchConnectionFixture elasticsearchConnectionFixture =
 			ElasticsearchConnectionFixture.builder(
 			).clusterName(
-				EmbeddedElasticsearchConnectionHttpTest.class.getSimpleName()
+				ElasticsearchConnectionHttpTest.class.getSimpleName()
 			).elasticsearchConfigurationProperties(
 				properties
 			).build();

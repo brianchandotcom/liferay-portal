@@ -56,7 +56,9 @@ public class ReplicasManagerImplTest {
 	}
 
 	@Test
-	public void testSystemCompanyIndexIsReplicatedAndMigrated() {
+	public void testSystemCompanyIndexIsReplicatedAndMigrated()
+		throws Exception {
+
 		long companyId = RandomTestUtil.randomLong();
 
 		setUpCompanyLocalService(companyId);
@@ -102,6 +104,8 @@ public class ReplicasManagerImplTest {
 		createNode(4);
 
 		_testCluster.destroyNode(1);
+
+		waitForShardReroute();
 
 		assert2PrimaryShards1ReplicaAnd3Nodes(elasticsearchClientResolver2);
 	}
@@ -215,6 +219,10 @@ public class ReplicasManagerImplTest {
 		).thenReturn(
 			Collections.singletonList(company)
 		);
+	}
+
+	protected void waitForShardReroute() throws Exception {
+		Thread.sleep(60000);
 	}
 
 	@Mock

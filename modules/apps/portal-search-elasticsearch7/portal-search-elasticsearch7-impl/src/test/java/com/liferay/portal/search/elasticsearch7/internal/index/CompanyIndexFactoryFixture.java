@@ -16,9 +16,12 @@ package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
 import com.liferay.portal.search.index.IndexNameBuilder;
+
+import java.util.HashMap;
 
 import org.elasticsearch.client.RestHighLevelClient;
 
@@ -60,6 +63,8 @@ public class CompanyIndexFactoryFixture {
 			{
 				setIndexNameBuilder(new TestIndexNameBuilder());
 				setJsonFactory(new JSONFactoryImpl());
+				setElasticsearchConfigurationWrapper(
+					createElasticsearchConfigurationWrapper());
 			}
 		};
 	}
@@ -68,6 +73,16 @@ public class CompanyIndexFactoryFixture {
 		IndexName indexName = new IndexName(_indexName);
 
 		return indexName.getName();
+	}
+
+	protected ElasticsearchConfigurationWrapper
+		createElasticsearchConfigurationWrapper() {
+
+		return new ElasticsearchConfigurationWrapper() {
+			{
+				activate(new HashMap<>());
+			}
+		};
 	}
 
 	protected class TestIndexNameBuilder implements IndexNameBuilder {

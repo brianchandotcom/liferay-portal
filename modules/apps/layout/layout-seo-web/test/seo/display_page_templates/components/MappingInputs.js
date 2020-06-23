@@ -77,11 +77,11 @@ describe('MappingInputs', () => {
 			expect(feedbackImageInput).toBeInTheDocument();
 		});
 
-		it('the title inputs for user feedback has the correct value', () => {
+		it('renders the title inputs for user feedback with the correct value', () => {
 			expect(feedbackTitleInput.value).toBe('Label source type: Field 5');
 		});
 
-		it('the image inputs for user feedback has unmapped value', () => {
+		it('renders the image input for user feedback with unmapped value', () => {
 			expect(feedbackImageInput.value).toBe('-- unmapped --');
 		});
 
@@ -93,7 +93,7 @@ describe('MappingInputs', () => {
 			);
 		});
 
-		it('has a image hidden input with the correct without value', () => {
+		it('has an image hidden input without value', () => {
 			expect(hiddenImageInput.type).toBe('hidden');
 			expect(hiddenImageInput.name).toBe(baseProps.inputs[1].name);
 			expect(hiddenImageInput.value).toBe('');

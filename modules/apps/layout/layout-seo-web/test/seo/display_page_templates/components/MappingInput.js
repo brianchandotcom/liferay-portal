@@ -205,16 +205,21 @@ describe('MappingInput', () => {
 			options = fieldSelect.querySelectorAll('option');
 		});
 
-		it('only have to filtred options', () => {
+		it('only has two filtered options', () => {
 			expect(options.length).toBe(2);
 		});
 
-		it('the first and the selected one is unmapped', () => {
+		it('has the first option unmapped', () => {
 			expect(options[0].value).toBe('');
 			expect(fieldSelect.value).toBe('');
 		});
 
-		it('the second is the field type image', () => {
+		it('has the selected field unmapped', () => {
+			expect(options[0].value).toBe('');
+			expect(fieldSelect.value).toBe('');
+		});
+
+		it('has the image field in the second position', () => {
 			expect(options[1].value).toBe(baseProps.initialFields[2].key);
 		});
 	});

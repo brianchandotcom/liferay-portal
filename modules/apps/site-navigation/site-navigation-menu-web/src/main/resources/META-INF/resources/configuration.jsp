@@ -185,9 +185,7 @@ else {
 													>
 														<h3 class="card-title">
 															<span class="text-truncate-inline">
-																<span class="text-truncate" id="<portlet:namespace />rootMenuItemName">
-																	<%= HtmlUtil.escape(rootMenuItemName) %>
-																</span>
+																<span class="text-truncate" id="<portlet:namespace />rootMenuItemName"><%= HtmlUtil.escape(rootMenuItemName) %></span>
 															</span>
 														</h3>
 													</clay:content-col>

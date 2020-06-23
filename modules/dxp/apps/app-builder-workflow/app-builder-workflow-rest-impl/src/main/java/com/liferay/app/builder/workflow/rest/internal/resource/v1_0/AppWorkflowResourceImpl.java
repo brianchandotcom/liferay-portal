@@ -18,6 +18,7 @@ import com.liferay.app.builder.model.AppBuilderApp;
 import com.liferay.app.builder.service.AppBuilderAppLocalService;
 import com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink;
 import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflow;
+import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowDataLayoutLink;
 import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowState;
 import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask;
 import com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTransition;
@@ -25,6 +26,7 @@ import com.liferay.app.builder.workflow.rest.internal.resource.v1_0.helper.AppWo
 import com.liferay.app.builder.workflow.rest.resource.v1_0.AppWorkflowResource;
 import com.liferay.app.builder.workflow.service.AppBuilderWorkflowTaskLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
@@ -81,12 +83,16 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 			for (AppWorkflowTask appWorkflowTask :
 					appWorkflow.getAppWorkflowTasks()) {
 
-				for (Long dataLayoutId : appWorkflowTask.getDataLayoutIds()) {
+				for (AppWorkflowDataLayoutLink appWorkflowDataLayoutLink :
+						appWorkflowTask.getAppWorkflowDataLayoutLinks()) {
+
 					appBuilderWorkflowTaskLinks.add(
 						_appBuilderWorkflowTaskLinkLocalService.
 							addAppBuilderWorkflowTaskLink(
 								contextCompany.getCompanyId(), appId,
-								dataLayoutId, false,
+								appWorkflowDataLayoutLink.getDataLayoutId(),
+								GetterUtil.getBoolean(
+									appWorkflowDataLayoutLink.getReadOnly()),
 								appWorkflowTask.getName()));
 				}
 			}
@@ -195,12 +201,21 @@ public class AppWorkflowResourceImpl extends BaseAppWorkflowResourceImpl {
 
 		return new AppWorkflowTask() {
 			{
+				appWorkflowDataLayoutLinks = transformToArray(
+					appBuilderWorkflowTaskLinks,
+					appBuilderWorkflowTaskLink ->
+						new AppWorkflowDataLayoutLink() {
+							{
+								dataLayoutId =
+									appBuilderWorkflowTaskLink.
+										getDdmStructureLayoutId();
+								readOnly =
+									appBuilderWorkflowTaskLink.getReadOnly();
+							}
+						},
+					AppWorkflowDataLayoutLink.class);
 				appWorkflowTransitions = _toAppWorkflowTransitions(
 					node.getOutgoingTransitionsList());
-				dataLayoutIds = transformToArray(
-					appBuilderWorkflowTaskLinks,
-					AppBuilderWorkflowTaskLink::getDdmStructureLayoutId,
-					Long.class);
 				name = taskName;
 				roleIds = _toRoleIds((Task)node);
 			}

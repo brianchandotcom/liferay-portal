@@ -15,8 +15,8 @@
 package com.liferay.translation.info.item.updater.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -108,7 +108,7 @@ public class InfoFormValuesUpdaterTest {
 			descriptionMap, contentMap, LocaleUtil.getSiteDefault(), false,
 			true, _serviceContext);
 
-		InfoFormValues infoFormValues =
+		InfoItemFieldValues infoItemFieldValues =
 			_xliffTranslationInfoFormValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
@@ -118,7 +118,7 @@ public class InfoFormValuesUpdaterTest {
 
 		JournalArticle journalArticle =
 			_infoFormValuesUpdater.updateFromInfoFormValues(
-				article, infoFormValues);
+				article, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
@@ -152,7 +152,7 @@ public class InfoFormValuesUpdaterTest {
 			descriptionMap, contentMap, LocaleUtil.getSiteDefault(), false,
 			true, _serviceContext);
 
-		InfoFormValues infoFormValues =
+		InfoItemFieldValues infoItemFieldValues =
 			_xliffTranslationInfoFormValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
@@ -162,7 +162,7 @@ public class InfoFormValuesUpdaterTest {
 
 		JournalArticle journalArticle =
 			_infoFormValuesUpdater.updateFromInfoFormValues(
-				article, infoFormValues);
+				article, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));

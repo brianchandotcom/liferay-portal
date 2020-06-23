@@ -15,8 +15,8 @@
 package com.liferay.journal.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.FileSizeException;
-import com.liferay.info.field.InfoFormValues;
 import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
@@ -84,7 +84,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
 
-				InfoFormValues infoFormValues =
+				InfoItemFieldValues infoItemFieldValues =
 					_translationInfoFormValuesExporter.importXLIFF(
 						themeDisplay.getScopeGroupId(),
 						new InfoItemClassPKReference(
@@ -99,7 +99,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				JournalArticle journalArticle =
 					_infoFormValuesUpdater.updateFromInfoFormValues(
 						_journalArticleService.getArticle(groupId, articleId),
-						infoFormValues);
+						infoItemFieldValues);
 
 				int workflowAction = ParamUtil.getInteger(
 					actionRequest, "workflowAction",

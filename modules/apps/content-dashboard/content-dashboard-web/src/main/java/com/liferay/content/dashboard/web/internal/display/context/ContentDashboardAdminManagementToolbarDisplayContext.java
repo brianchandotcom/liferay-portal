@@ -262,7 +262,13 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 				DropdownItem dropdownItem = new DropdownItem();
 
 				dropdownItem.setActive(authorIds.isEmpty());
-				dropdownItem.setHref(getPortletURL());
+
+				PortletURL portletURL = getPortletURL();
+
+				portletURL.setParameter("authorIds", (String)null);
+
+				dropdownItem.setHref(portletURL);
+
 				dropdownItem.setLabel(LanguageUtil.get(request, "all"));
 
 				return dropdownItem;

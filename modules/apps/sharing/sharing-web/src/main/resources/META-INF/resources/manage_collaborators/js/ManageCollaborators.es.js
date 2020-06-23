@@ -36,7 +36,6 @@ const ManageCollaborators = ({
 	classNameId,
 	classPK,
 	collaborators,
-	dialogId,
 	portletNamespace,
 }) => {
 	const [currentCollaborators, setCurrentCollaborators] = useState(
@@ -69,11 +68,9 @@ const ManageCollaborators = ({
 	};
 
 	const closeDialog = () => {
-		const collaboratorsDialog = Liferay.Util.getWindow(dialogId);
-
-		if (collaboratorsDialog && collaboratorsDialog.hide) {
-			collaboratorsDialog.hide();
-		}
+		Liferay.Util.getOpener().Liferay.fire('closeModal', {
+			id: 'sharingDialog',
+		});
 	};
 
 	const objectToPairArray = (object) => {
@@ -255,9 +252,9 @@ const ManageCollaborators = ({
 					classPK,
 				});
 
-				showNotification(json.successMessage);
-
 				setLoadingResponse(false);
+
+				showNotification(json.successMessage);
 			})
 			.catch((error) => {
 				showNotification(error.message, true);

@@ -28,52 +28,46 @@ sharingURL.setWindowState(LiferayWindowState.POP_UP);
 
 <aui:script sandbox="<%= true %>">
 	function showDialog(uri, title) {
-		Liferay.Util.openWindow({
-			dialog: {
-				centered: true,
-				constrain: true,
-				cssClass: 'sharing-dialog',
-				destroyOnHide: true,
-				modal: true,
-				height: 540,
-				width: 600,
-			},
+		Liferay.Util.openModal({
 			id: 'sharingDialog',
+			iframeBodyCssClass: 'sharing-dialog',
 			title: Liferay.Util.escapeHTML(title),
-			uri: uri,
+			url: uri,
 		});
 	}
 
-	Liferay.Sharing = Liferay.Sharing || {};
+	var Sharing = {
+		manageCollaborators: function (classNameId, classPK) {
+			var manageCollaboratorsParameters = {
+				classNameId: classNameId,
+				classPK: classPK,
+			};
 
-	Liferay.Sharing.share = function (classNameId, classPK, title) {
-		var sharingParameters = {
-			classNameId: classNameId,
-			classPK: classPK,
-		};
+			var manageCollaboratorsURL = Liferay.Util.PortletURL.createPortletURL(
+				'<%= manageCollaboratorsURL.toString() %>',
+				manageCollaboratorsParameters
+			);
 
-		var sharingURL = Liferay.Util.PortletURL.createPortletURL(
-			'<%= sharingURL.toString() %>',
-			sharingParameters
-		);
+			showDialog(
+				manageCollaboratorsURL.toString(),
+				'<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
+			);
+		},
 
-		showDialog(sharingURL.toString(), title);
+		share: function (classNameId, classPK, title) {
+			var sharingParameters = {
+				classNameId: classNameId,
+				classPK: classPK,
+			};
+
+			var sharingURL = Liferay.Util.PortletURL.createPortletURL(
+				'<%= sharingURL.toString() %>',
+				sharingParameters
+			);
+
+			showDialog(sharingURL.toString(), title);
+		},
 	};
 
-	Liferay.Sharing.manageCollaborators = function (classNameId, classPK) {
-		var manageCollaboratorsParameters = {
-			classNameId: classNameId,
-			classPK: classPK,
-		};
-
-		var manageCollaboratorsURL = Liferay.Util.PortletURL.createPortletURL(
-			'<%= manageCollaboratorsURL.toString() %>',
-			manageCollaboratorsParameters
-		);
-
-		showDialog(
-			manageCollaboratorsURL.toString(),
-			'<%= LanguageUtil.get(resourceBundle, "manage-collaborators") %>'
-		);
-	};
+	Liferay.Sharing = Sharing;
 </aui:script>

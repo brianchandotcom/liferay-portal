@@ -42,7 +42,6 @@ const Sharing = ({
 	autocompleteUserURL,
 	classNameId,
 	classPK,
-	dialogId,
 	portletNamespace,
 	shareActionURL,
 	sharingEntryPermissionDisplayActionId,
@@ -59,11 +58,9 @@ const Sharing = ({
 	const emailValidationInProgress = useRef(false);
 
 	const closeDialog = () => {
-		const sharingDialog = Liferay.Util.getWindow(dialogId);
-
-		if (sharingDialog && sharingDialog.hide) {
-			sharingDialog.hide();
-		}
+		Liferay.Util.getOpener().Liferay.fire('closeModal', {
+			id: 'sharingDialog',
+		});
 	};
 
 	const showNotification = (message, error) => {
@@ -122,14 +119,6 @@ const Sharing = ({
 			.catch((error) => {
 				showNotification(error.message, true);
 			});
-	};
-
-	const onModalClose = () => {
-		const sharingDialog = Liferay.Util.getWindow(dialogId);
-
-		if (sharingDialog && sharingDialog.hide) {
-			sharingDialog.hide();
-		}
 	};
 
 	const isEmailAddressValid = (email) => {
@@ -357,7 +346,7 @@ const Sharing = ({
 					<ClayButton.Group spaced>
 						<ClayButton
 							displayType="secondary"
-							onClick={onModalClose}
+							onClick={closeDialog}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>

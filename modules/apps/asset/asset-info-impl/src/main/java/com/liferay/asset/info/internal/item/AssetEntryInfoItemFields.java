@@ -15,6 +15,7 @@
 package com.liferay.asset.info.internal.item;
 
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 
@@ -60,6 +61,11 @@ public interface AssetEntryInfoItemFields {
 		InfoLocalizedValue.localize(
 			AssetEntryInfoItemFields.class, "user-name"),
 		"userName");
+	public static final InfoField userProfileImage = new InfoField(
+		ImageInfoFieldType.INSTANCE,
+		InfoLocalizedValue.localize(
+			AssetEntryInfoItemFields.class, "user-profile-image"),
+		"userProfileImage");
 	public static final InfoField viewCountInfoField = new InfoField(
 		TextInfoFieldType.INSTANCE,
 		InfoLocalizedValue.localize(

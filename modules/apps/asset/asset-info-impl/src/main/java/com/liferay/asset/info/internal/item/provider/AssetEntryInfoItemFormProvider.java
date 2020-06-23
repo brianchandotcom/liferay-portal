@@ -57,7 +57,8 @@ public class AssetEntryInfoItemFormProvider
 			AssetEntryInfoItemFields.modifiedDateInfoField,
 			AssetEntryInfoItemFields.expirationDateInfoField,
 			AssetEntryInfoItemFields.viewCountInfoField,
-			AssetEntryInfoItemFields.urlInfoField);
+			AssetEntryInfoItemFields.urlInfoField,
+			AssetEntryInfoItemFields.userProfileImage);
 	}
 
 	@Reference

@@ -75,8 +75,8 @@ public class ScopedCSSVariablesTopHeadDynamicIncludeTest {
 			scopedCSSVariables
 		);
 
-		scopedCSSVariablesTopHeadDynamicInclude.addScopedCSSVariablesProvider(
-			scopedCSSVariablesProvider);
+		scopedCSSVariablesTopHeadDynamicInclude.setScopedCSSVariablesProviders(
+			Arrays.asList(scopedCSSVariablesProvider));
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
@@ -129,9 +129,6 @@ public class ScopedCSSVariablesTopHeadDynamicIncludeTest {
 			scopedCSSVariables1
 		);
 
-		scopedCSSVariablesTopHeadDynamicInclude.addScopedCSSVariablesProvider(
-			scopedCSSVariablesProvider1);
-
 		ScopedCSSVariablesProvider scopedCSSVariablesProvider2 = Mockito.mock(
 			ScopedCSSVariablesProvider.class);
 
@@ -178,8 +175,9 @@ public class ScopedCSSVariablesTopHeadDynamicIncludeTest {
 			scopedCSSVariables2
 		);
 
-		scopedCSSVariablesTopHeadDynamicInclude.addScopedCSSVariablesProvider(
-			scopedCSSVariablesProvider2);
+		scopedCSSVariablesTopHeadDynamicInclude.setScopedCSSVariablesProviders(
+			Arrays.asList(
+				scopedCSSVariablesProvider1, scopedCSSVariablesProvider2));
 
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);

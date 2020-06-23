@@ -55,7 +55,7 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 		printWriter.print("type=\"text/css\">\n");
 
 		for (ScopedCSSVariablesProvider scopedCSSVariablesProvider :
-				_scopedCssVariablesProviders) {
+				_scopedCSSVariablesProviders) {
 
 			_writeCSSVariables(
 				printWriter,
@@ -74,16 +74,28 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_scopedCssVariablesProviders = ServiceTrackerListFactory.open(
-			bundleContext, ScopedCSSVariablesProvider.class,
-			new PropertyServiceReferenceComparator<>("service.ranking"));
+		_scopedCssVariablesProviderServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, ScopedCSSVariablesProvider.class,
+				new PropertyServiceReferenceComparator<>("service.ranking"));
+
+		setScopedCSSVariablesProviders(
+			_scopedCssVariablesProviderServiceTrackerList);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_scopedCssVariablesProviders.close();
+		setScopedCSSVariablesProviders(null);
 
-		_scopedCssVariablesProviders = null;
+		_scopedCssVariablesProviderServiceTrackerList.close();
+
+		_scopedCssVariablesProviderServiceTrackerList = null;
+	}
+
+	protected void setScopedCSSVariablesProviders(
+		Iterable<ScopedCSSVariablesProvider> scopedCSSVariablesProviders) {
+
+		_scopedCSSVariablesProviders = scopedCSSVariablesProviders;
 	}
 
 	private void _writeCSSVariables(
@@ -111,8 +123,9 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 		}
 	}
 
+	private Iterable<ScopedCSSVariablesProvider> _scopedCSSVariablesProviders;
 	private ServiceTrackerList
 		<ScopedCSSVariablesProvider, ScopedCSSVariablesProvider>
-			_scopedCssVariablesProviders;
+			_scopedCssVariablesProviderServiceTrackerList;
 
 }

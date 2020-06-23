@@ -81,7 +81,31 @@ definition {
 			locator1 = "Questions#ASK_QUESTION_TITLE_FIELD",
 			value1 = "${titleField}");
 
-		CKEditor.addContent(content = "${kbArticleContent}");
+		CKEditor.addContent(content = "${contentField}");
+
+		if (isSet(imageFileName)) {
+			var key_imageFileName = "${imageFileName}";
+
+			ItemSelector.gotoItemSelectorViaCKEditor();
+
+			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
+
+			if (isSet(depotName)) {
+				AssertClick(
+					key_breadcrumbName = "Sites and Libraries",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					value1 = "Sites and Libraries");
+
+				AssertClick(
+					key_groupTab = "Asset Library",
+					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+					value1 = "Asset Library");
+
+				LexiconCard.clickCard(card = "${depotName}");
+			}
+
+			Click(locator1 = "ItemSelector#SELECT_FILE_IMAGE_CARD");
+		}
 	}
 
 	macro changeDisplayStyle {

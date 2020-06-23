@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.Digester;
@@ -516,7 +517,14 @@ public class SyncHelperImpl implements SyncHelper {
 			serviceContext.getModelPermissions();
 
 		if (modelPermissions == null) {
-			modelPermissions = new ModelPermissions();
+			if (folder) {
+				modelPermissions = ModelPermissionsFactory.create(
+					Folder.class.getName());
+			}
+			else {
+				modelPermissions = ModelPermissionsFactory.create(
+					FileEntry.class.getName());
+			}
 		}
 
 		modelPermissions.addRolePermissions(

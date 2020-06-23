@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -134,7 +135,7 @@ public class SearchPermissionCheckerFacetedSearcherTest
 	}
 
 	protected ModelPermissions createModelPermissions() {
-		ModelPermissions modelPermissions = new ModelPermissions();
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create();
 
 		modelPermissions.addRolePermissions(
 			RoleConstants.OWNER, ActionKeys.VIEW);

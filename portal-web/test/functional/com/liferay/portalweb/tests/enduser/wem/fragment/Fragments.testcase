@@ -960,6 +960,20 @@ definition {
 	@description = "Fragments that are being used cannot be deleted."
 	@priority = "5"
 	test ViewCannotDeleteFragmentInUse {
+		task ("Publish the fragment entry") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
+
+			FragmentsAdminNavigator.gotoEntryEllipsisItem(
+				entry = "Fragment Name",
+				item = "Edit");
+
+			Pause(locator1 = "3000");
+
+			PortletEntry.publish();
+		}
+
 		task ("Navigate to page templates admin") {
 			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
 		}

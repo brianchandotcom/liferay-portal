@@ -34,7 +34,6 @@ definition {
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property environment.acceptance = "true";
-		property portal.upstream = "quarantine";
 
 		Staging.remoteStagingSetUp(siteName = "Site Name");
 
@@ -153,8 +152,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
+		property portal.acceptance = "true";
 
 		Staging.remoteStagingSetUp(
 			remotePort = "9080",
@@ -703,7 +701,6 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
-		property portal.upstream = "quarantine";
 
 		Staging.remoteStagingSetUp(
 			pageVersioningEnabled = "true",
@@ -826,7 +823,6 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "PGStaging#PublishWCWithPagesVariationViaRemoteStaging";
 
 		Staging.remoteStagingSetUp(

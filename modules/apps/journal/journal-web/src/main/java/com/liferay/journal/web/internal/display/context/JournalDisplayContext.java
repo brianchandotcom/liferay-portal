@@ -700,7 +700,7 @@ public class JournalDisplayContext {
 		return _navigation;
 	}
 
-	public List<NavigationItem> getNavigationBarItems(String currentItem) {
+	public List<NavigationItem> getNavigationItems(String currentItem) {
 		Group group = _themeDisplay.getScopeGroup();
 
 		return NavigationItemListBuilder.add(

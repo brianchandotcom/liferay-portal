@@ -19,11 +19,10 @@ function undoAction({action, store}) {
 	const {itemId, portletIds} = action;
 
 	return (dispatch) => {
-		return LayoutService.markItemForDeletion({
+		return LayoutService.unmarkItemForDeletion({
 			itemId,
 			onNetworkStatus: dispatch,
 			segmentsExperienceId: store.segmentsExperienceId,
-			unmark: true,
 		}).then(({layoutData}) => {
 			dispatch(addItem({itemId, layoutData, portletIds}));
 		});

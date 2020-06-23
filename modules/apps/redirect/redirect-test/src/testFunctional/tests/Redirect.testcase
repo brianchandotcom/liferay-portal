@@ -937,9 +937,6 @@ definition {
 	@description = "This ensures that the old friendlyURL can be removed from the history."
 	@priority = "5"
 	test RemoveOldFriendlyURL {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -993,9 +990,6 @@ definition {
 	@description = "This ensures that the old friendlyURL can be restored from the history."
 	@priority = "5"
 	test RestoreOldFriendlyURL {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -1376,9 +1370,6 @@ definition {
 	@description = "This ensures that both the active URL and old friendlyURL can be viewed from the history."
 	@priority = "5"
 	test ViewFriendlyURLs {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -1448,9 +1439,6 @@ definition {
 	@description = "This ensures that both the localized active URL and old friendlyURL can be viewed from the history."
 	@priority = "5"
 	test ViewLocalizedFriendlyURLs {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -1501,9 +1489,6 @@ definition {
 	@description = "This ensures that the multiple old friendlyURLs can be viewed from the history. This test also covers the first old friendlyURL is the last one."
 	@priority = "5"
 	test ViewMultipleOldFriendlyURLs {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(
@@ -1532,9 +1517,6 @@ definition {
 	@description = "This ensures that both the active URL and the old friendlyURL can be viewed by default language from the history after localization without friendlyURL."
 	@priority = "5"
 	test ViewURLsAfterLocalizationWithoutFriendlyURL {
-		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.FFViewFriendlyURLHistoryConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		JSONLayout.addPublicLayout(

@@ -32,7 +32,25 @@ import {useSelector} from '../../store/index';
 import {useHoverItem, useIsActive} from '../Controls';
 import {useUpdatedLayoutDataContext} from '../ResizeContext';
 
-export default function FloatingToolbar({
+export default React.memo(FloatingToolbar, (prevProps, nextProps) => {
+	if (
+		prevProps.item !== nextProps.item ||
+		prevProps.itemElement !== nextProps.itemElement ||
+		prevProps.onButtonClick !== nextProps.onButtonClick
+	) {
+		return false;
+	}
+
+	if (prevProps.buttons.length !== nextProps.buttons.length) {
+		return false;
+	}
+
+	return prevProps.buttons.every(
+		(button, index) => button === nextProps.buttons[index]
+	);
+});
+
+function FloatingToolbar({
 	buttons,
 	item,
 	itemElement,
@@ -56,7 +74,10 @@ export default function FloatingToolbar({
 	);
 
 	const PanelComponent = useMemo(
-		() => FLOATING_TOOLBAR_CONFIGURATIONS[panelId] || null,
+		() =>
+			FLOATING_TOOLBAR_CONFIGURATIONS[panelId]
+				? React.memo(FLOATING_TOOLBAR_CONFIGURATIONS[panelId])
+				: null,
 		[panelId]
 	);
 

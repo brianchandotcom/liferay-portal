@@ -21,11 +21,10 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
 import com.liferay.translation.info.item.updater.InfoFormValuesUpdater;
 import com.liferay.translation.test.util.TranslationTestUtil;
@@ -59,8 +59,9 @@ public class InfoFormValuesUpdaterTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule testRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule testRule = new AggregateTestRule(
+		new LiferayIntegrationTestRule(),
+		PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -72,19 +73,10 @@ public class InfoFormValuesUpdaterTest {
 			_group, user.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
-
-		_originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			user);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
@@ -176,11 +168,6 @@ public class InfoFormValuesUpdaterTest {
 
 	@Inject
 	private InfoFormValuesUpdater _infoFormValuesUpdater;
-
-	private PermissionChecker _originalPermissionChecker;
-
-	@Inject
-	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	private ServiceContext _serviceContext;
 

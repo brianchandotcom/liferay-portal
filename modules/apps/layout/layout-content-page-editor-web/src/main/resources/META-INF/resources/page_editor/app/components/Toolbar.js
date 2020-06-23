@@ -13,6 +13,7 @@
  */
 
 import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
+import ClayLayout from '@clayui/layout';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
@@ -174,11 +175,7 @@ function ToolbarBody() {
 	}
 
 	return (
-		<div
-			className="container-fluid container-fluid-max-xl"
-			onClick={deselectItem}
-			ref={dropClearRef}
-		>
+		<ClayLayout.ContainerFluid onClick={deselectItem} ref={dropClearRef}>
 			<ul
 				className={classNames('navbar-nav', {
 					'responsive-mode': config.responsiveEnabled,
@@ -303,7 +300,7 @@ function ToolbarBody() {
 			</ul>
 
 			{openPreviewModal && <PreviewModal observer={observer} />}
-		</div>
+		</ClayLayout.ContainerFluid>
 	);
 }
 

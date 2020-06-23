@@ -59,7 +59,7 @@ public class TextDDMFormFieldTypeReportProcessor
 	@Override
 	public JSONObject process(
 			DDMFormFieldValue ddmFormFieldValue, JSONObject fieldJSONObject,
-			long ddmFormInstanceRecordId, String ddmFormInstanceReportEvent)
+			long formInstanceRecordId, String ddmFormInstanceReportEvent)
 		throws Exception {
 
 		boolean nullValue = Validator.isNull(_getValue(ddmFormFieldValue));
@@ -75,7 +75,7 @@ public class TextDDMFormFieldTypeReportProcessor
 
 			valuesJSONArray.put(
 				JSONUtil.put(
-					"formInstanceRecordId", ddmFormInstanceRecordId
+					"formInstanceRecordId", formInstanceRecordId
 				).put(
 					"value", _getValue(ddmFormFieldValue)
 				));
@@ -102,7 +102,7 @@ public class TextDDMFormFieldTypeReportProcessor
 
 			DDMFormInstanceRecord ddmFormInstanceRecord =
 				ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-					ddmFormInstanceRecordId);
+					formInstanceRecordId);
 
 			DDMFormInstance ddmFormInstance =
 				ddmFormInstanceRecord.getFormInstance();
@@ -124,7 +124,7 @@ public class TextDDMFormFieldTypeReportProcessor
 			stream.filter(
 				currentDDMFormInstanceRecord ->
 					currentDDMFormInstanceRecord.getFormInstanceRecordId() !=
-						ddmFormInstanceRecordId
+						formInstanceRecordId
 			).limit(
 				_VALUES_MAX_LENGTH
 			).forEach(

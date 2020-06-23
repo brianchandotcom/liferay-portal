@@ -50,7 +50,7 @@ public class DDMFormInstanceReportLocalServiceImpl
 	extends DDMFormInstanceReportLocalServiceBaseImpl {
 
 	@Override
-	public DDMFormInstanceReport addFormInstanceReport(long ddmFormInstanceId)
+	public DDMFormInstanceReport addFormInstanceReport(long formInstanceId)
 		throws PortalException {
 
 		DDMFormInstanceReport ddmFormInstanceReport =
@@ -58,7 +58,7 @@ public class DDMFormInstanceReportLocalServiceImpl
 				counterLocalService.increment());
 
 		DDMFormInstance ddmFormInstance =
-			_ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
+			_ddmFormInstancePersistence.findByPrimaryKey(formInstanceId);
 
 		ddmFormInstanceReport.setGroupId(ddmFormInstance.getGroupId());
 		ddmFormInstanceReport.setCompanyId(ddmFormInstance.getCompanyId());
@@ -72,21 +72,21 @@ public class DDMFormInstanceReportLocalServiceImpl
 
 	@Override
 	public DDMFormInstanceReport getFormInstanceReportByFormInstanceId(
-			long ddmFormInstanceId)
+			long formInstanceId)
 		throws PortalException {
 
 		return ddmFormInstanceReportPersistence.findByFormInstanceId(
-			ddmFormInstanceId);
+			formInstanceId);
 	}
 
 	@Override
 	public void processFormInstanceReportEvent(
-		long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+		long formInstanceReportId, long formInstanceRecordVersionId,
 		String ddmFormInstanceReportEvent) {
 
 		try {
 			ddmFormInstanceReportLocalService.updateFormInstanceReport(
-				ddmFormInstanceReportId, ddmFormInstanceRecordVersionId,
+				formInstanceReportId, formInstanceRecordVersionId,
 				ddmFormInstanceReportEvent);
 		}
 		catch (Exception exception) {
@@ -95,7 +95,7 @@ public class DDMFormInstanceReportLocalServiceImpl
 
 				sb.append("Unable to update dynamic data mapping form ");
 				sb.append("instance report ");
-				sb.append(ddmFormInstanceReportId);
+				sb.append(formInstanceReportId);
 
 				_log.warn(sb.toString(), exception);
 			}
@@ -104,32 +104,30 @@ public class DDMFormInstanceReportLocalServiceImpl
 
 	@Override
 	public DDMFormInstanceReport updateFormInstanceReport(
-			long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+			long formInstanceReportId, long formInstanceRecordVersionId,
 			String ddmFormInstanceReportEvent)
 		throws PortalException {
 
 		DDMFormInstanceReport ddmFormInstanceReport =
 			ddmFormInstanceReportPersistence.findByPrimaryKey(
-				ddmFormInstanceReportId);
+				formInstanceReportId);
 
 		ddmFormInstanceReport.setModifiedDate(new Date());
 		ddmFormInstanceReport.setData(
-			_getData(
-				ddmFormInstanceRecordVersionId, ddmFormInstanceReportEvent));
+			_getData(formInstanceRecordVersionId, ddmFormInstanceReportEvent));
 
 		return ddmFormInstanceReportPersistence.update(ddmFormInstanceReport);
 	}
 
 	private String _getData(
-			long ddmFormInstanceRecordVersionId,
-			String ddmFormInstanceReportEvent)
+			long formInstanceRecordVersionId, String ddmFormInstanceReportEvent)
 		throws PortalException {
 
 		try {
 			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 				_ddmFormInstanceRecordVersionLocalService.
 					getDDMFormInstanceRecordVersion(
-						ddmFormInstanceRecordVersionId);
+						formInstanceRecordVersionId);
 
 			DDMFormInstanceReport ddmFormInstanceReport =
 				ddmFormInstanceReportPersistence.findByFormInstanceId(
@@ -202,7 +200,7 @@ public class DDMFormInstanceReportLocalServiceImpl
 		catch (Exception exception) {
 			throw new PortalException(
 				"Unable to process data for form instance record version " +
-					ddmFormInstanceRecordVersionId,
+					formInstanceRecordVersionId,
 				exception);
 		}
 	}

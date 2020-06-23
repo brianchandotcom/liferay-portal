@@ -24,7 +24,7 @@ public interface DDMFormFieldTypeReportProcessor {
 
 	public default JSONObject process(
 			DDMFormFieldValue ddmFormFieldValue, JSONObject fieldJSONObject,
-			long ddmFormInstanceRecordId, String ddmFormInstanceReportEvent)
+			long formInstanceRecordId, String ddmFormInstanceReportEvent)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

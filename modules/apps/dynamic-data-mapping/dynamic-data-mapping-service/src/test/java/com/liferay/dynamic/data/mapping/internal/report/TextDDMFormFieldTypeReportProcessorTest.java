@@ -100,11 +100,11 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			0L
 		);
 
-		long ddmFormInstanceRecordId = 3;
+		long formInstanceRecordId = 3;
 
 		when(
 			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				ddmFormInstanceRecordId)
+				formInstanceRecordId)
 		).thenReturn(
 			ddmFormInstanceRecord
 		);
@@ -143,7 +143,7 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 							"value", "text 1"
 						))
 				),
-				ddmFormInstanceRecordId,
+				formInstanceRecordId,
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
@@ -201,11 +201,11 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			ddmFormInstance
 		);
 
-		long ddmFormInstanceRecordId = 3;
+		long formInstanceRecordId = 3;
 
 		when(
 			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				ddmFormInstanceRecordId)
+				formInstanceRecordId)
 		).thenReturn(
 			ddmFormInstanceRecord
 		);
@@ -229,7 +229,7 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		JSONObject processedFieldJSONObject =
 			_textDDMFormFieldTypeReportProcessor.process(
 				ddmFormFieldValue, JSONUtil.put("type", DDMFormFieldType.TEXT),
-				ddmFormInstanceRecordId,
+				formInstanceRecordId,
 				DDMFormInstanceReportConstants.EVENT_DELETE_RECORD_VERSION);
 
 		Assert.assertEquals(
@@ -281,11 +281,11 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			0L
 		);
 
-		long ddmFormInstanceRecordId = 1;
+		long formInstanceRecordId = 1;
 
 		when(
 			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				ddmFormInstanceRecordId)
+				formInstanceRecordId)
 		).thenReturn(
 			ddmFormInstanceRecord
 		);
@@ -298,7 +298,7 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 				).put(
 					"values", JSONFactoryUtil.createJSONObject()
 				),
-				ddmFormInstanceRecordId,
+				formInstanceRecordId,
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
@@ -350,11 +350,11 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			0L
 		);
 
-		long ddmFormInstanceRecordId = 0;
+		long formInstanceRecordId = 0;
 
 		when(
 			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				ddmFormInstanceRecordId)
+				formInstanceRecordId)
 		).thenReturn(
 			ddmFormInstanceRecord
 		);
@@ -373,7 +373,7 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 							"value", "text 1"
 						))
 				),
-				ddmFormInstanceRecordId,
+				formInstanceRecordId,
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(
@@ -429,11 +429,11 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			0L
 		);
 
-		long ddmFormInstanceRecordId = 6;
+		long formInstanceRecordId = 6;
 
 		when(
 			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				ddmFormInstanceRecordId)
+				formInstanceRecordId)
 		).thenReturn(
 			ddmFormInstanceRecord
 		);
@@ -472,7 +472,7 @@ public class TextDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 							"value", "text 1"
 						))
 				),
-				ddmFormInstanceRecordId,
+				formInstanceRecordId,
 				DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION);
 
 		Assert.assertEquals(

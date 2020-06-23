@@ -100,7 +100,7 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 
 		String fieldName = ParamUtil.getString(httpServletRequest, "fieldName");
 
-		long ddmFormInstanceId = ParamUtil.getLong(
+		long formInstanceId = ParamUtil.getLong(
 			httpServletRequest, "formInstanceId");
 
 		int start = ParamUtil.getInteger(
@@ -110,7 +110,7 @@ public class GetFormRecordsFieldValuesMVCResourceCommand
 
 		BaseModelSearchResult<DDMFormInstanceRecord> baseModelSearchResult =
 			_ddmFormInstanceRecordService.searchFormInstanceRecords(
-				ddmFormInstanceId, new String[] {fieldName},
+				formInstanceId, new String[] {fieldName},
 				WorkflowConstants.STATUS_APPROVED, start, end,
 				new Sort(Field.MODIFIED_DATE, Sort.LONG_TYPE, true));
 

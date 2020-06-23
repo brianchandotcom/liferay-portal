@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.kernel.Value;
 import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -151,6 +152,36 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 		return infoFieldValues;
 	}
 
+	private WebImage _getWebImage(JSONObject jsonObject) {
+		try {
+			String uuid = jsonObject.getString("uuid");
+			long groupId = jsonObject.getLong("groupId");
+
+			if (Validator.isNull(uuid) && (groupId == 0)) {
+				return null;
+			}
+
+			FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
+				uuid, groupId);
+
+			WebImage webImage = new WebImage(
+				_dlURLHelper.getDownloadURL(
+					fileEntry, fileEntry.getFileVersion(), null,
+					StringPool.BLANK));
+
+			webImage.setAlt(jsonObject.getString("alt"));
+
+			return webImage;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception, exception);
+			}
+		}
+
+		return null;
+	}
+
 	private Object _sanitizeDDMFormFieldValue(
 		T t, DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
@@ -182,12 +213,8 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 			else if (Objects.equals(ddmFormFieldValue.getType(), "ddm-image") ||
 					 Objects.equals(ddmFormFieldValue.getType(), "image")) {
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-					valueString);
-
-				jsonObject.put("url", _transformFileEntryURL(valueString));
-
-				return jsonObject;
+				return _getWebImage(
+					JSONFactoryUtil.createJSONObject(valueString));
 			}
 
 			return SanitizerUtil.sanitize(
@@ -202,32 +229,6 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 
 			return valueString;
 		}
-	}
-
-	private String _transformFileEntryURL(String data) {
-		try {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(data);
-
-			String uuid = jsonObject.getString("uuid");
-			long groupId = jsonObject.getLong("groupId");
-
-			if (Validator.isNull(uuid) && (groupId == 0)) {
-				return StringPool.BLANK;
-			}
-
-			FileEntry fileEntry = _dlAppService.getFileEntryByUuidAndGroupId(
-				uuid, groupId);
-
-			return _dlURLHelper.getDownloadURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception, exception);
-			}
-		}
-
-		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

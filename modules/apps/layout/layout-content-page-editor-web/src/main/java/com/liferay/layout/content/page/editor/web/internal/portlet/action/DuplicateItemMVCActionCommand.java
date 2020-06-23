@@ -299,13 +299,13 @@ public class DuplicateItemMVCActionCommand
 
 			editableValuesJSONObject.put("instanceId", namespace);
 
-			_copyPortletPreferences(
-				serviceContext.getRequest(), portletId, oldInstanceId,
-				namespace);
 			_copyPortletPermissions(
 				fragmentEntryLink.getCompanyId(),
 				fragmentEntryLink.getGroupId(), namespace, oldInstanceId,
 				fragmentEntryLink.getPlid(), portletId);
+			_copyPortletPreferences(
+				serviceContext.getRequest(), portletId, oldInstanceId,
+				namespace);
 		}
 
 		FragmentEntryLink duplicatedFragmentEntryLink =

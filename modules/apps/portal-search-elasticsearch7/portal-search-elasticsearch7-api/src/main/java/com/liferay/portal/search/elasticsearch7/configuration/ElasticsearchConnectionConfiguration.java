@@ -39,13 +39,16 @@ public interface ElasticsearchConnectionConfiguration {
 	)
 	public boolean active();
 
-	@Meta.AD(description = "connection-id-help", name = "connection-id")
+	@Meta.AD(
+		description = "connection-id-help", name = "connection-id",
+		required = false
+	)
 	public String connectionId();
 
 	@Meta.AD(
 		deflt = "http://localhost:9200",
 		description = "network-host-addresses-help",
-		name = "network-host-addresses"
+		name = "network-host-addresses", required = false
 	)
 	public String[] networkHostAddresses();
 

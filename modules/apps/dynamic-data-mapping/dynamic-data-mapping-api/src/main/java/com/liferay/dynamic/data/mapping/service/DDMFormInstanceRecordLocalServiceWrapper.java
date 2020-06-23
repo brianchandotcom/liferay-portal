@@ -431,11 +431,11 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 
 	@Override
 	public DDMFormInstanceRecord getFormInstanceRecord(
-			long ddmFormInstanceRecordId)
+			long formInstanceRecordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-			ddmFormInstanceRecordId);
+			formInstanceRecordId);
 	}
 
 	@Override
@@ -529,12 +529,12 @@ public class DDMFormInstanceRecordLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<DDMFormInstanceRecord> searchFormInstanceRecords(
-				long ddmFormInstanceId, String[] notEmptyFields, int status,
+				long formInstanceId, String[] notEmptyFields, int status,
 				int start, int end, com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceRecordLocalService.searchFormInstanceRecords(
-			ddmFormInstanceId, notEmptyFields, status, start, end, sort);
+			formInstanceId, notEmptyFields, status, start, end, sort);
 	}
 
 	@Override

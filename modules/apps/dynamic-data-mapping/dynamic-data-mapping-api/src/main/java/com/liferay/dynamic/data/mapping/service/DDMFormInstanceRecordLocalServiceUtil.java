@@ -397,10 +397,10 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord
-			getFormInstanceRecord(long ddmFormInstanceRecordId)
+			getFormInstanceRecord(long formInstanceRecordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getFormInstanceRecord(ddmFormInstanceRecordId);
+		return getService().getFormInstanceRecord(formInstanceRecordId);
 	}
 
 	public static java.util.List
@@ -490,13 +490,13 @@ public class DDMFormInstanceRecordLocalServiceUtil {
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord>
 				searchFormInstanceRecords(
-					long ddmFormInstanceId, String[] notEmptyFields, int status,
+					long formInstanceId, String[] notEmptyFields, int status,
 					int start, int end,
 					com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().searchFormInstanceRecords(
-			ddmFormInstanceId, notEmptyFields, status, start, end, sort);
+			formInstanceId, notEmptyFields, status, start, end, sort);
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult

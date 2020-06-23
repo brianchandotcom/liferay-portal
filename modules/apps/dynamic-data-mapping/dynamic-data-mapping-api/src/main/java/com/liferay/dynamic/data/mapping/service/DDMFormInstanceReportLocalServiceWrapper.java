@@ -51,11 +51,11 @@ public class DDMFormInstanceReportLocalServiceWrapper
 	}
 
 	@Override
-	public DDMFormInstanceReport addFormInstanceReport(long ddmFormInstanceId)
+	public DDMFormInstanceReport addFormInstanceReport(long formInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceReportLocalService.addFormInstanceReport(
-			ddmFormInstanceId);
+			formInstanceId);
 	}
 
 	/**
@@ -286,11 +286,11 @@ public class DDMFormInstanceReportLocalServiceWrapper
 
 	@Override
 	public DDMFormInstanceReport getFormInstanceReportByFormInstanceId(
-			long ddmFormInstanceId)
+			long formInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceReportLocalService.
-			getFormInstanceReportByFormInstanceId(ddmFormInstanceId);
+			getFormInstanceReportByFormInstanceId(formInstanceId);
 	}
 
 	@Override
@@ -325,11 +325,11 @@ public class DDMFormInstanceReportLocalServiceWrapper
 
 	@Override
 	public void processFormInstanceReportEvent(
-		long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+		long formInstanceReportId, long formInstanceRecordVersionId,
 		String ddmFormInstanceReportEvent) {
 
 		_ddmFormInstanceReportLocalService.processFormInstanceReportEvent(
-			ddmFormInstanceReportId, ddmFormInstanceRecordVersionId,
+			formInstanceReportId, formInstanceRecordVersionId,
 			ddmFormInstanceReportEvent);
 	}
 
@@ -349,12 +349,12 @@ public class DDMFormInstanceReportLocalServiceWrapper
 
 	@Override
 	public DDMFormInstanceReport updateFormInstanceReport(
-			long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+			long formInstanceReportId, long formInstanceRecordVersionId,
 			String ddmFormInstanceReportEvent)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _ddmFormInstanceReportLocalService.updateFormInstanceReport(
-			ddmFormInstanceReportId, ddmFormInstanceRecordVersionId,
+			formInstanceReportId, formInstanceRecordVersionId,
 			ddmFormInstanceReportEvent);
 	}
 

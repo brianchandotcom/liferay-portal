@@ -76,7 +76,7 @@ public interface DDMFormInstanceReportLocalService
 	public DDMFormInstanceReport addDDMFormInstanceReport(
 		DDMFormInstanceReport ddmFormInstanceReport);
 
-	public DDMFormInstanceReport addFormInstanceReport(long ddmFormInstanceId)
+	public DDMFormInstanceReport addFormInstanceReport(long formInstanceId)
 		throws PortalException;
 
 	/**
@@ -237,7 +237,7 @@ public interface DDMFormInstanceReportLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstanceReport getFormInstanceReportByFormInstanceId(
-			long ddmFormInstanceId)
+			long formInstanceId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -259,7 +259,7 @@ public interface DDMFormInstanceReportLocalService
 		throws PortalException;
 
 	public void processFormInstanceReportEvent(
-		long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+		long formInstanceReportId, long formInstanceRecordVersionId,
 		String ddmFormInstanceReportEvent);
 
 	/**
@@ -273,7 +273,7 @@ public interface DDMFormInstanceReportLocalService
 		DDMFormInstanceReport ddmFormInstanceReport);
 
 	public DDMFormInstanceReport updateFormInstanceReport(
-			long ddmFormInstanceReportId, long ddmFormInstanceRecordVersionId,
+			long formInstanceReportId, long formInstanceRecordVersionId,
 			String ddmFormInstanceReportEvent)
 		throws PortalException;
 

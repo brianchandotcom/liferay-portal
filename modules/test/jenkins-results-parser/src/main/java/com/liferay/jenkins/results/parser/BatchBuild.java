@@ -65,6 +65,25 @@ public class BatchBuild extends BaseBuild {
 		return getSpiraPropertyValue("database");
 	}
 
+	public List<AxisBuild> getDownstreamAxisBuilds() {
+		List<AxisBuild> downstreamAxisBuilds = new ArrayList<>();
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		Collections.sort(
+			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (!(downstreamBuild instanceof AxisBuild)) {
+				continue;
+			}
+
+			downstreamAxisBuilds.add((AxisBuild)downstreamBuild);
+		}
+
+		return downstreamAxisBuilds;
+	}
+
 	@Override
 	public Element getGitHubMessageElement() {
 		Collections.sort(
@@ -424,9 +443,7 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	protected AxisBuild getAxisBuild(String axisVariable) {
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
-
+		for (AxisBuild downstreamAxisBuild : getDownstreamAxisBuilds()) {
 			if (axisVariable.equals(downstreamAxisBuild.getAxisVariable())) {
 				return downstreamAxisBuild;
 			}
@@ -505,18 +522,7 @@ public class BatchBuild extends BaseBuild {
 
 		tableRowElements.add(getJenkinsReportTableRowElement());
 
-		List<Build> downstreamBuilds = getDownstreamBuilds(null);
-
-		Collections.sort(
-			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
-
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (!(downstreamBuild instanceof AxisBuild)) {
-				continue;
-			}
-
-			AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
-
+		for (AxisBuild downstreamAxisBuild : getDownstreamAxisBuilds()) {
 			tableRowElements.addAll(
 				downstreamAxisBuild.getJenkinsReportTableRowElements(
 					downstreamAxisBuild.getResult(),

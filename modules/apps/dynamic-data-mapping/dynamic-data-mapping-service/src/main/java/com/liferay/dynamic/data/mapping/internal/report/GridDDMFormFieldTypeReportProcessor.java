@@ -102,13 +102,32 @@ public class GridDDMFormFieldTypeReportProcessor
 		DDMFormField ddmFormField = ddmStructure.getDDMFormField(
 			ddmFormFieldValue.getName());
 
+		int totalEntries = fieldJSONObject.getInt("totalEntries");
+
+		if (valueJSONObject.length() != 0) {
+			if (ddmFormInstanceReportEvent.equals(
+					DDMFormInstanceReportConstants.EVENT_ADD_RECORD_VERSION)) {
+
+				totalEntries++;
+			}
+			else if (ddmFormInstanceReportEvent.equals(
+						DDMFormInstanceReportConstants.
+							EVENT_DELETE_RECORD_VERSION)) {
+
+				totalEntries--;
+			}
+		}
+
 		fieldJSONObject.put(
 			"structure",
 			JSONUtil.put(
 				"columns", _getOptionNames(ddmFormField, "columns")
 			).put(
 				"rows", _getOptionNames(ddmFormField, "rows")
-			));
+			)
+		).put(
+			"totalEntries", totalEntries
+		);
 
 		return fieldJSONObject;
 	}

@@ -62,9 +62,9 @@ definition {
 
 			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Add Category",
-				rowEntry = "Vocabulary Name");
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
 
 			PortletEntry.inputTitle(title = "${inputText}");
 
@@ -151,9 +151,9 @@ definition {
 
 			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Add Category",
-				rowEntry = "Vocabulary Name");
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
 
 			PortletEntry.inputTitle(title = "${inputText}");
 
@@ -219,9 +219,9 @@ definition {
 
 			Vocabulary.addCP(vocabularyName = "Vocabulary Name");
 
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Add Category",
-				rowEntry = "Vocabulary Name");
+			Navigator.gotoNavNested(navNested = "Vocabulary Name");
+
+			LexiconEntry.gotoAdd();
 
 			PortletEntry.inputTitle(title = "${inputText}");
 

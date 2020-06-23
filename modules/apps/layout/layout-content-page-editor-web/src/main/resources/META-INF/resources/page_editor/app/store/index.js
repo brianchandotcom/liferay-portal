@@ -25,7 +25,13 @@ import React, {
 import useThunk from '../../core/hooks/useThunk';
 import useUndo from '../components/undo/useUndo';
 
-const StoreContext = React.createContext(null);
+const StoreDispatchContext = React.createContext(() => {});
+const StoreGetStateContext = React.createContext(null);
+const StoreSubscriptionContext = React.createContext([() => {}, () => {}]);
+
+const DEFAULT_COMPARE_EQUAL = (a, b) => a === b;
+const DEFAULT_DISPATCH = () => {};
+const DEFAULT_GET_STATE = () => ({});
 
 /**
  * Although StoreContextProvider creates a full functional store,
@@ -38,8 +44,8 @@ const StoreContext = React.createContext(null);
  */
 export const StoreAPIContextProvider = ({
 	children,
-	dispatch = () => {},
-	getState = () => ({}),
+	dispatch = DEFAULT_DISPATCH,
+	getState = DEFAULT_GET_STATE,
 }) => {
 	const subscribers = useRef([]);
 
@@ -54,25 +60,17 @@ export const StoreAPIContextProvider = ({
 	}, []);
 
 	useEffect(() => {
-		storeRef.current.dispatch = dispatch;
-	}, [dispatch]);
-
-	useEffect(() => {
-		storeRef.current.getState = getState;
 		subscribers.current.forEach((subscriber) => subscriber());
 	}, [getState]);
 
-	const storeRef = useRef({
-		dispatch,
-		getState,
-		subscribe,
-		unsubscribe,
-	});
-
 	return (
-		<StoreContext.Provider value={storeRef}>
-			{children}
-		</StoreContext.Provider>
+		<StoreSubscriptionContext.Provider value={[subscribe, unsubscribe]}>
+			<StoreDispatchContext.Provider value={dispatch}>
+				<StoreGetStateContext.Provider value={getState}>
+					{children}
+				</StoreGetStateContext.Provider>
+			</StoreDispatchContext.Provider>
+		</StoreSubscriptionContext.Provider>
 	);
 };
 
@@ -101,28 +99,17 @@ export const StoreContextProvider = ({children, initialState, reducer}) => {
 /**
  * @see https://react-redux.js.org/api/hooks#usedispatch
  */
-export const useDispatch = () => {
-	const storeRef = useContext(StoreContext);
-
-	if (process.env.NODE_ENV === 'test' && !storeRef) {
-		throw new Error('StoreContextProvider was not found');
-	}
-
-	return storeRef.current.dispatch;
-};
+export const useDispatch = () => useContext(StoreDispatchContext);
 
 /**
  * @see https://react-redux.js.org/api/hooks#useselector
  */
-export const useSelector = (selector, compareEqual = (a, b) => a === b) => {
-	const storeRef = useContext(StoreContext);
-
-	if (process.env.NODE_ENV === 'test' && !storeRef) {
-		throw new Error('StoreContextProvider was not found');
-	}
+export const useSelector = (selector, compareEqual = DEFAULT_COMPARE_EQUAL) => {
+	const getState = useContext(StoreGetStateContext);
+	const [subscribe, unsubscribe] = useContext(StoreSubscriptionContext);
 
 	const initialState = useMemo(
-		() => selector(storeRef.current.getState()),
+		() => selector(getState()),
 
 		// We really want to call selector here just on component mount.
 		// This provides an initial value that will be recalculated when
@@ -134,22 +121,27 @@ export const useSelector = (selector, compareEqual = (a, b) => a === b) => {
 	const [selectorState, setSelectorState] = useState(initialState);
 
 	useEffect(() => {
-		const store = storeRef.current;
-
 		const onStoreChange = () => {
-			const nextState = selector(storeRef.current.getState());
+			const nextState = selector(getState());
 
 			if (!compareEqual(selectorState, nextState)) {
 				setSelectorState(nextState);
 			}
 		};
 
-		store.subscribe(onStoreChange);
+		subscribe(onStoreChange);
 
 		return () => {
-			store.unsubscribe(onStoreChange);
+			unsubscribe(onStoreChange);
 		};
-	}, [selectorState, storeRef, selector, compareEqual]);
+	}, [
+		compareEqual,
+		getState,
+		selector,
+		selectorState,
+		subscribe,
+		unsubscribe,
+	]);
 
 	return selectorState;
 };

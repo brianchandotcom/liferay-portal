@@ -187,6 +187,7 @@ function CustomXAxisTick(props) {
 	return (
 		<Text
 			fill={BAR_CHART.fillXAxis}
+			fontSize={14}
 			textAnchor="middle"
 			verticalAnchor="start"
 			width={120}
@@ -204,6 +205,7 @@ function CustomYAxisTick(props) {
 	return (
 		<Text
 			fill={BAR_CHART.fillXAxis}
+			fontSize={14}
 			textAnchor="end"
 			verticalAnchor="end"
 			x={rtl ? x + BAR_CHART.axisMargin : x - BAR_CHART.axisMargin}

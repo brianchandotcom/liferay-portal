@@ -399,7 +399,20 @@ public class ViewChangesDisplayContext {
 			return null;
 		}
 
-		CTClosure ctClosure = _getCTClosure();
+		CTClosure ctClosure = null;
+
+		try {
+			ctClosure = _ctClosureFactory.create(
+				_ctCollection.getCtCollectionId());
+		}
+		catch (IllegalArgumentException | IllegalStateException exception) {
+			_log.error(exception, exception);
+
+			return JSONUtil.put(
+				"errorMessage",
+				_language.get(
+					_httpServletRequest, "context-view-is-unavailable"));
+		}
 
 		JSONObject everythingJSONObject = JSONUtil.put(
 			"id", 0
@@ -516,15 +529,6 @@ public class ViewChangesDisplayContext {
 		return contextViewJSONObject;
 	}
 
-	private CTClosure _getCTClosure() {
-		if (_ctClosure == null) {
-			_ctClosure = _ctClosureFactory.create(
-				_ctCollection.getCtCollectionId());
-		}
-
-		return _ctClosure;
-	}
-
 	private Map<Serializable, CTEntry> _getCTEntryMap(long classNameId) {
 		Map<Serializable, CTEntry> ctEntryMap = new HashMap<>();
 
@@ -567,7 +571,6 @@ public class ViewChangesDisplayContext {
 
 	private final long _activeCtCollectionId;
 	private final BasePersistenceRegistry _basePersistenceRegistry;
-	private CTClosure _ctClosure;
 	private final CTClosureFactory _ctClosureFactory;
 	private final CTCollection _ctCollection;
 	private final CTConfiguration _ctConfiguration;

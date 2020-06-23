@@ -19,6 +19,7 @@ package com.liferay.change.tracking.reference.closure;
  */
 public interface CTClosureFactory {
 
-	public CTClosure create(long ctCollectionId);
+	public CTClosure create(long ctCollectionId)
+		throws IllegalArgumentException;
 
 }

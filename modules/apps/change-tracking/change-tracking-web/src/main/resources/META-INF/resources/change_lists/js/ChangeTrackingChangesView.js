@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
@@ -522,14 +523,23 @@ class ChangeTrackingChangesView extends React.Component {
 	}
 
 	_handleNavigationUpdate(json) {
-		if (json.filterClass) {
-			this.filterClass = json.filterClass;
-		}
-
 		let navigation = json.navigation;
 
 		if (!navigation) {
 			navigation = this.state.navigation;
+		}
+
+		if (navigation === 'contextView' && this.contextView.errorMessage) {
+			this.setState({
+				navigation,
+				renderInnerHTML: null,
+			});
+
+			return;
+		}
+
+		if (json.filterClass) {
+			this.filterClass = json.filterClass;
 		}
 
 		this.nodeId = json.nodeId;
@@ -633,6 +643,48 @@ class ChangeTrackingChangesView extends React.Component {
 					dangerouslySetInnerHTML={this.state.renderInnerHTML}
 				/>
 			</div>
+		);
+	}
+
+	_renderMainContent() {
+		if (
+			this.state.navigation === 'contextView' &&
+			this.contextView.errorMessage
+		) {
+			return (
+				<ClayAlert displayType="danger">
+					{this.contextView.errorMessage}
+				</ClayAlert>
+			);
+		}
+
+		return (
+			<>
+				{this._renderManagementToolbar()}
+
+				<div className="container-fluid container-fluid-max-xl">
+					<ClayBreadcrumb
+						ellipsisBuffer={1}
+						items={this.state.breadcrumbItems}
+						spritemap={this.spritemap}
+					/>
+
+					<div className="change-lists-changes-content row">
+						{this._renderPanel()}
+
+						<div
+							className={
+								this.state.navigation === 'changes'
+									? 'col-md-12'
+									: 'col-md-9'
+							}
+						>
+							{this._renderEntry()}
+							{this._renderTable()}
+						</div>
+					</div>
+				</div>
+			</>
 		);
 	}
 
@@ -861,30 +913,7 @@ class ChangeTrackingChangesView extends React.Component {
 					{items}
 				</ClayNavigationBar>
 
-				{this._renderManagementToolbar()}
-
-				<div className="container-fluid container-fluid-max-xl">
-					<ClayBreadcrumb
-						ellipsisBuffer={1}
-						items={this.state.breadcrumbItems}
-						spritemap={this.spritemap}
-					/>
-
-					<div className="change-lists-changes-content row">
-						{this._renderPanel()}
-
-						<div
-							className={
-								this.state.navigation === 'changes'
-									? 'col-md-12'
-									: 'col-md-9'
-							}
-						>
-							{this._renderEntry()}
-							{this._renderTable()}
-						</div>
-					</div>
-				</div>
+				{this._renderMainContent()}
 			</>
 		);
 	}

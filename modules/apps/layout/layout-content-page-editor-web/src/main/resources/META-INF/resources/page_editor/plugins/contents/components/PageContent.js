@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import {openModal} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -83,7 +84,7 @@ export default function PageContent(props) {
 			onMouseOver={handleMouseOver}
 		>
 			<div className="d-flex pl-3 pr-2 py-3">
-				<div className="autofit-col autofit-col-expand">
+				<ClayLayout.ContentCol expand>
 					<strong className="list-group-title text-truncate">
 						{props.title}
 					</strong>
@@ -109,7 +110,7 @@ export default function PageContent(props) {
 							{props.status.label}
 						</ClayLabel>
 					</div>
-				</div>
+				</ClayLayout.ContentCol>
 
 				{(editURL || permissionsURL || viewUsagesURL) && (
 					<ClayDropDown

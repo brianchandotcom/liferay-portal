@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useEffect, useState} from 'react';
 
 import CollectionService from '../../services/CollectionService';
@@ -78,10 +79,7 @@ const Grid = ({
 				const itemCount = i * numberOfColumns + j;
 
 				columns.push(
-					<div
-						className={`col col-${12 / numberOfColumns}`}
-						key={index}
-					>
+					<ClayLayout.Col key={index} size={12 / numberOfColumns}>
 						{itemCount < maxNumberOfItems && (
 							<CollectionItemContextProvider
 								key={index}
@@ -105,15 +103,11 @@ const Grid = ({
 								{React.cloneElement(child)}
 							</CollectionItemContextProvider>
 						)}
-					</div>
+					</ClayLayout.Col>
 				);
 			}
 
-			rows.push(
-				<div className="row" key={i}>
-					{columns}
-				</div>
-			);
+			rows.push(<ClayLayout.Row key={i}>{columns}</ClayLayout.Row>);
 		}
 
 		return rows;

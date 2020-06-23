@@ -22,7 +22,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(JournalWebKeys.JOU
 String title = article.getTitle();
 String redirect = ParamUtil.getString(request, "redirect");
 
-JSONArray data = (JSONArray)request.getAttribute("data");
+InfoFormValues infoFormValues = (InfoFormValues)request.getAttribute(InfoFormValues.class.getName());
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -62,12 +62,13 @@ renderResponse.setTitle(title);
 		<div class="bg-white p-4">
 
 			<%
-			for (int i = 0; i < data.length(); i++) {
-				JSONObject fieldJSONObject = data.getJSONObject(i);
+				for (InfoFieldValue<Object> infoFieldValue : infoFormValues.getInfoFieldValues()) {
+					InfoField infoField = infoFieldValue.getInfoField();
 
-				String label = fieldJSONObject.getString("label");
-				String type = fieldJSONObject.getString("type");
-				String value = fieldJSONObject.getString("value");
+					if (infoField.isLocalizable()) {
+						String label = infoField.getLabelInfoLocalizedValue().getValue(locale);
+						String type = infoField.getInfoFieldType().getName();
+						String value = String.valueOf(infoFieldValue.getValue(locale));
 			%>
 
 				<clay:row>
@@ -86,6 +87,7 @@ renderResponse.setTitle(title);
 
 			<%
 			}
+				}
 			%>
 
 		</div>

@@ -77,13 +77,13 @@ renderResponse.setTitle(title);
 					<clay:col
 						md="6"
 					>
-						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" type="<%= infoFieldType.getName() %>" value="<%= String.valueOf(infoFieldValue.getValue(locale)) %>" />
+						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(locale)) %>" />
 					</clay:col>
 
 					<clay:col
 						md="6"
 					>
-						<aui:input label="<%= label %>" name="<%= label %>" type="<%= infoFieldType.getName() %>" value="" />
+						<aui:input label="<%= label %>" name="<%= label %>" value="" />
 					</clay:col>
 				</clay:row>
 

@@ -58,7 +58,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -85,7 +85,7 @@ public class CommerceDiscountTargetGrossTest {
 	@ClassRule
 	@Rule
 	public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new LiferayIntegrationTestRule(), PermissionCheckerTestRule.INSTANCE);
+		new LiferayIntegrationTestRule(), PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {

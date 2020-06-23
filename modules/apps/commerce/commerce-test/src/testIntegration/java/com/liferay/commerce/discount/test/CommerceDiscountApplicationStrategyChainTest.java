@@ -20,7 +20,7 @@ import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
@@ -41,7 +41,7 @@ public class CommerceDiscountApplicationStrategyChainTest {
 	@ClassRule
 	@Rule
 	public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
-		new LiferayIntegrationTestRule(), PermissionCheckerTestRule.INSTANCE);
+		new LiferayIntegrationTestRule(), PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
 	public void testApplyDiscountsChainMethod() throws Exception {

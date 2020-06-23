@@ -70,9 +70,6 @@ public class BatchBuild extends BaseBuild {
 
 		List<Build> downstreamBuilds = getDownstreamBuilds(null);
 
-		Collections.sort(
-			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
-
 		for (Build downstreamBuild : downstreamBuilds) {
 			if (!(downstreamBuild instanceof AxisBuild)) {
 				continue;
@@ -80,6 +77,9 @@ public class BatchBuild extends BaseBuild {
 
 			downstreamAxisBuilds.add((AxisBuild)downstreamBuild);
 		}
+
+		Collections.sort(
+			downstreamAxisBuilds, new BaseBuild.BuildDisplayNameComparator());
 
 		return downstreamAxisBuilds;
 	}

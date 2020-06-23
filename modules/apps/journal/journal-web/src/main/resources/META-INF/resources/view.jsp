@@ -47,7 +47,7 @@ if (Validator.isNotNull(title)) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems='<%= journalDisplayContext.getNavigationBarItems("web-content") %>'
+	navigationItems='<%= journalDisplayContext.getNavigationItems("web-content") %>'
 />
 
 <clay:management-toolbar

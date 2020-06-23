@@ -30,7 +30,7 @@ if (ddmStructure != null) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems='<%= journalDisplayContext.getNavigationBarItems("templates") %>'
+	navigationItems='<%= journalDisplayContext.getNavigationItems("templates") %>'
 />
 
 <clay:management-toolbar

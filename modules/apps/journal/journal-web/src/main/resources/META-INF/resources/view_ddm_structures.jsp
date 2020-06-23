@@ -24,7 +24,7 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	navigationItems='<%= journalDisplayContext.getNavigationBarItems("structures") %>'
+	navigationItems='<%= journalDisplayContext.getNavigationItems("structures") %>'
 />
 
 <clay:management-toolbar

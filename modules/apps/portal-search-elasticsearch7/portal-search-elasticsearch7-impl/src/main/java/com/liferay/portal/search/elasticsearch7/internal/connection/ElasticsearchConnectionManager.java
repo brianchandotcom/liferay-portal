@@ -27,14 +27,12 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.configuration.CrossClusterReplicationConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch7.internal.util.SearchLogHelperUtil;
 
 import java.net.InetAddress;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -200,10 +198,6 @@ public class ElasticsearchConnectionManager
 		return crossClusterReplicationConfigurationWrapper.isCCREnabled();
 	}
 
-	public synchronized void registerCompanyId(long companyId) {
-		_companyIds.put(companyId, companyId);
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MANDATORY,
 		target = "(operation.mode=EMBEDDED)",
@@ -242,10 +236,6 @@ public class ElasticsearchConnectionManager
 		}
 	}
 
-	public synchronized void unregisterCompanyId(long companyId) {
-		_companyIds.remove(companyId);
-	}
-
 	public void unsetElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
 
@@ -280,25 +270,6 @@ public class ElasticsearchConnectionManager
 					runtimeException);
 
 				throw runtimeException;
-			}
-		}
-	}
-
-	protected synchronized void createCompanyIndexes() {
-		for (Long companyId : _companyIds.values()) {
-			try {
-				RestHighLevelClient restHighLevelClient =
-					getRestHighLevelClient();
-
-				indexFactory.createIndices(
-					restHighLevelClient.indices(), companyId);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to reinitialize index for company " + companyId,
-						exception);
-				}
 			}
 		}
 	}
@@ -380,8 +351,6 @@ public class ElasticsearchConnectionManager
 	@Modified
 	protected synchronized void modified(Map<String, Object> properties) {
 		setConfiguration(properties);
-
-		createCompanyIndexes();
 	}
 
 	@Reference(unbind = "-")
@@ -410,9 +379,6 @@ public class ElasticsearchConnectionManager
 	protected volatile CrossClusterReplicationConfigurationWrapper
 		crossClusterReplicationConfigurationWrapper;
 
-	@Reference(unbind = "-")
-	protected IndexFactory indexFactory;
-
 	private String _getExceptionMessage(
 		String message, String connectionId, boolean preferLocalCluster) {
 
@@ -428,7 +394,6 @@ public class ElasticsearchConnectionManager
 		ElasticsearchConnectionManager.class);
 
 	private ClusterExecutor _clusterExecutor;
-	private final Map<Long, Long> _companyIds = new HashMap<>();
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<String, ElasticsearchConnection>
 		_elasticsearchConnections = new ConcurrentHashMap<>();

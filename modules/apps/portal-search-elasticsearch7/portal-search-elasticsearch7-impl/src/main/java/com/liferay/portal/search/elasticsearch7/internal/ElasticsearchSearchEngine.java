@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
+import com.liferay.portal.search.elasticsearch7.internal.index.CompanyIndexCreator;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
@@ -112,7 +113,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		_indexFactory.createIndices(restHighLevelClient.indices(), companyId);
 
-		_elasticsearchConnectionManager.registerCompanyId(companyId);
+		_companyIndexCreator.registerCompanyId(companyId);
 
 		waitForYellowStatus();
 	}
@@ -140,7 +141,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			_indexFactory.deleteIndices(
 				restHighLevelClient.indices(), companyId);
 
-			_elasticsearchConnectionManager.unregisterCompanyId(companyId);
+			_companyIndexCreator.unregisterCompanyId(companyId);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -192,6 +193,12 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		super.setIndexWriter(indexWriter);
 	}
 
+	public void unsetCompanyIndexCreator(
+		CompanyIndexCreator companyIndexCreator) {
+
+		_companyIndexCreator = companyIndexCreator;
+	}
+
 	public void unsetElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
 
@@ -239,6 +246,13 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		}
 
 		return true;
+	}
+
+	@Reference
+	protected void setCompanyIndexCreator(
+		CompanyIndexCreator companyIndexCreator) {
+
+		_companyIndexCreator = companyIndexCreator;
 	}
 
 	@Reference
@@ -333,6 +347,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchSearchEngine.class);
 
+	private CompanyIndexCreator _companyIndexCreator;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private IndexFactory _indexFactory;
 	private IndexNameBuilder _indexNameBuilder;

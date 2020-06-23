@@ -7,6 +7,7 @@
 		"@clayui/modal": "3.5.1",
 		"@clayui/popover": "3.4.1",
 		"@clayui/tooltip": "3.3.1",
+		"classnames": "2.2.6",
 		"frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"path-to-regexp": "3.0.0"

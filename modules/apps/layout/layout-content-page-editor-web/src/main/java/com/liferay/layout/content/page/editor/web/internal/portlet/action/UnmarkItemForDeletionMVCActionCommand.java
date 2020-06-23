@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
-import java.util.Arrays;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -38,11 +36,11 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-		"mvc.command.name=/content_layout/mark_item_for_deletion"
+		"mvc.command.name=/content_layout/unmark_item_for_deletion"
 	},
 	service = MVCActionCommand.class
 )
-public class MarkItemForDeletionMVCActionCommand
+public class UnmarkItemForDeletionMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
@@ -57,8 +55,6 @@ public class MarkItemForDeletionMVCActionCommand
 			actionRequest, "segmentsExperienceId",
 			SegmentsExperienceConstants.ID_DEFAULT);
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
-		String[] portletIds = ParamUtil.getStringValues(
-			actionRequest, "portletIds");
 
 		return JSONUtil.put(
 			"layoutData",
@@ -66,8 +62,8 @@ public class MarkItemForDeletionMVCActionCommand
 				themeDisplay.getScopeGroupId(), segmentsExperienceId,
 				themeDisplay.getPlid(),
 				layoutStructure ->
-					layoutStructure.markLayoutStructureItemForDeletion(
-						itemId, Arrays.asList(portletIds))));
+					layoutStructure.unmarkLayoutStructureItemForDeletion(
+						itemId)));
 	}
 
 }

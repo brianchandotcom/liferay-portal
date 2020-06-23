@@ -152,8 +152,18 @@ public class EditFragmentEntryDisplayContext {
 			return _fragmentEntryId;
 		}
 
-		_fragmentEntryId = ParamUtil.getLong(
+		long fragmentEntryId = ParamUtil.getLong(
 			_httpServletRequest, "fragmentEntryId");
+
+		FragmentEntry draftFragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchDraft(fragmentEntryId);
+
+		if (draftFragmentEntry == null) {
+			_fragmentEntryId = fragmentEntryId;
+		}
+		else {
+			_fragmentEntryId = draftFragmentEntry.getFragmentEntryId();
+		}
 
 		return _fragmentEntryId;
 	}

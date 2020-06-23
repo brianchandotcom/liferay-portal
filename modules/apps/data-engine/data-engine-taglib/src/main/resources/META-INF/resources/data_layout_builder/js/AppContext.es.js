@@ -407,7 +407,14 @@ const createReducer = (dataLayoutBuilder) => {
 				};
 			}
 			case UPDATE_FIELDSETS: {
-				const {fieldSets} = action.payload;
+				const {dataDefinitionId} = state;
+				let {fieldSets} = action.payload;
+
+				if (dataDefinitionId) {
+					fieldSets = fieldSets.filter(
+						(item) => item.id !== dataDefinitionId
+					);
+				}
 
 				return {
 					...state,

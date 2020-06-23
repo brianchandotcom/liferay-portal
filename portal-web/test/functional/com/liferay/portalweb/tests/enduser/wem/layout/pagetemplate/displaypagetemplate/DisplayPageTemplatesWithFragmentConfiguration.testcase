@@ -48,6 +48,7 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
 				html = "${htmlSnippet}",
 				name = "Checkbox Fragment Example");
@@ -96,6 +97,7 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
 				html = "${htmlSnippet}",
 				name = "itemSelector Fragment Example");
@@ -148,6 +150,7 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
 				html = "${htmlSnippet}",
 				name = "Text Fragment Example");
@@ -190,6 +193,7 @@ definition {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
 				configuration = "${jsonSnippet}",
+				fragmentStatus = "Approved",
 				groupName = "Test Site Name",
 				html = "${htmlSnippet}",
 				name = "Text Fragment Example");

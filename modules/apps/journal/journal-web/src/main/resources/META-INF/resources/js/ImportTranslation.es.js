@@ -25,7 +25,7 @@ export default function ImportTranslation({
 	submitBtnId,
 }) {
 	const [hasError, setHasError] = useState();
-	const [importFile, setImporFile] = useState();
+	const [importFile, setImportFile] = useState();
 
 	const inputFileRef = useRef();
 
@@ -65,7 +65,7 @@ export default function ImportTranslation({
 				setHasError(!validFile);
 
 				if (!validFile) {
-					setImporFile(null);
+					setImportFile(null);
 				}
 			}
 			catch (_error) {
@@ -94,7 +94,7 @@ export default function ImportTranslation({
 					className="d-none"
 					name="file"
 					onChange={(e) => {
-						setImporFile(e.target.files[0]);
+						setImportFile(e.target.files[0]);
 					}}
 					ref={inputFileRef}
 					type="file"
@@ -118,7 +118,7 @@ export default function ImportTranslation({
 						<ClayButtonWithIcon
 							displayType="unstyled"
 							onClick={() => {
-								setImporFile(null);
+								setImportFile(null);
 							}}
 							symbol="times-circle"
 							title={Liferay.Language.get('delete')}

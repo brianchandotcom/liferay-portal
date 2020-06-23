@@ -305,7 +305,7 @@ public class JournalArticleInfoItemFormProviderTest {
 		Assert.assertNotNull(infoItemFieldValues.getInfoFieldValue("boolean"));
 
 		InfoFieldValue<Object> imageInfoFieldValue =
-            infoItemFieldValues.getInfoFieldValue("image");
+			infoItemFieldValues.getInfoFieldValue("image");
 
 		WebImage webImage = (WebImage)imageInfoFieldValue.getValue(
 			LocaleUtil.getDefault());

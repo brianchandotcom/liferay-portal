@@ -14,6 +14,7 @@
 
 package com.liferay.app.builder.workflow.rest.client.serdes.v1_0;
 
+import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowDataLayoutLink;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTask;
 import com.liferay.app.builder.workflow.rest.client.dto.v1_0.AppWorkflowTransition;
 import com.liferay.app.builder.workflow.rest.client.json.BaseJSONParser;
@@ -57,6 +58,34 @@ public class AppWorkflowTaskSerDes {
 
 		sb.append("{");
 
+		if (appWorkflowTask.getAppWorkflowDataLayoutLinks() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"appWorkflowDataLayoutLinks\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < appWorkflowTask.getAppWorkflowDataLayoutLinks().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						appWorkflowTask.getAppWorkflowDataLayoutLinks()[i]));
+
+				if ((i + 1) <
+						appWorkflowTask.
+							getAppWorkflowDataLayoutLinks().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (appWorkflowTask.getAppWorkflowTransitions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -76,28 +105,6 @@ public class AppWorkflowTaskSerDes {
 				if ((i + 1) <
 						appWorkflowTask.getAppWorkflowTransitions().length) {
 
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (appWorkflowTask.getDataLayoutIds() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"dataLayoutIds\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < appWorkflowTask.getDataLayoutIds().length;
-				 i++) {
-
-				sb.append(appWorkflowTask.getDataLayoutIds()[i]);
-
-				if ((i + 1) < appWorkflowTask.getDataLayoutIds().length) {
 					sb.append(", ");
 				}
 			}
@@ -158,6 +165,16 @@ public class AppWorkflowTaskSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (appWorkflowTask.getAppWorkflowDataLayoutLinks() == null) {
+			map.put("appWorkflowDataLayoutLinks", null);
+		}
+		else {
+			map.put(
+				"appWorkflowDataLayoutLinks",
+				String.valueOf(
+					appWorkflowTask.getAppWorkflowDataLayoutLinks()));
+		}
+
 		if (appWorkflowTask.getAppWorkflowTransitions() == null) {
 			map.put("appWorkflowTransitions", null);
 		}
@@ -165,15 +182,6 @@ public class AppWorkflowTaskSerDes {
 			map.put(
 				"appWorkflowTransitions",
 				String.valueOf(appWorkflowTask.getAppWorkflowTransitions()));
-		}
-
-		if (appWorkflowTask.getDataLayoutIds() == null) {
-			map.put("dataLayoutIds", null);
-		}
-		else {
-			map.put(
-				"dataLayoutIds",
-				String.valueOf(appWorkflowTask.getDataLayoutIds()));
 		}
 
 		if (appWorkflowTask.getName() == null) {
@@ -211,7 +219,24 @@ public class AppWorkflowTaskSerDes {
 			AppWorkflowTask appWorkflowTask, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "appWorkflowTransitions")) {
+			if (Objects.equals(
+					jsonParserFieldName, "appWorkflowDataLayoutLinks")) {
+
+				if (jsonParserFieldValue != null) {
+					appWorkflowTask.setAppWorkflowDataLayoutLinks(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> AppWorkflowDataLayoutLinkSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new AppWorkflowDataLayoutLink[size]
+						));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "appWorkflowTransitions")) {
+
 				if (jsonParserFieldValue != null) {
 					appWorkflowTask.setAppWorkflowTransitions(
 						Stream.of(
@@ -222,12 +247,6 @@ public class AppWorkflowTaskSerDes {
 						).toArray(
 							size -> new AppWorkflowTransition[size]
 						));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "dataLayoutIds")) {
-				if (jsonParserFieldValue != null) {
-					appWorkflowTask.setDataLayoutIds(
-						toLongs((Object[])jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

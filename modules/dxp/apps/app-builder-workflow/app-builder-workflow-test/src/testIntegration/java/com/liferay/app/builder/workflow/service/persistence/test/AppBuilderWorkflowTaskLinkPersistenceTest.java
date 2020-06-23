@@ -139,6 +139,9 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 		newAppBuilderWorkflowTaskLink.setDdmStructureLayoutId(
 			RandomTestUtil.nextLong());
 
+		newAppBuilderWorkflowTaskLink.setReadOnly(
+			RandomTestUtil.randomBoolean());
+
 		newAppBuilderWorkflowTaskLink.setWorkflowTaskName(
 			RandomTestUtil.randomString());
 
@@ -165,6 +168,9 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 		Assert.assertEquals(
 			existingAppBuilderWorkflowTaskLink.getDdmStructureLayoutId(),
 			newAppBuilderWorkflowTaskLink.getDdmStructureLayoutId());
+		Assert.assertEquals(
+			existingAppBuilderWorkflowTaskLink.isReadOnly(),
+			newAppBuilderWorkflowTaskLink.isReadOnly());
 		Assert.assertEquals(
 			existingAppBuilderWorkflowTaskLink.getWorkflowTaskName(),
 			newAppBuilderWorkflowTaskLink.getWorkflowTaskName());
@@ -228,8 +234,8 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"AppBuilderWorkflowTaskLink", "mvccVersion", true,
 			"appBuilderWorkflowTaskLinkId", true, "companyId", true,
-			"appBuilderAppId", true, "ddmStructureLayoutId", true,
-			"workflowTaskName", true);
+			"appBuilderAppId", true, "ddmStructureLayoutId", true, "readOnly",
+			true, "workflowTaskName", true);
 	}
 
 	@Test
@@ -525,6 +531,8 @@ public class AppBuilderWorkflowTaskLinkPersistenceTest {
 
 		appBuilderWorkflowTaskLink.setDdmStructureLayoutId(
 			RandomTestUtil.nextLong());
+
+		appBuilderWorkflowTaskLink.setReadOnly(RandomTestUtil.randomBoolean());
 
 		appBuilderWorkflowTaskLink.setWorkflowTaskName(
 			RandomTestUtil.randomString());

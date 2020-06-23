@@ -39,6 +39,7 @@ public class AppBuilderWorkflowTaskLinkSoap implements Serializable {
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setAppBuilderAppId(model.getAppBuilderAppId());
 		soapModel.setDdmStructureLayoutId(model.getDdmStructureLayoutId());
+		soapModel.setReadOnly(model.isReadOnly());
 		soapModel.setWorkflowTaskName(model.getWorkflowTaskName());
 
 		return soapModel;
@@ -145,6 +146,18 @@ public class AppBuilderWorkflowTaskLinkSoap implements Serializable {
 		_ddmStructureLayoutId = ddmStructureLayoutId;
 	}
 
+	public boolean getReadOnly() {
+		return _readOnly;
+	}
+
+	public boolean isReadOnly() {
+		return _readOnly;
+	}
+
+	public void setReadOnly(boolean readOnly) {
+		_readOnly = readOnly;
+	}
+
 	public String getWorkflowTaskName() {
 		return _workflowTaskName;
 	}
@@ -158,6 +171,7 @@ public class AppBuilderWorkflowTaskLinkSoap implements Serializable {
 	private long _companyId;
 	private long _appBuilderAppId;
 	private long _ddmStructureLayoutId;
+	private boolean _readOnly;
 	private String _workflowTaskName;
 
 }

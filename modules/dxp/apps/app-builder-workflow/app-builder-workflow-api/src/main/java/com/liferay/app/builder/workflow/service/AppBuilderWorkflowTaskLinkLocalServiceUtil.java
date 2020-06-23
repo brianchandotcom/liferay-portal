@@ -58,11 +58,13 @@ public class AppBuilderWorkflowTaskLinkLocalServiceUtil {
 		com.liferay.app.builder.workflow.model.AppBuilderWorkflowTaskLink
 				addAppBuilderWorkflowTaskLink(
 					long companyId, long appBuilderAppId,
-					long ddmStructureLayoutId, String workflowTaskName)
+					long ddmStructureLayoutId, boolean readOnly,
+					String workflowTaskName)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().addAppBuilderWorkflowTaskLink(
-			companyId, appBuilderAppId, ddmStructureLayoutId, workflowTaskName);
+			companyId, appBuilderAppId, ddmStructureLayoutId, readOnly,
+			workflowTaskName);
 	}
 
 	/**

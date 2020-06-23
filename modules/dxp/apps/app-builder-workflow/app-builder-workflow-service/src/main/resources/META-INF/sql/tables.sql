@@ -12,5 +12,6 @@ create table AppBuilderWorkflowTaskLink (
 	companyId LONG,
 	appBuilderAppId LONG,
 	ddmStructureLayoutId LONG,
+	readOnly BOOLEAN,
 	workflowTaskName VARCHAR(75) null
 );

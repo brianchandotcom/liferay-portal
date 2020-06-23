@@ -79,7 +79,7 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,6 +91,8 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 		sb.append(appBuilderAppId);
 		sb.append(", ddmStructureLayoutId=");
 		sb.append(ddmStructureLayoutId);
+		sb.append(", readOnly=");
+		sb.append(readOnly);
 		sb.append(", workflowTaskName=");
 		sb.append(workflowTaskName);
 		sb.append("}");
@@ -110,6 +112,7 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 		appBuilderWorkflowTaskLinkImpl.setAppBuilderAppId(appBuilderAppId);
 		appBuilderWorkflowTaskLinkImpl.setDdmStructureLayoutId(
 			ddmStructureLayoutId);
+		appBuilderWorkflowTaskLinkImpl.setReadOnly(readOnly);
 
 		if (workflowTaskName == null) {
 			appBuilderWorkflowTaskLinkImpl.setWorkflowTaskName("");
@@ -135,6 +138,8 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 		appBuilderAppId = objectInput.readLong();
 
 		ddmStructureLayoutId = objectInput.readLong();
+
+		readOnly = objectInput.readBoolean();
 		workflowTaskName = objectInput.readUTF();
 	}
 
@@ -150,6 +155,8 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 
 		objectOutput.writeLong(ddmStructureLayoutId);
 
+		objectOutput.writeBoolean(readOnly);
+
 		if (workflowTaskName == null) {
 			objectOutput.writeUTF("");
 		}
@@ -163,6 +170,7 @@ public class AppBuilderWorkflowTaskLinkCacheModel
 	public long companyId;
 	public long appBuilderAppId;
 	public long ddmStructureLayoutId;
+	public boolean readOnly;
 	public String workflowTaskName;
 
 }

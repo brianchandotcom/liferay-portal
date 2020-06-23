@@ -49,6 +49,9 @@ public class AppBuilderWorkflowTaskLinkTable
 		ddmStructureLayoutId = createColumn(
 			"ddmStructureLayoutId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<AppBuilderWorkflowTaskLinkTable, Boolean> readOnly =
+		createColumn(
+			"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<AppBuilderWorkflowTaskLinkTable, String>
 		workflowTaskName = createColumn(
 			"workflowTaskName", String.class, Types.VARCHAR,

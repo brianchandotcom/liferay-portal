@@ -33,8 +33,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,35 +40,31 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AppWorkflowTask")
+@GraphQLName("AppWorkflowDataLayoutLink")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AppWorkflowTask")
-public class AppWorkflowTask {
+@XmlRootElement(name = "AppWorkflowDataLayoutLink")
+public class AppWorkflowDataLayoutLink {
 
-	public static AppWorkflowTask toDTO(String json) {
-		return ObjectMapperUtil.readValue(AppWorkflowTask.class, json);
+	public static AppWorkflowDataLayoutLink toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			AppWorkflowDataLayoutLink.class, json);
 	}
 
 	@Schema
-	@Valid
-	public AppWorkflowDataLayoutLink[] getAppWorkflowDataLayoutLinks() {
-		return appWorkflowDataLayoutLinks;
+	public Long getDataLayoutId() {
+		return dataLayoutId;
 	}
 
-	public void setAppWorkflowDataLayoutLinks(
-		AppWorkflowDataLayoutLink[] appWorkflowDataLayoutLinks) {
-
-		this.appWorkflowDataLayoutLinks = appWorkflowDataLayoutLinks;
+	public void setDataLayoutId(Long dataLayoutId) {
+		this.dataLayoutId = dataLayoutId;
 	}
 
 	@JsonIgnore
-	public void setAppWorkflowDataLayoutLinks(
-		UnsafeSupplier<AppWorkflowDataLayoutLink[], Exception>
-			appWorkflowDataLayoutLinksUnsafeSupplier) {
+	public void setDataLayoutId(
+		UnsafeSupplier<Long, Exception> dataLayoutIdUnsafeSupplier) {
 
 		try {
-			appWorkflowDataLayoutLinks =
-				appWorkflowDataLayoutLinksUnsafeSupplier.get();
+			dataLayoutId = dataLayoutIdUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -82,27 +76,23 @@ public class AppWorkflowTask {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected AppWorkflowDataLayoutLink[] appWorkflowDataLayoutLinks;
+	protected Long dataLayoutId;
 
 	@Schema
-	@Valid
-	public AppWorkflowTransition[] getAppWorkflowTransitions() {
-		return appWorkflowTransitions;
+	public Boolean getReadOnly() {
+		return readOnly;
 	}
 
-	public void setAppWorkflowTransitions(
-		AppWorkflowTransition[] appWorkflowTransitions) {
-
-		this.appWorkflowTransitions = appWorkflowTransitions;
+	public void setReadOnly(Boolean readOnly) {
+		this.readOnly = readOnly;
 	}
 
 	@JsonIgnore
-	public void setAppWorkflowTransitions(
-		UnsafeSupplier<AppWorkflowTransition[], Exception>
-			appWorkflowTransitionsUnsafeSupplier) {
+	public void setReadOnly(
+		UnsafeSupplier<Boolean, Exception> readOnlyUnsafeSupplier) {
 
 		try {
-			appWorkflowTransitions = appWorkflowTransitionsUnsafeSupplier.get();
+			readOnly = readOnlyUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -114,61 +104,7 @@ public class AppWorkflowTask {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected AppWorkflowTransition[] appWorkflowTransitions;
-
-	@Schema
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		try {
-			name = nameUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
-
-	@Schema
-	public Long[] getRoleIds() {
-		return roleIds;
-	}
-
-	public void setRoleIds(Long[] roleIds) {
-		this.roleIds = roleIds;
-	}
-
-	@JsonIgnore
-	public void setRoleIds(
-		UnsafeSupplier<Long[], Exception> roleIdsUnsafeSupplier) {
-
-		try {
-			roleIds = roleIdsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long[] roleIds;
+	protected Boolean readOnly;
 
 	@Override
 	public boolean equals(Object object) {
@@ -176,13 +112,14 @@ public class AppWorkflowTask {
 			return true;
 		}
 
-		if (!(object instanceof AppWorkflowTask)) {
+		if (!(object instanceof AppWorkflowDataLayoutLink)) {
 			return false;
 		}
 
-		AppWorkflowTask appWorkflowTask = (AppWorkflowTask)object;
+		AppWorkflowDataLayoutLink appWorkflowDataLayoutLink =
+			(AppWorkflowDataLayoutLink)object;
 
-		return Objects.equals(toString(), appWorkflowTask.toString());
+		return Objects.equals(toString(), appWorkflowDataLayoutLink.toString());
 	}
 
 	@Override
@@ -197,78 +134,24 @@ public class AppWorkflowTask {
 
 		sb.append("{");
 
-		if (appWorkflowDataLayoutLinks != null) {
+		if (dataLayoutId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"appWorkflowDataLayoutLinks\": ");
+			sb.append("\"dataLayoutId\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < appWorkflowDataLayoutLinks.length; i++) {
-				sb.append(String.valueOf(appWorkflowDataLayoutLinks[i]));
-
-				if ((i + 1) < appWorkflowDataLayoutLinks.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(dataLayoutId);
 		}
 
-		if (appWorkflowTransitions != null) {
+		if (readOnly != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"appWorkflowTransitions\": ");
+			sb.append("\"readOnly\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < appWorkflowTransitions.length; i++) {
-				sb.append(String.valueOf(appWorkflowTransitions[i]));
-
-				if ((i + 1) < appWorkflowTransitions.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
-		}
-
-		if (roleIds != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"roleIds\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < roleIds.length; i++) {
-				sb.append(roleIds[i]);
-
-				if ((i + 1) < roleIds.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append(readOnly);
 		}
 
 		sb.append("}");
@@ -277,7 +160,7 @@ public class AppWorkflowTask {
 	}
 
 	@Schema(
-		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowTask",
+		defaultValue = "com.liferay.app.builder.workflow.rest.dto.v1_0.AppWorkflowDataLayoutLink",
 		name = "x-class-name"
 	)
 	public String xClassName;

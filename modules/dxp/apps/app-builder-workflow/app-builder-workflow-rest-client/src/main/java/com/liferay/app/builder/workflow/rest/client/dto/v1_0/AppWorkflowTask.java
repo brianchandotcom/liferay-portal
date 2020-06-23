@@ -32,6 +32,31 @@ public class AppWorkflowTask implements Cloneable {
 		return AppWorkflowTaskSerDes.toDTO(json);
 	}
 
+	public AppWorkflowDataLayoutLink[] getAppWorkflowDataLayoutLinks() {
+		return appWorkflowDataLayoutLinks;
+	}
+
+	public void setAppWorkflowDataLayoutLinks(
+		AppWorkflowDataLayoutLink[] appWorkflowDataLayoutLinks) {
+
+		this.appWorkflowDataLayoutLinks = appWorkflowDataLayoutLinks;
+	}
+
+	public void setAppWorkflowDataLayoutLinks(
+		UnsafeSupplier<AppWorkflowDataLayoutLink[], Exception>
+			appWorkflowDataLayoutLinksUnsafeSupplier) {
+
+		try {
+			appWorkflowDataLayoutLinks =
+				appWorkflowDataLayoutLinksUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AppWorkflowDataLayoutLink[] appWorkflowDataLayoutLinks;
+
 	public AppWorkflowTransition[] getAppWorkflowTransitions() {
 		return appWorkflowTransitions;
 	}
@@ -55,27 +80,6 @@ public class AppWorkflowTask implements Cloneable {
 	}
 
 	protected AppWorkflowTransition[] appWorkflowTransitions;
-
-	public Long[] getDataLayoutIds() {
-		return dataLayoutIds;
-	}
-
-	public void setDataLayoutIds(Long[] dataLayoutIds) {
-		this.dataLayoutIds = dataLayoutIds;
-	}
-
-	public void setDataLayoutIds(
-		UnsafeSupplier<Long[], Exception> dataLayoutIdsUnsafeSupplier) {
-
-		try {
-			dataLayoutIds = dataLayoutIdsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long[] dataLayoutIds;
 
 	public String getName() {
 		return name;

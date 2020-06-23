@@ -39,7 +39,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 		<c:choose>
 			<c:when test="<%= childPanelCategoriesSize > 1 %>">
 				<a aria-controls="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" aria-expanded="<%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() %>" class="panel-toggler <%= (group != null) ? "collapse-icon collapse-icon-middle " : StringPool.BLANK %> <%= siteAdministrationPanelCategoryDisplayContext.isCollapsedPanel() ? StringPool.BLANK : "collapsed" %> site-administration-toggler" data-parent="#<portlet:namespace />Accordion" data-qa-id="productMenuSiteAdministrationPanelCategory" data-toggle="liferay-collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Collapse" id="<portlet:namespace /><%= AUIUtil.normalizeId(panelCategory.getKey()) %>Toggler" <%= (group != null) ? "role=\"button\"" : StringPool.BLANK %>>
-					<%@ include file="/sites/site_administration_header_title.jspf" %>
+					<%@ include file="/sites/site_administration_header_no_collapsible.jspf" %>
 
 					<aui:icon cssClass="collapse-icon-closed" image="angle-right" markupView="lexicon" />
 
@@ -48,7 +48,7 @@ portletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 			</c:when>
 			<c:otherwise>
 				<span class="collapse-icon pr-2" data-qa-id="productMenuSiteAdministrationPanelCategory">
-					<%@ include file="/sites/site_administration_header_title.jspf" %>
+					<%@ include file="/sites/site_administration_header_no_collapsible.jspf" %>
 				</span>
 			</c:otherwise>
 		</c:choose>

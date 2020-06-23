@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.mapping.service.impl;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.exception.InvalidParentStructureException;
@@ -66,6 +68,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -79,6 +83,7 @@ import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
@@ -650,7 +655,7 @@ public class DDMStructureLocalServiceImpl
 		}
 
 		for (long ancestorSiteGroupId :
-				_portal.getAncestorSiteGroupIds(groupId)) {
+				_getAncestorSiteAndDepotGroupIds(groupId)) {
 
 			structure = ddmStructurePersistence.fetchByG_C_S(
 				ancestorSiteGroupId, classNameId, structureKey);
@@ -679,7 +684,7 @@ public class DDMStructureLocalServiceImpl
 		}
 
 		for (long ancestorSiteGroupId :
-				_portal.getAncestorSiteGroupIds(groupId)) {
+				_getAncestorSiteAndDepotGroupIds(groupId)) {
 
 			structure = ddmStructurePersistence.fetchByUUID_G(
 				uuid, ancestorSiteGroupId);
@@ -836,7 +841,7 @@ public class DDMStructureLocalServiceImpl
 					structureKey);
 		}
 
-		for (long curGroupId : _portal.getAncestorSiteGroupIds(groupId)) {
+		for (long curGroupId : _getAncestorSiteAndDepotGroupIds(groupId)) {
 			structure = ddmStructurePersistence.fetchByG_C_S(
 				curGroupId, classNameId, structureKey);
 
@@ -2038,6 +2043,25 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
+	private long[] _getAncestorSiteAndDepotGroupIds(long groupId) {
+		try {
+			return ArrayUtil.append(
+				_portal.getAncestorSiteGroupIds(groupId),
+				ListUtil.toLongArray(
+					_depotEntryLocalService.getGroupConnectedDepotEntries(
+						groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					DepotEntry::getGroupId));
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+
+			return new long[0];
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMStructureLocalServiceImpl.class);
+
 	private static final Pattern _callFunctionPattern = Pattern.compile(
 		"call\\(\\s*\'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +
 			"[0-9a-f]{12})\'\\s*,\\s*\'(.*)\'\\s*,\\s*\'(.*)\'\\s*\\)");
@@ -2079,6 +2103,9 @@ public class DDMStructureLocalServiceImpl
 
 	@Reference
 	private DDMXML _ddmXML;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference(target = "(ddm.form.deserializer.type=json)")
 	private DDMFormDeserializer _jsonDDMFormDeserializer;

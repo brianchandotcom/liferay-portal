@@ -20,6 +20,11 @@
 AssetListManagementToolbarDisplayContext assetListManagementToolbarDisplayContext = new AssetListManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, assetListDisplayContext);
 %>
 
+<clay:navigation-bar
+	inverted="<%= true %>"
+	navigationItems='<%= assetListDisplayContext.getNavigationBarItems("collections") %>'
+/>
+
 <clay:management-toolbar
 	displayContext="<%= assetListManagementToolbarDisplayContext %>"
 />

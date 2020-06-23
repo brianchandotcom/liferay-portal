@@ -26,6 +26,8 @@ import com.liferay.asset.list.web.internal.security.permission.resource.AssetLis
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -233,6 +235,28 @@ public class AssetListDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public List<NavigationItem> getNavigationBarItems(String currentItem) {
+		return NavigationItemListBuilder.add(
+			navigationItem -> {
+				navigationItem.setActive(currentItem.equals("collections"));
+				navigationItem.setHref(_renderResponse.createRenderURL());
+				navigationItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "collections"));
+			}
+		).add(
+			navigationItem -> {
+				navigationItem.setActive(
+					currentItem.equals("collection-providers"));
+				navigationItem.setHref(
+					_renderResponse.createRenderURL(), "mvcPath",
+					"/view_info_list_providers.jsp");
+				navigationItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "collection-providers"));
+			}
+		).build();
 	}
 
 	public String getOrderByCol() {

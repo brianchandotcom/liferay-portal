@@ -12,7 +12,7 @@
  * details.
  */
 
-export const AVAILABLE_PANELS = ['comments', 'contents', 'page-structure'];
+export const AVAILABLE_PANELS = ['comments', 'contents'];
 
 /**
  * @param {Array<Array<string>>} panels

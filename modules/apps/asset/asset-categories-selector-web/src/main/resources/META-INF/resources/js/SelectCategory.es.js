@@ -17,7 +17,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 function visit(nodes, callback) {
 	nodes.forEach((node) => {
@@ -36,13 +36,17 @@ function SelectCategory({
 	namespace,
 	nodes,
 }) {
-	if (
-		nodes.length === 1 &&
-		nodes[0].vocabulary &&
-		nodes[0].children.length > 0
-	) {
-		nodes = nodes[0].children;
-	}
+	const flattenedNodes = useMemo(() => {
+		if (
+			nodes.length === 1 &&
+			nodes[0].vocabulary &&
+			nodes[0].children.length > 0
+		) {
+			return nodes[0].children;
+		}
+
+		return nodes;
+	}, [nodes]);
 
 	const [filterQuery, setFilterQuery] = useState('');
 
@@ -81,7 +85,7 @@ function SelectCategory({
 
 		// Mark newly selected nodes as selected.
 
-		visit(nodes, (node) => {
+		visit(flattenedNodes, (node) => {
 			if (selectedNodes.has(node.id)) {
 				data[node.id] = {
 					categoryId: node.vocabulary ? 0 : node.id,
@@ -112,7 +116,7 @@ function SelectCategory({
 
 	const initialSelectedNodeIds = [];
 
-	visit(nodes, (node) => {
+	visit(flattenedNodes, (node) => {
 		if (node.selected) {
 			initialSelectedNodeIds.push(node.id);
 		}

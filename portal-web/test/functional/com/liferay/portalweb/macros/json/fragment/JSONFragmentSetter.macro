@@ -52,7 +52,7 @@ definition {
 
 	macro setStatus {
 		if (!(isSet(status))) {
-			var status = "0";
+			var status = "2";
 		}
 
 		return "${status}";

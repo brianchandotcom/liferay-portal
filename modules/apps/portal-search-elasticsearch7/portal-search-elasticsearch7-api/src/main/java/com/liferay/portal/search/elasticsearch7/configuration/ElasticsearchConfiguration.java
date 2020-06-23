@@ -32,11 +32,22 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ElasticsearchConfiguration {
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *			 #productionModeEnabled()}
+	 */
+	@Deprecated
 	@Meta.AD(
 		deflt = "EMBEDDED", description = "operation-mode-help",
 		name = "operation-mode", required = false
 	)
 	public OperationMode operationMode();
+
+	@Meta.AD(
+		deflt = "false", description = "production-mode-enabled-help",
+		name = "production-mode-enabled", required = false
+	)
+	public boolean productionModeEnabled();
 
 	@Meta.AD(
 		description = "remote-cluster-connection-id-help",
@@ -176,6 +187,10 @@ public interface ElasticsearchConfiguration {
 	)
 	public String sidecarHttpPort();
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x)
+	 */
+	@Deprecated
 	@Meta.AD(
 		deflt = "9300-9400",
 		description = "discovery-zen-ping-unicast-hosts-port-help",

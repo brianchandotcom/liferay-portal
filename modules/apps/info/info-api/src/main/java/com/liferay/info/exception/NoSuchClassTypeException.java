@@ -14,12 +14,10 @@
 
 package com.liferay.info.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author Jorge Ferrer
  */
-public class NoSuchClassTypeException extends PortalException {
+public class NoSuchClassTypeException extends Exception {
 
 	public NoSuchClassTypeException(long classTypeId, Throwable cause) {
 		super(

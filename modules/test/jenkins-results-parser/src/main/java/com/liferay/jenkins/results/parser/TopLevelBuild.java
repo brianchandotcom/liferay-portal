@@ -215,6 +215,39 @@ public abstract class TopLevelBuild extends BaseBuild {
 		return displayName;
 	}
 
+	public List<AxisBuild> getDownstreamAxisBuilds() {
+		List<AxisBuild> downstreamAxisBuilds = new ArrayList<>();
+
+		for (BatchBuild downstreamBatchBuild : getDownstreamBatchBuilds()) {
+			downstreamAxisBuilds.addAll(
+				downstreamBatchBuild.getDownstreamAxisBuilds());
+		}
+
+		Collections.sort(
+			downstreamAxisBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		return downstreamAxisBuilds;
+	}
+
+	public List<BatchBuild> getDownstreamBatchBuilds() {
+		List<BatchBuild> downstreamBatchBuilds = new ArrayList<>();
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		Collections.sort(
+			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			if (!(downstreamBuild instanceof BatchBuild)) {
+				continue;
+			}
+
+			downstreamBatchBuilds.add((BatchBuild)downstreamBuild);
+		}
+
+		return downstreamBatchBuilds;
+	}
+
 	@Override
 	public Element getGitHubMessageElement() {
 		Collections.sort(

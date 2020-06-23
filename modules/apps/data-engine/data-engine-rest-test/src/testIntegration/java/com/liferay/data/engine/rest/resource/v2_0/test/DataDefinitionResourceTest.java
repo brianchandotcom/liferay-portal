@@ -58,7 +58,7 @@ public class DataDefinitionResourceTest
 	public void testDeleteDataDefinition() throws Exception {
 		super.testDeleteDataDefinition();
 
-		DataDefinition parentDataDefinition =
+		DataDefinition dataDefinition =
 			testDeleteDataDefinition_addDataDefinition(
 				DataDefinition.toDTO(
 					DataDefinitionTestUtil.read("data-definition-parent.json")),
@@ -68,12 +68,12 @@ public class DataDefinitionResourceTest
 		assertHttpResponseStatusCode(
 			204,
 			dataDefinitionResource.deleteDataDefinitionHttpResponse(
-				parentDataDefinition.getId()));
+				dataDefinition.getId()));
 
 		assertHttpResponseStatusCode(
 			404,
 			dataDefinitionResource.getDataDefinitionHttpResponse(
-				parentDataDefinition.getId()));
+				dataDefinition.getId()));
 	}
 
 	@Override
@@ -459,21 +459,17 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals("MustSetValidName", problem.getType());
 		}
-	}
 
-	@Test
-	public void testPostSiteDataDefinitionByContentTypeWithoutDataLayoutName()
-		throws Exception {
-
-		DataDefinition postDataDefinition =
+		DataDefinition dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(
 				testGroup.getGroupId(), _CONTENT_TYPE,
 				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition-must-set-data-layout-name.json")));
+					DataDefinitionTestUtil.read(
+						"data-definition-must-set-data-layout-name.json")));
 
-		DataLayout dataLayout = postDataDefinition.getDefaultDataLayout();
+		DataLayout dataLayout = dataDefinition.getDefaultDataLayout();
 
-		Assert.assertNotNull(dataLayout.getName());
+		Assert.assertEquals(dataDefinition.getName(), dataLayout.getName());
 	}
 
 	@Override

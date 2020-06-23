@@ -151,7 +151,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
-			value1 = "Elasticsearch (Embedded)");
+			value1 = "Elasticsearch (Sidecar)");
 
 		AssertTextEquals(
 			locator1 = "SearchAdmin#ACTIVE_CONNECTION_COUNT",
@@ -191,7 +191,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
-			value1 = "Elasticsearch (Embedded)");
+			value1 = "Elasticsearch (Sidecar)");
 
 		// Workaround of LPS-109110
 

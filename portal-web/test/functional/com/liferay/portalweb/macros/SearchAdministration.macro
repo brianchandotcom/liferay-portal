@@ -25,7 +25,7 @@ definition {
 		var searchEngineVendor = selenium.getText("SearchAdmin#SEARCH_ENGINE_VENDOR");
 
 		if (contains("${searchEngineVendor}", "Elasticsearch")) {
-			if (contains("${searchEngineVendor}", "Embedded")) {
+			if (contains("${searchEngineVendor}", "Sidecar")) {
 				var curl = "http://localhost:9201/_tasks";
 			}
 			else {

@@ -109,18 +109,13 @@ xpack.ml.enabled: false</echo>
 
 	<macrodef name="configure-portal-remote-elasticsearch-osgi-properties">
 		<sequential>
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode="REMOTE"
-remoteClusterConnectionId="remote"</echo>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}operationMode="REMOTE"</echo>
 		</sequential>
 	</macrodef>
 
 	<macrodef name="configure-portal-x-pack-osgi-properties">
 		<sequential>
-			<replace
-				file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config"
-				token="remoteClusterConnectionId=&quot;remote&quot;"
-				value="remoteClusterConnectionId=&quot;xpack&quot;"
-			/>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}remoteClusterConnectionId="xpack"</echo>
 
 			<propertyregex
 				defaultValue="${elastic.xpack.elastic.user.password}"

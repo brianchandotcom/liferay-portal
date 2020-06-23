@@ -32,14 +32,14 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
  */
 @Component(
 	property = {
-		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/frontend-taglib-app",
-		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Clay.Application",
+		JaxrsWhiteboardConstants.JAX_RS_APPLICATION_BASE + "=/frontend-taglib-clay/app",
+		JaxrsWhiteboardConstants.JAX_RS_NAME + "=Liferay.Frontend.Clay",
 		"auth.verifier.auth.verifier.PortalSessionAuthVerifier.urls.includes=/*",
 		"auth.verifier.guest.allowed=true", "liferay.oauth2=false"
 	},
 	service = Application.class
 )
-public class FrontEndApplication extends Application {
+public class FrontendClayApplication extends Application {
 
 	public Set<Object> getSingletons() {
 		Set<Object> singletons = new HashSet<>();

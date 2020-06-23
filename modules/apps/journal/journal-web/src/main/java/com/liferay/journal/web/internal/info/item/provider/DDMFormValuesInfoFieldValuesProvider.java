@@ -43,6 +43,7 @@ import java.text.NumberFormat;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -133,10 +134,12 @@ public class DDMFormValuesInfoFieldValuesProvider<T extends GroupedModel> {
 					).entrySet(
 					).stream(
 					).collect(
-						Collectors.toMap(
-							Map.Entry::getKey,
-							entry -> _sanitizeDDMFormFieldValue(
-								t, ddmFormFieldValue, entry.getKey()))
+						HashMap<Locale, Object>::new,
+						(map, entry) -> map.put(
+							entry.getKey(),
+							_sanitizeDDMFormFieldValue(
+								t, ddmFormFieldValue, entry.getKey())),
+						HashMap::putAll
 					)
 				).build()));
 	}

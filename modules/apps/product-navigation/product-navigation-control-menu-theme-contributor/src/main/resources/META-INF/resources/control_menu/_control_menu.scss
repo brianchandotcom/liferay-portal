@@ -95,6 +95,21 @@ a.control-menu-icon,
 	.control-menu-level-1-heading {
 		color: $gray-900;
 	}
+
+	.toast-animation {
+		.cn,
+		.pm {
+			border-color: $control-menu-level-1-light-color;
+		}
+	}
+
+	.product-menu-toggle:focus,
+	.product-menu-toggle:hover {
+		.cn,
+		.pm {
+			border-color: $control-menu-level-1-light-link-hover-color;
+		}
+	}
 }
 
 .control-menu-level-1-nav {

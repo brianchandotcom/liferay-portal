@@ -21,7 +21,16 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.type.WebImage;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
@@ -86,7 +95,10 @@ public class AssetEntryInfoItemFieldValuesProvider
 				AssetEntryInfoItemFields.viewCountInfoField,
 				assetEntry::getViewCount),
 			new InfoFieldValue<>(
-				AssetEntryInfoItemFields.urlInfoField, assetEntry.getUrl()));
+				AssetEntryInfoItemFields.urlInfoField, assetEntry.getUrl()),
+			new InfoFieldValue<>(
+				AssetEntryInfoItemFields.userProfileImage,
+				_getUserNameProfileImage(assetEntry.getUserId())));
 	}
 
 	private String _getDateValue(Date date) {
@@ -102,8 +114,53 @@ public class AssetEntryInfoItemFieldValuesProvider
 		return dateFormatDateTime.format(date);
 	}
 
+	private ThemeDisplay _getThemeDisplay() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getThemeDisplay();
+		}
+
+		return null;
+	}
+
+	private Object _getUserNameProfileImage(long userId) {
+		User user = _userLocalService.fetchUser(userId);
+
+		if (user == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		if (themeDisplay != null) {
+			try {
+				WebImage webImage = new WebImage(
+					user.getPortraitURL(themeDisplay));
+
+				webImage.setAlt(user.getFullName());
+
+				return webImage;
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException, portalException);
+				}
+			}
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetEntryInfoItemFieldValuesProvider.class);
+
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

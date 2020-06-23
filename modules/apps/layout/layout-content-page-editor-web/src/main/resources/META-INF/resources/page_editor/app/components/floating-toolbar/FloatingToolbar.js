@@ -30,6 +30,7 @@ import {FLOATING_TOOLBAR_CONFIGURATIONS} from '../../config/constants/floatingTo
 import {config} from '../../config/index';
 import {useSelector} from '../../store/index';
 import {useHoverItem, useIsActive} from '../Controls';
+import {useGlobalContext} from '../GlobalContext';
 import {useUpdatedLayoutDataContext} from '../ResizeContext';
 
 export default React.memo(FloatingToolbar, (prevProps, nextProps) => {
@@ -67,6 +68,7 @@ function FloatingToolbar({
 	const [windowWidth, setWindowWidth] = useState(0);
 	const [show, setShow] = useState(false);
 	const updatedLayoutData = useUpdatedLayoutDataContext();
+	const globalContext = useGlobalContext();
 
 	const languageId = useSelector((state) => state.languageId);
 	const selectedViewportSize = useSelector(
@@ -143,21 +145,27 @@ function FloatingToolbar({
 
 	useEffect(() => {
 		const handleWindowResize = debounceRAF(() => {
-			setWindowWidth(window.innerWidth);
+			setWindowWidth(globalContext.window.innerWidth);
 		});
 
 		const handleWindowScroll = debounceRAF(() => {
-			setWindowScrollPosition(window.scrollY);
+			setWindowScrollPosition(globalContext.window.scrollY);
 		});
 
-		window.addEventListener('resize', handleWindowResize);
-		window.addEventListener('scroll', handleWindowScroll);
+		globalContext.window.addEventListener('resize', handleWindowResize);
+		globalContext.window.addEventListener('scroll', handleWindowScroll);
 
 		return () => {
-			window.removeEventListener('resize', handleWindowResize);
-			window.removeEventListener('scroll', handleWindowScroll);
+			globalContext.window.removeEventListener(
+				'resize',
+				handleWindowResize
+			);
+			globalContext.window.removeEventListener(
+				'scroll',
+				handleWindowScroll
+			);
 		};
-	}, []);
+	}, [globalContext]);
 
 	useEffect(() => {
 		if (!itemElement) {

@@ -50,6 +50,7 @@ page import="com.liferay.asset.list.web.internal.display.context.AssetListEntryU
 page import="com.liferay.asset.list.web.internal.display.context.AssetListEntryUsagesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.AssetListManagementToolbarDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.display.context.EditAssetListDisplayContext" %><%@
+page import="com.liferay.asset.list.web.internal.display.context.InfoListProviderDisplayContext" %><%@
 page import="com.liferay.asset.list.web.internal.security.permission.resource.AssetListEntryPermission" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.AssetEntryListActionDropdownItems" %><%@
 page import="com.liferay.asset.list.web.internal.servlet.taglib.util.AssetListContentActionDropdownItems" %><%@

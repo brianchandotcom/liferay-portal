@@ -37,6 +37,9 @@ public class AssetListWebKeys {
 	public static final String EDIT_ASSET_LIST_DISPLAY_CONTEXT =
 		"EDIT_ASSET_LIST_DISPLAY_CONTEXT";
 
+	public static final String INFO_LIST_PROVIDER_DISPLAY_CONTEXT =
+		"INFO_LIST_PROVIDER_DISPLAY_CONTEXT";
+
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
 }

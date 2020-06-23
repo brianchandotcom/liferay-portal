@@ -132,6 +132,7 @@
 	{@param? handleRuleAdded: any}
 	{@param invalidRule: bool}
 	{@param logicalOperator: string}
+	{@param logicalOperators: list<[label: string, value: string]>}
 	{@param pageOptions: list<[
 			label: string,
 			name: string,
@@ -180,6 +181,8 @@
 						{param _handleLogicalOperationChange: $_handleLogicalOperationChange /}
 						{param enableLogicalOperator: $enableLogicalOperator /}
 						{param logicalOperator: $logicalOperator /}
+						{param logicalOperators: $logicalOperators /}
+						{param spritemap: $spritemap /}
 					{/call}
 				{/param}
 				{param title kind="text"}
@@ -910,20 +913,18 @@
 	{@param _handleLogicalOperationChange: any}
 	{@param? enableLogicalOperator: bool}
 	{@param? logicalOperator: string}
+	{@param? logicalOperators: list<?>}
+	{@param spritemap: string}
 
-	{let $attributes kind="attributes"}
-		class="btn btn-secondary dropdown-toggle dropdown-toggle-operator text-uppercase"
-		data-toggle="liferay-dropdown"
-		ref="logicalOperatorDropDownButton"
-		type="button"
-
-		{if not $enableLogicalOperator}
-			disabled
-		{/if}
-	{/let}
-
-	<div class="btn-group btn-group-item dropdown" style="block">
-		<button {$attributes}>
+	{call ClayDropdownBase.render}
+		{param events: [
+			'itemClicked': $_handleLogicalOperationChange
+		] /}
+		{param contentRenderer: 'contentConditionLogicalOperatorDropdown' /}
+		{param disabled: $enableLogicalOperator ? false : true /}
+		{param elementClasses: 'btn-group btn-group-item dropdown' /}
+		{param items: $logicalOperators ? $logicalOperators : [] /}
+		{param label kind="html"}
 			<span class="dropdown-toggle-selected-value">
 				{if $logicalOperator == 'and'}
 					{msg desc=""}and{/msg}
@@ -932,18 +933,13 @@
 				{/if}
 			</span>
 			<span class="caret"></span>
-		</button>
-
-		<ul class="dropdown-menu" data-onclick="{$_handleLogicalOperationChange}">
-			<li class="logic-operator text-uppercase" ref="globalOrOperator">
-				<a class="dropdown-item" data-value="or">{msg desc=""}or{/msg}</a>
-			</li>
-			<li class="divider"></li>
-			<li class="logic-operator text-uppercase" ref="globalAndOperator">
-				<a class="dropdown-item" data-value="and">{msg desc=""}and{/msg}</a>
-			</li>
-		</ul>
-	</div>
+		{/param}
+		{param preferredAlign: 'BottomRight' /}
+		{param ref: 'logicalOperatorDropDownButton' /}
+		{param spritemap: $spritemap /}
+		{param style: 'secondary' /}
+		{param triggerClasses: 'dropdown-toggle-operator text-uppercase' /}
+	{/call}
 {/template}
 
 /**
@@ -1141,3 +1137,42 @@
 		{/if}
 	</div>
 {/template}
+
+{deltemplate ClayDropdownItem.Item variant="'itemConditionLogicalOperatorDropdown'"}
+	{@param label: string}
+	{@param? _handleItemClick: any}
+	{@param? active: bool}
+	{@param? checked: bool}
+
+	{let $itemAttributes kind="attributes"}
+		class="dropdown-item logic-operator text-uppercase
+			{if $active or $checked}
+				{sp}active
+			{/if}
+		"
+
+		data-onclick="{$_handleItemClick}"
+	{/let}
+
+	<li {$itemAttributes} data-option-value="{$label}">
+		{$label}
+	</li>
+{/deltemplate}
+
+{deltemplate ClayDropdownBase.Content variant="'contentConditionLogicalOperatorDropdown'"}
+	{@param? _handleItemClick: any}
+	{@param? contentRenderer: string}
+	{@param? items: list<?>}
+	{@param? spritemap: string}
+
+	{if $items}
+		<ul class="list-unstyled">
+			{call ClayDropdownBase.items}
+				{param _handleItemClick: $_handleItemClick /}
+				{param contentRenderer: 'itemConditionLogicalOperatorDropdown' /}
+				{param items: $items /}
+				{param spritemap: $spritemap /}
+			{/call}
+		</ul>
+	{/if}
+{/deltemplate}

@@ -895,8 +895,8 @@ class RuleEditor extends Component {
 		});
 	}
 
-	_handleLogicalOperationChange({target}) {
-		const {value} = target.dataset;
+	_handleLogicalOperationChange({data}) {
+		const {value} = data.item;
 
 		if (value !== this.logicalOperator) {
 			this.setState({
@@ -1702,6 +1702,17 @@ RuleEditor.STATE = {
 	loadingDataProviderOptions: Config.bool(),
 
 	logicalOperator: Config.string().internal().value('or'),
+
+	logicalOperators: Config.array().value([
+		{
+			label: Liferay.Language.get('or'),
+			value: 'or',
+		},
+		{
+			label: Liferay.Language.get('and'),
+			value: 'and',
+		},
+	]),
 
 	pageOptions: Config.arrayOf(
 		Config.shapeOf({

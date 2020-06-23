@@ -88,6 +88,7 @@ function openToast({
 	message = '',
 	messageType = TYPES.TEXT,
 	onClick = () => {},
+	onClose = () => {},
 	renderData = DEFAULT_RENDER_DATA,
 	title,
 	titleType = TYPES.TEXT,
@@ -99,18 +100,24 @@ function openToast({
 
 	unmountComponentAtNode(rootElement);
 
-	const onClose = () => unmountComponentAtNode(rootElement);
-
 	const Container =
 		container || containerId ? React.Fragment : ClayAlert.ToastContainer;
+
+	const onCloseFn = (event) => {
+		if (onClose) {
+			onClose({event});
+		}
+
+		unmountComponentAtNode(rootElement);
+	};
 
 	render(
 		<Container>
 			<ClayAlert
 				autoClose={autoClose}
 				displayType={type}
-				onClick={(event) => onClick({event, onClose})}
-				onClose={onClose}
+				onClick={(event) => onClick({event, onClose: onCloseFn})}
+				onClose={onCloseFn}
 				title={
 					<Text allowHTML={titleType === TYPES.HTML} string={title} />
 				}

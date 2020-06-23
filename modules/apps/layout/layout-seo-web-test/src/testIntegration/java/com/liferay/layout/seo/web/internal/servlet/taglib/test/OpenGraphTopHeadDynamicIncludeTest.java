@@ -1050,10 +1050,11 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		Registry registry = RegistryUtil.getRegistry();
 
 		ServiceRegistration<InfoItemFieldValuesProvider<?>>
-			infoItemFieldValuesProviderServiceRegistration = registry.registerService(
-				(Class<InfoItemFieldValuesProvider<?>>)
-					(Class<?>)InfoItemFieldValuesProvider.class,
-				new MockInfoItemFieldValuesProvider(), new HashMap<>());
+			infoItemFieldValuesProviderServiceRegistration =
+				registry.registerService(
+					(Class<InfoItemFieldValuesProvider<?>>)
+						(Class<?>)InfoItemFieldValuesProvider.class,
+					new MockInfoItemFieldValuesProvider(), new HashMap<>());
 
 		httpServletRequest.setAttribute(
 			AssetDisplayPageWebKeys.INFO_DISPLAY_OBJECT_PROVIDER,
@@ -1168,7 +1169,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		implements InfoItemFieldValuesProvider<MockObject> {
 
 		@Override
-		public InfoItemFieldValues getInfoItemFieldValues(MockObject mockObject) {
+		public InfoItemFieldValues getInfoItemFieldValues(
+			MockObject mockObject) {
+
 			InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
 				null);
 

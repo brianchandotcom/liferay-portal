@@ -65,9 +65,9 @@ renderResponse.setTitle(title);
 				for (InfoFieldValue<Object> infoFieldValue : infoFormValues.getInfoFieldValues()) {
 					InfoField infoField = infoFieldValue.getInfoField();
 
-					if (infoField.isLocalizable()) {
-						InfoFieldType infoFieldType = infoField.getInfoFieldType();
+					InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
+					if (infoField.isLocalizable() && infoFieldType.equals(TextInfoFieldType.INSTANCE)) {
 						InfoLocalizedValue<String> labelInfoLocalizedValue = infoField.getLabelInfoLocalizedValue();
 
 						String label = labelInfoLocalizedValue.getValue(locale);

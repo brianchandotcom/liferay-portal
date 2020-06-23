@@ -72,6 +72,7 @@ page import="com.liferay.info.field.InfoField" %><%@
 page import="com.liferay.info.field.InfoFieldValue" %><%@
 page import="com.liferay.info.field.InfoFormValues" %><%@
 page import="com.liferay.info.field.type.InfoFieldType" %><%@
+page import="com.liferay.info.field.type.TextInfoFieldType" %><%@
 page import="com.liferay.info.localized.InfoLocalizedValue" %><%@
 page import="com.liferay.journal.configuration.JournalFileUploadsConfiguration" %><%@
 page import="com.liferay.journal.configuration.JournalGroupServiceConfiguration" %><%@

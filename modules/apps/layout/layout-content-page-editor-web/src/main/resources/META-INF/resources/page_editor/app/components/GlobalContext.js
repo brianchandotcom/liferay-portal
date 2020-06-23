@@ -49,6 +49,7 @@ export default function GlobalContextProvider({children, useIframe}) {
 
 					setIFrameContext({
 						document: iframeElement.contentDocument,
+						iframe: iframeElement,
 						window: iframeElement.contentWindow,
 					});
 				});

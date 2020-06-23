@@ -11,8 +11,10 @@
 
 import ClayBadge from '@clayui/badge';
 import ClayIcon from '@clayui/icon';
-import classNames from 'classNames';
+import classNames from 'classnames';
 import React from 'react';
+
+import ButtonInfo from '../../../../components/button-info/ButtonInfo.es';
 
 const Arrow = () => {
 	return (
@@ -27,7 +29,13 @@ const Arrow = () => {
 	);
 };
 
-export default function WorkflowStep({initial, name, onClick, selected}) {
+export default function WorkflowStep({
+	initial,
+	name,
+	onClick,
+	selected,
+	stepInfo,
+}) {
 	const isInitialOrFinalSteps = initial !== undefined;
 	const isFinalStep = isInitialOrFinalSteps && !initial;
 
@@ -59,9 +67,9 @@ export default function WorkflowStep({initial, name, onClick, selected}) {
 						)}
 						onClick={onClick}
 					>
-						<div className="step-card-row">
-							<div className="autofit-row">{name}</div>
-						</div>
+						{name}
+
+						<ButtonInfo items={stepInfo} />
 					</div>
 				</div>
 			</div>

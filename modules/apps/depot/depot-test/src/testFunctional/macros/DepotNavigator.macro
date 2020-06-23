@@ -37,19 +37,16 @@ definition {
 				value1 = "${depotName}");
 		}
 
-		AssertTextNotEquals(
+		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
 			value1 = "Asset Libraries");
 
-		if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED")) {
-			Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
+		for (var portletName : list "Web Content,Documents and Media,Collections,Categories,Tags,Recycle Bin,Memberships,Settings,Workflow") {
+			AssertTextEquals(
+				key_card = "${portletName}",
+				locator1 = "LexiconCard#CARD",
+				value1 = "${portletName}");
 		}
-
-		ProductMenuHelper.gotoPortlet(portlet = "${portlet}");
-
-		AssertTextEquals(
-			locator1 = "ControlMenu#HEADING",
-			value1 = "${portlet}");
 	}
 
 	macro gotoDepotPortlet {
@@ -77,8 +74,8 @@ definition {
 				value1 = "${depotName}");
 		}
 
-		ProductMenu.gotoPortlet(
-			category = "${category}",
+		DepotNavigator.gotoPortlet(
+			depotName = "${depotName}",
 			portlet = "${portlet}");
 	}
 
@@ -128,6 +125,23 @@ definition {
 			key_title = "Languages",
 			locator1 = "Header#H2_TITLE",
 			value1 = "Languages");
+	}
+
+	macro gotoPortlet {
+		Click(
+			key_card = "${portlet}",
+			locator1 = "LexiconCard#CARD");
+
+		if ("${portlet}" == "Settings") {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "${depotName}");
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "${portlet}");
+		}
 	}
 
 	macro gotoShare {

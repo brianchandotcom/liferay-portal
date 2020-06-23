@@ -99,6 +99,8 @@ int childPanelCategoriesSize = GetterUtil.getInteger(request.getAttribute("produ
 		</c:choose>
 	</c:when>
 	<c:when test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
+		<%@ include file="/sites/site_administration_header_icon_sites.jspf" %>
+
 		<div class="collapsed panel-toggler">
 			<span class="site-name">
 				<liferay-ui:message key="choose-a-site" />

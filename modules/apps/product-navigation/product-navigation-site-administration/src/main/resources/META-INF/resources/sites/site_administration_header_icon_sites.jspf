@@ -1,0 +1,63 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="icon-sites">
+	<liferay-ui:icon
+		icon="sites"
+		id="manageSitesLink"
+		label="<%= false %>"
+		linkCssClass="icon-monospaced"
+		markupView="lexicon"
+		message="go-to-other-site-or-library"
+		url="javascript:;"
+	/>
+</div>
+
+<%
+String eventName = liferayPortletResponse.getNamespace() + "selectSite";
+
+ItemSelector itemSelector = (ItemSelector)request.getAttribute(SiteAdministrationWebKeys.ITEM_SELECTOR);
+
+GroupItemSelectorCriterion groupItemSelectorCriterion = new GroupItemSelectorCriterion();
+
+groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
+groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
+
+PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, groupItemSelectorCriterion);
+%>
+
+<script>
+	(function () {
+		var manageSitesLink = document.getElementById(
+			'<portlet:namespace />manageSitesLink'
+		);
+
+		if (manageSitesLink) {
+			manageSitesLink.addEventListener('click', function (event) {
+				Liferay.Util.openModal({
+					id: '<portlet:namespace />selectSite',
+					onSelect: function (selectedItem) {
+						Liferay.Util.navigate(selectedItem.url);
+					},
+					selectEventName: '<%= eventName %>',
+					title:
+						'<liferay-ui:message key="select-site-or-asset-library" />',
+					url: '<%= itemSelectorURL.toString() %>',
+				});
+			});
+		}
+	})();
+</script>

@@ -52,114 +52,16 @@
 		<clay:content-col
 			cssClass="autofit-col-end"
 		>
-			<div class="icon-pages-tree">
-				<liferay-ui:icon
-					icon="pages-tree"
-					id="pagesTreeSidenavToggleId"
-					label="<%= false %>"
-					linkCssClass="icon-monospaced"
-					markupView="lexicon"
-					message="find-a-page"
-					url="javascript:;"
-				/>
-			</div>
+			<%@ include file="/sites/site_administration_header_icon_pages_tree.jspf" %>
 		</clay:content-col>
-
-		<aui:script sandbox="<%= true %>">
-			var pagesTreeToggle = document.getElementById(
-				'<portlet:namespace />pagesTreeSidenavToggleId'
-			);
-
-			pagesTreeToggle.addEventListener('click', function (event) {
-				Liferay.Util.Session.set(
-					'com.liferay.product.navigation.product.menu.web_pagesTreeState',
-					'open'
-				).then(function () {
-					Liferay.Util.fetch('<%= portletURL.toString() %>')
-						.then(function (response) {
-							if (!response.ok) {
-								throw new Error(
-									'<liferay-ui:message key="an-unexpected-error-occurred" />'
-								);
-							}
-
-							return response.text();
-						})
-						.then(function (response) {
-							var sidebar = document.querySelector(
-								'.lfr-product-menu-sidebar .sidebar-body'
-							);
-
-							sidebar.innerHTML = '';
-
-							var range = document.createRange();
-							range.selectNode(sidebar);
-
-							var fragment = range.createContextualFragment(response);
-
-							var pagesTree = document.createElement('div');
-							pagesTree.setAttribute('class', 'pages-tree');
-							pagesTree.appendChild(fragment);
-
-							sidebar.appendChild(pagesTree);
-						});
-				});
-			});
-		</aui:script>
 	</c:if>
 
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowSiteSelector() %>">
 		<clay:content-col
 			cssClass="autofit-col-end"
 		>
-			<div class="icon-sites">
-				<liferay-ui:icon
-					icon="sites"
-					id="manageSitesLink"
-					label="<%= false %>"
-					linkCssClass="icon-monospaced"
-					markupView="lexicon"
-					message="go-to-other-site-or-library"
-					url="javascript:;"
-				/>
-			</div>
+			<%@ include file="/sites/site_administration_header_icon_sites.jspf" %>
 		</clay:content-col>
-
-		<%
-		String eventName = liferayPortletResponse.getNamespace() + "selectSite";
-
-		ItemSelector itemSelector = (ItemSelector)request.getAttribute(SiteAdministrationWebKeys.ITEM_SELECTOR);
-
-		GroupItemSelectorCriterion groupItemSelectorCriterion = new GroupItemSelectorCriterion();
-
-		groupItemSelectorCriterion.setDesiredItemSelectorReturnTypes(new URLItemSelectorReturnType());
-		groupItemSelectorCriterion.setIncludeAllVisibleGroups(true);
-
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(liferayPortletRequest), eventName, groupItemSelectorCriterion);
-		%>
-
-		<script>
-			(function () {
-				var manageSitesLink = document.getElementById(
-					'<portlet:namespace />manageSitesLink'
-				);
-
-				if (manageSitesLink) {
-					manageSitesLink.addEventListener('click', function (event) {
-						Liferay.Util.openModal({
-							id: '<portlet:namespace />selectSite',
-							onSelect: function (selectedItem) {
-								Liferay.Util.navigate(selectedItem.url);
-							},
-							selectEventName: '<%= eventName %>',
-							title:
-								'<liferay-ui:message key="select-site-or-asset-library" />',
-							url: '<%= itemSelectorURL.toString() %>',
-						});
-					});
-				}
-			})();
-		</script>
 	</c:if>
 
 	<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.getNotificationsCount() > 0 %>">

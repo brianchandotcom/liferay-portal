@@ -1,0 +1,69 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="icon-pages-tree">
+	<liferay-ui:icon
+		icon="pages-tree"
+		id="pagesTreeSidenavToggleId"
+		label="<%= false %>"
+		linkCssClass="icon-monospaced"
+		markupView="lexicon"
+		message="find-a-page"
+		url="javascript:;"
+	/>
+</div>
+
+<aui:script sandbox="<%= true %>">
+	var pagesTreeToggle = document.getElementById(
+		'<portlet:namespace />pagesTreeSidenavToggleId'
+	);
+
+	pagesTreeToggle.addEventListener('click', function (event) {
+		Liferay.Util.Session.set(
+			'com.liferay.product.navigation.product.menu.web_pagesTreeState',
+			'open'
+		).then(function () {
+			Liferay.Util.fetch('<%= portletURL.toString() %>')
+				.then(function (response) {
+					if (!response.ok) {
+						throw new Error(
+							'<liferay-ui:message key="an-unexpected-error-occurred" />'
+						);
+					}
+
+					return response.text();
+				})
+				.then(function (response) {
+					var sidebar = document.querySelector(
+						'.lfr-product-menu-sidebar .sidebar-body'
+					);
+
+					sidebar.innerHTML = '';
+
+					var range = document.createRange();
+					range.selectNode(sidebar);
+
+					var fragment = range.createContextualFragment(response);
+
+					var pagesTree = document.createElement('div');
+					pagesTree.setAttribute('class', 'pages-tree');
+					pagesTree.appendChild(fragment);
+
+					sidebar.appendChild(pagesTree);
+				});
+		});
+	});
+</aui:script>

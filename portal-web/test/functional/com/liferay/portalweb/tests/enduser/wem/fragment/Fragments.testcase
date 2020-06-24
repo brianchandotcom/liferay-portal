@@ -1076,6 +1076,7 @@ definition {
 		task ("Add a section fragment to the fragment collection via JSON") {
 			JSONFragment.addSection(
 				collectionName = "Global Collection Name",
+				fragmentStatus = "Approved",
 				groupName = "Global",
 				name = "Global Fragment Name 2");
 		}

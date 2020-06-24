@@ -191,11 +191,11 @@ do
 
 	SUBREPO_PATH="../../../${SUBREPO_NAME}"
 
-	if [[ "${SUBREPO_BRANCH}" == *-private ]]
+	if [[ "${SUBREPO_BRANCH}" == "master" ]]
 	then
-		CENTRAL_PATH="../../../liferay-portal-ee"
-	else
 		CENTRAL_PATH="../.."
+	else
+		CENTRAL_PATH="../../../liferay-portal-ee"
 	fi
 
 	if [[ ! -e "${SUBREPO_PATH}" ]]
@@ -246,7 +246,7 @@ do
 		fi
 	fi
 
-	SUBREPO_TREE=$(git -C "${SUBREPO_PATH}" ls-tree --full-tree -r "${SUBREPO_COMMIT}" . | egrep -v '\sgradlew' | egrep -v '\sgradle/wrapper' | sort -k 4)
+	SUBREPO_TREE=$(git -C "${SUBREPO_PATH}" ls-tree --full-tree -r "${SUBREPO_COMMIT}" . | egrep -v '\sgradle.properties' | egrep -v '\sgradlew' | egrep -v '\sgradle/wrapper' | sort -k 4)
 
 	if [[ "${CENTRAL_TREE}" != "${SUBREPO_TREE}" ]]
 	then

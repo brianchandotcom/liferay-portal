@@ -4,7 +4,7 @@
 	<template>
 		<template-key>similar-results-compact-ftl</template-key>
 		<name>portlet-display-template-name-compact-layout</name>
-		<description>portlet-display-template-description-compact</description>
+		<description>portlet-display-template-description-similar-results-compact</description>
 		<language>ftl</language>
 		<script-file>com/liferay/search/similar/results/web/portlet/template/dependencies/portlet_display_template_compact.ftl</script-file>
 		<cacheable>false</cacheable>
@@ -12,7 +12,7 @@
 	<template>
 		<template-key>similar-results-list-ftl</template-key>
 		<name>portlet-display-template-name-list-layout</name>
-		<description>portlet-display-template-description-list</description>
+		<description>portlet-display-template-description-similar-results-list</description>
 		<language>ftl</language>
 		<script-file>com/liferay/search/similar/results/web/portlet/template/dependencies/portlet_display_template_list.ftl</script-file>
 		<cacheable>false</cacheable>
@@ -20,7 +20,7 @@
 	<template>
 		<template-key>similar-results-card-ftl</template-key>
 		<name>portlet-display-template-name-card-layout</name>
-		<description>portlet-display-template-description-card</description>
+		<description>portlet-display-template-description-similar-results-card</description>
 		<language>ftl</language>
 		<script-file>com/liferay/search/similar/results/web/portlet/template/dependencies/portlet_display_template_card.ftl</script-file>
 		<cacheable>false</cacheable>

@@ -10,6 +10,18 @@ definition {
 			value1 = "${site}");
 	}
 
+	macro gotoPanel {
+		var key_panel = "${panel}";
+
+		AssertClick.assertPartialTextClickAt(
+			locator1 = "GlobalMenu#PANEL",
+			value1 = "${panel}");
+
+		AssertElementPresent(locator1 = "GlobalMenu#ACTIVE_PANEL");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
 	@summary = "Navigate to Global Menu > ${panel} > ${category} > ${portlet}"
 	macro gotoPortlet {
 		GlobalMenuHelper.openGlobalMenu();

@@ -41,6 +41,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileTree;
@@ -80,15 +81,23 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 
 		_configureExtensionLiferay(liferayExtension);
 
-		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
 
 		final Configuration originalModuleConfiguration =
-			_addConfigurationOriginalModule(project);
+			configurationContainer.create(ORIGINAL_MODULE_CONFIGURATION_NAME);
 
-		Sync unzipOriginalModuleSync = _addTaskUnzipOriginalModule(
-			project, originalModuleConfiguration);
+		Configuration compileOnlyConfiguration =
+			configurationContainer.getByName(
+				JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
 
 		_configureConfigurationCompileOnly(
+			compileOnlyConfiguration, originalModuleConfiguration);
+		_configureConfigurationOriginalModule(originalModuleConfiguration);
+
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		Sync unzipOriginalModuleSync = _addTaskUnzipOriginalModule(
 			project, originalModuleConfiguration);
 
 		_configureTaskDeploy(project, liferayExtension, jar);
@@ -106,20 +115,18 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			});
 	}
 
-	private Configuration _addConfigurationOriginalModule(Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, ORIGINAL_MODULE_CONFIGURATION_NAME);
+	private void _configureConfigurationOriginalModule(
+		Configuration originalModuleConfiguration) {
 
-		configuration.setDescription(
+		originalModuleConfiguration.setDescription(
 			"Configures the original module to extend.");
-		configuration.setTransitive(false);
-		configuration.setVisible(false);
-
-		return configuration;
+		originalModuleConfiguration.setTransitive(false);
+		originalModuleConfiguration.setVisible(false);
 	}
 
 	private Sync _addTaskUnzipOriginalModule(
-		final Project project, final Configuration configuration) {
+		final Project project,
+		final Configuration originalModuleConfiguration) {
 
 		Sync sync = GradleUtil.addTask(
 			project, UNZIP_ORIGINAL_MODULE_TASK_NAME, Sync.class);
@@ -129,7 +136,8 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 
 				@Override
 				public FileTree call() {
-					return project.zipTree(configuration.getSingleFile());
+					return project.zipTree(
+						originalModuleConfiguration.getSingleFile());
 				}
 
 			});
@@ -164,15 +172,11 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		WatchOSGiPlugin.INSTANCE.apply(project);
 	}
 
-	private Configuration _configureConfigurationCompileOnly(
-		Project project, Configuration originalModuleConfiguration) {
+	private void _configureConfigurationCompileOnly(
+		Configuration compileOnlyConfiguration,
+		Configuration originalModuleConfiguration) {
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
-
-		configuration.extendsFrom(originalModuleConfiguration);
-
-		return configuration;
+		compileOnlyConfiguration.extendsFrom(originalModuleConfiguration);
 	}
 
 	private void _configureExtensionLiferay(

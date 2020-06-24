@@ -22,11 +22,19 @@ import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -76,12 +84,29 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				TranslationInfoFieldChecker.class.getName(),
 				_translationInfoFieldChecker);
+			renderRequest.setAttribute(
+				"availableSourceLocalesIds", Arrays.asList(article.getAvailableLanguageIds()));
+			renderRequest.setAttribute(
+				"availableTargetLocalesIds",
+				_getSiteAvailableLocalesIds(themeDisplay));
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
 		}
 
 		return "/translate.jsp";
+	}
+
+
+	private List<String> _getSiteAvailableLocalesIds(ThemeDisplay themeDisplay) {
+		Stream<Locale> stream = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId()).stream();
+
+		return stream.map(
+			LocaleUtil::toLanguageId
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	@Reference

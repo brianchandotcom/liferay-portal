@@ -48,6 +48,7 @@ import org.gradle.api.java.archives.Manifest;
 import org.gradle.api.java.archives.ManifestMergeDetails;
 import org.gradle.api.java.archives.ManifestMergeSpec;
 import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Sync;
@@ -72,6 +73,13 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 	public void apply(final Project project) {
 		_applyPlugins(project);
 
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		LiferayExtension liferayExtension = extensionContainer.getByType(
+			LiferayExtension.class);
+
+		_configureExtensionLiferay(liferayExtension);
+
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		final Configuration originalModuleConfiguration =
@@ -83,8 +91,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		_configureConfigurationCompileOnly(
 			project, originalModuleConfiguration);
 
-		_configureLiferay(project);
-		_configureTaskDeploy(project, jar);
+		_configureTaskDeploy(project, liferayExtension, jar);
 
 		_configureTaskJar(jar, unzipOriginalModuleSync);
 
@@ -168,9 +175,8 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private void _configureLiferay(Project project) {
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+	private void _configureExtensionLiferay(
+		final LiferayExtension liferayExtension) {
 
 		liferayExtension.setDeployDir(
 			new Callable<File>() {
@@ -220,7 +226,10 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 	}
 
 	@SuppressWarnings("serial")
-	private void _configureTaskDeploy(final Project project, Jar jar) {
+	private void _configureTaskDeploy(
+		final Project project, final LiferayExtension liferayExtension,
+		Jar jar) {
+
 		Copy copy = (Copy)GradleUtil.getTask(
 			project, LiferayBasePlugin.DEPLOY_TASK_NAME);
 
@@ -234,10 +243,6 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 						new Closure<String>(project) {
 
 							public String doCall(String fileName) {
-								LiferayExtension liferayExtension =
-									GradleUtil.getExtension(
-										project, LiferayExtension.class);
-
 								Closure<String> closure =
 									liferayExtension.
 										getDeployedFileNameClosure();

@@ -17,6 +17,7 @@ package com.liferay.content.dashboard.web.internal.instance.lifecycle;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.content.dashboard.web.internal.constants.ContentDashboardAssetVocabularyNamesConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -45,9 +46,12 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_addAssetVocabulary(company, PropsValues.ASSET_VOCABULARY_DEFAULT);
-		_addAssetVocabulary(company, "audience");
-		_addAssetVocabulary(company, "stage");
+		for (String assetVocabularyName :
+				ContentDashboardAssetVocabularyNamesConstants.
+					DEFAULT_ASSET_VOCABULARY_NAMES) {
+
+			_addAssetVocabulary(company, assetVocabularyName);
+		}
 	}
 
 	private void _addAssetVocabulary(Company company, String name)

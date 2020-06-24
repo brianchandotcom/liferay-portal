@@ -16,6 +16,7 @@ package com.liferay.content.dashboard.web.internal.provider;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.content.dashboard.web.internal.constants.ContentDashboardAssetVocabularyNamesConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 
@@ -42,10 +43,12 @@ public class AssetVocabulariesProvider {
 		}
 
 		return Stream.of(
-			_assetVocabularyLocalService.fetchGroupVocabulary(
-				group.getGroupId(), "audience"),
-			_assetVocabularyLocalService.fetchGroupVocabulary(
-				group.getGroupId(), "stage")
+			ContentDashboardAssetVocabularyNamesConstants.
+				DEFAULT_ASSET_VOCABULARY_NAMES
+		).map(
+			assetVocabularyName ->
+				_assetVocabularyLocalService.fetchGroupVocabulary(
+					group.getGroupId(), assetVocabularyName)
 		).filter(
 			Objects::nonNull
 		).filter(

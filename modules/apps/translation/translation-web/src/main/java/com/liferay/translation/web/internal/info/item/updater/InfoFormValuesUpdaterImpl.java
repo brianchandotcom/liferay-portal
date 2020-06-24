@@ -107,9 +107,9 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 					article.getDescription(),
 					importedLocaleDescriptionMap.get(targetLocale));
 
-				String translatedContent =
-					_getTranslatedContent(article.getContent(), importedLocaleContentMap,
-						targetLocale);
+				String translatedContent = _getTranslatedContent(
+					article.getContent(), importedLocaleContentMap,
+					targetLocale);
 
 				article = _journalArticleService.updateArticleTranslation(
 					article.getGroupId(), article.getArticleId(),
@@ -123,6 +123,53 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 		}
 
 		return article;
+	}
+
+	private String _getTranslatedContent(
+			String articleContent,
+			Map<Locale, Map<String, String>> importedLocaleContentMap,
+			Locale targetLocale)
+		throws DocumentException {
+
+		Map<String, String> contentFieldMap = importedLocaleContentMap.get(
+			targetLocale);
+
+		if ((contentFieldMap == null) || contentFieldMap.isEmpty()) {
+			return articleContent;
+		}
+
+		for (Map.Entry<String, String> entry : contentFieldMap.entrySet()) {
+			Document document = SAXReaderUtil.read(articleContent);
+
+			articleContent = _updateContent(
+				document, entry.getKey(), entry.getValue(), targetLocale);
+		}
+
+		return articleContent;
+	}
+
+	private String _getTranslatedString(
+		String currentString, String defaultString, String importedString) {
+
+		if (importedString != null) {
+			return importedString;
+		}
+
+		if (Validator.isNotNull(currentString)) {
+			return currentString;
+		}
+
+		return defaultString;
+	}
+
+	private void _setTargetLocale(Element rootElement, Locale targetLocale) {
+		String availableLanguageIds = rootElement.attributeValue(
+			"available-locales");
+
+		if (!availableLanguageIds.contains(targetLocale.toString())) {
+			availableLanguageIds += StringPool.COMMA + targetLocale.toString();
+			rootElement.addAttribute("available-locales", availableLanguageIds);
+		}
 	}
 
 	private String _updateContent(
@@ -141,7 +188,6 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 				"name", StringPool.BLANK);
 
 			if (Objects.equals(attribute, fieldName)) {
-
 				_updateElement(
 					dynamicElementElement, importedContent, targetLocale);
 			}
@@ -153,6 +199,7 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 	private void _updateElement(
 		Element dynamicElementElement, String importedContent,
 		Locale targetLocale) {
+
 		boolean exists = false;
 
 		for (Element element :
@@ -161,16 +208,16 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 			String languageId = element.attributeValue(
 				"language-id", StringPool.BLANK);
 
-			if (Objects.equals(languageId, LocaleUtil.toLanguageId(
-				targetLocale))) {
+			if (Objects.equals(
+					languageId, LocaleUtil.toLanguageId(targetLocale))) {
 
 				element.clearContent();
 				element.addCDATA(importedContent);
 
 				exists = true;
+
 				break;
 			}
-
 		}
 
 		if (!exists) {
@@ -181,56 +228,6 @@ public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
 				"language-id", LocaleUtil.toLanguageId(targetLocale));
 			element.addCDATA(importedContent);
 		}
-	}
-
-	private void _setTargetLocale(
-		Element rootElement, Locale targetLocale) {
-		String availableLanguageIds = rootElement.attributeValue(
-			"available-locales");
-
-		if (!availableLanguageIds.contains(targetLocale.toString())) {
-			availableLanguageIds += StringPool.COMMA + targetLocale.toString();
-			rootElement.addAttribute("available-locales", availableLanguageIds);
-		}
-	}
-
-	private String _getTranslatedContent(
-		String articleContent,
-		Map<Locale, Map<String, String>> importedLocaleContentMap,
-		Locale targetLocale) throws DocumentException {
-
-		Map<String, String> contentFieldMap =
-			importedLocaleContentMap.get(targetLocale);
-
-		if ((contentFieldMap == null)||contentFieldMap.isEmpty()) {
-			return articleContent;
-		}
-
-		String translatedContent = articleContent;
-
-		for (Map.Entry<String, String> entry : contentFieldMap.entrySet()) {
-			Document document = SAXReaderUtil.read(translatedContent);
-
-			translatedContent = _updateContent(
-				document, entry.getKey(), entry.getValue(),
-				targetLocale);
-		}
-
-		return translatedContent;
-	}
-
-	private String _getTranslatedString(
-		String currentString, String defaultString, String importedString) {
-
-		if (importedString != null) {
-			return importedString;
-		}
-
-		if (Validator.isNotNull(currentString)) {
-			return currentString;
-		}
-
-		return defaultString;
 	}
 
 	@Reference

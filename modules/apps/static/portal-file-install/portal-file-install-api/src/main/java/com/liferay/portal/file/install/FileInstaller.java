@@ -12,19 +12,36 @@
  * details.
  */
 
-package com.liferay.portal.file.install.listener;
+package com.liferay.portal.file.install;
 
 import java.io.File;
+
+import java.net.URL;
 
 /**
  * @author Matthew Tambara
  */
-public interface ArtifactInstaller extends ArtifactListener {
+public interface FileInstaller {
 
-	public void install(File file) throws Exception;
+	public default boolean canInstall(File file) {
+		return false;
+	}
 
-	public void uninstall(File file) throws Exception;
+	public default boolean canTransformURL(File file) {
+		return false;
+	}
 
-	public void update(File file) throws Exception;
+	public default void install(File file) throws Exception {
+	}
+
+	public default URL transform(URL url) throws Exception {
+		return url;
+	}
+
+	public default void uninstall(File file) throws Exception {
+	}
+
+	public default void update(File file) throws Exception {
+	}
 
 }

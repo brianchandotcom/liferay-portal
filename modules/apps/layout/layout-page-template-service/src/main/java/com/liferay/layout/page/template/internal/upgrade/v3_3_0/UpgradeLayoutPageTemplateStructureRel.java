@@ -103,7 +103,8 @@ public class UpgradeLayoutPageTemplateStructureRel extends UpgradeProcess {
 				(!portletId.contains(
 					_SEGMENTS_EXPERIENCE_SEPARATOR_1 + segmentsExperienceId) &&
 				 !portletId.contains(
-					 _SEGMENTS_EXPERIENCE_SEPARATOR_2 + segmentsExperienceId))) {
+					 _SEGMENTS_EXPERIENCE_SEPARATOR_2 +
+						 segmentsExperienceId))) {
 
 				continue;
 			}

@@ -49,6 +49,7 @@ import org.gradle.api.java.archives.Manifest;
 import org.gradle.api.java.archives.ManifestMergeDetails;
 import org.gradle.api.java.archives.ManifestMergeSpec;
 import org.gradle.api.plugins.BasePluginConvention;
+import org.gradle.api.plugins.Convention;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
@@ -95,6 +96,11 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			compileOnlyConfiguration, originalModuleConfiguration);
 		_configureConfigurationOriginalModule(originalModuleConfiguration);
 
+		Convention convention = project.getConvention();
+
+		BasePluginConvention basePluginConvention = convention.getPlugin(
+			BasePluginConvention.class);
+
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		Sync unzipOriginalModuleSync = _addTaskUnzipOriginalModule(
@@ -109,7 +115,20 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					_configureProject(project, originalModuleConfiguration);
+					try (JarFile jarFile = new JarFile(
+							originalModuleConfiguration.getSingleFile())) {
+
+						java.util.jar.Manifest manifest = jarFile.getManifest();
+
+						Attributes attributes = manifest.getMainAttributes();
+
+						_configureConventionBasePluginAfterEvaluate(
+							basePluginConvention, attributes);
+						_configureProjectAfterEvaluate(project, attributes);
+					}
+					catch (IOException ioException) {
+						throw new UncheckedIOException(ioException);
+					}
 				}
 
 			});
@@ -195,38 +214,28 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureProject(
-		Project project, Configuration originalModuleConfiguration) {
+	private void _configureProjectAfterEvaluate(
+		Project project, Attributes attributes) {
 
-		try (JarFile jarFile = new JarFile(
-				originalModuleConfiguration.getSingleFile())) {
+		String version = attributes.getValue(Constants.BUNDLE_VERSION);
 
-			java.util.jar.Manifest manifest = jarFile.getManifest();
+		VersionNumber versionNumber = VersionNumber.parse(version);
 
-			Attributes attributes = manifest.getMainAttributes();
-
-			String version = attributes.getValue(Constants.BUNDLE_VERSION);
-
-			VersionNumber versionNumber = VersionNumber.parse(version);
-
-			if (Validator.isNull(versionNumber.getQualifier())) {
-				version += '.' + _VERSION_SUFFIX;
-			}
-			else {
-				version += '-' + _VERSION_SUFFIX;
-			}
-
-			project.setVersion(version);
-
-			BasePluginConvention basePluginConvention =
-				GradleUtil.getConvention(project, BasePluginConvention.class);
-
-			basePluginConvention.setArchivesBaseName(
-				attributes.getValue(Constants.BUNDLE_SYMBOLICNAME));
+		if (Validator.isNull(versionNumber.getQualifier())) {
+			version += '.' + _VERSION_SUFFIX;
 		}
-		catch (IOException ioException) {
-			throw new UncheckedIOException(ioException);
+		else {
+			version += '-' + _VERSION_SUFFIX;
 		}
+
+		project.setVersion(version);
+	}
+
+	private void _configureConventionBasePluginAfterEvaluate(
+		BasePluginConvention basePluginConvention, Attributes attributes) {
+
+		basePluginConvention.setArchivesBaseName(
+			attributes.getValue(Constants.BUNDLE_SYMBOLICNAME));
 	}
 
 	@SuppressWarnings("serial")

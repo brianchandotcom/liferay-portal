@@ -15,10 +15,6 @@ definition {
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
 			layoutName = "Test Source Page");
-
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Destination Page");
 	}
 
 	tearDown {

@@ -33,7 +33,7 @@
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.portal.vulcan.api</artifactId>
-			<version>7.6.1</version>
+			<version>@com.liferay.portal.vulcan.api.version@</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

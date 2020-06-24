@@ -126,6 +126,18 @@ definition {
 			value1 = "${itemsPerPage}");
 	}
 
+	macro changeTopic {
+		Click(locator1 = "Questions#QUESTIONS_TOPIC_DROPDOWN_MENU");
+
+		Click(
+			key_topicName = "${topicName}",
+			locator1 = "Questions#QUESTIONS_TOPIC_DROPDOWN_OPTION");
+
+		AssertTextEquals(
+			locator1 = "Questions#QUESTIONS_TOPIC_DROPDOWN_MENU",
+			value1 = "${topicName}");
+	}
+
 	macro clearSearchResults {
 		Click(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
 
@@ -170,6 +182,11 @@ definition {
 		Click(
 			key_questionNameField = "${categoryName}",
 			locator1 = "Questions#QUESTIONS_NAME_FIELD");
+
+		AssertTextEquals(
+			key_categoryTitle = "${categoryName}",
+			locator1 = "Questions#QUESTIONS_CATEGORY_TITLE",
+			value1 = "${categoryName}");
 	}
 
 	macro gotoDetails {
@@ -229,6 +246,25 @@ definition {
 			key_lastQuestionTitle = "${lastQuestionTitle}",
 			locator1 = "Questions#QUESTIONS_TITLE_LAST",
 			value1 = "${lastQuestionTitle}");
+	}
+
+	macro viewList {
+		if (isSet(unlistedQuestions)) {
+			for (var unlistedQuestion : list "${unlistedQuestions}") {
+				AssertElementNotPresent(
+					key_questionTitle = "${unlistedQuestions}",
+					locator1 = "Questions#QUESTIONS_TITLE");
+			}
+		}
+
+		if (isSet(unlistedQuestions)) {
+			for (var listedQuestion : list "${listedQuestions}") {
+				AssertTextEquals(
+					key_questionTitle = "${listedQuestion}",
+					locator1 = "Questions#QUESTIONS_TITLE",
+					value1 = "${listedQuestion}");
+			}
+		}
 	}
 
 	macro viewNoSearchResults {

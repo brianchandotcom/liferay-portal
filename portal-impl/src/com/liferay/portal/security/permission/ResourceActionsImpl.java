@@ -375,6 +375,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		return portletNames;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public List<String> getPortletResourceActions(Portlet portlet) {
 		Set<String> actions = new LinkedHashSet<>(

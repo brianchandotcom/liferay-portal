@@ -173,9 +173,7 @@ for (String childrenItemId : childrenItemIds) {
 			defaultFragmentRendererContext.setPreviewType(previewType);
 			defaultFragmentRendererContext.setSegmentsExperienceIds(segmentsExperienceIds);
 
-			LayoutStructureItem parentLayoutStructureItem = layoutStructure.getLayoutStructureItem(fragmentLayoutStructureItem.getParentItemId());
-
-			if (parentLayoutStructureItem instanceof CollectionItemLayoutStructureItem) {
+			if (LayoutStructureItemUtil.hasAncestor(fragmentLayoutStructureItem.getItemId(), LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM, layoutStructure)) {
 				defaultFragmentRendererContext.setUseCachedContent(false);
 			}
 			%>

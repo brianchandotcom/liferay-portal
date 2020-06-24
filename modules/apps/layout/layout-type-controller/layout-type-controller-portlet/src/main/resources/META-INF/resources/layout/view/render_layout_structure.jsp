@@ -183,9 +183,7 @@ for (String childrenItemId : childrenItemIds) {
 				defaultFragmentRendererContext.setDisplayObject(displayObject);
 				defaultFragmentRendererContext.setLocale(locale);
 
-				LayoutStructureItem parentLayoutStructureItem = layoutStructure.getLayoutStructureItem(fragmentLayoutStructureItem.getParentItemId());
-
-				if (parentLayoutStructureItem instanceof CollectionItemLayoutStructureItem) {
+				if (LayoutStructureItemUtil.hasAncestor(fragmentLayoutStructureItem.getItemId(), LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM, layoutStructure)) {
 					defaultFragmentRendererContext.setUseCachedContent(false);
 				}
 				%>

@@ -40,6 +40,10 @@ definition {
 
 		MessageboardsCategory.gotoPG(categoryName = "${categoryName}");
 
+		if (isSet(subCategoryName)) {
+			MessageboardsCategory.gotoPG(categoryName = "${subCategoryName}");
+		}
+
 		Pause(locator = "3000");
 
 		var categoryId = JSONMBMessage.getCategoryId();

@@ -39,11 +39,9 @@ definition {
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
-		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
-
-		PageTemplatesAdminGlobalSite.addCP(
-			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name");
+		JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+			pageTemplateEntryActive = "true",
+			pageTemplateEntryName = "Page Template Name");
 
 		JSONGroup.addGroup(groupName = "Site Name");
 
@@ -234,11 +232,11 @@ definition {
 	test DeleteGlobalPageTemplate {
 		property portal.acceptance = "true";
 
-		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+		JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+			pageTemplateEntryActive = "true",
+			pageTemplateEntryName = "Page Template Name");
 
-		PageTemplatesAdminGlobalSite.addCP(
-			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.deleteCP(pageTemplateName = "Page Template Name");
 
@@ -288,11 +286,11 @@ definition {
 	test EditGlobalPageTemplate {
 		property portal.acceptance = "true";
 
-		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+		JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+			pageTemplateEntryActive = "true",
+			pageTemplateEntryName = "Page Template Name");
 
-		PageTemplatesAdminGlobalSite.addCP(
-			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Page Template Name");
 
@@ -315,11 +313,12 @@ definition {
 
 	@priority = "4"
 	test EditGlobalPageTemplateDescription {
-		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+		JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+			pageTemplateEntryActive = "true",
+			pageTemplateEntryDescription = "This is a page template description",
+			pageTemplateEntryName = "Page Template Name");
 
-		PageTemplatesAdminGlobalSite.addCP(
-			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		PageTemplatesAdminGlobalSite.editDescription(
 			pageTemplateDescription = "This is a page template description",
@@ -465,11 +464,11 @@ definition {
 	test RenameGlobalPageTemplate {
 		property testray.component.names = "Page Templates";
 
-		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
+		JSONLayoutpagetemplate.addGlobalPageTemplateEntry(
+			pageTemplateEntryActive = "true",
+			pageTemplateEntryName = "Page Template Name");
 
-		PageTemplatesAdminGlobalSite.addCP(
-			pageTemplateActive = "Active",
-			pageTemplateName = "Page Template Name");
+		PageTemplatesAdminGlobalSite.openGlobalPageTemplatesAdmin();
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

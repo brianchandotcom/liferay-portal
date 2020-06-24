@@ -59,21 +59,46 @@ public class DataDefinitionResourceTest
 	public void testDeleteDataDefinition() throws Exception {
 		super.testDeleteDataDefinition();
 
-		DataDefinition dataDefinition =
-			_testDeleteDataDefinition_addDataDefinition(
+		DataDefinition parentDataDefinition =
+			dataDefinitionResource.postSiteDataDefinitionByContentType(
+				testGroup.getGroupId(), _CONTENT_TYPE,
 				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition-parent.json")),
-				DataDefinition.toDTO(
-					DataDefinitionTestUtil.read("data-definition-child.json")));
+					DataDefinitionTestUtil.read(
+						"data-definition-parent.json")));
+
+		DataDefinition childDataDefinition = DataDefinition.toDTO(
+			DataDefinitionTestUtil.read("data-definition-child.json"));
+
+		DataDefinitionField[] dataDefinitionFields =
+			childDataDefinition.getDataDefinitionFields();
+
+		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
+			dataDefinitionField.setCustomProperties(
+				HashMapBuilder.<String, Object>put(
+					"collapsible", true
+				).put(
+					"ddmStructureId", parentDataDefinition.getId()
+				).put(
+					"ddmStructureLayoutId", ""
+				).put(
+					"rows",
+					new String[] {
+						"[{\"columns\":[{\"fields\":[\"Text\"],\"size\": 12}]}]"
+					}
+				).build());
+		}
+
+		dataDefinitionResource.postSiteDataDefinitionByContentType(
+			testGroup.getGroupId(), _CONTENT_TYPE, childDataDefinition);
 
 		assertHttpResponseStatusCode(
 			204,
 			dataDefinitionResource.deleteDataDefinitionHttpResponse(
-				dataDefinition.getId()));
+				parentDataDefinition.getId()));
 		assertHttpResponseStatusCode(
 			404,
 			dataDefinitionResource.getDataDefinitionHttpResponse(
-				dataDefinition.getId()));
+				parentDataDefinition.getId()));
 	}
 
 	@Override
@@ -552,40 +577,6 @@ public class DataDefinitionResourceTest
 
 		return dataDefinitionResource.postSiteDataDefinitionByContentType(
 			testGroup.getGroupId(), _CONTENT_TYPE, randomDataDefinition());
-	}
-
-	private DataDefinition _testDeleteDataDefinition_addDataDefinition(
-			DataDefinition parentDataDefinition,
-			DataDefinition childDataDefinition)
-		throws Exception {
-
-		parentDataDefinition =
-			dataDefinitionResource.postSiteDataDefinitionByContentType(
-				testGroup.getGroupId(), _CONTENT_TYPE, parentDataDefinition);
-
-		DataDefinitionField[] dataDefinitionFields =
-			childDataDefinition.getDataDefinitionFields();
-
-		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
-			dataDefinitionField.setCustomProperties(
-				HashMapBuilder.<String, Object>put(
-					"collapsible", true
-				).put(
-					"ddmStructureId", parentDataDefinition.getId()
-				).put(
-					"ddmStructureLayoutId", ""
-				).put(
-					"rows",
-					new String[] {
-						"[{\"columns\":[{\"fields\":[\"Text\"],\"size\": 12}]}]"
-					}
-				).build());
-		}
-
-		dataDefinitionResource.postSiteDataDefinitionByContentType(
-			testGroup.getGroupId(), _CONTENT_TYPE, childDataDefinition);
-
-		return parentDataDefinition;
 	}
 
 	@Override

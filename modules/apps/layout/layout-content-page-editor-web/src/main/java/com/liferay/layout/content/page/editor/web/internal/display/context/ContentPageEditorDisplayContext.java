@@ -719,6 +719,8 @@ public class ContentPageEditorDisplayContext {
 		infoListProviderItemSelectorCriterion.setItemTypes(
 			_getInfoItemFormProviderClassNames());
 
+		infoListProviderItemSelectorCriterion.setPlid(themeDisplay.getPlid());
+
 		infoListProviderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoListProviderItemSelectorReturnType());
 
@@ -1418,6 +1420,8 @@ public class ContentPageEditorDisplayContext {
 		InfoListProviderItemSelectorCriterion
 			infoListProviderItemSelectorCriterion =
 				new InfoListProviderItemSelectorCriterion();
+
+		infoListProviderItemSelectorCriterion.setPlid(themeDisplay.getPlid());
 
 		infoListProviderItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			new InfoListProviderItemSelectorReturnType());

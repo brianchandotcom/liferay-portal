@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -34,11 +33,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 import javax.portlet.ResourceRequest;
@@ -86,12 +86,6 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 		Layout layout = _layoutLocalService.getLayout(
 			ParamUtil.getLong(resourceRequest, "plid"));
 
-		FriendlyURLEntry mainFriendlyURLEntry =
-			_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-				_layoutFriendlyURLEntryHelper.getClassNameId(
-					layout.isPrivateLayout()),
-				layout.getPlid());
-
 		JSONObject friendlyURLEntryLocalizationsJSONObject =
 			JSONFactoryUtil.createJSONObject();
 
@@ -104,26 +98,21 @@ public class GetFriendlyURLEntryLocalizationsMVCResourceCommand
 					layout.getPlid(), languageId, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, _friendlyURLEntryLocalizationComparator);
 
-			if (friendlyURLEntryLocalizations.isEmpty()) {
-				continue;
-			}
-
-			FriendlyURLEntryLocalization mainFriendlyURLEntryLocalization =
-				_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
-					mainFriendlyURLEntry.getFriendlyURLEntryId(), languageId);
+			String mainUrlTitle = layout.getFriendlyURL(
+				LocaleUtil.fromLanguageId(languageId));
 
 			friendlyURLEntryLocalizationsJSONObject.put(
 				languageId,
 				JSONUtil.put(
-					"current",
-					_serializeFriendlyURLEntryLocalization(
-						mainFriendlyURLEntryLocalization)
+					"current", JSONUtil.put("urlTitle", mainUrlTitle)
 				).put(
 					"history",
 					_getJSONJArray(
-						ListUtil.remove(
+						ListUtil.filter(
 							friendlyURLEntryLocalizations,
-							Arrays.asList(mainFriendlyURLEntryLocalization)),
+							friendlyURLEntryLocalization -> !Objects.equals(
+								friendlyURLEntryLocalization.getUrlTitle(),
+								mainUrlTitle)),
 						this::_serializeFriendlyURLEntryLocalization)
 				));
 		}

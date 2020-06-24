@@ -29,18 +29,8 @@ TranslationInfoFieldChecker translationInfoFieldChecker = (TranslationInfoFieldC
 
 List<String> sourceLocaleIds = (List)request.getAttribute("availableSourceLocalesIds");
 List<String> targetLocaleIds = (List)request.getAttribute("availableTargetLocalesIds");
-
-String sourceLocaleId = ParamUtil.getString(request, "sourceLocaleId");
-
-if (Validator.isNull(sourceLocaleId)) {
-	sourceLocaleId = sourceLocaleIds.get(0);
-}
-
-String targetLocaleId = ParamUtil.getString(request, "targetLocaleId");
-
-if (Validator.isNull(targetLocaleId)) {
-	targetLocaleId = targetLocaleIds.get(0);
-}
+String sourceLocaleId = (String)request.getAttribute("sourceLocaleId");
+String targetLocaleId = (String)request.getAttribute("targetLocaleId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -59,11 +49,13 @@ renderResponse.setTitle(title);
 
 						<%
 						Map<String, Object> data = HashMapBuilder.<String, Object>put(
-							"initialSourceLanguageId", sourceLocaleId
+							"currentUrl", currentURL
+						).put(
+							"sourceLanguageId", sourceLocaleId
 						).put(
 							"sourceAvailableLanguages", sourceLocaleIds
 						).put(
-							"initialTargetLanguageId", targetLocaleId
+							"targetLanguageId", targetLocaleId
 						).put(
 							"targetAvailableLanguages", targetLocaleIds
 						).build();
@@ -73,10 +65,6 @@ renderResponse.setTitle(title);
 							data="<%= data %>"
 							module="js/translate/TranslateLanguagesSelector"
 						/>
-
-						<h2 class="h4 text-truncate-inline" title="<%= HtmlUtil.escapeAttribute(title) %>">
-							<span class="text-truncate"><%= HtmlUtil.escape(title) %></span>
-						</h4>
 					</div>
 				</li>
 				<li class="tbar-item">

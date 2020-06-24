@@ -25,8 +25,8 @@ import {AppContext} from '../../AppContext.es';
 import Answer from '../../components/Answer.es';
 import ArticleBodyRenderer from '../../components/ArticleBodyRenderer.es';
 import CreatorRow from '../../components/CreatorRow.es';
+import DeleteThread from '../../components/DeleteThread.es';
 import Link from '../../components/Link.es';
-import Modal from '../../components/Modal.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionsEditor from '../../components/QuestionsEditor';
 import Rating from '../../components/Rating.es';
@@ -38,21 +38,15 @@ import TextLengthValidation from '../../components/TextLengthValidation.es';
 import useQueryParams from '../../hooks/useQueryParams.es';
 import {
 	createAnswerQuery,
-	deleteMessageBoardThreadQuery,
 	getMessagesQuery,
 	getThreadQuery,
 	markAsAnswerMessageBoardMessageQuery,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {
-	dateToBriefInternationalHuman,
-	historyPushWithSlug,
-	stripHTML,
-} from '../../utils/utils.es';
+import {dateToBriefInternationalHuman, stripHTML} from '../../utils/utils.es';
 
 export default withRouter(
 	({
-		history,
 		location,
 		match: {
 			params: {questionId},
@@ -66,11 +60,10 @@ export default withRouter(
 		const sort = queryParams.get('sort') || 'active';
 
 		const [articleBody, setArticleBody] = useState();
-		const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+		const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
+
 		const [page, setPage] = useState(1);
 		const [pageSize, setPageSize] = useState(20);
-
-		const historyPushParser = historyPushWithSlug(history.push);
 
 		const {
 			loading,
@@ -148,18 +141,6 @@ export default withRouter(
 			onCompleted() {
 				setArticleBody('');
 				refetch();
-			},
-		});
-
-		const [deleteThread] = useMutation(deleteMessageBoardThreadQuery, {
-			onCompleted() {
-				historyPushParser(
-					`/questions/${question.messageBoardSection.title}`
-				);
-			},
-			update(proxy) {
-				proxy.evict(`MessageBoardThread:${question.id}`);
-				proxy.gc();
 			},
 		});
 
@@ -291,38 +272,16 @@ export default withRouter(
 
 											{question.actions.delete && (
 												<>
-													<Modal
-														body={Liferay.Language.get(
-															'do-you-want-to-delete–this-thread'
-														)}
-														callback={() => {
-															deleteThread({
-																variables: {
-																	messageBoardThreadId:
-																		question.id,
-																},
-															});
-														}}
-														onClose={() =>
-															setDeleteModalVisible(
-																false
-															)
-														}
-														status="warning"
-														textPrimaryButton={Liferay.Language.get(
-															'delete'
-														)}
-														title={Liferay.Language.get(
-															'delete-thread'
-														)}
-														visible={
-															deleteModalVisible
+													<DeleteThread
+														question={question}
+														showDeleteModalPanel={
+															showDeleteModalPanel
 														}
 													/>
 													<ClayButton
 														displayType="secondary"
 														onClick={() =>
-															setDeleteModalVisible(
+															setShowDeleteModalPanel(
 																true
 															)
 														}

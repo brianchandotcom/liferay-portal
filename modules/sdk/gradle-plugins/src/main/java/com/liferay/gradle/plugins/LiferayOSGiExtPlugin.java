@@ -75,7 +75,12 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(final Project project) {
+
+		// Plugins
+
 		_applyPlugins(project);
+
+		// Extensions
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
@@ -83,6 +88,8 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			LiferayExtension.class);
 
 		_configureExtensionLiferay(liferayExtension);
+
+		// Configurations
 
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
@@ -98,10 +105,14 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			compileOnlyConfiguration, originalModuleConfiguration);
 		_configureConfigurationOriginalModule(originalModuleConfiguration);
 
+		// Conventions
+
 		Convention convention = project.getConvention();
 
 		BasePluginConvention basePluginConvention = convention.getPlugin(
 			BasePluginConvention.class);
+
+		// Tasks
 
 		TaskProvider<Sync> unzipOriginalModuleTaskProvider =
 			GradleUtil.addTaskProvider(
@@ -119,6 +130,8 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		_configureTaskUnzipOriginalModuleProvider(
 			project, originalModuleConfiguration,
 			unzipOriginalModuleTaskProvider);
+
+		// Other
 
 		project.afterEvaluate(
 			new Action<Project>() {

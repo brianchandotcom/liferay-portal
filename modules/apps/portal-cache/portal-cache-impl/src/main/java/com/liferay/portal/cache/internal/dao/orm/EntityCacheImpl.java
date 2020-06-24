@@ -132,13 +132,21 @@ public class EntityCacheImpl
 		return EntityCache.class.getName();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * 				#getResult(Class, Serializable)}
+	 */
+	@Deprecated
 	@Override
 	public Serializable getResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
 
-		if (!_valueObjectEntityCacheEnabled || !entityCacheEnabled ||
-			!CacheRegistryUtil.isActive()) {
+		return getResult(clazz, primaryKey);
+	}
 
+	@Override
+	public Serializable getResult(Class<?> clazz, Serializable primaryKey) {
+		if (!_valueObjectEntityCacheEnabled || !CacheRegistryUtil.isActive()) {
 			return null;
 		}
 
@@ -284,21 +292,46 @@ public class EntityCacheImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * 				#putResult(Class, Serializable, Serializable)}
+	 */
+	@Deprecated
 	@Override
 	public void putResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		Serializable result) {
 
-		putResult(entityCacheEnabled, clazz, primaryKey, result, true);
+		putResult(clazz, primaryKey, result);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * 				#putResult(Class, Serializable, Serializable, boolean)}
+	 */
+	@Deprecated
 	@Override
 	public void putResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		Serializable result, boolean quiet) {
 
-		if (!_valueObjectEntityCacheEnabled || !entityCacheEnabled ||
-			!CacheRegistryUtil.isActive() || (result == null)) {
+		putResult(clazz, primaryKey, result, quiet);
+	}
+
+	@Override
+	public void putResult(
+		Class<?> clazz, Serializable primaryKey, Serializable result) {
+
+		putResult(clazz, primaryKey, result, true);
+	}
+
+	@Override
+	public void putResult(
+		Class<?> clazz, Serializable primaryKey, Serializable result,
+		boolean quiet) {
+
+		if (!_valueObjectEntityCacheEnabled || !CacheRegistryUtil.isActive() ||
+			(result == null)) {
 
 			return;
 		}
@@ -337,13 +370,21 @@ public class EntityCacheImpl
 		_multiVMPool.removePortalCache(groupKey);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 * 				#removeResult(Class, Serializable)}
+	 */
+	@Deprecated
 	@Override
 	public void removeResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
 
-		if (!_valueObjectEntityCacheEnabled || !entityCacheEnabled ||
-			!CacheRegistryUtil.isActive()) {
+		removeResult(clazz, primaryKey);
+	}
 
+	@Override
+	public void removeResult(Class<?> clazz, Serializable primaryKey) {
+		if (!_valueObjectEntityCacheEnabled || !CacheRegistryUtil.isActive()) {
 			return;
 		}
 

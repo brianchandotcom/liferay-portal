@@ -1642,6 +1642,106 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-114727. The Content Display fragment can display title of asset entries in Collection Provider."
+	@priority = "5"
+	test ViewAssetTitleInContentDisplayWithCollectionProvider {
+		task ("Add a Web Content Article,a Blogs Entry and a document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1.jpg",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert assets' title are displayed in Collection Display with Content Display") {
+			Click.clickNoMouseOver(
+				key_elementType = "Collection Display",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
+			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			NavItem.click(navItem = "Collection Providers");
+
+			LexiconCard.clickCard(card = "Highest Rated Assets");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Document_1.jpg",
+				fragmentName = "Content Display");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Document_1.jpg",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Blogs Entry Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Web Content Title",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+		}
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertVisible(
+			key_colPosition = "1",
+			key_entryTitle = "Document_1.jpg",
+			key_fragmentName = "Collection Display",
+			key_rowPosition = "2",
+			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+
+		AssertVisible(
+			key_colPosition = "2",
+			key_entryTitle = "Blogs Entry Title",
+			key_fragmentName = "Collection Display",
+			key_rowPosition = "2",
+			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+
+		AssertVisible(
+			key_colPosition = "3",
+			key_entryTitle = "Web Content Title",
+			key_fragmentName = "Collection Display",
+			key_rowPosition = "2",
+			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+	}
+
 	@description = "This is a test for LPS-112093. The Blogs Entries of collection are displayed using Full Content when add a Content Display to Collection Display."
 	@priority = "4"
 	test ViewBlogEntryViaContentInCollectionDisplay {

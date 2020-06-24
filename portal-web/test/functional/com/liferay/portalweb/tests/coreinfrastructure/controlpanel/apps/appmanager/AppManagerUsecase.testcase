@@ -61,7 +61,7 @@ definition {
 		property test.name.skip.portal.instance = "AppManagerUsecase#ViewLicenseManager";
 
 		GlobalMenu.gotoPortlet(
-			category = "Apps",
+			category = "Marketplace",
 			panel = "Control Panel",
 			portlet = "License Manager");
 

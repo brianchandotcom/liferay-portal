@@ -224,7 +224,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		LexiconEntry.gotoAdd();
@@ -243,7 +243,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Accounts",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Accounts");
 
 		Search.searchCP(searchTerm = "Back Icon Account");
@@ -407,7 +407,7 @@ definition {
 
 		GlobalMenu.gotoPortlet(
 			category = "Users",
-			panel = "Control Panel",
+			panel = "Applications",
 			portlet = "Users and Organizations");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn userln");

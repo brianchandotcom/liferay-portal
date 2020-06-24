@@ -4,7 +4,7 @@
 	<template>
 		<template-key>custom-filter-compact-ftl</template-key>
 		<name>portlet-display-template-name-compact-layout</name>
-		<description>portlet-display-template-description-compact</description>
+		<description>portlet-display-template-description-custom-filter-compact</description>
 		<language>ftl</language>
 		<script-file>com/liferay/portal/search/web/internal/custom/filter/template/dependencies/portlet_display_template_compact.ftl</script-file>
 		<cacheable>false</cacheable>

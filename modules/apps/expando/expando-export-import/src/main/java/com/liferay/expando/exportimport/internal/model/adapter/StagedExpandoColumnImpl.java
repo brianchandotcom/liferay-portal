@@ -197,6 +197,10 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 		return _expandoColumn.isCachedModel();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return _expandoColumn.isEntityCacheEnabled();
@@ -207,6 +211,10 @@ public class StagedExpandoColumnImpl implements StagedExpandoColumn {
 		return _expandoColumn.isEscapedModel();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return _expandoColumn.isFinderCacheEnabled();

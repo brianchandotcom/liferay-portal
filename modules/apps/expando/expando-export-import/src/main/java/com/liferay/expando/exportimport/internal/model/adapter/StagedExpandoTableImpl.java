@@ -155,6 +155,10 @@ public class StagedExpandoTableImpl implements StagedExpandoTable {
 		return _expandoTable.isDefaultTable();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return _expandoTable.isEntityCacheEnabled();
@@ -165,6 +169,10 @@ public class StagedExpandoTableImpl implements StagedExpandoTable {
 		return _expandoTable.isEscapedModel();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return _expandoTable.isFinderCacheEnabled();

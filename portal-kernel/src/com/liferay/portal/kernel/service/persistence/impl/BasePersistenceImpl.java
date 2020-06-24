@@ -597,6 +597,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		return model;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public void setConfiguration(Configuration configuration) {
 		String modelClassName = _modelClass.getName();
 
@@ -890,7 +894,17 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	protected int databaseInMaxParameters;
 	protected Map<String, String> dbColumnNames;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	protected boolean entityCacheEnabled;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	protected boolean finderCacheEnabled;
 
 	private static Type _getType(Expression<?> expression) {
@@ -1065,6 +1079,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			throw new UnsupportedOperationException();
 		}
 
+		/**
+		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+		 */
+		@Deprecated
 		@Override
 		public boolean isEntityCacheEnabled() {
 			throw new UnsupportedOperationException();
@@ -1075,6 +1093,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			throw new UnsupportedOperationException();
 		}
 
+		/**
+		 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+		 */
+		@Deprecated
 		@Override
 		public boolean isFinderCacheEnabled() {
 			throw new UnsupportedOperationException();

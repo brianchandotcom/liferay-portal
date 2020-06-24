@@ -98,6 +98,10 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 		return model.isCachedModel();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return model.isEntityCacheEnabled();
@@ -108,6 +112,10 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 		return model.isEscapedModel();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return model.isFinderCacheEnabled();

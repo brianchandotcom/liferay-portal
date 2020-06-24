@@ -215,14 +215,32 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	<#if entity.hasEagerBlobColumn()>
 		<#if !dependencyInjectorDS>
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				/**
+				* @deprecated As of Athanasius (7.3.x), with no direct replacement
+				*/
+				@Deprecated
+			</#if>
 			public static final boolean ENTITY_CACHE_ENABLED = false;
 
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				/**
+				* @deprecated As of Athanasius (7.3.x), with no direct replacement
+				*/
+				@Deprecated
+			</#if>
 			public static final boolean FINDER_CACHE_ENABLED = false;
 		</#if>
 
 		<#assign columnBitmaskEnabled = false />
 	<#else>
 		<#if !dependencyInjectorDS>
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				/**
+				* @deprecated As of Athanasius (7.3.x), with no direct replacement
+				*/
+				@Deprecated
+			</#if>
 			public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),
 
 			<#if entity.isCacheEnabled()>
@@ -233,6 +251,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			);
 
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				/**
+				* @deprecated As of Athanasius (7.3.x), with no direct replacement
+				*/
+				@Deprecated
+			</#if>
 			public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${apiPackagePath}.model.${entity.name}"),
 
 			<#if entity.isCacheEnabled()>
@@ -248,6 +272,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		<#if entity.finderEntityColumns?size == 0>
 			<#if !dependencyInjectorDS>
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					/**
+					* @deprecated As of Athanasius (7.3.x), with no direct replacement
+					*/
+					@Deprecated
+				</#if>
 				public static final boolean COLUMN_BITMASK_ENABLED = false;
 			</#if>
 
@@ -256,6 +286,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		<#if entity.finderEntityColumns?size &gt; 64>
 			<#if !dependencyInjectorDS>
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					/**
+					* @deprecated As of Athanasius (7.3.x), with no direct replacement
+					*/
+					@Deprecated
+				</#if>
 				public static final boolean COLUMN_BITMASK_ENABLED = false;
 			</#if>
 
@@ -264,6 +300,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		<#if columnBitmaskEnabled>
 			<#if !dependencyInjectorDS>
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					/**
+					* @deprecated As of Athanasius (7.3.x), with no direct replacement
+					*/
+					@Deprecated
+				</#if>
 				public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
 			</#if>
 
@@ -286,14 +328,26 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	</#if>
 
 	<#if dependencyInjectorDS>
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			/**
+			* @deprecated As of Athanasius (7.3.x), with no direct replacement
+			*/
+			@Deprecated
+		</#if>
 		public static void setEntityCacheEnabled(boolean entityCacheEnabled) {
-			<#if !entity.hasEagerBlobColumn()>
+			<#if serviceBuilder.isVersionLTE_7_2_0() && !entity.hasEagerBlobColumn()>
 				_entityCacheEnabled = entityCacheEnabled;
 			</#if>
 		}
 
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			/**
+			* @deprecated As of Athanasius (7.3.x), with no direct replacement
+			*/
+			@Deprecated
+		</#if>
 		public static void setFinderCacheEnabled(boolean finderCacheEnabled) {
-			<#if !entity.hasEagerBlobColumn()>
+			<#if serviceBuilder.isVersionLTE_7_2_0() && !entity.hasEagerBlobColumn()>
 				_finderCacheEnabled = finderCacheEnabled;
 			</#if>
 		}
@@ -372,6 +426,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			public static final String MAPPING_TABLE_${stringUtil.upperCase(entityColumn.mappingTableName)}_SQL_CREATE = "${serviceBuilder.getCreateMappingTableSQL(serviceBuilder.getEntityMapping(entityColumn.mappingTableName))}";
 
 			<#if !dependencyInjectorDS>
+				<#if serviceBuilder.isVersionGTE_7_3_0()>
+					/**
+					* @deprecated As of Athanasius (7.3.x), with no direct replacement
+					*/
+					@Deprecated
+				</#if>
 				public static final boolean FINDER_CACHE_ENABLED_${stringUtil.upperCase(entityColumn.mappingTableName)} = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${entityColumn.mappingTableName}"), true);
 			</#if>
 		</#if>
@@ -475,8 +535,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			attributes.put(attributeName, attributeGetterFunction.apply((${entity.name})this));
 		}
 
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
+		<#if serviceBuilder.isVersionLTE_7_2_0()>
+			attributes.put("entityCacheEnabled", isEntityCacheEnabled());
+			attributes.put("finderCacheEnabled", isFinderCacheEnabled());
+		</#if>
 
 		return attributes;
 	}
@@ -1556,19 +1618,39 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 	}
 
+	<#if serviceBuilder.isVersionGTE_7_3_0()>
+		/**
+		* @deprecated As of Athanasius (7.3.x), with no direct replacement
+		*/
+		@Deprecated
+	</#if>
 	@Override
 	public boolean isEntityCacheEnabled() {
 		<#if dependencyInjectorDS>
-			return _entityCacheEnabled;
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				return true;
+			<#else>
+				return _entityCacheEnabled;
+			</#if>
 		<#else>
 			return ENTITY_CACHE_ENABLED;
 		</#if>
 	}
 
+	<#if serviceBuilder.isVersionGTE_7_3_0()>
+		/**
+		* @deprecated As of Athanasius (7.3.x), with no direct replacement
+		*/
+		@Deprecated
+	</#if>
 	@Override
 	public boolean isFinderCacheEnabled() {
 		<#if dependencyInjectorDS>
-			return _finderCacheEnabled;
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				return true;
+			<#else>
+				return _finderCacheEnabled;
+			</#if>
 		<#else>
 			return FINDER_CACHE_ENABLED;
 		</#if>
@@ -1779,7 +1861,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	}
 
-	<#if dependencyInjectorDS>
+	<#if serviceBuilder.isVersionLTE_7_2_0() && dependencyInjectorDS>
 		<#if entity.hasEagerBlobColumn()>
 			private static final boolean _entityCacheEnabled = false;
 			private static final boolean _finderCacheEnabled = false;

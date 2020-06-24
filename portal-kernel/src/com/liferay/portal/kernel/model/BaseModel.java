@@ -86,7 +86,9 @@ public interface BaseModel<T>
 	 *
 	 * @return <code>true</code> if this model's entity cache is enabled;
 	 *         <code>false</code> otherwise
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public boolean isEntityCacheEnabled();
 
 	/**
@@ -102,7 +104,9 @@ public interface BaseModel<T>
 	 *
 	 * @return <code>true</code> if this model's finder cache is enabled;
 	 *         <code>false</code> otherwise
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
+	@Deprecated
 	public boolean isFinderCacheEnabled();
 
 	/**

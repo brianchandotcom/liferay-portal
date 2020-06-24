@@ -502,6 +502,10 @@ public class StagedGroupImpl extends GroupWrapper implements StagedGroup {
 		return _group.isControlPanel();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return _group.isEntityCacheEnabled();
@@ -512,6 +516,10 @@ public class StagedGroupImpl extends GroupWrapper implements StagedGroup {
 		return _group.isEscapedModel();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return _group.isFinderCacheEnabled();

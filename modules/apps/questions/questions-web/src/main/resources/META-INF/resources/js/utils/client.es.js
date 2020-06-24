@@ -447,7 +447,7 @@ export const getSections = (sectionTitle, siteKey) =>
 			return [section, section];
 		})
 		.then((data) => {
-			return {...data[0], parentMessageBoardSection: data[1]};
+			return {...data[0], parentSection: data[1]};
 		});
 
 export const getThreadsQuery = gql`

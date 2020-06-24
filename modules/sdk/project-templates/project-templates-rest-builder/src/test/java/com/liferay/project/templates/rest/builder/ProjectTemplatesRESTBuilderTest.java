@@ -127,8 +127,9 @@ public class ProjectTemplatesRESTBuilderTest
 		String liferayVersion = getDefaultLiferayVersion();
 		String name = "sample";
 		String packageName = "com.test.sample";
-		String implProjectName = name + "-impl";
 		String template = "rest-builder";
+
+		String implProjectName = name + "-impl";
 
 		File gradleWorkspaceDir = buildWorkspace(
 			temporaryFolder, "gradle", "gradleWS", liferayVersion,

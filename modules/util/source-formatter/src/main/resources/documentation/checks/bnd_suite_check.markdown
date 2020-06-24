@@ -12,7 +12,6 @@ Liferay-Releng-Marketplace: false
 ---
 
 If the value of property `Liferay-Releng-Suite` is not blank, it should be one
-of the following value:
+of the values specified in
 
-`collaboration`, `forms-and-workflow`, `foundation`, `static`, or
-`web-experience`
+`source-formatter.properties#source.check.BNDSuiteCheck.allowedLiferayRelengSuiteNames`

@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACTIVE_PANEL</td>
+	<td>//li[contains(@id,'GlobalMenuPortlet')]/button[contains(@class,'nav-link') and contains(@class,'active') and normalize-space()='${key_panel}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY</td>
 	<td>//ul[contains(@class,'list') and not(contains(@class,'rounded'))]//li[contains(@class,'dropdown-subheader') and contains(.,'${key_category}')]</td>
 	<td></td>
@@ -16,6 +21,11 @@
 <tr>
 	<td>GLOBAL_MENU</td>
 	<td>//div[contains(@class,'global-apps-menu-modal')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PANEL</td>
+	<td>//li[contains(@id,'GlobalMenuPortlet')]/button[contains(@class,'nav-link') and normalize-space()='${key_panel}']</td>
 	<td></td>
 </tr>
 <tr>

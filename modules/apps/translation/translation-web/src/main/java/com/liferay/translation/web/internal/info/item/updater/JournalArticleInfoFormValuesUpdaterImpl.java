@@ -45,8 +45,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alicia García
  */
-@Component(service = InfoFormValuesUpdater.class)
-public class InfoFormValuesUpdaterImpl implements InfoFormValuesUpdater {
+@Component(
+	property = "model.class.name=com.liferay.journal.model.JournalArticle",
+	service = InfoFormValuesUpdater.class
+)
+public class JournalArticleInfoFormValuesUpdaterImpl
+	implements InfoFormValuesUpdater<JournalArticle> {
 
 	@Override
 	public JournalArticle updateFromInfoFormValues(

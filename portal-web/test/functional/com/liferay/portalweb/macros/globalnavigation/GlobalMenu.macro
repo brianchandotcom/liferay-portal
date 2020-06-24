@@ -26,7 +26,7 @@ definition {
 	macro gotoPortlet {
 		GlobalMenuHelper.openGlobalMenu();
 
-		Navigator.gotoNavTab(navTab = "${panel}");
+		GlobalMenu.gotoPanel(panel = "${panel}");
 
 		GlobalMenuHelper.gotoPortlet(
 			category = "${category}",

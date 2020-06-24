@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.product.content.web.internal.util;
 
-import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.petra.lang.HashUtil;
 
 import java.util.Objects;
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 
@@ -75,6 +76,20 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 						InfoItemFieldValuesProvider.class,
 						JournalArticle.class.getName());
 
+			List<String> availableSourceLocalesIds =  Arrays.asList(article.getAvailableLanguageIds());
+			List<String> availableTargetLocalesIds = _getSiteAvailableLocalesIds(themeDisplay);
+
+			String sourceLocaleId = ParamUtil.getString(renderRequest, "sourceLocaleId");
+			String targetLocaleId = ParamUtil.getString(renderRequest, "targetLocaleId");
+
+			if (Validator.isNull(sourceLocaleId)) {
+				sourceLocaleId = availableSourceLocalesIds.get(0);
+			}
+
+			if (Validator.isNull(targetLocaleId)) {
+				targetLocaleId = availableTargetLocalesIds.get(0);
+			}
+
 			renderRequest.setAttribute(
 				InfoItemFieldValues.class.getName(),
 				infoItemFieldValuesProvider.getInfoItemFieldValues(article));
@@ -85,10 +100,13 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				TranslationInfoFieldChecker.class.getName(),
 				_translationInfoFieldChecker);
 			renderRequest.setAttribute(
-				"availableSourceLocalesIds", Arrays.asList(article.getAvailableLanguageIds()));
+				"availableSourceLocalesIds", availableSourceLocalesIds);
 			renderRequest.setAttribute(
-				"availableTargetLocalesIds",
-				_getSiteAvailableLocalesIds(themeDisplay));
+				"availableTargetLocalesIds", availableTargetLocalesIds);
+			renderRequest.setAttribute(
+				"sourceLocaleId", sourceLocaleId);
+			renderRequest.setAttribute(
+				"targetLocaleId", targetLocaleId);
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);

@@ -73,11 +73,19 @@
 			<scope>provided</scope>
 		</dependency>
 #end
+#if (${liferayVersion.startsWith("7.1")})
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.annotation.versioning</artifactId>
 			<version>1.1.0</version>
 			<scope>provided</scope>
 		</dependency>
+#else
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.annotation.versioning</artifactId>
+			<scope>provided</scope>
+		</dependency>
+#end
 	</dependencies>
 </project>

@@ -125,18 +125,16 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 			head.appendChild(style);
 		}
-	}, [colors]);
 
-	useEffect(() => {
 		return () => {
-			const head =
-				document.head || document.getElementsByTagName('head')[0];
-			const style = document.getElementById('legend-checkboxes');
-			if (style) {
+			if (Object.keys(colors).length) {
+				const head =
+					document.head || document.getElementsByTagName('head')[0];
+				const style = document.getElementById('legend-checkboxes');
 				head.removeChild(style);
 			}
 		};
-	}, []);
+	}, [colors]);
 
 	const renderLegend = (props) => {
 		const {payload} = props;

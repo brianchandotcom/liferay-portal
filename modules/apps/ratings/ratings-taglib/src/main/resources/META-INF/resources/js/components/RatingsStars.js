@@ -31,6 +31,7 @@ const RatingsStars = ({
 	inititalTitle,
 	numberOfStars,
 	sendVoteRequest,
+	type,
 	userScore,
 }) => {
 	const starScores = Array.from(Array(numberOfStars)).map((_, index) => {
@@ -136,7 +137,7 @@ const RatingsStars = ({
 		return Lang.sub(srAverageMessage, [averageScore, numberOfStars]);
 	};
 
-	return (
+	return type === 'stars' ? (
 		<ClayLayout.ContentRow
 			className="ratings ratings-stars"
 			noGutters
@@ -232,6 +233,8 @@ const RatingsStars = ({
 				</span>
 			</ClayLayout.ContentCol>
 		</ClayLayout.ContentRow>
+	) : (
+		'staked starts'
 	);
 };
 

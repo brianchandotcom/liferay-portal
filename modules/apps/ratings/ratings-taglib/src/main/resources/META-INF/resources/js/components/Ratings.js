@@ -23,6 +23,7 @@ import RatingsThumbs from './RatingsThumbs';
 
 const TYPES = {
 	LIKE: 'like',
+	STACKED_STARS: 'stacked-stars',
 	STARS: 'stars',
 	THUMBS: 'thumbs',
 };
@@ -84,6 +85,7 @@ const Ratings = ({
 	const RatingsTypes = {
 		[TYPES.LIKE]: RatingsLike,
 		[TYPES.STARS]: RatingsStars,
+		[TYPES.STACKED_STARS]: RatingsStars,
 		[TYPES.THUMBS]: RatingsThumbs,
 	};
 
@@ -95,6 +97,7 @@ const Ratings = ({
 			disabled={!signedIn || !enabled}
 			inititalTitle={getDefaultTitle()}
 			sendVoteRequest={sendVoteRequest}
+			type={type}
 		/>
 	);
 };

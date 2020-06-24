@@ -19,9 +19,13 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMe
 
 import java.io.IOException;
 
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,6 +34,12 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SpiraRestAPIUtil {
+
+	protected static String getDateString(long timestamp) {
+		Date date = new Date(timestamp);
+
+		return _UtcIso8601SimpleDateFormat.format(date);
+	}
 
 	protected static String request(
 			String urlPath, Map<String, String> urlParameters,
@@ -125,6 +135,17 @@ public class SpiraRestAPIUtil {
 		}
 
 		return "?" + JenkinsResultsParserUtil.join("&", urlParameterStrings);
+	}
+
+	private static final SimpleDateFormat _UtcIso8601SimpleDateFormat;
+
+	static {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss");
+
+		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		_UtcIso8601SimpleDateFormat = simpleDateFormat;
 	}
 
 }

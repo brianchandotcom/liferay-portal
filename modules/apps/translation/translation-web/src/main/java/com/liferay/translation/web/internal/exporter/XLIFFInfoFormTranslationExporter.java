@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.translation.exception.InvalidXLIFFFileException;
-import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 
 import java.io.ByteArrayInputStream;
@@ -57,10 +57,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "content.type=application/xliff+xml",
-	service = TranslationInfoFormValuesExporter.class
+	service = TranslationInfoItemFieldValuesExporter.class
 )
 public class XLIFFInfoFormTranslationExporter<T>
-	implements TranslationInfoFormValuesExporter<T> {
+	implements TranslationInfoItemFieldValuesExporter<T> {
 
 	@Override
 	public InputStream export(

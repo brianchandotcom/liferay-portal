@@ -39,8 +39,8 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
-import com.liferay.translation.info.item.updater.InfoFormValuesUpdater;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
 import java.util.Locale;
@@ -59,7 +59,7 @@ import org.junit.runner.RunWith;
  * @author Alicia García
  */
 @RunWith(Arquillian.class)
-public class JournalArticleInfoFormValuesUpdaterTest {
+public class JournalArticleInfoItemFieldValuesUpdaterTest {
 
 	@ClassRule
 	@Rule
@@ -85,7 +85,7 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoFormValuesAddsTranslatedContent()
+	public void testUpdateArticleFromInfoItemFieldValuesAddsTranslatedContent()
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -107,7 +107,7 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 			true, _serviceContext);
 
 		InfoItemFieldValues infoItemFieldValues =
-			_xliffTranslationInfoFormValuesImporter.importXLIFF(
+			_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
@@ -115,8 +115,8 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 					"test-journal-article-122.xlf"));
 
 		JournalArticle journalArticle =
-			_journalArticleInfoFormValuesUpdater.updateFromInfoFormValues(
-				article, infoItemFieldValues);
+			_journalArticleInfoItemFieldValuesUpdater.
+				updateFromInfoItemFieldValues(article, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
@@ -133,7 +133,7 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoFormValuesDoesNotModifyOtherTranslations()
+	public void testUpdateArticleFromInfoItemFieldValuesDoesNotModifyOtherTranslations()
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -161,7 +161,7 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 			true, _serviceContext);
 
 		InfoItemFieldValues infoItemFieldValues =
-			_xliffTranslationInfoFormValuesImporter.importXLIFF(
+			_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
@@ -169,8 +169,8 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 					"test-journal-article-122-ja-JP.xlf"));
 
 		JournalArticle journalArticle =
-			_journalArticleInfoFormValuesUpdater.updateFromInfoFormValues(
-				article, infoItemFieldValues);
+			_journalArticleInfoItemFieldValuesUpdater.
+				updateFromInfoItemFieldValues(article, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
@@ -199,7 +199,7 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoFormValuesUpdatesOnlyTheTitle()
+	public void testUpdateArticleFromInfoItemFieldValuesUpdatesOnlyTheTitle()
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -223,7 +223,7 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 			true, _serviceContext);
 
 		InfoItemFieldValues infoItemFieldValues =
-			_xliffTranslationInfoFormValuesImporter.importXLIFF(
+			_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
@@ -231,8 +231,8 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 					"test-journal-article-122-only-title.xlf"));
 
 		JournalArticle journalArticle =
-			_journalArticleInfoFormValuesUpdater.updateFromInfoFormValues(
-				article, infoItemFieldValues);
+			_journalArticleInfoItemFieldValuesUpdater.
+				updateFromInfoItemFieldValues(article, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
@@ -248,7 +248,7 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateArticleFromInfoFormValuesUpdatesTranslations()
+	public void testUpdateArticleFromInfoItemFieldValuesUpdatesTranslations()
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
@@ -288,7 +288,7 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 				article.getContent(), "name", LocaleUtil.US, LocaleUtil.JAPAN));
 
 		InfoItemFieldValues infoItemFieldValues =
-			_xliffTranslationInfoFormValuesImporter.importXLIFF(
+			_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
@@ -296,8 +296,8 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 					"test-journal-article-122-ja-JP.xlf"));
 
 		JournalArticle journalArticle =
-			_journalArticleInfoFormValuesUpdater.updateFromInfoFormValues(
-				article, infoItemFieldValues);
+			_journalArticleInfoItemFieldValuesUpdater.
+				updateFromInfoItemFieldValues(article, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"これはタイトルです", journalArticle.getTitle(LocaleUtil.JAPAN));
@@ -365,13 +365,13 @@ public class JournalArticleInfoFormValuesUpdaterTest {
 	@Inject(
 		filter = "model.class.name=com.liferay.journal.model.JournalArticle"
 	)
-	private InfoFormValuesUpdater<JournalArticle>
-		_journalArticleInfoFormValuesUpdater;
+	private InfoItemFieldValuesUpdater<JournalArticle>
+		_journalArticleInfoItemFieldValuesUpdater;
 
 	private ServiceContext _serviceContext;
 
 	@Inject(filter = "content.type=application/xliff+xml")
-	private TranslationInfoFormValuesExporter
-		_xliffTranslationInfoFormValuesImporter;
+	private TranslationInfoItemFieldValuesExporter
+		_xliffTranslationInfoItemFieldValuesImporter;
 
 }

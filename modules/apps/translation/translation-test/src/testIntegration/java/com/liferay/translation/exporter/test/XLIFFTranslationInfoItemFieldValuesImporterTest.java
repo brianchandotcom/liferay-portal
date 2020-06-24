@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.translation.exception.InvalidXLIFFFileException;
-import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
 import java.util.Collection;
@@ -42,7 +42,7 @@ import org.junit.runner.RunWith;
  * @author Alicia García
  */
 @RunWith(Arquillian.class)
-public class XLIFFTranslationInfoFormValuesImporterTest {
+public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 
 	@ClassRule
 	@Rule
@@ -56,7 +56,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 
 	@Test(expected = InvalidXLIFFFileException.class)
 	public void testImportXLIFF2FailsFileInvalidId() throws Exception {
-		_xliffTranslationInfoFormValuesImporter.importXLIFF(
+		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),
 			new InfoItemClassPKReference(
 				JournalArticle.class.getName(), RandomTestUtil.randomInt(1, 3)),
@@ -66,7 +66,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 
 	@Test(expected = InvalidXLIFFFileException.class)
 	public void testImportXLIFF2FailsFileInvalidVersion() throws Exception {
-		_xliffTranslationInfoFormValuesImporter.importXLIFF(
+		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),
 			new InfoItemClassPKReference(JournalArticle.class.getName(), 122),
 			TranslationTestUtil.readFileToInputStream("example-1_2-oasis.xlf"));
@@ -74,7 +74,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 
 	@Test(expected = InvalidXLIFFFileException.class)
 	public void testImportXLIFF2FailsFileNoTarget() throws Exception {
-		_xliffTranslationInfoFormValuesImporter.importXLIFF(
+		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),
 			new InfoItemClassPKReference(
 				JournalArticle.class.getName(), RandomTestUtil.randomInt(1, 3)),
@@ -85,7 +85,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 	@Test
 	public void testImportXLIFFXLIFFDocument() throws Exception {
 		InfoItemFieldValues infoItemFieldValues =
-			_xliffTranslationInfoFormValuesImporter.importXLIFF(
+			_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
@@ -105,7 +105,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 	private Group _group;
 
 	@Inject(filter = "content.type=application/xliff+xml")
-	private TranslationInfoFormValuesExporter
-		_xliffTranslationInfoFormValuesImporter;
+	private TranslationInfoItemFieldValuesExporter
+		_xliffTranslationInfoItemFieldValuesImporter;
 
 }

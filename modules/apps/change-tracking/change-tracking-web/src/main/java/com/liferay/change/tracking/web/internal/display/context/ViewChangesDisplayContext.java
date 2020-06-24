@@ -284,7 +284,7 @@ public class ViewChangesDisplayContext {
 		);
 	}
 
-	private JSONArray _getChildren(
+	private <T extends BaseModel<T>> JSONArray _getChildren(
 			AtomicInteger nodeIdCounter, Map<Long, List<Long>> childPKsMap)
 		throws PortalException {
 
@@ -294,7 +294,7 @@ public class ViewChangesDisplayContext {
 			long classNameId = entry.getKey();
 			List<Long> classPKs = entry.getValue();
 
-			Map<Serializable, ? extends BaseModel<?>> baseModelMap =
+			Map<Serializable, T> baseModelMap =
 				_basePersistenceRegistry.fetchBaseModelMap(
 					classNameId, classPKs);
 
@@ -323,8 +323,21 @@ public class ViewChangesDisplayContext {
 					renderURL.setParameter(
 						"modelClassPK", String.valueOf(classPK));
 
+					T baseModel = baseModelMap.get(classPK);
+
+					if (baseModel == null) {
+						baseModel = _ctDisplayRendererRegistry.fetchCTModel(
+							CTConstants.CT_COLLECTION_ID_PRODUCTION,
+							CTSQLModeThreadLocal.CTSQLMode.DEFAULT, classNameId,
+							classPK);
+					}
+
 					childJSONObject.put(
-						"title", _getTitle(baseModelMap, classNameId, classPK));
+						"title",
+						_ctDisplayRendererRegistry.getTitle(
+							CTConstants.CT_COLLECTION_ID_PRODUCTION,
+							CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
+							_themeDisplay.getLocale(), baseModel, classNameId));
 				}
 				else {
 					childJSONObject.put(
@@ -518,23 +531,6 @@ public class ViewChangesDisplayContext {
 		}
 
 		return ctEntryMap;
-	}
-
-	private <T extends BaseModel<T>> String _getTitle(
-		Map<Serializable, ? extends BaseModel<?>> baseModelMap,
-		long classNameId, long classPK) {
-
-		T baseModel = (T)baseModelMap.get(classPK);
-
-		if (baseModel == null) {
-			baseModel = _ctDisplayRendererRegistry.fetchCTModel(
-				classNameId, classPK);
-		}
-
-		return _ctDisplayRendererRegistry.getTitle(
-			CTConstants.CT_COLLECTION_ID_PRODUCTION,
-			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, _themeDisplay.getLocale(),
-			baseModel, classNameId);
 	}
 
 	private String _getTypeName(long classNameId) {

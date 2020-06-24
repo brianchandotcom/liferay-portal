@@ -37,8 +37,8 @@ public class BNDSourceProcessorTest extends BaseSourceProcessorTestCase {
 					"false if a POSHI tests exists",
 				StringBundler.concat(
 					"The 'Liferay-Releng-Suite' can be blank or one of the ",
-					"following values collaboration, forms-and-workflow, ",
-					"foundation, static, web-experience")
+					"following values 'collaboration, commerce, ",
+					"forms-and-workflow, foundation, static, web-experience'")
 			});
 	}
 

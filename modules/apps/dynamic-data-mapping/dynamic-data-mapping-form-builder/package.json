@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/layout": "3.0.1",
+		"@clayui/layout": "3.1.0",
 		"classnames": "2.2.6",
 		"clay-alert": "2.21.3",
 		"clay-checkbox": "2.21.3",

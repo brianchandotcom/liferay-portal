@@ -15,16 +15,14 @@
 package com.liferay.translation.info.item.updater;
 
 import com.liferay.info.field.InfoFormValues;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alicia García
  */
-public interface InfoFormValuesUpdater {
+public interface InfoFormValuesUpdater<T> {
 
-	public JournalArticle updateFromInfoFormValues(
-			JournalArticle article, InfoFormValues infoFormValues)
+	public T updateFromInfoFormValues(T t, InfoFormValues infoFormValues)
 		throws PortalException;
 
 }

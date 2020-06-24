@@ -81,12 +81,11 @@ export default function multipleUndo({numberOfActions, store, type}) {
 
 		dispatch(
 			updateNetwork({
-				requestGenerateDraft: false,
 				status: SERVICE_NETWORK_STATUS_TYPES.savingDraft,
 			})
 		);
 
-		undosToUndo
+		return undosToUndo
 			.reduce((promise, undo) => {
 				return promise.then(() => {
 					return undoAction({
@@ -106,6 +105,20 @@ export default function multipleUndo({numberOfActions, store, type}) {
 					updateNetwork({
 						requestGenerateDraft: false,
 						status: SERVICE_NETWORK_STATUS_TYPES.draftSaved,
+					})
+				);
+			})
+			.catch((error) => {
+				if (process.env.NODE_ENV === 'development') {
+					console.error(error);
+				}
+
+				dispatch(
+					updateNetwork({
+						error: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						status: SERVICE_NETWORK_STATUS_TYPES.error,
 					})
 				);
 			});

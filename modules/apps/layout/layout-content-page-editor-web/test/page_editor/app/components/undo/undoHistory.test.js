@@ -80,7 +80,7 @@ jest.mock(
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/multipleUndo',
-	() => jest.fn(() => {})
+	() => jest.fn(() => () => Promise.resolve())
 );
 
 function renderUndoHistory() {

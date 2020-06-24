@@ -12,19 +12,36 @@
  * details.
  */
 
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import {addParams} from 'frontend-js-web';
 
 import LanguageSelector from './LanguageSelector';
 
 const TranslateLanguagesSelector = ({
+	currentUrl,
 	defaultLanguageId = "en_US" ,
-	initialSourceLanguageId,
+	portletNamespace,
 	sourceAvailableLanguages,
-	initialTargetLanguageId,
+	sourceLanguageId,
 	targetAvailableLanguages,
+	targetLanguageId,
 }) => {
-	const [originLanguageId, setOriginLanguageId] = useState(initialSourceLanguageId);
-	const [targetLanguageId, setTargetLanguageId] = useState(initialTargetLanguageId);
+	const namespace = `_${portletNamespace}_`;
+
+	const changeSourceLanguage = (value) => {
+		refreshPage(value, targetLanguageId);
+	}
+
+	const changeTargetLanguage = (value) => {
+		refreshPage(sourceLanguageId, value);
+	}
+
+	const refreshPage = (sourceId, targetId) => {
+		location.href = addParams(
+			namespace + 'sourceLocaleId=' + sourceId + '&' + namespace + 'targetLocaleId=' + targetId,
+			currentUrl
+		);
+	};
 
 	return (
 		<div>
@@ -34,9 +51,9 @@ const TranslateLanguagesSelector = ({
 				defaultLanguageId={defaultLanguageId}
 				languageIds={sourceAvailableLanguages}
 				onChange={(value) => {
-					setOriginLanguageId(value);
+					changeSourceLanguage(value);
 				}}
-				selectedLanguageId={originLanguageId}
+				selectedLanguageId={sourceLanguageId}
 			/>
 
 			{Liferay.Language.get('to')}
@@ -45,7 +62,7 @@ const TranslateLanguagesSelector = ({
 				defaultLanguageId={defaultLanguageId}
 				languageIds={targetAvailableLanguages}
 				onChange={(value) => {
-					setTargetLanguageId(value);
+					changeTargetLanguage(value);
 				}}
 				selectedLanguageId={targetLanguageId}
 			/>

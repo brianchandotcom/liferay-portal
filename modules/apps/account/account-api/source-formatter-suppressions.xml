@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaConfigurationCategoryCheck" files="src/main/java/com/liferay/account/configuration/AccountEntryEmailDomainsConfiguration\.java" />
+	</source-check>
+</suppressions>

@@ -278,8 +278,7 @@ public class InfoFormValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"translate content to japanese",
-			_getContent(
-				article.getContent(), "name", _LOCALE_US, _LOCALE_JA));
+			_getContent(article.getContent(), "name", _LOCALE_US, _LOCALE_JA));
 
 		InfoFormValues infoFormValues =
 			_xliffTranslationInfoFormValuesImporter.importXLIFF(
@@ -316,8 +315,10 @@ public class InfoFormValuesUpdaterTest {
 		String availableLanguageIds = rootElement.attributeValue(
 			"available-locales");
 
-		if (!availableLanguageIds.contains(LocaleUtil.toLanguageId(sourceLocale)) ||
-			!availableLanguageIds.contains(LocaleUtil.toLanguageId(targetLocale))) {
+		if (!availableLanguageIds.contains(
+				LocaleUtil.toLanguageId(sourceLocale)) ||
+			!availableLanguageIds.contains(
+				LocaleUtil.toLanguageId(targetLocale))) {
 
 			return StringPool.BLANK;
 		}

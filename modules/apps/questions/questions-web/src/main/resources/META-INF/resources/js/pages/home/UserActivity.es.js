@@ -13,12 +13,10 @@
  */
 
 import {useQuery} from '@apollo/client';
-import ClayButton from '@clayui/button';
 import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import Link from '../../components/Link.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import UserIcon from '../../components/UserIcon.es';
@@ -137,15 +135,6 @@ export default withRouter(
 									Posts: {creatorInfo.postsNumber}
 								</span>
 							</div>
-						</div>
-						<div className="flex-column justify-content-end ml-auto">
-							{context.userId === creatorId && (
-								<Link to={`/subscriptions/${creatorId}`}>
-									<ClayButton displayType="secondary">
-										Manage Subscriptions
-									</ClayButton>
-								</Link>
-							)}
 						</div>
 					</div>
 					<div className="border-bottom c-mt-5">

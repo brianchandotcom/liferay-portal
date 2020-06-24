@@ -347,7 +347,7 @@ function MappingFieldSelect({fieldType, fields, onValueSelect, value}) {
 					<ClayForm.FeedbackItem>
 						{Liferay.Util.sub(
 							Liferay.Language.get(
-								'no-fields-available-for-x-editable'
+								'no-fields-are-available-for-x-editable'
 							),
 							[
 								EDITABLE_TYPES.backgroundImage,

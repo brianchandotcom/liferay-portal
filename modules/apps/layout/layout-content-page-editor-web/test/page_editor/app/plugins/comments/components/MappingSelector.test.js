@@ -300,7 +300,10 @@ describe('MappingSelector', () => {
 
 		expect(fieldSelect).toBeInTheDocument();
 		expect(
-			getByText(document.body, 'no-fields-available-for-x-editable-text')
+			getByText(
+				document.body,
+				'no-fields-are-available-for-x-editable-text'
+			)
 		).toBeInTheDocument();
 	});
 });

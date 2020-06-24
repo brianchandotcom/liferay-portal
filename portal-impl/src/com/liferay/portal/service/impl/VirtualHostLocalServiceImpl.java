@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
-import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.service.base.VirtualHostLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 
@@ -214,8 +213,7 @@ public class VirtualHostLocalServiceImpl
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					EntityCacheUtil.removeResult(
-						company.isEntityCacheEnabled(), company.getClass(),
-						company.getPrimaryKeyObj());
+						company.getClass(), company.getPrimaryKeyObj());
 
 					return null;
 				});
@@ -241,7 +239,6 @@ public class VirtualHostLocalServiceImpl
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
 					EntityCacheUtil.removeResult(
-						LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
 						LayoutSetImpl.class, layoutSetId);
 
 					return null;

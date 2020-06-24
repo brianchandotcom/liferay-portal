@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.LayoutSetImpl;
-import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.service.base.LayoutSetLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -514,7 +513,6 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 					@Override
 					public Void call() {
 						EntityCacheUtil.removeResult(
-							LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
 							LayoutSetImpl.class, layoutSet.getLayoutSetId());
 
 						return null;

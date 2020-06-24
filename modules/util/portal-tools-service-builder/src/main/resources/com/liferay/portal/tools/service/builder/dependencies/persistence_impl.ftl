@@ -279,7 +279,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 		</#if>
 
-		${entityCache}.putResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
+		${entityCache}.putResult(
+				<#if serviceBuilder.isVersionLTE_7_2_0()>
+					${entityCacheEnabled},
+				</#if>
+				${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName});
 
 		<#list entity.uniqueEntityFinders as uniqueEntityFinder>
 			<#assign entityColumns = uniqueEntityFinder.entityColumns />
@@ -321,7 +325,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				}
 			</#if>
 
-			if (${entityCache}.getResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey()) == null) {
+			if (${entityCache}.getResult(
+				<#if serviceBuilder.isVersionLTE_7_2_0()>
+					${entityCacheEnabled},
+				</#if>
+				${entity.name}Impl.class, ${entity.varName}.getPrimaryKey()) == null) {
 				cacheResult(${entity.varName});
 			}
 			else {
@@ -355,7 +363,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public void clearCache(${entity.name} ${entity.varName}) {
-		${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+		${entityCache}.removeResult(
+			<#if serviceBuilder.isVersionLTE_7_2_0()>
+				${entityCacheEnabled},
+			</#if>
+			${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
 
 		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -371,7 +383,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (${entity.name} ${entity.varName} : ${entity.pluralVarName}) {
-			${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+			${entityCache}.removeResult(
+				<#if serviceBuilder.isVersionLTE_7_2_0()>
+					${entityCacheEnabled},
+				</#if>
+				${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
 
 			<#if entity.uniqueEntityFinders?size &gt; 0>
 				clearUniqueFindersCache((${entity.name}ModelImpl)${entity.varName}, true);
@@ -388,7 +404,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, primaryKey);
+			${entityCache}.removeResult(
+				<#if serviceBuilder.isVersionLTE_7_2_0()>
+					${entityCacheEnabled},
+				</#if>
+				${entity.name}Impl.class, primaryKey);
 		}
 	}
 
@@ -911,7 +931,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 		</#if>
 
-		${entityCache}.putResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName}, false);
+		${entityCache}.putResult(
+			<#if serviceBuilder.isVersionLTE_7_2_0()>
+				${entityCacheEnabled},
+			</#if>
+			${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName}, false);
 
 		<#if entity.uniqueEntityFinders?size &gt; 0>
 			clearUniqueFindersCache(${entity.varName}ModelImpl, false);

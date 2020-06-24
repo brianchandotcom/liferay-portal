@@ -1935,8 +1935,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					@Override
 					public Void call() throws Exception {
 						EntityCacheUtil.removeResult(
-							company.isEntityCacheEnabled(), company.getClass(),
-							company.getPrimaryKeyObj());
+							company.getClass(), company.getPrimaryKeyObj());
 
 						return null;
 					}

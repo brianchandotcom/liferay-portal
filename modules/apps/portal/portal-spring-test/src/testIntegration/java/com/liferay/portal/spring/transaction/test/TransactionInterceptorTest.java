@@ -87,7 +87,7 @@ public class TransactionInterceptorTest {
 		}
 
 		Assert.assertNull(
-			_entityCache.getResult(true, ClassNameImpl.class, classNameId));
+			_entityCache.getResult(ClassNameImpl.class, classNameId));
 	}
 
 	@Inject

@@ -30,7 +30,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Javier de Arcos
  */
-public class RestBuilderProjectTemplateCustomizer
+public class RESTBuilderProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override

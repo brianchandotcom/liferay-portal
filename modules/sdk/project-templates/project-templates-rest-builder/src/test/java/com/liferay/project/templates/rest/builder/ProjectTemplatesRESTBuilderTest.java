@@ -40,7 +40,7 @@ import org.junit.rules.TemporaryFolder;
 /**
  * @author Javier de Arcos
  */
-public class ProjectTemplatesRestBuilderTest
+public class ProjectTemplatesRESTBuilderTest
 	implements BaseProjectTemplatesTestCase {
 
 	@ClassRule
@@ -63,7 +63,7 @@ public class ProjectTemplatesRestBuilderTest
 	}
 
 	@Test
-	public void testBuildTemplateRestBuilderCheckExports() throws Exception {
+	public void testBuildTemplateRESTBuilderCheckExports() throws Exception {
 		String liferayVersion = getDefaultLiferayVersion();
 		String name = "guestbook";
 		String packageName = "com.liferay.docs.guestbook";
@@ -123,7 +123,7 @@ public class ProjectTemplatesRestBuilderTest
 	}
 
 	@Test
-	public void testCompareRestBuilderPluginVersions() throws Exception {
+	public void testCompareRESTBuilderPluginVersions() throws Exception {
 		String liferayVersion = getDefaultLiferayVersion();
 		String name = "sample";
 		String packageName = "com.test.sample";
@@ -145,13 +145,13 @@ public class ProjectTemplatesRestBuilderTest
 			gradleWorkspaceDir, true, _gradleDistribution,
 			":modules:" + name + ":" + implProjectName + ":dependencies");
 
-		String gradleRestBuilderVersion = null;
+		String gradleRESTBuilderVersion = null;
 
 		Matcher matcher = _restBuilderVersionPattern.matcher(
 			gradleResult.get());
 
 		if (matcher.matches()) {
-			gradleRestBuilderVersion = matcher.group(1);
+			gradleRESTBuilderVersion = matcher.group(1);
 		}
 
 		File mavenWorkspaceDir = buildWorkspace(
@@ -169,15 +169,15 @@ public class ProjectTemplatesRestBuilderTest
 
 		matcher = _restBuilderVersionPattern.matcher(mavenResult);
 
-		String mavenRestBuilderVersion = null;
+		String mavenRESTBuilderVersion = null;
 
 		if (matcher.matches()) {
-			mavenRestBuilderVersion = matcher.group(1);
+			mavenRESTBuilderVersion = matcher.group(1);
 		}
 
 		Assert.assertEquals(
 			"com.liferay.portal.tools.rest.builder versions do not match",
-			gradleRestBuilderVersion, mavenRestBuilderVersion);
+			gradleRESTBuilderVersion, mavenRESTBuilderVersion);
 	}
 
 	@Rule

@@ -46,7 +46,7 @@ import org.junit.runners.Parameterized;
  * @author Lawrence Lee
  */
 @RunWith(Parameterized.class)
-public class ProjectTemplatesRestBuilderWorkspaceTest
+public class ProjectTemplatesRESTBuilderWorkspaceTest
 	implements BaseProjectTemplatesTestCase {
 
 	@ClassRule
@@ -84,7 +84,7 @@ public class ProjectTemplatesRestBuilderWorkspaceTest
 		_gradleDistribution = URI.create(gradleDistribution);
 	}
 
-	public ProjectTemplatesRestBuilderWorkspaceTest(
+	public ProjectTemplatesRESTBuilderWorkspaceTest(
 		String name, String packageName, String liferayVersion) {
 
 		_name = name;
@@ -93,7 +93,7 @@ public class ProjectTemplatesRestBuilderWorkspaceTest
 	}
 
 	@Test
-	public void testBuildTemplateRestBuilderWorkspace() throws Exception {
+	public void testBuildTemplateRESTBuilderWorkspace() throws Exception {
 		String template = "rest-builder";
 
 		File gradleWorkspaceDir = buildWorkspace(
@@ -188,7 +188,7 @@ public class ProjectTemplatesRestBuilderWorkspaceTest
 				projectPath = ":modules:" + _name;
 			}
 
-			_testBuildTemplateRestBuilder(
+			_testBuildTemplateRESTBuilder(
 				gradleProjectDir, mavenProjectDir, gradleWorkspaceDir, _name,
 				_packageName, projectPath);
 		}
@@ -197,7 +197,7 @@ public class ProjectTemplatesRestBuilderWorkspaceTest
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private void _testBuildTemplateRestBuilder(
+	private void _testBuildTemplateRESTBuilder(
 			File gradleProjectDir, File mavenProjectDir, final File rootProject,
 			String name, String packageName, final String projectPath)
 		throws Exception {
@@ -270,7 +270,7 @@ public class ProjectTemplatesRestBuilderWorkspaceTest
 
 	private void _testChangeOpenAPIYAML(
 			File projectDir, String implProjectName,
-			Callable<Void> buildRestCallable)
+			Callable<Void> buildRESTCallable)
 		throws Exception {
 
 		File file = testExists(
@@ -288,7 +288,7 @@ public class ProjectTemplatesRestBuilderWorkspaceTest
 
 		Files.write(path, newContent.getBytes(StandardCharsets.UTF_8));
 
-		buildRestCallable.call();
+		buildRESTCallable.call();
 	}
 
 	private static final String _GRADLE_TASK_PATH_BUILD_REST = ":buildREST";

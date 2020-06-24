@@ -6,7 +6,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.reflect"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.odata.api"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "7.6.1"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.vulcan.api", version: "@com.liferay.portal.vulcan.api.version@"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.test", version: "7.1.0"
 	testIntegrationCompile group: "commons-beanutils", name: "commons-beanutils"

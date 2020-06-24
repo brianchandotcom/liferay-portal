@@ -123,13 +123,9 @@ public class SpiraTestCaseRun extends BaseSpiraArtifact {
 			"project_id", String.valueOf(spiraProject.getID()));
 
 		try {
-			JSONArray responseJSONArray = null;
-
-			synchronized (SpiraTestCaseRun.class) {
-				responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
-					urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
-					requestJSONArray.toString());
-			}
+			JSONArray responseJSONArray = SpiraRestAPIUtil.requestJSONArray(
+				urlPath, null, urlPathReplacements, HttpRequestMethod.POST,
+				requestJSONArray.toString());
 
 			List<SpiraTestCaseRun> spiraTestCaseRuns = new ArrayList<>();
 

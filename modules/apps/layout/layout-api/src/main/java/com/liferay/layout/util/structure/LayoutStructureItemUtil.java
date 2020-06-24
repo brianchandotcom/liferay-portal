@@ -78,4 +78,29 @@ public class LayoutStructureItemUtil {
 		return null;
 	}
 
+	public static boolean hasAncestor(
+		String itemId, String itemType, LayoutStructure layoutStructure) {
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructureItem.getParentItemId());
+
+		if (Objects.equals(parentLayoutStructureItem.getItemType(), itemType)) {
+			return true;
+		}
+
+		if (Objects.equals(
+				parentLayoutStructureItem.getItemType(),
+				LayoutDataItemTypeConstants.TYPE_ROOT)) {
+
+			return false;
+		}
+
+		return hasAncestor(
+			parentLayoutStructureItem.getItemId(), itemType, layoutStructure);
+	}
+
 }

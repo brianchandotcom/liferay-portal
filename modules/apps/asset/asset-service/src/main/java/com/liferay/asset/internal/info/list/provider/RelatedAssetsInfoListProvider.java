@@ -24,6 +24,7 @@ import com.liferay.info.sort.Sort;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -106,6 +108,22 @@ public class RelatedAssetsInfoListProvider
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "related-assets");
+	}
+
+	@Override
+	public boolean isAvailable(
+		InfoListProviderContext infoListProviderContext) {
+
+		Optional<Layout> layoutOptional =
+			infoListProviderContext.getLayoutOptional();
+
+		if (layoutOptional.isPresent()) {
+			Layout layout = layoutOptional.get();
+
+			return layout.isTypeAssetDisplay();
+		}
+
+		return false;
 	}
 
 	private long _getLayoutAssetEntryId() {

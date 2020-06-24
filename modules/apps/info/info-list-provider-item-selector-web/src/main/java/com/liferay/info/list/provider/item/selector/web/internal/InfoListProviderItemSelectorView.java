@@ -14,6 +14,7 @@
 
 package com.liferay.info.list.provider.item.selector.web.internal;
 
+import com.liferay.info.list.provider.DefaultInfoListProviderContext;
 import com.liferay.info.list.provider.InfoListProvider;
 import com.liferay.info.list.provider.InfoListProviderTracker;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorCriterion;
@@ -26,7 +27,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -115,6 +118,9 @@ public class InfoListProviderItemSelectorView
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.info.list.provider.item.selector.web)"
@@ -228,6 +234,24 @@ public class InfoListProviderItemSelectorView
 				infoListProviders =
 					_infoListProviderTracker.getInfoListProviders();
 			}
+
+			Layout layout = _layoutLocalService.fetchLayout(
+				_infoListProviderItemSelectorCriterion.getPlid());
+
+			infoListProviders = ListUtil.filter(
+				infoListProviders,
+				infoListProvider -> {
+					DefaultInfoListProviderContext
+						defaultInfoListProviderContext =
+							new DefaultInfoListProviderContext(
+								themeDisplay.getScopeGroup(),
+								themeDisplay.getUser());
+
+					defaultInfoListProviderContext.setLayout(layout);
+
+					return infoListProvider.isAvailable(
+						defaultInfoListProviderContext);
+				});
 
 			searchContainer.setResults(
 				ListUtil.subList(

@@ -38,6 +38,10 @@ public class InfoListProviderItemSelectorCriterion
 		return _itemTypes;
 	}
 
+	public long getPlid() {
+		return _plid;
+	}
+
 	public void setItemType(String itemType) {
 		_itemTypes.add(itemType);
 	}
@@ -46,6 +50,11 @@ public class InfoListProviderItemSelectorCriterion
 		_itemTypes = itemTypes;
 	}
 
+	public void setPlid(long plid) {
+		_plid = plid;
+	}
+
 	private List<String> _itemTypes = new ArrayList<>();
+	private long _plid;
 
 }

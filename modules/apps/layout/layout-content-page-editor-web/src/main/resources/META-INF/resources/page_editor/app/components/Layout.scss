@@ -78,16 +78,11 @@
 
 	&__container,
 	&__container:before,
-	&__section,
-	&__section > .container:before,
-	&__section > .container-fluid:before,
 	&__row:before {
 		box-shadow: inset 0 0 0 1px $primary-l2;
 	}
 
 	&__col,
-	&__section > .container,
-	&__section > .container-fluid,
 	&__row,
 	&__collection-item {
 		position: relative;
@@ -135,8 +130,6 @@
 	}
 
 	&__container.empty,
-	&__section.empty > .container,
-	&__section.empty > .container-fluid,
 	&__row.empty {
 		min-height: 10em;
 	}

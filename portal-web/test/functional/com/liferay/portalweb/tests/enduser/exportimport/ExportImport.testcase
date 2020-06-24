@@ -162,6 +162,7 @@ definition {
 	test EditImportedContentPageViaImportedSiteTemplate {
 		property osgi.module.configuration.file.names = "com.liferay.layout.configuration.LayoutExportImportConfiguration.config";
 		property osgi.module.configurations = "exportDraftLayout=true";
+		property portal.upstream = "quarantine";
 		property testray.component.names = "Training";
 
 		SiteTemplates.addCP(

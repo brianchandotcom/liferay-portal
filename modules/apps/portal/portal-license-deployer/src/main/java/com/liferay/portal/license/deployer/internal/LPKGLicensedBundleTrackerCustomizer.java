@@ -14,7 +14,7 @@
 
 package com.liferay.portal.license.deployer.internal;
 
-import com.liferay.portal.file.install.listener.ArtifactInstaller;
+import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -41,9 +41,7 @@ import org.osgi.util.tracker.BundleTrackerCustomizer;
 public class LPKGLicensedBundleTrackerCustomizer
 	implements BundleTrackerCustomizer<Bundle> {
 
-	public LPKGLicensedBundleTrackerCustomizer(
-		ArtifactInstaller licenseInstaller) {
-
+	public LPKGLicensedBundleTrackerCustomizer(FileInstaller licenseInstaller) {
 		_licenseInstaller = licenseInstaller;
 	}
 
@@ -86,7 +84,7 @@ public class LPKGLicensedBundleTrackerCustomizer
 
 					File tempFile = tempFilePath.toFile();
 
-					if (_licenseInstaller.canHandle(tempFile)) {
+					if (_licenseInstaller.canInstall(tempFile)) {
 						_licenseInstaller.install(tempFile);
 
 						hasLicense = true;
@@ -123,6 +121,6 @@ public class LPKGLicensedBundleTrackerCustomizer
 	private static final Log _log = LogFactoryUtil.getLog(
 		LPKGLicensedBundleTrackerCustomizer.class);
 
-	private final ArtifactInstaller _licenseInstaller;
+	private final FileInstaller _licenseInstaller;
 
 }

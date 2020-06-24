@@ -14,7 +14,7 @@
 
 package com.liferay.portal.license.deployer.internal.installer;
 
-import com.liferay.portal.file.install.listener.ArtifactInstaller;
+import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
@@ -28,10 +28,10 @@ import java.io.File;
 /**
  * @author Amos Fong
  */
-public class LicenseInstaller implements ArtifactInstaller {
+public class LicenseInstaller implements FileInstaller {
 
 	@Override
-	public boolean canHandle(File artifact) {
+	public boolean canInstall(File artifact) {
 		String extension = FileUtil.getExtension(artifact.getName());
 
 		if (!extension.equals("xml")) {

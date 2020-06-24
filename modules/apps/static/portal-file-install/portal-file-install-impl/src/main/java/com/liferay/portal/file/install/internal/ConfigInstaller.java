@@ -17,11 +17,10 @@ package com.liferay.portal.file.install.internal;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.collections.DictionaryAsMap;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.file.install.internal.properties.TypedProperties;
-import com.liferay.portal.file.install.listener.ArtifactInstaller;
-import com.liferay.portal.file.install.listener.ArtifactListener;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -62,8 +61,7 @@ import org.osgi.service.cm.ConfigurationListener;
 /**
  * @author Matthew Tambara
  */
-public class ConfigInstaller
-	implements ArtifactInstaller, ConfigurationListener {
+public class ConfigInstaller implements ConfigurationListener, FileInstaller {
 
 	public ConfigInstaller(
 		BundleContext bundleContext, ConfigurationAdmin configurationAdmin,
@@ -75,7 +73,7 @@ public class ConfigInstaller
 	}
 
 	@Override
-	public boolean canHandle(File artifact) {
+	public boolean canInstall(File artifact) {
 		String name = artifact.getName();
 
 		if (name.endsWith(".cfg") || name.endsWith(".config")) {
@@ -230,8 +228,7 @@ public class ConfigInstaller
 		_serviceRegistration = _bundleContext.registerService(
 			new String[] {
 				ConfigurationListener.class.getName(),
-				ArtifactListener.class.getName(),
-				ArtifactInstaller.class.getName()
+				FileInstaller.class.getName()
 			},
 			this, null);
 

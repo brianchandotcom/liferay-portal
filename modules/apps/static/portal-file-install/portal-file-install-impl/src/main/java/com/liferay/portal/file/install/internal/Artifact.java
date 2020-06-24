@@ -14,7 +14,7 @@
 
 package com.liferay.portal.file.install.internal;
 
-import com.liferay.portal.file.install.listener.ArtifactListener;
+import com.liferay.portal.file.install.FileInstaller;
 
 import java.io.File;
 
@@ -33,16 +33,16 @@ public class Artifact {
 		return _checksum;
 	}
 
+	public FileInstaller getFileInstaller() {
+		return _fileInstaller;
+	}
+
 	public File getJaredDirectory() {
 		return _jaredDirectory;
 	}
 
 	public URL getJaredUrl() {
 		return _jaredUrl;
-	}
-
-	public ArtifactListener getListener() {
-		return _artifactListener;
 	}
 
 	public File getPath() {
@@ -61,16 +61,16 @@ public class Artifact {
 		_checksum = checksum;
 	}
 
+	public void setFileInstaller(FileInstaller fileInstaller) {
+		_fileInstaller = fileInstaller;
+	}
+
 	public void setJaredDirectory(File jaredDirectory) {
 		_jaredDirectory = jaredDirectory;
 	}
 
 	public void setJaredUrl(URL jaredUrl) {
 		_jaredUrl = jaredUrl;
-	}
-
-	public void setListener(ArtifactListener listener) {
-		_artifactListener = listener;
 	}
 
 	public void setPath(File path) {
@@ -81,9 +81,9 @@ public class Artifact {
 		_transformedURL = transformedUrl;
 	}
 
-	private ArtifactListener _artifactListener;
 	private long _bundleId = -1;
 	private long _checksum;
+	private FileInstaller _fileInstaller;
 	private File _jaredDirectory;
 	private URL _jaredUrl;
 	private File _path;

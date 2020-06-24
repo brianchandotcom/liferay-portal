@@ -140,6 +140,8 @@ public class ScopedCSSVariablesTopHeadDynamicIncludeTest {
 					return HashMapBuilder.put(
 						"color", "green"
 					).put(
+						"fixed-font", "\"Lucida Console\""
+					).put(
 						"font", "Comic Sans"
 					).build();
 				}

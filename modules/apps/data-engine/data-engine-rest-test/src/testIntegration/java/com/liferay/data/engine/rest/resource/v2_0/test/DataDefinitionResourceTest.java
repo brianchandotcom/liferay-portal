@@ -41,7 +41,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -112,7 +111,7 @@ public class DataDefinitionResourceTest
 
 		Assert.assertTrue(Validator.isNotNull(fieldTypes));
 	}
-	
+
 	@Override
 	@Test
 	public void testGetDataDefinitionPermissionsPage() throws Exception {
@@ -485,6 +484,9 @@ public class DataDefinitionResourceTest
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertEquals("MustSetValidName", problem.getType());
 		}
+
+		// Fill the data layout name with the data definition's one
+		// when no name is informed
 
 		DataDefinition dataDefinition =
 			dataDefinitionResource.postSiteDataDefinitionByContentType(

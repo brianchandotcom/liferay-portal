@@ -68,7 +68,9 @@ public class UserLocaleOptionsBottomJSPDynamicInclude
 
 		boolean ignoreUserLocaleOptions = GetterUtil.getBoolean(
 			SessionClicks.get(
-				httpServletRequest.getSession(), "ignoreUserLocaleOptions",
+				httpServletRequest.getSession(),
+				"com.liferay.portal.user.locale.options_" +
+					"ignoreUserLocaleOptions",
 				Boolean.FALSE.toString()));
 
 		if (ignoreUserLocaleOptions) {

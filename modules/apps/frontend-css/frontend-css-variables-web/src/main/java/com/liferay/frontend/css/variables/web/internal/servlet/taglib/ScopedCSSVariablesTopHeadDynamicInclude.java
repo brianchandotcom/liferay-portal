@@ -19,6 +19,7 @@ import com.liferay.frontend.css.variables.ScopedCSSVariablesProvider;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 
@@ -105,6 +106,7 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 		for (ScopedCSSVariables scopedCSSVariables :
 				scopedCSSVariablesCollection) {
 
+			printWriter.print(StringPool.TAB);
 			printWriter.print(scopedCSSVariables.getScope());
 			printWriter.print(" {\n");
 
@@ -112,14 +114,14 @@ public class ScopedCSSVariablesTopHeadDynamicInclude
 				scopedCSSVariables.getCSSVariables();
 
 			for (Map.Entry<String, String> entry : cssVariables.entrySet()) {
-				printWriter.print("--");
+				printWriter.print("\t\t--");
 				printWriter.print(entry.getKey());
 				printWriter.print(": ");
 				printWriter.print(entry.getValue());
 				printWriter.print(";\n");
 			}
 
-			printWriter.print("}\n");
+			printWriter.print("\t}\n");
 		}
 	}
 

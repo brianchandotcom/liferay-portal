@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -1342,8 +1341,8 @@ public class CTPreferencesPersistenceImpl
 	@Override
 	public void cacheResult(CTPreferences ctPreferences) {
 		entityCache.putResult(
-			entityCacheEnabled, CTPreferencesImpl.class,
-			ctPreferences.getPrimaryKey(), ctPreferences);
+			CTPreferencesImpl.class, ctPreferences.getPrimaryKey(),
+			ctPreferences);
 
 		finderCache.putResult(
 			_finderPathFetchByC_U,
@@ -1364,8 +1363,8 @@ public class CTPreferencesPersistenceImpl
 	public void cacheResult(List<CTPreferences> ctPreferenceses) {
 		for (CTPreferences ctPreferences : ctPreferenceses) {
 			if (entityCache.getResult(
-					entityCacheEnabled, CTPreferencesImpl.class,
-					ctPreferences.getPrimaryKey()) == null) {
+					CTPreferencesImpl.class, ctPreferences.getPrimaryKey()) ==
+						null) {
 
 				cacheResult(ctPreferences);
 			}
@@ -1401,8 +1400,7 @@ public class CTPreferencesPersistenceImpl
 	@Override
 	public void clearCache(CTPreferences ctPreferences) {
 		entityCache.removeResult(
-			entityCacheEnabled, CTPreferencesImpl.class,
-			ctPreferences.getPrimaryKey());
+			CTPreferencesImpl.class, ctPreferences.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1417,8 +1415,7 @@ public class CTPreferencesPersistenceImpl
 
 		for (CTPreferences ctPreferences : ctPreferenceses) {
 			entityCache.removeResult(
-				entityCacheEnabled, CTPreferencesImpl.class,
-				ctPreferences.getPrimaryKey());
+				CTPreferencesImpl.class, ctPreferences.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(CTPreferencesModelImpl)ctPreferences, true);
@@ -1432,8 +1429,7 @@ public class CTPreferencesPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, CTPreferencesImpl.class, primaryKey);
+			entityCache.removeResult(CTPreferencesImpl.class, primaryKey);
 		}
 	}
 
@@ -1627,10 +1623,7 @@ public class CTPreferencesPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				ctPreferencesModelImpl.getCtCollectionId()
 			};
@@ -1701,8 +1694,8 @@ public class CTPreferencesPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, CTPreferencesImpl.class,
-			ctPreferences.getPrimaryKey(), ctPreferences, false);
+			CTPreferencesImpl.class, ctPreferences.getPrimaryKey(),
+			ctPreferences, false);
 
 		clearUniqueFindersCache(ctPreferencesModelImpl, false);
 		cacheUniqueFindersCache(ctPreferencesModelImpl);
@@ -1967,45 +1960,37 @@ public class CTPreferencesPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		CTPreferencesModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		CTPreferencesModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			CTPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			CTPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCollectionId",
+			CTPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCollectionId",
-			new String[] {Long.class.getName()},
+			CTPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCollectionId", new String[] {Long.class.getName()},
 			CTPreferencesModelImpl.CTCOLLECTIONID_COLUMN_BITMASK);
 
 		_finderPathCountByCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCollectionId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCollectionId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByPreviousCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			CTPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByPreviousCollectionId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
@@ -2013,26 +1998,22 @@ public class CTPreferencesPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByPreviousCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTPreferencesImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			CTPreferencesImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByPreviousCollectionId", new String[] {Long.class.getName()},
 			CTPreferencesModelImpl.PREVIOUSCTCOLLECTIONID_COLUMN_BITMASK);
 
 		_finderPathCountByPreviousCollectionId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByPreviousCollectionId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_U = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, CTPreferencesImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
+			CTPreferencesImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			CTPreferencesModelImpl.COMPANYID_COLUMN_BITMASK |
 			CTPreferencesModelImpl.USERID_COLUMN_BITMASK);
 
 		_finderPathCountByC_U = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
@@ -2050,12 +2031,6 @@ public class CTPreferencesPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.change.tracking.model.CTPreferences"),
-			true);
 	}
 
 	@Override
@@ -2075,8 +2050,6 @@ public class CTPreferencesPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

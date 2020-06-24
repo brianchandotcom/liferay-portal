@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -355,7 +354,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, FriendlyURLEntryMappingImpl.class,
+			FriendlyURLEntryMappingImpl.class,
 			friendlyURLEntryMapping.getPrimaryKey(), friendlyURLEntryMapping);
 
 		finderCache.putResult(
@@ -388,7 +387,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 			}
 
 			if (entityCache.getResult(
-					entityCacheEnabled, FriendlyURLEntryMappingImpl.class,
+					FriendlyURLEntryMappingImpl.class,
 					friendlyURLEntryMapping.getPrimaryKey()) == null) {
 
 				cacheResult(friendlyURLEntryMapping);
@@ -425,7 +424,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	@Override
 	public void clearCache(FriendlyURLEntryMapping friendlyURLEntryMapping) {
 		entityCache.removeResult(
-			entityCacheEnabled, FriendlyURLEntryMappingImpl.class,
+			FriendlyURLEntryMappingImpl.class,
 			friendlyURLEntryMapping.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -446,7 +445,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 				friendlyURLEntryMappings) {
 
 			entityCache.removeResult(
-				entityCacheEnabled, FriendlyURLEntryMappingImpl.class,
+				FriendlyURLEntryMappingImpl.class,
 				friendlyURLEntryMapping.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -463,8 +462,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				entityCacheEnabled, FriendlyURLEntryMappingImpl.class,
-				primaryKey);
+				FriendlyURLEntryMappingImpl.class, primaryKey);
 		}
 	}
 
@@ -692,17 +690,14 @@ public class FriendlyURLEntryMappingPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, FriendlyURLEntryMappingImpl.class,
+			FriendlyURLEntryMappingImpl.class,
 			friendlyURLEntryMapping.getPrimaryKey(), friendlyURLEntryMapping,
 			false);
 
@@ -1161,29 +1156,20 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		FriendlyURLEntryMappingModelImpl.setEntityCacheEnabled(
-			entityCacheEnabled);
-		FriendlyURLEntryMappingModelImpl.setFinderCacheEnabled(
-			finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			FriendlyURLEntryMappingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			FriendlyURLEntryMappingImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathFetchByC_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			FriendlyURLEntryMappingImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -1191,8 +1177,7 @@ public class FriendlyURLEntryMappingPersistenceImpl
 			FriendlyURLEntryMappingModelImpl.CLASSPK_COLUMN_BITMASK);
 
 		_finderPathCountByC_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
@@ -1210,12 +1195,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.friendly.url.model.FriendlyURLEntryMapping"),
-			true);
 	}
 
 	@Override
@@ -1235,8 +1214,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected CTPersistenceHelper ctPersistenceHelper;

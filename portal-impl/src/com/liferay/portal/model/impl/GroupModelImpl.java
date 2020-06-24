@@ -137,20 +137,23 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	public static final String TX_MANAGER = "liferayTransactionManager";
 
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.entity.cache.enabled.com.liferay.portal.kernel.model.Group"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean ENTITY_CACHE_ENABLED = true;
 
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.finder.cache.enabled.com.liferay.portal.kernel.model.Group"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED = true;
 
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(
-		com.liferay.portal.util.PropsUtil.get(
-			"value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.Group"),
-		true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean COLUMN_BITMASK_ENABLED = true;
 
 	public static final long ACTIVE_COLUMN_BITMASK = 1L;
 
@@ -253,11 +256,11 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final String MAPPING_TABLE_GROUPS_ORGS_SQL_CREATE =
 		"create table Groups_Orgs (companyId LONG not null,groupId LONG not null,organizationId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, organizationId, ctCollectionId))";
 
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ORGS =
-		GetterUtil.getBoolean(
-			com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Groups_Orgs"),
-			true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ORGS = true;
 
 	public static final String MAPPING_TABLE_GROUPS_ROLES_NAME = "Groups_Roles";
 
@@ -269,11 +272,11 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final String MAPPING_TABLE_GROUPS_ROLES_SQL_CREATE =
 		"create table Groups_Roles (companyId LONG not null,groupId LONG not null,roleId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, roleId, ctCollectionId))";
 
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES =
-		GetterUtil.getBoolean(
-			com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Groups_Roles"),
-			true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_ROLES = true;
 
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_NAME =
 		"Groups_UserGroups";
@@ -286,11 +289,11 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE =
 		"create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, userGroupId, ctCollectionId))";
 
-	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS =
-		GetterUtil.getBoolean(
-			com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Groups_UserGroups"),
-			true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS = true;
 
 	public static final String MAPPING_TABLE_USERS_GROUPS_NAME = "Users_Groups";
 
@@ -302,11 +305,11 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public static final String MAPPING_TABLE_USERS_GROUPS_SQL_CREATE =
 		"create table Users_Groups (companyId LONG not null,groupId LONG not null,userId LONG not null,ctCollectionId LONG default 0 not null,ctChangeType BOOLEAN,primary key (groupId, userId, ctCollectionId))";
 
-	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS =
-		GetterUtil.getBoolean(
-			com.liferay.portal.util.PropsUtil.get(
-				"value.object.finder.cache.enabled.Users_Groups"),
-			true);
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
+	public static final boolean FINDER_CACHE_ENABLED_USERS_GROUPS = true;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		com.liferay.portal.util.PropsUtil.get(
@@ -361,9 +364,6 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 			attributes.put(
 				attributeName, attributeGetterFunction.apply((Group)this));
 		}
-
-		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
-		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
 
 		return attributes;
 	}
@@ -1409,11 +1409,19 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return (int)getPrimaryKey();
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isEntityCacheEnabled() {
 		return ENTITY_CACHE_ENABLED;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public boolean isFinderCacheEnabled() {
 		return FINDER_CACHE_ENABLED;

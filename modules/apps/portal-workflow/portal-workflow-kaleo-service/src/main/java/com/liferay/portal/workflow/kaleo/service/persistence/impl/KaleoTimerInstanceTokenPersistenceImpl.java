@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2015,7 +2014,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	@Override
 	public void cacheResult(KaleoTimerInstanceToken kaleoTimerInstanceToken) {
 		entityCache.putResult(
-			entityCacheEnabled, KaleoTimerInstanceTokenImpl.class,
+			KaleoTimerInstanceTokenImpl.class,
 			kaleoTimerInstanceToken.getPrimaryKey(), kaleoTimerInstanceToken);
 
 		finderCache.putResult(
@@ -2042,7 +2041,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				kaleoTimerInstanceTokens) {
 
 			if (entityCache.getResult(
-					entityCacheEnabled, KaleoTimerInstanceTokenImpl.class,
+					KaleoTimerInstanceTokenImpl.class,
 					kaleoTimerInstanceToken.getPrimaryKey()) == null) {
 
 				cacheResult(kaleoTimerInstanceToken);
@@ -2079,7 +2078,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	@Override
 	public void clearCache(KaleoTimerInstanceToken kaleoTimerInstanceToken) {
 		entityCache.removeResult(
-			entityCacheEnabled, KaleoTimerInstanceTokenImpl.class,
+			KaleoTimerInstanceTokenImpl.class,
 			kaleoTimerInstanceToken.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2100,7 +2099,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 				kaleoTimerInstanceTokens) {
 
 			entityCache.removeResult(
-				entityCacheEnabled, KaleoTimerInstanceTokenImpl.class,
+				KaleoTimerInstanceTokenImpl.class,
 				kaleoTimerInstanceToken.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -2117,8 +2116,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				entityCacheEnabled, KaleoTimerInstanceTokenImpl.class,
-				primaryKey);
+				KaleoTimerInstanceTokenImpl.class, primaryKey);
 		}
 	}
 
@@ -2351,10 +2349,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				kaleoTimerInstanceTokenModelImpl.getKaleoInstanceId()
 			};
@@ -2463,7 +2458,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, KaleoTimerInstanceTokenImpl.class,
+			KaleoTimerInstanceTokenImpl.class,
 			kaleoTimerInstanceToken.getPrimaryKey(), kaleoTimerInstanceToken,
 			false);
 
@@ -2737,29 +2732,20 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		KaleoTimerInstanceTokenModelImpl.setEntityCacheEnabled(
-			entityCacheEnabled);
-		KaleoTimerInstanceTokenModelImpl.setFinderCacheEnabled(
-			finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByKaleoInstanceId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoInstanceId",
 			new String[] {
@@ -2768,19 +2754,16 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByKaleoInstanceId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoInstanceId",
 			new String[] {Long.class.getName()},
 			KaleoTimerInstanceTokenModelImpl.KALEOINSTANCEID_COLUMN_BITMASK);
 
 		_finderPathCountByKaleoInstanceId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoInstanceId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByKaleoInstanceId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByKITI_KTI = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByKITI_KTI",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2789,12 +2772,11 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			KaleoTimerInstanceTokenModelImpl.KALEOTIMERID_COLUMN_BITMASK);
 
 		_finderPathCountByKITI_KTI = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKITI_KTI",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByKITI_KTI",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByKITI_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKITI_C",
 			new String[] {
@@ -2804,7 +2786,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByKITI_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKITI_C",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -2813,12 +2794,11 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			KaleoTimerInstanceTokenModelImpl.COMPLETED_COLUMN_BITMASK);
 
 		_finderPathCountByKITI_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKITI_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByKITI_C",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByKITI_B_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKITI_B_C",
 			new String[] {
@@ -2828,7 +2808,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByKITI_B_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			KaleoTimerInstanceTokenImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKITI_B_C",
 			new String[] {
@@ -2841,8 +2820,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 			KaleoTimerInstanceTokenModelImpl.COMPLETED_COLUMN_BITMASK);
 
 		_finderPathCountByKITI_B_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKITI_B_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByKITI_B_C",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Boolean.class.getName()
@@ -2863,12 +2842,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken"),
-			true);
 	}
 
 	@Override
@@ -2888,8 +2861,6 @@ public class KaleoTimerInstanceTokenPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

@@ -889,7 +889,6 @@ public class ResourceActionPersistenceImpl
 
 		setModelImplClass(ResourceActionImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(ResourceActionModelImpl.ENTITY_CACHE_ENABLED);
 
 		setTable(ResourceActionTable.INSTANCE);
 	}
@@ -902,7 +901,6 @@ public class ResourceActionPersistenceImpl
 	@Override
 	public void cacheResult(ResourceAction resourceAction) {
 		EntityCacheUtil.putResult(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
 			resourceAction);
 
@@ -925,7 +923,6 @@ public class ResourceActionPersistenceImpl
 	public void cacheResult(List<ResourceAction> resourceActions) {
 		for (ResourceAction resourceAction : resourceActions) {
 			if (EntityCacheUtil.getResult(
-					ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 					ResourceActionImpl.class, resourceAction.getPrimaryKey()) ==
 						null) {
 
@@ -963,7 +960,6 @@ public class ResourceActionPersistenceImpl
 	@Override
 	public void clearCache(ResourceAction resourceAction) {
 		EntityCacheUtil.removeResult(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceActionImpl.class, resourceAction.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -979,7 +975,6 @@ public class ResourceActionPersistenceImpl
 
 		for (ResourceAction resourceAction : resourceActions) {
 			EntityCacheUtil.removeResult(
-				ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceActionImpl.class, resourceAction.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -994,9 +989,7 @@ public class ResourceActionPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-				ResourceActionImpl.class, primaryKey);
+			EntityCacheUtil.removeResult(ResourceActionImpl.class, primaryKey);
 		}
 	}
 
@@ -1189,11 +1182,7 @@ public class ResourceActionPersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!ResourceActionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {resourceActionModelImpl.getName()};
 
 			FinderCacheUtil.removeResult(_finderPathCountByName, args);
@@ -1227,7 +1216,6 @@ public class ResourceActionPersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
 			resourceAction, false);
 
@@ -1494,26 +1482,18 @@ public class ResourceActionPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceActionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceActionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByName = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceActionImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByName",
 			new String[] {
@@ -1522,31 +1502,23 @@ public class ResourceActionPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByName = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceActionImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByName", new String[] {String.class.getName()},
 			ResourceActionModelImpl.NAME_COLUMN_BITMASK |
 			ResourceActionModelImpl.BITWISEVALUE_COLUMN_BITMASK);
 
 		_finderPathCountByName = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByName", new String[] {String.class.getName()});
 
 		_finderPathFetchByN_A = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED,
 			ResourceActionImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByN_A",
 			new String[] {String.class.getName(), String.class.getName()},
 			ResourceActionModelImpl.NAME_COLUMN_BITMASK |
 			ResourceActionModelImpl.ACTIONID_COLUMN_BITMASK);
 
 		_finderPathCountByN_A = new FinderPath(
-			ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourceActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_A",
 			new String[] {String.class.getName(), String.class.getName()});
 	}
 

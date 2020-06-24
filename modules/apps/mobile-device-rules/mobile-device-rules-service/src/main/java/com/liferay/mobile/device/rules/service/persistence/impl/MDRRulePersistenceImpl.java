@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1965,8 +1964,7 @@ public class MDRRulePersistenceImpl
 	@Override
 	public void cacheResult(MDRRule mdrRule) {
 		entityCache.putResult(
-			entityCacheEnabled, MDRRuleImpl.class, mdrRule.getPrimaryKey(),
-			mdrRule);
+			MDRRuleImpl.class, mdrRule.getPrimaryKey(), mdrRule);
 
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
@@ -1984,8 +1982,7 @@ public class MDRRulePersistenceImpl
 	public void cacheResult(List<MDRRule> mdrRules) {
 		for (MDRRule mdrRule : mdrRules) {
 			if (entityCache.getResult(
-					entityCacheEnabled, MDRRuleImpl.class,
-					mdrRule.getPrimaryKey()) == null) {
+					MDRRuleImpl.class, mdrRule.getPrimaryKey()) == null) {
 
 				cacheResult(mdrRule);
 			}
@@ -2020,8 +2017,7 @@ public class MDRRulePersistenceImpl
 	 */
 	@Override
 	public void clearCache(MDRRule mdrRule) {
-		entityCache.removeResult(
-			entityCacheEnabled, MDRRuleImpl.class, mdrRule.getPrimaryKey());
+		entityCache.removeResult(MDRRuleImpl.class, mdrRule.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2036,7 +2032,7 @@ public class MDRRulePersistenceImpl
 
 		for (MDRRule mdrRule : mdrRules) {
 			entityCache.removeResult(
-				entityCacheEnabled, MDRRuleImpl.class, mdrRule.getPrimaryKey());
+				MDRRuleImpl.class, mdrRule.getPrimaryKey());
 
 			clearUniqueFindersCache((MDRRuleModelImpl)mdrRule, true);
 		}
@@ -2049,8 +2045,7 @@ public class MDRRulePersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, MDRRuleImpl.class, primaryKey);
+			entityCache.removeResult(MDRRuleImpl.class, primaryKey);
 		}
 	}
 
@@ -2267,10 +2262,7 @@ public class MDRRulePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {mdrRuleModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2358,8 +2350,7 @@ public class MDRRulePersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, MDRRuleImpl.class, mdrRule.getPrimaryKey(),
-			mdrRule, false);
+			MDRRuleImpl.class, mdrRule.getPrimaryKey(), mdrRule, false);
 
 		clearUniqueFindersCache(mdrRuleModelImpl, false);
 		cacheUniqueFindersCache(mdrRuleModelImpl);
@@ -2626,58 +2617,50 @@ public class MDRRulePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		MDRRuleModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		MDRRuleModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			MDRRuleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			MDRRuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			MDRRuleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
+			MDRRuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid", new String[] {String.class.getName()},
 			MDRRuleModelImpl.UUID_COLUMN_BITMASK |
 			MDRRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			MDRRuleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			MDRRuleModelImpl.UUID_COLUMN_BITMASK |
 			MDRRuleModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			MDRRuleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2685,37 +2668,35 @@ public class MDRRulePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			MDRRuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			MDRRuleModelImpl.UUID_COLUMN_BITMASK |
 			MDRRuleModelImpl.COMPANYID_COLUMN_BITMASK |
 			MDRRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByRuleGroupId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRuleGroupId",
+			MDRRuleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByRuleGroupId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByRuleGroupId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MDRRuleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRuleGroupId",
-			new String[] {Long.class.getName()},
+			MDRRuleImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByRuleGroupId", new String[] {Long.class.getName()},
 			MDRRuleModelImpl.RULEGROUPID_COLUMN_BITMASK |
 			MDRRuleModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByRuleGroupId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRuleGroupId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByRuleGroupId", new String[] {Long.class.getName()});
 	}
 
 	@Deactivate
@@ -2732,12 +2713,6 @@ public class MDRRulePersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.mobile.device.rules.model.MDRRule"),
-			true);
 	}
 
 	@Override
@@ -2757,8 +2732,6 @@ public class MDRRulePersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

@@ -59,7 +59,6 @@ public abstract class DDMFormInstanceRecordFinderBaseImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
 	}
 
 	@Override

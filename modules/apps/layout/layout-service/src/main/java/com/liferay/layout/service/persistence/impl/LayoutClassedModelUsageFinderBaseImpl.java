@@ -60,7 +60,6 @@ public abstract class LayoutClassedModelUsageFinderBaseImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
 	}
 
 	@Override

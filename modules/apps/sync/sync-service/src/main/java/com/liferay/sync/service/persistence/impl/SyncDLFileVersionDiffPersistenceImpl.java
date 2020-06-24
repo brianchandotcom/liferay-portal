@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1417,7 +1416,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	@Override
 	public void cacheResult(SyncDLFileVersionDiff syncDLFileVersionDiff) {
 		entityCache.putResult(
-			entityCacheEnabled, SyncDLFileVersionDiffImpl.class,
+			SyncDLFileVersionDiffImpl.class,
 			syncDLFileVersionDiff.getPrimaryKey(), syncDLFileVersionDiff);
 
 		finderCache.putResult(
@@ -1445,7 +1444,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				syncDLFileVersionDiffs) {
 
 			if (entityCache.getResult(
-					entityCacheEnabled, SyncDLFileVersionDiffImpl.class,
+					SyncDLFileVersionDiffImpl.class,
 					syncDLFileVersionDiff.getPrimaryKey()) == null) {
 
 				cacheResult(syncDLFileVersionDiff);
@@ -1482,7 +1481,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	@Override
 	public void clearCache(SyncDLFileVersionDiff syncDLFileVersionDiff) {
 		entityCache.removeResult(
-			entityCacheEnabled, SyncDLFileVersionDiffImpl.class,
+			SyncDLFileVersionDiffImpl.class,
 			syncDLFileVersionDiff.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1501,7 +1500,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 				syncDLFileVersionDiffs) {
 
 			entityCache.removeResult(
-				entityCacheEnabled, SyncDLFileVersionDiffImpl.class,
+				SyncDLFileVersionDiffImpl.class,
 				syncDLFileVersionDiff.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1517,8 +1516,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				entityCacheEnabled, SyncDLFileVersionDiffImpl.class,
-				primaryKey);
+				SyncDLFileVersionDiffImpl.class, primaryKey);
 		}
 	}
 
@@ -1727,10 +1725,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				syncDLFileVersionDiffModelImpl.getFileEntryId()
 			};
@@ -1767,7 +1762,7 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, SyncDLFileVersionDiffImpl.class,
+			SyncDLFileVersionDiffImpl.class,
 			syncDLFileVersionDiff.getPrimaryKey(), syncDLFileVersionDiff,
 			false);
 
@@ -2044,29 +2039,20 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		SyncDLFileVersionDiffModelImpl.setEntityCacheEnabled(
-			entityCacheEnabled);
-		SyncDLFileVersionDiffModelImpl.setFinderCacheEnabled(
-			finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			SyncDLFileVersionDiffImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			SyncDLFileVersionDiffImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByFileEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			SyncDLFileVersionDiffImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFileEntryId",
 			new String[] {
@@ -2075,19 +2061,16 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByFileEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			SyncDLFileVersionDiffImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFileEntryId",
 			new String[] {Long.class.getName()},
 			SyncDLFileVersionDiffModelImpl.FILEENTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByFileEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFileEntryId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByFileEntryId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByExpirationDate = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			SyncDLFileVersionDiffImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExpirationDate",
 			new String[] {
@@ -2096,12 +2079,10 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			});
 
 		_finderPathWithPaginationCountByExpirationDate = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByExpirationDate",
-			new String[] {Date.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByExpirationDate", new String[] {Date.class.getName()});
 
 		_finderPathFetchByF_S_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			SyncDLFileVersionDiffImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByF_S_T",
 			new String[] {
@@ -2112,8 +2093,8 @@ public class SyncDLFileVersionDiffPersistenceImpl
 			SyncDLFileVersionDiffModelImpl.TARGETFILEVERSIONID_COLUMN_BITMASK);
 
 		_finderPathCountByF_S_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_S_T",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByF_S_T",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
@@ -2133,12 +2114,6 @@ public class SyncDLFileVersionDiffPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.sync.model.SyncDLFileVersionDiff"),
-			true);
 	}
 
 	@Override
@@ -2158,8 +2133,6 @@ public class SyncDLFileVersionDiffPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

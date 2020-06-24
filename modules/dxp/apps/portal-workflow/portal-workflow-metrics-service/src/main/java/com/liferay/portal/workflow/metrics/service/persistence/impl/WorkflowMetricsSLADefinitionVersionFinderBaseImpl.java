@@ -66,7 +66,6 @@ public abstract class WorkflowMetricsSLADefinitionVersionFinderBaseImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
 	}
 
 	@Override

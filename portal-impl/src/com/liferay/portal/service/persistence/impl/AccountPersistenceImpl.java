@@ -91,7 +91,6 @@ public class AccountPersistenceImpl
 
 		setModelImplClass(AccountImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(AccountModelImpl.ENTITY_CACHE_ENABLED);
 
 		setTable(AccountTable.INSTANCE);
 	}
@@ -104,8 +103,7 @@ public class AccountPersistenceImpl
 	@Override
 	public void cacheResult(Account account) {
 		EntityCacheUtil.putResult(
-			AccountModelImpl.ENTITY_CACHE_ENABLED, AccountImpl.class,
-			account.getPrimaryKey(), account);
+			AccountImpl.class, account.getPrimaryKey(), account);
 
 		account.resetOriginalValues();
 	}
@@ -119,8 +117,7 @@ public class AccountPersistenceImpl
 	public void cacheResult(List<Account> accounts) {
 		for (Account account : accounts) {
 			if (EntityCacheUtil.getResult(
-					AccountModelImpl.ENTITY_CACHE_ENABLED, AccountImpl.class,
-					account.getPrimaryKey()) == null) {
+					AccountImpl.class, account.getPrimaryKey()) == null) {
 
 				cacheResult(account);
 			}
@@ -156,8 +153,7 @@ public class AccountPersistenceImpl
 	@Override
 	public void clearCache(Account account) {
 		EntityCacheUtil.removeResult(
-			AccountModelImpl.ENTITY_CACHE_ENABLED, AccountImpl.class,
-			account.getPrimaryKey());
+			AccountImpl.class, account.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -170,8 +166,7 @@ public class AccountPersistenceImpl
 
 		for (Account account : accounts) {
 			EntityCacheUtil.removeResult(
-				AccountModelImpl.ENTITY_CACHE_ENABLED, AccountImpl.class,
-				account.getPrimaryKey());
+				AccountImpl.class, account.getPrimaryKey());
 		}
 	}
 
@@ -182,9 +177,7 @@ public class AccountPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				AccountModelImpl.ENTITY_CACHE_ENABLED, AccountImpl.class,
-				primaryKey);
+			EntityCacheUtil.removeResult(AccountImpl.class, primaryKey);
 		}
 	}
 
@@ -365,8 +358,7 @@ public class AccountPersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(
-			AccountModelImpl.ENTITY_CACHE_ENABLED, AccountImpl.class,
-			account.getPrimaryKey(), account, false);
+			AccountImpl.class, account.getPrimaryKey(), account, false);
 
 		account.resetOriginalValues();
 
@@ -632,20 +624,15 @@ public class AccountPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			AccountModelImpl.ENTITY_CACHE_ENABLED,
-			AccountModelImpl.FINDER_CACHE_ENABLED, AccountImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			AccountImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			AccountModelImpl.ENTITY_CACHE_ENABLED,
-			AccountModelImpl.FINDER_CACHE_ENABLED, AccountImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			AccountImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			AccountModelImpl.ENTITY_CACHE_ENABLED,
-			AccountModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 	}
 

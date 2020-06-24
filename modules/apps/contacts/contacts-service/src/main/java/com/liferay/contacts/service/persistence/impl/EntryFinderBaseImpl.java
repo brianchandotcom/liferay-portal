@@ -41,7 +41,6 @@ public abstract class EntryFinderBaseImpl extends BasePersistenceImpl<Entry> {
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
 	}
 
 	@Override

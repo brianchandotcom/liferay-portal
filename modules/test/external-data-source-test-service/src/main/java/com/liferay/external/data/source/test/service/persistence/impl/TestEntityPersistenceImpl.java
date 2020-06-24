@@ -84,7 +84,6 @@ public class TestEntityPersistenceImpl
 
 		setModelImplClass(TestEntityImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(TestEntityModelImpl.ENTITY_CACHE_ENABLED);
 
 		setTable(TestEntityTable.INSTANCE);
 	}
@@ -97,8 +96,7 @@ public class TestEntityPersistenceImpl
 	@Override
 	public void cacheResult(TestEntity testEntity) {
 		entityCache.putResult(
-			TestEntityModelImpl.ENTITY_CACHE_ENABLED, TestEntityImpl.class,
-			testEntity.getPrimaryKey(), testEntity);
+			TestEntityImpl.class, testEntity.getPrimaryKey(), testEntity);
 
 		testEntity.resetOriginalValues();
 	}
@@ -112,7 +110,6 @@ public class TestEntityPersistenceImpl
 	public void cacheResult(List<TestEntity> testEntities) {
 		for (TestEntity testEntity : testEntities) {
 			if (entityCache.getResult(
-					TestEntityModelImpl.ENTITY_CACHE_ENABLED,
 					TestEntityImpl.class, testEntity.getPrimaryKey()) == null) {
 
 				cacheResult(testEntity);
@@ -149,8 +146,7 @@ public class TestEntityPersistenceImpl
 	@Override
 	public void clearCache(TestEntity testEntity) {
 		entityCache.removeResult(
-			TestEntityModelImpl.ENTITY_CACHE_ENABLED, TestEntityImpl.class,
-			testEntity.getPrimaryKey());
+			TestEntityImpl.class, testEntity.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -163,8 +159,7 @@ public class TestEntityPersistenceImpl
 
 		for (TestEntity testEntity : testEntities) {
 			entityCache.removeResult(
-				TestEntityModelImpl.ENTITY_CACHE_ENABLED, TestEntityImpl.class,
-				testEntity.getPrimaryKey());
+				TestEntityImpl.class, testEntity.getPrimaryKey());
 		}
 	}
 
@@ -175,9 +170,7 @@ public class TestEntityPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				TestEntityModelImpl.ENTITY_CACHE_ENABLED, TestEntityImpl.class,
-				primaryKey);
+			entityCache.removeResult(TestEntityImpl.class, primaryKey);
 		}
 	}
 
@@ -314,8 +307,8 @@ public class TestEntityPersistenceImpl
 		}
 
 		entityCache.putResult(
-			TestEntityModelImpl.ENTITY_CACHE_ENABLED, TestEntityImpl.class,
-			testEntity.getPrimaryKey(), testEntity, false);
+			TestEntityImpl.class, testEntity.getPrimaryKey(), testEntity,
+			false);
 
 		testEntity.resetOriginalValues();
 
@@ -581,20 +574,15 @@ public class TestEntityPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			TestEntityModelImpl.ENTITY_CACHE_ENABLED,
-			TestEntityModelImpl.FINDER_CACHE_ENABLED, TestEntityImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			TestEntityImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			TestEntityModelImpl.ENTITY_CACHE_ENABLED,
-			TestEntityModelImpl.FINDER_CACHE_ENABLED, TestEntityImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			TestEntityImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			TestEntityModelImpl.ENTITY_CACHE_ENABLED,
-			TestEntityModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 	}
 

@@ -1331,8 +1331,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		setModelImplClass(WorkflowInstanceLinkImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED);
 
 		setTable(WorkflowInstanceLinkTable.INSTANCE);
 	}
@@ -1351,7 +1349,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			workflowInstanceLink.getPrimaryKey(), workflowInstanceLink);
 
@@ -1375,7 +1372,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 			}
 
 			if (EntityCacheUtil.getResult(
-					WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 					WorkflowInstanceLinkImpl.class,
 					workflowInstanceLink.getPrimaryKey()) == null) {
 
@@ -1413,7 +1409,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 	@Override
 	public void clearCache(WorkflowInstanceLink workflowInstanceLink) {
 		EntityCacheUtil.removeResult(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			workflowInstanceLink.getPrimaryKey());
 
@@ -1430,7 +1425,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 				workflowInstanceLinks) {
 
 			EntityCacheUtil.removeResult(
-				WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 				WorkflowInstanceLinkImpl.class,
 				workflowInstanceLink.getPrimaryKey());
 		}
@@ -1444,7 +1438,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			EntityCacheUtil.removeResult(
-				WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 				WorkflowInstanceLinkImpl.class, primaryKey);
 		}
 	}
@@ -1653,11 +1646,7 @@ public class WorkflowInstanceLinkPersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!WorkflowInstanceLinkModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				workflowInstanceLinkModelImpl.getGroupId(),
 				workflowInstanceLinkModelImpl.getCompanyId(),
@@ -1739,7 +1728,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			workflowInstanceLink.getPrimaryKey(), workflowInstanceLink, false);
 
@@ -2194,27 +2182,19 @@ public class WorkflowInstanceLinkPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByG_C_C = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
 			new String[] {
@@ -2224,8 +2204,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_C_C = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
 			new String[] {
@@ -2237,16 +2215,13 @@ public class WorkflowInstanceLinkPersistenceImpl
 			WorkflowInstanceLinkModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByG_C_C = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 
 		_finderPathWithPaginationFindByG_C_C_C = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_C",
 			new String[] {
@@ -2257,8 +2232,6 @@ public class WorkflowInstanceLinkPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_C_C_C = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED,
 			WorkflowInstanceLinkImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_C",
 			new String[] {
@@ -2272,9 +2245,8 @@ public class WorkflowInstanceLinkPersistenceImpl
 			WorkflowInstanceLinkModelImpl.CREATEDATE_COLUMN_BITMASK);
 
 		_finderPathCountByG_C_C_C = new FinderPath(
-			WorkflowInstanceLinkModelImpl.ENTITY_CACHE_ENABLED,
-			WorkflowInstanceLinkModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_C_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Long.class.getName(), Long.class.getName()

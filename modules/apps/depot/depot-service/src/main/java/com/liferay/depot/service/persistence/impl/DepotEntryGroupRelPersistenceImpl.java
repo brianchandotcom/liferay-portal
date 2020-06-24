@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -1880,8 +1879,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	@Override
 	public void cacheResult(DepotEntryGroupRel depotEntryGroupRel) {
 		entityCache.putResult(
-			entityCacheEnabled, DepotEntryGroupRelImpl.class,
-			depotEntryGroupRel.getPrimaryKey(), depotEntryGroupRel);
+			DepotEntryGroupRelImpl.class, depotEntryGroupRel.getPrimaryKey(),
+			depotEntryGroupRel);
 
 		finderCache.putResult(
 			_finderPathFetchByD_TGI,
@@ -1903,7 +1902,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	public void cacheResult(List<DepotEntryGroupRel> depotEntryGroupRels) {
 		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
 			if (entityCache.getResult(
-					entityCacheEnabled, DepotEntryGroupRelImpl.class,
+					DepotEntryGroupRelImpl.class,
 					depotEntryGroupRel.getPrimaryKey()) == null) {
 
 				cacheResult(depotEntryGroupRel);
@@ -1940,8 +1939,7 @@ public class DepotEntryGroupRelPersistenceImpl
 	@Override
 	public void clearCache(DepotEntryGroupRel depotEntryGroupRel) {
 		entityCache.removeResult(
-			entityCacheEnabled, DepotEntryGroupRelImpl.class,
-			depotEntryGroupRel.getPrimaryKey());
+			DepotEntryGroupRelImpl.class, depotEntryGroupRel.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1957,7 +1955,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
 			entityCache.removeResult(
-				entityCacheEnabled, DepotEntryGroupRelImpl.class,
+				DepotEntryGroupRelImpl.class,
 				depotEntryGroupRel.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1972,8 +1970,7 @@ public class DepotEntryGroupRelPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, DepotEntryGroupRelImpl.class, primaryKey);
+			entityCache.removeResult(DepotEntryGroupRelImpl.class, primaryKey);
 		}
 	}
 
@@ -2175,10 +2172,7 @@ public class DepotEntryGroupRelPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				depotEntryGroupRelModelImpl.getDepotEntryId()
 			};
@@ -2274,8 +2268,8 @@ public class DepotEntryGroupRelPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, DepotEntryGroupRelImpl.class,
-			depotEntryGroupRel.getPrimaryKey(), depotEntryGroupRel, false);
+			DepotEntryGroupRelImpl.class, depotEntryGroupRel.getPrimaryKey(),
+			depotEntryGroupRel, false);
 
 		clearUniqueFindersCache(depotEntryGroupRelModelImpl, false);
 		cacheUniqueFindersCache(depotEntryGroupRelModelImpl);
@@ -2542,27 +2536,20 @@ public class DepotEntryGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		DepotEntryGroupRelModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		DepotEntryGroupRelModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
 			new String[] {
@@ -2571,19 +2558,16 @@ public class DepotEntryGroupRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByDepotEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDepotEntryId",
 			new String[] {Long.class.getName()},
 			DepotEntryGroupRelModelImpl.DEPOTENTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByDepotEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByDepotEntryId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByToGroupId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByToGroupId",
 			new String[] {
@@ -2592,19 +2576,16 @@ public class DepotEntryGroupRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByToGroupId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByToGroupId",
 			new String[] {Long.class.getName()},
 			DepotEntryGroupRelModelImpl.TOGROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByToGroupId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByToGroupId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByToGroupId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByD_TGI = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByD_TGI",
 			new String[] {Long.class.getName(), Long.class.getName()},
@@ -2612,12 +2593,11 @@ public class DepotEntryGroupRelPersistenceImpl
 			DepotEntryGroupRelModelImpl.TOGROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByD_TGI = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_TGI",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByD_TGI",
 			new String[] {Long.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByS_TGI = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_TGI",
 			new String[] {
@@ -2627,7 +2607,6 @@ public class DepotEntryGroupRelPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByS_TGI = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotEntryGroupRelImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_TGI",
 			new String[] {Boolean.class.getName(), Long.class.getName()},
@@ -2635,8 +2614,8 @@ public class DepotEntryGroupRelPersistenceImpl
 			DepotEntryGroupRelModelImpl.TOGROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByS_TGI = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_TGI",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByS_TGI",
 			new String[] {Boolean.class.getName(), Long.class.getName()});
 	}
 
@@ -2654,12 +2633,6 @@ public class DepotEntryGroupRelPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.depot.model.DepotEntryGroupRel"),
-			true);
 	}
 
 	@Override
@@ -2679,8 +2652,6 @@ public class DepotEntryGroupRelPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

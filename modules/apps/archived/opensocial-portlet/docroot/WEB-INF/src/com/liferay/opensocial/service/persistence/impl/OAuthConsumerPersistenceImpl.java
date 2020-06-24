@@ -920,7 +920,6 @@ public class OAuthConsumerPersistenceImpl
 
 		setModelImplClass(OAuthConsumerImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -931,7 +930,6 @@ public class OAuthConsumerPersistenceImpl
 	@Override
 	public void cacheResult(OAuthConsumer oAuthConsumer) {
 		EntityCacheUtil.putResult(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 			OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey(),
 			oAuthConsumer);
 
@@ -954,7 +952,6 @@ public class OAuthConsumerPersistenceImpl
 	public void cacheResult(List<OAuthConsumer> oAuthConsumers) {
 		for (OAuthConsumer oAuthConsumer : oAuthConsumers) {
 			if (EntityCacheUtil.getResult(
-					OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 					OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey()) ==
 						null) {
 
@@ -992,7 +989,6 @@ public class OAuthConsumerPersistenceImpl
 	@Override
 	public void clearCache(OAuthConsumer oAuthConsumer) {
 		EntityCacheUtil.removeResult(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 			OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1008,7 +1004,6 @@ public class OAuthConsumerPersistenceImpl
 
 		for (OAuthConsumer oAuthConsumer : oAuthConsumers) {
 			EntityCacheUtil.removeResult(
-				OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 				OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1023,9 +1018,7 @@ public class OAuthConsumerPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-				OAuthConsumerImpl.class, primaryKey);
+			EntityCacheUtil.removeResult(OAuthConsumerImpl.class, primaryKey);
 		}
 	}
 
@@ -1243,11 +1236,7 @@ public class OAuthConsumerPersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!OAuthConsumerModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				oAuthConsumerModelImpl.getGadgetKey()
 			};
@@ -1283,7 +1272,6 @@ public class OAuthConsumerPersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 			OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey(),
 			oAuthConsumer, false);
 
@@ -1550,26 +1538,18 @@ public class OAuthConsumerPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthConsumerModelImpl.FINDER_CACHE_ENABLED,
 			OAuthConsumerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthConsumerModelImpl.FINDER_CACHE_ENABLED,
 			OAuthConsumerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthConsumerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByGadgetKey = new FinderPath(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthConsumerModelImpl.FINDER_CACHE_ENABLED,
 			OAuthConsumerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"findByGadgetKey",
 			new String[] {
@@ -1578,31 +1558,23 @@ public class OAuthConsumerPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByGadgetKey = new FinderPath(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthConsumerModelImpl.FINDER_CACHE_ENABLED,
 			OAuthConsumerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"findByGadgetKey", new String[] {String.class.getName()},
 			OAuthConsumerModelImpl.GADGETKEY_COLUMN_BITMASK |
 			OAuthConsumerModelImpl.SERVICENAME_COLUMN_BITMASK);
 
 		_finderPathCountByGadgetKey = new FinderPath(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthConsumerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGadgetKey",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByGadgetKey", new String[] {String.class.getName()});
 
 		_finderPathFetchByG_S = new FinderPath(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthConsumerModelImpl.FINDER_CACHE_ENABLED,
 			OAuthConsumerImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_S",
 			new String[] {String.class.getName(), String.class.getName()},
 			OAuthConsumerModelImpl.GADGETKEY_COLUMN_BITMASK |
 			OAuthConsumerModelImpl.SERVICENAME_COLUMN_BITMASK);
 
 		_finderPathCountByG_S = new FinderPath(
-			OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
-			OAuthConsumerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
 			new String[] {String.class.getName(), String.class.getName()});
 	}
 

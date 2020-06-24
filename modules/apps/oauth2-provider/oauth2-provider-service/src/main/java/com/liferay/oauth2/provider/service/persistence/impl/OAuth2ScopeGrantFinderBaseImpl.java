@@ -60,7 +60,6 @@ public abstract class OAuth2ScopeGrantFinderBaseImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
 	}
 
 	@Override

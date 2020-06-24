@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1725,8 +1724,8 @@ public class WikiPageResourcePersistenceImpl
 	@Override
 	public void cacheResult(WikiPageResource wikiPageResource) {
 		entityCache.putResult(
-			entityCacheEnabled, WikiPageResourceImpl.class,
-			wikiPageResource.getPrimaryKey(), wikiPageResource);
+			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey(),
+			wikiPageResource);
 
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
@@ -1754,7 +1753,7 @@ public class WikiPageResourcePersistenceImpl
 	public void cacheResult(List<WikiPageResource> wikiPageResources) {
 		for (WikiPageResource wikiPageResource : wikiPageResources) {
 			if (entityCache.getResult(
-					entityCacheEnabled, WikiPageResourceImpl.class,
+					WikiPageResourceImpl.class,
 					wikiPageResource.getPrimaryKey()) == null) {
 
 				cacheResult(wikiPageResource);
@@ -1791,8 +1790,7 @@ public class WikiPageResourcePersistenceImpl
 	@Override
 	public void clearCache(WikiPageResource wikiPageResource) {
 		entityCache.removeResult(
-			entityCacheEnabled, WikiPageResourceImpl.class,
-			wikiPageResource.getPrimaryKey());
+			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1808,8 +1806,7 @@ public class WikiPageResourcePersistenceImpl
 
 		for (WikiPageResource wikiPageResource : wikiPageResources) {
 			entityCache.removeResult(
-				entityCacheEnabled, WikiPageResourceImpl.class,
-				wikiPageResource.getPrimaryKey());
+				WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(WikiPageResourceModelImpl)wikiPageResource, true);
@@ -1823,8 +1820,7 @@ public class WikiPageResourcePersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, WikiPageResourceImpl.class, primaryKey);
+			entityCache.removeResult(WikiPageResourceImpl.class, primaryKey);
 		}
 	}
 
@@ -2063,10 +2059,7 @@ public class WikiPageResourcePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {wikiPageResourceModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2131,8 +2124,8 @@ public class WikiPageResourcePersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, WikiPageResourceImpl.class,
-			wikiPageResource.getPrimaryKey(), wikiPageResource, false);
+			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey(),
+			wikiPageResource, false);
 
 		clearUniqueFindersCache(wikiPageResourceModelImpl, false);
 		cacheUniqueFindersCache(wikiPageResourceModelImpl);
@@ -2403,57 +2396,52 @@ public class WikiPageResourcePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		WikiPageResourceModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		WikiPageResourceModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, WikiPageResourceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			WikiPageResourceImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, WikiPageResourceImpl.class,
+			WikiPageResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, WikiPageResourceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			WikiPageResourceImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, WikiPageResourceImpl.class,
+			WikiPageResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			WikiPageResourceModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, WikiPageResourceImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			WikiPageResourceImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			WikiPageResourceModelImpl.UUID_COLUMN_BITMASK |
 			WikiPageResourceModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, WikiPageResourceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			WikiPageResourceImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2461,27 +2449,25 @@ public class WikiPageResourcePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, WikiPageResourceImpl.class,
+			WikiPageResourceImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			WikiPageResourceModelImpl.UUID_COLUMN_BITMASK |
 			WikiPageResourceModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByN_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, WikiPageResourceImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
+			WikiPageResourceImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
 			new String[] {Long.class.getName(), String.class.getName()},
 			WikiPageResourceModelImpl.NODEID_COLUMN_BITMASK |
 			WikiPageResourceModelImpl.TITLE_COLUMN_BITMASK);
 
 		_finderPathCountByN_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByN_T",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -2499,12 +2485,6 @@ public class WikiPageResourcePersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.wiki.model.WikiPageResource"),
-			true);
 	}
 
 	@Override
@@ -2524,8 +2504,6 @@ public class WikiPageResourcePersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

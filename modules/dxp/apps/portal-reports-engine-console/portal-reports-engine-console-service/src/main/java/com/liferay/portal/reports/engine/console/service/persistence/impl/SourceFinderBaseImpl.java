@@ -58,7 +58,6 @@ public abstract class SourceFinderBaseImpl extends BasePersistenceImpl<Source> {
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
 	}
 
 	@Override

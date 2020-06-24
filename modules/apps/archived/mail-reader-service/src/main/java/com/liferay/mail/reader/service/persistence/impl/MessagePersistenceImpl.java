@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1331,8 +1330,7 @@ public class MessagePersistenceImpl
 	@Override
 	public void cacheResult(Message message) {
 		entityCache.putResult(
-			entityCacheEnabled, MessageImpl.class, message.getPrimaryKey(),
-			message);
+			MessageImpl.class, message.getPrimaryKey(), message);
 
 		finderCache.putResult(
 			_finderPathFetchByF_R,
@@ -1351,8 +1349,7 @@ public class MessagePersistenceImpl
 	public void cacheResult(List<Message> messages) {
 		for (Message message : messages) {
 			if (entityCache.getResult(
-					entityCacheEnabled, MessageImpl.class,
-					message.getPrimaryKey()) == null) {
+					MessageImpl.class, message.getPrimaryKey()) == null) {
 
 				cacheResult(message);
 			}
@@ -1387,8 +1384,7 @@ public class MessagePersistenceImpl
 	 */
 	@Override
 	public void clearCache(Message message) {
-		entityCache.removeResult(
-			entityCacheEnabled, MessageImpl.class, message.getPrimaryKey());
+		entityCache.removeResult(MessageImpl.class, message.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1403,7 +1399,7 @@ public class MessagePersistenceImpl
 
 		for (Message message : messages) {
 			entityCache.removeResult(
-				entityCacheEnabled, MessageImpl.class, message.getPrimaryKey());
+				MessageImpl.class, message.getPrimaryKey());
 
 			clearUniqueFindersCache((MessageModelImpl)message, true);
 		}
@@ -1416,8 +1412,7 @@ public class MessagePersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, MessageImpl.class, primaryKey);
+			entityCache.removeResult(MessageImpl.class, primaryKey);
 		}
 	}
 
@@ -1628,10 +1623,7 @@ public class MessagePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {messageModelImpl.getCompanyId()};
 
 			finderCache.removeResult(_finderPathCountByCompanyId, args);
@@ -1689,8 +1681,7 @@ public class MessagePersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, MessageImpl.class, message.getPrimaryKey(),
-			message, false);
+			MessageImpl.class, message.getPrimaryKey(), message, false);
 
 		clearUniqueFindersCache(messageModelImpl, false);
 		cacheUniqueFindersCache(messageModelImpl);
@@ -1959,73 +1950,62 @@ public class MessagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		MessageModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		MessageModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			MessageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			MessageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			MessageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()},
+			MessageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCompanyId", new String[] {Long.class.getName()},
 			MessageModelImpl.COMPANYID_COLUMN_BITMASK |
 			MessageModelImpl.SENTDATE_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByFolderId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFolderId",
+			MessageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByFolderId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByFolderId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MessageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFolderId",
-			new String[] {Long.class.getName()},
+			MessageImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByFolderId", new String[] {Long.class.getName()},
 			MessageModelImpl.FOLDERID_COLUMN_BITMASK |
 			MessageModelImpl.SENTDATE_COLUMN_BITMASK);
 
 		_finderPathCountByFolderId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFolderId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByFolderId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByF_R = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, MessageImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_R",
+			MessageImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByF_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			MessageModelImpl.FOLDERID_COLUMN_BITMASK |
 			MessageModelImpl.REMOTEMESSAGEID_COLUMN_BITMASK);
 
 		_finderPathCountByF_R = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_R",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_R",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
@@ -2043,12 +2023,6 @@ public class MessagePersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.mail.reader.model.Message"),
-			true);
 	}
 
 	@Override
@@ -2068,8 +2042,6 @@ public class MessagePersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

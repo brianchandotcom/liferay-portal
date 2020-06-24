@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -2373,7 +2372,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		CalendarNotificationTemplate calendarNotificationTemplate) {
 
 		entityCache.putResult(
-			entityCacheEnabled, CalendarNotificationTemplateImpl.class,
+			CalendarNotificationTemplateImpl.class,
 			calendarNotificationTemplate.getPrimaryKey(),
 			calendarNotificationTemplate);
 
@@ -2410,7 +2409,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				calendarNotificationTemplates) {
 
 			if (entityCache.getResult(
-					entityCacheEnabled, CalendarNotificationTemplateImpl.class,
+					CalendarNotificationTemplateImpl.class,
 					calendarNotificationTemplate.getPrimaryKey()) == null) {
 
 				cacheResult(calendarNotificationTemplate);
@@ -2449,7 +2448,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		CalendarNotificationTemplate calendarNotificationTemplate) {
 
 		entityCache.removeResult(
-			entityCacheEnabled, CalendarNotificationTemplateImpl.class,
+			CalendarNotificationTemplateImpl.class,
 			calendarNotificationTemplate.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -2471,7 +2470,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 				calendarNotificationTemplates) {
 
 			entityCache.removeResult(
-				entityCacheEnabled, CalendarNotificationTemplateImpl.class,
+				CalendarNotificationTemplateImpl.class,
 				calendarNotificationTemplate.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -2489,8 +2488,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				entityCacheEnabled, CalendarNotificationTemplateImpl.class,
-				primaryKey);
+				CalendarNotificationTemplateImpl.class, primaryKey);
 		}
 	}
 
@@ -2783,10 +2781,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				calendarNotificationTemplateModelImpl.getUuid()
 			};
@@ -2885,7 +2880,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, CalendarNotificationTemplateImpl.class,
+			CalendarNotificationTemplateImpl.class,
 			calendarNotificationTemplate.getPrimaryKey(),
 			calendarNotificationTemplate, false);
 
@@ -3167,29 +3162,20 @@ public class CalendarNotificationTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		CalendarNotificationTemplateModelImpl.setEntityCacheEnabled(
-			entityCacheEnabled);
-		CalendarNotificationTemplateModelImpl.setFinderCacheEnabled(
-			finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
 			new String[] {
@@ -3198,19 +3184,16 @@ public class CalendarNotificationTemplatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			CalendarNotificationTemplateModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3218,12 +3201,11 @@ public class CalendarNotificationTemplatePersistenceImpl
 			CalendarNotificationTemplateModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
 			new String[] {
@@ -3233,7 +3215,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
@@ -3241,12 +3222,11 @@ public class CalendarNotificationTemplatePersistenceImpl
 			CalendarNotificationTemplateModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByCalendarId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCalendarId",
 			new String[] {
@@ -3255,19 +3235,16 @@ public class CalendarNotificationTemplatePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCalendarId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCalendarId",
 			new String[] {Long.class.getName()},
 			CalendarNotificationTemplateModelImpl.CALENDARID_COLUMN_BITMASK);
 
 		_finderPathCountByCalendarId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCalendarId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCalendarId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_NT_NTT = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			CalendarNotificationTemplateImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByC_NT_NTT",
 			new String[] {
@@ -3281,8 +3258,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 				NOTIFICATIONTEMPLATETYPE_COLUMN_BITMASK);
 
 		_finderPathCountByC_NT_NTT = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_NT_NTT",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_NT_NTT",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
@@ -3304,12 +3281,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.calendar.model.CalendarNotificationTemplate"),
-			true);
 	}
 
 	@Override
@@ -3329,8 +3300,6 @@ public class CalendarNotificationTemplatePersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

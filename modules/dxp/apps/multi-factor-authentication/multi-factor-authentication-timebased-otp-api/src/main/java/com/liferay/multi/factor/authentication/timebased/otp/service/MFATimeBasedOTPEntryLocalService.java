@@ -87,6 +87,12 @@ public interface MFATimeBasedOTPEntryLocalService
 		long mfaTimeBasedOTPEntryId);
 
 	/**
+	 * @throws PortalException
+	 */
+	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
 	 * Deletes the mfa time based otp entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param mfaTimeBasedOTPEntryId the primary key of the mfa time based otp entry

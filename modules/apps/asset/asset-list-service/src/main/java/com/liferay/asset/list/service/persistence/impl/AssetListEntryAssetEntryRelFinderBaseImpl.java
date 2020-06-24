@@ -59,7 +59,6 @@ public abstract class AssetListEntryAssetEntryRelFinderBaseImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
 	}
 
 	@Override

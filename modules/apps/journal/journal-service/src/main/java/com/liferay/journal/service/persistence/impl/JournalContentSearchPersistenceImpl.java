@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -5089,7 +5088,7 @@ public class JournalContentSearchPersistenceImpl
 	@Override
 	public void cacheResult(JournalContentSearch journalContentSearch) {
 		entityCache.putResult(
-			entityCacheEnabled, JournalContentSearchImpl.class,
+			JournalContentSearchImpl.class,
 			journalContentSearch.getPrimaryKey(), journalContentSearch);
 
 		finderCache.putResult(
@@ -5117,7 +5116,7 @@ public class JournalContentSearchPersistenceImpl
 				journalContentSearchs) {
 
 			if (entityCache.getResult(
-					entityCacheEnabled, JournalContentSearchImpl.class,
+					JournalContentSearchImpl.class,
 					journalContentSearch.getPrimaryKey()) == null) {
 
 				cacheResult(journalContentSearch);
@@ -5154,7 +5153,7 @@ public class JournalContentSearchPersistenceImpl
 	@Override
 	public void clearCache(JournalContentSearch journalContentSearch) {
 		entityCache.removeResult(
-			entityCacheEnabled, JournalContentSearchImpl.class,
+			JournalContentSearchImpl.class,
 			journalContentSearch.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -5173,7 +5172,7 @@ public class JournalContentSearchPersistenceImpl
 				journalContentSearchs) {
 
 			entityCache.removeResult(
-				entityCacheEnabled, JournalContentSearchImpl.class,
+				JournalContentSearchImpl.class,
 				journalContentSearch.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -5189,7 +5188,7 @@ public class JournalContentSearchPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				entityCacheEnabled, JournalContentSearchImpl.class, primaryKey);
+				JournalContentSearchImpl.class, primaryKey);
 		}
 	}
 
@@ -5402,10 +5401,7 @@ public class JournalContentSearchPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				journalContentSearchModelImpl.getCompanyId()
 			};
@@ -5668,7 +5664,7 @@ public class JournalContentSearchPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, JournalContentSearchImpl.class,
+			JournalContentSearchImpl.class,
 			journalContentSearch.getPrimaryKey(), journalContentSearch, false);
 
 		clearUniqueFindersCache(journalContentSearchModelImpl, false);
@@ -5937,27 +5933,20 @@ public class JournalContentSearchPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		JournalContentSearchModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		JournalContentSearchModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
 			new String[] {
@@ -5966,19 +5955,16 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
 			new String[] {Long.class.getName()},
 			JournalContentSearchModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByPortletId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortletId",
 			new String[] {
@@ -5987,19 +5973,16 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByPortletId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPortletId",
 			new String[] {String.class.getName()},
 			JournalContentSearchModelImpl.PORTLETID_COLUMN_BITMASK);
 
 		_finderPathCountByPortletId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortletId",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByPortletId", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByArticleId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByArticleId",
 			new String[] {
@@ -6008,19 +5991,16 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByArticleId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByArticleId",
 			new String[] {String.class.getName()},
 			JournalContentSearchModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByArticleId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByArticleId",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByArticleId", new String[] {String.class.getName()});
 
 		_finderPathWithPaginationFindByG_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
 			new String[] {
@@ -6030,7 +6010,6 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -6038,12 +6017,10 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.PRIVATELAYOUT_COLUMN_BITMASK);
 
 		_finderPathCountByG_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathWithPaginationFindByG_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
 			new String[] {
@@ -6053,7 +6030,6 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -6061,12 +6037,10 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByG_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
 			new String[] {Long.class.getName(), String.class.getName()});
 
 		_finderPathWithPaginationFindByG_P_L = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
 			new String[] {
@@ -6076,7 +6050,6 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P_L = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
 			new String[] {
@@ -6088,15 +6061,14 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.LAYOUTID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_L = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_P_L",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName()
 			});
 
 		_finderPathWithPaginationFindByG_P_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_A",
 			new String[] {
@@ -6106,7 +6078,6 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_A",
 			new String[] {
@@ -6118,15 +6089,14 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()
 			});
 
 		_finderPathWithPaginationFindByG_P_L_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_P",
 			new String[] {
@@ -6137,7 +6107,6 @@ public class JournalContentSearchPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByG_P_L_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L_P",
 			new String[] {
@@ -6150,15 +6119,14 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.PORTLETID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_L_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_P",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_P_L_P",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(), String.class.getName()
 			});
 
 		_finderPathFetchByG_P_L_P_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			JournalContentSearchImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByG_P_L_P_A",
 			new String[] {
@@ -6173,8 +6141,8 @@ public class JournalContentSearchPersistenceImpl
 			JournalContentSearchModelImpl.ARTICLEID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_L_P_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L_P_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_P_L_P_A",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName(), String.class.getName(),
@@ -6196,12 +6164,6 @@ public class JournalContentSearchPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalContentSearch"),
-			true);
 	}
 
 	@Override
@@ -6221,8 +6183,6 @@ public class JournalContentSearchPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

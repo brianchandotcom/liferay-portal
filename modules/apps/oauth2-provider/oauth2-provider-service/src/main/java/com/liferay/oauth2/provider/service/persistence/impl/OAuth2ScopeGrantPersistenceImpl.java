@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -1065,8 +1064,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 	@Override
 	public void cacheResult(OAuth2ScopeGrant oAuth2ScopeGrant) {
 		entityCache.putResult(
-			entityCacheEnabled, OAuth2ScopeGrantImpl.class,
-			oAuth2ScopeGrant.getPrimaryKey(), oAuth2ScopeGrant);
+			OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey(),
+			oAuth2ScopeGrant);
 
 		finderCache.putResult(
 			_finderPathFetchByC_O_A_B_S,
@@ -1091,7 +1090,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 	public void cacheResult(List<OAuth2ScopeGrant> oAuth2ScopeGrants) {
 		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
 			if (entityCache.getResult(
-					entityCacheEnabled, OAuth2ScopeGrantImpl.class,
+					OAuth2ScopeGrantImpl.class,
 					oAuth2ScopeGrant.getPrimaryKey()) == null) {
 
 				cacheResult(oAuth2ScopeGrant);
@@ -1128,8 +1127,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 	@Override
 	public void clearCache(OAuth2ScopeGrant oAuth2ScopeGrant) {
 		entityCache.removeResult(
-			entityCacheEnabled, OAuth2ScopeGrantImpl.class,
-			oAuth2ScopeGrant.getPrimaryKey());
+			OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1145,8 +1143,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		for (OAuth2ScopeGrant oAuth2ScopeGrant : oAuth2ScopeGrants) {
 			entityCache.removeResult(
-				entityCacheEnabled, OAuth2ScopeGrantImpl.class,
-				oAuth2ScopeGrant.getPrimaryKey());
+				OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(OAuth2ScopeGrantModelImpl)oAuth2ScopeGrant, true);
@@ -1160,8 +1157,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, OAuth2ScopeGrantImpl.class, primaryKey);
+			entityCache.removeResult(OAuth2ScopeGrantImpl.class, primaryKey);
 		}
 	}
 
@@ -1372,10 +1368,7 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				oAuth2ScopeGrantModelImpl.getOAuth2ApplicationScopeAliasesId()
 			};
@@ -1420,8 +1413,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, OAuth2ScopeGrantImpl.class,
-			oAuth2ScopeGrant.getPrimaryKey(), oAuth2ScopeGrant, false);
+			OAuth2ScopeGrantImpl.class, oAuth2ScopeGrant.getPrimaryKey(),
+			oAuth2ScopeGrant, false);
 
 		clearUniqueFindersCache(oAuth2ScopeGrantModelImpl, false);
 		cacheUniqueFindersCache(oAuth2ScopeGrantModelImpl);
@@ -2031,9 +2024,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		OAuth2ScopeGrantModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		OAuth2ScopeGrantModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		oAuth2ScopeGrantToOAuth2AuthorizationTableMapper =
 			TableMapperFactory.getTableMapper(
 				"OA2Auths_OA2ScopeGrants#oAuth2ScopeGrantId",
@@ -2041,22 +2031,20 @@ public class OAuth2ScopeGrantPersistenceImpl
 				"oAuth2AuthorizationId", this, OAuth2Authorization.class);
 
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, OAuth2ScopeGrantImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			OAuth2ScopeGrantImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, OAuth2ScopeGrantImpl.class,
+			OAuth2ScopeGrantImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId =
 			new FinderPath(
-				entityCacheEnabled, finderCacheEnabled,
 				OAuth2ScopeGrantImpl.class,
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 				"findByOAuth2ApplicationScopeAliasesId",
@@ -2067,7 +2055,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 
 		_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId =
 			new FinderPath(
-				entityCacheEnabled, finderCacheEnabled,
 				OAuth2ScopeGrantImpl.class,
 				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 				"findByOAuth2ApplicationScopeAliasesId",
@@ -2076,14 +2063,13 @@ public class OAuth2ScopeGrantPersistenceImpl
 					OAUTH2APPLICATIONSCOPEALIASESID_COLUMN_BITMASK);
 
 		_finderPathCountByOAuth2ApplicationScopeAliasesId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByOAuth2ApplicationScopeAliasesId",
 			new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_O_A_B_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, OAuth2ScopeGrantImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_O_A_B_S",
+			OAuth2ScopeGrantImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByC_O_A_B_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName(),
@@ -2097,8 +2083,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 			OAuth2ScopeGrantModelImpl.SCOPE_COLUMN_BITMASK);
 
 		_finderPathCountByC_O_A_B_S = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_O_A_B_S",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_O_A_B_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName(),
@@ -2123,12 +2109,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.oauth2.provider.model.OAuth2ScopeGrant"),
-			true);
 	}
 
 	@Override
@@ -2148,8 +2128,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

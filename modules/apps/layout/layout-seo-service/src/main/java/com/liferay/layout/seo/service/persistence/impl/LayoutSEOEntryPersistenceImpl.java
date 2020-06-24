@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -1727,8 +1726,8 @@ public class LayoutSEOEntryPersistenceImpl
 	@Override
 	public void cacheResult(LayoutSEOEntry layoutSEOEntry) {
 		entityCache.putResult(
-			entityCacheEnabled, LayoutSEOEntryImpl.class,
-			layoutSEOEntry.getPrimaryKey(), layoutSEOEntry);
+			LayoutSEOEntryImpl.class, layoutSEOEntry.getPrimaryKey(),
+			layoutSEOEntry);
 
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
@@ -1757,8 +1756,8 @@ public class LayoutSEOEntryPersistenceImpl
 	public void cacheResult(List<LayoutSEOEntry> layoutSEOEntries) {
 		for (LayoutSEOEntry layoutSEOEntry : layoutSEOEntries) {
 			if (entityCache.getResult(
-					entityCacheEnabled, LayoutSEOEntryImpl.class,
-					layoutSEOEntry.getPrimaryKey()) == null) {
+					LayoutSEOEntryImpl.class, layoutSEOEntry.getPrimaryKey()) ==
+						null) {
 
 				cacheResult(layoutSEOEntry);
 			}
@@ -1794,8 +1793,7 @@ public class LayoutSEOEntryPersistenceImpl
 	@Override
 	public void clearCache(LayoutSEOEntry layoutSEOEntry) {
 		entityCache.removeResult(
-			entityCacheEnabled, LayoutSEOEntryImpl.class,
-			layoutSEOEntry.getPrimaryKey());
+			LayoutSEOEntryImpl.class, layoutSEOEntry.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1810,8 +1808,7 @@ public class LayoutSEOEntryPersistenceImpl
 
 		for (LayoutSEOEntry layoutSEOEntry : layoutSEOEntries) {
 			entityCache.removeResult(
-				entityCacheEnabled, LayoutSEOEntryImpl.class,
-				layoutSEOEntry.getPrimaryKey());
+				LayoutSEOEntryImpl.class, layoutSEOEntry.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(LayoutSEOEntryModelImpl)layoutSEOEntry, true);
@@ -1825,8 +1822,7 @@ public class LayoutSEOEntryPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, LayoutSEOEntryImpl.class, primaryKey);
+			entityCache.removeResult(LayoutSEOEntryImpl.class, primaryKey);
 		}
 	}
 
@@ -2090,10 +2086,7 @@ public class LayoutSEOEntryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {layoutSEOEntryModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -2158,8 +2151,8 @@ public class LayoutSEOEntryPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, LayoutSEOEntryImpl.class,
-			layoutSEOEntry.getPrimaryKey(), layoutSEOEntry, false);
+			LayoutSEOEntryImpl.class, layoutSEOEntry.getPrimaryKey(),
+			layoutSEOEntry, false);
 
 		clearUniqueFindersCache(layoutSEOEntryModelImpl, false);
 		cacheUniqueFindersCache(layoutSEOEntryModelImpl);
@@ -2429,57 +2422,49 @@ public class LayoutSEOEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		LayoutSEOEntryModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		LayoutSEOEntryModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			LayoutSEOEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			LayoutSEOEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			LayoutSEOEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()},
+			LayoutSEOEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid", new String[] {String.class.getName()},
 			LayoutSEOEntryModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			LayoutSEOEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			LayoutSEOEntryModelImpl.UUID_COLUMN_BITMASK |
 			LayoutSEOEntryModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			LayoutSEOEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -2487,20 +2472,19 @@ public class LayoutSEOEntryPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			LayoutSEOEntryImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			LayoutSEOEntryModelImpl.UUID_COLUMN_BITMASK |
 			LayoutSEOEntryModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathFetchByG_P_L = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, LayoutSEOEntryImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L",
+			LayoutSEOEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName()
@@ -2510,8 +2494,8 @@ public class LayoutSEOEntryPersistenceImpl
 			LayoutSEOEntryModelImpl.LAYOUTID_COLUMN_BITMASK);
 
 		_finderPathCountByG_P_L = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_L",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_P_L",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				Long.class.getName()
@@ -2532,12 +2516,6 @@ public class LayoutSEOEntryPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.layout.seo.model.LayoutSEOEntry"),
-			true);
 	}
 
 	@Override
@@ -2557,8 +2535,6 @@ public class LayoutSEOEntryPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

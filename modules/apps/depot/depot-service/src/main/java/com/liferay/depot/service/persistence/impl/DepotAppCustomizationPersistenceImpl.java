@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1111,7 +1110,7 @@ public class DepotAppCustomizationPersistenceImpl
 	@Override
 	public void cacheResult(DepotAppCustomization depotAppCustomization) {
 		entityCache.putResult(
-			entityCacheEnabled, DepotAppCustomizationImpl.class,
+			DepotAppCustomizationImpl.class,
 			depotAppCustomization.getPrimaryKey(), depotAppCustomization);
 
 		finderCache.putResult(
@@ -1146,7 +1145,7 @@ public class DepotAppCustomizationPersistenceImpl
 				depotAppCustomizations) {
 
 			if (entityCache.getResult(
-					entityCacheEnabled, DepotAppCustomizationImpl.class,
+					DepotAppCustomizationImpl.class,
 					depotAppCustomization.getPrimaryKey()) == null) {
 
 				cacheResult(depotAppCustomization);
@@ -1183,7 +1182,7 @@ public class DepotAppCustomizationPersistenceImpl
 	@Override
 	public void clearCache(DepotAppCustomization depotAppCustomization) {
 		entityCache.removeResult(
-			entityCacheEnabled, DepotAppCustomizationImpl.class,
+			DepotAppCustomizationImpl.class,
 			depotAppCustomization.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
@@ -1202,7 +1201,7 @@ public class DepotAppCustomizationPersistenceImpl
 				depotAppCustomizations) {
 
 			entityCache.removeResult(
-				entityCacheEnabled, DepotAppCustomizationImpl.class,
+				DepotAppCustomizationImpl.class,
 				depotAppCustomization.getPrimaryKey());
 
 			clearUniqueFindersCache(
@@ -1218,8 +1217,7 @@ public class DepotAppCustomizationPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(
-				entityCacheEnabled, DepotAppCustomizationImpl.class,
-				primaryKey);
+				DepotAppCustomizationImpl.class, primaryKey);
 		}
 	}
 
@@ -1456,10 +1454,7 @@ public class DepotAppCustomizationPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				depotAppCustomizationModelImpl.getDepotEntryId()
 			};
@@ -1496,7 +1491,7 @@ public class DepotAppCustomizationPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, DepotAppCustomizationImpl.class,
+			DepotAppCustomizationImpl.class,
 			depotAppCustomization.getPrimaryKey(), depotAppCustomization,
 			false);
 
@@ -1768,29 +1763,20 @@ public class DepotAppCustomizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		DepotAppCustomizationModelImpl.setEntityCacheEnabled(
-			entityCacheEnabled);
-		DepotAppCustomizationModelImpl.setFinderCacheEnabled(
-			finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotAppCustomizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotAppCustomizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotAppCustomizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
 			new String[] {
@@ -1799,19 +1785,16 @@ public class DepotAppCustomizationPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByDepotEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotAppCustomizationImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDepotEntryId",
 			new String[] {Long.class.getName()},
 			DepotAppCustomizationModelImpl.DEPOTENTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByDepotEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByDepotEntryId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByD_E = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotAppCustomizationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByD_E",
 			new String[] {Long.class.getName(), Boolean.class.getName()},
@@ -1819,12 +1802,10 @@ public class DepotAppCustomizationPersistenceImpl
 			DepotAppCustomizationModelImpl.ENABLED_COLUMN_BITMASK);
 
 		_finderPathCountByD_E = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_E",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_E",
 			new String[] {Long.class.getName(), Boolean.class.getName()});
 
 		_finderPathFetchByD_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled,
 			DepotAppCustomizationImpl.class, FINDER_CLASS_NAME_ENTITY,
 			"fetchByD_P",
 			new String[] {Long.class.getName(), String.class.getName()},
@@ -1832,8 +1813,7 @@ public class DepotAppCustomizationPersistenceImpl
 			DepotAppCustomizationModelImpl.PORTLETID_COLUMN_BITMASK);
 
 		_finderPathCountByD_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_P",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByD_P",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -1851,12 +1831,6 @@ public class DepotAppCustomizationPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.depot.model.DepotAppCustomization"),
-			true);
 	}
 
 	@Override
@@ -1876,8 +1850,6 @@ public class DepotAppCustomizationPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

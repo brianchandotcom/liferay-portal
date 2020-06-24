@@ -830,7 +830,6 @@ public class PortletPersistenceImpl
 
 		setModelImplClass(PortletImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(PortletModelImpl.ENTITY_CACHE_ENABLED);
 
 		setTable(PortletTable.INSTANCE);
 	}
@@ -843,8 +842,7 @@ public class PortletPersistenceImpl
 	@Override
 	public void cacheResult(Portlet portlet) {
 		EntityCacheUtil.putResult(
-			PortletModelImpl.ENTITY_CACHE_ENABLED, PortletImpl.class,
-			portlet.getPrimaryKey(), portlet);
+			PortletImpl.class, portlet.getPrimaryKey(), portlet);
 
 		FinderCacheUtil.putResult(
 			_finderPathFetchByC_P,
@@ -863,8 +861,7 @@ public class PortletPersistenceImpl
 	public void cacheResult(List<Portlet> portlets) {
 		for (Portlet portlet : portlets) {
 			if (EntityCacheUtil.getResult(
-					PortletModelImpl.ENTITY_CACHE_ENABLED, PortletImpl.class,
-					portlet.getPrimaryKey()) == null) {
+					PortletImpl.class, portlet.getPrimaryKey()) == null) {
 
 				cacheResult(portlet);
 			}
@@ -900,8 +897,7 @@ public class PortletPersistenceImpl
 	@Override
 	public void clearCache(Portlet portlet) {
 		EntityCacheUtil.removeResult(
-			PortletModelImpl.ENTITY_CACHE_ENABLED, PortletImpl.class,
-			portlet.getPrimaryKey());
+			PortletImpl.class, portlet.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -916,8 +912,7 @@ public class PortletPersistenceImpl
 
 		for (Portlet portlet : portlets) {
 			EntityCacheUtil.removeResult(
-				PortletModelImpl.ENTITY_CACHE_ENABLED, PortletImpl.class,
-				portlet.getPrimaryKey());
+				PortletImpl.class, portlet.getPrimaryKey());
 
 			clearUniqueFindersCache((PortletModelImpl)portlet, true);
 		}
@@ -930,9 +925,7 @@ public class PortletPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				PortletModelImpl.ENTITY_CACHE_ENABLED, PortletImpl.class,
-				primaryKey);
+			EntityCacheUtil.removeResult(PortletImpl.class, primaryKey);
 		}
 	}
 
@@ -1118,11 +1111,7 @@ public class PortletPersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!PortletModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {portletModelImpl.getCompanyId()};
 
 			FinderCacheUtil.removeResult(_finderPathCountByCompanyId, args);
@@ -1156,8 +1145,7 @@ public class PortletPersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(
-			PortletModelImpl.ENTITY_CACHE_ENABLED, PortletImpl.class,
-			portlet.getPrimaryKey(), portlet, false);
+			PortletImpl.class, portlet.getPrimaryKey(), portlet, false);
 
 		clearUniqueFindersCache(portletModelImpl, false);
 		cacheUniqueFindersCache(portletModelImpl);
@@ -1424,56 +1412,42 @@ public class PortletPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			PortletImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			PortletImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			PortletImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCompanyId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()},
+			PortletImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCompanyId", new String[] {Long.class.getName()},
 			PortletModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByCompanyId = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCompanyId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByC_P = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, PortletImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
+			PortletImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
 			new String[] {Long.class.getName(), String.class.getName()},
 			PortletModelImpl.COMPANYID_COLUMN_BITMASK |
 			PortletModelImpl.PORTLETID_COLUMN_BITMASK);
 
 		_finderPathCountByC_P = new FinderPath(
-			PortletModelImpl.ENTITY_CACHE_ENABLED,
-			PortletModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 

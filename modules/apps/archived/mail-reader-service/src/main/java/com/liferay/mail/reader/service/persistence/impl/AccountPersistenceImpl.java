@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -866,8 +865,7 @@ public class AccountPersistenceImpl
 	@Override
 	public void cacheResult(Account account) {
 		entityCache.putResult(
-			entityCacheEnabled, AccountImpl.class, account.getPrimaryKey(),
-			account);
+			AccountImpl.class, account.getPrimaryKey(), account);
 
 		finderCache.putResult(
 			_finderPathFetchByU_A,
@@ -885,8 +883,7 @@ public class AccountPersistenceImpl
 	public void cacheResult(List<Account> accounts) {
 		for (Account account : accounts) {
 			if (entityCache.getResult(
-					entityCacheEnabled, AccountImpl.class,
-					account.getPrimaryKey()) == null) {
+					AccountImpl.class, account.getPrimaryKey()) == null) {
 
 				cacheResult(account);
 			}
@@ -921,8 +918,7 @@ public class AccountPersistenceImpl
 	 */
 	@Override
 	public void clearCache(Account account) {
-		entityCache.removeResult(
-			entityCacheEnabled, AccountImpl.class, account.getPrimaryKey());
+		entityCache.removeResult(AccountImpl.class, account.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -937,7 +933,7 @@ public class AccountPersistenceImpl
 
 		for (Account account : accounts) {
 			entityCache.removeResult(
-				entityCacheEnabled, AccountImpl.class, account.getPrimaryKey());
+				AccountImpl.class, account.getPrimaryKey());
 
 			clearUniqueFindersCache((AccountModelImpl)account, true);
 		}
@@ -950,8 +946,7 @@ public class AccountPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, AccountImpl.class, primaryKey);
+			entityCache.removeResult(AccountImpl.class, primaryKey);
 		}
 	}
 
@@ -1160,10 +1155,7 @@ public class AccountPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {accountModelImpl.getUserId()};
 
 			finderCache.removeResult(_finderPathCountByUserId, args);
@@ -1196,8 +1188,7 @@ public class AccountPersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, AccountImpl.class, account.getPrimaryKey(),
-			account, false);
+			AccountImpl.class, account.getPrimaryKey(), account, false);
 
 		clearUniqueFindersCache(accountModelImpl, false);
 		cacheUniqueFindersCache(accountModelImpl);
@@ -1466,53 +1457,44 @@ public class AccountPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		AccountModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		AccountModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AccountImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			AccountImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AccountImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			AccountImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUserId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AccountImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+			AccountImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUserId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AccountImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()},
+			AccountImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByUserId", new String[] {Long.class.getName()},
 			AccountModelImpl.USERID_COLUMN_BITMASK |
 			AccountModelImpl.ADDRESS_COLUMN_BITMASK);
 
 		_finderPathCountByUserId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUserId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByU_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AccountImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_A",
+			AccountImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByU_A",
 			new String[] {Long.class.getName(), String.class.getName()},
 			AccountModelImpl.USERID_COLUMN_BITMASK |
 			AccountModelImpl.ADDRESS_COLUMN_BITMASK);
 
 		_finderPathCountByU_A = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_A",
 			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
@@ -1530,12 +1512,6 @@ public class AccountPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.mail.reader.model.Account"),
-			true);
 	}
 
 	@Override
@@ -1555,8 +1531,6 @@ public class AccountPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

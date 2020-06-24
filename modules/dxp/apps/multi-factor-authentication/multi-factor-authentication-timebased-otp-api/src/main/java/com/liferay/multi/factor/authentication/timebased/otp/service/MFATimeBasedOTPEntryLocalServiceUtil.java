@@ -74,6 +74,16 @@ public class MFATimeBasedOTPEntryLocalServiceUtil {
 	}
 
 	/**
+	 * @throws PortalException
+	 */
+	public static com.liferay.portal.kernel.model.PersistedModel
+			createPersistedModel(java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().createPersistedModel(primaryKeyObj);
+	}
+
+	/**
 	 * Deletes the mfa time based otp entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param mfaTimeBasedOTPEntryId the primary key of the mfa time based otp entry

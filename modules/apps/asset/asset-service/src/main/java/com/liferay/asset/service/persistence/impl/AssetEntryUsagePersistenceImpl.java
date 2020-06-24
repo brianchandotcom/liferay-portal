@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -4085,8 +4084,8 @@ public class AssetEntryUsagePersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, AssetEntryUsageImpl.class,
-			assetEntryUsage.getPrimaryKey(), assetEntryUsage);
+			AssetEntryUsageImpl.class, assetEntryUsage.getPrimaryKey(),
+			assetEntryUsage);
 
 		finderCache.putResult(
 			_finderPathFetchByUUID_G,
@@ -4122,7 +4121,7 @@ public class AssetEntryUsagePersistenceImpl
 			}
 
 			if (entityCache.getResult(
-					entityCacheEnabled, AssetEntryUsageImpl.class,
+					AssetEntryUsageImpl.class,
 					assetEntryUsage.getPrimaryKey()) == null) {
 
 				cacheResult(assetEntryUsage);
@@ -4159,8 +4158,7 @@ public class AssetEntryUsagePersistenceImpl
 	@Override
 	public void clearCache(AssetEntryUsage assetEntryUsage) {
 		entityCache.removeResult(
-			entityCacheEnabled, AssetEntryUsageImpl.class,
-			assetEntryUsage.getPrimaryKey());
+			AssetEntryUsageImpl.class, assetEntryUsage.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -4176,8 +4174,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		for (AssetEntryUsage assetEntryUsage : assetEntryUsages) {
 			entityCache.removeResult(
-				entityCacheEnabled, AssetEntryUsageImpl.class,
-				assetEntryUsage.getPrimaryKey());
+				AssetEntryUsageImpl.class, assetEntryUsage.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(AssetEntryUsageModelImpl)assetEntryUsage, true);
@@ -4191,8 +4188,7 @@ public class AssetEntryUsagePersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, AssetEntryUsageImpl.class, primaryKey);
+			entityCache.removeResult(AssetEntryUsageImpl.class, primaryKey);
 		}
 	}
 
@@ -4483,10 +4479,7 @@ public class AssetEntryUsagePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {assetEntryUsageModelImpl.getUuid()};
 
 			finderCache.removeResult(_finderPathCountByUuid, args);
@@ -4670,8 +4663,8 @@ public class AssetEntryUsagePersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, AssetEntryUsageImpl.class,
-			assetEntryUsage.getPrimaryKey(), assetEntryUsage, false);
+			AssetEntryUsageImpl.class, assetEntryUsage.getPrimaryKey(),
+			assetEntryUsage, false);
 
 		clearUniqueFindersCache(assetEntryUsageModelImpl, false);
 		cacheUniqueFindersCache(assetEntryUsageModelImpl);
@@ -5132,57 +5125,52 @@ public class AssetEntryUsagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		AssetEntryUsageModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		AssetEntryUsageModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			AssetEntryUsageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid",
 			new String[] {
 				String.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			AssetEntryUsageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] {String.class.getName()},
 			AssetEntryUsageModelImpl.UUID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid", new String[] {String.class.getName()});
 
 		_finderPathFetchByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()},
 			AssetEntryUsageModelImpl.UUID_COLUMN_BITMASK |
 			AssetEntryUsageModelImpl.GROUPID_COLUMN_BITMASK);
 
 		_finderPathCountByUUID_G = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUUID_G",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByUuid_C",
 			new String[] {
 				String.class.getName(), Long.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -5190,58 +5178,56 @@ public class AssetEntryUsagePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			AssetEntryUsageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			AssetEntryUsageModelImpl.UUID_COLUMN_BITMASK |
 			AssetEntryUsageModelImpl.COMPANYID_COLUMN_BITMASK);
 
 		_finderPathCountByUuid_C = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()});
 
 		_finderPathWithPaginationFindByAssetEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByAssetEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByAssetEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			AssetEntryUsageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetEntryId",
 			new String[] {Long.class.getName()},
 			AssetEntryUsageModelImpl.ASSETENTRYID_COLUMN_BITMASK);
 
 		_finderPathCountByAssetEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByAssetEntryId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByPlid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPlid",
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByPlid",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByPlid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			AssetEntryUsageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPlid",
 			new String[] {Long.class.getName()},
 			AssetEntryUsageModelImpl.PLID_COLUMN_BITMASK);
 
 		_finderPathCountByPlid = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPlid",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByPlid", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByA_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_T",
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByA_T",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -5249,20 +5235,19 @@ public class AssetEntryUsagePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByA_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			AssetEntryUsageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_T",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			AssetEntryUsageModelImpl.ASSETENTRYID_COLUMN_BITMASK |
 			AssetEntryUsageModelImpl.TYPE_COLUMN_BITMASK);
 
 		_finderPathCountByA_T = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_T",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_T",
 			new String[] {Long.class.getName(), Integer.class.getName()});
 
 		_finderPathWithPaginationFindByC_C_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_P",
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_C_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(), Integer.class.getName(),
@@ -5270,7 +5255,7 @@ public class AssetEntryUsagePersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByC_C_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
+			AssetEntryUsageImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
@@ -5281,16 +5266,16 @@ public class AssetEntryUsagePersistenceImpl
 			AssetEntryUsageModelImpl.PLID_COLUMN_BITMASK);
 
 		_finderPathCountByC_C_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_P",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByC_C_P",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			});
 
 		_finderPathFetchByA_C_C_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, AssetEntryUsageImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_C_C_P",
+			AssetEntryUsageImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByA_C_C_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Long.class.getName()
@@ -5301,8 +5286,8 @@ public class AssetEntryUsagePersistenceImpl
 			AssetEntryUsageModelImpl.PLID_COLUMN_BITMASK);
 
 		_finderPathCountByA_C_C_P = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByA_C_C_P",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByA_C_C_P",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Long.class.getName()
@@ -5323,12 +5308,6 @@ public class AssetEntryUsagePersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.asset.model.AssetEntryUsage"),
-			true);
 	}
 
 	@Override
@@ -5348,8 +5327,6 @@ public class AssetEntryUsagePersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected CTPersistenceHelper ctPersistenceHelper;

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.segments.exception.NoSuchEntryRoleException;
@@ -1334,8 +1333,8 @@ public class SegmentsEntryRolePersistenceImpl
 	@Override
 	public void cacheResult(SegmentsEntryRole segmentsEntryRole) {
 		entityCache.putResult(
-			entityCacheEnabled, SegmentsEntryRoleImpl.class,
-			segmentsEntryRole.getPrimaryKey(), segmentsEntryRole);
+			SegmentsEntryRoleImpl.class, segmentsEntryRole.getPrimaryKey(),
+			segmentsEntryRole);
 
 		finderCache.putResult(
 			_finderPathFetchByS_R,
@@ -1357,7 +1356,7 @@ public class SegmentsEntryRolePersistenceImpl
 	public void cacheResult(List<SegmentsEntryRole> segmentsEntryRoles) {
 		for (SegmentsEntryRole segmentsEntryRole : segmentsEntryRoles) {
 			if (entityCache.getResult(
-					entityCacheEnabled, SegmentsEntryRoleImpl.class,
+					SegmentsEntryRoleImpl.class,
 					segmentsEntryRole.getPrimaryKey()) == null) {
 
 				cacheResult(segmentsEntryRole);
@@ -1394,8 +1393,7 @@ public class SegmentsEntryRolePersistenceImpl
 	@Override
 	public void clearCache(SegmentsEntryRole segmentsEntryRole) {
 		entityCache.removeResult(
-			entityCacheEnabled, SegmentsEntryRoleImpl.class,
-			segmentsEntryRole.getPrimaryKey());
+			SegmentsEntryRoleImpl.class, segmentsEntryRole.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1411,8 +1409,7 @@ public class SegmentsEntryRolePersistenceImpl
 
 		for (SegmentsEntryRole segmentsEntryRole : segmentsEntryRoles) {
 			entityCache.removeResult(
-				entityCacheEnabled, SegmentsEntryRoleImpl.class,
-				segmentsEntryRole.getPrimaryKey());
+				SegmentsEntryRoleImpl.class, segmentsEntryRole.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(SegmentsEntryRoleModelImpl)segmentsEntryRole, true);
@@ -1426,8 +1423,7 @@ public class SegmentsEntryRolePersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, SegmentsEntryRoleImpl.class, primaryKey);
+			entityCache.removeResult(SegmentsEntryRoleImpl.class, primaryKey);
 		}
 	}
 
@@ -1652,10 +1648,7 @@ public class SegmentsEntryRolePersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				segmentsEntryRoleModelImpl.getSegmentsEntryId()
 			};
@@ -1719,8 +1712,8 @@ public class SegmentsEntryRolePersistenceImpl
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, SegmentsEntryRoleImpl.class,
-			segmentsEntryRole.getPrimaryKey(), segmentsEntryRole, false);
+			SegmentsEntryRoleImpl.class, segmentsEntryRole.getPrimaryKey(),
+			segmentsEntryRole, false);
 
 		clearUniqueFindersCache(segmentsEntryRoleModelImpl, false);
 		cacheUniqueFindersCache(segmentsEntryRoleModelImpl);
@@ -1986,71 +1979,63 @@ public class SegmentsEntryRolePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		SegmentsEntryRoleModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		SegmentsEntryRoleModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SegmentsEntryRoleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			SegmentsEntryRoleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SegmentsEntryRoleImpl.class,
+			SegmentsEntryRoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindBySegmentsEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SegmentsEntryRoleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySegmentsEntryId",
+			SegmentsEntryRoleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findBySegmentsEntryId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindBySegmentsEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SegmentsEntryRoleImpl.class,
+			SegmentsEntryRoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySegmentsEntryId",
 			new String[] {Long.class.getName()},
 			SegmentsEntryRoleModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK);
 
 		_finderPathCountBySegmentsEntryId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySegmentsEntryId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBySegmentsEntryId", new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByRoleId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SegmentsEntryRoleImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
+			SegmentsEntryRoleImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByRoleId",
 			new String[] {
 				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithoutPaginationFindByRoleId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SegmentsEntryRoleImpl.class,
+			SegmentsEntryRoleImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
 			new String[] {Long.class.getName()},
 			SegmentsEntryRoleModelImpl.ROLEID_COLUMN_BITMASK);
 
 		_finderPathCountByRoleId = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
-			new String[] {Long.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByRoleId", new String[] {Long.class.getName()});
 
 		_finderPathFetchByS_R = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SegmentsEntryRoleImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByS_R",
+			SegmentsEntryRoleImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByS_R",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			SegmentsEntryRoleModelImpl.SEGMENTSENTRYID_COLUMN_BITMASK |
 			SegmentsEntryRoleModelImpl.ROLEID_COLUMN_BITMASK);
 
 		_finderPathCountByS_R = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_R",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_R",
 			new String[] {Long.class.getName(), Long.class.getName()});
 	}
 
@@ -2068,12 +2053,6 @@ public class SegmentsEntryRolePersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.segments.model.SegmentsEntryRole"),
-			true);
 	}
 
 	@Override
@@ -2093,8 +2072,6 @@ public class SegmentsEntryRolePersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

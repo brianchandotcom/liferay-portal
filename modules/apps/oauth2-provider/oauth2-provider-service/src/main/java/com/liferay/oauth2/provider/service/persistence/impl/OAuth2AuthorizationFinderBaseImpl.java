@@ -60,7 +60,6 @@ public abstract class OAuth2AuthorizationFinderBaseImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
 	}
 
 	@Override

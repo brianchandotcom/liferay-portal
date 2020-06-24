@@ -673,7 +673,6 @@ public class PowwowServerPersistenceImpl
 
 		setModelImplClass(PowwowServerImpl.class);
 		setModelPKClass(long.class);
-		setEntityCacheEnabled(PowwowServerModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
 	/**
@@ -684,8 +683,7 @@ public class PowwowServerPersistenceImpl
 	@Override
 	public void cacheResult(PowwowServer powwowServer) {
 		EntityCacheUtil.putResult(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED, PowwowServerImpl.class,
-			powwowServer.getPrimaryKey(), powwowServer);
+			PowwowServerImpl.class, powwowServer.getPrimaryKey(), powwowServer);
 
 		powwowServer.resetOriginalValues();
 	}
@@ -699,7 +697,6 @@ public class PowwowServerPersistenceImpl
 	public void cacheResult(List<PowwowServer> powwowServers) {
 		for (PowwowServer powwowServer : powwowServers) {
 			if (EntityCacheUtil.getResult(
-					PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 					PowwowServerImpl.class, powwowServer.getPrimaryKey()) ==
 						null) {
 
@@ -737,8 +734,7 @@ public class PowwowServerPersistenceImpl
 	@Override
 	public void clearCache(PowwowServer powwowServer) {
 		EntityCacheUtil.removeResult(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED, PowwowServerImpl.class,
-			powwowServer.getPrimaryKey());
+			PowwowServerImpl.class, powwowServer.getPrimaryKey());
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -751,7 +747,6 @@ public class PowwowServerPersistenceImpl
 
 		for (PowwowServer powwowServer : powwowServers) {
 			EntityCacheUtil.removeResult(
-				PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
 				PowwowServerImpl.class, powwowServer.getPrimaryKey());
 		}
 	}
@@ -763,9 +758,7 @@ public class PowwowServerPersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			EntityCacheUtil.removeResult(
-				PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-				PowwowServerImpl.class, primaryKey);
+			EntityCacheUtil.removeResult(PowwowServerImpl.class, primaryKey);
 		}
 	}
 
@@ -943,11 +936,7 @@ public class PowwowServerPersistenceImpl
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!PowwowServerModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			Object[] args = new Object[] {
 				powwowServerModelImpl.getProviderType(),
 				powwowServerModelImpl.isActive()
@@ -988,8 +977,8 @@ public class PowwowServerPersistenceImpl
 		}
 
 		EntityCacheUtil.putResult(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED, PowwowServerImpl.class,
-			powwowServer.getPrimaryKey(), powwowServer, false);
+			PowwowServerImpl.class, powwowServer.getPrimaryKey(), powwowServer,
+			false);
 
 		powwowServer.resetOriginalValues();
 
@@ -1255,26 +1244,20 @@ public class PowwowServerPersistenceImpl
 	 */
 	public void afterPropertiesSet() {
 		_finderPathWithPaginationFindAll = new FinderPath(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, PowwowServerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, PowwowServerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
-			new String[0]);
+			PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByPT_A = new FinderPath(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, PowwowServerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPT_A",
+			PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByPT_A",
 			new String[] {
 				String.class.getName(), Boolean.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
@@ -1282,18 +1265,16 @@ public class PowwowServerPersistenceImpl
 			});
 
 		_finderPathWithoutPaginationFindByPT_A = new FinderPath(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, PowwowServerImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPT_A",
+			PowwowServerImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByPT_A",
 			new String[] {String.class.getName(), Boolean.class.getName()},
 			PowwowServerModelImpl.PROVIDERTYPE_COLUMN_BITMASK |
 			PowwowServerModelImpl.ACTIVE_COLUMN_BITMASK |
 			PowwowServerModelImpl.NAME_COLUMN_BITMASK);
 
 		_finderPathCountByPT_A = new FinderPath(
-			PowwowServerModelImpl.ENTITY_CACHE_ENABLED,
-			PowwowServerModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPT_A",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByPT_A",
 			new String[] {String.class.getName(), Boolean.class.getName()});
 	}
 

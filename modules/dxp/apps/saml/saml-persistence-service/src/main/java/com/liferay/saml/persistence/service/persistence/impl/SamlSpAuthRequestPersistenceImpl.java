@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -950,8 +949,8 @@ public class SamlSpAuthRequestPersistenceImpl
 	@Override
 	public void cacheResult(SamlSpAuthRequest samlSpAuthRequest) {
 		entityCache.putResult(
-			entityCacheEnabled, SamlSpAuthRequestImpl.class,
-			samlSpAuthRequest.getPrimaryKey(), samlSpAuthRequest);
+			SamlSpAuthRequestImpl.class, samlSpAuthRequest.getPrimaryKey(),
+			samlSpAuthRequest);
 
 		finderCache.putResult(
 			_finderPathFetchBySIEI_SSARK,
@@ -973,7 +972,7 @@ public class SamlSpAuthRequestPersistenceImpl
 	public void cacheResult(List<SamlSpAuthRequest> samlSpAuthRequests) {
 		for (SamlSpAuthRequest samlSpAuthRequest : samlSpAuthRequests) {
 			if (entityCache.getResult(
-					entityCacheEnabled, SamlSpAuthRequestImpl.class,
+					SamlSpAuthRequestImpl.class,
 					samlSpAuthRequest.getPrimaryKey()) == null) {
 
 				cacheResult(samlSpAuthRequest);
@@ -1010,8 +1009,7 @@ public class SamlSpAuthRequestPersistenceImpl
 	@Override
 	public void clearCache(SamlSpAuthRequest samlSpAuthRequest) {
 		entityCache.removeResult(
-			entityCacheEnabled, SamlSpAuthRequestImpl.class,
-			samlSpAuthRequest.getPrimaryKey());
+			SamlSpAuthRequestImpl.class, samlSpAuthRequest.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1027,8 +1025,7 @@ public class SamlSpAuthRequestPersistenceImpl
 
 		for (SamlSpAuthRequest samlSpAuthRequest : samlSpAuthRequests) {
 			entityCache.removeResult(
-				entityCacheEnabled, SamlSpAuthRequestImpl.class,
-				samlSpAuthRequest.getPrimaryKey());
+				SamlSpAuthRequestImpl.class, samlSpAuthRequest.getPrimaryKey());
 
 			clearUniqueFindersCache(
 				(SamlSpAuthRequestModelImpl)samlSpAuthRequest, true);
@@ -1042,8 +1039,7 @@ public class SamlSpAuthRequestPersistenceImpl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Serializable primaryKey : primaryKeys) {
-			entityCache.removeResult(
-				entityCacheEnabled, SamlSpAuthRequestImpl.class, primaryKey);
+			entityCache.removeResult(SamlSpAuthRequestImpl.class, primaryKey);
 		}
 	}
 
@@ -1244,18 +1240,15 @@ public class SamlSpAuthRequestPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (!_columnBitmaskEnabled) {
-			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-		}
-		else if (isNew) {
+		if (isNew) {
 			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 
 		entityCache.putResult(
-			entityCacheEnabled, SamlSpAuthRequestImpl.class,
-			samlSpAuthRequest.getPrimaryKey(), samlSpAuthRequest, false);
+			SamlSpAuthRequestImpl.class, samlSpAuthRequest.getPrimaryKey(),
+			samlSpAuthRequest, false);
 
 		clearUniqueFindersCache(samlSpAuthRequestModelImpl, false);
 		cacheUniqueFindersCache(samlSpAuthRequestModelImpl);
@@ -1521,46 +1514,41 @@ public class SamlSpAuthRequestPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		SamlSpAuthRequestModelImpl.setEntityCacheEnabled(entityCacheEnabled);
-		SamlSpAuthRequestModelImpl.setFinderCacheEnabled(finderCacheEnabled);
-
 		_finderPathWithPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SamlSpAuthRequestImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+			SamlSpAuthRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findAll", new String[0]);
 
 		_finderPathWithoutPaginationFindAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SamlSpAuthRequestImpl.class,
+			SamlSpAuthRequestImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
 			new String[0]);
 
 		_finderPathCountAll = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
 
 		_finderPathWithPaginationFindByCreateDate = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SamlSpAuthRequestImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCreateDate",
+			SamlSpAuthRequestImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCreateDate",
 			new String[] {
 				Date.class.getName(), Integer.class.getName(),
 				Integer.class.getName(), OrderByComparator.class.getName()
 			});
 
 		_finderPathWithPaginationCountByCreateDate = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByCreateDate",
-			new String[] {Date.class.getName()});
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByCreateDate", new String[] {Date.class.getName()});
 
 		_finderPathFetchBySIEI_SSARK = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, SamlSpAuthRequestImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchBySIEI_SSARK",
+			SamlSpAuthRequestImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchBySIEI_SSARK",
 			new String[] {String.class.getName(), String.class.getName()},
 			SamlSpAuthRequestModelImpl.SAMLIDPENTITYID_COLUMN_BITMASK |
 			SamlSpAuthRequestModelImpl.SAMLSPAUTHREQUESTKEY_COLUMN_BITMASK);
 
 		_finderPathCountBySIEI_SSARK = new FinderPath(
-			entityCacheEnabled, finderCacheEnabled, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySIEI_SSARK",
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countBySIEI_SSARK",
 			new String[] {String.class.getName(), String.class.getName()});
 	}
 
@@ -1578,12 +1566,6 @@ public class SamlSpAuthRequestPersistenceImpl
 		unbind = "-"
 	)
 	public void setConfiguration(Configuration configuration) {
-		super.setConfiguration(configuration);
-
-		_columnBitmaskEnabled = GetterUtil.getBoolean(
-			configuration.get(
-				"value.object.column.bitmask.enabled.com.liferay.saml.persistence.model.SamlSpAuthRequest"),
-			true);
 	}
 
 	@Override
@@ -1603,8 +1585,6 @@ public class SamlSpAuthRequestPersistenceImpl
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		super.setSessionFactory(sessionFactory);
 	}
-
-	private boolean _columnBitmaskEnabled;
 
 	@Reference
 	protected EntityCache entityCache;

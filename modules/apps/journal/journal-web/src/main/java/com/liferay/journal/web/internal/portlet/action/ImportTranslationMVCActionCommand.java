@@ -109,7 +109,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					_journalArticleService.updateStatus(
 						journalArticle.getGroupId(),
 						journalArticle.getArticleId(),
-						journalArticle.getVersion(), workflowAction,
+						journalArticle.getVersion(),
+						WorkflowConstants.STATUS_APPROVED,
 						journalArticle.getUrlTitle(),
 						ServiceContextFactory.getInstance(actionRequest));
 				}

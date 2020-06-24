@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.translation.info.item.updater.InfoFormValuesUpdater;
+import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,13 +47,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "model.class.name=com.liferay.journal.model.JournalArticle",
-	service = InfoFormValuesUpdater.class
+	service = InfoItemFieldValuesUpdater.class
 )
-public class JournalArticleInfoFormValuesUpdaterImpl
-	implements InfoFormValuesUpdater<JournalArticle> {
+public class JournalArticleInfoItemFieldValuesUpdaterImpl
+	implements InfoItemFieldValuesUpdater<JournalArticle> {
 
 	@Override
-	public JournalArticle updateFromInfoFormValues(
+	public JournalArticle updateFromInfoItemFieldValues(
 			JournalArticle article, InfoItemFieldValues infoItemFieldValues)
 		throws PortalException {
 
@@ -66,7 +66,7 @@ public class JournalArticleInfoFormValuesUpdaterImpl
 			Map<String, String> fieldNameContentMap = new HashMap<>();
 
 			for (InfoFieldValue<Object> infoFieldValue :
-				infoItemFieldValues.getInfoFieldValues()) {
+					infoItemFieldValues.getInfoFieldValues()) {
 
 				InfoField infoField = infoFieldValue.getInfoField();
 

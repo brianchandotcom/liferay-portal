@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
 import org.junit.Assert;
@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author Alejandro Tardín
  */
 @RunWith(Arquillian.class)
-public class XLIFFTranslationInfoFormValuesExporterTest {
+public class XLIFFTranslationInfoItemFieldValuesExporterTest {
 
 	@ClassRule
 	@Rule
@@ -79,7 +79,7 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 				"$ARTICLE_ID",
 				String.valueOf(journalArticle.getResourcePrimKey())),
 			StreamUtil.toString(
-				_xliffTranslationInfoFormValuesExporter.export(
+				_xliffTranslationInfoItemFieldValuesExporter.export(
 					infoItemFieldValuesProvider.getInfoItemFieldValues(
 						journalArticle),
 					LocaleUtil.getDefault(),
@@ -116,7 +116,7 @@ public class XLIFFTranslationInfoFormValuesExporterTest {
 	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Inject(filter = "content.type=application/xliff+xml")
-	private TranslationInfoFormValuesExporter<?>
-		_xliffTranslationInfoFormValuesExporter;
+	private TranslationInfoItemFieldValuesExporter<?>
+		_xliffTranslationInfoItemFieldValuesExporter;
 
 }

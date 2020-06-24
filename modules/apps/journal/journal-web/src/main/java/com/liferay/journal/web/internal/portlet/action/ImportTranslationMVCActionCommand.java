@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.translation.exception.InvalidXLIFFFileException;
-import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
-import com.liferay.translation.info.item.updater.InfoFormValuesUpdater;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
+import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
 import java.io.InputStream;
 
@@ -85,7 +85,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					"file")) {
 
 				InfoItemFieldValues infoItemFieldValues =
-					_translationInfoFormValuesExporter.importXLIFF(
+					_translationInfoItemFieldValuesExporter.importXLIFF(
 						themeDisplay.getScopeGroupId(),
 						new InfoItemClassPKReference(
 							JournalArticle.class.getName(),
@@ -97,8 +97,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "articleId");
 
 				JournalArticle journalArticle =
-					_journalArticleInfoFormValuesUpdater.
-						updateFromInfoFormValues(
+					_journalArticleInfoItemFieldValuesUpdater.
+						updateFromInfoItemFieldValues(
 							_journalArticleService.getArticle(
 								groupId, articleId),
 							infoItemFieldValues);
@@ -163,8 +163,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	@Reference(
 		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
 	)
-	private InfoFormValuesUpdater<JournalArticle>
-		_journalArticleInfoFormValuesUpdater;
+	private InfoItemFieldValuesUpdater<JournalArticle>
+		_journalArticleInfoItemFieldValuesUpdater;
 
 	@Reference
 	private JournalArticleService _journalArticleService;
@@ -173,7 +173,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	private Portal _portal;
 
 	@Reference
-	private TranslationInfoFormValuesExporter
-		_translationInfoFormValuesExporter;
+	private TranslationInfoItemFieldValuesExporter
+		_translationInfoItemFieldValuesExporter;
 
 }

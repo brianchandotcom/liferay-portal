@@ -20,9 +20,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Alicia García
  */
-public interface InfoFormValuesUpdater<T> {
+public interface InfoItemFieldValuesUpdater<T> {
 
-	public T updateFromInfoFormValues(T t, InfoItemFieldValues infoItemFieldValues)
+	public T updateFromInfoItemFieldValues(
+			T t, InfoItemFieldValues infoItemFieldValues)
 		throws PortalException;
 
 }

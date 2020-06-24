@@ -217,7 +217,7 @@ public class JournalArticleInfoItemFormProviderTest {
 	}
 
 	@Test
-	public void testGetInfoFormValues() throws Exception {
+	public void testGetInfoItemFieldValues() throws Exception {
 		InfoItemFieldValuesProvider<JournalArticle>
 			infoItemFieldValuesProvider =
 				(InfoItemFieldValuesProvider<JournalArticle>)

@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.translation.exporter.TranslationInfoFormValuesExporter;
+import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -92,7 +92,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 						article.getTitle(themeDisplay.getLocale()),
 						StringPool.DASH, sourceLanguageId, StringPool.DASH,
 						targetLanguageId, ".xlf"),
-					_translationInfoFormValuesExporter.export(
+					_translationInfoItemFieldValuesExporter.export(
 						infoItemFieldValuesProvider.getInfoItemFieldValues(
 							article),
 						LocaleUtil.fromLanguageId(sourceLanguageId),
@@ -123,7 +123,7 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
-	private TranslationInfoFormValuesExporter<?>
-		_translationInfoFormValuesExporter;
+	private TranslationInfoItemFieldValuesExporter<?>
+		_translationInfoItemFieldValuesExporter;
 
 }

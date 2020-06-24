@@ -61,7 +61,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 			new InfoItemClassPKReference(
 				JournalArticle.class.getName(), RandomTestUtil.randomInt(1, 3)),
 			TranslationTestUtil.readFileToInputStream(
-				"test-journal-article_122.xlf"));
+				"test-journal-article-122.xlf"));
 	}
 
 	@Test(expected = InvalidXLIFFFileException.class)
@@ -69,7 +69,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 		_xliffTranslationInfoFormValuesImporter.importXLIFF(
 			_group.getGroupId(),
 			new InfoItemClassPKReference(JournalArticle.class.getName(), 122),
-			TranslationTestUtil.readFileToInputStream("example_1_2_oasis.xlf"));
+			TranslationTestUtil.readFileToInputStream("example-1_2-oasis.xlf"));
 	}
 
 	@Test(expected = InvalidXLIFFFileException.class)
@@ -79,7 +79,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 			new InfoItemClassPKReference(
 				JournalArticle.class.getName(), RandomTestUtil.randomInt(1, 3)),
 			TranslationTestUtil.readFileToInputStream(
-				"test-journal-article_no_target.xlf"));
+				"test-journal-article-no-target.xlf"));
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class XLIFFTranslationInfoFormValuesImporterTest {
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
 				TranslationTestUtil.readFileToInputStream(
-					"test-journal-article_122.xlf"));
+					"test-journal-article-122.xlf"));
 
 		Assert.assertNotNull(infoItemFieldValues);
 		Assert.assertNotNull(infoItemFieldValues.getInfoFieldValues());

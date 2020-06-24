@@ -15,7 +15,7 @@
 import ClayAlert from '@clayui/alert';
 import React, {useEffect, useState} from 'react';
 
-export default ({info, displayType = 'danger'}) => {
+export default ({displayType = 'danger', info}) => {
 	const [alert, setAlert] = useState(null);
 
 	useEffect(() => {

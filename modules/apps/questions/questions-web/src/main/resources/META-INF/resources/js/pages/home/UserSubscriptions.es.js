@@ -12,7 +12,6 @@
  * details.
  */
 
-import Alert from '../../components/Alert.es';
 import {useMutation, useQuery} from '@apollo/client';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
@@ -20,9 +19,14 @@ import ClayEmptyState from '@clayui/empty-state';
 import React, {useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
+import Alert from '../../components/Alert.es';
 import DeleteThread from '../../components/DeleteThread.es';
 import QuestionRow from '../../components/QuestionRow.es';
-import {client, getSubscriptionsQuery, unsubscribeMyUserAccountQuery,} from '../../utils/client.es';
+import {
+	client,
+	getSubscriptionsQuery,
+	unsubscribeMyUserAccountQuery,
+} from '../../utils/client.es';
 import {historyPushWithSlug} from '../../utils/utils.es';
 import NavigationBar from '../NavigationBar.es';
 
@@ -54,7 +58,9 @@ export default withRouter(({history}) => {
 		onCompleted() {
 			refetchThreads();
 			refetchTopics();
-			setInfo({title: 'You have unsubscribed from this asset successfully.'})
+			setInfo({
+				title: 'You have unsubscribed from this asset successfully.',
+			});
 		},
 	});
 
@@ -129,17 +135,17 @@ export default withRouter(({history}) => {
 
 	return (
 		<>
-			<NavigationBar/>
+			<NavigationBar />
 			<section className="questions-section questions-section-list">
 				<div className="c-p-5 questions-container row">
 					<div className="col-xl-8 offset-xl-2">
 						<h2 className="sheet-subtitle">Topics</h2>
-						<Topics/>
+						<Topics />
 						<h2 className="mt-5 sheet-subtitle">Questions</h2>
-						<Questions/>
+						<Questions />
 					</div>
 				</div>
-				<Alert info={info} displayType={'success'} />
+				<Alert displayType={'success'} info={info} />
 			</section>
 		</>
 	);
@@ -148,55 +154,55 @@ export default withRouter(({history}) => {
 		return (
 			<>
 				{topics &&
-				 topics.myUserAccountSubscriptions.items &&
-				 !topics.myUserAccountSubscriptions.items.length && (
-					 <ClayEmptyState
-						 title={Liferay.Language.get('there-are-no-results')}
-					 />
-				 )}
+					topics.myUserAccountSubscriptions.items &&
+					!topics.myUserAccountSubscriptions.items.length && (
+						<ClayEmptyState
+							title={Liferay.Language.get('there-are-no-results')}
+						/>
+					)}
 				<div className="row">
 					{topics &&
-					 topics.myUserAccountSubscriptions.items &&
-					 topics.myUserAccountSubscriptions.items.map((data) => (
-						 <div
-							 className="col-md-4 question-tags"
-							 key={data.graphQLNode.id}
-						 >
-							 <div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
-								 <div className="card-body">
-									 <div className="card-row">
-										 <div
-											 className="autofit-col autofit-col-expand"
-											 onClick={() => navigate(data)}
-										 >
-											 <div className="autofit-section">
-												 <div className="card-title">
+						topics.myUserAccountSubscriptions.items &&
+						topics.myUserAccountSubscriptions.items.map((data) => (
+							<div
+								className="col-md-4 question-tags"
+								key={data.graphQLNode.id}
+							>
+								<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">
+									<div className="card-body">
+										<div className="card-row">
+											<div
+												className="autofit-col autofit-col-expand"
+												onClick={() => navigate(data)}
+											>
+												<div className="autofit-section">
+													<div className="card-title">
 														<span className="text-truncate">
 															{
 																data.graphQLNode
 																	.title
 															}
 														</span>
-												 </div>
-											 </div>
-										 </div>
-										 <div className="autofit-col">
-											 <ClayDropDownWithItems
-												 items={actions(data)}
-												 trigger={
-													 <ClayButtonWithIcon
-														 displayType="unstyled"
-														 small
-														 symbol="ellipsis-v"
-													 />
-												 }
-											 />
-										 </div>
-									 </div>
-								 </div>
-							 </div>
-						 </div>
-					 ))}
+													</div>
+												</div>
+											</div>
+											<div className="autofit-col">
+												<ClayDropDownWithItems
+													items={actions(data)}
+													trigger={
+														<ClayButtonWithIcon
+															displayType="unstyled"
+															small
+															symbol="ellipsis-v"
+														/>
+													}
+												/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						))}
 				</div>
 			</>
 		);
@@ -206,28 +212,28 @@ export default withRouter(({history}) => {
 		return (
 			<div>
 				{threads &&
-				 threads.myUserAccountSubscriptions.items &&
-				 !threads.myUserAccountSubscriptions.items.length && (
-					 <ClayEmptyState
-						 title={Liferay.Language.get('there-are-no-results')}
-					 />
-				 )}
+					threads.myUserAccountSubscriptions.items &&
+					!threads.myUserAccountSubscriptions.items.length && (
+						<ClayEmptyState
+							title={Liferay.Language.get('there-are-no-results')}
+						/>
+					)}
 				{threads &&
-				 threads.myUserAccountSubscriptions.items &&
-				 threads.myUserAccountSubscriptions.items.map((data) => (
-					 <>
-						 <QuestionRow
-							 items={actions(data)}
-							 key={data.id}
-							 question={data.graphQLNode}
-							 showSectionLabel={true}
-						 />
-						 <DeleteThread
-							 question={data.graphQLNode}
-							 showDeleteModalPanel={showDeleteModalPanel}
-						 />
-					 </>
-				 ))}
+					threads.myUserAccountSubscriptions.items &&
+					threads.myUserAccountSubscriptions.items.map((data) => (
+						<>
+							<QuestionRow
+								items={actions(data)}
+								key={data.id}
+								question={data.graphQLNode}
+								showSectionLabel={true}
+							/>
+							<DeleteThread
+								question={data.graphQLNode}
+								showDeleteModalPanel={showDeleteModalPanel}
+							/>
+						</>
+					))}
 			</div>
 		);
 	}

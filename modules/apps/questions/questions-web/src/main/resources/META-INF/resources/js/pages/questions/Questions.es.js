@@ -21,8 +21,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import Breadcrumb from '../../components/Breadcrumb.es';
 import Alert from '../../components/Alert.es';
+import Breadcrumb from '../../components/Breadcrumb.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import SectionSubscription from '../../components/SectionSubscription.es';

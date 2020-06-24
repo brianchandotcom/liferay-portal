@@ -264,6 +264,10 @@ public class PermissionCacheUtil {
 			_userRolePortalCache, userRoleKey, value);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void removePermission(
 		long groupId, String name, String primKey, long[] roleIds,
 		String actionId) {
@@ -274,10 +278,18 @@ public class PermissionCacheUtil {
 		_permissionPortalCache.remove(permissionKey);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void removeUserBag(long userId) {
 		_userBagPortalCache.remove(userId);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void removeUserGroupRoleIds(long userId, long groupId) {
 		UserGroupRoleIdsKey userGroupRoleIdsKey = new UserGroupRoleIdsKey(
 			userId, groupId);
@@ -285,6 +297,10 @@ public class PermissionCacheUtil {
 		_userGroupRoleIdsPortalCache.remove(userGroupRoleIdsKey);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
+	 */
+	@Deprecated
 	public static void removeUserPrimaryKeyRole(
 		long userId, long primaryKey, String roleName) {
 

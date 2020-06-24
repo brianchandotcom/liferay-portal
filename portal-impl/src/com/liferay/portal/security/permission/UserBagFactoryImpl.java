@@ -49,86 +49,79 @@ public class UserBagFactoryImpl implements UserBagFactory {
 			return userBag;
 		}
 
-		try {
-			Set<Long> allGroupIds = new HashSet<>();
+		Set<Long> allGroupIds = new HashSet<>();
 
-			Collection<Organization> userOrgs = getUserOrgs(userId);
+		Collection<Organization> userOrgs = getUserOrgs(userId);
 
-			Set<Long> userOrgGroupIds = new HashSet<>();
+		Set<Long> userOrgGroupIds = new HashSet<>();
 
-			for (Organization organization : userOrgs) {
-				userOrgGroupIds.add(organization.getGroupId());
+		for (Organization organization : userOrgs) {
+			userOrgGroupIds.add(organization.getGroupId());
+		}
+
+		allGroupIds.addAll(userOrgGroupIds);
+
+		List<UserGroup> userUserGroups =
+			UserGroupLocalServiceUtil.getUserUserGroups(userId);
+
+		long[] userUserGroupGroupIds = new long[userUserGroups.size()];
+
+		for (int i = 0; i < userUserGroups.size(); i++) {
+			UserGroup userUserGroup = userUserGroups.get(i);
+
+			long groupId = userUserGroup.getGroupId();
+
+			userUserGroupGroupIds[i] = groupId;
+
+			allGroupIds.add(groupId);
+		}
+
+		long[] userGroupIds = null;
+
+		if (userOrgs.isEmpty() && userUserGroups.isEmpty()) {
+			userGroupIds = UserLocalServiceUtil.getGroupPrimaryKeys(userId);
+
+			for (long userGroupId : userGroupIds) {
+				allGroupIds.add(userGroupId);
 			}
+		}
+		else {
+			List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(
+				userId, true);
 
-			allGroupIds.addAll(userOrgGroupIds);
+			userGroupIds = new long[userGroups.size()];
 
-			List<UserGroup> userUserGroups =
-				UserGroupLocalServiceUtil.getUserUserGroups(userId);
+			for (int i = 0; i < userGroups.size(); i++) {
+				Group userGroup = userGroups.get(i);
 
-			long[] userUserGroupGroupIds = new long[userUserGroups.size()];
+				long groupId = userGroup.getGroupId();
 
-			for (int i = 0; i < userUserGroups.size(); i++) {
-				UserGroup userUserGroup = userUserGroups.get(i);
-
-				long groupId = userUserGroup.getGroupId();
-
-				userUserGroupGroupIds[i] = groupId;
+				userGroupIds[i] = groupId;
 
 				allGroupIds.add(groupId);
 			}
-
-			long[] userGroupIds = null;
-
-			if (userOrgs.isEmpty() && userUserGroups.isEmpty()) {
-				userGroupIds = UserLocalServiceUtil.getGroupPrimaryKeys(userId);
-
-				for (long userGroupId : userGroupIds) {
-					allGroupIds.add(userGroupId);
-				}
-			}
-			else {
-				List<Group> userGroups = GroupLocalServiceUtil.getUserGroups(
-					userId, true);
-
-				userGroupIds = new long[userGroups.size()];
-
-				for (int i = 0; i < userGroups.size(); i++) {
-					Group userGroup = userGroups.get(i);
-
-					long groupId = userGroup.getGroupId();
-
-					userGroupIds[i] = groupId;
-
-					allGroupIds.add(groupId);
-				}
-			}
-
-			if (allGroupIds.isEmpty()) {
-				long[] userRoleIds = UserLocalServiceUtil.getRolePrimaryKeys(
-					userId);
-
-				userBag = new UserBagImpl(
-					userId, userGroupIds, userOrgs, userOrgGroupIds,
-					userUserGroups, userUserGroupGroupIds, userRoleIds);
-			}
-			else {
-				List<Role> userRoles = RoleLocalServiceUtil.getUserRelatedRoles(
-					userId, ArrayUtil.toLongArray(allGroupIds));
-
-				userBag = new UserBagImpl(
-					userId, userGroupIds, userOrgs, userOrgGroupIds,
-					userUserGroups, userUserGroupGroupIds, userRoles);
-			}
-
-			PermissionCacheUtil.putUserBag(userId, userBag);
-
-			return userBag;
 		}
-		catch (Exception exception) {
-			PermissionCacheUtil.removeUserBag(userId);
 
-			throw exception;
+		if (allGroupIds.isEmpty()) {
+			long[] userRoleIds = UserLocalServiceUtil.getRolePrimaryKeys(
+				userId);
+
+			userBag = new UserBagImpl(
+				userId, userGroupIds, userOrgs, userOrgGroupIds, userUserGroups,
+				userUserGroupGroupIds, userRoleIds);
 		}
+		else {
+			List<Role> userRoles = RoleLocalServiceUtil.getUserRelatedRoles(
+				userId, ArrayUtil.toLongArray(allGroupIds));
+
+			userBag = new UserBagImpl(
+				userId, userGroupIds, userOrgs, userOrgGroupIds, userUserGroups,
+				userUserGroupGroupIds, userRoles);
+		}
+
+		PermissionCacheUtil.putUserBag(userId, userBag);
+
+		return userBag;
 	}
 
 	protected Collection<Organization> getUserOrgs(long userId)

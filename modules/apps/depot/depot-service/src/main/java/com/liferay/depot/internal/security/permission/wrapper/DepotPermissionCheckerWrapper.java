@@ -218,20 +218,12 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return value;
 		}
 
-		try {
-			value = unsafeFunction.apply(group);
+		value = unsafeFunction.apply(group);
 
-			PermissionCacheUtil.putUserPrimaryKeyRole(
-				getUserId(), group.getGroupId(), roleName, value);
+		PermissionCacheUtil.putUserPrimaryKeyRole(
+			getUserId(), group.getGroupId(), roleName, value);
 
-			return value;
-		}
-		catch (Exception exception) {
-			PermissionCacheUtil.removeUserPrimaryKeyRole(
-				getUserId(), group.getGroupId(), roleName);
-
-			throw exception;
-		}
+		return value;
 	}
 
 	private boolean _hasPermission(

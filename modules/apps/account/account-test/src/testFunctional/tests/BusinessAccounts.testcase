@@ -221,6 +221,34 @@ definition {
 		Search.searchCP(searchTerm = "Cancel Accounts Name");
 
 		LexiconEntry.viewNoEntry(rowEntry = "Cancel Accounts Name");
+
+		GlobalMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		LexiconEntry.gotoAdd();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Add Account");
+
+		PortletEntry.inputName(name = "Back Icon Account");
+
+		Navigator.gotoBack();
+
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Accounts");
+
+		GlobalMenu.gotoPortlet(
+			category = "Accounts",
+			panel = "Control Panel",
+			portlet = "Accounts");
+
+		Search.searchCP(searchTerm = "Back Icon Account");
+
+		LexiconEntry.viewNoEntry(rowEntry = "Back Icon Account");
 	}
 
 	@priority = "4"

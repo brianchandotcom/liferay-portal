@@ -49,7 +49,7 @@ Locale userLocale = user.getLocale();
 		onClose: function (data) {
 			if (data.event) {
 				Liferay.Util.Session.set(
-					'com.liferay.portal.user.locale.options_ignoreUserLocaleOptions',
+					'com.liferay.portal.user.locale.options.web_ignoreUserLocaleOptions',
 					true
 				);
 

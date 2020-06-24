@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.user.locale.options.internal.servlet.taglib;
+package com.liferay.portal.user.locale.options.web.internal.servlet.taglib;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -69,7 +69,7 @@ public class UserLocaleOptionsBottomJSPDynamicInclude
 		boolean ignoreUserLocaleOptions = GetterUtil.getBoolean(
 			SessionClicks.get(
 				httpServletRequest.getSession(),
-				"com.liferay.portal.user.locale.options_" +
+				"com.liferay.portal.user.locale.options.web_" +
 					"ignoreUserLocaleOptions",
 				Boolean.FALSE.toString()));
 
@@ -106,7 +106,7 @@ public class UserLocaleOptionsBottomJSPDynamicInclude
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portal.user.locale.options)",
+		target = "(osgi.web.symbolicname=com.liferay.portal.user.locale.options.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

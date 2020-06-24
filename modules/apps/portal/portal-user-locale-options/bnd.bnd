@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Portal User Locale Options
-Bundle-SymbolicName: com.liferay.portal.user.locale.options
-Bundle-Version: 1.0.0
-Web-ContextPath: /portal-user-locale-options

@@ -157,9 +157,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 				ddmStructureFieldValue, structure.getFieldType(fieldName));
 		}
 
-		String ddmFieldsFieldValueSuffix =
-			StringUtil.upperCaseFirstLetter(ddmStructureFieldNameParts[1]) +
-				StringPool.UNDERLINE + LocaleUtil.toLanguageId(locale);
+		String valueFieldName = getValueFieldName(
+			ddmStructureFieldNameParts[1], locale);
 
 		if (ddmStructureFieldValue instanceof String[]) {
 			String[] ddmStructureFieldValueArray =
@@ -174,8 +173,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 					ddmStructureFieldName);
 				booleanQuery.addRequiredTerm(
 					StringBundler.concat(
-						DDM_FIELDS, StringPool.PERIOD,
-						DDM_VALUE_FIELD_NAME_PREFIX, ddmFieldsFieldValueSuffix),
+						DDM_FIELDS, StringPool.PERIOD, valueFieldName),
 					StringPool.QUOTE + ddmStructureFieldValueString +
 						StringPool.QUOTE);
 			}
@@ -187,8 +185,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 				ddmStructureFieldName);
 			booleanQuery.addRequiredTerm(
 				StringBundler.concat(
-					DDM_FIELDS, StringPool.PERIOD, DDM_VALUE_FIELD_NAME_PREFIX,
-					ddmFieldsFieldValueSuffix),
+					DDM_FIELDS, StringPool.PERIOD, valueFieldName),
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 

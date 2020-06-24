@@ -831,7 +831,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		<#if columnBitmaskEnabled>
+		<#if serviceBuilder.isVersionLTE_7_2_0() && columnBitmaskEnabled>
 			if (!${columnBitmaskCacheEnabled}) {
 				${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 			}

@@ -55,7 +55,6 @@ export default function serviceFetch(
 	if (requestGenerateDraft) {
 		onNetworkStatus(
 			updateNetwork({
-				requestGenerateDraft,
 				status: SERVICE_NETWORK_STATUS_TYPES.savingDraft,
 			})
 		);
@@ -111,7 +110,6 @@ export default function serviceFetch(
 				onNetworkStatus(
 					updateNetwork({
 						error: null,
-						lastFetch: new Date(),
 						status: SERVICE_NETWORK_STATUS_TYPES.draftSaved,
 					})
 				);

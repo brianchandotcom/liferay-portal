@@ -12,46 +12,54 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEventListener} from 'frontend-js-react-web';
 import {openToast} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 
-const getStatus = (isOnline, status, lastSaveDate) => {
+const LoadingText = ({children}) => (
+	<>
+		<span className="m-0 navbar-text page-editor__status-bar text-info">
+			{children}
+		</span>
+		<ClayLoadingIndicator className={'mr-3 my-0'} small />
+	</>
+);
+
+const SuccessText = ({children}) => (
+	<>
+		<span className="m-0 navbar-text page-editor__status-bar text-success">
+			{children}
+		</span>
+		<ClayIcon className={'mr-3 text-success'} symbol={'check-circle'} />
+	</>
+);
+
+const getContent = (isOnline, status) => {
 	if (!isOnline) {
-		return `${Liferay.Language.get('trying-to-reconnect')}...`;
+		return (
+			<LoadingText>
+				{Liferay.Language.get('trying-to-reconnect')}
+			</LoadingText>
+		);
 	}
-	else if (status === SERVICE_NETWORK_STATUS_TYPES.savingDraft) {
-		return Liferay.Language.get('saving-changes');
+
+	if (status === SERVICE_NETWORK_STATUS_TYPES.draftSaved) {
+		return <SuccessText>{Liferay.Language.get('saved')}</SuccessText>;
 	}
-	else if (lastSaveDate) {
-		return lastSaveDate;
+
+	if (status === SERVICE_NETWORK_STATUS_TYPES.savingDraft) {
+		return <LoadingText>{Liferay.Language.get('saving')}</LoadingText>;
 	}
 
 	return null;
 };
 
-const parseDate = (date) => {
-	if (!date) {
-		return null;
-	}
-
-	const lastSaveDateText = Liferay.Language.get('changes-saved');
-
-	return lastSaveDateText.replace(
-		'{0}',
-		date.toLocaleTimeString(Liferay.ThemeDisplay.getBCP47LanguageId())
-	);
-};
-
-const NetworkStatusBar = ({error, lastFetch, status}) => {
+const NetworkStatusBar = ({error, status}) => {
 	const [isOnline, setIsOnline] = useState(true);
-	const [lastSaveDate, setLastSaveDate] = useState(parseDate(lastFetch));
-
-	useEffect(() => {
-		setLastSaveDate(parseDate(lastFetch));
-	}, [lastFetch]);
 
 	useEffect(() => {
 		if (status === SERVICE_NETWORK_STATUS_TYPES.error) {
@@ -67,15 +75,11 @@ const NetworkStatusBar = ({error, lastFetch, status}) => {
 
 	useEventListener('offline', () => setIsOnline(false), true, window);
 
-	const statusText = getStatus(isOnline, status, lastSaveDate);
-
-	if (!statusText) {
-		return null;
-	}
+	const content = getContent(isOnline, status);
 
 	return (
-		<li className="d-inline nav-item text-truncate">
-			<span className="my-0 navbar-text">{statusText}</span>
+		<li className="d-flex flex-direction-row nav-item text-truncate">
+			{content}
 		</li>
 	);
 };

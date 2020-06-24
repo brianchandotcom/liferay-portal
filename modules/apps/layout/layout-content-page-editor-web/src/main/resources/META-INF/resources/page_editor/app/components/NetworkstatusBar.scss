@@ -1,0 +1,12 @@
+@import 'atlas-variables';
+
+@import './variables';
+
+.page-editor__status-bar {
+	font-size: 0.75rem;
+	font-weight: 600;
+
+	& + .lexicon-icon {
+		font-size: 0.75rem;
+	}
+}

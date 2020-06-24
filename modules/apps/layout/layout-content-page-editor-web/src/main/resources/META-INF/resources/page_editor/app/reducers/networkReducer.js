@@ -13,12 +13,10 @@
  */
 
 import {UPDATE_NETWORK} from '../actions/types';
-import {SERVICE_NETWORK_STATUS_TYPES} from '../config/constants/serviceNetworkStatusTypes';
 
 export const INITIAL_STATE = {
 	error: null,
-	lastFetch: null,
-	status: SERVICE_NETWORK_STATUS_TYPES.draftSaved,
+	status: null,
 };
 
 export default function networkReducer(networkStatus = INITIAL_STATE, action) {

@@ -34,6 +34,12 @@ public interface ArchivedModulesUpgradeConfiguration {
 	public boolean removeChatModuleData();
 
 	@Meta.AD(
+		deflt = "false", name = "remove-dictionary-module-data",
+		required = false
+	)
+	public boolean removeDictionaryModuleData();
+
+	@Meta.AD(
 		deflt = "false", name = "remove-invitation-module-data",
 		required = false
 	)
@@ -44,6 +50,12 @@ public interface ArchivedModulesUpgradeConfiguration {
 		required = false
 	)
 	public boolean removeMailReaderModuleData();
+
+	@Meta.AD(
+		deflt = "false", name = "remove-portal-directory-module-data",
+		required = false
+	)
+	public boolean removePortalDirectoryModuleData();
 
 	@Meta.AD(
 		deflt = "false", name = "remove-shopping-module-data", required = false

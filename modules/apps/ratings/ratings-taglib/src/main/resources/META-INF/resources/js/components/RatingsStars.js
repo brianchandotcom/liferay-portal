@@ -38,7 +38,7 @@ const RatingsStars = ({
 
 		return {
 			label: number,
-			value: (1 / numberOfStars) * number,
+			value: number / numberOfStars,
 		};
 	});
 

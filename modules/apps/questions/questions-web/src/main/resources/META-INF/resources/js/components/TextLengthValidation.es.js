@@ -26,7 +26,7 @@ export default ({text}) => {
 		<>
 			{text && htmlText.length < 15 && (
 				<p className="float-right small text-secondary">
-					{lang.sub(Liferay.Language.get('x-characters-left'), [
+					{lang.sub(Liferay.Language.get('enter-at-least-x-characters'), [
 						15 - htmlText.length,
 					])}
 				</p>

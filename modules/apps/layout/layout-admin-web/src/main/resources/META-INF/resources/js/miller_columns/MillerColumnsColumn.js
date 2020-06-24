@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
 import React, {useEffect, useRef} from 'react';
 import {useDrop} from 'react-dnd';
@@ -68,14 +69,18 @@ const MillerColumnsColumn = ({
 	}, [drop]);
 
 	return (
-		<ul
+		<ClayLayout.Col
 			className={classNames(
-				'col-11 col-lg-4 col-md-6 miller-columns-col show-quick-actions-on-hover',
+				'miller-columns-col show-quick-actions-on-hover',
 				{
 					'drop-target': canDrop,
 				}
 			)}
+			containerElement="ul"
+			lg="4"
+			md="6"
 			ref={ref}
+			size="11"
 		>
 			{columnItems.map((item, index) => (
 				<MillerColumnsItem
@@ -89,7 +94,7 @@ const MillerColumnsColumn = ({
 					rtl={rtl}
 				/>
 			))}
-		</ul>
+		</ClayLayout.Col>
 	);
 };
 

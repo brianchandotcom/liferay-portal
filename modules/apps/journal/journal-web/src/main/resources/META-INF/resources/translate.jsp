@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-InfoFormValues infoFormValues = (InfoFormValues)request.getAttribute(InfoFormValues.class.getName());
+InfoItemFieldValues infoItemFieldValues = (InfoItemFieldValues)request.getAttribute(InfoItemFieldValues.class.getName());
 
 JournalArticle article = (JournalArticle)request.getAttribute(JournalWebKeys.JOURNAL_ARTICLES);
 
@@ -65,7 +65,7 @@ renderResponse.setTitle(title);
 		<div class="bg-white p-4">
 
 			<%
-			for (InfoFieldValue<Object> infoFieldValue : infoFormValues.getInfoFieldValues()) {
+			for (InfoFieldValue<Object> infoFieldValue : infoItemFieldValues.getInfoFieldValues()) {
 				InfoField infoField = infoFieldValue.getInfoField();
 
 				if (translationInfoFieldChecker.isTranslatable(infoField)) {

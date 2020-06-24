@@ -86,26 +86,29 @@ renderResponse.setTitle(title);
 		<div class="bg-white p-4">
 
 			<%
+			Locale sourceLocale = LocaleUtil.fromLanguageId(sourceLocaleId);
+			Locale targetLocale = LocaleUtil.fromLanguageId(targetLocaleId);
+
 			for (InfoFieldValue<Object> infoFieldValue : infoItemFieldValues.getInfoFieldValues()) {
 				InfoField infoField = infoFieldValue.getInfoField();
 
 				if (translationInfoFieldChecker.isTranslatable(infoField)) {
 					InfoLocalizedValue<String> labelInfoLocalizedValue = infoField.getLabelInfoLocalizedValue();
 
-					String label = labelInfoLocalizedValue.getValue(locale);
+					String label = labelInfoLocalizedValue.getValue(sourceLocale);
 			%>
 
 				<clay:row>
 					<clay:col
 						md="6"
 					>
-						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(locale)) %>" />
+						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(sourceLocale)) %>" />
 					</clay:col>
 
 					<clay:col
 						md="6"
 					>
-						<aui:input label="<%= label %>" name="<%= label %>" value="" />
+						<aui:input label="<%= label %>" name="<%= label %>" value="<%= String.valueOf(infoFieldValue.getValue(targetLocale)) %>" />
 					</clay:col>
 				</clay:row>
 

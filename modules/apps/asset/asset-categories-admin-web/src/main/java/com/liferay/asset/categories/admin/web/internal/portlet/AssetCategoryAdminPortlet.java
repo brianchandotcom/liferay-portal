@@ -44,6 +44,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -52,6 +53,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -67,6 +69,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -218,11 +221,13 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			AssetVocabulary.class.getName(), actionRequest);
 
+		AssetVocabulary vocabulary = null;
+
 		if (vocabularyId <= 0) {
 
 			// Add vocabulary
 
-			_assetVocabularyService.addVocabulary(
+			vocabulary = _assetVocabularyService.addVocabulary(
 				serviceContext.getScopeGroupId(), StringPool.BLANK, titleMap,
 				descriptionMap, getSettings(actionRequest), serviceContext);
 		}
@@ -230,10 +235,13 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			// Update vocabulary
 
-			_assetVocabularyService.updateVocabulary(
+			vocabulary = _assetVocabularyService.updateVocabulary(
 				vocabularyId, StringPool.BLANK, titleMap, descriptionMap,
 				getSettings(actionRequest), serviceContext);
 		}
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, _getRedirectURL(actionResponse, vocabulary));
 	}
 
 	public void moveCategory(
@@ -424,6 +432,21 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
+	private String _getRedirectURL(
+		ActionResponse actionResponse, AssetVocabulary vocabulary) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(actionResponse);
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter(
+			"vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
+
+		return portletURL.toString();
+	}
+
 	private AssetCategoriesAdminWebConfiguration
 		_assetCategoriesAdminWebConfiguration;
 
@@ -436,5 +459,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private Portal _portal;
 
 }

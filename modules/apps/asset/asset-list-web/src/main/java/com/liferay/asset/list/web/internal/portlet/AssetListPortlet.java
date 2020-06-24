@@ -93,7 +93,6 @@ public class AssetListPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetListWebKeys.ASSET_LIST_DISPLAY_CONTEXT,
 			assetListDisplayContext);
-
 		renderRequest.setAttribute(
 			AssetListWebKeys.EDIT_ASSET_LIST_DISPLAY_CONTEXT,
 			new EditAssetListDisplayContext(
@@ -106,7 +105,6 @@ public class AssetListPortlet extends MVCPortlet {
 			new InfoListProviderDisplayContext(
 				_infoItemServiceTracker, _infoListProviderTracker,
 				renderRequest, renderResponse));
-
 		renderRequest.setAttribute(
 			AssetListWebKeys.ITEM_SELECTOR, _itemSelector);
 

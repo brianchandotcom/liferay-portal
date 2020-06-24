@@ -27,6 +27,21 @@ String title = article.getTitle();
 
 TranslationInfoFieldChecker translationInfoFieldChecker = (TranslationInfoFieldChecker)request.getAttribute(TranslationInfoFieldChecker.class.getName());
 
+List<String> sourceLocaleIds = (List)request.getAttribute("availableSourceLocalesIds");
+List<String> targetLocaleIds = (List)request.getAttribute("availableTargetLocalesIds");
+
+String sourceLocaleId = ParamUtil.getString(request, "sourceLocaleId");
+
+if (Validator.isNull(sourceLocaleId)) {
+	sourceLocaleId = sourceLocaleIds.get(0);
+}
+
+String targetLocaleId = ParamUtil.getString(request, "targetLocaleId");
+
+if (Validator.isNull(targetLocaleId)) {
+	targetLocaleId = targetLocaleIds.get(0);
+}
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -41,6 +56,24 @@ renderResponse.setTitle(title);
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
 					<div class="tbar-section text-left">
+
+						<%
+						Map<String, Object> data = HashMapBuilder.<String, Object>put(
+							"initialSourceLanguageId", sourceLocaleId
+						).put(
+							"sourceAvailableLanguages", sourceLocaleIds
+						).put(
+							"initialTargetLanguageId", targetLocaleId
+						).put(
+							"targetAvailableLanguages", targetLocaleIds
+						).build();
+						%>
+
+						<react:component
+							data="<%= data %>"
+							module="js/translate/TranslateLanguagesSelector"
+						/>
+
 						<h2 class="h4 text-truncate-inline" title="<%= HtmlUtil.escapeAttribute(title) %>">
 							<span class="text-truncate"><%= HtmlUtil.escape(title) %></span>
 						</h4>

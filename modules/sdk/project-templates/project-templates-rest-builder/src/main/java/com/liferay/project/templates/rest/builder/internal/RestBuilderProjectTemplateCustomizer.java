@@ -53,7 +53,6 @@ public class RestBuilderProjectTemplateCustomizer
 		String artifactId = archetypeGenerationRequest.getArtifactId();
 
 		String apiPath = ":" + artifactId + "-api";
-
 		String clientPath = ":" + artifactId + "-client";
 
 		File destinationDir = new File(
@@ -74,7 +73,6 @@ public class RestBuilderProjectTemplateCustomizer
 			relativePath = relativePath.replace(File.separatorChar, ':');
 
 			apiPath = ":" + relativePath + ":" + artifactId + apiPath;
-
 			clientPath = ":" + relativePath + ":" + artifactId + clientPath;
 		}
 

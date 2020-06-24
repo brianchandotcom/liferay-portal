@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
+import {ClayButtonWithIcon, default as ClayButton} from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useIsMounted} from 'frontend-js-react-web';
@@ -247,15 +247,16 @@ function ToolbarBody() {
 				</li>
 
 				<li className="nav-item">
-					<ClayButton
+					<ClayButtonWithIcon
 						className="btn btn-secondary mr-3"
 						displayType="secondary"
 						onClick={() => setOpenPreviewModal(true)}
 						small
+						symbol="view"
 						type="button"
 					>
 						{Liferay.Language.get('preview')}
-					</ClayButton>
+					</ClayButtonWithIcon>
 				</li>
 				{config.singleSegmentsExperienceMode && (
 					<li className="nav-item">

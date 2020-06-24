@@ -418,6 +418,66 @@ definition {
 			locator1 = "Questions#QUESTIONS_LIST_TAB_FIELD");
 	}
 
+	@description = "Validate if the users can view the questions from different topics via the breadcrumb."
+	@priority = "4"
+	test ViewQuestionsFromDifferentSubTopics {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+
+		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
+
+		var messageBoardsCategoryURL = selenium.getLocation();
+		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
+
+		for (var num : list "1,2") {
+			JSONMBMessage.addCategory(
+				categoryDescription = "Subcategory Description",
+				categoryName = "Questions Subcategory${num}",
+				parentCategoryId = "${parentCategoryId}",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		for (var num : list "1,2") {
+			Questions.addQuestionWithoutTagByAPI(
+				bodyField = "Question Body ${num}",
+				categoryName = "Questions Test Category",
+				subCategoryName = "Questions Subcategory${num}",
+				titleField = "Question ${num}");
+		}
+
+		Navigator.gotoPage(pageName = "Questions Page");
+
+		Questions.gotoCategory(categoryName = "Questions Test Category");
+
+		AssertTextEquals(
+			locator1 = "Questions#QUESTIONS_TOPIC_DROPDOWN_MENU",
+			value1 = "All");
+
+		Questions.changeTopic(topicName = "Questions Subcategory1");
+
+		Questions.viewList(
+			listedQuestions = "Question 1",
+			unlistedQuestions = "Question 2");
+
+		Questions.changeTopic(topicName = "Questions Subcategory2");
+
+		Questions.viewList(
+			listedQuestions = "Question 2",
+			unlistedQuestions = "Question 1");
+
+		Questions.changeTopic(topicName = "All");
+
+		Questions.viewList(listedQuestions = "Question 1,Question 2");
+	}
+
 	@description = "Validate if the pagination will appear and works when we have more than 4 questions."
 	@priority = "3"
 	test ViewQuestionsPagination {

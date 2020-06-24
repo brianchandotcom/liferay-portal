@@ -144,57 +144,6 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureConfigurationOriginalModule(
-		Configuration originalModuleConfiguration) {
-
-		originalModuleConfiguration.setDescription(
-			"Configures the original module to extend.");
-		originalModuleConfiguration.setTransitive(false);
-		originalModuleConfiguration.setVisible(false);
-	}
-
-	private void _configureTaskUnzipOriginalModuleProvider(
-		final Project project,
-		final Configuration originalModuleConfiguration,
-		TaskProvider<Sync> unzipOriginalModuleTaskProvider) {
-
-		unzipOriginalModuleTaskProvider.configure(
-			new Action<Sync>() {
-
-				@Override
-				public void execute(Sync unzipOriginalModuleSync) {
-					unzipOriginalModuleSync.from(
-						new Callable<FileTree>() {
-
-							@Override
-							public FileTree call() {
-								File file =
-									originalModuleConfiguration.getSingleFile();
-
-								return project.zipTree(file);
-							}
-
-						});
-
-					unzipOriginalModuleSync.into(
-						new Callable<File>() {
-
-							@Override
-							public File call() {
-								return new File(
-									project.getBuildDir(), "original-module");
-							}
-
-						});
-
-					unzipOriginalModuleSync.setDescription(
-						"Unzips the original module into a temporary " +
-							"directory.");
-				}
-
-			});
-	}
-
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
@@ -214,6 +163,22 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		Configuration originalModuleConfiguration) {
 
 		compileOnlyConfiguration.extendsFrom(originalModuleConfiguration);
+	}
+
+	private void _configureConfigurationOriginalModule(
+		Configuration originalModuleConfiguration) {
+
+		originalModuleConfiguration.setDescription(
+			"Configures the original module to extend.");
+		originalModuleConfiguration.setTransitive(false);
+		originalModuleConfiguration.setVisible(false);
+	}
+
+	private void _configureConventionBasePluginAfterEvaluate(
+		BasePluginConvention basePluginConvention, Attributes attributes) {
+
+		basePluginConvention.setArchivesBaseName(
+			attributes.getValue(Constants.BUNDLE_SYMBOLICNAME));
 	}
 
 	private void _configureExtensionLiferay(
@@ -247,13 +212,6 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 		}
 
 		project.setVersion(version);
-	}
-
-	private void _configureConventionBasePluginAfterEvaluate(
-		BasePluginConvention basePluginConvention, Attributes attributes) {
-
-		basePluginConvention.setArchivesBaseName(
-			attributes.getValue(Constants.BUNDLE_SYMBOLICNAME));
 	}
 
 	private void _configureTaskDeployProvider(
@@ -374,6 +332,47 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 							}
 
 						});
+				}
+
+			});
+	}
+
+	private void _configureTaskUnzipOriginalModuleProvider(
+		final Project project, final Configuration originalModuleConfiguration,
+		TaskProvider<Sync> unzipOriginalModuleTaskProvider) {
+
+		unzipOriginalModuleTaskProvider.configure(
+			new Action<Sync>() {
+
+				@Override
+				public void execute(Sync unzipOriginalModuleSync) {
+					unzipOriginalModuleSync.from(
+						new Callable<FileTree>() {
+
+							@Override
+							public FileTree call() {
+								File file =
+									originalModuleConfiguration.getSingleFile();
+
+								return project.zipTree(file);
+							}
+
+						});
+
+					unzipOriginalModuleSync.into(
+						new Callable<File>() {
+
+							@Override
+							public File call() {
+								return new File(
+									project.getBuildDir(), "original-module");
+							}
+
+						});
+
+					unzipOriginalModuleSync.setDescription(
+						"Unzips the original module into a temporary " +
+							"directory.");
 				}
 
 			});

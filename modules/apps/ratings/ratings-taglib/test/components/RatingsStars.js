@@ -169,15 +169,15 @@ describe('RatingsStars', () => {
 				expect(starsDropdownToggle.value).toBe('5');
 			});
 
-			describe('and the user vote 3/5 stars', () => {
+			describe('and the user vote 2/5 stars', () => {
 				beforeEach(() => {
 					act(() => {
-						fireEvent.click(starsButtons[3]);
+						fireEvent.click(starsButtons[2]);
 					});
 				});
 
 				it('decreases the user score', () => {
-					expect(starsDropdownToggle.value).toBe('3');
+					expect(starsDropdownToggle.value).toBe('2');
 				});
 			});
 		});
@@ -188,7 +188,7 @@ describe('RatingsStars', () => {
 			fetch.mockResponseOnce(
 				JSON.stringify({
 					averageScore: 0.5,
-					score: 0.2,
+					score: 0.6,
 					totalEntries: 2,
 				})
 			);
@@ -198,20 +198,20 @@ describe('RatingsStars', () => {
 			fetch.resetMocks();
 		});
 
-		describe('and the user vote 2/5 stars', () => {
+		describe('and the user vote 3/5 stars', () => {
 			let starsDropdownToggle;
 			let starsButtons;
 			let result;
 
 			beforeEach(async () => {
 				result = renderComponent({
-					userScore: 0.6,
+					userScore: 0.4,
 				});
 				starsButtons = result.getAllByRole('button');
 				starsDropdownToggle = starsButtons[0];
 
 				await act(async () => {
-					fireEvent.click(starsButtons[2]);
+					fireEvent.click(starsButtons[3]);
 				});
 			});
 
@@ -221,7 +221,7 @@ describe('RatingsStars', () => {
 
 				expect(url).toBe(baseProps.url);
 				expect(objFormData.className).toBe(baseProps.className);
-				expect(objFormData.score).toBe('0.4');
+				expect(objFormData.score).toBe('0.6');
 			});
 
 			it('updates the average score of 2 votes', () => {
@@ -229,7 +229,7 @@ describe('RatingsStars', () => {
 			});
 
 			it('updates the user score with the one from the server', () => {
-				expect(starsDropdownToggle.value).toBe('1');
+				expect(starsDropdownToggle.value).toBe('3');
 			});
 
 			describe('later the user change her vote to 5/5 stars', () => {

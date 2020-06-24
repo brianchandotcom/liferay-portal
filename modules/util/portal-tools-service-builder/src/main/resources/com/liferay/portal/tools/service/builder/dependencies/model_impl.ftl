@@ -241,15 +241,19 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				*/
 				@Deprecated
 			</#if>
-			public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),
-
-			<#if entity.isCacheEnabled()>
-				true
+			public static final boolean ENTITY_CACHE_ENABLED =
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				true;
 			<#else>
-				false
-			</#if>
+				GetterUtil.getBoolean(${propsUtil}.get("value.object.entity.cache.enabled.${apiPackagePath}.model.${entity.name}"),
+				<#if entity.isCacheEnabled()>
+					true
+				<#else>
+					false
+				</#if>
 
-			);
+				);
+			</#if>
 
 			<#if serviceBuilder.isVersionGTE_7_3_0()>
 				/**
@@ -257,15 +261,20 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 				*/
 				@Deprecated
 			</#if>
-			public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${apiPackagePath}.model.${entity.name}"),
-
-			<#if entity.isCacheEnabled()>
-				true
+			public static final boolean FINDER_CACHE_ENABLED =
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				true;
 			<#else>
-				false
-			</#if>
+				GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${apiPackagePath}.model.${entity.name}"),
 
-			);
+				<#if entity.isCacheEnabled()>
+					true
+				<#else>
+					false
+				</#if>
+
+				);
+			</#if>
 		</#if>
 
 		<#assign columnBitmaskEnabled = true />
@@ -306,7 +315,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					*/
 					@Deprecated
 				</#if>
-				public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
+				public static final boolean COLUMN_BITMASK_ENABLED =
+					<#if serviceBuilder.isVersionGTE_7_3_0()>
+						true;
+					<#else>
+						GetterUtil.getBoolean(${propsUtil}.get("value.object.column.bitmask.enabled.${apiPackagePath}.model.${entity.name}"), true);
+					</#if>
 			</#if>
 
 			<#assign columnBitmask = 1 />
@@ -432,7 +446,12 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 					*/
 					@Deprecated
 				</#if>
-				public static final boolean FINDER_CACHE_ENABLED_${stringUtil.upperCase(entityColumn.mappingTableName)} = GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${entityColumn.mappingTableName}"), true);
+				public static final boolean FINDER_CACHE_ENABLED_${stringUtil.upperCase(entityColumn.mappingTableName)} =
+				  	<#if serviceBuilder.isVersionGTE_7_3_0()>
+						true;
+					<#else>
+						GetterUtil.getBoolean(${propsUtil}.get("value.object.finder.cache.enabled.${entityColumn.mappingTableName}"), true);
+					</#if>
 			</#if>
 		</#if>
 	</#list>

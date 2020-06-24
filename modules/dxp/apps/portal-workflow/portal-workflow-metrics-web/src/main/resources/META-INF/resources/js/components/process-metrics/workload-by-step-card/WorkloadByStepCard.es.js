@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useMemo} from 'react';
 
 import Panel from '../../../shared/components/Panel.es';
@@ -26,17 +27,19 @@ const WorkloadByStepCard = ({processId, routeParams}) => {
 
 	return (
 		<PromisesResolver promises={promises}>
-			<Panel className="container-fluid-1280 mt-4">
-				<Panel.HeaderWithOptions
-					description={Liferay.Language.get(
-						'workload-by-step-description'
-					)}
-					elementClasses="dashboard-panel-header"
-					title={Liferay.Language.get('workload-by-step')}
-					tooltipPosition="bottom"
-				/>
+			<Panel>
+				<ClayLayout.ContainerFluid className="mt-4">
+					<Panel.HeaderWithOptions
+						description={Liferay.Language.get(
+							'workload-by-step-description'
+						)}
+						elementClasses="dashboard-panel-header"
+						title={Liferay.Language.get('workload-by-step')}
+						tooltipPosition="bottom"
+					/>
 
-				<WorkloadByStepCard.Body {...data} {...routeParams} />
+					<WorkloadByStepCard.Body {...data} {...routeParams} />
+				</ClayLayout.ContainerFluid>
 			</Panel>
 		</PromisesResolver>
 	);

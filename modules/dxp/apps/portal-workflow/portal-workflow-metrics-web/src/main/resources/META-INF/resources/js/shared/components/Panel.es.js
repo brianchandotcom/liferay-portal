@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import React from 'react';
@@ -64,8 +65,8 @@ const HeaderWithOptions = ({
 }) => {
 	return (
 		<Header elementClasses={elementClasses}>
-			<div className="autofit-row">
-				<div className="autofit-col autofit-col-expand flex-row">
+			<ClayLayout.ContentRow>
+				<ClayLayout.ContentRow className="flex-row" expand>
 					<span className="mr-2">{title}</span>
 
 					<ClayTooltipProvider>
@@ -79,10 +80,10 @@ const HeaderWithOptions = ({
 							</span>
 						</span>
 					</ClayTooltipProvider>
-				</div>
+				</ClayLayout.ContentRow>
 
 				{children}
-			</div>
+			</ClayLayout.ContentRow>
 		</Header>
 	);
 };
@@ -91,11 +92,11 @@ const Panel = ({children, elementClasses}) => {
 	const classes = getCN('panel', 'panel-secondary', elementClasses);
 
 	return (
-		<div className="container-fluid-1280 mt-4">
+		<ClayLayout.ContainerFluid className="mt-4">
 			<div className={classes} data-testid="panel">
 				{children}
 			</div>
-		</div>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

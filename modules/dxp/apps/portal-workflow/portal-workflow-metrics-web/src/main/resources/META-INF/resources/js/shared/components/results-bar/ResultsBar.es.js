@@ -11,6 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import React, {useCallback} from 'react';
 
 import {useFilter} from '../../hooks/useFilter.es';
@@ -25,9 +26,9 @@ import {
 const ResultsBar = ({children}) => {
 	return (
 		<nav className="mt-0 subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down">
-			<div className="container-fluid container-fluid-max-xl">
+			<ClayLayout.ContainerFluid>
 				<ul className="tbar-nav tbar-nav-wrap">{children}</ul>
-			</div>
+			</ClayLayout.ContainerFluid>
 		</nav>
 	);
 };

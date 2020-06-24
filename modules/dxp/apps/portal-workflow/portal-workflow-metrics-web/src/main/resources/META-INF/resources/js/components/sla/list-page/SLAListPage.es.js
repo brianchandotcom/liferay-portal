@@ -10,6 +10,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayLayout from '@clayui/layout';
 import React, {createContext, useContext, useMemo, useState} from 'react';
 
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
@@ -56,7 +57,7 @@ const SLAListPage = ({page, pageSize, processId}) => {
 		<SLAListPageContext.Provider value={slaContextState}>
 			<SLAListPage.Header processId={processId} />
 
-			<div className="container-fluid-1280">
+			<ClayLayout.ContainerFluid>
 				<BlockedSLAInfo processId={processId} />
 
 				{SLAUpdated && (
@@ -85,7 +86,7 @@ const SLAListPage = ({page, pageSize, processId}) => {
 				</PromisesResolver>
 
 				<SLAListPage.DeleteSLAModal />
-			</div>
+			</ClayLayout.ContainerFluid>
 		</SLAListPageContext.Provider>
 	);
 };

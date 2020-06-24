@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {usePrevious} from 'frontend-js-react-web';
 import React, {useCallback, useContext, useEffect, useMemo} from 'react';
@@ -196,12 +197,9 @@ const Header = ({
 			>
 				{toolbarActive ? (
 					<ClayManagementToolbar.Item className="navbar-nav-last">
-						<div
-							className="autofit-col"
-							data-testid="headerQuickAction"
-						>
+						<ClayLayout.ContentCol data-testid="headerQuickAction">
 							<QuickActionKebab items={kebabItems} />
-						</div>
+						</ClayLayout.ContentCol>
 					</ClayManagementToolbar.Item>
 				) : (
 					<>

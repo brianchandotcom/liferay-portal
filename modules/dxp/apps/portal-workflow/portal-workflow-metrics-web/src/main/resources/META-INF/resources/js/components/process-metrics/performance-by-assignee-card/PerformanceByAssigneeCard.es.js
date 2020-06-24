@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useMemo} from 'react';
 
 import Panel from '../../../shared/components/Panel.es';
@@ -29,7 +30,7 @@ const Header = ({disableFilters, prefixKey, processId}) => {
 			elementClasses="dashboard-panel-header"
 			title={Liferay.Language.get('performance-by-assignee')}
 		>
-			<div className="autofit-col m-0 management-bar management-bar-light navbar">
+			<ClayLayout.ContentCol className="m-0 management-bar management-bar-light navbar">
 				<ul className="navbar-nav">
 					<ProcessStepFilter
 						disabled={disableFilters}
@@ -51,7 +52,7 @@ const Header = ({disableFilters, prefixKey, processId}) => {
 						prefixKey={prefixKey}
 					/>
 				</ul>
-			</div>
+			</ClayLayout.ContentCol>
 		</Panel.HeaderWithOptions>
 	);
 };

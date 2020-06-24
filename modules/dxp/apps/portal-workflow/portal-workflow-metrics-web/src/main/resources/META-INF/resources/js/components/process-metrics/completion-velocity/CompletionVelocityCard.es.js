@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useMemo} from 'react';
 
 import Panel from '../../../shared/components/Panel.es';
@@ -103,7 +104,7 @@ const Header = ({disableFilters, prefixKey, timeRange}) => {
 			elementClasses="dashboard-panel-header pb-0"
 			title={Liferay.Language.get('completion-velocity')}
 		>
-			<div className="autofit-col m-0 management-bar management-bar-light navbar">
+			<ClayLayout.ContentCol className="m-0 management-bar management-bar-light navbar">
 				<ul className="navbar-nav">
 					<TimeRangeFilter
 						disabled={disableFilters}
@@ -118,7 +119,7 @@ const Header = ({disableFilters, prefixKey, timeRange}) => {
 						timeRange={timeRange}
 					/>
 				</ul>
-			</div>
+			</ClayLayout.ContentCol>
 		</Panel.HeaderWithOptions>
 	);
 };

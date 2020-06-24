@@ -11,6 +11,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import React, {useMemo} from 'react';
 
@@ -192,15 +193,23 @@ const SectionSubTitle = ({children}) => {
 
 const SectionAttribute = ({description, detail}) => {
 	return (
-		<p className="row">
-			<span className="col-2 font-weight-medium small text-secondary">
+		<ClayLayout.Row containerElement="p">
+			<ClayLayout.Col
+				className="font-weight-medium small text-secondary"
+				containerElement="span"
+				size="2"
+			>
 				{`${description}`}
-			</span>
+			</ClayLayout.Col>
 
-			<span className="col small" data-testid="instanceDetailSpan">
+			<ClayLayout.Col
+				className="small"
+				containerElement="span"
+				data-testid="instanceDetailSpan"
+			>
 				{detail}
-			</span>
-		</p>
+			</ClayLayout.Col>
+		</ClayLayout.Row>
 	);
 };
 

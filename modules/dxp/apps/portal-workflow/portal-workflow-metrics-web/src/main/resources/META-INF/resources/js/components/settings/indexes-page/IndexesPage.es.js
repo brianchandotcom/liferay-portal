@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useMemo} from 'react';
 
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
@@ -21,7 +22,7 @@ const IndexesPage = () => {
 	const promises = useMemo(() => [fetchData()], [fetchData]);
 
 	return (
-		<div className="container-fluid-1280">
+		<ClayLayout.ContainerFluid>
 			<h3 className="font-weight-semi-bold my-4" data-testid="pageTitle">
 				{Liferay.Language.get('workflow-index-actions')}
 			</h3>
@@ -29,7 +30,7 @@ const IndexesPage = () => {
 			<PromisesResolver promises={promises}>
 				<IndexesPage.Body {...data} />
 			</PromisesResolver>
-		</div>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

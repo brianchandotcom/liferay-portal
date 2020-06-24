@@ -11,6 +11,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayTable from '@clayui/table';
 import React, {useContext} from 'react';
 
@@ -240,9 +241,9 @@ const QuickActionMenu = ({disabled, instance}) => {
 	}
 
 	return (
-		<div className="autofit-col">
+		<ClayLayout.ContentCol>
 			<QuickActionKebab disabled={disabled} items={kebabItems} />
-		</div>
+		</ClayLayout.ContentCol>
 	);
 };
 

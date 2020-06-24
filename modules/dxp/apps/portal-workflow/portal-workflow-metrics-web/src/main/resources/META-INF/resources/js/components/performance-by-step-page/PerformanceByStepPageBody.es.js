@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useMemo} from 'react';
 
 import ContentView from '../../shared/components/content-view/ContentView.es';
@@ -33,8 +34,8 @@ const Body = ({filtered, items, page, pageSize, totalCount}) => {
 	);
 
 	return (
-		<div
-			className="container-fluid-1280 mt-4 workflow-process-dashboard"
+		<ClayLayout.ContainerFluid
+			className="mt-4 workflow-process-dashboard"
 			data-testid="performanceByStepBody"
 		>
 			<ContentView {...statesProps}>
@@ -50,7 +51,7 @@ const Body = ({filtered, items, page, pageSize, totalCount}) => {
 					</>
 				)}
 			</ContentView>
-		</div>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

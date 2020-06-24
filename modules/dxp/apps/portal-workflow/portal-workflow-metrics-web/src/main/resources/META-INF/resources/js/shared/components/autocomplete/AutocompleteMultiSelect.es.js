@@ -11,6 +11,7 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
@@ -153,7 +154,7 @@ const AutocompleteMultiSelect = ({
 	return (
 		<ClayAutocomplete>
 			<div className={className} ref={wrapperRef}>
-				<div className="col-11 d-flex flex-wrap p-0">
+				<ClayLayout.Col className="d-flex flex-wrap p-0" size="11">
 					{selectedItems.map(
 						({[fieldId]: id, [fieldName]: name}, index) => (
 							<AutocompleteMultiSelect.Item
@@ -173,14 +174,15 @@ const AutocompleteMultiSelect = ({
 						placeholder={!selectedItems.length ? placeholder : ''}
 						type="text"
 					/>
-				</div>
+				</ClayLayout.Col>
 
-				<div
-					className="col-1 drop-icon mt-1 text-right"
+				<ClayLayout.Col
+					className="drop-icon mt-1 text-right"
 					onClick={handleFocus}
+					size="1"
 				>
 					<ClayIcon symbol="caret-double" />
-				</div>
+				</ClayLayout.Col>
 
 				<Autocomplete.DropDown
 					active={active}

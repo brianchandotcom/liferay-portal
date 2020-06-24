@@ -10,6 +10,7 @@
  */
 
 import ClayForm from '@clayui/form';
+import ClayLayout from '@clayui/layout';
 import React, {useCallback, useContext, useMemo} from 'react';
 import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
@@ -99,78 +100,86 @@ const DurationSection = ({onChangeHandler}) => {
 					: Liferay.Language.get('define-the-sla-duration')}
 			</div>
 
-			<div className="row">
-				<FormGroupWithStatus
-					className="col col-sm-3 form-group"
-					data-testid="daysField"
-					error={errors[DURATION]}
-					htmlFor="slaDurationDays"
-					label={Liferay.Language.get('days')}
-				>
-					<MaskedInput
-						className="form-control"
-						id="slaDurationDays"
-						mask={daysMask}
-						maxLength={4}
-						name={DAYS}
-						onChange={onChangeHandler(onDurationChanged)}
-						value={days}
-					/>
+			<ClayLayout.Row>
+				<ClayLayout.Col sm="3">
+					<FormGroupWithStatus
+						className="form-group"
+						data-testid="daysField"
+						error={errors[DURATION]}
+						htmlFor="slaDurationDays"
+						label={Liferay.Language.get('days')}
+					>
+						<MaskedInput
+							className="form-control"
+							id="slaDurationDays"
+							mask={daysMask}
+							maxLength={4}
+							name={DAYS}
+							onChange={onChangeHandler(onDurationChanged)}
+							value={days}
+						/>
 
-					<ClayForm.FeedbackGroup>
-						<ClayForm.FeedbackItem>
-							<ClayForm.Text data-testid="durationDaysDescription">
-								{Liferay.Language.get('enter-a-whole-number')}
-							</ClayForm.Text>
-						</ClayForm.FeedbackItem>
-					</ClayForm.FeedbackGroup>
-				</FormGroupWithStatus>
+						<ClayForm.FeedbackGroup>
+							<ClayForm.FeedbackItem>
+								<ClayForm.Text data-testid="durationDaysDescription">
+									{Liferay.Language.get(
+										'enter-a-whole-number'
+									)}
+								</ClayForm.Text>
+							</ClayForm.FeedbackItem>
+						</ClayForm.FeedbackGroup>
+					</FormGroupWithStatus>
+				</ClayLayout.Col>
 
-				<FormGroupWithStatus
-					className="col col-sm-3 form-group"
-					data-testid="hoursField"
-					error={errors[DURATION] || errors[HOURS]}
-					htmlFor="slaDurationHours"
-					label={Liferay.Language.get('hours')}
-				>
-					<MaskedInput
-						className="form-control"
-						id="slaDurationHours"
-						mask={[/\d/, /\d/, ':', /\d/, /\d/]}
-						name={HOURS}
-						onBlur={onHoursBlurred}
-						onChange={onChangeHandler(onDurationChanged)}
-						placeholder="00:00"
-						value={hours}
-					/>
-				</FormGroupWithStatus>
+				<ClayLayout.Col sm="3">
+					<FormGroupWithStatus
+						className="form-group"
+						data-testid="hoursField"
+						error={errors[DURATION] || errors[HOURS]}
+						htmlFor="slaDurationHours"
+						label={Liferay.Language.get('hours')}
+					>
+						<MaskedInput
+							className="form-control"
+							id="slaDurationHours"
+							mask={[/\d/, /\d/, ':', /\d/, /\d/]}
+							name={HOURS}
+							onBlur={onHoursBlurred}
+							onChange={onChangeHandler(onDurationChanged)}
+							placeholder="00:00"
+							value={hours}
+						/>
+					</FormGroupWithStatus>
+				</ClayLayout.Col>
 
 				{calendars.length > 1 && (
-					<FormGroupWithStatus
-						className="col col-sm-6 form-group"
-						htmlFor="slaCalendarKey"
-						label={Liferay.Language.get('calendar')}
-					>
-						<select
-							className="form-control"
-							id="slaCalendarKey"
-							name={CALENDAR_KEY}
-							onChange={onChangeHandler()}
-							value={calendarKey}
+					<ClayLayout.Col sm="6">
+						<FormGroupWithStatus
+							className="form-group"
+							htmlFor="slaCalendarKey"
+							label={Liferay.Language.get('calendar')}
 						>
-							{calendars.map((calendar, index) => (
-								<option key={index} value={calendar.key}>
-									{calendar.title}{' '}
-									{calendar.defaultCalendar &&
-										`(${Liferay.Language.get(
-											'system-default'
-										)})`}
-								</option>
-							))}
-						</select>
-					</FormGroupWithStatus>
+							<select
+								className="form-control"
+								id="slaCalendarKey"
+								name={CALENDAR_KEY}
+								onChange={onChangeHandler()}
+								value={calendarKey}
+							>
+								{calendars.map((calendar, index) => (
+									<option key={index} value={calendar.key}>
+										{calendar.title}{' '}
+										{calendar.defaultCalendar &&
+											`(${Liferay.Language.get(
+												'system-default'
+											)})`}
+									</option>
+								))}
+							</select>
+						</FormGroupWithStatus>
+					</ClayLayout.Col>
 				)}
-			</div>
+			</ClayLayout.Row>
 		</>
 	);
 };

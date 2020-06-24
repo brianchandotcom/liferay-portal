@@ -10,6 +10,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayTable from '@clayui/table';
 import React, {useCallback, useContext} from 'react';
 
@@ -102,9 +103,9 @@ const Item = ({
 			</ClayTable.Cell>
 
 			<ClayTable.Cell className="actions">
-				<div className="autofit-col">
+				<ClayLayout.ContentCol>
 					<QuickActionKebab dropDownItems={dropDownItems} />
-				</div>
+				</ClayLayout.ContentCol>
 			</ClayTable.Cell>
 		</ClayTable.Row>
 	);

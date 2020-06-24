@@ -10,6 +10,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayLayout from '@clayui/layout';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ChildLink from '../../shared/components/router/ChildLink.es';
@@ -70,7 +71,7 @@ const SLAInfo = ({processId}) => {
 	return (
 		<>
 			{alert && (
-				<div className="container-fluid-1280">
+				<ClayLayout.ContainerFluid>
 					<ClayAlert
 						className="mb-0"
 						data-testid="slaInfoAlert"
@@ -87,7 +88,7 @@ const SLAInfo = ({processId}) => {
 							{alert.linkText}
 						</ChildLink>
 					</ClayAlert>
-				</div>
+				</ClayLayout.ContainerFluid>
 			)}
 		</>
 	);

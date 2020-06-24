@@ -11,6 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayLayout from '@clayui/layout';
 import React, {useCallback, useContext} from 'react';
 
 import ContentView from '../../../shared/components/content-view/ContentView.es';
@@ -176,76 +177,86 @@ const Body = ({history, id, processId, query}) => {
 				{sla.status === 2 && <Body.AlertChange />}
 			</div>
 
-			<ClayForm className="sheet sheet-lg">
-				<div className="mb-0 sheet-header">
-					<h2 className="sheet-title" data-testid="sheetTitle">
-						{Liferay.Language.get('sla-definition')}
-					</h2>
-				</div>
+			<ClayForm>
+				<ClayLayout.Sheet>
+					<ClayLayout.SheetHeader className="mb-0">
+						<h2 className="sheet-title" data-testid="sheetTitle">
+							{Liferay.Language.get('sla-definition')}
+						</h2>
+					</ClayLayout.SheetHeader>
 
-				<div className="mb-0 sheet-section">
-					<div className="row">
-						<FormGroupWithStatus
-							className="col col-sm-5 form-group"
-							data-testid="nameField"
-							error={errors[NAME]}
-							htmlFor="slaName"
-							label={Liferay.Language.get('name')}
-							requiredLabel
-						>
-							<ClayInput
-								autoFocus
-								className="form-control"
-								id="slaName"
-								maxLength={75}
-								name="name"
-								onChange={onChangeHandler(onNameChanged)}
-								type="text"
-								value={sla.name}
-							/>
-						</FormGroupWithStatus>
+					<ClayLayout.SheetSection className="mb-0">
+						<ClayLayout.Row>
+							<ClayLayout.Col sm="5">
+								<FormGroupWithStatus
+									className="form-group"
+									data-testid="nameField"
+									error={errors[NAME]}
+									htmlFor="slaName"
+									label={Liferay.Language.get('name')}
+									requiredLabel
+								>
+									<ClayInput
+										autoFocus
+										className="form-control"
+										id="slaName"
+										maxLength={75}
+										name="name"
+										onChange={onChangeHandler(
+											onNameChanged
+										)}
+										type="text"
+										value={sla.name}
+									/>
+								</FormGroupWithStatus>
+							</ClayLayout.Col>
 
-						<FormGroupWithStatus
-							className="col col-sm-7 form-group"
-							data-testid="descriptionField"
-							htmlFor="slaDescription"
-							label={Liferay.Language.get('description')}
-						>
-							<ClayInput
-								id="slaDescription"
-								name="description"
-								onChange={onChangeHandler()}
-								type="text"
-								value={sla.description}
-							/>
-						</FormGroupWithStatus>
-					</div>
+							<ClayLayout.Col sm="7">
+								<FormGroupWithStatus
+									className="form-group"
+									data-testid="descriptionField"
+									htmlFor="slaDescription"
+									label={Liferay.Language.get('description')}
+								>
+									<ClayInput
+										id="slaDescription"
+										name="description"
+										onChange={onChangeHandler()}
+										type="text"
+										value={sla.description}
+									/>
+								</FormGroupWithStatus>
+							</ClayLayout.Col>
+						</ClayLayout.Row>
 
-					<Body.TimeFrameSection />
+						<Body.TimeFrameSection />
 
-					<Body.DurationSection onChangeHandler={onChangeHandler} />
-				</div>
+						<Body.DurationSection
+							onChangeHandler={onChangeHandler}
+						/>
+					</ClayLayout.SheetSection>
 
-				<div className="sheet-footer sheet-footer-btn-block-sm-down">
-					<ClayButton.Group spaced>
-						<ClayButton
-							data-testid="saveButton"
-							onClick={handleSubmit}
-						>
-							{id
-								? Liferay.Language.get('update')
-								: Liferay.Language.get('save')}
-						</ClayButton>
+					<ClayLayout.SheetFooter className="sheet-footer-btn-block-sm-down">
+						<ClayButton.Group spaced>
+							<ClayButton
+								data-testid="saveButton"
+								onClick={handleSubmit}
+							>
+								{id
+									? Liferay.Language.get('update')
+									: Liferay.Language.get('save')}
+							</ClayButton>
 
-						<ClayButton
-							data-testid="cancelButton"
-							displayType="secondary"
-							onClick={() => history.goBack()}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-					</ClayButton.Group>
-				</div>
+							<ClayButton
+								data-testid="cancelButton"
+								displayType="secondary"
+								onClick={() => history.goBack()}
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+						</ClayButton.Group>
+					</ClayLayout.SheetFooter>
+				</ClayLayout.Sheet>
 			</ClayForm>
 		</ContentView>
 	);

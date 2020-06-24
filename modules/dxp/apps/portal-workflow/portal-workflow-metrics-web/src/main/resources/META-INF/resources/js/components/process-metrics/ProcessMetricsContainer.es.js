@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useContext, useMemo} from 'react';
 import {Route, Switch} from 'react-router-dom';
 
@@ -41,19 +42,19 @@ const DashboardTab = ({history, ...otherProps}) => {
 	}, [history]);
 
 	return (
-		<div className="container-fluid-1280">
-			<div className="row">
-				<div className="col-md-9 p-0">
+		<ClayLayout.ContainerFluid>
+			<ClayLayout.Row>
+				<ClayLayout.Col className="p-0" md="9">
 					<PendingItemsCard {...otherProps} />
 
 					<WorkloadByStepCard {...otherProps} />
-				</div>
+				</ClayLayout.Col>
 
-				<div className="col-md-3 p-0">
+				<ClayLayout.Col className="p-0" md="3">
 					<WorkloadByAssigneeCard {...otherProps} />
-				</div>
-			</div>
-		</div>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

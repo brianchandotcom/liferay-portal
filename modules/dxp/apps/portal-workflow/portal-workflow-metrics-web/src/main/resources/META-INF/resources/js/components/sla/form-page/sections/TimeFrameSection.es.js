@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useContext} from 'react';
 
 import {AutocompleteMultiSelect} from '../../../../shared/components/autocomplete/AutocompleteMultiSelect.es';
@@ -66,91 +67,112 @@ const TimeFrameSection = () => {
 				)}
 			</div>
 
-			<div className="row">
-				<FormGroupWithStatus
-					className="col col-sm-12 form-group"
-					data-testid="startField"
-					error={errors[START_NODE_KEYS]}
-					htmlFor="slaTimeStart"
-					label={Liferay.Language.get('start')}
-					requiredLabel
-				>
-					<div className="form-text" data-testid="startDescription">
-						{Liferay.Language.get('time-will-begin-counting-when')}
-					</div>
+			<ClayLayout.Row>
+				<ClayLayout.Col>
+					<FormGroupWithStatus
+						className="form-group"
+						data-testid="startField"
+						error={errors[START_NODE_KEYS]}
+						htmlFor="slaTimeStart"
+						label={Liferay.Language.get('start')}
+						requiredLabel
+					>
+						<div
+							className="form-text"
+							data-testid="startDescription"
+						>
+							{Liferay.Language.get(
+								'time-will-begin-counting-when'
+							)}
+						</div>
 
-					<AutocompleteMultiSelect
-						fieldId="compositeId"
-						fieldName="desc"
-						id="start"
-						items={getStartNodes(pauseNodeKeys, stopNodeKeys)}
-						onChange={changeNodesKeys(
-							START_NODE_KEYS,
-							nodes,
-							checkNodeErrors(START_NODE_KEYS)
-						)}
-						selectedItems={getNodeTags(
-							getStartNodes(pauseNodeKeys, stopNodeKeys),
-							startNodeKeys
-						)}
-					/>
-				</FormGroupWithStatus>
+						<AutocompleteMultiSelect
+							fieldId="compositeId"
+							fieldName="desc"
+							id="start"
+							items={getStartNodes(pauseNodeKeys, stopNodeKeys)}
+							onChange={changeNodesKeys(
+								START_NODE_KEYS,
+								nodes,
+								checkNodeErrors(START_NODE_KEYS)
+							)}
+							selectedItems={getNodeTags(
+								getStartNodes(pauseNodeKeys, stopNodeKeys),
+								startNodeKeys
+							)}
+						/>
+					</FormGroupWithStatus>
+				</ClayLayout.Col>
 
-				<FormGroupWithStatus
-					className="col col-sm-12 form-group"
-					data-testid="pauseField"
-					htmlFor="slaTimePause"
-					label={Liferay.Language.get('pause')}
-				>
-					<div className="form-text" data-testid="pauseDescription">
-						{Liferay.Language.get('time-wont-be-considered-when')}
-					</div>
+				<ClayLayout.Col>
+					<FormGroupWithStatus
+						className="form-group"
+						data-testid="pauseField"
+						htmlFor="slaTimePause"
+						label={Liferay.Language.get('pause')}
+					>
+						<div
+							className="form-text"
+							data-testid="pauseDescription"
+						>
+							{Liferay.Language.get(
+								'time-wont-be-considered-when'
+							)}
+						</div>
 
-					<AutocompleteMultiSelect
-						fieldId="compositeId"
-						fieldName="desc"
-						id="pause"
-						items={getPauseNodes(startNodeKeys, stopNodeKeys)}
-						onChange={changePauseNodes(
-							getPauseNodes(startNodeKeys, stopNodeKeys),
-							checkNodeErrors(PAUSE_NODE_KEYS)
-						)}
-						selectedItems={getPauseNodeTags(
-							getPauseNodes(startNodeKeys, stopNodeKeys),
-							pauseNodeKeys
-						)}
-					/>
-				</FormGroupWithStatus>
+						<AutocompleteMultiSelect
+							fieldId="compositeId"
+							fieldName="desc"
+							id="pause"
+							items={getPauseNodes(startNodeKeys, stopNodeKeys)}
+							onChange={changePauseNodes(
+								getPauseNodes(startNodeKeys, stopNodeKeys),
+								checkNodeErrors(PAUSE_NODE_KEYS)
+							)}
+							selectedItems={getPauseNodeTags(
+								getPauseNodes(startNodeKeys, stopNodeKeys),
+								pauseNodeKeys
+							)}
+						/>
+					</FormGroupWithStatus>
+				</ClayLayout.Col>
 
-				<FormGroupWithStatus
-					className="col col-sm-12 form-group"
-					data-testid="stopField"
-					error={errors[STOP_NODE_KEYS]}
-					htmlFor="slaTimeStop"
-					label={Liferay.Language.get('stop')}
-					requiredLabel
-				>
-					<div className="form-text" data-testid="stopDescription">
-						{Liferay.Language.get('time-will-stop-counting-when')}
-					</div>
+				<ClayLayout.Col>
+					<FormGroupWithStatus
+						className="form-group"
+						data-testid="stopField"
+						error={errors[STOP_NODE_KEYS]}
+						htmlFor="slaTimeStop"
+						label={Liferay.Language.get('stop')}
+						requiredLabel
+					>
+						<div
+							className="form-text"
+							data-testid="stopDescription"
+						>
+							{Liferay.Language.get(
+								'time-will-stop-counting-when'
+							)}
+						</div>
 
-					<AutocompleteMultiSelect
-						fieldId="compositeId"
-						fieldName="desc"
-						id="stop"
-						items={getStopNodes(pauseNodeKeys, startNodeKeys)}
-						onChange={changeNodesKeys(
-							STOP_NODE_KEYS,
-							nodes,
-							checkNodeErrors(STOP_NODE_KEYS)
-						)}
-						selectedItems={getNodeTags(
-							getStopNodes(pauseNodeKeys, startNodeKeys),
-							stopNodeKeys
-						)}
-					/>
-				</FormGroupWithStatus>
-			</div>
+						<AutocompleteMultiSelect
+							fieldId="compositeId"
+							fieldName="desc"
+							id="stop"
+							items={getStopNodes(pauseNodeKeys, startNodeKeys)}
+							onChange={changeNodesKeys(
+								STOP_NODE_KEYS,
+								nodes,
+								checkNodeErrors(STOP_NODE_KEYS)
+							)}
+							selectedItems={getNodeTags(
+								getStopNodes(pauseNodeKeys, startNodeKeys),
+								stopNodeKeys
+							)}
+						/>
+					</FormGroupWithStatus>
+				</ClayLayout.Col>
+			</ClayLayout.Row>
 		</>
 	);
 };

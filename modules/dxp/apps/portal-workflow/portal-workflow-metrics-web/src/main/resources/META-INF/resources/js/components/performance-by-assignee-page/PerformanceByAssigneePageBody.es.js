@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import React, {useMemo} from 'react';
 
 import ContentView from '../../shared/components/content-view/ContentView.es';
@@ -38,7 +39,7 @@ const Body = ({filtered, items, page, pageSize, totalCount}) => {
 	);
 
 	return (
-		<div className="container-fluid-1280 mt-4">
+		<ClayLayout.ContainerFluid className="mt-4">
 			<ContentView {...statesProps}>
 				{totalCount > 0 && (
 					<>
@@ -52,7 +53,7 @@ const Body = ({filtered, items, page, pageSize, totalCount}) => {
 					</>
 				)}
 			</ContentView>
-		</div>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

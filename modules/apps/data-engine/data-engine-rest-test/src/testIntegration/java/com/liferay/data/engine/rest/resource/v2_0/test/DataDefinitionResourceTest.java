@@ -70,7 +70,6 @@ public class DataDefinitionResourceTest
 			204,
 			dataDefinitionResource.deleteDataDefinitionHttpResponse(
 				dataDefinition.getId()));
-
 		assertHttpResponseStatusCode(
 			404,
 			dataDefinitionResource.getDataDefinitionHttpResponse(

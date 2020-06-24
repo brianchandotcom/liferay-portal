@@ -17,8 +17,6 @@ package com.liferay.journal.web.internal.display.context;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -55,12 +53,12 @@ import com.liferay.journal.web.internal.util.ExportTranslationUtil;
 import com.liferay.journal.web.internal.util.JournalArticleTranslation;
 import com.liferay.journal.web.internal.util.JournalArticleTranslationRowChecker;
 import com.liferay.journal.web.internal.util.JournalPortletUtil;
+import com.liferay.journal.web.internal.util.SiteAncestorGroupUtil;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -469,8 +467,9 @@ public class JournalDisplayContext {
 		}
 
 		_ddmStructures = JournalFolderServiceUtil.getDDMStructures(
-			_getCurrentAndAncestorSiteAndDepotGroupIds(), getFolderId(),
-			restrictionType);
+			SiteAncestorGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
+				_themeDisplay.getScopeGroupId()),
+			getFolderId(), restrictionType);
 
 		Locale locale = _themeDisplay.getLocale();
 
@@ -1394,19 +1393,6 @@ public class JournalDisplayContext {
 		searchContainer.setTotal(hits.getLength());
 
 		return searchContainer;
-	}
-
-	private long[] _getCurrentAndAncestorSiteAndDepotGroupIds()
-		throws PortalException {
-
-		return ArrayUtil.append(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				_themeDisplay.getScopeGroupId()),
-			ListUtil.toLongArray(
-				DepotEntryServiceUtil.getGroupConnectedDepotEntries(
-					_themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS),
-				DepotEntry::getGroupId));
 	}
 
 	private EntriesChecker _getEntriesChecker() {

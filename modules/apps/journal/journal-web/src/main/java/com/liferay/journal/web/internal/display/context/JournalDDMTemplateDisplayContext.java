@@ -14,8 +14,6 @@
 
 package com.liferay.journal.web.internal.display.context;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
@@ -25,13 +23,11 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.servlet.taglib.util.JournalDDMTemplateActionDropdownItemsProvider;
+import com.liferay.journal.web.internal.util.SiteAncestorGroupUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -136,7 +132,9 @@ public class JournalDDMTemplateDisplayContext {
 		long[] groupIds = {themeDisplay.getScopeGroupId()};
 
 		if (_journalWebConfiguration.showAncestorScopesByDefault()) {
-			groupIds = _getCurrentAndAncestorSiteAndDepotGroupIds(themeDisplay);
+			groupIds =
+				SiteAncestorGroupUtil.getCurrentAndAncestorSiteAndDepotGroupIds(
+					themeDisplay.getScopeGroupId());
 		}
 
 		List<DDMTemplate> results = null;
@@ -228,20 +226,6 @@ public class JournalDDMTemplateDisplayContext {
 		}
 
 		return false;
-	}
-
-	private long[] _getCurrentAndAncestorSiteAndDepotGroupIds(
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return ArrayUtil.append(
-			PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				themeDisplay.getScopeGroupId()),
-			ListUtil.toLongArray(
-				DepotEntryServiceUtil.getGroupConnectedDepotEntries(
-					themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS),
-				DepotEntry::getGroupId));
 	}
 
 	private long[] _getDDMTemplateClassPKs() {

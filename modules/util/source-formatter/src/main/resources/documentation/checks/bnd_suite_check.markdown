@@ -1,6 +1,6 @@
 ## BNDSuiteCheck
 
-Depreceated apps that are not published on Marketplace should be moved to the
+Deprecated apps that are not published on Marketplace should be moved to the
 `archived` folder.
 
 This applies to modules, where the `app.bnd` contains the following:

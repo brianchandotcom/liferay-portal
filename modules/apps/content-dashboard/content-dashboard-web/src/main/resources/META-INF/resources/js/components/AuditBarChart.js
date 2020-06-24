@@ -14,7 +14,7 @@
 
 import {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
 	Bar,
 	BarChart,
@@ -78,10 +78,18 @@ export default function AuditBarChart({rtl, vocabularies}) {
 			{}
 		);
 
-		return {bars, data, legendCheckboxes};
+		const colors = bars.reduce(
+			(acc, {dataKey}, index) => ({
+				...acc,
+				[dataKey]: COLORS[index % COLORS.length],
+			}),
+			{}
+		);
+
+		return {bars, colors, data, legendCheckboxes};
 	}, [vocabularies]);
 
-	const {bars, data, legendCheckboxes} = auditBarChartData;
+	const {bars, colors, data, legendCheckboxes} = auditBarChartData;
 
 	const height = !bars.length
 		? BAR_CHART.height - BAR_CHART.legendHeight
@@ -93,6 +101,43 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 	const [checkboxes, setCheckbox] = useState(legendCheckboxes);
 
+	useEffect(() => {
+		if (Object.keys(colors).length) {
+			const head =
+				document.head || document.getElementsByTagName('head')[0];
+			const style = document.createElement('style');
+			style.id = 'legend-checkboxes';
+			style.type = 'text/css';
+
+			{
+				Object.entries(colors).forEach(([dataKey, color]) => {
+					style.textContent += `.custom-control-color-${dataKey}.custom-control-input:checked ~ 
+					.custom-control-label::before {
+						background-color: ${color};
+						border-color: ${color};
+				}
+				.custom-control-color-${dataKey}.custom-control-input:not(:checked) ~ 
+					.custom-control-label::before {
+						border-color: ${color};
+				}`;
+				});
+			}
+
+			head.appendChild(style);
+		}
+	}, [colors]);
+
+	useEffect(() => {
+		return () => {
+			const head =
+				document.head || document.getElementsByTagName('head')[0];
+			const style = document.getElementById('legend-checkboxes');
+			if (style) {
+				head.removeChild(style);
+			}
+		};
+	}, []);
+
 	const renderLegend = (props) => {
 		const {payload} = props;
 
@@ -102,6 +147,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 					<ClayCheckbox
 						aria-labelledby={entry.value}
 						checked={checkboxes[entry.dataKey]}
+						className={`custom-control-color-${entry.dataKey}`}
 						inline
 						key={entry.dataKey}
 						label={entry.value}
@@ -163,7 +209,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 											: 0
 									}
 									dataKey={bar.dataKey}
-									fill={COLORS[index % COLORS.length]}
+									fill={colors[bar.dataKey]}
 									key={index}
 									legendType="square"
 									name={bar.name}

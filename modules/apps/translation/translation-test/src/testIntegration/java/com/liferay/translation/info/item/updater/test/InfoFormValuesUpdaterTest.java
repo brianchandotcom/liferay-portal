@@ -89,15 +89,15 @@ public class InfoFormValuesUpdaterTest {
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
-			_LOCALE_US, "<p>This is the content</p>"
+			LocaleUtil.US, "<p>This is the content</p>"
 		).build();
 
 		Map<Locale, String> descriptionMap = HashMapBuilder.put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -112,22 +112,24 @@ public class InfoFormValuesUpdaterTest {
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
 				TranslationTestUtil.readFileToInputStream(
-					"test-journal-article_122.xlf"));
+					"test-journal-article-122.xlf"));
 
 		JournalArticle journalArticle =
 			_infoFormValuesUpdater.updateFromInfoFormValues(
 				article, infoItemFieldValues);
 
 		Assert.assertEquals(
-			"Este es el titulo", journalArticle.getTitle(_LOCALE_ES));
+			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
 
 		Assert.assertEquals(
-			"Este es el resumen", journalArticle.getDescription(_LOCALE_ES));
+			"Este es el resumen",
+			journalArticle.getDescription(LocaleUtil.SPAIN));
 
 		Assert.assertEquals(
 			"<p>Este es el contenido</p>",
 			_getContent(
-				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_ES));
+				journalArticle.getContent(), "name", LocaleUtil.US,
+				LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -135,21 +137,21 @@ public class InfoFormValuesUpdaterTest {
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
-			_LOCALE_ES, "Este es el contenido"
+			LocaleUtil.SPAIN, "Este es el contenido"
 		).put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		Map<Locale, String> descriptionMap = HashMapBuilder.put(
-			_LOCALE_ES, "Esta es la descripcion"
+			LocaleUtil.SPAIN, "Esta es la descripcion"
 		).put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
-			_LOCALE_ES, "Este es el titulo"
+			LocaleUtil.SPAIN, "Este es el titulo"
 		).put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -164,33 +166,36 @@ public class InfoFormValuesUpdaterTest {
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
 				TranslationTestUtil.readFileToInputStream(
-					"test-journal-article_122_Jap.xlf"));
+					"test-journal-article-122-ja-JP.xlf"));
 
 		JournalArticle journalArticle =
 			_infoFormValuesUpdater.updateFromInfoFormValues(
 				article, infoFormValues);
 
 		Assert.assertEquals(
-			"Este es el titulo", journalArticle.getTitle(_LOCALE_ES));
+			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
 
 		Assert.assertEquals(
 			"Esta es la descripcion",
-			journalArticle.getDescription(_LOCALE_ES));
+			journalArticle.getDescription(LocaleUtil.SPAIN));
 
 		Assert.assertEquals(
 			"Este es el contenido",
 			_getContent(
-				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_ES));
-
-		Assert.assertEquals("これはタイトルです", journalArticle.getTitle(_LOCALE_JA));
+				journalArticle.getContent(), "name", LocaleUtil.US,
+				LocaleUtil.SPAIN));
 
 		Assert.assertEquals(
-			"これは要約です", journalArticle.getDescription(_LOCALE_JA));
+			"これはタイトルです", journalArticle.getTitle(LocaleUtil.JAPAN));
+
+		Assert.assertEquals(
+			"これは要約です", journalArticle.getDescription(LocaleUtil.JAPAN));
 
 		Assert.assertEquals(
 			"<p>これが内容です</p>",
 			_getContent(
-				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_JA));
+				journalArticle.getContent(), "name", LocaleUtil.US,
+				LocaleUtil.JAPAN));
 	}
 
 	@Test
@@ -198,17 +203,17 @@ public class InfoFormValuesUpdaterTest {
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
-			_LOCALE_US, "content"
+			LocaleUtil.US, "content"
 		).build();
 
 		Map<Locale, String> descriptionMap = HashMapBuilder.put(
-			_LOCALE_ES, "Descripcion"
+			LocaleUtil.SPAIN, "Descripcion"
 		).put(
-			_LOCALE_US, "description"
+			LocaleUtil.US, "description"
 		).build();
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -223,22 +228,23 @@ public class InfoFormValuesUpdaterTest {
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
 				TranslationTestUtil.readFileToInputStream(
-					"test-journal-article_122_only_title.xlf"));
+					"test-journal-article-122-only-title.xlf"));
 
 		JournalArticle journalArticle =
 			_infoFormValuesUpdater.updateFromInfoFormValues(
 				article, infoItemFieldValues);
 
 		Assert.assertEquals(
-			"Este es el titulo", journalArticle.getTitle(_LOCALE_ES));
+			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
 
 		Assert.assertEquals(
-			"Descripcion", journalArticle.getDescription(_LOCALE_ES));
+			"Descripcion", journalArticle.getDescription(LocaleUtil.SPAIN));
 
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_getContent(
-				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_ES));
+				journalArticle.getContent(), "name", LocaleUtil.US,
+				LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -246,21 +252,21 @@ public class InfoFormValuesUpdaterTest {
 		throws Exception {
 
 		Map<Locale, String> contentMap = HashMapBuilder.put(
-			_LOCALE_JA, "translate content to japanese"
+			LocaleUtil.JAPAN, "translate content to japanese"
 		).put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		Map<Locale, String> descriptionMap = HashMapBuilder.put(
-			_LOCALE_JA, "translate description to japanese"
+			LocaleUtil.JAPAN, "translate description to japanese"
 		).put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		Map<Locale, String> titleMap = HashMapBuilder.put(
-			_LOCALE_JA, "translate title to japanese"
+			LocaleUtil.JAPAN, "translate title to japanese"
 		).put(
-			_LOCALE_US, RandomTestUtil.randomString()
+			LocaleUtil.US, RandomTestUtil.randomString()
 		).build();
 
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -270,15 +276,16 @@ public class InfoFormValuesUpdaterTest {
 			true, _serviceContext);
 
 		Assert.assertEquals(
-			"translate title to japanese", article.getTitle(_LOCALE_JA));
+			"translate title to japanese", article.getTitle(LocaleUtil.JAPAN));
 
 		Assert.assertEquals(
 			"translate description to japanese",
-			article.getDescription(_LOCALE_JA));
+			article.getDescription(LocaleUtil.JAPAN));
 
 		Assert.assertEquals(
 			"translate content to japanese",
-			_getContent(article.getContent(), "name", _LOCALE_US, _LOCALE_JA));
+			_getContent(
+				article.getContent(), "name", LocaleUtil.US, LocaleUtil.JAPAN));
 
 		InfoFormValues infoFormValues =
 			_xliffTranslationInfoFormValuesImporter.importXLIFF(
@@ -286,21 +293,23 @@ public class InfoFormValuesUpdaterTest {
 				new InfoItemClassPKReference(
 					JournalArticle.class.getName(), 122),
 				TranslationTestUtil.readFileToInputStream(
-					"test-journal-article_122_Jap.xlf"));
+					"test-journal-article-122-ja-JP.xlf"));
 
 		JournalArticle journalArticle =
 			_infoFormValuesUpdater.updateFromInfoFormValues(
 				article, infoFormValues);
 
-		Assert.assertEquals("これはタイトルです", journalArticle.getTitle(_LOCALE_JA));
+		Assert.assertEquals(
+			"これはタイトルです", journalArticle.getTitle(LocaleUtil.JAPAN));
 
 		Assert.assertEquals(
-			"これは要約です", journalArticle.getDescription(_LOCALE_JA));
+			"これは要約です", journalArticle.getDescription(LocaleUtil.JAPAN));
 
 		Assert.assertEquals(
 			"<p>これが内容です</p>",
 			_getContent(
-				journalArticle.getContent(), "name", _LOCALE_US, _LOCALE_JA));
+				journalArticle.getContent(), "name", LocaleUtil.US,
+				LocaleUtil.JAPAN));
 	}
 
 	private String _getContent(
@@ -349,12 +358,6 @@ public class InfoFormValuesUpdaterTest {
 
 		return StringPool.BLANK;
 	}
-
-	private static final Locale _LOCALE_ES = LocaleUtil.SPAIN;
-
-	private static final Locale _LOCALE_JA = LocaleUtil.JAPAN;
-
-	private static final Locale _LOCALE_US = LocaleUtil.US;
 
 	@DeleteAfterTestRun
 	private Group _group;

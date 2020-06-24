@@ -1,5 +1,7 @@
 @import 'atlas-variables';
 
+@import '../variables';
+
 .page-editor__undo-history {
 	&.dropdown-menu {
 		max-height: 320px;
@@ -15,6 +17,25 @@
 			color: $secondary-l1;
 			font-size: 0.75rem;
 			margin-left: 1em;
+		}
+	}
+
+	&__overlay {
+		height: 100vh;
+		left: 0;
+		position: fixed;
+		top: 0;
+		width: 100vw;
+		z-index: $undoHistoryOverlayZIndex;
+
+		body.has-control-menu & {
+			height: calc(100vh - #{$controlMenuHeight});
+			top: $controlMenuHeight;
+
+			@include media-breakpoint-up(xl) {
+				height: calc(100vh - #{$desktopControlMenuHeight});
+				top: $desktopControlMenuHeight;
+			}
 		}
 	}
 }

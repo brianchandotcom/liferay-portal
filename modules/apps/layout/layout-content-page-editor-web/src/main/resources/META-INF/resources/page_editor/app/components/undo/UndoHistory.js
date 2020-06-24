@@ -15,7 +15,9 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayDropDownDivider from '@clayui/drop-down/lib/Divider';
+import {useEventListener, useIsMounted} from 'frontend-js-react-web';
 import React, {useState} from 'react';
+import ReactDOM from 'react-dom';
 
 import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
 import {UNDO_TYPES} from '../../config/constants/undoTypes';
@@ -31,7 +33,28 @@ export default function UndoHistory() {
 	const redoHistory = useSelector((state) => state.redoHistory || []);
 	const undoHistory = useSelector((state) => state.undoHistory || []);
 
+	const isMounted = useIsMounted();
+
 	const [active, setActive] = useState(false);
+	const [loading, setLoading] = useState(false);
+
+	const onHistoryItemClick = (event, numberOfActions, type) => {
+		event.preventDefault();
+
+		setLoading(true);
+
+		dispatch(
+			multipleUndo({
+				numberOfActions,
+				store,
+				type,
+			})
+		).finally(() => {
+			if (isMounted()) {
+				setLoading(false);
+			}
+		});
+	};
 
 	return (
 		<>
@@ -54,33 +77,60 @@ export default function UndoHistory() {
 				}
 			>
 				<ClayDropDown.ItemList>
-					<History actions={redoHistory} type={UNDO_TYPES.redo} />
-					<History actions={undoHistory} type={UNDO_TYPES.undo} />
+					<History
+						actions={redoHistory}
+						onHistoryItemClick={onHistoryItemClick}
+						type={UNDO_TYPES.redo}
+					/>
+					<History
+						actions={undoHistory}
+						onHistoryItemClick={onHistoryItemClick}
+						type={UNDO_TYPES.undo}
+					/>
 					<ClayDropDownDivider />
 					<ClayDropDown.Item
 						disabled={!undoHistory.length}
-						onClick={(event) => {
-							event.preventDefault();
-
-							dispatch(
-								multipleUndo({
-									numberOfActions: undoHistory.length,
-									store,
-									type: UNDO_TYPES.undo,
-								})
-							);
-						}}
+						onClick={(event) =>
+							onHistoryItemClick(
+								event,
+								undoHistory.length,
+								UNDO_TYPES.undo
+							)
+						}
 					>
 						{Liferay.Language.get('undo-all')}
 					</ClayDropDown.Item>
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
+
+			{loading && ReactDOM.createPortal(<Overlay />, document.body)}
 		</>
 	);
 }
 
-const History = ({actions = [], type}) => {
-	const dispatch = useDispatch();
+const Overlay = () => {
+	useEventListener(
+		'keydown',
+		(event) => {
+			event.preventDefault();
+			event.stopPropagation();
+			event.stopImmediatePropagation();
+		},
+		true,
+		window
+	);
+
+	return (
+		<div
+			className={'page-editor__undo-history__overlay'}
+			onClickCapture={(event) => {
+				event.preventDefault();
+				event.stopPropagation();
+			}}
+		></div>
+	);
+};
+const History = ({actions = [], type, onHistoryItemClick}) => {
 	const store = useSelector((state) => state);
 
 	const isSelectedAction = (index) => type === UNDO_TYPES.undo && index === 0;
@@ -93,18 +143,12 @@ const History = ({actions = [], type}) => {
 			disabled={isSelectedAction(index)}
 			key={action.actionId}
 			onClick={(event) => {
-				event.preventDefault();
+				const numberOfActions =
+					type === UNDO_TYPES.undo
+						? index
+						: actionList.length - index;
 
-				dispatch(
-					multipleUndo({
-						numberOfActions:
-							type === UNDO_TYPES.undo
-								? index
-								: actionList.length - index,
-						store,
-						type,
-					})
-				);
+				onHistoryItemClick(event, numberOfActions, type);
 			}}
 			symbolRight={isSelectedAction(index) ? 'check' : ''}
 		>

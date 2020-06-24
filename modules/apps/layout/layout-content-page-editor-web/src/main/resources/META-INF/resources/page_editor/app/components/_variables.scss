@@ -12,6 +12,9 @@ $toolbarBorderWidth: 1px;
 
 $floatingToolbarPanelMinWidth: 288px;
 
+$controlMenuHeight: 48px;
+$desktopControlMenuHeight: 56px;
+
 $dropTargetWidth: 5px;
 
 // z-indexes, ordered numerically.
@@ -24,4 +27,5 @@ $floatingToolbarPanelZIndex: 987;
 $floatingToolbarZIndex: 987;
 $sidebarZIndex: 988;
 $dragPreviewLayer: 991;
+$undoHistoryOverlayZIndex: 1001;
 $modalZIndex: 1050;

@@ -20,7 +20,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
-import Error from '../../components/Error.es';
+import Alert from '../../components/Alert.es';
 import Link from '../../components/Link.es';
 import QuestionsEditor from '../../components/QuestionsEditor';
 import TagSelector from '../../components/TagSelector.es';
@@ -237,7 +237,7 @@ export default withRouter(
 						</div>
 					</div>
 				</div>
-				<Error error={error} />
+				<Alert info={error} />
 			</section>
 		);
 	}

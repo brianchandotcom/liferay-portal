@@ -15,14 +15,14 @@
 import ClayAlert from '@clayui/alert';
 import React, {useEffect, useState} from 'react';
 
-export default ({error}) => {
+export default ({info, displayType = 'danger'}) => {
 	const [alert, setAlert] = useState(null);
 
 	useEffect(() => {
-		if (error && (error.title || error.message)) {
-			setAlert(error);
+		if (info && (info.title || info.message)) {
+			setAlert(info);
 		}
-	}, [error]);
+	}, [info]);
 
 	return (
 		<>
@@ -30,7 +30,7 @@ export default ({error}) => {
 				<ClayAlert.ToastContainer>
 					<ClayAlert
 						autoClose={5000}
-						displayType="danger"
+						displayType={displayType}
 						onClose={() => {
 							setAlert(null);
 						}}

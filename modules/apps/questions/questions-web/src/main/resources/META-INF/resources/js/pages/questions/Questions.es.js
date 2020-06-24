@@ -22,7 +22,7 @@ import {withRouter} from 'react-router-dom';
 
 import {AppContext} from '../../AppContext.es';
 import Breadcrumb from '../../components/Breadcrumb.es';
-import Error from '../../components/Error.es';
+import Alert from '../../components/Alert.es';
 import PaginatedList from '../../components/PaginatedList.es';
 import QuestionRow from '../../components/QuestionRow.es';
 import SectionSubscription from '../../components/SectionSubscription.es';
@@ -249,7 +249,7 @@ export default withRouter(
 								)}
 							</PaginatedList>
 
-							<Error error={error} />
+							<Alert info={error} />
 						</div>
 					</div>
 				</div>

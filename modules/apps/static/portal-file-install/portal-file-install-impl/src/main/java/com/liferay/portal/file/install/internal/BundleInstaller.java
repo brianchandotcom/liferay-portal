@@ -14,7 +14,7 @@
 
 package com.liferay.portal.file.install.internal;
 
-import com.liferay.portal.file.install.listener.ArtifactUrlTransformer;
+import com.liferay.portal.file.install.FileInstaller;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,10 +28,10 @@ import java.util.jar.Manifest;
 /**
  * @author Matthew Tambara
  */
-public class BundleTransformer implements ArtifactUrlTransformer {
+public class BundleInstaller implements FileInstaller {
 
 	@Override
-	public boolean canHandle(File artifact) {
+	public boolean canTransformURL(File artifact) {
 		String name = artifact.getName();
 
 		if (name.endsWith(".lpkg") || name.endsWith(".txt") ||

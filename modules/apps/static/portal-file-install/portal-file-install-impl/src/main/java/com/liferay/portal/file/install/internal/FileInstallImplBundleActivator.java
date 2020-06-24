@@ -15,12 +15,8 @@
 package com.liferay.portal.file.install.internal;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
-import com.liferay.portal.file.install.listener.ArtifactInstaller;
-import com.liferay.portal.file.install.listener.ArtifactListener;
-import com.liferay.portal.file.install.listener.ArtifactUrlTransformer;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -48,7 +44,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.wiring.FrameworkWiring;
@@ -64,7 +59,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class FileInstallImplBundleActivator
 	implements BundleActivator,
-			   ServiceTrackerCustomizer<ArtifactListener, ArtifactListener> {
+			   ServiceTrackerCustomizer<FileInstaller, FileInstaller> {
 
 	public static void refresh(Bundle systemBundle, Collection<Bundle> bundles)
 		throws InterruptedException {
@@ -81,14 +76,15 @@ public class FileInstallImplBundleActivator
 	}
 
 	@Override
-	public ArtifactListener addingService(
-		ServiceReference<ArtifactListener> serviceReference) {
+	public FileInstaller addingService(
+		ServiceReference<FileInstaller> serviceReference) {
 
-		ArtifactListener listener = _bundleContext.getService(serviceReference);
+		FileInstaller fileInstaller = _bundleContext.getService(
+			serviceReference);
 
-		_addListener(serviceReference, listener);
+		_addFileInstaller(serviceReference, fileInstaller);
 
-		return listener;
+		return fileInstaller;
 	}
 
 	public void deleted(String pid) {
@@ -103,16 +99,16 @@ public class FileInstallImplBundleActivator
 		}
 	}
 
-	public List<ArtifactListener> getListeners() {
-		synchronized (_listeners) {
-			List<ArtifactListener> artifactListeners = new ArrayList<>(
-				_listeners.values());
+	public List<FileInstaller> getFileInstallers() {
+		synchronized (_fileInstallers) {
+			List<FileInstaller> fileInstallers = new ArrayList<>(
+				_fileInstallers.values());
 
-			Collections.reverse(artifactListeners);
+			Collections.reverse(fileInstallers);
 
-			artifactListeners.add(_bundleTransformer);
+			fileInstallers.add(_bundleTransformer);
 
-			return artifactListeners;
+			return fileInstallers;
 		}
 	}
 
@@ -122,20 +118,20 @@ public class FileInstallImplBundleActivator
 
 	@Override
 	public void modifiedService(
-		ServiceReference<ArtifactListener> serviceReference,
-		ArtifactListener artifactListener) {
+		ServiceReference<FileInstaller> serviceReference,
+		FileInstaller fileInstaller) {
 
-		_removeListener(serviceReference, artifactListener);
+		_removeFileInstaller(serviceReference, fileInstaller);
 
-		_addListener(serviceReference, artifactListener);
+		_addFileInstaller(serviceReference, fileInstaller);
 	}
 
 	@Override
 	public void removedService(
-		ServiceReference<ArtifactListener> serviceReference,
-		ArtifactListener artifactListener) {
+		ServiceReference<FileInstaller> serviceReference,
+		FileInstaller fileInstaller) {
 
-		_removeListener(serviceReference, artifactListener);
+		_removeFileInstaller(serviceReference, fileInstaller);
 	}
 
 	public void start(BundleContext bundleContext) throws Exception {
@@ -152,23 +148,10 @@ public class FileInstallImplBundleActivator
 				URLStreamHandlerService.class.getName(), new JarDirUrlHandler(),
 				properties);
 
-			StringBundler sb = new StringBundler(10);
+			_fileInstallersTracker = new ServiceTracker(
+				bundleContext, FileInstaller.class, this);
 
-			sb.append("(|(");
-			sb.append(Constants.OBJECTCLASS);
-			sb.append(StringPool.EQUAL);
-			sb.append(ArtifactInstaller.class.getName());
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(Constants.OBJECTCLASS);
-			sb.append(StringPool.EQUAL);
-			sb.append(ArtifactUrlTransformer.class.getName());
-			sb.append("))");
-
-			_listenersTracker = new ServiceTracker(
-				bundleContext, FrameworkUtil.createFilter(sb.toString()), this);
-
-			_listenersTracker.open();
+			_fileInstallersTracker.open();
 
 			try {
 				_cmSupport = new ConfigAdminSupport(bundleContext, this);
@@ -255,8 +238,8 @@ public class FileInstallImplBundleActivator
 				}
 			}
 
-			if (_listenersTracker != null) {
-				_listenersTracker.close();
+			if (_fileInstallersTracker != null) {
+				_fileInstallersTracker.close();
 			}
 
 			if (_cmSupport != null) {
@@ -315,12 +298,12 @@ public class FileInstallImplBundleActivator
 		directoryWatcher.start();
 	}
 
-	private void _addListener(
-		ServiceReference<ArtifactListener> serviceReference,
-		ArtifactListener artifactListener) {
+	private void _addFileInstaller(
+		ServiceReference<FileInstaller> serviceReference,
+		FileInstaller fileInstaller) {
 
-		synchronized (_listeners) {
-			_listeners.put(serviceReference, artifactListener);
+		synchronized (_fileInstallers) {
+			_fileInstallers.put(serviceReference, fileInstaller);
 		}
 
 		Bundle bundle = serviceReference.getBundle();
@@ -334,16 +317,16 @@ public class FileInstallImplBundleActivator
 		}
 
 		for (DirectoryWatcher directoryWatcher : toNotify) {
-			directoryWatcher.addListener(artifactListener, currentStamp);
+			directoryWatcher.addFileInstaller(fileInstaller, currentStamp);
 		}
 	}
 
-	private void _removeListener(
-		ServiceReference<ArtifactListener> serviceReference,
-		ArtifactListener artifactListener) {
+	private void _removeFileInstaller(
+		ServiceReference<FileInstaller> serviceReference,
+		FileInstaller fileInstaller) {
 
-		synchronized (_listeners) {
-			_listeners.remove(serviceReference);
+		synchronized (_fileInstallers) {
+			_fileInstallers.remove(serviceReference);
 		}
 
 		List<DirectoryWatcher> toNotify = new ArrayList<>();
@@ -353,7 +336,7 @@ public class FileInstallImplBundleActivator
 		}
 
 		for (DirectoryWatcher directoryWatcher : toNotify) {
-			directoryWatcher.removeListener(artifactListener);
+			directoryWatcher.removeFileInstaller(fileInstaller);
 		}
 	}
 
@@ -375,13 +358,11 @@ public class FileInstallImplBundleActivator
 	}
 
 	private BundleContext _bundleContext;
-	private final BundleTransformer _bundleTransformer =
-		new BundleTransformer();
+	private final BundleInstaller _bundleTransformer = new BundleInstaller();
 	private Runnable _cmSupport;
-	private final Map<ServiceReference<ArtifactListener>, ArtifactListener>
-		_listeners = new TreeMap<>();
-	private ServiceTracker<ArtifactListener, ArtifactListener>
-		_listenersTracker;
+	private final Map<ServiceReference<FileInstaller>, FileInstaller>
+		_fileInstallers = new TreeMap<>();
+	private ServiceTracker<FileInstaller, FileInstaller> _fileInstallersTracker;
 	private final ReadWriteLock _lock = new ReentrantReadWriteLock();
 	private final Lock _readLock = _lock.readLock();
 	private volatile boolean _stopped;

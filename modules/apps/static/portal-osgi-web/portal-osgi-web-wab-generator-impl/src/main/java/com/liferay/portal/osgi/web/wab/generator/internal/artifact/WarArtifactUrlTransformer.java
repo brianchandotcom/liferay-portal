@@ -14,7 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.artifact;
 
-import com.liferay.portal.file.install.listener.ArtifactUrlTransformer;
+import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,14 +34,14 @@ import java.util.zip.ZipFile;
  * @author Miguel Pastor
  * @author Raymond Augé
  */
-public class WarArtifactUrlTransformer implements ArtifactUrlTransformer {
+public class WarArtifactUrlTransformer implements FileInstaller {
 
 	public WarArtifactUrlTransformer(AtomicBoolean portalIsReady) {
 		_portalIsReady = portalIsReady;
 	}
 
 	@Override
-	public boolean canHandle(File artifact) {
+	public boolean canTransformURL(File artifact) {
 		String name = artifact.getName();
 
 		if (!name.endsWith(".war")) {

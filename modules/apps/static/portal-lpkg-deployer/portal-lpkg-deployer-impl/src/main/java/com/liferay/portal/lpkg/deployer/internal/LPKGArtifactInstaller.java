@@ -18,7 +18,7 @@ import com.liferay.osgi.util.bundle.BundleStartLevelUtil;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.file.install.listener.ArtifactInstaller;
+import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -57,11 +57,11 @@ import org.osgi.service.url.URLStreamHandlerService;
 /**
  * @author Shuyang Zhou
  */
-@Component(immediate = true, service = ArtifactInstaller.class)
-public class LPKGArtifactInstaller implements ArtifactInstaller {
+@Component(immediate = true, service = FileInstaller.class)
+public class LPKGArtifactInstaller implements FileInstaller {
 
 	@Override
-	public boolean canHandle(File file) {
+	public boolean canInstall(File file) {
 		String name = StringUtil.toLowerCase(file.getName());
 
 		return name.endsWith(".lpkg");

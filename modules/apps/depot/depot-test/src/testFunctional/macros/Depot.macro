@@ -536,21 +536,15 @@ definition {
 		if (isSet(noApplication)) {
 			for (var applicationList : list "${applicationList}") {
 				AssertElementNotPresent(
-					key_portlet = "${applicationList}",
-					locator1 = "ProductMenu#PORTLET");
+					key_card = "${applicationList}",
+					locator1 = "LexiconCard#CARD");
 			}
 		}
 		else {
 			for (var applicationList : list "${applicationList}") {
-				if (IsElementPresent(locator1 = "ProductMenu#PRODUCT_MENU_CLOSED")) {
-					Click.clickNoSPARefresh(locator1 = "ProductMenu#TOGGLE");
-				}
-
-				ProductMenuHelper.expandCategory(category = "Content &amp; Data");
-
 				AssertVisible(
-					key_portlet = "${applicationList}",
-					locator1 = "ProductMenu#PORTLET");
+					key_card = "${applicationList}",
+					locator1 = "LexiconCard#CARD");
 			}
 		}
 	}

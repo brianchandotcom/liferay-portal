@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
@@ -692,8 +693,11 @@ class ResultRankingsForm extends Component {
 					onPublish={this._handlePublish}
 				/>
 
-				<div className="container-fluid container-fluid-max-xl container-form-lg result-rankings-container">
-					<div className="form-section-header sheet sheet-lg">
+				<ClayLayout.ContainerFluid
+					className="result-rankings-container"
+					formSize="lg"
+				>
+					<ClayLayout.Sheet className="form-section-header">
 						<label>{Liferay.Language.get('query')}</label>
 
 						<h2 className="sheet-title">{`${searchQuery}`}</h2>
@@ -707,9 +711,9 @@ class ResultRankingsForm extends Component {
 								onChange={this._handleUpdateAliases}
 							/>
 						</ErrorBoundary>
-					</div>
+					</ClayLayout.Sheet>
 
-					<div className="form-section-body sheet sheet-lg">
+					<ClayLayout.Sheet className="form-section-body">
 						<div className="results-title sheet-text">
 							{Liferay.Language.get('results')}
 						</div>
@@ -804,8 +808,8 @@ class ResultRankingsForm extends Component {
 								</ClayTabs.Content>
 							</div>
 						</ErrorBoundary>
-					</div>
-				</div>
+					</ClayLayout.Sheet>
+				</ClayLayout.ContainerFluid>
 
 				{showDebugger && (
 					<FormValueDebugger

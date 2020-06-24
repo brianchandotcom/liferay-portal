@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 import {useResource} from '@clayui/data-provider';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
@@ -294,7 +295,11 @@ function AddResultModal({
 			);
 		}
 
-		return <div className="add-result-sheet sheet">{emptyState}</div>;
+		return (
+			<ClayLayout.Sheet className="add-result-sheet">
+				{emptyState}
+			</ClayLayout.Sheet>
+		);
 	}
 
 	/**
@@ -328,9 +333,9 @@ function AddResultModal({
 
 		return (
 			<>
-				<div className="add-result-sheet sheet">
+				<ClayLayout.Sheet className="add-result-sheet">
 					<div className={classManagementBar}>
-						<div className="container-fluid container-fluid-max-xl">
+						<ClayLayout.ContainerFluid>
 							<ul className="navbar-nav navbar-nav-expand">
 								<li className="nav-item">
 									<ClayCheckbox
@@ -364,7 +369,7 @@ function AddResultModal({
 									</li>
 								)}
 							</ul>
-						</div>
+						</ClayLayout.ContainerFluid>
 					</div>
 
 					<ul className="list-group" data-testid="add-result-items">
@@ -387,7 +392,7 @@ function AddResultModal({
 							/>
 						))}
 					</ul>
-				</div>
+				</ClayLayout.Sheet>
 
 				<div className="add-result-container">
 					<ClayPaginationBarWithBasicItems
@@ -451,13 +456,13 @@ function AddResultModal({
 
 					<div className="add-result-scroller">
 						{loading && (
-							<div className="add-result-sheet sheet">
+							<ClayLayout.Sheet className="add-result-sheet">
 								<div className="sheet-title">
 									<div className="load-more-container">
 										<ClayLoadingIndicator />
 									</div>
 								</div>
-							</div>
+							</ClayLayout.Sheet>
 						)}
 
 						{!loading &&

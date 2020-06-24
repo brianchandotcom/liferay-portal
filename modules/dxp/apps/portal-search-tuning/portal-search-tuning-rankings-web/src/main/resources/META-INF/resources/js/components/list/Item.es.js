@@ -13,6 +13,7 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
 import getCN from 'classnames';
 import {PropTypes} from 'prop-types';
@@ -442,8 +443,8 @@ class Item extends PureComponent {
 				style={style}
 				tabIndex={0}
 			>
-				<div
-					className="autofit-col result-drag"
+				<ClayLayout.ContentCol
+					className="result-drag"
 					data-testid="DRAG_ICON"
 					style={{visibility: pinned ? 'visible' : 'hidden'}}
 				>
@@ -452,24 +453,24 @@ class Item extends PureComponent {
 							<ClayIcon symbol="drag" />
 						</span>
 					)}
-				</div>
+				</ClayLayout.ContentCol>
 
-				<div className="autofit-col">
+				<ClayLayout.ContentCol>
 					<ClayCheckbox
 						aria-label={Liferay.Language.get('select')}
 						checked={selected}
 						onChange={this._handleSelect}
 					/>
-				</div>
+				</ClayLayout.ContentCol>
 
-				<div className="autofit-col">
+				<ClayLayout.ContentCol>
 					<ClaySticker className={classSticker} displayType="light">
 						<ClayIcon symbol={icon ? icon : DEFAULT_ICON} />
 					</ClaySticker>
-				</div>
+				</ClayLayout.ContentCol>
 
-				<div className="autofit-col autofit-col-expand">
-					<section className="autofit-section">
+				<ClayLayout.ContentCol expand>
+					<ClayLayout.ContentSection containerElement="section">
 						<div className="list-group-title">
 							<span className="text-truncate-inline">
 								{viewURL ? (
@@ -516,10 +517,10 @@ class Item extends PureComponent {
 								{description}
 							</p>
 						)}
-					</section>
-				</div>
+					</ClayLayout.ContentSection>
+				</ClayLayout.ContentCol>
 
-				<div className="autofit-col">
+				<ClayLayout.ContentCol>
 					{pinned && <ResultPinIconDisplay />}
 
 					<div className="quick-action-menu">
@@ -568,7 +569,7 @@ class Item extends PureComponent {
 							pinned={pinned}
 						/>
 					)}
-				</div>
+				</ClayLayout.ContentCol>
 
 				{!isNil(clicks) && (
 					<div className="click-count list-group-text sticker-bottom-right">

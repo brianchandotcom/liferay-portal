@@ -55,10 +55,73 @@ export default withRouter(({history}) => {
 		},
 	});
 
+	useEffect(() => {
+		if (entity.title) {
+			client.cache.evict(`MessageBoardSection:${entity.id}`);
+		}
+		else {
+			client.cache.evict(`MessageBoardThread:${entity.id}`);
+		}
+		client.cache.gc();
+	}, [entity]);
+
+	const [showDeleteModalPanel, setShowDeleteModalPanel] = useState(false);
+
 	const historyPushParser = historyPushWithSlug(history.push);
 
 	const navigate = (data) => {
 		historyPushParser(`/questions/${data.graphQLNode.title}`);
+	};
+
+	const actions = (data) => {
+		const question = data.graphQLNode;
+
+		const actions = [
+			{
+				label: 'Unsubscribe',
+				onClick: () => {
+					setEntity({...data.graphQLNode});
+					unsubscribe({
+						variables: {
+							subscriptionId: data.id,
+						},
+					});
+				},
+			},
+		];
+
+		if (question.actions && question.actions.delete) {
+			actions.push({
+				label: 'Delete',
+				onClick: () => {
+					setShowDeleteModalPanel(true);
+				},
+			});
+		}
+
+		if (question.actions && question.actions.replace) {
+			actions.push({
+				label: 'Edit',
+				onClick: () => {
+					historyPushParser(
+						`/questions/${question.messageBoardSection.title}/${data.graphQLNode.friendlyUrlPath}/edit`
+					);
+				},
+			});
+		}
+
+		if (question.headline) {
+			actions.push({
+				label: 'Reply',
+				onClick: () => {
+					historyPushParser(
+						`/questions/${question.messageBoardSection.title}/${question.friendlyUrlPath}`
+					);
+				},
+			});
+		}
+
+		return actions;
 	};
 
 	return (

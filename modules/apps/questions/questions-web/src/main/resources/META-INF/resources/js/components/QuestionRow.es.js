@@ -29,7 +29,7 @@ import SectionLabel from './SectionLabel.es';
 import TagList from './TagList.es';
 import UserIcon from './UserIcon.es';
 
-export default ({currentSection, question, showSectionLabel, unsubscribe}) => (
+export default ({currentSection, items, question, showSectionLabel}) => (
 	<div className="c-mt-4 c-p-3 position-relative question-row text-secondary">
 		<div className="align-items-center d-flex flex-wrap justify-content-between">
 			<span>
@@ -76,18 +76,11 @@ export default ({currentSection, question, showSectionLabel, unsubscribe}) => (
 					/>
 				</li>
 
-				{unsubscribe && (
+				{items && items.length && (
 					<li>
 						<ClayDropDownWithItems
 							className="c-py-1"
-							items={[
-								{
-									label: 'Unsubscribe',
-									onClick: () => {
-										unsubscribe();
-									},
-								},
-							]}
+							items={items}
 							trigger={
 								<ClayButtonWithIcon
 									displayType="unstyled"

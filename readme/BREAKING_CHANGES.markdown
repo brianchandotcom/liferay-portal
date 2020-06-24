@@ -744,3 +744,38 @@ This change was made because blocking caches should never be enabled because of
 its bad performance.
 
 ---------------------------------------
+
+### Remove support of setting properties of cache for each entity model
+- **Date:** 2020-Jun-24
+- **JIRA Ticket:** [LPS-116049](https://issues.liferay.com/browse/LPS-116049)
+
+#### What changed?
+Remove support of setting the following properties of cache for a specific
+entity:
+
+`value.object.entity.cache.enabled`
+`value.object.finder.cache.enabled`
+`value.object.column.bitmask.enabled`
+
+For example the following properties are for entity
+`com.liferay.portal.kernel.model.User`:
+
+`value.object.entity.cache.enabled.com.liferay.portal.kernel.model.User`
+`value.object.finder.cache.enabled.com.liferay.portal.kernel.model.User`
+`value.object.column.bitmask.enabled.com.liferay.portal.kernel.model.User`
+
+#### Who is affected?
+
+This affects anyone using the properties listed above for a specific entity.
+
+#### How should I update my code?
+
+There's no direct replacement for the removed feature, please remove
+corresponding property settings directly.
+
+#### Why was this change made?
+
+This change was made because there is no good reason to set those properties
+for a specific entity.
+
+---------------------------------------

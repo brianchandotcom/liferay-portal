@@ -79,9 +79,8 @@ public class FinderCacheImplTest {
 	@Before
 	public void setUp() {
 		_finderPath = new FinderPath(
-			true, true, FinderCacheImplTest.class,
-			FinderCacheImplTest.class.getName(), "test",
-			new String[] {String.class.getName()});
+			FinderCacheImplTest.class, FinderCacheImplTest.class.getName(),
+			"test", new String[] {String.class.getName()});
 	}
 
 	@Test

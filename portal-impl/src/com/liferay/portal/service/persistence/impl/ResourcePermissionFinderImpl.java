@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.persistence.ResourcePermissionFinder;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.ResourcePermissionImpl;
-import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
@@ -60,8 +59,7 @@ public class ResourcePermissionFinderImpl
 
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_N_S_P_R_A =
 		new FinderPath(
-			ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
-			ResourcePermissionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			Long.class,
 			ResourcePermissionPersistenceImpl.
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 			"countByC_N_S_P_R_A",

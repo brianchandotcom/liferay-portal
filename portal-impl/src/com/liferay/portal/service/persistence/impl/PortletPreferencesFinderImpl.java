@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.persistence.PortletPreferencesUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
-import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.Serializable;
@@ -62,8 +61,6 @@ public class PortletPreferencesFinderImpl
 
 	public static final FinderPath FINDER_PATH_FIND_BY_C_G_O_O_P_P =
 		new FinderPath(
-			PortletPreferencesModelImpl.ENTITY_CACHE_ENABLED,
-			PortletPreferencesModelImpl.FINDER_CACHE_ENABLED,
 			PortletPreferencesImpl.class,
 			PortletPreferencesPersistenceImpl.
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,

@@ -59,7 +59,7 @@ import org.junit.runner.RunWith;
  * @author Alicia García
  */
 @RunWith(Arquillian.class)
-public class InfoFormValuesUpdaterTest {
+public class JournalArticleInfoFormValuesUpdaterTest {
 
 	@ClassRule
 	@Rule
@@ -115,7 +115,7 @@ public class InfoFormValuesUpdaterTest {
 					"test-journal-article-122.xlf"));
 
 		JournalArticle journalArticle =
-			_infoFormValuesUpdater.updateFromInfoFormValues(
+			_journalArticleInfoFormValuesUpdater.updateFromInfoFormValues(
 				article, infoItemFieldValues);
 
 		Assert.assertEquals(
@@ -160,7 +160,7 @@ public class InfoFormValuesUpdaterTest {
 			descriptionMap, contentMap, LocaleUtil.getSiteDefault(), false,
 			true, _serviceContext);
 
-		InfoFormValues infoFormValues =
+		InfoItemFieldValues infoItemFieldValues =
 			_xliffTranslationInfoFormValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
@@ -169,8 +169,8 @@ public class InfoFormValuesUpdaterTest {
 					"test-journal-article-122-ja-JP.xlf"));
 
 		JournalArticle journalArticle =
-			_infoFormValuesUpdater.updateFromInfoFormValues(
-				article, infoFormValues);
+			_journalArticleInfoFormValuesUpdater.updateFromInfoFormValues(
+				article, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
@@ -231,7 +231,7 @@ public class InfoFormValuesUpdaterTest {
 					"test-journal-article-122-only-title.xlf"));
 
 		JournalArticle journalArticle =
-			_infoFormValuesUpdater.updateFromInfoFormValues(
+			_journalArticleInfoFormValuesUpdater.updateFromInfoFormValues(
 				article, infoItemFieldValues);
 
 		Assert.assertEquals(
@@ -287,7 +287,7 @@ public class InfoFormValuesUpdaterTest {
 			_getContent(
 				article.getContent(), "name", LocaleUtil.US, LocaleUtil.JAPAN));
 
-		InfoFormValues infoFormValues =
+		InfoItemFieldValues infoItemFieldValues =
 			_xliffTranslationInfoFormValuesImporter.importXLIFF(
 				_group.getGroupId(),
 				new InfoItemClassPKReference(
@@ -296,8 +296,8 @@ public class InfoFormValuesUpdaterTest {
 					"test-journal-article-122-ja-JP.xlf"));
 
 		JournalArticle journalArticle =
-			_infoFormValuesUpdater.updateFromInfoFormValues(
-				article, infoFormValues);
+			_journalArticleInfoFormValuesUpdater.updateFromInfoFormValues(
+				article, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"これはタイトルです", journalArticle.getTitle(LocaleUtil.JAPAN));
@@ -362,8 +362,11 @@ public class InfoFormValuesUpdaterTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	@Inject
-	private InfoFormValuesUpdater _infoFormValuesUpdater;
+	@Inject(
+		filter = "model.class.name=com.liferay.journal.model.JournalArticle"
+	)
+	private InfoFormValuesUpdater<JournalArticle>
+		_journalArticleInfoFormValuesUpdater;
 
 	private ServiceContext _serviceContext;
 

@@ -97,9 +97,11 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, "articleId");
 
 				JournalArticle journalArticle =
-					_infoFormValuesUpdater.updateFromInfoFormValues(
-						_journalArticleService.getArticle(groupId, articleId),
-						infoItemFieldValues);
+					_journalArticleInfoFormValuesUpdater.
+						updateFromInfoFormValues(
+							_journalArticleService.getArticle(
+								groupId, articleId),
+							infoItemFieldValues);
 
 				int workflowAction = ParamUtil.getInteger(
 					actionRequest, "workflowAction",
@@ -158,8 +160,11 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference
-	private InfoFormValuesUpdater _infoFormValuesUpdater;
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private InfoFormValuesUpdater<JournalArticle>
+		_journalArticleInfoFormValuesUpdater;
 
 	@Reference
 	private JournalArticleService _journalArticleService;

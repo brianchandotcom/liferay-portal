@@ -4,8 +4,6 @@ definition {
 		var key_navItem = "${navItem}";
 		var key_index = "${count}";
 
-		AssertElementPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
-
 		AssertElementPresent(locator1 = "LexiconTable#TABLE_SESSION_ID");
 	}
 

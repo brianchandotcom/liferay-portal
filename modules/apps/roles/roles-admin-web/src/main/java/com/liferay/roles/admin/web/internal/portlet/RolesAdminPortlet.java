@@ -453,6 +453,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 				String[] groupIds = StringUtil.split(
 					ParamUtil.getString(actionRequest, "groupIds" + target));
 
+				groupIds = ArrayUtil.filter(groupIds, Validator::isNotNull);
 				groupIds = ArrayUtil.distinct(groupIds);
 
 				int scope = ResourceConstants.SCOPE_COMPANY;

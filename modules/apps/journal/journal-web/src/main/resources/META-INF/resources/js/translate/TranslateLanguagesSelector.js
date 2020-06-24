@@ -13,7 +13,6 @@
  */
 
 import React, {useEffect, useRef, useState} from 'react';
-import {addParams} from 'frontend-js-web';
 
 import LanguageSelector from './LanguageSelector';
 
@@ -37,10 +36,15 @@ const TranslateLanguagesSelector = ({
 	}
 
 	const refreshPage = (sourceId, targetId) => {
-		location.href = addParams(
-			namespace + 'sourceLocaleId=' + sourceId + '&' + namespace + 'targetLocaleId=' + targetId,
-			currentUrl
-		);
+		let url = new URL(currentUrl);
+		let search_params = url.searchParams;
+
+		search_params.set(namespace + 'sourceLocaleId', sourceId);
+		search_params.set(namespace + 'targetLocaleId', targetId);
+
+		url.search = search_params.toString();
+
+		location.href = url.toString();
 	};
 
 	return (

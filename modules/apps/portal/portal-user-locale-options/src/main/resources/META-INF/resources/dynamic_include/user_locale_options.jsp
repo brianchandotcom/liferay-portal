@@ -48,7 +48,11 @@ Locale userLocale = user.getLocale();
 		messageType: 'html',
 		onClose: function (data) {
 			if (data.event) {
-				Liferay.Util.Session.set('ignoreUserLocaleOptions', true);
+				Liferay.Util.Session.set(
+					'com.liferay.portal.user.locale.options_ignoreUserLocaleOptions',
+					true
+				);
+
 				Liferay.Util.Session.set('useHttpSession', true);
 			}
 		},

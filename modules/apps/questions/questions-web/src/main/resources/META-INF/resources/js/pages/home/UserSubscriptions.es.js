@@ -129,7 +129,7 @@ export default withRouter(({history}) => {
 			<NavigationBar />
 			<section className="questions-section questions-section-list">
 				<div className="c-p-5 questions-container row">
-					<div className="col-lg-8 offset-lg-2">
+					<div className="col-xl-8 offset-xl-2">
 						<h2 className="sheet-subtitle">Topics</h2>
 						<Topics />
 						<h2 className="mt-5 sheet-subtitle">Questions</h2>

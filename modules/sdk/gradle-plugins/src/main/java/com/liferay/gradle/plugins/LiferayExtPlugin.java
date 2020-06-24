@@ -34,6 +34,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.Convention;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.plugins.WarPluginConvention;
@@ -77,6 +78,15 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		// Plugins
 
 		_applyPlugins(project);
+
+		// Extensions
+
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		LiferayExtension liferayExtension = extensionContainer.getByType(
+			LiferayExtension.class);
+
+		_configureExtensionLiferay(liferayExtension);
 
 		// Configurations
 
@@ -166,8 +176,6 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 		// Other
 
-		_configureLiferay(project);
-
 		FileCollection fileCollection = project.files(
 			extKernelJarTaskProvider, extUtilBridgesJarTaskProvider,
 			extUtilJavaJarTaskProvider, extUtilTaglibJarTaskProvider);
@@ -204,9 +212,8 @@ public class LiferayExtPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, WarPlugin.class);
 	}
 
-	private void _configureLiferay(Project project) {
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+	private void _configureExtensionLiferay(
+		final LiferayExtension liferayExtension) {
 
 		liferayExtension.setDeployDir(
 			new Callable<File>() {

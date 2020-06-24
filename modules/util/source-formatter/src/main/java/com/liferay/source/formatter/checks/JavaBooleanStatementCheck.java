@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.parser.JavaTerm;
 
 import java.util.regex.Matcher;
@@ -86,6 +87,12 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
+			String variableName = matcher1.group(2);
+
+			if (_isInsideLambdaStatement(variableName, javaTermContent)) {
+				continue;
+			}
+
 			String criteria = matcher1.group(3);
 
 			String[] ternaryOperatorParts = getTernaryOperatorParts(criteria);
@@ -97,7 +104,7 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 
 				return _formatBooleanStatement(
 					javaTermContent, booleanStatement, matcher1.group(1),
-					matcher1.group(2), ifCondition, trueValue, falseValue);
+					variableName, ifCondition, trueValue, falseValue);
 			}
 
 			String strippedCriteria = _stripQuotesAndMethodParameters(criteria);
@@ -109,7 +116,7 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 
 				return _formatBooleanStatement(
 					javaTermContent, booleanStatement, matcher1.group(1),
-					matcher1.group(2), criteria, "true", "false");
+					variableName, criteria, "true", "false");
 			}
 
 			Matcher matcher2 = _relationalOperatorPattern.matcher(
@@ -118,11 +125,51 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 			if (matcher2.find()) {
 				return _formatBooleanStatement(
 					javaTermContent, booleanStatement, matcher1.group(1),
-					matcher1.group(2), criteria, "true", "false");
+					variableName, criteria, "true", "false");
 			}
 		}
 
 		return javaTermContent;
+	}
+
+	private boolean _isInsideLambdaStatement(
+		String variableName, String content) {
+
+		Matcher matcher = _lambdaPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher.end() - 1)) {
+				continue;
+			}
+
+			int lineNumber = getLineNumber(content, matcher.end() - 1);
+
+			String line = getLine(content, lineNumber);
+
+			if (line.matches(".*\\W" + variableName + "\\W.*")) {
+				return true;
+			}
+
+			int leadingTabCount = getLeadingTabCount(line);
+
+			while (true) {
+				lineNumber++;
+
+				line = getLine(content, lineNumber);
+
+				if ((line == null) ||
+					(getLeadingTabCount(line) <= leadingTabCount)) {
+
+					break;
+				}
+
+				if (line.matches(".*\\W" + variableName + "\\W.*")) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private String _stripQuotesAndMethodParameters(String s) {
@@ -168,6 +215,7 @@ public class JavaBooleanStatementCheck extends BaseJavaTermCheck {
 
 	private static final Pattern _booleanPattern = Pattern.compile(
 		"\n(\t+)boolean (\\w+) =(.*?);\n", Pattern.DOTALL);
+	private static final Pattern _lambdaPattern = Pattern.compile(" ->");
 	private static final Pattern _relationalOperatorPattern = Pattern.compile(
 		".* (==|!=|<|>|>=|<=)[ \n].*");
 

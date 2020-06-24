@@ -29,6 +29,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTreeElement;
@@ -90,8 +91,11 @@ public class LiferayExtPlugin implements Plugin<Project> {
 
 		// Configurations
 
-		Configuration portalConfiguration = GradleUtil.getConfiguration(
-			project, LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration portalConfiguration = configurationContainer.getByName(
+			LiferayBasePlugin.PORTAL_CONFIGURATION_NAME);
 
 		// Conventions
 

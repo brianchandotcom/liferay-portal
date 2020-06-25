@@ -49,7 +49,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"ddm.form.field.type.name=date", "ddm.form.field.type.name=text"
+		"ddm.form.field.type.name=color", "ddm.form.field.type.name=date",
+		"ddm.form.field.type.name=text"
 	},
 	service = DDMFormFieldTypeReportProcessor.class
 )

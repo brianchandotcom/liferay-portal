@@ -21,14 +21,15 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,8 +52,6 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	public List<KeyValuePair> getAvailableVocabularyNames() throws Exception {
-		List<KeyValuePair> availableVocabularyNames = new ArrayList<>();
-
 		String[] assetVocabularyNames = _getAssetVocabularyNames();
 
 		Arrays.sort(assetVocabularyNames);
@@ -60,49 +59,41 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		Set<String> availableAssetVocabularyNamesSet = SetUtil.fromArray(
 			_getAvailableAssetVocabularyNames());
 
-		for (String assetVocabularyName : availableAssetVocabularyNamesSet) {
-			if (Arrays.binarySearch(assetVocabularyNames, assetVocabularyName) <
-					0) {
+		Stream<String> stream = availableAssetVocabularyNamesSet.stream();
 
-				AssetVocabulary assetVocabulary =
-					_assetVocabularyLocalService.fetchGroupVocabulary(
-						_themeDisplay.getCompanyGroupId(), assetVocabularyName);
-
-				if (assetVocabulary == null) {
-					continue;
-				}
-
-				availableVocabularyNames.add(_toKeyValuePair(assetVocabulary));
-			}
-		}
-
-		return ListUtil.sort(
-			availableVocabularyNames, new KeyValuePairComparator(false, true));
+		return stream.filter(
+			assetVocabularyName ->
+				Arrays.binarySearch(assetVocabularyNames, assetVocabularyName) <
+					0
+		).map(
+			assetVocabularyName ->
+				_assetVocabularyLocalService.fetchGroupVocabulary(
+					_themeDisplay.getCompanyGroupId(), assetVocabularyName)
+		).filter(
+			Objects::nonNull
+		).map(
+			this::_toKeyValuePair
+		).sorted(
+			new KeyValuePairComparator(false, true)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	public List<KeyValuePair> getCurrentVocabularyNames() throws Exception {
-		List<KeyValuePair> currentVocabularyNames = new ArrayList<>();
-
-		for (String assetVocabularyName : _getAssetVocabularyNames()) {
-			AssetVocabulary assetVocabulary =
+		return Stream.of(
+			_getAssetVocabularyNames()
+		).map(
+			assetVocabularyName ->
 				_assetVocabularyLocalService.fetchGroupVocabulary(
-					_themeDisplay.getCompanyGroupId(), assetVocabularyName);
-
-			if (assetVocabulary == null) {
-				continue;
-			}
-
-			currentVocabularyNames.add(_toKeyValuePair(assetVocabulary));
-		}
-
-		return currentVocabularyNames;
-	}
-
-	private KeyValuePair _toKeyValuePair(AssetVocabulary assetVocabulary) {
-		return new KeyValuePair(
-			assetVocabulary.getName(),
-			HtmlUtil.escape(
-				assetVocabulary.getTitle(_themeDisplay.getLanguageId())));
+					_themeDisplay.getCompanyGroupId(), assetVocabularyName)
+		).filter(
+			Objects::nonNull
+		).map(
+			this::_toKeyValuePair
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private List<AssetVocabulary> _getAssetVocabularies() {
@@ -143,6 +134,13 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		}
 
 		return _availableAssetVocabularyNames;
+	}
+
+	private KeyValuePair _toKeyValuePair(AssetVocabulary assetVocabulary) {
+		return new KeyValuePair(
+			assetVocabulary.getName(),
+			HtmlUtil.escape(
+				assetVocabulary.getTitle(_themeDisplay.getLanguageId())));
 	}
 
 	private List<AssetVocabulary> _assetVocabularies;

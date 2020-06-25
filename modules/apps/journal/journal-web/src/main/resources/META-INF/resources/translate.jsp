@@ -38,7 +38,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(title);
 %>
 
-<aui:form name="translate_fm" onSubmit="event.preventDefault();">
+<aui:form name="translate_fm" onSubmit="event.preventDefault();" cssClass="translate-article">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">

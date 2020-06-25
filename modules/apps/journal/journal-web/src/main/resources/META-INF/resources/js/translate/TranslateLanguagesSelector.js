@@ -48,28 +48,36 @@ const TranslateLanguagesSelector = ({
 	};
 
 	return (
-		<div>
-			{Liferay.Language.get('translate-from')}
+		<div className="autofit-row autofit-row-center languages-selector">
+			<span className="autofit-col">
+				{Liferay.Language.get('translate-from')}
+			</span>
 
-			<LanguageSelector
-				defaultLanguageId={defaultLanguageId}
-				languageIds={sourceAvailableLanguages}
-				onChange={(value) => {
-					changeSourceLanguage(value);
-				}}
-				selectedLanguageId={sourceLanguageId}
-			/>
+			<span className="autofit-col">
+				<LanguageSelector
+					defaultLanguageId={defaultLanguageId}
+					languageIds={sourceAvailableLanguages}
+					onChange={(value) => {
+						changeSourceLanguage(value);
+					}}
+					selectedLanguageId={sourceLanguageId}
+				/>
+			</span>
 
-			{Liferay.Language.get('to')}
+			<span className="autofit-col">
+				{Liferay.Language.get('to')}
+			</span>
 
-			<LanguageSelector
-				defaultLanguageId={defaultLanguageId}
-				languageIds={targetAvailableLanguages}
-				onChange={(value) => {
-					changeTargetLanguage(value);
-				}}
-				selectedLanguageId={targetLanguageId}
-			/>
+			<span className="autofit-col">
+				<LanguageSelector
+					defaultLanguageId={defaultLanguageId}
+					languageIds={targetAvailableLanguages}
+					onChange={(value) => {
+						changeTargetLanguage(value);
+					}}
+					selectedLanguageId={targetLanguageId}
+				/>
+			</span>
 		</div>
 	);
 }

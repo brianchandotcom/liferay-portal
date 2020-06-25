@@ -67,6 +67,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.sort.FieldSort;
+import com.liferay.portal.search.sort.NestedSort;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portlet.asset.util.AssetSearcher;
 
 import java.io.Serializable;
@@ -553,8 +559,14 @@ public class AssetHelperImpl implements AssetHelper {
 			searchContext.setLike(true);
 		}
 
-		searchContext.setSorts(
-			_getSorts(assetEntryQuery, searchContext.getLocale()));
+		_searchRequestBuilderFactory.builder(
+			searchContext
+		).fetchSource(
+			true
+		).sorts(
+			_getSearchSorts(assetEntryQuery, searchContext.getLocale())
+		);
+
 		searchContext.setStart(start);
 
 		return assetSearcher;
@@ -592,11 +604,14 @@ public class AssetHelperImpl implements AssetHelper {
 		int sortType, Locale locale) {
 
 		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
-			StringBundler sb = new StringBundler(3);
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(DDMIndexer.DDM_FIELDS);
+			sb.append(StringPool.PERIOD);
 
 			try {
-				String indexType = sortField.split(
-					DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR)[1];
+				String indexType =
+					sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR)[1];
 
 				if (fieldLocalizable) {
 					sb.append(_ddmIndexer.getValueFieldName(indexType, locale));
@@ -638,6 +653,59 @@ public class AssetHelperImpl implements AssetHelper {
 		return sortField;
 	}
 
+	private com.liferay.portal.search.sort.Sort _getSearchSort(
+			String orderByType, String sortField, Locale locale)
+		throws Exception {
+
+		Sort sort = _getSort(orderByType, sortField, locale);
+
+		FieldSort fieldSort = _sorts.field(sort.getFieldName());
+
+		if (sort.isReverse()) {
+			fieldSort.setSortOrder(SortOrder.DESC);
+		}
+
+		if (!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+			return fieldSort;
+		}
+
+		NestedSort nestedSort = _sorts.nested(DDMIndexer.DDM_FIELDS);
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(sortField);
+
+		if (_getDDMFormFieldLocalizable(sortField)) {
+			sb.append(StringPool.UNDERLINE);
+			sb.append(LocaleUtil.toLanguageId(locale));
+		}
+
+		nestedSort.setFilterQuery(
+			_queries.term(
+				StringBundler.concat(
+					DDMIndexer.DDM_FIELDS, StringPool.PERIOD,
+					DDMIndexer.DDM_FIELD_NAME),
+				sb.toString()));
+
+		fieldSort.setNestedSort(nestedSort);
+
+		return fieldSort;
+	}
+
+	private com.liferay.portal.search.sort.Sort[] _getSearchSorts(
+			AssetEntryQuery assetEntryQuery, Locale locale)
+		throws Exception {
+
+		com.liferay.portal.search.sort.Sort sort1 = _getSearchSort(
+			assetEntryQuery.getOrderByType1(), assetEntryQuery.getOrderByCol1(),
+			locale);
+		com.liferay.portal.search.sort.Sort sort2 = _getSearchSort(
+			assetEntryQuery.getOrderByType2(), assetEntryQuery.getOrderByCol2(),
+			locale);
+
+		return new com.liferay.portal.search.sort.Sort[] {sort1, sort2};
+	}
+
 	private Sort _getSort(String orderByType, String sortField, Locale locale)
 		throws Exception {
 
@@ -658,19 +726,6 @@ public class AssetHelperImpl implements AssetHelper {
 				sortField, ddmFormFieldType, ddmFormFieldLocalizable, sortType,
 				locale),
 			!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX), orderByType);
-	}
-
-	private Sort[] _getSorts(AssetEntryQuery assetEntryQuery, Locale locale)
-		throws Exception {
-
-		Sort sort1 = _getSort(
-			assetEntryQuery.getOrderByType1(), assetEntryQuery.getOrderByCol1(),
-			locale);
-		Sort sort2 = _getSort(
-			assetEntryQuery.getOrderByType2(), assetEntryQuery.getOrderByCol2(),
-			locale);
-
-		return new Sort[] {sort1, sort2};
 	}
 
 	private int _getSortType(String fieldType) {
@@ -727,5 +782,14 @@ public class AssetHelperImpl implements AssetHelper {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private Queries _queries;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private Sorts _sorts;
 
 }

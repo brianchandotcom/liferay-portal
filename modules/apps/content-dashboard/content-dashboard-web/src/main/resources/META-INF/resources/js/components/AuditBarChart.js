@@ -106,15 +106,17 @@ export default function AuditBarChart({rtl, vocabularies}) {
 			style.type = 'text/css';
 
 			Object.entries(colors).forEach(([dataKey, color]) => {
-				style.textContent += `.custom-control-color-${dataKey}.custom-control-input:checked ~ 
-					.custom-control-label::before {
-						background-color: ${color};
-						border-color: ${color};
-				}
-				.custom-control-color-${dataKey}.custom-control-input:not(:checked) ~ 
-					.custom-control-label::before {
-						border-color: ${color};
-				}`;
+				style.textContent += `
+					.custom-control-color-${dataKey}.custom-control-input:checked ~ 
+						.custom-control-label::before {
+							background-color: ${color};
+							border-color: ${color};
+					}
+					.custom-control-color-${dataKey}.custom-control-input:not(:checked) ~ 
+						.custom-control-label::before {
+							border-color: ${color};
+					}
+				`;
 			});
 
 			document.head.appendChild(style);

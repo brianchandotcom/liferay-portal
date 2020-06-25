@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import {render} from 'frontend-js-react-web';
 import dom from 'metal-dom';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import './Modal.scss';
 import navigate from '../util/navigate.es';
@@ -103,7 +103,7 @@ const openPortletWindow = ({bodyCssClass, portlet, uri, ...otherProps}) => {
 const Modal = ({
 	bodyHTML,
 	buttons,
-	customEvents = [],
+	customEvents,
 	headerHTML,
 	height,
 	id,
@@ -183,7 +183,7 @@ const Modal = ({
 		}
 	};
 
-	const processClose = () => {
+	const processClose = useCallback(() => {
 		setVisible(false);
 
 		document.body.classList.remove('modal-open');
@@ -199,7 +199,7 @@ const Modal = ({
 		if (onClose) {
 			onClose();
 		}
-	};
+	}, [eventHandlersRef, onClose]);
 
 	const Body = ({html}) => {
 		const bodyRef = useRef();
@@ -239,15 +239,20 @@ const Modal = ({
 			eventHandlers.push(selectEventHandler);
 		}
 
-		customEvents.forEach((customEvent) => {
-			if (customEvent.name && customEvent.onEvent) {
-				const eventHandler = Liferay.on(customEvent.name, (event) => {
-					customEvent.onEvent(event);
-				});
+		if (customEvents) {
+			customEvents.forEach((customEvent) => {
+				if (customEvent.name && customEvent.onEvent) {
+					const eventHandler = Liferay.on(
+						customEvent.name,
+						(event) => {
+							customEvent.onEvent(event);
+						}
+					);
 
-				eventHandlers.push(eventHandler);
-			}
-		});
+					eventHandlers.push(eventHandler);
+				}
+			});
+		}
 
 		const closeEventHandler = Liferay.on('closeModal', (event) => {
 			if (event.id && id && event.id !== id) {
@@ -270,8 +275,16 @@ const Modal = ({
 
 			eventHandlers.splice(0, eventHandlers.length);
 		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [
+		customEvents,
+		eventHandlersRef,
+		id,
+		onClose,
+		onOpen,
+		onSelect,
+		processClose,
+		selectEventName,
+	]);
 
 	return (
 		<>

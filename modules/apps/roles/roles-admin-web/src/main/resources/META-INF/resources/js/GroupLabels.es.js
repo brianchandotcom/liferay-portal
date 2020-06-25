@@ -25,7 +25,9 @@ function GroupLabels({itemSelectorURL, portletNamespace, target}) {
 		setGroupIds(
 			document[`${portletNamespace}fm`][
 				`${portletNamespace}groupIds${target}`
-			].value.split(',')
+			].value
+				.split(',')
+				.filter((groupId) => !!groupId)
 		);
 		setGroupNames(
 			document[`${portletNamespace}fm`][

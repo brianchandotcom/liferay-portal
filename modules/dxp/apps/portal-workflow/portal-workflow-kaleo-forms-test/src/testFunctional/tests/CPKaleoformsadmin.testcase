@@ -1645,6 +1645,7 @@ definition {
 
 	@priority = "3"
 	test EditSingleApproverWorkflowViaViewTabViaAddProcess {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditSingleApproverWorkflowViaViewTabViaAddProcess";
 
 		Navigator.openURL();
@@ -1723,6 +1724,7 @@ definition {
 
 	@priority = "4"
 	test EditUploadedWorkflowViaViewTabViaAddProcess {
+		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CPKaleoformsadmin#EditUploadedWorkflowViaViewTabViaAddProcess";
 
 		GlobalMenu.gotoPortlet(

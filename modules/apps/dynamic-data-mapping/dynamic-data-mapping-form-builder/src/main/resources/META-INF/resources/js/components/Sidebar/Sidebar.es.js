@@ -1180,6 +1180,7 @@ class Sidebar extends Component {
 						<li class="tbar-item">
 							<ClayButton
 								disabled={this.isActionsDisabled()}
+								elementClasses="nav-link"
 								events={previousButtonEvents}
 								icon="angle-left"
 								ref="previousButton"

@@ -130,7 +130,7 @@ describe('EditApp', () => {
 		const deployButton = getByText('deploy');
 		const nameInput = getByPlaceholderText('untitled-app');
 
-		expect(queryByText('configuration')).toBeTruthy();
+		expect(queryByText('step-configuration')).toBeTruthy();
 		expect(queryByText('new-workflow-powered-app')).toBeTruthy();
 		expect(queryByText('cancel')).toBeTruthy();
 
@@ -142,7 +142,7 @@ describe('EditApp', () => {
 		const backButton = getByTestId('back-button');
 		const sidebarHeader = document.querySelector('div.tab-title');
 
-		expect(queryByText('configuration')).toBeNull();
+		expect(queryByText('step-configuration')).toBeNull();
 		expect(sidebarHeader).toHaveTextContent('data-and-views');
 		expect(sidebarHeader).toContainElement(backButton);
 
@@ -196,12 +196,35 @@ describe('EditApp', () => {
 			name: {
 				en_US: 'Test',
 			},
-			scope: 'workflow',
+			scope: 'standard',
 			siteId: 20124,
 			userId: 20126,
 		};
 
+		const workflow = {
+			appId: 123,
+			appWorkflowStates: [
+				{
+					appWorkflowTransitions: [
+						{
+							name: 'submit',
+							primary: true,
+							transitionTo: 'Final Step',
+						},
+					],
+					initial: true,
+					name: 'Initial Step',
+				},
+				{
+					appWorkflowTransitions: [],
+					initial: false,
+					name: 'Final Step',
+				},
+			],
+		};
+
 		fetch.mockResponseOnce(JSON.stringify(app));
+		fetch.mockResponseOnce(JSON.stringify(workflow));
 		fetch.mockResponseOnce(JSON.stringify(customObjectItems));
 		fetch.mockResponseOnce(JSON.stringify(nativeObjectItems));
 		fetch.mockResponseOnce(JSON.stringify(formViewItems));

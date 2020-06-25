@@ -16,6 +16,9 @@ package com.liferay.archived.modules.upgrade.internal;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  * @author Sam Ziemer
  */
@@ -23,13 +26,37 @@ public class UpgradeDictionary extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(connection, "23");
+		PreparedStatement ps = connection.prepareStatement(
+			"select * from Portlet where portletId = '23'");
 
-		runSQL("delete from Portlet where portletId = '23'");
+		ResultSet rs = ps.executeQuery();
 
-		runSQL("delete from PortletPreferences where portletId = '23'");
+		if (rs.next()) {
+			LayoutTypeSettingsUtil.removePortletId(connection, "23");
 
-		runSQL("delete from ResourcePermission where name = '23'");
+			runSQL("delete from Portlet where portletId = '23'");
+
+			runSQL("delete from PortletPreferences where portletId = '23'");
+
+			runSQL("delete from ResourcePermission where name = '23'");
+		}
+		else {
+			LayoutTypeSettingsUtil.removePortletId(
+				connection,
+				"com_liferay_dictionary_web_portlet_DictionaryPortlet");
+
+			runSQL(
+				"delete from Portlet where portletId = " +
+					"'com_liferay_dictionary_web_portlet_DictionaryPortlet'");
+
+			runSQL(
+				"delete from PortletPreferences where portletId = " +
+					"'com_liferay_dictionary_web_portlet_DictionaryPortlet'");
+
+			runSQL(
+				"delete from ResourcePermission where name = " +
+					"'com_liferay_dictionary_web_portlet_DictionaryPortlet'");
+		}
 	}
 
 }

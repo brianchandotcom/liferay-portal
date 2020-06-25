@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="JavaLongLinesCheck" files="src/main/java/com/liferay/archived/modules/upgrade/internal/UpgradePortalDirectory\.java" />
+	</source-check>
+</suppressions>

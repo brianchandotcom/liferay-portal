@@ -54,7 +54,9 @@ const TranslateLanguagesSelector = ({
 				/>
 			</span>
 
-			<span className="autofit-col">{Liferay.Language.get('to')}</span>
+			<span className="autofit-col">
+				{Liferay.Language.get('to').toLowerCase()}
+			</span>
 
 			<span className="autofit-col">
 				<LanguageSelector

@@ -27,7 +27,10 @@ export function getResponsiveColumnSize(config, viewportSize) {
 			viewportSize
 		);
 
-		if (viewportSize === VIEWPORT_SIZES.desktop) {
+		if (
+			viewportSize === VIEWPORT_SIZES.desktop ||
+			viewportSizePosition === -1
+		) {
 			return VIEWPORT_SIZES.desktop;
 		}
 

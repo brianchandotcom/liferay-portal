@@ -27,14 +27,6 @@ const TranslateLanguagesSelector = ({
 }) => {
 	const namespace = `_${portletNamespace}_`;
 
-	const changeSourceLanguage = (value) => {
-		refreshPage(value, targetLanguageId);
-	};
-
-	const changeTargetLanguage = (value) => {
-		refreshPage(sourceLanguageId, value);
-	};
-
 	const refreshPage = (sourceId, targetId) => {
 		const url = new URL(currentUrl);
 		const search_params = url.searchParams;
@@ -58,7 +50,7 @@ const TranslateLanguagesSelector = ({
 					defaultLanguageId={defaultLanguageId}
 					languageIds={sourceAvailableLanguages}
 					onChange={(value) => {
-						changeSourceLanguage(value);
+						refreshPage(value, targetLanguageId);
 					}}
 					selectedLanguageId={sourceLanguageId}
 				/>
@@ -71,7 +63,7 @@ const TranslateLanguagesSelector = ({
 					defaultLanguageId={defaultLanguageId}
 					languageIds={targetAvailableLanguages}
 					onChange={(value) => {
-						changeTargetLanguage(value);
+						refreshPage(sourceLanguageId, value);
 					}}
 					selectedLanguageId={targetLanguageId}
 				/>

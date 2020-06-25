@@ -198,6 +198,12 @@ definition {
 			workflowDefinitionTitle = "${workflowDefinitionTitle}");
 	}
 
+	macro closeWorkflowModal {
+		SelectFrame(value1 = "relative=top");
+
+		Click(locator1 = "KaleoFormsAdmin#CLOSE_BUTTON");
+	}
+
 	macro deactivateWorkflow {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Unpublish",

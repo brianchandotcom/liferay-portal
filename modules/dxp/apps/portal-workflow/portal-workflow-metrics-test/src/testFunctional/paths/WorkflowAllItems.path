@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>WORKFLOW_ALL_ITEMS_FILTER_BY_ASSIGNEE_VALUE</td>
-	<td>//div[@class='dropdown-menu show dropdown-menu-left']/ul[@class='list-unstyled']//li[contains(.,'${assigneeName}')]</td>
+	<td>//div[@class='dropdown-menu show dropdown-menu-left']/ul[@class='list-unstyled']//span[contains(.,'${assigneeName}')]</td>
 	<td></td>
 </tr>
 <tr>

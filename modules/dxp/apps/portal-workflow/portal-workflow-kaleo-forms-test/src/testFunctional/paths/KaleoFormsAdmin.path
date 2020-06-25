@@ -24,6 +24,12 @@
 	<td>//div[contains(@class,'empty-result')]//div[contains(text(),'There are no unpublished definitions.')]</td>
 	<td></td>
 </tr>
+<!--WORKFLOW_MODAL-->
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[contains(@aria-label,'close')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

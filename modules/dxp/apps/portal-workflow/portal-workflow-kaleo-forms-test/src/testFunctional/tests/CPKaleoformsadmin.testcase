@@ -2860,7 +2860,7 @@ definition {
 
 		Workflow.saveDefinition();
 
-		IFrame.closeFrame();
+		KaleoFormsAdmin.closeWorkflowModal();
 
 		KaleoFormsAdmin.editWorkflowDraft(workflowDefinitionTitle = "Workflow Definition Title");
 
@@ -2868,7 +2868,7 @@ definition {
 
 		Workflow.saveDefinition();
 
-		IFrame.closeFrame();
+		KaleoFormsAdmin.closeWorkflowModal();
 
 		KaleoFormsAdmin.deleteWorkflowDraft(workflowDefinitionTitle = "Workflow Definition Title");
 

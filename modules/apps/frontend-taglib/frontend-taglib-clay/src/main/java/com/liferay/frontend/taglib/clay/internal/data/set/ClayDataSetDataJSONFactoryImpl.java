@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.internal.data.set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -109,5 +110,22 @@ public class ClayDataSetDataJSONFactoryImpl
 	@Reference
 	private ClayDataSetActionProviderRegistry
 		_clayDataSetActionProviderRegistry;
+
+	private class ClayDataSetResponse {
+
+		public ClayDataSetResponse(
+			List<ClayDataSetDataRow> clayDataSetRows, int total) {
+
+			_clayDataSetRows = clayDataSetRows;
+			_total = total;
+		}
+
+		@JsonProperty("rows")
+		private final List<ClayDataSetDataRow> _clayDataSetRows;
+
+		@JsonProperty("total")
+		private final int _total;
+
+	}
 
 }

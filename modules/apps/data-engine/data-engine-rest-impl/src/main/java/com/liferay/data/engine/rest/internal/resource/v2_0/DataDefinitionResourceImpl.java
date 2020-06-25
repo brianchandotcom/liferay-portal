@@ -21,9 +21,6 @@ import com.liferay.data.engine.content.type.DataDefinitionContentType;
 import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.data.engine.model.DEDataDefinitionFieldLink;
 import com.liferay.data.engine.model.DEDataListView;
-import com.liferay.data.engine.nativeobject.DataEngineNativeObject;
-import com.liferay.data.engine.nativeobject.DataEngineNativeObjectField;
-import com.liferay.data.engine.nativeobject.tracker.DataEngineNativeObjectTracker;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionField;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
@@ -46,7 +43,6 @@ import com.liferay.data.engine.service.DEDataDefinitionFieldLinkLocalService;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
-import com.liferay.dynamic.data.mapping.exception.NoSuchStructureException;
 import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.form.builder.rule.DDMFormRuleDeserializer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
@@ -81,7 +77,6 @@ import com.liferay.dynamic.data.mapping.util.comparator.StructureNameComparator;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
-import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -102,8 +97,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -123,17 +116,12 @@ import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.sql.Types;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -336,72 +324,6 @@ public class DataDefinitionResourceImpl
 				LanguageUtil.format(
 					contextAcceptLanguage.getPreferredLocale(),
 					"page-size-is-greater-than-x", 250));
-		}
-
-		if (Objects.equals(contentType, "native-object") &&
-			Validator.isNull(keywords)) {
-
-			for (DataEngineNativeObject dataEngineNativeObject :
-					_dataEngineNativeObjectTracker.
-						getDataEngineNativeObjects()) {
-
-				DataDefinition dataDefinition = null;
-
-				try {
-					dataDefinition =
-						getSiteDataDefinitionByContentTypeByDataDefinitionKey(
-							siteId, "native-object",
-							dataEngineNativeObject.getClassName());
-				}
-				catch (Exception exception) {
-					if (!(exception instanceof NoSuchStructureException) &&
-						!(exception.getCause() instanceof
-							NoSuchStructureException)) {
-
-						throw exception;
-					}
-
-					dataDefinition = new DataDefinition() {
-						{
-							availableLanguageIds = new String[] {
-								contextAcceptLanguage.getPreferredLanguageId()
-							};
-							dataDefinitionKey =
-								dataEngineNativeObject.getClassName();
-							storageType = "json";
-						}
-					};
-				}
-
-				dataDefinition.setDataDefinitionFields(
-					_toDataDefinitionFields(
-						Optional.ofNullable(
-							dataDefinition.getDataDefinitionFields()
-						).orElse(
-							new DataDefinitionField[0]
-						),
-						dataEngineNativeObject.
-							getDataEngineNativeObjectFields()));
-				dataDefinition.setName(
-					HashMapBuilder.<String, Object>putAll(
-						Optional.ofNullable(
-							dataDefinition.getName()
-						).orElse(
-							new HashMap<>()
-						)
-					).put(
-						contextAcceptLanguage.getPreferredLanguageId(),
-						dataEngineNativeObject.getName()
-					).build());
-
-				if (Validator.isNull(dataDefinition.getId())) {
-					postDataDefinitionByContentType(
-						"native-object", dataDefinition);
-				}
-				else {
-					putDataDefinition(dataDefinition.getId(), dataDefinition);
-				}
-			}
 		}
 
 		if (ArrayUtil.isEmpty(sorts)) {
@@ -962,35 +884,6 @@ public class DataDefinitionResourceImpl
 		);
 	}
 
-	private String _getFieldType(String customType, int sqlType) {
-		if (ArrayUtil.contains(_BASIC_FIELD_TYPES, customType)) {
-			return customType;
-		}
-
-		String type = "text";
-
-		if (sqlType == Types.ARRAY) {
-			type = "select";
-		}
-		else if (sqlType == Types.BOOLEAN) {
-			type = "radio";
-		}
-		else if ((sqlType == Types.BIGINT) || (sqlType == Types.DECIMAL) ||
-				 (sqlType == Types.DOUBLE) || (sqlType == Types.FLOAT) ||
-				 (sqlType == Types.INTEGER) || (sqlType == Types.NUMERIC) ||
-				 (sqlType == Types.TINYINT)) {
-
-			type = "numeric";
-		}
-		else if ((sqlType == Types.DATE) || (sqlType == Types.TIME) ||
-				 (sqlType == Types.TIMESTAMP)) {
-
-			type = "date";
-		}
-
-		return type;
-	}
-
 	private JSONObject _getFieldTypeMetadataJSONObject(
 		String ddmFormFieldName, ResourceBundle resourceBundle) {
 
@@ -1363,91 +1256,6 @@ public class DataDefinitionResourceImpl
 			_spiDDMFormRuleConverter);
 	}
 
-	private DataDefinitionField[] _toDataDefinitionFields(
-			DataDefinitionField[] dataDefinitionFields,
-			List<DataEngineNativeObjectField> dataEngineNativeObjectFields)
-		throws Exception {
-
-		if (ListUtil.isEmpty(dataEngineNativeObjectFields)) {
-			return new DataDefinitionField[0];
-		}
-
-		List<DataDefinitionField> list = new ArrayList<>();
-
-		for (DataEngineNativeObjectField dataEngineNativeObjectField :
-				dataEngineNativeObjectFields) {
-
-			Column<?, ?> column = dataEngineNativeObjectField.getColumn();
-
-			DataDefinitionField dataDefinitionField = Stream.of(
-				dataDefinitionFields
-			).filter(
-				field -> Objects.equals(column.getName(), field.getName())
-			).findFirst(
-			).orElse(
-				new DataDefinitionField() {
-					{
-						customProperties = HashMapBuilder.<String, Object>put(
-							"fieldNamespace", StringPool.BLANK
-						).put(
-							"nativeField", true
-						).build();
-						defaultValue = HashMapBuilder.<String, Object>put(
-							contextAcceptLanguage.getPreferredLanguageId(),
-							StringPool.BLANK
-						).build();
-						label = HashMapBuilder.<String, Object>put(
-							contextAcceptLanguage.getPreferredLanguageId(),
-							GetterUtil.getString(
-								dataEngineNativeObjectField.getCustomName(),
-								column.getName())
-						).build();
-						localizable = true;
-						name = column.getName();
-						tip = HashMapBuilder.<String, Object>put(
-							contextAcceptLanguage.getPreferredLanguageId(),
-							StringPool.BLANK
-						).build();
-					}
-				}
-			);
-
-			dataDefinitionField.setFieldType(
-				_getFieldType(
-					dataEngineNativeObjectField.getCustomType(),
-					column.getSQLType()));
-			dataDefinitionField.setRequired(!column.isNullAllowed());
-
-			if (Objects.equals(
-					dataDefinitionField.getFieldType(), "checkbox_multiple") ||
-				Objects.equals(dataDefinitionField.getFieldType(), "radio") ||
-				Objects.equals(dataDefinitionField.getFieldType(), "select")) {
-
-				Map<String, Object> customProperties =
-					dataDefinitionField.getCustomProperties();
-
-				if (MapUtil.isEmpty((Map)customProperties.get("options"))) {
-					customProperties.put(
-						"options",
-						HashMapBuilder.<String, Object>put(
-							contextAcceptLanguage.getPreferredLanguageId(),
-							new String[] {
-								JSONUtil.put(
-									"label", "Option"
-								).put(
-									"value", "option"
-								).toJSONString()
-							}
-						).build());
-				}
-			}
-
-			list.add(dataDefinitionField);
-		}
-
-		return list.toArray(new DataDefinitionField[0]);
-	}
-
 	private DataDefinitionValidationException
 		_toDataDefinitionValidationException(
 			DDMFormValidationException ddmFormValidationException) {
@@ -1763,10 +1571,6 @@ public class DataDefinitionResourceImpl
 		}
 	}
 
-	private static final String[] _BASIC_FIELD_TYPES = {
-		"checkbox_multiple", "date", "numeric", "radio", "select", "text"
-	};
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataDefinitionResourceImpl.class);
 
@@ -1779,9 +1583,6 @@ public class DataDefinitionResourceImpl
 	@Reference
 	private DataDefinitionModelResourcePermission
 		_dataDefinitionModelResourcePermission;
-
-	@Reference
-	private DataEngineNativeObjectTracker _dataEngineNativeObjectTracker;
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

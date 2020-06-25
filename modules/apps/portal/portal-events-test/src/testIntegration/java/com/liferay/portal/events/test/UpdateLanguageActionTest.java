@@ -143,10 +143,8 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = urls[1];
 
 		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
-		_assertRedirect(_targetLocalePrepend + bareDefaultURL, bareSourceURL);
-		_assertRedirect(
-			_targetLocalePrepend + bareDefaultURL,
-			_sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(bareDefaultURL, bareSourceURL);
+		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
@@ -160,10 +158,8 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = urls[1];
 
 		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
-		_assertRedirect(_targetLocalePrepend + bareDefaultURL, bareSourceURL);
-		_assertRedirect(
-			_targetLocalePrepend + bareDefaultURL,
-			_sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(bareDefaultURL, bareSourceURL);
+		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
@@ -207,10 +203,8 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = urls[1];
 
 		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
-		_assertRedirect(_targetLocalePrepend + bareDefaultURL, bareSourceURL);
-		_assertRedirect(
-			_targetLocalePrepend + bareDefaultURL,
-			_sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(bareDefaultURL, bareSourceURL);
+		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
@@ -224,10 +218,8 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = urls[1];
 
 		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
-		_assertRedirect(_targetLocalePrepend + bareDefaultURL, bareSourceURL);
-		_assertRedirect(
-			_targetLocalePrepend + bareDefaultURL,
-			_sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(bareDefaultURL, bareSourceURL);
+		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
@@ -371,10 +363,8 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = urls[1];
 
 		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
-		_assertRedirect(_targetLocalePrepend + bareDefaultURL, bareSourceURL);
-		_assertRedirect(
-			_targetLocalePrepend + bareDefaultURL,
-			_sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(bareDefaultURL, bareSourceURL);
+		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
@@ -388,10 +378,8 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = urls[1];
 
 		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
-		_assertRedirect(_targetLocalePrepend + bareDefaultURL, bareSourceURL);
-		_assertRedirect(
-			_targetLocalePrepend + bareDefaultURL,
-			_sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(bareDefaultURL, bareSourceURL);
+		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
@@ -435,10 +423,8 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = urls[1];
 
 		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 1;
-		_assertRedirect(_targetLocalePrepend + bareDefaultURL, bareSourceURL);
-		_assertRedirect(
-			_targetLocalePrepend + bareDefaultURL,
-			_sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(bareDefaultURL, bareSourceURL);
+		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test
@@ -452,10 +438,8 @@ public class UpdateLanguageActionTest {
 		String bareDefaultURL = urls[1];
 
 		PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE = 2;
-		_assertRedirect(_targetLocalePrepend + bareDefaultURL, bareSourceURL);
-		_assertRedirect(
-			_targetLocalePrepend + bareDefaultURL,
-			_sourceLocalePrepend + bareSourceURL);
+		_assertRedirect(bareDefaultURL, bareSourceURL);
+		_assertRedirect(bareDefaultURL, _sourceLocalePrepend + bareSourceURL);
 	}
 
 	@Test

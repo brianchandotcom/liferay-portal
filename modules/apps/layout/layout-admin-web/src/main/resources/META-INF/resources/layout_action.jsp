@@ -102,6 +102,14 @@ Layout curLayout = (Layout)row.getObject();
 			url="<%= layoutsAdminDisplayContext.getDiscardDraftURL(curLayout) %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= layoutsAdminDisplayContext.isShowViewCollectionItemsAction(curLayout) %>">
+		<liferay-ui:icon
+			cssClass="view-collection-items-action-option"
+			message="view-collection-items"
+			url="javascript:;"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>
 
 <aui:script require="metal-dom/src/all/dom as dom">
@@ -119,8 +127,23 @@ Layout curLayout = (Layout)row.getObject();
 		}
 	);
 
+	var viewCollectionItemsActionOptionQueryClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'.<portlet:namespace />view-collection-items-action-option',
+		function (event) {
+			Liferay.Util.openModal({
+				id: '<portlet:namespace />viewCollectionItemsDialog',
+				title: '<liferay-ui:message key="collection-items" />',
+				url:
+					'<%= layoutsAdminDisplayContext.getViewCollectionItemsURL(layout) %>',
+			});
+		}
+	);
+
 	function handleDestroyPortlet() {
 		addLayoutPrototypeActionOptionQueryClickHandler.removeListener();
+		viewCollectionItemsActionOptionQueryClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

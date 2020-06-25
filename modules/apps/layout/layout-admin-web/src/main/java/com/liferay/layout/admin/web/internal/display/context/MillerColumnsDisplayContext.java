@@ -673,6 +673,23 @@ public class MillerColumnsDisplayContext {
 				));
 		}
 
+		if (_layoutsAdminDisplayContext.isShowViewCollectionItemsAction(
+				layout)) {
+
+			jsonArray.put(
+				JSONUtil.put(
+					"id", "viewCollectionItems"
+				).put(
+					"label",
+					LanguageUtil.get(
+						_httpServletRequest, "view-collection-items")
+				).put(
+					"url",
+					_layoutsAdminDisplayContext.getViewCollectionItemsURL(
+						layout)
+				));
+		}
+
 		return jsonArray;
 	}
 

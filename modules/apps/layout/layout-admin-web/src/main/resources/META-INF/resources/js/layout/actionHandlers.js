@@ -49,6 +49,14 @@ const actionHandlers = {
 			url: actionURL,
 		});
 	},
+
+	viewCollectionItems: ({actionURL, namespace}) => {
+		openModal({
+			id: `${namespace}viewCollectionItemsDialog`,
+			title: Liferay.Language.get('collection-items'),
+			url: actionURL,
+		});
+	},
 };
 
 export default actionHandlers;

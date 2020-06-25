@@ -15,7 +15,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup} from '@testing-library/react';
 
-import {updateNewLayoutDataContext} from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/ColumnWithControls';
+import {updateNewLayoutDataContext} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/layout-data-items/ColumnWithControls';
 
 const LAYOUT_DATA = {
 	deletedItems: [],

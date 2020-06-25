@@ -196,6 +196,66 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	test SearchWithSynonyms {
+		property test.name.skip.portal.instance = "CrossClusterReplicationES7#SearchWithSynonyms";
+
+		OSGiConfig.deployOSGiConfigs(
+			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config",
+			OSGiConfigs = "operationMode=&quot;REMOTE&quot;,logExceptionsOnly=&quot;true&quot;");
+
+		OSGiConfig.deployOSGiConfigs(
+			OSGiConfigFileName = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration-default_ccr.config",
+			OSGiConfigs = "active=&quot;true&quot;,connectionId=&quot;ccr&quot;,networkHostAddresses=[&quot;http://localhost:9202&quot;]");
+
+		AntCommand(
+			locator1 = "build-test-elasticsearch7.xml",
+			value1 = "create-follower-indices");
+
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "System Settings");
+
+		SystemSettings.gotoConfiguration(
+			configurationCategory = "Search",
+			configurationName = "Cross-Cluster Replication",
+			configurationScope = "System Scope");
+
+		SystemSettings.configureCrossClusterReplication(ccrLocalClusterConnectionID = "ccr");
+
+		for (var title : list "banana,red apple") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Guest",
+				title = "${title}");
+		}
+
+		GlobalMenu.gotoPortlet(
+			category = "Search Tuning",
+			panel = "Applications",
+			portlet = "Synonyms");
+
+		SearchTuning.addSynonymSet(synonyms = "banana,red apple,fruit");
+
+		AssertElementPresent(
+			key_synonyms = "banana, red apple, fruit",
+			locator1 = "SearchTuning#SYNONYMS_ENTRY");
+
+		Navigator.openURL();
+
+		Pause(locator1 = "70000");
+
+		var searchTerms = "banana,red apple,fruit";
+
+		for (var searchTerm : list "${searchTerms}") {
+			SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+
+			SearchResultPortlet.viewMultipleSearchResults(
+				resultsList = "banana/Web Content Article,red apple/Web Content Article",
+				searchTerm = "${searchTerm}");
+		}
+	}
+
 	@priority = "5"
 	test Smoke {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration.config";

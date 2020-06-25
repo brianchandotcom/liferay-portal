@@ -17,15 +17,20 @@ package com.liferay.headless.portal.instances.internal.resource.v1_0;
 import com.liferay.headless.portal.instances.dto.v1_0.PortalInstance;
 import com.liferay.headless.portal.instances.resource.v1_0.PortalInstanceResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.instances.initializer.PortalInstanceInitializer;
+import com.liferay.portal.instances.initializer.PortalInstanceInitializerRegistry;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.ValidationException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -98,8 +103,21 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 	}
 
 	@Override
-	public PortalInstance postPortalInstance(PortalInstance portalInstance)
+	public PortalInstance postPortalInstance(
+			String portalInstanceInitializerKey, PortalInstance portalInstance)
 		throws Exception {
+
+		PortalInstanceInitializer portalInstanceInitializer = null;
+
+		if (Validator.isNotNull(portalInstanceInitializerKey)) {
+			portalInstanceInitializer =
+				_portalInstanceInitializerRegistry.getPortalInstanceInitializer(
+					portalInstanceInitializerKey);
+
+			if (portalInstanceInitializer == null) {
+				throw new ValidationException("Invalid initializer key");
+			}
+		}
 
 		Company company = _companyLocalService.addCompany(
 			portalInstance.getCompanyId(), portalInstance.getPortalInstanceId(),
@@ -110,6 +128,12 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 			ServletContextPool.get(StringPool.BLANK), company.getWebId());
 
 		_portalInstancesLocalService.synchronizePortalInstances();
+
+		if (portalInstanceInitializer != null) {
+			portalInstanceInitializer.initialize(
+				company.getWebId(), company.getVirtualHostname(),
+				company.getMx());
+		}
 
 		return _toPortalInstance(company);
 	}
@@ -152,6 +176,10 @@ public class PortalInstanceResourceImpl extends BasePortalInstanceResourceImpl {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private PortalInstanceInitializerRegistry
+		_portalInstanceInitializerRegistry;
 
 	@Reference
 	private PortalInstancesLocalService _portalInstancesLocalService;

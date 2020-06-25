@@ -14,26 +14,22 @@
 
 package com.liferay.translation.web.internal.info.item.updater;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.journal.util.JournalConverter;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -55,99 +51,94 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 	@Override
 	public JournalArticle updateFromInfoItemFieldValues(
 			JournalArticle article, InfoItemFieldValues infoItemFieldValues)
-		throws PortalException {
+		throws Exception {
 
-		try {
-			Map<Locale, String> importedLocaleTitleMap = new HashMap<>();
-			Map<Locale, String> importedLocaleDescriptionMap = new HashMap<>();
-			Map<Locale, Map<String, String>> importedLocaleContentMap =
-				new HashMap<>();
-			Set<Locale> translatedLocales = new HashSet<>();
-			Map<String, String> fieldNameContentMap = new HashMap<>();
+		Map<Locale, String> importedLocaleTitleMap = new HashMap<>();
+		Map<Locale, String> importedLocaleDescriptionMap = new HashMap<>();
+		Map<Locale, Map<String, String>> importedLocaleContentMap =
+			new HashMap<>();
+		Set<Locale> translatedLocales = new HashSet<>();
+		Map<String, String> fieldNameContentMap = new HashMap<>();
 
-			for (InfoFieldValue<Object> infoFieldValue :
-					infoItemFieldValues.getInfoFieldValues()) {
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
 
-				InfoField infoField = infoFieldValue.getInfoField();
+			InfoField infoField = infoFieldValue.getInfoField();
 
-				InfoLocalizedValue<String> labelInfoLocalizedValue =
-					infoField.getLabelInfoLocalizedValue();
+			InfoLocalizedValue<String> labelInfoLocalizedValue =
+				infoField.getLabelInfoLocalizedValue();
 
-				for (Locale locale :
-						labelInfoLocalizedValue.getAvailableLocales()) {
+			for (Locale locale :
+					labelInfoLocalizedValue.getAvailableLocales()) {
 
-					translatedLocales.add(locale);
+				translatedLocales.add(locale);
 
-					if (infoFieldValue.getValue(locale) instanceof String) {
-						String fieldName = infoField.getName();
+				if (infoFieldValue.getValue(locale) instanceof String) {
+					String fieldName = infoField.getName();
 
-						String valueString = String.valueOf(
-							infoFieldValue.getValue(locale));
+					String valueString = String.valueOf(
+						infoFieldValue.getValue(locale));
 
-						if (Objects.equals("description", fieldName)) {
-							importedLocaleDescriptionMap.put(
-								locale, valueString);
-						}
-						else if (Objects.equals("title", fieldName)) {
-							importedLocaleTitleMap.put(locale, valueString);
-						}
-						else {
-							fieldNameContentMap.put(fieldName, valueString);
+					if (Objects.equals("description", fieldName)) {
+						importedLocaleDescriptionMap.put(locale, valueString);
+					}
+					else if (Objects.equals("title", fieldName)) {
+						importedLocaleTitleMap.put(locale, valueString);
+					}
+					else {
+						fieldNameContentMap.put(fieldName, valueString);
 
-							importedLocaleContentMap.put(
-								locale, fieldNameContentMap);
-						}
+						importedLocaleContentMap.put(
+							locale, fieldNameContentMap);
 					}
 				}
 			}
-
-			for (Locale targetLocale : translatedLocales) {
-				String translatedTitle = _getTranslatedString(
-					article.getTitle(targetLocale), article.getTitle(),
-					importedLocaleTitleMap.get(targetLocale));
-				String translatedDescription = _getTranslatedString(
-					article.getDescription(targetLocale),
-					article.getDescription(),
-					importedLocaleDescriptionMap.get(targetLocale));
-				String translatedContent = _getTranslatedContent(
-					article.getContent(), importedLocaleContentMap,
-					targetLocale);
-
-				article = _journalArticleService.updateArticleTranslation(
-					article.getGroupId(), article.getArticleId(),
-					article.getVersion(), targetLocale, translatedTitle,
-					translatedDescription, translatedContent, null,
-					ServiceContextThreadLocal.getServiceContext());
-			}
 		}
-		catch (DocumentException documentException) {
-			throw new PortalException(documentException);
+
+		for (Locale targetLocale : translatedLocales) {
+			String translatedTitle = _getTranslatedString(
+				article.getTitle(targetLocale), article.getTitle(),
+				importedLocaleTitleMap.get(targetLocale));
+			String translatedDescription = _getTranslatedString(
+				article.getDescription(targetLocale), article.getDescription(),
+				importedLocaleDescriptionMap.get(targetLocale));
+			String translatedContent = _getTranslatedContent(
+				article.getContent(), article.getDDMStructure(),
+				importedLocaleContentMap, targetLocale);
+
+			article = _journalArticleService.updateArticleTranslation(
+				article.getGroupId(), article.getArticleId(),
+				article.getVersion(), targetLocale, translatedTitle,
+				translatedDescription, translatedContent, null,
+				ServiceContextThreadLocal.getServiceContext());
 		}
 
 		return article;
 	}
 
 	private String _getTranslatedContent(
-			String articleContent,
+			String content, DDMStructure ddmStructure,
 			Map<Locale, Map<String, String>> importedLocaleContentMap,
 			Locale targetLocale)
-		throws DocumentException {
+		throws Exception {
 
 		Map<String, String> contentFieldMap = importedLocaleContentMap.get(
 			targetLocale);
 
 		if ((contentFieldMap == null) || contentFieldMap.isEmpty()) {
-			return articleContent;
+			return content;
 		}
+
+		Fields ddmFields = _journalConverter.getDDMFields(
+			ddmStructure, content);
 
 		for (Map.Entry<String, String> entry : contentFieldMap.entrySet()) {
-			Document document = SAXReaderUtil.read(articleContent);
+			Field field = ddmFields.get(entry.getKey());
 
-			articleContent = _updateContent(
-				document, entry.getKey(), entry.getValue(), targetLocale);
+			field.setValue(targetLocale, entry.getValue());
 		}
 
-		return articleContent;
+		return _journalConverter.getContent(ddmStructure, ddmFields);
 	}
 
 	private String _getTranslatedString(
@@ -164,75 +155,10 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		return defaultString;
 	}
 
-	private void _setTargetLocale(Element rootElement, Locale targetLocale) {
-		String availableLanguageIds = rootElement.attributeValue(
-			"available-locales");
-
-		if (!availableLanguageIds.contains(targetLocale.toString())) {
-			availableLanguageIds += StringPool.COMMA + targetLocale.toString();
-			rootElement.addAttribute("available-locales", availableLanguageIds);
-		}
-	}
-
-	private String _updateContent(
-		Document document, String fieldName, String importedContent,
-		Locale targetLocale) {
-
-		Element rootElement = document.getRootElement();
-
-		_setTargetLocale(rootElement, targetLocale);
-
-		List<Element> dynamicElementElements = rootElement.elements(
-			"dynamic-element");
-
-		for (Element dynamicElementElement : dynamicElementElements) {
-			String attribute = dynamicElementElement.attributeValue(
-				"name", StringPool.BLANK);
-
-			if (Objects.equals(attribute, fieldName)) {
-				_updateElement(
-					dynamicElementElement, importedContent, targetLocale);
-			}
-		}
-
-		return document.asXML();
-	}
-
-	private void _updateElement(
-		Element dynamicElementElement, String importedContent,
-		Locale targetLocale) {
-
-		boolean exists = false;
-
-		for (Element element :
-				dynamicElementElement.elements("dynamic-content")) {
-
-			String languageId = element.attributeValue(
-				"language-id", StringPool.BLANK);
-
-			if (Objects.equals(
-					languageId, LocaleUtil.toLanguageId(targetLocale))) {
-
-				element.clearContent();
-				element.addCDATA(importedContent);
-
-				exists = true;
-
-				break;
-			}
-		}
-
-		if (!exists) {
-			Element element = dynamicElementElement.addElement(
-				"dynamic-content");
-
-			element.addAttribute(
-				"language-id", LocaleUtil.toLanguageId(targetLocale));
-			element.addCDATA(importedContent);
-		}
-	}
-
 	@Reference
 	private JournalArticleService _journalArticleService;
+
+	@Reference
+	private JournalConverter _journalConverter;
 
 }

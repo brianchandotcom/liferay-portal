@@ -15,7 +15,6 @@
 package com.liferay.translation.info.item.updater;
 
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Alicia García
@@ -24,6 +23,6 @@ public interface InfoItemFieldValuesUpdater<T> {
 
 	public T updateFromInfoItemFieldValues(
 			T t, InfoItemFieldValues infoItemFieldValues)
-		throws PortalException;
+		throws Exception;
 
 }

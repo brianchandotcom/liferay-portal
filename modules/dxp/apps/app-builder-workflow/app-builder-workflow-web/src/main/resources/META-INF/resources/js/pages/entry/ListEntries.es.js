@@ -51,7 +51,7 @@ export default function ListEntries({history}) {
 		showFormView,
 	} = useContext(AppContext);
 
-	const {appWorkflowDefinitionId, appWorkflowStates} = useAppWorkflow(appId);
+	const {appWorkflowDefinitionId} = useAppWorkflow(appId);
 
 	const {
 		columns,
@@ -181,21 +181,10 @@ export default function ListEntries({history}) {
 							break;
 						}
 						case 'taskNames': {
-							if (entry.completed && appWorkflowStates) {
-								const finalState =
-									appWorkflowStates.find(
-										({initial}) => !initial
-									) || {};
-
-								workflowValues[key] =
-									finalState.name || emptyValue;
-							}
-							else {
-								workflowValues[key] =
-									entry[key] && entry[key].length
-										? entry[key].pop()
-										: emptyValue;
-							}
+							workflowValues[key] =
+								entry[key] && entry[key].length
+									? entry[key].pop()
+									: emptyValue;
 
 							break;
 						}

@@ -26,17 +26,9 @@ import React, {useContext, useEffect, useState} from 'react';
 import '../../../css/ViewEntry.scss';
 import useAppWorkflow from '../../hooks/useAppWorkflow.es';
 
-const WorkflowInfo = ({
-	assignees = [],
-	completed,
-	taskNames = [],
-	states = [],
-}) => {
+const WorkflowInfo = ({assignees = [], completed, taskNames = []}) => {
 	const emptyValue = '--';
 
-	const finalState = states.find(({initial}) => !initial) || {
-		name: emptyValue,
-	};
 	const {name = emptyValue} = assignees.pop() || {};
 	const status = completed ? (
 		<ClayLabel displayType="success">
@@ -57,7 +49,7 @@ const WorkflowInfo = ({
 		},
 		{
 			label: Liferay.Language.get('step'),
-			value: completed ? finalState.name : stepName,
+			value: stepName,
 		},
 		{
 			label: Liferay.Language.get('assignee'),
@@ -87,7 +79,7 @@ export default function ViewEntry({
 	},
 }) {
 	const {appId, dataDefinitionId, dataLayoutId} = useContext(AppContext);
-	const {appWorkflowDefinitionId, appWorkflowStates} = useAppWorkflow(appId);
+	const {appWorkflowDefinitionId} = useAppWorkflow(appId);
 	const {
 		dataDefinition,
 		dataLayout: {dataLayoutPages},
@@ -191,12 +183,7 @@ export default function ViewEntry({
 				page={page}
 				totalCount={totalCount}
 			>
-				{workflowInfo && (
-					<WorkflowInfo
-						{...workflowInfo}
-						states={appWorkflowStates}
-					/>
-				)}
+				{workflowInfo && <WorkflowInfo {...workflowInfo} />}
 			</ViewEntryUpperToolbar>
 
 			<Loading isLoading={isLoading || isFetching}>

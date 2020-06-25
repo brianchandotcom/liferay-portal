@@ -424,6 +424,8 @@ const ColumnWithControls = React.forwardRef(
 									}
 								)}
 								onMouseDown={handleMouseDown}
+								title={Liferay.Language.get('resize-column')}
+								type="button"
 							/>
 							{children}
 						</NotDraggableArea>

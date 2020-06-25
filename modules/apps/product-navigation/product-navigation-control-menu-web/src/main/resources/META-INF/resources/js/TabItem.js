@@ -22,8 +22,19 @@ import {LAYOUT_DATA_ITEM_TYPES} from './AddPanel';
 
 import 'product-navigation-control-menu/css/TabItem.scss';
 
+import {useDragSymbol} from './useDragAndDrop';
+
 export default function TabItem({item}) {
-	const isContent = item.type !== LAYOUT_DATA_ITEM_TYPES.fragment;
+	const isContent = item.type === LAYOUT_DATA_ITEM_TYPES.content;
+
+	const {sourceRef} = useDragSymbol({
+		data: item.data,
+		icon: item.icon,
+		label: item.label,
+		portletId: item.itemId,
+		portletUsed: item.data.used,
+		type: item.type,
+	});
 
 	return (
 		<li
@@ -31,6 +42,7 @@ export default function TabItem({item}) {
 				disabled: item.disabled,
 				multiline: isContent,
 			})}
+			ref={item.disabled ? null : sourceRef}
 		>
 			<div className="sidebar__add-panel__tab-item-body">
 				<div className="icon">
@@ -38,7 +50,9 @@ export default function TabItem({item}) {
 				</div>
 				<div className="text-truncate title">{item.label}</div>
 				{isContent && (
-					<div className="subtitle text-truncate">{item.type}</div>
+					<div className="subtitle text-truncate">
+						{item.category}
+					</div>
 				)}
 			</div>
 

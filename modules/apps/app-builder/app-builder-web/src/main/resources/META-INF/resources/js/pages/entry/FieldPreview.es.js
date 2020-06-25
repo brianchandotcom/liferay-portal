@@ -142,7 +142,9 @@ const OptionsRenderer = ({displayType, options, values = []}) => {
 };
 
 const StringRenderer = ({value}) => (
-	<div>{(Array.isArray(value) ? value.join(', ') : value) || ' - '}</div>
+	<span className="d-block">
+		{(Array.isArray(value) ? value.join(', ') : value) || ' - '}
+	</span>
 );
 
 const getFieldValueRenderer = (dataDefinitionField, displayType) => {

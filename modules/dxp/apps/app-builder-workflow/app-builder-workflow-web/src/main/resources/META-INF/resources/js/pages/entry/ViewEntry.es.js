@@ -13,7 +13,6 @@ import ClayLabel from '@clayui/label';
 import {AppContext} from 'app-builder-web/js/AppContext.es';
 import ControlMenu from 'app-builder-web/js/components/control-menu/ControlMenu.es';
 import {Loading} from 'app-builder-web/js/components/loading/Loading.es';
-import UpperToolbar from 'app-builder-web/js/components/upper-toolbar/UpperToolbar.es';
 import useDataLayout from 'app-builder-web/js/hooks/useDataLayout.es';
 import useQuery from 'app-builder-web/js/hooks/useQuery.es';
 import {ViewDataLayoutPageValues} from 'app-builder-web/js/pages/entry/ViewEntry.es';
@@ -67,19 +66,17 @@ const WorkflowInfo = ({
 	];
 
 	return (
-		<UpperToolbar.Item>
-			<div className="workflow-info">
-				{items.map(({label, value}, index) => (
-					<div className="info-item" key={index}>
-						<span className="font-weight-bold text-secondary">
-							{`${label}: `}
-						</span>
+		<div className="workflow-info">
+			{items.map(({label, value}, index) => (
+				<div className="info-item" key={index}>
+					<span className="font-weight-bold text-secondary">
+						{`${label}: `}
+					</span>
 
-						{value}
-					</div>
-				))}
-			</div>
-		</UpperToolbar.Item>
+					{value}
+				</div>
+			))}
+		</div>
 	);
 };
 

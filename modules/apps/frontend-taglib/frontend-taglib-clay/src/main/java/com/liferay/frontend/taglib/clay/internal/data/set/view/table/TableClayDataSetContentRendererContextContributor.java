@@ -61,19 +61,19 @@ public class TableClayDataSetContentRendererContextContributor
 	}
 
 	private Map<String, Object> _serialize(
-		BaseTableClayDataSetDisplayView tableClayDataSetDisplayView,
+		BaseTableClayDataSetDisplayView baseTableClayDataSetDisplayView,
 		Locale locale) {
 
 		JSONArray fieldsJSONArray = _jsonFactory.createJSONArray();
 
 		ClayTableSchema clayTableSchema =
-			tableClayDataSetDisplayView.getClayTableSchema();
+			baseTableClayDataSetDisplayView.getClayTableSchema();
 
 		Map<String, ClayTableSchemaField> fieldsMap =
 			clayTableSchema.getClayTableSchemaFieldsMap();
 
 		ResourceBundle resourceBundle =
-			tableClayDataSetDisplayView.getResourceBundle(locale);
+			baseTableClayDataSetDisplayView.getResourceBundle(locale);
 
 		for (ClayTableSchemaField clayTableSchemaField : fieldsMap.values()) {
 			String label = LanguageUtil.get(

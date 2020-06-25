@@ -47,7 +47,7 @@ public class ClayDataSetDataJSONFactoryImpl
 		List<ClayDataSetDataRow> clayDataSetDataRows = _getClayTableRows(
 			items, tableName, httpServletRequest, groupId);
 
-		return _OBJECT_MAPPER.writeValueAsString(clayDataSetDataRows);
+		return _objectMapper.writeValueAsString(clayDataSetDataRows);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class ClayDataSetDataJSONFactoryImpl
 			_getClayTableRows(items, tableName, httpServletRequest, groupId),
 			itemsCount);
 
-		return _OBJECT_MAPPER.writeValueAsString(clayDataSetResponse);
+		return _objectMapper.writeValueAsString(clayDataSetResponse);
 	}
 
 	private List<ClayDataSetDataRow> _getClayTableRows(
@@ -99,7 +99,7 @@ public class ClayDataSetDataJSONFactoryImpl
 		return clayDataSetDataRows;
 	}
 
-	private static final ObjectMapper _OBJECT_MAPPER = new ObjectMapper() {
+	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			disable(SerializationFeature.INDENT_OUTPUT);

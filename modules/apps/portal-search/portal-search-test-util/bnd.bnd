@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Test Utilities
 Bundle-SymbolicName: com.liferay.portal.search.test.util
-Bundle-Version: 4.5.4
+Bundle-Version: 4.6.0
 Export-Package:\
 	com.liferay.portal.search.test.util,\
 	com.liferay.portal.search.test.util.logging

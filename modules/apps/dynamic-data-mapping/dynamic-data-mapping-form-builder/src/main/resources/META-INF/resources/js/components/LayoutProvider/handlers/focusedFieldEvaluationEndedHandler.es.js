@@ -24,10 +24,8 @@ const handleFocusedFieldEvaluationEnded = (
 	instanceId,
 	settingsContext
 ) => {
-	const visitor = new PagesVisitor(settingsContext.pages);
-	const {focusedField} = state;
-
 	const fieldName = getField(settingsContext.pages, 'name');
+	const {focusedField} = state;
 	const focusedFieldName = getField(
 		focusedField.settingsContext.pages,
 		'name'
@@ -48,6 +46,8 @@ const handleFocusedFieldEvaluationEnded = (
 			settingsContext,
 		},
 	};
+
+	const visitor = new PagesVisitor(settingsContext.pages);
 
 	visitor.mapFields(({fieldName, value}) => {
 		state = handleFieldEdited(

@@ -13,7 +13,12 @@
 	}
 
 	.data-engine-form-builder > .sheet {
-		margin: 24px 0 0;
+		margin-bottom: 0;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 24px;
+		padding-left: 24px;
+		padding-right: 24px;
 	}
 
 	.taglib-empty-result-message {

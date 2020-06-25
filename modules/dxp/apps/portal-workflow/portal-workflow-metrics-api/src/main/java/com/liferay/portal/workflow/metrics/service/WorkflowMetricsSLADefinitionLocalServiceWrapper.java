@@ -435,6 +435,16 @@ public class WorkflowMetricsSLADefinitionLocalServiceWrapper
 			getWorkflowMetricsSLADefinitions(companyId, status);
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinition>
+			getWorkflowMetricsSLADefinitions(
+				long companyId, String name, long processId) {
+
+		return _workflowMetricsSLADefinitionLocalService.
+			getWorkflowMetricsSLADefinitions(companyId, name, processId);
+	}
+
 	/**
 	 * Returns all the workflow metrics sla definitions matching the UUID and company.
 	 *

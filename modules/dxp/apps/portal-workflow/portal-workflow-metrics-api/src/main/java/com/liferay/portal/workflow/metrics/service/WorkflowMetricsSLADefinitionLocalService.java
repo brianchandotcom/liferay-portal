@@ -300,6 +300,10 @@ public interface WorkflowMetricsSLADefinitionLocalService
 	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
 		long companyId, int status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, String name, long processId);
+
 	/**
 	 * Returns all the workflow metrics sla definitions matching the UUID and company.
 	 *

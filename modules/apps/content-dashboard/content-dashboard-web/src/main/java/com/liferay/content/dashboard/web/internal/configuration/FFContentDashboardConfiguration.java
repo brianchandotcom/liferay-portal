@@ -23,9 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.content.dashboard.web.internal.configuration.ContentDashboardConfiguration"
+	id = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardConfiguration"
 )
-public interface ContentDashboardConfiguration {
+public interface FFContentDashboardConfiguration {
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean auditGraphEnabled();

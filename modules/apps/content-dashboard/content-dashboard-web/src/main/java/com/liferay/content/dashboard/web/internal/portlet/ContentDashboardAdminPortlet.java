@@ -15,7 +15,7 @@
 package com.liferay.content.dashboard.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.content.dashboard.web.internal.configuration.ContentDashboardConfiguration;
+import com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardConfiguration;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebKeys;
 import com.liferay.content.dashboard.web.internal.dao.search.ContentDashboardItemSearchContainerFactory;
@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Cristina González
  */
 @Component(
-	configurationPid = "com.liferay.content.dashboard.web.internal.configuration.ContentDashboardConfiguration",
+	configurationPid = "com.liferay.content.dashboard.web.internal.configuration.FFContentDashboardConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -127,12 +127,11 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 					assetVocabularies,
 					contentDashboardDataProvider.getAssetVocabularyMetric(
 						assetVocabularies),
-					_contentDashboardConfiguration,
 					new ContentDashboardDropdownItemsProvider(
 						_http, _language, liferayPortletRequest,
 						liferayPortletResponse, _portal),
-					_itemSelector, liferayPortletRequest,
-					liferayPortletResponse, _portal,
+					_ffContentDashboardConfiguration, _itemSelector,
+					liferayPortletRequest, liferayPortletResponse, _portal,
 					ResourceBundleUtil.getBundle(
 						_portal.getLocale(renderRequest), getClass()),
 					searchContainer);
@@ -162,13 +161,13 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_contentDashboardConfiguration = ConfigurableUtil.createConfigurable(
-			ContentDashboardConfiguration.class, properties);
+		_ffContentDashboardConfiguration = ConfigurableUtil.createConfigurable(
+			FFContentDashboardConfiguration.class, properties);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_contentDashboardConfiguration = null;
+		_ffContentDashboardConfiguration = null;
 	}
 
 	@Reference
@@ -177,9 +176,6 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 	@Reference
 	private AssetVocabulariesProvider _assetVocabulariesProvider;
 
-	private volatile ContentDashboardConfiguration
-		_contentDashboardConfiguration;
-
 	@Reference
 	private ContentDashboardItemFactoryTracker
 		_contentDashboardItemFactoryTracker;
@@ -187,6 +183,9 @@ public class ContentDashboardAdminPortlet extends MVCPortlet {
 	@Reference
 	private ContentDashboardSearchRequestBuilderFactory
 		_contentDashboardSearchRequestBuilderFactory;
+
+	private volatile FFContentDashboardConfiguration
+		_ffContentDashboardConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

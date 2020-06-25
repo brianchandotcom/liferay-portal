@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+Set<MBThread> threadFlagSet = MBThreadFlagLocalServiceUtil.getThreadFlagSet(themeDisplay.getUserId(), threadEntriesSearchContainer.getResults());
+%>
+
 <liferay-ui:search-container
 	searchContainer="<%= threadEntriesSearchContainer %>"
 >
@@ -59,7 +63,7 @@
 				<aui:a href="<%= rowURL.toString() %>">
 					<c:if test="<%= message != null %>">
 						<c:choose>
-							<c:when test="<%= !MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread) %>">
+							<c:when test="<%= !threadFlagSet.contains(thread) %>">
 								<strong><%= message.getSubject() %></strong>
 							</c:when>
 							<c:otherwise>

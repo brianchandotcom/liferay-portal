@@ -593,6 +593,10 @@
 			<finder-column name="userId" />
 			<finder-column name="threadId" />
 		</finder>
+		<finder name="U_ThreadIds" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column arrayable-operator="OR" name="threadId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>BannedUser</exception>

@@ -27,8 +27,12 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -134,6 +138,46 @@ public class MBThreadFlagLocalServiceImpl
 		}
 
 		return mbThreadFlagPersistence.fetchByU_T(userId, thread.getThreadId());
+	}
+
+	@Override
+	public Set<MBThread> getThreadFlagSet(long userId, List<MBThread> threads)
+		throws PortalException {
+
+		if ((threads == null) || threads.isEmpty()) {
+			return Collections.emptySet();
+		}
+
+		User user = _userLocalService.getUser(userId);
+
+		if (user.isDefaultUser()) {
+			return new HashSet<>(threads);
+		}
+
+		Set<MBThread> threadFlagSet = new HashSet<>();
+
+		for (MBThreadFlag threadFlag :
+				mbThreadFlagPersistence.findByU_ThreadIds(
+					userId,
+					ListUtil.toLongArray(threads, MBThread::getThreadId))) {
+
+			for (MBThread thread : threads) {
+				if (thread.getThreadId() != threadFlag.getThreadId()) {
+					continue;
+				}
+
+				if (DateUtil.equals(
+						threadFlag.getModifiedDate(),
+						thread.getLastPostDate())) {
+
+					threadFlagSet.add(thread);
+				}
+
+				break;
+			}
+		}
+
+		return threadFlagSet;
 	}
 
 	@Override

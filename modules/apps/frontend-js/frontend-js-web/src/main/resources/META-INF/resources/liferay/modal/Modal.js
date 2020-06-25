@@ -226,47 +226,42 @@ const Modal = ({
 	useEffect(() => {
 		const eventHandlers = eventHandlersRef.current;
 
-		if (visible) {
-			if (onSelect && selectEventName) {
-				const selectEventHandler = Liferay.once(
-					selectEventName,
-					(selectedItem) => {
-						processClose();
+		if (onSelect && selectEventName) {
+			const selectEventHandler = Liferay.on(
+				selectEventName,
+				(selectedItem) => {
+					processClose();
 
-						onSelect(selectedItem);
-					}
-				);
+					onSelect(selectedItem);
+				}
+			);
 
-				eventHandlers.push(selectEventHandler);
+			eventHandlers.push(selectEventHandler);
+		}
+
+		customEvents.forEach((customEvent) => {
+			if (customEvent.name && customEvent.onEvent) {
+				const eventHandler = Liferay.on(customEvent.name, (event) => {
+					customEvent.onEvent(event);
+				});
+
+				eventHandlers.push(eventHandler);
+			}
+		});
+
+		const closeEventHandler = Liferay.on('closeModal', (event) => {
+			if (event.id && id && event.id !== id) {
+				return;
 			}
 
-			customEvents.forEach((customEvent) => {
-				if (customEvent.name && customEvent.onEvent) {
-					const eventHandler = Liferay.on(
-						customEvent.name,
-						(event) => {
-							customEvent.onEvent(event);
-						}
-					);
+			processClose();
 
-					eventHandlers.push(eventHandler);
-				}
-			});
+			if (event.redirect) {
+				navigate(event.redirect);
+			}
+		});
 
-			const closeEventHandler = Liferay.on('closeModal', (event) => {
-				if (event.id && id && event.id !== id) {
-					return;
-				}
-
-				processClose();
-
-				if (event.redirect) {
-					navigate(event.redirect);
-				}
-			});
-
-			eventHandlers.push(closeEventHandler);
-		}
+		eventHandlers.push(closeEventHandler);
 
 		return () => {
 			eventHandlers.forEach((eventHandler) => {
@@ -284,7 +279,6 @@ const Modal = ({
 		onSelect,
 		processClose,
 		selectEventName,
-		visible,
 	]);
 
 	return (

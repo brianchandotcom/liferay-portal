@@ -18,7 +18,6 @@ import LanguageSelector from './LanguageSelector';
 
 const TranslateLanguagesSelector = ({
 	currentUrl,
-	defaultLanguageId = 'en_US',
 	portletNamespace,
 	sourceAvailableLanguages,
 	sourceLanguageId,
@@ -47,7 +46,6 @@ const TranslateLanguagesSelector = ({
 
 			<span className="autofit-col">
 				<LanguageSelector
-					defaultLanguageId={defaultLanguageId}
 					languageIds={sourceAvailableLanguages}
 					onChange={(value) => {
 						refreshPage(value, targetLanguageId);
@@ -60,7 +58,6 @@ const TranslateLanguagesSelector = ({
 
 			<span className="autofit-col">
 				<LanguageSelector
-					defaultLanguageId={defaultLanguageId}
 					languageIds={targetAvailableLanguages}
 					onChange={(value) => {
 						refreshPage(sourceLanguageId, value);

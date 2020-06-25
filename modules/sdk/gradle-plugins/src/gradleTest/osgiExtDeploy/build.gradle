@@ -3,7 +3,7 @@ apply plugin: "com.liferay.osgi.ext.plugin"
 task runGradleTest
 
 dependencies {
-	originalModule group: "com.liferay", name: "com.liferay.login.web", version: "2.0.0"
+	originalModule group: "com.liferay", name: "com.liferay.login.web.api", version: "1.0.0"
 }
 
 repositories {
@@ -18,7 +18,7 @@ runGradleTest {
 	doLast {
 		File bundleDir = file("../../../bundle")
 
-		File jarFile = new File(bundleDir, "osgi/marketplace/override/com.liferay.login.web.jar")
+		File jarFile = new File(bundleDir, "osgi/marketplace/override/com.liferay.login.web.api.jar")
 
 		assert jarFile.exists()
 	}

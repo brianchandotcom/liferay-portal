@@ -83,7 +83,37 @@ renderResponse.setTitle(title);
 	<clay:container-fluid
 		cssClass="container-view"
 	>
-		<div class="bg-white p-4">
+		<div class="translate-body-form">
+
+			<%
+				String sourceLocaleIdTitle = StringUtil.replace(sourceLocaleId, "_", "-");
+				String targetLocaleIdTitle = StringUtil.replace(targetLocaleId, "_", "-");
+			%>
+			<clay:row>
+				<clay:col
+					md="6"
+				>
+					<clay:icon
+						symbol='<%= StringUtil.toLowerCase(sourceLocaleIdTitle) %>'
+					/>
+
+					<span class="ml-1"> <%= sourceLocaleIdTitle %> </span>
+
+					<div class="separator"><!-- --></div>
+				</clay:col>
+
+				<clay:col
+					md="6"
+				>
+					<clay:icon
+						symbol='<%= StringUtil.toLowerCase(targetLocaleIdTitle) %>'
+					/>
+
+					<span class="ml-1"> <%= targetLocaleIdTitle %> </span>
+
+					<div class="separator"><!-- --></div>
+				</clay:col>
+			</clay:row>
 
 			<%
 			Locale sourceLocale = LocaleUtil.fromLanguageId(sourceLocaleId);

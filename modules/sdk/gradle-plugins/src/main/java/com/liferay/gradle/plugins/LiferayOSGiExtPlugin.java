@@ -252,7 +252,7 @@ public class LiferayOSGiExtPlugin implements Plugin<Project> {
 													getDeployedFileNameClosure();
 
 											return closure.call(
-												jarTaskProvider);
+												jarTaskProvider.get());
 										}
 
 									});

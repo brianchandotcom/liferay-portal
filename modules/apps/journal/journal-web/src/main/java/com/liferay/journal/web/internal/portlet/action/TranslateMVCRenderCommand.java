@@ -108,6 +108,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				TranslationInfoFieldChecker.class.getName(),
 				_translationInfoFieldChecker);
+
 			renderRequest.setAttribute(
 				JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS,
 				availableSourceLanguageIds);

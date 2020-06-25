@@ -29,6 +29,7 @@ TranslationInfoFieldChecker translationInfoFieldChecker = (TranslationInfoFieldC
 
 List<String> availableSourceLanguageIds = (List)request.getAttribute(JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS);
 List<String> availableTargetLanguageIds = (List)request.getAttribute(JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS);
+
 String sourceLanguageId = (String)request.getAttribute(JournalWebConstants.SOURCE_LANGUAGE_ID);
 String targetLanguageId = (String)request.getAttribute(JournalWebConstants.TARGET_LANGUAGE_ID);
 

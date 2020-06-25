@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 
@@ -83,21 +82,15 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				article.getAvailableLanguageIds());
 
 			String sourceLanguageId = ParamUtil.getString(
-				renderRequest, "sourceLanguageId");
+				renderRequest, "sourceLanguageId",
+				availableSourceLanguageIds.get(0));
 
 			List<String> availableTargetLanguageIds =
 				_getSiteAvailableLanguageIds(sourceLanguageId, themeDisplay);
 
 			String targetLanguageId = ParamUtil.getString(
-				renderRequest, "targetLanguageId");
-
-			if (Validator.isNull(sourceLanguageId)) {
-				sourceLanguageId = availableSourceLanguageIds.get(0);
-			}
-
-			if (Validator.isNull(targetLanguageId)) {
-				targetLanguageId = availableTargetLanguageIds.get(0);
-			}
+				renderRequest, "targetLanguageId",
+				availableTargetLanguageIds.get(0));
 
 			renderRequest.setAttribute(
 				InfoItemFieldValues.class.getName(),

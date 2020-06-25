@@ -31,6 +31,22 @@ import {shortenNumber} from '../utils/shortenNumber';
 
 export default function AuditBarChart({rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
+		const axisNames = vocabularies.reduce((_acc, category) => {
+			if (!category.categories) {
+				return {x: category.vocabularyName};
+			}
+
+			return category.categories.reduce(
+				(acc, {vocabularyName}) => {
+					return {
+						...acc,
+						y: vocabularyName,
+					};
+				},
+				{x: category.vocabularyName}
+			);
+		}, {});
+
 		const dataKeys = new Set();
 
 		const bars = vocabularies.reduce((acc, category) => {
@@ -84,10 +100,10 @@ export default function AuditBarChart({rtl, vocabularies}) {
 			{colors: {}, legendCheckboxes: {}}
 		);
 
-		return {bars, colors, data, legendCheckboxes};
+		return {axisNames, bars, colors, data, legendCheckboxes};
 	}, [vocabularies]);
 
-	const {bars, colors, data, legendCheckboxes} = auditBarChartData;
+	const {axisNames, bars, colors, data, legendCheckboxes} = auditBarChartData;
 
 	const height = !bars.length
 		? BAR_CHART.height - BAR_CHART.legendHeight
@@ -132,29 +148,37 @@ export default function AuditBarChart({rtl, vocabularies}) {
 	}, [colors]);
 
 	const renderLegend = (props) => {
-		const {payload} = props;
+		const {payload, yAxisName} = props;
 
-		return payload.map((entry) => (
-			<ClayCheckbox
-				aria-labelledby={entry.value}
-				checked={checkboxes[entry.dataKey]}
-				className={`custom-control-color-${entry.dataKey}`}
-				inline
-				key={entry.dataKey}
-				label={entry.value}
-				onChange={() =>
-					setCheckbox({
-						...checkboxes,
-						[entry.dataKey]: !checkboxes[entry.dataKey],
-					})
-				}
-			/>
-		));
+		return (
+			<>
+				<span className="mr-4 small">{yAxisName}:</span>
+				{payload.map((entry) => (
+					<ClayCheckbox
+						aria-labelledby={entry.value}
+						checked={checkboxes[entry.dataKey]}
+						className={`custom-control-color-${entry.dataKey}`}
+						inline
+						key={entry.dataKey}
+						onChange={() =>
+							setCheckbox({
+								...checkboxes,
+								[entry.dataKey]: !checkboxes[entry.dataKey],
+							})
+						}
+					>
+						<span className="inline-item inline-item-after small text-secondary">
+							{entry.value}
+						</span>
+					</ClayCheckbox>
+				))}
+			</>
+		);
 	};
 
 	return (
 		<>
-			<ResponsiveContainer height={height}>
+			<ResponsiveContainer className="mb-4" height={height}>
 				<BarChart data={data} height={height} width={BAR_CHART.width}>
 					{bars.length && (
 						<Legend
@@ -162,6 +186,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 							content={renderLegend}
 							height={BAR_CHART.legendHeight}
 							verticalAlign="top"
+							yAxisName={axisNames.y}
 						/>
 					)}
 					<CartesianGrid
@@ -173,8 +198,13 @@ export default function AuditBarChart({rtl, vocabularies}) {
 							stroke: BAR_CHART.stroke,
 						}}
 						dataKey="name"
-						height={70}
+						height={75}
 						interval={0}
+						label={{
+							className: 'small',
+							position: 'insideBottom',
+							value: axisNames.x,
+						}}
 						reversed={rtl}
 						tick={<CustomXAxisTick />}
 						tickLine={false}

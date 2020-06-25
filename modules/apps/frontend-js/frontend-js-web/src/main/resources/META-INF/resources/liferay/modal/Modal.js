@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import {render} from 'frontend-js-react-web';
 import dom from 'metal-dom';
 import PropTypes from 'prop-types';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import './Modal.scss';
 import navigate from '../util/navigate.es';
@@ -183,7 +183,7 @@ const Modal = ({
 		}
 	};
 
-	const processClose = useCallback(() => {
+	const processClose = () => {
 		setVisible(false);
 
 		document.body.classList.remove('modal-open');
@@ -199,7 +199,7 @@ const Modal = ({
 		if (onClose) {
 			onClose();
 		}
-	}, [eventHandlersRef, onClose]);
+	};
 
 	const Body = ({html}) => {
 		const bodyRef = useRef();
@@ -270,16 +270,8 @@ const Modal = ({
 
 			eventHandlers.splice(0, eventHandlers.length);
 		};
-	}, [
-		customEvents,
-		eventHandlersRef,
-		id,
-		onClose,
-		onOpen,
-		onSelect,
-		processClose,
-		selectEventName,
-	]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<>

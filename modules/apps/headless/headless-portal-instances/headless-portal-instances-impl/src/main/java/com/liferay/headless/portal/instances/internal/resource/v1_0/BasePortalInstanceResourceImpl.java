@@ -97,10 +97,21 @@ public abstract class BasePortalInstanceResourceImpl
 	@Consumes({"application/json", "application/xml"})
 	@Operation(description = "Adds a new portal instance")
 	@POST
+	@Parameters(
+		value = {
+			@Parameter(
+				in = ParameterIn.QUERY, name = "portalInstanceInitializerKey"
+			)
+		}
+	)
 	@Path("/portal-instances")
 	@Produces({"application/json", "application/xml"})
 	@Tags(value = {@Tag(name = "PortalInstance")})
-	public PortalInstance postPortalInstance(PortalInstance portalInstance)
+	public PortalInstance postPortalInstance(
+			@Parameter(hidden = true)
+			@QueryParam("portalInstanceInitializerKey") String
+				portalInstanceInitializerKey,
+			PortalInstance portalInstance)
 		throws Exception {
 
 		return new PortalInstance();

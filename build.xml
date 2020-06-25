@@ -1276,7 +1276,9 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 		>
 			<fileset
 				dir="${project.dir}/.gradle/caches/modules-2/files-2.1"
-			/>
+			>
+				<size units="Mi" value="100" when="less" />
+			</fileset>
 		</copy>
 
 		<gradle-execute dir="${project.dir}/modules" task="updateYarnBinariesCache">

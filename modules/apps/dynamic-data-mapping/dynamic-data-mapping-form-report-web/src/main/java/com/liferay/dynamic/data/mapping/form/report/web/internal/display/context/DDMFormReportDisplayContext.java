@@ -77,16 +77,25 @@ public class DDMFormReportDisplayContext {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		ddmFormFields.forEach(
-			ddmFormField -> fieldsJSONArray.put(
-				JSONUtil.put(
+			ddmFormField -> {
+				JSONObject fieldJSONObject = JSONUtil.put(
+					"columns", _getPropertyLabels(ddmFormField, "columns")
+				).put(
 					"label", _getValue(ddmFormField.getLabel())
 				).put(
 					"name", ddmFormField.getName()
 				).put(
-					"options", _getFieldOptions(ddmFormField)
+					"options",
+					_getDDMFormFieldOptionLabels(
+						ddmFormField.getDDMFormFieldOptions())
+				).put(
+					"rows", _getPropertyLabels(ddmFormField, "rows")
 				).put(
 					"type", ddmFormField.getType()
-				)));
+				);
+
+				fieldsJSONArray.put(fieldJSONObject);
+			});
 
 		return fieldsJSONArray;
 	}
@@ -148,11 +157,10 @@ public class DDMFormReportDisplayContext {
 		return jsonObject.getInt("totalItems");
 	}
 
-	private JSONObject _getFieldOptions(DDMFormField ddmFormField) {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+	private JSONObject _getDDMFormFieldOptionLabels(
+		DDMFormFieldOptions ddmFormFieldOptions) {
 
-		DDMFormFieldOptions ddmFormFieldOptions =
-			ddmFormField.getDDMFormFieldOptions();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		Set<String> optionsValues = ddmFormFieldOptions.getOptionsValues();
 
@@ -162,6 +170,21 @@ public class DDMFormReportDisplayContext {
 				_getValue(ddmFormFieldOptions.getOptionLabels(optionValue))));
 
 		return jsonObject;
+	}
+
+	private JSONObject _getPropertyLabels(
+		DDMFormField ddmFormField, String propertyName) {
+
+		Object property = ddmFormField.getProperty(propertyName);
+
+		if (property instanceof DDMFormFieldOptions) {
+			DDMFormFieldOptions ddmFormFieldOptions =
+				(DDMFormFieldOptions)property;
+
+			return _getDDMFormFieldOptionLabels(ddmFormFieldOptions);
+		}
+
+		return JSONFactoryUtil.createJSONObject();
 	}
 
 	private String _getValue(Value value) {

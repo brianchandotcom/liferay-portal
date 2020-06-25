@@ -55,9 +55,21 @@ public class Page<T> {
 		return new Page<>(actions, items, pagination, totalCount);
 	}
 
+	public static <T> Page<T> of(
+		Map<String, Map<String, String>> actions, Collection<T> items,
+		Pagination pagination, long totalCount, List<Facet> facets) {
+
+		return new Page<>(actions, items, pagination, totalCount, facets);
+	}
+
 	@JsonProperty("actions")
 	public Map<String, Map<String, String>> getActions() {
 		return _actions;
+	}
+
+	@JsonProperty("facets")
+	public List<Facet> getFacets() {
+		return _facets;
 	}
 
 	@JacksonXmlElementWrapper(localName = "items")
@@ -141,8 +153,29 @@ public class Page<T> {
 		_totalCount = totalCount;
 	}
 
+	private Page(
+		Map<String, Map<String, String>> actions, Collection<T> items,
+		Pagination pagination, long totalCount, List<Facet> facets) {
+
+		_actions = actions;
+		_items = items;
+		_facets = facets;
+
+		if (pagination == null) {
+			_page = 0;
+			_pageSize = 0;
+		}
+		else {
+			_page = pagination.getPage();
+			_pageSize = pagination.getPageSize();
+		}
+
+		_totalCount = totalCount;
+	}
+
 	private final Map<String, Map<String, String>> _actions;
 	private final Collection<T> _items;
+	private List<Facet> _facets = new ArrayList<>();
 	private final long _page;
 	private final long _pageSize;
 	private final long _totalCount;

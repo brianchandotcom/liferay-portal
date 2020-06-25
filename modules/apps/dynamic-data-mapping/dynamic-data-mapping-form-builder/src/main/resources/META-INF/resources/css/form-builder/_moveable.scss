@@ -10,6 +10,8 @@ $c: '.ddm-form-builder';
 	.ddm-field-container {
 		border: 1px solid transparent;
 		margin-left: 0 !important;
+		padding-left: 0px !important;
+		padding-right: 0px !important;
 		position: relative;
 	}
 
@@ -20,8 +22,8 @@ $c: '.ddm-form-builder';
 
 		.form-group {
 			margin-bottom: 0;
-			margin-left: 12px;
-			margin-right: 12px;
+			margin-left: 8px;
+			margin-right: 8px;
 		}
 	}
 

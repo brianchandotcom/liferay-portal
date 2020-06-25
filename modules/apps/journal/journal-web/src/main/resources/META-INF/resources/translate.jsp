@@ -86,8 +86,8 @@ renderResponse.setTitle(title);
 		<div class="translate-body-form">
 
 			<%
-			String sourceLocaleIdTitle = StringUtil.replace(sourceLocaleId, "_", "-");
-			String targetLocaleIdTitle = StringUtil.replace(targetLocaleId, "_", "-");
+			String sourceLocaleIdTitle = LocaleUtil.toBCP47LanguageId(sourceLocaleId);
+			String targetLocaleIdTitle = LocaleUtil.toBCP47LanguageId(targetLocaleId);
 			%>
 
 			<clay:row>

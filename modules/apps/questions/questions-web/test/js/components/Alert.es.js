@@ -15,25 +15,25 @@
 import {cleanup} from '@testing-library/react';
 import React from 'react';
 
-import Error from '../../../src/main/resources/META-INF/resources/js/components/Error.es';
+import Alert from '../../../src/main/resources/META-INF/resources/js/components/Alert.es';
 import {renderComponent} from '../../helpers.es';
 
 import '@testing-library/jest-dom/extend-expect';
 
-describe('Error', () => {
+describe('Alert', () => {
 	afterEach(cleanup);
 
-	it('renders error title and error message', () => {
-		const error = {
-			message: 'Error message',
-			title: 'Error title',
+	it('renders alert with its title and message', () => {
+		const info = {
+			message: 'Info message',
+			title: 'Info title',
 		};
 		const {getByText} = renderComponent({
-			ui: <Error error={error} />,
+			ui: <Alert info={info} />,
 		});
 
-		expect(getByText(error.title)).toBeInTheDocument();
+		expect(getByText(info.title)).toBeInTheDocument();
 
-		expect(getByText(error.message)).toBeInTheDocument();
+		expect(getByText(info.message)).toBeInTheDocument();
 	});
 });

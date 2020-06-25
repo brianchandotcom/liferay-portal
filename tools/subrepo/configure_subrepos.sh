@@ -197,18 +197,6 @@ do
 	fi
 done
 
-for GITREPO in "${GITREPOS[@]}"
-do
-	BRANCH_NAME="${GITREPO%%:*}"
-	GITREPO_PATH="${GITREPO##*:}"
-	REPO_PATH="$(echo "${GITREPO}" | sed 's/:[^:]*$//' | sed 's/.*://')"
-
-	if [[ "${GITREPO_PATH}" == modules/* ]] && [[ -z "$(echo "${GITREPOS[@]}" | grep "modules/private.*/$(echo "${GITREPO_PATH}" | sed 's@.*/\([^/]*/\.gitrepo$\)$@\1@')")" ]]
-	then
-		GITREPOS=("${GITREPOS[@]}" "${GITREPO}-private")
-	fi
-done
-
 info "Configuring ${#GITREPOS[@]} GitHub repositories..."
 info
 

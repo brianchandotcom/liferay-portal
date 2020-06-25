@@ -18,7 +18,7 @@ export const BAR_CHART = {
 	dotRadiusMax: 35,
 	dotRadiusMin: 5,
 	emptyHeight: 300,
-	fillXAxis: '#666',
+	fillXAxis: '#6B6C7E',
 	height: 400,
 	legendHeight: 70,
 	stroke: '#E7E7ED',
@@ -26,13 +26,14 @@ export const BAR_CHART = {
 };
 
 export const COLORS = [
-	'#4B9BFF',
-	'#50D2A0',
+	'#4B9FFF',
 	'#FFB46E',
-	'#b19cd9',
-	'#FFC0CB',
-	'#AFEEEE',
-	'#009975',
-	'#9B111E',
-	'#FFDF00',
+	'#FF5F5F',
+	'#50D2A0',
+	'#FF73C3',
+	'#9CE269',
+	'#AF78FF',
+	'#FFD76E',
+	'#5FC8FF',
+	'#7785FF',
 ];

@@ -40,14 +40,16 @@ ContentDashboardAdminConfigurationDisplayContext contentDashboardAdminConfigurat
 	<liferay-frontend:edit-form-body>
 		<liferay-frontend:fieldset-group>
 			<liferay-frontend:fieldset>
-				<liferay-ui:input-move-boxes
-					leftBoxName="currentAssetVocabularyNames"
-					leftList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
-					leftTitle="current"
-					rightBoxName="availableAssetVocabularyNames"
-					rightList="<%= contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames() %>"
-					rightTitle="available"
-				/>
+				<aui:field-wrapper label="select-vocabularies">
+					<liferay-ui:input-move-boxes
+						leftBoxName="currentAssetVocabularyNames"
+						leftList="<%= contentDashboardAdminConfigurationDisplayContext.getCurrentVocabularyNames() %>"
+						leftTitle="current"
+						rightBoxName="availableAssetVocabularyNames"
+						rightList="<%= contentDashboardAdminConfigurationDisplayContext.getAvailableVocabularyNames() %>"
+						rightTitle="available"
+					/>
+				</aui:field-wrapper>
 			</liferay-frontend:fieldset>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>

@@ -16,6 +16,9 @@ package com.liferay.archived.modules.upgrade.internal;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  * @author Sam Ziemer
  */
@@ -23,13 +26,85 @@ public class UpgradePortalDirectory extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		LayoutTypeSettingsUtil.removePortletId(connection, "11");
+		PreparedStatement ps = connection.prepareStatement(
+			"select * from Portlet where portletId = '11'");
 
-		runSQL("delete from Portlet where portletId = '11'");
+		ResultSet rs = ps.executeQuery();
 
-		runSQL("delete from PortletPreferences where portletId = '11'");
+		if (rs.next()) {
+			LayoutTypeSettingsUtil.removePortletId(connection, "11");
+			LayoutTypeSettingsUtil.removePortletId(connection, "186");
+			LayoutTypeSettingsUtil.removePortletId(connection, "187");
+			LayoutTypeSettingsUtil.removePortletId(connection, "188");
 
-		runSQL("delete from ResourcePermission where name = '11'");
+			runSQL("delete from Portlet where portletId = '11'");
+			runSQL("delete from Portlet where portletId = '186'");
+			runSQL("delete from Portlet where portletId = '187'");
+			runSQL("delete from Portlet where portletId = '188'");
+
+			runSQL("delete from PortletPreferences where portletId = '11'");
+			runSQL("delete from PortletPreferences where portletId = '186'");
+			runSQL("delete from PortletPreferences where portletId = '187'");
+			runSQL("delete from PortletPreferences where portletId = '188'");
+
+			runSQL("delete from ResourcePermission where name = '11'");
+			runSQL("delete from ResourcePermission where name = '186'");
+			runSQL("delete from ResourcePermission where name = '187'");
+			runSQL("delete from ResourcePermission where name = '188'");
+		}
+		else {
+			LayoutTypeSettingsUtil.removePortletId(
+				connection,
+				"com_liferay_directory_web_portlet_DirectoryPortlet");
+			LayoutTypeSettingsUtil.removePortletId(
+				connection,
+				"com_liferay_directory_web_portlet_FriendsDirectoryPortlet");
+			LayoutTypeSettingsUtil.removePortletId(
+				connection,
+				"com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet");
+			LayoutTypeSettingsUtil.removePortletId(
+				connection,
+				"com_liferay_directory_web_portlet_MySitesDirectoryPortlet");
+
+			runSQL(
+				"delete from Portlet where portletId = " +
+					"'com_liferay_directory_web_portlet_DirectoryPortlet'");
+			runSQL(
+				"delete from Portlet where portletId = " +
+					"'com_liferay_directory_web_portlet_FriendsDirectoryPortlet'");
+			runSQL(
+				"delete from Portlet where portletId = " +
+					"'com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet'");
+			runSQL(
+				"delete from Portlet where portletId = " +
+					"'com_liferay_directory_web_portlet_MySitesDirectoryPortlet'");
+
+			runSQL(
+				"delete from PortletPreferences where portletId = " +
+					"'com_liferay_directory_web_portlet_DirectoryPortlet'");
+			runSQL(
+				"delete from PortletPreferences where portletId = " +
+					"'com_liferay_directory_web_portlet_FriendsDirectoryPortlet'");
+			runSQL(
+				"delete from PortletPreferences where portletId = " +
+					"'com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet'");
+			runSQL(
+				"delete from PortletPreferences where portletId = " +
+					"'com_liferay_directory_web_portlet_MySitesDirectoryPortlet'");
+
+			runSQL(
+				"delete from ResourcePermission where name = " +
+					"'com_liferay_directory_web_portlet_DirectoryPortlet'");
+			runSQL(
+				"delete from ResourcePermission where name = " +
+					"'com_liferay_directory_web_portlet_FriendsDirectoryPortlet'");
+			runSQL(
+				"delete from ResourcePermission where name = " +
+					"'com_liferay_directory_web_portlet_SiteMembersDirectoryPortlet'");
+			runSQL(
+				"delete from ResourcePermission where name = " +
+					"'com_liferay_directory_web_portlet_MySitesDirectoryPortlet'");
+		}
 	}
 
 }

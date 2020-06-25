@@ -135,26 +135,22 @@ export default function AuditBarChart({rtl, vocabularies}) {
 	const renderLegend = (props) => {
 		const {payload} = props;
 
-		return (
-			<>
-				{payload.map((entry) => (
-					<ClayCheckbox
-						aria-labelledby={entry.value}
-						checked={checkboxes[entry.dataKey]}
-						className={`custom-control-color-${entry.dataKey}`}
-						inline
-						key={entry.dataKey}
-						label={entry.value}
-						onChange={() =>
-							setCheckbox({
-								...checkboxes,
-								[entry.dataKey]: !checkboxes[entry.dataKey],
-							})
-						}
-					/>
-				))}
-			</>
-		);
+		return payload.map((entry) => (
+			<ClayCheckbox
+				aria-labelledby={entry.value}
+				checked={checkboxes[entry.dataKey]}
+				className={`custom-control-color-${entry.dataKey}`}
+				inline
+				key={entry.dataKey}
+				label={entry.value}
+				onChange={() =>
+					setCheckbox({
+						...checkboxes,
+						[entry.dataKey]: !checkboxes[entry.dataKey],
+					})
+				}
+			/>
+		));
 	};
 
 	return (

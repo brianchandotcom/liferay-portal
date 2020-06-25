@@ -16,19 +16,26 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
+page import="com.liferay.content.dashboard.web.internal.configuration.ContentDashboardAdminConfiguration" %><%@
 page import="com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebKeys" %><%@
+page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminConfigurationDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminManagementToolbarDisplayContext" %><%@
 page import="com.liferay.content.dashboard.web.internal.item.ContentDashboardItem" %><%@
 page import="com.liferay.content.dashboard.web.internal.util.AssetCategoryUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %>
 
@@ -37,5 +44,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>

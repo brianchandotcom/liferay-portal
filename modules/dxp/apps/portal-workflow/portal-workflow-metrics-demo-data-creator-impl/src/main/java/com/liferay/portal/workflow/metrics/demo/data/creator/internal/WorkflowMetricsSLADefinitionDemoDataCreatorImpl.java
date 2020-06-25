@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -144,9 +145,16 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 		for (Long workflowMetricsSLADefinitionId :
 				_workflowMetricsSLADefinitionIds) {
 
-			_workflowMetricsSLADefinitionLocalService.
-				deleteWorkflowMetricsSLADefinition(
-					workflowMetricsSLADefinitionId);
+			WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
+				_workflowMetricsSLADefinitionLocalService.
+					fetchWorkflowMetricsSLADefinition(
+						workflowMetricsSLADefinitionId);
+
+			if (workflowMetricsSLADefinition != null) {
+				_workflowMetricsSLADefinitionLocalService.
+					deleteWorkflowMetricsSLADefinition(
+						workflowMetricsSLADefinition);
+			}
 		}
 	}
 
@@ -157,16 +165,9 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 		throws Exception {
 
 		WorkflowMetricsSLADefinition workflowMetricsSLADefinition =
-			_workflowMetricsSLADefinitionLocalService.
-				addWorkflowMetricsSLADefinition(
-					null, null, duration, name, null, processId, startNodeKeys,
-					stopNodeKeys,
-					new ServiceContext() {
-						{
-							setCompanyId(companyId);
-							setUserId(userId);
-						}
-					});
+			_getWorkflowMetricsSLADefinition(
+				companyId, userId, duration, name, processId, startNodeKeys,
+				stopNodeKeys);
 
 		workflowMetricsSLADefinition.setCreateDate(createDate);
 
@@ -211,6 +212,32 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
 					LocaleUtil.getMostRelevantLocale(),
 					WorkflowMetricsSLADefinitionDemoDataCreatorImpl.class)));
+	}
+
+	private WorkflowMetricsSLADefinition _getWorkflowMetricsSLADefinition(
+			long companyId, long userId, long duration, String name,
+			long processId, String[] startNodeKeys, String[] stopNodeKeys)
+		throws Exception {
+
+		List<WorkflowMetricsSLADefinition> workflowMetricsSLADefinitions =
+			_workflowMetricsSLADefinitionLocalService.
+				getWorkflowMetricsSLADefinitions(companyId, name, processId);
+
+		if (ListUtil.isNotEmpty(workflowMetricsSLADefinitions)) {
+			return workflowMetricsSLADefinitions.get(
+				workflowMetricsSLADefinitions.size() - 1);
+		}
+
+		return _workflowMetricsSLADefinitionLocalService.
+			addWorkflowMetricsSLADefinition(
+				null, null, duration, name, null, processId, startNodeKeys,
+				stopNodeKeys,
+				new ServiceContext() {
+					{
+						setCompanyId(companyId);
+						setUserId(userId);
+					}
+				});
 	}
 
 	private String[] _toStringArray(String... nodeKeys) {

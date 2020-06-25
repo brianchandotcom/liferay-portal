@@ -30,8 +30,8 @@ const TranslateLanguagesSelector = ({
 		const url = new URL(currentUrl);
 		const search_params = url.searchParams;
 
-		search_params.set(namespace + 'sourceLocaleId', sourceId);
-		search_params.set(namespace + 'targetLocaleId', targetId);
+		search_params.set(namespace + 'sourceLanguageId', sourceId);
+		search_params.set(namespace + 'targetLanguageId', targetId);
 
 		url.search = search_params.toString();
 

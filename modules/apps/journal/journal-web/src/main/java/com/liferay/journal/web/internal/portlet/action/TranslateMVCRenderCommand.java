@@ -77,22 +77,22 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 						InfoItemFieldValuesProvider.class,
 						JournalArticle.class.getName());
 
-			List<String> availableSourceLocalesIds = Arrays.asList(
+			List<String> availableSourceLanguageIds = Arrays.asList(
 				article.getAvailableLanguageIds());
-			List<String> availableTargetLocalesIds =
-				_getSiteAvailableLocalesIds(themeDisplay);
+			List<String> availableTargetLanguageIds =
+				_getSiteAvailableLanguageIds(themeDisplay);
 
-			String sourceLocaleId = ParamUtil.getString(
-				renderRequest, "sourceLocaleId");
-			String targetLocaleId = ParamUtil.getString(
-				renderRequest, "targetLocaleId");
+			String sourceLanguageId = ParamUtil.getString(
+				renderRequest, "sourceLanguageId");
+			String targetLanguageId = ParamUtil.getString(
+				renderRequest, "targetLanguageId");
 
-			if (Validator.isNull(sourceLocaleId)) {
-				sourceLocaleId = availableSourceLocalesIds.get(0);
+			if (Validator.isNull(sourceLanguageId)) {
+				sourceLanguageId = availableSourceLanguageIds.get(0);
 			}
 
-			if (Validator.isNull(targetLocaleId)) {
-				targetLocaleId = availableTargetLocalesIds.get(0);
+			if (Validator.isNull(targetLanguageId)) {
+				targetLanguageId = availableTargetLanguageIds.get(0);
 			}
 
 			renderRequest.setAttribute(
@@ -105,11 +105,11 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				TranslationInfoFieldChecker.class.getName(),
 				_translationInfoFieldChecker);
 			renderRequest.setAttribute(
-				"availableSourceLocalesIds", availableSourceLocalesIds);
+				"availableSourceLanguageIds", availableSourceLanguageIds);
 			renderRequest.setAttribute(
-				"availableTargetLocalesIds", availableTargetLocalesIds);
-			renderRequest.setAttribute("sourceLocaleId", sourceLocaleId);
-			renderRequest.setAttribute("targetLocaleId", targetLocaleId);
+				"availableTargetLanguageIds", availableTargetLanguageIds);
+			renderRequest.setAttribute("sourceLanguageId", sourceLanguageId);
+			renderRequest.setAttribute("targetLanguageId", targetLanguageId);
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
@@ -118,7 +118,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return "/translate.jsp";
 	}
 
-	private List<String> _getSiteAvailableLocalesIds(
+	private List<String> _getSiteAvailableLanguageIds(
 		ThemeDisplay themeDisplay) {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(

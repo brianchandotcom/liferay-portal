@@ -78,6 +78,7 @@
 		keyProperty="primaryKeyObj"
 		modelVar="thread"
 	>
+
 		<%
 		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());
 

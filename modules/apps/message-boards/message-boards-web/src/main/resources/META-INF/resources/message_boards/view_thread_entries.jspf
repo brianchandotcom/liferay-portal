@@ -18,12 +18,11 @@
 	searchContainer="<%= threadEntriesSearchContainer %>"
 >
 	<liferay-ui:search-container-row
-		className="Object"
+		className="com.liferay.message.boards.model.MBThread"
 		escapedModel="<%= true %>"
-		keyProperty="categoryId"
-		modelVar="result"
+		keyProperty="threadId"
+		modelVar="thread"
 	>
-		<%@ include file="/message_boards/cast_result.jspf" %>
 
 		<%
 		MBMessage message = MBMessageLocalServiceUtil.fetchMBMessage(thread.getRootMessageId());

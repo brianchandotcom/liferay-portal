@@ -389,7 +389,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</clay:content-row>
 
 					<%
-					SearchContainer categoryEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, mbListDisplayContext.getCategoryEntriesDelta(), PortletURLUtil.clone(portletURL, renderResponse), null, "there-are-no-threads-or-categories");
+					SearchContainer<MBCategory> categoryEntriesSearchContainer = new SearchContainer<>(renderRequest, null, null, "cur1", 0, mbListDisplayContext.getCategoryEntriesDelta(), PortletURLUtil.clone(portletURL, renderResponse), null, "there-are-no-threads-or-categories");
 
 					mbListDisplayContext.setCategoryEntriesDelta(categoryEntriesSearchContainer);
 
@@ -407,7 +407,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					</c:if>
 
 					<%
-					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur2", 0, mbListDisplayContext.getThreadEntriesDelta(), PortletURLUtil.clone(portletURL, renderResponse), null, "there-are-no-threads-or-categories");
+					SearchContainer<MBThread> threadEntriesSearchContainer = new SearchContainer<>(renderRequest, null, null, "cur2", 0, mbListDisplayContext.getThreadEntriesDelta(), PortletURLUtil.clone(portletURL, renderResponse), null, "there-are-no-threads-or-categories");
 
 					mbListDisplayContext.setThreadEntriesDelta(threadEntriesSearchContainer);
 
@@ -528,7 +528,7 @@ request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
 					%>
 
 					<%
-					SearchContainer threadEntriesSearchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, mbListDisplayContext.getThreadEntriesDelta(), portletURL, null, "there-are-no-threads");
+					SearchContainer<MBThread> threadEntriesSearchContainer = new SearchContainer<>(renderRequest, null, null, "cur1", 0, mbListDisplayContext.getThreadEntriesDelta(), portletURL, null, "there-are-no-threads");
 
 					mbListDisplayContext.setThreadEntriesDelta(threadEntriesSearchContainer);
 

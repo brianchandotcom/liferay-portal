@@ -20,6 +20,7 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryServiceUtil;
+import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.service.MBThreadServiceUtil;
 import com.liferay.message.boards.settings.MBGroupServiceSettings;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -130,7 +132,7 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 	@Override
 	public void populateCategoriesResultsAndTotal(
-			SearchContainer searchContainer)
+			SearchContainer<MBCategory> searchContainer)
 		throws PortalException {
 
 		if (isShowSearch()) {
@@ -165,7 +167,8 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 	}
 
 	@Override
-	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
+	public void populateThreadsResultsAndTotal(
+			SearchContainer<MBThread> searchContainer)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay =
@@ -206,9 +209,20 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 
 			Hits hits = indexer.search(searchContext);
 
-			searchContainer.setResults(
+			List<SearchResult> searchResults =
 				SearchResultUtil.getSearchResults(
-					hits, _httpServletRequest.getLocale()));
+					hits, _httpServletRequest.getLocale());
+
+			List<MBThread> mbThreads = new ArrayList<>(searchResults.size());
+
+			for (SearchResult searchResult : searchResults) {
+				MBMessage message = MBMessageLocalServiceUtil.getMessage(
+					searchResult.getClassPK());
+
+				mbThreads.add(message.getThread());
+			}
+
+			searchContainer.setResults(mbThreads);
 
 			searchContainer.setTotal(hits.getLength());
 		}
@@ -299,7 +313,9 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 	}
 
 	@Override
-	public void setCategoryEntriesDelta(SearchContainer searchContainer) {
+	public void setCategoryEntriesDelta(
+		SearchContainer<MBCategory> searchContainer) {
+
 		int categoryEntriesDelta = ParamUtil.getInteger(
 			_httpServletRequest, searchContainer.getDeltaParam());
 
@@ -315,7 +331,9 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 	}
 
 	@Override
-	public void setThreadEntriesDelta(SearchContainer searchContainer) {
+	public void setThreadEntriesDelta(
+		SearchContainer<MBThread> searchContainer) {
+
 		int threadEntriesDelta = ParamUtil.getInteger(
 			_httpServletRequest, searchContainer.getDeltaParam());
 

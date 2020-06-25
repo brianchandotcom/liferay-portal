@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.display.context;
 
+import com.liferay.message.boards.model.MBCategory;
+import com.liferay.message.boards.model.MBThread;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -66,26 +68,31 @@ public class BaseMBListDisplayContext
 
 	@Override
 	public void populateCategoriesResultsAndTotal(
-			SearchContainer searchContainer)
+			SearchContainer<MBCategory> searchContainer)
 		throws PortalException {
 
 		parentDisplayContext.populateCategoriesResultsAndTotal(searchContainer);
 	}
 
 	@Override
-	public void populateThreadsResultsAndTotal(SearchContainer searchContainer)
+	public void populateThreadsResultsAndTotal(
+			SearchContainer<MBThread> searchContainer)
 		throws PortalException {
 
 		parentDisplayContext.populateThreadsResultsAndTotal(searchContainer);
 	}
 
 	@Override
-	public void setCategoryEntriesDelta(SearchContainer searchContainer) {
+	public void setCategoryEntriesDelta(
+		SearchContainer<MBCategory> searchContainer) {
+
 		parentDisplayContext.setCategoryEntriesDelta(searchContainer);
 	}
 
 	@Override
-	public void setThreadEntriesDelta(SearchContainer searchContainer) {
+	public void setThreadEntriesDelta(
+		SearchContainer<MBThread> searchContainer) {
+
 		parentDisplayContext.setThreadEntriesDelta(searchContainer);
 	}
 

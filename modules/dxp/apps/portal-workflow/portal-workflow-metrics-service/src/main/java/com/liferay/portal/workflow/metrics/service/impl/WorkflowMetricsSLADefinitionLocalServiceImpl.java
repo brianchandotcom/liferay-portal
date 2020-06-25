@@ -211,6 +211,14 @@ public class WorkflowMetricsSLADefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<WorkflowMetricsSLADefinition> getWorkflowMetricsSLADefinitions(
+		long companyId, String name, long processId) {
+
+		return workflowMetricsSLADefinitionPersistence.findByC_A_N_P(
+			companyId, true, name, processId);
+	}
+
+	@Override
 	public int getWorkflowMetricsSLADefinitionsCount(
 		long companyId, boolean active, long processId) {
 

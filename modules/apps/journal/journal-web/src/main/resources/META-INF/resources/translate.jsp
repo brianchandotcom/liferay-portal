@@ -38,7 +38,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(title);
 %>
 
-<aui:form name="translate_fm" onSubmit="event.preventDefault();" cssClass="translate-article">
+<aui:form cssClass="translate-article" name="translate_fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
@@ -51,13 +51,13 @@ renderResponse.setTitle(title);
 						Map<String, Object> data = HashMapBuilder.<String, Object>put(
 							"currentUrl", currentURL
 						).put(
-							"sourceLanguageId", sourceLocaleId
-						).put(
 							"sourceAvailableLanguages", sourceLocaleIds
 						).put(
-							"targetLanguageId", targetLocaleId
+							"sourceLanguageId", sourceLocaleId
 						).put(
 							"targetAvailableLanguages", targetLocaleIds
+						).put(
+							"targetLanguageId", targetLocaleId
 						).build();
 						%>
 
@@ -86,15 +86,16 @@ renderResponse.setTitle(title);
 		<div class="translate-body-form">
 
 			<%
-				String sourceLocaleIdTitle = StringUtil.replace(sourceLocaleId, "_", "-");
-				String targetLocaleIdTitle = StringUtil.replace(targetLocaleId, "_", "-");
+			String sourceLocaleIdTitle = StringUtil.replace(sourceLocaleId, "_", "-");
+			String targetLocaleIdTitle = StringUtil.replace(targetLocaleId, "_", "-");
 			%>
+
 			<clay:row>
 				<clay:col
 					md="6"
 				>
 					<clay:icon
-						symbol='<%= StringUtil.toLowerCase(sourceLocaleIdTitle) %>'
+						symbol="<%= StringUtil.toLowerCase(sourceLocaleIdTitle) %>"
 					/>
 
 					<span class="ml-1"> <%= sourceLocaleIdTitle %> </span>
@@ -106,7 +107,7 @@ renderResponse.setTitle(title);
 					md="6"
 				>
 					<clay:icon
-						symbol='<%= StringUtil.toLowerCase(targetLocaleIdTitle) %>'
+						symbol="<%= StringUtil.toLowerCase(targetLocaleIdTitle) %>"
 					/>
 
 					<span class="ml-1"> <%= targetLocaleIdTitle %> </span>
@@ -128,19 +129,19 @@ renderResponse.setTitle(title);
 					String label = labelInfoLocalizedValue.getValue(sourceLocale);
 			%>
 
-				<clay:row>
-					<clay:col
-						md="6"
-					>
-						<aui:input label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(sourceLocale)) %>" />
-					</clay:col>
+					<clay:row>
+						<clay:col
+							md="6"
+						>
+							<aui:input label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(sourceLocale)) %>" />
+						</clay:col>
 
-					<clay:col
-						md="6"
-					>
-						<aui:input label="<%= label %>" name="<%= label %>" value="<%= String.valueOf(infoFieldValue.getValue(targetLocale)) %>" />
-					</clay:col>
-				</clay:row>
+						<clay:col
+							md="6"
+						>
+							<aui:input label="<%= label %>" name="<%= label %>" value="<%= String.valueOf(infoFieldValue.getValue(targetLocale)) %>" />
+						</clay:col>
+					</clay:row>
 
 			<%
 				}

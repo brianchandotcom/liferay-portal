@@ -76,11 +76,15 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 						InfoItemFieldValuesProvider.class,
 						JournalArticle.class.getName());
 
-			List<String> availableSourceLocalesIds =  Arrays.asList(article.getAvailableLanguageIds());
-			List<String> availableTargetLocalesIds = _getSiteAvailableLocalesIds(themeDisplay);
+			List<String> availableSourceLocalesIds = Arrays.asList(
+				article.getAvailableLanguageIds());
+			List<String> availableTargetLocalesIds =
+				_getSiteAvailableLocalesIds(themeDisplay);
 
-			String sourceLocaleId = ParamUtil.getString(renderRequest, "sourceLocaleId");
-			String targetLocaleId = ParamUtil.getString(renderRequest, "targetLocaleId");
+			String sourceLocaleId = ParamUtil.getString(
+				renderRequest, "sourceLocaleId");
+			String targetLocaleId = ParamUtil.getString(
+				renderRequest, "targetLocaleId");
 
 			if (Validator.isNull(sourceLocaleId)) {
 				sourceLocaleId = availableSourceLocalesIds.get(0);
@@ -103,10 +107,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				"availableSourceLocalesIds", availableSourceLocalesIds);
 			renderRequest.setAttribute(
 				"availableTargetLocalesIds", availableTargetLocalesIds);
-			renderRequest.setAttribute(
-				"sourceLocaleId", sourceLocaleId);
-			renderRequest.setAttribute(
-				"targetLocaleId", targetLocaleId);
+			renderRequest.setAttribute("sourceLocaleId", sourceLocaleId);
+			renderRequest.setAttribute("targetLocaleId", targetLocaleId);
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);
@@ -115,10 +117,12 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 		return "/translate.jsp";
 	}
 
+	private List<String> _getSiteAvailableLocalesIds(
+		ThemeDisplay themeDisplay) {
 
-	private List<String> _getSiteAvailableLocalesIds(ThemeDisplay themeDisplay) {
 		Stream<Locale> stream = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId()).stream();
+			themeDisplay.getSiteGroupId()
+		).stream();
 
 		return stream.map(
 			LocaleUtil::toLanguageId

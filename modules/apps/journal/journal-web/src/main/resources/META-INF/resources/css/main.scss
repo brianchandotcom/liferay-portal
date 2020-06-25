@@ -255,5 +255,20 @@ $productMenuWidth: 320px;
 		.languages-selector .autofit-col {
 			margin-right: 1em;
 		}
+
+		.translate-body-form {
+			background-color: #fff;
+			padding: 1.5rem;
+
+			.form-control[readonly] {
+				background-color: #fff;
+			}
+
+			.separator {
+				margin-bottom: 2rem;
+				margin-top: 0.25rem;
+				border-color: $secondary;
+			}
+		}
 	}
 }

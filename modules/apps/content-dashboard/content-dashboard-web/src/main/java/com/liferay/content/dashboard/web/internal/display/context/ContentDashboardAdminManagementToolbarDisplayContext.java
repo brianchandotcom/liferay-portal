@@ -85,7 +85,7 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 
 	@Override
 	public String getDefaultEventHandler() {
-		return "contentDashboardManagementToolbarDefaultEventHandle";
+		return "contentDashboardManagementToolbarDefaultEventHandler";
 	}
 
 	@Override

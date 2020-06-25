@@ -70,7 +70,7 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5><%= user2.getFullName() %></h5>
+						<h5 class="table-title"><%= user2.getFullName() %></h5>
 
 						<h6 class="text-default">
 							<span><%= user2.getScreenName() %></span>
@@ -79,7 +79,7 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
-						cssClass="table-cell-content"
+						cssClass="table-cell-content table-title"
 						name="name"
 						property="fullName"
 					/>

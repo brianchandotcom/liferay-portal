@@ -47,6 +47,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 			%>
 
 			<liferay-ui:search-container-column-text
+				cssClass="table-title"
 				name="name"
 				orderable="<%= true %>"
 				property="name"

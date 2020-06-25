@@ -238,20 +238,16 @@ public class InfoListProviderItemSelectorView
 			Layout layout = _layoutLocalService.fetchLayout(
 				_infoListProviderItemSelectorCriterion.getPlid());
 
+			DefaultInfoListProviderContext defaultInfoListProviderContext =
+				new DefaultInfoListProviderContext(
+					themeDisplay.getScopeGroup(), themeDisplay.getUser());
+
+			defaultInfoListProviderContext.setLayout(layout);
+
 			infoListProviders = ListUtil.filter(
 				infoListProviders,
-				infoListProvider -> {
-					DefaultInfoListProviderContext
-						defaultInfoListProviderContext =
-							new DefaultInfoListProviderContext(
-								themeDisplay.getScopeGroup(),
-								themeDisplay.getUser());
-
-					defaultInfoListProviderContext.setLayout(layout);
-
-					return infoListProvider.isAvailable(
-						defaultInfoListProviderContext);
-				});
+				infoListProvider -> infoListProvider.isAvailable(
+					defaultInfoListProviderContext));
 
 			searchContainer.setResults(
 				ListUtil.subList(

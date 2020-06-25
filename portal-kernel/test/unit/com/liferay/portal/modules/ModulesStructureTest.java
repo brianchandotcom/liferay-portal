@@ -1049,8 +1049,10 @@ public class ModulesStructureTest {
 				buildGradle);
 		}
 
-		_testGradleBuildProperties(
-			dirPath, gradlePropertiesPath, dxpRepo, privateRepo);
+		if (Files.exists(gradlePropertiesPath)) {
+			_testGradleBuildProperties(
+				dirPath, gradlePropertiesPath, dxpRepo, privateRepo);
+		}
 
 		if (Files.notExists(dirPath.resolve("settings-ext.gradle"))) {
 			settingsGradleTemplate = StringUtil.removeSubstring(

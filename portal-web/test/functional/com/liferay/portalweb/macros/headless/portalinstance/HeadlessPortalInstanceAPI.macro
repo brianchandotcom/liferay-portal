@@ -1,0 +1,83 @@
+definition {
+
+	@summary = "Get all current companies in a JSON format"
+	macro _getPortalInstances {
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		var JSON = JSONCurlUtil.get("${curl}");
+
+		return "${JSON}";
+	}
+
+	@summary = "Creates a new Portal Instance with domain = mailDomain, virtualHost = virtualHost, and portalInstanceId = webId"
+	macro addPortalInstance {
+		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "{}",
+			key = "domain",
+			value = ""${domain}"");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "virtualHost",
+			value = ""${virtualHost}"");
+
+		var parameters = JSONUtil2._addJSONObject(
+			JSON = "${parameters}",
+			key = "portalInstanceId",
+			value = ""${portalInstanceId}"");
+
+		var curl = '''
+			${portalURL}/o/headless-portal-instances/v1.0/portal-instances \
+			-u test@liferay.com:test \
+			-d ${parameters} \
+			-H Content-Type: application/json
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
+	@summary = "Clean up all Portal Instances that are not the default using Headless"
+	macro cleanAllPortalInstances {
+		var portalInstanceJSON = HeadlessPortalInstanceAPI._getPortalInstances();
+
+		var portalInstanceIds = JSONUtil.getWithJSONPath("${portalInstanceJSON}","$.items..portalInstanceId");
+
+		// Format JSON Array into a Poshi List
+
+		var portalInstanceIds = StringUtil.regexReplaceAll("${portalInstanceIds}","[\[\]&quot;]","");
+
+		for (var portalInstanceId : list "${portalInstanceIds}") {
+			if ("${portalInstanceId}" != "liferay.com") {
+				HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = "${portalInstanceId}");
+			}
+		}
+	}
+
+	@summary = "Deletes a Portal Instance with portalInstanceId resembling webId"
+	macro deletePortalInstance {
+		Variables.assertDefined(parameterList = "${portalInstanceId}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var portalInstanceId = StringUtil.replace("${portalInstanceId}", " ", "%20");
+
+		var curl = '''
+			${portalURL}/o/headless-portal-instances/v1.0/portal-instances/${portalInstanceId} \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+		''';
+
+		JSONCurlUtil.delete("${curl}");
+	}
+
+}

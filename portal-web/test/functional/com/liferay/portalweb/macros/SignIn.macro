@@ -61,62 +61,16 @@ definition {
 	}
 
 	macro signInPortalInstanceSetUp {
-		var defaultPortalURL = PropsUtil.get("default.portal.url");
-
-		SignIn.signInSpecificURL(url = "${defaultPortalURL}");
-
-		if (IsElementPresent(locator1 = "Button#I_AGREE")) {
-			SignIn.agreeToTermsOfUse();
-		}
-
-		if (IsElementPresent(locator1 = "Select#QUESTION")) {
-			SignIn.setPasswordReminder();
-		}
-
-		ApplicationsMenu.gotoPortlet(
-			category = "System",
-			panel = "Control Panel",
-			portlet = "Virtual Instances");
-
-		while (IsElementPresent(locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS", key_rowNumber = "2")) {
-			Click.waitForMenuToggleJSClick(
-				key_rowNumber = "2",
-				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS");
-
-			MenuItem.clickNoError(menuItem = "Delete");
-
-			AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-			Alert.viewSuccessMessage();
-		}
-
 		var portalURL = PropsUtil.get("portal.url");
 		var portalURL = StringUtil.replace("${portalURL}", "http://", "");
 		var portalURL = StringUtil.replace("${portalURL}", ":8080", "");
 
-		LexiconEntry.gotoAdd();
+		HeadlessPortalInstanceAPI.cleanAllPortalInstances();
 
-		WaitForElementPresent(locator1 = "//script[contains(@src,'ManagementToolbar.es.js')]");
-
-		Type(
-			locator1 = "TextInput#WEB_ID",
-			value1 = "${portalURL}");
-
-		Type(
-			locator1 = "TextInput#VIRTUAL_HOST",
-			value1 = "${portalURL}");
-
-		Type(
-			locator1 = "TextInput#MAIL_DOMAIN",
-			value1 = "liferay.com");
-
-		Button.clickSave();
-
-		Pause(locator1 = "3000");
-
-		WaitForElementPresent(locator1 = "//script[contains(@src,'OpenToast.es.js')]");
-
-		Navigator.openURL();
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "liferay.com",
+			portalInstanceId = "${portalURL}",
+			virtualHost = "${portalURL}");
 	}
 
 	macro signInSpecificURL {

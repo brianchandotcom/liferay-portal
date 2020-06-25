@@ -15,7 +15,6 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayLabel from '@clayui/label';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -29,12 +28,7 @@ function getLanguage(id) {
 	};
 }
 
-function LanguageSelector({
-	defaultLanguageId,
-	languageIds,
-	onChange,
-	selectedLanguageId,
-}) {
+function LanguageSelector({languageIds, onChange, selectedLanguageId}) {
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const language = getLanguage(selectedLanguageId);
 
@@ -68,11 +62,6 @@ function LanguageSelector({
 								<ClayIcon symbol={icon} />
 							</span>
 							{text}{' '}
-							{defaultLanguageId === id && (
-								<ClayLabel displayType="info">
-									{Liferay.Language.get('default')}
-								</ClayLabel>
-							)}
 						</ClayDropDown.Item>
 					);
 				})}
@@ -82,7 +71,6 @@ function LanguageSelector({
 }
 
 LanguageSelector.propTypes = {
-	defaultLanguageId: PropTypes.string.isRequired,
 	languageIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 	onChange: PropTypes.func.isRequired,
 	selectedLanguageId: PropTypes.string.isRequired,

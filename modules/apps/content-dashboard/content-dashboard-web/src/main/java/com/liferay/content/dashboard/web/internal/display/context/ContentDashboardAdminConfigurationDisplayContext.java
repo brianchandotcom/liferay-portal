@@ -80,7 +80,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		);
 	}
 
-	public List<KeyValuePair> getCurrentVocabularyNames() throws Exception {
+	public List<KeyValuePair> getCurrentVocabularyNames() {
 		return Stream.of(
 			_getAssetVocabularyNames()
 		).map(
@@ -107,7 +107,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		return _assetVocabularies;
 	}
 
-	private String[] _getAssetVocabularyNames() throws Exception {
+	private String[] _getAssetVocabularyNames() {
 		if (_assetVocabularyNames != null) {
 			return _assetVocabularyNames;
 		}

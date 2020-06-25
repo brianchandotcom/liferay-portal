@@ -54,18 +54,18 @@ public class SelectableTableClayDataSetContentRendererContextContributor
 
 	private Map<String, Object> _serialize(
 		BaseSelectableTableClayDataSetDisplayView
-			selectableTableClayDataSetDisplayView,
+			baseSelectableTableClayDataSetDisplayView,
 		Locale locale) {
 
 		return HashMapBuilder.<String, Object>put(
 			"schema",
 			JSONUtil.put(
 				"firstColumnLabel",
-				selectableTableClayDataSetDisplayView.getFirstColumnLabel(
+				baseSelectableTableClayDataSetDisplayView.getFirstColumnLabel(
 					locale)
 			).put(
 				"firstColumnName",
-				selectableTableClayDataSetDisplayView.getFirstColumnName()
+				baseSelectableTableClayDataSetDisplayView.getFirstColumnName()
 			)
 		).build();
 	}

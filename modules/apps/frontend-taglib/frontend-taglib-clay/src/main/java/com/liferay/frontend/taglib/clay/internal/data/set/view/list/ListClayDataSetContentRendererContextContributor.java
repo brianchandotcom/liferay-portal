@@ -48,16 +48,16 @@ public class ListClayDataSetContentRendererContextContributor
 	}
 
 	private Map<String, Object> _serialize(
-		BaseListClayDataSetDisplayView listClayDataSetDisplayView) {
+		BaseListClayDataSetDisplayView baseListClayDataSetDisplayView) {
 
 		return HashMapBuilder.<String, Object>put(
 			"schema",
 			HashMapBuilder.<String, Object>put(
-				"description", listClayDataSetDisplayView.getDescription()
+				"description", baseListClayDataSetDisplayView.getDescription()
 			).put(
-				"thumbnail", listClayDataSetDisplayView.getThumbnail()
+				"thumbnail", baseListClayDataSetDisplayView.getThumbnail()
 			).put(
-				"title", listClayDataSetDisplayView.getTitle()
+				"title", baseListClayDataSetDisplayView.getTitle()
 			).build()
 		).build();
 	}

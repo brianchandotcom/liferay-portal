@@ -51,16 +51,17 @@ public class TimelineClayDataSetContentRendererContextContributor
 	}
 
 	private Map<String, Object> _serialize(
-		BaseTimelineClayDataSetDisplayView timelineClayDataSetDisplayView) {
+		BaseTimelineClayDataSetDisplayView baseTimelineClayDataSetDisplayView) {
 
 		return HashMapBuilder.<String, Object>put(
 			"schema",
 			JSONUtil.put(
-				"date", timelineClayDataSetDisplayView.getDate()
+				"date", baseTimelineClayDataSetDisplayView.getDate()
 			).put(
-				"description", timelineClayDataSetDisplayView.getDescription()
+				"description",
+				baseTimelineClayDataSetDisplayView.getDescription()
 			).put(
-				"title", timelineClayDataSetDisplayView.getTitle()
+				"title", baseTimelineClayDataSetDisplayView.getTitle()
 			)
 		).build();
 	}

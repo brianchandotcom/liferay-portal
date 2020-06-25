@@ -375,11 +375,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	 */
 	@Override
 	public void clearCache(${entity.name} ${entity.varName}) {
-		${entityCache}.removeResult(
-			<#if serviceBuilder.isVersionLTE_7_2_0()>
-				${entityCacheEnabled},
-			</#if>
-			${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			${entityCache}.removeResult(${entity.name}Impl.class, ${entity.varName});
+		<#else>
+			${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+		</#if>
 
 		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -395,11 +395,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		${finderCache}.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (${entity.name} ${entity.varName} : ${entity.pluralVarName}) {
-			${entityCache}.removeResult(
-				<#if serviceBuilder.isVersionLTE_7_2_0()>
-					${entityCacheEnabled},
-				</#if>
-				${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+			<#if serviceBuilder.isVersionGTE_7_3_0()>
+				${entityCache}.removeResult(${entity.name}Impl.class, ${entity.varName});
+			<#else>
+				${entityCache}.removeResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey());
+			</#if>
 
 			<#if entity.uniqueEntityFinders?size &gt; 0>
 				clearUniqueFindersCache((${entity.name}ModelImpl)${entity.varName}, true);
@@ -976,11 +976,11 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			}
 		</#if>
 
-		${entityCache}.putResult(
-			<#if serviceBuilder.isVersionLTE_7_2_0()>
-				${entityCacheEnabled},
-			</#if>
-			${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName}, false);
+		<#if serviceBuilder.isVersionGTE_7_3_0()>
+			${entityCache}.putResult(${entity.name}Impl.class, ${entity.varName}, false, true);
+		<#else>
+			${entityCache}.putResult(${entityCacheEnabled}, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName}, false);
+		</#if>
 
 		<#if entity.uniqueEntityFinders?size &gt; 0>
 			clearUniqueFindersCache(${entity.varName}ModelImpl, false);

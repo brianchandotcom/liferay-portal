@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.model.BaseModel;
 
 import java.io.Serializable;
 
@@ -74,8 +75,17 @@ public interface EntityCache {
 		Serializable result, boolean quiet);
 
 	public void putResult(
+		Class<?> clazz, BaseModel<?> baseModel, boolean quiet,
+		boolean updateFinderCache);
+
+	public void putResult(
 		Class<?> clazz, Serializable primaryKey, Serializable result);
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #putResult(Class, BaseModel, boolean, boolean)}
+	 */
+	@Deprecated
 	public void putResult(
 		Class<?> clazz, Serializable primaryKey, Serializable result,
 		boolean quiet);
@@ -89,6 +99,8 @@ public interface EntityCache {
 	@Deprecated
 	public void removeResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey);
+
+	public void removeResult(Class<?> clazz, BaseModel<?> baseModel);
 
 	public void removeResult(Class<?> clazz, Serializable primaryKey);
 

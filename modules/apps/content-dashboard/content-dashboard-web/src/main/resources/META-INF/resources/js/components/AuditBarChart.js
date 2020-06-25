@@ -70,20 +70,18 @@ export default function AuditBarChart({rtl, vocabularies}) {
 			);
 		});
 
-		const legendCheckboxes = bars.reduce(
-			(acc, {dataKey}) => ({
-				...acc,
-				[dataKey]: true,
-			}),
-			{}
-		);
-
-		const colors = bars.reduce(
+		const {colors, legendCheckboxes} = bars.reduce(
 			(acc, {dataKey}, index) => ({
-				...acc,
-				[dataKey]: COLORS[index % COLORS.length],
+				colors: {
+					...acc.colors,
+					[dataKey]: COLORS[index % COLORS.length],
+				},
+				legendCheckboxes: {
+					...acc.legendCheckboxes,
+					[dataKey]: true,
+				},
 			}),
-			{}
+			{colors: {}, legendCheckboxes: {}}
 		);
 
 		return {bars, colors, data, legendCheckboxes};

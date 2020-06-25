@@ -34,6 +34,7 @@ import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -120,9 +121,10 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	private List<String> _getSiteAvailableLocalesIds(
 		ThemeDisplay themeDisplay) {
 
-		Stream<Locale> stream = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId()
-		).stream();
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
+
+		Stream<Locale> stream = availableLocales.stream();
 
 		return stream.map(
 			LocaleUtil::toLanguageId

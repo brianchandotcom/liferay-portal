@@ -25,8 +25,6 @@ public interface ElasticsearchInstancePaths {
 
 	public Path getHomePath();
 
-	public Path getIndicesPath();
-
 	public Path getWorkPath();
 
 }

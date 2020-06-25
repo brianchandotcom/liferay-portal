@@ -165,8 +165,6 @@ public class SidecarElasticsearchConnectionManager {
 			dataPath
 		).homePath(
 			resolveHomePath(workPath, elasticsearchConfiguration)
-		).indicesPath(
-			dataPath.resolve("indices")
 		).workPath(
 			workPath
 		).build();

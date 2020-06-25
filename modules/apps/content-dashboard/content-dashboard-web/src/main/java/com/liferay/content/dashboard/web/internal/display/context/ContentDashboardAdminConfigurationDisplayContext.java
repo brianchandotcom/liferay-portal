@@ -72,12 +72,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 					continue;
 				}
 
-				availableVocabularyNames.add(
-					new KeyValuePair(
-						assetVocabulary.getName(),
-						HtmlUtil.escape(
-							assetVocabulary.getTitle(
-								_themeDisplay.getLanguageId()))));
+				availableVocabularyNames.add(_toKeyValuePair(assetVocabulary));
 			}
 		}
 
@@ -97,15 +92,17 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 				continue;
 			}
 
-			currentVocabularyNames.add(
-				new KeyValuePair(
-					assetVocabulary.getName(),
-					HtmlUtil.escape(
-						assetVocabulary.getTitle(
-							_themeDisplay.getLanguageId()))));
+			currentVocabularyNames.add(_toKeyValuePair(assetVocabulary));
 		}
 
 		return currentVocabularyNames;
+	}
+
+	private KeyValuePair _toKeyValuePair(AssetVocabulary assetVocabulary) {
+		return new KeyValuePair(
+			assetVocabulary.getName(),
+			HtmlUtil.escape(
+				assetVocabulary.getTitle(_themeDisplay.getLanguageId())));
 	}
 
 	private List<AssetVocabulary> _getAssetVocabularies() {

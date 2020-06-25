@@ -126,12 +126,19 @@ public class AssetListItemsDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_asset_list_items.jsp");
+		portletURL.setParameter("redirect", _getRedirect());
+
 		portletURL.setParameter(
 			"assetListEntryId", String.valueOf(getAssetListEntryId()));
 		portletURL.setParameter(
 			"segmentsEntryId", String.valueOf(getSegmentsEntryId()));
 
 		return portletURL;
+	}
+
+	private String _getRedirect() {
+		return ParamUtil.get(
+			_renderRequest, "redirect", _themeDisplay.getURLCurrent());
 	}
 
 	private final AssetListAssetEntryProvider _assetListAssetEntryProvider;

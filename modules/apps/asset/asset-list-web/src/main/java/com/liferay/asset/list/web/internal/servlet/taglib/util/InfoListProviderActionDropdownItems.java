@@ -67,6 +67,8 @@ public class InfoListProviderActionDropdownItems {
 		viewInfoListProviderItemsURL.setParameter(
 			"mvcPath", "/view_info_list_provider_items.jsp");
 		viewInfoListProviderItemsURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		viewInfoListProviderItemsURL.setParameter(
 			"infoListProviderKey", String.valueOf(_infoListProvider.getKey()));
 
 		viewInfoListProviderItemsURL.setWindowState(LiferayWindowState.POP_UP);

@@ -12,13 +12,13 @@
  * details.
  */
 
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 
 import LanguageSelector from './LanguageSelector';
 
 const TranslateLanguagesSelector = ({
 	currentUrl,
-	defaultLanguageId = "en_US" ,
+	defaultLanguageId = 'en_US',
 	portletNamespace,
 	sourceAvailableLanguages,
 	sourceLanguageId,
@@ -29,15 +29,15 @@ const TranslateLanguagesSelector = ({
 
 	const changeSourceLanguage = (value) => {
 		refreshPage(value, targetLanguageId);
-	}
+	};
 
 	const changeTargetLanguage = (value) => {
 		refreshPage(sourceLanguageId, value);
-	}
+	};
 
 	const refreshPage = (sourceId, targetId) => {
-		let url = new URL(currentUrl);
-		let search_params = url.searchParams;
+		const url = new URL(currentUrl);
+		const search_params = url.searchParams;
 
 		search_params.set(namespace + 'sourceLocaleId', sourceId);
 		search_params.set(namespace + 'targetLocaleId', targetId);
@@ -64,9 +64,7 @@ const TranslateLanguagesSelector = ({
 				/>
 			</span>
 
-			<span className="autofit-col">
-				{Liferay.Language.get('to')}
-			</span>
+			<span className="autofit-col">{Liferay.Language.get('to')}</span>
 
 			<span className="autofit-col">
 				<LanguageSelector
@@ -80,6 +78,6 @@ const TranslateLanguagesSelector = ({
 			</span>
 		</div>
 	);
-}
+};
 
 export default TranslateLanguagesSelector;

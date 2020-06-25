@@ -1323,6 +1323,217 @@ definition {
 			key_workflowProcessName = "Single Approver");
 	}
 
+	@description = "LRQA-53660 Automate LPS-105495 single-task work"
+	@priority = "5"
+	test SingleTaskWorkflowTransition {
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 1 Content",
+			entryTitle = "Blogs Entry Title 1");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 1",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		GlobalMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		Click(locator1 = "WorkflowAllItems#APPROVE_DROPDOWN");
+
+		Button.click(button = "Done");
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoBack();
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver");
+
+		Navigator.gotoBack();
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 1",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 2 Content",
+			entryTitle = "Blogs Entry Title 2");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		AssertElementNotPresent(locator1 = "WorkflowAllItems#APPROVE_DROPDOWN");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#KEBAB_BUTTON_DISABLED");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.viewTaskAssignedToMyRoles(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 2",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 2",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver");
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		Click(locator1 = "WorkflowAllItems#APPROVE_DROPDOWN");
+
+		Button.click(button = "Done");
+
+		Alert.viewSuccessMessage();
+
+		GlobalMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Metrics");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver");
+
+		Workflow.duplicateSingleApproverWorkflow(workflowName = "Single Approver Edited");
+
+		KaleoDesigner.deleteNode(nodeNodeLabel = "update");
+
+		Button.clickUpdate();
+
+		ProductMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Site Administration",
+			portlet = "Workflow",
+			site = "${siteName}");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "Single Approver Edited",
+			workflowResourceValue = "Blogs Entry");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry 3 Content",
+			entryTitle = "Blogs Entry Title 3");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		Workflow.assignToMeTaskByActions(
+			workflowAssetTitle = "Blogs Entry Title 3",
+			workflowAssetType = "Blogs Entry",
+			workflowTask = "Review");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver Edited");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver Edited");
+
+		Click(
+			locator1 = "WorkflowAllItems#KEBAB_DROPDOWN",
+			task = "1");
+
+		Click(locator1 = "WorkflowAllItems#APPROVE_DROPDOWN");
+
+		Button.click(button = "Done");
+
+		Alert.viewSuccessMessage();
+
+		Navigator.gotoBack();
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "PENDING",
+			workflowMetricsTab = "DASHBOARD",
+			workflowProcess = "Single Approver Edited");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No results were found.");
+
+		WorkflowMetrics.goToDashboardAllItemsWithFilter(
+			workflowFilterOption = "COMPLETED",
+			workflowMetricsTab = "PERFORMANCE",
+			workflowProcess = "Single Approver Edited");
+
+		Navigator.gotoBack();
+
+		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
+
+		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+
+		AssertElementPresent(
+			key_workflowAssetTitle = "Blogs Entry Title 3",
+			locator1 = "MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE");
+	}
+
 	@description = "Verify that the filters from All Items page are correctly loaded when accessed via Metrics Pending/Completed cards"
 	@priority = "5"
 	test VerifyAllItemsFilterFromMetrics {

@@ -1257,6 +1257,38 @@ public class JenkinsResultsParserUtil {
 		return Float.parseFloat(matcher.group(1));
 	}
 
+	public static String getJenkinsMasterName(String jenkinSlaveName) {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to get build properties", ioException);
+		}
+
+		for (Object propertyName : buildProperties.keySet()) {
+			Matcher jenkinsSlavesPropertyNameMatcher =
+				_jenkinsSlavesPropertyNamePattern.matcher(
+					propertyName.toString());
+
+			if (jenkinsSlavesPropertyNameMatcher.matches()) {
+				String jenkinsMasterName =
+					jenkinsSlavesPropertyNameMatcher.group(1);
+
+				List<String> jenkinsSlaveNames = getSlaves(
+					buildProperties, jenkinsMasterName, null, false);
+
+				if (jenkinsSlaveNames.contains(jenkinSlaveName)) {
+					return jenkinsMasterName;
+				}
+			}
+		}
+
+		return null;
+	}
+
 	public static List<JenkinsMaster> getJenkinsMasters(
 		Properties buildProperties, int minimumRAM, String prefix) {
 
@@ -3523,6 +3555,8 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _jenkinsMasterPattern = Pattern.compile(
 		"(?<cohortName>test-\\d+)-\\d+");
 	private static Hashtable<?, ?> _jenkinsProperties;
+	private static final Pattern _jenkinsSlavesPropertyNamePattern =
+		Pattern.compile("master.slaves\\((.+)\\)");
 	private static final Pattern _localURLAuthorityPattern1 = Pattern.compile(
 		"http://((release|test)-[0-9]+)/([0-9]+)/");
 	private static final Pattern _localURLAuthorityPattern2 = Pattern.compile(

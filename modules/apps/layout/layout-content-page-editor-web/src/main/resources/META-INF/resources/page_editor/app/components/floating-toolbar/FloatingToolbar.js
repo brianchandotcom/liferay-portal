@@ -76,7 +76,7 @@ export default function FloatingToolbar({
 						getElementAlign(
 							element,
 							anchor,
-							config.languageDirection[languageId] === 'rtl'
+							config.languageDirection?.[languageId] === 'rtl'
 						),
 						false
 					);
@@ -148,7 +148,7 @@ export default function FloatingToolbar({
 			marginRight: itemRefMarginRight,
 		} = getComputedStyle(itemElement);
 
-		const rtl = config.languageDirection[languageId] === 'rtl';
+		const rtl = config.languageDirection?.[languageId] === 'rtl';
 
 		const marginValue = rtl
 			? Math.abs(parseInt(itemRefMarginLeft, 10))
@@ -447,7 +447,7 @@ const getHorizontalPosition = (anchor, element, rtl) => {
 	const {
 		left: pageEditorLeft,
 		right: pageEditorRight,
-	} = pageEditor.getBoundingClientRect();
+	} = pageEditor?.getBoundingClientRect() ?? {left: 0, right: 0};
 
 	const {
 		left: anchorLeft,

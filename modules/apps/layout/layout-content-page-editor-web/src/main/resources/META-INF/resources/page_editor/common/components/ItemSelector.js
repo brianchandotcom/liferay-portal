@@ -35,7 +35,7 @@ export default function ItemSelector({
 }) {
 	const [active, setActive] = useState(false);
 	const itemSelectorInputId = useId();
-	const mappedInfoItems = useSelector((state) => state.mappedInfoItems);
+	const mappedInfoItems = useSelector((state) => state.mappedInfoItems || []);
 
 	const defaultEventName = `${config.portletNamespace}selectInfoItem`;
 

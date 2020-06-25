@@ -71,7 +71,6 @@ ExperiencesList.propTypes = {
 	activeExperienceId: PropTypes.string.isRequired,
 	defaultExperienceId: PropTypes.string.isRequired,
 	experiences: PropTypes.arrayOf(PropTypes.shape(ExperienceType)).isRequired,
-	hasUpdatePermissions: PropTypes.bool.isRequired,
 	onDeleteExperience: PropTypes.func.isRequired,
 	onEditExperience: PropTypes.func.isRequired,
 	onPriorityDecrease: PropTypes.func.isRequired,

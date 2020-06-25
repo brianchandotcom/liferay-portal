@@ -21,7 +21,9 @@ export default function useSetRef(ref) {
 		(node) => {
 			setElement(node);
 
-			ref.current = node;
+			if (ref) {
+				ref.current = node;
+			}
 		},
 		[ref]
 	);

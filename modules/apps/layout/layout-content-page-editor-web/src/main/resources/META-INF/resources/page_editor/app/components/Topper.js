@@ -129,7 +129,7 @@ function Topper({children, item, itemElement, layoutData}) {
 		[canUpdatePageStructure, item, layoutData]
 	);
 
-	const commentsPanelId = config.sidebarPanels.comments.sidebarPanelId;
+	const commentsPanelId = config.sidebarPanels?.comments?.sidebarPanelId;
 
 	const fragmentEntryLinks = store.fragmentEntryLinks;
 
@@ -174,9 +174,9 @@ function Topper({children, item, itemElement, layoutData}) {
 			const itemTop =
 				itemElement.getBoundingClientRect().top - TOPPER_BAR_HEIGHT;
 
-			const controlMenuContainerHeight = document.querySelector(
-				'.control-menu-container'
-			).offsetHeight;
+			const controlMenuContainerHeight =
+				document.querySelector('.control-menu-container')
+					?.offsetHeight ?? 0;
 
 			if (itemTop < controlMenuContainerHeight) {
 				setIsInset(true);

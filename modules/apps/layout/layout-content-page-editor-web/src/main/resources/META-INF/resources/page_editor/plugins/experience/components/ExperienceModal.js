@@ -274,7 +274,6 @@ const ExperienceModal = ({
 ExperienceModal.propTypes = {
 	errorMessage: PropTypes.string,
 	experienceId: PropTypes.string,
-	hasSegmentsPermission: PropTypes.bool.isRequired,
 	initialName: PropTypes.string,
 	observer: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired,

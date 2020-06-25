@@ -27,7 +27,7 @@ import {
 } from 'recharts';
 
 import {BAR_CHART, COLORS} from '../utils/constants';
-import {numberShorten} from '../utils/numberShorten';
+import {shortenNumber} from '../utils/shortenNumber';
 
 export default function AuditBarChart({rtl, vocabularies}) {
 	const auditBarChartData = useMemo(() => {
@@ -249,7 +249,7 @@ function CustomYAxisTick(props) {
 			x={rtl ? x + BAR_CHART.axisMargin : x - BAR_CHART.axisMargin}
 			y={y}
 		>
-			{numberShorten(payload.value)}
+			{shortenNumber(payload.value)}
 		</Text>
 	);
 }

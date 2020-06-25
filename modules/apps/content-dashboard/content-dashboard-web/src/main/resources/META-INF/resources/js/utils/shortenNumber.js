@@ -22,15 +22,15 @@
  * 4000000 => '4M'
  * 4000000000 => '4B'
  */
-export function numberShorten(value) {
+export function shortenNumber(value) {
 	if (value >= 1000000000) {
-		return value / 1000000000 + 'B';
+		return (value / 1000000000).toFixed(0) + 'B';
 	}
 	else if (value >= 1000000) {
-		return value / 1000000 + 'M';
+		return (value / 1000000).toFixed(0) + 'M';
 	}
 	else if (value >= 10000) {
-		return value / 10000 + 'K';
+		return (value / 10000).toFixed(0) + 'K';
 	}
 
 	return value;

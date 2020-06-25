@@ -47,6 +47,11 @@ public class ContentDashboardConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
+	public String getJspPath(HttpServletRequest httpServletRequest) {
+		return "/configuration.jsp";
+	}
+
+	@Override
 	public void include(
 			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

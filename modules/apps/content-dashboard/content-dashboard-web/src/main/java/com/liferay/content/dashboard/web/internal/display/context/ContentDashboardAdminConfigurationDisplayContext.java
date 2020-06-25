@@ -51,7 +51,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	public List<KeyValuePair> getAvailableVocabularyNames() throws Exception {
-		List<KeyValuePair> availableVocabularNames = new ArrayList<>();
+		List<KeyValuePair> availableVocabularyNames = new ArrayList<>();
 
 		String[] assetVocabularyNames = _getAssetVocabularyNames();
 
@@ -72,7 +72,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 					continue;
 				}
 
-				availableVocabularNames.add(
+				availableVocabularyNames.add(
 					new KeyValuePair(
 						assetVocabulary.getName(),
 						HtmlUtil.escape(
@@ -82,11 +82,11 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 		}
 
 		return ListUtil.sort(
-			availableVocabularNames, new KeyValuePairComparator(false, true));
+			availableVocabularyNames, new KeyValuePairComparator(false, true));
 	}
 
 	public List<KeyValuePair> getCurrentVocabularyNames() throws Exception {
-		List<KeyValuePair> currentVocabularNames = new ArrayList<>();
+		List<KeyValuePair> currentVocabularyNames = new ArrayList<>();
 
 		for (String assetVocabularyName : _getAssetVocabularyNames()) {
 			AssetVocabulary assetVocabulary =
@@ -97,7 +97,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 				continue;
 			}
 
-			currentVocabularNames.add(
+			currentVocabularyNames.add(
 				new KeyValuePair(
 					assetVocabulary.getName(),
 					HtmlUtil.escape(
@@ -105,7 +105,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 							_themeDisplay.getLanguageId()))));
 		}
 
-		return currentVocabularNames;
+		return currentVocabularyNames;
 	}
 
 	private List<AssetVocabulary> _getAssetVocabularies() {

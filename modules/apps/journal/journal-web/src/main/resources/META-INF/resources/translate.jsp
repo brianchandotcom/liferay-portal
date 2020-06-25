@@ -27,10 +27,10 @@ String title = article.getTitle();
 
 TranslationInfoFieldChecker translationInfoFieldChecker = (TranslationInfoFieldChecker)request.getAttribute(TranslationInfoFieldChecker.class.getName());
 
-List<String> sourceLocaleIds = (List)request.getAttribute("availableSourceLocalesIds");
-List<String> targetLocaleIds = (List)request.getAttribute("availableTargetLocalesIds");
-String sourceLocaleId = (String)request.getAttribute("sourceLocaleId");
-String targetLocaleId = (String)request.getAttribute("targetLocaleId");
+List<String> availableSourceLanguageIds = (List)request.getAttribute("availableSourceLanguageIds");
+List<String> availableTargetLanguageIds = (List)request.getAttribute("availableTargetLanguageIds");
+String sourceLanguageId = (String)request.getAttribute("sourceLanguageId");
+String targetLanguageId = (String)request.getAttribute("targetLanguageId");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -51,13 +51,15 @@ renderResponse.setTitle(title);
 						Map<String, Object> data = HashMapBuilder.<String, Object>put(
 							"currentUrl", currentURL
 						).put(
-							"sourceAvailableLanguages", sourceLocaleIds
+							"sourceAvailableLanguages",
+							availableSourceLanguageIds
 						).put(
-							"sourceLanguageId", sourceLocaleId
+							"sourceLanguageId", sourceLanguageId
 						).put(
-							"targetAvailableLanguages", targetLocaleIds
+							"targetAvailableLanguages",
+							availableTargetLanguageIds
 						).put(
-							"targetLanguageId", targetLocaleId
+							"targetLanguageId", targetLanguageId
 						).build();
 						%>
 
@@ -86,8 +88,8 @@ renderResponse.setTitle(title);
 		<div class="translate-body-form">
 
 			<%
-			String sourceLocaleIdTitle = LocaleUtil.toBCP47LanguageId(sourceLocaleId);
-			String targetLocaleIdTitle = LocaleUtil.toBCP47LanguageId(targetLocaleId);
+			String sourceLanguageIdTitle = LocaleUtil.toBCP47LanguageId(sourceLanguageId);
+			String targetLanguageIdTitle = LocaleUtil.toBCP47LanguageId(targetLanguageId);
 			%>
 
 			<clay:row>
@@ -95,10 +97,10 @@ renderResponse.setTitle(title);
 					md="6"
 				>
 					<clay:icon
-						symbol="<%= StringUtil.toLowerCase(sourceLocaleIdTitle) %>"
+						symbol="<%= StringUtil.toLowerCase(sourceLanguageIdTitle) %>"
 					/>
 
-					<span class="ml-1"> <%= sourceLocaleIdTitle %> </span>
+					<span class="ml-1"> <%= sourceLanguageIdTitle %> </span>
 
 					<div class="separator"><!-- --></div>
 				</clay:col>
@@ -107,18 +109,18 @@ renderResponse.setTitle(title);
 					md="6"
 				>
 					<clay:icon
-						symbol="<%= StringUtil.toLowerCase(targetLocaleIdTitle) %>"
+						symbol="<%= StringUtil.toLowerCase(targetLanguageIdTitle) %>"
 					/>
 
-					<span class="ml-1"> <%= targetLocaleIdTitle %> </span>
+					<span class="ml-1"> <%= targetLanguageIdTitle %> </span>
 
 					<div class="separator"><!-- --></div>
 				</clay:col>
 			</clay:row>
 
 			<%
-			Locale sourceLocale = LocaleUtil.fromLanguageId(sourceLocaleId);
-			Locale targetLocale = LocaleUtil.fromLanguageId(targetLocaleId);
+			Locale sourceLocale = LocaleUtil.fromLanguageId(sourceLanguageId);
+			Locale targetLocale = LocaleUtil.fromLanguageId(targetLanguageId);
 
 			for (InfoFieldValue<Object> infoFieldValue : infoItemFieldValues.getInfoFieldValues()) {
 				InfoField infoField = infoFieldValue.getInfoField();

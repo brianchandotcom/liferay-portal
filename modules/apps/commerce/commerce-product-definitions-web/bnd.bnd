@@ -5,14 +5,6 @@ Export-Package:\
 	com.liferay.commerce.product.definitions.web.display.context,\
 	com.liferay.commerce.product.definitions.web.portlet.action,\
 	com.liferay.commerce.product.definitions.web.servlet.taglib.ui
-Import-Package:\
-	com.liferay.dynamic.data.mapping.data.provider;version="[1.0.0,3.0.0)",\
-	com.liferay.friendly.url.model;version="[1.0.0,3.0.0)",\
-	com.liferay.frontend.taglib.clay.servlet.taglib.util;version="[1.0.0,3.0.0)",\
-	com.liferay.portal.kernel.portlet;version="[8.0,9.1)",\
-	com.liferay.taglib.util;version="[7.4.0,9.0.0)",\
-	\
-	*
 Provide-Capability:\
 	liferay.resource.bundle;\
 		resource.bundle.aggregate:String="(bundle.symbolic.name=com.liferay.commerce.lang)";\

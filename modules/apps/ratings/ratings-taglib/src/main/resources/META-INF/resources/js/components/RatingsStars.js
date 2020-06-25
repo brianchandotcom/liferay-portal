@@ -59,9 +59,7 @@ const RatingsStars = ({
 
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 	const [score, setScore] = useState(getLabelScore(userScore));
-	const [averageScore, setAverageScore] = useState(
-		formatAverageScore(initialAverageScore)
-	);
+	const [averageScore, setAverageScore] = useState(initialAverageScore);
 	const [totalEntries, setTotalEntries] = useState(initialTotalEntries);
 	const isMounted = useIsMounted();
 
@@ -94,13 +92,13 @@ const RatingsStars = ({
 						totalEntries !== undefined
 					) {
 						setTotalEntries(totalEntries);
-						setAverageScore(formatAverageScore(averageScore));
+						setAverageScore(averageScore);
 						setScore(getLabelScore(score));
 					}
 				}
 			);
 		},
-		[formatAverageScore, getLabelScore, isMounted, sendVoteRequest]
+		[getLabelScore, isMounted, sendVoteRequest]
 	);
 
 	const getTitle = useCallback(() => {
@@ -128,7 +126,7 @@ const RatingsStars = ({
 
 	const getSrAverageMessage = () => {
 		const srAverageMessage =
-			averageScore === 1.0
+			averageScore === 1
 				? Liferay.Language.get('the-average-rating-is-x-star-out-of-x')
 				: Liferay.Language.get(
 						'the-average-rating-is-x-stars-out-of-x'
@@ -221,7 +219,7 @@ const RatingsStars = ({
 						/>
 					</span>
 					<span className="inline-item ratings-stars-average-text">
-						{averageScore}
+						{formatAverageScore(averageScore)}
 						{!!totalEntries &&
 							` (${totalEntries} ${
 								totalEntries === 1

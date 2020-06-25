@@ -101,8 +101,6 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 	useEffect(() => {
 		if (Object.keys(colors).length) {
-			const head =
-				document.head || document.getElementsByTagName('head')[0];
 			const style = document.createElement('style');
 			style.id = 'legend-checkboxes';
 			style.type = 'text/css';
@@ -119,15 +117,13 @@ export default function AuditBarChart({rtl, vocabularies}) {
 				}`;
 			});
 
-			head.appendChild(style);
+			document.head.appendChild(style);
 		}
 
 		return () => {
 			if (Object.keys(colors).length) {
-				const head =
-					document.head || document.getElementsByTagName('head')[0];
 				const style = document.getElementById('legend-checkboxes');
-				head.removeChild(style);
+				document.head.removeChild(style);
 			}
 		};
 	}, [colors]);

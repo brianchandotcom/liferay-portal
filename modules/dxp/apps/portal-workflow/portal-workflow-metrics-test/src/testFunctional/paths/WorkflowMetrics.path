@@ -354,6 +354,11 @@
 	<td>//input[@placeholder='Search for Assignee Name']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>KEBAB_BUTTON_DISABLED</td>
+	<td>//button[@data-testid="kebab" and @disabled]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

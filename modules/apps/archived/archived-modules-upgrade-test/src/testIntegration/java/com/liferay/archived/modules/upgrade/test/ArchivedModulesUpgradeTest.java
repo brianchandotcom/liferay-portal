@@ -94,8 +94,8 @@ public class ArchivedModulesUpgradeTest {
 	@Test
 	public void testDeprecatedModulesUpgradeDictionary() throws Exception {
 		_testDeprecatedModulesUpgrade(
-			"removeDictionaryModuleData", "com.liferay.dictionary.web",
-			null, "com_liferay_dictionary_web_portlet_DictionaryPortlet");
+			"removeDictionaryModuleData", "com.liferay.dictionary.web", null,
+			"com_liferay_dictionary_web_portlet_DictionaryPortlet");
 	}
 
 	@Test

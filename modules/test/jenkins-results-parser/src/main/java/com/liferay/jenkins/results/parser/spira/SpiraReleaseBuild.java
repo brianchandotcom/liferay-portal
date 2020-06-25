@@ -37,7 +37,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 	public static SpiraReleaseBuild createSpiraReleaseBuild(
 		SpiraProject spiraProject, SpiraRelease spiraRelease,
 		String releaseBuildName, String releaseBuildDescription,
-		Status releaseBuildStatus) {
+		Status releaseBuildStatus, long releaseBuildStartTime) {
 
 		List<SpiraReleaseBuild> spiraReleaseBuilds = getSpiraReleaseBuilds(
 			spiraProject, spiraRelease,
@@ -61,6 +61,9 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		requestJSONObject.put(SpiraProject.ID_KEY, spiraProject.getID());
 		requestJSONObject.put(SpiraRelease.ID_KEY, spiraRelease.getID());
 		requestJSONObject.put("BuildStatusId", releaseBuildStatus.getID());
+		requestJSONObject.put(
+			"CreationDate",
+			SpiraRestAPIUtil.getDateString(releaseBuildStartTime));
 		requestJSONObject.put("Name", releaseBuildName);
 
 		if (releaseBuildDescription != null) {

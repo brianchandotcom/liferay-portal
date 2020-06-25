@@ -153,6 +153,7 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long parentCategoryId = ParamUtil.getLong(
 			actionRequest, "parentCategoryId");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
@@ -177,8 +178,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 			// Add category
 
 			_assetCategoryService.addCategory(
-				serviceContext.getScopeGroupId(), parentCategoryId, titleMap,
-				descriptionMap, vocabularyId, null, serviceContext);
+				groupId, parentCategoryId, titleMap, descriptionMap,
+				vocabularyId, null, serviceContext);
 
 			MultiSessionMessages.add(
 				actionRequest, "categoryAdded",

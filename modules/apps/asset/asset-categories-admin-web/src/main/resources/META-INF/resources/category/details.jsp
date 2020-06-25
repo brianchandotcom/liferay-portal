@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect", assetCategoriesDispla
 
 long categoryId = ParamUtil.getLong(request, "categoryId");
 
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+
 AssetCategory category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
 
 long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId");
@@ -35,6 +37,7 @@ renderResponse.setTitle((category == null) ? LanguageUtil.get(request, "add-new-
 
 <portlet:actionURL name="editCategory" var="editCategoryURL">
 	<portlet:param name="mvcPath" value="/edit_category.jsp" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 

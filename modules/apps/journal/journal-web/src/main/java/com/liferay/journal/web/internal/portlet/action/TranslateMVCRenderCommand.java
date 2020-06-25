@@ -21,6 +21,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.web.internal.constants.JournalWebConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -108,11 +109,15 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 				TranslationInfoFieldChecker.class.getName(),
 				_translationInfoFieldChecker);
 			renderRequest.setAttribute(
-				"availableSourceLanguageIds", availableSourceLanguageIds);
+				JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS,
+				availableSourceLanguageIds);
 			renderRequest.setAttribute(
-				"availableTargetLanguageIds", availableTargetLanguageIds);
-			renderRequest.setAttribute("sourceLanguageId", sourceLanguageId);
-			renderRequest.setAttribute("targetLanguageId", targetLanguageId);
+				JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS,
+				availableTargetLanguageIds);
+			renderRequest.setAttribute(
+				JournalWebConstants.SOURCE_LANGUAGE_ID, sourceLanguageId);
+			renderRequest.setAttribute(
+				JournalWebConstants.TARGET_LANGUAGE_ID, targetLanguageId);
 		}
 		catch (PortalException portalException) {
 			throw new PortletException(portalException);

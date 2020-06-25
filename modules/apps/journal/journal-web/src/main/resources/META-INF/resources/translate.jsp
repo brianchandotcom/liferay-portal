@@ -27,10 +27,10 @@ String title = article.getTitle();
 
 TranslationInfoFieldChecker translationInfoFieldChecker = (TranslationInfoFieldChecker)request.getAttribute(TranslationInfoFieldChecker.class.getName());
 
-List<String> availableSourceLanguageIds = (List)request.getAttribute("availableSourceLanguageIds");
-List<String> availableTargetLanguageIds = (List)request.getAttribute("availableTargetLanguageIds");
-String sourceLanguageId = (String)request.getAttribute("sourceLanguageId");
-String targetLanguageId = (String)request.getAttribute("targetLanguageId");
+List<String> availableSourceLanguageIds = (List)request.getAttribute(JournalWebConstants.AVAILABLE_SOURCE_LANGUAGE_IDS);
+List<String> availableTargetLanguageIds = (List)request.getAttribute(JournalWebConstants.AVAILABLE_TARGET_LANGUAGE_IDS);
+String sourceLanguageId = (String)request.getAttribute(JournalWebConstants.SOURCE_LANGUAGE_ID);
+String targetLanguageId = (String)request.getAttribute(JournalWebConstants.TARGET_LANGUAGE_ID);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

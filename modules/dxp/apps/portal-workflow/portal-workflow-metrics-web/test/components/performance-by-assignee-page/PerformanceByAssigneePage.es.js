@@ -13,9 +13,20 @@ import {render} from '@testing-library/react';
 import React from 'react';
 
 import PerformanceByAssigneePage from '../../../src/main/resources/META-INF/resources/js/components/performance-by-assignee-page/PerformanceByAssigneePage.es';
+import {stringify} from '../../../src/main/resources/META-INF/resources/js/shared/components/router/queryString.es';
+import {jsonSessionStorage} from '../../../src/main/resources/META-INF/resources/js/shared/util/storage.es';
 import {MockRouter} from '../../mock/MockRouter.es';
 
 import '@testing-library/jest-dom/extend-expect';
+
+const {filters, processId} = {
+	filters: {
+		stepDateEnd: '2019-12-09T00:00:00Z',
+		stepDateStart: '2019-12-03T00:00:00Z',
+		stepTimeRange: ['7'],
+	},
+	processId: 12345,
+};
 
 const items = [
 	{
@@ -26,7 +37,6 @@ const items = [
 	{
 		assignee: {image: 'path/to/image', name: 'User Test Second'},
 		durationTaskAvg: 475200000,
-
 		taskCount: 31,
 	},
 	{
@@ -37,23 +47,47 @@ const items = [
 ];
 
 const data = {items, totalCount: items.length};
-
-const clientMock = {
-	get: jest.fn().mockResolvedValue({data}),
-	post: jest.fn().mockResolvedValue({data}),
-	request: jest.fn().mockResolvedValue({data}),
+const query = stringify({filters});
+const timeRangeData = {
+	items: [
+		{
+			dateEnd: '2019-12-09T00:00:00Z',
+			dateStart: '2019-12-03T00:00:00Z',
+			defaultTimeRange: false,
+			id: 7,
+			name: 'Last 7 Days',
+		},
+		{
+			dateEnd: '2019-12-09T00:00:00Z',
+			dateStart: '2019-11-10T00:00:00Z',
+			defaultTimeRange: true,
+			id: 30,
+			name: 'Last 30 Days',
+		},
+	],
+	totalCount: 2,
 };
-
-const wrapper = ({children}) => (
-	<MockRouter client={clientMock}>{children}</MockRouter>
-);
 
 describe('The PerformanceByAssigneePage component having data should', () => {
 	let getAllByTestId;
 
 	beforeAll(() => {
+		jsonSessionStorage.set('timeRanges', timeRangeData);
+
+		const clientMock = {
+			get: jest.fn().mockResolvedValue({data}),
+			post: jest.fn().mockResolvedValue({data}),
+			request: jest.fn().mockResolvedValue({data}),
+		};
+
+		const wrapper = ({children}) => (
+			<MockRouter client={clientMock} query={query}>
+				{children}
+			</MockRouter>
+		);
+
 		const renderResult = render(
-			<PerformanceByAssigneePage routeParams={{processId: 12345}} />,
+			<PerformanceByAssigneePage routeParams={{processId}} />,
 			{wrapper}
 		);
 

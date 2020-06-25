@@ -19,6 +19,10 @@ package com.liferay.content.dashboard.web.internal.constants;
  */
 public class ContentDashboardWebKeys {
 
+	public static final String
+		CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT =
+			"CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT";
+
 	public static final String CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT =
 		"CONTENT_DASHBOARD_ADMIN_DISPLAY_CONTEXT";
 

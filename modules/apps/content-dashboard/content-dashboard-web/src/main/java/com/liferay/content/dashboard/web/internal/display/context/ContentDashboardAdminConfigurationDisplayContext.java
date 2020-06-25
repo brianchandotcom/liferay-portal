@@ -15,10 +15,8 @@
 package com.liferay.content.dashboard.web.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.content.dashboard.web.internal.configuration.ContentDashboardAdminConfiguration;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -40,7 +38,13 @@ import javax.servlet.http.HttpServletRequest;
 public class ContentDashboardAdminConfigurationDisplayContext {
 
 	public ContentDashboardAdminConfigurationDisplayContext(
+		AssetVocabularyLocalService assetVocabularyLocalService,
+		ContentDashboardAdminConfiguration contentDashboardAdminConfiguration,
 		HttpServletRequest httpServletRequest) {
+
+		_assetVocabularyLocalService = assetVocabularyLocalService;
+		_contentDashboardAdminConfiguration =
+			contentDashboardAdminConfiguration;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -61,7 +65,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 					0) {
 
 				AssetVocabulary assetVocabulary =
-					AssetVocabularyLocalServiceUtil.fetchGroupVocabulary(
+					_assetVocabularyLocalService.fetchGroupVocabulary(
 						_themeDisplay.getCompanyGroupId(), assetVocabularyName);
 
 				if (assetVocabulary == null) {
@@ -86,7 +90,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 
 		for (String assetVocabularyName : _getAssetVocabularyNames()) {
 			AssetVocabulary assetVocabulary =
-				AssetVocabularyLocalServiceUtil.fetchGroupVocabulary(
+				_assetVocabularyLocalService.fetchGroupVocabulary(
 					_themeDisplay.getCompanyGroupId(), assetVocabularyName);
 
 			if (assetVocabulary == null) {
@@ -109,7 +113,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 			return _assetVocabularies;
 		}
 
-		_assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
+		_assetVocabularies = _assetVocabularyLocalService.getGroupVocabularies(
 			new long[] {_themeDisplay.getCompanyGroupId()});
 
 		return _assetVocabularies;
@@ -120,13 +124,8 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 			return _assetVocabularyNames;
 		}
 
-		ContentDashboardAdminConfiguration contentDashboardAdminConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				ContentDashboardAdminConfiguration.class,
-				_themeDisplay.getCompanyId());
-
 		_assetVocabularyNames =
-			contentDashboardAdminConfiguration.assetVocabularyNames();
+			_contentDashboardAdminConfiguration.assetVocabularyNames();
 
 		return _assetVocabularyNames;
 	}
@@ -150,8 +149,11 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 	}
 
 	private List<AssetVocabulary> _assetVocabularies;
+	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private String[] _assetVocabularyNames;
 	private String[] _availableAssetVocabularyNames;
+	private final ContentDashboardAdminConfiguration
+		_contentDashboardAdminConfiguration;
 	private final ThemeDisplay _themeDisplay;
 
 }

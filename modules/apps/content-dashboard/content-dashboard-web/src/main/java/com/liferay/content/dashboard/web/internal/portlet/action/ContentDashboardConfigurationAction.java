@@ -14,15 +14,23 @@
 
 package com.liferay.content.dashboard.web.internal.portlet.action;
 
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.content.dashboard.web.internal.configuration.ContentDashboardAdminConfiguration;
 import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPortletKeys;
+import com.liferay.content.dashboard.web.internal.constants.ContentDashboardWebKeys;
+import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardAdminConfigurationDisplayContext;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.PortletConfig;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,8 +47,24 @@ public class ContentDashboardConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
-	public String getJspPath(HttpServletRequest httpServletRequest) {
-		return "/configuration.jsp";
+	public void include(
+			PortletConfig portletConfig, HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		ContentDashboardAdminConfiguration contentDashboardAdminConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				ContentDashboardAdminConfiguration.class,
+				_portal.getCompanyId(httpServletRequest));
+
+		httpServletRequest.setAttribute(
+			ContentDashboardWebKeys.
+				CONTENT_DASHBOARD_ADMIN_CONFIGURATION_DISPLAY_CONTEXT,
+			new ContentDashboardAdminConfigurationDisplayContext(
+				_assetVocabularyLocalService,
+				contentDashboardAdminConfiguration, httpServletRequest));
+
+		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -61,5 +85,14 @@ public class ContentDashboardConfigurationAction
 			actionRequest, "assetVocabularyNames",
 			StringUtil.split(assetVocabularyNames));
 	}
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

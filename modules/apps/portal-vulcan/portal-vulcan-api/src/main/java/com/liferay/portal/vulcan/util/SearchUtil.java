@@ -128,6 +128,21 @@ public class SearchUtil {
 			}
 		}
 
+		List<Facet> facets = new ArrayList<>();
+
+		Facet facet = searchContext.getFacet("optionsNames");
+
+		FacetCollector facetCollector = facet.getFacetCollector();
+
+		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
+			MultiValueFacet multiValueFacet = new MultiValueFacet(
+				searchContext);
+
+			multiValueFacet.setFieldName(termCollector.getTerm());
+
+			facets.add(multiValueFacet);
+		}
+
 		return Page.of(
 			actions, items, pagination, indexer.searchCount(searchContext));
 	}

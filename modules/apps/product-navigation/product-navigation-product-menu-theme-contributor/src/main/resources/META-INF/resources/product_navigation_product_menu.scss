@@ -191,6 +191,14 @@
 		}
 	}
 
+	.panel-title > .collapse-icon {
+		padding: 12px 8px 12px 16px;
+
+		@include media-breakpoint-up(sm) {
+			padding-left: 24px;
+		}
+	}
+
 	.list-group-heading {
 		background-color: $product-menu-list-group-item-bg;
 		font-weight: 600;

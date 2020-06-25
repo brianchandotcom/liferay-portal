@@ -66,6 +66,12 @@ paths:
             description:
                 Adds a new portal instance
             operationId: postPortalInstance
+            parameters:
+                - in: query
+                  name: portalInstanceInitializerKey
+                  required: false
+                  schema:
+                      type: string
             requestBody:
                 content:
                     application/json:

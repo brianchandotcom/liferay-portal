@@ -34,6 +34,7 @@ import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -79,11 +80,13 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 			List<String> availableSourceLanguageIds = Arrays.asList(
 				article.getAvailableLanguageIds());
-			List<String> availableTargetLanguageIds =
-				_getSiteAvailableLanguageIds(themeDisplay);
 
 			String sourceLanguageId = ParamUtil.getString(
 				renderRequest, "sourceLanguageId");
+
+			List<String> availableTargetLanguageIds =
+				_getSiteAvailableLanguageIds(sourceLanguageId, themeDisplay);
+
 			String targetLanguageId = ParamUtil.getString(
 				renderRequest, "targetLanguageId");
 
@@ -119,7 +122,7 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private List<String> _getSiteAvailableLanguageIds(
-		ThemeDisplay themeDisplay) {
+		String sourceLanguageId, ThemeDisplay themeDisplay) {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
 			themeDisplay.getSiteGroupId());
@@ -128,6 +131,8 @@ public class TranslateMVCRenderCommand implements MVCRenderCommand {
 
 		return stream.map(
 			LocaleUtil::toLanguageId
+		).filter(
+			languageId -> !Objects.equals(languageId, sourceLanguageId)
 		).collect(
 			Collectors.toList()
 		);

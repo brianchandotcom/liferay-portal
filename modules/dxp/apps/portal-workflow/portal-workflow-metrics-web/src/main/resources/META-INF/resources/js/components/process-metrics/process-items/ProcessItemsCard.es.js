@@ -28,20 +28,24 @@ const ProcessItemsCard = ({
 	completed,
 	description,
 	processId,
-	timeRange,
+	timeRange = {},
 	title,
 }) => {
-	const timeRangeParams = timeRange || {};
-
 	const {data, fetchData} = useFetch({
 		params: {
 			completed,
-			...timeRangeParams,
+			...timeRange,
 		},
 		url: `/processes/${processId}/metrics`,
 	});
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
+	const promises = useMemo(() => {
+		if (!completed || (timeRange.dateEnd && timeRange.dateStart)) {
+			return [fetchData()];
+		}
+
+		return [new Promise((_, reject) => reject())];
+	}, [fetchData, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
 		<PromisesResolver promises={promises}>

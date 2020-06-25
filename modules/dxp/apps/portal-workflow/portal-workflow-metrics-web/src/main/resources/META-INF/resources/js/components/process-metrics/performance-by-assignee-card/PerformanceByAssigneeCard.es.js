@@ -96,7 +96,13 @@ const PerformanceByAssigneeCard = ({routeParams}) => {
 		url: `/processes/${processId}/assignees/metrics`,
 	});
 
-	const promises = useMemo(() => [postData()], [postData]);
+	const promises = useMemo(() => {
+		if (timeRange.dateEnd && timeRange.dateStart) {
+			return [postData()];
+		}
+
+		return [new Promise((_, reject) => reject(filtersError))];
+	}, [filtersError, postData, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
 		<Panel elementClasses="dashboard-card">

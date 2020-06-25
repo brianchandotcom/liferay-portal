@@ -68,7 +68,13 @@ const PerformanceByStepCard = ({routeParams}) => {
 		url: `/processes/${processId}/nodes/metrics`,
 	});
 
-	const promises = useMemo(() => [fetchData()], [fetchData]);
+	const promises = useMemo(() => {
+		if (timeRange.dateEnd && timeRange.dateStart) {
+			return [fetchData()];
+		}
+
+		return [new Promise((_, reject) => reject(filtersError))];
+	}, [fetchData, filtersError, timeRange.dateEnd, timeRange.dateStart]);
 
 	return (
 		<Panel elementClasses="dashboard-card">

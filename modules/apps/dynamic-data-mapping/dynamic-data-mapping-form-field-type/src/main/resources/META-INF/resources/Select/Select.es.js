@@ -311,6 +311,8 @@ const Select = ({
 			setExpand(false);
 
 			onExpand({event, expand: false});
+
+			triggerElementRef.current.firstChild.focus();
 		}
 	};
 
@@ -335,6 +337,10 @@ const Select = ({
 
 					setExpand(!expand);
 					onExpand({event, expand: !expand});
+
+					if (expand) {
+						triggerElementRef.current.firstChild.focus();
+					}
 				}}
 				onTriggerKeyDown={(event) => {
 					if (
@@ -363,6 +369,10 @@ const Select = ({
 						setExpand(!expand);
 
 						onExpand({event, expand: !expand});
+
+						if (expand) {
+							triggerElementRef.current.firstChild.focus();
+						}
 					}
 				}}
 				options={options}

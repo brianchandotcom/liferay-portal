@@ -36,27 +36,29 @@ const ExportTranslationModal = ({
 		availableSourceLocales[0].languageId
 	);
 
-	const [selectedTargetLocales, setSelectedTargetLocales] = useState([]);
+	const [selectedTargetLanguageIds, setSelectedTargetLanguageIds] = useState(
+		[]
+	);
 
 	const exportTranslationPortletURL = Liferay.Util.PortletURL.createPortletURL(
 		exportTranslationURL,
 		{
 			articleId: articleIds[0],
 			sourceLanguageId,
-			targetLanguageIds: selectedTargetLocales.join(','),
+			targetLanguageIds: selectedTargetLanguageIds.join(','),
 		}
 	);
 
-	const onChangeTarget = (checked, selectedLocaleId) => {
+	const onChangeTarget = (checked, selectedLanguageId) => {
 		if (checked) {
-			setSelectedTargetLocales(
-				selectedTargetLocales.concat(selectedLocaleId)
+			setSelectedTargetLanguageIds(
+				selectedTargetLanguageIds.concat(selectedLanguageId)
 			);
 		}
 		else {
-			setSelectedTargetLocales(
-				selectedTargetLocales.filter(
-					(localeId) => localeId != selectedLocaleId
+			setSelectedTargetLanguageIds(
+				selectedTargetLanguageIds.filter(
+					(languageId) => languageId != selectedLanguageId
 				)
 			);
 		}
@@ -94,7 +96,7 @@ const ExportTranslationModal = ({
 
 	const TargetLocale = ({locale}) => {
 		const languageId = locale.languageId;
-		const checked = selectedTargetLocales.indexOf(languageId) != -1;
+		const checked = selectedTargetLanguageIds.indexOf(languageId) != -1;
 
 		return (
 			<ClayCheckbox
@@ -165,7 +167,9 @@ const ExportTranslationModal = ({
 							</ClayButton>
 
 							<ClayButton
-								disabled={selectedTargetLocales.length === 0}
+								disabled={
+									selectedTargetLanguageIds.length === 0
+								}
 								displayType="primary"
 								type="submit"
 							>

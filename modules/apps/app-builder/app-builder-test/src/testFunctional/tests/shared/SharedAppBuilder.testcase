@@ -739,6 +739,9 @@ definition {
 
 		AppBuilderAdmin.save();
 
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Alex");
+		AppBuilderAdmin.validateItemNameOnTableNotPresent(itemName = "Mister");
+
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Pepe");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "Guardi");
 		AppBuilderAdmin.validateItemNameOnTable(itemName = "1");

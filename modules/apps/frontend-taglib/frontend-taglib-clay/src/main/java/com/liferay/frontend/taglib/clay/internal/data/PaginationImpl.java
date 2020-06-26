@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.data.provider;
+package com.liferay.frontend.taglib.clay.internal.data;
 
 import com.liferay.frontend.taglib.clay.data.Pagination;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.data.provider;
+package com.liferay.frontend.taglib.clay.internal.data.set.provider;
 
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetProviderRegistry;

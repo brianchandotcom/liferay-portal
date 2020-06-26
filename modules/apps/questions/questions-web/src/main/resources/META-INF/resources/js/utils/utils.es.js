@@ -147,3 +147,22 @@ export function stripHTML(text) {
 			.replace(newLines, '') || ''
 	);
 }
+
+export function getFullPath() {
+	return window.location.href.substring(0, window.location.href.indexOf('#'));
+}
+
+export function getBasePath() {
+	return window.location.href.substring(
+		window.location.origin.length,
+		window.location.href.indexOf('#')
+	);
+}
+
+export function getContextLink(url) {
+	return {
+		headers: {
+			Link: `${getFullPath()}?redirectTo=/%23/questions/${url}/`,
+		},
+	};
+}

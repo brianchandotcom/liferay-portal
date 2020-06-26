@@ -389,16 +389,6 @@ public class FinderCacheImpl
 		_finderPathServiceTrackerMap.close();
 	}
 
-	@Reference(unbind = "-")
-	protected void setMultiVMPool(MultiVMPool multiVMPool) {
-		_multiVMPool = multiVMPool;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
 	private Object[] _getArguments(
 		FinderPath finderPath, BaseModel<?> baseModel, boolean checkColumn,
 		boolean original) {
@@ -488,10 +478,16 @@ public class FinderCacheImpl
 	private ServiceTrackerMap<String, List<FinderPath>>
 		_finderPathServiceTrackerMap;
 	private ThreadLocal<LRUMap> _localCache;
+
+	@Reference
 	private MultiVMPool _multiVMPool;
+
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches = new ConcurrentHashMap<>();
+
+	@Reference
 	private Props _props;
+
 	private boolean _valueObjectFinderCacheEnabled;
 	private int _valueObjectFinderCacheListThreshold;
 

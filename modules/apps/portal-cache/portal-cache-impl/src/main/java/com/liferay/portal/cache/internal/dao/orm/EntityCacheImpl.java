@@ -416,16 +416,6 @@ public class EntityCacheImpl
 		portalCacheManager.registerPortalCacheManagerListener(this);
 	}
 
-	@Reference(unbind = "-")
-	protected void setMultiVMPool(MultiVMPool multiVMPool) {
-		_multiVMPool = multiVMPool;
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
-	}
-
 	private boolean _isLocalCacheEnabled() {
 		if (_localCache == null) {
 			return false;
@@ -521,10 +511,16 @@ public class EntityCacheImpl
 	private FinderCacheImpl _finderCacheImpl;
 
 	private ThreadLocal<LRUMap> _localCache;
+
+	@Reference
 	private MultiVMPool _multiVMPool;
+
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches = new ConcurrentHashMap<>();
+
+	@Reference
 	private Props _props;
+
 	private boolean _valueObjectEntityCacheEnabled;
 	private boolean _valueObjectMVCCEntityCacheEnabled;
 

@@ -16,10 +16,13 @@ package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -58,15 +61,7 @@ public class RedirectNotFoundEntryLocalServiceImpl
 				group.getGroupId(), url);
 
 		if (redirectNotFoundEntry == null) {
-			int maximumNumberOfRedirectNotFoundEntries =
-				_redirectConfiguration.maximumNumberOfRedirectNotFoundEntries();
-
-			List<RedirectNotFoundEntry> redirectNotFoundEntries =
-				getRedirectNotFoundEntries(
-					maximumNumberOfRedirectNotFoundEntries - 1,
-					getRedirectNotFoundEntriesCount());
-
-			redirectNotFoundEntries.forEach(this::deleteRedirectNotFoundEntry);
+			_purgeRedirectNotFoundEntries();
 
 			redirectNotFoundEntry = redirectNotFoundEntryPersistence.create(
 				counterLocalService.increment());
@@ -211,6 +206,40 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 		return redirectNotFoundEntriesDynamicQuery;
 	}
+
+	private void _purgeRedirectNotFoundEntries() {
+		ActionableDynamicQuery actionableDynamicQuery =
+			redirectNotFoundEntryLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				int maximumNumberOfRedirectNotFoundEntries =
+					_redirectConfiguration.
+						maximumNumberOfRedirectNotFoundEntries();
+
+				dynamicQuery.setLimit(
+					maximumNumberOfRedirectNotFoundEntries - 1,
+					getRedirectNotFoundEntriesCount());
+			});
+
+		actionableDynamicQuery.setAddOrderCriteriaMethod(
+			dynamicQuery -> dynamicQuery.addOrder(
+				OrderFactoryUtil.desc("modifiedDate")));
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(ActionableDynamicQuery.PerformActionMethod<RedirectNotFoundEntry>)
+				this::deleteRedirectNotFoundEntry);
+
+		try {
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException, portalException);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RedirectNotFoundEntryLocalServiceImpl.class);
 
 	private RedirectConfiguration _redirectConfiguration;
 

@@ -661,6 +661,7 @@ definition {
 			portlet = "Pages");
 
 		Page.viewPagesOrder(
+			depth = "2",
 			pageName1 = "Home",
 			pageName2 = "1",
 			pageName3 = "2",

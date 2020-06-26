@@ -300,6 +300,7 @@ definition {
 		SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
 		Page.viewPagesOrder(
+			depth = "2",
 			pageName1 = "Test Content Page Name 1",
 			pageName2 = "Test Content Page Name 2");
 
@@ -308,6 +309,7 @@ definition {
 			pageNameTo = "Test Content Page Name 1");
 
 		Page.viewPagesOrder(
+			depth = "2",
 			pageName1 = "Test Content Page Name 2",
 			pageName2 = "Test Content Page Name 1");
 	}

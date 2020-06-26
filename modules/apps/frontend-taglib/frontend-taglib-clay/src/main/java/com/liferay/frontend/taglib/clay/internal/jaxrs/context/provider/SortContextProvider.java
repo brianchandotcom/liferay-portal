@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.data.provider;
+package com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider;
 
-import com.liferay.frontend.taglib.clay.data.Pagination;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,19 +32,26 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marco Leo
  */
-@Component(immediate = true, service = PaginationContextProvider.class)
+@Component(immediate = true, service = SortContextProvider.class)
 @Provider
-public class PaginationContextProvider implements ContextProvider<Pagination> {
+public class SortContextProvider implements ContextProvider<Sort> {
 
 	@Override
-	public Pagination createContext(Message message) {
+	public Sort createContext(Message message) {
 		HttpServletRequest httpServletRequest =
 			(HttpServletRequest)message.getContextualProperty("HTTP.REQUEST");
 
-		int page = ParamUtil.getInteger(httpServletRequest, "page", 1);
-		int pageSize = ParamUtil.getInteger(httpServletRequest, "pageSize", 20);
+		String sortString = ParamUtil.getString(
+			httpServletRequest, "sort.field");
 
-		return new PaginationImpl(pageSize, page);
+		if (Validator.isNull(sortString)) {
+			return null;
+		}
+
+		String sortDir = ParamUtil.getString(httpServletRequest, "sort.dir");
+
+		return SortFactoryUtil.create(
+			StringUtil.trim(sortString), sortDir.equals("desc"));
 	}
 
 }

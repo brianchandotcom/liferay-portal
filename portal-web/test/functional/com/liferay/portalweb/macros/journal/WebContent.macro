@@ -1536,15 +1536,11 @@ definition {
 	macro viewCategorizationVocabularyCP {
 		Panel.expandPanel(panel = "Metadata");
 
-		var count = "1";
-
 		for (var vocabularyName : list "${vocabularyNameList}") {
 			AssertTextEquals(
-				key_count = "${count}",
+				key_fieldLabel = "${vocabularyName}",
 				locator1 = "AssetCategorization#VOCABULARY_LIST_ITEM",
 				value1 = "${vocabularyName}");
-
-			var count = ${count} + 1;
 		}
 	}
 

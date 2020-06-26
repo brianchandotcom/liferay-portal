@@ -142,14 +142,11 @@ public class CTDisplayRendererRegistry {
 			return null;
 		}
 
-		try {
-			try (SafeClosable safeClosable =
-					CTCollectionThreadLocal.setCTCollectionId(
-						ctEntry.getCtCollectionId())) {
+		try (SafeClosable safeClosable =
+				CTCollectionThreadLocal.setCTCollectionId(
+					ctEntry.getCtCollectionId())) {
 
-				return ctDisplayRenderer.getEditURL(
-					httpServletRequest, ctModel);
-			}
+			return ctDisplayRenderer.getEditURL(httpServletRequest, ctModel);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -190,7 +187,7 @@ public class CTDisplayRendererRegistry {
 			false);
 	}
 
-	public <T extends BaseModel<T>> String getTitle(
+	public String getTitle(
 			CTCollection ctCollection, CTEntry ctEntry, Locale locale)
 		throws PortalException {
 

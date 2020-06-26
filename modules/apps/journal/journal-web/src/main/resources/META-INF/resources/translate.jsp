@@ -72,11 +72,11 @@ renderResponse.setTitle(title);
 				</li>
 				<li class="tbar-item">
 					<div class="metadata-type-button-row tbar-section text-right">
-						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
+						<aui:button cssClass="btn-sm mr-2" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
+						<aui:button cssClass="btn-sm mr-2" id="saveDraftBtn" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
 
-						<aui:button cssClass="btn-sm mr-3" id="submitBtnId" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
+						<aui:button cssClass="btn-sm" id="submitBtnId" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
 					</div>
 				</li>
 			</ul>

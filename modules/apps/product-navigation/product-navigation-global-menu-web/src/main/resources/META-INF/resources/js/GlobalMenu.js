@@ -123,43 +123,53 @@ const AppsPanel = ({
 						key={`tabPane-${index}`}
 					>
 						<ClayLayout.Row className="global-apps-nav">
-							{childCategories.map(({key, label, panelApps}) => (
-								<ClayLayout.Col key={key} md>
-									<ul className="list-unstyled">
-										<li className="global-apps-nav-header">
-											{label}
-										</li>
+							<div className="c-p-0 col-md">
+								<div className="global-apps-nav-columns">
+									{childCategories.map(
+										({key, label, panelApps}) => (
+											<ClayLayout.Col key={key} md>
+												<ul className="list-unstyled">
+													<li className="global-apps-nav-header">
+														{label}
+													</li>
 
-										{panelApps.map(
-											({label, portletId, url}) => (
-												<li
-													className="global-apps-nav-item"
-													key={portletId}
-												>
-													<a
-														className={classNames(
-															'component-link global-apps-nav-link',
-															{
-																active:
-																	portletId ===
-																	selectedPortletId,
-															}
-														)}
-														href={url}
-													>
-														<span
-															className="c-inner"
-															tabIndex="-1"
-														>
-															{label}
-														</span>
-													</a>
-												</li>
-											)
-										)}
-									</ul>
-								</ClayLayout.Col>
-							))}
+													{panelApps.map(
+														({
+															label,
+															portletId,
+															url,
+														}) => (
+															<li
+																className="global-apps-nav-item"
+																key={portletId}
+															>
+																<a
+																	className={classNames(
+																		'component-link global-apps-nav-link',
+																		{
+																			active:
+																				portletId ===
+																				selectedPortletId,
+																		}
+																	)}
+																	href={url}
+																>
+																	<span
+																		className="c-inner"
+																		tabIndex="-1"
+																	>
+																		{label}
+																	</span>
+																</a>
+															</li>
+														)
+													)}
+												</ul>
+											</ClayLayout.Col>
+										)
+									)}
+								</div>
+							</div>
 
 							<div className="global-apps-sites">
 								<ul className="bg-light list-unstyled rounded">

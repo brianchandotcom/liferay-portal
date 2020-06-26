@@ -70,6 +70,28 @@ $tab-header-height: 38px;
 			font-weight: 700;
 		}
 	}
+
+	.global-apps-nav-columns {
+		column-count: 1;
+		orphans: 1;
+		widows: 1;
+
+		@include media-breakpoint-up(sm) {
+			column-count: 2;
+		}
+
+		@include media-breakpoint-up(md) {
+			column-count: 3;
+		}
+
+		@include media-breakpoint-up(lg) {
+			column-count: 4;
+		}
+
+		.col-md {
+			display: inline-block;
+		}
+	}
 }
 
 .global-apps-sites {

@@ -1,0 +1,124 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Site Pages Administration";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		Staging.openStagingAdmin(siteURLKey = "test-site-name");
+
+		Staging.activateStagingCP(siteName = "Test Site Name");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is for LPS-114527. Can move multiple pages via dragging in Pages admin of Staging site but cannot in Live site."
+	@priority = "3"
+	test CanMoveMultiplePagesInStagingSiteButCannotInLiveSite {
+		task ("Add 2 widget page and 1 content page in the same level") {
+			for (var n : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name-staging",
+					layoutName = "Test Page Name ${n}",
+					site = "false");
+			}
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name-staging",
+				layoutName = "Test Page Name 3",
+				site = "false",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 3",
+				siteName = "Test Site Name Staging");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Publish to Live site") {
+			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
+
+			Staging.publishCustomPublication();
+		}
+
+		task ("Assert pages order in Staging site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			MetalComponent.waitForManagementBar();
+
+			Page.viewPagesOrder(
+				depth = "2",
+				pageName1 = "Test Page Name 1",
+				pageName2 = "Test Page Name 2",
+				pageName3 = "Test Page Name 3");
+		}
+
+		task ("Move Test Page Name 2 and 3 to top of Test Page Name 1 in Staging site") {
+			for (var n : list "2,3") {
+				SitePages.checkPage(pageName = "Test Page Name ${n}");
+			}
+
+			ContentPages.movePageToPageUp(
+				pageName = "Test Page Name 2",
+				pageNameTo = "Test Page Name 1");
+		}
+
+		task ("Assert Test Page Name 2 and 3 are moved to top of Test Page Name 1 in Staging site") {
+			Page.viewPagesOrder(
+				depth = "2",
+				pageName1 = "Test Page Name 2",
+				pageName2 = "Test Page Name 3",
+				pageName3 = "Test Page Name 1");
+		}
+
+		task ("Assert pages order in Live site") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForManagementBar();
+
+			Page.viewPagesOrder(
+				depth = "2",
+				pageName1 = "Test Page Name 1",
+				pageName2 = "Test Page Name 2",
+				pageName3 = "Test Page Name 3");
+		}
+
+		task ("Assert cannot move Test Page Name 2 and 3 to top of Test Page Name 1 in Live site") {
+			for (var n : list "2,3") {
+				SitePages.checkPage(pageName = "Test Page Name ${n}");
+			}
+
+			ContentPages.movePageToPageUp(
+				pageName = "Test Page Name 2",
+				pageNameTo = "Test Page Name 1");
+
+			Alert.viewErrorMessage(errorMessage = "You do not have the required permissions.");
+
+			Alert.closeMessage(messageType = "ERROR");
+
+			Page.viewPagesOrder(
+				depth = "2",
+				pageName1 = "Test Page Name 1",
+				pageName2 = "Test Page Name 2",
+				pageName3 = "Test Page Name 3");
+		}
+	}
+
+}

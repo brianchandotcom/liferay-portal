@@ -443,6 +443,14 @@ public class PollsQuestionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.polls.model.PollsQuestion> search(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.polls.model.PollsQuestion> orderByComparator) {
+
+		return getService().search(groupId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.polls.model.PollsQuestion> search(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.polls.model.PollsQuestion> orderByComparator) {
@@ -460,6 +468,10 @@ public class PollsQuestionLocalServiceUtil {
 		return getService().search(
 			companyId, groupIds, name, description, andOperator, start, end,
 			orderByComparator);
+	}
+
+	public static int searchCount(long groupId) {
+		return getService().searchCount(groupId);
 	}
 
 	public static int searchCount(

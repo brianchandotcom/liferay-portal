@@ -476,6 +476,16 @@ public class PollsQuestionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.polls.model.PollsQuestion> search(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<com.liferay.polls.model.PollsQuestion> orderByComparator) {
+
+		return _pollsQuestionLocalService.search(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.polls.model.PollsQuestion> search(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<com.liferay.polls.model.PollsQuestion> orderByComparator) {
@@ -494,6 +504,11 @@ public class PollsQuestionLocalServiceWrapper
 		return _pollsQuestionLocalService.search(
 			companyId, groupIds, name, description, andOperator, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public int searchCount(long groupId) {
+		return _pollsQuestionLocalService.searchCount(groupId);
 	}
 
 	@Override

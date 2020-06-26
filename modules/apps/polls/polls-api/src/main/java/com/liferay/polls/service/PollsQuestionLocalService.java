@@ -354,6 +354,11 @@ public interface PollsQuestionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<PollsQuestion> search(
+		long groupId, int start, int end,
+		OrderByComparator<PollsQuestion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<PollsQuestion> search(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		OrderByComparator<PollsQuestion> orderByComparator);
 
@@ -362,6 +367,9 @@ public interface PollsQuestionLocalService
 		long companyId, long[] groupIds, String name, String description,
 		boolean andOperator, int start, int end,
 		OrderByComparator<PollsQuestion> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long[] groupIds, String keywords);

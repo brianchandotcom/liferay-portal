@@ -37,4 +37,11 @@ public interface RedirectConfiguration {
 	)
 	public int redirectNotFoundEntryMaxAge();
 
+	@Meta.AD(
+		deflt = "1000",
+		description = "maximum-number-of-redirect-not-found-entries-help",
+		name = "maximum-number-of-redirect-not-found-entries", required = false
+	)
+	public int maximumNumberOfRedirectNotFoundEntries();
+
 }

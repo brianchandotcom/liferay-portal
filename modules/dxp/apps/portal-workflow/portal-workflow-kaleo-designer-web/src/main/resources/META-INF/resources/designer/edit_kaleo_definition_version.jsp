@@ -700,7 +700,7 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 									</c:if>
 
 									<c:if test="<%= Validator.isNotNull(closeRedirect) %>">
-										<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "closeKaleoDialog();" %>' value="cancel" />
+										<aui:button type="cancel" />
 									</c:if>
 
 									<span class="lfr-portlet-workflowdesigner-message" id="<portlet:namespace />toolbarMessage"></span>

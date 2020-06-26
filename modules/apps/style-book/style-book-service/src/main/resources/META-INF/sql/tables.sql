@@ -6,5 +6,7 @@ create table StyleBookEntry (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	name VARCHAR(75) null
+	name VARCHAR(75) null,
+	styleBookEntryKey VARCHAR(75) null,
+	previewFileEntryId LONG
 );

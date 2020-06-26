@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.style.book.exception.NoSuchEntryException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.model.StyleBookEntryTable;
@@ -44,6 +45,7 @@ import java.lang.reflect.InvocationHandler;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -580,6 +582,832 @@ public class StyleBookEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 =
 		"styleBookEntry.groupId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByG_LikeN;
+	private FinderPath _finderPathWithPaginationCountByG_LikeN;
+
+	/**
+	 * Returns all the style book entries where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching style book entries
+	 */
+	@Override
+	public List<StyleBookEntry> findByG_LikeN(long groupId, String name) {
+		return findByG_LikeN(
+			groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the style book entries where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @return the range of matching style book entries
+	 */
+	@Override
+	public List<StyleBookEntry> findByG_LikeN(
+		long groupId, String name, int start, int end) {
+
+		return findByG_LikeN(groupId, name, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the style book entries where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching style book entries
+	 */
+	@Override
+	public List<StyleBookEntry> findByG_LikeN(
+		long groupId, String name, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator) {
+
+		return findByG_LikeN(
+			groupId, name, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the style book entries where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching style book entries
+	 */
+	@Override
+	public List<StyleBookEntry> findByG_LikeN(
+		long groupId, String name, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		name = Objects.toString(name, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = _finderPathWithPaginationFindByG_LikeN;
+		finderArgs = new Object[] {
+			groupId, name, start, end, orderByComparator
+		};
+
+		List<StyleBookEntry> list = null;
+
+		if (useFinderCache) {
+			list = (List<StyleBookEntry>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (StyleBookEntry styleBookEntry : list) {
+					if ((groupId != styleBookEntry.getGroupId()) ||
+						!StringUtil.wildcardMatches(
+							styleBookEntry.getName(), name, '_', '%', '\\',
+							true)) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_STYLEBOOKENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_LIKEN_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_LIKEN_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(StyleBookEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				list = (List<StyleBookEntry>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first style book entry in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching style book entry
+	 * @throws NoSuchEntryException if a matching style book entry could not be found
+	 */
+	@Override
+	public StyleBookEntry findByG_LikeN_First(
+			long groupId, String name,
+			OrderByComparator<StyleBookEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		StyleBookEntry styleBookEntry = fetchByG_LikeN_First(
+			groupId, name, orderByComparator);
+
+		if (styleBookEntry != null) {
+			return styleBookEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", nameLIKE");
+		sb.append(name);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the first style book entry in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching style book entry, or <code>null</code> if a matching style book entry could not be found
+	 */
+	@Override
+	public StyleBookEntry fetchByG_LikeN_First(
+		long groupId, String name,
+		OrderByComparator<StyleBookEntry> orderByComparator) {
+
+		List<StyleBookEntry> list = findByG_LikeN(
+			groupId, name, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last style book entry in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching style book entry
+	 * @throws NoSuchEntryException if a matching style book entry could not be found
+	 */
+	@Override
+	public StyleBookEntry findByG_LikeN_Last(
+			long groupId, String name,
+			OrderByComparator<StyleBookEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		StyleBookEntry styleBookEntry = fetchByG_LikeN_Last(
+			groupId, name, orderByComparator);
+
+		if (styleBookEntry != null) {
+			return styleBookEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", nameLIKE");
+		sb.append(name);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
+	}
+
+	/**
+	 * Returns the last style book entry in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching style book entry, or <code>null</code> if a matching style book entry could not be found
+	 */
+	@Override
+	public StyleBookEntry fetchByG_LikeN_Last(
+		long groupId, String name,
+		OrderByComparator<StyleBookEntry> orderByComparator) {
+
+		int count = countByG_LikeN(groupId, name);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<StyleBookEntry> list = findByG_LikeN(
+			groupId, name, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the style book entries before and after the current style book entry in the ordered set where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * @param styleBookEntryId the primary key of the current style book entry
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next style book entry
+	 * @throws NoSuchEntryException if a style book entry with the primary key could not be found
+	 */
+	@Override
+	public StyleBookEntry[] findByG_LikeN_PrevAndNext(
+			long styleBookEntryId, long groupId, String name,
+			OrderByComparator<StyleBookEntry> orderByComparator)
+		throws NoSuchEntryException {
+
+		name = Objects.toString(name, "");
+
+		StyleBookEntry styleBookEntry = findByPrimaryKey(styleBookEntryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			StyleBookEntry[] array = new StyleBookEntryImpl[3];
+
+			array[0] = getByG_LikeN_PrevAndNext(
+				session, styleBookEntry, groupId, name, orderByComparator,
+				true);
+
+			array[1] = styleBookEntry;
+
+			array[2] = getByG_LikeN_PrevAndNext(
+				session, styleBookEntry, groupId, name, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected StyleBookEntry getByG_LikeN_PrevAndNext(
+		Session session, StyleBookEntry styleBookEntry, long groupId,
+		String name, OrderByComparator<StyleBookEntry> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_STYLEBOOKENTRY_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_LIKEN_GROUPID_2);
+
+		boolean bindName = false;
+
+		if (name.isEmpty()) {
+			sb.append(_FINDER_COLUMN_G_LIKEN_NAME_3);
+		}
+		else {
+			bindName = true;
+
+			sb.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(StyleBookEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(groupId);
+
+		if (bindName) {
+			queryPos.add(name);
+		}
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						styleBookEntry)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<StyleBookEntry> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the style book entries where groupId = &#63; and name LIKE &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 */
+	@Override
+	public void removeByG_LikeN(long groupId, String name) {
+		for (StyleBookEntry styleBookEntry :
+				findByG_LikeN(
+					groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(styleBookEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of style book entries where groupId = &#63; and name LIKE &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the number of matching style book entries
+	 */
+	@Override
+	public int countByG_LikeN(long groupId, String name) {
+		name = Objects.toString(name, "");
+
+		FinderPath finderPath = _finderPathWithPaginationCountByG_LikeN;
+
+		Object[] finderArgs = new Object[] {groupId, name};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_STYLEBOOKENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_LIKEN_GROUPID_2);
+
+			boolean bindName = false;
+
+			if (name.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_LIKEN_NAME_3);
+			}
+			else {
+				bindName = true;
+
+				sb.append(_FINDER_COLUMN_G_LIKEN_NAME_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindName) {
+					queryPos.add(name);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_2 =
+		"styleBookEntry.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 =
+		"styleBookEntry.name LIKE ?";
+
+	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 =
+		"(styleBookEntry.name IS NULL OR styleBookEntry.name LIKE '')";
+
+	private FinderPath _finderPathFetchByG_SBEK;
+	private FinderPath _finderPathCountByG_SBEK;
+
+	/**
+	 * Returns the style book entry where groupId = &#63; and styleBookEntryKey = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param styleBookEntryKey the style book entry key
+	 * @return the matching style book entry
+	 * @throws NoSuchEntryException if a matching style book entry could not be found
+	 */
+	@Override
+	public StyleBookEntry findByG_SBEK(long groupId, String styleBookEntryKey)
+		throws NoSuchEntryException {
+
+		StyleBookEntry styleBookEntry = fetchByG_SBEK(
+			groupId, styleBookEntryKey);
+
+		if (styleBookEntry == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", styleBookEntryKey=");
+			sb.append(styleBookEntryKey);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchEntryException(sb.toString());
+		}
+
+		return styleBookEntry;
+	}
+
+	/**
+	 * Returns the style book entry where groupId = &#63; and styleBookEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param styleBookEntryKey the style book entry key
+	 * @return the matching style book entry, or <code>null</code> if a matching style book entry could not be found
+	 */
+	@Override
+	public StyleBookEntry fetchByG_SBEK(
+		long groupId, String styleBookEntryKey) {
+
+		return fetchByG_SBEK(groupId, styleBookEntryKey, true);
+	}
+
+	/**
+	 * Returns the style book entry where groupId = &#63; and styleBookEntryKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param styleBookEntryKey the style book entry key
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching style book entry, or <code>null</code> if a matching style book entry could not be found
+	 */
+	@Override
+	public StyleBookEntry fetchByG_SBEK(
+		long groupId, String styleBookEntryKey, boolean useFinderCache) {
+
+		styleBookEntryKey = Objects.toString(styleBookEntryKey, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {groupId, styleBookEntryKey};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByG_SBEK, finderArgs, this);
+		}
+
+		if (result instanceof StyleBookEntry) {
+			StyleBookEntry styleBookEntry = (StyleBookEntry)result;
+
+			if ((groupId != styleBookEntry.getGroupId()) ||
+				!Objects.equals(
+					styleBookEntryKey, styleBookEntry.getStyleBookEntryKey())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_STYLEBOOKENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_SBEK_GROUPID_2);
+
+			boolean bindStyleBookEntryKey = false;
+
+			if (styleBookEntryKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_SBEK_STYLEBOOKENTRYKEY_3);
+			}
+			else {
+				bindStyleBookEntryKey = true;
+
+				sb.append(_FINDER_COLUMN_G_SBEK_STYLEBOOKENTRYKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindStyleBookEntryKey) {
+					queryPos.add(styleBookEntryKey);
+				}
+
+				List<StyleBookEntry> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByG_SBEK, finderArgs, list);
+					}
+				}
+				else {
+					StyleBookEntry styleBookEntry = list.get(0);
+
+					result = styleBookEntry;
+
+					cacheResult(styleBookEntry);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (StyleBookEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the style book entry where groupId = &#63; and styleBookEntryKey = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param styleBookEntryKey the style book entry key
+	 * @return the style book entry that was removed
+	 */
+	@Override
+	public StyleBookEntry removeByG_SBEK(long groupId, String styleBookEntryKey)
+		throws NoSuchEntryException {
+
+		StyleBookEntry styleBookEntry = findByG_SBEK(
+			groupId, styleBookEntryKey);
+
+		return remove(styleBookEntry);
+	}
+
+	/**
+	 * Returns the number of style book entries where groupId = &#63; and styleBookEntryKey = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param styleBookEntryKey the style book entry key
+	 * @return the number of matching style book entries
+	 */
+	@Override
+	public int countByG_SBEK(long groupId, String styleBookEntryKey) {
+		styleBookEntryKey = Objects.toString(styleBookEntryKey, "");
+
+		FinderPath finderPath = _finderPathCountByG_SBEK;
+
+		Object[] finderArgs = new Object[] {groupId, styleBookEntryKey};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_STYLEBOOKENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_SBEK_GROUPID_2);
+
+			boolean bindStyleBookEntryKey = false;
+
+			if (styleBookEntryKey.isEmpty()) {
+				sb.append(_FINDER_COLUMN_G_SBEK_STYLEBOOKENTRYKEY_3);
+			}
+			else {
+				bindStyleBookEntryKey = true;
+
+				sb.append(_FINDER_COLUMN_G_SBEK_STYLEBOOKENTRYKEY_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				if (bindStyleBookEntryKey) {
+					queryPos.add(styleBookEntryKey);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_SBEK_GROUPID_2 =
+		"styleBookEntry.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_G_SBEK_STYLEBOOKENTRYKEY_2 =
+		"styleBookEntry.styleBookEntryKey = ?";
+
+	private static final String _FINDER_COLUMN_G_SBEK_STYLEBOOKENTRYKEY_3 =
+		"(styleBookEntry.styleBookEntryKey IS NULL OR styleBookEntry.styleBookEntryKey = '')";
+
 	public StyleBookEntryPersistenceImpl() {
 		setModelClass(StyleBookEntry.class);
 
@@ -598,6 +1426,14 @@ public class StyleBookEntryPersistenceImpl
 	public void cacheResult(StyleBookEntry styleBookEntry) {
 		entityCache.putResult(
 			StyleBookEntryImpl.class, styleBookEntry.getPrimaryKey(),
+			styleBookEntry);
+
+		finderCache.putResult(
+			_finderPathFetchByG_SBEK,
+			new Object[] {
+				styleBookEntry.getGroupId(),
+				styleBookEntry.getStyleBookEntryKey()
+			},
 			styleBookEntry);
 
 		styleBookEntry.resetOriginalValues();
@@ -653,6 +1489,8 @@ public class StyleBookEntryPersistenceImpl
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		clearUniqueFindersCache((StyleBookEntryModelImpl)styleBookEntry, true);
 	}
 
 	@Override
@@ -663,6 +1501,9 @@ public class StyleBookEntryPersistenceImpl
 		for (StyleBookEntry styleBookEntry : styleBookEntries) {
 			entityCache.removeResult(
 				StyleBookEntryImpl.class, styleBookEntry.getPrimaryKey());
+
+			clearUniqueFindersCache(
+				(StyleBookEntryModelImpl)styleBookEntry, true);
 		}
 	}
 
@@ -674,6 +1515,46 @@ public class StyleBookEntryPersistenceImpl
 
 		for (Serializable primaryKey : primaryKeys) {
 			entityCache.removeResult(StyleBookEntryImpl.class, primaryKey);
+		}
+	}
+
+	protected void cacheUniqueFindersCache(
+		StyleBookEntryModelImpl styleBookEntryModelImpl) {
+
+		Object[] args = new Object[] {
+			styleBookEntryModelImpl.getGroupId(),
+			styleBookEntryModelImpl.getStyleBookEntryKey()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByG_SBEK, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByG_SBEK, args, styleBookEntryModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		StyleBookEntryModelImpl styleBookEntryModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+				styleBookEntryModelImpl.getGroupId(),
+				styleBookEntryModelImpl.getStyleBookEntryKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_SBEK, args);
+			finderCache.removeResult(_finderPathFetchByG_SBEK, args);
+		}
+
+		if ((styleBookEntryModelImpl.getColumnBitmask() &
+			 _finderPathFetchByG_SBEK.getColumnBitmask()) != 0) {
+
+			Object[] args = new Object[] {
+				styleBookEntryModelImpl.getOriginalGroupId(),
+				styleBookEntryModelImpl.getOriginalStyleBookEntryKey()
+			};
+
+			finderCache.removeResult(_finderPathCountByG_SBEK, args);
+			finderCache.removeResult(_finderPathFetchByG_SBEK, args);
 		}
 	}
 
@@ -863,6 +1744,9 @@ public class StyleBookEntryPersistenceImpl
 		entityCache.putResult(
 			StyleBookEntryImpl.class, styleBookEntry.getPrimaryKey(),
 			styleBookEntry, false);
+
+		clearUniqueFindersCache(styleBookEntryModelImpl, false);
+		cacheUniqueFindersCache(styleBookEntryModelImpl);
 
 		styleBookEntry.resetOriginalValues();
 
@@ -1153,6 +2037,31 @@ public class StyleBookEntryPersistenceImpl
 		_finderPathCountByGroupId = new FinderPath(
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
 			"countByGroupId", new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationFindByG_LikeN = new FinderPath(
+			StyleBookEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByG_LikeN",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithPaginationCountByG_LikeN = new FinderPath(
+			Long.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"countByG_LikeN",
+			new String[] {Long.class.getName(), String.class.getName()});
+
+		_finderPathFetchByG_SBEK = new FinderPath(
+			StyleBookEntryImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByG_SBEK",
+			new String[] {Long.class.getName(), String.class.getName()},
+			StyleBookEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			StyleBookEntryModelImpl.STYLEBOOKENTRYKEY_COLUMN_BITMASK);
+
+		_finderPathCountByG_SBEK = new FinderPath(
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByG_SBEK",
+			new String[] {Long.class.getName(), String.class.getName()});
 	}
 
 	@Deactivate

@@ -56,4 +56,7 @@ public interface StyleBookEntry extends PersistedModel, StyleBookEntryModel {
 
 		};
 
+	public String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
+
 }

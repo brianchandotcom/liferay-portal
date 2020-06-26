@@ -190,4 +190,33 @@ public interface StyleBookEntryModel
 	 */
 	public void setName(String name);
 
+	/**
+	 * Returns the style book entry key of this style book entry.
+	 *
+	 * @return the style book entry key of this style book entry
+	 */
+	@AutoEscape
+	public String getStyleBookEntryKey();
+
+	/**
+	 * Sets the style book entry key of this style book entry.
+	 *
+	 * @param styleBookEntryKey the style book entry key of this style book entry
+	 */
+	public void setStyleBookEntryKey(String styleBookEntryKey);
+
+	/**
+	 * Returns the preview file entry ID of this style book entry.
+	 *
+	 * @return the preview file entry ID of this style book entry
+	 */
+	public long getPreviewFileEntryId();
+
+	/**
+	 * Sets the preview file entry ID of this style book entry.
+	 *
+	 * @param previewFileEntryId the preview file entry ID of this style book entry
+	 */
+	public void setPreviewFileEntryId(long previewFileEntryId);
+
 }

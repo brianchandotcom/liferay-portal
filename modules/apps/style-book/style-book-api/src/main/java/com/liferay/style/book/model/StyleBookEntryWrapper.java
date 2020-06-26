@@ -50,6 +50,8 @@ public class StyleBookEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("name", getName());
+		attributes.put("styleBookEntryKey", getStyleBookEntryKey());
+		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 
 		return attributes;
 	}
@@ -103,6 +105,18 @@ public class StyleBookEntryWrapper
 		if (name != null) {
 			setName(name);
 		}
+
+		String styleBookEntryKey = (String)attributes.get("styleBookEntryKey");
+
+		if (styleBookEntryKey != null) {
+			setStyleBookEntryKey(styleBookEntryKey);
+		}
+
+		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");
+
+		if (previewFileEntryId != null) {
+			setPreviewFileEntryId(previewFileEntryId);
+		}
 	}
 
 	/**
@@ -135,6 +149,13 @@ public class StyleBookEntryWrapper
 		return model.getGroupId();
 	}
 
+	@Override
+	public String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+
+		return model.getImagePreviewURL(themeDisplay);
+	}
+
 	/**
 	 * Returns the mvcc version of this style book entry.
 	 *
@@ -156,6 +177,16 @@ public class StyleBookEntryWrapper
 	}
 
 	/**
+	 * Returns the preview file entry ID of this style book entry.
+	 *
+	 * @return the preview file entry ID of this style book entry
+	 */
+	@Override
+	public long getPreviewFileEntryId() {
+		return model.getPreviewFileEntryId();
+	}
+
+	/**
 	 * Returns the primary key of this style book entry.
 	 *
 	 * @return the primary key of this style book entry
@@ -173,6 +204,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public long getStyleBookEntryId() {
 		return model.getStyleBookEntryId();
+	}
+
+	/**
+	 * Returns the style book entry key of this style book entry.
+	 *
+	 * @return the style book entry key of this style book entry
+	 */
+	@Override
+	public String getStyleBookEntryKey() {
+		return model.getStyleBookEntryKey();
 	}
 
 	/**
@@ -261,6 +302,16 @@ public class StyleBookEntryWrapper
 	}
 
 	/**
+	 * Sets the preview file entry ID of this style book entry.
+	 *
+	 * @param previewFileEntryId the preview file entry ID of this style book entry
+	 */
+	@Override
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		model.setPreviewFileEntryId(previewFileEntryId);
+	}
+
+	/**
 	 * Sets the primary key of this style book entry.
 	 *
 	 * @param primaryKey the primary key of this style book entry
@@ -278,6 +329,16 @@ public class StyleBookEntryWrapper
 	@Override
 	public void setStyleBookEntryId(long styleBookEntryId) {
 		model.setStyleBookEntryId(styleBookEntryId);
+	}
+
+	/**
+	 * Sets the style book entry key of this style book entry.
+	 *
+	 * @param styleBookEntryKey the style book entry key of this style book entry
+	 */
+	@Override
+	public void setStyleBookEntryKey(String styleBookEntryKey) {
+		model.setStyleBookEntryKey(styleBookEntryKey);
 	}
 
 	/**

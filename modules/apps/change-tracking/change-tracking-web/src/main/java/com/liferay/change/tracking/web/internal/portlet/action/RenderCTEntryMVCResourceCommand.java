@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -57,26 +56,12 @@ public class RenderCTEntryMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long ctCollectionId = ParamUtil.getLong(
-			resourceRequest, "ctCollectionId",
-			CTConstants.CT_COLLECTION_ID_PRODUCTION);
-
-		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-			CTSQLModeThreadLocal.CTSQLMode.DEFAULT;
-
-		String ctSQLModeString = ParamUtil.getString(
-			resourceRequest, "ctSQLMode");
-
-		if (Validator.isNotNull(ctSQLModeString)) {
-			ctSQLMode = CTSQLModeThreadLocal.CTSQLMode.valueOf(ctSQLModeString);
-		}
-
 		long modelClassNameId = ParamUtil.getLong(
 			resourceRequest, "modelClassNameId");
 		long modelClassPK = ParamUtil.getLong(resourceRequest, "modelClassPK");
 
 		T model = _ctDisplayRendererRegistry.fetchCTModel(
-			ctCollectionId, ctSQLMode, modelClassNameId, modelClassPK);
+			modelClassNameId, modelClassPK);
 
 		if (model == null) {
 			model = _basePersistenceRegistry.fetchBaseModel(
@@ -85,8 +70,9 @@ public class RenderCTEntryMVCResourceCommand extends BaseMVCResourceCommand {
 
 		_ctDisplayRendererRegistry.renderCTEntry(
 			_portal.getHttpServletRequest(resourceRequest),
-			_portal.getHttpServletResponse(resourceResponse), ctCollectionId,
-			ctSQLMode, model, modelClassNameId);
+			_portal.getHttpServletResponse(resourceResponse),
+			CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, model, modelClassNameId);
 	}
 
 	@Reference

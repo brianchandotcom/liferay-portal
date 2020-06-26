@@ -319,23 +319,12 @@ public class ViewChangesDisplayContext {
 					renderURL.setResourceID("/change_lists/render_ct_entry");
 
 					renderURL.setParameter(
-						"ctCollectionId",
-						String.valueOf(
-							CTConstants.CT_COLLECTION_ID_PRODUCTION));
-					renderURL.setParameter(
-						"ctSQLMode",
-						CTSQLModeThreadLocal.CTSQLMode.DEFAULT.toString());
-					renderURL.setParameter(
 						"modelClassNameId", String.valueOf(classNameId));
 					renderURL.setParameter(
 						"modelClassPK", String.valueOf(classPK));
 
 					childJSONObject.put(
-						"title",
-						_getTitle(
-							baseModelMap, classNameId, classPK,
-							CTConstants.CT_COLLECTION_ID_PRODUCTION,
-							CTSQLModeThreadLocal.CTSQLMode.DEFAULT));
+						"title", _getTitle(baseModelMap, classNameId, classPK));
 				}
 				else {
 					childJSONObject.put(
@@ -533,19 +522,19 @@ public class ViewChangesDisplayContext {
 
 	private <T extends BaseModel<T>> String _getTitle(
 		Map<Serializable, ? extends BaseModel<?>> baseModelMap,
-		long classNameId, long classPK, long ctCollectionId,
-		CTSQLModeThreadLocal.CTSQLMode ctSQLMode) {
+		long classNameId, long classPK) {
 
 		T baseModel = (T)baseModelMap.get(classPK);
 
 		if (baseModel == null) {
 			baseModel = _ctDisplayRendererRegistry.fetchCTModel(
-				ctCollectionId, ctSQLMode, classNameId, classPK);
+				classNameId, classPK);
 		}
 
 		return _ctDisplayRendererRegistry.getTitle(
-			ctCollectionId, ctSQLMode, _themeDisplay.getLocale(), baseModel,
-			classNameId);
+			CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, _themeDisplay.getLocale(),
+			baseModel, classNameId);
 	}
 
 	private String _getTypeName(long classNameId) {

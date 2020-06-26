@@ -90,6 +90,15 @@ public class CTDisplayRendererRegistry {
 		}
 	}
 
+	public <T extends BaseModel<T>> T fetchCTModel(
+		long modelClassNameId, long modelClassPK) {
+
+		return fetchCTModel(
+			CTConstants.CT_COLLECTION_ID_PRODUCTION,
+			CTSQLModeThreadLocal.CTSQLMode.DEFAULT, modelClassNameId,
+			modelClassPK);
+	}
+
 	public CTSQLModeThreadLocal.CTSQLMode getCTSQLMode(
 		long ctCollectionId, CTEntry ctEntry) {
 
@@ -134,11 +143,9 @@ public class CTDisplayRendererRegistry {
 		}
 
 		try {
-			try (SafeClosable safeClosable1 =
+			try (SafeClosable safeClosable =
 					CTCollectionThreadLocal.setCTCollectionId(
-						ctEntry.getCtCollectionId());
-				SafeClosable safeClosable2 = CTSQLModeThreadLocal.setCTSQLMode(
-					CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
+						ctEntry.getCtCollectionId())) {
 
 				return ctDisplayRenderer.getEditURL(
 					httpServletRequest, ctModel);

@@ -208,7 +208,7 @@ definition {
 			pageName = "Child Page Name",
 			privacy = "Public Pages");
 
-		ContentPages.movePageToPageUp(
+		SitePages.movePageToPageUp(
 			pageName = "Child Page Name",
 			pageNameTo = "Parent Page Name");
 
@@ -270,7 +270,7 @@ definition {
 
 			SitePages.checkPage(pageName = "Child Child Page Name 1");
 
-			ContentPages.movePageToPageUp(
+			SitePages.movePageToPageUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Child Page Name 1");
 		}
@@ -323,7 +323,7 @@ definition {
 				SitePages.checkPage(pageName = "Test Page Name ${n}");
 			}
 
-			ContentPages.movePageToPageUp(
+			SitePages.movePageToPageUp(
 				pageName = "Test Page Name 2",
 				pageNameTo = "Test Page Name 1");
 		}
@@ -421,7 +421,7 @@ definition {
 			pageName1 = "Test Content Page Name 1",
 			pageName2 = "Test Content Page Name 2");
 
-		ContentPages.movePageToPageUp(
+		SitePages.movePageToPageUp(
 			pageName = "Test Content Page Name 2",
 			pageNameTo = "Test Content Page Name 1");
 
@@ -477,7 +477,7 @@ definition {
 			pageName = "Child Content Page Name 1",
 			privacy = "Public Pages");
 
-		ContentPages.movePageToPageUp(
+		SitePages.movePageToPageUp(
 			pageName = "Test Content Page Name 2",
 			pageNameTo = "Child Content Page Name 1");
 

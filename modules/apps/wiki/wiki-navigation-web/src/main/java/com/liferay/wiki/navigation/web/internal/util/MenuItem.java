@@ -79,6 +79,14 @@ public class MenuItem implements Serializable {
 		return _externalURL;
 	}
 
+	public String getIcon() {
+		return _icon;
+	}
+
+	public String getId() {
+		return _id;
+	}
+
 	public String getLabel() {
 		return _label;
 	}
@@ -93,6 +101,14 @@ public class MenuItem implements Serializable {
 
 	public void setExternalURL(boolean externalURL) {
 		_externalURL = externalURL;
+	}
+
+	public void setIcon(String icon) {
+		_icon = icon;
+	}
+
+	public void setId(String id) {
+		_id = id;
 	}
 
 	public void setLabel(String label) {
@@ -125,6 +141,8 @@ public class MenuItem implements Serializable {
 
 			MenuItem menuItem = new MenuItem();
 
+			menuItem.setIcon("wiki-page");
+			menuItem.setId(String.valueOf(wikiPage.getPageId()));
 			menuItem.setLabel(title);
 			menuItem.setURL(portletURL.toString());
 
@@ -207,6 +225,8 @@ public class MenuItem implements Serializable {
 
 	private List<MenuItem> _children;
 	private boolean _externalURL;
+	private String _icon;
+	private String _id;
 	private String _label;
 	private String _url;
 

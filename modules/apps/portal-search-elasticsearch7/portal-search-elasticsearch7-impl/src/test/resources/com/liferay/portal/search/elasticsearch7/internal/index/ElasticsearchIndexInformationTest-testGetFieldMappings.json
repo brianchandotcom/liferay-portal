@@ -4,6 +4,16 @@
 			"date_detection": false,
 			"dynamic_templates": [
 				{
+					"template_ddmFields_fieldValue_Number_sortable": {
+						"mapping": {
+							"scaling_factor": 1000,
+							"store": true,
+							"type": "scaled_float"
+						},
+						"path_match": "ddmFields.fieldValue*Number_sortable"
+					}
+				},
+				{
 					"template_long_sortable": {
 						"mapping": {
 							"store": true,
@@ -36,6 +46,26 @@
 							"type": "geo_point"
 						},
 						"match": "*_geolocation"
+					}
+				},
+				{
+					"template_ddmFields_fieldValueKeyword": {
+						"mapping": {
+							"store": true,
+							"type": "keyword"
+						},
+						"match_mapping_type": "string",
+						"path_match": "ddmFields.fieldValueKeyword*"
+					}
+				},
+				{
+					"template_ddm_keyword": {
+						"mapping": {
+							"store": true,
+							"type": "keyword"
+						},
+						"match": "ddm__keyword__*",
+						"match_mapping_type": "string"
 					}
 				},
 				{
@@ -446,6 +476,26 @@
 					}
 				},
 				{
+					"template_ddmFields_fieldValueText": {
+						"mapping": {
+							"store": true,
+							"type": "text"
+						},
+						"match_mapping_type": "string",
+						"path_match": "ddmFields.fieldValueText*"
+					}
+				},
+				{
+					"template_ddm": {
+						"mapping": {
+							"store": true,
+							"type": "text"
+						},
+						"match": "ddm__*",
+						"match_mapping_type": "string"
+					}
+				},
+				{
 					"template_expando": {
 						"mapping": {
 							"store": true,
@@ -553,12 +603,6 @@
 					"properties": {
 						"fieldName": {
 							"type": "keyword"
-						},
-						"fieldValueKeyword": {
-							"type": "keyword"
-						},
-						"fieldValueText": {
-							"type": "text"
 						},
 						"valueFieldName": {
 							"type": "keyword"

@@ -15,13 +15,17 @@
 package com.liferay.portal.search.test.util;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.searcher.SearchResponse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -120,6 +124,32 @@ public class FieldValuesAssert {
 			_filterOnKey(_toFieldValuesMap(document), keysPredicate));
 	}
 
+	private static void _addFields(
+		Map<String, com.liferay.portal.kernel.search.Field> map,
+		String parentKey,
+		Collection<com.liferay.portal.kernel.search.Field> fields) {
+
+		for (com.liferay.portal.kernel.search.Field field : fields) {
+			String key = field.getName();
+
+			if (Validator.isNull(key)) {
+				_addFields(map, parentKey, field.getFields());
+
+				continue;
+			}
+
+			if (parentKey != null) {
+				key = StringBundler.concat(parentKey, StringPool.PERIOD, key);
+			}
+
+			if (field.getValues() != null) {
+				map.put(key, field);
+			}
+
+			_addFields(map, key, field.getFields());
+		}
+	}
+
 	private static Map<String, String> _filterOnKey(
 		Map<String, String> map, Predicate<String> predicate) {
 
@@ -168,8 +198,15 @@ public class FieldValuesAssert {
 	private static Map<String, String> _toLegacyFieldValuesMap(
 		com.liferay.portal.kernel.search.Document document) {
 
-		return _toStringValuesMap(
-			document.getFields(), FieldValuesAssert::_toLegacyFieldString);
+		Map<String, com.liferay.portal.kernel.search.Field> map =
+			new HashMap<>();
+
+		Map<String, com.liferay.portal.kernel.search.Field> documentFields =
+			document.getFields();
+
+		_addFields(map, null, documentFields.values());
+
+		return _toStringValuesMap(map, FieldValuesAssert::_toLegacyFieldString);
 	}
 
 	private static String _toListString(List<?> values) {

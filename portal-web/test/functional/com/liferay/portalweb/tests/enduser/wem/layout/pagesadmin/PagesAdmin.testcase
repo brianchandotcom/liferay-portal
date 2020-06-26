@@ -217,6 +217,73 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@description = "This is for LPS-114527. Can move multiple different level pages to the same level via dragging in Pages admin."
+	@priority = "4"
+	test MoveMultipleDifferentLevelsPagesToTheSameLevel {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 1");
+		}
+
+		task ("Add a child page of Test Page Name 1") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Page Name 1",
+				parentLayoutName = "Test Page Name 1");
+		}
+
+		task ("Add a child page of Child Page Name 1") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Child Child Page Name 1",
+				parentLayoutName = "Child Page Name 1");
+		}
+
+		task ("Add a content page in the same level with Test Page Name 1") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 2",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 2",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Move Test Page Name 2 and Child Child Page Name 1 to the same level with Child Page Name 1") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForManagementBar();
+
+			Click(
+				key_itemName = "Test Page Name 1",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
+
+			Click(
+				key_itemName = "Child Page Name 1",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
+
+			SitePages.checkPage(pageName = "Test Page Name 2");
+
+			SitePages.checkPage(pageName = "Child Child Page Name 1");
+
+			ContentPages.movePageToPageUp(
+				pageName = "Test Page Name 2",
+				pageNameTo = "Child Page Name 1");
+		}
+
+		task ("Assert Test Page Name 2 and Child Child Page Name 1 are moved to the same level with Child Page Name 1") {
+			Page.viewPagesOrder(
+				depth = "3",
+				pageName1 = "Test Page Name 2",
+				pageName2 = "Child Child Page Name 1",
+				pageName3 = "Child Page Name 1");
+		}
+	}
+
 	@description = "This is for LPS-114527. Can move multiple same level pages at the same level via dragging in Pages admin."
 	@priority = "5"
 	test MoveMultiplePagesInSameLevel {

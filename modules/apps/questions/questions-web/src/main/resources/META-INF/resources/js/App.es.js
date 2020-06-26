@@ -31,85 +31,105 @@ import Question from './pages/questions/Question.es';
 import Questions from './pages/questions/Questions.es';
 import Tags from './pages/tags/Tags.es';
 import {client} from './utils/client.es';
+import {getFullPath} from './utils/utils.es';
 
-export default (props) => (
-	<AppContextProvider {...props}>
-		<ApolloProvider client={client}>
-			<Router>
-				<ErrorBoundary>
-					<div>
-						<Route component={Home} exact path="/" />
-						<Route component={Home} exact path="/questions" />
-						<Route
-							component={ForumsToQuestion}
-							exact
-							path="/question/:questionId"
-						/>
-						<Route
-							component={UserActivity}
-							exact
-							path="/activity/:creatorId"
-						/>
-						<Route
-							component={UserSubscriptions}
-							exact
-							path="/subscriptions/:creatorId"
-						/>
+export default (props) => {
+	redirectForNotifications();
 
-						<Route
-							path="/questions/:sectionTitle"
-							render={({match: {path}}) => (
-								<>
-									<NavigationBar />
+	return (
+		<AppContextProvider {...props}>
+			<ApolloProvider client={client}>
+				<Router>
+					<ErrorBoundary>
+						<div>
+							<Route component={Home} exact path="/" />
+							<Route component={Home} exact path="/questions" />
+							<Route
+								component={ForumsToQuestion}
+								exact
+								path="/question/:questionId"
+							/>
+							<Route
+								component={UserActivity}
+								exact
+								path="/activity/:creatorId"
+							/>
+							<Route
+								component={UserSubscriptions}
+								exact
+								path="/subscriptions/:creatorId"
+							/>
 
-									<Switch>
-										<ProtectedRoute
-											component={EditAnswer}
-											exact
-											path={`${path}/:questionId/answers/:answerId/edit`}
-										/>
-										<Route
-											component={Questions}
-											exact
-											path={`${path}/creator/:creatorId`}
-										/>
-										<Route
-											component={Questions}
-											exact
-											path={`${path}/tag/:tag`}
-										/>
-										<ProtectedRoute
-											component={NewQuestion}
-											exact
-											path={`${path}/new`}
-										/>
-										<Route
-											component={Tags}
-											exact
-											path={`${path}/tags`}
-										/>
-										<Route
-											component={Question}
-											exact
-											path={`${path}/:questionId`}
-										/>
-										<ProtectedRoute
-											component={EditQuestion}
-											exact
-											path={`${path}/:questionId/edit`}
-										/>
-										<Route
-											component={Questions}
-											exact
-											path={`${path}/`}
-										/>
-									</Switch>
-								</>
-							)}
-						/>
-					</div>
-				</ErrorBoundary>
-			</Router>
-		</ApolloProvider>
-	</AppContextProvider>
-);
+							<Route
+								path="/questions/:sectionTitle"
+								render={({match: {path}}) => (
+									<>
+										<NavigationBar />
+
+										<Switch>
+											<ProtectedRoute
+												component={EditAnswer}
+												exact
+												path={`${path}/:questionId/answers/:answerId/edit`}
+											/>
+											<Route
+												component={Questions}
+												exact
+												path={`${path}/creator/:creatorId`}
+											/>
+											<Route
+												component={Questions}
+												exact
+												path={`${path}/tag/:tag`}
+											/>
+											<ProtectedRoute
+												component={NewQuestion}
+												exact
+												path={`${path}/new`}
+											/>
+											<Route
+												component={Tags}
+												exact
+												path={`${path}/tags`}
+											/>
+											<Route
+												component={Question}
+												exact
+												path={`${path}/:questionId`}
+											/>
+											<ProtectedRoute
+												component={EditQuestion}
+												exact
+												path={`${path}/:questionId/edit`}
+											/>
+											<Route
+												component={Questions}
+												exact
+												path={`${path}/`}
+											/>
+										</Switch>
+									</>
+								)}
+							/>
+						</div>
+					</ErrorBoundary>
+				</Router>
+			</ApolloProvider>
+		</AppContextProvider>
+	);
+
+	function redirectForNotifications() {
+		if (window.location.search) {
+			const urlSearchParams = new URLSearchParams(window.location.search);
+
+			const redirectTo = urlSearchParams.get('redirectTo');
+			if (redirectTo) {
+				window.history.replaceState(
+					{},
+					document.title,
+					getFullPath() + decodeURIComponent(redirectTo)
+				);
+			}
+		}
+	}
+};

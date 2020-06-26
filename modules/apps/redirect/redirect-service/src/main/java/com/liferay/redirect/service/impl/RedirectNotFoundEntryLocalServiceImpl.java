@@ -15,6 +15,7 @@
 package com.liferay.redirect.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -24,18 +25,23 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.redirect.internal.configuration.RedirectConfiguration;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.base.RedirectNotFoundEntryLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(
+	configurationPid = "com.liferay.redirect.internal.configuration.RedirectConfiguration",
 	property = "model.class.name=com.liferay.redirect.model.RedirectNotFoundEntry",
 	service = AopService.class
 )
@@ -52,6 +58,16 @@ public class RedirectNotFoundEntryLocalServiceImpl
 				group.getGroupId(), url);
 
 		if (redirectNotFoundEntry == null) {
+			int maximumNumberOfRedirectNotFoundEntries =
+				_redirectConfiguration.maximumNumberOfRedirectNotFoundEntries();
+
+			List<RedirectNotFoundEntry> redirectNotFoundEntries =
+				getRedirectNotFoundEntries(
+					maximumNumberOfRedirectNotFoundEntries - 1,
+					getRedirectNotFoundEntriesCount());
+
+			redirectNotFoundEntries.forEach(this::deleteRedirectNotFoundEntry);
+
 			redirectNotFoundEntry = redirectNotFoundEntryPersistence.create(
 				counterLocalService.increment());
 
@@ -147,6 +163,13 @@ public class RedirectNotFoundEntryLocalServiceImpl
 		return redirectNotFoundEntryPersistence.update(redirectNotFoundEntry);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_redirectConfiguration = ConfigurableUtil.createConfigurable(
+			RedirectConfiguration.class, properties);
+	}
+
 	private DynamicQuery _getRedirectNotFoundEntriesDynamicQuery(
 		long groupId, Boolean ignored, Date minModifiedDate) {
 
@@ -188,5 +211,7 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 		return redirectNotFoundEntriesDynamicQuery;
 	}
+
+	private RedirectConfiguration _redirectConfiguration;
 
 }

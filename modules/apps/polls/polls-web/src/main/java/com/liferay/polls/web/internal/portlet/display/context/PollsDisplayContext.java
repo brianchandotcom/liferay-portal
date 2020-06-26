@@ -412,19 +412,15 @@ public class PollsDisplayContext {
 	private void _populateWithDatabase(
 		PollsQuestionSearch pollsQuestionSearch) {
 
-		int total = _pollsQuestionLocalService.searchCount(
-			_pollsRequestHelper.getCompanyId(),
-			new long[] {_pollsRequestHelper.getScopeGroupId()}, getKeywords());
+		pollsQuestionSearch.setTotal(
+			_pollsQuestionLocalService.searchCount(
+				_pollsRequestHelper.getScopeGroupId()));
 
-		pollsQuestionSearch.setTotal(total);
-
-		List<PollsQuestion> results = _pollsQuestionLocalService.search(
-			_pollsRequestHelper.getCompanyId(),
-			new long[] {_pollsRequestHelper.getScopeGroupId()}, getKeywords(),
-			pollsQuestionSearch.getStart(), pollsQuestionSearch.getEnd(),
-			pollsQuestionSearch.getOrderByComparator());
-
-		pollsQuestionSearch.setResults(results);
+		pollsQuestionSearch.setResults(
+			_pollsQuestionLocalService.search(
+				_pollsRequestHelper.getScopeGroupId(),
+				pollsQuestionSearch.getStart(), pollsQuestionSearch.getEnd(),
+				pollsQuestionSearch.getOrderByComparator()));
 	}
 
 	private void _populateWithSearchIndex(

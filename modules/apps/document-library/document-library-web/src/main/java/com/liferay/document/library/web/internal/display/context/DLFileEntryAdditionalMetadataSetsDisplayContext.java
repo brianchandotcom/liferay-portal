@@ -15,9 +15,14 @@
 package com.liferay.document.library.web.internal.display.context;
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeServiceUtil;
+import com.liferay.document.library.web.internal.configuration.FFDocumentLibraryDDMEditorConfigurationUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureServiceUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -36,13 +41,14 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 		_httpServletRequest = httpServletRequest;
 	}
 
-	public long getDDMStructureId() {
+	public long getDDMStructureId() throws PortalException {
 		return BeanParamUtil.getLong(
 			_getDDMStructure(), _httpServletRequest, "structureId");
 	}
 
 	public List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
-		getDDMStructures() {
+			getDDMStructures()
+		throws PortalException {
 
 		if (_ddmStructures != null) {
 			return _ddmStructures;
@@ -72,19 +78,35 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 		return _ddmStructures;
 	}
 
-	public int getDDMStructuresCount() {
+	public int getDDMStructuresCount() throws PortalException {
 		List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 			ddmStructures = getDDMStructures();
 
 		return ddmStructures.size();
 	}
 
-	public DLFileEntryType getDLFileEntryType() {
+	public DLFileEntryType getDLFileEntryType() throws PortalException {
+		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
+			return DLFileEntryTypeServiceUtil.getFileEntryType(
+				ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId"));
+		}
+
 		return (DLFileEntryType)_httpServletRequest.getAttribute(
 			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE);
 	}
 
-	private DDMStructure _getDDMStructure() {
+	private DDMStructure _getDDMStructure() throws PortalException {
+		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
+			DLFileEntryType dlFileEntryType = getDLFileEntryType();
+
+			if (dlFileEntryType.getDataDefinitionId() == 0) {
+				return null;
+			}
+
+			return DDMStructureServiceUtil.getStructure(
+				dlFileEntryType.getDataDefinitionId());
+		}
+
 		return (DDMStructure)_httpServletRequest.getAttribute(
 			WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
 	}

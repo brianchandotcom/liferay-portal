@@ -106,6 +106,11 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 					editAdditionalMetadataFieldsURL.setParameter(
 						"mvcPath",
 						"/document_library/ddm/additional_metadata_fields.jsp");
+					editAdditionalMetadataFieldsURL.setParameter(
+						"fileEntryTypeId",
+						String.valueOf(
+							ParamUtil.getLong(
+								_liferayPortletRequest, "fileEntryTypeId")));
 					editAdditionalMetadataFieldsURL.setWindowState(
 						LiferayWindowState.EXCLUSIVE);
 

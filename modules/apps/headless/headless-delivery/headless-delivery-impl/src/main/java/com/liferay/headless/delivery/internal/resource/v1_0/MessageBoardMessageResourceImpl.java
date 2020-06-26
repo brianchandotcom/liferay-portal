@@ -274,10 +274,7 @@ public class MessageBoardMessageResourceImpl
 			mbMessage.getClassName(), mbMessage.getClassPK(),
 			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(),
-			ServiceContextUtil.createServiceContext(
-				_getExpandoBridgeAttributes(messageBoardMessage),
-				mbMessage.getGroupId(),
-				messageBoardMessage.getViewableByAsString()));
+			_getServiceContext(messageBoardMessage, mbMessage.getGroupId()));
 
 		_updateAnswer(mbMessage, messageBoardMessage);
 
@@ -330,26 +327,14 @@ public class MessageBoardMessageResourceImpl
 			encodingFormat = MBMessageConstants.DEFAULT_FORMAT;
 		}
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			_getExpandoBridgeAttributes(messageBoardMessage),
-			parentMBMessage.getGroupId(),
-			messageBoardMessage.getViewableByAsString());
-
-		UriBuilder uriBuilder = contextUriInfo.getBaseUriBuilder();
-
-		serviceContext.setAttribute(
-			"entryURL",
-			String.valueOf(
-				uriBuilder.replacePath(
-					"/"
-				).build()));
-
 		MBMessage mbMessage = _mbMessageService.addMessage(
 			messageBoardMessageId, headline,
 			messageBoardMessage.getArticleBody(), encodingFormat,
 			Collections.emptyList(),
 			GetterUtil.getBoolean(messageBoardMessage.getAnonymous()), 0.0,
-			false, serviceContext);
+			false,
+			_getServiceContext(
+				messageBoardMessage, parentMBMessage.getGroupId()));
 
 		_updateAnswer(mbMessage, messageBoardMessage);
 
@@ -427,6 +412,36 @@ public class MessageBoardMessageResourceImpl
 			document -> _toMessageBoardMessage(
 				_mbMessageService.getMessage(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	private ServiceContext _getServiceContext(
+		MessageBoardMessage messageBoardMessage, long siteId) {
+
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			_getExpandoBridgeAttributes(messageBoardMessage), siteId,
+			messageBoardMessage.getViewableByAsString());
+
+		UriBuilder uriBuilder = contextUriInfo.getBaseUriBuilder();
+
+		String link = contextHttpServletRequest.getHeader("Link");
+
+		if (link == null) {
+			link = String.valueOf(
+				uriBuilder.replacePath(
+					"/"
+				).build());
+		}
+
+		serviceContext.setAttribute("entryURL", link);
+
+		if (messageBoardMessage.getId() == null) {
+			serviceContext.setCommand("add");
+		}
+		else {
+			serviceContext.setCommand("update");
+		}
+
+		return serviceContext;
 	}
 
 	private SPIRatingResource<Rating> _getSPIRatingResource() {

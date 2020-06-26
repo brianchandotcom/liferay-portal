@@ -366,16 +366,7 @@ public class MessageBoardThreadResourceImpl
 				_toPriority(
 					mbThread.getGroupId(), messageBoardThread.getThreadType()),
 				false,
-				ServiceContextUtil.createServiceContext(
-					messageBoardThread.getTaxonomyCategoryIds(),
-					Optional.ofNullable(
-						messageBoardThread.getKeywords()
-					).orElse(
-						new String[0]
-					),
-					_getExpandoBridgeAttributes(messageBoardThread),
-					mbThread.getGroupId(),
-					messageBoardThread.getViewableByAsString())));
+				_getServiceContext(messageBoardThread, mbThread.getGroupId())));
 	}
 
 	@Override
@@ -423,20 +414,8 @@ public class MessageBoardThreadResourceImpl
 			encodingFormat = MBMessageConstants.DEFAULT_FORMAT;
 		}
 
-		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			messageBoardThread.getTaxonomyCategoryIds(),
-			messageBoardThread.getKeywords(),
-			_getExpandoBridgeAttributes(messageBoardThread), siteId,
-			messageBoardThread.getViewableByAsString());
-
-		UriBuilder uriBuilder = contextUriInfo.getBaseUriBuilder();
-
-		serviceContext.setAttribute(
-			"entryURL",
-			String.valueOf(
-				uriBuilder.replacePath(
-					"/"
-				).build()));
+		ServiceContext serviceContext = _getServiceContext(
+			messageBoardThread, siteId);
 
 		MBMessage mbMessage = _mbMessageService.addMessage(
 			siteId, messageBoardSectionId, messageBoardThread.getHeadline(),
@@ -497,6 +476,42 @@ public class MessageBoardThreadResourceImpl
 			MBMessage.class.getName(), contextCompany.getCompanyId(),
 			messageBoardThread.getCustomFields(),
 			contextAcceptLanguage.getPreferredLocale());
+	}
+
+	private ServiceContext _getServiceContext(
+		MessageBoardThread messageBoardThread, long siteId) {
+
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			messageBoardThread.getTaxonomyCategoryIds(),
+			Optional.ofNullable(
+				messageBoardThread.getKeywords()
+			).orElse(
+				new String[0]
+			),
+			_getExpandoBridgeAttributes(messageBoardThread), siteId,
+			messageBoardThread.getViewableByAsString());
+
+		UriBuilder uriBuilder = contextUriInfo.getBaseUriBuilder();
+
+		String link = contextHttpServletRequest.getHeader("Link");
+
+		if (link == null) {
+			link = String.valueOf(
+				uriBuilder.replacePath(
+					"/"
+				).build());
+		}
+
+		serviceContext.setAttribute("entryURL", link);
+
+		if (messageBoardThread.getId() == null) {
+			serviceContext.setCommand("add");
+		}
+		else {
+			serviceContext.setCommand("update");
+		}
+
+		return serviceContext;
 	}
 
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(

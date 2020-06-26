@@ -68,7 +68,7 @@ definition {
 
 	@priority = "4"
 	test AddPollsQuestionWithSpecialCharacters {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		var pollsQuestionChoiceA = '''"Black"''';
 
@@ -207,7 +207,7 @@ definition {
 
 	@priority = "4"
 	test ViewChart {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		Navigator.openURL();
 
@@ -263,7 +263,7 @@ definition {
 
 	@priority = "4"
 	test VotePollsQuestionWithGuestPermissions {
-		property portal.upstream = "quarantine";
+		property portal.upstream = "true";
 
 		Navigator.openURL();
 

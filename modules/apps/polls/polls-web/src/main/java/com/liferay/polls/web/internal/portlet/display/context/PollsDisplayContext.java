@@ -32,16 +32,30 @@ import com.liferay.polls.web.internal.security.permission.resource.PollsPermissi
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -217,13 +231,15 @@ public class PollsDisplayContext {
 	}
 
 	public SearchContainer<?> getSearch() {
-		String displayStyle = getDisplayStyle();
+		if (_pollsQuestionSearch != null) {
+			return _pollsQuestionSearch;
+		}
 
 		PortletURL portletURL = getPortletURL();
 
-		portletURL.setParameter("displayStyle", displayStyle);
+		portletURL.setParameter("displayStyle", getDisplayStyle());
 
-		PollsQuestionSearch pollsQuestionSearch = new PollsQuestionSearch(
+		_pollsQuestionSearch = new PollsQuestionSearch(
 			_renderRequest, portletURL);
 
 		String orderByCol = getOrderByCol();
@@ -232,21 +248,22 @@ public class PollsDisplayContext {
 		OrderByComparator<PollsQuestion> orderByComparator =
 			getPollsQuestionOrderByComparator(orderByCol, orderByType);
 
-		pollsQuestionSearch.setOrderByCol(orderByCol);
-		pollsQuestionSearch.setOrderByComparator(orderByComparator);
-		pollsQuestionSearch.setOrderByType(orderByType);
+		_pollsQuestionSearch.setOrderByCol(orderByCol);
+		_pollsQuestionSearch.setOrderByComparator(orderByComparator);
+		_pollsQuestionSearch.setOrderByType(orderByType);
 
-		if (pollsQuestionSearch.isSearch()) {
-			pollsQuestionSearch.setEmptyResultsMessage("no-polls-were-found");
+		if (_pollsQuestionSearch.isSearch()) {
+			_pollsQuestionSearch.setEmptyResultsMessage("no-polls-were-found");
+
+			_populateWithSearchIndex(_pollsQuestionSearch);
 		}
 		else {
-			pollsQuestionSearch.setEmptyResultsMessage("there-are-no-polls");
+			_pollsQuestionSearch.setEmptyResultsMessage("there-are-no-polls");
+
+			_populateWithDatabase(_pollsQuestionSearch);
 		}
 
-		setDDMPollSearchResults(pollsQuestionSearch);
-		setDDMPollSearchTotal(pollsQuestionSearch);
-
-		return pollsQuestionSearch;
+		return _pollsQuestionSearch;
 	}
 
 	public String getSearchActionURL() {
@@ -353,8 +370,53 @@ public class PollsDisplayContext {
 		return false;
 	}
 
-	protected void setDDMPollSearchResults(
+	private SearchContext _buildSearchContext(
 		PollsQuestionSearch pollsQuestionSearch) {
+
+		SearchContext searchContext = SearchContextFactory.getInstance(
+			_pollsRequestHelper.getRequest());
+
+		searchContext.setAttribute("paginationType", "none");
+		searchContext.setCompanyId(_pollsRequestHelper.getCompanyId());
+		searchContext.setEnd(pollsQuestionSearch.getEnd());
+		searchContext.setGroupIds(
+			new long[] {_pollsRequestHelper.getScopeGroupId()});
+		searchContext.setKeywords(getKeywords());
+		searchContext.setStart(pollsQuestionSearch.getStart());
+
+		OrderByComparator<PollsQuestion> orderByComparator =
+			pollsQuestionSearch.getOrderByComparator();
+
+		if (orderByComparator != null) {
+			searchContext.setSorts(_getSortFromComparator(orderByComparator));
+		}
+
+		return searchContext;
+	}
+
+	private Sort _getSortFromComparator(
+		OrderByComparator<PollsQuestion> orderByComparator) {
+
+		String[] fields = orderByComparator.getOrderByFields();
+
+		boolean reverse = !orderByComparator.isAscending();
+		String field = fields[0];
+
+		if (field.equals(Field.CREATE_DATE)) {
+			return new Sort(field, Sort.LONG_TYPE, reverse);
+		}
+
+		return new Sort(field, reverse);
+	}
+
+	private void _populateWithDatabase(
+		PollsQuestionSearch pollsQuestionSearch) {
+
+		int total = _pollsQuestionLocalService.searchCount(
+			_pollsRequestHelper.getCompanyId(),
+			new long[] {_pollsRequestHelper.getScopeGroupId()}, getKeywords());
+
+		pollsQuestionSearch.setTotal(total);
 
 		List<PollsQuestion> results = _pollsQuestionLocalService.search(
 			_pollsRequestHelper.getCompanyId(),
@@ -365,17 +427,42 @@ public class PollsDisplayContext {
 		pollsQuestionSearch.setResults(results);
 	}
 
-	protected void setDDMPollSearchTotal(
+	private void _populateWithSearchIndex(
 		PollsQuestionSearch pollsQuestionSearch) {
 
-		int total = _pollsQuestionLocalService.searchCount(
-			_pollsRequestHelper.getCompanyId(),
-			new long[] {_pollsRequestHelper.getScopeGroupId()}, getKeywords());
+		try {
+			Indexer<PollsQuestion> indexer = IndexerRegistryUtil.getIndexer(
+				PollsQuestion.class);
 
-		pollsQuestionSearch.setTotal(total);
+			Hits hits = indexer.search(
+				_buildSearchContext(pollsQuestionSearch));
+
+			List<SearchResult> searchResults =
+				SearchResultUtil.getSearchResults(
+					hits, LocaleUtil.getDefault());
+
+			Stream<SearchResult> stream = searchResults.stream();
+
+			pollsQuestionSearch.setResults(
+				stream.map(
+					SearchResult::getClassPK
+				).map(
+					_pollsQuestionLocalService::fetchPollsQuestion
+				).collect(
+					Collectors.toList()
+				));
+
+			pollsQuestionSearch.setTotal(hits.getLength());
+		}
+		catch (SearchException searchException) {
+			pollsQuestionSearch.setResults(Collections.emptyList());
+
+			pollsQuestionSearch.setTotal(0);
+		}
 	}
 
 	private final PollsQuestionLocalService _pollsQuestionLocalService;
+	private PollsQuestionSearch _pollsQuestionSearch;
 	private final PollsRequestHelper _pollsRequestHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

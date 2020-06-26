@@ -123,7 +123,7 @@ const AppsPanel = ({
 						key={`tabPane-${index}`}
 					>
 						<ClayLayout.Row className="global-apps-nav">
-							<div className="c-p-0 col-md">
+							<ClayLayout.Col className="c-p-0" md>
 								<div className="global-apps-nav-columns">
 									{childCategories.map(
 										({key, label, panelApps}) => (
@@ -169,7 +169,7 @@ const AppsPanel = ({
 										)
 									)}
 								</div>
-							</div>
+							</ClayLayout.Col>
 
 							<div className="global-apps-sites">
 								<ul className="bg-light list-unstyled rounded">

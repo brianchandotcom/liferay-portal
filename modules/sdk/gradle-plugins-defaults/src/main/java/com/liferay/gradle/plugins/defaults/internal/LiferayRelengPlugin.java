@@ -875,16 +875,16 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					return false;
 				}
 
-				if (Boolean.parseBoolean(force)) {
-					return true;
-				}
-
 				String result = GitUtil.getGitResult(
 					project, "ls-files",
 					FileUtil.getAbsolutePath(project.getProjectDir()));
 
 				if (Validator.isNull(result)) {
 					return false;
+				}
+
+				if (Boolean.parseBoolean(force)) {
+					return true;
 				}
 
 				if (liferayThemeProject &&

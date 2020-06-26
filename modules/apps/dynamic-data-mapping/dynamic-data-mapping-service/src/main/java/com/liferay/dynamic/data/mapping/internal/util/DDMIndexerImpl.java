@@ -58,9 +58,7 @@ import java.text.Format;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -454,63 +452,38 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		Document document = createDocument(indexType, type, value, locale);
 
-		com.liferay.portal.kernel.search.Field field =
+		com.liferay.portal.kernel.search.Field ddmField =
 			new com.liferay.portal.kernel.search.Field("");
 
-		field.addField(
+		ddmField.addField(
 			new com.liferay.portal.kernel.search.Field(DDM_FIELD_NAME, name));
 
-		Stream.of(
-			document.getFields()
-		).map(
-			Map::entrySet
-		).flatMap(
-			Set::stream
-		).map(
-			Map.Entry::getValue
-		).forEach(
-			entry -> {
-				if (entry.getGeoLocationPoint() != null) {
-					com.liferay.portal.kernel.search.Field geolocationField =
-						new com.liferay.portal.kernel.search.Field(
-							entry.getName());
+		Map<String, com.liferay.portal.kernel.search.Field> fields =
+			document.getFields();
 
-					geolocationField.setGeoLocationPoint(
-						entry.getGeoLocationPoint());
+		String valueFieldName = null;
 
-					field.addField(geolocationField);
-				}
-				else {
-					field.addField(
-						new com.liferay.portal.kernel.search.Field(
-							entry.getName(), entry.getValue()));
-				}
+		for (com.liferay.portal.kernel.search.Field field : fields.values()) {
+			ddmField.addField(field);
 
-				Stream<com.liferay.portal.kernel.search.Field> stream =
-					field.getFields(
-					).stream();
+			String fieldName = field.getName();
 
-				Optional<com.liferay.portal.kernel.search.Field>
-					valueFieldName = stream.filter(
-						currentField -> currentField.getName(
-						).equals(
-							"valueFieldName"
-						)
-					).findFirst();
+			if ((valueFieldName == null) &&
+				!fieldName.contains(
+					com.liferay.portal.kernel.search.Field.
+						SORTABLE_FIELD_SUFFIX)) {
 
-				if (!valueFieldName.isPresent() &&
-					!entry.getName().contains(
-						com.liferay.portal.kernel.search.Field.
-							SORTABLE_FIELD_SUFFIX)) {
-
-					field.addField(
-						new com.liferay.portal.kernel.search.Field(
-							"valueFieldName", entry.getName()));
-				}
+				valueFieldName = fieldName;
 			}
-		);
+		}
 
-		return field;
+		if (valueFieldName != null) {
+			ddmField.addField(
+				new com.liferay.portal.kernel.search.Field(
+					DDM_VALUE_FIELD_NAME, valueFieldName));
+		}
+
+		return ddmField;
 	}
 
 	protected String encodeName(

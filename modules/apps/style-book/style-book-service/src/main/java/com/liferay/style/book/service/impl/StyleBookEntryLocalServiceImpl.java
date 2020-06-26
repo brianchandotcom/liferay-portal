@@ -16,20 +16,25 @@ package com.liferay.style.book.service.impl;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.base.StyleBookEntryLocalServiceBaseImpl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -91,6 +96,37 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<StyleBookEntry> getStyleBookEntries(
+		long groupId, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator) {
+
+		return styleBookEntryPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<StyleBookEntry> getStyleBookEntries(
+		long groupId, String name, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator) {
+
+		return styleBookEntryPersistence.findByG_LikeN(
+			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getStyleBookEntriesCount(long groupId) {
+		return styleBookEntryPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public int getStyleBookEntriesCount(long groupId, String name) {
+		return styleBookEntryPersistence.countByG_LikeN(
+			groupId,
+			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0]);
+	}
+
+	@Override
 	public StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, String name)
 		throws PortalException {
@@ -125,5 +161,8 @@ public class StyleBookEntryLocalServiceImpl
 				"Maximum length of name exceeded");
 		}
 	}
+
+	@Reference
+	private CustomSQL _customSQL;
 
 }

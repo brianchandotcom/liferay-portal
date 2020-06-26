@@ -91,6 +91,11 @@ public class DataEngineNativeObjectDataDefinitionContentType
 			permissionChecker, groupId, actionId);
 	}
 
+	@Override
+	public boolean isDataRecordCollectionPermissionCheckingEnabled() {
+		return true;
+	}
+
 	@Reference
 	private Portal _portal;
 

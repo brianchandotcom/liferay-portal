@@ -53,6 +53,7 @@ definition {
 		task ("Add a section fragment to the staging site via JSON") {
 			JSONFragment.addSection(
 				collectionName = "Collection Name",
+				fragmentStatus = "Approved",
 				groupKey = "Test Site Name-staging",
 				name = "Fragment Name",
 				site = "false");

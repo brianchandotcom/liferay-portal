@@ -217,6 +217,57 @@ definition {
 			privacy = "Public Pages");
 	}
 
+	@description = "This is for LPS-114527. Can move multiple same level pages at the same level via dragging in Pages admin."
+	@priority = "5"
+	test MoveMultiplePagesInSameLevel {
+		task ("Add 2 widget page and 1 content page in the same level") {
+			for (var n : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}");
+			}
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 3",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 3",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Assert pages order") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			Page.viewPagesOrder(
+				depth = "2",
+				pageName1 = "Test Page Name 1",
+				pageName2 = "Test Page Name 2",
+				pageName3 = "Test Page Name 3");
+		}
+
+		task ("Move Test Page Name 2 and 3 to top of Test Page Name 1") {
+			for (var n : list "2,3") {
+				SitePages.checkPage(pageName = "Test Page Name ${n}");
+			}
+
+			ContentPages.movePageToPageUp(
+				pageName = "Test Page Name 2",
+				pageNameTo = "Test Page Name 1");
+		}
+
+		task ("Assert Test Page Name 2 and 3 are moved to top of Test Page Name 1") {
+			Page.viewPagesOrder(
+				depth = "2",
+				pageName1 = "Test Page Name 2",
+				pageName2 = "Test Page Name 3",
+				pageName3 = "Test Page Name 1");
+		}
+	}
+
 	@description = "This is for LPS-110108. Reorder pages in same level via drag and drop."
 	@priority = "5"
 	test MovePageInSameLevel {

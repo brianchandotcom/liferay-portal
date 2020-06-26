@@ -745,31 +745,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	<#if entity.versionEntity??>
 		<#assign versionEntity = entity.versionEntity />
 
-		public boolean getHead() {
-			return _head;
-		}
-
-		@Override
-		public boolean isHead() {
-			return _head;
-		}
-
-		public boolean getOriginalHead() {
-			return _originalHead;
-		}
-
-		public void setHead(boolean head) {
-			_columnBitmask |= HEAD_COLUMN_BITMASK;
-
-			if (!_setOriginalHead) {
-				_setOriginalHead = true;
-
-				_originalHead = _head;
-			}
-
-			_head = head;
-		}
-
 		@Override
 		public void populateVersionModel(${versionEntity.name} ${versionEntity.varName}) {
 			<#list entity.entityColumns as entityColumn>
@@ -816,7 +791,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#if>
 
-	<#list entity.regularEntityColumns as entityColumn>
+	<#list entity.databaseRegularEntityColumns as entityColumn>
 		<#if stringUtil.equals(entityColumn.name, "classNameId") && !hasClassNameCacheField>
 			@Override
 			public String getClassName() {
@@ -845,7 +820,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			@JSON(include = false)
 		</#if>
 
-		@Override
+		<#if !entity.versionEntity?? || !stringUtil.equals(entityColumn.name, "head")>
+			@Override
+		</#if>
 		public ${entityColumn.genericizedType} get${entityColumn.methodName}() {
 			<#if stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
 				if (_${entityColumn.name} == null) {
@@ -938,7 +915,9 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			}
 		</#if>
 
-		@Override
+		<#if !entity.versionEntity?? || !stringUtil.equals(entityColumn.name, "head")>
+			@Override
+		</#if>
 		public void set${entityColumn.methodName}(${entityColumn.genericizedType} ${entityColumn.name}) {
 			<#if entity.hasEntityColumn("createDate", "Date") && entity.hasEntityColumn("modifiedDate", "Date") && stringUtil.equals(entityColumn.name, "modifiedDate")>
 				_setModifiedDate = true;

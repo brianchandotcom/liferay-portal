@@ -29,6 +29,7 @@ export default () => {
 		portletNamespace,
 		toggleSidebar,
 		totalEntries,
+		type,
 	} = useContext(SidebarContext);
 
 	let endpoint = null;
@@ -102,7 +103,7 @@ export default () => {
 							</div>
 						)}
 
-						<List data={data}></List>
+						<List data={data} type={type}></List>
 					</div>
 				</div>
 			</div>

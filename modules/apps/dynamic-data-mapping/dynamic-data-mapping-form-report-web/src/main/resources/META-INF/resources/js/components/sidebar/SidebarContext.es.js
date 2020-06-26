@@ -25,13 +25,15 @@ const SidebarContextProvider = ({
 		field: null,
 		isOpen: false,
 		totalEntries: 0,
+		type: null,
 	});
 
-	const toggleSidebar = (field, totalEntries) => {
+	const toggleSidebar = (field, totalEntries, type) => {
 		setSidebarState(() => ({
 			field,
 			isOpen: field !== null,
 			totalEntries,
+			type,
 		}));
 	};
 

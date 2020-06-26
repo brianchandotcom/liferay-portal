@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.translation.exception.InvalidXLIFFFileException;
+import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.test.util.TranslationTestUtil;
 
@@ -54,7 +54,7 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 		_group = GroupTestUtil.addGroup();
 	}
 
-	@Test(expected = InvalidXLIFFFileException.class)
+	@Test(expected = XLIFFFileException.class)
 	public void testImportXLIFF2FailsFileInvalidId() throws Exception {
 		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),
@@ -64,7 +64,18 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 				"test-journal-article-122.xlf"));
 	}
 
-	@Test(expected = InvalidXLIFFFileException.class)
+	@Test(
+		expected = XLIFFFileException.MustNotBeUnsupportedLanguage.class
+	)
+	public void testImportXLIFF2FailsFileInvalidLanguage() throws Exception {
+		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
+			_group.getGroupId(),
+			new InfoItemClassPKReference(JournalArticle.class.getName(), 122),
+			TranslationTestUtil.readFileToInputStream(
+				"test-journal-article-122-pt-PT.xlf"));
+	}
+
+	@Test(expected = XLIFFFileException.MustNotBeInvalidFile.class)
 	public void testImportXLIFF2FailsFileInvalidVersion() throws Exception {
 		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),
@@ -72,7 +83,7 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 			TranslationTestUtil.readFileToInputStream("example-1_2-oasis.xlf"));
 	}
 
-	@Test(expected = InvalidXLIFFFileException.class)
+	@Test(expected = XLIFFFileException.MustNotHaveInvalidId.class)
 	public void testImportXLIFF2FailsFileNoTarget() throws Exception {
 		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),

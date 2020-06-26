@@ -86,16 +86,28 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 	}
 
 	public DLFileEntryType getDLFileEntryType() throws PortalException {
-		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
-			return DLFileEntryTypeServiceUtil.getFileEntryType(
-				ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId"));
+		if (_dlFileEntryType != null) {
+			return _dlFileEntryType;
 		}
 
-		return (DLFileEntryType)_httpServletRequest.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE);
+		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
+			_dlFileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(
+				ParamUtil.getLong(_httpServletRequest, "fileEntryTypeId"));
+		}
+		else {
+			_dlFileEntryType =
+				(DLFileEntryType)_httpServletRequest.getAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE);
+		}
+
+		return _dlFileEntryType;
 	}
 
 	private DDMStructure _getDDMStructure() throws PortalException {
+		if (_ddmStructure != null) {
+			return _ddmStructure;
+		}
+
 		if (FFDocumentLibraryDDMEditorConfigurationUtil.useDataEngineEditor()) {
 			DLFileEntryType dlFileEntryType = getDLFileEntryType();
 
@@ -103,16 +115,21 @@ public class DLFileEntryAdditionalMetadataSetsDisplayContext {
 				return null;
 			}
 
-			return DDMStructureServiceUtil.getStructure(
+			_ddmStructure = DDMStructureServiceUtil.getStructure(
 				dlFileEntryType.getDataDefinitionId());
 		}
+		else {
+			_ddmStructure = (DDMStructure)_httpServletRequest.getAttribute(
+				WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
+		}
 
-		return (DDMStructure)_httpServletRequest.getAttribute(
-			WebKeys.DOCUMENT_LIBRARY_DYNAMIC_DATA_MAPPING_STRUCTURE);
+		return _ddmStructure;
 	}
 
+	private DDMStructure _ddmStructure;
 	private List<com.liferay.dynamic.data.mapping.kernel.DDMStructure>
 		_ddmStructures;
+	private DLFileEntryType _dlFileEntryType;
 	private final HttpServletRequest _httpServletRequest;
 
 }

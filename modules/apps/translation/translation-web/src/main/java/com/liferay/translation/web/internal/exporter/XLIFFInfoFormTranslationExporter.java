@@ -19,7 +19,6 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.translation.exception.InvalidXLIFFFileException;
+import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 
@@ -41,13 +40,14 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
+import net.sf.okapi.lib.xliff2.InvalidParameterException;
+import net.sf.okapi.lib.xliff2.XLIFFException;
 import net.sf.okapi.lib.xliff2.core.Fragment;
 import net.sf.okapi.lib.xliff2.core.Part;
 import net.sf.okapi.lib.xliff2.core.StartXliffData;
 import net.sf.okapi.lib.xliff2.core.Unit;
 import net.sf.okapi.lib.xliff2.document.FileNode;
 import net.sf.okapi.lib.xliff2.document.XLIFFDocument;
-import net.sf.okapi.lib.xliff2.reader.XLIFFReaderException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -130,7 +130,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 	public InfoItemFieldValues importXLIFF(
 			long groupId, InfoItemClassPKReference infoItemClassPKReference,
 			InputStream inputStream)
-		throws InvalidXLIFFFileException, IOException {
+		throws IOException, XLIFFFileException {
 
 		InfoItemFieldValues infoItemFieldValues = new InfoItemFieldValues(
 			infoItemClassPKReference);
@@ -141,6 +141,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 			xliffDocument.load(FileUtil.createTempFile(inputStream));
 
 			_validateXLIFFFile(infoItemClassPKReference, xliffDocument);
+
 			StartXliffData startXliffData = xliffDocument.getStartXliffData();
 
 			Locale targetLocale = LocaleUtil.fromLanguageId(
@@ -152,7 +153,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 				String field = unit.getId();
 
 				if (unit.getPartCount() != 1) {
-					throw new InvalidXLIFFFileException(
+					throw new XLIFFFileException.MustNotHaveMoreThanOne(
 						"The file only can have one unit");
 				}
 
@@ -180,8 +181,12 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 			return infoItemFieldValues;
 		}
-		catch (XLIFFReaderException xliffReaderException) {
-			throw new InvalidXLIFFFileException(xliffReaderException);
+		catch (InvalidParameterException invalidParameterException) {
+			throw new XLIFFFileException.MustNotHaveInvalidParameter(
+				invalidParameterException);
+		}
+		catch (XLIFFException xliffException) {
+			throw new XLIFFFileException.MustNotBeInvalidFile(xliffException);
 		}
 	}
 
@@ -194,35 +199,45 @@ public class XLIFFInfoFormTranslationExporter<T>
 	}
 
 	private void _validateXLIFFCompletion(XLIFFDocument xliffDocument)
-		throws InvalidXLIFFFileException {
+		throws XLIFFFileException {
 
 		StartXliffData startXliffData = xliffDocument.getStartXliffData();
 
 		String sourceLanguage = startXliffData.getSourceLanguage();
 
+		if (Validator.isNull(sourceLanguage)) {
+			throw new XLIFFFileException.MustNotBeIncomplete(
+				"There is no translation source");
+		}
+
 		Locale sourceLocale = LocaleUtil.fromLanguageId(
 			sourceLanguage, true, false);
 
-		if (Validator.isNull(sourceLanguage) || (sourceLocale == null)) {
-			throw new InvalidXLIFFFileException(
-				"There is no translation source");
+		if (sourceLocale == null) {
+			throw new XLIFFFileException.MustNotBeUnsupportedLanguage(
+				sourceLanguage);
 		}
 
 		String targetLanguage = startXliffData.getTargetLanguage();
 
+		if (Validator.isNull(targetLanguage)) {
+			throw new XLIFFFileException.MustNotBeIncomplete(
+				"There is no translation target");
+		}
+
 		Locale targetLocale = LocaleUtil.fromLanguageId(
 			targetLanguage, true, false);
 
-		if (Validator.isNull(targetLanguage) || (targetLocale == null)) {
-			throw new InvalidXLIFFFileException(
-				"There is no translation target");
+		if (targetLocale == null) {
+			throw new XLIFFFileException.MustNotBeUnsupportedLanguage(
+				targetLanguage);
 		}
 	}
 
 	private void _validateXLIFFFile(
 			InfoItemClassPKReference infoItemClassPKReference,
 			XLIFFDocument xliffDocument)
-		throws InvalidXLIFFFileException {
+		throws XLIFFFileException {
 
 		_validateXLIFFCompletion(xliffDocument);
 
@@ -232,12 +247,13 @@ public class XLIFFInfoFormTranslationExporter<T>
 	private void _validateXLIFFFileNode(
 			InfoItemClassPKReference infoItemClassPKReference,
 			XLIFFDocument xliffDocument)
-		throws InvalidXLIFFFileException {
+		throws XLIFFFileException {
 
 		List<String> fileNodeIds = xliffDocument.getFileNodeIds();
 
 		if (fileNodeIds.size() != 1) {
-			throw new InvalidXLIFFFileException("Only one node is allowed");
+			throw new XLIFFFileException.MustNotHaveMoreThanOne(
+				"Only one node is allowed");
 		}
 
 		FileNode fileNode = xliffDocument.getFileNode(
@@ -245,12 +261,10 @@ public class XLIFFInfoFormTranslationExporter<T>
 				infoItemClassPKReference.getClassPK());
 
 		if (fileNode == null) {
-			throw new InvalidXLIFFFileException("File ID is invalid");
+			throw new XLIFFFileException.MustNotHaveInvalidId(
+				"File ID is invalid");
 		}
 	}
-
-	@Reference
-	private InfoItemServiceTracker _infoItemServiceTracker;
 
 	@Reference
 	private TranslationInfoFieldChecker _translationInfoFieldChecker;

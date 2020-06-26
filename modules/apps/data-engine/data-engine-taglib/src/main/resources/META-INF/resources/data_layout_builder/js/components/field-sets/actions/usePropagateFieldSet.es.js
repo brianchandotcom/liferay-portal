@@ -54,26 +54,37 @@ export default () => {
 			const {dataLayouts = [], dataListViews = []} =
 				items[0] || findDataDefinition();
 
-			if (!items.length) {
+			const fieldSetIsUsed =
+				!!dataLayouts.length || !!dataListViews.length;
+
+			if (!items.length || !fieldSetIsUsed) {
 				return onPropagate(fieldSet, true);
 			}
 
 			const getName = ({name = {}}) => {
-				return name[defaultLanguageId];
+				return (
+					name[defaultLanguageId] || Liferay.Language.get('untitled')
+				);
 			};
 
 			const Items = ({name}) => {
-				return items.map((item, index) => (
-					<div className="mb-4" key={index}>
-						<label>{getName(item.dataDefinition)}</label>
+				return items.map((item, index) => {
+					if (!item[name].length) {
+						return null;
+					}
 
-						<ol>
-							{item[name].map((content, index) => (
-								<li key={index}>{getName(content)}</li>
-							))}
-						</ol>
-					</div>
-				));
+					return (
+						<div className="mb-4" key={index}>
+							<label>{getName(item.dataDefinition)}</label>
+
+							<ol>
+								{item[name].map((content, index) => (
+									<li key={index}>{getName(content)}</li>
+								))}
+							</ol>
+						</div>
+					);
+				});
 			};
 
 			return new Promise((resolve) => {

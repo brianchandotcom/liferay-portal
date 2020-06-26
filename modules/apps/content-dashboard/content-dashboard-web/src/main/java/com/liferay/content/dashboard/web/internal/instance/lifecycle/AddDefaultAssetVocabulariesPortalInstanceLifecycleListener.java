@@ -17,7 +17,6 @@ package com.liferay.content.dashboard.web.internal.instance.lifecycle;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.content.dashboard.web.internal.constants.ContentDashboardAssetVocabularyNamesConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
@@ -46,10 +45,7 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		for (String assetVocabularyName :
-				ContentDashboardAssetVocabularyNamesConstants.
-					DEFAULT_ASSET_VOCABULARY_NAMES) {
-
+		for (String assetVocabularyName : _DEFAULT_ASSET_VOCABULARY_NAMES) {
 			_addAssetVocabulary(company, assetVocabularyName);
 		}
 	}
@@ -92,6 +88,10 @@ public class AddDefaultAssetVocabulariesPortalInstanceLifecycleListener
 			Collections.emptyMap(), assetVocabularySettingsHelper.toString(),
 			serviceContext);
 	}
+
+	private static final String[] _DEFAULT_ASSET_VOCABULARY_NAMES = {
+		"audience", "stage", PropsValues.ASSET_VOCABULARY_DEFAULT
+	};
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

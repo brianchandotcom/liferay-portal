@@ -107,7 +107,10 @@ class JournalPortlet extends PortletBase {
 		const inputComponent = Liferay.component(this.ns(name));
 		const translatedLanguages = inputComponent.get('translatedLanguages');
 
-		if (!translatedLanguages.has(this._selectedLanguageId)) {
+		if (
+			!translatedLanguages.has(this._selectedLanguageId) &&
+			this._selectedLanguageId !== this.defaultLanguageId
+		) {
 			inputComponent.updateInput('');
 
 			const form = Liferay.Form.get(this.ns('fm1'));

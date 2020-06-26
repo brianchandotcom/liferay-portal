@@ -688,10 +688,20 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		AssertTextEquals(
-			key_text = "Title",
-			locator1 = "TextArea#ANY",
-			value1 = "${entryTitle}");
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			AssertTextEquals.assertValue(
+				key_text = "Title",
+				locator1 = "TextArea#ANY",
+				value1 = "${entryTitle}");
+		}
+		else {
+			AssertTextEquals(
+				key_text = "Title",
+				locator1 = "TextArea#ANY",
+				value1 = "${entryTitle}");
+		}
 
 		if (isSet(entrySubtitle)) {
 			AssertTextEquals(

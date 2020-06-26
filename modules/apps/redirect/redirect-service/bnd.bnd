@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Redirect Service
 Bundle-SymbolicName: com.liferay.redirect.service
 Bundle-Version: 1.0.13
-Liferay-Require-SchemaVersion: 2.0.1
+Liferay-Require-SchemaVersion: 3.0.0
 Liferay-Service: true
 -dsannotations-options: inherit

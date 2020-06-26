@@ -472,7 +472,8 @@ public class ViewChangesDisplayContext {
 				continue;
 			}
 
-			JSONArray childrenJSONArray = _getChildren(nodeIdCounter, childPKsMap);
+			JSONArray childrenJSONArray = _getChildren(
+				nodeIdCounter, childPKsMap);
 
 			if (childrenJSONArray.length() == 0) {
 				continue;
@@ -482,8 +483,9 @@ public class ViewChangesDisplayContext {
 				JSONObject childJSONObject = childrenJSONArray.getJSONObject(i);
 
 				_addRootDisplayNode(
-					child,
-					rootDisplayMap.get(childJSONObject.getLong("modelClassNameId")));
+					childJSONObject,
+					rootDisplayMap.get(
+						childJSONObject.getLong("modelClassNameId")));
 
 				deque.push(childJSONObject);
 			}
@@ -500,15 +502,15 @@ public class ViewChangesDisplayContext {
 				continue;
 			}
 
-			JSONArray nodeIds = JSONFactoryUtil.createJSONArray();
+			JSONArray nodeIdsJSONArray = JSONFactoryUtil.createJSONArray();
 
 			for (JSONObject rootDisplayNode : rootDisplayNodes) {
-				nodeIds.put(rootDisplayNode.getInt("id"));
+				nodeIdsJSONArray.put(rootDisplayNode.getInt("id"));
 			}
 
 			String typeName = _getTypeName(entry.getKey());
 
-			contextViewJSONObject.put(typeName, nodeIds);
+			contextViewJSONObject.put(typeName, nodeIdsJSONArray);
 
 			rootDisplayClassesJSONArray.put(typeName);
 		}

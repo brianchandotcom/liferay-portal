@@ -43,13 +43,17 @@ import {
 	markAsAnswerMessageBoardMessageQuery,
 } from '../../utils/client.es';
 import lang from '../../utils/lang.es';
-import {dateToBriefInternationalHuman, stripHTML} from '../../utils/utils.es';
+import {
+	dateToBriefInternationalHuman,
+	getContextLink,
+	stripHTML,
+} from '../../utils/utils.es';
 
 export default withRouter(
 	({
 		location,
 		match: {
-			params: {questionId},
+			params: {questionId, sectionTitle},
 			url,
 		},
 	}) => {
@@ -138,6 +142,7 @@ export default withRouter(
 		}, [messageBoardThreadMessageBoardMessages, pageSize, sort]);
 
 		const [createAnswer] = useMutation(createAnswerQuery, {
+			context: getContextLink(`${sectionTitle}/${questionId}`),
 			onCompleted() {
 				setArticleBody('');
 				refetch();
@@ -261,11 +266,6 @@ export default withRouter(
 										>
 											{question.actions.subscribe && (
 												<Subscription
-													onSubscription={(
-														subscribed
-													) => {
-														question.subscribed = subscribed;
-													}}
 													question={question}
 												/>
 											)}

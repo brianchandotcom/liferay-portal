@@ -29,6 +29,7 @@ import useSection from '../../hooks/useSection.es';
 import {client, createQuestionQuery} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
+	getContextLink,
 	historyPushWithSlug,
 	slugToText,
 	stripHTML,
@@ -61,6 +62,7 @@ export default withRouter(
 		);
 
 		const [createQuestion] = useMutation(createQuestionQuery, {
+			context: getContextLink(sectionTitle),
 			onCompleted() {
 				client.resetStore();
 				debounceCallback();

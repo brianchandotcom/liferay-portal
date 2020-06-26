@@ -25,7 +25,7 @@ import QuestionsEditor from '../../components/QuestionsEditor';
 import TagSelector from '../../components/TagSelector.es';
 import TextLengthValidation from '../../components/TextLengthValidation.es';
 import {getThreadContentQuery, updateThreadQuery} from '../../utils/client.es';
-import {stripHTML} from '../../utils/utils.es';
+import {getContextLink, stripHTML} from '../../utils/utils.es';
 
 export default withRouter(
 	({
@@ -65,6 +65,7 @@ export default withRouter(
 		});
 
 		const [updateThread] = useMutation(updateThreadQuery, {
+			context: getContextLink(`${sectionTitle}/${questionId}`),
 			onCompleted() {
 				history.goBack();
 			},

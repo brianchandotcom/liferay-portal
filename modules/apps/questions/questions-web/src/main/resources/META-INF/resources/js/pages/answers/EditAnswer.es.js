@@ -23,13 +23,13 @@ import {AppContext} from '../../AppContext.es';
 import QuestionsEditor from '../../components/QuestionsEditor';
 import TextLengthValidation from '../../components/TextLengthValidation.es';
 import {getMessageQuery, updateMessageQuery} from '../../utils/client.es';
-import {stripHTML} from '../../utils/utils.es';
+import {getContextLink, stripHTML} from '../../utils/utils.es';
 
 export default withRouter(
 	({
 		history,
 		match: {
-			params: {answerId},
+			params: {answerId, questionId, sectionTitle},
 		},
 	}) => {
 		const context = useContext(AppContext);
@@ -42,6 +42,7 @@ export default withRouter(
 		const [articleBody, setArticleBody] = useState('');
 
 		const [addUpdateMessage] = useMutation(updateMessageQuery, {
+			context: getContextLink(`${sectionTitle}/${questionId}`),
 			onCompleted() {
 				history.goBack();
 			},

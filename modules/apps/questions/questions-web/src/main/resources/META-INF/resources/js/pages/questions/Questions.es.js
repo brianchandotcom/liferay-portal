@@ -30,6 +30,7 @@ import useQueryParams from '../../hooks/useQueryParams.es';
 import {getQuestionThreads, getSections} from '../../utils/client.es';
 import lang from '../../utils/lang.es';
 import {
+	getBasePath,
 	historyPushWithSlug,
 	slugToText,
 	useDebounceCallback,
@@ -165,10 +166,7 @@ export default withRouter(
 
 		const navigateToNewQuestion = () => {
 			if (context.redirectToLogin && !themeDisplay.isSignedIn()) {
-				const baseURL = window.location.href.substring(
-					window.location.origin.length,
-					window.location.href.indexOf('#')
-				);
+				const baseURL = getBasePath();
 
 				window.location.replace(
 					`/c/portal/login?redirect=${baseURL}#/questions/${sectionTitle}/new`

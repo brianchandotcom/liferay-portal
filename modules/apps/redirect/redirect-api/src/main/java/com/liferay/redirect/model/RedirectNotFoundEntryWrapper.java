@@ -52,7 +52,6 @@ public class RedirectNotFoundEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("hits", getHits());
 		attributes.put("ignored", isIgnored());
 		attributes.put("url", getUrl());
 
@@ -110,12 +109,6 @@ public class RedirectNotFoundEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long hits = (Long)attributes.get("hits");
-
-		if (hits != null) {
-			setHits(hits);
-		}
-
 		Boolean ignored = (Boolean)attributes.get("ignored");
 
 		if (ignored != null) {
@@ -159,11 +152,6 @@ public class RedirectNotFoundEntryWrapper
 		return model.getGroupId();
 	}
 
-	/**
-	 * Returns the hits of this redirect not found entry.
-	 *
-	 * @return the hits of this redirect not found entry
-	 */
 	@Override
 	public long getHits() {
 		return model.getHits();
@@ -307,16 +295,6 @@ public class RedirectNotFoundEntryWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
-	}
-
-	/**
-	 * Sets the hits of this redirect not found entry.
-	 *
-	 * @param hits the hits of this redirect not found entry
-	 */
-	@Override
-	public void setHits(long hits) {
-		model.setHits(hits);
 	}
 
 	/**

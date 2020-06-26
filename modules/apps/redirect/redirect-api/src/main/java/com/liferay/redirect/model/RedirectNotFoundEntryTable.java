@@ -57,8 +57,6 @@ public class RedirectNotFoundEntryTable
 	public final Column<RedirectNotFoundEntryTable, Date> modifiedDate =
 		createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<RedirectNotFoundEntryTable, Long> hits = createColumn(
-		"hits", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<RedirectNotFoundEntryTable, Boolean> ignored =
 		createColumn(
 			"ignored", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);

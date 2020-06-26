@@ -1,0 +1,1 @@
+create index IX_B77B682C on StyleBookEntry (groupId);

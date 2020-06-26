@@ -4,6 +4,6 @@ baseline {
 
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
-	compileOnly group: "com.liferay.portal", name: "release.portal.api", version: "7.1.1"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly project(":apps:commerce:commerce-account-api")
 }

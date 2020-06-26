@@ -53,3 +53,10 @@ function getNumberOfWords({innerText}) {
 }
 
 export {closest, getClosestAssetElement, getNumberOfWords};
+
+/**
+ * Polyfill for .matches in IE11
+ */
+if (!Element.prototype.matches) {
+	Element.prototype.matches = Element.prototype.msMatchesSelector;
+}

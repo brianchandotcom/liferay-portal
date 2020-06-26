@@ -96,7 +96,10 @@ export default ({currentSection, items, question, showSectionLabel}) => (
 
 		<Link
 			className="questions-title stretched-link"
-			to={`/questions/${question.messageBoardSection.title}/${question.friendlyUrlPath}`}
+			to={`/questions/${
+				question.messageBoardSection &&
+				question.messageBoardSection.title
+			}/${question.friendlyUrlPath}`}
 		>
 			<h2
 				className={classNames(
@@ -124,7 +127,9 @@ export default ({currentSection, items, question, showSectionLabel}) => (
 			<div className="c-mt-3 c-mt-sm-0 stretched-link-layer">
 				<Link
 					to={`/questions/${
-						currentSection || question.messageBoardSection.title
+						currentSection ||
+						(question.messageBoardSection &&
+							question.messageBoardSection.title)
 					}/creator/${question.creator.id}`}
 				>
 					<UserIcon
@@ -145,7 +150,10 @@ export default ({currentSection, items, question, showSectionLabel}) => (
 			</div>
 
 			<TagList
-				sectionTitle={question.messageBoardSection.title}
+				sectionTitle={
+					question.messageBoardSection &&
+					question.messageBoardSection.title
+				}
 				tags={question.keywords}
 			/>
 		</div>

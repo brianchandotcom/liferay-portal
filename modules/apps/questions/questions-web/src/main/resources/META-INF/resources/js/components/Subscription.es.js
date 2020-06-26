@@ -19,10 +19,7 @@ import React, {useEffect, useState} from 'react';
 
 import {subscribeQuery, unsubscribeQuery} from '../utils/client.es';
 
-export default ({
-	onSubscription,
-	question: {id: messageBoardThreadId, subscribed},
-}) => {
+export default ({question: {id: messageBoardThreadId, subscribed}}) => {
 	const [subscription, setSubscription] = useState(false);
 
 	useEffect(() => {
@@ -31,9 +28,6 @@ export default ({
 
 	const onCompleted = () => {
 		setSubscription(!subscription);
-		if (onSubscription) {
-			onSubscription(subscription);
-		}
 	};
 
 	const [subscribe] = useMutation(subscribeQuery, {onCompleted});

@@ -222,6 +222,49 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
+	public void testImportFragmentWithInvalidHTML() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			_fragmentsImporter.importFile(
+				_user.getUserId(), _group.getGroupId(), 0, _file, false);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		List<FragmentCollection> fragmentCollections =
+			_fragmentCollectionLocalService.getFragmentCollections(
+				_group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+		List<FragmentEntry> fragmentEntries =
+			_fragmentEntryLocalService.getFragmentEntries(
+				fragmentCollection.getFragmentCollectionId());
+
+		Stream<FragmentEntry> stream = fragmentEntries.stream();
+
+		List<FragmentEntry> filteredFragmentEntries = stream.filter(
+			fragmentEntry -> Objects.equals(
+				fragmentEntry.getName(), "Fragment With Invalid HTML")
+		).collect(
+			Collectors.toList()
+		);
+
+		Assert.assertEquals(
+			filteredFragmentEntries.toString(), 1,
+			filteredFragmentEntries.size());
+
+		FragmentEntry fragmentEntry = filteredFragmentEntries.get(0);
+
+		Assert.assertTrue(fragmentEntry.isDraft());
+	}
+
+	@Test
 	public void testImportSections() throws Exception {
 		_importFragmentsByType(FragmentConstants.TYPE_SECTION);
 	}

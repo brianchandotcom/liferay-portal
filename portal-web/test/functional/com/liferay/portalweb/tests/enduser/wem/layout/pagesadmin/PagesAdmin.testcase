@@ -242,6 +242,8 @@ definition {
 		task ("Assert pages order") {
 			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
 
+			MetalComponent.waitForManagementBar();
+
 			Page.viewPagesOrder(
 				depth = "2",
 				pageName1 = "Test Page Name 1",

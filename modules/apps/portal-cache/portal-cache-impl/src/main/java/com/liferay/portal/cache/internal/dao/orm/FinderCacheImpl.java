@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListener;
 import com.liferay.portal.kernel.dao.orm.ArgumentsResolver;
-import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -61,7 +60,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Shuyang Zhou
  */
 @Component(
-	immediate = true, service = {CacheRegistryItem.class, FinderCache.class}
+	immediate = true,
+	service = {
+		CacheRegistryItem.class, FinderCache.class, FinderCacheImpl.class
+	}
 )
 public class FinderCacheImpl
 	implements CacheRegistryItem, FinderCache, PortalCacheManagerListener {
@@ -380,10 +382,6 @@ public class FinderCacheImpl
 		_argumentsResolverServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, ArgumentsResolver.class, "model.class.name");
-
-		EntityCacheImpl entityCacheImpl = (EntityCacheImpl)_entityCache;
-
-		entityCacheImpl.setFinderCacheImpl(this);
 	}
 
 	@Deactivate
@@ -487,10 +485,6 @@ public class FinderCacheImpl
 
 	private ServiceTrackerMap<String, ArgumentsResolver>
 		_argumentsResolverServiceTrackerMap;
-
-	@Reference
-	private EntityCache _entityCache;
-
 	private ServiceTrackerMap<String, List<FinderPath>>
 		_finderPathServiceTrackerMap;
 	private ThreadLocal<LRUMap> _localCache;

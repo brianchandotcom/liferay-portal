@@ -68,6 +68,8 @@ public class DLFolderCTDisplayRenderer implements CTDisplayRenderer<DLFolder> {
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_folder");
 		portletURL.setParameter(
+			"redirect", _portal.getCurrentURL(httpServletRequest));
+		portletURL.setParameter(
 			"folderId", String.valueOf(dlFolder.getFolderId()));
 
 		return portletURL.toString();

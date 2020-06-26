@@ -70,8 +70,10 @@ public class JournalArticleCTDisplayRenderer
 
 		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter(
-			"groupId", String.valueOf(journalArticle.getGroupId()));
+			"redirect", _portal.getCurrentURL(httpServletRequest));
 		portletURL.setParameter("articleId", journalArticle.getArticleId());
+		portletURL.setParameter(
+			"groupId", String.valueOf(journalArticle.getGroupId()));
 		portletURL.setParameter(
 			"version", String.valueOf(journalArticle.getVersion()));
 

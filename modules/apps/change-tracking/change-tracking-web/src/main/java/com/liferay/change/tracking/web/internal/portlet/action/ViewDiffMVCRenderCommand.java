@@ -32,8 +32,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,17 +62,12 @@ public class ViewDiffMVCRenderCommand implements MVCRenderCommand {
 				_ctCollectionLocalService.getCTCollection(
 					ctEntry.getCtCollectionId());
 
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
-
-			String name = _ctDisplayRendererRegistry.getTitle(
-				ctEntry, _portal.getLocale(httpServletRequest));
-
 			CTEntryDiffDisplay ctEntryDiffDisplay = new CTEntryDiffDisplay(
 				ctCollection, _ctDisplayRendererRegistry, ctEntry,
-				_ctEntryLocalService, httpServletRequest,
+				_ctEntryLocalService,
+				_portal.getHttpServletRequest(renderRequest),
 				_portal.getHttpServletResponse(renderResponse), _language,
-				name);
+				_portal.getLocale(renderRequest));
 
 			renderRequest.setAttribute(
 				CTWebKeys.CT_ENTRY_DIFF_DISPLAY, ctEntryDiffDisplay);

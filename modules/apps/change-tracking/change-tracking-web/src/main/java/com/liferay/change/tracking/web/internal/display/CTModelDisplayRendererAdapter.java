@@ -17,10 +17,16 @@ package com.liferay.change.tracking.web.internal.display;
 import com.liferay.change.tracking.display.CTDisplayRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.Writer;
 
+import java.text.Format;
+
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
@@ -69,6 +75,13 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 
 		writer.write("<div class=\"table-responsive\"><table class=\"table\">");
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Format format = FastDateFormatFactoryUtil.getDateTime(
+			themeDisplay.getLocale(), themeDisplay.getTimeZone());
+
 		Map<String, Function<T, Object>> attributeGetterFunctions =
 			model.getAttributeGetterFunctions();
 
@@ -83,7 +96,10 @@ public class CTModelDisplayRendererAdapter<T extends BaseModel<T>>
 
 			Object attributeValue = function.apply(model);
 
-			if (attributeValue instanceof String) {
+			if (attributeValue instanceof Date) {
+				writer.write(format.format(attributeValue));
+			}
+			else if (attributeValue instanceof String) {
 				writer.write(HtmlUtil.escape(attributeValue.toString()));
 			}
 			else {

@@ -140,15 +140,33 @@ portletDisplay.setShowBackIcon(true);
 	</clay:container-fluid>
 </nav>
 
-<clay:navigation-bar
-	navigationItems="<%= viewChangesDisplayContext.getViewNavigationItems() %>"
-/>
+<div class="change-lists-view-changes-wrapper">
+	<c:choose>
+		<c:when test="<%= viewChangesDisplayContext.hasChanges() %>">
+			<react:component
+				data="<%= viewChangesDisplayContext.getReactData() %>"
+				module="change_lists/js/ChangeTrackingChangesView"
+			/>
+		</c:when>
+		<c:otherwise>
 
-<c:choose>
-	<c:when test='<%= Objects.equals(viewChangesDisplayContext.getDisplayStyle(), "all-items") %>'>
-		<liferay-util:include page="/change_lists/view_all_items.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page="/change_lists/view_tree.jsp" servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
+			<%
+			NavigationItemList navigationItems = NavigationItemListBuilder.add(
+				navigationItem -> {
+					navigationItem.setActive(true);
+					navigationItem.setLabel(LanguageUtil.get(request, "changes"));
+				}).build();
+			%>
+
+			<clay:navigation-bar
+				navigationItems="<%= navigationItems %>"
+			/>
+
+			<clay:container-fluid>
+				<liferay-ui:empty-result-message
+					message="no-changes-were-found"
+				/>
+			</clay:container-fluid>
+		</c:otherwise>
+	</c:choose>
+</div>

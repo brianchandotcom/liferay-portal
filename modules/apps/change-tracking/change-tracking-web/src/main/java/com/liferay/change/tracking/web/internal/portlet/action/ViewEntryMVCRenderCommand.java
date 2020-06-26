@@ -15,12 +15,15 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
+import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
-import com.liferay.change.tracking.web.internal.display.BasePersistenceRegistry;
 import com.liferay.change.tracking.web.internal.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.web.internal.display.context.ViewEntryDisplayContext;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.ParamUtil;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -42,20 +45,29 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
-		renderRequest.setAttribute(
-			CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT,
-			new ViewEntryDisplayContext(
-				_basePersistenceRegistry, _ctDisplayRendererRegistry));
+		long ctEntryId = ParamUtil.getLong(renderRequest, "ctEntryId");
+
+		try {
+			renderRequest.setAttribute(
+				CTWebKeys.VIEW_ENTRY_DISPLAY_CONTEXT,
+				new ViewEntryDisplayContext(
+					_ctDisplayRendererRegistry,
+					_ctEntryLocalService.getCTEntry(ctEntryId)));
+		}
+		catch (PortalException portalException) {
+			throw new PortletException(portalException);
+		}
 
 		return "/change_lists/view_entry.jsp";
 	}
 
 	@Reference
-	private BasePersistenceRegistry _basePersistenceRegistry;
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference
-	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
+	private CTEntryLocalService _ctEntryLocalService;
 
 }

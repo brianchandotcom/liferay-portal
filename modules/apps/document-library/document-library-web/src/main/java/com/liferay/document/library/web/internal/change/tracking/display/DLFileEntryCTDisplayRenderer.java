@@ -67,6 +67,8 @@ public class DLFileEntryCTDisplayRenderer
 		portletURL.setParameter(
 			"mvcRenderCommandName", "/document_library/edit_file_entry");
 		portletURL.setParameter(
+			"redirect", _portal.getCurrentURL(httpServletRequest));
+		portletURL.setParameter(
 			"fileEntryId", String.valueOf(dlFileEntry.getFileEntryId()));
 
 		return portletURL.toString();

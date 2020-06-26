@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.clay.internal.application;
 
-import com.liferay.frontend.taglib.clay.internal.data.provider.ClayDataSetDataProviderResource;
+import com.liferay.frontend.taglib.clay.internal.jaxrs.endpoint.ClayDataSetDataProviderResource;
 import com.liferay.frontend.taglib.clay.internal.data.provider.PaginationContextProvider;
 import com.liferay.frontend.taglib.clay.internal.data.provider.SortContextProvider;
 

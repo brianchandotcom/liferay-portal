@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.data.provider;
+package com.liferay.frontend.taglib.clay.internal.jaxrs.endpoint;
 
 import com.liferay.frontend.taglib.clay.data.FilterFactory;
 import com.liferay.frontend.taglib.clay.data.FilterFactoryRegistry;

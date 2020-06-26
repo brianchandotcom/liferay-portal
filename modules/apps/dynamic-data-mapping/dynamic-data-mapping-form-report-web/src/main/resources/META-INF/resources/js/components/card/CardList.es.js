@@ -48,7 +48,6 @@ const chartFactory = (field, values, totalEntries) => {
 				return '';
 			}
 		}
-
 		case 'radio':
 		case 'select':
 			return (
@@ -57,7 +56,7 @@ const chartFactory = (field, values, totalEntries) => {
 					totalEntries={totalEntries}
 				/>
 			);
-
+		case 'color':
 		case 'date':
 		case 'text': {
 			if (Array.isArray(values)) {
@@ -66,6 +65,7 @@ const chartFactory = (field, values, totalEntries) => {
 						data={toArray(values)}
 						field={field}
 						totalEntries={totalEntries}
+						type={type}
 					/>
 				);
 			}

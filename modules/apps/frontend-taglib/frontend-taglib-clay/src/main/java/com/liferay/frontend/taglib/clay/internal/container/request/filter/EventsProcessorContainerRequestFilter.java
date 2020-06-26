@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.application.filter;
+package com.liferay.frontend.taglib.clay.internal.container.request.filter;
 
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -46,7 +46,8 @@ import org.osgi.service.component.annotations.Component;
 	service = ContainerRequestFilter.class
 )
 @PreMatching
-public class LiferayEventProcessorFilter implements ContainerRequestFilter {
+public class EventsProcessorContainerRequestFilter
+	implements ContainerRequestFilter {
 
 	@Override
 	public void filter(ContainerRequestContext containerRequestContext) {
@@ -66,7 +67,7 @@ public class LiferayEventProcessorFilter implements ContainerRequestFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LiferayEventProcessorFilter.class);
+		EventsProcessorContainerRequestFilter.class);
 
 	@Context
 	private HttpServletRequest _httpServletRequest;

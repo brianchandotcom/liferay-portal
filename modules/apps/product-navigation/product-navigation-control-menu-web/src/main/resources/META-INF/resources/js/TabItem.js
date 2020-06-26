@@ -19,11 +19,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES} from './AddPanel';
+import {addLoadingAnimation, addPortlet, useDragSymbol} from './useDragAndDrop';
 
 import 'product-navigation-control-menu/css/TabItem.scss';
 
-import {useDragSymbol} from './useDragAndDrop';
+const addItem = (item) => {
+	const targetItem = document.querySelector('.portlet-dropzone');
+	const loading = addLoadingAnimation(targetItem);
 
+	if (!item.used) {
+		addPortlet(item, loading);
+	}
+};
 export default function TabItem({item}) {
 	const isContent = item.type === LAYOUT_DATA_ITEM_TYPES.content;
 
@@ -59,6 +66,7 @@ export default function TabItem({item}) {
 			<ClayButton
 				className="btn-monospaced sidebar__add-panel__tab-item-add"
 				displayType="unstyled"
+				onClick={() => addItem(item)}
 				small
 				title={item.name}
 			>

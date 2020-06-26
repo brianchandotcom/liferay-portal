@@ -56,7 +56,7 @@ export function useDragItem(sourceItem) {
 			data: sourceItem.data,
 			getSourceItem,
 			icon: sourceItem.icon,
-			id: sourceItem.itemId,
+			itemId: sourceItem.itemId,
 			name: sourceItem.name,
 			type: sourceItem.type,
 			used: sourceItem.used,
@@ -165,26 +165,7 @@ export function useDropTarget(targetItem) {
 			if (!item.used) {
 				dropTargetColumn.classList.remove(DROP_OVER_CLASS);
 
-				openToast({
-					message: Liferay.Language.get(
-						'the-application-was-added-to-the-page'
-					),
-					type: 'success',
-				});
-
-				const portletData =
-					item.type === LAYOUT_DATA_ITEM_TYPES.fragment
-						? ''
-						: `${item.data.classPK},${item.data.className}`;
-
-				Liferay.Portlet.add({
-					beforePortletLoaded: () => null,
-					placeHolder: loading,
-					plid: themeDisplay.getPlid(),
-					portletData,
-					portletId: item.id,
-					portletItemId: '',
-				});
+				addPortlet(item, loading);
 			}
 		},
 		hover(item, monitor) {
@@ -234,7 +215,7 @@ export function useDropTarget(targetItem) {
 	setDropTargetRef(targetItem);
 }
 
-const addLoadingAnimation = (targetItem, targetPosition) => {
+export const addLoadingAnimation = (targetItem, targetPosition) => {
 	const itemIsDropzone = targetItem.classList.contains('portlet-dropzone');
 	const loading = document.createElement('div');
 	loading.classList.add('loading-animation');
@@ -253,6 +234,27 @@ const addLoadingAnimation = (targetItem, targetPosition) => {
 	}
 
 	return loading;
+};
+
+export const addPortlet = (item, loading) => {
+	openToast({
+		message: Liferay.Language.get('the-application-was-added-to-the-page'),
+		type: 'success',
+	});
+
+	const portletData =
+		item.type === LAYOUT_DATA_ITEM_TYPES.fragment
+			? ''
+			: `${item.data.classPK},${item.data.className}`;
+
+	Liferay.Portlet.add({
+		beforePortletLoaded: () => null,
+		placeHolder: loading,
+		plid: themeDisplay.getPlid(),
+		portletData,
+		portletId: item.itemId,
+		portletItemId: '',
+	});
 };
 
 const getHoverPosition = (monitor, targetItem) => {

@@ -48,7 +48,7 @@ public class ClayDataSetDisplayViewRegistryImpl
 		if (clayDataSetDisplayViewServiceWrappers == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No ClayDataSetDisplayView registered with key " + key);
+					"No clay data set display view registered with key " + key);
 			}
 
 			return Collections.emptyList();

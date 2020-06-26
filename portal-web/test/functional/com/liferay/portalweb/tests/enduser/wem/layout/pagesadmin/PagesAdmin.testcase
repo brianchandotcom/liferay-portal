@@ -270,6 +270,56 @@ definition {
 		}
 	}
 
+	@description = "This is for LPS-114527. Can move multiple same level pages to different level via dragging in Pages admin."
+	@priority = "4"
+	test MoveMultipleSameLevelPagesToChildLevel {
+		task ("Add 2 widget page and 1 content page in the same level") {
+			for (var n : list "1,2") {
+				JSONLayout.addPublicLayout(
+					groupName = "Test Site Name",
+					layoutName = "Test Page Name ${n}");
+			}
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name 3",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name 3",
+				siteName = "Test Site Name");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Move Test Page Name 1 and 2 to child level of Test Page Name 3") {
+			SitePages.openPagesAdmin(siteURLKey = "test-site-name");
+
+			MetalComponent.waitForManagementBar();
+
+			Click(
+				key_itemName = "Test Page Name 3",
+				locator1 = "SitePages#LIST_GROUP_ITEM");
+
+			for (var n : list "1,2") {
+				SitePages.checkPage(pageName = "Test Page Name ${n}");
+			}
+
+			DragAndDrop.javaScriptDragAndDropToUp(
+				key_pageName = "Test Page Name 1",
+				locator1 = "SitePages#LIST_GROUP_ITEM_DRAG_HANDLER",
+				locator2 = "//ul[contains(@class,'col')][3]",
+				value1 = "");
+		}
+
+		task ("Assert Test Page Name 1 and 2 are moved to child level of Test Page Name 3") {
+			Page.viewPagesOrder(
+				depth = "3",
+				pageName1 = "Test Page Name 1",
+				pageName2 = "Test Page Name 2");
+		}
+	}
+
 	@description = "This is for LPS-110108. Reorder pages in same level via drag and drop."
 	@priority = "5"
 	test MovePageInSameLevel {

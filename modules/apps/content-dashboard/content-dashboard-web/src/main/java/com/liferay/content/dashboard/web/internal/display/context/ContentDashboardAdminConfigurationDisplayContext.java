@@ -51,7 +51,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<KeyValuePair> getAvailableVocabularyNames() throws Exception {
+	public List<KeyValuePair> getAvailableVocabularyNames() {
 		String[] assetVocabularyNames = _getAssetVocabularyNames();
 
 		Arrays.sort(assetVocabularyNames);

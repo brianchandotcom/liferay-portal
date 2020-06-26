@@ -123,6 +123,9 @@ renderResponse.setTitle(title);
 			Locale sourceLocale = LocaleUtil.fromLanguageId(sourceLanguageId);
 			Locale targetLocale = LocaleUtil.fromLanguageId(targetLanguageId);
 
+			String sourceLanguageDir = LanguageUtil.get(sourceLocale, "lang.dir");
+			String targetLanguageDir = LanguageUtil.get(targetLocale, "lang.dir");
+
 			for (InfoFieldValue<Object> infoFieldValue : infoItemFieldValues.getInfoFieldValues()) {
 				InfoField infoField = infoFieldValue.getInfoField();
 
@@ -136,13 +139,13 @@ renderResponse.setTitle(title);
 						<clay:col
 							md="6"
 						>
-							<aui:input label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(sourceLocale)) %>" />
+							<aui:input dir="<%= sourceLanguageDir %>" label="<%= label %>" name="<%= label %>" readonly="true" value="<%= String.valueOf(infoFieldValue.getValue(sourceLocale)) %>" />
 						</clay:col>
 
 						<clay:col
 							md="6"
 						>
-							<aui:input label="<%= label %>" name="<%= label %>" value="<%= String.valueOf(infoFieldValue.getValue(targetLocale)) %>" />
+							<aui:input dir="<%= targetLanguageDir %>" label="<%= label %>" name="<%= label %>" value="<%= String.valueOf(infoFieldValue.getValue(targetLocale)) %>" />
 						</clay:col>
 					</clay:row>
 

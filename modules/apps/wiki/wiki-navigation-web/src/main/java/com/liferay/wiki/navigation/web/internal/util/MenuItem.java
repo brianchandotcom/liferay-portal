@@ -87,8 +87,8 @@ public class MenuItem implements Serializable {
 		return _id;
 	}
 
-	public String getLabel() {
-		return _label;
+	public String getName() {
+		return _name;
 	}
 
 	public String getURL() {
@@ -111,8 +111,8 @@ public class MenuItem implements Serializable {
 		_id = id;
 	}
 
-	public void setLabel(String label) {
-		_label = label;
+	public void setName(String name) {
+		_name = name;
 	}
 
 	public void setURL(String url) {
@@ -143,7 +143,7 @@ public class MenuItem implements Serializable {
 
 			menuItem.setIcon("wiki-page");
 			menuItem.setId(String.valueOf(wikiPage.getPageId()));
-			menuItem.setLabel(title);
+			menuItem.setName(title);
 			menuItem.setURL(portletURL.toString());
 
 			if ((depth >= curDepth) ||
@@ -174,7 +174,7 @@ public class MenuItem implements Serializable {
 
 			MenuItem menuItem = new MenuItem();
 
-			menuItem.setLabel(title);
+			menuItem.setName(title);
 
 			menuItems.add(menuItem);
 
@@ -188,15 +188,15 @@ public class MenuItem implements Serializable {
 
 			int index = s.indexOf(StringPool.PIPE);
 
-			String label = null;
+			String name = null;
 			String url = null;
 
 			if (index != -1) {
-				label = s.substring(index + 1);
+				name = s.substring(index + 1);
 				url = s.substring(0, index);
 			}
 			else {
-				label = s;
+				name = s;
 				url = s;
 			}
 
@@ -211,7 +211,7 @@ public class MenuItem implements Serializable {
 				childMenuItem.setExternalURL(true);
 			}
 
-			childMenuItem.setLabel(label);
+			childMenuItem.setName(name);
 			childMenuItem.setURL(url);
 
 			menuItem.addChild(childMenuItem);
@@ -227,7 +227,7 @@ public class MenuItem implements Serializable {
 	private boolean _externalURL;
 	private String _icon;
 	private String _id;
-	private String _label;
+	private String _name;
 	private String _url;
 
 }

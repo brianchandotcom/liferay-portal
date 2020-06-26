@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.clay.internal.application;
+package com.liferay.frontend.taglib.clay.internal.jaxrs.application;
 
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.PaginationContextProvider;
 import com.liferay.frontend.taglib.clay.internal.jaxrs.context.provider.SortContextProvider;

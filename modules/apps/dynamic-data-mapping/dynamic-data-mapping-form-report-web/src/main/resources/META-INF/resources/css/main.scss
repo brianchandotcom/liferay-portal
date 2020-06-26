@@ -171,6 +171,18 @@ body,
 	min-width: 0;
 }
 
+.color {
+	.color-viewer {
+		border-radius: 20%;
+		border-width: 0;
+		height: 28px;
+		width: 28px;
+	}
+	.color-text {
+		padding-top: 4px;
+	}
+}
+
 .empty-message {
 	margin-top: 104px;
 

@@ -388,7 +388,7 @@ public class ViewChangesDisplayContext {
 			ctClosure = _ctClosureFactory.create(
 				_ctCollection.getCtCollectionId());
 		}
-		catch (IllegalArgumentException | IllegalStateException exception) {
+		catch (Exception exception) {
 			_log.error(exception, exception);
 
 			return JSONUtil.put(

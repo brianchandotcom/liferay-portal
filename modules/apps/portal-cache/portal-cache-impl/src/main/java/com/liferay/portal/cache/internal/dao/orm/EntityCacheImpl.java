@@ -328,6 +328,7 @@ public class EntityCacheImpl
 		putResult(clazz, primaryKey, result, quiet);
 	}
 
+	@Override
 	public void putResult(
 		Class<?> clazz, BaseModel<?> baseModel, boolean quiet,
 		boolean updateFinderCache) {

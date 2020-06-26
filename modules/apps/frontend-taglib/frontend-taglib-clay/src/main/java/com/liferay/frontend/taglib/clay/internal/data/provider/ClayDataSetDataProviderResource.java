@@ -70,7 +70,7 @@ public class ClayDataSetDataProviderResource {
 			_clayDataProviderRegistry.getClayDataSetProvider(dataProvider);
 
 		if ((clayDataProvider == null) && _log.isDebugEnabled()) {
-			_log.debug("No DataProvider registered with key " + dataProvider);
+			_log.debug("No data provider registered with key " + dataProvider);
 		}
 
 		try {

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>VOCABULARY_LIST_ITEM</td>
-	<td>//*[@class='field-content'][${key_count}]//label</td>
+	<td>//*[@class='field-content']//label[normalize-space(text())='${key_fieldLabel}']</td>
 	<td></td>
 </tr>
 <tr>

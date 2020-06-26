@@ -321,8 +321,6 @@ definition {
 			locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON",
 			value1 = "Select");
 
-		SelectFrame();
-
 		SelectFrame(locator1 = "IFrame#SELECT_STRUCTURE_FIELD");
 
 		var key_fieldName = "${fieldFilter}";
@@ -1242,8 +1240,6 @@ definition {
 			AssertClick(
 				locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON",
 				value1 = "Select");
-
-			SelectFrame();
 
 			SelectFrame(locator1 = "IFrame#SELECT_STRUCTURE_FIELD");
 

@@ -288,6 +288,8 @@ public class FragmentsImporterTest {
 
 		_addZipWriterEntry(
 			zipWriter, path, FragmentExportImportConstants.FILE_NAME_FRAGMENT);
+		_addZipWriterEntry(
+			zipWriter, path, jsonObject.getString("configurationPath"));
 		_addZipWriterEntry(zipWriter, path, jsonObject.getString("cssPath"));
 		_addZipWriterEntry(zipWriter, path, jsonObject.getString("htmlPath"));
 		_addZipWriterEntry(zipWriter, path, jsonObject.getString("jsPath"));

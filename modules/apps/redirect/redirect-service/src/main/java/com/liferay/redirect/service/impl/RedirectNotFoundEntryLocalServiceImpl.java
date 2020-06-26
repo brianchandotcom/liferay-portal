@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.redirect.internal.configuration.RedirectConfiguration;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
 import com.liferay.redirect.service.base.RedirectNotFoundEntryLocalServiceBaseImpl;
@@ -39,6 +41,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -68,16 +71,18 @@ public class RedirectNotFoundEntryLocalServiceImpl
 
 			redirectNotFoundEntry.setGroupId(group.getGroupId());
 			redirectNotFoundEntry.setCompanyId(group.getCompanyId());
-			redirectNotFoundEntry.setHits(1);
 			redirectNotFoundEntry.setUrl(url);
 
-			return redirectNotFoundEntryPersistence.update(
+			redirectNotFoundEntry = redirectNotFoundEntryPersistence.update(
 				redirectNotFoundEntry);
 		}
 
-		redirectNotFoundEntry.setHits(redirectNotFoundEntry.getHits() + 1);
+		_viewCountManager.incrementViewCount(
+			redirectNotFoundEntry.getCompanyId(),
+			_portal.getClassNameId(RedirectNotFoundEntry.class),
+			redirectNotFoundEntry.getRedirectNotFoundEntryId(), 1);
 
-		return redirectNotFoundEntryPersistence.update(redirectNotFoundEntry);
+		return redirectNotFoundEntry;
 	}
 
 	@Override
@@ -239,6 +244,12 @@ public class RedirectNotFoundEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		RedirectNotFoundEntryLocalServiceImpl.class);
 
+	@Reference
+	private Portal _portal;
+
 	private RedirectConfiguration _redirectConfiguration;
+
+	@Reference
+	private ViewCountManager _viewCountManager;
 
 }

@@ -10,7 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayLayout from '@clayui/layout';
+import ClayList from '@clayui/list';
 import ClayProgressBar from '@clayui/progress-bar';
 import React from 'react';
 
@@ -34,18 +34,20 @@ const Body = ({items = []}) => {
 
 	return (
 		<>
-			<ClayLayout.Sheet className="mb-4">
-				<ClayLayout.ContentRow verticalAlign="center">
-					<ClayLayout.ContentCol expand>
-						<h5
-							className="font-weight-semi-bold m-0 py-2"
-							data-testid="reindexAllLabel"
-						>
-							{Liferay.Language.get('workflow-indexes')}
-						</h5>
-					</ClayLayout.ContentCol>
+			<ClayList>
+				<ClayList.Item
+					className="autofit-row-center reindex-action"
+					flex
+				>
+					<ClayList.ItemField
+						className="font-weight-semi-bold"
+						data-testid="reindexAllLabel"
+						expand
+					>
+						{Liferay.Language.get('workflow-indexes')}
+					</ClayList.ItemField>
 
-					<ClayLayout.ContentCol>
+					<ClayList.ItemField>
 						{isReindexing(ALL_INDEXES_KEY) ? (
 							<ClayProgressBar
 								data-testid="reindexAllStatus"
@@ -54,15 +56,16 @@ const Body = ({items = []}) => {
 						) : (
 							<ClayButton
 								data-testid="reindexAllBtn"
+								displayType="primary"
 								onClick={() => handleReindex(ALL_INDEXES_KEY)}
 								small
 							>
 								{Liferay.Language.get('reindex-all')}
 							</ClayButton>
 						)}
-					</ClayLayout.ContentCol>
-				</ClayLayout.ContentRow>
-			</ClayLayout.Sheet>
+					</ClayList.ItemField>
+				</ClayList.Item>
+			</ClayList>
 
 			<PromisesResolver.Resolved>
 				{Object.values(groups).map((group, index) => (

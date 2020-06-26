@@ -419,10 +419,7 @@ public class ConfigurationPersistenceManager
 		String fileName = dictionary.get(_FELIX_FILE_INSTALL_FILENAME);
 
 		if (fileName != null) {
-			File file = new File(
-				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
-
-			file = file.getAbsoluteFile();
+			File file = _getCanonicalConfigFile(fileName);
 
 			URI uri = file.toURI();
 
@@ -446,6 +443,15 @@ public class ConfigurationPersistenceManager
 		}
 
 		return newDictionary;
+	}
+
+	private File _getCanonicalConfigFile(String fileName) throws IOException {
+		File configFile = new File(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
+
+		configFile = configFile.getCanonicalFile();
+
+		return configFile;
 	}
 
 	private ConfigurationModelListener _getConfigurationModelListener(
@@ -507,13 +513,7 @@ public class ConfigurationPersistenceManager
 			needSave = false;
 		}
 		else {
-			configFile = new File(
-				PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
-				felixFileInstallFileName);
-
-			configFile = configFile.getCanonicalFile();
-
-			configFile = configFile.getAbsoluteFile();
+			configFile = _getCanonicalConfigFile(felixFileInstallFileName);
 
 			URI uri = configFile.toURI();
 

@@ -22,6 +22,7 @@ import React, {
 	useState,
 } from 'react';
 import {useDrag, useDrop} from 'react-dnd';
+import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from './AddPanel';
 
@@ -47,7 +48,7 @@ export function useDragItem(sourceItem) {
 	const getSourceItem = useCallback(() => sourceItem, [sourceItem]);
 	const sourceRef = useRef(null);
 
-	const [{isDraggingSource}, handlerRef] = useDrag({
+	const [{isDraggingSource}, handlerRef, previewRef] = useDrag({
 		collect: (monitor) => ({
 			isDraggingSource: monitor.isDragging(),
 		}),
@@ -62,6 +63,10 @@ export function useDragItem(sourceItem) {
 			used: sourceItem.used,
 		},
 	});
+
+	useEffect(() => {
+		previewRef(getEmptyImage(), {captureDraggingState: true});
+	}, [previewRef]);
 
 	return {
 		handlerRef,

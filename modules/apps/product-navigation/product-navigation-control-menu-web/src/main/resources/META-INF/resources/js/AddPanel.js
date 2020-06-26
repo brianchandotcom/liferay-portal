@@ -18,6 +18,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 
 import {AddPanelContextProvider} from './AddPanelContext';
 import DragAndDrop from './DragAndDrop';
+import DragPreview from './DragPreview';
 import TabsPanel from './TabsPanel';
 
 import 'product-navigation-control-menu/css/AddPanel.scss';
@@ -78,6 +79,7 @@ const AddPanel = ({
 				}}
 			>
 				<DndProvider backend={HTML5Backend}>
+					<DragPreview />
 					<DragAndDrop />
 					<TabsPanel tabs={tabs} />
 				</DndProvider>

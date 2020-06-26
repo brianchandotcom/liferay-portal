@@ -92,7 +92,7 @@
 </tr>
 <tr>
 	<td>ENTRY_LIST_LAST_MODIFIED</td>
-	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//span[contains(.,'modified')]</td>
+	<td>//*[@data-qa-id='row' and contains(.,'${key_webContentTitle}')]//span[contains(.,'Modified')]</td>
 	<td></td>
 </tr>
 <tr>

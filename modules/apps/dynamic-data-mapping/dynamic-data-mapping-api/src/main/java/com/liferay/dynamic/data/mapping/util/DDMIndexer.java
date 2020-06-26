@@ -60,8 +60,12 @@ public interface DDMIndexer {
 	public String extractIndexableAttributes(
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues, Locale locale);
 
-	public String getValueFieldName(String indexType);
+	public default String getValueFieldName(String indexType) {
+		throw new UnsupportedOperationException();
+	}
 
-	public String getValueFieldName(String indexType, Locale locale);
+	public default String getValueFieldName(String indexType, Locale locale) {
+		throw new UnsupportedOperationException();
+	}
 
 }

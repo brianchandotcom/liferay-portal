@@ -16,7 +16,7 @@ package com.liferay.translation.exporter;
 
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
-import com.liferay.translation.exception.InvalidXLIFFFileException;
+import com.liferay.translation.exception.XLIFFFileException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,6 +36,6 @@ public interface TranslationInfoItemFieldValuesExporter<T> {
 	public InfoItemFieldValues importXLIFF(
 			long groupId, InfoItemClassPKReference infoItemClassPKReference,
 			InputStream inputStream)
-		throws InvalidXLIFFFileException, IOException;
+		throws IOException, XLIFFFileException;
 
 }

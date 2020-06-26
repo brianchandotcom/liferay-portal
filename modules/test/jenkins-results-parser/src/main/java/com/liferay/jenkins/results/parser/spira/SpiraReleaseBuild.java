@@ -63,7 +63,7 @@ public class SpiraReleaseBuild extends BaseSpiraArtifact {
 		requestJSONObject.put("BuildStatusId", releaseBuildStatus.getID());
 		requestJSONObject.put(
 			"CreationDate",
-			SpiraRestAPIUtil.getDateString(releaseBuildStartTime));
+			SpiraRestAPIUtil.toDateString(releaseBuildStartTime));
 		requestJSONObject.put("Name", releaseBuildName);
 
 		if (releaseBuildDescription != null) {

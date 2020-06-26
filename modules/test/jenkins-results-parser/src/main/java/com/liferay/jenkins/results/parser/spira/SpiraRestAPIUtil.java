@@ -35,12 +35,6 @@ import org.json.JSONObject;
  */
 public class SpiraRestAPIUtil {
 
-	protected static String getDateString(long timestamp) {
-		Date date = new Date(timestamp);
-
-		return _UtcIso8601SimpleDateFormat.format(date);
-	}
-
 	protected static String request(
 			String urlPath, Map<String, String> urlParameters,
 			Map<String, String> urlPathReplacements,
@@ -84,6 +78,12 @@ public class SpiraRestAPIUtil {
 			request(
 				urlPath, urlParameters, urlPathReplacements, httpRequestMethod,
 				requestData));
+	}
+
+	protected static String toDateString(long timestamp) {
+		Date date = new Date(timestamp);
+
+		return _UtcIso8601SimpleDateFormat.format(date);
 	}
 
 	private static String _applyURLPathReplacements(

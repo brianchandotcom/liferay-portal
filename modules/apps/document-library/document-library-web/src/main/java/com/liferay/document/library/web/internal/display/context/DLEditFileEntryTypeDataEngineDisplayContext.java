@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Alicia Garcia
@@ -42,14 +44,13 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
+
+		_httpServletRequest = PortalUtil.getHttpServletRequest(
+			liferayPortletRequest);
 	}
 
 	public List<Map<String, Object>> getAdditionalPanels(
 		String npmResolvedPackageName) {
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_liferayPortletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		List<Map<String, Object>> additionalPanels = new ArrayList<>();
 
@@ -57,7 +58,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"icon", "cog"
 			).put(
-				"label", LanguageUtil.get(themeDisplay.getLocale(), "details")
+				"label", LanguageUtil.get(_httpServletRequest, "details")
 			).put(
 				"pluginEntryPoint",
 				npmResolvedPackageName +
@@ -90,7 +91,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 			).put(
 				"label",
 				LanguageUtil.get(
-					themeDisplay.getLocale(), "additional-metadata-fields")
+					_httpServletRequest, "additional-metadata-fields")
 			).put(
 				"pluginEntryPoint",
 				npmResolvedPackageName +
@@ -128,7 +129,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 					"icon", "lock"
 				).put(
 					"label",
-					LanguageUtil.get(themeDisplay.getLocale(), "permissions")
+					LanguageUtil.get(_httpServletRequest, "permissions")
 				).put(
 					"pluginEntryPoint",
 					npmResolvedPackageName +
@@ -159,6 +160,7 @@ public class DLEditFileEntryTypeDataEngineDisplayContext {
 			useDataEngineEditor();
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 

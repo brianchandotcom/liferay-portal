@@ -36,7 +36,7 @@ public class ClayTagDataSourceProvider {
 	public static <T> ClayTagDataSource<T> getClayTagDataSource(String key) {
 		if (_clayTagDataSourceProvider == null) {
 			_log.error(
-				"Unable to get list of Clay tag data sources for key " + key);
+				"Unable to get list of clay tag data sources for key " + key);
 
 			return null;
 		}

@@ -55,7 +55,7 @@ public class ClayDataSetContentRendererContextContributorRegistryImpl
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No ClayDataSetContentRendererContextContributor " +
+					"No clay data set content renderer context contributor " +
 						"registered with key " + key);
 			}
 

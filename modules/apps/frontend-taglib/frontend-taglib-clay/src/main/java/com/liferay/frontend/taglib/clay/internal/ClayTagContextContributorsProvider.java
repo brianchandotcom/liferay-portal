@@ -41,7 +41,7 @@ public class ClayTagContextContributorsProvider {
 
 		if (_clayTagContextContributorsProvider == null) {
 			_log.error(
-				"Unable to get list of Clay tag context contributors for key " +
+				"Unable to get list of clay tag context contributors for key " +
 					key);
 
 			return Collections.emptyList();

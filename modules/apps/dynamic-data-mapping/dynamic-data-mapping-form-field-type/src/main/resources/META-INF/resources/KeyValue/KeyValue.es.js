@@ -41,7 +41,7 @@ const KeyValue = ({disabled, onChange, value, ...otherProps}) => (
 );
 
 const Main = ({
-	generateKeyword: initialGenerateKeyword = true,
+	generateKeyword,
 	keyword: initialKeyword,
 	keywordReadOnly,
 	name,
@@ -61,7 +61,7 @@ const Main = ({
 }) => {
 	const [keyword, setKeyword] = useSyncValue(initialKeyword);
 
-	const generateKeywordRef = useRef(initialGenerateKeyword);
+	const generateKeywordRef = useRef(generateKeyword);
 
 	return (
 		<FieldBase

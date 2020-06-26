@@ -64,19 +64,30 @@ const Option = React.forwardRef(
 	)
 );
 
-const refreshFields = (defaultLanguageId, editingLanguageId, options) =>
+const refreshFields = (
+	defaultLanguageId,
+	editingLanguageId,
+	generateOptionValueUsingOptionLabel,
+	options
+) =>
 	[
 		...options.map((option) => ({
-			generateKeyword: isOptionValueGenerated(
-				defaultLanguageId,
-				editingLanguageId,
-				options,
-				option
-			),
+			generateKeyword: generateOptionValueUsingOptionLabel
+				? isOptionValueGenerated(
+						defaultLanguageId,
+						editingLanguageId,
+						options,
+						option
+				  )
+				: false,
 			id: random(),
 			...option,
 		})),
-		{...defaultOption, generateKeyword: true, id: random()},
+		{
+			...defaultOption,
+			generateKeyword: generateOptionValueUsingOptionLabel,
+			id: random(),
+		},
 	].filter((field) => field && Object.keys(field).length > 0);
 
 const Options = ({
@@ -84,6 +95,7 @@ const Options = ({
 	defaultLanguageId,
 	disabled,
 	editingLanguageId,
+	generateOptionValueUsingOptionLabel,
 	onChange,
 	value = {},
 }) => {
@@ -107,7 +119,12 @@ const Options = ({
 			normalizedValue[defaultLanguageId] ||
 			[];
 
-		return refreshFields(defaultLanguageId, editingLanguageId, options);
+		return refreshFields(
+			defaultLanguageId,
+			editingLanguageId,
+			generateOptionValueUsingOptionLabel,
+			options
+		);
 	});
 
 	useEffect(() => {
@@ -116,8 +133,20 @@ const Options = ({
 			normalizedValue[defaultLanguageId] ||
 			[];
 
-		setFields(refreshFields(defaultLanguageId, editingLanguageId, options));
-	}, [defaultLanguageId, editingLanguageId, normalizedValue]);
+		setFields(
+			refreshFields(
+				defaultLanguageId,
+				editingLanguageId,
+				generateOptionValueUsingOptionLabel,
+				options
+			)
+		);
+	}, [
+		defaultLanguageId,
+		editingLanguageId,
+		generateOptionValueUsingOptionLabel,
+		normalizedValue,
+	]);
 
 	const defaultOptionRef = useRef(
 		fields.length === 2 &&
@@ -201,7 +230,7 @@ const Options = ({
 
 		fields.push({
 			...defaultOption,
-			generateKeyword: true,
+			generateKeyword: generateOptionValueUsingOptionLabel,
 			id: random(),
 		});
 
@@ -287,6 +316,7 @@ const Options = ({
 const Main = ({
 	defaultLanguageId = themeDisplay.getLanguageId(),
 	editingLanguageId = themeDisplay.getLanguageId(),
+	generateOptionValueUsingOptionLabel = false,
 	onChange,
 	keywordReadOnly,
 	placeholder = Liferay.Language.get('enter-an-option'),
@@ -302,6 +332,9 @@ const Main = ({
 				defaultLanguageId={defaultLanguageId}
 				disabled={readOnly}
 				editingLanguageId={editingLanguageId}
+				generateOptionValueUsingOptionLabel={
+					generateOptionValueUsingOptionLabel
+				}
 				onChange={(value) => onChange({}, value)}
 				value={value}
 			>

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Adolfo Pérez
  */
+
 public class UpgradeInvitation extends UpgradeProcess {
 
 	@Override

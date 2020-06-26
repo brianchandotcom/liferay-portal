@@ -4683,7 +4683,7 @@ log.sanitizer.enabled=false</echo>
 						<dirset
 							dir="modules/sdk"
 							excludes="${gradle.plugins.test.excludes}"
-							includes="gradle-plugins-*"
+							includes="gradle-plugins*"
 						/>
 					</path>
 					<sequential>
@@ -4693,7 +4693,9 @@ log.sanitizer.enabled=false</echo>
 								substring="gradleTest"
 							/>
 							<then>
-								<gradle-execute dir="@{gradle.plugin.dir}" task="gradleTest" />
+								<gradle-execute dir="@{gradle.plugin.dir}" task="gradleTest">
+									<arg value="-Pplugins.sdk.version=${build.sdk.version}" />
+								</gradle-execute>
 							</then>
 						</if>
 					</sequential>

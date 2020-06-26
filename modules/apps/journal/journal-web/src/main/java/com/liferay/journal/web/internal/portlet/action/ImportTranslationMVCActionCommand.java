@@ -38,6 +38,7 @@ import com.liferay.translation.exception.InvalidXLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Objects;
@@ -95,12 +96,13 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				long groupId = ParamUtil.getLong(actionRequest, "groupId");
 				String articleId = ParamUtil.getString(
 					actionRequest, "articleId");
+				double version = ParamUtil.getDouble(actionRequest, "version");
 
 				JournalArticle journalArticle =
 					_journalArticleInfoItemFieldValuesUpdater.
 						updateFromInfoItemFieldValues(
 							_journalArticleService.getArticle(
-								groupId, articleId),
+								groupId, articleId, version),
 							infoItemFieldValues);
 
 				int workflowAction = ParamUtil.getInteger(

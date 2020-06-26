@@ -461,7 +461,8 @@ public class JournalArticleActionDropdownItemsProvider {
 				"referringPortletResource", _getReferringPortletResource(),
 				"articleResourcePrimKey", _article.getResourcePrimKey(),
 				"groupId", _article.getGroupId(), "articleId",
-				_article.getArticleId(), "articleTitle", _article.getTitle());
+				_article.getArticleId(), "version", _article.getVersion(),
+				"articleTitle", _article.getTitle());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "import-translation"));
 		};

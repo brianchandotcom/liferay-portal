@@ -22,6 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 String articleResourcePrimKey = ParamUtil.getString(request, "articleResourcePrimKey");
 String groupId = ParamUtil.getString(request, "groupId");
 String articleId = ParamUtil.getString(request, "articleId");
+double version = ParamUtil.getDouble(request, "version");
 String articleTitle = ParamUtil.getString(request, "articleTitle");
 
 portletDisplay.setShowBackIcon(true);
@@ -36,6 +37,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 	<portlet:param name="articleResourcePrimKey" value="<%= articleResourcePrimKey %>" />
 	<portlet:param name="groupId" value="<%= groupId %>" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
+	<portlet:param name="version" value="<%= String.valueOf(version) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= importTranslationURL %>" name="fm">

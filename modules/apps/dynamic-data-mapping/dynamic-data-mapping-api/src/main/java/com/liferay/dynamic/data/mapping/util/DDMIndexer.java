@@ -41,6 +41,8 @@ public interface DDMIndexer {
 
 	public static final String DDM_FIELDS = "ddmFields";
 
+	public static final String DDM_VALUE_FIELD_NAME = "valueFieldName";
+
 	public static final String DDM_VALUE_FIELD_NAME_PREFIX = "fieldValue";
 
 	public void addAttributes(

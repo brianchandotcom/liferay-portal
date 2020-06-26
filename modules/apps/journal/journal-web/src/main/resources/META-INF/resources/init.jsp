@@ -213,7 +213,7 @@ page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.rss.util.RSSUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.taglib.util.CustomAttributesUtil" %><%@
-page import="com.liferay.translation.exception.InvalidXLIFFFileException" %><%@
+page import="com.liferay.translation.exception.XLIFFFileException" %><%@
 page import="com.liferay.translation.info.field.TranslationInfoFieldChecker" %>
 
 <%@ page import="java.text.Format" %>

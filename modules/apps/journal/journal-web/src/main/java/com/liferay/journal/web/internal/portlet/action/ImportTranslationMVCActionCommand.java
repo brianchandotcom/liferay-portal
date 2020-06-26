@@ -21,6 +21,7 @@ import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -34,7 +35,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.translation.exception.InvalidXLIFFFileException;
+import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.info.item.updater.InfoItemFieldValuesUpdater;
 
@@ -45,6 +46,9 @@ import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -66,10 +70,16 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		long articleResourcePrimKey = ParamUtil.getLong(
+			actionRequest, "articleResourcePrimKey");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		String articleId = ParamUtil.getString(actionRequest, "articleId");
+		double version = ParamUtil.getDouble(actionRequest, "version");
 
 		try {
 			UploadPortletRequest uploadPortletRequest =
@@ -78,9 +88,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			_checkExceededSizeLimit(uploadPortletRequest);
 
 			_checkContentType(uploadPortletRequest.getContentType("file"));
-
-			long articleResourcePrimKey = ParamUtil.getLong(
-				actionRequest, "articleResourcePrimKey");
 
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
@@ -92,11 +99,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 							JournalArticle.class.getName(),
 							articleResourcePrimKey),
 						inputStream);
-
-				long groupId = ParamUtil.getLong(actionRequest, "groupId");
-				String articleId = ParamUtil.getString(
-					actionRequest, "articleId");
-				double version = ParamUtil.getDouble(actionRequest, "version");
 
 				JournalArticle journalArticle =
 					_journalArticleInfoItemFieldValuesUpdater.
@@ -122,16 +124,20 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception exception) {
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
+
+			_redirectsOnError(
+				actionRequest, actionResponse, articleResourcePrimKey, groupId,
+				articleId, version);
 		}
 	}
 
 	private void _checkContentType(String contentType)
-		throws InvalidXLIFFFileException {
+		throws XLIFFFileException {
 
 		if (!Objects.equals("application/x-xliff+xml", contentType) &&
 			!Objects.equals("application/xliff+xml", contentType)) {
 
-			throw new InvalidXLIFFFileException(
+			throw new XLIFFFileException.MustNotBeInvalidFile(
 				"Unsupported content type: " + contentType);
 		}
 	}
@@ -160,6 +166,30 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 			throw new PortalException(cause);
 		}
+	}
+
+	private void _redirectsOnError(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			long articleResourcePrimKey, long groupId, String articleId,
+			double version)
+		throws IOException, WindowStateException {
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, JournalPortletKeys.JOURNAL,
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/import_translation.jsp");
+		portletURL.setParameter(
+			"redirect", ParamUtil.getString(actionRequest, "redirect"));
+		portletURL.setParameter(
+			"articleResourcePrimKey", String.valueOf(articleResourcePrimKey));
+		portletURL.setParameter("groupId", String.valueOf(groupId));
+		portletURL.setParameter("articleId", articleId);
+		portletURL.setParameter("version", String.valueOf(version));
+
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		sendRedirect(actionRequest, actionResponse, portletURL.toString());
 	}
 
 	@Reference(

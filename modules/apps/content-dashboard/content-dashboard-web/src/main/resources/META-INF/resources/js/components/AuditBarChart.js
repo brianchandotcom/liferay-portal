@@ -100,9 +100,9 @@ export default function AuditBarChart({rtl, vocabularies}) {
 	const [checkboxes, setCheckbox] = useState(legendCheckboxes);
 
 	useEffect(() => {
+		let style;
 		if (Object.keys(colors).length) {
-			const style = document.createElement('style');
-			style.id = 'legend-checkboxes';
+			style = document.createElement('style');
 			style.type = 'text/css';
 			style.textContent = Object.entries(colors).reduce(
 				(acc, [dataKey, color]) => {
@@ -125,8 +125,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 		}
 
 		return () => {
-			if (Object.keys(colors).length) {
-				const style = document.getElementById('legend-checkboxes');
+			if (style) {
 				document.head.removeChild(style);
 			}
 		};

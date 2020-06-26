@@ -252,6 +252,15 @@ public class PollsQuestionLocalServiceImpl
 
 	@Override
 	public List<PollsQuestion> search(
+		long groupId, int start, int end,
+		OrderByComparator<PollsQuestion> orderByComparator) {
+
+		return pollsQuestionPersistence.filterFindByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<PollsQuestion> search(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		OrderByComparator<PollsQuestion> orderByComparator) {
 
@@ -268,6 +277,11 @@ public class PollsQuestionLocalServiceImpl
 		return pollsQuestionFinder.findByC_G_T_D(
 			companyId, groupIds, name, description, andOperator, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public int searchCount(long groupId) {
+		return pollsQuestionPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override

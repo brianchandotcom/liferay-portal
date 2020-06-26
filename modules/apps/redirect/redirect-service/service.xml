@@ -67,7 +67,6 @@
 
 		<!-- Other fields -->
 
-		<column name="hits" type="long" />
 		<column name="ignored" type="boolean" />
 		<column name="url" type="String" />
 

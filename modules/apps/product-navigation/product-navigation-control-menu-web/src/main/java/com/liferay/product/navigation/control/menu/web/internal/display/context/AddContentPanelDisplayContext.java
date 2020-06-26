@@ -138,6 +138,8 @@ public class AddContentPanelDisplayContext {
 		).put(
 			"namespace", _getNamespace()
 		).put(
+			"plid", _themeDisplay.getPlid()
+		).put(
 			"widgets",
 			() -> {
 				if (hasAddApplicationsPermission()) {

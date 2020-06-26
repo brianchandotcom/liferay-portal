@@ -17,6 +17,8 @@ package com.liferay.portal.configuration.extender.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.log.LogCapture;
@@ -32,6 +34,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.jar.Attributes;
+import java.util.jar.JarEntry;
+import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -77,6 +83,12 @@ public class ConfiguratorExtenderTest {
 		Assert.assertNotNull(
 			"Unable to find bundle with symbolic name: " + symbolicName,
 			_bundle);
+
+		try {
+			_uninstallJAR();
+		}
+		catch (Exception exception) {
+		}
 	}
 
 	@After
@@ -84,6 +96,49 @@ public class ConfiguratorExtenderTest {
 		_deleteConfigurations("(service.pid=test.pid)");
 		_deleteConfigurations("(service.pid=test.pid2)");
 		_deleteConfigurations("(service.factoryPid=test.factory.pid)");
+		_deleteConfigurations(
+			"(service.factoryPid=" + _JAR_BUNDLE_SERVICE_FACTORY_PID + ")");
+	}
+
+	@Test
+	public void testConfiguringEndpointsAndExtendersProgrammatically()
+		throws Exception {
+
+		Bundle bundle = null;
+
+		BundleContext bundleContext = _bundle.getBundleContext();
+
+		_installJAR(bundleContext);
+
+		for (Bundle curBundle : bundleContext.getBundles()) {
+			if (_JAR_BUNDLE_SYMBOLIC_NAME.equals(curBundle.getSymbolicName())) {
+				bundle = curBundle;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(
+			"Unable to find bundle with symbolic name: " +
+				_JAR_BUNDLE_SYMBOLIC_NAME,
+			bundle);
+
+		try {
+			Configuration[] configurations =
+				_configurationAdmin.listConfigurations(
+					"(service.factoryPid=" + _JAR_BUNDLE_SERVICE_FACTORY_PID +
+						")");
+
+			Dictionary<String, Object> properties =
+				configurations[0].getProperties();
+
+			Assert.assertEquals(
+				_JAR_BUNDLE_SERVICE_PROPERTY_VALUE,
+				properties.get(_JAR_BUNDLE_SERVICE_PROPERTY_KEY));
+		}
+		finally {
+			_uninstallJAR(bundle);
+		}
 	}
 
 	@Test
@@ -352,6 +407,65 @@ public class ConfiguratorExtenderTest {
 		}
 	}
 
+	private void _installJAR(BundleContext bundleContext) throws Exception {
+		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+				new UnsyncByteArrayOutputStream()) {
+
+			Manifest manifest = new Manifest();
+
+			Attributes attributes = manifest.getMainAttributes();
+
+			attributes.put(Attributes.Name.MANIFEST_VERSION, "1.0");
+			attributes.put(new Attributes.Name("Bundle-ManifestVersion"), "2");
+			attributes.put(
+				new Attributes.Name("Bundle-Name"),
+				"Liferay Foo Bundle for Testing");
+			attributes.put(
+				new Attributes.Name("Bundle-SymbolicName"),
+				_JAR_BUNDLE_SYMBOLIC_NAME);
+			attributes.put(new Attributes.Name("Bundle-Version"), "1.0.0");
+			attributes.put(
+				new Attributes.Name("Liferay-Configuration-Path"),
+				"/" + _JAR_BUNDLE_CONFIGURATION_PATH);
+
+			try (JarOutputStream jarOutputStream = new JarOutputStream(
+					unsyncByteArrayOutputStream, manifest)) {
+
+				JarEntry jarEntry = new JarEntry(
+					_JAR_BUNDLE_CONFIGURATION_PATH + "/");
+
+				jarOutputStream.putNextEntry(jarEntry);
+
+				jarOutputStream.closeEntry();
+
+				jarEntry = new JarEntry(
+					_JAR_BUNDLE_CONFIGURATION_PATH + "/" +
+						_JAR_BUNDLE_SERVICE_PROPERTIES_FILE);
+
+				jarOutputStream.putNextEntry(jarEntry);
+
+				String value =
+					_JAR_BUNDLE_SERVICE_PROPERTY_KEY + "=" +
+						_JAR_BUNDLE_SERVICE_PROPERTY_VALUE;
+
+				jarOutputStream.write(value.getBytes());
+
+				jarOutputStream.closeEntry();
+			}
+
+			try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
+					new UnsyncByteArrayInputStream(
+						unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
+						unsyncByteArrayOutputStream.size())) {
+
+				Bundle bundle = bundleContext.installBundle(
+					"testLocation", unsyncByteArrayInputStream);
+
+				bundle.start();
+			}
+		}
+	}
+
 	private void _processConfigurations(
 			String namespace, Object... namedConfigurationContents)
 		throws Exception {
@@ -374,6 +488,46 @@ public class ConfiguratorExtenderTest {
 				Arrays.asList(namedConfigurationContents));
 		}
 	}
+
+	private void _uninstallJAR() throws Exception {
+		Bundle bundle = null;
+
+		BundleContext bundleContext = _bundle.getBundleContext();
+
+		for (Bundle curBundle : bundleContext.getBundles()) {
+			if (_JAR_BUNDLE_SYMBOLIC_NAME.equals(curBundle.getSymbolicName())) {
+				bundle = curBundle;
+
+				break;
+			}
+		}
+
+		_uninstallJAR(bundle);
+	}
+
+	private void _uninstallJAR(Bundle bundle) throws Exception {
+		if (bundle != null) {
+			bundle.uninstall();
+		}
+	}
+
+	private static final String _JAR_BUNDLE_CONFIGURATION_PATH =
+		"configuration";
+
+	private static final String _JAR_BUNDLE_SERVICE_FACTORY_PID =
+		"com.liferay.portal.remote.cxf.common.configuration." +
+			"CXFEndpointPublisherConfiguration";
+
+	private static final String _JAR_BUNDLE_SERVICE_PROPERTIES_FILE =
+		_JAR_BUNDLE_SERVICE_FACTORY_PID + "-test.properties";
+
+	private static final String _JAR_BUNDLE_SERVICE_PROPERTY_KEY =
+		"contextPath";
+
+	private static final String _JAR_BUNDLE_SERVICE_PROPERTY_VALUE = "/test-ws";
+
+	private static final String _JAR_BUNDLE_SYMBOLIC_NAME =
+		"com.liferay.foo.bundle.for.testing.symbolic.name";
 
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;

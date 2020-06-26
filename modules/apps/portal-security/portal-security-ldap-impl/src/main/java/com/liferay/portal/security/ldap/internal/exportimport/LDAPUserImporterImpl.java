@@ -1797,11 +1797,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			if (passwordGenerated) {
 				user.setDigest(StringPool.BLANK);
+
+				_userLocalService.updateUser(user);
 			}
-
-			user.setPasswordModifiedDate(modifiedDate);
-
-			_userLocalService.updateUser(user);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

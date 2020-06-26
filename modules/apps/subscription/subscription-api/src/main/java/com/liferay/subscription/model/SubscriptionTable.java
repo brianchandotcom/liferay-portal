@@ -34,6 +34,8 @@ public class SubscriptionTable extends BaseTable<SubscriptionTable> {
 
 	public final Column<SubscriptionTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<SubscriptionTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SubscriptionTable, Long> subscriptionId = createColumn(
 		"subscriptionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SubscriptionTable, Long> groupId = createColumn(

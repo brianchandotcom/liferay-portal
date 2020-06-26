@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -38,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SubscriptionModel
-	extends AttachedModel, BaseModel<Subscription>, GroupedModel, MVCCModel,
-			ShardedModel {
+	extends AttachedModel, BaseModel<Subscription>, CTModel<Subscription>,
+			GroupedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +53,7 @@ public interface SubscriptionModel
 	 *
 	 * @return the primary key of this subscription
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +61,7 @@ public interface SubscriptionModel
 	 *
 	 * @param primaryKey the primary key of this subscription
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -76,6 +79,22 @@ public interface SubscriptionModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this subscription.
+	 *
+	 * @return the ct collection ID of this subscription
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this subscription.
+	 *
+	 * @param ctCollectionId the ct collection ID of this subscription
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the subscription ID of this subscription.

@@ -77,10 +77,12 @@ public class SubscriptionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", subscriptionId=");
 		sb.append(subscriptionId);
 		sb.append(", groupId=");
@@ -111,6 +113,7 @@ public class SubscriptionCacheModel
 		SubscriptionImpl subscriptionImpl = new SubscriptionImpl();
 
 		subscriptionImpl.setMvccVersion(mvccVersion);
+		subscriptionImpl.setCtCollectionId(ctCollectionId);
 		subscriptionImpl.setSubscriptionId(subscriptionId);
 		subscriptionImpl.setGroupId(groupId);
 		subscriptionImpl.setCompanyId(companyId);
@@ -156,6 +159,8 @@ public class SubscriptionCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		subscriptionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -176,6 +181,8 @@ public class SubscriptionCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(subscriptionId);
 
@@ -208,6 +215,7 @@ public class SubscriptionCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long subscriptionId;
 	public long groupId;
 	public long companyId;

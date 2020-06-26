@@ -15,6 +15,7 @@
 package com.liferay.subscription.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.subscription.exception.NoSuchSubscriptionException;
 import com.liferay.subscription.model.Subscription;
 
@@ -32,7 +33,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface SubscriptionPersistence extends BasePersistence<Subscription> {
+public interface SubscriptionPersistence
+	extends BasePersistence<Subscription>, CTPersistence<Subscription> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

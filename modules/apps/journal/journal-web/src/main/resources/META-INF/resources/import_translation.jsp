@@ -31,7 +31,12 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 %>
 
-<liferay-ui:error exception="<%= InvalidXLIFFFileException.class %>" message="the-file-is-invalid" />
+<liferay-ui:error exception="<%= XLIFFFileException.MustNotBeIncomplete.class %>" message="xliff-file-does-not-have-all-needed-fields" />
+<liferay-ui:error exception="<%= XLIFFFileException.MustNotBeInvalidFile.class %>" message="the-file-is-not-a-valid-xliff-file" />
+<liferay-ui:error exception="<%= XLIFFFileException.MustNotBeUnsupportedLanguage.class %>" message="xliff-file-has-unavailable-language-translation" />
+<liferay-ui:error exception="<%= XLIFFFileException.MustNotHaveInvalidId.class %>" message="the-translation-file-x-does-not-correspond-to-this-web-content" />
+<liferay-ui:error exception="<%= XLIFFFileException.MustNotHaveInvalidParameter.class %>" message="xliff-file-has-invalid-parameters" />
+<liferay-ui:error exception="<%= XLIFFFileException.MustNotHaveMoreThanOne.class %>" message="xliff-file-is-invalid" />
 
 <portlet:actionURL name="/journal/import_translation" var="importTranslationURL">
 	<portlet:param name="articleResourcePrimKey" value="<%= articleResourcePrimKey %>" />

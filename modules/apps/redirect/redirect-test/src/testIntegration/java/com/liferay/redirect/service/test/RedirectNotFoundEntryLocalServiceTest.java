@@ -67,6 +67,38 @@ public class RedirectNotFoundEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddOrUpdateRedirectNotFoundEntryWithBiggerLimit()
+		throws Exception {
+
+		RedirectTestUtil.withMaximumNumberOfRedirectNotFoundEntries(
+			2,
+			() -> {
+				for (int i = 0; i < 10; i++) {
+					_addOrUpdateRedirectNotFoundEntry("url" + i);
+				}
+
+				List<RedirectNotFoundEntry> redirectNotFoundEntries =
+					_redirectNotFoundEntryLocalService.
+						getRedirectNotFoundEntries(
+							_group.getGroupId(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS, null);
+
+				Assert.assertEquals(
+					redirectNotFoundEntries.toString(), 2,
+					redirectNotFoundEntries.size());
+
+				RedirectNotFoundEntry redirectNotFoundEntry =
+					redirectNotFoundEntries.get(0);
+
+				Assert.assertEquals("url8", redirectNotFoundEntry.getUrl());
+
+				redirectNotFoundEntry = redirectNotFoundEntries.get(1);
+
+				Assert.assertEquals("url9", redirectNotFoundEntry.getUrl());
+			});
+	}
+
+	@Test
 	public void testAddOrUpdateRedirectNotFoundEntryWithDifferentURL() {
 		RedirectNotFoundEntry redirectNotFoundEntry1 =
 			_addOrUpdateRedirectNotFoundEntry("url1");

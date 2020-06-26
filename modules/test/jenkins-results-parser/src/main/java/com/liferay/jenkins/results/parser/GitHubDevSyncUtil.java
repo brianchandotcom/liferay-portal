@@ -19,6 +19,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -364,7 +365,8 @@ public class GitHubDevSyncUtil {
 		}
 
 		if (!cacheRemoteGitBranches.isEmpty()) {
-			gitWorkingDirectory.deleteRemoteGitBranches(cacheRemoteGitBranches);
+			deleteRemoteGitBranches(
+				gitWorkingDirectory, cacheRemoteGitBranches);
 		}
 	}
 
@@ -439,7 +441,7 @@ public class GitHubDevSyncUtil {
 				"Deleting ", String.valueOf(expiredRemoteGitBranches.size()),
 				" branches from ", gitRemote.getRemoteURL()));
 
-		gitWorkingDirectory.deleteRemoteGitBranches(expiredRemoteGitBranches);
+		deleteRemoteGitBranches(gitWorkingDirectory, expiredRemoteGitBranches);
 
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
@@ -531,8 +533,8 @@ public class GitHubDevSyncUtil {
 				timestampedRemoteGitBranches.remove(
 					timestampedRemoteGitBranches.size() - 1);
 
-				gitWorkingDirectory.deleteRemoteGitBranches(
-					timestampedRemoteGitBranches);
+				deleteRemoteGitBranches(
+					gitWorkingDirectory, timestampedRemoteGitBranches);
 			}
 		}
 	}
@@ -714,11 +716,8 @@ public class GitHubDevSyncUtil {
 		orphanedCacheRemoteGitBranches.addAll(
 			orphanedTimestampedCacheRemoteGitBranchesMap.values());
 
-		GitWorkingDirectory gitWorkingDirectory =
-			gitRemote.getGitWorkingDirectory();
-
-		gitWorkingDirectory.deleteRemoteGitBranches(
-			orphanedCacheRemoteGitBranches);
+		deleteRemoteGitBranches(
+			gitRemote.getGitWorkingDirectory(), orphanedCacheRemoteGitBranches);
 	}
 
 	protected static void deleteOrphanedCacheBranches(
@@ -745,6 +744,45 @@ public class GitHubDevSyncUtil {
 			callables, _threadPoolExecutor);
 
 		parallelExecutor.execute();
+	}
+
+	protected static void deleteRemoteGitBranches(
+		GitWorkingDirectory gitWorkingDirectory,
+		List<RemoteGitBranch> remoteGitBranches) {
+
+		gitWorkingDirectory.deleteRemoteGitBranches(remoteGitBranches);
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			JenkinsResultsParserUtil.toDateString(
+				new Date(), "America/Los_Angeles"));
+
+		JenkinsSlave jenkinsSlave = new JenkinsSlave();
+
+		if (jenkinsSlave != null) {
+			sb.append("Build URL: ");
+
+			Build build = jenkinsSlave.getCurrentBuild();
+
+			sb.append(build.getBuildURL());
+
+			sb.append("\n");
+		}
+
+		sb.append("\n\n");
+
+		sb.append("Deleted GitHub-dev branches:\n");
+
+		for (RemoteGitBranch remoteGitBranch : remoteGitBranches) {
+			sb.append("    ");
+			sb.append(remoteGitBranch.getName());
+			sb.append("\n");
+		}
+
+		NotificationUtil.sendEmail(
+			sb.toString(), "jenkins", "GitHub-dev branches deleted",
+			"peter.yoo@liferay.com");
 	}
 
 	protected static String getCacheBranchName(

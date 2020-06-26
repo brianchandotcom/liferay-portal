@@ -39,6 +39,8 @@ public class StyleBookEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setName(model.getName());
+		soapModel.setStyleBookEntryKey(model.getStyleBookEntryKey());
+		soapModel.setPreviewFileEntryId(model.getPreviewFileEntryId());
 
 		return soapModel;
 	}
@@ -161,6 +163,22 @@ public class StyleBookEntrySoap implements Serializable {
 		_name = name;
 	}
 
+	public String getStyleBookEntryKey() {
+		return _styleBookEntryKey;
+	}
+
+	public void setStyleBookEntryKey(String styleBookEntryKey) {
+		_styleBookEntryKey = styleBookEntryKey;
+	}
+
+	public long getPreviewFileEntryId() {
+		return _previewFileEntryId;
+	}
+
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		_previewFileEntryId = previewFileEntryId;
+	}
+
 	private long _mvccVersion;
 	private long _styleBookEntryId;
 	private long _groupId;
@@ -169,5 +187,7 @@ public class StyleBookEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private String _name;
+	private String _styleBookEntryKey;
+	private long _previewFileEntryId;
 
 }

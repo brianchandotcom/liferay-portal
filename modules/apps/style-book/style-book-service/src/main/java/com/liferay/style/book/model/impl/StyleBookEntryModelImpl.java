@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.model.StyleBookEntryModel;
@@ -70,7 +71,9 @@ public class StyleBookEntryModelImpl
 		{"mvccVersion", Types.BIGINT}, {"styleBookEntryId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"name", Types.VARCHAR}
+		{"createDate", Types.TIMESTAMP}, {"name", Types.VARCHAR},
+		{"styleBookEntryKey", Types.VARCHAR},
+		{"previewFileEntryId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -85,10 +88,12 @@ public class StyleBookEntryModelImpl
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("styleBookEntryKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table StyleBookEntry (mvccVersion LONG default 0 not null,styleBookEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,name VARCHAR(75) null)";
+		"create table StyleBookEntry (mvccVersion LONG default 0 not null,styleBookEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,name VARCHAR(75) null,styleBookEntryKey VARCHAR(75) null,previewFileEntryId LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table StyleBookEntry";
 
@@ -106,7 +111,11 @@ public class StyleBookEntryModelImpl
 
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 
-	public static final long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
+
+	public static final long STYLEBOOKENTRYKEY_COLUMN_BITMASK = 4L;
+
+	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -282,6 +291,18 @@ public class StyleBookEntryModelImpl
 		attributeSetterBiConsumers.put(
 			"name",
 			(BiConsumer<StyleBookEntry, String>)StyleBookEntry::setName);
+		attributeGetterFunctions.put(
+			"styleBookEntryKey", StyleBookEntry::getStyleBookEntryKey);
+		attributeSetterBiConsumers.put(
+			"styleBookEntryKey",
+			(BiConsumer<StyleBookEntry, String>)
+				StyleBookEntry::setStyleBookEntryKey);
+		attributeGetterFunctions.put(
+			"previewFileEntryId", StyleBookEntry::getPreviewFileEntryId);
+		attributeSetterBiConsumers.put(
+			"previewFileEntryId",
+			(BiConsumer<StyleBookEntry, Long>)
+				StyleBookEntry::setPreviewFileEntryId);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -406,7 +427,52 @@ public class StyleBookEntryModelImpl
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
+	}
+
+	@Override
+	public String getStyleBookEntryKey() {
+		if (_styleBookEntryKey == null) {
+			return "";
+		}
+		else {
+			return _styleBookEntryKey;
+		}
+	}
+
+	@Override
+	public void setStyleBookEntryKey(String styleBookEntryKey) {
+		_columnBitmask |= STYLEBOOKENTRYKEY_COLUMN_BITMASK;
+
+		if (_originalStyleBookEntryKey == null) {
+			_originalStyleBookEntryKey = _styleBookEntryKey;
+		}
+
+		_styleBookEntryKey = styleBookEntryKey;
+	}
+
+	public String getOriginalStyleBookEntryKey() {
+		return GetterUtil.getString(_originalStyleBookEntryKey);
+	}
+
+	@Override
+	public long getPreviewFileEntryId() {
+		return _previewFileEntryId;
+	}
+
+	@Override
+	public void setPreviewFileEntryId(long previewFileEntryId) {
+		_previewFileEntryId = previewFileEntryId;
 	}
 
 	public long getColumnBitmask() {
@@ -453,6 +519,8 @@ public class StyleBookEntryModelImpl
 		styleBookEntryImpl.setUserName(getUserName());
 		styleBookEntryImpl.setCreateDate(getCreateDate());
 		styleBookEntryImpl.setName(getName());
+		styleBookEntryImpl.setStyleBookEntryKey(getStyleBookEntryKey());
+		styleBookEntryImpl.setPreviewFileEntryId(getPreviewFileEntryId());
 
 		styleBookEntryImpl.resetOriginalValues();
 
@@ -529,6 +597,11 @@ public class StyleBookEntryModelImpl
 
 		styleBookEntryModelImpl._setOriginalGroupId = false;
 
+		styleBookEntryModelImpl._originalName = styleBookEntryModelImpl._name;
+
+		styleBookEntryModelImpl._originalStyleBookEntryKey =
+			styleBookEntryModelImpl._styleBookEntryKey;
+
 		styleBookEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -571,6 +644,16 @@ public class StyleBookEntryModelImpl
 		if ((name != null) && (name.length() == 0)) {
 			styleBookEntryCacheModel.name = null;
 		}
+
+		styleBookEntryCacheModel.styleBookEntryKey = getStyleBookEntryKey();
+
+		String styleBookEntryKey = styleBookEntryCacheModel.styleBookEntryKey;
+
+		if ((styleBookEntryKey != null) && (styleBookEntryKey.length() == 0)) {
+			styleBookEntryCacheModel.styleBookEntryKey = null;
+		}
+
+		styleBookEntryCacheModel.previewFileEntryId = getPreviewFileEntryId();
 
 		return styleBookEntryCacheModel;
 	}
@@ -655,6 +738,10 @@ public class StyleBookEntryModelImpl
 	private String _userName;
 	private Date _createDate;
 	private String _name;
+	private String _originalName;
+	private String _styleBookEntryKey;
+	private String _originalStyleBookEntryKey;
+	private long _previewFileEntryId;
 	private long _columnBitmask;
 	private StyleBookEntry _escapedModel;
 

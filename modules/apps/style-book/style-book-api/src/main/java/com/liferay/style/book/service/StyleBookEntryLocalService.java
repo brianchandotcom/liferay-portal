@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -61,6 +62,10 @@ public interface StyleBookEntryLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link StyleBookEntryLocalServiceUtil} to access the style book entry local service. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, String name, String styleBookEntryKey,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * Adds the style book entry to the database. Also notifies the appropriate model listeners.
@@ -109,9 +114,11 @@ public interface StyleBookEntryLocalService
 	 *
 	 * @param styleBookEntry the style book entry
 	 * @return the style book entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
-	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry);
+	public StyleBookEntry deleteStyleBookEntry(StyleBookEntry styleBookEntry)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public <T> T dslQuery(DSLQuery dslQuery);
@@ -186,6 +193,10 @@ public interface StyleBookEntryLocalService
 	public StyleBookEntry fetchStyleBookEntry(long styleBookEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public StyleBookEntry fetchStyleBookEntry(
+		long groupId, String styleBookEntryKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -220,6 +231,16 @@ public interface StyleBookEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<StyleBookEntry> getStyleBookEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<StyleBookEntry> getStyleBookEntries(
+		long groupId, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<StyleBookEntry> getStyleBookEntries(
+		long groupId, String name, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator);
+
 	/**
 	 * Returns the number of style book entries.
 	 *
@@ -227,6 +248,12 @@ public interface StyleBookEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getStyleBookEntriesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStyleBookEntriesCount(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getStyleBookEntriesCount(long groupId, String name);
 
 	/**
 	 * Returns the style book entry with the primary key.
@@ -237,6 +264,14 @@ public interface StyleBookEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public StyleBookEntry getStyleBookEntry(long styleBookEntryId)
+		throws PortalException;
+
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException;
+
+	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name)
 		throws PortalException;
 
 	/**

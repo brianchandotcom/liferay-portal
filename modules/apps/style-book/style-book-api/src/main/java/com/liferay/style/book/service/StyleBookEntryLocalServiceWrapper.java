@@ -33,6 +33,16 @@ public class StyleBookEntryLocalServiceWrapper
 		_styleBookEntryLocalService = styleBookEntryLocalService;
 	}
 
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, String name, String styleBookEntryKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.addStyleBookEntry(
+			userId, groupId, name, styleBookEntryKey, serviceContext);
+	}
+
 	/**
 	 * Adds the style book entry to the database. Also notifies the appropriate model listeners.
 	 *
@@ -103,10 +113,12 @@ public class StyleBookEntryLocalServiceWrapper
 	 *
 	 * @param styleBookEntry the style book entry
 	 * @return the style book entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.style.book.model.StyleBookEntry deleteStyleBookEntry(
-		com.liferay.style.book.model.StyleBookEntry styleBookEntry) {
+			com.liferay.style.book.model.StyleBookEntry styleBookEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.deleteStyleBookEntry(styleBookEntry);
 	}
@@ -216,6 +228,14 @@ public class StyleBookEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.style.book.model.StyleBookEntry fetchStyleBookEntry(
+		long groupId, String styleBookEntryKey) {
+
+		return _styleBookEntryLocalService.fetchStyleBookEntry(
+			groupId, styleBookEntryKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -268,6 +288,30 @@ public class StyleBookEntryLocalServiceWrapper
 		return _styleBookEntryLocalService.getStyleBookEntries(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.style.book.model.StyleBookEntry>
+		getStyleBookEntries(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.style.book.model.StyleBookEntry>
+					orderByComparator) {
+
+		return _styleBookEntryLocalService.getStyleBookEntries(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.style.book.model.StyleBookEntry>
+		getStyleBookEntries(
+			long groupId, String name, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.style.book.model.StyleBookEntry>
+					orderByComparator) {
+
+		return _styleBookEntryLocalService.getStyleBookEntries(
+			groupId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of style book entries.
 	 *
@@ -276,6 +320,17 @@ public class StyleBookEntryLocalServiceWrapper
 	@Override
 	public int getStyleBookEntriesCount() {
 		return _styleBookEntryLocalService.getStyleBookEntriesCount();
+	}
+
+	@Override
+	public int getStyleBookEntriesCount(long groupId) {
+		return _styleBookEntryLocalService.getStyleBookEntriesCount(groupId);
+	}
+
+	@Override
+	public int getStyleBookEntriesCount(long groupId, String name) {
+		return _styleBookEntryLocalService.getStyleBookEntriesCount(
+			groupId, name);
 	}
 
 	/**
@@ -291,6 +346,24 @@ public class StyleBookEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _styleBookEntryLocalService.getStyleBookEntry(styleBookEntryId);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateStyleBookEntry(
+			styleBookEntryId, previewFileEntryId);
+	}
+
+	@Override
+	public com.liferay.style.book.model.StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _styleBookEntryLocalService.updateStyleBookEntry(
+			styleBookEntryId, name);
 	}
 
 	/**

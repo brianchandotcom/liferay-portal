@@ -37,6 +37,14 @@ public class StyleBookEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.style.book.service.impl.StyleBookEntryLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.style.book.model.StyleBookEntry addStyleBookEntry(
+			long userId, long groupId, String name, String styleBookEntryKey,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().addStyleBookEntry(
+			userId, groupId, name, styleBookEntryKey, serviceContext);
+	}
 
 	/**
 	 * Adds the style book entry to the database. Also notifies the appropriate model listeners.
@@ -102,10 +110,12 @@ public class StyleBookEntryLocalServiceUtil {
 	 *
 	 * @param styleBookEntry the style book entry
 	 * @return the style book entry that was removed
+	 * @throws PortalException
 	 */
 	public static com.liferay.style.book.model.StyleBookEntry
-		deleteStyleBookEntry(
-			com.liferay.style.book.model.StyleBookEntry styleBookEntry) {
+			deleteStyleBookEntry(
+				com.liferay.style.book.model.StyleBookEntry styleBookEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteStyleBookEntry(styleBookEntry);
 	}
@@ -207,6 +217,12 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().fetchStyleBookEntry(styleBookEntryId);
 	}
 
+	public static com.liferay.style.book.model.StyleBookEntry
+		fetchStyleBookEntry(long groupId, String styleBookEntryKey) {
+
+		return getService().fetchStyleBookEntry(groupId, styleBookEntryKey);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -256,6 +272,28 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().getStyleBookEntries(start, end);
 	}
 
+	public static java.util.List<com.liferay.style.book.model.StyleBookEntry>
+		getStyleBookEntries(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.style.book.model.StyleBookEntry>
+					orderByComparator) {
+
+		return getService().getStyleBookEntries(
+			groupId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.style.book.model.StyleBookEntry>
+		getStyleBookEntries(
+			long groupId, String name, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.style.book.model.StyleBookEntry>
+					orderByComparator) {
+
+		return getService().getStyleBookEntries(
+			groupId, name, start, end, orderByComparator);
+	}
+
 	/**
 	 * Returns the number of style book entries.
 	 *
@@ -263,6 +301,14 @@ public class StyleBookEntryLocalServiceUtil {
 	 */
 	public static int getStyleBookEntriesCount() {
 		return getService().getStyleBookEntriesCount();
+	}
+
+	public static int getStyleBookEntriesCount(long groupId) {
+		return getService().getStyleBookEntriesCount(groupId);
+	}
+
+	public static int getStyleBookEntriesCount(long groupId, String name) {
+		return getService().getStyleBookEntriesCount(groupId, name);
 	}
 
 	/**
@@ -277,6 +323,21 @@ public class StyleBookEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getStyleBookEntry(styleBookEntryId);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntry(long styleBookEntryId, long previewFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStyleBookEntry(
+			styleBookEntryId, previewFileEntryId);
+	}
+
+	public static com.liferay.style.book.model.StyleBookEntry
+			updateStyleBookEntry(long styleBookEntryId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().updateStyleBookEntry(styleBookEntryId, name);
 	}
 
 	/**

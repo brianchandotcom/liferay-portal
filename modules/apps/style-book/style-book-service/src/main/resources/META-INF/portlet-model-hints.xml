@@ -10,5 +10,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="name" type="String" />
+		<field name="styleBookEntryKey" type="String" />
+		<field name="previewFileEntryId" type="long" />
 	</model>
 </model-hints>

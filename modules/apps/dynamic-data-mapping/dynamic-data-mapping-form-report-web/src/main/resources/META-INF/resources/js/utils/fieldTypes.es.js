@@ -17,6 +17,10 @@ export default {
 		icon: 'check-circle',
 		title: Liferay.Language.get('checkbox-multiple-field-type-label'),
 	},
+	color: {
+		icon: 'color-picker',
+		title: Liferay.Language.get('color-field-type-label'),
+	},
 	date: {
 		icon: 'calendar',
 		title: Liferay.Language.get('date-field-type-label'),

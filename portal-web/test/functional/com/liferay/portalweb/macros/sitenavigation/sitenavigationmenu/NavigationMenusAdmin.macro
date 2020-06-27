@@ -29,7 +29,7 @@ definition {
 	}
 
 	macro _editItemPage {
-		Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#SET_CUSTOM_NAME_CHECKBOX");
+		Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#USE_CUSTOM_NAME_CHECKBOX");
 
 		if (isSet(name)) {
 			Type(
@@ -102,8 +102,8 @@ definition {
 
 		Pause(locator1 = "3000");
 
-		if (IsElementPresent(locator1 = "SiteNavigationMenu#SET_CUSTOM_NAME_CHECKBOX")) {
-			Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#SET_CUSTOM_NAME_CHECKBOX");
+		if (IsElementPresent(locator1 = "SiteNavigationMenu#USE_CUSTOM_NAME_CHECKBOX")) {
+			Check.checkToggleSwitch(locator1 = "SiteNavigationMenu#USE_CUSTOM_NAME_CHECKBOX");
 		}
 
 		PortletEntry.changeLocale(

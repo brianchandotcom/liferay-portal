@@ -44,8 +44,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SET_CUSTOM_NAME_CHECKBOX</td>
-	<td>//label[contains(.,'Set Custom Name')]/input[@type='checkbox']</td>
+	<td>USE_CUSTOM_NAME_CHECKBOX</td>
+	<td>//label[contains(.,'Use Custom Name')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

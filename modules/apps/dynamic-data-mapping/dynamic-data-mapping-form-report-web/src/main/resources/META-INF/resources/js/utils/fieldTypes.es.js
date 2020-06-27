@@ -25,6 +25,10 @@ export default {
 		icon: 'calendar',
 		title: Liferay.Language.get('date-field-type-label'),
 	},
+	grid: {
+		icon: 'table2',
+		title: Liferay.Language.get('grid-field-type-label'),
+	},
 	numeric: {
 		icon: 'integer',
 		title: Liferay.Language.get('numeric-field-type-label'),

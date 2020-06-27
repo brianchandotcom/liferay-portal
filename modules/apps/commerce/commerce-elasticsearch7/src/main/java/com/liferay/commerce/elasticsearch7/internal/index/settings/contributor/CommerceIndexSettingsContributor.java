@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.elasticsearch6.internal.index.settings.contributor;
+package com.liferay.commerce.elasticsearch7.internal.index.settings.contributor;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsContributor;
-import com.liferay.portal.search.elasticsearch6.settings.IndexSettingsHelper;
-import com.liferay.portal.search.elasticsearch6.settings.TypeMappingsHelper;
+import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsContributor;
+import com.liferay.portal.search.elasticsearch7.settings.IndexSettingsHelper;
+import com.liferay.portal.search.elasticsearch7.settings.TypeMappingsHelper;
 
 import org.osgi.service.component.annotations.Component;
 

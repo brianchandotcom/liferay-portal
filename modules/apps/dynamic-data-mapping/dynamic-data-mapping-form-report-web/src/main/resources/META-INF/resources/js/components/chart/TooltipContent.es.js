@@ -14,45 +14,93 @@
 
 import React from 'react';
 
-import colors from '../../utils/colors.es';
 import {roundPercentage} from '../../utils/data.es';
 
 export default ({
 	active,
-	activeIndex,
+	label,
 	payload,
+	roundBullet = true,
 	showBullet = true,
-	totalEntries,
+	showHeader = true,
+	totalEntries = 0,
 }) => {
-	const getPercentage = (count) => count / totalEntries;
+	if (active) {
+		const getPercentage = (count) => count / totalEntries;
 
-	if (!active) {
-		return null;
+		if (!totalEntries) {
+			totalEntries = payload.reduce((a, obj) => {
+				return a + obj.value;
+			}, 0);
+		}
+
+		return (
+			<div className="custom-tooltip">
+				{showHeader ? (
+					<div className="header">
+						<div className="title">{label}</div>
+					</div>
+				) : null}
+
+				<ul>
+					{payload.map(
+						(
+							{
+								dataKey,
+								payload,
+								fill = fill == undefined ? payload.fill : null,
+								value,
+							},
+							index
+						) => {
+							dataKey = !showHeader ? payload.label : dataKey;
+
+							return (
+								<li key={`tooltip-${index}`}>
+									{showBullet ? (
+										<svg height="12" width="12">
+											{roundBullet ? (
+												<circle
+													cx="6"
+													cy="6"
+													fill={fill}
+													r="6"
+													strokeWidth="0"
+												/>
+											) : (
+												<rect
+													fill={fill}
+													height="12"
+													width="12"
+												/>
+											)}
+										</svg>
+									) : null}
+									<div id="tooltip-label">
+										{`${dataKey}: ${value} `}
+										{value == 1
+											? `${Liferay.Language.get(
+													'entry'
+											  ).toLowerCase()} `
+											: `${Liferay.Language.get(
+													'entries'
+											  ).toLowerCase()} `}
+										<b>
+											(
+											{roundPercentage(
+												getPercentage(value)
+											)}
+											)
+										</b>
+									</div>
+								</li>
+							);
+						}
+					)}
+				</ul>
+			</div>
+		);
 	}
 
-	const {count, label} = payload[0].payload;
-
-	return (
-		<div className="custom-tooltip">
-			{showBullet ? (
-				<svg height="12" width="12">
-					<circle
-						cx="6"
-						cy="6"
-						fill={colors(activeIndex)}
-						r="6"
-						strokeWidth="0"
-					/>
-				</svg>
-			) : null}
-
-			<p className="tooltip-label">
-				{`${label}: ${count} `}
-				{count == 1
-					? `${Liferay.Language.get('entry').toLowerCase()} `
-					: `${Liferay.Language.get('entries').toLowerCase()} `}
-				<b>({roundPercentage(getPercentage(count))})</b>
-			</p>
-		</div>
-	);
+	return null;
 };

@@ -13,13 +13,13 @@
  */
 
 const COLORS = [
-	'#4b9fff',
+	'#4b9bff',
+	'#af78ff',
+	'#50d2a0',
 	'#ffb46e',
 	'#ff5f5f',
-	'#50d2a0',
 	'#ff73c3',
 	'#9be169',
-	'#af78ff',
 	'#ffd76e',
 	'#5fc8ff',
 	'#7785ff',
@@ -56,9 +56,7 @@ const COLORS = [
 ];
 
 const NAMED_COLORS = {
-	blue: 'rgba(75, 155, 255)',
 	blueDark: '#272833',
-	blueLight: 'rgba(75, 155, 255, 0.5)',
 	gray: '#cdced9',
 	white: '#ffffff',
 };

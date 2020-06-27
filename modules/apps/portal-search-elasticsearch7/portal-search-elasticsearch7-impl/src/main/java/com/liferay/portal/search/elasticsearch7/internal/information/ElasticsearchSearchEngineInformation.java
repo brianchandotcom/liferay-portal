@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch7.internal.information;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -25,9 +24,9 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration;
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSearchEngine;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.OperationModeResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
@@ -47,7 +46,6 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -62,18 +60,13 @@ import org.elasticsearch.client.RestHighLevelClient;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adam Brandizzi
  */
-@Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
-	immediate = true, service = SearchEngineInformation.class
-)
+@Component(immediate = true, service = SearchEngineInformation.class)
 public class ElasticsearchSearchEngineInformation
 	implements SearchEngineInformation {
 
@@ -97,12 +90,14 @@ public class ElasticsearchSearchEngineInformation
 
 		if (operationModeResolver.isProductionModeEnabled() &&
 			!Validator.isBlank(
-				elasticsearchConfiguration.remoteClusterConnectionId())) {
+				elasticsearchConfigurationWrapper.
+					remoteClusterConnectionId())) {
 
 			filterString = filterString.concat(
 				String.format(
 					"(!(connectionId=%s))",
-					elasticsearchConfiguration.remoteClusterConnectionId()));
+					elasticsearchConfigurationWrapper.
+						remoteClusterConnectionId()));
 		}
 
 		if (operationModeResolver.isProductionModeEnabled() &&
@@ -192,13 +187,6 @@ public class ElasticsearchSearchEngineInformation
 		}
 
 		return vendor;
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		elasticsearchConfiguration = ConfigurableUtil.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
 	}
 
 	protected void addActiveConnections(
@@ -376,7 +364,9 @@ public class ElasticsearchSearchEngineInformation
 	protected ConnectionInformationBuilderFactory
 		connectionInformationBuilderFactory;
 
-	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
+	@Reference
+	protected volatile ElasticsearchConfigurationWrapper
+		elasticsearchConfigurationWrapper;
 
 	@Reference
 	protected ElasticsearchConnectionManager elasticsearchConnectionManager;

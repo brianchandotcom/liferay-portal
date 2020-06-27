@@ -15,13 +15,12 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.index.contributor.IndexContributorReceiver;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
@@ -34,7 +33,6 @@ import com.liferay.portal.search.spi.model.index.contributor.IndexContributor;
 import java.io.IOException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -48,9 +46,7 @@ import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -60,7 +56,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
 	immediate = true,
 	service = {IndexContributorReceiver.class, IndexFactory.class}
 )
@@ -112,25 +107,6 @@ public class CompanyIndexFactory
 		_indexContributors.remove(indexContributor);
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		ElasticsearchConfiguration elasticsearchConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ElasticsearchConfiguration.class, properties);
-
-		setAdditionalIndexConfigurations(
-			elasticsearchConfiguration.additionalIndexConfigurations());
-		setAdditionalTypeMappings(
-			elasticsearchConfiguration.additionalTypeMappings());
-		setIndexNumberOfReplicas(
-			elasticsearchConfiguration.indexNumberOfReplicas());
-		setIndexNumberOfShards(
-			elasticsearchConfiguration.indexNumberOfShards());
-		setOverrideTypeMappings(
-			elasticsearchConfiguration.overrideTypeMappings());
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -146,9 +122,12 @@ public class CompanyIndexFactory
 		CreateIndexRequest createIndexRequest,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
-		if (Validator.isNotNull(_overrideTypeMappings)) {
+		if (Validator.isNotNull(
+				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
+
 			liferayDocumentTypeFactory.createLiferayDocumentTypeMappings(
-				createIndexRequest, _overrideTypeMappings);
+				createIndexRequest,
+				_elasticsearchConfigurationWrapper.overrideTypeMappings());
 		}
 		else {
 			liferayDocumentTypeFactory.createRequiredDefaultTypeMappings(
@@ -244,19 +223,23 @@ public class CompanyIndexFactory
 	protected void loadAdditionalIndexConfigurations(
 		SettingsBuilder settingsBuilder) {
 
-		settingsBuilder.loadFromSource(_additionalIndexConfigurations);
+		settingsBuilder.loadFromSource(
+			_elasticsearchConfigurationWrapper.additionalIndexConfigurations());
 	}
 
 	protected void loadAdditionalTypeMappings(
 		String indexName,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
-		if (Validator.isNull(_additionalTypeMappings)) {
+		if (Validator.isNull(
+				_elasticsearchConfigurationWrapper.additionalTypeMappings())) {
+
 			return;
 		}
 
 		liferayDocumentTypeFactory.addTypeMappings(
-			indexName, _additionalTypeMappings);
+			indexName,
+			_elasticsearchConfigurationWrapper.additionalTypeMappings());
 	}
 
 	protected void loadDefaultIndexSettings(SettingsBuilder settingsBuilder) {
@@ -269,8 +252,12 @@ public class CompanyIndexFactory
 	}
 
 	protected void loadIndexConfigurations(SettingsBuilder settingsBuilder) {
-		settingsBuilder.put("index.number_of_replicas", _indexNumberOfReplicas);
-		settingsBuilder.put("index.number_of_shards", _indexNumberOfShards);
+		settingsBuilder.put(
+			"index.number_of_replicas",
+			_elasticsearchConfigurationWrapper.indexNumberOfReplicas());
+		settingsBuilder.put(
+			"index.number_of_shards",
+			_elasticsearchConfigurationWrapper.indexNumberOfShards());
 	}
 
 	protected void loadIndexSettingsContributors(
@@ -315,14 +302,11 @@ public class CompanyIndexFactory
 		_indexSettingsContributors.remove(indexSettingsContributor);
 	}
 
-	protected void setAdditionalIndexConfigurations(
-		String additionalIndexConfigurations) {
+	@Reference(unbind = "-")
+	protected void setElasticsearchConfigurationWrapper(
+		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper) {
 
-		_additionalIndexConfigurations = additionalIndexConfigurations;
-	}
-
-	protected void setAdditionalTypeMappings(String additionalTypeMappings) {
-		_additionalTypeMappings = additionalTypeMappings;
+		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
 	}
 
 	@Reference(unbind = "-")
@@ -330,21 +314,9 @@ public class CompanyIndexFactory
 		_indexNameBuilder = indexNameBuilder;
 	}
 
-	protected void setIndexNumberOfReplicas(String indexNumberOfReplicas) {
-		_indexNumberOfReplicas = indexNumberOfReplicas;
-	}
-
-	protected void setIndexNumberOfShards(String indexNumberOfShards) {
-		_indexNumberOfShards = indexNumberOfShards;
-	}
-
 	@Reference(unbind = "-")
 	protected void setJsonFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
-	}
-
-	protected void setOverrideTypeMappings(String overrideTypeMappings) {
-		_overrideTypeMappings = overrideTypeMappings;
 	}
 
 	protected void setSettings(
@@ -378,7 +350,9 @@ public class CompanyIndexFactory
 		String indexName,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
 
-		if (Validator.isNotNull(_overrideTypeMappings)) {
+		if (Validator.isNotNull(
+				_elasticsearchConfigurationWrapper.overrideTypeMappings())) {
+
 			return;
 		}
 
@@ -392,16 +366,13 @@ public class CompanyIndexFactory
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyIndexFactory.class);
 
-	private volatile String _additionalIndexConfigurations;
-	private String _additionalTypeMappings;
+	private volatile ElasticsearchConfigurationWrapper
+		_elasticsearchConfigurationWrapper;
 	private final List<IndexContributor> _indexContributors =
 		new CopyOnWriteArrayList<>();
 	private IndexNameBuilder _indexNameBuilder;
-	private String _indexNumberOfReplicas;
-	private String _indexNumberOfShards;
 	private final Set<IndexSettingsContributor> _indexSettingsContributors =
 		new ConcurrentSkipListSet<>();
 	private JSONFactory _jsonFactory;
-	private String _overrideTypeMappings;
 
 }

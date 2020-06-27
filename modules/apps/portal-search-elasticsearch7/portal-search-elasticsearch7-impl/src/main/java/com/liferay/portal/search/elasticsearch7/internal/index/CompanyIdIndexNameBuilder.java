@@ -15,39 +15,57 @@
 package com.liferay.portal.search.elasticsearch7.internal.index;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserverComparator;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.index.IndexNameBuilder;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-@Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
-	immediate = true, service = IndexNameBuilder.class
-)
-public class CompanyIdIndexNameBuilder implements IndexNameBuilder {
+@Component(immediate = true, service = IndexNameBuilder.class)
+public class CompanyIdIndexNameBuilder
+	implements ElasticsearchConfigurationObserver, IndexNameBuilder {
+
+	@Override
+	public int compareTo(
+		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
+
+		return elasticsearchConfigurationObserverComparator.compare(
+			this, elasticsearchConfigurationObserver);
+	}
 
 	@Override
 	public String getIndexName(long companyId) {
 		return _indexNamePrefix + companyId;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		ElasticsearchConfiguration elasticsearchConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ElasticsearchConfiguration.class, properties);
+	@Override
+	public int getPriority() {
+		return 0;
+	}
 
-		setIndexNamePrefix(elasticsearchConfiguration.indexNamePrefix());
+	@Override
+	public void onElasticsearchConfigurationUpdate() {
+		setIndexNamePrefix(elasticsearchConfigurationWrapper.indexNamePrefix());
+	}
+
+	@Activate
+	protected void activate() {
+		elasticsearchConfigurationWrapper.register(this);
+
+		setIndexNamePrefix(elasticsearchConfigurationWrapper.indexNamePrefix());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		elasticsearchConfigurationWrapper.unregister(this);
 	}
 
 	protected void setIndexNamePrefix(String indexNamePrefix) {
@@ -59,6 +77,14 @@ public class CompanyIdIndexNameBuilder implements IndexNameBuilder {
 				StringUtil.trim(indexNamePrefix));
 		}
 	}
+
+	@Reference
+	protected ElasticsearchConfigurationObserverComparator
+		elasticsearchConfigurationObserverComparator;
+
+	@Reference
+	protected volatile ElasticsearchConfigurationWrapper
+		elasticsearchConfigurationWrapper;
 
 	private volatile String _indexNamePrefix;
 

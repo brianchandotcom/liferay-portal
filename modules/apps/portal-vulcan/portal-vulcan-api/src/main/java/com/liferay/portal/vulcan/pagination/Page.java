@@ -19,9 +19,12 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import com.liferay.portal.vulcan.aggregation.Facet;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,7 +60,8 @@ public class Page<T> {
 
 	public static <T> Page<T> of(
 		Map<String, Map<String, String>> actions, Collection<T> items,
-		Pagination pagination, long totalCount, List<Facet> facets) {
+		Pagination pagination, long totalCount,
+		Map<String, List<Facet>> facets) {
 
 		return new Page<>(actions, items, pagination, totalCount, facets);
 	}
@@ -68,7 +72,7 @@ public class Page<T> {
 	}
 
 	@JsonProperty("facets")
-	public List<Facet> getFacets() {
+	public Map<String, List<Facet>> getFacets() {
 		return _facets;
 	}
 
@@ -155,11 +159,12 @@ public class Page<T> {
 
 	private Page(
 		Map<String, Map<String, String>> actions, Collection<T> items,
-		Pagination pagination, long totalCount, List<Facet> facets) {
+		Pagination pagination, long totalCount,
+		Map<String, List<Facet>> facetMap) {
 
 		_actions = actions;
 		_items = items;
-		_facets = facets;
+		_facets = facetMap;
 
 		if (pagination == null) {
 			_page = 0;
@@ -174,8 +179,8 @@ public class Page<T> {
 	}
 
 	private final Map<String, Map<String, String>> _actions;
+	private Map<String, List<Facet>> _facets = new HashMap<>();
 	private final Collection<T> _items;
-	private List<Facet> _facets = new ArrayList<>();
 	private final long _page;
 	private final long _pageSize;
 	private final long _totalCount;

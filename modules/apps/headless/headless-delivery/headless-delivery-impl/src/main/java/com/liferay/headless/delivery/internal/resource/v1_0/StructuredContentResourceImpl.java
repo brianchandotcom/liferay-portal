@@ -87,6 +87,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -105,7 +106,6 @@ import java.net.URI;
 import java.time.LocalDateTime;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -163,7 +163,7 @@ public class StructuredContentResourceImpl
 			contentStructureId);
 
 		return _getStructuredContentsPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"get",
 				addAction(
 					"VIEW", ddmStructure.getStructureId(),
@@ -172,19 +172,16 @@ public class StructuredContentResourceImpl
 					ddmStructure.getGroupId())
 			).build(),
 			booleanQuery -> {
-				if (contentStructureId != null) {
-					BooleanFilter booleanFilter =
-						booleanQuery.getPreBooleanFilter();
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
 
-					booleanFilter.add(
-						new TermFilter(
-							com.liferay.portal.kernel.search.Field.
-								CLASS_TYPE_ID,
-							contentStructureId.toString()),
-						BooleanClauseOccur.MUST);
-				}
+				booleanFilter.add(
+					new TermFilter(
+						com.liferay.portal.kernel.search.Field.CLASS_TYPE_ID,
+						contentStructureId.toString()),
+					BooleanClauseOccur.MUST);
 			},
-			ddmStructure.getGroupId(), filter, search, pagination, sorts);
+			ddmStructure.getGroupId(), filter, search, pagination, sorts, null);
 	}
 
 	@Override
@@ -193,7 +190,7 @@ public class StructuredContentResourceImpl
 
 		List<EntityField> entityFields = null;
 
-		Long contentStructureId = GetterUtil.getLong(
+		long contentStructureId = GetterUtil.getLong(
 			(String)multivaluedMap.getFirst("contentStructureId"));
 
 		if (contentStructureId > 0) {
@@ -241,11 +238,11 @@ public class StructuredContentResourceImpl
 	@Override
 	public Page<StructuredContent> getSiteStructuredContentsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, Sort[] sorts, Aggregation aggregation)
 		throws Exception {
 
 		return _getStructuredContentsPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_ARTICLE", "postSiteStructuredContent",
@@ -270,7 +267,7 @@ public class StructuredContentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, filter, search, pagination, sorts);
+			siteId, filter, search, pagination, sorts, aggregation);
 	}
 
 	@Override
@@ -294,7 +291,7 @@ public class StructuredContentResourceImpl
 			structuredContentFolderId);
 
 		return _getStructuredContentsPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_ARTICLE", journalFolder.getFolderId(),
@@ -310,24 +307,21 @@ public class StructuredContentResourceImpl
 					journalFolder.getGroupId())
 			).build(),
 			booleanQuery -> {
-				if (structuredContentFolderId != null) {
-					BooleanFilter booleanFilter =
-						booleanQuery.getPreBooleanFilter();
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
 
-					String field =
-						com.liferay.portal.kernel.search.Field.FOLDER_ID;
+				String field = com.liferay.portal.kernel.search.Field.FOLDER_ID;
 
-					if (GetterUtil.getBoolean(flatten)) {
-						field = "treePath";
-					}
-
-					booleanFilter.add(
-						new TermFilter(
-							field, structuredContentFolderId.toString()),
-						BooleanClauseOccur.MUST);
+				if (GetterUtil.getBoolean(flatten)) {
+					field = "treePath";
 				}
+
+				booleanFilter.add(
+					new TermFilter(field, structuredContentFolderId.toString()),
+					BooleanClauseOccur.MUST);
 			},
-			journalFolder.getGroupId(), filter, search, pagination, sorts);
+			journalFolder.getGroupId(), filter, search, pagination, sorts,
+			null);
 	}
 
 	@Override
@@ -766,7 +760,7 @@ public class StructuredContentResourceImpl
 						ratingsEntry.getClassPK());
 
 				return RatingUtil.toRating(
-					HashMapBuilder.<String, Map<String, String>>put(
+					HashMapBuilder.put(
 						"create",
 						addAction(
 							"UPDATE", journalArticle.getResourcePrimKey(),
@@ -820,7 +814,7 @@ public class StructuredContentResourceImpl
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
 			Long siteId, Filter filter, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Sort[] sorts, Aggregation aggregation)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -839,6 +833,8 @@ public class StructuredContentResourceImpl
 				if (siteId != null) {
 					searchContext.setGroupIds(new long[] {siteId});
 				}
+
+				searchContext.addSimpleFacets(aggregation);
 			},
 			sorts,
 			document -> _toStructuredContent(
@@ -901,11 +897,7 @@ public class StructuredContentResourceImpl
 		Fields newFields = _ddm.getFields(
 			ddmStructure.getStructureId(), serviceContext);
 
-		Iterator<Field> iterator = fields.iterator();
-
-		while (iterator.hasNext()) {
-			Field field = iterator.next();
-
+		for (Field field : fields) {
 			Field newField = newFields.get(field.getName());
 
 			field.setValues(
@@ -929,11 +921,7 @@ public class StructuredContentResourceImpl
 			return fields;
 		}
 
-		Iterator<Field> iterator = fields.iterator();
-
-		while (iterator.hasNext()) {
-			Field field = iterator.next();
-
+		for (Field field : fields) {
 			if (field.isRepeatable()) {
 				throw new BadRequestException(
 					"Unable to patch a structured content with a repeatable " +
@@ -990,7 +978,7 @@ public class StructuredContentResourceImpl
 		return _structuredContentDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.<String, Map<String, String>>put(
+				HashMapBuilder.put(
 					"delete",
 					addAction(
 						"DELETE", journalArticle.getResourcePrimKey(),

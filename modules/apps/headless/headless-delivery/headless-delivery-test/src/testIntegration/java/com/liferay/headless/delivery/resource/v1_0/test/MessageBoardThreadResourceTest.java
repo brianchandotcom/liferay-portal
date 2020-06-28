@@ -85,7 +85,7 @@ public class MessageBoardThreadResourceTest
 
 		Page<MessageBoardThread> ascPage =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-				null, null, null, Pagination.of(1, 2), "ratingValue:asc");
+				null, null, null, null, Pagination.of(1, 2), "ratingValue:asc");
 
 		assertEquals(
 			Arrays.asList(messageBoardThread1, messageBoardThread2),
@@ -93,7 +93,8 @@ public class MessageBoardThreadResourceTest
 
 		Page<MessageBoardThread> descPage =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
-				null, null, null, Pagination.of(1, 2), "ratingValue:desc");
+				null, null, null, null, Pagination.of(1, 2),
+				"ratingValue:desc");
 
 		assertEquals(
 			Arrays.asList(messageBoardThread2, messageBoardThread1),

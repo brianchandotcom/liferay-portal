@@ -21,7 +21,6 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
@@ -65,6 +64,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
@@ -119,7 +119,8 @@ public class DocumentResourceImpl
 	@Override
 	public Page<Document> getDocumentFolderDocumentsPage(
 			Long documentFolderId, Boolean flatten, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		Folder folder = _dlAppService.getFolder(documentFolderId);
@@ -152,7 +153,7 @@ public class DocumentResourceImpl
 					new TermFilter(field, String.valueOf(documentFolderId)),
 					BooleanClauseOccur.MUST);
 			},
-			filter, search, pagination, sorts);
+			search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -173,12 +174,13 @@ public class DocumentResourceImpl
 
 	@Override
 	public Page<Document> getSiteDocumentsPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return _getDocumentsPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_DOCUMENT", "postSiteDocument",
@@ -208,7 +210,7 @@ public class DocumentResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			filter, search, pagination, sorts);
+			search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -425,7 +427,8 @@ public class DocumentResourceImpl
 	private Page<Document> _getDocumentsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Filter filter, String keywords, Pagination pagination, Sort[] sorts)
+			String keywords, Aggregation aggregation, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -433,8 +436,10 @@ public class DocumentResourceImpl
 			keywords, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.addVulcanAggregation(aggregation);
+			},
 			sorts,
 			document -> _toDocument(
 				_dlAppService.getFileEntry(
@@ -538,7 +543,7 @@ public class DocumentResourceImpl
 					ratingsEntry.getClassPK());
 
 				return RatingUtil.toRating(
-					HashMapBuilder.<String, Map<String, String>>put(
+					HashMapBuilder.put(
 						"create",
 						addAction(
 							"UPDATE", fileEntry.getPrimaryKey(),
@@ -642,9 +647,6 @@ public class DocumentResourceImpl
 
 	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private DLFileEntryService _dlFileEntryService;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

@@ -3209,6 +3209,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -3468,6 +3474,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -3613,6 +3625,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -3776,6 +3794,12 @@ paths:
                   schema:
                       type: boolean
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -3899,6 +3923,12 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -4093,6 +4123,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -4596,6 +4632,12 @@ paths:
                   schema:
                       type: boolean
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -4829,6 +4871,12 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -5336,6 +5384,12 @@ paths:
                   schema:
                       type: boolean
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -5521,6 +5575,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -5637,6 +5697,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -5722,6 +5788,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: page
                   schema:
@@ -5932,6 +6004,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -6231,6 +6309,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -6313,6 +6397,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -6426,6 +6516,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -6557,6 +6653,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -6602,6 +6704,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -6682,6 +6790,12 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -6766,6 +6880,12 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -6854,6 +6974,12 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -7042,6 +7168,12 @@ paths:
                   schema:
                       type: boolean
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -7126,6 +7258,12 @@ paths:
                   schema:
                       type: boolean
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -7209,6 +7347,12 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -7393,6 +7537,12 @@ paths:
                   schema:
                       type: boolean
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -7476,6 +7626,12 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -7670,6 +7826,12 @@ paths:
                       format: int64
                       type: integer
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -7747,6 +7909,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -7936,6 +8104,12 @@ paths:
                   name: flatten
                   schema:
                       type: boolean
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -8177,6 +8351,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:
@@ -8577,6 +8757,12 @@ paths:
                   schema:
                       format: int64
                       type: integer
+                - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
                 - in: query
                   name: filter
                   schema:

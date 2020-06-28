@@ -20,6 +20,13 @@ import com.liferay.asset.info.display.url.provider.AssetInfoEditURLProvider;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.info.display.contributor.InfoDisplayContributor;
+import com.liferay.info.display.contributor.InfoDisplayContributorTracker;
+import com.liferay.info.display.contributor.InfoDisplayObjectProvider;
+import com.liferay.info.item.InfoItemClassPKReference;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -42,16 +49,20 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-public class AssetListItemsActionDropdownItems {
+public class ListItemsActionDropdownItems {
 
-	public AssetListItemsActionDropdownItems(
+	public ListItemsActionDropdownItems(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		AssetInfoEditURLProvider assetInfoEditURLProvider,
+		InfoDisplayContributorTracker infoDisplayContributorTracker,
+		InfoItemServiceTracker infoItemServiceTracker,
 		HttpServletRequest httpServletRequest) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_assetInfoEditURLProvider = assetInfoEditURLProvider;
+		_infoDisplayContributorTracker = infoDisplayContributorTracker;
+		_infoItemServiceTracker = infoItemServiceTracker;
 
 		_httpServletRequest = httpServletRequest;
 
@@ -59,22 +70,44 @@ public class AssetListItemsActionDropdownItems {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public List<DropdownItem> getActionDropdownItems(AssetEntry assetEntry)
+	public List<DropdownItem> getActionDropdownItems(
+			String className, Object object)
 		throws Exception {
 
+		InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+			_infoItemServiceTracker.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class, className);
+
+		InfoItemFieldValues infoFormValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(object);
+
+		InfoItemClassPKReference infoItemClassPKReference =
+			infoFormValues.getInfoItemClassPKReference();
+
+		long classPK = infoItemClassPKReference.getClassPK();
+
+		String objectClassName = className;
+
+		if (object instanceof AssetEntry) {
+			AssetEntry assetEntry = (AssetEntry)object;
+
+			classPK = assetEntry.getClassPK();
+			objectClassName = assetEntry.getClassName();
+		}
+
 		return DropdownItemListBuilder.add(
-			_getViewDisplayPageActionUnsafeConsumer(assetEntry)
+			_getViewDisplayPageActionUnsafeConsumer(objectClassName, classPK)
 		).add(
-			_getEditContentActionUnsafeConsumer(assetEntry)
+			_getEditContentActionUnsafeConsumer(objectClassName, classPK)
 		).add(
-			_getEditDisplayPageActionUnsafeConsumer(assetEntry)
+			_getEditDisplayPageActionUnsafeConsumer(objectClassName, classPK)
 		).build();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getEditContentActionUnsafeConsumer(AssetEntry assetEntry) {
+		_getEditContentActionUnsafeConsumer(String className, long classPK) {
 
-		String editContentURL = _getEditContentURL(assetEntry);
+		String editContentURL = _getEditContentURL(className, classPK);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "editContent");
@@ -85,21 +118,21 @@ public class AssetListItemsActionDropdownItems {
 		};
 	}
 
-	private String _getEditContentURL(AssetEntry assetEntry) {
+	private String _getEditContentURL(String className, long classPK) {
 		String editContentURL = _assetInfoEditURLProvider.getURL(
-			assetEntry.getClassName(), assetEntry.getClassPK(),
-			_httpServletRequest);
+			className, classPK, _httpServletRequest);
 
 		return HttpUtil.setParameter(
 			editContentURL, "redirect", _getRedirect());
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getEditDisplayPageActionUnsafeConsumer(AssetEntry assetEntry)
+			_getEditDisplayPageActionUnsafeConsumer(
+				String className, long classPK)
 		throws Exception {
 
 		String editDisplayPageTemplateURL = _getEditDisplayPageTemplateURL(
-			assetEntry);
+			className, classPK);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "editDisplayPageTemplate");
@@ -113,13 +146,29 @@ public class AssetListItemsActionDropdownItems {
 		};
 	}
 
-	private String _getEditDisplayPageTemplateURL(AssetEntry assetEntry)
+	private String _getEditDisplayPageTemplateURL(
+			String className, long classPK)
 		throws Exception {
+
+		InfoDisplayContributor<?> infoDisplayContributor =
+			_infoDisplayContributorTracker.getInfoDisplayContributor(className);
+
+		if (infoDisplayContributor == null) {
+			return null;
+		}
+
+		InfoDisplayObjectProvider<?> infoDisplayObjectProvider =
+			infoDisplayContributor.getInfoDisplayObjectProvider(classPK);
+
+		if (infoDisplayObjectProvider == null) {
+			return null;
+		}
 
 		LayoutPageTemplateEntry assetDisplayPageLayoutPageTemplateEntry =
 			AssetDisplayPageUtil.getAssetDisplayPageLayoutPageTemplateEntry(
-				_themeDisplay.getScopeGroupId(), assetEntry.getClassNameId(),
-				assetEntry.getClassPK(), assetEntry.getClassTypeId());
+				_themeDisplay.getScopeGroupId(),
+				PortalUtil.getClassNameId(className), classPK,
+				infoDisplayObjectProvider.getClassTypeId());
 
 		if (assetDisplayPageLayoutPageTemplateEntry == null) {
 			return null;
@@ -165,10 +214,11 @@ public class AssetListItemsActionDropdownItems {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-			_getViewDisplayPageActionUnsafeConsumer(AssetEntry assetEntry)
+			_getViewDisplayPageActionUnsafeConsumer(
+				String className, long classPK)
 		throws Exception {
 
-		String viewDisplayPageURL = _getViewDisplayPageURL(assetEntry);
+		String viewDisplayPageURL = _getViewDisplayPageURL(className, classPK);
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "viewDisplayPage");
@@ -179,7 +229,7 @@ public class AssetListItemsActionDropdownItems {
 		};
 	}
 
-	private String _getViewDisplayPageURL(AssetEntry assetEntry)
+	private String _getViewDisplayPageURL(String className, long classPK)
 		throws Exception {
 
 		if (_assetDisplayPageFriendlyURLProvider == null) {
@@ -188,8 +238,7 @@ public class AssetListItemsActionDropdownItems {
 
 		String viewDisplayPageURL =
 			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				assetEntry.getClassName(), assetEntry.getClassPK(),
-				_themeDisplay);
+				className, classPK, _themeDisplay);
 
 		return HttpUtil.setParameter(
 			viewDisplayPageURL, "p_l_back_url", _getRedirect());
@@ -199,6 +248,8 @@ public class AssetListItemsActionDropdownItems {
 		_assetDisplayPageFriendlyURLProvider;
 	private final AssetInfoEditURLProvider _assetInfoEditURLProvider;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoDisplayContributorTracker _infoDisplayContributorTracker;
+	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private String _redirect;
 	private final ThemeDisplay _themeDisplay;
 

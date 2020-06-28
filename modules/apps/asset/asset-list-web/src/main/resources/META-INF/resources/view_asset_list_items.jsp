@@ -17,8 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetListItemsActionDropdownItems assetListItemsActionDropdownItems = (AssetListItemsActionDropdownItems)request.getAttribute(AssetListWebKeys.ASSET_LIST_ITEMS_ACTION_DROPDOWN_ITEMS);
 AssetListItemsDisplayContext assetListItemsDisplayContext = (AssetListItemsDisplayContext)request.getAttribute(AssetListWebKeys.ASSET_LIST_ITEMS_DISPLAY_CONTEXT);
+ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDropdownItems)request.getAttribute(AssetListWebKeys.LIST_ITEMS_ACTION_DROPDOWN_ITEMS);
+
+String className = AssetEntry.class.getName();
 %>
 
 <clay:container-fluid
@@ -68,8 +70,8 @@ AssetListItemsDisplayContext assetListItemsDisplayContext = (AssetListItemsDispl
 			<c:if test="<%= assetListItemsDisplayContext.isShowActions() %>">
 				<liferay-ui:search-container-column-text>
 					<clay:dropdown-actions
-						defaultEventHandler="<%= AssetListWebKeys.ASSET_LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-						dropdownItems="<%= assetListItemsActionDropdownItems.getActionDropdownItems(assetEntry) %>"
+						defaultEventHandler="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+						dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(className, assetEntry) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 			</c:if>
@@ -82,6 +84,6 @@ AssetListItemsDisplayContext assetListItemsDisplayContext = (AssetListItemsDispl
 </clay:container-fluid>
 
 <liferay-frontend:component
-	componentId="<%= AssetListWebKeys.ASSET_LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
-	module="js/AssetListItemsDropdownDefaultEventHandler.es"
+	componentId="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/ListItemsDropdownDefaultEventHandler.es"
 />

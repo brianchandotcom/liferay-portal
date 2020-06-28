@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.view.count.ViewCountManager;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -134,8 +135,9 @@ public class MessageBoardThreadResourceImpl
 	@Override
 	public Page<MessageBoardThread>
 			getMessageBoardSectionMessageBoardThreadsPage(
-				Long messageBoardSectionId, String search, Filter filter,
-				Pagination pagination, Sort[] sorts)
+				Long messageBoardSectionId, String search,
+				Aggregation aggregation, Filter filter, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		MBCategory mbCategory = _mbCategoryService.getCategory(
@@ -189,7 +191,8 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			mbCategory.getGroupId(), filter, search, pagination, sorts);
+			mbCategory.getGroupId(), search, aggregation, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -225,7 +228,7 @@ public class MessageBoardThreadResourceImpl
 	@Override
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 		Date dateCreated, Date dateModified, Long messageBoardSectionId,
-		Pagination pagination, Sort[] sorts) {
+		Aggregation aggregation, Pagination pagination, Sort[] sorts) {
 
 		DynamicQuery dynamicQuery = _getDynamicQuery(
 			dateCreated, dateModified, messageBoardSectionId);
@@ -293,12 +296,13 @@ public class MessageBoardThreadResourceImpl
 
 	@Override
 	public Page<MessageBoardThread> getSiteMessageBoardThreadsPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return _getSiteMessageBoardThreadsPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_MESSAGE", "postSiteMessageBoardThread",
@@ -323,7 +327,7 @@ public class MessageBoardThreadResourceImpl
 					new TermFilter("parentMessageId", "0"),
 					BooleanClauseOccur.MUST);
 			},
-			siteId, filter, search, pagination, sorts);
+			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -540,8 +544,8 @@ public class MessageBoardThreadResourceImpl
 	private Page<MessageBoardThread> _getSiteMessageBoardThreadsPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long siteId, Filter filter, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long siteId, String keywords, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -552,6 +556,7 @@ public class MessageBoardThreadResourceImpl
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 				searchContext.setGroupIds(new long[] {siteId});
+				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> _toMessageBoardThread(
@@ -567,7 +572,7 @@ public class MessageBoardThreadResourceImpl
 					ratingsEntry.getClassPK());
 
 				return RatingUtil.toRating(
-					HashMapBuilder.<String, Map<String, String>>put(
+					HashMapBuilder.put(
 						"create",
 						addAction(
 							"UPDATE", mbMessage,
@@ -607,7 +612,7 @@ public class MessageBoardThreadResourceImpl
 		return _messageBoardThreadDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.<String, Map<String, String>>put(
+				HashMapBuilder.put(
 					"delete",
 					addAction("DELETE", mbMessage, "deleteMessageBoardThread")
 				).put(

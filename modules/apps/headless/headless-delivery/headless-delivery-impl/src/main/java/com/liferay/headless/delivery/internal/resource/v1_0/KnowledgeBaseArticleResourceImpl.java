@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -114,15 +115,15 @@ public class KnowledgeBaseArticleResourceImpl
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 				Long parentKnowledgeBaseArticleId, Boolean flatten,
-				String search, Filter filter, Pagination pagination,
-				Sort[] sorts)
+				String search, Aggregation aggregation, Filter filter,
+				Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		KBArticle kbArticle = _kbArticleService.getLatestKBArticle(
 			parentKnowledgeBaseArticleId, WorkflowConstants.STATUS_APPROVED);
 
 		return _getKnowledgeBaseArticlesPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_KB_ARTICLE",
@@ -144,7 +145,8 @@ public class KnowledgeBaseArticleResourceImpl
 						String.valueOf(kbArticle.getResourcePrimKey())),
 					BooleanClauseOccur.MUST);
 			},
-			kbArticle.getGroupId(), filter, search, pagination, sorts);
+			kbArticle.getGroupId(), search, aggregation, filter, pagination,
+			sorts);
 	}
 
 	@Override
@@ -160,13 +162,14 @@ public class KnowledgeBaseArticleResourceImpl
 	public Page<KnowledgeBaseArticle>
 			getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 				Long knowledgeBaseFolderId, Boolean flatten, String search,
-				Filter filter, Pagination pagination, Sort[] sorts)
+				Aggregation aggregation, Filter filter, Pagination pagination,
+				Sort[] sorts)
 		throws Exception {
 
 		KBFolder kbFolder = _kbFolderService.getKBFolder(knowledgeBaseFolderId);
 
 		return _getKnowledgeBaseArticlesPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_KB_ARTICLE",
@@ -196,17 +199,19 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			kbFolder.getGroupId(), filter, search, pagination, sorts);
+			kbFolder.getGroupId(), search, aggregation, filter, pagination,
+			sorts);
 	}
 
 	@Override
 	public Page<KnowledgeBaseArticle> getSiteKnowledgeBaseArticlesPage(
-			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Long siteId, Boolean flatten, String search,
+			Aggregation aggregation, Filter filter, Pagination pagination,
+			Sort[] sorts)
 		throws Exception {
 
 		return _getKnowledgeBaseArticlesPage(
-			HashMapBuilder.<String, Map<String, String>>put(
+			HashMapBuilder.put(
 				"create",
 				addAction(
 					"ADD_KB_ARTICLE", "postSiteKnowledgeBaseArticle",
@@ -240,7 +245,7 @@ public class KnowledgeBaseArticleResourceImpl
 						BooleanClauseOccur.MUST);
 				}
 			},
-			siteId, filter, search, pagination, sorts);
+			siteId, search, aggregation, filter, pagination, sorts);
 	}
 
 	@Override
@@ -397,8 +402,8 @@ public class KnowledgeBaseArticleResourceImpl
 	private Page<KnowledgeBaseArticle> _getKnowledgeBaseArticlesPage(
 			Map<String, Map<String, String>> actions,
 			UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-			Long siteId, Filter filter, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long siteId, String keywords, Aggregation aggregation,
+			Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return SearchUtil.search(
@@ -415,6 +420,8 @@ public class KnowledgeBaseArticleResourceImpl
 				if (keywords == null) {
 					searchContext.setKeywords("");
 				}
+
+				searchContext.addVulcanAggregation(aggregation);
 			},
 			sorts,
 			document -> _toKnowledgeBaseArticle(
@@ -432,7 +439,7 @@ public class KnowledgeBaseArticleResourceImpl
 					WorkflowConstants.STATUS_APPROVED);
 
 				return RatingUtil.toRating(
-					HashMapBuilder.<String, Map<String, String>>put(
+					HashMapBuilder.put(
 						"create",
 						addAction(
 							"UPDATE", kbArticle.getResourcePrimKey(),
@@ -480,7 +487,7 @@ public class KnowledgeBaseArticleResourceImpl
 		return _knowledgeBaseArticleDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.<String, Map<String, String>>put(
+				HashMapBuilder.put(
 					"delete",
 					addAction(
 						"DELETE", kbArticle.getResourcePrimKey(),

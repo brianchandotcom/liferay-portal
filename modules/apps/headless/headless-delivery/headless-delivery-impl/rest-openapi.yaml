@@ -7306,6 +7306,12 @@ paths:
                   schema:
                       type: boolean
                 - in: query
+                  name: terms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
                   name: filter
                   schema:
                       type: string

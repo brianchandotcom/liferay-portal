@@ -30,6 +30,10 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.facet.SimpleFacet;
+import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
+import com.liferay.portal.kernel.search.facet.collector.TermCollector;
+import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
@@ -39,11 +43,14 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
+import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -128,23 +135,9 @@ public class SearchUtil {
 			}
 		}
 
-		List<Facet> facets = new ArrayList<>();
-
-		Facet facet = searchContext.getFacet("optionsNames");
-
-		FacetCollector facetCollector = facet.getFacetCollector();
-
-		for (TermCollector termCollector : facetCollector.getTermCollectors()) {
-			MultiValueFacet multiValueFacet = new MultiValueFacet(
-				searchContext);
-
-			multiValueFacet.setFieldName(termCollector.getTerm());
-
-			facets.add(multiValueFacet);
-		}
-
 		return Page.of(
-			actions, items, pagination, indexer.searchCount(searchContext));
+			actions, items, pagination, indexer.searchCount(searchContext),
+			_getFacets(searchContext));
 	}
 
 	/**
@@ -209,6 +202,28 @@ public class SearchUtil {
 
 	public static class SearchContext
 		extends com.liferay.portal.kernel.search.SearchContext {
+
+		public void addSimpleFacets(Aggregation aggregation) {
+			if ((aggregation == null) || (aggregation.getTerms() == null)) {
+				return;
+			}
+
+			Map<String, String> terms = aggregation.getTerms();
+
+			for (Map.Entry<String, String> entry : terms.entrySet()) {
+				com.liferay.portal.kernel.search.facet.Facet facet =
+					new SimpleFacet(this);
+
+				facet.setFieldName(entry.getValue());
+
+				FacetConfiguration facetConfiguration =
+					facet.getFacetConfiguration();
+
+				facetConfiguration.setLabel(entry.getKey());
+
+				addFacet(facet);
+			}
+		}
 
 		public boolean isVulcanCheckPermissions() {
 			return _vulcanCheckPermissions;
@@ -282,6 +297,45 @@ public class SearchUtil {
 
 		return BooleanClauseFactoryUtil.create(
 			booleanQuery, BooleanClauseOccur.MUST.getName());
+	}
+
+	private static Map<String, List<Facet>> _getFacets(
+		SearchContext searchContext) {
+
+		Map<String, List<Facet>> facetMap = new HashMap<>();
+
+		Map<String, com.liferay.portal.kernel.search.facet.Facet>
+			serviceBuilderFacetMap = searchContext.getFacets();
+
+		for (com.liferay.portal.kernel.search.facet.Facet facet :
+				serviceBuilderFacetMap.values()) {
+
+			FacetCollector facetCollector = facet.getFacetCollector();
+
+			List<Facet> facets = new ArrayList<>();
+
+			for (TermCollector termCollector :
+					facetCollector.getTermCollectors()) {
+
+				facets.add(
+					new Facet(
+						termCollector.getTerm(), termCollector.getFrequency()));
+			}
+
+			if (!facets.isEmpty()) {
+				FacetConfiguration facetConfiguration =
+					facet.getFacetConfiguration();
+
+				if (facetConfiguration.getLabel() != null) {
+					facetMap.put(facetConfiguration.getLabel(), facets);
+				}
+				else {
+					facetMap.put(facet.getFieldName(), facets);
+				}
+			}
+		}
+
+		return facetMap;
 	}
 
 	private static Object[] _getOrderByComparatorColumns(Sort[] sorts) {

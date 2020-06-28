@@ -563,7 +563,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Page<StructuredContent> page =
 			structuredContentResource.getSiteStructuredContentsPage(
 				testGetSiteStructuredContentsPage_getSiteId(), null,
-				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null);
+				RandomTestUtil.randomString(), null, Pagination.of(1, 2), null,
+				null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 
@@ -577,7 +578,8 @@ public abstract class BaseStructuredContentResourceTestCase {
 					irrelevantSiteId, randomIrrelevantStructuredContent());
 
 			page = structuredContentResource.getSiteStructuredContentsPage(
-				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null,
+				null);
 
 			Assert.assertEquals(1, page.getTotalCount());
 
@@ -596,7 +598,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				siteId, randomStructuredContent());
 
 		page = structuredContentResource.getSiteStructuredContentsPage(
-			siteId, null, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, Pagination.of(1, 2), null, null);
 
 		Assert.assertEquals(2, page.getTotalCount());
 
@@ -636,7 +638,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				structuredContentResource.getSiteStructuredContentsPage(
 					siteId, null, null,
 					getFilterString(entityField, "between", structuredContent1),
-					Pagination.of(1, 2), null);
+					Pagination.of(1, 2), null, null);
 
 			assertEquals(
 				Collections.singletonList(structuredContent1),
@@ -671,7 +673,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 				structuredContentResource.getSiteStructuredContentsPage(
 					siteId, null, null,
 					getFilterString(entityField, "eq", structuredContent1),
-					Pagination.of(1, 2), null);
+					Pagination.of(1, 2), null, null);
 
 			assertEquals(
 				Collections.singletonList(structuredContent1),
@@ -699,7 +701,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Page<StructuredContent> page1 =
 			structuredContentResource.getSiteStructuredContentsPage(
-				siteId, null, null, null, Pagination.of(1, 2), null);
+				siteId, null, null, null, Pagination.of(1, 2), null, null);
 
 		List<StructuredContent> structuredContents1 =
 			(List<StructuredContent>)page1.getItems();
@@ -709,7 +711,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Page<StructuredContent> page2 =
 			structuredContentResource.getSiteStructuredContentsPage(
-				siteId, null, null, null, Pagination.of(2, 2), null);
+				siteId, null, null, null, Pagination.of(2, 2), null, null);
 
 		Assert.assertEquals(3, page2.getTotalCount());
 
@@ -721,7 +723,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		Page<StructuredContent> page3 =
 			structuredContentResource.getSiteStructuredContentsPage(
-				siteId, null, null, null, Pagination.of(1, 3), null);
+				siteId, null, null, null, Pagination.of(1, 3), null, null);
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -844,7 +846,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Page<StructuredContent> ascPage =
 				structuredContentResource.getSiteStructuredContentsPage(
 					siteId, null, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":asc");
+					entityField.getName() + ":asc", null);
 
 			assertEquals(
 				Arrays.asList(structuredContent1, structuredContent2),
@@ -853,7 +855,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Page<StructuredContent> descPage =
 				structuredContentResource.getSiteStructuredContentsPage(
 					siteId, null, null, null, Pagination.of(1, 2),
-					entityField.getName() + ":desc");
+					entityField.getName() + ":desc", null);
 
 			assertEquals(
 				Arrays.asList(structuredContent2, structuredContent1),

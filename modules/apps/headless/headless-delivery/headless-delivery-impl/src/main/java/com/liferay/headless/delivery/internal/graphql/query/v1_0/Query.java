@@ -1623,7 +1623,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContents(filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContents(aggregation: ___, filter: ___, flatten: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the site's structured content. Results can be paginated, filtered, searched, flattened, and sorted."
@@ -1635,7 +1635,9 @@ public class Query {
 			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page,
-			@GraphQLName("sort") String sortsString)
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("aggregation")
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
@@ -1648,7 +1650,8 @@ public class Query {
 						structuredContentResource, filterString),
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(
-						structuredContentResource, sortsString))));
+						structuredContentResource, sortsString),
+					aggregation)));
 	}
 
 	/**

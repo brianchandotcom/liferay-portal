@@ -151,7 +151,9 @@ public abstract class BaseStructuredContentResourceImpl
 			@Parameter(hidden = true) @QueryParam("flatten") Boolean flatten,
 			@Parameter(hidden = true) @QueryParam("search") String search,
 			@Context Filter filter, @Context Pagination pagination,
-			@Context Sort[] sorts)
+			@Context Sort[] sorts,
+			@Context com.liferay.portal.vulcan.aggregation.Aggregation
+				aggregation)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -1044,7 +1046,7 @@ public abstract class BaseStructuredContentResourceImpl
 
 		return getSiteStructuredContentsPage(
 			(Long)parameters.get("siteId"), (Boolean)parameters.get("flatten"),
-			search, filter, pagination, sorts);
+			search, filter, pagination, sorts, null);
 	}
 
 	@Override

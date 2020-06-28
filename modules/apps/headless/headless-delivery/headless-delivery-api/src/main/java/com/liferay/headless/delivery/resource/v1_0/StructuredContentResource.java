@@ -57,7 +57,8 @@ public interface StructuredContentResource {
 
 	public Page<StructuredContent> getSiteStructuredContentsPage(
 			Long siteId, Boolean flatten, String search, Filter filter,
-			Pagination pagination, Sort[] sorts)
+			Pagination pagination, Sort[] sorts,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation)
 		throws Exception;
 
 	public StructuredContent postSiteStructuredContent(

@@ -55,3 +55,8 @@ StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContex
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
+
+<liferay-frontend:component
+	componentId="<%= styleBookManagementToolbarDisplayContext.getDefaultEventHandler() %>"
+	module="js/ManagementToolbarDefaultEventHandler.es"
+/>

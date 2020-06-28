@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -94,6 +95,19 @@ public class InfoListProviderItemsDisplayContext {
 			_themeDisplay.getLocale(), className);
 	}
 
+	public String getInfoListProviderClassName() {
+		if (Validator.isNotNull(_infoListProviderClassName)) {
+			return _infoListProviderClassName;
+		}
+
+		InfoListProvider<?> infoListProvider = _getInfoListProvider();
+
+		_infoListProviderClassName = GenericUtil.getGenericClassName(
+			infoListProvider);
+
+		return _infoListProviderClassName;
+	}
+
 	public SearchContainer<Object> getSearchContainer() {
 		SearchContainer<Object> searchContainer = new SearchContainer<>(
 			_renderRequest, _getPortletURL(), null,
@@ -117,6 +131,16 @@ public class InfoListProviderItemsDisplayContext {
 		searchContainer.setTotal(infoList.size());
 
 		return searchContainer;
+	}
+
+	public boolean isShowActions() {
+		if (_showActions != null) {
+			return _showActions;
+		}
+
+		_showActions = ParamUtil.get(_renderRequest, "showActions", false);
+
+		return _showActions;
 	}
 
 	private InfoListProvider<?> _getInfoListProvider() {
@@ -163,9 +187,11 @@ public class InfoListProviderItemsDisplayContext {
 	private InfoItemFieldValuesProvider<Object> _infoItemFieldValuesProvider;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private InfoListProvider<?> _infoListProvider;
+	private String _infoListProviderClassName;
 	private String _infoListProviderKey;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private Boolean _showActions;
 	private final ThemeDisplay _themeDisplay;
 
 }

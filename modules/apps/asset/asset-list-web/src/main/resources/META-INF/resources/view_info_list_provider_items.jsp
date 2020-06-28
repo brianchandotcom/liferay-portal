@@ -18,8 +18,11 @@
 
 <%
 InfoListProviderItemsDisplayContext infoListProviderItemsDisplayContext = (InfoListProviderItemsDisplayContext)request.getAttribute(AssetListWebKeys.INFO_LIST_PROVIDER_ITEMS_DISPLAY_CONTEXT);
+ListItemsActionDropdownItems listItemsActionDropdownItems = (ListItemsActionDropdownItems)request.getAttribute(AssetListWebKeys.LIST_ITEMS_ACTION_DROPDOWN_ITEMS);
 
 InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoListProviderItemsDisplayContext.getInfoItemFieldValuesProvider();
+
+String infoListProviderClassName = infoListProviderItemsDisplayContext.getInfoListProviderClassName();
 %>
 
 <clay:container-fluid
@@ -68,6 +71,15 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoListProviderItems
 					name="create-date"
 					value="<%= String.valueOf(createDate.getValue()) %>"
 				/>
+
+				<c:if test="<%= infoListProviderItemsDisplayContext.isShowActions() %>">
+					<liferay-ui:search-container-column-text>
+						<clay:dropdown-actions
+							defaultEventHandler="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+							dropdownItems="<%= listItemsActionDropdownItems.getActionDropdownItems(infoListProviderClassName, result) %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:if>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator
@@ -76,3 +88,8 @@ InfoItemFieldValuesProvider<Object> infoItemFormProvider = infoListProviderItems
 		</liferay-ui:search-container>
 	</aui:form>
 </clay:container-fluid>
+
+<liferay-frontend:component
+	componentId="<%= AssetListWebKeys.LIST_ITEMS_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/ListItemsDropdownDefaultEventHandler.es"
+/>

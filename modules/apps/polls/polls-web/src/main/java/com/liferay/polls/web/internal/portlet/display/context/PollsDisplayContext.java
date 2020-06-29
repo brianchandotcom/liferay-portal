@@ -31,6 +31,8 @@ import com.liferay.polls.web.internal.portlet.search.PollsQuestionSearch;
 import com.liferay.polls.web.internal.security.permission.resource.PollsPermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -451,11 +453,18 @@ public class PollsDisplayContext {
 			pollsQuestionSearch.setTotal(hits.getLength());
 		}
 		catch (SearchException searchException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(searchException, searchException);
+			}
+
 			pollsQuestionSearch.setResults(Collections.emptyList());
 
 			pollsQuestionSearch.setTotal(0);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PollsDisplayContext.class);
 
 	private final PollsQuestionLocalService _pollsQuestionLocalService;
 	private PollsQuestionSearch _pollsQuestionSearch;

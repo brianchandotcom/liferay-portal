@@ -749,6 +749,11 @@ public class GitHubDevSyncUtil {
 	protected static void deleteRemoteGitBranches(
 		GitWorkingDirectory gitWorkingDirectory,
 		List<RemoteGitBranch> remoteGitBranches) {
+
+		if (remoteGitBranches.isEmpty()) {
+			return;
+		}
+
 		gitWorkingDirectory.deleteRemoteGitBranches(remoteGitBranches);
 
 		StringBuilder sb = new StringBuilder();

@@ -168,7 +168,9 @@ public class RESTBuilder {
 		}
 
 		if (Validator.isNotNull(_configYAML.getClientDir())) {
+			_createClientAggregationFile(context);
 			_createClientBaseJSONParserFile(context);
+			_createClientFacetFile(context);
 			_createClientHttpInvokerFile(context);
 			_createClientPageFile(context);
 			_createClientPaginationFile(context);
@@ -504,6 +506,27 @@ public class RESTBuilder {
 				_copyrightFile, "base_resource_test_case", context));
 	}
 
+	private void _createClientAggregationFile(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+		sb.append(
+			StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'));
+		sb.append("/client/aggregation/Aggregation.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, "client_aggregation", context));
+	}
+
 	private void _createClientBaseJSONParserFile(Map<String, Object> context)
 		throws Exception {
 
@@ -577,6 +600,27 @@ public class RESTBuilder {
 			file,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, "client_enum", context));
+	}
+
+	private void _createClientFacetFile(Map<String, Object> context)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_configYAML.getClientDir());
+		sb.append("/");
+		sb.append(
+			StringUtil.replace(_configYAML.getApiPackagePath(), '.', '/'));
+		sb.append("/client/aggregation/Facet.java");
+
+		File file = new File(sb.toString());
+
+		_files.add(file);
+
+		FileUtil.write(
+			file,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, "client_facet", context));
 	}
 
 	private void _createClientHttpInvokerFile(Map<String, Object> context)

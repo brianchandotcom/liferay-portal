@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from 'dynamic-data-mapping-form-renderer';
+import {PagesVisitor, generateName} from 'dynamic-data-mapping-form-renderer';
 import Form from 'dynamic-data-mapping-form-renderer/js/containers/Form/Form.es';
 
 export const getEvents = (dispatchEvent, settingsContext) => {
@@ -61,7 +61,12 @@ export const getEvents = (dispatchEvent, settingsContext) => {
 	};
 };
 
-export const getFilteredSettingsContext = ({config, settingsContext}) => {
+export const getFilteredSettingsContext = ({
+	config,
+	editingLanguageId,
+	settingsContext,
+}) => {
+	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 	const unsupportedTabs = [...config.disabledTabs];
 
 	const pages = settingsContext.pages.filter(
@@ -81,11 +86,17 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 			return {
 				...column,
 				fields: column.fields.map((field) => {
-					const {fieldName} = field;
+					const {fieldName, name} = field;
+					const updatedField = {
+						...field,
+						defaultLanguageId,
+						editingLanguageId,
+					};
 
 					if (unsupportedProperties.includes(fieldName)) {
 						return {
-							...field,
+							...updatedField,
+							name: generateName(name, updatedField),
 							visibilityExpression: 'FALSE',
 							visible: false,
 						};
@@ -93,13 +104,17 @@ export const getFilteredSettingsContext = ({config, settingsContext}) => {
 
 					if (fieldName === 'dataSourceType') {
 						return {
-							...field,
+							...updatedField,
+							name: generateName(name, updatedField),
 							predefinedValue: '["manual"]',
 							readOnly: true,
 						};
 					}
 
-					return field;
+					return {
+						...updatedField,
+						name: generateName(name, updatedField),
+					};
 				}),
 			};
 		}),

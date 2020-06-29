@@ -31,7 +31,7 @@ import renderSettingsForm, {
 export default function () {
 	const [dataLayoutBuilder] = useContext(DataLayoutBuilderContext);
 	const [state, dispatch] = useContext(AppContext);
-	const {focusedCustomObjectField, focusedField} = state;
+	const {editingLanguageId, focusedCustomObjectField, focusedField} = state;
 	const {
 		settingsContext: customObjectFieldSettingsContext,
 	} = focusedCustomObjectField;
@@ -46,6 +46,7 @@ export default function () {
 	useEffect(() => {
 		const filteredSettingsContext = getFilteredSettingsContext({
 			config: state.config,
+			editingLanguageId,
 			settingsContext,
 		});
 
@@ -86,6 +87,7 @@ export default function () {
 	}, [
 		dataLayoutBuilder,
 		dispatch,
+		editingLanguageId,
 		focusedField,
 		form,
 		formRef,
@@ -97,6 +99,15 @@ export default function () {
 	useEffect(() => {
 		return () => form && form.dispose();
 	}, [form]);
+
+	useEffect(() => {
+		if (form) {
+			form.setState({
+				defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+				editingLanguageId,
+			});
+		}
+	}, [editingLanguageId, form]);
 
 	const focusedFieldName = focusedField.name;
 

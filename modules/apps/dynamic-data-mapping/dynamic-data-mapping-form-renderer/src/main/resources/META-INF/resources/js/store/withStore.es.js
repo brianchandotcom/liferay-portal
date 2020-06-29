@@ -172,18 +172,22 @@ export default (Component) => {
 			if (editingLanguageId) {
 				const visitor = new PagesVisitor(this.pages);
 
-				this.pages = visitor.mapFields(
-					({localizedValue}) => ({
-						value:
-							localizedValue &&
-							localizedValue[editingLanguageId.newVal]
-								? localizedValue[editingLanguageId.newVal]
-								: localizedValue[defaultLanguageId]
-								? localizedValue[defaultLanguageId]
-								: null,
-					}),
-					true
-				);
+				this.pages = visitor.mapFields(({localizedValue}) => {
+					let value;
+
+					if (localizedValue) {
+						if (localizedValue[editingLanguageId.newVal]) {
+							value = localizedValue[editingLanguageId.newVal];
+						}
+						else if (localizedValue[defaultLanguageId]) {
+							value = localizedValue[defaultLanguageId];
+						}
+					}
+
+					return {
+						value,
+					};
+				}, true);
 			}
 		}
 

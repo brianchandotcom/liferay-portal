@@ -41,17 +41,29 @@ export default ({children, dataLayoutBuilder}) => {
 
 	useEffect(() => {
 		const provider = dataLayoutBuilder.getLayoutProvider();
+		const availableLanguageIds = [
+			...new Set([
+				...provider.props.availableLanguageIds,
+				editingLanguageId,
+			]),
+		];
 
 		provider.props = {
 			...provider.props,
-			availableLanguageIds: [
-				...new Set([
-					...provider.props.availableLanguageIds,
-					editingLanguageId,
-				]),
-			],
+			availableLanguageIds,
 			editingLanguageId,
 		};
+
+		dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps = {
+			...dataLayoutBuilder.formBuilderWithLayoutProvider.props
+				.layoutProviderProps,
+			availableLanguageIds,
+			defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+			editingLanguageId,
+		};
+
+		dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps =
+			dataLayoutBuilder.formBuilderWithLayoutProvider.props.layoutProviderProps; // eslint-disable-line
 
 		if (Object.keys(focusedField).length) {
 			provider.getEvents().fieldClicked(focusedField);

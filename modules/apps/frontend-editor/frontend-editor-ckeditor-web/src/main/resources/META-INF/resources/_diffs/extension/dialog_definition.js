@@ -14,6 +14,8 @@
 
 CKEDITOR.on('dialogDefinition', (event) => {
 	if (event.editor === ckEditor) {
+		var boundingWindow = event.editor.window;
+
 		var dialogDefinition = event.data.definition;
 
 		var onShow = dialogDefinition.onShow;
@@ -56,5 +58,14 @@ CKEDITOR.on('dialogDefinition', (event) => {
 
 			instance.move(x, y, false);
 		}
+
+		AUI().use('aui-debounce', A => {
+			boundingWindow.on(
+				'resize',
+				A.debounce(() => {
+					centerDialog();
+				}, 250)
+			);
+		});
 	}
 });

@@ -31,6 +31,8 @@
 				"deltaValues", PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES
 			).put(
 				"pathFriendlyURLPublic", PortalUtil.getPathFriendlyURLPublic()
+			).put(
+				"showNativeObjectsTab", request.getAttribute(AppBuilderWebKeys.SHOW_NATIVE_OBJECTS_TAB)
 			).build() %>'
 		module="js/index.es"
 	/>

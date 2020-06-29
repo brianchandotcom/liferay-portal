@@ -55,11 +55,11 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		_setUpJSONFactoryUtil();
-
 		_numericDDMFormFieldTypeReportProcessor.
 			ddmFormInstanceRecordLocalService =
 				_ddmFormInstanceRecordLocalService;
+
+		_setUpJSONFactoryUtil();
 	}
 
 	@Test

@@ -144,6 +144,22 @@
 		"ColumnDefinition": {
 			"additionalProperties": false,
 			"properties": {
+				"columnViewportConfig": {
+					"additionalProperties": false,
+					"properties": {
+						"landscapeMobile": {
+							"$ref": "#/definitions/ColumnViewportConfigDefinition"
+						},
+						"portraitMobile": {
+							"$ref": "#/definitions/ColumnViewportConfigDefinition"
+						},
+						"tablet": {
+							"$ref": "#/definitions/ColumnViewportConfigDefinition"
+						}
+					},
+					"title": "The columnViewportConfig Schema",
+					"type": "object"
+				},
 				"size": {
 					"maximum": 12,
 					"minimum": 1,
@@ -152,6 +168,19 @@
 				}
 			},
 			"title": "The ColumnDefinition Schema",
+			"type": "object"
+		},
+		"ColumnViewportConfigDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"size": {
+					"maximum": 12,
+					"minimum": 1,
+					"title": "The size Schema",
+					"type": "integer"
+				}
+			},
+			"title": "The ColumnViewportConfigDefinition Schema",
 			"type": "object"
 		},
 		"ContextReference": {

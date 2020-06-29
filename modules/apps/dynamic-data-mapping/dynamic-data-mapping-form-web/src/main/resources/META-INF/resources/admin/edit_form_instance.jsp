@@ -81,6 +81,11 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 						<%= LanguageUtil.get(request, "preview") %>
 					</button>
 				</li>
+				<li class="nav-item pl-2 pr-2">
+					<button class="btn btn-secondary btn-sm lfr-ddm-save-button">
+						<%= LanguageUtil.get(request, "save") %>
+					</button>
+				</li>
 				<li class="nav-item">
 					<button class="btn btn-primary btn-sm lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced" id="addFieldButton">
 						<svg class="lexicon-icon">

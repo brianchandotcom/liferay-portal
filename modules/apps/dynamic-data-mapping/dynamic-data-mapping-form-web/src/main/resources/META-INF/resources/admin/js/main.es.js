@@ -178,6 +178,11 @@ class Form extends Component {
 				'.lfr-ddm-preview-button',
 				'click',
 				this._handlePreviewButtonClicked.bind(this)
+			),
+			dom.on(
+				'.lfr-ddm-save-button',
+				'click',
+				this._handleSaveButtonClicked.bind(this)
 			)
 		);
 
@@ -470,13 +475,6 @@ class Form extends Component {
 										.publishFormInstanceURL
 								}
 							/>
-							<button
-								class="btn btn-secondary ddm-button"
-								data-onclick="_handleSaveButtonClicked"
-								ref="saveButton"
-							>
-								{saveButtonLabel}
-							</button>
 						</div>
 					)}
 

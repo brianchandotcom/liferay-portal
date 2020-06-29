@@ -15,7 +15,20 @@
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React from 'react';
 
+const formatSummary = (summary) => {
+	const formatedSummary = {};
+
+	formatedSummary['sum'] = summary['sum'];
+	formatedSummary['average'] = summary['average'];
+	formatedSummary['min'] = summary['min'];
+	formatedSummary['max'] = summary['max'];
+
+	return formatedSummary;
+};
+
 export default ({summary}) => {
+	summary = formatSummary(summary);
+
 	const formatNumber = (number) => {
 		let formatedNumber = number.toString();
 
@@ -34,12 +47,14 @@ export default ({summary}) => {
 		};
 
 		if (formatedNumber != summary[key]) {
-			attributes['title'] = formatedNumber;
+			attributes['title'] = summary[key];
 		}
 
 		return (
 			<div className="summary-item" key={`summary-item-${index}`}>
-				<div className="type">{key}</div>
+				<div className="type">
+					{key.charAt(0).toUpperCase() + key.slice(1)}
+				</div>
 				<div {...attributes} data-tooltip-align="bottom">
 					{formatNumber(summary[key])}
 				</div>

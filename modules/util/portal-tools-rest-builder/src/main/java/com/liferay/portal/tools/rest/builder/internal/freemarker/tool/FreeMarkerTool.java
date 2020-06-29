@@ -127,6 +127,8 @@ public class FreeMarkerTool {
 		parameter = StringUtil.replace(
 			parameter, "com.liferay.portal.kernel.search.Sort[] sorts",
 			"String sortString");
+		parameter = StringUtil.removeSubstring(
+			parameter, "com.liferay.portal.vulcan.aggregation.");
 		parameter = StringUtil.replace(
 			parameter,
 			"com.liferay.portal.vulcan.multipart.MultipartBody multipartBody",
@@ -134,9 +136,9 @@ public class FreeMarkerTool {
 				schemaName, " ", schemaVarName,
 				", Map<String, File> multipartFiles"));
 		parameter = StringUtil.removeSubstring(
-			parameter, "com.liferay.portal.vulcan.permission.");
-		parameter = StringUtil.removeSubstring(
 			parameter, "com.liferay.portal.vulcan.pagination.");
+		parameter = StringUtil.removeSubstring(
+			parameter, "com.liferay.portal.vulcan.permission.");
 
 		return parameter;
 	}

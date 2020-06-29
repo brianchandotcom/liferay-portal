@@ -87,7 +87,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	public void testUpdateArticleFromInfoItemFieldValuesAddsTranslatedContent()
 		throws Exception {
 
-		JournalArticle article = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class),
 			HashMapBuilder.put(
@@ -109,9 +109,10 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 				TranslationTestUtil.readFileToInputStream(
 					"test-journal-article-122.xlf"));
 
-		JournalArticle journalArticle =
+		journalArticle =
 			_journalArticleInfoItemFieldValuesUpdater.
-				updateFromInfoItemFieldValues(article, infoItemFieldValues);
+				updateFromInfoItemFieldValues(
+					journalArticle, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
@@ -129,7 +130,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	public void testUpdateArticleFromInfoItemFieldValuesDoesNotModifyOtherTranslations()
 		throws Exception {
 
-		JournalArticle article = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class),
 			HashMapBuilder.put(
@@ -157,9 +158,10 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 				TranslationTestUtil.readFileToInputStream(
 					"test-journal-article-122-ja-JP.xlf"));
 
-		JournalArticle journalArticle =
+		journalArticle =
 			_journalArticleInfoItemFieldValuesUpdater.
-				updateFromInfoItemFieldValues(article, infoItemFieldValues);
+				updateFromInfoItemFieldValues(
+					journalArticle, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"これはタイトルです", journalArticle.getTitle(LocaleUtil.JAPAN));
@@ -186,7 +188,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	public void testUpdateArticleFromInfoItemFieldValuesUpdatesOnlyTheTitle()
 		throws Exception {
 
-		JournalArticle article = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class),
 			HashMapBuilder.put(
@@ -210,9 +212,10 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 				TranslationTestUtil.readFileToInputStream(
 					"test-journal-article-122-only-title.xlf"));
 
-		JournalArticle journalArticle =
+		journalArticle =
 			_journalArticleInfoItemFieldValuesUpdater.
-				updateFromInfoItemFieldValues(article, infoItemFieldValues);
+				updateFromInfoItemFieldValues(
+					journalArticle, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
@@ -229,7 +232,7 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	public void testUpdateArticleFromInfoItemFieldValuesUpdatesTranslations()
 		throws Exception {
 
-		JournalArticle article = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
 			PortalUtil.getClassNameId(JournalArticle.class),
 			HashMapBuilder.put(
@@ -250,14 +253,16 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
 
 		Assert.assertEquals(
-			"translate title to japanese", article.getTitle(LocaleUtil.JAPAN));
+			"translate title to japanese",
+			journalArticle.getTitle(LocaleUtil.JAPAN));
 		Assert.assertEquals(
 			"translate description to japanese",
-			article.getDescription(LocaleUtil.JAPAN));
+			journalArticle.getDescription(LocaleUtil.JAPAN));
 		Assert.assertEquals(
 			"translate content to japanese",
 			_getContent(
-				article.getContent(), "name", LocaleUtil.US, LocaleUtil.JAPAN));
+				journalArticle.getContent(), "name", LocaleUtil.US,
+				LocaleUtil.JAPAN));
 
 		InfoItemFieldValues infoItemFieldValues =
 			_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
@@ -267,16 +272,15 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 				TranslationTestUtil.readFileToInputStream(
 					"test-journal-article-122-ja-JP.xlf"));
 
-		JournalArticle journalArticle =
+		journalArticle =
 			_journalArticleInfoItemFieldValuesUpdater.
-				updateFromInfoItemFieldValues(article, infoItemFieldValues);
+				updateFromInfoItemFieldValues(
+					journalArticle, infoItemFieldValues);
 
 		Assert.assertEquals(
 			"これはタイトルです", journalArticle.getTitle(LocaleUtil.JAPAN));
-
 		Assert.assertEquals(
 			"これは要約です", journalArticle.getDescription(LocaleUtil.JAPAN));
-
 		Assert.assertEquals(
 			"<p>これが内容です</p>",
 			_getContent(

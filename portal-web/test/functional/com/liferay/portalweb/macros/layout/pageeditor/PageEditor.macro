@@ -812,6 +812,8 @@ definition {
 				value1 = "${text}");
 		}
 
+		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
+
 		PageEditor.waitForAutoSave();
 	}
 

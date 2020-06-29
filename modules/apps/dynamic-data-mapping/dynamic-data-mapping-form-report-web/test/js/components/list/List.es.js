@@ -37,6 +37,24 @@ describe('List', () => {
 		expect(asFragment()).toMatchSnapshot();
 	});
 
+	it('renders color list', () => {
+		const colorProps = {
+			...props,
+			data: ['7F26FF', '2BA676', 'CBCBCB', 'FF21A0', 'FF0D0D'],
+			type: 'color',
+		};
+
+		const {container} = render(<List {...colorProps} />);
+
+		const colorTextList = container.querySelectorAll('.color-text');
+
+		expect(colorTextList.length).toBe(5);
+
+		colorTextList.forEach((colorText, index) =>
+			expect(colorText.textContent).toBe(colorProps.data[index])
+		);
+	});
+
 	it('shows a button to see all entries when there are more than 5 entries', () => {
 		const {container} = render(<List {...props} totalEntries={6} />);
 

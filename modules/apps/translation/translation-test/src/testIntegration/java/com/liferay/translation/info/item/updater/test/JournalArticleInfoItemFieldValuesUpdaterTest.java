@@ -115,11 +115,9 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"Este es el resumen",
 			journalArticle.getDescription(LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"<p>Este es el contenido</p>",
 			_getContent(
@@ -164,29 +162,24 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 				updateFromInfoItemFieldValues(article, infoItemFieldValues);
 
 		Assert.assertEquals(
+			"これはタイトルです", journalArticle.getTitle(LocaleUtil.JAPAN));
+		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
-
+		Assert.assertEquals(
+			"これは要約です", journalArticle.getDescription(LocaleUtil.JAPAN));
 		Assert.assertEquals(
 			"Esta es la descripcion",
 			journalArticle.getDescription(LocaleUtil.SPAIN));
-
-		Assert.assertEquals(
-			"Este es el contenido",
-			_getContent(
-				journalArticle.getContent(), "name", LocaleUtil.US,
-				LocaleUtil.SPAIN));
-
-		Assert.assertEquals(
-			"これはタイトルです", journalArticle.getTitle(LocaleUtil.JAPAN));
-
-		Assert.assertEquals(
-			"これは要約です", journalArticle.getDescription(LocaleUtil.JAPAN));
-
 		Assert.assertEquals(
 			"<p>これが内容です</p>",
 			_getContent(
 				journalArticle.getContent(), "name", LocaleUtil.US,
 				LocaleUtil.JAPAN));
+		Assert.assertEquals(
+			"Este es el contenido",
+			_getContent(
+				journalArticle.getContent(), "name", LocaleUtil.US,
+				LocaleUtil.SPAIN));
 	}
 
 	@Test

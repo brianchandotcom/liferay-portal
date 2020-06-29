@@ -42,7 +42,7 @@ public class CORSServletFilter extends BaseFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (corsSupport.isCORSRequest(httpServletRequest::getHeader)) {
+		if (CORSSupport.isCORSRequest(httpServletRequest::getHeader)) {
 			return true;
 		}
 

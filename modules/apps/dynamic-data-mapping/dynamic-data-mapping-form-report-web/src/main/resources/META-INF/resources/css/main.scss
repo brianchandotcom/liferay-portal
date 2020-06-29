@@ -11,7 +11,8 @@ body,
 	width: 100%;
 }
 
-.card {
+.card,
+.sidebar-body {
 	box-shadow: none;
 	margin-bottom: 0;
 	padding: 0 12px;
@@ -21,6 +22,7 @@ body,
 		background-color: white;
 		background-image: none;
 		padding: 0;
+		padding-bottom: 16px;
 	}
 
 	.card-body {
@@ -122,7 +124,7 @@ body,
 	}
 
 	.field-info {
-		margin-bottom: 24px;
+		margin-bottom: 18px;
 		margin-left: 52px;
 	}
 
@@ -133,6 +135,7 @@ body,
 	.summary {
 		display: flex;
 		justify-content: flex-start;
+		padding-top: 8px;
 
 		.summary-item:last-child {
 			margin-right: 0;
@@ -143,7 +146,6 @@ body,
 			background: #f7f8f9;
 			border-radius: 4px;
 			cursor: default;
-			margin-bottom: 16px;
 			margin-right: 16px;
 			padding: 8px 12px;
 
@@ -267,6 +269,11 @@ body,
 			padding: 18px 8px;
 		}
 
+		.entries-list {
+			border-top: 1px solid #e7e7ed;
+			margin-top: 15px;
+		}
+
 		.icon {
 			background: #f7f8f9;
 			border-radius: 4px;
@@ -279,6 +286,10 @@ body,
 				height: 100%;
 				width: 100%;
 			}
+		}
+
+		.summary {
+			padding-top: 32px;
 		}
 
 		.tbar-item-expand {

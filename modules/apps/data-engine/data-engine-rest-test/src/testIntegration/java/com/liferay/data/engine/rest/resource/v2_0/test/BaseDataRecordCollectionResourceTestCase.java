@@ -614,6 +614,11 @@ public abstract class BaseDataRecordCollectionResourceTestCase {
 	}
 
 	@Test
+	public void testGetDataRecordCollectionPermissionsPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPutDataRecordCollectionPermission() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DataRecordCollection dataRecordCollection =

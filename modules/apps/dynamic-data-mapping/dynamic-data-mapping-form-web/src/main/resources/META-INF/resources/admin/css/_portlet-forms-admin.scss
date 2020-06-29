@@ -78,12 +78,19 @@
 	}
 
 	.autosave-feedback {
+		color: #6b6c7e;
 		display: block;
+		font-style: italic;
 		padding-bottom: 18.071px;
-		padding-left: 124px;
+		padding-right: 124px;
 		padding-top: 18.071px;
 		text-align: center;
-		width: 100%;
+	}
+
+	.autosave-feedback-container {
+		align-items: center;
+		display: flex;
+		justify-content: flex-end;
 	}
 
 	.management-bar .liferayalert {

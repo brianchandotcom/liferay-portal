@@ -57,7 +57,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 		<clay:container-fluid
 			cssClass="autosave-bar toolbar"
 		>
-			<div class="navbar-form navbar-form-autofit navbar-overlay toolbar-group-content">
+			<div class="autosave-feedback-container navbar-form navbar-form-autofit navbar-overlay toolbar-group-content">
 				<span class="autosave-feedback management-bar-text" id="<portlet:namespace />autosaveMessage"></span>
 			</div>
 
@@ -92,7 +92,7 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 					</button>
 				</li>
 				<li class="nav-item">
-					<button class="btn btn-primary btn-sm lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced" id="addFieldButton">
+					<button class="btn btn-primary btn-sm lfr-ddm-add-field lfr-ddm-plus-button nav-btn nav-btn-monospaced" id="addFieldButton" title="<%= LanguageUtil.get(request, "add-elements") %>">
 						<svg class="lexicon-icon">
 							<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
 						</svg>

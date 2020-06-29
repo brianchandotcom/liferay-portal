@@ -32,6 +32,8 @@ jest.mock(
 
 const renderComponent = ({
 	activeItemId = null,
+	hasUpdatePermissions = true,
+	lockedExperience = false,
 	masterRootItemChildren = ['11-container'],
 	rootItemChildren = ['01-container'],
 } = {}) => {
@@ -154,7 +156,8 @@ const renderComponent = ({
 					},
 
 					permissions: {
-						UPDATE: true,
+						LOCKED_SEGMENTS_EXPERIMENT: lockedExperience,
+						UPDATE: hasUpdatePermissions,
 					},
 
 					selectedViewportSize: VIEWPORT_SIZES.desktop,
@@ -283,5 +286,16 @@ describe('PageStructureSidebar', () => {
 		userEvent.click(button);
 
 		expect(button.parentElement).toHaveAttribute('aria-selected', 'false');
+	});
+
+	it('Does not allow removing items if user has no permissions', () => {
+		const {queryByLabelText} = renderComponent({
+			hasUpdatePermissions: false,
+			rootItemChildren: ['01-container', '02-row', '04-fragment'],
+		});
+
+		expect(queryByLabelText('remove-x-container')).toBe(null);
+		expect(queryByLabelText('remove-x-row')).toBe(null);
+		expect(queryByLabelText('remove-x-Fragment 1')).toBe(null);
 	});
 });

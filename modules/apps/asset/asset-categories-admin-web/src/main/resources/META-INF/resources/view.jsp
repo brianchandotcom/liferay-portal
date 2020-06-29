@@ -30,7 +30,7 @@
 				<ul class="nav nav-nested">
 					<li class="nav-item">
 						<c:choose>
-							<c:when test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) %>">
+							<c:when test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getVocabularies()) || ListUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) %>">
 								<clay:content-row
 									cssClass="mb-4"
 									verticalAlign="center"
@@ -70,7 +70,43 @@
 									</clay:content-col>
 								</clay:content-row>
 
+								<c:if test="<%= ListUtil.isNotEmpty(assetCategoriesDisplayContext.getInheritedVocabularies()) %>">
+									<ul class="mb-2 nav nav-stacked">
+										<span class="text-truncate"><%= LanguageUtil.get(request, "global") %></span>
+
+										<%
+										for (AssetVocabulary vocabulary : assetCategoriesDisplayContext.getInheritedVocabularies()) {
+										%>
+
+											<li class="nav-item">
+
+												<%
+												PortletURL vocabularyURL = renderResponse.createRenderURL();
+
+												vocabularyURL.setParameter("mvcPath", "/view.jsp");
+												vocabularyURL.setParameter("vocabularyId", String.valueOf(vocabulary.getVocabularyId()));
+												%>
+
+												<a class="nav-link text-truncate <%= (assetCategoriesDisplayContext.getVocabularyId() == vocabulary.getVocabularyId()) ? "active" : StringPool.BLANK %>" href="<%= vocabularyURL.toString() %>">
+													<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
+
+													<liferay-ui:icon
+														icon="lock"
+														iconCssClass="text-muted"
+														markupView="lexicon"
+													/>
+												</a>
+											</li>
+
+										<%
+										}
+										%>
+
+									</ul>
+								</c:if>
+
 								<ul class="mb-2 nav nav-stacked">
+									<span class="text-truncate"><%= assetCategoriesDisplayContext.getGroupName() %></span>
 
 									<%
 									for (AssetVocabulary vocabulary : assetCategoriesDisplayContext.getVocabularies()) {

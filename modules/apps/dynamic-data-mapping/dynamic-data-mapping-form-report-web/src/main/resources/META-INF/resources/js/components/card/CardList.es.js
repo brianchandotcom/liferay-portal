@@ -22,7 +22,7 @@ import EmptyState from '../empty-state/EmptyState.es';
 import List from '../list/List.es';
 import Card from './Card.es';
 
-const chartFactory = (field, values, totalEntries) => {
+const chartFactory = (field, values, summary, totalEntries) => {
 	const {options, type} = field;
 
 	switch (type) {
@@ -40,6 +40,7 @@ const chartFactory = (field, values, totalEntries) => {
 					<List
 						data={toArray(values)}
 						field={field}
+						summary={summary}
 						totalEntries={totalEntries}
 					/>
 				);
@@ -93,7 +94,7 @@ export default ({data, fields}) => {
 			...fieldTypes[field.type],
 		};
 
-		const chart = chartFactory(field, values, totalEntries);
+		const chart = chartFactory(field, values, summary, totalEntries);
 
 		if (chart === null) {
 			return null;

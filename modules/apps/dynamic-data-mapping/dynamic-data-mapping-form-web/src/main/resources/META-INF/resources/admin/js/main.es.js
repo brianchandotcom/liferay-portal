@@ -36,7 +36,6 @@ import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
-import PublishButton from './components/PublishButton/PublishButton.es';
 import ShareFormModal from './components/ShareFormModal/ShareFormModal.es';
 import AutoSave from './util/AutoSave.es';
 import FormURL from './util/FormURL.es';
@@ -183,6 +182,11 @@ class Form extends Component {
 				'.lfr-ddm-save-button',
 				'click',
 				this._handleSaveButtonClicked.bind(this)
+			),
+			dom.on(
+				'.lfr-ddm-publish-button',
+				'click',
+				this._handlePublishButtonClicked.bind(this)
 			)
 		);
 
@@ -372,6 +376,12 @@ class Form extends Component {
 		}
 	}
 
+	publish(event) {
+		this.props.published = true;
+
+		return this._savePublished(event, true);
+	}
+
 	render() {
 		const {ComposedFormBuilder} = this;
 		const {
@@ -463,21 +473,6 @@ class Form extends Component {
 				</LayoutProviderTag>
 
 				<div class="container-fluid-1280">
-					{this.isFormBuilderView() && (
-						<div class="button-holder ddm-form-builder-buttons">
-							<PublishButton
-								namespace={namespace}
-								published={published}
-								spritemap={spritemap}
-								submitForm={this.submitForm}
-								url={
-									Liferay.DDM.FormSettings
-										.publishFormInstanceURL
-								}
-							/>
-						</div>
-					)}
-
 					{!this.isFormBuilderView() && (
 						<div class="button-holder ddm-form-builder-buttons">
 							<button
@@ -573,6 +568,12 @@ class Form extends Component {
 			default:
 				break;
 		}
+	}
+
+	unpublish(event) {
+		this.props.published = false;
+
+		return this._savePublished(event, false);
 	}
 
 	willReceiveProps({published = {}}) {
@@ -761,6 +762,20 @@ class Form extends Component {
 			});
 	}
 
+	_handlePublishButtonClicked(event) {
+		const {published} = this.props;
+		let promise;
+
+		if (published) {
+			promise = this.unpublish(event);
+		}
+		else {
+			promise = this.publish(event);
+		}
+
+		return promise;
+	}
+
 	_handleRulesModified() {
 		this._autoSave.save(true);
 
@@ -815,6 +830,21 @@ class Form extends Component {
 		}
 
 		return label;
+	}
+
+	_savePublished(event) {
+		const {namespace} = this.props;
+		const url = Liferay.DDM.FormSettings.publishFormInstanceURL;
+
+		event.preventDefault();
+
+		const form = document.querySelector(`#${namespace}editForm`);
+
+		if (form) {
+			form.setAttribute('action', url);
+		}
+
+		return Promise.resolve(this.submitForm());
 	}
 
 	_setContext(context) {

@@ -10,6 +10,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "radio",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -84,6 +85,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
                 "settingsContext": Object {
@@ -93,6 +95,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
@@ -107,6 +110,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "select",
+                "instanceId": "1fnjfqk1",
                 "label": "Select Field",
                 "options": Array [
                   Object {
@@ -139,6 +143,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -157,6 +162,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {
@@ -197,6 +203,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "radio",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -266,6 +273,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
                 "settingsContext": Object {
@@ -275,6 +283,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
@@ -289,6 +298,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "select",
+                "instanceId": "1fnjfqk1",
                 "label": "Select Field",
                 "options": Array [
                   Object {
@@ -321,6 +331,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -339,6 +350,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {
@@ -357,7 +369,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport should add a new fields to column void 1`] = `
+exports[`FormSupport adds a new fields to column void 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -367,6 +379,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "radio",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -436,6 +449,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
                 "settingsContext": Object {
@@ -445,6 +459,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
@@ -459,6 +474,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "select",
+                "instanceId": "1fnjfqk1",
                 "label": "Select Field",
                 "options": Array [
                   Object {
@@ -496,6 +512,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -514,6 +531,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {
@@ -532,11 +550,12 @@ Array [
 ]
 `;
 
-exports[`FormSupport should get a column from pages 1`] = `
+exports[`FormSupport gets a column from pages 1`] = `
 Object {
   "fields": Array [
     Object {
       "fieldName": "select",
+      "instanceId": "1fnjfqk1",
       "label": "Select Field",
       "options": Array [
         Object {
@@ -559,13 +578,14 @@ Object {
 }
 `;
 
-exports[`FormSupport should get a row from pages 1`] = `
+exports[`FormSupport gets a row from pages 1`] = `
 Object {
   "columns": Array [
     Object {
       "fields": Array [
         Object {
           "fieldName": "text1",
+          "instanceId": "1fnjndk1",
           "label": "Text Field 1",
           "required": true,
           "settingsContext": Object {
@@ -575,6 +595,7 @@ Object {
         },
         Object {
           "fieldName": "text2",
+          "instanceId": "193jndk1",
           "label": "Text Field 2",
           "required": true,
           "settingsContext": Object {
@@ -589,6 +610,7 @@ Object {
       "fields": Array [
         Object {
           "fieldName": "select",
+          "instanceId": "1fnjfqk1",
           "label": "Select Field",
           "options": Array [
             Object {
@@ -617,9 +639,10 @@ Object {
 }
 `;
 
-exports[`FormSupport should get a specific field through the pages 1`] = `
+exports[`FormSupport gets a specific field through the pages 1`] = `
 Object {
   "fieldName": "radio",
+  "instanceId": "123njndk1",
   "label": "Radio Field",
   "options": Array [
     Object {
@@ -676,7 +699,7 @@ Object {
 }
 `;
 
-exports[`FormSupport should remove a column from pages and reorder 1`] = `
+exports[`FormSupport removes a column from pages and reorder 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -686,6 +709,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "radio",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -755,6 +779,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
                 "settingsContext": Object {
@@ -764,6 +789,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
@@ -786,6 +812,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -804,6 +831,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {
@@ -822,7 +850,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport should remove a fields to column from pages 1`] = `
+exports[`FormSupport removes a fields to column from pages 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -832,6 +860,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "radio",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -901,6 +930,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
                 "settingsContext": Object {
@@ -910,6 +940,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
@@ -936,6 +967,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -954,6 +986,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {
@@ -972,7 +1005,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport should remove a row from pages and reorder 1`] = `
+exports[`FormSupport removes a row from pages and reorder 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -982,6 +1015,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "radio",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -1051,6 +1085,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -1069,6 +1104,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {
@@ -1087,7 +1123,7 @@ Array [
 ]
 `;
 
-exports[`FormSupport should update a field 1`] = `
+exports[`FormSupport updates a field 1`] = `
 Array [
   Object {
     "rows": Array [
@@ -1097,6 +1133,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "radio",
+                "instanceId": "123njndk1",
                 "label": "Radio Field",
                 "options": Array [
                   Object {
@@ -1166,6 +1203,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "text1",
+                "instanceId": "1fnjndk1",
                 "label": "Text Field 1",
                 "required": true,
                 "settingsContext": Object {
@@ -1175,6 +1213,7 @@ Array [
               },
               Object {
                 "fieldName": "text2",
+                "instanceId": "193jndk1",
                 "label": "Text Field 2",
                 "required": true,
                 "settingsContext": Object {
@@ -1189,6 +1228,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "select",
+                "instanceId": "1fnjfqk1",
                 "label": "Select Field",
                 "options": Array [
                   Object {
@@ -1221,6 +1261,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "date",
+                "instanceId": "1ffqwjndk1",
                 "label": "Date Field",
                 "required": true,
                 "settingsContext": Object {
@@ -1239,6 +1280,7 @@ Array [
             "fields": Array [
               Object {
                 "fieldName": "numeric",
+                "instanceId": "1ljqjndk1",
                 "label": "Numeric Field",
                 "required": true,
                 "settingsContext": Object {

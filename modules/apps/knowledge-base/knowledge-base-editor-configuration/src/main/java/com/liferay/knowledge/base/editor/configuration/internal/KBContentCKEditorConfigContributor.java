@@ -75,6 +75,8 @@ public class KBContentCKEditorConfigContributor
 
 		JSONArray jsonArray = JSONUtil.putAll(
 			super.toJSONArray("['Bold', 'Italic', 'Underline']"),
+			super.toJSONArray(
+				"['JustifyLeft', 'JustifyCenter', 'JustifyRight']"),
 			super.toJSONArray("['NumberedList', 'BulletedList']"),
 			super.toJSONArray("['Styles']"),
 			super.toJSONArray("['Link', 'Unlink']"),

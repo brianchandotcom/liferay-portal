@@ -336,7 +336,7 @@ definition {
 		Click(locator1 = "AssetLists#ASSET_LIST_ELLIPSIS");
 
 		Click(
-			key_menuItem = "View Content",
+			key_menuItem = "View Items",
 			locator1 = "AssetLists#PERSONALIZATION_DROPDOWN_ITEM");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");

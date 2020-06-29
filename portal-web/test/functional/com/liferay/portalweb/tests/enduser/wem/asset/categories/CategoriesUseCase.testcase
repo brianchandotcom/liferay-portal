@@ -241,6 +241,10 @@ definition {
 	test AddSubcategoryConfigureParentCategory {
 		property test.name.skip.portal.instance = "CategoriesUseCase#AddSubcategoryConfigureParentCategory";
 
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Topic");
+
 		GlobalMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -1352,6 +1356,10 @@ definition {
 	@priority = "3"
 	test ViewFlattenedTreeCategoryNavigationDisplayStyle {
 		property test.name.skip.portal.instance = "CategoriesUseCase#ViewFlattenedTreeCategoryNavigationDisplayStyle";
+
+		JSONCategory.addVocabulary(
+			groupName = "Test Site Name",
+			title = "Topic");
 
 		GlobalMenu.gotoPortlet(
 			category = "Configuration",

@@ -74,6 +74,10 @@ definition {
 	test AddAutoAssertionCategoryViaDMDocument {
 		property test.name.skip.portal.instance = "DocumentsadministrationUsecase#AddAutoAssertionCategoryViaDMDocument";
 
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Topic");
+
 		ProductMenu.gotoPortlet(
 			category = "Categorization",
 			portlet = "Categories");
@@ -1319,6 +1323,10 @@ definition {
 	@priority = "5"
 	test ViewFileCategoryAndTags {
 		property testray.component.names = "Training";
+
+		JSONCategory.addVocabulary(
+			groupName = "Guest",
+			title = "Topic");
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

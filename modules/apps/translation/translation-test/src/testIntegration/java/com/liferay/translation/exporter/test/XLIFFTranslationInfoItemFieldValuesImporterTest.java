@@ -65,7 +65,7 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 	}
 
 	@Test(
-		expected = XLIFFFileException.MustNotBeUnsupportedLanguage.class
+		expected = XLIFFFileException.MustBeSupportedLanguage.class
 	)
 	public void testImportXLIFF2FailsFileInvalidLanguage() throws Exception {
 		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
@@ -75,7 +75,7 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 				"test-journal-article-122-pt-PT.xlf"));
 	}
 
-	@Test(expected = XLIFFFileException.MustNotBeInvalidFile.class)
+	@Test(expected = XLIFFFileException.MustBeValid.class)
 	public void testImportXLIFF2FailsFileInvalidVersion() throws Exception {
 		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),
@@ -83,7 +83,7 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 			TranslationTestUtil.readFileToInputStream("example-1_2-oasis.xlf"));
 	}
 
-	@Test(expected = XLIFFFileException.MustNotHaveInvalidId.class)
+	@Test(expected = XLIFFFileException.MustHaveValidId.class)
 	public void testImportXLIFF2FailsFileNoTarget() throws Exception {
 		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),

@@ -352,7 +352,9 @@ definition {
 
 		takeScreenshot();
 
-		Navigator.openSpecificURL(url = "http://localhost:8080/c/portal/login");
+		var portalURL = PropsUtil.get("portal.url");
+
+		Navigator.openSpecificURL(url = "${portalURL}/c/portal/login");
 
 		WaitForElementPresent(locator1 = "SignIn#PORTLET_TITLE");
 

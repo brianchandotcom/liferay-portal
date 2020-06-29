@@ -1170,15 +1170,52 @@ public class JenkinsResultsParserUtil {
 			return new ArrayList<>();
 		}
 
-		List<PathMatcher> excludePathMatchers = null;
+		final List<PathMatcher> excludesPathMatchers = new ArrayList<>();
 
 		if ((excludes != null) && (excludes.length > 0)) {
-			excludePathMatchers = toPathMatchers(null, excludes);
+			excludesPathMatchers.addAll(toPathMatchers(null, excludes));
 		}
 
-		return getIncludedFiles(
-			excludePathMatchers, toPathMatchers(null, includes),
-			findFiles(basedir, ".*"));
+		final List<PathMatcher> includesPathMatchers = toPathMatchers(
+			null, includes);
+
+		final List<File> includedFiles = new ArrayList<>();
+
+		try {
+			Files.walkFileTree(
+				basedir.toPath(),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path filePath,
+							BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						for (PathMatcher pathMatcher : excludesPathMatchers) {
+							if (pathMatcher.matches(filePath)) {
+								return FileVisitResult.CONTINUE;
+							}
+						}
+
+						for (PathMatcher pathMatcher : includesPathMatchers) {
+							if (pathMatcher.matches(filePath)) {
+								includedFiles.add(filePath.toFile());
+
+								break;
+							}
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return includedFiles;
 	}
 
 	public static List<File> getIncludedFiles(

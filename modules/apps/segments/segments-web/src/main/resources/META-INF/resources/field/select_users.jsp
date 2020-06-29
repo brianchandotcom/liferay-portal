@@ -21,12 +21,12 @@ SelectUsersDisplayContext selectUsersDisplayContext = (SelectUsersDisplayContext
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new SelectUsersManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, selectUsersDisplayContext) %>"
+	displayContext="<%= (SelectUsersManagementToolbarDisplayContext)request.getAttribute(SegmentsWebKeys.SEGMENTS_SELECT_USER_MANAGEMENT_TOOLBAL_DISPLAY_CONTEXT) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
-		id="selectSegmentsEntryUsers"
+		id="<%= selectUsersDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= selectUsersDisplayContext.getUserSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

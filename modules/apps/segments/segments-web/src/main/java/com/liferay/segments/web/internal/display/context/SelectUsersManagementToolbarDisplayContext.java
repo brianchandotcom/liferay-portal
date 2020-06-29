@@ -38,6 +38,8 @@ public class SelectUsersManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			selectUsersDisplayContext.getUserSearchContainer());
+
+		_selectUsersDisplayContext = selectUsersDisplayContext;
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class SelectUsersManagementToolbarDisplayContext
 
 	@Override
 	public String getSearchContainerId() {
-		return "users";
+		return _selectUsersDisplayContext.getSearchContainerId();
 	}
 
 	@Override
@@ -85,5 +87,7 @@ public class SelectUsersManagementToolbarDisplayContext
 	protected String[] getOrderByKeys() {
 		return new String[] {"first-name", "screen-name"};
 	}
+
+	private final SelectUsersDisplayContext _selectUsersDisplayContext;
 
 }

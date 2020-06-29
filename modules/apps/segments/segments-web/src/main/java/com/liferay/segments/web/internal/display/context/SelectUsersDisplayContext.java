@@ -60,6 +60,9 @@ public class SelectUsersDisplayContext {
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_userLocalService = userLocalService;
+
+		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getClearResultsURL() {
@@ -116,13 +119,9 @@ public class SelectUsersDisplayContext {
 			return _groupId;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		_groupId = ParamUtil.getLong(
 			_httpServletRequest, "groupId",
-			themeDisplay.getSiteGroupIdOrLiveGroupId());
+			_themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		return _groupId;
 	}
@@ -199,6 +198,10 @@ public class SelectUsersDisplayContext {
 		return searchActionURL.toString();
 	}
 
+	public String getSearchContainerId() {
+		return "selectSegmentsEntryUsers";
+	}
+
 	public String getSortingURL() {
 		PortletURL sortingURL = getPortletURL();
 
@@ -219,10 +222,6 @@ public class SelectUsersDisplayContext {
 		if (_userSearchContainer != null) {
 			return _userSearchContainer;
 		}
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		SearchContainer<User> userSearchContainer = new UserSearch(
 			_renderRequest, getPortletURL());
@@ -247,13 +246,15 @@ public class SelectUsersDisplayContext {
 			).build();
 
 		int usersCount = _userLocalService.searchCount(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			searchTerms.getStatus(), userParams);
 
 		userSearchContainer.setTotal(usersCount);
 
+		userSearchContainer.setId(getSearchContainerId());
+
 		List<User> users = _userLocalService.search(
-			themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+			_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 			searchTerms.getStatus(), userParams, userSearchContainer.getStart(),
 			userSearchContainer.getEnd(),
 			userSearchContainer.getOrderByComparator());
@@ -344,6 +345,7 @@ public class SelectUsersDisplayContext {
 	private String _orderByType;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
 	private SearchContainer<User> _userSearchContainer;
 

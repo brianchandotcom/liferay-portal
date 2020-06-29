@@ -22,7 +22,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.style.book.web.internal.display.context.StyleBookDisplayContext" %><%@
+<%@ page import="com.liferay.style.book.web.internal.constants.StyleBookWebKeys" %><%@
+page import="com.liferay.style.book.web.internal.display.context.StyleBookDisplayContext" %><%@
 page import="com.liferay.style.book.web.internal.display.context.StyleBookManagementToolbarDisplayContext" %><%@
 page import="com.liferay.style.book.web.internal.servlet.taglib.clay.StyleBookVerticalCard" %>
 

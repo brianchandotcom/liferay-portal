@@ -57,6 +57,11 @@ StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContex
 </clay:container-fluid>
 
 <liferay-frontend:component
+	componentId="<%= StyleBookWebKeys.STYLE_BOOK_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER %>"
+	module="js/StyleBookEntryDropdownDefaultEventHandler.es"
+/>
+
+<liferay-frontend:component
 	componentId="<%= styleBookManagementToolbarDisplayContext.getDefaultEventHandler() %>"
 	module="js/ManagementToolbarDefaultEventHandler.es"
 />

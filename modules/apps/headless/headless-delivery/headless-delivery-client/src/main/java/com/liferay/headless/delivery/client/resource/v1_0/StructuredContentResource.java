@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.resource.v1_0;
 
+import com.liferay.headless.delivery.client.aggregation.Aggregation;
 import com.liferay.headless.delivery.client.dto.v1_0.Rating;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
@@ -57,14 +58,12 @@ public interface StructuredContentResource {
 
 	public Page<StructuredContent> getSiteStructuredContentsPage(
 			Long siteId, Boolean flatten, String search, String filterString,
-			Pagination pagination, String sortString,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation)
+			Pagination pagination, String sortString, Aggregation aggregation)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteStructuredContentsPageHttpResponse(
 			Long siteId, Boolean flatten, String search, String filterString,
-			Pagination pagination, String sortString,
-			com.liferay.portal.vulcan.aggregation.Aggregation aggregation)
+			Pagination pagination, String sortString, Aggregation aggregation)
 		throws Exception;
 
 	public StructuredContent postSiteStructuredContent(
@@ -411,7 +410,7 @@ public interface StructuredContentResource {
 		public Page<StructuredContent> getSiteStructuredContentsPage(
 				Long siteId, Boolean flatten, String search,
 				String filterString, Pagination pagination, String sortString,
-				com.liferay.portal.vulcan.aggregation.Aggregation aggregation)
+				Aggregation aggregation)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -443,9 +442,7 @@ public interface StructuredContentResource {
 				getSiteStructuredContentsPageHttpResponse(
 					Long siteId, Boolean flatten, String search,
 					String filterString, Pagination pagination,
-					String sortString,
-					com.liferay.portal.vulcan.aggregation.Aggregation
-						aggregation)
+					String sortString, Aggregation aggregation)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -490,6 +487,12 @@ public interface StructuredContentResource {
 
 			if (sortString != null) {
 				httpInvoker.parameter("sort", sortString);
+			}
+
+			if (aggregation != null && aggregation.getTerms() != null) {
+				Map<String, String> terms = aggregation.getTerms();
+				httpInvoker.parameter(
+					"terms", String.join(",", terms.values()));
 			}
 
 			httpInvoker.path(

@@ -40,7 +40,7 @@ public class RedirectComparator<T extends BaseModel, V extends Comparable<V>>
 	@Override
 	public int compare(T baseModel1, T baseModel2) {
 		V fieldValue1 = _fieldValueFunction.apply(baseModel1);
-		V fieldValue2 = _fieldValueFunction.apply(baseModel1);
+		V fieldValue2 = _fieldValueFunction.apply(baseModel2);
 
 		int value = fieldValue1.compareTo(fieldValue2);
 

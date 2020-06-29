@@ -42,7 +42,7 @@ const NavbarTabs = ({tabs = []}) => {
 	const {name: activeTabName} = tabs.filter(isActive)[0] || {};
 
 	return (
-		<ClayNavigationBar inverted triggerLabel={activeTabName}>
+		<ClayNavigationBar triggerLabel={activeTabName}>
 			{tabs.map((tab, index) => (
 				<NavbarTabs.Item {...tab} active={isActive(tab)} key={index} />
 			))}

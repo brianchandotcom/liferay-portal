@@ -59,11 +59,10 @@ public class Page<T> {
 	}
 
 	public static <T> Page<T> of(
-		Map<String, Map<String, String>> actions, Collection<T> items,
-		Pagination pagination, long totalCount,
-		Map<String, List<Facet>> facets) {
+		Map<String, Map<String, String>> actions, List<Facet> facets,
+		Collection<T> items, Pagination pagination, long totalCount) {
 
-		return new Page<>(actions, items, pagination, totalCount, facets);
+		return new Page<>(actions, facets, items, pagination, totalCount);
 	}
 
 	@JsonProperty("actions")
@@ -72,7 +71,7 @@ public class Page<T> {
 	}
 
 	@JsonProperty("facets")
-	public Map<String, List<Facet>> getFacets() {
+	public List<Facet> getFacets() {
 		return _facets;
 	}
 
@@ -158,13 +157,12 @@ public class Page<T> {
 	}
 
 	private Page(
-		Map<String, Map<String, String>> actions, Collection<T> items,
-		Pagination pagination, long totalCount,
-		Map<String, List<Facet>> facetMap) {
+		Map<String, Map<String, String>> actions, List<Facet> facets,
+		Collection<T> items, Pagination pagination, long totalCount) {
 
 		_actions = actions;
+		_facets = facets;
 		_items = items;
-		_facets = facetMap;
 
 		if (pagination == null) {
 			_page = 0;
@@ -179,7 +177,7 @@ public class Page<T> {
 	}
 
 	private final Map<String, Map<String, String>> _actions;
-	private Map<String, List<Facet>> _facets = new HashMap<>();
+	private List<Facet> _facets = new ArrayList<>();
 	private final Collection<T> _items;
 	private final long _page;
 	private final long _pageSize;

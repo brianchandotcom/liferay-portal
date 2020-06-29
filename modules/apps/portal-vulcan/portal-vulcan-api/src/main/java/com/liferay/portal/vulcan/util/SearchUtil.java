@@ -50,7 +50,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -136,8 +135,8 @@ public class SearchUtil {
 		}
 
 		return Page.of(
-			actions, items, pagination, indexer.searchCount(searchContext),
-			_getFacets(searchContext));
+			actions, _getFacets(searchContext), items, pagination,
+			indexer.searchCount(searchContext));
 	}
 
 	/**
@@ -299,10 +298,8 @@ public class SearchUtil {
 			booleanQuery, BooleanClauseOccur.MUST.getName());
 	}
 
-	private static Map<String, List<Facet>> _getFacets(
-		SearchContext searchContext) {
-
-		Map<String, List<Facet>> facetMap = new HashMap<>();
+	private static List<Facet> _getFacets(SearchContext searchContext) {
+		List<Facet> facets = new ArrayList<>();
 
 		Map<String, com.liferay.portal.kernel.search.facet.Facet>
 			serviceBuilderFacetMap = searchContext.getFacets();
@@ -312,30 +309,31 @@ public class SearchUtil {
 
 			FacetCollector facetCollector = facet.getFacetCollector();
 
-			List<Facet> facets = new ArrayList<>();
+			List<Facet.FacetValue> facetValues = new ArrayList<>();
 
 			for (TermCollector termCollector :
 					facetCollector.getTermCollectors()) {
 
-				facets.add(
-					new Facet(
+				facetValues.add(
+					new Facet.FacetValue(
 						termCollector.getTerm(), termCollector.getFrequency()));
 			}
 
-			if (!facets.isEmpty()) {
+			if (!facetValues.isEmpty()) {
 				FacetConfiguration facetConfiguration =
 					facet.getFacetConfiguration();
 
 				if (facetConfiguration.getLabel() != null) {
-					facetMap.put(facetConfiguration.getLabel(), facets);
+					facets.add(
+						new Facet(facetConfiguration.getLabel(), facetValues));
 				}
 				else {
-					facetMap.put(facet.getFieldName(), facets);
+					facets.add(new Facet(facet.getFieldName(), facetValues));
 				}
 			}
 		}
 
-		return facetMap;
+		return facets;
 	}
 
 	private static Object[] _getOrderByComparatorColumns(Sort[] sorts) {

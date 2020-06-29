@@ -206,7 +206,9 @@ describe('PermissionsModal', () => {
 
 		const saveButton = getAllByRole('button')[3];
 
-		fireEvent.click(saveButton);
+		await act(async () => {
+			fireEvent.click(saveButton);
+		});
 
 		const powerUserPermissions = onSaveCallback.mock.calls[0][0][1];
 
@@ -249,7 +251,9 @@ describe('PermissionsModal', () => {
 
 		const saveButton = getAllByRole('button')[3];
 
-		fireEvent.click(saveButton);
+		await act(async () => {
+			fireEvent.click(saveButton);
+		});
 
 		const powerUserPermissions = onSaveCallback.mock.calls[0][0][1];
 

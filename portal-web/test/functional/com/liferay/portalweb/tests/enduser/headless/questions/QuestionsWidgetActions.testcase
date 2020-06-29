@@ -239,6 +239,7 @@ definition {
 		MessageboardsCategory.gotoCP(categoryName = "Questions Test Category");
 
 		var messageBoardsCategoryURL = selenium.getLocation();
+
 		var parentCategoryId = StringUtil.extractLast("${messageBoardsCategoryURL}", "mbCategoryId=");
 
 		JSONMBMessage.addCategory(

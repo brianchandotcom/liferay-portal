@@ -737,12 +737,47 @@
 					"title": "The reverseOrder Schema",
 					"type": "boolean"
 				},
+				"rowViewportConfig": {
+					"additionalProperties": false,
+					"properties": {
+						"landscapeMobile": {
+							"$ref": "#/definitions/RowViewportConfigDefinition"
+						},
+						"portraitMobile": {
+							"$ref": "#/definitions/RowViewportConfigDefinition"
+						},
+						"tablet": {
+							"$ref": "#/definitions/RowViewportConfigDefinition"
+						}
+					},
+					"title": "The rowViewportConfig Schema",
+					"type": "object"
+				},
 				"verticalAlignment": {
 					"title": "The verticalAlignment Schema",
 					"type": "string"
 				}
 			},
 			"title": "The RowDefinition Schema",
+			"type": "object"
+		},
+		"RowViewportConfigDefinition": {
+			"additionalProperties": false,
+			"properties": {
+				"modulesPerRow": {
+					"title": "The modulesPerRow Schema",
+					"type": "integer"
+				},
+				"reverseOrder": {
+					"title": "The reverseOrder Schema",
+					"type": "boolean"
+				},
+				"verticalAlignment": {
+					"title": "The verticalAlignment Schema",
+					"type": "string"
+				}
+			},
+			"title": "The RowViewportConfigDefinition Schema",
 			"type": "object"
 		},
 		"SectionDefinition": {

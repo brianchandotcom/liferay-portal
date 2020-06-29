@@ -26,8 +26,12 @@ StyleBookManagementToolbarDisplayContext styleBookManagementToolbarDisplayContex
 	displayContext="<%= styleBookManagementToolbarDisplayContext %>"
 />
 
+<portlet:actionURL name="/style_book/delete_style_book_entry" var="deleteStyleBookEntryURL">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
 <clay:container-fluid>
-	<aui:form name="fm">
+	<aui:form action="<%= deleteStyleBookEntryURL %>" name="fm">
 		<liferay-ui:search-container
 			searchContainer="<%= styleBookDisplayContext.getStyleBookEntriesSearchContainer() %>"
 		>

@@ -57,6 +57,11 @@ public class StyleBookVerticalCard
 	}
 
 	@Override
+	public String getDefaultEventHandler() {
+		return StyleBookWebKeys.STYLE_BOOK_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
+	}
+
+	@Override
 	public String getIcon() {
 		return "magic";
 	}
@@ -64,16 +69,6 @@ public class StyleBookVerticalCard
 	@Override
 	public String getTitle() {
 		return _styleBookEntry.getName();
-	}
-
-	@Override
-	public boolean isSelectable() {
-		return false;
-	}
-
-	@Override
-	public String getDefaultEventHandler() {
-		return StyleBookWebKeys.STYLE_BOOK_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
 	}
 
 	private final RenderRequest _renderRequest;

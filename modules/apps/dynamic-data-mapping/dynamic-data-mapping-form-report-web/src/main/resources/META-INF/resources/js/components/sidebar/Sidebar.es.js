@@ -49,7 +49,7 @@ export default () => {
 		return null;
 	}
 
-	const {icon, name: fieldName} = field;
+	const {icon, label} = field;
 
 	return (
 		<>
@@ -68,7 +68,7 @@ export default () => {
 								<li className="tbar-item tbar-item-expand">
 									<div className="tbar-section">
 										<div className="field-info">
-											<p className="title">{fieldName}</p>
+											<p className="title">{label}</p>
 
 											<p className="description">
 												{totalEntries}{' '}

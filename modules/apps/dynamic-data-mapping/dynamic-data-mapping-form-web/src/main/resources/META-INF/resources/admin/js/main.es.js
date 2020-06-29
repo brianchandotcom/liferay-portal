@@ -951,19 +951,16 @@ class Form extends Component {
 	}
 
 	_toggleFormBuilder(show) {
-		const {namespace, published, saved} = this.props;
+		const {namespace} = this.props;
 
 		const managementToolbar = document.querySelector(
 			`#${namespace}managementToolbar`
 		);
 		const formBasicInfo = document.querySelector('.ddm-form-basic-info');
-		const formBuilderButtons = document.querySelector(
-			'.ddm-form-builder-buttons'
+		const formBuilderButtons = document.querySelectorAll(
+			'.toolbar-group-field .nav-item .lfr-ddm-button'
 		);
 		const publishIcon = document.querySelector('.publish-icon');
-		const shareURLButton = document.querySelector(
-			'.lfr-ddm-share-url-button'
-		);
 		const translationManager = document.querySelector(
 			'.ddm-translation-manager'
 		);
@@ -971,7 +968,10 @@ class Form extends Component {
 		if (show) {
 			managementToolbar.classList.remove('hide');
 			formBasicInfo.classList.remove('hide');
-			formBuilderButtons.classList.remove('hide');
+
+			formBuilderButtons.forEach((formBuilderButton) => {
+				formBuilderButton.classList.remove('hide');
+			});
 
 			if (publishIcon) {
 				publishIcon.classList.remove('hide');
@@ -981,15 +981,15 @@ class Form extends Component {
 				translationManager.classList.remove('hide');
 			}
 
-			if (saved || published) {
-				shareURLButton.classList.remove('hide');
-			}
 			this.showAddButton();
 		}
 		else {
 			managementToolbar.classList.add('hide');
 			formBasicInfo.classList.add('hide');
-			formBuilderButtons.classList.add('hide');
+
+			formBuilderButtons.forEach((formBuilderButton) => {
+				formBuilderButton.classList.add('hide');
+			});
 
 			if (publishIcon) {
 				publishIcon.classList.add('hide');
@@ -999,7 +999,6 @@ class Form extends Component {
 				translationManager.classList.add('hide');
 			}
 
-			shareURLButton.classList.add('hide');
 			this.hideAddButton();
 		}
 	}

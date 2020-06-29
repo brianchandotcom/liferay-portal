@@ -53,7 +53,32 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			_getRenameStyleBookEntrytActionUnsafeConsumer()
+		).add(
+			_getDeleteStyleBookEntryActionUnsafeConsumer()
 		).build();
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteStyleBookEntryActionUnsafeConsumer() {
+
+		PortletURL deleteStyleBookEntryURL = _renderResponse.createActionURL();
+
+		deleteStyleBookEntryURL.setParameter(
+			ActionRequest.ACTION_NAME, "/style_book/delete_style_book_entry");
+
+		deleteStyleBookEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		deleteStyleBookEntryURL.setParameter(
+			"styleBookEntryId",
+			String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteStyleBookEntry");
+			dropdownItem.putData(
+				"deleteStyleBookEntryURL", deleteStyleBookEntryURL.toString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete"));
+		};
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

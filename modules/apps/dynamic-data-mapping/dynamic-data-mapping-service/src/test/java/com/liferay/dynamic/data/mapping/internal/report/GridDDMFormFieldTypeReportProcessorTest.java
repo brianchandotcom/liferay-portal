@@ -194,16 +194,16 @@ public class GridDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 	}
 
 	private void _assertStructure(JSONObject structureJSONObject) {
-		JSONArray rowsJSONArray = structureJSONObject.getJSONArray("rows");
-
-		Assert.assertEquals(
-			"[\"option1\",\"option2\"]", rowsJSONArray.toJSONString());
-
 		JSONArray columnsJSONArray = structureJSONObject.getJSONArray(
 			"columns");
 
 		Assert.assertEquals(
 			"[\"option1\",\"option2\"]", columnsJSONArray.toJSONString());
+
+		JSONArray rowsJSONArray = structureJSONObject.getJSONArray("rows");
+
+		Assert.assertEquals(
+			"[\"option1\",\"option2\"]", rowsJSONArray.toJSONString());
 	}
 
 	private DDMFormFieldOptions _createDDMFormOptions() {

@@ -12,6 +12,16 @@
  * details.
  */
 
-import moment from 'moment';
+import moment from 'moment/min/moment-with-locales';
 
-export const fromNow = (date) => moment(date).fromNow();
+const getLanguage = () => {
+	const language = Liferay.ThemeDisplay.getBCP47LanguageId();
+
+	const languages = {
+		'zh-Hans-CN': 'zh-CN',
+	};
+
+	return languages[language] || language;
+};
+
+export const fromNow = (date) => moment(date).locale(getLanguage()).fromNow();

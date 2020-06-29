@@ -42,6 +42,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Response;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
+import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -469,7 +470,8 @@ public class ResourceOpenAPIParser {
 
 			if (StringUtil.equals(parameterName, "Accept-Language") ||
 				StringUtil.equals(parameterName, "filter") ||
-				StringUtil.equals(parameterName, "sort")) {
+				StringUtil.equals(parameterName, "sort") ||
+				StringUtil.equals(parameterName, "terms")) {
 
 				continue;
 			}
@@ -497,6 +499,13 @@ public class ResourceOpenAPIParser {
 			javaMethodParameters.add(
 				new JavaMethodParameter(
 					"permissions", Permission[].class.getName()));
+		}
+
+		if (parameterNames.contains("terms")) {
+			JavaMethodParameter javaMethodParameter = new JavaMethodParameter(
+				"aggregation", Aggregation.class.getName());
+
+			javaMethodParameters.add(javaMethodParameter);
 		}
 
 		if (parameterNames.contains("filter")) {
@@ -749,6 +758,12 @@ public class ResourceOpenAPIParser {
 		}
 
 		String parameterType = javaMethodParameter.getParameterType();
+
+		if (Objects.equals(parameterType, Aggregation.class.getName()) &&
+			parameterNames.contains("terms")) {
+
+			return "@Context";
+		}
 
 		if (Objects.equals(parameterType, Filter.class.getName()) &&
 			parameterNames.contains("filter")) {

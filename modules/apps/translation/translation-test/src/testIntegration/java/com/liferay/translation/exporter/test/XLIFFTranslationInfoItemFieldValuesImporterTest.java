@@ -64,9 +64,7 @@ public class XLIFFTranslationInfoItemFieldValuesImporterTest {
 				"test-journal-article-122.xlf"));
 	}
 
-	@Test(
-		expected = XLIFFFileException.MustBeSupportedLanguage.class
-	)
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
 	public void testImportXLIFF2FailsFileInvalidLanguage() throws Exception {
 		_xliffTranslationInfoItemFieldValuesImporter.importXLIFF(
 			_group.getGroupId(),

@@ -261,8 +261,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 				infoItemClassPKReference.getClassPK());
 
 		if (fileNode == null) {
-			throw new XLIFFFileException.MustHaveValidId(
-				"File ID is invalid");
+			throw new XLIFFFileException.MustHaveValidId("File ID is invalid");
 		}
 	}
 

@@ -596,6 +596,12 @@ public class MBThreadLocalServiceUtil {
 			userId, messageId, subject, serviceContext);
 	}
 
+	public static void updateLastPostDate(
+		long threadId, java.util.Date lastPostDate) {
+
+		getService().updateLastPostDate(threadId, lastPostDate);
+	}
+
 	/**
 	 * Updates the message boards thread in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

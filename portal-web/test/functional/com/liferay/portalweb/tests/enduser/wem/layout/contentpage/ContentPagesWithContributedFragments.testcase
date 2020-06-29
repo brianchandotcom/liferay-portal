@@ -1834,22 +1834,19 @@ definition {
 
 		AssertVisible(
 			key_colPosition = "1",
-			key_entryTitle = "Document_1.jpg",
-			key_fragmentName = "Collection Display",
+			key_entryContent = "Document_1.jpg",
 			key_rowPosition = "2",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
 
 		AssertVisible(
 			key_colPosition = "2",
-			key_entryTitle = "Blogs Entry Title",
-			key_fragmentName = "Collection Display",
+			key_entryContent = "Blogs Entry Title",
 			key_rowPosition = "2",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
 
 		AssertVisible(
 			key_colPosition = "3",
-			key_entryTitle = "Web Content Title",
-			key_fragmentName = "Collection Display",
+			key_entryContent = "Web Content Title",
 			key_rowPosition = "2",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
 	}
@@ -2257,13 +2254,13 @@ definition {
 
 		AssertVisible(
 			key_colPosition = "2",
-			key_entryTitle = "Blogs Entry Content",
+			key_entryContent = "Blogs Entry Content",
 			key_rowPosition = "1",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
 
 		AssertVisible(
 			key_colPosition = "3",
-			key_entryTitle = "Web Content Content",
+			key_entryContent = "Web Content Content",
 			key_rowPosition = "1",
 			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
 	}

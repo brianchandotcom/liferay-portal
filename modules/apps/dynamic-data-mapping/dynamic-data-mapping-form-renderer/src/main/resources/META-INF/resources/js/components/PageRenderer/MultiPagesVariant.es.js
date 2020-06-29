@@ -25,17 +25,20 @@ export const Container = ({children, empty, page, pageIndex, pages}) => {
 	const {editingLanguageId, successPageSettings} = store;
 
 	const pageSettingsItems = [
-		(empty)
-		? {
-			className: 'ddm-btn-disabled',
-			disabled: true,
-			label: Liferay.Language.get('reset-page'),
-		}
-		:{
-			label: Liferay.Language.get('reset-page'),
-			onClick: () =>
-				dispatch({payload: {pageIndex}, type: EVENT_TYPES.PAGE_RESET}),
-		},
+		empty
+			? {
+					className: 'ddm-btn-disabled',
+					disabled: true,
+					label: Liferay.Language.get('reset-page'),
+			  }
+			: {
+					label: Liferay.Language.get('reset-page'),
+					onClick: () =>
+						dispatch({
+							payload: {pageIndex},
+							type: EVENT_TYPES.PAGE_RESET,
+						}),
+			  },
 		pageIndex > 0
 			? {
 					label: Liferay.Language.get('remove-page'),

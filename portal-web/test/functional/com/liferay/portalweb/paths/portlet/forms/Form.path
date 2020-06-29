@@ -20,7 +20,7 @@
 </tr>
 <tr>
     <td>SAVE_FORM_BUTTON</td>
-    <td>//button[contains(.,'Save Form') and not (contains(@class,'disabled'))]</td>
+    <td>//button[contains(.,'Save') and not (contains(@class,'disabled'))]</td>
     <td></td>
 </tr>
 <tr>
@@ -30,7 +30,7 @@
 </tr>
 <tr>
     <td>SAVE_FORM_BUTTON_LOCALIZED</td>
-    <td>//div[contains(@class,'button-holder')]//button[contains(.,'${key_saveButton}') and not (contains(@class,'disabled'))]</td>
+    <td>//button[contains(.,'${key_saveButton}') and not (contains(@class,'disabled'))]</td>
     <td></td>
 </tr>
 <tr>
@@ -46,6 +46,21 @@
 <tr>
     <td>PAGE_TITLE_FIELD</td>
     <td>xpath=(//input[contains(@class,'form-builder-page-header-title')])[${key_titleNumber}]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PREVIEW_FORM_BUTTON</td>
+    <td>//button[contains(.,'Preview') and not (contains(@class,'disabled'))]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PUBLISH_FORM_BUTTON</td>
+    <td>//button[contains(.,'Publish') and not (contains(@class,'disabled'))]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>UNPUBLISH_FORM_BUTTON</td>
+    <td>//button[contains(.,'Unpublish') and not (contains(@class,'disabled'))]</td>
     <td></td>
 </tr>
 <tr>

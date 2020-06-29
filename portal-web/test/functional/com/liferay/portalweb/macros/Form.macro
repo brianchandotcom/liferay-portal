@@ -481,11 +481,11 @@ definition {
 	}
 
 	macro publishForm {
-		WaitForElementPresent(locator1 = "Button#PUBLISH");
+		WaitForElementPresent(locator1 = "Form#PUBLISH_FORM_BUTTON");
 
 		AssertElementPresent(locator1 = "Form#NAME_FIELD");
 
-		Click(locator1 = "Button#PUBLISH");
+		Click(locator1 = "Form#PUBLISH_FORM_BUTTON");
 
 		Form.assertFormWasPublished();
 	}
@@ -505,11 +505,11 @@ definition {
 		else {
 			WaitForElementPresent(
 				locator1 = "Form#SAVE_FORM_BUTTON",
-				value1 = "Save Form");
+				value1 = "Save");
 
 			AssertClick(
 				locator1 = "Form#SAVE_FORM_BUTTON",
-				value1 = "Save Form");
+				value1 = "Save");
 		}
 
 		Alert.viewSuccessMessage();
@@ -593,11 +593,11 @@ definition {
 	}
 
 	macro unpublishForm {
-		WaitForElementPresent(locator1 = "Button#UNPUBLISH");
+		WaitForElementPresent(locator1 = "Form#UNPUBLISH_FORM_BUTTON");
 
 		AssertElementPresent(locator1 = "Form#NAME_FIELD");
 
-		Click(locator1 = "Button#UNPUBLISH");
+		Click(locator1 = "Form#UNPUBLISH_FORM_BUTTON");
 
 		var key_uniqueSuccess = "The form was unpublished successfully!";
 

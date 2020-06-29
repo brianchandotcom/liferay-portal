@@ -1937,7 +1937,7 @@ definition {
 
 		Form.editDescription(formDescription = "User Locale Edit Form Description");
 
-		Form.saveLocalized(saveButton = "Guardar formulario");
+		Form.saveLocalized(saveButton = "Guardar");
 
 		Click(locator1 = "UserBar#USER_AVATAR_IMAGE");
 

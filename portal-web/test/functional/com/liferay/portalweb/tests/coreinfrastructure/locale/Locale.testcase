@@ -60,7 +60,7 @@ definition {
 
 		Form.closeSidebar();
 
-		Form.save(localeSaveForm = "Guardar formulario");
+		Form.save(localeSaveForm = "Guardar");
 	}
 
 	@priority = "4"

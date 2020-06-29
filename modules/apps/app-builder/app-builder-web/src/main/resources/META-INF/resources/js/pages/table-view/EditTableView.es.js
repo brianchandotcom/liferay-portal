@@ -36,6 +36,8 @@ const EditTableView = withRouter(({history}) => {
 		EditTableViewContext
 	);
 
+	const languageId = Liferay.ThemeDisplay.getLanguageId();
+
 	let title = Liferay.Language.get('new-table-view');
 
 	if (dataListView.id) {
@@ -61,12 +63,12 @@ const EditTableView = withRouter(({history}) => {
 	};
 
 	const validate = () => {
-		const name = dataListView.name.en_US.trim();
+		const {[languageId]: name = ''} = dataListView.name;
 
 		return {
 			...dataListView,
 			name: {
-				en_US: name,
+				en_US: name.trim(),
 			},
 		};
 	};

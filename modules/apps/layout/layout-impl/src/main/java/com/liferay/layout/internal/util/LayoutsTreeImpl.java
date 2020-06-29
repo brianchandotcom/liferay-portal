@@ -54,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -625,6 +626,18 @@ public class LayoutsTreeImpl implements LayoutsTree {
 					"layoutSetBranchId", layoutSetBranchId
 				).put(
 					"layoutSetBranchName", boundLayoutSetBranch.getName()
+				);
+			}
+
+			if (Objects.equals(
+					layout.getType(), LayoutConstants.TYPE_COLLECTION)) {
+
+				jsonObject.put(
+					"collectionPK",
+					layout.getTypeSettingsProperty("collectionPK")
+				).put(
+					"collectionType",
+					layout.getTypeSettingsProperty("collectionType")
 				);
 			}
 

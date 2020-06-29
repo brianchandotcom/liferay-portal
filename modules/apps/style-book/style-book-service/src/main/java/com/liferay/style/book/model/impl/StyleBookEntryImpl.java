@@ -14,23 +14,43 @@
 
 package com.liferay.style.book.model.impl;
 
+import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+
 /**
- * The extended model implementation for the StyleBookEntry service. Represents a row in the &quot;StyleBookEntry&quot; database table, with each column mapped to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the <code>com.liferay.style.book.model.StyleBookEntry</code> interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
 public class StyleBookEntryImpl extends StyleBookEntryBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a style book entry model instance should use the {@link com.liferay.style.book.model.StyleBookEntry} interface instead.
-	 */
-	public StyleBookEntryImpl() {
+	@Override
+	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
+		if (getPreviewFileEntryId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		try {
+			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+				getPreviewFileEntryId());
+
+			if (fileEntry == null) {
+				return StringPool.BLANK;
+			}
+
+			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get preview entry image URL", exception);
+		}
+
+		return StringPool.BLANK;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StyleBookEntryImpl.class);
 
 }

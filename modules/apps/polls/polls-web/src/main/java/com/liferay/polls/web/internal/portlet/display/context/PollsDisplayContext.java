@@ -399,9 +399,10 @@ public class PollsDisplayContext {
 	private Sort _getSortFromComparator(
 		OrderByComparator<PollsQuestion> orderByComparator) {
 
+		boolean reverse = !orderByComparator.isAscending();
+
 		String[] fields = orderByComparator.getOrderByFields();
 
-		boolean reverse = !orderByComparator.isAscending();
 		String field = fields[0];
 
 		if (field.equals(Field.CREATE_DATE)) {

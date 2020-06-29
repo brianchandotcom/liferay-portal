@@ -163,6 +163,7 @@ page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalSelectD
 page import="com.liferay.journal.web.internal.util.JournalHelperUtil" %><%@
 page import="com.liferay.journal.web.internal.util.JournalPortletUtil" %><%@
 page import="com.liferay.journal.web.internal.util.JournalUtil" %><%@
+page import="com.liferay.petra.string.CharPool" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@

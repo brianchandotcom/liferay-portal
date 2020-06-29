@@ -1642,6 +1642,118 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-114727. The Content Display fragment can display abstract of asset entries in Collection Display."
+	@priority = "5"
+	test ViewAbstractInContentDisplayWithCollectionProvider {
+		task ("Add a Web Content Article, a document and a Blogs Entry") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				description = "Web Content Discription",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_1.jpg",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "test-site-name");
+
+			Blogs.addWithCustomAbstract(
+				entryAbstractDescription = "Blogs Entry Custom Abstract",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Assert assets' title are displayed in Collection Display with Content Display") {
+			Click.clickNoMouseOver(
+				key_elementType = "Collection Display",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+
+			Click(locator1 = "PageEditor#FRAGMENT_BODY_FLOATING_TOOLBAR_PLUS_BUTTON");
+
+			SelectFrame(locator1 = "IFrame#DIALOG");
+
+			NavItem.click(navItem = "Collection Providers");
+
+			LexiconCard.clickCard(card = "Recent Content");
+
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				entryTitle = "Document_1.jpg",
+				fragmentName = "Content Display");
+
+			PageEditor.gotoConfiguration(fragmentName = "Content Display");
+
+			Select(
+				key_fieldLabel = "Template",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Abstract");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Template",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Abstract");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Blogs Entry Custom Abstract",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "DM Document Description",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "2",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryContent = "Web Content Discription",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "3",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT");
+		}
+
+		PageEditor.clickPublish();
+
+		ContentPagesNavigator.openViewContentPage(
+			pageName = "Content Page Name",
+			siteName = "Test Site Name");
+
+		AssertVisible(
+			key_colPosition = "1",
+			key_entryContent = "Blogs Entry Custom Abstract",
+			key_rowPosition = "1",
+			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+
+		AssertVisible(
+			key_colPosition = "2",
+			key_entryContent = "DM Document Description",
+			key_rowPosition = "1",
+			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+
+		AssertVisible(
+			key_colPosition = "3",
+			key_entryContent = "Web Content Discription",
+			key_rowPosition = "1",
+			locator1 = "Fragment#CONTENT_DISPLAY_FRAGMENT_BODY");
+	}
+
 	@description = "This is a use case for LPS-114727. The Content Display fragment can display title of asset entries in Collection Provider."
 	@priority = "5"
 	test ViewAssetTitleInContentDisplayWithCollectionProvider {

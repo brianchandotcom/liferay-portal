@@ -42,7 +42,7 @@ renderResponse.setTitle(title);
 <aui:form cssClass="translate-article" name="translate_fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
+	<nav class="component-tbar subnav-tbar-light tbar tbar-translate">
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">
@@ -72,9 +72,9 @@ renderResponse.setTitle(title);
 				</li>
 				<li class="tbar-item">
 					<div class="metadata-type-button-row tbar-section text-right">
-						<aui:button cssClass="btn-sm mr-2" href="<%= redirect %>" type="cancel" />
+						<aui:button cssClass="btn-sm mr-3" href="<%= redirect %>" type="cancel" />
 
-						<aui:button cssClass="btn-sm mr-2" id="saveDraftBtn" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
+						<aui:button cssClass="btn-sm mr-3" id="saveDraftBtn" value='<%= LanguageUtil.get(request, "save-as-draft") %>' />
 
 						<aui:button cssClass="btn-sm" id="submitBtnId" primary="<%= true %>" type="submit" value='<%= LanguageUtil.get(request, "publish") %>' />
 					</div>

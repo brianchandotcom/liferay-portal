@@ -29,12 +29,14 @@ SelectSegmentsEntryDisplayContext selectSegmentsEntryDisplayContext = (SelectSeg
 	searchActionURL="<%= selectSegmentsEntryDisplayContext.getSearchActionURL() %>"
 	searchContainerId="selectSegmentsEntry"
 	searchFormName="searchFm"
+	selectable="<%= false %>"
 	sortingOrder="<%= selectSegmentsEntryDisplayContext.getOrderByType() %>"
 	sortingURL="<%= selectSegmentsEntryDisplayContext.getSortingURL() %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="selectSegmentsEntryFm">
 	<liferay-ui:search-container
+		id="<%= selectSegmentsEntryDisplayContext.getSearchContainerId() %>"
 		searchContainer="<%= selectSegmentsEntryDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row

@@ -177,6 +177,10 @@ public class SelectSegmentsEntryDisplayContext {
 		return _searchContainer;
 	}
 
+	public String getSearchContainerId() {
+		return "selectSegmentsEntrySegments";
+	}
+
 	public long[] getSelectedSegmentsEntryIds() {
 		return StringUtil.split(
 			ParamUtil.getString(

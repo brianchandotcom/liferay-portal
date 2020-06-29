@@ -92,9 +92,9 @@ definition {
 
 		SelectFrameTop();
 
-		if (IsElementPresent(locator1 = "Button#ADD")) {
+		if (IsElementPresent(locator1 = "//button[contains(.,'Add')]")) {
 			AssertClick(
-				locator1 = "Button#ADD",
+				locator1 = "//button[contains(.,'Add')]",
 				value1 = "Add");
 		}
 		else if (IsElementPresent(locator1 = "Button#DONE")) {

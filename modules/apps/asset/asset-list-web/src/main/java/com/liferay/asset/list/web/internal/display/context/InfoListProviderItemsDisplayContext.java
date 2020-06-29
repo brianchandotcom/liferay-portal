@@ -161,8 +161,15 @@ public class InfoListProviderItemsDisplayContext {
 			return _infoListProviderKey;
 		}
 
-		_infoListProviderKey = ParamUtil.getString(
+		String infoListProviderKey = ParamUtil.getString(
 			_renderRequest, "infoListProviderKey");
+
+		if (Validator.isNull(infoListProviderKey)) {
+			infoListProviderKey = ParamUtil.getString(
+				_renderRequest, "collectionPK");
+		}
+
+		_infoListProviderKey = infoListProviderKey;
 
 		return _infoListProviderKey;
 	}

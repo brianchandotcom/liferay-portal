@@ -94,8 +94,15 @@ public class AssetListItemsDisplayContext {
 			return _assetListEntryId;
 		}
 
-		_assetListEntryId = ParamUtil.getLong(
+		long assetListEntryId = ParamUtil.getLong(
 			_httpServletRequest, "assetListEntryId");
+
+		if (assetListEntryId <= 0) {
+			assetListEntryId = ParamUtil.getLong(
+				_httpServletRequest, "collectionPK");
+		}
+
+		_assetListEntryId = assetListEntryId;
 
 		return _assetListEntryId;
 	}

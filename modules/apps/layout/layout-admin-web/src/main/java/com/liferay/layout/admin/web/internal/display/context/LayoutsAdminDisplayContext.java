@@ -22,9 +22,6 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.info.list.provider.InfoListProvider;
-import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.admin.web.internal.configuration.LayoutConverterConfiguration;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -1073,20 +1070,23 @@ public class LayoutsAdminDisplayContext {
 			return null;
 		}
 
-		if (Objects.equals(
-				collectionType,
-				InfoListItemSelectorReturnType.class.getName())) {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_liferayPortletRequest, AssetListEntry.class.getName(),
+			PortletProvider.Action.BROWSE);
 
-			return _getInfoListViewCollectionItemsURL(collectionPK);
-		}
-		else if (Objects.equals(
-					collectionType,
-					InfoListProviderItemSelectorReturnType.class.getName())) {
-
-			return _getInfoListProviderViewCollectionItemsURL(collectionPK);
+		if (portletURL == null) {
+			return null;
 		}
 
-		return null;
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		portletURL.setParameter("collectionPK", collectionPK);
+		portletURL.setParameter("collectionType", collectionType);
+		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return portletURL.toString();
 	}
 
 	public String getViewLayoutURL(Layout layout) throws PortalException {
@@ -1670,47 +1670,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return new long[0];
-	}
-
-	private String _getInfoListProviderViewCollectionItemsURL(
-			String collectionPK)
-		throws PortalException, WindowStateException {
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_liferayPortletRequest, InfoListProvider.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		if (portletURL == null) {
-			return null;
-		}
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("infoListProviderKey", collectionPK);
-		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
-	}
-
-	private String _getInfoListViewCollectionItemsURL(String collectionPK)
-		throws PortalException, WindowStateException {
-
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			_liferayPortletRequest, AssetListEntry.class.getName(),
-			PortletProvider.Action.BROWSE);
-
-		if (portletURL == null) {
-			return null;
-		}
-
-		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		portletURL.setParameter("assetListEntryId", collectionPK);
-		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
-
-		portletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return portletURL.toString();
 	}
 
 	private String _getOrderByCol() {

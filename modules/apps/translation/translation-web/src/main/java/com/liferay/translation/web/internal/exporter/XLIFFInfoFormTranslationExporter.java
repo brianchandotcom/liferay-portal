@@ -162,7 +162,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 				Fragment value = valuePart.getTarget();
 
 				if(value == null){
-					throw new XLIFFFileException.MustNotBeIncomplete(
+					throw new XLIFFFileException.MustBeWellFormed(
 						"There is no translation target");
 				}
 
@@ -187,11 +187,11 @@ public class XLIFFInfoFormTranslationExporter<T>
 			return infoItemFieldValues;
 		}
 		catch (InvalidParameterException invalidParameterException) {
-			throw new XLIFFFileException.MustNotHaveInvalidParameter(
+			throw new XLIFFFileException.MustHaveValidParameter(
 				invalidParameterException);
 		}
 		catch (XLIFFException xliffException) {
-			throw new XLIFFFileException.MustNotBeInvalidFile(xliffException);
+			throw new XLIFFFileException.MustBeValid(xliffException);
 		}
 	}
 
@@ -211,7 +211,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 		String sourceLanguage = startXliffData.getSourceLanguage();
 
 		if (Validator.isNull(sourceLanguage)) {
-			throw new XLIFFFileException.MustNotBeIncomplete(
+			throw new XLIFFFileException.MustBeWellFormed(
 				"There is no translation source");
 		}
 
@@ -219,14 +219,14 @@ public class XLIFFInfoFormTranslationExporter<T>
 			sourceLanguage, true, false);
 
 		if (sourceLocale == null) {
-			throw new XLIFFFileException.MustNotBeUnsupportedLanguage(
+			throw new XLIFFFileException.MustBeSupportedLanguage(
 				sourceLanguage);
 		}
 
 		String targetLanguage = startXliffData.getTargetLanguage();
 
 		if (Validator.isNull(targetLanguage)) {
-			throw new XLIFFFileException.MustNotBeIncomplete(
+			throw new XLIFFFileException.MustBeWellFormed(
 				"There is no translation target");
 		}
 
@@ -234,7 +234,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 			targetLanguage, true, false);
 
 		if (targetLocale == null) {
-			throw new XLIFFFileException.MustNotBeUnsupportedLanguage(
+			throw new XLIFFFileException.MustBeSupportedLanguage(
 				targetLanguage);
 		}
 	}
@@ -266,7 +266,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 				infoItemClassPKReference.getClassPK());
 
 		if (fileNode == null) {
-			throw new XLIFFFileException.MustNotHaveInvalidId(
+			throw new XLIFFFileException.MustHaveValidId(
 				"File ID is invalid");
 		}
 	}

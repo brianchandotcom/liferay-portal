@@ -21,97 +21,97 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class XLIFFFileException extends PortalException {
 
-	public static class MustNotBeIncomplete extends XLIFFFileException {
+	public static class MustBeWellFormed extends XLIFFFileException {
 
-		public MustNotBeIncomplete() {
+		public MustBeWellFormed() {
 		}
 
-		public MustNotBeIncomplete(String msg) {
+		public MustBeWellFormed(String msg) {
 			super(msg);
 		}
 
-		public MustNotBeIncomplete(String msg, Throwable cause) {
+		public MustBeWellFormed(String msg, Throwable cause) {
 			super(msg, cause);
 		}
 
-		public MustNotBeIncomplete(Throwable cause) {
+		public MustBeWellFormed(Throwable cause) {
 			super(cause);
 		}
 
 	}
 
-	public static class MustNotBeInvalidFile extends XLIFFFileException {
+	public static class MustBeValid extends XLIFFFileException {
 
-		public MustNotBeInvalidFile() {
+		public MustBeValid() {
 		}
 
-		public MustNotBeInvalidFile(String msg) {
+		public MustBeValid(String msg) {
 			super(msg);
 		}
 
-		public MustNotBeInvalidFile(String msg, Throwable cause) {
+		public MustBeValid(String msg, Throwable cause) {
 			super(msg, cause);
 		}
 
-		public MustNotBeInvalidFile(Throwable cause) {
+		public MustBeValid(Throwable cause) {
 			super(cause);
 		}
 
 	}
 
-	public static class MustNotBeUnsupportedLanguage
+	public static class MustBeSupportedLanguage
 		extends XLIFFFileException {
 
-		public MustNotBeUnsupportedLanguage() {
+		public MustBeSupportedLanguage() {
 		}
 
-		public MustNotBeUnsupportedLanguage(String msg) {
+		public MustBeSupportedLanguage(String msg) {
 			super(msg);
 		}
 
-		public MustNotBeUnsupportedLanguage(String msg, Throwable cause) {
+		public MustBeSupportedLanguage(String msg, Throwable cause) {
 			super(msg, cause);
 		}
 
-		public MustNotBeUnsupportedLanguage(Throwable cause) {
+		public MustBeSupportedLanguage(Throwable cause) {
 			super(cause);
 		}
 
 	}
 
-	public static class MustNotHaveInvalidId extends XLIFFFileException {
+	public static class MustHaveValidId extends XLIFFFileException {
 
-		public MustNotHaveInvalidId() {
+		public MustHaveValidId() {
 		}
 
-		public MustNotHaveInvalidId(String msg) {
+		public MustHaveValidId(String msg) {
 			super(msg);
 		}
 
-		public MustNotHaveInvalidId(String msg, Throwable cause) {
+		public MustHaveValidId(String msg, Throwable cause) {
 			super(msg, cause);
 		}
 
-		public MustNotHaveInvalidId(Throwable cause) {
+		public MustHaveValidId(Throwable cause) {
 			super(cause);
 		}
 
 	}
 
-	public static class MustNotHaveInvalidParameter extends XLIFFFileException {
+	public static class MustHaveValidParameter extends XLIFFFileException {
 
-		public MustNotHaveInvalidParameter() {
+		public MustHaveValidParameter() {
 		}
 
-		public MustNotHaveInvalidParameter(String msg) {
+		public MustHaveValidParameter(String msg) {
 			super(msg);
 		}
 
-		public MustNotHaveInvalidParameter(String msg, Throwable cause) {
+		public MustHaveValidParameter(String msg, Throwable cause) {
 			super(msg, cause);
 		}
 
-		public MustNotHaveInvalidParameter(Throwable cause) {
+		public MustHaveValidParameter(Throwable cause) {
 			super(cause);
 		}
 

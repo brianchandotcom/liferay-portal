@@ -51,10 +51,10 @@ describe('Card', () => {
 
 		const {getByText} = render(<Card {...props} summary={summary} />);
 
-		expect(getByText('average')).toBeTruthy();
-		expect(getByText('max')).toBeTruthy();
-		expect(getByText('min')).toBeTruthy();
-		expect(getByText('sum')).toBeTruthy();
+		expect(getByText('Average')).toBeTruthy();
+		expect(getByText('Max')).toBeTruthy();
+		expect(getByText('Min')).toBeTruthy();
+		expect(getByText('Sum')).toBeTruthy();
 		expect(getByText('1.350775...')).toBeTruthy();
 		expect(getByText('99978663...')).toBeTruthy();
 	});

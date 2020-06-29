@@ -20,6 +20,7 @@ import List from '../../../../src/main/resources/META-INF/resources/js/component
 const props = {
 	data: ['label1', 'label2', 'label3', 'label4', 'label5'],
 	onClick: () => {},
+	summary: {},
 	totalEntries: 5,
 };
 

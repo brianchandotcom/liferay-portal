@@ -41,7 +41,11 @@ const props = {
 			type: 'date',
 			values: {option1: 1},
 		},
-		totalEntries: 5,
+		field6: {
+			type: 'numeric',
+			values: {option1: 1},
+		},
+		totalEntries: 6,
 	},
 	fields: [
 		{
@@ -74,6 +78,12 @@ const props = {
 			options: {option: 'option'},
 			type: 'date',
 		},
+		{
+			label: 'Field 6',
+			name: 'field6',
+			options: {option: 'option'},
+			type: 'numeric',
+		},
 	],
 };
 
@@ -88,5 +98,6 @@ describe('CardList', () => {
 		expect(getByText('Field 3')).toBeTruthy();
 		expect(getByText('Field 4')).toBeTruthy();
 		expect(getByText('Field 5')).toBeTruthy();
+		expect(getByText('Field 6')).toBeTruthy();
 	});
 });

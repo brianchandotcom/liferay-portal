@@ -216,10 +216,8 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			"Descripcion", journalArticle.getDescription(LocaleUtil.SPAIN));
-
 		Assert.assertEquals(
 			StringPool.BLANK,
 			_getContent(
@@ -253,11 +251,9 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 
 		Assert.assertEquals(
 			"translate title to japanese", article.getTitle(LocaleUtil.JAPAN));
-
 		Assert.assertEquals(
 			"translate description to japanese",
 			article.getDescription(LocaleUtil.JAPAN));
-
 		Assert.assertEquals(
 			"translate content to japanese",
 			_getContent(

@@ -124,6 +124,8 @@ public class MBCategoryPersistenceTest {
 
 		MBCategory newMBCategory = _persistence.create(pk);
 
+		newMBCategory.setMvccVersion(RandomTestUtil.nextLong());
+
 		newMBCategory.setUuid(RandomTestUtil.randomString());
 
 		newMBCategory.setGroupId(RandomTestUtil.nextLong());
@@ -161,6 +163,9 @@ public class MBCategoryPersistenceTest {
 		MBCategory existingMBCategory = _persistence.findByPrimaryKey(
 			newMBCategory.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingMBCategory.getMvccVersion(),
+			newMBCategory.getMvccVersion());
 		Assert.assertEquals(
 			existingMBCategory.getUuid(), newMBCategory.getUuid());
 		Assert.assertEquals(
@@ -378,12 +383,12 @@ public class MBCategoryPersistenceTest {
 
 	protected OrderByComparator<MBCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"MBCategory", "uuid", true, "categoryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentCategoryId", true, "name", true,
-			"description", true, "displayStyle", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"MBCategory", "mvccVersion", true, "uuid", true, "categoryId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "parentCategoryId",
+			true, "name", true, "description", true, "displayStyle", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -619,6 +624,8 @@ public class MBCategoryPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		MBCategory mbCategory = _persistence.create(pk);
+
+		mbCategory.setMvccVersion(RandomTestUtil.nextLong());
 
 		mbCategory.setUuid(RandomTestUtil.randomString());
 

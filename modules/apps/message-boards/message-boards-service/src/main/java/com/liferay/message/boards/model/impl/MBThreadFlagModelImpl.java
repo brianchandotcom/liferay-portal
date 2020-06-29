@@ -69,17 +69,19 @@ public class MBThreadFlagModelImpl
 	public static final String TABLE_NAME = "MBThreadFlag";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"uuid_", Types.VARCHAR}, {"threadFlagId", Types.BIGINT},
-		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"threadId", Types.BIGINT}, {"lastPublishDate", Types.TIMESTAMP}
+		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
+		{"threadFlagId", Types.BIGINT}, {"groupId", Types.BIGINT},
+		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
+		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
+		{"modifiedDate", Types.TIMESTAMP}, {"threadId", Types.BIGINT},
+		{"lastPublishDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
 		new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("threadFlagId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -93,7 +95,7 @@ public class MBThreadFlagModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table MBThreadFlag (uuid_ VARCHAR(75) null,threadFlagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG,lastPublishDate DATE null)";
+		"create table MBThreadFlag (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,threadFlagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG,lastPublishDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table MBThreadFlag";
 
@@ -259,6 +261,11 @@ public class MBThreadFlagModelImpl
 		Map<String, BiConsumer<MBThreadFlag, ?>> attributeSetterBiConsumers =
 			new LinkedHashMap<String, BiConsumer<MBThreadFlag, ?>>();
 
+		attributeGetterFunctions.put(
+			"mvccVersion", MBThreadFlag::getMvccVersion);
+		attributeSetterBiConsumers.put(
+			"mvccVersion",
+			(BiConsumer<MBThreadFlag, Long>)MBThreadFlag::setMvccVersion);
 		attributeGetterFunctions.put("uuid", MBThreadFlag::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid", (BiConsumer<MBThreadFlag, String>)MBThreadFlag::setUuid);
@@ -305,6 +312,16 @@ public class MBThreadFlagModelImpl
 			attributeGetterFunctions);
 		_attributeSetterBiConsumers = Collections.unmodifiableMap(
 			(Map)attributeSetterBiConsumers);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	@Override
@@ -539,6 +556,7 @@ public class MBThreadFlagModelImpl
 	public Object clone() {
 		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
 
+		mbThreadFlagImpl.setMvccVersion(getMvccVersion());
 		mbThreadFlagImpl.setUuid(getUuid());
 		mbThreadFlagImpl.setThreadFlagId(getThreadFlagId());
 		mbThreadFlagImpl.setGroupId(getGroupId());
@@ -648,6 +666,8 @@ public class MBThreadFlagModelImpl
 	public CacheModel<MBThreadFlag> toCacheModel() {
 		MBThreadFlagCacheModel mbThreadFlagCacheModel =
 			new MBThreadFlagCacheModel();
+
+		mbThreadFlagCacheModel.mvccVersion = getMvccVersion();
 
 		mbThreadFlagCacheModel.uuid = getUuid();
 
@@ -775,6 +795,7 @@ public class MBThreadFlagModelImpl
 
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private String _originalUuid;
 	private long _threadFlagId;

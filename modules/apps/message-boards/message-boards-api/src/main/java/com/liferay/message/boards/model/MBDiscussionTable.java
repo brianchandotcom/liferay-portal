@@ -32,6 +32,8 @@ public class MBDiscussionTable extends BaseTable<MBDiscussionTable> {
 
 	public static final MBDiscussionTable INSTANCE = new MBDiscussionTable();
 
+	public final Column<MBDiscussionTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<MBDiscussionTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBDiscussionTable, Long> discussionId = createColumn(

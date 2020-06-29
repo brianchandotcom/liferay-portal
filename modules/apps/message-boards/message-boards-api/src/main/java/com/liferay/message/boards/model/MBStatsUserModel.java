@@ -15,6 +15,7 @@
 package com.liferay.message.boards.model;
 
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 
 import java.util.Date;
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @generated
  */
 @ProviderType
-public interface MBStatsUserModel extends BaseModel<MBStatsUser>, ShardedModel {
+public interface MBStatsUserModel
+	extends BaseModel<MBStatsUser>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -54,6 +56,22 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser>, ShardedModel {
 	 * @param primaryKey the primary key of this message boards stats user
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this message boards stats user.
+	 *
+	 * @return the mvcc version of this message boards stats user
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this message boards stats user.
+	 *
+	 * @param mvccVersion the mvcc version of this message boards stats user
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the stats user ID of this message boards stats user.

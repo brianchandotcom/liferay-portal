@@ -32,6 +32,8 @@ public class MBBanTable extends BaseTable<MBBanTable> {
 
 	public static final MBBanTable INSTANCE = new MBBanTable();
 
+	public final Column<MBBanTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<MBBanTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBBanTable, Long> banId = createColumn(

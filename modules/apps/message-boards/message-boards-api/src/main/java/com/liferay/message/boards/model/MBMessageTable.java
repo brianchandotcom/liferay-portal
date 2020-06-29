@@ -33,6 +33,8 @@ public class MBMessageTable extends BaseTable<MBMessageTable> {
 
 	public static final MBMessageTable INSTANCE = new MBMessageTable();
 
+	public final Column<MBMessageTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<MBMessageTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBMessageTable, Long> messageId = createColumn(

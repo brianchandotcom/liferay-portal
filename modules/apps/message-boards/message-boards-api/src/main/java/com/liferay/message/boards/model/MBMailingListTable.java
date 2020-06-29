@@ -32,6 +32,8 @@ public class MBMailingListTable extends BaseTable<MBMailingListTable> {
 
 	public static final MBMailingListTable INSTANCE = new MBMailingListTable();
 
+	public final Column<MBMailingListTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<MBMailingListTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBMailingListTable, Long> mailingListId = createColumn(

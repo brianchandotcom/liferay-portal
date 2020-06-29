@@ -124,6 +124,8 @@ public class MBDiscussionPersistenceTest {
 
 		MBDiscussion newMBDiscussion = _persistence.create(pk);
 
+		newMBDiscussion.setMvccVersion(RandomTestUtil.nextLong());
+
 		newMBDiscussion.setUuid(RandomTestUtil.randomString());
 
 		newMBDiscussion.setGroupId(RandomTestUtil.nextLong());
@@ -151,6 +153,9 @@ public class MBDiscussionPersistenceTest {
 		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(
 			newMBDiscussion.getPrimaryKey());
 
+		Assert.assertEquals(
+			existingMBDiscussion.getMvccVersion(),
+			newMBDiscussion.getMvccVersion());
 		Assert.assertEquals(
 			existingMBDiscussion.getUuid(), newMBDiscussion.getUuid());
 		Assert.assertEquals(
@@ -257,10 +262,11 @@ public class MBDiscussionPersistenceTest {
 
 	protected OrderByComparator<MBDiscussion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"MBDiscussion", "uuid", true, "discussionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"threadId", true, "lastPublishDate", true);
+			"MBDiscussion", "mvccVersion", true, "uuid", true, "discussionId",
+			true, "groupId", true, "companyId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "threadId", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -515,6 +521,8 @@ public class MBDiscussionPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		MBDiscussion mbDiscussion = _persistence.create(pk);
+
+		mbDiscussion.setMvccVersion(RandomTestUtil.nextLong());
 
 		mbDiscussion.setUuid(RandomTestUtil.randomString());
 

@@ -32,6 +32,8 @@ public class MBThreadFlagTable extends BaseTable<MBThreadFlagTable> {
 
 	public static final MBThreadFlagTable INSTANCE = new MBThreadFlagTable();
 
+	public final Column<MBThreadFlagTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<MBThreadFlagTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBThreadFlagTable, Long> threadFlagId = createColumn(

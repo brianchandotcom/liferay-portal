@@ -43,6 +43,7 @@ public class MBDiscussionWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("discussionId", getDiscussionId());
 		attributes.put("groupId", getGroupId());
@@ -61,6 +62,12 @@ public class MBDiscussionWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		Long mvccVersion = (Long)attributes.get("mvccVersion");
+
+		if (mvccVersion != null) {
+			setMvccVersion(mvccVersion);
+		}
+
 		String uuid = (String)attributes.get("uuid");
 
 		if (uuid != null) {
@@ -225,6 +232,16 @@ public class MBDiscussionWrapper
 	}
 
 	/**
+	 * Returns the mvcc version of this message boards discussion.
+	 *
+	 * @return the mvcc version of this message boards discussion
+	 */
+	@Override
+	public long getMvccVersion() {
+		return model.getMvccVersion();
+	}
+
+	/**
 	 * Returns the primary key of this message boards discussion.
 	 *
 	 * @return the primary key of this message boards discussion
@@ -372,6 +389,16 @@ public class MBDiscussionWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the mvcc version of this message boards discussion.
+	 *
+	 * @param mvccVersion the mvcc version of this message boards discussion
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		model.setMvccVersion(mvccVersion);
 	}
 
 	/**

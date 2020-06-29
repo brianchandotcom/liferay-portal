@@ -2,6 +2,7 @@
 
 <model-hints>
 	<model name="com.liferay.message.boards.model.MBBan">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="banId" type="long" />
 		<field name="groupId" type="long" />
@@ -14,6 +15,7 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBCategory">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="categoryId" type="long" />
 		<field name="groupId" type="long" />
@@ -37,6 +39,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBDiscussion">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="discussionId" type="long" />
 		<field name="groupId" type="long" />
@@ -51,6 +54,7 @@
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBMailingList">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="mailingListId" type="long" />
 		<field name="groupId" type="long" />
@@ -87,6 +91,7 @@
 		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBMessage">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="messageId" type="long" />
 		<field name="groupId" type="long" />
@@ -127,6 +132,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBStatsUser">
+		<field name="mvccVersion" type="long" />
 		<field name="statsUserId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -135,6 +141,7 @@
 		<field name="lastPostDate" type="Date" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBThread">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="threadId" type="long" />
 		<field name="groupId" type="long" />
@@ -161,6 +168,7 @@
 		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.message.boards.model.MBThreadFlag">
+		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="threadFlagId" type="long" />
 		<field name="groupId" type="long" />

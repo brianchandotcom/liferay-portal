@@ -18,6 +18,7 @@ import com.liferay.message.boards.model.MBThreadFlag;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class MBThreadFlagCacheModel
-	implements CacheModel<MBThreadFlag>, Externalizable {
+	implements CacheModel<MBThreadFlag>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,7 +49,9 @@ public class MBThreadFlagCacheModel
 		MBThreadFlagCacheModel mbThreadFlagCacheModel =
 			(MBThreadFlagCacheModel)object;
 
-		if (threadFlagId == mbThreadFlagCacheModel.threadFlagId) {
+		if ((threadFlagId == mbThreadFlagCacheModel.threadFlagId) &&
+			(mvccVersion == mbThreadFlagCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class MBThreadFlagCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, threadFlagId);
+		int hashCode = HashUtil.hash(0, threadFlagId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", threadFlagId=");
 		sb.append(threadFlagId);
@@ -92,6 +109,8 @@ public class MBThreadFlagCacheModel
 	@Override
 	public MBThreadFlag toEntityModel() {
 		MBThreadFlagImpl mbThreadFlagImpl = new MBThreadFlagImpl();
+
+		mbThreadFlagImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			mbThreadFlagImpl.setUuid("");
@@ -142,6 +161,7 @@ public class MBThreadFlagCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		threadFlagId = objectInput.readLong();
@@ -161,6 +181,8 @@ public class MBThreadFlagCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -190,6 +212,7 @@ public class MBThreadFlagCacheModel
 		objectOutput.writeLong(lastPublishDate);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long threadFlagId;
 	public long groupId;

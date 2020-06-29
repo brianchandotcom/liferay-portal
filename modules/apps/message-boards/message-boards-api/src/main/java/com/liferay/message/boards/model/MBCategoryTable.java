@@ -32,6 +32,8 @@ public class MBCategoryTable extends BaseTable<MBCategoryTable> {
 
 	public static final MBCategoryTable INSTANCE = new MBCategoryTable();
 
+	public final Column<MBCategoryTable, Long> mvccVersion = createColumn(
+		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
 	public final Column<MBCategoryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<MBCategoryTable, Long> categoryId = createColumn(

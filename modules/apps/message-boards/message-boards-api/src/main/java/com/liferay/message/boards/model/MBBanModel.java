@@ -16,6 +16,7 @@ package com.liferay.message.boards.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -36,7 +37,7 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MBBanModel
-	extends BaseModel<MBBan>, ShardedModel, StagedGroupedModel {
+	extends BaseModel<MBBan>, MVCCModel, ShardedModel, StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +58,22 @@ public interface MBBanModel
 	 * @param primaryKey the primary key of this message boards ban
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this message boards ban.
+	 *
+	 * @return the mvcc version of this message boards ban
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this message boards ban.
+	 *
+	 * @param mvccVersion the mvcc version of this message boards ban
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this message boards ban.

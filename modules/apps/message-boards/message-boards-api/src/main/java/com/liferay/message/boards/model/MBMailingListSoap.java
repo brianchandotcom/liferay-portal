@@ -31,6 +31,7 @@ public class MBMailingListSoap implements Serializable {
 	public static MBMailingListSoap toSoapModel(MBMailingList model) {
 		MBMailingListSoap soapModel = new MBMailingListSoap();
 
+		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setMailingListId(model.getMailingListId());
 		soapModel.setGroupId(model.getGroupId());
@@ -108,6 +109,14 @@ public class MBMailingListSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setMailingListId(pk);
+	}
+
+	public long getMvccVersion() {
+		return _mvccVersion;
+	}
+
+	public void setMvccVersion(long mvccVersion) {
+		_mvccVersion = mvccVersion;
 	}
 
 	public String getUuid() {
@@ -338,6 +347,7 @@ public class MBMailingListSoap implements Serializable {
 		_active = active;
 	}
 
+	private long _mvccVersion;
 	private String _uuid;
 	private long _mailingListId;
 	private long _groupId;

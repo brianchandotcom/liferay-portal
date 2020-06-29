@@ -18,6 +18,7 @@ import com.liferay.message.boards.model.MBMailingList;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -33,7 +34,7 @@ import java.util.Date;
  * @generated
  */
 public class MBMailingListCacheModel
-	implements CacheModel<MBMailingList>, Externalizable {
+	implements CacheModel<MBMailingList>, Externalizable, MVCCModel {
 
 	@Override
 	public boolean equals(Object object) {
@@ -48,7 +49,9 @@ public class MBMailingListCacheModel
 		MBMailingListCacheModel mbMailingListCacheModel =
 			(MBMailingListCacheModel)object;
 
-		if (mailingListId == mbMailingListCacheModel.mailingListId) {
+		if ((mailingListId == mbMailingListCacheModel.mailingListId) &&
+			(mvccVersion == mbMailingListCacheModel.mvccVersion)) {
+
 			return true;
 		}
 
@@ -57,14 +60,28 @@ public class MBMailingListCacheModel
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, mailingListId);
+		int hashCode = HashUtil.hash(0, mailingListId);
+
+		return HashUtil.hash(hashCode, mvccVersion);
+	}
+
+	@Override
+	public long getMvccVersion() {
+		return mvccVersion;
+	}
+
+	@Override
+	public void setMvccVersion(long mvccVersion) {
+		this.mvccVersion = mvccVersion;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(55);
 
-		sb.append("{uuid=");
+		sb.append("{mvccVersion=");
+		sb.append(mvccVersion);
+		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", mailingListId=");
 		sb.append(mailingListId);
@@ -124,6 +141,8 @@ public class MBMailingListCacheModel
 	@Override
 	public MBMailingList toEntityModel() {
 		MBMailingListImpl mbMailingListImpl = new MBMailingListImpl();
+
+		mbMailingListImpl.setMvccVersion(mvccVersion);
 
 		if (uuid == null) {
 			mbMailingListImpl.setUuid("");
@@ -243,6 +262,7 @@ public class MBMailingListCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		mailingListId = objectInput.readLong();
@@ -286,6 +306,8 @@ public class MBMailingListCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
+		objectOutput.writeLong(mvccVersion);
+
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -393,6 +415,7 @@ public class MBMailingListCacheModel
 		objectOutput.writeBoolean(active);
 	}
 
+	public long mvccVersion;
 	public String uuid;
 	public long mailingListId;
 	public long groupId;

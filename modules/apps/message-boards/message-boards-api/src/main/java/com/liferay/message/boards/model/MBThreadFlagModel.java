@@ -16,6 +16,7 @@ package com.liferay.message.boards.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 
@@ -36,7 +37,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface MBThreadFlagModel
-	extends BaseModel<MBThreadFlag>, ShardedModel, StagedGroupedModel {
+	extends BaseModel<MBThreadFlag>, MVCCModel, ShardedModel,
+			StagedGroupedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,6 +59,22 @@ public interface MBThreadFlagModel
 	 * @param primaryKey the primary key of this message boards thread flag
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the mvcc version of this message boards thread flag.
+	 *
+	 * @return the mvcc version of this message boards thread flag
+	 */
+	@Override
+	public long getMvccVersion();
+
+	/**
+	 * Sets the mvcc version of this message boards thread flag.
+	 *
+	 * @param mvccVersion the mvcc version of this message boards thread flag
+	 */
+	@Override
+	public void setMvccVersion(long mvccVersion);
 
 	/**
 	 * Returns the uuid of this message boards thread flag.

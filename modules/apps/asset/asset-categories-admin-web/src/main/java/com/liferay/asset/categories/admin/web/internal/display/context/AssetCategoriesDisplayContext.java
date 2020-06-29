@@ -661,6 +661,10 @@ public class AssetCategoriesDisplayContext {
 	public boolean hasPermission(AssetCategory category, String actionId)
 		throws PortalException {
 
+		if (category.getGroupId() != _themeDisplay.getScopeGroupId()) {
+			return false;
+		}
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			_themeDisplay.getPermissionChecker(),
 			_themeDisplay.getScopeGroupId(), AssetCategory.class.getName(),
@@ -676,6 +680,10 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean hasPermission(AssetVocabulary vocabulary, String actionId) {
+		if (vocabulary.getGroupId() != _themeDisplay.getScopeGroupId()) {
+			return false;
+		}
+
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			_themeDisplay.getPermissionChecker(),
 			_themeDisplay.getScopeGroupId(), AssetVocabulary.class.getName(),
@@ -707,6 +715,19 @@ public class AssetCategoriesDisplayContext {
 	}
 
 	public boolean isShowCategoriesAddButton() {
+		try {
+			AssetVocabulary assetVocabulary = getVocabulary();
+
+			if (assetVocabulary.getGroupId() !=
+					_themeDisplay.getScopeGroupId()) {
+
+				return false;
+			}
+		}
+		catch (Exception exception) {
+			_log.error("Unable to get Asset Vocabulary", exception);
+		}
+
 		if (AssetCategoriesPermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				AssetCategoriesPermission.RESOURCE_NAME,

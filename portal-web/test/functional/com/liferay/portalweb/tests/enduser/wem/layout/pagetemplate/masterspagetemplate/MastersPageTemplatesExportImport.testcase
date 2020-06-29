@@ -592,6 +592,12 @@ definition {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			Button.click(button = "Publish Master");
 		}
 
 		task ("Change thumbnail of custom master") {
@@ -640,6 +646,12 @@ definition {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
 				masterPageTemplateEntryName = "Custom Masters Page Template");
+
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+
+			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
+
+			Button.click(button = "Publish Master");
 		}
 
 		task ("Change thumbnail of custom master") {

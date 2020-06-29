@@ -69,8 +69,10 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
 			"field1", "3");
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = mock(
-			DDMFormInstanceRecord.class);
+		long formInstanceRecordId = 3;
+
+		DDMFormInstanceRecord ddmFormInstanceRecord =
+			_mockDDMFormInstanceRecord(formInstanceRecordId);
 
 		DDMFormInstance ddmFormInstance = mock(DDMFormInstance.class);
 
@@ -97,15 +99,6 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			ddmFormInstanceRecord.getFormInstance()
 		).thenReturn(
 			ddmFormInstance
-		);
-
-		long formInstanceRecordId = 3;
-
-		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				formInstanceRecordId)
-		).thenReturn(
-			ddmFormInstanceRecord
 		);
 
 		when(
@@ -184,23 +177,9 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
 			"field1", "1");
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = mock(
-			DDMFormInstanceRecord.class);
-
-		when(
-			ddmFormInstanceRecord.getFormInstanceId()
-		).thenReturn(
-			0L
-		);
-
 		long formInstanceRecordId = 1;
 
-		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				formInstanceRecordId)
-		).thenReturn(
-			ddmFormInstanceRecord
-		);
+		_mockDDMFormInstanceRecord(formInstanceRecordId);
 
 		JSONObject processedFieldJSONObject =
 			_numericDDMFormFieldTypeReportProcessor.process(
@@ -229,23 +208,9 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
 			"field1", "3");
 
-		DDMFormInstanceRecord ddmFormInstanceRecord = mock(
-			DDMFormInstanceRecord.class);
-
-		when(
-			ddmFormInstanceRecord.getFormInstanceId()
-		).thenReturn(
-			0L
-		);
-
 		long formInstanceRecordId = 0;
 
-		when(
-			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
-				formInstanceRecordId)
-		).thenReturn(
-			ddmFormInstanceRecord
-		);
+		_mockDDMFormInstanceRecord(formInstanceRecordId);
 
 		JSONObject processedFieldJSONObject =
 			_numericDDMFormFieldTypeReportProcessor.process(
@@ -293,7 +258,8 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		DDMFormInstanceRecord ddmFormInstanceRecord = mock(
 			DDMFormInstanceRecord.class);
 
-		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue("", valueString);
+		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue(
+			"", valueString);
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
@@ -343,6 +309,29 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 		);
 
 		return ddmFormFieldValue;
+	}
+
+	private DDMFormInstanceRecord _mockDDMFormInstanceRecord(
+			long formInstanceRecordId)
+		throws Exception {
+
+		DDMFormInstanceRecord ddmFormInstanceRecord = mock(
+			DDMFormInstanceRecord.class);
+
+		when(
+			ddmFormInstanceRecord.getFormInstanceId()
+		).thenReturn(
+			0L
+		);
+
+		when(
+			_ddmFormInstanceRecordLocalService.getFormInstanceRecord(
+				formInstanceRecordId)
+		).thenReturn(
+			ddmFormInstanceRecord
+		);
+
+		return ddmFormInstanceRecord;
 	}
 
 	private void _setUpJSONFactoryUtil() {

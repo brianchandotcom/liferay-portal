@@ -153,7 +153,6 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 		long categoryId = ParamUtil.getLong(actionRequest, "categoryId");
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long parentCategoryId = ParamUtil.getLong(
 			actionRequest, "parentCategoryId");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
@@ -176,6 +175,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		if (categoryId <= 0) {
 
 			// Add category
+
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 			_assetCategoryService.addCategory(
 				groupId, parentCategoryId, titleMap, descriptionMap,

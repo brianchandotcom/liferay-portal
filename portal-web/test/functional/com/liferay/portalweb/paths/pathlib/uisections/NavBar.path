@@ -70,7 +70,7 @@
 </tr>
 <tr>
 	<td>NAV_ITEM_REDIRECTION</td>
-	<td>//*[contains(@class,'nav-link')]/span[contains(.,'${key_navItem}')]</td>
+	<td>//li[contains(@class,'nav-item')]//a[contains(.,'${key_navItem}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -7,3 +7,4 @@ Provide-Capability:\
 		resource.bundle.base.name="content.Language"
 Web-ContextPath: /app-builder-web
 -dsannotations-options: inherit
+-metatype: *

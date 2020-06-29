@@ -15,16 +15,29 @@
 package com.liferay.app.builder.web.internal.portlet;
 
 import com.liferay.app.builder.constants.AppBuilderPortletKeys;
+import com.liferay.app.builder.web.internal.configuration.AppBuilderConfiguration;
+import com.liferay.app.builder.web.internal.constants.AppBuilderWebKeys;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
-import javax.portlet.Portlet;
+import java.io.IOException;
 
+import java.util.Map;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Bruno Farache
  */
 @Component(
+	configurationPid = "com.liferay.app.builder.web.internal.configuration.AppBuilderConfiguration",
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
@@ -41,4 +54,26 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class ObjectsPortlet extends MVCPortlet {
+
+	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			AppBuilderWebKeys.SHOW_NATIVE_OBJECTS_TAB,
+			_appBuilderConfiguration.showNativeObjectsTab());
+
+		super.doView(renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_appBuilderConfiguration = ConfigurableUtil.createConfigurable(
+			AppBuilderConfiguration.class, properties);
+	}
+
+	private volatile AppBuilderConfiguration _appBuilderConfiguration;
+
 }

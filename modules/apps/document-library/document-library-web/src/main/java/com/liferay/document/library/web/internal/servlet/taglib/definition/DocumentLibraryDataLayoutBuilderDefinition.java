@@ -43,4 +43,11 @@ public class DocumentLibraryDataLayoutBuilderDefinition
 		return new String[] {"Autocomplete"};
 	}
 
+	@Override
+	public String[] getUnimplementedProperties() {
+		return new String[] {
+			"fieldNamespace", "readOnly", "validation", "visibilityExpression"
+		};
+	}
+
 }

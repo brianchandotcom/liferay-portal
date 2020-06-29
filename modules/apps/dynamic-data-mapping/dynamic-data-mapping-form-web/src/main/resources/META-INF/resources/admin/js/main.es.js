@@ -36,7 +36,6 @@ import {EventHandler} from 'metal-events';
 import Component from 'metal-jsx';
 import {Config} from 'metal-state';
 
-import PreviewButton from './components/PreviewButton/PreviewButton.es';
 import PublishButton from './components/PublishButton/PublishButton.es';
 import ShareFormModal from './components/ShareFormModal/ShareFormModal.es';
 import AutoSave from './util/AutoSave.es';
@@ -174,6 +173,11 @@ class Form extends Component {
 				'.forms-navigation-bar li',
 				'click',
 				this._handleFormNavClicked
+			),
+			dom.on(
+				'.lfr-ddm-preview-button',
+				'click',
+				this._handlePreviewButtonClicked.bind(this)
 			)
 		);
 
@@ -473,11 +477,6 @@ class Form extends Component {
 							>
 								{saveButtonLabel}
 							</button>
-							<PreviewButton
-								namespace={namespace}
-								resolvePreviewURL={this._resolvePreviewURL}
-								spritemap={spritemap}
-							/>
 						</div>
 					)}
 
@@ -748,6 +747,20 @@ class Form extends Component {
 		this.setState({
 			paginationMode: newVal,
 		});
+	}
+
+	_handlePreviewButtonClicked() {
+		return this._resolvePreviewURL()
+			.then((previewURL) => {
+				window.open(previewURL, '_blank');
+
+				return previewURL;
+			})
+			.catch(() => {
+				Notifications.showError(
+					Liferay.Language.get('your-request-failed-to-complete')
+				);
+			});
 	}
 
 	_handleRulesModified() {

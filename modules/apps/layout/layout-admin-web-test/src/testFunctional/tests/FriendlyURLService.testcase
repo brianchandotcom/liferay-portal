@@ -266,6 +266,32 @@ definition {
 			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
 	}
 
+	@description = "This test covers LPS-116068. It ensures that both the active URL and old friendlyURL can be viewed from the history of a default page."
+	@priority = "5"
+	test ViewFriendlyURLsViaDefaultPage {
+		SitePages.openPagesAdmin(siteURLKey = "guest");
+
+		SitePages.gotoPageMenuItem(
+			menuItem = "Configure",
+			pageName = "Search");
+
+		Page.editFriendlyURL(friendlyURLEdit = "/new-search-page");
+
+		Page.gotoFriendlyURLHistory();
+
+		Page.viewActiveURL(activeURL = "/new-search-page");
+
+		AssertElementNotPresent(
+			key_activeURL = "/search",
+			locator1 = "SitePages#FRIENDLY_URL_ACTIVE_URL");
+
+		Page.viewOldFriendlyURL(oldFriendlyURL = "/search");
+
+		AssertElementNotPresent(
+			key_oldFriendlyURL = "/new-search-page",
+			locator1 = "SitePages#FRIENDLY_URL_HISTORY_ITEM");
+	}
+
 	@description = "This ensures that both the localized active URL and old friendlyURL can be viewed from the history."
 	@priority = "5"
 	test ViewLocalizedFriendlyURLs {

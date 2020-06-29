@@ -20,12 +20,18 @@ import React from 'react';
 import {EVENT_TYPES, usePage} from '../../hooks/usePage.es';
 import {Placeholder} from './DefaultVariant.es';
 
-export const Container = ({children, page, pageIndex, pages}) => {
+export const Container = ({children, empty, page, pageIndex, pages}) => {
 	const {dispatch, store} = usePage();
 	const {editingLanguageId, successPageSettings} = store;
 
 	const pageSettingsItems = [
-		{
+		(empty)
+		? {
+			className: 'ddm-btn-disabled',
+			disabled: true,
+			label: Liferay.Language.get('reset-page'),
+		}
+		:{
 			label: Liferay.Language.get('reset-page'),
 			onClick: () =>
 				dispatch({payload: {pageIndex}, type: EVENT_TYPES.PAGE_RESET}),

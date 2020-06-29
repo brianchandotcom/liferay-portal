@@ -192,6 +192,7 @@ const Renderer = ({
 		<Components.Container
 			activePage={activePage}
 			editable={editable}
+			empty={empty}
 			page={page}
 			pageIndex={pageIndex}
 			pages={pages}

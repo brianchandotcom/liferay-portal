@@ -32,47 +32,33 @@ import PendingItemsCard from './process-items/PendingItemsCard.es';
 import WorkloadByAssigneeCard from './workload-by-assignee-card/WorkloadByAssigneeCard.es';
 import WorkloadByStepCard from './workload-by-step-card/WorkloadByStepCard.es';
 
-let SEARCH = '';
-
-const DashboardTab = ({history, ...otherProps}) => {
-	useMemo(() => {
-		const pathname = history.location.pathname;
-
-		history.replace({pathname, search: SEARCH});
-	}, [history]);
-
+const DashboardTab = (props) => {
 	return (
 		<ClayLayout.ContainerFluid>
 			<ClayLayout.Row>
 				<ClayLayout.Col className="p-0" md="9">
-					<PendingItemsCard {...otherProps} />
+					<PendingItemsCard {...props} />
 
-					<WorkloadByStepCard {...otherProps} />
+					<WorkloadByStepCard {...props} />
 				</ClayLayout.Col>
 
 				<ClayLayout.Col className="p-0" md="3">
-					<WorkloadByAssigneeCard {...otherProps} />
+					<WorkloadByAssigneeCard {...props} />
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 		</ClayLayout.ContainerFluid>
 	);
 };
 
-const PerformanceTab = ({history, ...otherProps}) => {
+const PerformanceTab = (props) => {
 	useTimeRangeFetch();
-
-	useMemo(() => {
-		const pathname = history.location.pathname;
-
-		history.replace({pathname, search: SEARCH});
-	}, [history]);
 
 	return (
 		<>
-			<CompletedItemsCard {...otherProps} />
-			<CompletionVelocityCard {...otherProps} />
-			<PerformanceByStepCard {...otherProps} />
-			<PerformanceByAssigneeCard {...otherProps} />
+			<CompletedItemsCard {...props} />
+			<CompletionVelocityCard {...props} />
+			<PerformanceByStepCard {...props} />
+			<PerformanceByAssigneeCard {...props} />
 		</>
 	);
 };
@@ -111,12 +97,12 @@ const ProcessMetricsContainer = ({history, processId, query}) => {
 	if (history.location.pathname === `/metrics/${processId}`) {
 		const pathname = getPathname(dashboardTab.params, dashboardTab.path);
 
-		SEARCH = stringify({
+		const search = stringify({
 			...parse(query),
 			filters: {taskNames: ['allSteps']},
 		});
 
-		history.replace({pathname});
+		history.replace({pathname, search});
 	}
 
 	return (

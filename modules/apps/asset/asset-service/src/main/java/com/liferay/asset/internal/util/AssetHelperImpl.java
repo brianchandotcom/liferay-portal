@@ -606,26 +606,42 @@ public class AssetHelperImpl implements AssetHelper {
 		if (sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
 			StringBundler sb = new StringBundler(5);
 
-			sb.append(DDMIndexer.DDM_FIELDS);
-			sb.append(StringPool.PERIOD);
-
-			try {
-				String indexType =
-					sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR)[1];
+			if (_ddmIndexer.isLegacyDDMIndexFieldsEnabled()) {
+				sb.append(sortField);
+				sb.append(StringPool.UNDERLINE);
 
 				if (fieldLocalizable) {
-					sb.append(_ddmIndexer.getValueFieldName(indexType, locale));
-					sb.append(StringPool.UNDERLINE);
-				}
-				else {
-					sb.append(_ddmIndexer.getValueFieldName(indexType));
+					sb.append(LocaleUtil.toLanguageId(locale));
 					sb.append(StringPool.UNDERLINE);
 				}
 			}
-			catch (Exception exception) {
-				_log.error("Unable to sort assets", exception);
+			else {
+				sb.append(DDMIndexer.DDM_FIELDS);
+				sb.append(StringPool.PERIOD);
 
-				throw exception;
+				try {
+					String indexType =
+						sortField.split(DDMIndexer.DDM_FIELD_SEPARATOR)[1];
+
+					if (fieldLocalizable) {
+						sb.append(
+							_ddmIndexer.getValueFieldName(indexType, locale));
+						sb.append(StringPool.UNDERLINE);
+					}
+					else {
+						sb.append(_ddmIndexer.getValueFieldName(indexType));
+						sb.append(StringPool.UNDERLINE);
+					}
+				}
+				catch (ArrayIndexOutOfBoundsException
+							arrayIndexOutOfBoundsException) {
+
+					_log.error(
+						"Unable to sort assets",
+						arrayIndexOutOfBoundsException);
+
+					throw arrayIndexOutOfBoundsException;
+				}
 			}
 
 			String suffix = "String";
@@ -665,7 +681,9 @@ public class AssetHelperImpl implements AssetHelper {
 			fieldSort.setSortOrder(SortOrder.DESC);
 		}
 
-		if (!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX)) {
+		if (!sortField.startsWith(DDMIndexer.DDM_FIELD_PREFIX) ||
+			_ddmIndexer.isLegacyDDMIndexFieldsEnabled()) {
+
 			return fieldSort;
 		}
 

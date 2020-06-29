@@ -70,4 +70,8 @@ public interface DDMIndexer {
 		throw new UnsupportedOperationException();
 	}
 
+	public default boolean isLegacyDDMIndexFieldsEnabled() {
+		return false;
+	}
+
 }

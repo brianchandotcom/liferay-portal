@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.util;
 
+import com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
@@ -25,6 +26,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -47,6 +49,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.engine.SearchEngineInformation;
 
 import java.io.Serializable;
 
@@ -57,15 +60,21 @@ import java.text.Format;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
  */
-@Component(immediate = true, service = DDMIndexer.class)
+@Component(
+	configurationPid = "com.liferay.dynamic.data.mapping.configuration.DDMIndexerConfiguration",
+	immediate = true, service = DDMIndexer.class
+)
 public class DDMIndexerImpl implements DDMIndexer {
 
 	@Override
@@ -73,9 +82,11 @@ public class DDMIndexerImpl implements DDMIndexer {
 		Document document, DDMStructure ddmStructure,
 		DDMFormValues ddmFormValues) {
 
+		boolean legacyDDMIndexFieldsEnabled = isLegacyDDMIndexFieldsEnabled();
+
 		FieldArray fieldArray = (FieldArray)document.getField(DDM_FIELDS);
 
-		if (fieldArray == null) {
+		if ((fieldArray == null) && !legacyDDMIndexFieldsEnabled) {
 			fieldArray = new FieldArray(DDM_FIELDS);
 
 			document.add(fieldArray);
@@ -107,8 +118,15 @@ public class DDMIndexerImpl implements DDMIndexer {
 							locale, indexType);
 						value = field.getValue(locale);
 
-						fieldArray.addField(
-							createField(field, name, value, indexType, locale));
+						if (legacyDDMIndexFieldsEnabled) {
+							addToDocument(
+								document, field, name, value, indexType);
+						}
+						else {
+							fieldArray.addField(
+								createField(
+									field, name, value, indexType, locale));
+						}
 					}
 				}
 				else {
@@ -117,8 +135,13 @@ public class DDMIndexerImpl implements DDMIndexer {
 						indexType);
 					value = field.getValue(ddmFormValues.getDefaultLocale());
 
-					fieldArray.addField(
-						createField(field, name, value, indexType, null));
+					if (legacyDDMIndexFieldsEnabled) {
+						addToDocument(document, field, name, value, indexType);
+					}
+					else {
+						fieldArray.addField(
+							createField(field, name, value, indexType, null));
+					}
 				}
 			}
 			catch (Exception exception) {
@@ -153,9 +176,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 				ddmStructureFieldValue, structure.getFieldType(fieldName));
 		}
 
-		String valueFieldName = getValueFieldName(
-			ddmStructureFieldNameParts[1], locale);
-
 		if (ddmStructureFieldValue instanceof String[]) {
 			String[] ddmStructureFieldValueArray =
 				(String[])ddmStructureFieldValue;
@@ -163,26 +183,19 @@ public class DDMIndexerImpl implements DDMIndexer {
 			for (String ddmStructureFieldValueString :
 					ddmStructureFieldValueArray) {
 
-				booleanQuery.addRequiredTerm(
-					StringBundler.concat(
-						DDM_FIELDS, StringPool.PERIOD, DDM_FIELD_NAME),
-					ddmStructureFieldName);
-				booleanQuery.addRequiredTerm(
-					StringBundler.concat(
-						DDM_FIELDS, StringPool.PERIOD, valueFieldName),
-					StringPool.QUOTE + ddmStructureFieldValueString +
-						StringPool.QUOTE);
+				addFieldValueRequiredTerm(
+					booleanQuery, ddmStructureFieldName,
+					ddmStructureFieldValueString, locale);
 			}
 		}
 		else {
-			booleanQuery.addRequiredTerm(
-				StringBundler.concat(
-					DDM_FIELDS, StringPool.PERIOD, DDM_FIELD_NAME),
-				ddmStructureFieldName);
-			booleanQuery.addRequiredTerm(
-				StringBundler.concat(
-					DDM_FIELDS, StringPool.PERIOD, valueFieldName),
-				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
+			addFieldValueRequiredTerm(
+				booleanQuery, ddmStructureFieldName,
+				String.valueOf(ddmStructureFieldValue), locale);
+		}
+
+		if (isLegacyDDMIndexFieldsEnabled()) {
+			return new QueryFilter(booleanQuery);
 		}
 
 		return new QueryFilter(new NestedQuery(DDM_FIELDS, booleanQuery));
@@ -332,6 +345,48 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		return valueFieldName;
+	}
+
+	@Override
+	public boolean isLegacyDDMIndexFieldsEnabled() {
+		if (Objects.equals(searchEngineInformation.getVendorString(), "Solr")) {
+			return true;
+		}
+
+		return _ddmIndexerConfiguration.enableLegacyDDMIndexFields();
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_ddmIndexerConfiguration = ConfigurableUtil.createConfigurable(
+			DDMIndexerConfiguration.class, properties);
+	}
+
+	protected void addFieldValueRequiredTerm(
+		BooleanQuery booleanQuery, String ddmStructureFieldName,
+		String ddmStructureFieldValue, Locale locale) {
+
+		if (isLegacyDDMIndexFieldsEnabled()) {
+			booleanQuery.addRequiredTerm(
+				ddmStructureFieldName,
+				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
+
+			return;
+		}
+
+		String[] ddmStructureFieldNameParts = StringUtil.split(
+			ddmStructureFieldName, DDM_FIELD_SEPARATOR);
+
+		String valueFieldName = getValueFieldName(
+			ddmStructureFieldNameParts[1], locale);
+
+		booleanQuery.addRequiredTerm(
+			StringBundler.concat(DDM_FIELDS, StringPool.PERIOD, DDM_FIELD_NAME),
+			ddmStructureFieldName);
+		booleanQuery.addRequiredTerm(
+			StringBundler.concat(DDM_FIELDS, StringPool.PERIOD, valueFieldName),
+			StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 	}
 
 	protected void addToDocument(
@@ -531,10 +586,14 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return new Fields();
 	}
 
+	@Reference
+	protected SearchEngineInformation searchEngineInformation;
+
 	private static final Log _log = LogFactoryUtil.getLog(DDMIndexerImpl.class);
 
 	private DDM _ddm;
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private volatile DDMIndexerConfiguration _ddmIndexerConfiguration;
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

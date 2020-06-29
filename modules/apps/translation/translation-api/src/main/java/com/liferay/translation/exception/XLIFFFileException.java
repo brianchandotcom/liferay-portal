@@ -21,20 +21,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class XLIFFFileException extends PortalException {
 
-	public static class MustBeWellFormed extends XLIFFFileException {
+	public static class MustBeSupportedLanguage extends XLIFFFileException {
 
-		public MustBeWellFormed() {
+		public MustBeSupportedLanguage() {
 		}
 
-		public MustBeWellFormed(String msg) {
+		public MustBeSupportedLanguage(String msg) {
 			super(msg);
 		}
 
-		public MustBeWellFormed(String msg, Throwable cause) {
+		public MustBeSupportedLanguage(String msg, Throwable cause) {
 			super(msg, cause);
 		}
 
-		public MustBeWellFormed(Throwable cause) {
+		public MustBeSupportedLanguage(Throwable cause) {
 			super(cause);
 		}
 
@@ -59,21 +59,20 @@ public class XLIFFFileException extends PortalException {
 
 	}
 
-	public static class MustBeSupportedLanguage
-		extends XLIFFFileException {
+	public static class MustBeWellFormed extends XLIFFFileException {
 
-		public MustBeSupportedLanguage() {
+		public MustBeWellFormed() {
 		}
 
-		public MustBeSupportedLanguage(String msg) {
+		public MustBeWellFormed(String msg) {
 			super(msg);
 		}
 
-		public MustBeSupportedLanguage(String msg, Throwable cause) {
+		public MustBeWellFormed(String msg, Throwable cause) {
 			super(msg, cause);
 		}
 
-		public MustBeSupportedLanguage(Throwable cause) {
+		public MustBeWellFormed(Throwable cause) {
 			super(cause);
 		}
 

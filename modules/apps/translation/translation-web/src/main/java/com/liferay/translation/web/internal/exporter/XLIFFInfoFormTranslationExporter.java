@@ -161,7 +161,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 
 				Fragment value = valuePart.getTarget();
 
-				if(value == null){
+				if (value == null) {
 					throw new XLIFFFileException.MustBeWellFormed(
 						"There is no translation target");
 				}
@@ -266,8 +266,7 @@ public class XLIFFInfoFormTranslationExporter<T>
 				infoItemClassPKReference.getClassPK());
 
 		if (fileNode == null) {
-			throw new XLIFFFileException.MustHaveValidId(
-				"File ID is invalid");
+			throw new XLIFFFileException.MustHaveValidId("File ID is invalid");
 		}
 	}
 

@@ -31,6 +31,8 @@ public class JenkinsSlave {
 	}
 
 	public JenkinsSlave(String hostname) {
+		hostname = hostname.replaceAll("([^\\.]+).*", "$1");
+
 		String jenkinsMasterName =
 			JenkinsResultsParserUtil.getJenkinsMasterName(hostname);
 

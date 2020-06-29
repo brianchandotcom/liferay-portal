@@ -401,15 +401,15 @@ public class PollsDisplayContext {
 
 		boolean reverse = !orderByComparator.isAscending();
 
-		String[] fields = orderByComparator.getOrderByFields();
+		String[] orderByFields = orderByComparator.getOrderByFields();
 
-		String field = fields[0];
+		String orderByField = orderByFields[0];
 
-		if (field.equals(Field.CREATE_DATE)) {
-			return new Sort(field, Sort.LONG_TYPE, reverse);
+		if (orderByField.equals(Field.CREATE_DATE)) {
+			return new Sort(orderByField, Sort.LONG_TYPE, reverse);
 		}
 
-		return new Sort(field, reverse);
+		return new Sort(orderByField, reverse);
 	}
 
 	private void _populateWithDatabase(

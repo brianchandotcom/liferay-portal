@@ -9,7 +9,6 @@
  * distribution rights of the Software.
  */
 
-import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React, {useCallback, useContext, useMemo} from 'react';
 import MaskedInput from 'react-text-mask';
@@ -104,10 +103,13 @@ const DurationSection = ({onChangeHandler}) => {
 				<ClayLayout.Col sm="3">
 					<FormGroupWithStatus
 						className="form-group"
-						data-testid="daysField"
+						description={Liferay.Language.get(
+							'enter-a-whole-number'
+						)}
 						error={errors[DURATION]}
 						htmlFor="slaDurationDays"
 						label={Liferay.Language.get('days')}
+						testid="daysField"
 					>
 						<MaskedInput
 							className="form-control"
@@ -118,16 +120,6 @@ const DurationSection = ({onChangeHandler}) => {
 							onChange={onChangeHandler(onDurationChanged)}
 							value={days}
 						/>
-
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.Text data-testid="durationDaysDescription">
-									{Liferay.Language.get(
-										'enter-a-whole-number'
-									)}
-								</ClayForm.Text>
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
 					</FormGroupWithStatus>
 				</ClayLayout.Col>
 

@@ -206,7 +206,19 @@ definition {
 	}
 
 	macro gotoAddVocabulary {
-		Button.click(button = "Add Vocabulary");
+		if (IsElementPresent(locator1 = "//*[contains(@class,'taglib-empty-result-message-title')][normalize-space(text())='No Vocabularies yet.']")) {
+			Button.click(button = "Add Vocabulary");
+		}
+		else {
+			var browserType = PropsUtil.get("browser.type");
+
+			if ("${browserType}" == "internetexplorer") {
+				Click(locator1 = "NavNested#NAV_NESTED_PLUS_IE");
+			}
+			else {
+				Click(locator1 = "NavNested#NAV_NESTED_PLUS");
+			}
+		}
 	}
 
 	macro tearDownCP {

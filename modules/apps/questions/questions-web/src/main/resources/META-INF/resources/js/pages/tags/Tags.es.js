@@ -129,6 +129,7 @@ export default withRouter(
 									key={tag.id}
 								>
 									<Link
+										title={tag.name}
 										to={`/questions/${sectionTitle}/tag/${tag.name}`}
 									>
 										<div className="card card-interactive card-interactive-primary card-type-template template-card-horizontal">

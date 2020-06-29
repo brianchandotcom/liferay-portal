@@ -178,7 +178,7 @@ const Body = ({history, id, processId, query}) => {
 			</div>
 
 			<ClayForm>
-				<ClayLayout.Sheet>
+				<ClayLayout.Sheet size="lg">
 					<ClayLayout.SheetHeader className="mb-0">
 						<h2 className="sheet-title" data-testid="sheetTitle">
 							{Liferay.Language.get('sla-definition')}

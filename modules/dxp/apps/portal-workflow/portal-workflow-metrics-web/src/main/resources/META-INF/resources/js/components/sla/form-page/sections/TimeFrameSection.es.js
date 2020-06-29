@@ -103,7 +103,8 @@ const TimeFrameSection = () => {
 						/>
 					</FormGroupWithStatus>
 				</ClayLayout.Col>
-
+			</ClayLayout.Row>
+			<ClayLayout.Row>
 				<ClayLayout.Col>
 					<FormGroupWithStatus
 						className="form-group"
@@ -136,7 +137,8 @@ const TimeFrameSection = () => {
 						/>
 					</FormGroupWithStatus>
 				</ClayLayout.Col>
-
+			</ClayLayout.Row>
+			<ClayLayout.Row>
 				<ClayLayout.Col>
 					<FormGroupWithStatus
 						className="form-group"

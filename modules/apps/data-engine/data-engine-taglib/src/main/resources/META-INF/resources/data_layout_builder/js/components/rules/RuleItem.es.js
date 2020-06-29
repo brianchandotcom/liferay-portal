@@ -43,6 +43,14 @@ const OPERATOR_LABELS = {
 	'not-is-empty': Liferay.Language.get('not-is-empty'),
 };
 
+const ACTION_LABELS = {
+	autofill: Liferay.Language.get('autofill'),
+	calculate: Liferay.Language.get('calculate'),
+	enable: Liferay.Language.get('enable'),
+	require: Liferay.Language.get('require'),
+	show: Liferay.Language.get('show'),
+};
+
 export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 	const {
 		actions,
@@ -125,11 +133,9 @@ export default function RuleItem({rule, toggleRulesEditorVisibility}) {
 					);
 				})}
 
-				<Text>{Liferay.Language.get('then')}</Text>
-
 				{actions.map(({action, expression, target}, index) => (
 					<>
-						<Text lowercase>{action}</Text>
+						<Text lowercase>{ACTION_LABELS[action] || action}</Text>
 
 						{expression && (
 							<>

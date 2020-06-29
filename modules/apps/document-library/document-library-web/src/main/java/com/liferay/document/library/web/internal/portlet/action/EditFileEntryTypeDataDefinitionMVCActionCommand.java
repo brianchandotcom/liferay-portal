@@ -27,8 +27,8 @@ import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
+import com.liferay.dynamic.data.mapping.exception.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.kernel.NoSuchStructureException;
-import com.liferay.dynamic.data.mapping.kernel.RequiredStructureException;
 import com.liferay.dynamic.data.mapping.kernel.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.kernel.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.kernel.StructureNameException;
@@ -187,25 +187,31 @@ public class EditFileEntryTypeDataDefinitionMVCActionCommand
 	private void _deleteFileEntryType(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-		long fileEntryTypeId = ParamUtil.getLong(
-			actionRequest, "fileEntryTypeId");
+			long fileEntryTypeId = ParamUtil.getLong(
+				actionRequest, "fileEntryTypeId");
 
-		DLFileEntryType fileEntryType =
-			_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
+			DLFileEntryType fileEntryType =
+				_dlFileEntryTypeService.getFileEntryType(fileEntryTypeId);
 
-		DataDefinitionResource dataDefinitionResource =
-			DataDefinitionResource.builder(
-			).user(
-				themeDisplay.getUser()
-			).build();
+			DataDefinitionResource dataDefinitionResource =
+				DataDefinitionResource.builder(
+				).user(
+					themeDisplay.getUser()
+				).build();
 
-		dataDefinitionResource.deleteDataDefinition(
-			fileEntryType.getDataDefinitionId());
+			dataDefinitionResource.deleteDataDefinition(
+				fileEntryType.getDataDefinitionId());
 
-		_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
+			_dlFileEntryTypeService.deleteFileEntryType(fileEntryTypeId);
+		}
+		catch (RequiredStructureException requiredStructureException) {
+			throw new RequiredFileEntryTypeException(
+				requiredStructureException);
+		}
 	}
 
 	private long[] _getLongArray(PortletRequest portletRequest, String name) {

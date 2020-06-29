@@ -107,6 +107,25 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 								</clay:content-col>
 							</clay:content-row>
 						</li>
+						<li class="view-collection-items-action-option {type}" data-view-collection-items-url="<%= layoutsTreeDisplayContext.getViewCollectionItemsURL() %>">
+							<clay:content-row
+								containerElement="a"
+								cssClass="dropdown-item layout-action"
+								href="javascript:;"
+							>
+								<clay:content-col
+									containerElement="span"
+									expand="<%= true %>"
+								>
+									<clay:content-section
+										containerElement="span"
+										cssClass="text-left"
+									>
+										<liferay-ui:message key="view-collection-items" />
+									</clay:content-section>
+								</clay:content-col>
+							</clay:content-row>
+						</li>
 					</ul>
 				</span>
 			</clay:content-col>
@@ -137,7 +156,22 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 	module="js/PagesTreeEventHandler.es"
 />
 
-<aui:script>
+<aui:script require="metal-dom/src/all/dom as dom">
+	var layoutsTree = document.getElementById('<portlet:namespace />layoutsTree');
+
+	var viewCollectionItemsActionOptionQueryClickHandler = dom.delegate(
+		layoutsTree,
+		'click',
+		'.view-collection-items-action-option.collection',
+		function (event) {
+			Liferay.Util.openModal({
+				id: '<portlet:namespace />viewCollectionItemsDialog',
+				title: '<liferay-ui:message key="collection-items" />',
+				url: event.delegateTarget.dataset.viewCollectionItemsUrl,
+			});
+		}
+	);
+
 	function handleDestroyPortlet() {
 		Liferay.destroyComponent(
 			'<%= liferayPortletResponse.getNamespace() %>pagesTree'
@@ -145,6 +179,8 @@ LayoutsTreeDisplayContext layoutsTreeDisplayContext = new LayoutsTreeDisplayCont
 		Liferay.destroyComponent(
 			'<%= ProductNavigationProductMenuWebKeys.PAGES_TREE_EVENT_HANDLER %>'
 		);
+
+		viewCollectionItemsActionOptionQueryClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

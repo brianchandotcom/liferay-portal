@@ -217,6 +217,14 @@ $product-menu-pages-administration-link-height: 72px;
 			);
 		}
 	}
+
+	.view-collection-items-action-option {
+		display: none;
+	}
+
+	.view-collection-items-action-option.collection {
+		display: block;
+	}
 }
 
 .tree-drag-helper {

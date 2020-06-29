@@ -16,6 +16,8 @@ package com.liferay.product.navigation.product.menu.web.internal.display.context
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
+import com.liferay.asset.list.constants.AssetListPortletKeys;
+import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,6 +26,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,6 +43,7 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 /**
  * @author Pavel Savinov
@@ -214,6 +220,33 @@ public class LayoutsTreeDisplayContext {
 		).put(
 			"privateLayout", isPrivateLayout()
 		).build();
+	}
+
+	public String getViewCollectionItemsURL()
+		throws PortalException, WindowStateException {
+
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_liferayPortletRequest, AssetListEntry.class.getName(),
+			PortletProvider.Action.BROWSE);
+
+		if (portletURL == null) {
+			return StringPool.BLANK;
+		}
+
+		portletURL.setParameter(
+			"redirect",
+			PortalUtil.getLayoutFullURL(
+				_themeDisplay.getLayout(), _themeDisplay));
+		portletURL.setParameter("showActions", String.valueOf(Boolean.TRUE));
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		return StringBundler.concat(
+			portletURL, StringPool.AMPERSAND,
+			PortalUtil.getPortletNamespace(AssetListPortletKeys.ASSET_LIST),
+			"collectionPK={collectionPK}", StringPool.AMPERSAND,
+			PortalUtil.getPortletNamespace(AssetListPortletKeys.ASSET_LIST),
+			"collectionType={collectionType}");
 	}
 
 	public boolean isPrivateLayout() {

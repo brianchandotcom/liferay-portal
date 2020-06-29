@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_DISPLAY_FRAGMENT_IMAGE</td>
+	<td>//div[contains(@class,'content')]//div[@class='row'][${key_rowPosition}]/div[contains(@class,'col')][${key_colPosition}]//*[contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTRIBUTED_FRAGMENT_EDITABLE_FIELD</td>
 	<td>//div[contains(@class,'page-editor__topper') and contains(.,'${key_fragmentName}')]//*[contains(@data-lfr-editable-id,'${id}')]</td>
 	<td></td>

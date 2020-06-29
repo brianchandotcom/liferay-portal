@@ -22,12 +22,12 @@ export {
 	generateInstanceId,
 } from './js/util/repeatable.es';
 export {PagesVisitor, RulesVisitor} from './js/util/visitors.es';
-export * as FormSupport from './js/components/FormRenderer/FormSupport.es';
+export * as FormSupport from './js/util/FormSupport.es';
 export {getConnectedReactComponentAdapter} from './js/util/ReactComponentAdapter.es';
 
-// Composing Form Renderer
+// Composing Form
 
-export {default as FormRenderer} from './js/components/FormRenderer/FormRenderer.es';
+export {default as Pages} from './js/components/Pages.es';
 export {EVENT_TYPES} from './js/actions/types.es';
 export {PageProvider, usePage} from './js/hooks/usePage.es';
 export {FormProvider, FormNoopProvider, useForm} from './js/hooks/useForm.es';
@@ -37,4 +37,4 @@ export * as DefaultVariant from './js/components/PageRenderer/DefaultVariant.es'
 // Containers
 
 export {default as Form} from './js/containers/Form.es';
-export {FormNoopRenderer} from './js/containers/FormNoopRenderer.es';
+export {FormNoop} from './js/containers/FormNoop.es';

@@ -20,8 +20,8 @@ import React, {useRef} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
-import {useFieldTypesResource} from '../../hooks/useResource.es';
-import PageRenderer from '../PageRenderer/index';
+import {useFieldTypesResource} from '../hooks/useResource.es';
+import Page from './PageRenderer/index';
 
 function getDisplayableValue({containerId, readOnly, viewMode}) {
 	return (
@@ -29,7 +29,7 @@ function getDisplayableValue({containerId, readOnly, viewMode}) {
 	);
 }
 
-const FormRenderer = React.forwardRef(
+const Pages = React.forwardRef(
 	(
 		{
 			activePage = 0,
@@ -78,7 +78,7 @@ const FormRenderer = React.forwardRef(
 					)}
 				>
 					{pages.map((page, index) => (
-						<PageRenderer
+						<Page
 							{...otherProps}
 							activePage={activePage}
 							cancelLabel={cancelLabel}
@@ -104,16 +104,16 @@ const FormRenderer = React.forwardRef(
 	}
 );
 
-FormRenderer.displayName = 'FormRenderer';
+Pages.displayName = 'Pages';
 
-const FormRendererWithProviders = React.forwardRef((props, ref) => (
+const PagesWithProviders = React.forwardRef((props, ref) => (
 	<DndProvider backend={HTML5Backend} context={window}>
 		<ClayIconSpriteContext.Provider value={props.spritemap}>
-			<FormRenderer {...props} ref={ref} />
+			<Pages {...props} ref={ref} />
 		</ClayIconSpriteContext.Provider>
 	</DndProvider>
 ));
 
-FormRendererWithProviders.displayName = 'FormRendererWithProviders';
+PagesWithProviders.displayName = 'PagesWithProviders';
 
-export default React.memo(FormRendererWithProviders);
+export default React.memo(PagesWithProviders);

@@ -16,7 +16,7 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import {
 	EVENT_TYPES,
 	FormProvider,
-	FormRenderer,
+	Pages,
 } from 'dynamic-data-mapping-form-renderer';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
@@ -106,7 +106,7 @@ export default function () {
 					spritemap,
 				}}
 			>
-				{(props) => <FormRenderer {...props} />}
+				{(props) => <Pages {...props} />}
 			</FormProvider>
 		</form>
 	);

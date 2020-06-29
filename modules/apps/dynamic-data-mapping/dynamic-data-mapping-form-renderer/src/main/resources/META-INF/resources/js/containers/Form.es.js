@@ -21,7 +21,7 @@ import React, {
 	useRef,
 } from 'react';
 
-import FormRenderer from '../components/FormRenderer/FormRenderer.es';
+import Pages from '../components/Pages.es';
 import {FormProvider, useForm} from '../hooks/useForm.es';
 import formValidate from '../thunks/formValidate.es';
 import {getConnectedReactComponentAdapter} from '../util/ReactComponentAdapter.es';
@@ -173,7 +173,7 @@ const Form = React.forwardRef((props, ref) => {
 		};
 	}, [containerRef, handleFormSubmitted]);
 
-	return <FormRenderer {...props} ref={containerRef} />;
+	return <Pages {...props} ref={containerRef} />;
 });
 
 Form.displayName = 'Form';

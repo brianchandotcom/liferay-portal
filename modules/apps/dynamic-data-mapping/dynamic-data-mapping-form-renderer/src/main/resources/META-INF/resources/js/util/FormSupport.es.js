@@ -12,7 +12,7 @@
  * details.
  */
 
-import {PagesVisitor} from '../../util/visitors.es';
+import {PagesVisitor} from './visitors.es';
 
 export const implAddColumn = (size, fields = []) => {
 	return {

@@ -14,23 +14,19 @@
 
 import React from 'react';
 
-import FormRenderer from '../components/FormRenderer/FormRenderer.es';
+import Pages from '../components/Pages.es';
 import {FormNoopProvider} from '../hooks/useForm.es';
 
 /**
- * It is an implementation of FormRenderer no-op, it just renders the
+ * It is an implementation of Form no-op, it just renders the
  * layout and propagates any event to the instance `dispatch`.
  */
-export const FormNoopRenderer = React.forwardRef(
-	({instance, ...otherProps}, ref) => (
-		<FormNoopProvider
-			onEvent={(type, payload) =>
-				instance?.context.dispatch(type, payload)
-			}
-		>
-			<FormRenderer {...otherProps} ref={ref} />
-		</FormNoopProvider>
-	)
-);
+export const FormNoop = React.forwardRef(({instance, ...otherProps}, ref) => (
+	<FormNoopProvider
+		onEvent={(type, payload) => instance?.context.dispatch(type, payload)}
+	>
+		<Pages {...otherProps} ref={ref} />
+	</FormNoopProvider>
+));
 
-FormNoopRenderer.displayName = 'FormNoopRenderer';
+FormNoop.displayName = 'FormNoop';

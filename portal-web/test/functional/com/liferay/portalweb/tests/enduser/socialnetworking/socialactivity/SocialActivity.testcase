@@ -29,6 +29,8 @@ definition {
 	@description = "It ensures that the user statistics are counted when social tracking is enabled."
 	@priority = "5"
 	test CountUserStatisticsAfterEnablingSocialTracking {
+		property test.name.skip.portal.instance = "SocialActivity#CountUserStatisticsAfterEnablingSocialTracking";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -82,6 +84,8 @@ definition {
 	@description = "It ensures that the user statistics are not counted when social tracking is disabled."
 	@priority = "5"
 	test DisableSocialTracking {
+		property test.name.skip.portal.instance = "SocialActivity#DisableSocialTracking";
+
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

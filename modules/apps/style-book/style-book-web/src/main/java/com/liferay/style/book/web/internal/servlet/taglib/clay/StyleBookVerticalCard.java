@@ -16,9 +16,14 @@ package com.liferay.style.book.web.internal.servlet.taglib.clay;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
+import com.liferay.style.book.web.internal.servlet.taglib.util.StyleBookEntryActionDropdownItemsProvider;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -36,6 +41,19 @@ public class StyleBookVerticalCard
 		super(baseModel, rowChecker);
 
 		_styleBookEntry = (StyleBookEntry)baseModel;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() {
+		StyleBookEntryActionDropdownItemsProvider
+			styleBookEntryActionDropdownItemsProvider =
+				new StyleBookEntryActionDropdownItemsProvider(
+					_styleBookEntry, _renderRequest, _renderResponse);
+
+		return styleBookEntryActionDropdownItemsProvider.
+			getActionDropdownItems();
 	}
 
 	@Override
@@ -53,6 +71,13 @@ public class StyleBookVerticalCard
 		return false;
 	}
 
+	@Override
+	public String getDefaultEventHandler() {
+		return StyleBookWebKeys.STYLE_BOOK_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
+	}
+
+	private final RenderRequest _renderRequest;
+	private final RenderResponse _renderResponse;
 	private final StyleBookEntry _styleBookEntry;
 
 }

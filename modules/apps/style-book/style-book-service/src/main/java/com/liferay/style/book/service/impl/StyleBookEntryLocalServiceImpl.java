@@ -132,6 +132,19 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry updateStyleBookEntry(
+			long styleBookEntryId, long previewFileEntryId)
+		throws PortalException {
+
+		StyleBookEntry styleBookEntry =
+			styleBookEntryPersistence.findByPrimaryKey(styleBookEntryId);
+
+		styleBookEntry.setPreviewFileEntryId(previewFileEntryId);
+
+		return styleBookEntryPersistence.update(styleBookEntry);
+	}
+
+	@Override
+	public StyleBookEntry updateStyleBookEntry(
 			long styleBookEntryId, String name)
 		throws PortalException {
 

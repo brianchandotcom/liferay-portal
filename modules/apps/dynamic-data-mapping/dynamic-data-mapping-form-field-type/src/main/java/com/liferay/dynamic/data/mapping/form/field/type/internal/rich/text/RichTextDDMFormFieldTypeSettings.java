@@ -67,6 +67,14 @@ public interface RichTextDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
+		label = "%searchable", optionLabels = {"%disable", "%text"},
+		optionValues = {"none", "text"}, predefinedValue = "text",
+		type = "radio"
+	)
+	@Override
+	public String indexType();
+
+	@DDMFormField(
 		dataType = "string", label = "%predefined-value", type = "rich_text"
 	)
 	@Override

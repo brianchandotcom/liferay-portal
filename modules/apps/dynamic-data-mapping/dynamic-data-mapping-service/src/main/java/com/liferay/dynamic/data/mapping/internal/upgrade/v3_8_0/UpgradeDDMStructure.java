@@ -391,6 +391,12 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 					_upgradeTextArea(companyId, jsonObject);
 				}
 
+				if (!StringUtil.equals(type, "separator") &&
+					Validator.isNull(jsonObject.getString("indexType"))) {
+
+					jsonObject.put("indexType", "none");
+				}
+
 				if (jsonObject.has("nestedFields")) {
 					jsonObject.put(
 						"nestedFields",

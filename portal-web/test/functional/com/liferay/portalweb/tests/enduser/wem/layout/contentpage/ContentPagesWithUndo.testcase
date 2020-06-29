@@ -385,6 +385,114 @@ definition {
 			locator1 = "Fragment#FRAGMENT");
 	}
 
+	@description = "This is a use case for for LPS-111548. Undo can make the page editor come back to previous state up to 100 last states when the page has more than 100 states."
+	@priority = "5"
+	test UndoPagechangeHundredTimes {
+		ContentPagesNavigator.openEditContentPage(
+			pageName = "Test Content Page Name",
+			siteName = "Test Site Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "${i}");
+
+			Click.clickNoMouseOver(
+				key_elementType = "Fragment",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		}
+
+		PageEditor.removeFragment(fragmentName = "Tabs");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "${i}");
+
+			Click.clickNoMouseOver(
+				key_elementType = "Fragment",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		}
+
+		PageEditor.removeFragment(fragmentName = "Tabs");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "${i}");
+
+			Click.clickNoMouseOver(
+				key_elementType = "Fragment",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		}
+
+		PageEditor.removeFragment(fragmentName = "Tabs");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "${i}");
+
+			Click.clickNoMouseOver(
+				key_elementType = "Fragment",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		}
+
+		PageEditor.removeFragment(fragmentName = "Tabs");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Tabs");
+
+		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19") {
+			PageEditor.gotoConfiguration(fragmentName = "Tabs");
+
+			PageEditor.configureFragment(numberOfTabs = "${i}");
+
+			Click.clickNoMouseOver(
+				key_elementType = "Fragment",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		}
+
+		var count = "0";
+
+		while ("${count}" != "100" && (maxIterations = "100")) {
+			Click(
+				key_text = "undo",
+				locator1 = "Icon#ANY");
+
+			var count = ${count} + 1;
+		}
+
+		AssertVisible(
+			key_navItem = "Tab 4",
+			locator1 = "Fragment#NAV_ITEM_TAB");
+
+		AssertElementNotPresent(
+			key_navItem = "Tab 5",
+			locator1 = "Fragment#NAV_ITEM_TAB");
+
+		AssertElementPresent(
+			key_text = "undo",
+			locator1 = "Icon#ANY_DISABLED");
+	}
+
 	@description = "This is a test for LPS-111548. Undo can make the page editor come back to previous state up to X last states when the page has X states that is less than 20."
 	@priority = "5"
 	test UndoPagechangeThreeTimes {
@@ -435,46 +543,6 @@ definition {
 		Click(
 			key_text = "undo",
 			locator1 = "Icon#ANY");
-
-		AssertElementPresent(
-			key_text = "undo",
-			locator1 = "Icon#ANY_DISABLED");
-	}
-
-	@description = "This is a use case for for LPS-111548. Undo can make the page editor come back to previous state up to 20 last states when the page has more than 20 states."
-	@priority = "5"
-	test UndoPagechangeTwentyTimes {
-		ContentPagesNavigator.openEditContentPage(
-			pageName = "Test Content Page Name",
-			siteName = "Test Site Name");
-
-		PageEditor.addFragment(
-			collectionName = "Basic Components",
-			fragmentName = "Tabs");
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
-			PageEditor.gotoConfiguration(fragmentName = "Tabs");
-
-			PageEditor.configureFragment(numberOfTabs = "${i}");
-
-			Click.clickNoMouseOver(
-				key_elementType = "Fragment",
-				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
-		}
-
-		for (var i : list "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20") {
-			Click(
-				key_text = "undo",
-				locator1 = "Icon#ANY");
-		}
-
-		AssertVisible(
-			key_navItem = "Tab 4",
-			locator1 = "Fragment#NAV_ITEM_TAB");
-
-		AssertElementNotPresent(
-			key_navItem = "Tab 5",
-			locator1 = "Fragment#NAV_ITEM_TAB");
 
 		AssertElementPresent(
 			key_text = "undo",

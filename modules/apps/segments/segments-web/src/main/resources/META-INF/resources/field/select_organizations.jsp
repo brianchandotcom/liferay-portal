@@ -21,7 +21,7 @@ SelectOrganizationsDisplayContext selectOrganizationsDisplayContext = (SelectOrg
 %>
 
 <clay:management-toolbar
-	displayContext="<%= (SelectOrganizationsManagementToolbarDisplayContext)request.getAttribute(SegmentsWebKeys.SEGMENTS_SELECT_ROLE_MANAGEMENT_TOOLBAL_DISPLAY_CONTEXT) %>"
+	displayContext="<%= (SelectOrganizationsManagementToolbarDisplayContext)request.getAttribute(SegmentsWebKeys.SEGMENTS_SELECT_ORGANIZATION_MANAGEMENT_TOOLBAL_DISPLAY_CONTEXT) %>"
 />
 
 <aui:form cssClass="container-fluid-1280" name="fm">

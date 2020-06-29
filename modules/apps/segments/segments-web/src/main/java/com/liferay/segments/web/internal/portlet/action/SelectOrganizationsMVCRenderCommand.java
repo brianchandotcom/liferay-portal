@@ -62,7 +62,7 @@ public class SelectOrganizationsMVCRenderCommand implements MVCRenderCommand {
 
 			renderRequest.setAttribute(
 				SegmentsWebKeys.
-					SEGMENTS_SELECT_ROLE_MANAGEMENT_TOOLBAL_DISPLAY_CONTEXT,
+					SEGMENTS_SELECT_ORGANIZATION_MANAGEMENT_TOOLBAL_DISPLAY_CONTEXT,
 				new SelectOrganizationsManagementToolbarDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
 					_portal.getLiferayPortletRequest(renderRequest),

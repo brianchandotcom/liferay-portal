@@ -17,6 +17,9 @@ package com.liferay.portal.vulcan.aggregation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Javier Gamarra
  */
@@ -26,22 +29,56 @@ public class Facet {
 	public Facet() {
 	}
 
-	public Facet(String term, Integer numberOfOccurrences) {
-		_term = term;
-		_numberOfOccurrences = numberOfOccurrences;
+	public Facet(String facetCriteria, List<FacetValue> facetValues) {
+		_facetCriteria = facetCriteria;
+		_facetValues = facetValues;
 	}
 
-	@JsonProperty("numberOfOccurrences")
-	public Integer getNumberOfOccurrences() {
-		return _numberOfOccurrences;
+	@JsonProperty("facetCriteria")
+	public String getFacetCriteria() {
+		return _facetCriteria;
 	}
 
-	@JsonProperty("term")
-	public String getTerm() {
-		return _term;
+	@JsonProperty("facetValues")
+	public List<FacetValue> getFacetValues() {
+		return _facetValues;
 	}
 
-	private Integer _numberOfOccurrences;
-	private String _term;
+	public void setFacetCriteria(String facetCriteria) {
+		_facetCriteria = facetCriteria;
+	}
+
+	public void setFacetValues(List<FacetValue> facetValues) {
+		_facetValues = facetValues;
+	}
+
+	@JacksonXmlRootElement(localName = "facetValue")
+	public static class FacetValue {
+
+		public FacetValue() {
+		}
+
+		public FacetValue(String term, Integer numberOfOccurrences) {
+			_term = term;
+			_numberOfOccurrences = numberOfOccurrences;
+		}
+
+		@JsonProperty("numberOfOccurrences")
+		public Integer getNumberOfOccurrences() {
+			return _numberOfOccurrences;
+		}
+
+		@JsonProperty("term")
+		public String getTerm() {
+			return _term;
+		}
+
+		private Integer _numberOfOccurrences;
+		private String _term;
+
+	}
+
+	private String _facetCriteria;
+	private List<FacetValue> _facetValues = new ArrayList<>();
 
 }

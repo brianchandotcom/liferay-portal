@@ -39,7 +39,7 @@ definition {
 	@priority = "4"
 	test ConfigureHeadingFragmentAndRefreshPageWithUndoEnabled {
 		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
+			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
@@ -221,7 +221,7 @@ definition {
 		AssetListsAdmin.configureAssetEntryType(selectedAsset = "Web Content Article");
 
 		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
+			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(
@@ -445,7 +445,7 @@ definition {
 	@priority = "5"
 	test UndoPagechangeTwentyTimes {
 		ContentPagesNavigator.openEditContentPage(
-			pageName = "Content Page Name",
+			pageName = "Test Content Page Name",
 			siteName = "Test Site Name");
 
 		PageEditor.addFragment(

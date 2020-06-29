@@ -18,20 +18,32 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {LAYOUT_DATA_ITEM_TYPES} from './AddPanel';
-import {addLoadingAnimation, addPortlet, useDragSymbol} from './useDragAndDrop';
+import {LAYOUT_DATA_ITEM_TYPES, updateUsedWidget} from './AddPanel';
+import {useSetWidgetsContext, useWidgetsContext} from './AddPanelContext';
+import {addPortlet, useDragSymbol} from './useDragAndDrop';
 
 import 'product-navigation-control-menu/css/TabItem.scss';
 
-const addItem = (item) => {
+const addItem = (item, widgets, setWidgets) => {
 	const targetItem = document.querySelector('.portlet-dropzone');
-	const loading = addLoadingAnimation(targetItem);
 
 	if (!item.used) {
-		addPortlet(item, loading);
+		addPortlet({item, targetItem});
+
+		if (!item.data.instanceable) {
+			const updatedWidgets = updateUsedWidget({
+				item,
+				widgets,
+			});
+
+			setWidgets(updatedWidgets);
+		}
 	}
 };
 export default function TabItem({item}) {
+	const setWidgets = useSetWidgetsContext();
+	const widgets = useWidgetsContext();
+
 	const isContent = item.type === LAYOUT_DATA_ITEM_TYPES.content;
 
 	const {sourceRef} = useDragSymbol({
@@ -39,7 +51,6 @@ export default function TabItem({item}) {
 		icon: item.icon,
 		label: item.label,
 		portletId: item.itemId,
-		portletUsed: item.data.used,
 		type: item.type,
 	});
 
@@ -63,16 +74,18 @@ export default function TabItem({item}) {
 				)}
 			</div>
 
-			<ClayButton
-				className="btn-monospaced sidebar__add-panel__tab-item-add"
-				displayType="unstyled"
-				onClick={() => addItem(item)}
-				small
-				title={item.name}
-			>
-				<ClayIcon symbol="plus" />
-				<span className="sr-only">{item.name}</span>
-			</ClayButton>
+			{!item.disabled && (
+				<ClayButton
+					className="btn-monospaced sidebar__add-panel__tab-item-add"
+					displayType="unstyled"
+					onClick={() => addItem(item, widgets, setWidgets)}
+					small
+					title={item.name}
+				>
+					<ClayIcon symbol="plus" />
+					<span className="sr-only">{item.name}</span>
+				</ClayButton>
+			)}
 		</li>
 	);
 }

@@ -22,6 +22,7 @@ const INITIAL_STATE = {
 	namespace: null,
 	portletNamespace: null,
 	setDisplayGrid: () => null,
+	setWidgets: () => null,
 	widgets: null,
 };
 
@@ -61,6 +62,10 @@ const useWidgetsContext = () => {
 	return useContext(AddPanelContext).widgets;
 };
 
+const useSetWidgetsContext = () => {
+	return useContext(AddPanelContext).setWidgets;
+};
+
 export {
 	AddPanelContext,
 	AddPanelContextProvider,
@@ -72,4 +77,5 @@ export {
 	usePortletNamespaceContext,
 	useSetDisplayGridContext,
 	useWidgetsContext,
+	useSetWidgetsContext,
 };

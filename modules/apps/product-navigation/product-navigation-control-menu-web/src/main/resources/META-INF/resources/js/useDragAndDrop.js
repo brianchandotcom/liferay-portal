@@ -24,7 +24,8 @@ import React, {
 import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
-import {LAYOUT_DATA_ITEM_TYPES} from './AddPanel';
+import {LAYOUT_DATA_ITEM_TYPES, updateUsedWidget} from './AddPanel';
+import {useSetWidgetsContext, useWidgetsContext} from './AddPanelContext';
 
 const DROP_OVER_CLASS = 'yui3-dd-drop-over';
 const POSITION = {
@@ -55,12 +56,12 @@ export function useDragItem(sourceItem) {
 
 		item: {
 			data: sourceItem.data,
+			disabled: sourceItem.disabled,
 			getSourceItem,
 			icon: sourceItem.icon,
 			itemId: sourceItem.itemId,
 			name: sourceItem.name,
 			type: sourceItem.type,
-			used: sourceItem.used,
 		},
 	});
 
@@ -75,14 +76,7 @@ export function useDragItem(sourceItem) {
 	};
 }
 
-export function useDragSymbol({
-	data,
-	icon,
-	label,
-	portletId,
-	portletUsed,
-	type,
-}) {
+export function useDragSymbol({data, icon, label, portletId, type}) {
 	const sourceItem = useMemo(
 		() => ({
 			data,
@@ -91,9 +85,8 @@ export function useDragSymbol({
 			itemId: portletId,
 			name: label,
 			type,
-			used: portletUsed,
 		}),
-		[data, icon, label, portletId, portletUsed, type]
+		[data, icon, label, portletId, type]
 	);
 
 	const {handlerRef, isDraggingSource, sourceRef} = useDragItem(sourceItem);
@@ -144,6 +137,9 @@ export function useDropTarget(targetItem) {
 	const [windowScrollPosition, setWindowScrollPosition] = useState(0);
 	const [targetPosition, setTargetPosition] = useState(null);
 
+	const setWidgets = useSetWidgetsContext();
+	const widgets = useWidgetsContext();
+
 	useEffect(() => {
 		const handleWindowScroll = () => {
 			setWindowScrollPosition(window.scrollY);
@@ -165,12 +161,18 @@ export function useDropTarget(targetItem) {
 				return;
 			}
 
-			const loading = addLoadingAnimation(targetItem, targetPosition);
-
-			if (!item.used) {
+			if (!item.disabled) {
 				dropTargetColumn.classList.remove(DROP_OVER_CLASS);
 
-				addPortlet(item, loading);
+				addPortlet({item, targetItem, targetPosition});
+
+				if (!item.data.instanceable) {
+					const updatedWidgets = updateUsedWidget({
+						item,
+						widgets,
+					});
+					setWidgets(updatedWidgets);
+				}
 			}
 		},
 		hover(item, monitor) {
@@ -220,7 +222,7 @@ export function useDropTarget(targetItem) {
 	setDropTargetRef(targetItem);
 }
 
-export const addLoadingAnimation = (targetItem, targetPosition) => {
+const addLoadingAnimation = (targetItem, targetPosition) => {
 	const itemIsDropzone = targetItem.classList.contains('portlet-dropzone');
 	const loading = document.createElement('div');
 	loading.classList.add('loading-animation');
@@ -241,14 +243,16 @@ export const addLoadingAnimation = (targetItem, targetPosition) => {
 	return loading;
 };
 
-export const addPortlet = (item, loading) => {
+export const addPortlet = ({item, targetItem, targetPosition}) => {
+	const loading = addLoadingAnimation(targetItem, targetPosition);
+
 	openToast({
 		message: Liferay.Language.get('the-application-was-added-to-the-page'),
 		type: 'success',
 	});
 
 	const portletData =
-		item.type === LAYOUT_DATA_ITEM_TYPES.fragment
+		item.type === LAYOUT_DATA_ITEM_TYPES.widget
 			? ''
 			: `${item.data.classPK},${item.data.className}`;
 
@@ -257,7 +261,7 @@ export const addPortlet = (item, loading) => {
 		placeHolder: loading,
 		plid: themeDisplay.getPlid(),
 		portletData,
-		portletId: item.itemId,
+		portletId: item.data.portletId,
 		portletItemId: '',
 	});
 };

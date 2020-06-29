@@ -12,7 +12,7 @@
  * details.
  */
 
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 
@@ -28,15 +28,49 @@ export const LAYOUT_DATA_ITEM_TYPES = {
 	widget: 'widget',
 };
 
+export const updateUsedWidget = ({item, used = true, widgets}) => {
+	return widgets.map((collection) => {
+		return {
+			...collection,
+			portlets: collection.portlets.map((portlet) => {
+				return portlet.portletId === item.itemId &&
+					!portlet.instanceable
+					? {...portlet, used}
+					: portlet;
+			}),
+		};
+	});
+};
+
 const AddPanel = ({
 	addContentsURLs,
 	contents,
 	getContentsURL,
 	namespace,
 	portletNamespace,
-	widgets,
+	widgets: widgetsItems,
 }) => {
 	const [displayGrid, setDisplayGrid] = useState(false);
+	const [widgets, setWidgets] = useState(widgetsItems);
+
+	useEffect(() => {
+		const removePortlet = (item) => {
+			const portlet = {...item, itemId: item.portletId};
+			const updatedWidgets = updateUsedWidget({
+				item: portlet,
+				used: false,
+				widgets,
+			});
+
+			setWidgets(updatedWidgets);
+		};
+
+		Liferay.on('closePortlet', removePortlet);
+
+		return () => {
+			Liferay.detach('closePortlet', removePortlet);
+		};
+	}, [widgets]);
 
 	const tabs = useMemo(
 		() => [
@@ -75,6 +109,7 @@ const AddPanel = ({
 					namespace,
 					portletNamespace,
 					setDisplayGrid,
+					setWidgets,
 					widgets,
 				}}
 			>
@@ -114,7 +149,7 @@ export const normalizeContent = (content) => {
 			portletId: content.portletId,
 		},
 		icon: content.icon,
-		itemId: content.portletId,
+		itemId: `${content.portletId}_${content.classPK}`,
 		label: content.title,
 		type: LAYOUT_DATA_ITEM_TYPES.content,
 	};

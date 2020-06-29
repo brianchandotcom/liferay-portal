@@ -749,7 +749,6 @@ public class GitHubDevSyncUtil {
 	protected static void deleteRemoteGitBranches(
 		GitWorkingDirectory gitWorkingDirectory,
 		List<RemoteGitBranch> remoteGitBranches) {
-
 		gitWorkingDirectory.deleteRemoteGitBranches(remoteGitBranches);
 
 		StringBuilder sb = new StringBuilder();
@@ -757,6 +756,7 @@ public class GitHubDevSyncUtil {
 		sb.append(
 			JenkinsResultsParserUtil.toDateString(
 				new Date(), "America/Los_Angeles"));
+		sb.append("\n\n");
 
 		JenkinsSlave jenkinsSlave = new JenkinsSlave();
 
@@ -772,10 +772,14 @@ public class GitHubDevSyncUtil {
 
 		sb.append("\n\n");
 
-		sb.append("Deleted GitHub-dev branches:\n");
+		sb.append("Deleted ");
+		sb.append(String.valueOf(remoteGitBranches.size()));
+		sb.append(" GitHub-dev branches:\n");
 
 		for (RemoteGitBranch remoteGitBranch : remoteGitBranches) {
 			sb.append("    ");
+			sb.append(remoteGitBranch.getRemoteURL());
+			sb.append(" ");
 			sb.append(remoteGitBranch.getName());
 			sb.append("\n");
 		}

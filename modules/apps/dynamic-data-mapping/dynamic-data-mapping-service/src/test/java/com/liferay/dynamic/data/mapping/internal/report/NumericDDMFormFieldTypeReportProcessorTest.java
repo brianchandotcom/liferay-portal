@@ -290,18 +290,10 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 			String valueString)
 		throws Exception {
 
-		DDMFormFieldValue ddmFormFieldValue = mock(DDMFormFieldValue.class);
+		DDMFormInstanceRecord ddmFormInstanceRecord = mock(
+			DDMFormInstanceRecord.class);
 
-		Value value = new LocalizedValue();
-
-		value.addString(value.getDefaultLocale(), valueString);
-		value.setDefaultLocale(LocaleUtil.US);
-
-		when(
-			ddmFormFieldValue.getValue()
-		).thenReturn(
-			value
-		);
+		DDMFormFieldValue ddmFormFieldValue = _mockDDMFormFieldValue("", valueString);
 
 		DDMFormValues ddmFormValues = mock(DDMFormValues.class);
 
@@ -312,9 +304,6 @@ public class NumericDDMFormFieldTypeReportProcessorTest extends PowerMockito {
 				"field1", Arrays.asList(ddmFormFieldValue)
 			).build()
 		);
-
-		DDMFormInstanceRecord ddmFormInstanceRecord = mock(
-			DDMFormInstanceRecord.class);
 
 		when(
 			ddmFormInstanceRecord.getDDMFormValues()

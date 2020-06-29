@@ -26,3 +26,11 @@
 	transform: translateX(-40%);
 	z-index: 1;
 }
+
+.no-categories-selected {
+	top: 18%;
+}
+
+.recharts-wrapper .recharts-cartesian-grid-vertical line:not(:last-child) {
+	stroke-opacity: 0;
+}

@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -176,9 +177,24 @@ export default function AuditBarChart({rtl, vocabularies}) {
 		);
 	};
 
+	const allCheckboxesNotChecked = Object.keys(checkboxes).every(
+		(i) => checkboxes[i] === false
+	);
+
 	return (
 		<>
-			<ResponsiveContainer className="mb-4" height={height}>
+			{allCheckboxesNotChecked && (
+				<ClayEmptyState
+					className="empty-state no-categories-selected text-center"
+					description={Liferay.Language.get(
+						'select-categories-from-the-checkboxes-in-the-legend-above'
+					)}
+					title={Liferay.Language.get(
+						'there-are-no-categories-selected'
+					)}
+				/>
+			)}
+			<ResponsiveContainer height={height}>
 				<BarChart data={data} height={height} width={BAR_CHART.width}>
 					{bars.length && (
 						<Legend

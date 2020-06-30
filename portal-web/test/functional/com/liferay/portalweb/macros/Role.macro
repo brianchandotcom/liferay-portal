@@ -35,6 +35,8 @@ definition {
 	macro addAssignees {
 		LexiconEntry.gotoAdd();
 
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
 		SelectFrame(locator1 = "IFrame#SELECT_ASSIGNEES");
 
 		Search.searchCP(searchTerm = "${assigneeName}");

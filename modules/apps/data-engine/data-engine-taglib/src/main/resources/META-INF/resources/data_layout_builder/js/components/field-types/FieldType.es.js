@@ -100,7 +100,7 @@ export default (props) => {
 			ref={drag}
 			verticalAlign="center"
 		>
-			{dragAlignment === 'left' && (
+			{draggable && dragAlignment === 'left' && (
 				<ClayLayout.ContentCol className="pl-2 pr-2">
 					<ClayIcon symbol="drag" />
 				</ClayLayout.ContentCol>
@@ -136,7 +136,7 @@ export default (props) => {
 				{actions && <DropDown actions={actions} />}
 			</div>
 
-			{dragAlignment === 'right' && (
+			{draggable && dragAlignment === 'right' && (
 				<ClayLayout.ContentCol className="pr-2">
 					<ClayIcon symbol="drag" />
 				</ClayLayout.ContentCol>

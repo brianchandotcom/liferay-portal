@@ -89,7 +89,7 @@ definition {
 			Refresh();
 		}
 
-		Portlet.viewPG(portletName = "Hello World");
+		Portlet.viewPortletPresentPG(portletContent = "Welcome to Liferay");
 	}
 
 	@priority = "4"

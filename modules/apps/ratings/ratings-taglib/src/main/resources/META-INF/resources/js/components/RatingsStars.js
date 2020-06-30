@@ -236,13 +236,25 @@ const RatingsStars = ({
 			<ClayLayout.ContentCol title={formatAverageScore(averageScore)}>
 				<span className="ratings-stars-average">
 					<span className="inline-item inline-item-before">
-						{starScores.map(({value}) => {
+						{starScores.map(({value}, index, arr) => {
+							const previousScore =
+								arr[index - 1] && arr[index - 1].value;
+
 							if (averageScore >= value) {
 								return (
 									<ClayIcon
 										className="ratings-stars-average-icon"
 										key={value}
 										symbol="star"
+									/>
+								);
+							}
+							else if (averageScore >= previousScore) {
+								return (
+									<ClayIcon
+										className="ratings-stars-average-icon"
+										key={value}
+										symbol="star-half"
 									/>
 								);
 							}

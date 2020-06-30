@@ -16,12 +16,20 @@ package com.liferay.style.book.web.internal.servlet.taglib.util;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
+import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 
 import java.util.List;
 
@@ -45,7 +53,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		_renderResponse = renderResponse;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
-
+		_itemSelector = (ItemSelector)renderRequest.getAttribute(
+			StyleBookWebKeys.ITEM_SELECTOR);
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -53,6 +62,11 @@ public class StyleBookEntryActionDropdownItemsProvider {
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
 			_getRenameStyleBookEntrytActionUnsafeConsumer()
+		).add(
+			_getUpdateStyleBookEntryPreviewActionUnsafeConsumer()
+		).add(
+			() -> _styleBookEntry.getPreviewFileEntryId() > 0,
+			_getDeleteStyleBookEntryPreviewActionUnsafeConsumer()
 		).add(
 			_getDeleteStyleBookEntryActionUnsafeConsumer()
 		).build();
@@ -79,6 +93,62 @@ public class StyleBookEntryActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getDeleteStyleBookEntryPreviewActionUnsafeConsumer() {
+
+		PortletURL deleteStyleBookEntryPreviewURL =
+			_renderResponse.createActionURL();
+
+		deleteStyleBookEntryPreviewURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/style_book/delete_style_book_entry_preview");
+
+		deleteStyleBookEntryPreviewURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		deleteStyleBookEntryPreviewURL.setParameter(
+			"styleBookEntryId",
+			String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "deleteStyleBookEntryPreview");
+			dropdownItem.putData(
+				"deleteStyleBookEntryPreviewURL",
+				deleteStyleBookEntryPreviewURL.toString());
+			dropdownItem.putData(
+				"styleBookEntryId",
+				String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
+		};
+	}
+
+	private String _getItemSelectorURL() {
+		PortletURL uploadURL = _renderResponse.createActionURL();
+
+		uploadURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			"/style_book/upload_style_book_entry_preview");
+		uploadURL.setParameter(
+			"styleBookEntryId",
+			String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			new UploadItemSelectorCriterion(
+				StyleBookPortletKeys.STYLE_BOOK, uploadURL.toString(),
+				LanguageUtil.get(_httpServletRequest, "style-book"),
+				UploadServletRequestConfigurationHelperUtil.getMaxSize());
+
+		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest),
+			_renderResponse.getNamespace() + "changePreview",
+			itemSelectorCriterion);
+
+		return itemSelectorURL.toString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
@@ -109,7 +179,22 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		};
 	}
 
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getUpdateStyleBookEntryPreviewActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "updateStyleBookEntryPreview");
+			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
+			dropdownItem.putData(
+				"styleBookEntryId",
+				String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
+		};
+	}
+
 	private final HttpServletRequest _httpServletRequest;
+	private final ItemSelector _itemSelector;
 	private final RenderResponse _renderResponse;
 	private final StyleBookEntry _styleBookEntry;
 	private final ThemeDisplay _themeDisplay;

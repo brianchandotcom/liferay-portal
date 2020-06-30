@@ -14,12 +14,20 @@
 
 package com.liferay.style.book.web.internal.portlet;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.style.book.web.internal.constants.StyleBookPortletKeys;
+import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -43,4 +51,19 @@ import org.osgi.service.component.annotations.Component;
 	service = {Portlet.class, StyleBookPortlet.class}
 )
 public class StyleBookPortlet extends MVCPortlet {
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			StyleBookWebKeys.ITEM_SELECTOR, _itemSelector);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private ItemSelector _itemSelector;
+
 }

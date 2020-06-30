@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
 import com.liferay.portal.search.test.util.IndexerFixture;
@@ -199,7 +201,8 @@ public class UserIndexerIndexedFieldsTest {
 
 	protected void setUpIndexedFieldsFixture() {
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory,
+			documentBuilderFactory);
 	}
 
 	protected void setUpIndexerFixture() {
@@ -234,6 +237,9 @@ public class UserIndexerIndexedFieldsTest {
 		group = groupSearchFixture.addGroup(new GroupBlueprint());
 	}
 
+	@Inject
+	protected DocumentBuilderFactory documentBuilderFactory;
+
 	protected Group group;
 	protected IndexedFieldsFixture indexedFieldsFixture;
 	protected IndexerFixture<User> indexerFixture;
@@ -248,6 +254,9 @@ public class UserIndexerIndexedFieldsTest {
 
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
+
+	@Inject
+	protected UIDFactory uidFactory;
 
 	@Inject
 	protected UserGroupLocalService userGroupLocalService;
@@ -311,8 +320,7 @@ public class UserIndexerIndexedFieldsTest {
 			"screenName_sortable", StringUtil.toLowerCase(user.getScreenName())
 		).build();
 
-		indexedFieldsFixture.populateUID(
-			User.class.getName(), user.getUserId(), map);
+		indexedFieldsFixture.populateUID(user, map);
 
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, user.getModifiedDate(), map);

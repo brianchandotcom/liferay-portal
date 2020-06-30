@@ -54,14 +54,12 @@ import com.liferay.users.admin.test.util.search.UserGroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -114,7 +112,9 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 	@Test
 	public void testAssociationsThatDoNotIndexGroupIdFields() {
-		String[] fieldNames = {Field.GROUP_ID, Field.SCOPE_GROUP_ID, Field.UID};
+		String[] fieldNames = {
+			_CT_COLLECTION_ID, Field.GROUP_ID, Field.SCOPE_GROUP_ID, Field.UID
+		};
 
 		UserGroup userGroup = addUserGroup();
 
@@ -142,10 +142,10 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 	@Test
 	public void testAssociationsThatIndexMoreFields() {
 		String[] fieldNames = {
-			"ancestorOrganizationIds", Field.COMPANY_ID, Field.ENTRY_CLASS_NAME,
-			Field.ENTRY_CLASS_PK, Field.GROUP_ID, "groupIds", "organizationIds",
-			"organizationCount", Field.SCOPE_GROUP_ID, Field.UID,
-			"userGroupIds", Field.USER_ID
+			"ancestorOrganizationIds", Field.COMPANY_ID, _CT_COLLECTION_ID,
+			Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK, Field.GROUP_ID,
+			"groupIds", "organizationIds", "organizationCount",
+			Field.SCOPE_GROUP_ID, Field.UID, "userGroupIds", Field.USER_ID
 		};
 
 		UserGroup userGroup = addUserGroup();
@@ -220,7 +220,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		SearchRequestBuilder searchRequestBuilder = getSearchRequestBuilder(
 			group.getCompanyId()
 		).fields(
-			Field.GROUP_ID
+			_CT_COLLECTION_ID, Field.GROUP_ID, Field.UID, Field.USER_ID
 		).modelIndexerClasses(
 			User.class
 		);
@@ -241,7 +241,12 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 		long groupId = group.getGroupId();
 
-		_assertContains(groupIds, groupId);
+		if (!groupIds.contains(groupId)) {
+			DocumentsAssert.assertValuesIgnoreRelevance(
+				searchResponse1.getRequestString(),
+				searchResponse1.getDocumentsStream(), Field.GROUP_ID,
+				_toSingletonListString(_toSortedListString(groupIds.stream())));
+		}
 
 		SearchResponse searchResponse2 = _searcher.search(
 			searchRequestBuilder.query(
@@ -341,11 +346,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 			).sorted());
 	}
 
-	private void _assertContains(Collection<Long> values, Long value) {
-		Assert.assertTrue(
-			_toSortedListString(values.stream()) + " should contain " + value,
-			values.contains(value));
-	}
+	private static final String _CT_COLLECTION_ID = "ctCollectionId";
 
 	@Inject
 	private static DocumentBuilderFactory _documentBuilderFactory;

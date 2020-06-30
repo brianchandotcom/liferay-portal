@@ -27,6 +27,7 @@ import com.liferay.style.book.web.internal.servlet.taglib.util.StyleBookEntryAct
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -64,6 +65,21 @@ public class StyleBookVerticalCard
 	@Override
 	public String getDefaultEventHandler() {
 		return StyleBookWebKeys.STYLE_BOOK_ENTRY_DROPDOWN_DEFAULT_EVENT_HANDLER;
+	}
+
+	@Override
+	public String getHref() {
+		PortletURL editStyleBookEntryURL = _renderResponse.createRenderURL();
+
+		editStyleBookEntryURL.setParameter(
+			"mvcRenderCommandName", "/style_book/edit_style_book_entry");
+		editStyleBookEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		editStyleBookEntryURL.setParameter(
+			"styleBookEntryId",
+			String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+
+		return editStyleBookEntryURL.toString();
 	}
 
 	@Override

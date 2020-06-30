@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,17 +11,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+import React from 'react';
 
-<%
-EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext = new EditStyleBookEntryDisplayContext(request, renderResponse);
-%>
+const StyleBookEditor = () => {
+	return <div className="style-boook-editor-container">Editor</div>;
+};
 
-<div>
-	<react:component
-		data="<%= editStyleBookEntryDisplayContext.getStyleBookEditorData() %>"
-		module="js/style-book-editor/StyleBookEditor"
-	/>
-</div>
+export default StyleBookEditor;

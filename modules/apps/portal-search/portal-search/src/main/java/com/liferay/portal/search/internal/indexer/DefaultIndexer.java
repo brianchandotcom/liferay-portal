@@ -17,7 +17,9 @@ package com.liferay.portal.search.internal.indexer;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -75,6 +77,16 @@ public class DefaultIndexer<T extends BaseModel<?>> implements Indexer<T> {
 
 	@Override
 	public void delete(T baseModel) throws SearchException {
+		if (baseModel instanceof CTModel<?>) {
+			CTModel<?> ctModel = (CTModel<?>)baseModel;
+
+			if ((ctModel.getCtCollectionId() == 0) &&
+				!CTCollectionThreadLocal.isProductionMode()) {
+
+				return;
+			}
+		}
+
 		_indexerWriter.delete(baseModel);
 	}
 

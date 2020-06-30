@@ -20,7 +20,7 @@ export const BAR_CHART = {
 	emptyHeight: 300,
 	fillXAxis: '#6B6C7E',
 	height: 400,
-	legendHeight: 70,
+	legendHeight: 80,
 	stroke: '#E7E7ED',
 	width: 1150,
 };

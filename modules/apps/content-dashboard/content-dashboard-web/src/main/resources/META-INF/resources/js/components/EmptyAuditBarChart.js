@@ -51,14 +51,7 @@ export default function EmptyAuditBarChart() {
 					height={BAR_CHART.emptyHeight}
 					width={BAR_CHART.width}
 				>
-					<CartesianGrid
-						horizontal={true}
-						horizontalPoints={[
-							BAR_CHART.dotRadiusMin,
-							BAR_CHART.emptyHeight - BAR_CHART.dotRadiusMax,
-						]}
-						stroke={BAR_CHART.stroke}
-					/>
+					<CartesianGrid stroke={BAR_CHART.stroke} />
 					<XAxis
 						axisLine={{
 							stroke: BAR_CHART.stroke,

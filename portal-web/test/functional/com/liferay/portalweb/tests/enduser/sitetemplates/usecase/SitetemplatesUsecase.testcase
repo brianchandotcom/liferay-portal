@@ -326,10 +326,7 @@ definition {
 
 	@priority = "4"
 	test SitesDynamicTemplateInheritance {
-		property portal.acceptance = "quarantine";
-		property portal.upstream = "quarantine";
-
-		// Quanratine for LPS-114960
+		property portal.acceptance = "true";
 
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
 

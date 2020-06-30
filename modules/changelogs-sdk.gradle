@@ -113,7 +113,9 @@ buildChangelogs {
 
 						if (!commitMessage.equalsIgnoreCase("Auto SF") &&
 							!commitMessage.equalsIgnoreCase("SF") &&
-							!commitMessage.matches(".*[Pp]rep next.*") &&
+							!commitMessage.matches(".*Prep next.*") &&
+							!commitMessage.matches(".*prep enxt.*") &&
+							!commitMessage.matches(".*prep next.*") &&
 							!commitMessage.matches(".*[Uu]se (\\d+\\.\\d+\\.\\d+|latest).*") &&
 							!commitMessage.matches("Revert \".* SF\"") &&
 							!commitMessage.startsWith("Semver")) {

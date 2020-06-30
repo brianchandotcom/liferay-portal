@@ -449,9 +449,7 @@ public class ConfigurationPersistenceManager
 		File configFile = new File(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, fileName);
 
-		configFile = configFile.getCanonicalFile();
-
-		return configFile;
+		return configFile.getCanonicalFile();
 	}
 
 	private ConfigurationModelListener _getConfigurationModelListener(

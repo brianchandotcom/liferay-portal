@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
 import com.liferay.portal.search.test.util.IndexerFixture;
@@ -109,7 +111,8 @@ public class LayoutIndexerIndexedFieldsTest {
 
 	protected void setUpIndexedFieldsFixture() {
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory,
+			documentBuilderFactory);
 	}
 
 	protected void setUpLayoutFixture() {
@@ -135,6 +138,10 @@ public class LayoutIndexerIndexedFieldsTest {
 	}
 
 	protected Locale defaultLocale;
+
+	@Inject
+	protected DocumentBuilderFactory documentBuilderFactory;
+
 	protected IndexedFieldsFixture indexedFieldsFixture;
 	protected LayoutFixture layoutFixture;
 	protected IndexerFixture<Layout> layoutIndexerFixture;
@@ -144,6 +151,9 @@ public class LayoutIndexerIndexedFieldsTest {
 
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
+
+	@Inject
+	protected UIDFactory uidFactory;
 
 	protected UserSearchFixture userSearchFixture;
 
@@ -182,8 +192,7 @@ public class LayoutIndexerIndexedFieldsTest {
 			"title_ja_JP", layout.getName(LocaleUtil.JAPAN)
 		).build();
 
-		indexedFieldsFixture.populateUID(
-			Layout.class.getName(), layout.getPrimaryKey(), map);
+		indexedFieldsFixture.populateUID(layout, map);
 
 		_populateName(layout, map);
 		_populateDates(layout, map);

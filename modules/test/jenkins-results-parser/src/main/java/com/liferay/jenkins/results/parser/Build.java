@@ -203,6 +203,8 @@ public interface Build {
 
 		public String getCachedRemoteGitRefName();
 
+		public Integer getPullRequestNumber();
+
 		public String getReceiverUsername();
 
 		public String getRepositoryName();

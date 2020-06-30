@@ -25,7 +25,8 @@ import org.dom4j.Element;
  * @author Cesar Polanco
  */
 public class SourceFormatBuild
-	extends DefaultTopLevelBuild implements PortalBranchInformationBuild {
+	extends DefaultTopLevelBuild
+	implements PortalBranchInformationBuild, PullRequestBuild {
 
 	@Override
 	public String getBaseGitRepositoryName() {
@@ -57,6 +58,7 @@ public class SourceFormatBuild
 		return new PullRequestBranchInformation(this, _pullRequest);
 	}
 
+	@Override
 	public PullRequest getPullRequest() {
 		return _pullRequest;
 	}
@@ -122,6 +124,19 @@ public class SourceFormatBuild
 
 	public static class PullRequestBranchInformation
 		extends DefaultBranchInformation {
+
+		@Override
+		public Integer getPullRequestNumber() {
+			String pullRequestNumber = _pullRequest.getNumber();
+
+			if ((pullRequestNumber == null) ||
+				!pullRequestNumber.matches("\\d+")) {
+
+				pullRequestNumber = "0";
+			}
+
+			return Integer.valueOf(pullRequestNumber);
+		}
 
 		@Override
 		public String getReceiverUsername() {

@@ -27,7 +27,8 @@ import org.dom4j.Element;
 /**
  * @author Peter Yoo
  */
-public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
+public class PullRequestPortalTopLevelBuild
+	extends PortalTopLevelBuild implements PullRequestBuild {
 
 	public PullRequestPortalTopLevelBuild(
 		String url, TopLevelBuild topLevelBuild) {
@@ -46,6 +47,24 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 
 			exception.printStackTrace();
 		}
+
+		BranchInformation branchInformation = getPortalBranchInformation();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://github.com/");
+		sb.append(branchInformation.getReceiverUsername());
+		sb.append("/");
+		sb.append(branchInformation.getRepositoryName());
+		sb.append("/pull/");
+		sb.append(branchInformation.getPullRequestNumber());
+
+		_pullRequest = new PullRequest(sb.toString());
+	}
+
+	@Override
+	public PullRequest getPullRequest() {
+		return _pullRequest;
 	}
 
 	@Override
@@ -334,6 +353,7 @@ public class PullRequestPortalTopLevelBuild extends PortalTopLevelBuild {
 		return rootElement;
 	}
 
+	private final PullRequest _pullRequest;
 	private Job _stableJob;
 	private String _stableJobResult;
 

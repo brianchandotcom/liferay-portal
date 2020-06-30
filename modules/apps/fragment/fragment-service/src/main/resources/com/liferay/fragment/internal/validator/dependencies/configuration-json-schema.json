@@ -314,6 +314,14 @@
 			"$id": "#/properties/fieldSets/items",
 			"additionalProperties": false,
 			"properties": {
+				"configurationRole": {
+					"default": "",
+					"enum": [
+						"style"
+					],
+					"title": "The Configuration Role Schema",
+					"type": "string"
+				},
 				"fields": {
 					"items": {
 						"$ref": "#/definitions/field"

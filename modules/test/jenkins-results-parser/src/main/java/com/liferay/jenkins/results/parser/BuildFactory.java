@@ -96,6 +96,11 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.equals("test-portal-release")) {
+			return new PortalReleasePortalTopLevelBuild(
+				url, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.contains("plugins")) {
 			return new PluginsTopLevelBuild(url, (TopLevelBuild)parentBuild);
 		}

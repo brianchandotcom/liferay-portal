@@ -435,6 +435,96 @@ definition {
 			userName = "Test Test");
 	}
 
+	@description = "This is a use case for LPS-101717"
+	@priority = "5"
+	test LoginWithIPBasedVerifierFailedOnInstanceLevel {
+		property test.name.skip.portal.instance = "MultiFactorAuthentication#LoginWithIPBasedVerifierFailed";
+
+		GlobalMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Virtual Instances");
+
+		PortalInstances.addCP(
+			mailDomain = "www.able.com",
+			virtualHost = "www.able.com",
+			webId = "www.able.com");
+
+		PortalInstances.viewCP(virtualHost = "www.able.com");
+
+		User.firstLoginPG(
+			password = "test",
+			userEmailAddress = "test@www.able.com",
+			virtualHostsURL = "http://www.able.com:8080");
+
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "Multi-Factor Authentication: Email One-Time Password Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureOTP(enableOTP = "true");
+
+		AssertElementPresent(
+			key_configurationName = "IP Address Configuration",
+			key_configurationScope = "Virtual Instance Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+		AssertElementPresent(
+			key_configurationName = "Time-Based One-Time Password Configuration",
+			key_configurationScope = "Virtual Instance Scope",
+			locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "IP Address Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureIPAddress(enableIP = "true");
+
+		UserBar.signOut();
+
+		User.loginPG(
+			password = "test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		GlobalMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Multi-Factor Authentication",
+			configurationName = "IP Address Configuration",
+			configurationScope = "Virtual Instance Scope");
+
+		MultiFactorAuthentication.configureIPAddress(
+			allowedIP = "192.168.132.153/255.0.0.0",
+			enableIP = "true");
+
+		UserBar.signOut();
+
+		SignIn.signInSpecificURL(
+			url = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com");
+
+		AssertElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_SEND_EMAIL_BUTTON");
+
+		MultiFactorAuthentication.sendOTPEmailPG();
+
+		MultiFactorAuthentication.verifyOTP(
+			portalURL = "http://www.able.com:8080",
+			recipient = "test test",
+			specificURL = "http://www.able.com:8080",
+			userEmailAddress = "test@www.able.com",
+			userPassword = "test");
+	}
+
 	@description = "This is a use case for LPS-101720"
 	@priority = "5"
 	test LoginWithOTPEnabled {

@@ -85,7 +85,7 @@ function DatasetDisplay({
 	const [delta, setDelta] = useState(
 		pagination.initialDelta || pagination.deltas[0].label
 	);
-	const [totalItems, setTotalItems] = useState(0);
+	const [total, setTotal] = useState(0);
 	const [activeView, setActiveView] = useState(activeView || 0);
 	const {
 		component: CurrentViewComponent,
@@ -143,7 +143,7 @@ function DatasetDisplay({
 	const formRef = useRef(null);
 
 	function updateDataset(dataSetData) {
-		setTotalItems(dataSetData.totalItems || dataSetData.totalCount || 0);
+		setTotal(dataSetData.total || 0);
 		updateItems(dataSetData.items);
 	}
 
@@ -322,7 +322,7 @@ function DatasetDisplay({
 				setActiveView={setActiveView}
 				showSearch={showSearch}
 				sidePanelId={datasetDisplaySupportSidePanelId}
-				totalItemsCount={items ? items.length : 0}
+				total={items ? items.length : 0}
 				views={views}
 			/>
 		</div>
@@ -372,7 +372,7 @@ function DatasetDisplay({
 						setDelta(deltaVal);
 					}}
 					onPageChange={setPageNumber}
-					totalItems={totalItems}
+					totalItems={total}
 				/>
 			</div>
 		) : null;

@@ -594,6 +594,217 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-112360. The asset entries should be ordered by view count from high to low in Collection Display when select Most Viewed Assets as Collection Provider."
+	@priority = "5"
+	test DisplayMostViewedAssetsInCollectionDisplay {
+		property custom.properties = "buffered.increment.enabled=true";
+
+		task ("Add a Web Content Article, a Blogs Entry and a Document") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Add a Row element to page and configure it to 2 columns") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Row");
+
+			PageEditor.editLayoutRow(columnCount = "2");
+		}
+
+		task ("Add a Collection Display fragment to column 1") {
+			PageEditor.addElementToColumn(
+				collectionName = "Content Display",
+				columnNumber = "1",
+				fragmentName = "Collection Display",
+				navTab = "Fragments");
+		}
+
+		task ("Select Most Viewed Assets Collection Providers in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Most Viewed Assets");
+		}
+
+		task ("Add an Asset Publisher widget to column 2") {
+			PageEditor.addElementToColumn(
+				columnNumber = "2",
+				navTab = "Widgets",
+				portletName = "Asset Publisher");
+		}
+
+		task ("Enable View Count Increment in Asset Publisher") {
+			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "View Count Increment");
+
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "Web Content Title",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Assert the title of collection items are respectively shown in each cell") {
+			var n = "1";
+
+			for (var title : list "Document Title,Blogs Entry Title,Web Content Title") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a Paragraph below Heading in Collection Display and Map View Count of collection items to editable field") {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_collectionName = "Basic Components",
+				key_fragmentName = "Paragraph",
+				locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+				locator2 = "//div[contains(@class,'page-editor__topper__content')][div/div/div/*[contains(@class,'heading')]]",
+				value1 = "");
+
+			PageEditor.waitForAutoSave();
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "View Count",
+				fragmentName = "Paragraph",
+				id = "element-text");
+		}
+
+		task ("Assert the view count of collection items are respectively shown in each cell") {
+			var n = "1";
+
+			for (var count : list "0,0,0") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//*[contains(@class,'paragraph') and contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${count}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View Web Content Article one time via Asset Publisher") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetDetailsPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Assert the display order of collection items") {
+			var n = "1";
+
+			for (var title : list "Web Content Title,Document Title,Blogs Entry Title") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "heading",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the view count of collection items") {
+			var n = "1";
+
+			for (var count : list "1,0,0") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "paragraph",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${count}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View Blogs Entry twice via Asset Publisher") {
+			var count = "0";
+
+			while ("${count}" != "2") {
+				AssetPublisherPortlet.viewAssetDetailsPG(
+					assetContent = "Blogs Entry Content",
+					assetTitle = "Blogs Entry Title");
+
+				Navigator.gotoBack();
+
+				var count = ${count} + 1;
+			}
+		}
+
+		task ("Assert the display order of collection items") {
+			var n = "1";
+
+			for (var title : list "Blogs Entry Title,Web Content Title,Document Title") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "heading",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the view count of collection items") {
+			var n = "1";
+
+			for (var count : list "2,1,0") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "paragraph",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${count}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Any asset types."
 	@priority = "5"
 	test DynamicCollectionWithAnyAssetTypeIsAvailableInCollectionDisplay {

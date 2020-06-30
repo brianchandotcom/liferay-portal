@@ -68,6 +68,89 @@ definition {
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_ENTRY_INPUT");
 	}
 
+	macro addElementToColumn {
+		if (!(isSet(position))) {
+			var position = "1";
+		}
+
+		PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+		if ("${navTab}" == "Fragments") {
+			Navigator.gotoNavTab(navTab = "${navTab}");
+
+			PageEditor.expandFragmentCollection(collectionName = "${collectionName}");
+
+			if (isSet(targetFragmentName)) {
+				DragAndDrop.javaScriptDragAndDropToBottom(
+					key_collectionName = "${collectionName}",
+					key_fragmentName = "${fragmentName}",
+					key_targetFragmentName = "${targetFragmentName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+					value1 = "");
+			}
+			else {
+				DragAndDrop.javaScriptDragAndDropToObject(
+					key_collectionName = "${collectionName}",
+					key_columnNumber = "${columnNumber}",
+					key_fragmentName = "${fragmentName}",
+					key_position = "${position}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "PageEditor#ROW_COLUMN",
+					value1 = "");
+			}
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "${columnNumber}",
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${fragmentName}')]",
+				key_position = "${position}",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+		}
+		else if ("${navTab}" == "Widgets") {
+			Navigator.gotoNavTab(navTab = "${navTab}");
+
+			Type.sendKeysApplicationSearch(
+				locator1 = "PageEditor#WIDGETS_APPLICATION_SEARCH_FIELD",
+				value1 = "${portletName}");
+
+			if (isSet(targetFragmentName)) {
+				DragAndDrop.javaScriptDragAndDropToBottom(
+					key_fragmentName = "${portletName}",
+					key_targetFragmentName = "${targetFragmentName}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_FRAGMENT",
+					locator2 = "PageEditor#ANY_NESTED_FRAGMENT_DROP_TARGET",
+					value1 = "");
+			}
+			else {
+				DragAndDrop.javaScriptDragAndDropToObject(
+					key_columnNumber = "${columnNumber}",
+					key_portletName = "${portletName}",
+					key_position = "${position}",
+					locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_TAB_WIDGET",
+					locator2 = "PageEditor#ROW_COLUMN",
+					value1 = "${portletName}");
+			}
+
+			Pause(locator1 = "5000");
+
+			PageEditor.waitForAutoSave();
+
+			AssertElementPresent(
+				key_columnNumber = "${columnNumber}",
+				key_elementHeader = "//li[contains(@class,'topper__title') and contains(.,'${portletName}')]",
+				key_position = "${position}",
+				locator1 = "PageEditor#ROW_COLUMN_NESTED_ELEMENT");
+
+			PageEditor.gotoTab(tabName = "Contents");
+
+			PageEditor.gotoTab(tabName = "Fragments and Widgets");
+
+			PageEditor.closeSidebar(tabName = "Fragments and Widgets");
+		}
+	}
+
 	macro addExperience {
 		var key_experienceName = "${experienceName}";
 

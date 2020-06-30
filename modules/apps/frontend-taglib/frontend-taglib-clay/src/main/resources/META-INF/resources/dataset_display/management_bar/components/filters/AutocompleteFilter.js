@@ -70,13 +70,13 @@ function AutocompleteFilter(props) {
 	const [items, updateItems] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [totalItems, updateTotalItems] = useState(0);
+	const [total, updateTotal] = useState(0);
 	const scrollingArea = useRef(null);
 	const [scrollingAreaRendered, setScrollingAreaRendered] = useState(false);
 	const infiniteLoader = useRef(null);
 	const [infiniteLoaderRendered, setInfiniteLoaderRendered] = useState(false);
 
-	const loaderVisible = items && items.length < totalItems;
+	const loaderVisible = items && items.length < total;
 
 	useEffect(() => {
 		setSelectedItems(props.value || []);
@@ -101,7 +101,7 @@ function AutocompleteFilter(props) {
 				else {
 					updateItems((items) => [...items, ...data.items]);
 				}
-				updateTotalItems(data.totalCount);
+				updateTotal(data.total);
 			})
 			.catch((error) => {
 				logError(error);

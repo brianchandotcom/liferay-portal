@@ -180,7 +180,7 @@ public class AccountUserDisplay {
 			_getAccountEntryUserRels(getUserId());
 
 		if (accountEntryUserRels.size() != 1) {
-			return false;
+			return true;
 		}
 
 		AccountEntryUserRel accountEntryUserRel = accountEntryUserRels.get(0);
@@ -189,7 +189,7 @@ public class AccountUserDisplay {
 			AccountEntryLocalServiceUtil.getAccountEntry(
 				accountEntryUserRel.getAccountEntryId());
 
-		return Objects.equals(
+		return !Objects.equals(
 			accountEntry.getType(),
 			AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL);
 	}

@@ -47,7 +47,7 @@ if (Validator.isNull(screenNavigationEntryKey)) {
 AccountUserDisplay accountUserDisplay = AccountUserDisplay.of(selUser);
 %>
 
-<c:if test="<%= !accountUserDisplay.isValidateEmailAddress() && Objects.equals(AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL, screenNavigationCategoryKey) && Objects.equals(AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION, screenNavigationEntryKey) %>">
+<c:if test="<%= accountUserDisplay.isValidateEmailAddress() && Objects.equals(AccountScreenNavigationEntryConstants.CATEGORY_KEY_GENERAL, screenNavigationCategoryKey) && Objects.equals(AccountScreenNavigationEntryConstants.ENTRY_KEY_INFORMATION, screenNavigationEntryKey) %>">
 
 	<%
 	PortletURL viewValidDomainsURL = renderResponse.createRenderURL();

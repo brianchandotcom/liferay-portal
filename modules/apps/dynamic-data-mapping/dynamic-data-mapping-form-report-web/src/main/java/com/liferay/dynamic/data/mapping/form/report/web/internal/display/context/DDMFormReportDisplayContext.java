@@ -119,7 +119,7 @@ public class DDMFormReportDisplayContext {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			themeDisplay.getLocale(), DDMFormReportPortlet.class);
 
-		String languageKey = "report-was-last-modified-on-x";
+		String languageKey = "the-last-entry-was-sent-on-x";
 
 		Date modifiedDate = _ddmFormInstanceReport.getModifiedDate();
 
@@ -128,7 +128,7 @@ public class DDMFormReportDisplayContext {
 			themeDisplay.getTimeZone());
 
 		if (daysBetween < 2) {
-			languageKey = "report-was-last-modified-x";
+			languageKey = "the-last-entry-was-sent-x";
 		}
 
 		String relativeTimeDescription = StringUtil.removeSubstring(

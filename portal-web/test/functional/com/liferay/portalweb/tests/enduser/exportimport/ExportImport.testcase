@@ -1692,6 +1692,7 @@ definition {
 	@description = "This is a use case for LPS-88571."
 	@priority = "3"
 	test ImportSiteWithMissingReferenceOfPreloadedEntry {
+		property portal.release = "false";
 		property test.name.skip.portal.instance = "ExportImport#ImportSiteWithMissingReferenceOfPreloadedEntry";
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "Global");

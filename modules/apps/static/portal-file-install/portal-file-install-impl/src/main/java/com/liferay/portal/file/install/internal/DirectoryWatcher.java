@@ -29,7 +29,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -253,10 +252,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		_bundleContext.removeBundleListener(this);
 
 		interrupt();
-
-		for (Artifact artifact : _getArtifacts()) {
-			_deleteJaredDirectory(artifact);
-		}
 
 		try {
 			scanner.close();
@@ -647,20 +642,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
-	private void _deleteJaredDirectory(Artifact artifact) {
-		File directory = artifact.getJaredDirectory();
-
-		if ((directory != null) && !directory.equals(artifact.getPath()) &&
-			!directory.delete()) {
-
-			_log(
-				Util.Logger.LOG_WARNING,
-				"Unable to delete jared artifact: " +
-					directory.getAbsolutePath(),
-				null);
-		}
-	}
-
 	private void _doProcess(Set<File> files) throws InterruptedException {
 		List<FileInstaller> fileInstallers = _fileInstall.getFileInstallers();
 		List<Artifact> deleted = new ArrayList<>();
@@ -679,44 +660,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 			if (!exists) {
 				if (artifact != null) {
-					_deleteJaredDirectory(artifact);
 					deleted.add(artifact);
 				}
 			}
 			else {
 				File jar = file;
-
-				URL jaredUrl = null;
-
-				try {
-					URI uri = file.toURI();
-
-					jaredUrl = uri.toURL();
-				}
-				catch (MalformedURLException malformedURLException) {
-				}
-
-				if (file.isDirectory()) {
-					_prepareTempDir();
-
-					try {
-						jar = new File(_tmpDir, file.getName() + ".jar");
-
-						Util.jarDir(file, jar);
-
-						jaredUrl = new URL(
-							JarDirUrlHandler.PROTOCOL, null, file.getPath());
-					}
-					catch (IOException ioException) {
-						_log(
-							Util.Logger.LOG_ERROR,
-							"Unable to create jar for: " +
-								file.getAbsolutePath(),
-							ioException);
-
-						continue;
-					}
-				}
 
 				if (artifact != null) {
 					artifact.setChecksum(scanner.getChecksum(file));
@@ -745,15 +693,10 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 						deleted.add(artifact);
 					}
 					else {
-						artifact.setJaredDirectory(jar);
-						artifact.setJaredUrl(jaredUrl);
-
 						if (_transformArtifact(artifact)) {
 							modified.add(artifact);
 						}
 						else {
-							_deleteJaredDirectory(artifact);
-
 							deleted.add(artifact);
 						}
 					}
@@ -773,16 +716,11 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					artifact = new Artifact();
 
 					artifact.setPath(file);
-					artifact.setJaredDirectory(jar);
-					artifact.setJaredUrl(jaredUrl);
 					artifact.setFileInstaller(fileInstaller);
 					artifact.setChecksum(scanner.getChecksum(file));
 
 					if (_transformArtifact(artifact)) {
 						created.add(artifact);
-					}
-					else {
-						_deleteJaredDirectory(artifact);
 					}
 				}
 			}
@@ -1449,9 +1387,9 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 		if (fileInstaller.canTransformURL(file)) {
 			try {
-				URL url = artifact.getJaredUrl();
+				URI uri = file.toURI();
 
-				URL transformed = fileInstaller.transform(url);
+				URL transformed = fileInstaller.transform(uri.toURL());
 
 				if (transformed != null) {
 					artifact.setTransformedUrl(transformed);

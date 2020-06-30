@@ -947,6 +947,112 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-112360. The asset entries should be ordered by modified time from recent to past in Collection Display when select Recent Content as Collection Provider."
+	@priority = "5"
+	test DisplayRecentContentInCollectionDisplay {
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add a Collection Display to page and Select Recent Content Collection Providers") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Recent Content");
+		}
+
+		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "First Web Content",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Assert the title of collection items are respectively shown in each cell") {
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert the display order of collection items") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "heading",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Modify the First Web Content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "First Web Content");
+
+			WebContent.editCP(
+				webContentContentEdit = "New Web Content Content",
+				webContentTitle = "First Web Content",
+				webContentTitleEdit = "First Web Content");
+		}
+
+		task ("Assert the display order of collection items") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "First Web Content,Third Web Content,Second Web Content") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "heading",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-114770. The Collection Display can select a dynamic collection with Any asset types."
 	@priority = "5"
 	test DynamicCollectionWithAnyAssetTypeIsAvailableInCollectionDisplay {

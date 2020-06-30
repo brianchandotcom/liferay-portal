@@ -147,6 +147,30 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	@Override
+	public AccountEntryUserRel addPersonTypeAccountEntryUserRel(
+			long accountEntryId, long creatorUserId, String screenName,
+			String emailAddress, Locale locale, String firstName,
+			String middleName, String lastName, long prefixId, long suffixId)
+		throws PortalException {
+
+		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		if (!Objects.equals(
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,
+				accountEntry.getType())) {
+
+			throw new AccountEntryTypeException();
+		}
+
+		deleteAccountEntryUserRelsByAccountEntryId(accountEntryId);
+
+		return addAccountEntryUserRel(
+			accountEntryId, creatorUserId, screenName, emailAddress, locale,
+			firstName, middleName, lastName, prefixId, suffixId);
+	}
+
+	@Override
 	public void deleteAccountEntryUserRels(
 			long accountEntryId, long[] accountUserIds)
 		throws PortalException {

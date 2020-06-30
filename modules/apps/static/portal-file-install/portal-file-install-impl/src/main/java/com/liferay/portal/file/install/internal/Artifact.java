@@ -49,10 +49,6 @@ public class Artifact {
 		return _path;
 	}
 
-	public File getTransformed() {
-		return _transformed;
-	}
-
 	public URL getTransformedUrl() {
 		return _transformedURL;
 	}
@@ -81,10 +77,6 @@ public class Artifact {
 		_path = path;
 	}
 
-	public void setTransformed(File transformed) {
-		_transformed = transformed;
-	}
-
 	public void setTransformedUrl(URL transformedUrl) {
 		_transformedURL = transformedUrl;
 	}
@@ -95,7 +87,6 @@ public class Artifact {
 	private File _jaredDirectory;
 	private URL _jaredUrl;
 	private File _path;
-	private File _transformed;
 	private URL _transformedURL;
 
 }

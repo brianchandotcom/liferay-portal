@@ -23,7 +23,6 @@ import com.liferay.portal.file.install.internal.version.VersionRange;
 import com.liferay.portal.file.install.internal.version.VersionTable;
 import com.liferay.portal.file.install.listener.ArtifactInstaller;
 import com.liferay.portal.file.install.listener.ArtifactListener;
-import com.liferay.portal.file.install.listener.ArtifactTransformer;
 import com.liferay.portal.file.install.listener.ArtifactUrlTransformer;
 
 import java.io.BufferedInputStream;
@@ -256,8 +255,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		interrupt();
 
 		for (Artifact artifact : _getArtifacts()) {
-			_deleteTransformedFile(artifact);
-
 			_deleteJaredDirectory(artifact);
 		}
 
@@ -664,20 +661,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 		}
 	}
 
-	private void _deleteTransformedFile(Artifact artifact) {
-		File file = artifact.getTransformed();
-
-		if ((file != null) && !file.equals(artifact.getPath()) &&
-			!file.delete()) {
-
-			_log(
-				Util.Logger.LOG_WARNING,
-				"Unable to delete transformed artifact: " +
-					file.getAbsolutePath(),
-				null);
-		}
-	}
-
 	private void _doProcess(Set<File> files) throws InterruptedException {
 		List<ArtifactListener> listeners = _fileInstall.getListeners();
 		List<Artifact> deleted = new ArrayList<>();
@@ -697,7 +680,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			if (!exists) {
 				if (artifact != null) {
 					_deleteJaredDirectory(artifact);
-					_deleteTransformedFile(artifact);
 					deleted.add(artifact);
 				}
 			}
@@ -762,8 +744,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 						deleted.add(artifact);
 					}
 					else {
-						_deleteTransformedFile(artifact);
-
 						artifact.setJaredDirectory(jar);
 						artifact.setJaredUrl(jaredUrl);
 
@@ -1090,39 +1070,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 
 					bundle = _installOrUpdateBundle(
 						location, inputStream, checksum, modified);
-
-					artifact.setBundleId(bundle.getBundleId());
-				}
-			}
-			else if (artifactListener instanceof ArtifactTransformer) {
-				Artifact badArtifact = _installationFailures.get(path);
-
-				if ((badArtifact != null) &&
-					(badArtifact.getChecksum() == checksum)) {
-
-					return null;
-				}
-
-				File transformed = artifact.getTransformed();
-
-				URI uri = path.toURI();
-
-				uri = uri.normalize();
-
-				String location = uri.toString();
-
-				File file = path;
-
-				if (transformed != null) {
-					file = transformed;
-				}
-
-				try (InputStream inputStream1 = new FileInputStream(file);
-					BufferedInputStream inputStream2 = new BufferedInputStream(
-						inputStream1)) {
-
-					bundle = _installOrUpdateBundle(
-						location, inputStream2, checksum, modified);
 
 					artifact.setBundleId(bundle.getBundleId());
 				}
@@ -1497,34 +1444,7 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 	private boolean _transformArtifact(Artifact artifact) {
 		ArtifactListener artifactListener = artifact.getListener();
 
-		if (artifactListener instanceof ArtifactTransformer) {
-			_prepareTempDir();
-
-			try {
-				ArtifactTransformer artifactTransformer =
-					(ArtifactTransformer)artifactListener;
-
-				File transformed = artifactTransformer.transform(
-					artifact.getJaredDirectory(), _tmpDir);
-
-				if (transformed != null) {
-					artifact.setTransformed(transformed);
-
-					return true;
-				}
-			}
-			catch (Exception exception) {
-				File file = artifact.getPath();
-
-				_log(
-					Util.Logger.LOG_WARNING,
-					"Unable to transform artifact: " + file.getAbsolutePath(),
-					exception);
-			}
-
-			return false;
-		}
-		else if (artifactListener instanceof ArtifactUrlTransformer) {
+		if (artifactListener instanceof ArtifactUrlTransformer) {
 			try {
 				URL url = artifact.getJaredUrl();
 
@@ -1566,8 +1486,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 			}
 
 			_removeArtifact(path);
-
-			_deleteTransformedFile(artifact);
 
 			ArtifactListener artifactListener = artifact.getListener();
 
@@ -1687,46 +1605,6 @@ public class DirectoryWatcher extends Thread implements BundleListener {
 					try (InputStream inputStream = new FileInputStream(path)) {
 						bundle.update(inputStream);
 					}
-				}
-			}
-			else if (artifactListener instanceof ArtifactTransformer) {
-				File transformed = artifact.getTransformed();
-
-				bundle = _bundleContext.getBundle(bundleId);
-
-				if (bundle == null) {
-					StringBundler sb = new StringBundler(5);
-
-					sb.append("Failed to update bundle: ");
-					sb.append(path);
-					sb.append(" with ID ");
-					sb.append(bundleId);
-					sb.append(". The bundle has been uninstalled");
-
-					_log(Util.Logger.LOG_WARNING, sb.toString(), null);
-
-					return null;
-				}
-
-				Util.log(
-					_bundleContext, Util.Logger.LOG_INFO,
-					StringBundler.concat(
-						"Updating bundle ", bundle.getSymbolicName(), " / ",
-						bundle.getVersion()),
-					null);
-
-				_stopTransient(bundle);
-
-				Util.storeChecksum(bundle, checksum, _bundleContext);
-
-				File file = path;
-
-				if (transformed != null) {
-					file = transformed;
-				}
-
-				try (InputStream inputStream = new FileInputStream(file)) {
-					bundle.update(inputStream);
 				}
 			}
 		}

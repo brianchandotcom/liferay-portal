@@ -222,6 +222,12 @@ public class Sidecar {
 	}
 
 	protected ProcessChannel<Serializable> executeSidecarMainProcess() {
+		if (!Files.isDirectory(_sidecarHomePath)) {
+			throw new IllegalArgumentException(
+				"Sidecar Elasticsearch home does not exist: " +
+					_sidecarHomePath);
+		}
+
 		String sidecarLibClassPath = _createClasspath(
 			_sidecarHomePath.resolve("lib"), path -> true);
 

@@ -171,25 +171,20 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 		_settingsContributors.remove(settingsContributor);
 	}
 
-	protected Path resolveHomePath(Path workPath) {
-		workPath = workPath.toAbsolutePath();
+	protected Path resolveHomePath(Path path) {
+		String sidecarHome = elasticsearchConfigurationWrapper.sidecarHome();
 
-		Path sidecarHomePath = workPath.resolve(
-			elasticsearchConfigurationWrapper.sidecarHome());
+		Path relativeSidecarHomePath = path.resolve(sidecarHome);
 
-		if (!Files.isDirectory(sidecarHomePath)) {
-			sidecarHomePath = Paths.get(
-				elasticsearchConfigurationWrapper.sidecarHome());
+		if (!Files.isDirectory(relativeSidecarHomePath)) {
+			Path absoluteSidecarHomePath = Paths.get(sidecarHome);
 
-			if (!Files.isDirectory(sidecarHomePath)) {
-				throw new IllegalArgumentException(
-					"Sidecar Elasticsearch home " +
-						elasticsearchConfigurationWrapper.sidecarHome() +
-							" does not exist");
+			if (Files.isDirectory(absoluteSidecarHomePath)) {
+				return absoluteSidecarHomePath;
 			}
 		}
 
-		return sidecarHomePath;
+		return relativeSidecarHomePath;
 	}
 
 	@Reference

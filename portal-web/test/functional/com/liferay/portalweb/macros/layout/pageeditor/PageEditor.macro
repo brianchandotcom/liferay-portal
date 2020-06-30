@@ -1139,9 +1139,16 @@ definition {
 				locator1 = "Fragment#FRAGMENT_BODY");
 		}
 
-		Click(
-			key_elementType = "Fragment",
-			locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		if (!(isSet(elementType))) {
+			Click(
+				key_elementType = "Fragment",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		}
+		else {
+			Click(
+				key_elementType = "${elementType}",
+				locator1 = "PageEditor#FRAGMENT_BODY_TOOLBAR_CONFIGURATION_BUTTON");
+		}
 	}
 
 	macro gotoContentConfiguration {

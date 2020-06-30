@@ -405,7 +405,7 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 	}
 
 	@Override
-	protected void doDelete(JournalArticle journalArticle) {
+	protected void doDelete(JournalArticle journalArticle) throws Exception {
 		_deleteDocument(journalArticle);
 
 		_reindexEveryVersionOfResourcePrimKey(
@@ -960,15 +960,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 			themeDisplay);
 	}
 
-	private void _deleteDocument(JournalArticle article) {
-		try {
-			_indexWriterHelper.deleteDocument(
-				getSearchEngineId(), article.getCompanyId(),
-				uidFactory.getUID(article), isCommitImmediately());
-		}
-		catch (SearchException searchException) {
-			throw new RuntimeException(searchException);
-		}
+	private void _deleteDocument(JournalArticle article) throws Exception {
+		deleteDocument(
+			article.getCompanyId(), "UID=" + uidFactory.getUID(article));
 	}
 
 	private Document _getDocument(JournalArticle journalArticle) {
@@ -980,7 +974,9 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		}
 	}
 
-	private void _reindexEveryVersionOfResourcePrimKey(long resourcePrimKey) {
+	private void _reindexEveryVersionOfResourcePrimKey(long resourcePrimKey)
+		throws Exception {
+
 		List<JournalArticle> journalArticles =
 			_journalArticleLocalService.getArticlesByResourcePrimKey(
 				resourcePrimKey);

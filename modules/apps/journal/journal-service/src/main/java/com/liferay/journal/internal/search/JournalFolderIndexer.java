@@ -110,7 +110,8 @@ public class JournalFolderIndexer
 
 	@Override
 	protected void doDelete(JournalFolder folder) throws Exception {
-		deleteDocument(folder.getCompanyId(), folder.getFolderId());
+		deleteDocument(
+			folder.getCompanyId(), "UID=" + uidFactory.getUID(folder));
 	}
 
 	@Override

@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.test.util.ExpandoTableSearchFixture;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -141,7 +143,8 @@ public class UserGroupIndexerIndexedFieldsTest {
 
 	protected void setUpIndexedFieldsFixture() {
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory,
+			documentBuilderFactory);
 	}
 
 	protected void setUpUserGroupFixture() {
@@ -170,6 +173,9 @@ public class UserGroupIndexerIndexedFieldsTest {
 	protected ClassNameLocalService classNameLocalService;
 
 	@Inject
+	protected DocumentBuilderFactory documentBuilderFactory;
+
+	@Inject
 	protected ExpandoColumnLocalService expandoColumnLocalService;
 
 	@Inject
@@ -183,6 +189,9 @@ public class UserGroupIndexerIndexedFieldsTest {
 
 	@Inject
 	protected SearchEngineHelper searchEngineHelper;
+
+	@Inject
+	protected UIDFactory uidFactory;
 
 	protected UserGroupFixture userGroupFixture;
 	protected IndexerFixture<UserGroup> userGroupIndexerFixture;
@@ -215,8 +224,7 @@ public class UserGroupIndexerIndexedFieldsTest {
 			"name_sortable", StringUtil.lowerCase(userGroup.getName())
 		).build();
 
-		indexedFieldsFixture.populateUID(
-			UserGroup.class.getName(), userGroup.getUserGroupId(), map);
+		indexedFieldsFixture.populateUID(userGroup, map);
 
 		_populateDates(userGroup, map);
 		_populateRoles(userGroup, map);

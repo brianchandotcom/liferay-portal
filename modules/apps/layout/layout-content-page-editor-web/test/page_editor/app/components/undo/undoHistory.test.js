@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {act, cleanup, render} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -110,37 +110,45 @@ describe('UndoHistory', () => {
 			);
 	});
 
-	it('calls multipleUndo with the correct number of actions', () => {
+	it('calls multipleUndo with the correct number of actions', async () => {
 		const {getByText} = renderUndoHistory();
 
-		[...mockState.redoHistory].reverse().forEach((redoItem, index) => {
+		const redoHistory = [...mockState.redoHistory].reverse();
+
+		for (let i = 0; i < redoHistory.length; i++) {
+			const redoItem = redoHistory[i];
+
 			const button = getByText(redoItem.itemName);
 
 			if (!button.disabled) {
-				userEvent.click(button);
+				await act(async () => userEvent.click(button));
 
 				expect(multipleUndo).toBeCalledWith(
 					expect.objectContaining({
-						numberOfActions: mockState.redoHistory.length - index,
+						numberOfActions: mockState.redoHistory.length - i,
 						type: UNDO_TYPES.redo,
 					})
 				);
 			}
-		});
+		}
 
-		mockState.undoHistory.forEach((undoItem, index) => {
+		const undoHistory = mockState.undoHistory;
+
+		for (let i = 0; i < undoHistory.length; i++) {
+			const undoItem = undoHistory[i];
+
 			const button = getByText(undoItem.itemName);
 
 			if (!button.disabled) {
-				userEvent.click(button);
+				await act(async () => userEvent.click(button));
 
 				expect(multipleUndo).toBeCalledWith(
 					expect.objectContaining({
-						numberOfActions: index,
+						numberOfActions: i,
 						type: UNDO_TYPES.undo,
 					})
 				);
 			}
-		});
+		}
 	});
 });

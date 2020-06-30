@@ -63,7 +63,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 		RedirectNotFoundEntry redirectNotFoundEntry =
 			_addOrUpdateRedirectNotFoundEntry("url");
 
-		Assert.assertEquals(1, redirectNotFoundEntry.getHits());
+		Assert.assertEquals(1, redirectNotFoundEntry.getRequestCount());
 	}
 
 	@Test
@@ -133,8 +133,8 @@ public class RedirectNotFoundEntryLocalServiceTest {
 
 		Assert.assertNotEquals(redirectNotFoundEntry1, redirectNotFoundEntry2);
 
-		Assert.assertEquals(1, redirectNotFoundEntry1.getHits());
-		Assert.assertEquals(1, redirectNotFoundEntry2.getHits());
+		Assert.assertEquals(1, redirectNotFoundEntry1.getRequestCount());
+		Assert.assertEquals(1, redirectNotFoundEntry2.getRequestCount());
 	}
 
 	@Test
@@ -145,7 +145,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 			_addOrUpdateRedirectNotFoundEntry("url");
 
 		Assert.assertEquals(redirectNotFoundEntry1, redirectNotFoundEntry2);
-		Assert.assertEquals(2, redirectNotFoundEntry2.getHits());
+		Assert.assertEquals(2, redirectNotFoundEntry2.getRequestCount());
 	}
 
 	@Test
@@ -153,7 +153,7 @@ public class RedirectNotFoundEntryLocalServiceTest {
 		RedirectNotFoundEntry redirectNotFoundEntry =
 			_addOrUpdateRedirectNotFoundEntry(null);
 
-		Assert.assertEquals(1, redirectNotFoundEntry.getHits());
+		Assert.assertEquals(1, redirectNotFoundEntry.getRequestCount());
 	}
 
 	@Test

@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.display;
 
+import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRel;
@@ -26,8 +27,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -131,6 +136,29 @@ public class AccountEntryDisplay {
 
 	public boolean isActive() {
 		return _active;
+	}
+
+	public boolean isEmailDomainValidationEnabled(ThemeDisplay themeDisplay) {
+		try {
+			AccountEntryEmailDomainsConfiguration
+				accountEntryEmailDomainsConfiguration =
+					ConfigurationProviderUtil.getCompanyConfiguration(
+						AccountEntryEmailDomainsConfiguration.class,
+						themeDisplay.getCompanyId());
+
+			if (accountEntryEmailDomainsConfiguration.
+					enableEmailDomainValidation()) {
+
+				return true;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException, configurationException);
+			}
+		}
+
+		return false;
 	}
 
 	private AccountEntryDisplay() {
@@ -308,6 +336,9 @@ public class AccountEntryDisplay {
 		new AccountEntryDisplay();
 
 	private static final int _ORGANIZATION_NAMES_LIMIT = 5;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountEntryDisplay.class);
 
 	private final long _accountEntryId;
 	private final boolean _active;

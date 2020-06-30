@@ -165,8 +165,7 @@ public class DLFolderIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		indexedFieldsFixture.populateRoleIdFields(
 			dlFolder.getCompanyId(), dlFolder.getModelClassName(),
 			dlFolder.getPrimaryKey(), dlFolder.getGroupId(), null, map);
-		indexedFieldsFixture.populateUID(
-			dlFolder.getModelClassName(), dlFolder.getFolderId(), map);
+		indexedFieldsFixture.populateUID(dlFolder, map);
 		indexedFieldsFixture.populateViewCount(
 			DLFolder.class, dlFolder.getFolderId(), map);
 

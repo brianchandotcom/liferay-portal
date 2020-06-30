@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.internal.portlet.action;
 
+import com.liferay.asset.display.page.portlet.AssetDisplayPageEntryFormProcessor;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.info.item.InfoItemClassPKReference;
 import com.liferay.info.item.InfoItemFieldValues;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
@@ -107,19 +107,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 								groupId, articleId, version),
 							infoItemFieldValues);
 
-				int workflowAction = ParamUtil.getInteger(
-					actionRequest, "workflowAction",
-					WorkflowConstants.ACTION_PUBLISH);
-
-				if (workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT) {
-					_journalArticleService.updateStatus(
-						journalArticle.getGroupId(),
-						journalArticle.getArticleId(),
-						journalArticle.getVersion(),
-						WorkflowConstants.STATUS_APPROVED,
-						journalArticle.getUrlTitle(),
-						ServiceContextFactory.getInstance(actionRequest));
-				}
 			}
 		}
 		catch (Exception exception) {

@@ -95,25 +95,34 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 			}
 		}
 
-		for (Locale targetLocale : translatedLocales) {
-			String translatedTitle = _getTranslatedString(
-				article.getTitle(targetLocale), article.getTitle(),
-				importedLocaleTitleMap.get(targetLocale));
-			String translatedDescription = _getTranslatedString(
-				article.getDescription(targetLocale), article.getDescription(),
-				importedLocaleDescriptionMap.get(targetLocale));
-			String translatedContent = _getTranslatedContent(
-				article.getContent(), article.getDDMStructure(),
-				importedLocaleContentMap, targetLocale);
+		Map<Locale, String> descriptionMap = article.getDescriptionMap();
+		Map<Locale, String> titleMap = article.getTitleMap();
+		String translatedContent = article.getContent();
 
-			article = _journalArticleService.updateArticleTranslation(
-				article.getGroupId(), article.getArticleId(),
-				article.getVersion(), targetLocale, translatedTitle,
-				translatedDescription, translatedContent, null,
-				ServiceContextThreadLocal.getServiceContext());
+		for (Locale targetLocale : translatedLocales) {
+			descriptionMap.put(
+				targetLocale,
+				_getTranslatedString(
+					article.getDescription(targetLocale),
+					article.getDescription(),
+					importedLocaleDescriptionMap.get(targetLocale)));
+			
+			titleMap.put(
+				targetLocale,
+				_getTranslatedString(
+					article.getTitle(targetLocale), article.getTitle(),
+					importedLocaleTitleMap.get(targetLocale)));
+
+			translatedContent = _getTranslatedContent(
+				translatedContent, article.getDDMStructure(),
+				importedLocaleContentMap, targetLocale);
 		}
 
-		return article;
+		return _journalArticleService.updateArticle(
+			article.getUserId(), article.getGroupId(), article.getFolderId(),
+			article.getArticleId(), article.getVersion(), titleMap,
+			descriptionMap, translatedContent, article.getLayoutUuid(),
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private String _getTranslatedContent(

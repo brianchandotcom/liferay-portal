@@ -554,6 +554,12 @@ definition {
 			value1 = "Remove");
 	}
 
+	macro viewPortletPresentPG {
+		AssertTextEquals.assertPartialText(
+			locator1 = "Portlet#PORTLET_CONTENT",
+			value1 = "${portletContent}");
+	}
+
 	macro viewSpecificPG {
 		var key_portletTitleName = "${portletName}";
 

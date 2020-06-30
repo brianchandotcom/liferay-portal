@@ -79,6 +79,42 @@ definition {
 			locator1 = "LexiconCard#CARD_TITLE");
 	}
 
+	macro mapEditableFieldToCollectionItems {
+		var lowerCase = StringUtil.lowerCase("${fragmentName}");
+
+		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
+
+		Click.clickNoWaitForVisible(
+			key_colPosition = "1",
+			key_element = "//div[contains(@class,'page-editor')]//li[contains(.,'${fragmentName}')]",
+			key_fragmentName = "Collection Display",
+			key_rowPosition = "1",
+			locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+		Click(
+			key_colPosition = "1",
+			key_element = "//*[contains(@class,'${lowerCase}') and contains(@data-lfr-editable-id,'${id}')]",
+			key_fragmentName = "Collection Display",
+			key_rowPosition = "1",
+			locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT");
+
+		Click(locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON");
+
+		Pause(locator1 = "3000");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${field}");
+
+		PageEditor.waitForAutoSave();
+
+		AssertSelectedLabel(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${field}");
+	}
+
 	macro mapEditableTextToField {
 		PageEditorMapping.gotoEditableFieldMapping(
 			contributed = "${contributed}",

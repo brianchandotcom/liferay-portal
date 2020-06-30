@@ -322,7 +322,7 @@ definition {
 
 		LexiconEntry.viewEntryStatus(
 			rowEntry = "${accountName}",
-			rowStatus = "INACTIVE");
+			rowStatus = "Inactive");
 	}
 
 	macro viewNoAssignee {

@@ -524,6 +524,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEO_MAPPED_FIELD</td>
+	<td>//input[contains(@id,'mapped-${key_mappedField}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SETUP_XML_URL</td>
 	<td>//input[contains(@id,'xmlUrl')]</td>
 	<td></td>

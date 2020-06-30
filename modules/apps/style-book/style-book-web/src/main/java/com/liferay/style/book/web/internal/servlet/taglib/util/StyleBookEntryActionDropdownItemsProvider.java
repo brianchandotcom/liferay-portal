@@ -61,6 +61,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 
 	public List<DropdownItem> getActionDropdownItems() {
 		return DropdownItemListBuilder.add(
+			_getEditStyleBookEntryActionUnsafeConsumer()
+		).add(
 			_getRenameStyleBookEntrytActionUnsafeConsumer()
 		).add(
 			_getUpdateStyleBookEntryPreviewActionUnsafeConsumer()
@@ -121,6 +123,20 @@ public class StyleBookEntryActionDropdownItemsProvider {
 				String.valueOf(_styleBookEntry.getStyleBookEntryId()));
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "remove-thumbnail"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getEditStyleBookEntryActionUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.setHref(
+				_renderResponse.createRenderURL(), "mvcRenderCommandName",
+				"/style_book/edit_style_book_entry", "redirect",
+				_themeDisplay.getURLCurrent(), "styleBookEntryId",
+				_styleBookEntry.getStyleBookEntryId());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
 	}
 

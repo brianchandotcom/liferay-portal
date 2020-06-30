@@ -243,7 +243,7 @@ describe('FragmentContent', () => {
 		).toBe(null);
 	});
 
-	it('hides widgets topper if user has no permissions', async () => {
+	it('shows widgets topper even without update permissions', async () => {
 		const fragmentEntryLink = getFragmentEntryLink();
 
 		await act(async () => {

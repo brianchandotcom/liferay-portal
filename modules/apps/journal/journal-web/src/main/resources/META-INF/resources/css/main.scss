@@ -251,12 +251,9 @@ $productMenuWidth: 320px;
 		}
 	}
 
+	.import-translation,
 	.translate-article {
-		.languages-selector .autofit-col {
-			margin-right: 1em;
-		}
-
-		nav.tbar-translate {
+		nav {
 			height: auto;
 
 			> .container-fluid {
@@ -299,6 +296,12 @@ $productMenuWidth: 320px;
 					}
 				}
 			}
+		}
+	}
+
+	.translate-article {
+		.languages-selector .autofit-col {
+			margin-right: 1em;
 		}
 
 		.translate-body-form {

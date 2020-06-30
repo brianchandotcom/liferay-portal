@@ -45,11 +45,11 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 	<portlet:param name="version" value="<%= String.valueOf(version) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= importTranslationURL %>" name="fm">
+<aui:form action="<%= importTranslationURL %>" cssClass="import-translation" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
-	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
+	<nav class="component-tbar subnav-tbar-light tbar">
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">

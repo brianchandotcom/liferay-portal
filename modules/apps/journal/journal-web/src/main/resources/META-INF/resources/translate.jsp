@@ -42,7 +42,7 @@ renderResponse.setTitle(title);
 <aui:form cssClass="translate-article" name="translate_fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
-	<nav class="component-tbar subnav-tbar-light tbar tbar-translate">
+	<nav class="component-tbar subnav-tbar-light tbar">
 		<clay:container-fluid>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">

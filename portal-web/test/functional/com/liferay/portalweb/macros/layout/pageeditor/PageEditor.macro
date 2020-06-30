@@ -691,7 +691,7 @@ definition {
 		}
 
 		if (isSet(infoListProviderName)) {
-			NavItem.click(navItem = "Collections Providers");
+			NavItem.click(navItem = "Collection Providers");
 
 			LexiconCard.clickCard(card = "${infoListProviderName}");
 

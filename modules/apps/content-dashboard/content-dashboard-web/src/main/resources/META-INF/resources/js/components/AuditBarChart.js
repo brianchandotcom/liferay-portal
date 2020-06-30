@@ -14,6 +14,7 @@
 
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
+import ClayLayout from '@clayui/layout';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import {
@@ -21,7 +22,6 @@ import {
 	BarChart,
 	CartesianGrid,
 	Legend,
-	ResponsiveContainer,
 	Text,
 	XAxis,
 	YAxis,
@@ -90,14 +90,6 @@ export default function AuditBarChart({rtl, vocabularies}) {
 
 	const {bars, colors, data, legendCheckboxes} = auditBarChartData;
 
-	const height = !bars.length
-		? BAR_CHART.height - BAR_CHART.legendHeight
-		: BAR_CHART.height;
-
-	const horizontalPoints = !bars.length
-		? [BAR_CHART.dotRadiusMin]
-		: [BAR_CHART.legendHeight + BAR_CHART.dotRadiusMin];
-
 	const [checkboxes, setCheckbox] = useState(legendCheckboxes);
 
 	useEffect(() => {
@@ -136,28 +128,43 @@ export default function AuditBarChart({rtl, vocabularies}) {
 		const {payload, yAxisName} = props;
 
 		return (
-			<>
-				<span className="mr-4 small">{yAxisName}:</span>
-				{payload.map((entry) => (
-					<ClayCheckbox
-						aria-labelledby={entry.value}
-						checked={checkboxes[entry.dataKey]}
-						className={`custom-control-color-${entry.dataKey}`}
-						inline
-						key={entry.dataKey}
-						onChange={() =>
-							setCheckbox({
-								...checkboxes,
-								[entry.dataKey]: !checkboxes[entry.dataKey],
-							})
-						}
-					>
-						<span className="inline-item inline-item-after small text-secondary">
-							{entry.value}
-						</span>
-					</ClayCheckbox>
-				))}
-			</>
+			<ClayLayout.ContainerFluid>
+				<ClayLayout.Row justify="start">
+					<ClayLayout.Col size={1}>
+						<span className="small">{yAxisName}:</span>
+					</ClayLayout.Col>
+					<ClayLayout.Col>
+						<ClayLayout.Row justify="start">
+							{payload.map((entry) => (
+								<ClayLayout.Col
+									className="c-mb-2"
+									key={entry.dataKey}
+									size={2}
+								>
+									<ClayCheckbox
+										aria-labelledby={entry.value}
+										checked={checkboxes[entry.dataKey]}
+										className={`custom-control-color-${entry.dataKey}`}
+										inline
+										onChange={() =>
+											setCheckbox({
+												...checkboxes,
+												[entry.dataKey]: !checkboxes[
+													entry.dataKey
+												],
+											})
+										}
+									>
+										<span className="inline-item-after small text-secondary">
+											{entry.value}
+										</span>
+									</ClayCheckbox>
+								</ClayLayout.Col>
+							))}
+						</ClayLayout.Row>
+					</ClayLayout.Col>
+				</ClayLayout.Row>
+			</ClayLayout.ContainerFluid>
 		);
 	};
 
@@ -185,30 +192,32 @@ export default function AuditBarChart({rtl, vocabularies}) {
 					)}
 				/>
 			)}
-			<ResponsiveContainer className="mb-3" height={height}>
-				<BarChart data={data} height={height} width={BAR_CHART.width}>
+			<div className="mb-3 overflow-auto">
+				<BarChart
+					data={data}
+					height={BAR_CHART.height}
+					width={BAR_CHART.width}
+				>
 					{showLegend && (
 						<Legend
 							align={rtl ? 'right' : 'left'}
 							content={renderLegend}
-							height={BAR_CHART.legendHeight}
 							verticalAlign="top"
+							wrapperStyle={{paddingBottom: 24}}
 							yAxisName={axisNames.y}
 						/>
 					)}
-					<CartesianGrid
-						horizontalPoints={horizontalPoints}
-						stroke={BAR_CHART.stroke}
-					/>
+					<CartesianGrid stroke={BAR_CHART.stroke} />
 					<XAxis
 						axisLine={{
 							stroke: BAR_CHART.stroke,
 						}}
 						dataKey="name"
-						height={75}
+						height={90}
 						interval={0}
 						label={{
 							className: 'small',
+							offset: 18,
 							position: 'insideBottom',
 							value: axisNames.x,
 						}}
@@ -250,7 +259,7 @@ export default function AuditBarChart({rtl, vocabularies}) {
 						/>
 					)}
 				</BarChart>
-			</ResponsiveContainer>
+			</div>
 		</>
 	);
 }

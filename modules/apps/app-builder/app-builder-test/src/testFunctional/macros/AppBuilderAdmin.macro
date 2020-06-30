@@ -113,12 +113,12 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click.clickAtNotVisible(
-			key_FilterOption = "${filterOption}",
+			key_FilterOption = "${statusFilterOption}",
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_STATUS");
 
 		Button.clickDone();
 
-		AppBuilderAdmin.filterByDeploymentType(itemName = "${itemName}");
+		AppBuilderAdmin.filterByDeploymentType(itemName = "${deploymentFilterOption}");
 
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
@@ -464,6 +464,8 @@ definition {
 		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_DEPLOYMENT_TYPE");
 
 		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_STATUS");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#VALIDATE_FILTER_BY_STATUS_ANY");
 
 		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_AUTHOR");
 

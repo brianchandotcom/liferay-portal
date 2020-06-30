@@ -85,6 +85,9 @@ const props = {
 			type: 'numeric',
 		},
 	],
+	locale: {
+		language: 'en',
+	},
 };
 
 describe('CardList', () => {

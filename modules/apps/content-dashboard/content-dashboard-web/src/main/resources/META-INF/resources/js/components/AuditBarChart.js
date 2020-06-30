@@ -177,13 +177,13 @@ export default function AuditBarChart({rtl, vocabularies}) {
 		);
 	};
 
-	const allCheckboxesNotChecked = Object.keys(checkboxes).every(
+	const noCheckboxesChecked = Object.keys(checkboxes).every(
 		(i) => checkboxes[i] === false
 	);
 
 	return (
 		<>
-			{allCheckboxesNotChecked && (
+			{noCheckboxesChecked && (
 				<ClayEmptyState
 					className="empty-state no-categories-selected text-center"
 					description={Liferay.Language.get(

@@ -15,6 +15,7 @@
 package com.liferay.account.service.impl;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.exception.DuplicateAccountEntryIdException;
 import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
 import com.liferay.account.model.AccountEntry;
@@ -25,6 +26,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
@@ -36,8 +39,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.time.Month;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -187,6 +192,51 @@ public class AccountEntryUserRelLocalServiceImpl
 	}
 
 	@Override
+	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
+		throws PortalException {
+
+		AccountEntry accountEntry = accountEntryLocalService.getAccountEntry(
+			accountEntryId);
+
+		if (!Objects.equals(
+				AccountConstants.ACCOUNT_ENTRY_TYPE_PERSONAL,
+				accountEntry.getType())) {
+
+			throw new AccountEntryTypeException();
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Updating user for person account: " + accountEntryId);
+		}
+
+		List<AccountEntryUserRel> removeAccountEntryUserRels = new ArrayList<>(
+			getAccountEntryUserRelsByAccountEntryId(accountEntryId));
+
+		boolean currentAccountUser = removeAccountEntryUserRels.removeIf(
+			accountEntryUserRel ->
+				accountEntryUserRel.getAccountUserId() == userId);
+
+		removeAccountEntryUserRels.forEach(
+			accountEntryUserRel -> {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Removing user: " +
+							accountEntryUserRel.getAccountUserId());
+				}
+
+				deleteAccountEntryUserRel(accountEntryUserRel);
+			});
+
+		if ((userId > 0) && !currentAccountUser) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Adding user: " + userId);
+			}
+
+			addAccountEntryUserRel(accountEntryId, userId);
+		}
+	}
+
+	@Override
 	public void updateAccountEntryUserRels(
 			long[] addAccountEntryIds, long[] deleteAccountEntryIds,
 			long accountUserId)
@@ -249,5 +299,8 @@ public class AccountEntryUserRelLocalServiceImpl
 				emailAddress, accountEntry.getDomains());
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AccountEntryUserRelLocalServiceImpl.class);
 
 }

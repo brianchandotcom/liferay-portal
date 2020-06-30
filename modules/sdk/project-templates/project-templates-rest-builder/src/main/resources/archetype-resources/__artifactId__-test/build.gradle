@@ -25,3 +25,9 @@ dependencies {
 	testIntegrationCompile project("${apiPath}")
 	testIntegrationCompile project("${clientPath}")
 }
+
+configurations.all {
+	resolutionStrategy {
+		force group: 'com.liferay.portal', name: 'com.liferay.portal.test', version: '7.1.0'
+	}
+}

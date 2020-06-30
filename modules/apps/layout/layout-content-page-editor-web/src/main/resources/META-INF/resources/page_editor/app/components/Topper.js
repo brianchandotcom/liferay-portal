@@ -92,7 +92,7 @@ export default function ({children, item, ...props}) {
 	return children;
 }
 
-function Topper({children, item, itemElement, layoutData}) {
+function Topper({children, className, item, itemElement, layoutData}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const dispatch = useDispatch();
 	const store = useSelector((state) => state);
@@ -200,7 +200,7 @@ function Topper({children, item, itemElement, layoutData}) {
 
 	return (
 		<div
-			className={classNames('page-editor__topper', {
+			className={classNames(className, 'page-editor__topper', {
 				active: isActive(item.itemId),
 				'drag-over-bottom':
 					isOverTarget && targetPosition === TARGET_POSITION.BOTTOM,

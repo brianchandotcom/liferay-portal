@@ -14,6 +14,7 @@
 
 package com.liferay.style.book.service.impl;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -24,7 +25,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.style.book.exception.DuplicateStyleBookEntryNameKeyException;
 import com.liferay.style.book.exception.StyleBookEntryNameException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.base.StyleBookEntryLocalServiceBaseImpl;
@@ -48,7 +51,7 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public StyleBookEntry addStyleBookEntry(
-			long userId, long groupId, String name,
+			long userId, long groupId, String name, String styleBookEntryKey,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -67,6 +70,14 @@ public class StyleBookEntryLocalServiceImpl
 
 		validate(name);
 
+		if (Validator.isNull(styleBookEntryKey)) {
+			styleBookEntryKey = _generateStyleBookEntryKey(groupId, name);
+		}
+
+		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
+
+		validateStyleBookEntryKey(groupId, styleBookEntryKey);
+
 		long styleBookEntryId = counterLocalService.increment();
 
 		StyleBookEntry styleBookEntry = styleBookEntryPersistence.create(
@@ -78,6 +89,7 @@ public class StyleBookEntryLocalServiceImpl
 		styleBookEntry.setUserName(user.getFullName());
 		styleBookEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
 		styleBookEntry.setName(name);
+		styleBookEntry.setStyleBookEntryKey(styleBookEntryKey);
 
 		return styleBookEntryPersistence.update(styleBookEntry);
 	}
@@ -105,6 +117,14 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		return styleBookEntry;
+	}
+
+	@Override
+	public StyleBookEntry fetchStyleBookEntry(
+		long groupId, String styleBookEntryKey) {
+
+		return styleBookEntryPersistence.fetchByG_SBEK(
+			groupId, _getStyleBookEntryKey(styleBookEntryKey));
 	}
 
 	@Override
@@ -185,6 +205,53 @@ public class StyleBookEntryLocalServiceImpl
 			throw new StyleBookEntryNameException(
 				"Maximum length of name exceeded");
 		}
+	}
+
+	protected void validateStyleBookEntryKey(
+			long groupId, String styleBookEntryKey)
+		throws PortalException {
+
+		styleBookEntryKey = _getStyleBookEntryKey(styleBookEntryKey);
+
+		StyleBookEntry styleBookEntry = styleBookEntryPersistence.fetchByG_SBEK(
+			groupId, styleBookEntryKey);
+
+		if (styleBookEntry != null) {
+			throw new DuplicateStyleBookEntryNameKeyException();
+		}
+	}
+
+	private String _generateStyleBookEntryKey(long groupId, String name) {
+		String styleBookEntryKey = _getStyleBookEntryKey(name);
+
+		styleBookEntryKey = StringUtil.replace(
+			styleBookEntryKey, CharPool.SPACE, CharPool.DASH);
+
+		String curStyleBookEntryKey = styleBookEntryKey;
+
+		int count = 0;
+
+		while (true) {
+			StyleBookEntry styleBookEntry =
+				styleBookEntryPersistence.fetchByG_SBEK(
+					groupId, curStyleBookEntryKey);
+
+			if (styleBookEntry == null) {
+				return curStyleBookEntryKey;
+			}
+
+			curStyleBookEntryKey = styleBookEntryKey + CharPool.DASH + count++;
+		}
+	}
+
+	private String _getStyleBookEntryKey(String styleBookEntryKey) {
+		if (styleBookEntryKey != null) {
+			styleBookEntryKey = styleBookEntryKey.trim();
+
+			return StringUtil.toLowerCase(styleBookEntryKey);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Reference

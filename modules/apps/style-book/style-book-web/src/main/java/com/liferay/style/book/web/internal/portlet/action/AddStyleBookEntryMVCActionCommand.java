@@ -14,6 +14,7 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -65,7 +66,8 @@ public class AddStyleBookEntryMVCActionCommand extends BaseMVCActionCommand {
 			StyleBookEntry styleBookEntry =
 				_styleBookEntryLocalService.addStyleBookEntry(
 					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), name, serviceContext);
+					serviceContext.getScopeGroupId(), name, StringPool.BLANK,
+					serviceContext);
 
 			JSONObject jsonObject = JSONUtil.put(
 				"redirectURL", getRedirectURL(actionResponse, styleBookEntry));

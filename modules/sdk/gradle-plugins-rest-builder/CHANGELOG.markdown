@@ -1,5 +1,17 @@
 # Liferay Gradle Plugins REST Builder Change Log
 
+## 1.0.113 - 2020-06-22
+
+### Dependencies
+- [LPS-114482] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.112.
+
+## 1.0.112 - 2020-06-21
+
+### Dependencies
+- [LPS-115431] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.111.
+
 ## 1.0.111 - 2020-06-16
 
 ### Dependencies
@@ -821,11 +833,13 @@ version 1.0.1.
 [LPS-113978]: https://issues.liferay.com/browse/LPS-113978
 [LPS-114114]: https://issues.liferay.com/browse/LPS-114114
 [LPS-114479]: https://issues.liferay.com/browse/LPS-114479
+[LPS-114482]: https://issues.liferay.com/browse/LPS-114482
 [LPS-114486]: https://issues.liferay.com/browse/LPS-114486
 [LPS-114504]: https://issues.liferay.com/browse/LPS-114504
 [LPS-114806]: https://issues.liferay.com/browse/LPS-114806
 [LPS-114849]: https://issues.liferay.com/browse/LPS-114849
 [LPS-114979]: https://issues.liferay.com/browse/LPS-114979
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-115431]: https://issues.liferay.com/browse/LPS-115431
 [LPS-115496]: https://issues.liferay.com/browse/LPS-115496
 [LRDOCS-6650]: https://issues.liferay.com/browse/LRDOCS-6650

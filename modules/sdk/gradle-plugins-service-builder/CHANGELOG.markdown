@@ -1,5 +1,17 @@
 # Liferay Gradle Plugins Service Builder Change Log
 
+## 4.0.18 - 2020-06-24
+
+### Dependencies
+- [LPS-116049] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.347.
+
+## 4.0.17 - 2020-06-22
+
+### Dependencies
+- [LPS-115687] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.346.
+
 ## 4.0.16 - 2020-06-15
 
 ### Dependencies
@@ -1920,6 +1932,8 @@ version 2.4.
 [LPS-113024]: https://issues.liferay.com/browse/LPS-113024
 [LPS-113624]: https://issues.liferay.com/browse/LPS-113624
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-115687]: https://issues.liferay.com/browse/LPS-115687
+[LPS-116049]: https://issues.liferay.com/browse/LPS-116049
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547
 [LRDOCS-4319]: https://issues.liferay.com/browse/LRDOCS-4319
 [LRDOCS-5050]: https://issues.liferay.com/browse/LRDOCS-5050

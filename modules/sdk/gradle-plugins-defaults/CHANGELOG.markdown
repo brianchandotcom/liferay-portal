@@ -1,5 +1,41 @@
 # Liferay Gradle Plugins Defaults Change Log
 
+## 6.1.305 - 2020-06-26
+
+### Commits
+- [LPS-115015] Skip checked out projects (42a24b1acc)
+
+### Dependencies
+- [LPS-115015 LPS-88645] Update the com.liferay.gradle.plugins dependency to
+version 10.0.4.
+
+## 6.1.304 - 2020-06-24
+
+### Dependencies
+- [LPS-88645 LPS-116049 LPS-116041] Update the com.liferay.gradle.plugins
+dependency to version 10.0.3.
+
+## 6.1.303 - 2020-06-22
+
+### Dependencies
+- [LPS-115687] Update the com.liferay.gradle.plugins dependency to version
+10.0.2.
+
+## 6.1.302 - 2020-06-22
+
+### Dependencies
+- [LPS-114482 LPS-115771 LPS-115922] Update the com.liferay.gradle.plugins
+dependency to version 10.0.1.
+
+## 6.1.301 - 2020-06-21
+
+### Commits
+- [LPS-88645] BundleExtension (89c6e73a9d)
+
+### Dependencies
+- [LPS-115431 LPS-115714 LPS-88645] Update the com.liferay.gradle.plugins
+dependency to version 10.0.0.
+
 ## 6.1.300 - 2020-06-17
 
 ### Dependencies
@@ -11716,6 +11752,7 @@ both Gradle 2.14+ and Gradle 3.0.
 [LPS-114165]: https://issues.liferay.com/browse/LPS-114165
 [LPS-114465]: https://issues.liferay.com/browse/LPS-114465
 [LPS-114479]: https://issues.liferay.com/browse/LPS-114479
+[LPS-114482]: https://issues.liferay.com/browse/LPS-114482
 [LPS-114486]: https://issues.liferay.com/browse/LPS-114486
 [LPS-114504]: https://issues.liferay.com/browse/LPS-114504
 [LPS-114565]: https://issues.liferay.com/browse/LPS-114565
@@ -11727,9 +11764,16 @@ both Gradle 2.14+ and Gradle 3.0.
 [LPS-114979]: https://issues.liferay.com/browse/LPS-114979
 [LPS-115015]: https://issues.liferay.com/browse/LPS-115015
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-115431]: https://issues.liferay.com/browse/LPS-115431
 [LPS-115443]: https://issues.liferay.com/browse/LPS-115443
 [LPS-115447]: https://issues.liferay.com/browse/LPS-115447
 [LPS-115496]: https://issues.liferay.com/browse/LPS-115496
+[LPS-115687]: https://issues.liferay.com/browse/LPS-115687
+[LPS-115714]: https://issues.liferay.com/browse/LPS-115714
+[LPS-115771]: https://issues.liferay.com/browse/LPS-115771
+[LPS-115922]: https://issues.liferay.com/browse/LPS-115922
+[LPS-116041]: https://issues.liferay.com/browse/LPS-116041
+[LPS-116049]: https://issues.liferay.com/browse/LPS-116049
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350

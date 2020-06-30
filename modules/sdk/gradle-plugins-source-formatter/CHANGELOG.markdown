@@ -1,5 +1,28 @@
 # Liferay Gradle Plugins Source Formatter Change Log
 
+## 4.0.1 - 2020-06-24
+
+### Dependencies
+- [LPS-116041] Update the com.liferay.source.formatter dependency to version
+1.0.1017.
+
+## 4.0.0 - 2020-06-22
+
+### Dependencies
+- [LPS-115771 LPS-115922] Update the com.liferay.source.formatter dependency to
+version 1.0.1016.
+
+## 3.0.46 - 2020-06-22
+
+### Commits
+- [LPS-115922] Use JavaExec (a26f272958)
+
+## 3.0.45 - 2020-06-21
+
+### Dependencies
+- [LPS-115714] Update the com.liferay.source.formatter dependency to version
+1.0.1015.
+
 ## 3.0.44 - 2020-06-16
 
 ### Dependencies
@@ -2321,9 +2344,6 @@ https://github.com/brianchandotcom/liferay-portal/pull/61854 (68c7d50e6c)
 1.0.643.
 
 ## 2.3.169 - 2018-05-23
-
-### Commits
-- [LPS-74544] prep enxt (d95903e968)
 
 ### Dependencies
 - [LPS-74544] Update the com.liferay.source.formatter dependency to version
@@ -5294,6 +5314,10 @@ version 2.4.
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
 [LPS-115443]: https://issues.liferay.com/browse/LPS-115443
 [LPS-115447]: https://issues.liferay.com/browse/LPS-115447
+[LPS-115714]: https://issues.liferay.com/browse/LPS-115714
+[LPS-115771]: https://issues.liferay.com/browse/LPS-115771
+[LPS-115922]: https://issues.liferay.com/browse/LPS-115922
+[LPS-116041]: https://issues.liferay.com/browse/LPS-116041
 [LRCI-642]: https://issues.liferay.com/browse/LRCI-642
 [LRDOCS-2647]: https://issues.liferay.com/browse/LRDOCS-2647
 [RELEASE-1607]: https://issues.liferay.com/browse/RELEASE-1607

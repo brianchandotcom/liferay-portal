@@ -1,5 +1,26 @@
 # Liferay Gradle Plugins Workspace Change Log
 
+## 2.5.7 - 2020-06-26
+
+### Dependencies
+- [LPS-115015 LPS-88645] Update the com.liferay.gradle.plugins.target.platform
+dependency to version 2.1.22.
+
+## 2.5.6 - 2020-06-24
+
+### Dependencies
+- [LPS-88645 LPS-116049 LPS-116041] Update the
+com.liferay.gradle.plugins.target.platform dependency to version 2.1.21.
+
+## 2.5.5 - 2020-06-21
+
+### Commits
+- [LPS-88645] BundleExtension (89c6e73a9d)
+
+### Dependencies
+- [LPS-115431 LPS-115714 LPS-88645] Update the
+com.liferay.gradle.plugins.target.platform dependency to version 2.1.20.
+
 ## 2.5.4 - 2020-06-18
 
 ### Commits
@@ -4859,6 +4880,11 @@ from settings.gradle (b4be4c57fd)
 [LPS-114570]: https://issues.liferay.com/browse/LPS-114570
 [LPS-114705]: https://issues.liferay.com/browse/LPS-114705
 [LPS-114882]: https://issues.liferay.com/browse/LPS-114882
+[LPS-115015]: https://issues.liferay.com/browse/LPS-115015
+[LPS-115431]: https://issues.liferay.com/browse/LPS-115431
+[LPS-115714]: https://issues.liferay.com/browse/LPS-115714
+[LPS-116041]: https://issues.liferay.com/browse/LPS-116041
+[LPS-116049]: https://issues.liferay.com/browse/LPS-116049
 [LRCI-65]: https://issues.liferay.com/browse/LRCI-65
 [LRCI-264]: https://issues.liferay.com/browse/LRCI-264
 [LRCI-350]: https://issues.liferay.com/browse/LRCI-350

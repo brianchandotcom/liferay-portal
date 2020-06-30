@@ -1,5 +1,74 @@
 # Liferay Gradle Plugins Change Log
 
+## 10.0.4 - 2020-06-26
+
+### Commits
+- [LPS-88645] Dependency (6c62ed8455)
+- [LPS-88645] Fix deploy (a0fc80e892)
+
+## 10.0.3 - 2020-06-24
+
+### Commits
+- [LPS-88645] Fix test (3b0edee176)
+- [LPS-88645] Configurations (5e8b276b78)
+- [LPS-88645] Extensions (1b7f654b38)
+- [LPS-88645] Organize plugin logic (5f52f07035)
+- [LPS-88645] Sort (d34e4e64c1)
+- [LPS-88645] Task providers (0ca8420703)
+- [LPS-88645] Conventions (9c66100858)
+- [LPS-88645] Configurations (4063492d4e)
+- [LPS-88645] Extensions (ea4aa29ad9)
+
+### Dependencies
+- [LPS-116041] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 4.0.1.
+- [LPS-116041] Update the com.liferay.source.formatter dependency to version
+1.0.1017.
+- [LPS-116049] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.18.
+- [LPS-116049] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.347.
+
+## 10.0.1 - 2020-06-22
+
+### Dependencies
+- [LPS-115687] Update the com.liferay.gradle.plugins.service.builder dependency
+to version 4.0.17.
+- [LPS-115687] Update the com.liferay.portal.tools.service.builder dependency to
+version 1.0.346.
+- [LPS-115771 LPS-115922] Update the com.liferay.gradle.plugins.source.formatter
+dependency to version 4.0.0.
+- [LPS-115771 LPS-115922] Update the com.liferay.source.formatter dependency to
+version 1.0.1016.
+- [LPS-114482] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.0.113.
+- [LPS-114482] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.112.
+
+## 9.0.1 - 2020-06-21
+
+### Commits
+- [LPS-88645] BundleExtension (89c6e73a9d)
+- [LPS-88645] Sort (f5d6b890ad)
+- [LPS-88645] Conventions (c841c8ad21)
+- [LPS-88645] Configurations (97f29eb821)
+- [LPS-88645] Extensions (5a7d376293)
+- [LPS-88645] BundleExtension (58e64a4b70)
+- [LPS-88645] Rename method (055b520a84)
+- [LPS-88645] Simplify (441b78122c)
+- [LPS-88645] Bnd instruction (673afe3f0f)
+- [LPS-88645] Move to extension (be72ab9815)
+
+### Dependencies
+- [LPS-115714] Update the com.liferay.gradle.plugins.source.formatter dependency
+to version 3.0.45.
+- [LPS-115714] Update the com.liferay.source.formatter dependency to version
+1.0.1015.
+- [LPS-115431] Update the com.liferay.gradle.plugins.rest.builder dependency to
+version 1.0.112.
+- [LPS-115431] Update the com.liferay.portal.tools.rest.builder dependency to
+version 1.0.111.
+
 ## 8.0.4 - 2020-06-17
 
 ### Commits
@@ -6364,9 +6433,6 @@ to version 2.3.170.
 1.0.643.
 
 ## 3.12.18 - 2018-05-23
-
-### Commits
-- [LPS-74544] prep enxt (d95903e968)
 
 ### Dependencies
 - [LPS-81404] Update the com.liferay.gradle.plugins.service.builder dependency
@@ -15994,6 +16060,7 @@ to version 1.0.2.
 [LPS-114114]: https://issues.liferay.com/browse/LPS-114114
 [LPS-114165]: https://issues.liferay.com/browse/LPS-114165
 [LPS-114479]: https://issues.liferay.com/browse/LPS-114479
+[LPS-114482]: https://issues.liferay.com/browse/LPS-114482
 [LPS-114486]: https://issues.liferay.com/browse/LPS-114486
 [LPS-114504]: https://issues.liferay.com/browse/LPS-114504
 [LPS-114565]: https://issues.liferay.com/browse/LPS-114565
@@ -16003,9 +16070,16 @@ to version 1.0.2.
 [LPS-114849]: https://issues.liferay.com/browse/LPS-114849
 [LPS-114979]: https://issues.liferay.com/browse/LPS-114979
 [LPS-115020]: https://issues.liferay.com/browse/LPS-115020
+[LPS-115431]: https://issues.liferay.com/browse/LPS-115431
 [LPS-115443]: https://issues.liferay.com/browse/LPS-115443
 [LPS-115447]: https://issues.liferay.com/browse/LPS-115447
 [LPS-115496]: https://issues.liferay.com/browse/LPS-115496
+[LPS-115687]: https://issues.liferay.com/browse/LPS-115687
+[LPS-115714]: https://issues.liferay.com/browse/LPS-115714
+[LPS-115771]: https://issues.liferay.com/browse/LPS-115771
+[LPS-115922]: https://issues.liferay.com/browse/LPS-115922
+[LPS-116041]: https://issues.liferay.com/browse/LPS-116041
+[LPS-116049]: https://issues.liferay.com/browse/LPS-116049
 [LRCI-642]: https://issues.liferay.com/browse/LRCI-642
 [LRDOCS-2147]: https://issues.liferay.com/browse/LRDOCS-2147
 [LRDOCS-2547]: https://issues.liferay.com/browse/LRDOCS-2547

@@ -80,8 +80,10 @@ const chartFactory = ({field, summary, totalEntries, values}) => {
 	}
 };
 
-export default ({data, fields}) => {
+export default ({data, fields, locale}) => {
 	let hasCards = false;
+
+	const {language} = locale;
 
 	const cards = fields.map((field, index) => {
 		const {

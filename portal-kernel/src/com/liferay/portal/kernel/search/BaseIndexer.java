@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.NoSuchRegionException;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -105,6 +107,16 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	public void delete(T object) throws SearchException {
 		if (object == null) {
 			return;
+		}
+
+		if (object instanceof CTModel<?>) {
+			CTModel<?> ctModel = (CTModel<?>)object;
+
+			if ((ctModel.getCtCollectionId() == 0) &&
+				!CTCollectionThreadLocal.isProductionMode()) {
+
+				return;
+			}
 		}
 
 		try {
@@ -1116,13 +1128,21 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	protected void deleteDocument(long companyId, String field1)
 		throws Exception {
 
-		Document document = new DocumentImpl();
+		String uid = null;
 
-		document.addUID(getClassName(), field1);
+		if (field1.startsWith("UID=")) {
+			uid = field1.substring(4);
+		}
+		else {
+			Document document = new DocumentImpl();
+
+			document.addUID(getClassName(), field1);
+
+			uid = document.get(Field.UID);
+		}
 
 		IndexWriterHelperUtil.deleteDocument(
-			getSearchEngineId(), companyId, document.get(Field.UID),
-			_commitImmediately);
+			getSearchEngineId(), companyId, uid, _commitImmediately);
 	}
 
 	protected void deleteDocument(long companyId, String field1, String field2)

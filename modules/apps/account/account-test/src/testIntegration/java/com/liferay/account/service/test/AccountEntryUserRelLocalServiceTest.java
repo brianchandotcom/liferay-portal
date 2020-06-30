@@ -15,6 +15,7 @@
 package com.liferay.account.service.test;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.exception.AccountEntryTypeException;
 import com.liferay.account.exception.DuplicateAccountEntryIdException;
 import com.liferay.account.exception.DuplicateAccountEntryUserRelException;
 import com.liferay.account.exception.NoSuchEntryException;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -268,6 +270,35 @@ public class AccountEntryUserRelLocalServiceTest {
 	}
 
 	@Test
+	public void testAddPersonTypeAccountEntryUserRel() throws Exception {
+		AccountEntry personTypeAccountEntry =
+			AccountEntryTestUtil.addPersonalAccountEntry(
+				_accountEntryLocalService);
+
+		AccountEntryUserRel accountEntryUserRel1 =
+			_addPersonTypeAccountEntryUserRel(
+				personTypeAccountEntry.getAccountEntryId());
+
+		Assert.assertNotNull(
+			_userLocalService.fetchUser(
+				accountEntryUserRel1.getAccountUserId()));
+
+		_assertPersonTypeAccountEntryUser(
+			new long[] {accountEntryUserRel1.getAccountUserId()},
+			personTypeAccountEntry.getAccountEntryId());
+
+		AccountEntryUserRel accountEntryUserRel2 =
+			_addPersonTypeAccountEntryUserRel(
+				personTypeAccountEntry.getAccountEntryId());
+
+		// The newly created user should be the only associated user
+
+		_assertPersonTypeAccountEntryUser(
+			new long[] {accountEntryUserRel2.getAccountUserId()},
+			personTypeAccountEntry.getAccountEntryId());
+	}
+
+	@Test
 	public void testDeleteAccountEntryUserRels() throws Exception {
 		AccountEntryUserRel accountEntryUserRel = _addAccountEntryUserRel(
 			_accountEntry.getAccountEntryId());
@@ -291,6 +322,30 @@ public class AccountEntryUserRelLocalServiceTest {
 
 		Assert.assertEquals(
 			accountEntryUserRels.toString(), 0, accountEntryUserRels.size());
+	}
+
+	@Test
+	public void testDeleteAccountEntryUserRelsByAccountEntryId()
+		throws Exception {
+
+		_testDeleteAccountEntryUserRelsByAccountEntryId(0);
+
+		List<User> users = ListUtil.fromArray(
+			UserTestUtil.addUser(), UserTestUtil.addUser(),
+			UserTestUtil.addUser());
+
+		for (User user : users) {
+			_accountEntryUserRelLocalService.addAccountEntryUserRel(
+				_accountEntry.getAccountEntryId(), user.getUserId());
+		}
+
+		_testDeleteAccountEntryUserRelsByAccountEntryId(users.size());
+
+		_accountEntryUserRelLocalService.
+			deleteAccountEntryUserRelsByAccountEntryId(
+				_accountEntry.getAccountEntryId());
+
+		_testDeleteAccountEntryUserRelsByAccountEntryId(0);
 	}
 
 	@Test(expected = NoSuchEntryUserRelException.class)
@@ -330,6 +385,38 @@ public class AccountEntryUserRelLocalServiceTest {
 		Arrays.sort(actualUserIds);
 
 		Assert.assertArrayEquals(expectedUserIds, actualUserIds);
+	}
+
+	@Test
+	public void testSetPersonTypeAccountEntryUser() throws Exception {
+		AccountEntry personTypeAccountEntry =
+			AccountEntryTestUtil.addPersonalAccountEntry(
+				_accountEntryLocalService);
+		User user1 = UserTestUtil.addUser();
+
+		_testSetPersonTypeAccountEntryUser(
+			new long[] {user1.getUserId()},
+			personTypeAccountEntry.getAccountEntryId(), user1.getUserId());
+
+		User user2 = UserTestUtil.addUser();
+
+		_testSetPersonTypeAccountEntryUser(
+			new long[] {user2.getUserId()},
+			personTypeAccountEntry.getAccountEntryId(), user2.getUserId());
+
+		// Passing in "0" will remove the user
+
+		_testSetPersonTypeAccountEntryUser(
+			new long[0], personTypeAccountEntry.getAccountEntryId(),
+			UserConstants.USER_ID_DEFAULT);
+	}
+
+	@Test(expected = AccountEntryTypeException.class)
+	public void testSetPersonTypeAccountEntryUserThrowsAccountEntryTypeException()
+		throws Exception {
+
+		_accountEntryUserRelLocalService.setPersonTypeAccountEntryUser(
+			_accountEntry.getAccountEntryId(), _user.getUserId());
 	}
 
 	@Test
@@ -432,6 +519,38 @@ public class AccountEntryUserRelLocalServiceTest {
 			_userInfo.suffixId);
 	}
 
+	private AccountEntryUserRel _addPersonTypeAccountEntryUserRel(
+			long accountEntryId)
+		throws Exception {
+
+		UserInfo userInfo = new UserInfo();
+
+		return _accountEntryUserRelLocalService.
+			addPersonTypeAccountEntryUserRel(
+				accountEntryId, TestPropsValues.getUserId(),
+				userInfo.screenName, userInfo.emailAddress, userInfo.locale,
+				userInfo.firstName, userInfo.middleName, userInfo.lastName,
+				userInfo.prefixId, userInfo.suffixId);
+	}
+
+	private void _assertPersonTypeAccountEntryUser(
+			long[] expectedUserIds, long accountEntryId)
+		throws Exception {
+
+		long[] actualUserIds = ListUtil.toLongArray(
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(accountEntryId),
+			AccountEntryUserRelModel::getAccountUserId);
+
+		Assert.assertEquals(
+			Arrays.toString(actualUserIds), expectedUserIds.length,
+			actualUserIds.length);
+
+		for (int i = 0; i < expectedUserIds.length; i++) {
+			Assert.assertEquals(expectedUserIds[i], actualUserIds[i]);
+		}
+	}
+
 	private void _testAddAccountEntryUserRel2(
 			long accountEntryId, long expectedCompanyId)
 		throws Exception {
@@ -457,6 +576,30 @@ public class AccountEntryUserRelLocalServiceTest {
 
 		Assert.assertEquals(users.toString(), 1, users.size());
 		Assert.assertEquals(users.get(0), user);
+	}
+
+	private void _testDeleteAccountEntryUserRelsByAccountEntryId(
+			int expectedCount)
+		throws Exception {
+
+		List<AccountEntryUserRel> accountEntryUserRels =
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountEntryId(
+					_accountEntry.getAccountEntryId());
+
+		Assert.assertEquals(
+			accountEntryUserRels.toString(), expectedCount,
+			accountEntryUserRels.size());
+	}
+
+	private void _testSetPersonTypeAccountEntryUser(
+			long[] expectedUserIds, long accountEntryId, long userId)
+		throws Exception {
+
+		_accountEntryUserRelLocalService.setPersonTypeAccountEntryUser(
+			accountEntryId, userId);
+
+		_assertPersonTypeAccountEntryUser(expectedUserIds, accountEntryId);
 	}
 
 	@DeleteAfterTestRun

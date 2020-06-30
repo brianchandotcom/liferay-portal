@@ -18,7 +18,6 @@ AUI.add(
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var FacetUtil = Liferay.Search.FacetUtil;
-		var Language = Liferay.Language;
 		var Util = Liferay.Util;
 
 		var ModifiedFacetFilter = function (config) {
@@ -62,7 +61,7 @@ AUI.add(
 				A.mix(
 					DEFAULTS_FORM_VALIDATOR.STRINGS,
 					{
-						[dateRangeRuleName]: Language.get(
+						[dateRangeRuleName]: Liferay.Language.get(
 							'search-custom-range-invalid-date-range'
 						),
 					},

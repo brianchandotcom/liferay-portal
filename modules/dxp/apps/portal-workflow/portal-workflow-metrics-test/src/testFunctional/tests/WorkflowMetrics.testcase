@@ -1578,6 +1578,97 @@ definition {
 			slaBreachedValue = "0 (0%)");
 	}
 
+	@description = "LRQA-53661 Automate LPS-89119: [SLA] Define the SLA timer calendar"
+	@priority = "5"
+	test VerifySLACustomCalendar {
+
+		var appName = "com.liferay.portal.workflow.metrics.calendar.integration";
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.verifyCustomCalendarExistOrNot(
+			calendar = "",
+			durationMessage = "Define the SLA duration. By default, the SLA timer runs 24 hours per day, 7 days per week.");
+
+		Click(locator1 = "Button#CANCEL");
+
+		GlobalMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "App Manager");
+
+		AppManager.uploadAppCP(
+			appName = "${appName}",
+			warFileName = "${appName}.jar");
+
+		AppManager.viewAppCP(
+			appName = "Liferay Portal Workflow Metrics Calendar Integration",
+			appStatus = "Active",
+			searchTerm = "calendar");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "Single Approver");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "Single Approver");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.verifyCustomCalendarExistOrNot(
+			calendar = "Calendar",
+			durationMessage = "Define the SLA duration and calendar format.");
+
+		AssertTextEquals(
+			locator1 = "WorkflowMetricsSLA#SLA_DEFINITION_CALENDAR_SELECT_VALUE_DEFAULT",
+			value1 = "Dummy");
+
+		WorkflowMetrics.fillSLAForm(
+			slaDefinitionCalendar = "24/7 (System Default)",
+			slaDefinitionDays = "1",
+			slaDefinitionDescription = "SLA Description",
+			slaDefinitionEnd = "Process Ends: Approved",
+			slaDefinitionHours = "1000",
+			slaDefinitionName = "SLA Name",
+			slaDefinitionStart = "Process Begins");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		WorkflowMetrics.verifySLARecordHead(slaRecordDurationHead = "Duration");
+
+		AssertElementPresent(
+			key_slaTitle = "SLA Name",
+			locator1 = "WorkflowMetricsSLA#SLA_RECORD_TITLE");
+
+		GlobalMenu.gotoPortlet(
+			category = "Workflow",
+			panel = "Applications",
+			portlet = "Process Builder");
+
+		Workflow.uploadDefinition(
+			workflowDefinitionFile = "workflow_definition_xss.xml",
+			workflowDefinitionTitle = "New Uploaded Definition");
+
+		WorkflowMetrics.goToWorkflowProcessMetrics(workflowProcessName = "New Uploaded Definition");
+
+		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_NO_SLA_MESSAGE");
+
+		WorkflowMetrics.goToWorkflowSLASettings(workflowProcessName = "New Uploaded Definition");
+
+		Click(locator1 = "WorkflowMetricsSLA#ADD_NEW_SLA_BUTTON");
+
+		WorkflowMetrics.verifyCustomCalendarExistOrNot(
+			calendar = "Calendar",
+			durationMessage = "Define the SLA duration and calendar format.");
+	}
+
 	@description = "LRQA-53654 Automate LPS-88968: [Reports] View the summary of all pending items and what's their SLA status"
 	@priority = "5"
 	test ViewPendingItems {

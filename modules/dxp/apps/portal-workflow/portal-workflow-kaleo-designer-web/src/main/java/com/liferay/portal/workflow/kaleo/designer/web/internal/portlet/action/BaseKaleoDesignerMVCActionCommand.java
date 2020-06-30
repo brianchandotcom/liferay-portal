@@ -15,12 +15,14 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -134,7 +136,15 @@ public abstract class BaseKaleoDesignerMVCActionCommand
 	}
 
 	protected Throwable getRootThrowable(Throwable throwable) {
-		if (throwable.getCause() == null) {
+		if ((throwable.getCause() == null) ||
+			(!(throwable.getCause() instanceof IllegalArgumentException) &&
+			 !(throwable.getCause() instanceof NoSuchRoleException) &&
+			 !(throwable.getCause() instanceof
+				 PrincipalException.MustBeCompanyAdmin) &&
+			 !(throwable.getCause() instanceof
+				 PrincipalException.MustBeOmniadmin) &&
+			 !(throwable.getCause() instanceof WorkflowException))) {
+
 			return throwable;
 		}
 

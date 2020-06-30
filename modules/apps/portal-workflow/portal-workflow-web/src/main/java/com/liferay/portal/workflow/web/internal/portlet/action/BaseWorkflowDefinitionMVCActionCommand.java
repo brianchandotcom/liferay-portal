@@ -79,20 +79,8 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 
 			hideDefaultErrorMessage(actionRequest);
 
-			if (rootThrowable instanceof IllegalArgumentException ||
-				rootThrowable instanceof NoSuchRoleException ||
-				rootThrowable instanceof
-					PrincipalException.MustBeCompanyAdmin ||
-				rootThrowable instanceof PrincipalException.MustBeOmniadmin) {
-
-				SessionErrors.add(
-					actionRequest, rootThrowable.getClass(), rootThrowable);
-			}
-			else {
-				SessionErrors.add(
-					actionRequest, workflowException.getClass(),
-					workflowException);
-			}
+			SessionErrors.add(
+				actionRequest, rootThrowable.getClass(), rootThrowable);
 
 			return false;
 		}
@@ -147,7 +135,15 @@ public abstract class BaseWorkflowDefinitionMVCActionCommand
 	}
 
 	protected Throwable getRootThrowable(Throwable throwable) {
-		if (throwable.getCause() == null) {
+		if ((throwable.getCause() == null) ||
+			(!(throwable.getCause() instanceof IllegalArgumentException) &&
+			 !(throwable.getCause() instanceof NoSuchRoleException) &&
+			 !(throwable.getCause() instanceof
+				 PrincipalException.MustBeCompanyAdmin) &&
+			 !(throwable.getCause() instanceof
+				 PrincipalException.MustBeOmniadmin) &&
+			 !(throwable.getCause() instanceof WorkflowException))) {
+
 			return throwable;
 		}
 

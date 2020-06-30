@@ -22,13 +22,12 @@
 	left: 50%;
 	max-width: 350px;
 	position: absolute;
-	top: 10%;
-	transform: translateX(-40%);
+	transform: translate(-40%, 10%);
 	z-index: 1;
 }
 
 .no-categories-selected {
-	top: 18%;
+	transform: translate(-40%, 100%);
 }
 
 .recharts-wrapper .recharts-cartesian-grid-vertical line:not(:last-child) {

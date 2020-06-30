@@ -23,11 +23,8 @@ JournalArticle article = journalDisplayContext.getArticle();
 
 JournalEditArticleDisplayContext journalEditArticleDisplayContext = new JournalEditArticleDisplayContext(request, liferayPortletResponse, article);
 
-String articleResourcePrimKey = ParamUtil.getString(request, "articleResourcePrimKey");
-String groupId = ParamUtil.getString(request, "groupId");
-String articleId = ParamUtil.getString(request, "articleId");
-double version = ParamUtil.getDouble(request, "version");
-String articleTitle = ParamUtil.getString(request, "articleTitle");
+String articleResourcePrimKey = String.valueOf(article.getResourcePrimKey());
+String articleTitle = article.getTitle();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -44,9 +41,9 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 
 <portlet:actionURL name="/journal/import_translation" var="importTranslationURL">
 	<portlet:param name="articleResourcePrimKey" value="<%= articleResourcePrimKey %>" />
-	<portlet:param name="groupId" value="<%= groupId %>" />
-	<portlet:param name="articleId" value="<%= articleId %>" />
-	<portlet:param name="version" value="<%= String.valueOf(version) %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+	<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+	<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 </portlet:actionURL>
 
 <aui:form action="<%= importTranslationURL %>" name="fm">

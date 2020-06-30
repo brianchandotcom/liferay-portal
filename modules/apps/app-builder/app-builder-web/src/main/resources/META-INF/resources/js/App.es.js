@@ -27,7 +27,11 @@ import ViewObject from './pages/object/ViewObject.es';
 export const AppNavigationBar = () => {
 	const {showNativeObjectsTab} = useContext(AppContext);
 
-	return showNativeObjectsTab ? (
+	if (!showNativeObjectsTab) {
+		return null;
+	}
+
+	return (
 		<NavigationBar
 			tabs={[
 				{
@@ -42,7 +46,7 @@ export const AppNavigationBar = () => {
 				},
 			]}
 		/>
-	) : null;
+	);
 };
 
 export default (props) => (

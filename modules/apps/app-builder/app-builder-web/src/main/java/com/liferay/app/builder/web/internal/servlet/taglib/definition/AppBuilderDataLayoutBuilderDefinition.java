@@ -30,7 +30,7 @@ public class AppBuilderDataLayoutBuilderDefinition
 
 	@Override
 	public boolean allowFieldSets() {
-		return true;
+		return false;
 	}
 
 	@Override

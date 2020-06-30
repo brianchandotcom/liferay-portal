@@ -86,7 +86,7 @@ export default ({
 					permissions,
 				}));
 			})
-			.catch((_) =>
+			.catch(() =>
 				setState((prevState) => ({
 					...prevState,
 					isLoading: false,

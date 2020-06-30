@@ -40,7 +40,7 @@ export default ({newCustomObject}) => {
 		}
 	}, [dataDefinition.defaultLanguageId, onEditingLanguageIdChange]);
 
-	const {basePortletURL} = useContext(AppContext);
+	const {basePortletURL, showTranslationManager} = useContext(AppContext);
 	const listUrl = `${basePortletURL}/#/custom-object/${dataDefinitionId}/form-views`;
 
 	const onDataLayoutNameChange = ({target: {value}}) => {
@@ -117,14 +117,16 @@ export default ({newCustomObject}) => {
 
 	return (
 		<UpperToolbar>
-			<UpperToolbar.Group>
-				<TranslationManager
-					defaultLanguageId={defaultLanguageId}
-					editingLanguageId={editingLanguageId}
-					onEditingLanguageIdChange={onEditingLanguageIdChange}
-					translatedLanguageIds={dataLayout.name}
-				/>
-			</UpperToolbar.Group>
+			{showTranslationManager && (
+				<UpperToolbar.Group>
+					<TranslationManager
+						defaultLanguageId={defaultLanguageId}
+						editingLanguageId={editingLanguageId}
+						onEditingLanguageIdChange={onEditingLanguageIdChange}
+						translatedLanguageIds={dataLayout.name}
+					/>
+				</UpperToolbar.Group>
+			)}
 
 			<UpperToolbar.Input
 				onInput={onDataLayoutNameChange}

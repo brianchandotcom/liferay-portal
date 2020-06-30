@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.ExpandoTableSearchFixture;
@@ -105,7 +107,8 @@ public class OrganizationIndexerIndexedFieldsTest {
 		_groups = groupSearchFixture.getGroups();
 
 		_indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory,
+			documentBuilderFactory);
 
 		_organizationFixture = organizationFixture;
 		_organizations = organizationFixture.getOrganizations();
@@ -172,6 +175,9 @@ public class OrganizationIndexerIndexedFieldsTest {
 	protected CountryService countryService;
 
 	@Inject
+	protected DocumentBuilderFactory documentBuilderFactory;
+
+	@Inject
 	protected ExpandoColumnLocalService expandoColumnLocalService;
 
 	@Inject
@@ -204,6 +210,9 @@ public class OrganizationIndexerIndexedFieldsTest {
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	@Inject
+	protected UIDFactory uidFactory;
+
+	@Inject
 	protected UserLocalService userLocalService;
 
 	private Map<String, Object> _expectedFieldValues(Organization organization)
@@ -211,9 +220,7 @@ public class OrganizationIndexerIndexedFieldsTest {
 
 		Map<String, String> map = new HashMap<>();
 
-		_indexedFieldsFixture.populateUID(
-			Organization.class.getName(), organization.getOrganizationId(),
-			map);
+		_indexedFieldsFixture.populateUID(organization, map);
 
 		_populateDates(organization, map);
 		_populateRoles(organization, map);

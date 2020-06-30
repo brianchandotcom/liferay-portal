@@ -444,7 +444,9 @@ public class ComboServlet extends HttpServlet {
 
 		String resourcePath = getResourcePath(modulePath);
 
-		if (!PortalUtil.isValidResourceId(resourcePath)) {
+		if (!StringUtil.startsWith(resourcePath, CharPool.SLASH) ||
+			!PortalUtil.isValidResourceId(resourcePath)) {
+
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(

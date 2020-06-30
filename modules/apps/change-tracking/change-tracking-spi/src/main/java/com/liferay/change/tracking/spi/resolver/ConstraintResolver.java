@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.spi.resolver;
 
-import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
@@ -37,7 +37,7 @@ public interface ConstraintResolver<T extends CTModel<T>> {
 	public String[] getUniqueIndexColumnNames();
 
 	public void resolveConflict(
-			ConstraintResolverHelper<T> constraintResolverHelper)
+			ConstraintResolverContext<T> constraintResolverContext)
 		throws PortalException;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.journal.internal.change.tracking.resolver;
 
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
-import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.comparator.ArticleVersionComparator;
@@ -66,12 +66,12 @@ public class JournalArticleVersionConstraintResolver
 
 	@Override
 	public void resolveConflict(
-			ConstraintResolverHelper<JournalArticle> constraintResolverHelper)
+			ConstraintResolverContext<JournalArticle> constraintResolverContext)
 		throws PortalException {
 
-		JournalArticle ctArticle = constraintResolverHelper.getSourceCTModel();
+		JournalArticle ctArticle = constraintResolverContext.getSourceCTModel();
 
-		double latestVersion = constraintResolverHelper.getInTarget(
+		double latestVersion = constraintResolverContext.getInTarget(
 			() -> {
 				JournalArticle latestProductionArticle =
 					_journalArticleLocalService.getLatestArticle(

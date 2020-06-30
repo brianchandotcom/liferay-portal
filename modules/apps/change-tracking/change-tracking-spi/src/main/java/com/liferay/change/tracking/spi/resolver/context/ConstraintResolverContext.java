@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.change.tracking.spi.resolver.helper;
+package com.liferay.change.tracking.spi.resolver.context;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
@@ -23,7 +23,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Preston Crary
  */
 @ProviderType
-public interface ConstraintResolverHelper<T extends CTModel<T>> {
+public interface ConstraintResolverContext<T extends CTModel<T>> {
 
 	public <R, E extends Throwable> R getInTarget(
 			UnsafeSupplier<R, E> unsafeSupplier)

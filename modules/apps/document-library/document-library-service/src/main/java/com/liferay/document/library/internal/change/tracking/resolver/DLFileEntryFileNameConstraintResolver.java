@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.change.tracking.resolver;
 
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
-import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -59,7 +59,7 @@ public class DLFileEntryFileNameConstraintResolver
 
 	@Override
 	public void resolveConflict(
-		ConstraintResolverHelper<DLFileEntry> constraintResolverHelper) {
+		ConstraintResolverContext<DLFileEntry> constraintResolverContext) {
 	}
 
 }

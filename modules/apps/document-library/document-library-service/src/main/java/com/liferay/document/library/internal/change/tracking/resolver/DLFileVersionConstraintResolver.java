@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.change.tracking.resolver;
 
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
-import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -82,13 +82,13 @@ public class DLFileVersionConstraintResolver
 
 	@Override
 	public void resolveConflict(
-			ConstraintResolverHelper<DLFileVersion> constraintResolverHelper)
+			ConstraintResolverContext<DLFileVersion> constraintResolverContext)
 		throws PortalException {
 
 		DLFileVersion dlFileVersion =
-			constraintResolverHelper.getSourceCTModel();
+			constraintResolverContext.getSourceCTModel();
 
-		List<String> latestVersionParts = constraintResolverHelper.getInTarget(
+		List<String> latestVersionParts = constraintResolverContext.getInTarget(
 			() -> {
 				DLFileVersion latestFileVersion =
 					_dlFileVersionLocalService.getLatestFileVersion(
@@ -115,7 +115,7 @@ public class DLFileVersionConstraintResolver
 			new VersionNumberComparator());
 
 		for (DLFileVersion fileVersion : fileVersions) {
-			if (!constraintResolverHelper.isSourceCTModel(fileVersion)) {
+			if (!constraintResolverContext.isSourceCTModel(fileVersion)) {
 				previousFileVersion = fileVersion;
 
 				continue;

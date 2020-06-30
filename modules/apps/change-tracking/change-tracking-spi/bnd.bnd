@@ -9,4 +9,4 @@ Export-Package:\
 	com.liferay.change.tracking.spi.reference,\
 	com.liferay.change.tracking.spi.reference.builder,\
 	com.liferay.change.tracking.spi.resolver,\
-	com.liferay.change.tracking.spi.resolver.helper
+	com.liferay.change.tracking.spi.resolver.context

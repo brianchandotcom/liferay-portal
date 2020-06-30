@@ -15,7 +15,7 @@
 package com.liferay.journal.internal.change.tracking.resolver;
 
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
-import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -60,7 +60,7 @@ public class JournalFolderNameConstraintResolver
 
 	@Override
 	public void resolveConflict(
-		ConstraintResolverHelper<JournalFolder> constraintResolverHelper) {
+		ConstraintResolverContext<JournalFolder> constraintResolverContext) {
 	}
 
 	@Reference

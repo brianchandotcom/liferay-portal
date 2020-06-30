@@ -17,7 +17,7 @@ package com.liferay.change.tracking.internal.conflict;
 import com.liferay.change.tracking.conflict.ConflictInfo;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.internal.CTRowUtil;
-import com.liferay.change.tracking.internal.resolver.ConstraintResolverHelperImpl;
+import com.liferay.change.tracking.internal.resolver.ConstraintResolverContextImpl;
 import com.liferay.change.tracking.internal.resolver.ConstraintResolverKey;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
@@ -178,8 +178,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			return;
 		}
 
-		ConstraintResolverHelperImpl<T> constraintResolverHelperImpl =
-			new ConstraintResolverHelperImpl<>(
+		ConstraintResolverContextImpl<T> constraintResolverContextImpl =
+			new ConstraintResolverContextImpl<>(
 				_ctService, _sourceCTCollectionId, _targetCTCollectionId);
 
 		Set<Map.Entry<Long, Long>> attemptedPrimaryKeys = new HashSet<>();
@@ -189,10 +189,10 @@ public class CTConflictChecker<T extends CTModel<T>> {
 		while (!nextPrimaryKeys.isEmpty()) {
 			Map.Entry<Long, Long> currentPrimaryKeys = nextPrimaryKeys.get(0);
 
-			constraintResolverHelperImpl.setPrimaryKeys(
+			constraintResolverContextImpl.setPrimaryKeys(
 				currentPrimaryKeys.getKey(), currentPrimaryKeys.getValue());
 
-			constraintResolver.resolveConflict(constraintResolverHelperImpl);
+			constraintResolver.resolveConflict(constraintResolverContextImpl);
 
 			Session session = ctPersistence.getCurrentSession();
 

@@ -14,7 +14,7 @@
 
 package com.liferay.change.tracking.internal.resolver;
 
-import com.liferay.change.tracking.spi.resolver.helper.ConstraintResolverHelper;
+import com.liferay.change.tracking.spi.resolver.context.ConstraintResolverContext;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -24,10 +24,10 @@ import com.liferay.portal.kernel.service.change.tracking.CTService;
 /**
  * @author Preston Crary
  */
-public class ConstraintResolverHelperImpl<T extends CTModel<T>>
-	implements ConstraintResolverHelper<T> {
+public class ConstraintResolverContextImpl<T extends CTModel<T>>
+	implements ConstraintResolverContext<T> {
 
-	public ConstraintResolverHelperImpl(
+	public ConstraintResolverContextImpl(
 		CTService<T> ctService, long sourceCTCollectionId,
 		long targetCTCollectionId) {
 

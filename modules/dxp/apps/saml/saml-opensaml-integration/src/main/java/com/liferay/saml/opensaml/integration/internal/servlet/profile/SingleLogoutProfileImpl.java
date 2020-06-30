@@ -937,6 +937,7 @@ public class SingleLogoutProfileImpl
 
 		outboundMessageContext.addSubcontext(samlSelfEntityContext);
 		outboundMessageContext.addSubcontext(samlPeerEntityContext);
+		outboundMessageContext.addSubcontext(samlBindingContext);
 
 		sendSamlMessage(messageContext, httpServletResponse);
 	}

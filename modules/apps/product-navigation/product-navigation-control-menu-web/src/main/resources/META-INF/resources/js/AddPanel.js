@@ -50,6 +50,7 @@ const AddPanel = ({
 	languageDirection,
 	languageId,
 	namespace,
+	plid,
 	portletNamespace,
 	widgets: widgetsItems,
 }) => {
@@ -116,6 +117,7 @@ const AddPanel = ({
 					displayGrid,
 					getContentsURL,
 					namespace,
+					plid,
 					portletNamespace,
 					setDisplayGrid,
 					setWidgets,

@@ -25,7 +25,11 @@ import {useDrag, useDrop} from 'react-dnd';
 import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES, updateUsedWidget} from './AddPanel';
-import {useSetWidgetsContext, useWidgetsContext} from './AddPanelContext';
+import {
+	usePlidContext,
+	useSetWidgetsContext,
+	useWidgetsContext,
+} from './AddPanelContext';
 
 const DROP_OVER_CLASS = 'yui3-dd-drop-over';
 const POSITION = {
@@ -139,6 +143,7 @@ export function useDropTarget(targetItem) {
 
 	const setWidgets = useSetWidgetsContext();
 	const widgets = useWidgetsContext();
+	const plid = usePlidContext();
 
 	useEffect(() => {
 		const handleWindowScroll = () => {
@@ -164,7 +169,7 @@ export function useDropTarget(targetItem) {
 			if (!item.disabled) {
 				dropTargetColumn.classList.remove(DROP_OVER_CLASS);
 
-				addPortlet({item, targetItem, targetPosition});
+				addPortlet({item, plid, targetItem, targetPosition});
 
 				if (!item.data.instanceable) {
 					const updatedWidgets = updateUsedWidget({
@@ -243,7 +248,7 @@ const addLoadingAnimation = (targetItem, targetPosition) => {
 	return loading;
 };
 
-export const addPortlet = ({item, targetItem, targetPosition}) => {
+export const addPortlet = ({item, plid, targetItem, targetPosition}) => {
 	const loading = addLoadingAnimation(targetItem, targetPosition);
 
 	openToast({
@@ -259,7 +264,7 @@ export const addPortlet = ({item, targetItem, targetPosition}) => {
 	Liferay.Portlet.add({
 		beforePortletLoaded: () => null,
 		placeHolder: loading,
-		plid: themeDisplay.getPlid(),
+		plid,
 		portletData,
 		portletId: item.data.portletId,
 		portletItemId: '',

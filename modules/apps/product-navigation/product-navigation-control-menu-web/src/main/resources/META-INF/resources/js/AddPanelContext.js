@@ -20,6 +20,7 @@ const INITIAL_STATE = {
 	displayGrid: false,
 	getContentsURL: null,
 	namespace: null,
+	plid: null,
 	portletNamespace: null,
 	setDisplayGrid: () => null,
 	setWidgets: () => null,
@@ -50,6 +51,9 @@ const useNamespaceContext = () => {
 	return useContext(AddPanelContext).namespace;
 };
 
+const usePlidContext = () => {
+	return useContext(AddPanelContext).plid;
+};
 const usePortletNamespaceContext = () => {
 	return useContext(AddPanelContext).portletNamespace;
 };
@@ -74,6 +78,7 @@ export {
 	useDisplayGridContext,
 	useGetContentsURLContext,
 	useNamespaceContext,
+	usePlidContext,
 	usePortletNamespaceContext,
 	useSetDisplayGridContext,
 	useWidgetsContext,

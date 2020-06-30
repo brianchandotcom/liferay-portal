@@ -19,16 +19,20 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 import {LAYOUT_DATA_ITEM_TYPES, updateUsedWidget} from './AddPanel';
-import {useSetWidgetsContext, useWidgetsContext} from './AddPanelContext';
+import {
+	usePlidContext,
+	useSetWidgetsContext,
+	useWidgetsContext,
+} from './AddPanelContext';
 import {addPortlet, useDragSymbol} from './useDragAndDrop';
 
 import 'product-navigation-control-menu/css/TabItem.scss';
 
-const addItem = (item, widgets, setWidgets) => {
+const addItem = ({item, plid, setWidgets, widgets}) => {
 	const targetItem = document.querySelector('.portlet-dropzone');
 
 	if (!item.used) {
-		addPortlet({item, targetItem});
+		addPortlet({item, plid, targetItem});
 
 		if (!item.data.instanceable) {
 			const updatedWidgets = updateUsedWidget({
@@ -43,6 +47,7 @@ const addItem = (item, widgets, setWidgets) => {
 export default function TabItem({item}) {
 	const setWidgets = useSetWidgetsContext();
 	const widgets = useWidgetsContext();
+	const plid = usePlidContext();
 
 	const isContent = item.type === LAYOUT_DATA_ITEM_TYPES.content;
 
@@ -80,7 +85,7 @@ export default function TabItem({item}) {
 				<ClayButton
 					className="btn-monospaced sidebar__add-panel__tab-item-add"
 					displayType="unstyled"
-					onClick={() => addItem(item, widgets, setWidgets)}
+					onClick={() => addItem({item, plid, setWidgets, widgets})}
 					small
 					title={item.name}
 				>

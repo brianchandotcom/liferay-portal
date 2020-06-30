@@ -96,6 +96,11 @@ public class BuildFactory {
 				url, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.equals("test-portal-fixpack-release")) {
+			return new PortalFixpackReleasePortalTopLevelBuild(
+				url, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.equals("test-portal-release")) {
 			return new PortalReleasePortalTopLevelBuild(
 				url, (TopLevelBuild)parentBuild);

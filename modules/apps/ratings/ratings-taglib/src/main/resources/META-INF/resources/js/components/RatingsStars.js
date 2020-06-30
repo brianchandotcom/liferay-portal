@@ -18,7 +18,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {useIsMounted} from 'frontend-js-react-web';
 import PropTypes from 'prop-types';
-import React, {useCallback, useState} from 'react';
+import React, {Fragment, useCallback, useState} from 'react';
 
 import Lang from '../utils/lang';
 
@@ -232,7 +232,99 @@ const RatingsStars = ({
 			</ClayLayout.ContentCol>
 		</ClayLayout.ContentRow>
 	) : (
-		'staked starts'
+		<fieldset className="rating ratings-stacked-stars ratings-stars">
+			<ClayLayout.ContentCol title={formatAverageScore(averageScore)}>
+				<span className="ratings-stars-average">
+					<span className="inline-item inline-item-before">
+						{starScores.map(({value}) => {
+							if (averageScore >= value) {
+								return (
+									<ClayIcon
+										className="ratings-stars-average-icon"
+										key={value}
+										symbol="star"
+									/>
+								);
+							}
+
+							return (
+								<ClayIcon
+									className="ratings-stars-average-icon"
+									key={value}
+									symbol="star-o"
+								/>
+							);
+						})}
+					</span>
+					<span className="inline-item ratings-stars-average-text">
+						{!!totalEntries &&
+							` (${totalEntries} ${
+								totalEntries === 1
+									? Liferay.Language.get('vote')
+									: Liferay.Language.get('votes')
+							})`}
+					</span>
+					<span className="sr-only">{getSrAverageMessage()}</span>
+				</span>
+			</ClayLayout.ContentCol>
+
+			<div>
+				<input
+					checked={score === 0}
+					className="sr-only"
+					id={`starDelete`}
+					name="rating"
+					onChange={() => {
+						handleOnClick();
+					}}
+					type="radio"
+					value={0}
+				/>
+
+				{starScores.map(({label, value}, index) => {
+					const srMessage =
+						index === 0
+							? Liferay.Language.get('rate-this-x-star-out-of-x')
+							: Liferay.Language.get(
+									'rate-this-x-stars-out-of-x'
+							  );
+					const full = label <= score;
+
+					return (
+						<Fragment key={value}>
+							<input
+								checked={label === score}
+								className="sr-only"
+								id={`star${label}`}
+								name="rating"
+								onChange={() => {
+									handleOnClick(index);
+								}}
+								type="radio"
+								value={value}
+							/>
+							<label htmlFor={`star${label}`}>
+								<ClayIcon symbol={full ? 'star' : 'star-o'} />
+								<span className="sr-only">
+									{Lang.sub(srMessage, [
+										label,
+										numberOfStars,
+									])}
+								</span>
+							</label>
+						</Fragment>
+					);
+				})}
+
+				<label
+					className="lfr-portal-tooltip"
+					htmlFor={`starDelete`}
+					title={Liferay.Language.get('delete')}
+				>
+					<ClayIcon symbol="times-circle" />
+				</label>
+			</div>
+		</fieldset>
 	);
 };
 

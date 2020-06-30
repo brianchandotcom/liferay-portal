@@ -170,3 +170,22 @@
 .ratings-stars-dropdown {
 	min-width: auto;
 }
+
+.ratings-stacked-stars {
+	label {
+		color: $primary;
+		padding: 0.1875rem;
+	}
+
+	input:checked ~ label {
+		color: $secondary-l1;
+	}
+
+	input:checked + label {
+		color: $primary;
+	}
+
+	.ratings-stars-average-icon {
+		margin: -0.1em 0.1875rem 0;
+	}
+}

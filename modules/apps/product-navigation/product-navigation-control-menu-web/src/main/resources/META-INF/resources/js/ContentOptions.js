@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 import {
@@ -43,7 +44,7 @@ const OPTIONS = [
 	},
 ];
 
-const ContentOptions = ({onChangeSelect}) => {
+export default function ContentOptions({onChangeSelect}) {
 	const addContentsURLs = useAddContentsURLsContext();
 	const displayGrid = useDisplayGridContext();
 	const portletNamespace = usePortletNamespaceContext();
@@ -109,6 +110,8 @@ const ContentOptions = ({onChangeSelect}) => {
 			</ClayDropDown>
 		</div>
 	);
-};
+}
 
-export default ContentOptions;
+ContentOptions.propTypes = {
+	onChangeSelect: PropTypes.func,
+};

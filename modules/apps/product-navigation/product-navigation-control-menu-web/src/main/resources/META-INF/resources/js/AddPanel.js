@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -43,7 +44,7 @@ export const updateUsedWidget = ({item, used = true, widgets}) => {
 	});
 };
 
-const AddPanel = ({
+export default function AddPanel({
 	addContentsURLs,
 	contents,
 	getContentsURL,
@@ -53,7 +54,7 @@ const AddPanel = ({
 	plid,
 	portletNamespace,
 	widgets: widgetsItems,
-}) => {
+}) {
 	const [displayGrid, setDisplayGrid] = useState(false);
 	const [widgets, setWidgets] = useState(widgetsItems);
 
@@ -132,7 +133,7 @@ const AddPanel = ({
 			</AddPanelContextProvider>
 		</div>
 	);
-};
+}
 
 const normalizeWidget = (widget) => {
 	return {
@@ -166,4 +167,14 @@ export const normalizeContent = (content) => {
 	};
 };
 
-export default AddPanel;
+AddPanel.propTypes = {
+	addContentsURLs: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+	contents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+	getContentsURL: PropTypes.string.isRequired,
+	languageDirection: PropTypes.shape({}),
+	languageId: PropTypes.string.isRequired,
+	namespace: PropTypes.string.isRequired,
+	plid: PropTypes.string.isRequired,
+	portletNamespace: PropTypes.string.isRequired,
+	widgets: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};

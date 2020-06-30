@@ -13,6 +13,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import PropTypes from 'prop-types';
 import React, {useRef} from 'react';
 import {useDragLayer} from 'react-dnd';
 
@@ -69,3 +70,7 @@ export default function DragPreview({rtl}) {
 		</div>
 	);
 }
+
+DragPreview.propTypes = {
+	rtl: PropTypes.bool,
+};

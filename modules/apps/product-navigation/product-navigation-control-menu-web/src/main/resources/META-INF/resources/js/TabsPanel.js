@@ -13,6 +13,7 @@
  */
 
 import ClayTabs from '@clayui/tabs';
+import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
 import {usePortletNamespaceContext} from './AddPanelContext';
@@ -28,7 +29,7 @@ const useId = ({portletNamespace}) => {
 	]);
 };
 
-const TabsPanel = ({tabs}) => {
+export default function TabsPanel({tabs}) {
 	const portletNamespace = usePortletNamespaceContext();
 
 	const [activeTabId, setActiveTabId] = useState(0);
@@ -71,6 +72,14 @@ const TabsPanel = ({tabs}) => {
 			</ClayTabs.Content>
 		</>
 	);
-};
+}
 
-export default TabsPanel;
+TabsPanel.propTypes = {
+	tabs: PropTypes.arrayOf(
+		PropTypes.shape({
+			collections: PropTypes.arrayOf(PropTypes.shape({})),
+			id: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+		})
+	).isRequired,
+};

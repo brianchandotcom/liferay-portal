@@ -14,6 +14,7 @@
 
 import classNames from 'classnames';
 import {fetch, objectToFormData} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import 'product-navigation-control-menu/css/TabsPanel.scss';
@@ -163,3 +164,15 @@ const TabsContent = ({tab}) => {
 };
 
 export default TabsContent;
+
+TabsContent.propTypes = {
+	collections: PropTypes.arrayOf(
+		PropTypes.shape({
+			children: PropTypes.arrayOf().isRequired,
+			collectionId: PropTypes.string.isRequired,
+			label: PropTypes.string.isRequired,
+		})
+	),
+	id: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired,
+};

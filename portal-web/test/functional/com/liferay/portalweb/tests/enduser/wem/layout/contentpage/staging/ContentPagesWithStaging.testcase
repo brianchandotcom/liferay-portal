@@ -297,6 +297,97 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-114174. Can create a Collection Page based on Collections or Collection Providers in Staging site."
+	@priority = "4"
+	test AddCollectionPageInLocalLiveStaging {
+		property osgi.module.configuration.file.names = "com.liferay.layout.admin.web.internal.configuration.CollectionLayoutsConfiguration";
+		property osgi.module.configurations = "enabled=B&quot;true&quot;";
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name-staging");
+
+		for (var i : list "3,2,1") {
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content ${i}",
+				webContentTitle = "Web Content Title ${i}");
+
+			PortletEntry.publish();
+		}
+
+		AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
+
+		AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Asset List Test");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Dynamic Asset List Test",
+			pageName = "Content Collection Page Name",
+			tabName = "Collections");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ControlMenu#PAGE_TYPE",
+			value1 = "Collection Page");
+
+		AssertVisible(
+			key_elementHeader = "//div[contains(.,'Dynamic Asset List Test') and contains(@id,'fragment-')]",
+			key_position = "1",
+			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title ${i}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		PageEditor.gotoConfiguration(
+			elementType = "Collection Display",
+			fragmentName = "Collection Display");
+
+		AssertTextEquals(
+			key_fieldLabel = "Collection",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Dynamic Asset List Test");
+
+		SitePages.openPagesAdmin(siteURLKey = "test-site-name-staging");
+
+		ContentPages.addPublicCollectionPage(
+			collectionName = "Most Viewed Assets",
+			pageName = "Content Collection Page Name 2",
+			tabName = "Collection Providers");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "ControlMenu#PAGE_TYPE",
+			value1 = "Collection Page");
+
+		AssertVisible(
+			key_elementHeader = "//div[contains(.,'Most Viewed Assets') and contains(@id,'fragment-')]",
+			key_position = "1",
+			locator1 = "PageEditor#CONTAINER_CONTAINER_NESTED_ELEMENT");
+
+		for (var i : list "1,2,3") {
+			AssertVisible(
+				key_colPosition = "1",
+				key_entryTitle = "Web Content Title ${i}",
+				key_fragmentName = "Collection Display",
+				key_rowPosition = "${i}",
+				locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+		}
+
+		PageEditor.gotoConfiguration(
+			elementType = "Collection Display",
+			fragmentName = "Collection Display");
+
+		AssertTextEquals(
+			key_fieldLabel = "Collection",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "Most Viewed Assets");
+	}
+
 	@description = "Published content pages should remain if staging is deactivated."
 	@priority = "4"
 	test DeactivateStagingAfterPublish {

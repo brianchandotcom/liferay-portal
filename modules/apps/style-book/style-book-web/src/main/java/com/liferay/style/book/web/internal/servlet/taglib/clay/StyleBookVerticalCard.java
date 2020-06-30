@@ -19,6 +19,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.soy.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 import com.liferay.style.book.web.internal.servlet.taglib.util.StyleBookEntryActionDropdownItemsProvider;
@@ -43,6 +45,9 @@ public class StyleBookVerticalCard
 		_styleBookEntry = (StyleBookEntry)baseModel;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -67,6 +72,11 @@ public class StyleBookVerticalCard
 	}
 
 	@Override
+	public String getImageSrc() {
+		return _styleBookEntry.getImagePreviewURL(_themeDisplay);
+	}
+
+	@Override
 	public String getTitle() {
 		return _styleBookEntry.getName();
 	}
@@ -74,5 +84,6 @@ public class StyleBookVerticalCard
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final StyleBookEntry _styleBookEntry;
+	private final ThemeDisplay _themeDisplay;
 
 }

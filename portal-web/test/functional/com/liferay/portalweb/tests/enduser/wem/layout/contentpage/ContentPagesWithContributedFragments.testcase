@@ -594,6 +594,148 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-112360. The asset entries should be ordered by ratings from high to low in Collection Display when select Highest Rated Assets as Collection Provider."
+	@priority = "5"
+	test DisplayHighestRatedAssetsInCollectionDisplay {
+		task ("Add three Web Content Articles based on Basic Web Content") {
+			for (var entryTitle : list "First Web Content,Second Web Content,Third Web Content") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content",
+					groupName = "Test Site Name",
+					title = "${entryTitle}");
+			}
+		}
+
+		task ("Add a Collection Display to page and Select Highest Rated Assets Collection Providers") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Highest Rated Assets");
+		}
+
+		task ("Add a Heading to Collection Display and Map Title of collection items to editable field") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Basic Components",
+				entryTitle = "First Web Content",
+				fragmentName = "Heading");
+
+			PageEditorMapping.mapEditableFieldToCollectionItems(
+				field = "Title",
+				fragmentName = "Heading",
+				id = "element-text");
+		}
+
+		task ("Assert the title of collection items are respectively shown in each cell") {
+			var n = "1";
+
+			for (var title : list "Third Web Content,Second Web Content,First Web Content") {
+				AssertTextEquals(
+					key_colPosition = "1",
+					key_element = "//div[contains(@class,'page-editor__topper') and contains(.,'Heading')]//*[contains(@data-lfr-editable-id,'element-text')]",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_CELL_NESTED_ELEMENT",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Add a Content Ratings to Collection Display") {
+			PageEditor.addFragmentToCollectionDisplay(
+				collectionName = "Content Display",
+				fragmentName = "Content Ratings",
+				targetFragmentName = "Heading");
+
+			for (var i : list "1,2,3") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_RATING_STAR_EMPTY");
+
+				AssertVisible(
+					key_colPosition = "1",
+					key_rowPosition = "${i}",
+					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR");
+			}
+		}
+
+		task ("Rate Third Web Content as 1, Second Web Content as 3, First Web Content as 5") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			Ratings.rateStarCollectionItem(
+				colPosition = "1",
+				ratingStarCount = "1 star",
+				rowPosition = "1");
+
+			Ratings.rateStarCollectionItem(
+				colPosition = "2",
+				ratingStarCount = "3 stars",
+				rowPosition = "1");
+
+			Ratings.rateStarCollectionItem(
+				colPosition = "3",
+				ratingStarCount = "5 stars",
+				rowPosition = "1");
+		}
+
+		task ("Assert the display order of collection items") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var title : list "First Web Content,Second Web Content,Third Web Content") {
+				AssertTextEquals(
+					key_colPosition = "${n}",
+					key_fragmentName = "heading",
+					key_rowPosition = "1",
+					locator1 = "Fragment#CONTRIBUTED_FRAGMENT_INLINE_CONTENT_IN_COLLECTION_DISPLAY",
+					value1 = "${title}");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Assert ratings of collection items") {
+			var n = "1";
+
+			for (var ratingStarCount : list "5 stars,3 stars,1 star") {
+				AssertElementPresent(
+					key_colPosition = "${n}",
+					key_rowPosition = "1",
+					key_ratingStarCount = "${ratingStarCount}",
+					locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
+
+				var n = ${n} + 1;
+			}
+
+			var n = "1";
+
+			for (var averageStarCount : list "5.0,3.0,1.0") {
+				AssertTextEquals.assertPartialText(
+					key_colPosition = "${n}",
+					key_rowPosition = "1",
+					locator1 = "PageEditor#COLLECTION_ITEM_AVERAGE_STAR_RESULT",
+					value1 = "${averageStarCount}");
+
+				var n = ${n} + 1;
+			}
+		}
+	}
+
 	@description = "This is a use case for LPS-112360. The asset entries should be ordered by view count from high to low in Collection Display when select Most Viewed Assets as Collection Provider."
 	@priority = "5"
 	test DisplayMostViewedAssetsInCollectionDisplay {

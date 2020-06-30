@@ -202,14 +202,20 @@ class LayoutProvider extends Component {
 			if (page.localizedDescription[editingLanguageId]) {
 				description = page.localizedDescription[editingLanguageId];
 			}
-			else if (page.localizedDescription[defaultLanguageId]) {
+			else if (
+				page.localizedDescription[defaultLanguageId] &&
+				page.localizedDescription[editingLanguageId] === undefined
+			) {
 				description = page.localizedDescription[defaultLanguageId];
 			}
 
 			if (page.localizedTitle[editingLanguageId]) {
 				title = page.localizedTitle[editingLanguageId];
 			}
-			else if (page.localizedTitle[defaultLanguageId]) {
+			else if (
+				page.localizedTitle[defaultLanguageId] &&
+				page.localizedTitle[editingLanguageId] === undefined
+			) {
 				title = page.localizedTitle[defaultLanguageId];
 			}
 

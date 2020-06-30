@@ -49,6 +49,9 @@ const props = {
 		},
 		{label: 'Field 3', name: 'field3', type: 'radio'},
 	],
+	locale: {
+		language: 'en',
+	},
 };
 
 describe('App', () => {

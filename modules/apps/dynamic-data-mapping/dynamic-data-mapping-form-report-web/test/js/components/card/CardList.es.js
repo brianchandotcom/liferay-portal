@@ -75,6 +75,9 @@ const props = {
 			type: 'date',
 		},
 	],
+	locale: {
+		language: 'en',
+	},
 };
 
 describe('CardList', () => {

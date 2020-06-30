@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -94,7 +96,8 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 
 		_groups = groupSearchFixture.getGroups();
 		_indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory,
+			documentBuilderFactory);
 	}
 
 	@Test
@@ -155,6 +158,9 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 	protected AssetVocabularyService assetVocabularyService;
 
 	@Inject
+	protected DocumentBuilderFactory documentBuilderFactory;
+
+	@Inject
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
 
 	@Inject
@@ -165,6 +171,9 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 
 	@Inject
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UIDFactory uidFactory;
 
 	protected UserSearchFixture userSearchFixture;
 
@@ -217,8 +226,7 @@ public class AssetCategoryIndexerIndexedFieldsTest {
 			"treePath", assetCategory.getTreePath()
 		).build();
 
-		_indexedFieldsFixture.populateUID(
-			AssetCategory.class.getName(), assetCategory.getCategoryId(), map);
+		_indexedFieldsFixture.populateUID(assetCategory, map);
 
 		_populateDates(assetCategory, map);
 		_populateRoles(assetCategory, map);

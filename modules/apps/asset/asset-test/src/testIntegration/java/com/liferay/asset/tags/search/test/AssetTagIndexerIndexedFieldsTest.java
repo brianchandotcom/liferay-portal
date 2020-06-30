@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -95,7 +97,8 @@ public class AssetTagIndexerIndexedFieldsTest {
 		_groups = groupSearchFixture.getGroups();
 
 		_indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory,
+			documentBuilderFactory);
 
 		_users = userSearchFixture.getUsers();
 	}
@@ -151,6 +154,9 @@ public class AssetTagIndexerIndexedFieldsTest {
 	@Inject
 	protected AssetTagLocalService assetTagLocalService;
 
+	@Inject
+	protected DocumentBuilderFactory documentBuilderFactory;
+
 	@Inject(
 		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetTag"
 	)
@@ -167,6 +173,9 @@ public class AssetTagIndexerIndexedFieldsTest {
 
 	@Inject
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
+
+	@Inject
+	protected UIDFactory uidFactory;
 
 	@Inject
 	protected UserLocalService userLocalService;
@@ -201,8 +210,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 			"name_String_sortable", assetTag.getName()
 		).build();
 
-		_indexedFieldsFixture.populateUID(
-			AssetTag.class.getName(), assetTag.getTagId(), map);
+		_indexedFieldsFixture.populateUID(assetTag, map);
 
 		_populateDates(assetTag, map);
 		_populateRoles(assetTag, map);

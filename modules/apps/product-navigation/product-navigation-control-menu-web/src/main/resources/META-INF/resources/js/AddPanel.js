@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React, {useEffect, useMemo, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -46,12 +47,16 @@ const AddPanel = ({
 	addContentsURLs,
 	contents,
 	getContentsURL,
+	languageDirection,
+	languageId,
 	namespace,
 	portletNamespace,
 	widgets: widgetsItems,
 }) => {
 	const [displayGrid, setDisplayGrid] = useState(false);
 	const [widgets, setWidgets] = useState(widgetsItems);
+
+	const rtl = languageDirection[languageId] === 'rtl';
 
 	useEffect(() => {
 		const removePortlet = (item) => {
@@ -99,7 +104,11 @@ const AddPanel = ({
 	);
 
 	return (
-		<div className="sidebar-content__add-panel">
+		<div
+			className={classNames('sidebar-content__add-panel', {
+				rtl,
+			})}
+		>
 			<AddPanelContextProvider
 				value={{
 					addContentsURLs,
@@ -114,7 +123,7 @@ const AddPanel = ({
 				}}
 			>
 				<DndProvider backend={HTML5Backend}>
-					<DragPreview />
+					<DragPreview rtl={rtl} />
 					<DragAndDrop />
 					<TabsPanel tabs={tabs} />
 				</DndProvider>

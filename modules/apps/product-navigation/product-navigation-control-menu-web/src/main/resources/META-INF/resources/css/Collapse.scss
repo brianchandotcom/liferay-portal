@@ -14,8 +14,18 @@
 		text-align: left;
 		width: 100%;
 
-		.sheet-subtitle {
-			line-height: unset;
+		&-closed {
+			.rtl & {
+				transform: rotate(-180deg);
+			}
+		}
+	}
+
+	.sheet-subtitle {
+		line-height: unset;
+
+		.rtl & {
+			text-align: right;
 		}
 	}
 }

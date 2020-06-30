@@ -5,10 +5,20 @@
 
 	&-add {
 		margin-left: 16px;
+
+		.rtl & {
+			margin-left: unset;
+			margin-right: 16px;
+		}
 	}
 
 	&-list {
 		margin-left: auto;
+
+		.rtl & {
+			margin-left: unset;
+			margin-right: auto;
+		}
 	}
 
 	&-select {

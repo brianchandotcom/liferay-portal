@@ -32,5 +32,9 @@
 		.lexicon-icon {
 			font-size: 14px;
 		}
+
+		.rtl & {
+			text-align: right;
+		}
 	}
 }

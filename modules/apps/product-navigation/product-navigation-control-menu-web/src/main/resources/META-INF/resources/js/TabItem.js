@@ -66,12 +66,14 @@ export default function TabItem({item}) {
 				<div className="icon">
 					<ClayIcon symbol={item.icon} />
 				</div>
-				<div className="text-truncate title">{item.label}</div>
-				{isContent && (
-					<div className="subtitle text-truncate">
-						{item.category}
-					</div>
-				)}
+				<div className="text">
+					<div className="text-truncate title">{item.label}</div>
+					{isContent && (
+						<div className="subtitle text-truncate">
+							{item.category}
+						</div>
+					)}
+				</div>
 			</div>
 
 			{!item.disabled && (

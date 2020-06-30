@@ -15,46 +15,12 @@
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
-import {
-	ConfigurationFieldPropTypes,
-	getLayoutDataItemPropTypes,
-} from '../../../prop-types/index';
+import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import {useDispatch, useSelector} from '../../store/index';
 import updateFragmentConfiguration from '../../thunks/updateFragmentConfiguration';
-import {FRAGMENT_CONFIGURATION_FIELDS} from '../fragment-configuration-fields/index';
-
-const FieldSet = ({configurationValues, fields, label, onValueSelect}) => {
-	return (
-		<>
-			{label && <p className="mb-3 sheet-subtitle">{label}</p>}
-
-			{fields.map((field, index) => {
-				const FieldComponent =
-					field.type && FRAGMENT_CONFIGURATION_FIELDS[field.type];
-
-				const fieldValue = configurationValues[field.name];
-
-				return (
-					<FieldComponent
-						field={field}
-						key={index}
-						onValueSelect={onValueSelect}
-						value={fieldValue}
-					/>
-				);
-			})}
-		</>
-	);
-};
-
-FieldSet.propTypes = {
-	configurationValues: PropTypes.object,
-	fields: PropTypes.arrayOf(PropTypes.shape(ConfigurationFieldPropTypes)),
-	label: PropTypes.string,
-	onValueSelect: PropTypes.func.isRequired,
-};
+import {FieldSet} from './FieldSet';
 
 export const FragmentConfigurationPanel = ({item}) => {
 	const dispatch = useDispatch();

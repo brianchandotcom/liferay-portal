@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METRICS_SLA_DURATION_MESSAGE</td>
+	<td>//div[contains(@data-testid, 'durationDescription')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>METRICS_SLA_SETTINGS</td>
 	<td>//div[contains(@class,'show')]//a[@class='dropdown-item'][contains(@href,'InstanceCount')]</td>
 	<td></td>
@@ -36,6 +41,21 @@
 <tr>
 	<td>SLA_CREATED_FORM</td>
 	<td>//a[contains(text(),'${key_workflowSLAName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_CALENDAR_SELECT</td>
+	<td>//div[contains(@class,'form-group')]//select[@name='calendarKey']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_CALENDAR_SELECT_VALUE_DEFAULT</td>
+	<td>//div[contains(@class,'form-group')]//select[@name='calendarKey']/option[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_DEFINITION_CALENDAR_TITLE</td>
+	<td>//div[contains(@class,'form-group')]//label[@for='slaCalendarKey']</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SLA_DROPDOWN_CALENDAR_OPTION</td>
+	<td>//option[contains(text(),'${key_slaDefinitionCalendar}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SLA_DROPDOWN_START_OPTION</td>
 	<td>//span[contains(text(),'${key_slaDefinitionStart}')]</td>
 	<td></td>
@@ -91,6 +116,11 @@
 <tr>
 	<td>SLA_ERROR_MESSAGE</td>
 	<td>//div[contains(text(), '${key_errorMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SLA_RECORD_DURATION</td>
+	<td>//tr//th[@data-testid='slaDurationHead']</td>
 	<td></td>
 </tr>
 <tr>

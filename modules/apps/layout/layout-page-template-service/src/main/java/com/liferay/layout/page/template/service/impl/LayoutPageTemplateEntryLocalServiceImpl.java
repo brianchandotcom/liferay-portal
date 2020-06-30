@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -393,6 +394,13 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 						layoutPrototypeId);
 				}
 			}
+		}
+
+		// Preview image
+
+		if (layoutPageTemplateEntry.getPreviewFileEntryId() > 0) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				layoutPageTemplateEntry.getPreviewFileEntryId());
 		}
 
 		// Dynamic data mapping structure link

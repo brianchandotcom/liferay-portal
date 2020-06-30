@@ -120,7 +120,7 @@ public class ClayDataSetDataJSONFactoryImpl
 			_total = total;
 		}
 
-		@JsonProperty("rows")
+		@JsonProperty("items")
 		private final List<ClayDataSetDataRow> _clayDataSetRows;
 
 		@JsonProperty("total")

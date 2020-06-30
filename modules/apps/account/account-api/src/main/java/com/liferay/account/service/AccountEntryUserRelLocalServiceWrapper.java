@@ -77,6 +77,21 @@ public class AccountEntryUserRelLocalServiceWrapper
 			accountEntryId, accountUserIds);
 	}
 
+	@Override
+	public com.liferay.account.model.AccountEntryUserRel
+			addPersonTypeAccountEntryUserRel(
+				long accountEntryId, long creatorUserId, String screenName,
+				String emailAddress, java.util.Locale locale, String firstName,
+				String middleName, String lastName, long prefixId,
+				long suffixId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _accountEntryUserRelLocalService.
+			addPersonTypeAccountEntryUserRel(
+				accountEntryId, creatorUserId, screenName, emailAddress, locale,
+				firstName, middleName, lastName, prefixId, suffixId);
+	}
+
 	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
@@ -141,6 +156,14 @@ public class AccountEntryUserRelLocalServiceWrapper
 
 		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
 			accountEntryId, accountUserIds);
+	}
+
+	@Override
+	public void deleteAccountEntryUserRelsByAccountEntryId(
+		long accountEntryId) {
+
+		_accountEntryUserRelLocalService.
+			deleteAccountEntryUserRelsByAccountEntryId(accountEntryId);
 	}
 
 	/**
@@ -368,6 +391,14 @@ public class AccountEntryUserRelLocalServiceWrapper
 	@Override
 	public boolean hasAccountEntryUserRel(long accountEntryId, long userId) {
 		return _accountEntryUserRelLocalService.hasAccountEntryUserRel(
+			accountEntryId, userId);
+	}
+
+	@Override
+	public void setPersonTypeAccountEntryUser(long accountEntryId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_accountEntryUserRelLocalService.setPersonTypeAccountEntryUser(
 			accountEntryId, userId);
 	}
 

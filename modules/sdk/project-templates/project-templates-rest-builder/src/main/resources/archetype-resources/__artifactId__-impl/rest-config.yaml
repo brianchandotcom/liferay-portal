@@ -11,4 +11,4 @@ application:
     name: "${applicationName}"
 author: "${author}"
 clientDir: "../${artifactId}-client/src/main/java"
-testDir: "../${artifactId}-test/src/main/java"
+testDir: "../${artifactId}-test/src/testIntegration/java"

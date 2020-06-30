@@ -113,6 +113,42 @@ public class GitWorkingDirectory {
 		return newGitRemote;
 	}
 
+	public LocalGitBranch checkoutLocalGitBranch(
+		Build.BranchInformation branchInformation) {
+
+		checkoutUpstreamLocalGitBranch();
+
+		LocalGitBranch localGitBranch = createLocalGitBranch(
+			JenkinsResultsParserUtil.combine(
+				getUpstreamBranchName(), "-temp-",
+				String.valueOf(System.currentTimeMillis())),
+			true);
+
+		try {
+			localGitBranch = fetch(
+				localGitBranch, true,
+				branchInformation.getCachedRemoteGitRef());
+		}
+		catch (Exception exception) {
+			localGitBranch = fetch(
+				localGitBranch, true,
+				branchInformation.getSenderRemoteGitRef());
+
+			LocalGitBranch upstreamLocalGitBranch = createLocalGitBranch(
+				JenkinsResultsParserUtil.combine(
+					getUpstreamBranchName(), "-temp-upstream-",
+					String.valueOf(System.currentTimeMillis())),
+				true, branchInformation.getUpstreamBranchSHA());
+
+			localGitBranch = rebase(
+				true, upstreamLocalGitBranch, localGitBranch);
+		}
+
+		checkoutLocalGitBranch(localGitBranch);
+
+		return localGitBranch;
+	}
+
 	public void checkoutLocalGitBranch(LocalGitBranch localGitBranch) {
 		checkoutLocalGitBranch(localGitBranch, "-f");
 	}

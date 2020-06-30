@@ -14,6 +14,7 @@
 
 package com.liferay.account.admin.web.internal.display;
 
+import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -176,6 +178,17 @@ public class AccountUserDisplay {
 	}
 
 	public boolean isValidateEmailAddress() throws PortalException {
+		AccountEntryEmailDomainsConfiguration
+			accountEntryEmailDomainsConfiguration =
+				ConfigurationProviderUtil.getCompanyConfiguration(
+					AccountEntryEmailDomainsConfiguration.class, _companyId);
+
+		if (!accountEntryEmailDomainsConfiguration.
+				enableEmailDomainValidation()) {
+
+			return false;
+		}
+
 		List<AccountEntryUserRel> accountEntryUserRels =
 			_getAccountEntryUserRels(getUserId());
 
@@ -196,6 +209,7 @@ public class AccountUserDisplay {
 
 	private AccountUserDisplay(User user) {
 		_accountEntryNamesStyle = _getAccountEntryNamesStyle(user.getUserId());
+		_companyId = user.getCompanyId();
 		_emailAddress = user.getEmailAddress();
 		_jobTitle = user.getJobTitle();
 		_name = user.getFullName();
@@ -257,6 +271,7 @@ public class AccountUserDisplay {
 	}
 
 	private final String _accountEntryNamesStyle;
+	private final long _companyId;
 	private final String _emailAddress;
 	private final String _jobTitle;
 	private final String _name;

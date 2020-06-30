@@ -27,6 +27,7 @@ AUI.add(
 		];
 
 		var STR_BLANK = '';
+		var XMLUtil = Liferay.XMLUtil;
 
 		var XMLDefinition = A.Component.create({
 			ATTRS: {
@@ -451,7 +452,9 @@ AUI.add(
 
 					var val = instance._sanitizeDefinitionXML(config.value);
 
-					instance.definitionDoc = A.DataType.XML.parse(val);
+					if (!val || XMLUtil.validateDefinition(val)) {
+						instance.definitionDoc = A.DataType.XML.parse(val);
+					}
 
 					var metadata = instance.getDefinitionMetadata();
 
@@ -500,7 +503,7 @@ AUI.add(
 			'aui-component',
 			'dataschema-xml',
 			'datatype-xml',
-			'liferay-kaleo-designer-utils',
+			'liferay-kaleo-designer-xml-util',
 		],
 	}
 );

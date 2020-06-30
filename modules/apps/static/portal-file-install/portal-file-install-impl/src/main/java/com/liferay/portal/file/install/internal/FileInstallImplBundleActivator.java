@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.internal.properties.InterpolationUtil;
 import com.liferay.portal.file.install.listener.ArtifactInstaller;
 import com.liferay.portal.file.install.listener.ArtifactListener;
-import com.liferay.portal.file.install.listener.ArtifactTransformer;
 import com.liferay.portal.file.install.listener.ArtifactUrlTransformer;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -153,17 +152,12 @@ public class FileInstallImplBundleActivator
 				URLStreamHandlerService.class.getName(), new JarDirUrlHandler(),
 				properties);
 
-			StringBundler sb = new StringBundler(15);
+			StringBundler sb = new StringBundler(10);
 
 			sb.append("(|(");
 			sb.append(Constants.OBJECTCLASS);
 			sb.append(StringPool.EQUAL);
 			sb.append(ArtifactInstaller.class.getName());
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(Constants.OBJECTCLASS);
-			sb.append(StringPool.EQUAL);
-			sb.append(ArtifactTransformer.class.getName());
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(Constants.OBJECTCLASS);

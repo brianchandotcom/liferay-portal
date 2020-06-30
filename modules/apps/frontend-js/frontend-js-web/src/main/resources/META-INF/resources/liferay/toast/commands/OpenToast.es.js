@@ -119,7 +119,12 @@ function openToast({
 				onClick={(event) => onClick({event, onClose: onCloseFn})}
 				onClose={onCloseFn}
 				title={
-					<Text allowHTML={titleType === TYPES.HTML} string={title} />
+					title && (
+						<Text
+							allowHTML={titleType === TYPES.HTML}
+							string={title}
+						/>
+					)
 				}
 				variant={variant}
 				{...toastProps}

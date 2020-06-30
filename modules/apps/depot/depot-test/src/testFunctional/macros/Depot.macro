@@ -109,7 +109,7 @@ definition {
 	macro assignUserGroupAsMember {
 		Navigator.gotoNavItem(navItem = "User Groups");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		LexiconEntry.gotoAdd();
 

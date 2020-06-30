@@ -1630,7 +1630,7 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		SearchAdministration.executeSearchActions(actionsDescription = "Reindex all search indexes.");
 
@@ -1786,7 +1786,7 @@ definition {
 
 		IFrame.closeFrame();
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		SitePages.openPagesAdmin(siteURLKey = "Site Name 1");
 

@@ -52,7 +52,7 @@ definition {
 			kbArticleContent = "Child Article Content",
 			kbArticleTitle = "Child Article Title");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -214,7 +214,7 @@ definition {
 			kbArticleContent = "Child Article Content",
 			kbArticleTitle = "Child Article Title");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -265,7 +265,7 @@ definition {
 			kbArticleContentEdit = "Knowledge Base Article Parent Content Edited 1",
 			kbArticleTitleEdit = "Knowledge Base Article Parent Title Edited 1");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -277,7 +277,7 @@ definition {
 			kbArticleContentEdit = "Knowledge Base Child Article Content Edited 1",
 			kbArticleTitleEdit = "Knowledge Base Article Parent Title Edited 1 Child 1");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 
@@ -307,7 +307,7 @@ definition {
 			kbArticleTitle = "Knowledge Base Article Title",
 			kbArticleTitleEdit = "Knowledge Base Article Title Edit");
 
-		Pause(locator1 = "5000");
+		Pause(locator1 = "3000");
 
 		Navigator.gotoPage(pageName = "Knowledge Base Display Page");
 

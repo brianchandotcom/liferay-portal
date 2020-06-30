@@ -104,8 +104,9 @@ public class ExportTranslationMVCResourceCommand implements MVCResourceCommand {
 
 				PortletResponseUtil.sendFile(
 					resourceRequest, resourceResponse,
-					article.getTitle(themeDisplay.getLocale()) +
-						sourceLanguageId + ".zip",
+					StringBundler.concat(
+						article.getTitle(themeDisplay.getLocale()),
+						StringPool.DASH, sourceLanguageId, ".zip"),
 					inputStream, ContentTypes.APPLICATION_ZIP);
 			}
 

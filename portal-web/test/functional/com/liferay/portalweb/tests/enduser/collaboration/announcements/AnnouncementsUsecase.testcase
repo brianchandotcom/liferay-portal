@@ -223,8 +223,8 @@ definition {
 		}
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
+			category = "Communication",
+			panel = "Applications",
 			portlet = "Announcements and Alerts");
 
 		AnnouncementsPortlet.configurePaginationCP(itemsPerPage = "4");

@@ -108,8 +108,8 @@ definition {
 		AssertTextNotPresent(value1 = "Announcements Entry Title");
 
 		GlobalMenu.gotoPortlet(
-			category = "Configuration",
-			panel = "Control Panel",
+			category = "Communication",
+			panel = "Applications",
 			portlet = "Announcements and Alerts");
 
 		AssertTextEquals(

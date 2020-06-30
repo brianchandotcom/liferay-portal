@@ -23,6 +23,7 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
+		<column name="styleBookEntryKey" type="String" />
 		<column name="previewFileEntryId" type="long" />
 
 		<!-- Order -->
@@ -40,12 +41,17 @@
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
+		<finder name="G_SBEK" return-type="StyleBookEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="styleBookEntryKey" />
+		</finder>
 
 		<!-- References -->
 
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
 	<exceptions>
+		<exception>DuplicateStyleBookEntryNameKey</exception>
 		<exception>StyleBookEntryName</exception>
 	</exceptions>
 </service-builder>

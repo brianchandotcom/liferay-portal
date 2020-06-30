@@ -827,6 +827,8 @@ definition {
 		if ("${replicateIndividualDeletions}" == "true") {
 			AssertVisible(locator1 = "Staging#STAGING_CONTENT_DELETIONS");
 
+			Click(locator1 = "Staging#STAGING_CONTENT_DELETIONS");
+
 			Click(locator1 = "Staging#REPLICATE_INDIVIDUAL_DELETIONS");
 		}
 

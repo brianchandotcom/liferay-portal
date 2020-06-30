@@ -37,14 +37,6 @@ public class Artifact {
 		return _fileInstaller;
 	}
 
-	public File getJaredDirectory() {
-		return _jaredDirectory;
-	}
-
-	public URL getJaredUrl() {
-		return _jaredUrl;
-	}
-
 	public File getPath() {
 		return _path;
 	}
@@ -65,14 +57,6 @@ public class Artifact {
 		_fileInstaller = fileInstaller;
 	}
 
-	public void setJaredDirectory(File jaredDirectory) {
-		_jaredDirectory = jaredDirectory;
-	}
-
-	public void setJaredUrl(URL jaredUrl) {
-		_jaredUrl = jaredUrl;
-	}
-
 	public void setPath(File path) {
 		_path = path;
 	}
@@ -84,8 +68,6 @@ public class Artifact {
 	private long _bundleId = -1;
 	private long _checksum;
 	private FileInstaller _fileInstaller;
-	private File _jaredDirectory;
-	private URL _jaredUrl;
 	private File _path;
 	private URL _transformedURL;
 

@@ -50,7 +50,6 @@ import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
-import org.osgi.service.url.URLStreamHandlerService;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -140,14 +139,6 @@ public class FileInstallImplBundleActivator
 		_writeLock.lock();
 
 		try {
-			Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-			properties.put("url.handler.protocol", JarDirUrlHandler.PROTOCOL);
-
-			_urlHandlerRegistration = bundleContext.registerService(
-				URLStreamHandlerService.class.getName(), new JarDirUrlHandler(),
-				properties);
-
 			_fileInstallersTracker = new ServiceTracker(
 				bundleContext, FileInstaller.class, this);
 
@@ -220,8 +211,6 @@ public class FileInstallImplBundleActivator
 		_writeLock.lock();
 
 		try {
-			_urlHandlerRegistration.unregister();
-
 			List<DirectoryWatcher> watchers = new ArrayList<>();
 
 			synchronized (_watchers) {
@@ -366,7 +355,6 @@ public class FileInstallImplBundleActivator
 	private final ReadWriteLock _lock = new ReentrantReadWriteLock();
 	private final Lock _readLock = _lock.readLock();
 	private volatile boolean _stopped;
-	private ServiceRegistration<?> _urlHandlerRegistration;
 	private final Map<String, DirectoryWatcher> _watchers = new HashMap<>();
 	private final Lock _writeLock = _lock.writeLock();
 

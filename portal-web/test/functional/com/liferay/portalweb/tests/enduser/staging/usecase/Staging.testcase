@@ -1270,6 +1270,7 @@ definition {
 		property app.server.bundles.size = "1";
 		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=";
 		property databases.size = "1";
+		property test.name.skip.portal.instance = "Staging#PublishVocabularyDeletionViaRemoteStagingOnGlobalSite";
 
 		User.logoutPG();
 
@@ -1322,13 +1323,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SitePages.openPagesAdmin(
+		Category.openCategoriesAdmin(
 			baseURL = "http://localhost:9080",
 			siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
 
 		Vocabulary.viewCP(vocabularyName = "Vocabulary Name");
 
@@ -1354,13 +1351,9 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		SitePages.openPagesAdmin(
+		Category.openCategoriesAdmin(
 			baseURL = "http://localhost:9080",
 			siteURLKey = "global");
-
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Categories");
 
 		AssertTextNotPresent(
 			key_navNested = "Vocabulary Name",

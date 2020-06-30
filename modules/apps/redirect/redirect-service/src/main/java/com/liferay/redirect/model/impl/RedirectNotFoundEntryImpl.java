@@ -28,6 +28,11 @@ public class RedirectNotFoundEntryImpl extends RedirectNotFoundEntryBaseImpl {
 
 	@Override
 	public long getHits() {
+		return getRequestCount();
+	}
+
+	@Override
+	public long getRequestCount() {
 		return ViewCountManagerUtil.getViewCount(
 			getCompanyId(),
 			ClassNameLocalServiceUtil.getClassNameId(

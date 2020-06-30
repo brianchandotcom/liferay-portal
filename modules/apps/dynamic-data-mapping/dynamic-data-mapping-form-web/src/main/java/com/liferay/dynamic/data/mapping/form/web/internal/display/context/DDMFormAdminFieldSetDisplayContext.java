@@ -196,7 +196,7 @@ public class DDMFormAdminFieldSetDisplayContext
 
 		return LanguageUtil.get(
 			httpServletRequest,
-			"click-on-the-plus-button-to-add-the-first-one");
+			"accelerate-form-creation-with-reusable-field-groupings");
 	}
 
 	@Override

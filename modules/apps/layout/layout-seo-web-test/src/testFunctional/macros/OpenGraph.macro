@@ -103,6 +103,21 @@ definition {
 		Button.click(button = "Save");
 	}
 
+	macro mapEditableTextToField {
+		Click(
+			key_mappedField = "${mappedField}",
+			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${field}");
+
+		Click(
+			key_mappedField = "${mappedField}",
+			locator1 = "PageEditor#EDITABLE_FIELD_TOOLBAR_MAP_BUTTON_SPECIFIC");
+	}
+
 	macro viewDefaultConfiguration {
 		task ("Assert open graph title") {
 			AssertTextEquals(
@@ -144,6 +159,13 @@ definition {
 
 			AssertElementPresent(locator1 = "Button#SELECT_OPEN_GRAPH_IMAGE");
 		}
+	}
+
+	macro viewMappedField {
+		AssertTextEquals(
+			key_mappedField = "${mappedField}",
+			locator1 = "TextInput#SEO_MAPPED_FIELD",
+			value1 = "${mappedFieldValue}");
 	}
 
 	macro viewNoOpenGraphProperties {

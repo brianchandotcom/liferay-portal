@@ -157,6 +157,16 @@ public class AccountEntryUserRelLocalServiceImpl
 		}
 	}
 
+	public void deleteAccountEntryUserRelsByAccountEntryId(
+		long accountEntryId) {
+
+		for (AccountEntryUserRel accountEntryUserRel :
+				getAccountEntryUserRelsByAccountEntryId(accountEntryId)) {
+
+			deleteAccountEntryUserRel(accountEntryUserRel);
+		}
+	}
+
 	@Override
 	public List<AccountEntryUserRel> getAccountEntryUserRelsByAccountEntryId(
 		long accountEntryId) {

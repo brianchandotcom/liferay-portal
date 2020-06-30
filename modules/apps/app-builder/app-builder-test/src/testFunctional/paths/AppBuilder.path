@@ -331,6 +331,12 @@
 </tr>
 
 <tr>
+	<td>VALIDATE_FILTER_BY_STATUS_ANY</td>
+	<td>//input[@type='radio' and @checked]</td>
+	<td></td>
+</tr>
+
+<tr>
  	<td>ENTRY_SUCCESS_MESSAGE</td>
  	<td>//div[contains(text(),'An entry was added.')]</td>
  	<td></td>

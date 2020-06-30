@@ -45,8 +45,6 @@ public abstract class BaseAnalyticsClientImpl {
 		return httpClientBuilder.build();
 	}
 
-	protected abstract Log getLog();
-
 	protected boolean isEnabled(long companyId) {
 		if (!analyticsConfigurationTracker.isActive()) {
 			if (_log.isDebugEnabled()) {

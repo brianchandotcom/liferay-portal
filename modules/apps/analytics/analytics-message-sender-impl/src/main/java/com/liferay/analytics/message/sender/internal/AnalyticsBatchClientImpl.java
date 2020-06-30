@@ -177,11 +177,6 @@ public class AnalyticsBatchClientImpl
 		}
 	}
 
-	@Override
-	protected Log getLog() {
-		return _log;
-	}
-
 	private void _setDefaultRequestHeaders(
 		long companyId, HttpUriRequest httpUriRequest) {
 

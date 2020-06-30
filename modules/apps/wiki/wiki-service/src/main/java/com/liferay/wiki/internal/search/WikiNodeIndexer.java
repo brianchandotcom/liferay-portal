@@ -78,7 +78,8 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 	@Override
 	protected void doDelete(WikiNode wikiNode) throws Exception {
-		deleteDocument(wikiNode.getCompanyId(), wikiNode.getNodeId());
+		deleteDocument(
+			wikiNode.getCompanyId(), "UID=" + uidFactory.getUID(wikiNode));
 	}
 
 	@Override

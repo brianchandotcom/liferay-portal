@@ -217,7 +217,8 @@ public class WikiPageIndexer
 
 	@Override
 	protected void doDelete(WikiPage wikiPage) throws Exception {
-		deleteDocument(wikiPage.getCompanyId(), wikiPage.getPrimaryKey());
+		deleteDocument(
+			wikiPage.getCompanyId(), "UID=" + uidFactory.getUID(wikiPage));
 	}
 
 	@Override

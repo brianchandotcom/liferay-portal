@@ -130,9 +130,11 @@ public class GitWorkingDirectory {
 				branchInformation.getCachedRemoteGitRef());
 		}
 		catch (Exception exception) {
-			localGitBranch = fetch(
-				localGitBranch, true,
-				branchInformation.getSenderRemoteGitRef());
+			fetch(branchInformation.getSenderRemoteGitRef());
+
+			localGitBranch = createLocalGitBranch(
+				localGitBranch.getName(), true,
+				branchInformation.getSenderBranchSHA());
 
 			LocalGitBranch upstreamLocalGitBranch = createLocalGitBranch(
 				JenkinsResultsParserUtil.combine(

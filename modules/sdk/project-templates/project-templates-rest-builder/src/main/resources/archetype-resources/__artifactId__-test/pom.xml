@@ -40,6 +40,10 @@
 		</dependency>
 		<dependency>
 			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.petra.io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.petra.reflect</artifactId>
 		</dependency>
 		<dependency>
@@ -108,6 +112,10 @@
 			<scope>provided</scope>
 		</dependency>
 #end
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>${groupId}</groupId>
 			<artifactId>${artifactId}-api</artifactId>

@@ -25,7 +25,7 @@ import UpperToolbar from '../../components/upper-toolbar/UpperToolbar.es';
 import {errorToast, successToast} from '../../utils/toast.es';
 import FormViewContext from './FormViewContext.es';
 
-export default ({newCustomObject}) => {
+export default ({newCustomObject, showTranslationManager}) => {
 	const [defaultLanguageId, setDefaultLanguageId] = useState('');
 	const [editingLanguageId, setEditingLanguageId] = useState('');
 
@@ -40,7 +40,7 @@ export default ({newCustomObject}) => {
 		}
 	}, [dataDefinition.defaultLanguageId, onEditingLanguageIdChange]);
 
-	const {basePortletURL, showTranslationManager} = useContext(AppContext);
+	const {basePortletURL} = useContext(AppContext);
 	const listUrl = `${basePortletURL}/#/custom-object/${dataDefinitionId}/form-views`;
 
 	const onDataLayoutNameChange = ({target: {value}}) => {

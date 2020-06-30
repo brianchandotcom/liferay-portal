@@ -48,6 +48,7 @@ const EditFormView = (props) => {
 		dataLayoutBuilder,
 		dataLayoutId,
 		newCustomObject,
+		showTranslationManager,
 	} = parseProps(props);
 	const {basePortletURL} = useContext(AppContext);
 
@@ -69,7 +70,10 @@ const EditFormView = (props) => {
 					dataLayoutId={dataLayoutId}
 				/>
 
-				<FormViewUpperToolbar newCustomObject={newCustomObject} />
+				<FormViewUpperToolbar
+					newCustomObject={newCustomObject}
+					showTranslationManager={showTranslationManager}
+				/>
 
 				{createPortal(
 					<CustomObjectSidebar />,

@@ -32,7 +32,7 @@ function ManagementBar({
 	selectionType,
 	setActiveView,
 	showSearch,
-	totalItemsCount,
+	total,
 	views,
 }) {
 	const {state} = useAppState();
@@ -52,7 +52,7 @@ function ManagementBar({
 					selectAllItems={selectAllItems}
 					selectedItemsKey={selectedItemsKey}
 					selectedItemsValue={selectedItemsValue}
-					totalItemsCount={totalItemsCount}
+					total={total}
 				/>
 			)}
 			{(!selectedItemsValue.length || selectionType === 'single') && (
@@ -100,7 +100,7 @@ Wrapper.propTypes = {
 	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
 	setActiveView: PropTypes.func.isRequired,
 	showSearch: PropTypes.bool,
-	totalItemsCount: PropTypes.number,
+	total: PropTypes.number,
 	views: PropTypes.array.isRequired,
 };
 

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * <p>
@@ -44,6 +46,7 @@ public class SegmentsEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
 		attributes.put("segmentsEntryId", getSegmentsEntryId());
 		attributes.put("groupId", getGroupId());
@@ -70,6 +73,12 @@ public class SegmentsEntryWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		Long ctCollectionId = (Long)attributes.get("ctCollectionId");
+
+		if (ctCollectionId != null) {
+			setCtCollectionId(ctCollectionId);
 		}
 
 		String uuid = (String)attributes.get("uuid");
@@ -217,6 +226,16 @@ public class SegmentsEntryWrapper
 	@Override
 	public com.liferay.segments.criteria.Criteria getCriteriaObj() {
 		return model.getCriteriaObj();
+	}
+
+	/**
+	 * Returns the ct collection ID of this segments entry.
+	 *
+	 * @return the ct collection ID of this segments entry
+	 */
+	@Override
+	public long getCtCollectionId() {
+		return model.getCtCollectionId();
 	}
 
 	@Override
@@ -582,6 +601,16 @@ public class SegmentsEntryWrapper
 	}
 
 	/**
+	 * Sets the ct collection ID of this segments entry.
+	 *
+	 * @param ctCollectionId the ct collection ID of this segments entry
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
 	 * Sets the description of this segments entry.
 	 *
 	 * @param description the description of this segments entry
@@ -839,6 +868,20 @@ public class SegmentsEntryWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	@Override
+	public Map<String, Function<SegmentsEntry, Object>>
+		getAttributeGetterFunctions() {
+
+		return model.getAttributeGetterFunctions();
+	}
+
+	@Override
+	public Map<String, BiConsumer<SegmentsEntry, Object>>
+		getAttributeSetterBiConsumers() {
+
+		return model.getAttributeSetterBiConsumers();
 	}
 
 	@Override

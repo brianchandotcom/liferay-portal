@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.AuditedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -37,8 +38,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SegmentsEntryRoleModel
-	extends AuditedModel, BaseModel<SegmentsEntryRole>, MVCCModel,
-			ShardedModel {
+	extends AuditedModel, BaseModel<SegmentsEntryRole>,
+			CTModel<SegmentsEntryRole>, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -51,6 +52,7 @@ public interface SegmentsEntryRoleModel
 	 *
 	 * @return the primary key of this segments entry role
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -58,6 +60,7 @@ public interface SegmentsEntryRoleModel
 	 *
 	 * @param primaryKey the primary key of this segments entry role
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -75,6 +78,22 @@ public interface SegmentsEntryRoleModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this segments entry role.
+	 *
+	 * @return the ct collection ID of this segments entry role
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this segments entry role.
+	 *
+	 * @param ctCollectionId the ct collection ID of this segments entry role
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the segments entry role ID of this segments entry role.

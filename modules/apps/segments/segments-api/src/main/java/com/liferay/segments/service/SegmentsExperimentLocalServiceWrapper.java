@@ -14,7 +14,10 @@
 
 package com.liferay.segments.service;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
+import com.liferay.segments.model.SegmentsExperiment;
 
 /**
  * Provides a wrapper for {@link SegmentsExperimentLocalService}.
@@ -34,7 +37,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment addSegmentsExperiment(
+	public SegmentsExperiment addSegmentsExperiment(
 			long segmentsExperienceId, long classNameId, long classPK,
 			String name, String description, String goal, String goalTarget,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -52,8 +55,8 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @return the segments experiment that was added
 	 */
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment addSegmentsExperiment(
-		com.liferay.segments.model.SegmentsExperiment segmentsExperiment) {
+	public SegmentsExperiment addSegmentsExperiment(
+		SegmentsExperiment segmentsExperiment) {
 
 		return _segmentsExperimentLocalService.addSegmentsExperiment(
 			segmentsExperiment);
@@ -78,8 +81,8 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @return the new segments experiment
 	 */
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-		createSegmentsExperiment(long segmentsExperimentId) {
+	public SegmentsExperiment createSegmentsExperiment(
+		long segmentsExperimentId) {
 
 		return _segmentsExperimentLocalService.createSegmentsExperiment(
 			segmentsExperimentId);
@@ -105,8 +108,8 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @throws PortalException if a segments experiment with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-			deleteSegmentsExperiment(long segmentsExperimentId)
+	public SegmentsExperiment deleteSegmentsExperiment(
+			long segmentsExperimentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.deleteSegmentsExperiment(
@@ -121,10 +124,8 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @throws PortalException
 	 */
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-			deleteSegmentsExperiment(
-				com.liferay.segments.model.SegmentsExperiment
-					segmentsExperiment)
+	public SegmentsExperiment deleteSegmentsExperiment(
+			SegmentsExperiment segmentsExperiment)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.deleteSegmentsExperiment(
@@ -132,11 +133,8 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-			deleteSegmentsExperiment(
-				com.liferay.segments.model.SegmentsExperiment
-					segmentsExperiment,
-				boolean force)
+	public SegmentsExperiment deleteSegmentsExperiment(
+			SegmentsExperiment segmentsExperiment, boolean force)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.deleteSegmentsExperiment(
@@ -249,26 +247,25 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-		fetchSegmentsExperiment(long segmentsExperimentId) {
+	public SegmentsExperiment fetchSegmentsExperiment(
+		long segmentsExperimentId) {
 
 		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
 			segmentsExperimentId);
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-		fetchSegmentsExperiment(
-			long segmentsExperienceId, long classNameId, long classPK,
-			int[] statuses) {
+	public SegmentsExperiment fetchSegmentsExperiment(
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] statuses) {
 
 		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
 			segmentsExperienceId, classNameId, classPK, statuses);
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-		fetchSegmentsExperiment(long groupId, String segmentsExperimentKey) {
+	public SegmentsExperiment fetchSegmentsExperiment(
+		long groupId, String segmentsExperimentKey) {
 
 		return _segmentsExperimentLocalService.fetchSegmentsExperiment(
 			groupId, segmentsExperimentKey);
@@ -282,8 +279,8 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @return the matching segments experiment, or <code>null</code> if a matching segments experiment could not be found
 	 */
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-		fetchSegmentsExperimentByUuidAndGroupId(String uuid, long groupId) {
+	public SegmentsExperiment fetchSegmentsExperimentByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return _segmentsExperimentLocalService.
 			fetchSegmentsExperimentByUuidAndGroupId(uuid, groupId);
@@ -336,7 +333,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+	public java.util.List<SegmentsExperiment>
 		getSegmentsEntrySegmentsExperiments(long segmentsEntryId) {
 
 		return _segmentsExperimentLocalService.
@@ -344,7 +341,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+	public java.util.List<SegmentsExperiment>
 		getSegmentsExperienceSegmentsExperiments(
 			long segmentsExperienceId, long classNameId, long classPK) {
 
@@ -354,7 +351,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+	public java.util.List<SegmentsExperiment>
 		getSegmentsExperienceSegmentsExperiments(
 			long[] segmentsExperienceIds, long classNameId, long classPK,
 			int[] statuses, int start, int end) {
@@ -373,8 +370,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @throws PortalException if a segments experiment with the primary key could not be found
 	 */
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment getSegmentsExperiment(
-			long segmentsExperimentId)
+	public SegmentsExperiment getSegmentsExperiment(long segmentsExperimentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.getSegmentsExperiment(
@@ -382,7 +378,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment getSegmentsExperiment(
+	public SegmentsExperiment getSegmentsExperiment(
 			String segmentsExperimentKey)
 		throws com.liferay.segments.exception.NoSuchExperimentException {
 
@@ -399,8 +395,8 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @throws PortalException if a matching segments experiment could not be found
 	 */
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-			getSegmentsExperimentByUuidAndGroupId(String uuid, long groupId)
+	public SegmentsExperiment getSegmentsExperimentByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.
@@ -419,29 +415,27 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @return the range of segments experiments
 	 */
 	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
-		getSegmentsExperiments(int start, int end) {
+	public java.util.List<SegmentsExperiment> getSegmentsExperiments(
+		int start, int end) {
 
 		return _segmentsExperimentLocalService.getSegmentsExperiments(
 			start, end);
 	}
 
 	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
-		getSegmentsExperiments(long groupId, long classNameId, long classPK) {
+	public java.util.List<SegmentsExperiment> getSegmentsExperiments(
+		long groupId, long classNameId, long classPK) {
 
 		return _segmentsExperimentLocalService.getSegmentsExperiments(
 			groupId, classNameId, classPK);
 	}
 
 	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
-		getSegmentsExperiments(
-			long segmentsExperienceId, long classNameId, long classPK,
-			int[] statuses,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.segments.model.SegmentsExperiment>
-					orderByComparator) {
+	public java.util.List<SegmentsExperiment> getSegmentsExperiments(
+		long segmentsExperienceId, long classNameId, long classPK,
+		int[] statuses,
+		com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+			orderByComparator) {
 
 		return _segmentsExperimentLocalService.getSegmentsExperiments(
 			segmentsExperienceId, classNameId, classPK, statuses,
@@ -456,7 +450,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @return the matching segments experiments, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+	public java.util.List<SegmentsExperiment>
 		getSegmentsExperimentsByUuidAndCompanyId(String uuid, long companyId) {
 
 		return _segmentsExperimentLocalService.
@@ -474,12 +468,11 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @return the range of matching segments experiments, or an empty list if no matches were found
 	 */
 	@Override
-	public java.util.List<com.liferay.segments.model.SegmentsExperiment>
+	public java.util.List<SegmentsExperiment>
 		getSegmentsExperimentsByUuidAndCompanyId(
 			String uuid, long companyId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<com.liferay.segments.model.SegmentsExperiment>
-					orderByComparator) {
+			com.liferay.portal.kernel.util.OrderByComparator<SegmentsExperiment>
+				orderByComparator) {
 
 		return _segmentsExperimentLocalService.
 			getSegmentsExperimentsByUuidAndCompanyId(
@@ -506,7 +499,7 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment runSegmentsExperiment(
+	public SegmentsExperiment runSegmentsExperiment(
 			long segmentsExperimentId, double confidenceLevel,
 			java.util.Map<Long, Double> segmentsExperienceIdSplitMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -517,10 +510,9 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperiment(
-				long segmentsExperimentId, String name, String description,
-				String goal, String goalTarget)
+	public SegmentsExperiment updateSegmentsExperiment(
+			long segmentsExperimentId, String name, String description,
+			String goal, String goalTarget)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.updateSegmentsExperiment(
@@ -534,18 +526,16 @@ public class SegmentsExperimentLocalServiceWrapper
 	 * @return the segments experiment that was updated
 	 */
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-		updateSegmentsExperiment(
-			com.liferay.segments.model.SegmentsExperiment segmentsExperiment) {
+	public SegmentsExperiment updateSegmentsExperiment(
+		SegmentsExperiment segmentsExperiment) {
 
 		return _segmentsExperimentLocalService.updateSegmentsExperiment(
 			segmentsExperiment);
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperimentStatus(
-				long segmentsExperimentId, int status)
+	public SegmentsExperiment updateSegmentsExperimentStatus(
+			long segmentsExperimentId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.updateSegmentsExperimentStatus(
@@ -553,14 +543,33 @@ public class SegmentsExperimentLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.segments.model.SegmentsExperiment
-			updateSegmentsExperimentStatus(
-				long segmentsExperimentId, long winnerSegmentsExperienceId,
-				int status)
+	public SegmentsExperiment updateSegmentsExperimentStatus(
+			long segmentsExperimentId, long winnerSegmentsExperienceId,
+			int status)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentLocalService.updateSegmentsExperimentStatus(
 			segmentsExperimentId, winnerSegmentsExperienceId, status);
+	}
+
+	@Override
+	public CTPersistence<SegmentsExperiment> getCTPersistence() {
+		return _segmentsExperimentLocalService.getCTPersistence();
+	}
+
+	@Override
+	public Class<SegmentsExperiment> getModelClass() {
+		return _segmentsExperimentLocalService.getModelClass();
+	}
+
+	@Override
+	public <R, E extends Throwable> R updateWithUnsafeFunction(
+			UnsafeFunction<CTPersistence<SegmentsExperiment>, R, E>
+				updateUnsafeFunction)
+		throws E {
+
+		return _segmentsExperimentLocalService.updateWithUnsafeFunction(
+			updateUnsafeFunction);
 	}
 
 	@Override

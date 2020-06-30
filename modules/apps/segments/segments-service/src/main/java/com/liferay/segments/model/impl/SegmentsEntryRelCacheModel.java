@@ -78,10 +78,12 @@ public class SegmentsEntryRelCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", segmentsEntryRelId=");
 		sb.append(segmentsEntryRelId);
 		sb.append(", groupId=");
@@ -112,6 +114,7 @@ public class SegmentsEntryRelCacheModel
 		SegmentsEntryRelImpl segmentsEntryRelImpl = new SegmentsEntryRelImpl();
 
 		segmentsEntryRelImpl.setMvccVersion(mvccVersion);
+		segmentsEntryRelImpl.setCtCollectionId(ctCollectionId);
 		segmentsEntryRelImpl.setSegmentsEntryRelId(segmentsEntryRelId);
 		segmentsEntryRelImpl.setGroupId(groupId);
 		segmentsEntryRelImpl.setCompanyId(companyId);
@@ -151,6 +154,8 @@ public class SegmentsEntryRelCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		segmentsEntryRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -172,6 +177,8 @@ public class SegmentsEntryRelCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(segmentsEntryRelId);
 
@@ -199,6 +206,7 @@ public class SegmentsEntryRelCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long segmentsEntryRelId;
 	public long groupId;
 	public long companyId;

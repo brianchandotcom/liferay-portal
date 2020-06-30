@@ -66,11 +66,11 @@ public class SegmentsEntryRoleModelImpl
 	public static final String TABLE_NAME = "SegmentsEntryRole";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"segmentsEntryRoleId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"segmentsEntryId", Types.BIGINT},
-		{"roleId", Types.BIGINT}
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"segmentsEntryRoleId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"segmentsEntryId", Types.BIGINT}, {"roleId", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -78,6 +78,7 @@ public class SegmentsEntryRoleModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("segmentsEntryRoleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -89,7 +90,7 @@ public class SegmentsEntryRoleModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsEntryRole (mvccVersion LONG default 0 not null,segmentsEntryRoleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,roleId LONG)";
+		"create table SegmentsEntryRole (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,segmentsEntryRoleId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,roleId LONG,primary key (segmentsEntryRoleId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsEntryRole";
 
@@ -259,6 +260,12 @@ public class SegmentsEntryRoleModelImpl
 			(BiConsumer<SegmentsEntryRole, Long>)
 				SegmentsEntryRole::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", SegmentsEntryRole::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<SegmentsEntryRole, Long>)
+				SegmentsEntryRole::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"segmentsEntryRoleId", SegmentsEntryRole::getSegmentsEntryRoleId);
 		attributeSetterBiConsumers.put(
 			"segmentsEntryRoleId",
@@ -317,6 +324,16 @@ public class SegmentsEntryRoleModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@Override
@@ -488,6 +505,7 @@ public class SegmentsEntryRoleModelImpl
 			new SegmentsEntryRoleImpl();
 
 		segmentsEntryRoleImpl.setMvccVersion(getMvccVersion());
+		segmentsEntryRoleImpl.setCtCollectionId(getCtCollectionId());
 		segmentsEntryRoleImpl.setSegmentsEntryRoleId(getSegmentsEntryRoleId());
 		segmentsEntryRoleImpl.setCompanyId(getCompanyId());
 		segmentsEntryRoleImpl.setUserId(getUserId());
@@ -587,6 +605,8 @@ public class SegmentsEntryRoleModelImpl
 			new SegmentsEntryRoleCacheModel();
 
 		segmentsEntryRoleCacheModel.mvccVersion = getMvccVersion();
+
+		segmentsEntryRoleCacheModel.ctCollectionId = getCtCollectionId();
 
 		segmentsEntryRoleCacheModel.segmentsEntryRoleId =
 			getSegmentsEntryRoleId();
@@ -699,6 +719,7 @@ public class SegmentsEntryRoleModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _segmentsEntryRoleId;
 	private long _companyId;
 	private long _userId;

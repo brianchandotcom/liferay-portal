@@ -78,10 +78,12 @@ public class SegmentsExperienceCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
 		sb.append(", segmentsExperienceId=");
@@ -125,6 +127,7 @@ public class SegmentsExperienceCacheModel
 			new SegmentsExperienceImpl();
 
 		segmentsExperienceImpl.setMvccVersion(mvccVersion);
+		segmentsExperienceImpl.setCtCollectionId(ctCollectionId);
 
 		if (uuid == null) {
 			segmentsExperienceImpl.setUuid("");
@@ -198,6 +201,8 @@ public class SegmentsExperienceCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
+
+		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
 		segmentsExperienceId = objectInput.readLong();
@@ -228,6 +233,8 @@ public class SegmentsExperienceCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		if (uuid == null) {
 			objectOutput.writeUTF("");
@@ -281,6 +288,7 @@ public class SegmentsExperienceCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public String uuid;
 	public long segmentsExperienceId;
 	public long groupId;

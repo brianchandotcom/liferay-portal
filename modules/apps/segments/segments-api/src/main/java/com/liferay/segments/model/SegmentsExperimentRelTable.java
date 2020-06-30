@@ -37,6 +37,9 @@ public class SegmentsExperimentRelTable
 	public final Column<SegmentsExperimentRelTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<SegmentsExperimentRelTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SegmentsExperimentRelTable, Long>
 		segmentsExperimentRelId = createColumn(
 			"segmentsExperimentRelId", Long.class, Types.BIGINT,

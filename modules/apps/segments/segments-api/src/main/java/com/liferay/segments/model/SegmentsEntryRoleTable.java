@@ -36,6 +36,9 @@ public class SegmentsEntryRoleTable extends BaseTable<SegmentsEntryRoleTable> {
 	public final Column<SegmentsEntryRoleTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<SegmentsEntryRoleTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SegmentsEntryRoleTable, Long> segmentsEntryRoleId =
 		createColumn(
 			"segmentsEntryRoleId", Long.class, Types.BIGINT,

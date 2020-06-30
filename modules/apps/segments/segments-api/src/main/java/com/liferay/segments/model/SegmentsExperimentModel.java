@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -39,8 +40,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SegmentsExperimentModel
-	extends AttachedModel, BaseModel<SegmentsExperiment>, GroupedModel,
-			MVCCModel, ShardedModel, StagedAuditedModel {
+	extends AttachedModel, BaseModel<SegmentsExperiment>,
+			CTModel<SegmentsExperiment>, GroupedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -53,6 +55,7 @@ public interface SegmentsExperimentModel
 	 *
 	 * @return the primary key of this segments experiment
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -60,6 +63,7 @@ public interface SegmentsExperimentModel
 	 *
 	 * @param primaryKey the primary key of this segments experiment
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -77,6 +81,22 @@ public interface SegmentsExperimentModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this segments experiment.
+	 *
+	 * @return the ct collection ID of this segments experiment
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this segments experiment.
+	 *
+	 * @param ctCollectionId the ct collection ID of this segments experiment
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the uuid of this segments experiment.

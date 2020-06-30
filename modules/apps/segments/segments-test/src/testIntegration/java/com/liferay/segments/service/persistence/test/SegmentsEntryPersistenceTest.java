@@ -126,6 +126,8 @@ public class SegmentsEntryPersistenceTest {
 
 		newSegmentsEntry.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSegmentsEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newSegmentsEntry.setUuid(RandomTestUtil.randomString());
 
 		newSegmentsEntry.setGroupId(RandomTestUtil.nextLong());
@@ -164,6 +166,9 @@ public class SegmentsEntryPersistenceTest {
 		Assert.assertEquals(
 			existingSegmentsEntry.getMvccVersion(),
 			newSegmentsEntry.getMvccVersion());
+		Assert.assertEquals(
+			existingSegmentsEntry.getCtCollectionId(),
+			newSegmentsEntry.getCtCollectionId());
 		Assert.assertEquals(
 			existingSegmentsEntry.getUuid(), newSegmentsEntry.getUuid());
 		Assert.assertEquals(
@@ -366,9 +371,9 @@ public class SegmentsEntryPersistenceTest {
 
 	protected OrderByComparator<SegmentsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SegmentsEntry", "mvccVersion", true, "uuid", true,
-			"segmentsEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+			"SegmentsEntry", "mvccVersion", true, "ctCollectionId", true,
+			"uuid", true, "segmentsEntryId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "segmentsEntryKey", true, "name", true,
 			"description", true, "active", true, "source", true, "type", true,
 			"lastPublishDate", true);
@@ -625,6 +630,8 @@ public class SegmentsEntryPersistenceTest {
 		SegmentsEntry segmentsEntry = _persistence.create(pk);
 
 		segmentsEntry.setMvccVersion(RandomTestUtil.nextLong());
+
+		segmentsEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
 		segmentsEntry.setUuid(RandomTestUtil.randomString());
 

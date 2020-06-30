@@ -82,11 +82,12 @@ public class SegmentsExperienceModelImpl
 	public static final String TABLE_NAME = "SegmentsExperience";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT}, {"uuid_", Types.VARCHAR},
-		{"segmentsExperienceId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"segmentsEntryId", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
+		{"uuid_", Types.VARCHAR}, {"segmentsExperienceId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"segmentsEntryId", Types.BIGINT},
 		{"segmentsExperienceKey", Types.VARCHAR}, {"classNameId", Types.BIGINT},
 		{"classPK", Types.BIGINT}, {"name", Types.VARCHAR},
 		{"priority", Types.INTEGER}, {"active_", Types.BOOLEAN},
@@ -98,6 +99,7 @@ public class SegmentsExperienceModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("segmentsExperienceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
@@ -117,7 +119,7 @@ public class SegmentsExperienceModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsExperience (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,segmentsExperienceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceKey VARCHAR(75) null,classNameId LONG,classPK LONG,name STRING null,priority INTEGER,active_ BOOLEAN,lastPublishDate DATE null)";
+		"create table SegmentsExperience (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,segmentsExperienceId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsEntryId LONG,segmentsExperienceKey VARCHAR(75) null,classNameId LONG,classPK LONG,name STRING null,priority INTEGER,active_ BOOLEAN,lastPublishDate DATE null,primary key (segmentsExperienceId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SegmentsExperience";
 
@@ -179,6 +181,7 @@ public class SegmentsExperienceModelImpl
 		SegmentsExperience model = new SegmentsExperienceImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setUuid(soapModel.getUuid());
 		model.setSegmentsExperienceId(soapModel.getSegmentsExperienceId());
 		model.setGroupId(soapModel.getGroupId());
@@ -355,6 +358,12 @@ public class SegmentsExperienceModelImpl
 			"mvccVersion",
 			(BiConsumer<SegmentsExperience, Long>)
 				SegmentsExperience::setMvccVersion);
+		attributeGetterFunctions.put(
+			"ctCollectionId", SegmentsExperience::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<SegmentsExperience, Long>)
+				SegmentsExperience::setCtCollectionId);
 		attributeGetterFunctions.put("uuid", SegmentsExperience::getUuid);
 		attributeSetterBiConsumers.put(
 			"uuid",
@@ -463,6 +472,17 @@ public class SegmentsExperienceModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -1012,6 +1032,7 @@ public class SegmentsExperienceModelImpl
 			new SegmentsExperienceImpl();
 
 		segmentsExperienceImpl.setMvccVersion(getMvccVersion());
+		segmentsExperienceImpl.setCtCollectionId(getCtCollectionId());
 		segmentsExperienceImpl.setUuid(getUuid());
 		segmentsExperienceImpl.setSegmentsExperienceId(
 			getSegmentsExperienceId());
@@ -1160,6 +1181,8 @@ public class SegmentsExperienceModelImpl
 			new SegmentsExperienceCacheModel();
 
 		segmentsExperienceCacheModel.mvccVersion = getMvccVersion();
+
+		segmentsExperienceCacheModel.ctCollectionId = getCtCollectionId();
 
 		segmentsExperienceCacheModel.uuid = getUuid();
 
@@ -1318,6 +1341,7 @@ public class SegmentsExperienceModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private String _uuid;
 	private String _originalUuid;
 	private long _segmentsExperienceId;

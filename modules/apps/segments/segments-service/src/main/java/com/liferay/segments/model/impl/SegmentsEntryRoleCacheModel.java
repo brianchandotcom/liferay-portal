@@ -78,10 +78,12 @@ public class SegmentsEntryRoleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
+		sb.append(", ctCollectionId=");
+		sb.append(ctCollectionId);
 		sb.append(", segmentsEntryRoleId=");
 		sb.append(segmentsEntryRoleId);
 		sb.append(", companyId=");
@@ -109,6 +111,7 @@ public class SegmentsEntryRoleCacheModel
 			new SegmentsEntryRoleImpl();
 
 		segmentsEntryRoleImpl.setMvccVersion(mvccVersion);
+		segmentsEntryRoleImpl.setCtCollectionId(ctCollectionId);
 		segmentsEntryRoleImpl.setSegmentsEntryRoleId(segmentsEntryRoleId);
 		segmentsEntryRoleImpl.setCompanyId(companyId);
 		segmentsEntryRoleImpl.setUserId(userId);
@@ -146,6 +149,8 @@ public class SegmentsEntryRoleCacheModel
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 
+		ctCollectionId = objectInput.readLong();
+
 		segmentsEntryRoleId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
@@ -163,6 +168,8 @@ public class SegmentsEntryRoleCacheModel
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(mvccVersion);
+
+		objectOutput.writeLong(ctCollectionId);
 
 		objectOutput.writeLong(segmentsEntryRoleId);
 
@@ -186,6 +193,7 @@ public class SegmentsEntryRoleCacheModel
 	}
 
 	public long mvccVersion;
+	public long ctCollectionId;
 	public long segmentsEntryRoleId;
 	public long companyId;
 	public long userId;

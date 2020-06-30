@@ -15,6 +15,7 @@
 package com.liferay.segments.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.segments.exception.NoSuchExperimentRelException;
 import com.liferay.segments.model.SegmentsExperimentRel;
 
@@ -33,7 +34,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SegmentsExperimentRelPersistence
-	extends BasePersistence<SegmentsExperimentRel> {
+	extends BasePersistence<SegmentsExperimentRel>,
+			CTPersistence<SegmentsExperimentRel> {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

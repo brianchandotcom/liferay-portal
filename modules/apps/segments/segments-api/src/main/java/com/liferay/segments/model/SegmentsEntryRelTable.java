@@ -35,6 +35,9 @@ public class SegmentsEntryRelTable extends BaseTable<SegmentsEntryRelTable> {
 
 	public final Column<SegmentsEntryRelTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<SegmentsEntryRelTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SegmentsEntryRelTable, Long> segmentsEntryRelId =
 		createColumn(
 			"segmentsEntryRelId", Long.class, Types.BIGINT,

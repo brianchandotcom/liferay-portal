@@ -130,6 +130,8 @@ public class SegmentsExperimentRelPersistenceTest {
 
 		newSegmentsExperimentRel.setMvccVersion(RandomTestUtil.nextLong());
 
+		newSegmentsExperimentRel.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newSegmentsExperimentRel.setGroupId(RandomTestUtil.nextLong());
 
 		newSegmentsExperimentRel.setCompanyId(RandomTestUtil.nextLong());
@@ -160,6 +162,9 @@ public class SegmentsExperimentRelPersistenceTest {
 		Assert.assertEquals(
 			existingSegmentsExperimentRel.getMvccVersion(),
 			newSegmentsExperimentRel.getMvccVersion());
+		Assert.assertEquals(
+			existingSegmentsExperimentRel.getCtCollectionId(),
+			newSegmentsExperimentRel.getCtCollectionId());
 		Assert.assertEquals(
 			existingSegmentsExperimentRel.getSegmentsExperimentRelId(),
 			newSegmentsExperimentRel.getSegmentsExperimentRelId());
@@ -237,9 +242,9 @@ public class SegmentsExperimentRelPersistenceTest {
 
 	protected OrderByComparator<SegmentsExperimentRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SegmentsExperimentRel", "mvccVersion", true,
-			"segmentsExperimentRelId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
+			"SegmentsExperimentRel", "mvccVersion", true, "ctCollectionId",
+			true, "segmentsExperimentRelId", true, "groupId", true, "companyId",
+			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "segmentsExperimentId", true,
 			"segmentsExperienceId", true, "split", true);
 	}
@@ -513,6 +518,8 @@ public class SegmentsExperimentRelPersistenceTest {
 		SegmentsExperimentRel segmentsExperimentRel = _persistence.create(pk);
 
 		segmentsExperimentRel.setMvccVersion(RandomTestUtil.nextLong());
+
+		segmentsExperimentRel.setCtCollectionId(RandomTestUtil.nextLong());
 
 		segmentsExperimentRel.setGroupId(RandomTestUtil.nextLong());
 

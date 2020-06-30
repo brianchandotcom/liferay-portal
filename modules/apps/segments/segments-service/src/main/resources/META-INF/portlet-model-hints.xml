@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.segments.model.SegmentsEntry">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="segmentsEntryId" type="long" />
 		<field name="groupId" type="long" />
@@ -26,6 +27,7 @@
 	</model>
 	<model name="com.liferay.segments.model.SegmentsEntryRel">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="segmentsEntryRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -39,6 +41,7 @@
 	</model>
 	<model name="com.liferay.segments.model.SegmentsEntryRole">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="segmentsEntryRoleId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -50,6 +53,7 @@
 	</model>
 	<model name="com.liferay.segments.model.SegmentsExperience">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="segmentsExperienceId" type="long" />
 		<field name="groupId" type="long" />
@@ -69,6 +73,7 @@
 	</model>
 	<model name="com.liferay.segments.model.SegmentsExperiment">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
 		<field name="segmentsExperimentId" type="long" />
 		<field name="groupId" type="long" />
@@ -93,6 +98,7 @@
 	</model>
 	<model name="com.liferay.segments.model.SegmentsExperimentRel">
 		<field name="mvccVersion" type="long" />
+		<field name="ctCollectionId" type="long" />
 		<field name="segmentsExperimentRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

@@ -35,6 +35,8 @@ public class SegmentsEntryTable extends BaseTable<SegmentsEntryTable> {
 
 	public final Column<SegmentsEntryTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<SegmentsEntryTable, Long> ctCollectionId = createColumn(
+		"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<SegmentsEntryTable, String> uuid = createColumn(
 		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SegmentsEntryTable, Long> segmentsEntryId =

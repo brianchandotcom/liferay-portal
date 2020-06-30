@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
 
@@ -38,8 +39,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface SegmentsEntryRelModel
-	extends AttachedModel, BaseModel<SegmentsEntryRel>, GroupedModel, MVCCModel,
-			ShardedModel {
+	extends AttachedModel, BaseModel<SegmentsEntryRel>,
+			CTModel<SegmentsEntryRel>, GroupedModel, MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -52,6 +53,7 @@ public interface SegmentsEntryRelModel
 	 *
 	 * @return the primary key of this segments entry rel
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -59,6 +61,7 @@ public interface SegmentsEntryRelModel
 	 *
 	 * @param primaryKey the primary key of this segments entry rel
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -76,6 +79,22 @@ public interface SegmentsEntryRelModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this segments entry rel.
+	 *
+	 * @return the ct collection ID of this segments entry rel
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this segments entry rel.
+	 *
+	 * @param ctCollectionId the ct collection ID of this segments entry rel
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the segments entry rel ID of this segments entry rel.

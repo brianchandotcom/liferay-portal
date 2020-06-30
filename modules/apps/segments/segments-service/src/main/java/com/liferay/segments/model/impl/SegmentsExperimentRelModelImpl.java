@@ -72,7 +72,7 @@ public class SegmentsExperimentRelModelImpl
 	public static final String TABLE_NAME = "SegmentsExperimentRel";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"mvccVersion", Types.BIGINT},
+		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"segmentsExperimentRelId", Types.BIGINT}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
@@ -86,6 +86,7 @@ public class SegmentsExperimentRelModelImpl
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("segmentsExperimentRelId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -99,7 +100,7 @@ public class SegmentsExperimentRelModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SegmentsExperimentRel (mvccVersion LONG default 0 not null,segmentsExperimentRelId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsExperimentId LONG,segmentsExperienceId LONG,split DOUBLE)";
+		"create table SegmentsExperimentRel (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,segmentsExperimentRelId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentsExperimentId LONG,segmentsExperienceId LONG,split DOUBLE,primary key (segmentsExperimentRelId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table SegmentsExperimentRel";
@@ -152,6 +153,7 @@ public class SegmentsExperimentRelModelImpl
 		SegmentsExperimentRel model = new SegmentsExperimentRelImpl();
 
 		model.setMvccVersion(soapModel.getMvccVersion());
+		model.setCtCollectionId(soapModel.getCtCollectionId());
 		model.setSegmentsExperimentRelId(
 			soapModel.getSegmentsExperimentRelId());
 		model.setGroupId(soapModel.getGroupId());
@@ -326,6 +328,12 @@ public class SegmentsExperimentRelModelImpl
 			(BiConsumer<SegmentsExperimentRel, Long>)
 				SegmentsExperimentRel::setMvccVersion);
 		attributeGetterFunctions.put(
+			"ctCollectionId", SegmentsExperimentRel::getCtCollectionId);
+		attributeSetterBiConsumers.put(
+			"ctCollectionId",
+			(BiConsumer<SegmentsExperimentRel, Long>)
+				SegmentsExperimentRel::setCtCollectionId);
+		attributeGetterFunctions.put(
 			"segmentsExperimentRelId",
 			SegmentsExperimentRel::getSegmentsExperimentRelId);
 		attributeSetterBiConsumers.put(
@@ -403,6 +411,17 @@ public class SegmentsExperimentRelModelImpl
 	@Override
 	public void setMvccVersion(long mvccVersion) {
 		_mvccVersion = mvccVersion;
+	}
+
+	@JSON
+	@Override
+	public long getCtCollectionId() {
+		return _ctCollectionId;
+	}
+
+	@Override
+	public void setCtCollectionId(long ctCollectionId) {
+		_ctCollectionId = ctCollectionId;
 	}
 
 	@JSON
@@ -605,6 +624,7 @@ public class SegmentsExperimentRelModelImpl
 			new SegmentsExperimentRelImpl();
 
 		segmentsExperimentRelImpl.setMvccVersion(getMvccVersion());
+		segmentsExperimentRelImpl.setCtCollectionId(getCtCollectionId());
 		segmentsExperimentRelImpl.setSegmentsExperimentRelId(
 			getSegmentsExperimentRelId());
 		segmentsExperimentRelImpl.setGroupId(getGroupId());
@@ -710,6 +730,8 @@ public class SegmentsExperimentRelModelImpl
 			new SegmentsExperimentRelCacheModel();
 
 		segmentsExperimentRelCacheModel.mvccVersion = getMvccVersion();
+
+		segmentsExperimentRelCacheModel.ctCollectionId = getCtCollectionId();
 
 		segmentsExperimentRelCacheModel.segmentsExperimentRelId =
 			getSegmentsExperimentRelId();
@@ -831,6 +853,7 @@ public class SegmentsExperimentRelModelImpl
 	}
 
 	private long _mvccVersion;
+	private long _ctCollectionId;
 	private long _segmentsExperimentRelId;
 	private long _groupId;
 	private long _companyId;

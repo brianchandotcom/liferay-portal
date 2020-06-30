@@ -12,7 +12,11 @@
  * details.
  */
 
-import {DefaultEventHandler, openSimpleInputModal} from 'frontend-js-web';
+import {
+	DefaultEventHandler,
+	ItemSelectorDialog,
+	openSimpleInputModal,
+} from 'frontend-js-web';
 import {Config} from 'metal-state';
 
 class StyleBookEntryDropdownDefaultEventHandler extends DefaultEventHandler {
@@ -24,6 +28,10 @@ class StyleBookEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 		) {
 			this._send(itemData.deleteStyleBookEntryURL);
 		}
+	}
+
+	deleteStyleBookEntryPreview(itemData) {
+		this._send(itemData.deleteStyleBookEntryPreviewURL);
 	}
 
 	renameStyleBookEntry(itemData) {
@@ -39,6 +47,30 @@ class StyleBookEntryDropdownDefaultEventHandler extends DefaultEventHandler {
 			namespace: this.namespace,
 			spritemap: this.spritemap,
 		});
+	}
+
+	updateStyleBookEntryPreview(itemData) {
+		const itemSelectorDialog = new ItemSelectorDialog({
+			eventName: this.ns('changePreview'),
+			singleSelect: true,
+			title: Liferay.Language.get('style-book-thumbnail'),
+			url: itemData.itemSelectorURL,
+		});
+
+		itemSelectorDialog.on('selectedItemChange', (event) => {
+			const selectedItem = event.selectedItem;
+
+			if (selectedItem) {
+				const itemValue = JSON.parse(selectedItem.value);
+
+				this.one('#styleBookEntryId').value = itemData.styleBookEntryId;
+				this.one('#fileEntryId').value = itemValue.fileEntryId;
+
+				submitForm(this.one('#styleBookEntryPreviewFm'));
+			}
+		});
+
+		itemSelectorDialog.open();
 	}
 
 	_send(url) {

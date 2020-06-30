@@ -30,4 +30,7 @@ public interface AppBuilderConfiguration {
 	@Meta.AD(required = false)
 	public boolean showNativeObjectsTab();
 
+	@Meta.AD(required = false)
+	public boolean showTranslationManager();
+
 }

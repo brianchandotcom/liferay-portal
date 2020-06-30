@@ -51,6 +51,8 @@ boolean newCustomObject = ParamUtil.getBoolean(request, "newCustomObject");
 				"dataLayoutId", dataLayoutId
 			).put(
 				"newCustomObject", newCustomObject
+			).put(
+				"showTranslationManager", request.getAttribute(AppBuilderWebKeys.SHOW_TRANSLATION_MANAGER)
 			).build();
 			%>
 

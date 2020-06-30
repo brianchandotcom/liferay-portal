@@ -36,4 +36,7 @@ public class AppBuilderWebKeys {
 
 	public static final String SHOW_TABLE_VIEW = "SHOW_TABLE_VIEW";
 
+	public static final String SHOW_TRANSLATION_MANAGER =
+		"SHOW_TRANSLATION_MANAGER";
+
 }

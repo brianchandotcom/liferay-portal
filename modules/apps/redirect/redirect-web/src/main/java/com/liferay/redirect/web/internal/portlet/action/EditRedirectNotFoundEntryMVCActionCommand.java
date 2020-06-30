@@ -14,7 +14,9 @@
 
 package com.liferay.redirect.web.internal.portlet.action;
 
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -60,21 +62,26 @@ public class EditRedirectNotFoundEntryMVCActionCommand
 		long redirectNotFoundEntryId = ParamUtil.getLong(
 			actionRequest, "redirectNotFoundEntryId");
 
-		if (redirectNotFoundEntryId > 0) {
-			_redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
-				redirectNotFoundEntryId,
-				ParamUtil.getBoolean(actionRequest, "ignored"));
-		}
-		else {
-			long[] editRedirectNotFoundEntryIds = ParamUtil.getLongValues(
-				actionRequest, "rowIds");
+		try (SafeClosable safeClosable =
+				ProxyModeThreadLocal.setWithSafeClosable(true)) {
 
-			for (long editRedirectNotFoundEntryId :
-					editRedirectNotFoundEntryIds) {
-
+			if (redirectNotFoundEntryId > 0) {
 				_redirectNotFoundEntryLocalService.updateRedirectNotFoundEntry(
-					editRedirectNotFoundEntryId,
+					redirectNotFoundEntryId,
 					ParamUtil.getBoolean(actionRequest, "ignored"));
+			}
+			else {
+				long[] editRedirectNotFoundEntryIds = ParamUtil.getLongValues(
+					actionRequest, "rowIds");
+
+				for (long editRedirectNotFoundEntryId :
+						editRedirectNotFoundEntryIds) {
+
+					_redirectNotFoundEntryLocalService.
+						updateRedirectNotFoundEntry(
+							editRedirectNotFoundEntryId,
+							ParamUtil.getBoolean(actionRequest, "ignored"));
+				}
 			}
 		}
 	}

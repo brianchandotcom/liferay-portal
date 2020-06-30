@@ -219,6 +219,11 @@ public class RedirectNotFoundEntryWrapper
 		return model.getRedirectNotFoundEntryId();
 	}
 
+	@Override
+	public long getRequestCount() {
+		return model.getRequestCount();
+	}
+
 	/**
 	 * Returns the url of this redirect not found entry.
 	 *

@@ -79,8 +79,8 @@ definition {
 
 		AssertElementPresent(
 			key_colPosition = "${colPosition}",
-			key_rowPosition = "${rowPosition}",
 			key_ratingStarCount = "${ratingStarCount}",
+			key_rowPosition = "${rowPosition}",
 			locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
 	}
 

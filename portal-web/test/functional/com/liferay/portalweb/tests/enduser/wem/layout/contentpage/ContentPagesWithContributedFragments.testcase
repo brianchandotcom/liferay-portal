@@ -715,8 +715,8 @@ definition {
 			for (var ratingStarCount : list "5 stars,3 stars,1 star") {
 				AssertElementPresent(
 					key_colPosition = "${n}",
-					key_rowPosition = "1",
 					key_ratingStarCount = "${ratingStarCount}",
+					key_rowPosition = "1",
 					locator1 = "PageEditor#COLLECTION_ITEM_YOUR_RATING_STAR_RESULT");
 
 				var n = ${n} + 1;

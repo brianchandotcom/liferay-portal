@@ -459,10 +459,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
 				"/import_translation.jsp", "redirect", _getRedirect(),
 				"referringPortletResource", _getReferringPortletResource(),
-				"articleResourcePrimKey", _article.getResourcePrimKey(),
-				"groupId", _article.getGroupId(), "articleId",
-				_article.getArticleId(), "version", _article.getVersion(),
-				"articleTitle", _article.getTitle());
+				"articleId", _article.getArticleId());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "import-translation"));
 		};

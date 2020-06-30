@@ -328,8 +328,6 @@ definition {
 			layoutName = "WC Test Page",
 			parentGroupName = "Site Name");
 
-		JSONGroup.addChildSite(groupName = "Site Name");
-
 		JSONLayout.addWidgetToPublicLayout(
 			groupName = "Site Name",
 			layoutName = "AP Test Page",

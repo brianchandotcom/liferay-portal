@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.struts;
+package com.liferay.portal.struts.constants;
 
 /**
  * @author Brian Wing Shun Chan

@@ -89,6 +89,8 @@ const ContainerWithControls = React.forwardRef(
 			[dispatch, item.itemId, segmentsExperienceId, selectItem]
 		);
 
+		const {marginLeft, marginRight, widthType} = item.config;
+
 		const buttons = [];
 
 		if (canUpdatePageStructure && !hasDropZoneChild(item, layoutData)) {
@@ -132,6 +134,12 @@ const ContainerWithControls = React.forwardRef(
 				)}
 
 				<Topper
+					className={classNames({
+						[`ml-${marginLeft || 0}`]: widthType !== 'fixed',
+						[`mr-${marginRight || 0}`]: widthType !== 'fixed',
+						container: widthType === 'fixed',
+						'p-0': widthType === 'fixed',
+					})}
 					item={item}
 					itemElement={itemElement}
 					layoutData={layoutData}

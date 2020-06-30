@@ -644,7 +644,7 @@ definition {
 
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
-		Click(locator1 = "Fragment#FRAGMENT_BODY");
+		Click.clickNoWaitForVisible(locator1 = "Fragment#FRAGMENT_HEADER");
 
 		Click.clickNoMouseOver(
 			key_elementType = "Collection Display",
